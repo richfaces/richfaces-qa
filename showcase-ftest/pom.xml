@@ -1,0 +1,175 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.richfaces.tests</groupId>
+	<artifactId>richfaces-showcase-ftest</artifactId>
+	<version>4.0.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>RichFaces ShowCase Smoke Ftest</name>
+
+	<properties>
+		<arquillian.version>1.0.0.Alpha5</arquillian.version>
+		<version.ajocado>1.0.0-SNAPSHOT</version.ajocado>
+		<version.selenium>2.0b2</version.selenium>
+		<version.org.jboss.jbossas>6.0.0.Final</version.org.jboss.jbossas>
+		<version.org.jboss.jbossas_server-manager>1.0.3.GA
+		</version.org.jboss.jbossas_server-manager>
+		<showcase.classifier>jee6</showcase.classifier>
+		<version.showcase>4.1.0-SNAPSHOT</version.showcase>
+	</properties>
+
+	<dependencies>
+		<!-- RichFaces dependencies -->
+		<dependency>
+			<groupId>org.richfaces.examples</groupId>
+			<artifactId>richfaces-showcase</artifactId>
+			<type>war</type>
+			<version>${version.showcase}</version>
+			<classifier>${showcase.classifier}</classifier>
+			<scope>compile</scope>
+		</dependency>
+		<!-- org.jboss.arquillian -->
+		<dependency>
+			<groupId>org.jboss.arquillian</groupId>
+			<artifactId>arquillian-spi</artifactId>
+			<version>${arquillian.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.protocol</groupId>
+			<artifactId>arquillian-protocol-servlet</artifactId>
+			<version>${arquillian.version}</version>
+		</dependency>
+		<!-- org.jboss <dependency> <groupId>org.jboss.jbossas</groupId> <artifactId>jboss-server-manager</artifactId> 
+			<version>${version.org.jboss.jbossas_server-manager}</version> <scope>provided</scope> 
+			</dependency> <dependency> <groupId>org.jboss.jbossas</groupId> <artifactId>jboss-as-client</artifactId> 
+			<version>${version.org.jboss.jbossas}</version> <type>pom</type> <scope>provided</scope> 
+			</dependency> -->
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>5.14.6</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian</groupId>
+			<artifactId>arquillian-testng</artifactId>
+			<version>${arquillian.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Arquillian Drone dependency -->
+		<dependency>
+			<groupId>org.jboss.arquillian.extension</groupId>
+			<artifactId>arquillian-drone</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Arquillian Ajocado dependencies -->
+		<dependency>
+			<groupId>org.jboss.arquillian.ajocado</groupId>
+			<artifactId>arquillian-ajocado-api</artifactId>
+			<version>${version.ajocado}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.ajocado</groupId>
+			<artifactId>arquillian-ajocado-impl</artifactId>
+			<version>${version.ajocado}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Selenium (including WebDriver in 2.x versions) -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-remote-control</artifactId>
+			<version>${version.selenium}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-server</artifactId>
+			<version>${version.selenium}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<!-- required to run Selenium Server, needed if you want Arquillian Drone 
+			to start Selenium Server for you -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>  <!-- choose different underlying implementation if you want -->
+			<version>1.5.10</version>  <!-- up to you, tested with 1.5.10 -->
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.8.1</version>
+				<configuration>
+					<systemPropertyVariables>
+						<versionShowcase>${version.showcase}</versionShowcase>
+						<showcaseClassifier>${showcase.classifier}</showcaseClassifier>
+					</systemPropertyVariables>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-installed</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.richfaces.examples</groupId>
+									<artifactId>richfaces-showcase</artifactId>
+									<version>${version.showcase}</version>
+									<classifier>${showcase.classifier}</classifier>
+									<type>war</type>
+								</artifactItem>
+							</artifactItems>
+							<outputDirectory>target</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
+
+	<profiles>
+		<profile>
+			<id>jbossas-managed-6</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.jboss.arquillian.container</groupId>
+					<artifactId>arquillian-jbossas-managed-6</artifactId>
+					<version>1.0.0.Alpha5</version>
+				</dependency>
+				<dependency>
+					<groupId>org.jboss.jbossas</groupId>
+					<artifactId>jboss-server-manager</artifactId>
+					<version>1.0.3.GA</version>
+				</dependency>
+				<dependency>
+					<groupId>org.jboss.jbossas</groupId>
+					<artifactId>jboss-as-client</artifactId>
+					<version>6.0.0.Final</version>
+					<type>pom</type>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+</project>
