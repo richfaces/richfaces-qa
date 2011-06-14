@@ -1,13 +1,14 @@
 #!/bin/bash
 
-SERVER="src/test/resources/selenium-server-standalone.jar"
+JAR="selenium-server-standalone.jar"
 LOG="target/selenium/selenium-server.log"
 PORT=8444
 
 mkdir -p `dirname $LOG` || true
 
-if [ ! -f "$SERVER" ]; then
-	mvn process-resources -Dselenium.server.skip=true -Dselenium.test.skip=true -Pprovide-selenium-server-standalone || exit 1
+if [ ! -f "$JAR" ]; then
+	VERSION=`grep version.selenium pom.xml | head -n 1 | tr '<>' ' ' | awk '{ print $2; }'`
+	wget http://selenium.googlecode.com/files/selenium-server-standalone-$VERSION.jar -O $JAR
 fi
 
-java -jar $SERVER -log $LOG -port $PORT -browserSessionReuse $*
+java -jar $JAR -log $LOG -port $PORT -browserSessionReuse $*
