@@ -1,0 +1,8 @@
+#Fri Jun 10 16:07:29 CEST 2011
+activeProfiles=jbossas-managed-6
+eclipse.preferences.version=1
+fullBuildGoals=process-test-resources
+resolveWorkspaceProjects=true
+resourceFilterGoals=process-resources resources\:testResources
+skipCompilerPlugin=true
+version=1
