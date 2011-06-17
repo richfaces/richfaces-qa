@@ -39,12 +39,6 @@
 			<artifactId>arquillian-protocol-servlet</artifactId>
 			<version>${arquillian.version}</version>
 		</dependency>
-		<!-- org.jboss <dependency> <groupId>org.jboss.jbossas</groupId> <artifactId>jboss-server-manager</artifactId> 
-			<version>${version.org.jboss.jbossas_server-manager}</version> <scope>provided</scope> 
-			</dependency> <dependency> <groupId>org.jboss.jbossas</groupId> <artifactId>jboss-as-client</artifactId> 
-			<version>${version.org.jboss.jbossas}</version> <type>pom</type> <scope>provided</scope> 
-			</dependency> -->
-		<!-- Test dependencies -->
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
