@@ -169,22 +169,5 @@
 				</dependency>
 			</dependencies>
 		</profile>
-
-		<profile>
-			<id>glassfish-embedded-3.1</id>
-			<dependencies>
-				<dependency>
-					<groupId>org.jboss.arquillian.container</groupId>
-					<artifactId>arquillian-glassfish-embedded-3.1</artifactId>
-					<version>1.0.0.Alpha5</version>
-				</dependency>
-				<dependency>
-					<groupId>org.glassfish.extras</groupId>
-					<artifactId>glassfish-embedded-all</artifactId>
-					<version>3.1</version>
-				</dependency>
-			</dependencies>
-		</profile>
-
 	</profiles>
 </project>
