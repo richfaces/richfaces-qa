@@ -36,10 +36,10 @@ import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
 import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.utils.URLUtils;
-import org.jboss.arquillian.api.ArquillianResource;
-import org.jboss.arquillian.api.Deployment;
-import org.jboss.arquillian.api.RunAsClient;
-import org.jboss.arquillian.drone.annotation.Drone;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.RunAsClient;
+import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -58,13 +58,13 @@ public abstract class AbstractShowcaseTest extends Arquillian {
 	@ArquillianResource
 	protected URL contextRoot;
 	
-	//protected static String versionShowcase = System.getProperty("versionShowcase");
-	//protected static String showcaseClassifier = System.getProperty("showcaseClassifier");
+	protected static String versionShowcase = System.getProperty("versionShowcase");
+	protected static String showcaseClassifier = System.getProperty("showcaseClassifier");
 	/*
 	 * Debug purposes
 	 */
-	protected static String versionShowcase = "4.1.0-SNAPSHOT";
-	protected static String showcaseClassifier = "jee6";
+	/*protected static String versionShowcase = "4.1.0-SNAPSHOT";
+	protected static String showcaseClassifier = "jee6";*/
 
 	@Deployment(testable = false)
 	public static WebArchive createTestArchive() {

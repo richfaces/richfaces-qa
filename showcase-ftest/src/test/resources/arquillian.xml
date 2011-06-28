@@ -17,11 +17,12 @@
 
 	<engine>
 		<property name="maxTestClassesBeforeRestart">12</property>
+		<property name="deploymentExportPath">target/</property>
 	</engine>
 
 	<container qualifier="jboss" default="true">
 		<configuration>
-			<!-- <property name="jbossHome">/home/jhuska/apps/jboss-6.0.0.Final</property> -->
+			<property name="jbossHome">target/jboss-6.0.0.Final</property>
 			<property name="bindAddress">127.0.0.1</property>
 			<property name="httpPort">8080</property>
 			<property name="javaVmArguments">-Xmx512m -XX:MaxPermSize=1500m</property>
@@ -31,12 +32,13 @@
 	<extension qualifier="selenium-server">
 		<configuration>
 			<property name="enable">false</property>
+			<property name="port">8444</property>
 		</configuration>
 	</extension>
 
 	<extension qualifier="ajocado">
 		<configuration>
-			<property name="browser">*firefox</property>
+			<property name="browser">*google-chrome</property>
 			<property name="contextRoot">http://localhost:8080/</property>
 			<property name="seleniumTimeoutAjax">5000</property>
 			<property name="seleniumMaximize">true</property>
