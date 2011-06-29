@@ -30,20 +30,18 @@
 	</container>
 
 	<extension qualifier="selenium-server">
-		<configuration>
-			<property name="enable">false</property>
-			<property name="port">8444</property>
-		</configuration>
+
+		<property name="enable">true</property>
+		<property name="port">8444</property>
+
 	</extension>
 
 	<extension qualifier="ajocado">
-		<configuration>
-			<property name="browser">*google-chrome</property>
-			<property name="contextRoot">http://localhost:8080/</property>
-			<property name="seleniumTimeoutAjax">5000</property>
-			<property name="seleniumMaximize">true</property>
-			<property name="seleniumPort">8444</property>
-			<property name="seleniumHost">localhost</property>
-		</configuration>
+		<property name="browser">*firefox</property>
+		<property name="contextRoot">http://localhost:8080/</property>
+		<property name="seleniumTimeoutAjax">5000</property>
+		<property name="seleniumMaximize">true</property>
+		<property name="seleniumPort">8444</property>
+		<property name="seleniumHost">localhost</property>
 	</extension>
 </arquillian>
