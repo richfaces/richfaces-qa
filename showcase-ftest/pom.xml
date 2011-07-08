@@ -12,6 +12,7 @@
 		<showcase.classifier>jee6</showcase.classifier>
 		<version.showcase>4.1.0-SNAPSHOT</version.showcase>
 		<version.org.jboss.jbossas>6.0.0.Final</version.org.jboss.jbossas>
+		<version.org.jboss.as>7.0.0.CR1</version.org.jboss.as>
 		<version.arquillian.container.jboss>1.0.0.CR1</version.arquillian.container.jboss>
 		<version.selenium>2.0b2</version.selenium>
 	</properties>
@@ -60,6 +61,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.2</version>
 				<executions>
 					<execution>
 						<id>copy-installed</id>
@@ -97,6 +99,28 @@
 									<outputDirectory>${project.build.directory}</outputDirectory>
 								</artifactItem>
 							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/src/test/resources</outputDirectory>
+							<overwrite>true</overwrite>
+							<resources>
+								<resource>
+									<directory>${basedir}/../richfaces-arquillian-xml-property-resolver/target/classes</directory>
+								</resource>
+							</resources>
 						</configuration>
 					</execution>
 				</executions>
@@ -156,7 +180,7 @@
 				<dependency>
 					<groupId>org.jboss.as</groupId>
 					<artifactId>jboss-as-arquillian-container-managed</artifactId>
-					<version>${version.org.jboss.jbossas}</version>
+					<version>${version.org.jboss.as}</version>
 				</dependency>
 			</dependencies>
 			<build>
@@ -176,7 +200,7 @@
 										<artifactItem>
 											<groupId>org.jboss.as</groupId>
 											<artifactId>jboss-as-dist</artifactId>
-											<version>${version.org.jboss.jbossas}</version>
+											<version>${version.org.jboss.as}</version>
 											<type>zip</type>
 											<overWrite>false</overWrite>
 											<outputDirectory>${project.build.directory}</outputDirectory>

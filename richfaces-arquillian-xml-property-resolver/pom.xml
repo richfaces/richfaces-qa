@@ -25,6 +25,10 @@
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 			</resource>
+			<resource>
+				<directory>target/classes</directory>
+				<filtering>false</filtering>
+			</resource>
 		</resources>
 		<plugins>
 			<plugin>
