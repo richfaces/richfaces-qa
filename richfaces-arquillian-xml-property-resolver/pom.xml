@@ -138,7 +138,7 @@
                 </property>
             </activation>
             <properties>
-                <browser>*iexplore</browser>
+                <browser>*piiexplore</browser>
             </properties>
         </profile>
 
