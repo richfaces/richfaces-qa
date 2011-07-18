@@ -126,7 +126,7 @@
                 </property>
             </activation>
             <properties>
-                <browser>*iehta</browser>
+                <browser>*piiexplore</browser>
             </properties>
         </profile>
 
