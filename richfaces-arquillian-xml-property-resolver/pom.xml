@@ -118,11 +118,11 @@
             </properties>
         </profile>
         <profile>
-            <id>browser-ie8</id>
+            <id>browser-ie7</id>
             <activation>
                 <property>
                     <name>BROWSER</name>
-                    <value>ie8</value>
+                    <value>ie7</value>
                 </property>
             </activation>
             <properties>
