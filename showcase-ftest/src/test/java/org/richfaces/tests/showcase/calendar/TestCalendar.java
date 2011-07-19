@@ -28,6 +28,7 @@ import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import org.testng.annotations.Test;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
@@ -36,8 +37,10 @@ public class TestCalendar extends AbstractCalendarTest {
 
 	/* ************************************************************************************
 	 * Locators
-	 **************************************************************************************/
-	
+	 * ******************************************************************
+	 * ******************
+	 */
+
 	protected JQueryLocator disabledCheckBox = jq("input[type=checkbox]:eq(0)");
 	protected JQueryLocator poppupModeCheckBox = jq("input[type=checkbox]:eq(1)");
 	protected JQueryLocator applyButtonCheckBox = jq("input[type=checkbox]:eq(2)");
@@ -46,28 +49,29 @@ public class TestCalendar extends AbstractCalendarTest {
 	protected JQueryLocator DELocale = jq("input[type=radio]:eq(1)");
 	protected JQueryLocator FRLocale = jq("input[type=radio]:eq(2)");
 	protected JQueryLocator RULocale = jq("input[type=radio]:eq(3)");
-	
-	
+
 	/* **************************************************************************************
 	 * Tests
-	 ****************************************************************************************/
-	
+	 * *********************************************************************
+	 * *****************
+	 */
+
 	@Test
 	public void testThereAreAllRequiredComponents() {
-		
+
 		abstractTestThereAreAllRequiredComponents();
-		
+
 		checkTheTimeSetterAndCleanButtonPresent();
 	}
-	
+
 	@Test
 	public void testDisabledCheckBox() {
-		
+
 		selenium.check(disabledCheckBox);
 		guardXhr(selenium).fireEvent(disabledCheckBox, Event.CLICK);
-		
+
 		guardNoRequest(selenium).click(imgWhichCallsTheCalendar);
-		
-		checkWhetherTheseComponentsArePresent( addAllComponentsToTheSet(), false);
+
+		checkWhetherTheseComponentsArePresent(addAllComponentsToTheSet(), false);
 	}
 }
