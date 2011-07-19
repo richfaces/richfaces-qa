@@ -21,11 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.clientValidation;
 
+
 import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import org.testng.annotations.Test;
+
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -42,7 +44,7 @@ public class TestJsr303 extends AbstractClientValidationTest {
 	private JQueryLocator ageInput = jq("input[id$=age]");
 	private JQueryLocator iAgreeTheTermsCheckBox = jq("input[id$=agreed]");
 	private JQueryLocator errorMessageAboutSizeOfName = jq("span:contains('size must be between')");
-	private JQueryLocator errorMessageAboutEmail = jq("span:contains('Bad email')");
+	private JQueryLocator errorMessageAboutEmail = jq("span:contains('bad email')");
 	private JQueryLocator errorMessageAboutAgeNumber = jq("span:contains" +
 			"('must be a number between -2147483648 and 2147483647')");
 	private JQueryLocator errorMessageAboutAgeMustBeGreaterThan = jq("span:contains('must be greater than')");
@@ -57,7 +59,7 @@ public class TestJsr303 extends AbstractClientValidationTest {
 		"size must be between 3 and 12";
 	
 	private final String ERROR_MESSAGE_ABOUT_EMAIL = 
-		"Bad email";
+		"bad email";
 	
 	private final String ERROR_MESSAGE_ABOUT_AGE_NUMBER = 
 		"must be a number between -2147483648 and 2147483647 Example: 9346";
@@ -111,7 +113,7 @@ public class TestJsr303 extends AbstractClientValidationTest {
 		eraseInput(ageInput);
 		
 		fillAnyInput(ageInput, "55");
-		guardNoRequest(selenium).fireEvent(ageInput, Event.BLUR);
+		selenium.fireEvent(ageInput, Event.BLUR);
 		isThereErrorMessageAboutAgeNumber(false);
 		isThereErrorMessageAboutAgeGreaterThan(false);
 		isThereErrorMessageAboutAgeLessThan(false);
@@ -119,7 +121,7 @@ public class TestJsr303 extends AbstractClientValidationTest {
 		eraseInput(ageInput);
 		
 		fillAnyInput(ageInput, "99");
-		guardNoRequest(selenium).fireEvent(ageInput, Event.BLUR);
+		selenium.fireEvent(ageInput, Event.BLUR);
 		isThereErrorMessageAboutAgeNumber(false);
 		isThereErrorMessageAboutAgeGreaterThan(false);
 		isThereErrorMessageAboutAgeLessThan(false);
@@ -140,7 +142,7 @@ public class TestJsr303 extends AbstractClientValidationTest {
 		eraseInput(ageInput);
 		
 		fillAnyInput(ageInput, "0");
-		guardNoRequest(selenium).fireEvent(ageInput, Event.BLUR);
+		selenium.fireEvent(ageInput, Event.BLUR);
 		isThereErrorMessageAboutAgeNumber(false);
 		isThereErrorMessageAboutAgeGreaterThan(true);
 		isThereErrorMessageAboutAgeLessThan(false);
@@ -148,7 +150,7 @@ public class TestJsr303 extends AbstractClientValidationTest {
 		eraseInput(ageInput);
 		
 		fillAnyInput(ageInput, " ");
-		guardNoRequest(selenium).fireEvent(ageInput, Event.BLUR);
+		selenium.fireEvent(ageInput, Event.BLUR);
 		isThereErrorMessageAboutAgeNumber(true);
 		isThereErrorMessageAboutAgeGreaterThan(false);
 		isThereErrorMessageAboutAgeLessThan(false);
@@ -156,7 +158,7 @@ public class TestJsr303 extends AbstractClientValidationTest {
 		eraseInput(ageInput);
 		
 		fillAnyInput(ageInput, "15");
-		guardNoRequest(selenium).fireEvent(ageInput, Event.BLUR);
+		selenium.fireEvent(ageInput, Event.BLUR);
 		isThereErrorMessageAboutAgeNumber(false);
 		isThereErrorMessageAboutAgeGreaterThan(true);
 		isThereErrorMessageAboutAgeLessThan(false);
@@ -164,7 +166,7 @@ public class TestJsr303 extends AbstractClientValidationTest {
 		eraseInput(ageInput);
 		
 		fillAnyInput(ageInput, "100");
-		guardNoRequest(selenium).fireEvent(ageInput, Event.BLUR);
+		selenium.fireEvent(ageInput, Event.BLUR);
 		isThereErrorMessageAboutAgeNumber(false);
 		isThereErrorMessageAboutAgeGreaterThan(false);
 		isThereErrorMessageAboutAgeLessThan(true);
@@ -277,13 +279,5 @@ public class TestJsr303 extends AbstractClientValidationTest {
 		selenium.uncheck(iAgreeTheTermsCheckBox);
 		guardNoRequest(selenium).fireEvent(iAgreeTheTermsCheckBox, Event.CHANGE);
 		guardNoRequest(selenium).fireEvent(iAgreeTheTermsCheckBox, Event.CLICK);
-	}
-	
-	@Override
-	protected void isThereErrorMessageAboutValueRequeired(boolean shouldBeErrorMessagePresented) {
-		
-		//this method is not needed in this class, it is needed in TestJsfValidators, but these two classes 
-		//has so many test features common that still it is useful to have abstract class and therefore to
-		//override this method
 	}
 }

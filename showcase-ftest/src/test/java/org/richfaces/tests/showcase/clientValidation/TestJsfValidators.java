@@ -24,9 +24,10 @@ package org.richfaces.tests.showcase.clientValidation;
 import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
-import org.testng.annotations.Test;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.testng.annotations.Test;
+
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
@@ -40,7 +41,7 @@ public class TestJsfValidators extends AbstractClientValidationTest {
 	private JQueryLocator nameInput = jq("input[id$=name]");
 	private JQueryLocator emailInput = jq("input[id$=email]");
 	private JQueryLocator ageInput = jq("input[id$=age]");
-	private JQueryLocator errorMessageAboutRegex = jq("span:contains('Regex pattern of')");
+	private JQueryLocator errorMessageAboutEmail = jq("span:contains('bad email')");
 	private JQueryLocator errorMessageAboutNumber = jq("span:contains('must be a number between')");
 	private JQueryLocator errorMessageAboutRange = jq("span:contains('Validation Error: Specified " +
 			"attribute is not between the expected values of')");
@@ -54,8 +55,7 @@ public class TestJsfValidators extends AbstractClientValidationTest {
 		"name: Validation Error: Specified attribute is not between the expected values of 3 and 8.";
 	
 	private final String ERROR_MESSAGE_ABOUT_EMAIL = 
-		"Regex pattern of '^(([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5}){1,25})+" +
-		"([;.](([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5}){1,25})+)*$' not matched";
+		"bad email";
 	
 	private final String ERROR_MESSAGE_ABOUT_AGE =
 		"must be a number between -2147483648 and 2147483647 Example: 9346";
@@ -93,12 +93,12 @@ public class TestJsfValidators extends AbstractClientValidationTest {
 		eraseInput(ageInput);
 		
 		fillAnyInput(ageInput, "55");
-		guardNoRequest(selenium).fireEvent(ageInput, Event.BLUR);
+		selenium.fireEvent(ageInput, Event.BLUR);
 		isThereErrorMessageAboutAge(false);
 		isThereErrorMessageAboutAgeSize(false);
 		
 		fillAnyInput(ageInput, "99");
-		guardNoRequest(selenium).fireEvent(ageInput, Event.BLUR);
+		selenium.fireEvent(ageInput, Event.BLUR);
 		isThereErrorMessageAboutAge(false);
 		isThereErrorMessageAboutAgeSize(false);
 	}
@@ -129,14 +129,14 @@ public class TestJsfValidators extends AbstractClientValidationTest {
 		eraseInput(ageInput);
 		
 		fillAnyInput(ageInput, "0");
-		guardNoRequest(selenium).fireEvent(ageInput, Event.BLUR);
+		selenium.fireEvent(ageInput, Event.BLUR);
 		isThereErrorMessageAboutAge(false);
 		isThereErrorMessageAboutAgeSize(true);
 		
 		eraseInput(ageInput);
 		
 		fillAnyInput(ageInput, " ");
-		guardNoRequest(selenium).fireEvent(ageInput, Event.BLUR);
+		selenium.fireEvent(ageInput, Event.BLUR);
 		isThereErrorMessageAboutAge(true);
 		isThereErrorMessageAboutAgeSize(false);
 		
@@ -144,14 +144,14 @@ public class TestJsfValidators extends AbstractClientValidationTest {
 		eraseInput(ageInput);
 		
 		fillAnyInput(ageInput, "17");
-		guardNoRequest(selenium).fireEvent(ageInput, Event.BLUR);
+		selenium.fireEvent(ageInput, Event.BLUR);
 		isThereErrorMessageAboutAge(false);
 		isThereErrorMessageAboutAgeSize(true);
 		
 		eraseInput(ageInput);
 		
 		fillAnyInput(ageInput, "100");
-		guardNoRequest(selenium).fireEvent(ageInput, Event.BLUR);
+		selenium.fireEvent(ageInput, Event.BLUR);
 		isThereErrorMessageAboutAge(false);
 		isThereErrorMessageAboutAgeSize(true);
 		
@@ -190,7 +190,7 @@ public class TestJsfValidators extends AbstractClientValidationTest {
 	@Override
 	protected void isThereErrorMessageAboutEmail(boolean shouldErrorMessagePresented) {
 		
-		isThereErrorMessage(errorMessageAboutRegex, ERROR_MESSAGE_ABOUT_EMAIL, shouldErrorMessagePresented);
+		isThereErrorMessage(errorMessageAboutEmail, ERROR_MESSAGE_ABOUT_EMAIL, shouldErrorMessagePresented);
 	}
 	
 	/**

@@ -22,11 +22,11 @@
 package org.richfaces.tests.showcase.clientValidation;
 
 import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
+import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.showcase.AbstractShowcaseTest;
-
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -34,146 +34,181 @@ import org.richfaces.tests.showcase.AbstractShowcaseTest;
  */
 public abstract class AbstractClientValidationTest extends AbstractShowcaseTest {
 
+	/* *********************************************************************************************************************
+	 * Locators
+	 * ******************************************************************
+	 * ***************************************************
+	 */
+	private JQueryLocator errorMessageAboutValueRequired = jq("span:contains('Validation Error: Value is required')");
+
+	/* *********************************************************************************************************************
+	 * Constants
+	 * *****************************************************************
+	 * ***************************************************
+	 */
+
+	private final String ERROR_MESSAGE_ABOUT_VALUE_REQUIRED = "Validation Error: Value is required.";
+
+	/* ************************************************************************************
+	 * Help methods
+	 * **********************************************************************
+	 */
+
 	/**
-	 * Finds out whether there is error message about email, it is implemented in the subclass
+	 * Finds out whether there is error message about email, it is implemented
+	 * in the subclass
+	 * 
 	 * @param isThereErrorMessageAboutEmail
 	 */
-	protected abstract void isThereErrorMessageAboutEmail(boolean isThereErrorMessageAboutEmail);
-	
+	protected abstract void isThereErrorMessageAboutEmail(
+			boolean isThereErrorMessageAboutEmail);
+
 	/**
-	 * Finds out whether there is error message about size of name, it is implemented in the subclass
+	 * Finds out whether there is error message about size of name, it is
+	 * implemented in the subclass
+	 * 
 	 * @param isThereErrorMessageAboutEmail
 	 */
-	protected abstract void isThereErrorMessageAboutSizeOfName(boolean isThereErrorMessageAboutEmail);
-	
-	protected abstract void isThereErrorMessageAboutValueRequeired(boolean shouldBeErrorMessagePresented);
-	
+	protected abstract void isThereErrorMessageAboutSizeOfName(
+			boolean isThereErrorMessageAboutEmail);
+
+	protected void isThereErrorMessageAboutValueRequeired(
+			boolean shouldBeErrorMessagePresented) {
+
+		isThereErrorMessage(errorMessageAboutValueRequired,
+				ERROR_MESSAGE_ABOUT_VALUE_REQUIRED,
+				shouldBeErrorMessagePresented);
+	}
+
 	/**
-	 * Fills in the name input incorrect value according to the borderValues, it tries to fill various values.
-	 * Checks whether there are error messages.
+	 * Fills in the name input incorrect value according to the borderValues, it
+	 * tries to fill various values. Checks whether there are error messages.
+	 * 
 	 * @param nameInput
 	 * @param bottomBorderValue
 	 * @param topBorderValue
 	 */
-	public void fillNameInputWithIncorrectValues(JQueryLocator nameInput, int bottomBorderValue, 
-			int topBorderValue) {
-		
+	public void fillNameInputWithIncorrectValues(JQueryLocator nameInput,
+			int bottomBorderValue, int topBorderValue) {
+
 		fillInputWithStringOfLength(nameInput, 0);
 		guardNoRequest(selenium).fireEvent(nameInput, Event.BLUR);
 		isThereErrorMessageAboutValueRequeired(true);
-		
+
 		eraseInput(nameInput);
-		
+
 		fillInputWithStringOfLength(nameInput, bottomBorderValue - 1);
 		guardNoRequest(selenium).fireEvent(nameInput, Event.BLUR);
 		isThereErrorMessageAboutSizeOfName(true);
-		
+
 		eraseInput(nameInput);
-		
+
 		fillInputWithStringOfLength(nameInput, topBorderValue + 1);
 		guardNoRequest(selenium).fireEvent(nameInput, Event.BLUR);
 		isThereErrorMessageAboutSizeOfName(true);
-		
+
 		eraseInput(nameInput);
-		
+
 		fillInputWithStringOfLength(nameInput, topBorderValue * 3);
 		guardNoRequest(selenium).fireEvent(nameInput, Event.BLUR);
 		isThereErrorMessageAboutSizeOfName(true);
 	}
-	
+
 	/**
-	 * Fills in the name input correct value according to the borderValues, it tries to fill various values.
-	 * Checks whether there are error messages.
+	 * Fills in the name input correct value according to the borderValues, it
+	 * tries to fill various values. Checks whether there are error messages.
+	 * 
 	 * @param nameInput
 	 * @param bottomBorderValue
 	 * @param middleValue
 	 * @param topBorderValue
 	 */
-	public void fillNameInputWithCorrectValues(JQueryLocator nameInput, int bottomBorderValue, 
-			int middleValue, int topBorderValue) {
-		
+	public void fillNameInputWithCorrectValues(JQueryLocator nameInput,
+			int bottomBorderValue, int middleValue, int topBorderValue) {
+
 		fillInputWithStringOfLength(nameInput, bottomBorderValue);
 		guardNoRequest(selenium).fireEvent(nameInput, Event.BLUR);
 		isThereErrorMessageAboutSizeOfName(false);
-		
+
 		eraseInput(nameInput);
-		
+
 		fillInputWithStringOfLength(nameInput, middleValue);
 		guardNoRequest(selenium).fireEvent(nameInput, Event.BLUR);
 		isThereErrorMessageAboutSizeOfName(false);
-		
+
 		eraseInput(nameInput);
-		
+
 		fillInputWithStringOfLength(nameInput, topBorderValue);
 		guardNoRequest(selenium).fireEvent(nameInput, Event.BLUR);
 		isThereErrorMessageAboutSizeOfName(false);
-		
+
 		eraseInput(nameInput);
 	}
-	
+
 	/**
-	 * Fills in the email input incorrect values, it tries various incorrect values.
-	 * Checks for error messages.
+	 * Fills in the email input incorrect values, it tries various incorrect
+	 * values. Checks for error messages.
+	 * 
 	 * @param emailInput
 	 */
 	public void fillEmailInputWithIncorrectValues(JQueryLocator emailInput) {
-		
+
 		fillAnyInput(emailInput, "");
 		guardNoRequest(selenium).fireEvent(emailInput, Event.BLUR);
 		isThereErrorMessageAboutEmail(true);
-		
+
 		fillAnyInput(emailInput, "jhuska");
 		guardNoRequest(selenium).fireEvent(emailInput, Event.BLUR);
 		isThereErrorMessageAboutEmail(true);
-		
+
 		eraseInput(emailInput);
-		
+
 		fillAnyInput(emailInput, "jhuska@");
 		guardNoRequest(selenium).fireEvent(emailInput, Event.BLUR);
 		isThereErrorMessageAboutEmail(true);
-		
+
 		eraseInput(emailInput);
-		
+
 		fillAnyInput(emailInput, "jhuska@redhat");
 		guardNoRequest(selenium).fireEvent(emailInput, Event.BLUR);
 		isThereErrorMessageAboutEmail(true);
-		
+
 		eraseInput(emailInput);
-		
+
 		fillAnyInput(emailInput, "jhuska@redhat.");
 		guardNoRequest(selenium).fireEvent(emailInput, Event.BLUR);
 		isThereErrorMessageAboutEmail(true);
-		
+
 		eraseInput(emailInput);
-		
+
 		fillAnyInput(emailInput, "jhuska@redhat.c");
 		guardNoRequest(selenium).fireEvent(emailInput, Event.BLUR);
 		isThereErrorMessageAboutEmail(true);
-		
+
 		eraseInput(emailInput);
-		
+
 		fillAnyInput(emailInput, "jhuska@redhat.com");
 		guardNoRequest(selenium).fireEvent(emailInput, Event.BLUR);
 		isThereErrorMessageAboutEmail(false);
 	}
-	
+
 	/**
-	 * Fills in the email input correct values, it tries various incorrect values.
-	 * Checks for error messages.
+	 * Fills in the email input correct values, it tries various incorrect
+	 * values. Checks for error messages.
+	 * 
 	 * @param emailInput
 	 */
 	public void fillEmailInputWithCorrectValues(JQueryLocator emailInput) {
-		
+
 		fillAnyInput(emailInput, "jhuska@redhat.com");
 		guardNoRequest(selenium).fireEvent(emailInput, Event.BLUR);
 		isThereErrorMessageAboutEmail(false);
-		
+
 		eraseInput(emailInput);
-		
+
 		fillAnyInput(emailInput, "xxx@foo.sk");
 		guardNoRequest(selenium).fireEvent(emailInput, Event.BLUR);
 		isThereErrorMessageAboutEmail(false);
 	}
-	
-	
+
 }
