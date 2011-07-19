@@ -89,9 +89,11 @@ public class TestClientProgressBar extends AbstractShowcaseTest {
 				
 				long currentTimeAfterChange = System.currentTimeMillis();
 				
-				if( (currentTimeAfterChange - currentTimeBeforeChange) > MAX_DEVIATION ) {
+				long duration = currentTimeAfterChange - currentTimeBeforeChange; 
+				if( duration > MAX_DEVIATION ) {
 					
-					fail("The graphical rising of progress bar should not take more than " + MAX_DEVIATION);
+					fail("The graphical rising of progress bar should not take more than " + MAX_DEVIATION + ", and " +
+							"was " + duration);
 				}
 				
 				getsTheWidthFromRetrieverAndStoresinList(styleRetriever);
