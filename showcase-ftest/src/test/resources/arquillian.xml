@@ -20,24 +20,29 @@
 		<property name="deploymentExportPath">target/</property>
 	</engine>
 
-	<container qualifier="jboss" default="true">
+	<container qualifier="jboss6" default="true">
 		<configuration>
 			<property name="jbossHome">target/jboss-6.0.0.Final</property>
 			<property name="javaVmArguments">-Xmx512m -XX:MaxPermSize=1500m</property>
 		</configuration>
 	</container>
 
+	<container qualifier="tomcat">
+		<configuration>
+			<property name="unpackArchive">true</property>
+			<property name="bindHttpPort">8080</property>
+		</configuration>
+	</container>
+
 	<extension qualifier="selenium-server">
-
-		<property name="enable">true</property>
+		<property name="enable">false</property>
 		<property name="port">8444</property>
-
 	</extension>
 
 	<extension qualifier="ajocado">
 		<property name="browser">*firefox</property>
 		<property name="contextRoot">http://localhost:8080/</property>
-		<property name="seleniumTimeoutAjax">5000</property>
+		<property name="seleniumTimeoutAjax">7000</property>
 		<property name="seleniumMaximize">true</property>
 		<property name="seleniumPort">8444</property>
 		<property name="seleniumHost">localhost</property>
