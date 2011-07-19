@@ -177,7 +177,7 @@
             </dependencies>
         </profile>
         <profile>
-            <id>tomcat-embedded</id>
+            <id>tomcat-embedded-6</id>
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.arquillian.container</groupId>
