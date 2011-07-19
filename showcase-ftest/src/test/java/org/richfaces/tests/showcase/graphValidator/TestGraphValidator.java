@@ -44,12 +44,10 @@ public class TestGraphValidator extends AbstractShowcaseTest {
 	private JQueryLocator confirmNewPasswordInput = jq("input[id$=conf]");
 	private JQueryLocator storeChangesButton = jq("input[type=submit]");
 	private JQueryLocator passwordError = jq("span[id$=pass] span[class=rf-msg-det]");
-	private JQueryLocator confirmationError = jq("span[id$=conf] span[class=rf-msg-det]");
 	private JQueryLocator differentPasswordError = jq("span:contains('Different passwords entered!')");
 	private JQueryLocator successfullyChangedInfo = jq("span:contains('Succesfully changed!')");
 
-	private final String ERROR_MESSAGE_WRONG_SIZE_FOR_PASSWORD = "Wrong size for password";
-	private final String ERROR_MESSAGE_WRONG_SIZE_FOR_CONFIRMATION = "Wrong size for confirmation";
+	private final String ERROR_MESSAGE_WRONG_SIZE_FOR_PASSWORD = "Password length must be between 5 and 15 characters.";
 	private final String ERROR_MESSAGE_DIFFERENT_PASSWORD_ENTERED = "Different passwords entered!";
 	private final String INFO_MESSAGE_SUCCESSFULLY_CHANGED = "Succesfully changed!";
 
@@ -76,7 +74,7 @@ public class TestGraphValidator extends AbstractShowcaseTest {
 	public void testNewPasswordTooShort() {
 
 		fillInInputsCheckForMessages(MIN_CORRECT_LENGTH_OF_PASSWORD - 1,
-				MIN_CORRECT_LENGTH_OF_PASSWORD, true, false, false, false);
+				MIN_CORRECT_LENGTH_OF_PASSWORD, true, false, false);
 
 	}
 
@@ -84,38 +82,8 @@ public class TestGraphValidator extends AbstractShowcaseTest {
 	public void testNewPasswordTooLong() {
 
 		fillInInputsCheckForMessages(MAX_CORRECT_LEGTH_OF_PASSWORD + 1,
-				MIN_CORRECT_LENGTH_OF_PASSWORD, true, false, false, false);
+				MIN_CORRECT_LENGTH_OF_PASSWORD, true, false, false);
 	}
-
-	@Test
-	public void testConfirmPasswordTooShort() {
-
-		fillInInputsCheckForMessages(MIN_CORRECT_LENGTH_OF_PASSWORD,
-				MIN_CORRECT_LENGTH_OF_PASSWORD - 1, false, true, false, false);
-	}
-
-	@Test
-	public void testConfirmPasswordTooLong() {
-
-		fillInInputsCheckForMessages(MIN_CORRECT_LENGTH_OF_PASSWORD,
-				MAX_CORRECT_LEGTH_OF_PASSWORD + 1, false, true, false, false);
-	}
-
-	@Test
-	public void testWrongPasswordsTooShort() {
-
-		fillInInputsCheckForMessages(MIN_CORRECT_LENGTH_OF_PASSWORD - 1,
-				MIN_CORRECT_LENGTH_OF_PASSWORD - 1, true, true, false, false);
-	}
-
-	@Test
-	public void testWrongPasswordsTooLong() {
-
-		fillInInputsCheckForMessages(MAX_CORRECT_LEGTH_OF_PASSWORD + 1,
-				MAX_CORRECT_LEGTH_OF_PASSWORD + 1, true, true, false, false);
-	}
-
-	// TODO try all combinations of incorrect length of passwords, if necessary
 
 	@Test
 	public void testDifferentPasswords() {
@@ -125,7 +93,7 @@ public class TestGraphValidator extends AbstractShowcaseTest {
 
 		guardXhr(selenium).click(storeChangesButton);
 
-		checkForAllMessages(false, false, true, false);
+		checkForAllMessages(false, true, false);
 
 		eraseAllInputsAndClickOnTheButton();
 
@@ -140,8 +108,7 @@ public class TestGraphValidator extends AbstractShowcaseTest {
 
 	private void fillInInputsCheckForMessages(int lengthOfNewPassword,
 			int lenthOfConfirmedPassword,
-			boolean shouldBeThereNewPasswordError,
-			boolean shouldBethereConfirmedPasswordError,
+			boolean shouldBeThereLenghtPasswordError,
 			boolean souldBeThereDifferentPasswordError,
 			boolean shouldBeThereInfoSuccessfullyChanged) {
 
@@ -151,8 +118,7 @@ public class TestGraphValidator extends AbstractShowcaseTest {
 
 		guardXhr(selenium).click(storeChangesButton);
 
-		checkForAllMessages(shouldBeThereNewPasswordError,
-				shouldBethereConfirmedPasswordError,
+		checkForAllMessages(shouldBeThereLenghtPasswordError,
 				souldBeThereDifferentPasswordError,
 				shouldBeThereInfoSuccessfullyChanged);
 
@@ -170,21 +136,17 @@ public class TestGraphValidator extends AbstractShowcaseTest {
 
 		guardXhr(selenium).click(storeChangesButton);
 
-		checkForAllMessages(false, false, false, true);
+		checkForAllMessages(false, false, true);
 
 	}
 
-	private void checkForAllMessages(boolean shouldBeThereNewPasswordError,
-			boolean shouldBethereConfirmedPasswordError,
+	private void checkForAllMessages(boolean shouldBeThereLengthPasswordError,
 			boolean souldBeThereDifferentPasswordError,
 			boolean shouldBeThereInfoSuccessfullyChanged) {
 
 		isThereErrorMessage(passwordError,
 				ERROR_MESSAGE_WRONG_SIZE_FOR_PASSWORD,
-				shouldBeThereNewPasswordError);
-		isThereErrorMessage(confirmationError,
-				ERROR_MESSAGE_WRONG_SIZE_FOR_CONFIRMATION,
-				shouldBethereConfirmedPasswordError);
+				shouldBeThereLengthPasswordError);
 		isThereErrorMessage(differentPasswordError,
 				ERROR_MESSAGE_DIFFERENT_PASSWORD_ENTERED,
 				souldBeThereDifferentPasswordError);
