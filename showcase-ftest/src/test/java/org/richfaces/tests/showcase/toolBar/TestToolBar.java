@@ -44,15 +44,15 @@ public class TestToolBar extends AbstractShowcaseTest {
 	 * **********************************************************************
 	 */
 	
-	private final String context = "/richfaces-showcase-" + versionShowcase + "-" + showcaseClassifier + "/images/icons"; 
+	private final String CONTEXT = "/showcase/images/icons"; 
 
 	private final String[] EXPECTED_ELEMENTS = {
-			context + "/create_doc.gif",
-			context + "/create_folder.gif",
-			context + "/copy.gif",
-			context + "/save.gif",
-			context + "/save_as.gif",
-			context + "/save_all.gif" };
+			CONTEXT + "/create_doc.gif",
+			CONTEXT + "/create_folder.gif",
+			CONTEXT + "/copy.gif",
+			CONTEXT + "/save.gif",
+			CONTEXT + "/save_as.gif",
+			CONTEXT + "/save_all.gif" };
 
 	/* *********************************************************************
 	 * Locators
