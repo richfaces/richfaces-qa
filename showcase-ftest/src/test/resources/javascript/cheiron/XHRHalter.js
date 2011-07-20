@@ -67,9 +67,9 @@ XHRHalter.getHandle = function() {
 };
 
 XHRHalter.XHRWrapperInjection = {
-	onreadystatechangeCallback : RichFacesSelenium.XHRWrapper.prototype.onreadystatechangeCallback,
-	open : RichFacesSelenium.XHRWrapper.prototype.open,
-	send : RichFacesSelenium.XHRWrapper.prototype.send
+	onreadystatechangeCallback : Ajocado.Page.XHRHalter.XHRWrapper.prototype.onreadystatechangeCallback,
+	open : Ajocado.Page.XHRHalter.XHRWrapper.prototype.open,
+	send : Ajocado.Page.XHRHalter.XHRWrapper.prototype.send
 };
 
 XHRHalter._repeatWait = function(id) {
@@ -155,7 +155,7 @@ XHRHalter.isHandleAvailable = function() {
 	return XHRHalter._instances.length - 1 >= XHRHalter._haltCounter;
 };
 
-RichFacesSelenium.XHRWrapper.prototype.onreadystatechangeCallback = function() {
+Ajocado.Page.XHRHalter.XHRWrapper.prototype.onreadystatechangeCallback = function() {
 	if (XHRHalter.isEnabled()) {
 		var halter = XHRHalter._associations[this];
 		halter.saveXhrParams();
@@ -164,7 +164,7 @@ RichFacesSelenium.XHRWrapper.prototype.onreadystatechangeCallback = function() {
 	}
 };
 
-RichFacesSelenium.XHRWrapper.prototype.open = function(method, url, asyncFlag, userName, password) {
+Ajocado.Page.XHRHalter.XHRWrapper.prototype.open = function(method, url, asyncFlag, userName, password) {
 	if (XHRHalter.isEnabled()) {
 		var halter = XHRHalter._associations[this];
 		if (halter === undefined) {
@@ -178,8 +178,7 @@ RichFacesSelenium.XHRWrapper.prototype.open = function(method, url, asyncFlag, u
 	return XHRHalter.XHRWrapperInjection.open.call(this, method, url, asyncFlag, userName, password);
 };
 
-
-RichFacesSelenium.XHRWrapper.prototype.send = function(content) {
+Ajocado.Page.XHRHalter.XHRWrapper.prototype.send = function(content) {
 	if (XHRHalter.isEnabled()) {
 		var halter = XHRHalter._associations[this];
 		halter.sendParams['content'] = content;

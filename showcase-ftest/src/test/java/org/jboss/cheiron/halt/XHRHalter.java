@@ -48,15 +48,15 @@ public final class XHRHalter {
         }
 
         public JavaScript isExtensionInstalledScript() {
-            return js("selenium.browserbot.getCurrentWindow().XHRHalter != undefined");
+            return js("Ajocado.getPage().XHRHalter != undefined");
         }
     };
 
-    private static JavaScript isHandleAvailable = js("selenium.browserbot.getCurrentWindow().XHRHalter.isHandleAvailable()");
-    private static JavaScript isWaitingForSend = js("selenium.browserbot.getCurrentWindow().XHRHalter.isWaitingForSend({0})");
-    private static JavaScript getHandle = js("selenium.browserbot.getCurrentWindow().XHRHalter.getHandle()");
-    private static JavaScript continueTo = js("selenium.browserbot.getCurrentWindow().XHRHalter.continueTo({0}, selenium.browserbot.getCurrentWindow().XHRHalter.STATE_{1})");
-    private static JavaScript setEnabled = js("selenium.browserbot.getCurrentWindow().XHRHalter.setEnabled({0})");
+    private static JavaScript isHandleAvailable = js("Ajocado.getPage().XHRHalter.isHandleAvailable()");
+    private static JavaScript isWaitingForSend = js("Ajocado.getPage().XHRHalter.isWaitingForSend({0})");
+    private static JavaScript getHandle = js("Ajocado.getPage().XHRHalter.getHandle()");
+    private static JavaScript continueTo = js("Ajocado.getPage().XHRHalter.continueTo({0}, Ajocado.getPage().XHRHalter.STATE_{1})");
+    private static JavaScript setEnabled = js("Ajocado.getPage().XHRHalter.setEnabled({0})");
 
     int handle;
 
