@@ -17,7 +17,7 @@
 
     <container qualifier="jbossas-managed-6" default="true">
         <configuration>
-            <property name="jbossHome">target/jboss-6.0.0.CR1</property>
+            <property name="jbossHome">target/jboss-6.0.0.Final</property>
             <property name="javaVmArguments">-Xmx512m -XX:MaxPermSize=1500m</property>
         </configuration>
     </container>
