@@ -41,7 +41,7 @@
     </container>
 
     <extension qualifier="selenium-server">
-        <property name="enable">false</property>
+        <property name="enable">true</property>
         <property name="port">8444</property>
     </extension>
 
