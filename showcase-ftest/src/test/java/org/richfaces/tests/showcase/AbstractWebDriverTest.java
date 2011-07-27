@@ -21,6 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.openqa.selenium.WebDriver;
@@ -40,11 +43,12 @@ public class AbstractWebDriverTest extends AbstractShowcaseTest {
 
 		// workaround for jboss as 7, since it throws error when is looking up
 		// for contextRoot
-		/*
-		 * try { contextRoot = new URL("http://localhost:8080"); } catch
-		 * (MalformedURLException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); }
-		 */
+
+		try {
+			contextRoot = new URL("http://localhost:8080");
+		} catch (MalformedURLException e) { // TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		String addition = getAdditionToContextRoot();
 

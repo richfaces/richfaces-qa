@@ -26,6 +26,8 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.awt.event.KeyEvent;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Iterator;
 
 import org.jboss.arquillian.ajocado.ajaxaware.AjaxAwareInterceptor;
@@ -57,11 +59,12 @@ public abstract class AbstractAjocadoTest extends AbstractShowcaseTest {
 
 		// workaround for jboss as 7, since it throws error when is looking up
 		// for contextRoot
-		/*
-		 * try { contextRoot = new URL("http://localhost:8080"); } catch
-		 * (MalformedURLException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); }
-		 */
+
+		try {
+			contextRoot = new URL("http://localhost:8080");
+		} catch (MalformedURLException e) { // TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		String addition = getAdditionToContextRoot();
 
