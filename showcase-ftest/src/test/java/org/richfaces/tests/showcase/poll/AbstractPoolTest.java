@@ -29,13 +29,13 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
-import org.richfaces.tests.showcase.AbstractShowcaseTest;
+import org.richfaces.tests.showcase.AbstractAjocadoTest;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class AbstractPoolTest extends AbstractShowcaseTest {
+public class AbstractPoolTest extends AbstractAjocadoTest {
 
 	/**
 	 * Initialize GregorianCalendar with time which is give from dateRetriever

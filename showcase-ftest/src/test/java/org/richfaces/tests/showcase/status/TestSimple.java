@@ -30,14 +30,14 @@ import static org.jboss.arquillian.ajocado.Ajocado.elementNotVisible;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.cheiron.halt.XHRHalter;
-import org.richfaces.tests.showcase.AbstractShowcaseTest;
+import org.richfaces.tests.showcase.AbstractAjocadoTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestSimple extends AbstractShowcaseTest {
+public class TestSimple extends AbstractAjocadoTest {
 
 	/* *******************************************************************************************************
 	 * Locators

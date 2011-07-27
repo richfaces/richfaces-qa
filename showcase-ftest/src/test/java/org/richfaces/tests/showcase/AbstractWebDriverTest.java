@@ -19,24 +19,36 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.commandButton;
+package org.richfaces.tests.showcase;
 
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.ajocado.utils.URLUtils;
+import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.BeforeMethod;
 
 /**
- * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc and Juraj Huska</a>
  * @version $Revision$
  */
-public class AbstractTestA4jCommand extends AbstractAjocadoTest {
-	
-	/* *********************************************************************
-	 * Locators
-	 ***********************************************************************/
-	
-	protected JQueryLocator input = jq("fieldset form input[type=text]");
-	protected JQueryLocator outHello = jq("fieldset span#out");
+public class AbstractWebDriverTest extends AbstractShowcaseTest {
 
+	@Drone
+	protected WebDriver webDriver;
+
+	@BeforeMethod
+	public void loadPage() {
+
+		// workaround for jboss as 7, since it throws error when is looking up
+		// for contextRoot
+		/*
+		 * try { contextRoot = new URL("http://localhost:8080"); } catch
+		 * (MalformedURLException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 */
+
+		String addition = getAdditionToContextRoot();
+
+		webDriver.get(URLUtils.buildUrl(contextRoot, "/showcase/", addition)
+				.toExternalForm());
+	}
 }

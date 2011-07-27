@@ -27,14 +27,14 @@ import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractShowcaseTest;
+import org.richfaces.tests.showcase.AbstractAjocadoTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestSliders extends AbstractShowcaseTest {
+public class TestSliders extends AbstractAjocadoTest {
 
 	/* *****************************************************************************************************
 	 * Constants

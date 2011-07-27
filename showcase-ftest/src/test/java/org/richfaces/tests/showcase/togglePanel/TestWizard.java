@@ -26,7 +26,7 @@ import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.fail;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractShowcaseTest;
+import org.richfaces.tests.showcase.AbstractAjocadoTest;
 import org.testng.annotations.Test;
 
 import com.thoughtworks.selenium.SeleniumException;
@@ -37,7 +37,7 @@ import com.thoughtworks.selenium.SeleniumException;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestWizard extends AbstractShowcaseTest {
+public class TestWizard extends AbstractAjocadoTest {
 	
 	/* ***********************************************************************************
 	 * Constants 

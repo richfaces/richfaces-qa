@@ -28,7 +28,7 @@ import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractShowcaseTest;
+import org.richfaces.tests.showcase.AbstractAjocadoTest;
 import org.testng.annotations.Test;
 
 
@@ -36,7 +36,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestAjax extends AbstractShowcaseTest {
+public class TestAjax extends AbstractAjocadoTest {
 	
 	/* *************************************************************************************
 	 * Locators

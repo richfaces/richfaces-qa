@@ -21,13 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.repeat;
 
-import org.richfaces.tests.showcase.AbstractShowcaseTest;
+import org.richfaces.tests.showcase.AbstractAjocadoTest;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class AbstractDataIterationWithStates extends AbstractShowcaseTest {
+public class AbstractDataIterationWithStates extends AbstractAjocadoTest {
 	
 	/* *************************************************************************************************************
 	 * Inner class for State infomation, which are used in data iteration components

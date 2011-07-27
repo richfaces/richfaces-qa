@@ -25,13 +25,13 @@ import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
 import java.util.Iterator;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractShowcaseTest;
+import org.richfaces.tests.showcase.AbstractAjocadoTest;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class AbstractDataIterationWithCars extends AbstractShowcaseTest {
+public class AbstractDataIterationWithCars extends AbstractAjocadoTest {
 	
 	//help class for saving data about car
 	public class Car {

@@ -27,7 +27,7 @@ import static org.testng.Assert.assertEquals;
 import java.awt.event.KeyEvent;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractShowcaseTest;
+import org.richfaces.tests.showcase.AbstractAjocadoTest;
 import org.testng.annotations.Test;
 
 /**
@@ -36,7 +36,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22196 $
  */
-public class TestInplaceInput extends AbstractShowcaseTest {
+public class TestInplaceInput extends AbstractAjocadoTest {
 	
 	/* *******************************************************************************
 	 * Locators

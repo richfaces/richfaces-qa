@@ -28,14 +28,14 @@ import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractShowcaseTest;
+import org.richfaces.tests.showcase.AbstractAjocadoTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestTopMenu extends AbstractShowcaseTest {
+public class TestTopMenu extends AbstractAjocadoTest {
 	
 	/* *********************************************************************************
 	 * Constants

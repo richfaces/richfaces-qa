@@ -25,14 +25,14 @@ import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractShowcaseTest;
+import org.richfaces.tests.showcase.AbstractAjocadoTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestGraphValidator extends AbstractShowcaseTest {
+public class TestGraphValidator extends AbstractAjocadoTest {
 
 	/* *****************************************************************************
 	 * Locators

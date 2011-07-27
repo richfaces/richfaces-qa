@@ -34,14 +34,14 @@ import java.util.List;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.WaitTimeoutException;
 import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
-import org.richfaces.tests.showcase.AbstractShowcaseTest;
+import org.richfaces.tests.showcase.AbstractAjocadoTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestAjaxProgressBar extends AbstractShowcaseTest {
+public class TestAjaxProgressBar extends AbstractAjocadoTest {
 
 	/* ***************************************************************************
 	 * Constants

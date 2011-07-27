@@ -35,14 +35,14 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
-import org.richfaces.tests.showcase.AbstractShowcaseTest;
+import org.richfaces.tests.showcase.AbstractAjocadoTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestPushTopicsContext extends AbstractShowcaseTest {
+public class TestPushTopicsContext extends AbstractAjocadoTest {
 
 	/* *****************************************************************************
 	 * Locators

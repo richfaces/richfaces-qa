@@ -25,13 +25,13 @@ package org.richfaces.tests.showcase.tree;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractShowcaseTest;
+import org.richfaces.tests.showcase.AbstractAjocadoTest;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class AbstractTreeTest extends AbstractShowcaseTest {
+public class AbstractTreeTest extends AbstractAjocadoTest {
 	
 	/* *************************************************************************************************
 	 * Constants

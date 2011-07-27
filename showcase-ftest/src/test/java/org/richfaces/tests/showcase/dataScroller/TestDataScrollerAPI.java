@@ -29,14 +29,14 @@ import static org.testng.Assert.assertFalse;
 
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractShowcaseTest;
+import org.richfaces.tests.showcase.AbstractAjocadoTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestDataScrollerAPI extends AbstractShowcaseTest {
+public class TestDataScrollerAPI extends AbstractAjocadoTest {
 	
 	/* **********************************************************************************************************************
 	 * Constants
