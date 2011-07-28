@@ -109,7 +109,7 @@ public class TestJsfValidators extends AbstractClientValidationTest {
 	@Test
 	public void testIncorrectName() {
 
-		fillNameInputWithIncorrectValues(nameInput, 3, 8);
+		fillNameInputWithIncorrectValues(nameInput, 3, 8, true);
 	}
 	
 	@Test

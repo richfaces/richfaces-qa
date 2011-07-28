@@ -86,7 +86,7 @@ public class TestJsr303 extends AbstractClientValidationTest {
 	@Test
 	public void testNameInputIncorrectValues() {
 		
-		fillNameInputWithIncorrectValues(nameInput, 3, 12);
+		fillNameInputWithIncorrectValues(nameInput, 3, 12, false);
 	}
 	
 	@Test

@@ -70,7 +70,7 @@ public abstract class AbstractClientValidationTest extends AbstractAjocadoTest {
 	 * @param isThereErrorMessageAboutEmail
 	 */
 	protected abstract void isThereErrorMessageAboutSizeOfName(
-			boolean isThereErrorMessageAboutEmail);
+			boolean isThereErrorMessageAboutSizeOfName);
 
 	protected void isThereErrorMessageAboutValueRequeired(
 			boolean shouldBeErrorMessagePresented) {
@@ -89,11 +89,11 @@ public abstract class AbstractClientValidationTest extends AbstractAjocadoTest {
 	 * @param topBorderValue
 	 */
 	public void fillNameInputWithIncorrectValues(JQueryLocator nameInput,
-			int bottomBorderValue, int topBorderValue) {
+			int bottomBorderValue, int topBorderValue, boolean valueRequiredErrorMessage) {
 
 		fillInputWithStringOfLength(nameInput, 0);
 		guardNoRequest(selenium).fireEvent(nameInput, Event.BLUR);
-		isThereErrorMessageAboutValueRequeired(true);
+		isThereErrorMessageAboutValueRequeired(valueRequiredErrorMessage);
 
 		eraseInput(nameInput);
 
