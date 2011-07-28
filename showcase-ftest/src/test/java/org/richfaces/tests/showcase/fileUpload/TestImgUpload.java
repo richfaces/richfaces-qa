@@ -26,6 +26,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.openqa.selenium.By;
 import org.richfaces.tests.showcase.AbstractAjocadoTest;
 import org.testng.annotations.Test;
 
@@ -57,6 +58,7 @@ public class TestImgUpload extends AbstractAjocadoTest {
 	 * *********************************************************************
 	 */
 
+	
 	@Test
 	public void testThereAreAllRequiredElements() {
 
@@ -70,5 +72,7 @@ public class TestImgUpload extends AbstractAjocadoTest {
 				"The div with uplad files messages should be there!");
 		assertEquals(selenium.getText(divWithUploadFilesMessage), MSG_NO_FILES,
 				"The message that no files is currently uploaded should be there!");
+		
 	}
+	
 }
