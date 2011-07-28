@@ -15,7 +15,22 @@
         <version.org.jboss.as>7.0.0.Final</version.org.jboss.as>
         <version.arquillian.container.jboss>1.0.0.CR1</version.arquillian.container.jboss>
         <version.selenium>2.0b2</version.selenium>
+        <version.org.apache.tomcat>7.0.16</version.org.apache.tomcat>
     </properties>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>jboss-qa-snapshots</id>
+            <name>JBoss QA snapshot repository</name>
+            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>jboss-qa-releases</id>
+            <name>JBoss QA selease repository</name>
+            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/releases</url>
+        </repository>
+    </distributionManagement>
+
 
     <dependencies>
         <!-- RichFaces dependencies -->
@@ -25,6 +40,13 @@
             <type>war</type>
             <version>${version.showcase}</version>
             <classifier>${showcase.classifier}</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.richfaces.samples</groupId>
+            <artifactId>richfaces-demo</artifactId>
+            <version>3.3.3.Final</version>
+            <classifier>tomcat6</classifier>
+            <type>war</type>
         </dependency>
         <!-- Arquillian dependencies -->
         <dependency>
@@ -209,8 +231,12 @@
                     <scope>provided</scope>
                 </dependency>
                 <!-- Weld servlet, EL and JSP required for testing CDI injections -->
-                <!-- <dependency> <groupId>org.jboss.weld.servlet</groupId> <artifactId>weld-servlet</artifactId> <version>1.1.1.Final</version> 
-                    <scope>provided</scope> </dependency> -->
+                <dependency>
+                    <groupId>org.jboss.weld.servlet</groupId>
+                    <artifactId>weld-servlet</artifactId>
+                    <version>1.0.1-Final</version>
+                    <scope>provided</scope>
+                </dependency>
                 <dependency>
                     <groupId>org.glassfish.web</groupId>
                     <artifactId>el-impl</artifactId>
@@ -226,13 +252,37 @@
             </dependencies>
         </profile>
         <profile>
-            <id>tomcat-remote-6</id>
+            <id>tomcat-embedded-7</id>
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.arquillian.container</groupId>
-                    <artifactId>arquillian-tomcat-remote-6</artifactId>
-                    <version>1.0.0.CR1</version>
+                    <artifactId>arquillian-tomcat-embedded-7</artifactId>
+                    <version>1.0.0.Final-SNAPSHOT</version>
                     <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                    <artifactId>tomcat-embed-core</artifactId>
+                    <version>${version.org.apache.tomcat}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                    <artifactId>tomcat-embed-jasper</artifactId>
+                    <version>${version.org.apache.tomcat}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                    <artifactId>tomcat-embed-logging-juli</artifactId>
+                    <version>${version.org.apache.tomcat}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.jboss.weld.servlet</groupId>
+                    <artifactId>weld-servlet</artifactId>
+                    <scope>test</scope>
+                    <version>1.0.1-Final</version>
                 </dependency>
             </dependencies>
         </profile>
@@ -292,4 +342,11 @@
             </build>
         </profile>
     </profiles>
+
+    <!-- SCM and distribution management -->
+    <scm>
+        <connection>scm:git:git://github.com/richfaces/qa.git</connection>
+        <developerConnection>scm:git:git@github.com:richfaces/qa.git</developerConnection>
+        <url>https://github.com/richfaces/qa</url>
+    </scm>
 </project>
