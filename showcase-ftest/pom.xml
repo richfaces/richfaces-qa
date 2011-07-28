@@ -41,13 +41,6 @@
             <version>${version.showcase}</version>
             <classifier>${showcase.classifier}</classifier>
         </dependency>
-        <dependency>
-            <groupId>org.richfaces.samples</groupId>
-            <artifactId>richfaces-demo</artifactId>
-            <version>3.3.3.Final</version>
-            <classifier>tomcat6</classifier>
-            <type>war</type>
-        </dependency>
         <!-- Arquillian dependencies -->
         <dependency>
             <groupId>org.jboss.arquillian.ajocado</groupId>
