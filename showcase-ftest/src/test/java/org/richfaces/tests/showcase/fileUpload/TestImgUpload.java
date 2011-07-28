@@ -26,7 +26,6 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.openqa.selenium.By;
 import org.richfaces.tests.showcase.AbstractAjocadoTest;
 import org.testng.annotations.Test;
 
@@ -57,7 +56,6 @@ public class TestImgUpload extends AbstractAjocadoTest {
 	 * Tests
 	 * *********************************************************************
 	 */
-
 	
 	@Test
 	public void testThereAreAllRequiredElements() {
