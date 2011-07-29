@@ -24,6 +24,7 @@ package org.richfaces.tests.showcase.select;
 
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertTrue;
+import org.jboss.arquillian.ajocado.dom.Event;
 
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
@@ -105,11 +106,10 @@ public class TestSelect extends AbstractAjocadoTest {
 		
 		eraseInput(manualInput);
 		
-		selenium.mouseDown(selectOpenButton.format(1));
-
 		JQueryLocator particularOption = option.format(capital);
 
 		selenium.type(manualInput, capital.substring(0, 2));
+		selenium.fireEvent(manualInput, Event.KEYPRESS);
 		
 		selenium.click(particularOption);
 
