@@ -21,9 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.select;
 
-
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
+
 import org.jboss.arquillian.ajocado.dom.Event;
 
 import org.jboss.arquillian.ajocado.dom.Attribute;
@@ -44,6 +45,7 @@ public class TestSelect extends AbstractAjocadoTest {
 	 */
 
 	protected final String CLASS_OF_SELECTED_OTPION = "rf-sel-sel";
+	protected final String ERROR_MSG_WHEN_POPUP_NOT_DISPLAYED = "The popup with options was not displayed in 1 second!";
 
 	/* ***********************************************************************************
 	 * Locators
@@ -54,6 +56,7 @@ public class TestSelect extends AbstractAjocadoTest {
 	protected JQueryLocator selectOpenButton = jq("span.rf-sel-btn:eq({0})");
 	protected JQueryLocator option = jq("div.rf-sel-opt:contains('{0}')");
 	protected JQueryLocator manualInput = jq("input[type=text]:eq(1)");
+	protected JQueryLocator popupWithOptions = jq("div.rf-sel-shdw:eq({0}):visible");
 
 	/* ***********************************************************************************
 	 * Locators
@@ -69,6 +72,11 @@ public class TestSelect extends AbstractAjocadoTest {
 			selenium.mouseDown(selectOpenButton.format(0));
 
 			JQueryLocator particularOption = option.format("Option " + i);
+
+			if (!waitForElementPresent(particularOption, 1000)) {
+
+				fail(ERROR_MSG_WHEN_POPUP_NOT_DISPLAYED);
+			}
 
 			selenium.click(particularOption);
 
@@ -88,30 +96,37 @@ public class TestSelect extends AbstractAjocadoTest {
 	public void testSelectManualInputByMouse() {
 
 		selectSomethingFromCapitalsSelectAndCheck("Arizona");
-		
+
 		selectSomethingFromCapitalsSelectAndCheck("Florida");
-		
+
 		selectSomethingFromCapitalsSelectAndCheck("California");
 	}
-	
+
 	/* *******************************************************************************
 	 * Help methods
-	 *********************************************************************************/
-	
-	/**
-	 * Types the beginning of capital and then selects from poppup and check whether right
-	 * option was selected
+	 * **************************************************************
+	 * *****************
 	 */
-	private void selectSomethingFromCapitalsSelectAndCheck( String capital ) {
-		
+
+	/**
+	 * Types the beginning of capital and then selects from poppup and check
+	 * whether right option was selected
+	 */
+	private void selectSomethingFromCapitalsSelectAndCheck(String capital) {
+
 		eraseInput(manualInput);
-		
+
 		JQueryLocator particularOption = option.format(capital);
+
+		selenium.click(manualInput);
 
 		selenium.type(manualInput, capital.substring(0, 2));
 		selenium.fireEvent(manualInput, Event.KEYPRESS);
-		
-		selenium.click(particularOption);
+
+		if (!waitForElementPresent(popupWithOptions.format(1), 1000)) {
+
+			fail(ERROR_MSG_WHEN_POPUP_NOT_DISPLAYED);
+		}
 
 		String classOfSelectedOption = selenium.getAttribute(particularOption
 				.getAttribute(Attribute.CLASS));
@@ -120,7 +135,6 @@ public class TestSelect extends AbstractAjocadoTest {
 				"The option " + particularOption.getRawLocator()
 						+ " should be selected");
 
-		
 	}
 
 }
