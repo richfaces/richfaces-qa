@@ -25,7 +25,6 @@ import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.awt.event.KeyEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
@@ -78,19 +77,45 @@ public abstract class AbstractAjocadoTest extends AbstractShowcaseTest {
 	 */
 
 	/**
+	 * Wait for presention of given element for given timeout
+	 * 
+	 * @param element the element which should be displayed
+	 * @param timeout the time for which the presention of element will be checked
+	 * @return true when elements is found in given timeout, false otherwise
+	 */
+	public boolean waitForElementPresent(JQueryLocator element, long timeout) {
+		
+		long end = System.currentTimeMillis() + timeout;
+		
+		while (System.currentTimeMillis() < end) {
+			
+			if(selenium.isElementPresent(element)) {
+		
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Erases the content of input
 	 * 
 	 * @param input
 	 */
 	public void eraseInput(JQueryLocator input) {
 
+		selenium.type(input, "");
+		
+		//the old way
+		/*
 		selenium.focus(input);
 
 		selenium.keyDownNative(KeyEvent.VK_CONTROL);
 		selenium.keyPressNative(KeyEvent.VK_A);
 		selenium.keyUpNative(KeyEvent.VK_CONTROL);
 
-		selenium.keyPressNative(KeyEvent.VK_BACK_SPACE);
+		selenium.keyPressNative(KeyEvent.VK_BACK_SPACE);*/
 	}
 
 	/**
