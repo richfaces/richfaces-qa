@@ -25,7 +25,7 @@
     <container qualifier="jbossas-managed-7">
         <configuration>
             <property name="jbossHome">target/jboss-as-7.0.0.Final</property>
-            <property name="javaVmArguments">-Xmx1024m -XX:MaxPermSize=500m</property>
+            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
             <property name="serverConfig">standalone-preview.xml</property>
         </configuration>
         <protocol type="jmx-as7">
@@ -33,15 +33,28 @@
         </protocol>
     </container>
 
-    <container qualifier="tomcat">
+    <container qualifier="tomcat-embedded-6">
         <configuration>
-            <property name="unpackArchive">false</property>
+            <property name="unpackArchive">true</property>
             <property name="bindHttpPort">8080</property>
         </configuration>
     </container>
 
+    <container qualifier="tomcat-embedded-7">
+        <configuration>
+            <property name="unpackArchive">true</property>
+            <property name="bindHttpPort">8080</property>
+        </configuration>
+    </container>
+
+    <container qualifier="tomcat-managed-6" default="true">
+        <configuration>
+            <property name="catalinaHome"></property>        
+        </configuration>
+    </container>
+    
     <extension qualifier="selenium-server">
-        <property name="enable">true</property>
+        <property name="enable">false</property>
         <property name="port">8444</property>
     </extension>
 
@@ -53,9 +66,9 @@
         <property name="seleniumPort">8444</property>
         <property name="seleniumHost">localhost</property>
     </extension>
-    
+
     <extension qualifier="webdriver">
         <property name="implementationClass">org.openqa.selenium.firefox.FirefoxDriver</property>
     </extension>
-    
+
 </arquillian>
