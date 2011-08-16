@@ -10,12 +10,13 @@
     <properties>
         <arquillian.version>1.0.0.CR1</arquillian.version>
         <showcase.classifier>jee6</showcase.classifier>
-        <version.showcase>4.1.0.20110805-M1</version.showcase>
+        <version.showcase>4.1.0-SNAPSHOT</version.showcase>
         <version.org.jboss.jbossas>6.0.0.Final</version.org.jboss.jbossas>
         <version.org.jboss.as>7.0.0.Final</version.org.jboss.as>
         <version.arquillian.container.jboss>1.0.0.CR1</version.arquillian.container.jboss>
         <version.selenium>2.0b2</version.selenium>
-        <version.org.apache.tomcat>7.0.16</version.org.apache.tomcat>
+        <version.tomcat6>6.0.32</version.tomcat6>
+        <tomcat.home>${project.build.directory}/apache-tomcat-${version.tomcat6}/apache-tomcat-${version.tomcat6}</tomcat.home>
     </properties>
 
     <distributionManagement>
@@ -182,104 +183,6 @@
             </build>
         </profile>
         <profile>
-            <id>glassfish-embedded-3.1</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.jboss.arquillian.container</groupId>
-                    <artifactId>arquillian-glassfish-embedded-3.1</artifactId>
-                    <version>1.0.0-SNAPSHOT</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.glassfish.extras</groupId>
-                    <artifactId>glassfish-embedded-all</artifactId>
-                    <version>3.1</version>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>tomcat-embedded-6</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.jboss.arquillian.container</groupId>
-                    <artifactId>arquillian-tomcat-embedded-6</artifactId>
-                    <version>${arquillian.version}</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>catalina</artifactId>
-                    <version>6.0.29</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>coyote</artifactId>
-                    <version>6.0.29</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>jasper</artifactId>
-                    <version>6.0.29</version>
-                    <scope>provided</scope>
-                </dependency>
-                <!-- Weld servlet, EL and JSP required for testing CDI injections -->
-                <dependency>
-                    <groupId>org.jboss.weld.servlet</groupId>
-                    <artifactId>weld-servlet</artifactId>
-                    <version>1.0.1-Final</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.glassfish.web</groupId>
-                    <artifactId>el-impl</artifactId>
-                    <version>2.2</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>javax.servlet.jsp</groupId>
-                    <artifactId>jsp-api</artifactId>
-                    <version>2.2</version>
-                    <scope>provided</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>tomcat-embedded-7</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.jboss.arquillian.container</groupId>
-                    <artifactId>arquillian-tomcat-embedded-7</artifactId>
-                    <version>1.0.0.Final-SNAPSHOT</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat.embed</groupId>
-                    <artifactId>tomcat-embed-core</artifactId>
-                    <version>${version.org.apache.tomcat}</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat.embed</groupId>
-                    <artifactId>tomcat-embed-jasper</artifactId>
-                    <version>${version.org.apache.tomcat}</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat.embed</groupId>
-                    <artifactId>tomcat-embed-logging-juli</artifactId>
-                    <version>${version.org.apache.tomcat}</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.jboss.weld.servlet</groupId>
-                    <artifactId>weld-servlet</artifactId>
-                    <scope>test</scope>
-                    <version>1.0.1-Final</version>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
             <id>tomcat-managed-6</id>
             <dependencies>
                 <dependency>
@@ -291,19 +194,19 @@
                 <dependency>
                     <groupId>org.apache.tomcat</groupId>
                     <artifactId>catalina</artifactId>
-                    <version>6.0.29</version>
+                    <version>${version.tomcat6}</version>
                     <scope>test</scope>
                 </dependency>
                 <dependency>
                     <groupId>org.apache.tomcat</groupId>
                     <artifactId>coyote</artifactId>
-                    <version>6.0.29</version>
+                    <version>${version.tomcat6}</version>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
                     <groupId>org.apache.tomcat</groupId>
                     <artifactId>jasper</artifactId>
-                    <version>6.0.29</version>
+                    <version>${version.tomcat6}</version>
                     <scope>provided</scope>
                 </dependency>
                 <!-- Weld servlet, EL and JSP required for testing CDI injections -->
@@ -326,6 +229,66 @@
                     <scope>provided</scope>
                 </dependency>
             </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <version>1.1.2</version>
+                        <executions>
+                            <execution>
+                                <id>install-tomcat</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>install</goal>
+                                </goals>
+                                <configuration>
+                                    <wait>false</wait>
+                                    <container>
+                                        <containerId>tomcat6x</containerId>
+                                        <!-- download zip url -->
+                                        <zipUrlInstaller>
+                                            <url>http://mirror.candidhosting.com/pub/apache//tomcat/tomcat-6/v${version.tomcat6}/bin/apache-tomcat-${version.tomcat6}.zip</url>
+                                            <downloadDir>${project.build.directory}/downloads</downloadDir>
+                                            <extractDir>${project.build.directory}/</extractDir>
+                                        </zipUrlInstaller>
+                                    </container>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>2.5</version>
+                        <executions>
+                            <execution>
+                                <id>copy-resources</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${tomcat.home}/conf</outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/test/resources/container</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <environmentVariables>
+                                <CATALINA_HOME>${tomcat.home}</CATALINA_HOME>
+                            </environmentVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <profile>
             <id>jenkins</id>

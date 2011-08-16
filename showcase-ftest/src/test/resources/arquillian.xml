@@ -11,11 +11,11 @@
     xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
     <engine>
-        <property name="maxTestClassesBeforeRestart">12</property>
+        <property name="maxTestClassesBeforeRestart">5</property>
         <property name="deploymentExportPath">target/</property>
     </engine>
 
-    <container qualifier="jbossas-managed-6" default="true">
+    <container qualifier="jbossas-managed-6">
         <configuration>
             <property name="jbossHome">target/jboss-6.0.0.Final</property>
             <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
@@ -33,28 +33,18 @@
         </protocol>
     </container>
 
-    <container qualifier="tomcat-embedded-6">
-        <configuration>
-            <property name="unpackArchive">true</property>
-            <property name="bindHttpPort">8080</property>
-        </configuration>
-    </container>
-
-    <container qualifier="tomcat-embedded-7">
-        <configuration>
-            <property name="unpackArchive">true</property>
-            <property name="bindHttpPort">8080</property>
-        </configuration>
-    </container>
-
     <container qualifier="tomcat-managed-6" default="true">
         <configuration>
-            <property name="catalinaHome"></property>        
+            <property name="catalinaHome">target/apache-tomcat-6.0.32/apache-tomcat-6.0.32</property>
+            <property name="startupTimeoutInSeconds">15</property>
+            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
+            <property name="user">tomcat</property>
+            <property name="pass">tomcat</property>
         </configuration>
     </container>
-    
+
     <extension qualifier="selenium-server">
-        <property name="enable">true</property>
+        <property name="enable">false</property>
         <property name="port">8444</property>
     </extension>
 
