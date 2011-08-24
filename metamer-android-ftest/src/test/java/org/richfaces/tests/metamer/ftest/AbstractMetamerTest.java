@@ -42,14 +42,30 @@ public abstract class AbstractMetamerTest extends Arquillian {
         return war;        
     }    
     
+    /**
+     * Context path will be used to retrieve pages from right URL. Don't hesitate to use it in cases of building absolute
+     * URLs.
+     * 
+     * @return context path
+     */
     protected String getContextPath() {
         return System.getProperty("context.path", "metamer");
     }
     
+    /**
+     * Context root can be used to obtaining full URL paths, is set to actual tested application's context root
+     * 
+     * @return context root
+     */    
     protected String getContextRoot() {
         return System.getProperty("context.root", "http://localhost:8080");
     }
     
+    /**
+     * Returns the url to test page to be opened by Selenium (without context root and context path)
+     * 
+     * @return url to the test page to be opened by Selenium - it doesn't contain context root and context path
+     */    
     protected abstract String getTestUrl();
 
 }

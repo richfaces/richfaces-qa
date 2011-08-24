@@ -39,7 +39,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     @Drone
     WebDriver webDriverFromDrone;
     
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void initializeWebDriver() throws MalformedURLException{
         if (isAndroid()) {
             webDriver = new AndroidDriver(System.getProperty("webdriver.android.url", "http://localhost:4444/wd/hub"));
