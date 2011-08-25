@@ -25,13 +25,13 @@ import static org.testng.Assert.assertEquals;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestHCommandButton extends AbstractAjocadoTest {
+public class TestHCommandButton extends AbstractWebDriverTest {
  
     private By button = By.id("form:commandButton");
     private By input = By.id("form:input");

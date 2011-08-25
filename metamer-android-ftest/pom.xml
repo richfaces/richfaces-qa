@@ -68,7 +68,7 @@
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
             <artifactId>arquillian-drone-webdriver</artifactId>
-            <version>${arquillian.version}</version>
+            <version>1.0.0.Final-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

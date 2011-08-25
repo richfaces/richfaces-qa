@@ -21,11 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest;
 
-import java.net.MalformedURLException;
-
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.android.AndroidDriver;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -33,21 +31,14 @@ import org.testng.annotations.BeforeMethod;
  */
 public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
   
-    private WebDriver webDriver;
+    @Drone
+    public WebDriver webDriver;
     
-    @BeforeClass(alwaysRun = true)
-    public void initializeWebDriver() throws MalformedURLException {
-        if (isAndroid()) {
-            webDriver = new AndroidDriver(System.getProperty("webdriver.android.url", "http://localhost:4444/wd/hub"));
-        }
-        else {
-            throw new UnsupportedOperationException();
-//            // TODO
-//            webDriver = new FirefoxDriver();
-        }
-        System.err.println("webdriver init: " + webDriver);
+    @BeforeMethod(alwaysRun = true)
+    public void loadPage() {
+        webDriver.get(getPath());
     }
-    
+
     @Override
     protected String getContextRoot() {
         if (isAndroid()) {
@@ -57,13 +48,13 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             return super.getContextRoot();
         }
     }
-    
+
     protected WebDriver getWebDriver() {
         return webDriver;
     }
-    
+
     private boolean isAndroid() {
-        return System.getProperty("webdriver.android") != null;
+        return webDriver instanceof AndroidDriver;
     }
     
 }
