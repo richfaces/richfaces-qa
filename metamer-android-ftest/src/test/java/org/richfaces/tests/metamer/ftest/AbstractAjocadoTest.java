@@ -23,47 +23,42 @@ package org.richfaces.tests.metamer.ftest;
 
 import java.net.MalformedURLException;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.android.AndroidDriver;
+import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
+import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.AjaxSeleniumImpl;
+import org.jboss.arquillian.ajocado.framework.AjocadoConfigurationContext;
+import org.jboss.arquillian.ajocado.framework.SystemPropertiesConfiguration;
+import org.jboss.arquillian.ajocado.utils.URLUtils;
+import org.openqa.selenium.WebDriverCommandProcessor;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
-  
-    private WebDriver webDriver;
+public abstract class AbstractAjocadoTest extends AbstractWebDriverTest {
+
+    private AjaxSeleniumImpl selenium;
     
-    @BeforeClass(alwaysRun = true)
-    public void initializeWebDriver() throws MalformedURLException {
-        if (isAndroid()) {
-            webDriver = new AndroidDriver(System.getProperty("webdriver.android.url", "http://localhost:4444/wd/hub"));
-        }
-        else {
-            throw new UnsupportedOperationException();
-//            // TODO
-//            webDriver = new FirefoxDriver();
-        }
-        System.err.println("webdriver init: " + webDriver);
+    @BeforeClass(dependsOnMethods={"initializeWebDriver"}, alwaysRun = true)
+    public void initializeAjocado() throws MalformedURLException {
+        WebDriverCommandProcessor commandProcessor = new WebDriverCommandProcessor(getContextRoot(), getWebDriver());
+        selenium = new AjaxSeleniumImpl(commandProcessor);
+        AjocadoConfigurationContext.set(new SystemPropertiesConfiguration());
+        AjaxSeleniumContext.set(selenium);
+        selenium.configureBrowser();
+//        selenium.initializeSeleniumExtensions();
+//        selenium.initializePageExtensions();
+        System.err.println("ajocado init: " + selenium);
+    }
+
+    protected AjaxSelenium getSelenium() {
+        return selenium;
     }
     
-    @Override
-    protected String getContextRoot() {
-        if (isAndroid()) {
-            return super.getContextRoot().replaceFirst("localhost", "10.0.2.2");
-        }
-        else {
-            return super.getContextRoot();
-        }
-    }
-    
-    protected WebDriver getWebDriver() {
-        return webDriver;
-    }
-    
-    private boolean isAndroid() {
-        return System.getProperty("webdriver.android") != null;
+    @BeforeMethod(alwaysRun = true)
+    public void loadPage() {
+        getSelenium().open(URLUtils.buildUrl(getPath()));
     }
     
 }

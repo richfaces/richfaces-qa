@@ -61,11 +61,15 @@ public abstract class AbstractMetamerTest extends Arquillian {
         return System.getProperty("context.root", "http://localhost:8080");
     }
     
+    protected String getPath() {
+        return getContextRoot() + "/" + getContextPath() + "/" + getTestUrl();
+    }
+    
     /**
      * Returns the url to test page to be opened by Selenium (without context root and context path)
      * 
      * @return url to the test page to be opened by Selenium - it doesn't contain context root and context path
      */    
     protected abstract String getTestUrl();
-
+    
 }

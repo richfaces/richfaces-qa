@@ -25,9 +25,5 @@
             <property name="executionType">REMOTE</property>
         </protocol>
     </container>
-
-    <extension qualifier="webdriver">
-        <property name="implementationClass">org.openqa.selenium.htmlunit.HtmlUnitDriver</property>
-    </extension>
             
 </arquillian>
