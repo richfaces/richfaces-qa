@@ -33,10 +33,16 @@
         </protocol>
     </container>
 
-    <container qualifier="tomcat-managed-6" default="true">
+    <container qualifier="tomcat-managed-6">
         <configuration>
-            <property name="catalinaHome">target/apache-tomcat-6.0.32/apache-tomcat-6.0.32</property>
-            <property name="startupTimeoutInSeconds">15</property>
+            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
+            <property name="user">tomcat</property>
+            <property name="pass">tomcat</property>
+        </configuration>
+    </container>
+    
+    <container qualifier="tomcat-managed-7">
+        <configuration>
             <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
             <property name="user">tomcat</property>
             <property name="pass">tomcat</property>
@@ -44,7 +50,7 @@
     </container>
 
     <extension qualifier="selenium-server">
-        <property name="enable">false</property>
+        <property name="enable">true</property>
         <property name="port">8444</property>
     </extension>
 
