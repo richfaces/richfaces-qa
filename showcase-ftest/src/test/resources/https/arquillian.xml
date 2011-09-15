@@ -15,48 +15,23 @@
         <property name="deploymentExportPath">target/</property>
     </engine>
 
-    <container qualifier="jbossas-managed-6">
+    <container qualifier="jbossas-managed-6-https">
         <configuration>
             <property name="jbossHome">target/jboss-6.0.0.Final</property>
             <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
         </configuration>
     </container>
 
-    <container qualifier="jbossas-managed-7">
-        <configuration>
-            <property name="jbossHome">target/jboss-as-7.0.0.Final</property>
-            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
-            <property name="serverConfig">standalone-preview.xml</property>
-        </configuration>
-        <protocol type="jmx-as7">
-            <property name="executionType">REMOTE</property>
-        </protocol>
-    </container>
-
-    <container qualifier="tomcat-managed-6">
-        <configuration>
-            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
-            <property name="user">tomcat</property>
-            <property name="pass">tomcat</property>
-        </configuration>
-    </container>
-    
-    <container qualifier="tomcat-managed-7">
-        <configuration>
-            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
-            <property name="user">tomcat</property>
-            <property name="pass">tomcat</property>
-        </configuration>
-    </container>
-
     <extension qualifier="selenium-server">
-        <property name="browserSessionReuse">true</property>
         <property name="port">8444</property>
+        <property name="browserSessionReuse">true</property>
+        <property name="firefoxProfileTemplate">${firefoxProfileTemplate}</property>
+        <!--<property name="trustStore">${trustStore}</property> -->
     </extension>
 
     <extension qualifier="ajocado">
         <property name="browser">*firefox</property>
-        <property name="contextRoot">http://localhost:8080/</property>
+        <property name="contextRoot">https://localhost:8443</property>
         <property name="seleniumTimeoutAjax">7000</property>
         <property name="seleniumMaximize">true</property>
         <property name="seleniumPort">8444</property>

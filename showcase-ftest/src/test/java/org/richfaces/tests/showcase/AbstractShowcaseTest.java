@@ -22,6 +22,7 @@
 package org.richfaces.tests.showcase;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.commons.lang.StringUtils;
@@ -29,6 +30,7 @@ import org.apache.commons.lang.WordUtils;
 import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -40,9 +42,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 @RunAsClient
 public abstract class AbstractShowcaseTest extends Arquillian {
 
-	// workaround for jboss as 7, since it throws error when is looking up
-	// for contextRoot
-	// @ArquillianResource
+	@ArquillianResource
 	protected URL contextRoot;
 
 	@Deployment(testable = false)
@@ -69,5 +69,18 @@ public abstract class AbstractShowcaseTest extends Arquillian {
 						demoName, sampleName);
 
 		return addition;
+	}
+	
+	protected URL getContextRoot() {
+		
+		if(System.getenv("HTTPStesting").equals("true")) {
+			try {
+				return new URL("https://localhost:8443");
+			} catch (MalformedURLException e) {
+				//it is not malformed URL for sure
+			}
+		}
+		
+		return this.contextRoot;
 	}
 }
