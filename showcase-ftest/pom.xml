@@ -3,14 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-showcase-ftest</artifactId>
-    <version>4.1.0-SNAPSHOT</version>
+    <version>4.1.0.20110910-M2</version>
     <packaging>jar</packaging>
     <name>RichFaces ShowCase Smoke Ftest</name>
 
     <properties>
         <arquillian.version>1.0.0.CR1</arquillian.version>
         <showcase.classifier>jee6</showcase.classifier>
-        <version.showcase>4.1.0-SNAPSHOT</version.showcase>
+        <version.showcase>4.1.0.20110910-M2</version.showcase>
         <version.org.jboss.jbossas>6.0.0.Final</version.org.jboss.jbossas>
         <version.org.jboss.as>7.0.0.Final</version.org.jboss.as>
         <version.arquillian.container.jboss>1.0.0.CR1</version.arquillian.container.jboss>
