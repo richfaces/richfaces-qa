@@ -8,19 +8,19 @@
     <name>RichFaces ShowCase Smoke Ftest</name>
 
     <properties>
-        <arquillian.version>1.0.0-Final-SNAPSHOT</arquillian.version>
+        <arquillian.version>1.0.0.Final-SNAPSHOT</arquillian.version>
         <showcase.classifier>jee6</showcase.classifier>
         <version.showcase>4.1.0.20110910-M2</version.showcase>
-        <version.org.jboss.jbossas>6.0.0.Final</version.org.jboss.jbossas>
-        <version.org.jboss.as>7.0.0.Final</version.org.jboss.as>
-        <version.arquillian.container.jboss>1.0.0.CR1</version.arquillian.container.jboss>
+        <version.jbossas6>6.0.0.Final</version.jbossas6>
+        <version.jbossas7>7.0.1.Final</version.jbossas7>
+        <version.arquillian.container.jboss>1.0.0-SNAPSHOT</version.arquillian.container.jboss>
         <version.selenium>2.0b2</version.selenium>
         <version.tomcat6>6.0.32</version.tomcat6>
         <version.tomcat7>7.0.20</version.tomcat7>
         <tomcat6.home>${project.build.directory}/apache-tomcat-${version.tomcat6}</tomcat6.home>
         <tomcat7.home>${project.build.directory}/apache-tomcat-${version.tomcat7}</tomcat7.home>
     </properties>
-
+    
     <distributionManagement>
         <snapshotRepository>
             <id>jboss-qa-snapshots</id>
@@ -105,12 +105,12 @@
                 <dependency>
                     <groupId>org.jboss.arquillian.container</groupId>
                     <artifactId>arquillian-jbossas-managed-6</artifactId>
-                    <version>${arquillian.version}</version>
+                    <version>${version.arquillian.container.jboss}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.jboss.jbossas</groupId>
                     <artifactId>jboss-as-client</artifactId>
-                    <version>${arquillian.version}</version>
+                    <version>${version.jbossas6}</version>
                     <type>pom</type>
                 </dependency>
             </dependencies>
@@ -131,7 +131,7 @@
                                         <artifactItem>
                                             <groupId>org.jboss.jbossas</groupId>
                                             <artifactId>jboss-as-distribution</artifactId>
-                                            <version>${version.org.jboss.jbossas}</version>
+                                            <version>${version.jbossas6}</version>
                                             <type>zip</type>
                                             <overWrite>false</overWrite>
                                             <outputDirectory>${project.build.directory}</outputDirectory>
@@ -150,12 +150,12 @@
                 <dependency>
                     <groupId>org.jboss.arquillian.container</groupId>
                     <artifactId>arquillian-jbossas-managed-6</artifactId>
-                    <version>${arquillian.version}</version>
+                    <version>${version.arquillian.container.jboss}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.jboss.jbossas</groupId>
                     <artifactId>jboss-as-client</artifactId>
-                    <version>${arquillian.version}</version>
+                    <version>${version.jbossas6}</version>
                     <type>pom</type>
                 </dependency>
             </dependencies>
@@ -219,7 +219,7 @@
                 <dependency>
                     <groupId>org.jboss.as</groupId>
                     <artifactId>jboss-as-arquillian-container-managed</artifactId>
-                    <version>${arquillian.version}</version>
+                    <version>${version.jbossas7}</version>
                 </dependency>
             </dependencies>
             <build>

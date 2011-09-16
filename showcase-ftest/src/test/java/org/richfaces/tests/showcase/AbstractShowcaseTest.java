@@ -73,7 +73,9 @@ public abstract class AbstractShowcaseTest extends Arquillian {
 	
 	protected URL getContextRoot() {
 		
-		if(System.getenv("HTTPStesting").equals("true")) {
+		String isHTTPTesting = System.getenv("HTTPStesting");
+		
+		if( isHTTPTesting != null && isHTTPTesting.equals("true")) {
 			try {
 				return new URL("https://localhost:8443");
 			} catch (MalformedURLException e) {
