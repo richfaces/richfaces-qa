@@ -8,7 +8,7 @@
     <name>RichFaces ShowCase Smoke Ftest</name>
 
     <properties>
-        <arquillian.version>1.0.0.CR1</arquillian.version>
+        <arquillian.version>1.0.0-Final-SNAPSHOT</arquillian.version>
         <showcase.classifier>jee6</showcase.classifier>
         <version.showcase>4.1.0.20110910-M2</version.showcase>
         <version.org.jboss.jbossas>6.0.0.Final</version.org.jboss.jbossas>
@@ -105,12 +105,12 @@
                 <dependency>
                     <groupId>org.jboss.arquillian.container</groupId>
                     <artifactId>arquillian-jbossas-managed-6</artifactId>
-                    <version>${version.arquillian.container.jboss}</version>
+                    <version>${arquillian.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.jboss.jbossas</groupId>
                     <artifactId>jboss-as-client</artifactId>
-                    <version>${version.org.jboss.jbossas}</version>
+                    <version>${arquillian.version}</version>
                     <type>pom</type>
                 </dependency>
             </dependencies>
@@ -150,12 +150,12 @@
                 <dependency>
                     <groupId>org.jboss.arquillian.container</groupId>
                     <artifactId>arquillian-jbossas-managed-6</artifactId>
-                    <version>${version.arquillian.container.jboss}</version>
+                    <version>${arquillian.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.jboss.jbossas</groupId>
                     <artifactId>jboss-as-client</artifactId>
-                    <version>${version.org.jboss.jbossas}</version>
+                    <version>${arquillian.version}</version>
                     <type>pom</type>
                 </dependency>
             </dependencies>
@@ -219,7 +219,7 @@
                 <dependency>
                     <groupId>org.jboss.as</groupId>
                     <artifactId>jboss-as-arquillian-container-managed</artifactId>
-                    <version>${version.org.jboss.as}</version>
+                    <version>${arquillian.version}</version>
                 </dependency>
             </dependencies>
             <build>
@@ -258,7 +258,7 @@
                 <dependency>
                     <groupId>org.jboss.arquillian.container</groupId>
                     <artifactId>arquillian-tomcat-managed-6</artifactId>
-                    <version>1.0.0.Final-SNAPSHOT</version>
+                    <version>${arquillian.version}</version>
                     <scope>test</scope>
                 </dependency>
                 <!-- Weld servlet, EL and JSP required for testing CDI injections -->
@@ -343,7 +343,7 @@
                 <dependency>
                     <groupId>org.jboss.arquillian.container</groupId>
                     <artifactId>arquillian-tomcat-managed-7</artifactId>
-                    <version>1.0.0.Final-SNAPSHOT</version>
+                    <version>${arquillian.version}</version>
                     <scope>test</scope>
                 </dependency>
                 <!-- Weld servlet, EL and JSP required for testing CDI injections -->
