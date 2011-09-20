@@ -3,17 +3,17 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-showcase-ftest</artifactId>
-    <version>4.1.0.20110910-M2</version>
+    <version>4.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>RichFaces ShowCase Smoke Ftest</name>
 
     <properties>
         <arquillian.version>1.0.0.Final-SNAPSHOT</arquillian.version>
         <showcase.classifier>jee6</showcase.classifier>
-        <version.showcase>4.1.0.20110910-M2</version.showcase>
+        <version.showcase>4.1.0-SNAPSHOT</version.showcase>
         <version.jbossas6>6.0.0.Final</version.jbossas6>
         <version.jbossas7>7.0.1.Final</version.jbossas7>
-        <version.arquillian.container.jboss>1.0.0-SNAPSHOT</version.arquillian.container.jboss>
+        <version.arquillian.container.jboss>1.0.0.CR2</version.arquillian.container.jboss>
         <version.selenium>2.0b2</version.selenium>
         <version.tomcat6>6.0.32</version.tomcat6>
         <version.tomcat7>7.0.20</version.tomcat7>
@@ -261,6 +261,7 @@
                     <version>${arquillian.version}</version>
                     <scope>test</scope>
                 </dependency>
+         
                 <!-- Weld servlet, EL and JSP required for testing CDI injections -->
                 <dependency>
                     <groupId>org.jboss.weld.servlet</groupId>
@@ -285,18 +286,20 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.6</version>
                         <executions>
                             <execution>
-                                <phase>generate-resources</phase>
+                                <id>download tomcat 6</id>
+                                <phase>generate-test-resources</phase>
                                 <configuration>
-                                    <target>
+                                    <tasks>
                                         <mkdir dir="${project.build.directory}/downloads" />
                                         <get
                                             src="http://archive.apache.org/dist/tomcat/tomcat-6/v${version.tomcat6}/bin/apache-tomcat-${version.tomcat6}.zip"
                                             dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
                                         <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat6}.zip"
                                             dest="${project.build.directory}" overwrite="false" />
-                                    </target>
+                                    </tasks>
                                 </configuration>
                                 <goals>
                                     <goal>run</goal>
@@ -373,16 +376,17 @@
                         <version>1.6</version>
                         <executions>
                             <execution>
-                                <phase>generate-resources</phase>
+                                <id>download tomcat 7</id>
+                                <phase>generate-test-resources</phase>
                                 <configuration>
-                                    <target>
+                                    <tasks>
                                         <mkdir dir="${project.build.directory}/downloads" />
                                         <get
                                             src="http://archive.apache.org/dist/tomcat/tomcat-7/v${version.tomcat7}/bin/apache-tomcat-${version.tomcat7}.zip"
                                             dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
                                         <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat7}.zip"
                                             dest="${project.build.directory}" overwrite="false" />
-                                    </target>
+                                    </tasks>
                                 </configuration>
                                 <goals>
                                     <goal>run</goal>
