@@ -131,7 +131,7 @@ public class TestDataTableEdit extends AbstractDataIterationWithCars {
 	}
 	
 	@Test
-	public void testPoppupValidationStringInsteadOfDouble() {
+	public void testPopupValidationStringInsteadOfDouble() {
 		
 		callTheInsertPoppup(2);
 		
@@ -147,7 +147,7 @@ public class TestDataTableEdit extends AbstractDataIterationWithCars {
 	}
 	
 	@Test
-	public void testPoppupValidationTooBigNumber() {
+	public void testPopupValidationTooBigNumber() {
 	
 		callTheInsertPoppup(3);
 		
@@ -161,7 +161,7 @@ public class TestDataTableEdit extends AbstractDataIterationWithCars {
 	}
 	
 	@Test
-	public void testPoppupValidationValuesRequired() {
+	public void testPopupValidationValuesRequired() {
 	
 		callTheInsertPoppup(1);
 		
@@ -177,7 +177,7 @@ public class TestDataTableEdit extends AbstractDataIterationWithCars {
 	}
 		
 	@Test
-	public void testPoppupValidationVinLength() {	
+	public void testPopupValidationVinLength() {	
 	
 		callTheInsertPoppup(4);
 		
@@ -204,7 +204,7 @@ public class TestDataTableEdit extends AbstractDataIterationWithCars {
 	}
 	
 	@Test
-	public void testPoppupValidationNegativeValues() {
+	public void testPopupValidationNegativeValues() {
 		
 		callTheInsertPoppup(5);
 		
@@ -220,7 +220,7 @@ public class TestDataTableEdit extends AbstractDataIterationWithCars {
 	}
 	
 	@Test
-	public void testPoppupCorrectValues() {
+	public void testPopupCorrectValues() {
 		
 		Car carWhichWillBeChanged = callTheInsertPoppup(6);
 		
