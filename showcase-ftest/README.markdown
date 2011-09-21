@@ -7,7 +7,7 @@ The tests can be run from command line with this command, assuming that your cur
 
 **mvn clean verify -PnameOfTheProfile [-Dtest=nameOfTheTest] [-Dshowcase.classifier=classifier] [-Darquillian.launch=whichSettingsForContainer]**
 
--nameOfTheProfile - for example jbossas-managed6, all profiles can be found in pom.xml
+-nameOfTheProfile - for example jbossas-managed-6, all profiles can be found in pom.xml
 
 -nameOfTheTest - define the test which will be run, it is optional, when not assigned all tests are run
 
