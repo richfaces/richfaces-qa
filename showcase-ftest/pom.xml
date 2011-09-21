@@ -8,6 +8,8 @@
     <name>RichFaces ShowCase Smoke Ftest</name>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <arquillian.version>1.0.0.CR1</arquillian.version>
         <showcase.classifier>jee6</showcase.classifier>
         <version.showcase>4.1.0-SNAPSHOT</version.showcase>
