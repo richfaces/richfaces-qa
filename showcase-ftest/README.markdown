@@ -7,7 +7,7 @@ The tests can be run from command line with this command, assuming that your cur
 
 **mvn clean verify -PnameOfTheProfile [-Dtest=nameOfTheTest] [-Dshowcase.classifier=classifier] [-Darquillian.launch=whichSettingsForContainer]**
 
--nameOfTheProfile - for example jbossas-managed6, all profiles can be found in pom.xml
+-nameOfTheProfile - for example jbossas-managed-6, all profiles can be found in pom.xml
 
 -nameOfTheTest - define the test which will be run, it is optional, when not assigned all tests are run
 
@@ -23,5 +23,5 @@ Notes:
 -It is recommended to use vncsession.sh script, to run tests in other desktop, since some of them are sensitive on mouse movements, clicks etc.
 
 -these tests require selenium-server running, which you can start manually with selenium-server.sh script, or you can let Arquillian framework
- do that for you, by enabling selenium-server extension in src/test/resources/arquillian.xml(default)
+ do that for you, by setting the skip property to false(false) for selenium-server qualifier in src/test/resources/arquillian.xml
 
