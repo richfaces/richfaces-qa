@@ -127,7 +127,7 @@ public class TestQueue extends AbstractAjocadoTest {
         handle.complete();
         
         try {
-        	waitGui.dontFail().waitForChange("", retrieveText.locator(repeatedText));
+        	waitGui.waitForChange("", retrieveText.locator(repeatedText));
         } catch (SeleniumException e) {
         	//expected timeout
         }
@@ -137,7 +137,7 @@ public class TestQueue extends AbstractAjocadoTest {
         handle.waitForOpen();
         handle.complete();
         
-        waitGui.dontFail().waitForChange("", retrieveText.locator(repeatedText));
+        waitGui.waitForChange("", retrieveText.locator(repeatedText));
         assertEquals(getTextFromElementRepeatedText(), "b", "The text in the repeated text should be 'b'!");
 		
 	}
@@ -165,7 +165,7 @@ public class TestQueue extends AbstractAjocadoTest {
 		selenium.fireEvent(inputQueue, KEYUP);
 		long currentTimeBeforeRequest = System.currentTimeMillis();
 		
-		waitGui.interval(50).timeout(currentTimeBeforeRequest + 2000).waitForChangeAndReturn(requestCountRetriever);
+		waitGui.interval(50).timeout(Long.valueOf(delayInMiliSeconds) + 2000).waitForChangeAndReturn(requestCountRetriever);
 		
 		long currentTimeAfterRequest = System.currentTimeMillis();
 		

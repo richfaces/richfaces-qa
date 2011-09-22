@@ -1,0 +1,76 @@
+<settings>
+
+<profiles>
+<profile>
+	<id>local</id>
+<repositories>
+    <repository>
+      <id>jboss-public-repository-group</id>
+      <name>JBoss Public Repository Group</name>
+      <url>https://repository.jboss.org/nexus/content/groups/public</url>
+      <layout>default</layout>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>never</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>jboss-public-repository-group</id>
+      <name>JBoss Public Repository Group</name>
+      <url>https://repository.jboss.org/nexus/content/groups/public</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+</profile>
+<profile>
+	<id>staging</id>
+<repositories>
+    <repository>
+      <id>jboss-staging-repository-group</id>
+      <name>JBoss Staging Repository Group</name>
+      <url>https://repository.jboss.org/nexus/content/groups/staging</url>
+      <layout>default</layout>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>never</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>jboss-staging-repository-group</id>
+      <name>JBoss Staging Repository Group</name>
+      <url>https://repository.jboss.org/nexus/content/groups/staging</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+</profile>
+
+</profiles>
+
+<activeProfiles>
+<activeProfile>local</activeProfile>
+<!--<activeProfile>staging</activeProfile>-->
+</activeProfiles>
+
+</settings>
