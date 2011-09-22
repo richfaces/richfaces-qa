@@ -266,7 +266,7 @@
                                         <artifactItem>
                                             <groupId>org.jboss.as</groupId>
                                             <artifactId>jboss-as-dist</artifactId>
-                                            <version>${version.org.jboss.as}</version>
+                                            <version>${version.jbossas7}</version>
                                             <type>zip</type>
                                             <overWrite>false</overWrite>
                                             <outputDirectory>${project.build.directory}</outputDirectory>

@@ -24,7 +24,7 @@
 
     <container qualifier="jbossas-managed-7">
         <configuration>
-            <property name="jbossHome">target/jboss-as-7.0.0.Final</property>
+            <property name="jbossHome">target/jboss-as-7.0.1.Final</property>
             <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
             <property name="serverConfig">standalone-preview.xml</property>
         </configuration>
