@@ -8,17 +8,27 @@
     <name>RichFaces ShowCase Smoke Ftest</name>
 
     <properties>
+        <!--  arquillian versions -->
         <arquillian.tomcat.version>1.0.0.CR2</arquillian.tomcat.version>
-        <showcase.classifier>jee6</showcase.classifier>
-        <version.showcase>4.1.0-SNAPSHOT</version.showcase>
+        <arquillian.drone.version>1.0.0.CR2</arquillian.drone.version>
+        <arquillian.ajocado-testng.version>1.0.0-SNAPSHOT</arquillian.ajocado-testng.version>
+        <arquillian.jboss-as6.version>1.0.0.CR2</arquillian.jboss-as6.version>
+        
+        <!-- version of JBoss containers to use and download-->
         <version.jbossas6>6.0.0.Final</version.jbossas6>
         <version.jbossas7>7.0.1.Final</version.jbossas7>
-        <version.arquillian.container.jboss>1.0.0.CR2</version.arquillian.container.jboss>
+        
+        <!-- selenium version used to download selenium-server via selenium-server.sh script in ${project.basedir} -->
         <version.selenium>2.0b2</version.selenium>
+        
         <version.tomcat6>6.0.32</version.tomcat6>
         <version.tomcat7>7.0.20</version.tomcat7>
+        
         <tomcat6.home>${project.build.directory}/apache-tomcat-${version.tomcat6}</tomcat6.home>
         <tomcat7.home>${project.build.directory}/apache-tomcat-${version.tomcat7}</tomcat7.home>
+        
+        <version.showcase>4.1.0-SNAPSHOT</version.showcase>
+        <showcase.classifier>jee6</showcase.classifier>
     </properties>
 
     <distributionManagement>
@@ -47,20 +57,15 @@
         <dependency>
             <groupId>org.jboss.arquillian.ajocado</groupId>
             <artifactId>arquillian-ajocado-testng</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${arquillian.ajocado-testng.version}</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
             <artifactId>arquillian-drone-webdriver</artifactId>
-            <version>1.0.0.CR2</version>
+            <version>${arquillian.drone.version}</version>
         </dependency>
-        <!-- <dependency> <groupId>org.jboss.shrinkwrap.descriptors</groupId> <artifactId>shrinkwrap-descriptors-impl</artifactId> 
-            <version>1.1.0-beta-1</version> <scope>test</scope> </dependency> <dependency> <groupId>org.jboss.shrinkwrap.descriptors</groupId> 
-            <artifactId>shrinkwrap-descriptors-api</artifactId> <version>1.1.0-beta-1</version> <scope>test</scope> </dependency> <dependency> 
-            <groupId>org.jboss.shrinkwrap.descriptors</groupId> <artifactId>shrinkwrap-descriptors-spi</artifactId> <version>1.1.0-beta-1</version> 
-            <scope>test</scope> </dependency> -->
     </dependencies>
 
     <dependencyManagement>
@@ -74,6 +79,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    
     <build>
         <plugins>
             <plugin>
@@ -121,7 +127,7 @@
                 <dependency>
                     <groupId>org.jboss.arquillian.container</groupId>
                     <artifactId>arquillian-jbossas-managed-6</artifactId>
-                    <version>${version.arquillian.container.jboss}</version>
+                    <version>${arquillian.jboss-as6.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.jboss.jbossas</groupId>
@@ -166,7 +172,7 @@
                 <dependency>
                     <groupId>org.jboss.arquillian.container</groupId>
                     <artifactId>arquillian-jbossas-managed-6</artifactId>
-                    <version>${version.arquillian.container.jboss}</version>
+                    <version>${arquillian.jboss-as6.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.jboss.jbossas</groupId>
