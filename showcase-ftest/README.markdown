@@ -23,5 +23,5 @@ Notes:
 -It is recommended to use vncsession.sh script, to run tests in other desktop, since some of them are sensitive on mouse movements, clicks etc.
 
 -these tests require selenium-server running, which you can start manually with selenium-server.sh script, or you can let Arquillian framework
- do that for you, by setting the skip property to false(false) for selenium-server qualifier in src/test/resources/arquillian.xml
+ do that for you, by setting the skip property to false(default) for selenium-server qualifier in src/test/resources/arquillian.xml
 
