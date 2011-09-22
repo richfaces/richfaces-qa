@@ -8,7 +8,7 @@
     <name>RichFaces ShowCase Smoke Ftest</name>
 
     <properties>
-        <arquillian.version>1.0.0.Final-SNAPSHOT</arquillian.version>
+        <arquillian.tomcat.version>1.0.0.CR2</arquillian.tomcat.version>
         <showcase.classifier>jee6</showcase.classifier>
         <version.showcase>4.1.0-SNAPSHOT</version.showcase>
         <version.jbossas6>6.0.0.Final</version.jbossas6>
@@ -20,7 +20,7 @@
         <tomcat6.home>${project.build.directory}/apache-tomcat-${version.tomcat6}</tomcat6.home>
         <tomcat7.home>${project.build.directory}/apache-tomcat-${version.tomcat7}</tomcat7.home>
     </properties>
-    
+
     <distributionManagement>
         <snapshotRepository>
             <id>jboss-qa-snapshots</id>
@@ -56,8 +56,24 @@
             <artifactId>arquillian-drone-webdriver</artifactId>
             <version>1.0.0.CR2</version>
         </dependency>
+        <!-- <dependency> <groupId>org.jboss.shrinkwrap.descriptors</groupId> <artifactId>shrinkwrap-descriptors-impl</artifactId> 
+            <version>1.1.0-beta-1</version> <scope>test</scope> </dependency> <dependency> <groupId>org.jboss.shrinkwrap.descriptors</groupId> 
+            <artifactId>shrinkwrap-descriptors-api</artifactId> <version>1.1.0-beta-1</version> <scope>test</scope> </dependency> <dependency> 
+            <groupId>org.jboss.shrinkwrap.descriptors</groupId> <artifactId>shrinkwrap-descriptors-spi</artifactId> <version>1.1.0-beta-1</version> 
+            <scope>test</scope> </dependency> -->
     </dependencies>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>1.0.0.CR5</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <build>
         <plugins>
             <plugin>
@@ -258,10 +274,10 @@
                 <dependency>
                     <groupId>org.jboss.arquillian.container</groupId>
                     <artifactId>arquillian-tomcat-managed-6</artifactId>
-                    <version>${arquillian.version}</version>
+                    <version>${arquillian.tomcat.version}</version>
                     <scope>test</scope>
                 </dependency>
-         
+
                 <!-- Weld servlet, EL and JSP required for testing CDI injections -->
                 <dependency>
                     <groupId>org.jboss.weld.servlet</groupId>
@@ -346,7 +362,7 @@
                 <dependency>
                     <groupId>org.jboss.arquillian.container</groupId>
                     <artifactId>arquillian-tomcat-managed-7</artifactId>
-                    <version>${arquillian.version}</version>
+                    <version>${arquillian.tomcat.version}</version>
                     <scope>test</scope>
                 </dependency>
                 <!-- Weld servlet, EL and JSP required for testing CDI injections -->
