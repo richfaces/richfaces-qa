@@ -23,7 +23,7 @@
         <version.jbossas7>7.0.1.Final</version.jbossas7>
         
         <!-- selenium version used to download selenium-server via selenium-server.sh script in ${project.basedir} -->
-        <version.selenium>2.0b2</version.selenium>
+        <version.selenium>2.6.0</version.selenium>
         
         <version.tomcat6>6.0.32</version.tomcat6>
         <version.tomcat7>7.0.20</version.tomcat7>
