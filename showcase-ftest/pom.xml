@@ -51,7 +51,6 @@
             <artifactId>arquillian-ajocado-testng</artifactId>
             <version>${arquillian.version}</version>
             <type>pom</type>
-            <scope>import</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
