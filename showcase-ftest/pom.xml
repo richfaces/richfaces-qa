@@ -24,13 +24,13 @@
         
         <!-- selenium version used to download selenium-server via selenium-server.sh script in ${project.basedir} -->
         <version.selenium>2.6.0</version.selenium>
-        
+
         <version.tomcat6>6.0.32</version.tomcat6>
         <version.tomcat7>7.0.20</version.tomcat7>
-        
+
         <tomcat6.home>${project.build.directory}/apache-tomcat-${version.tomcat6}</tomcat6.home>
         <tomcat7.home>${project.build.directory}/apache-tomcat-${version.tomcat7}</tomcat7.home>
-        
+
         <version.showcase>4.1.0-SNAPSHOT</version.showcase>
         <showcase.classifier>jee6</showcase.classifier>
 
@@ -83,7 +83,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -121,6 +121,16 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.9</version>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                      <!-- Logging configuration for Selenium -->
+                    <argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties</argLine>
+                </configuration>
             </plugin>
         </plugins>
     </build>
