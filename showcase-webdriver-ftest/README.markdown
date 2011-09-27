@@ -17,7 +17,7 @@ Available Properties
     - context root where the tested application is running
  * `context.path = <path>`
     - context path to the tested application
- * `skin.name = <blueSky|classic|deepMarine|emeraldTown|japanCherry|ruby|wine>
+ * `skin.name = <blueSky|classic|deepMarine|emeraldTown|japanCherry|ruby|wine>`
     - sets a skin which is used on the test pages
  * `webdriver.android`
     - enables testing through the android emulator
