@@ -19,33 +19,45 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.jboss.test.selenium.android;
+package org.jboss.test.selenium.support.ui;
 
-import java.io.IOException;
+import org.jboss.test.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
- * Thrown when calling the Android SDK fails 
- * 
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class ToolKitException extends IOException {
+public class ElementNotPresent implements ExpectedCondition<Boolean> {
 
-    private static final long serialVersionUID = 6037439439241335149L;
-
-    public ToolKitException() {
-        super();
+    private By locator;
+    
+    public static ElementNotPresent getInstance() {
+        return new ElementNotPresent();
     }
-
-    public ToolKitException(String message, Throwable cause) {
-        super(message, cause);
+    
+    public Boolean apply(WebDriver driver) {
+        try {
+            return !driver.findElement(locator).isDisplayed();
+        } catch(StaleElementReferenceException ignored) {
+            return false;
+        } catch (NoSuchElementException e) {
+            return true;
+        }    
     }
-
-    public ToolKitException(String message) {
-        super(message);
+    
+    public ElementNotPresent locator(By locator) {
+        ElementNotPresent copy = copy();
+        copy.locator = locator;
+        return copy;
     }
-
-    public ToolKitException(Throwable cause) {
-        super(cause);
-    }
-
+    
+    private ElementNotPresent copy() {
+        ElementNotPresent copy = new ElementNotPresent();
+        copy.locator = this.locator;
+        return copy;
+    }    
+    
 }

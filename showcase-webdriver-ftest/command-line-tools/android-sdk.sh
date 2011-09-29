@@ -5,7 +5,7 @@ ANDROID_DOWNLOAD_URL=http://dl.google.com/android;
 ANDROID_ARCHIVE=android-sdk_r12-linux_x86.tgz;
 
 WEBDRIVER_DOWNLOAD_URL=http://selenium.googlecode.com/files;
-WEBDRIVER=android-server-2.5.0.apk;
+WEBDRIVER=android-server-2.6.0.apk;
 
 WORKSPACE_DEFAULT=$SCRIPT_DIR/../android;
 

@@ -21,8 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver;
 
-import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
-
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
@@ -84,12 +82,7 @@ public abstract class AbstractShowcaseTest {
      * @return url to the test page to be opened by Selenium - it doesn't contain context root and context path
      */    
     protected String getTestUrl() {
-        return SimplifiedFormat.format(
-            "richfaces/component-sample.jsf?skin={0}&demo={1}&sample={2}",
-            getSkinName(),
-            getDemoName(),
-            getSampleName()
-        );
+        return "richfaces/component-sample.jsf?skin=" + getSkinName() + "&demo=" + getDemoName() + "&sample=" + getSampleName();
     }
     
     /**

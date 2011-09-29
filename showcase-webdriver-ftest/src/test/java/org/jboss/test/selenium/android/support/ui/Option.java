@@ -19,33 +19,44 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.jboss.test.selenium.android;
+package org.jboss.test.selenium.android.support.ui;
 
-import java.io.IOException;
+import org.jboss.test.selenium.android.ToolKit;
+import org.openqa.selenium.WebElement;
 
 /**
- * Thrown when calling the Android SDK fails 
- * 
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class ToolKitException extends IOException {
+public class Option extends AbstractComponent {
 
-    private static final long serialVersionUID = 6037439439241335149L;
-
-    public ToolKitException() {
-        super();
+    private String label;
+    private String value;
+    
+    public Option(ToolKit toolKit, WebElement webElement) {
+        super(toolKit, webElement);
     }
 
-    public ToolKitException(String message, Throwable cause) {
-        super(message, cause);
+    public String getLabel() {
+        if (label == null) {
+            label = getWebElement().getText();
+        }
+        return label;
     }
-
-    public ToolKitException(String message) {
-        super(message);
+    
+    public String getValue() {
+        if (value == null) {
+            value = getWebElement().getAttribute("value");
+        }
+        return value;
     }
-
-    public ToolKitException(Throwable cause) {
-        super(cause);
+    
+    public boolean isSelected() {
+        return getWebElement().isSelected();
     }
-
+    
+    @Override
+    public String toString() {
+        return getLabel() + " => " + getValue();
+    }
+    
 }

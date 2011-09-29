@@ -19,33 +19,20 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.jboss.test.selenium.android;
+package org.jboss.test.selenium.android.support.ui;
 
-import java.io.IOException;
+import org.openqa.selenium.WebElement;
 
 /**
- * Thrown when calling the Android SDK fails 
- * 
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class ToolKitException extends IOException {
+public interface Component {
 
-    private static final long serialVersionUID = 6037439439241335149L;
-
-    public ToolKitException() {
-        super();
-    }
-
-    public ToolKitException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public ToolKitException(String message) {
-        super(message);
-    }
-
-    public ToolKitException(Throwable cause) {
-        super(cause);
-    }
-
+    /**
+     * Returns instance of WebElement representing a component located on the page.
+     * 
+     * @return web element
+     */
+    WebElement getWebElement();
+    
 }

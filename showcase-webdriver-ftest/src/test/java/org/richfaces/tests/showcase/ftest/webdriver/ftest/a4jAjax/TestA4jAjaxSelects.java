@@ -22,14 +22,16 @@
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jAjax;
 
 import org.jboss.test.selenium.By;
-import org.jboss.test.selenium.android.Key;
+import org.jboss.test.selenium.android.support.ui.Select;
+import org.jboss.test.selenium.support.ui.ElementNotPresent;
+import org.jboss.test.selenium.support.ui.ElementPresent;
+import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractAndroidTest;
 import org.testng.annotations.Test;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -51,44 +53,21 @@ public class TestA4jAjaxSelects extends AbstractAndroidTest {
 
     @Test
     public void testDisplaySecondSelect() throws Exception {
-        getWebDriver().findElement(FIRST_SELECT).click();
-        getToolKit().sendKey(Key.DOWN_ARROW);
-        getToolKit().sendKey(Key.ENTER);
-        new WebDriverWait(getWebDriver(), 10).until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver d) {
-                try {
-                    return getWebDriver().findElement(SECOND_SELECT).isDisplayed();
-                } catch(Exception ignored) {
-                    return false;
-                }
-            }            
-        });
-        getWebDriver().findElement(FIRST_SELECT).click();
-        getToolKit().sendKey(Key.DOWN_ARROW);
-        getToolKit().sendKey(Key.ENTER);
-        new WebDriverWait(getWebDriver(), 10).until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver d) {
-                try {
-                    return getWebDriver().findElement(SECOND_SELECT).isDisplayed();
-                } catch(Exception ignored) {
-                    return false;
-                }
-            }            
-        });          
-        getWebDriver().findElement(FIRST_SELECT).click();
-        getToolKit().sendKey(Key.UP_ARROW);
-        getToolKit().sendKey(Key.UP_ARROW);
-        getToolKit().sendKey(Key.ENTER);
-        new WebDriverWait(getWebDriver(), 10).until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver d) {
-                try {
-                    return !getWebDriver().findElement(SECOND_SELECT).isDisplayed();
-                } catch(StaleElementReferenceException ignored) {
-                    return false;
-                } catch (NoSuchElementException e) {
-                    return true;
-                }
-            }            
-        });        
+        Select firstSelect = new Select(getToolKit(), getWebDriver().findElement(FIRST_SELECT));
+        
+        firstSelect.selectByValue("fruits");
+        new WebDriverWait(getWebDriver())
+            .failWith("After selecting [fruit] option, the vegetables select should be present.")
+            .until(ElementPresent.getInstance().locator(SECOND_SELECT));
+        
+        firstSelect.selectByValue("vegetables");
+        new WebDriverWait(getWebDriver())
+            .failWith("After selecting [vegetables] option, the vegetables select should be present.")
+            .until(ElementPresent.getInstance().locator(SECOND_SELECT));    
+        
+        firstSelect.selectByValue("");
+        new WebDriverWait(getWebDriver())
+            .failWith("After selecting [] option, the vegetables select shouldn't be present.")
+            .until(ElementNotPresent.getInstance().locator(SECOND_SELECT));           
     }
 }

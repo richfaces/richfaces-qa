@@ -25,9 +25,9 @@ import org.jboss.test.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractAndroidTest;
-import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
 /**
@@ -51,7 +51,7 @@ public class TestA4jAjaxSimple extends AbstractAndroidTest {
     @Test
     public void testType() {
         getWebDriver().findElement(INPUT).sendKeys("something");
-        
+               
         new WebDriverWait(getWebDriver(), 10).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {
                 try {
