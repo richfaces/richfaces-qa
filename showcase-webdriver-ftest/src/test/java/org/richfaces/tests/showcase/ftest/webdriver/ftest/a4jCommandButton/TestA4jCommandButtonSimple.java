@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jAjax;
+package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jCommandButton;
 
 import org.jboss.test.selenium.By;
 import org.jboss.test.selenium.support.ui.TextEquals;
@@ -31,30 +31,33 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jAjaxSimple extends AbstractWebDriverTest {
+public class TestA4jCommandButtonSimple extends AbstractWebDriverTest {
 
+    private static final By BUTTON = By.xpath("//*[@class='example-cnt']//input[@type='submit']");
     private static final By INPUT = By.xpath("//*[@class='example-cnt']//input[@type='text']");
-    private static final By OUTPUT = By.xpath("//*[@class='example-cnt']//span");
+    private static final By OUTPUT = By.xpath("//*[@class='example-cnt']//span[@class='outhello']");
     
     @Override
     protected String getDemoName() {
-        return "ajax";
+        return "commandButton";
     }
 
     @Override
     protected String getSampleName() {
-        return "ajax";
+        return "commandButton";
     }
 
     @Test
-    public void testType() {
+    public void testTypeAndSend() {
         WebElement input = getWebDriver().findElement(INPUT);
         input.click();
         input.sendKeys("something");
         
+        getWebDriver().findElement(BUTTON).click();
+        
         new WebDriverWait(getWebDriver())
-            .failWith("After typing something into the input, the text should appear in the output area.")
-            .until(TextEquals.getInstance().locator(OUTPUT).text("something"));
+            .failWith("After typing something into the input and clicking on the command button, the text should appear in the output area.")
+            .until(TextEquals.getInstance().locator(OUTPUT).text("Hello something !"));  
     }
-
+    
 }

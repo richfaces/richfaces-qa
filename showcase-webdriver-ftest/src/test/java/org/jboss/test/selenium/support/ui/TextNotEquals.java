@@ -19,42 +19,51 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jAjax;
+package org.jboss.test.selenium.support.ui;
 
 import org.jboss.test.selenium.By;
-import org.jboss.test.selenium.support.ui.TextEquals;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.WebElement;
-import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
-import org.testng.annotations.Test;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jAjaxSimple extends AbstractWebDriverTest {
+public class TextNotEquals implements ExpectedCondition<Boolean> {
 
-    private static final By INPUT = By.xpath("//*[@class='example-cnt']//input[@type='text']");
-    private static final By OUTPUT = By.xpath("//*[@class='example-cnt']//span");
+    private By locator;
+    private String text;
+
+    public static TextNotEquals getInstance() {
+        return new TextNotEquals();
+    }    
     
     @Override
-    protected String getDemoName() {
-        return "ajax";
+    public Boolean apply(WebDriver driver) {
+        try {
+            return !driver.findElement(locator).getText().equals(text);
+        } catch(StaleElementReferenceException ignored) {
+            return false;
+        }
+    } 
+
+    public TextNotEquals locator(By locator) {
+        TextNotEquals copy = copy();
+        copy.locator = locator;
+        return copy;
     }
 
-    @Override
-    protected String getSampleName() {
-        return "ajax";
-    }
-
-    @Test
-    public void testType() {
-        WebElement input = getWebDriver().findElement(INPUT);
-        input.click();
-        input.sendKeys("something");
-        
-        new WebDriverWait(getWebDriver())
-            .failWith("After typing something into the input, the text should appear in the output area.")
-            .until(TextEquals.getInstance().locator(OUTPUT).text("something"));
+    public TextNotEquals text(String text) {
+        TextNotEquals copy = copy();
+        copy.text = text;
+        return copy;
+    }    
+    
+    private TextNotEquals copy() {
+        TextNotEquals copy = new TextNotEquals();
+        copy.locator = locator;
+        copy.text = text;
+        return copy;
     }
 
 }

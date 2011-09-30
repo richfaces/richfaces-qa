@@ -28,6 +28,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.android.AndroidDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 
 /**
 * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -73,7 +74,7 @@ public abstract class AbstractWebDriverTest extends AbstractShowcaseTest {
     /**
      * Initializes web driver to open a test page 
      */
-    @BeforeClass(dependsOnMethods = {"initializeWebDriver"}, alwaysRun = true)
+    @BeforeMethod(alwaysRun = true)
     public void initPage() {
         webDriver.get(getPath());        
     }

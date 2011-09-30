@@ -17,6 +17,9 @@ Available Properties
     - context root where the tested application is running
  * `context.path = <path>`
     - context path to the tested application
+ * `showcase.version = <common|mobile>
+    - sets a showcase version
+    - if the property is not set, the web driver type determines showcase version  
  * `skin.name = <blueSky|classic|deepMarine|emeraldTown|japanCherry|ruby|wine>`
     - sets a skin which is used on the test pages
  * `webdriver.android`
@@ -34,7 +37,7 @@ Command Line Tools
  * `device.sh <directory>`
     - launches a new device on android emulator with Selenium server running
     - only one device can be running at one moment
-    - <directory> has to contain a directory with Android SDK
+    - `<directory>` has to contain a directory with Android SDK
  * `fedora-64-packages.sh`
     - installs needed libraries on Fedora 64bit
  * `android-sdk.sh [<directory>]`

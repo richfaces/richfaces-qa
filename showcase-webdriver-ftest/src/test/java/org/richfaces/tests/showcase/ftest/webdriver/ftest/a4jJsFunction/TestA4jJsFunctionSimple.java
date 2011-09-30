@@ -19,42 +19,41 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jAjax;
+package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jJsFunction;
 
 import org.jboss.test.selenium.By;
 import org.jboss.test.selenium.support.ui.TextEquals;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jAjaxSimple extends AbstractWebDriverTest {
-
-    private static final By INPUT = By.xpath("//*[@class='example-cnt']//input[@type='text']");
-    private static final By OUTPUT = By.xpath("//*[@class='example-cnt']//span");
+public class TestA4jJsFunctionSimple extends AbstractWebDriverTest {
+    
+    private static final String NAME_XPATH = "//*[@class='example-cnt']//span[text()='{0}']"; 
+    private static final By OUTPUT = By.xpath("//*[@class='example-cnt']//b/span");
     
     @Override
     protected String getDemoName() {
-        return "ajax";
+        return "jsFunction";
     }
 
     @Override
     protected String getSampleName() {
-        return "ajax";
+        return "jsFunction";
     }
 
     @Test
-    public void testType() {
-        WebElement input = getWebDriver().findElement(INPUT);
-        input.click();
-        input.sendKeys("something");
-        
-        new WebDriverWait(getWebDriver())
-            .failWith("After typing something into the input, the text should appear in the output area.")
-            .until(TextEquals.getInstance().locator(OUTPUT).text("something"));
+    public void testClick() {
+        String[] names = new String[] {"Alex", "John", "Kate"};
+        for (String name : names) {
+            getWebDriver().findElement(By.xpath(NAME_XPATH.replace("{0}", name))).click();
+            new WebDriverWait(getWebDriver())
+                .failWith("After clicking on the name <" + name + ">, the name should appear in the output area.")
+                .until(TextEquals.getInstance().locator(OUTPUT).text(name));
+        }
     }
-
+    
 }

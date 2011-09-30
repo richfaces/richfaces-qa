@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jAjax;
+package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jCommandLink;
 
 import org.jboss.test.selenium.By;
 import org.jboss.test.selenium.support.ui.TextEquals;
@@ -31,30 +31,33 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jAjaxSimple extends AbstractWebDriverTest {
+public class TestA4jCommandLinkSimple extends AbstractWebDriverTest {
 
     private static final By INPUT = By.xpath("//*[@class='example-cnt']//input[@type='text']");
-    private static final By OUTPUT = By.xpath("//*[@class='example-cnt']//span");
+    private static final By LINK = By.xpath("//*[@class='example-cnt']//a[text()='Say Hello']");
+    private static final By OUTPUT = By.xpath("//*[@class='example-cnt']//span[@class='outhello']");
     
     @Override
     protected String getDemoName() {
-        return "ajax";
+        return "commandLink";
     }
 
     @Override
     protected String getSampleName() {
-        return "ajax";
+        return "commandLink";
     }
 
     @Test
-    public void testType() {
+    public void testTypeAndSend() {
         WebElement input = getWebDriver().findElement(INPUT);
         input.click();
         input.sendKeys("something");
         
+        getWebDriver().findElement(LINK).click();
+        
         new WebDriverWait(getWebDriver())
-            .failWith("After typing something into the input, the text should appear in the output area.")
-            .until(TextEquals.getInstance().locator(OUTPUT).text("something"));
+            .failWith("After typing something into the input and clicking on the command link, the text should appear in the output area.")
+            .until(TextEquals.getInstance().locator(OUTPUT).text("Hello something !"));  
     }
-
+    
 }

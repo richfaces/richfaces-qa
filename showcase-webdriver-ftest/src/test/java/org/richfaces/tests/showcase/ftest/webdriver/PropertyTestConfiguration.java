@@ -94,7 +94,9 @@ public class PropertyTestConfiguration implements TestConfiguration {
     }
 
     public boolean isMobile() {
-//        return false;
+        if (System.getProperty("showcase.layout") != null) {
+            return System.getProperty("showcase.layout") == "mobile";
+        }
         return isAndroid();
     }
    
