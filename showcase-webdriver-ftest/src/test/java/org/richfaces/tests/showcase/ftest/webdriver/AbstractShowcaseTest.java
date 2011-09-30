@@ -82,7 +82,11 @@ public abstract class AbstractShowcaseTest {
      * @return url to the test page to be opened by Selenium - it doesn't contain context root and context path
      */    
     protected String getTestUrl() {
-        return "richfaces/component-sample.jsf?skin=" + getSkinName() + "&demo=" + getDemoName() + "&sample=" + getSampleName();
+        if (getConfiguration().isMobile()) {
+            return "#" + getDemoName() + ":" + getSampleName();
+        } else {
+            return "richfaces/component-sample.jsf?skin=" + getSkinName() + "&demo=" + getDemoName() + "&sample=" + getSampleName();
+        }
     }
     
     /**

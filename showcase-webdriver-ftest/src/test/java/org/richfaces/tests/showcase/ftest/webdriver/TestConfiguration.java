@@ -64,4 +64,11 @@ public interface TestConfiguration {
      */
     boolean isAndroid(); 
     
+    /**
+     * Checks whether the tests should use mobile version of the Showcase
+     * 
+     * @return true if the Showcase should be in mobile version
+     */
+    boolean isMobile();
+    
 }

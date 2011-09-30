@@ -93,5 +93,10 @@ public class PropertyTestConfiguration implements TestConfiguration {
         return System.getProperty("webdriver.android") != null;
     }
 
+    public boolean isMobile() {
+//        return false;
+        return isAndroid();
+    }
+   
 }
  
