@@ -26,12 +26,8 @@ import org.jboss.test.selenium.android.support.ui.Select;
 import org.jboss.test.selenium.support.ui.ElementNotPresent;
 import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractAndroidTest;
 import org.testng.annotations.Test;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -51,7 +47,7 @@ public class TestA4jAjaxSelects extends AbstractAndroidTest {
         return "selectsUpdates";
     }
 
-    @Test
+    @Test(enabled=false)
     public void testDisplaySecondSelect() throws Exception {
         Select firstSelect = new Select(getToolKit(), getWebDriver().findElement(FIRST_SELECT));
         
