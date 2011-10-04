@@ -19,46 +19,32 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.jboss.test.selenium.support.ui;
+package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jParam;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.jboss.test.selenium.support.ui.TextEquals;
+import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.ftest.webdriver.page.ParamParamPage;
+import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TextNotEquals implements ExpectedCondition<Boolean> {
+public class TestA4jParamSimple extends AbstractWebDriverTest<ParamParamPage>{
 
-    private WebElement element;
-    private String text;
-
-    public static TextNotEquals getInstance() {
-        return new TextNotEquals();
+    @Test
+    public void testSetName() {
+        for(ParamParamPage.Name name : ParamParamPage.Name.getAll()) {
+            getPage().setName(name);
+            new WebDriverWait(getWebDriver())
+                .failWith("After selecting name, the output should contain the name.")
+                .until(TextEquals.getInstance().element(getPage().getOutput()).text("Selected Name:" + name));               
+        }
     }
-
+    
     @Override
-    public Boolean apply(WebDriver driver) {
-        return !element.getText().equals(text);
-    }
-
-    public TextNotEquals element(WebElement element) {
-        TextNotEquals copy = copy();
-        copy.element = element;
-        return copy;
-    }
-
-    public TextNotEquals text(String text) {
-        TextNotEquals copy = copy();
-        copy.text = text;
-        return copy;
-    }
-
-    private TextNotEquals copy() {
-        TextNotEquals copy = new TextNotEquals();
-        copy.element = element;
-        copy.text = text;
-        return copy;
+    protected ParamParamPage createPage() {
+        return new ParamParamPage();
     }
 
 }

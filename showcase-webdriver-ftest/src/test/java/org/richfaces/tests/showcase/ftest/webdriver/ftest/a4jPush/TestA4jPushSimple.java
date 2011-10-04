@@ -19,46 +19,32 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.jboss.test.selenium.support.ui;
+package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jPush;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.jboss.test.selenium.support.ui.TextNotEquals;
+import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.ftest.webdriver.page.PushPushPage;
+import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TextNotEquals implements ExpectedCondition<Boolean> {
-
-    private WebElement element;
-    private String text;
-
-    public static TextNotEquals getInstance() {
-        return new TextNotEquals();
+public class TestA4jPushSimple extends AbstractWebDriverTest<PushPushPage>{
+    
+    @Test
+    public void testDateUpdates() {
+        for(int i=0; i<2; i++) {
+            String before = getPage().getDate().getText();
+            new WebDriverWait(getWebDriver())
+                .failWith("The updating doesn't work correctly." + i)
+                .until(TextNotEquals.getInstance().element(getPage().getDate()).text(before));            
+        }
     }
-
+       
     @Override
-    public Boolean apply(WebDriver driver) {
-        return !element.getText().equals(text);
-    }
-
-    public TextNotEquals element(WebElement element) {
-        TextNotEquals copy = copy();
-        copy.element = element;
-        return copy;
-    }
-
-    public TextNotEquals text(String text) {
-        TextNotEquals copy = copy();
-        copy.text = text;
-        return copy;
-    }
-
-    private TextNotEquals copy() {
-        TextNotEquals copy = new TextNotEquals();
-        copy.element = element;
-        copy.text = text;
-        return copy;
+    protected PushPushPage createPage() {
+        return new PushPushPage();
     }
 
 }

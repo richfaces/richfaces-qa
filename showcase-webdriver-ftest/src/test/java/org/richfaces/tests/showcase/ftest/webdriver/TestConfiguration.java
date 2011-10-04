@@ -21,9 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver;
 
+import org.jboss.test.selenium.android.support.pagefactory.StaleReferenceAwareFieldDecorator;
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocator;
 
-
+/**
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ */
 public interface TestConfiguration {
 
     /**
@@ -56,6 +60,21 @@ public interface TestConfiguration {
      * @return webdriver host URL
      */
     String getWebDriverHost();    
+    
+    /**
+     * Returns number of tries which is used for {@link StaleReferenceAwareFieldDecorator}
+     * 
+     * @return number of tries
+     */
+    int getWebDriverElementTries();
+
+    /**
+     * Returns timout in seconds which is used for {@link AjaxElementLocator}
+     * and other timout settings
+     * 
+     * @return timout in seconds
+     */
+    int getWebDriverTimeout();    
     
     /**
      * Checks whether the tests are executed on an android web driver

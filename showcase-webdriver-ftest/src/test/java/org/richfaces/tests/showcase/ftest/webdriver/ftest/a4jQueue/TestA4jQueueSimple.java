@@ -19,43 +19,42 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jPoll;
+package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jQueue;
 
 import org.jboss.test.selenium.support.ui.TextEquals;
-import org.jboss.test.selenium.support.ui.TextNotEquals;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.ftest.webdriver.page.PollPollPage;
+import org.richfaces.tests.showcase.ftest.webdriver.page.QueueQueuePage;
 import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jPollSimple extends AbstractWebDriverTest<PollPollPage> {
-    
+public class TestA4jQueueSimple extends AbstractWebDriverTest<QueueQueuePage>{
+
     @Test
-    public void testStop() throws InterruptedException {
-        getPage().getButton().click();
-        String before = getPage().getDate().getText();
-        Thread.sleep(1500);
-        new WebDriverWait(getWebDriver())
-            .failWith("After clicking on the stop button, there should be not updates.")
-            .until(TextEquals.getInstance().element(getPage().getDate()).text(before));        
-                
-    }
-    
-    @Test
-    public void testUpdates() {
-        for (int i=0; i<2; i++) {
-            String before = getPage().getDate().getText();
-            new WebDriverWait(getWebDriver(), 2)
-                .failWith("The updating doesn't work correctly.")
-                .until(TextNotEquals.getInstance().element(getPage().getDate()).text(before));
+    public void testType() {
+        StringBuilder inputAll = new StringBuilder();
+        for(int n=1; n<=3; n++) {
+            StringBuilder input = new StringBuilder();
+            for(int i=0; i<n; i++) {
+                input.append("a");
+            }
+            inputAll.append(input);
+            getPage().getInput().click();
+            getPage().getInput().sendKeys(input.toString());
+            new WebDriverWait(getWebDriver())
+                .until(TextEquals.getInstance().element(getPage().getOutput()).text(inputAll.toString()));
+            assertEquals(getPage().getEvents().getText(), String.valueOf(inputAll.toString().length()));
+            assertEquals(getPage().getUpdates().getText(), String.valueOf(n));
+            assertEquals(getPage().getRequests().getText(), String.valueOf(n));            
         }
     }
     
-    protected PollPollPage createPage() {
-        return new PollPollPage();
+    @Override
+    protected QueueQueuePage createPage() {
+        return new QueueQueuePage();
     }
-    
+
 }

@@ -75,13 +75,13 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
         else {
             webDriver = new HtmlUnitDriver(getConfiguration().getWebDriverCapabilities());
         }
-        webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().implicitlyWait(getConfiguration().getWebDriverTimeout(), TimeUnit.SECONDS);
     }
     
     @BeforeClass(alwaysRun = true, dependsOnMethods = { "initializeWebDriver" })
     public void initializePage() {
-        ElementLocatorFactory locatorFactory = new AjaxElementLocatorFactory(getWebDriver(), 10);
-        FieldDecorator decorator = new StaleReferenceAwareFieldDecorator(locatorFactory, 5);
+        ElementLocatorFactory locatorFactory = new AjaxElementLocatorFactory(getWebDriver(), getConfiguration().getWebDriverTimeout());
+        FieldDecorator decorator = new StaleReferenceAwareFieldDecorator(locatorFactory, getConfiguration().getWebDriverElementTries());
         PageFactory.initElements(decorator, getPage());
     }
     

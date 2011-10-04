@@ -24,12 +24,15 @@ Available Properties
     - sets a skin which is used on the test pages
  * `webdriver.android`
     - enables testing through the android emulator
- * `webdriver.host = <full path>`
-    - sets a host which is used to control the active webdriver
  * `webdriver.capabilities = <android|chrome|firefox|internetExplorer|iphone|opera>`
     - sets browser capabilities, it's used only when the default webdriver
       (HtmlUnitDriver) is active
-
+ * `webdriver.element.tries = <number>`
+    - sets a number of tries which is used when an element is stale and tries to refresh its reference
+ * `webdriver.host = <full path>`
+    - sets a host which is used to control the active webdriver
+ * `webdriver.timout = <timout in seconds>`
+    - sets an amount of time in seconds which is used for timouts 
  
 Command Line Tools
 ====================

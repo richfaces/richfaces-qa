@@ -19,46 +19,63 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.jboss.test.selenium.support.ui;
+package org.richfaces.tests.showcase.ftest.webdriver.page;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TextNotEquals implements ExpectedCondition<Boolean> {
+public class ParamParamPage implements ShowcasePage {
 
-    private WebElement element;
-    private String text;
+    @FindBy(xpath = "//*[@class='example-cnt']//div[@class='rf-p-b ']/span")
+    private WebElement output;
+    @FindBy(xpath = "//*[@class='example-cnt']//input[@value='Set Name to Alex']")
+    private WebElement setAlex;
+    @FindBy(xpath = "//*[@class='example-cnt']//input[@value='Set Name to John']")
+    private WebElement setJohn;
 
-    public static TextNotEquals getInstance() {
-        return new TextNotEquals();
+    @Override
+    public String getDemoName() {
+        return "param";
+    }
+
+    public WebElement getOutput() {
+        return output;
     }
 
     @Override
-    public Boolean apply(WebDriver driver) {
-        return !element.getText().equals(text);
+    public String getSampleName() {
+        return "param";
     }
 
-    public TextNotEquals element(WebElement element) {
-        TextNotEquals copy = copy();
-        copy.element = element;
-        return copy;
+    public void setName(Name name) {
+        switch(name) {
+            case ALEX:
+                setAlex.click();
+                break;
+            case JOHN:
+                setJohn.click();
+                break;
+        }
     }
+    
+    public static enum Name {
+        ALEX("Alex"), JOHN("John");
+        private String name;
 
-    public TextNotEquals text(String text) {
-        TextNotEquals copy = copy();
-        copy.text = text;
-        return copy;
-    }
+        private Name(String name) {
+            this.name = name;
+        }
 
-    private TextNotEquals copy() {
-        TextNotEquals copy = new TextNotEquals();
-        copy.element = element;
-        copy.text = text;
-        return copy;
+        public static Name[] getAll() {
+            return new Name[] {ALEX, JOHN};
+        }
+        
+        public String toString() {
+            return name;
+        }
     }
 
 }

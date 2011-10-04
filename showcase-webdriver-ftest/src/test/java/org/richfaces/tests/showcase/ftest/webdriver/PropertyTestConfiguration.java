@@ -33,12 +33,16 @@ public class PropertyTestConfiguration implements TestConfiguration {
     public static final String DEFAULT_CONTEXT_ROOT = "http://localhost:8080";
     public static final String DEFAULT_CONTEXT_ROOT_ANDROID = "http://10.0.2.2:8080";
     public static final String DEFAULT_SKIN_NAME = "blueSky";
+    public static final Capabilities DEFAULT_WEBDRIVER_CAPABALITIES = DesiredCapabilities.firefox();
     public static final String DEFAULT_WEBDRIVER_HOST = "";
     public static final String DEFAULT_WEBDRIVER_HOST_ANDROID = "http://localhost:4444/wd/hub";
-    public static final Capabilities DEFAULT_WEBDRIVER_CAPABALITIES = DesiredCapabilities.firefox();
+    public static final String DEFAULT_WEBDRIVER_STALE_TRIES = "5";
+    public static final String DEFAULT_WEBDRIVER_TIMEOUT = "10";
+    
     
     private static Map<String, Capabilities> availableCapabilities;
     
+    @Override
     public String getWebDriverHost() {
         if (isAndroid()) {
             return System.getProperty("webdriver.host", DEFAULT_WEBDRIVER_HOST_ANDROID);
@@ -46,13 +50,14 @@ public class PropertyTestConfiguration implements TestConfiguration {
         else {
             return System.getProperty("webdriver.host", DEFAULT_WEBDRIVER_HOST);
         }
-        
     }
 
+    @Override
     public String getContextPath() {
         return System.getProperty("context.path", DEFAULT_CONTEXT_PATH);
     }
 
+    @Override
     public String getContextRoot() {
         if (isAndroid()) {
             return System.getProperty("context.root", DEFAULT_CONTEXT_ROOT_ANDROID);
@@ -62,6 +67,7 @@ public class PropertyTestConfiguration implements TestConfiguration {
         }
     }
 
+    @Override
     public String getSkinName() {
         return System.getProperty("skin.name", DEFAULT_SKIN_NAME);
     }
@@ -89,10 +95,22 @@ public class PropertyTestConfiguration implements TestConfiguration {
         }
     }    
     
+    @Override
+    public int getWebDriverElementTries() {
+        return Integer.parseInt(System.getProperty("webdriver.stale.tries", DEFAULT_WEBDRIVER_STALE_TRIES));
+    }
+    
+    @Override
+    public int getWebDriverTimeout() {
+        return Integer.parseInt(System.getProperty("webdriver.timout", DEFAULT_WEBDRIVER_TIMEOUT));
+    }
+    
+    @Override
     public boolean isAndroid() {
         return System.getProperty("webdriver.android") != null;
     }
 
+    @Override
     public boolean isMobile() {
         if (System.getProperty("showcase.layout") != null) {
             return System.getProperty("showcase.layout") == "mobile";
