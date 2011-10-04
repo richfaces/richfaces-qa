@@ -19,45 +19,15 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.jboss.test.selenium.support.ui;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+package org.richfaces.tests.showcase.ftest.webdriver.page;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class ElementNotPresent implements ExpectedCondition<Boolean> {
+public interface ShowcasePage {
 
-    private By locator;
+    String getDemoName();
     
-    public static ElementNotPresent getInstance() {
-        return new ElementNotPresent();
-    }
-    
-    public Boolean apply(WebDriver driver) {
-        try {
-            return !driver.findElement(locator).isDisplayed();
-        } catch(StaleElementReferenceException ignored) {
-            return false;
-        } catch (NoSuchElementException e) {
-            return true;
-        }    
-    }
-    
-    public ElementNotPresent locator(By locator) {
-        ElementNotPresent copy = copy();
-        copy.locator = locator;
-        return copy;
-    }
-    
-    private ElementNotPresent copy() {
-        ElementNotPresent copy = new ElementNotPresent();
-        copy.locator = this.locator;
-        return copy;
-    }    
+    String getSampleName();
     
 }

@@ -21,39 +21,31 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jJsFunction;
 
-import org.jboss.test.selenium.By;
 import org.jboss.test.selenium.support.ui.TextEquals;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.ftest.webdriver.page.JsFunctionJsFunctionPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jJsFunctionSimple extends AbstractWebDriverTest {
+public class TestA4jJsFunctionSimple extends AbstractWebDriverTest<JsFunctionJsFunctionPage> {
     
-    private static final String NAME_XPATH = "//*[@class='example-cnt']//span[text()='{0}']"; 
-    private static final By OUTPUT = By.xpath("//*[@class='example-cnt']//b/span");
-    
-    @Override
-    protected String getDemoName() {
-        return "jsFunction";
-    }
-
-    @Override
-    protected String getSampleName() {
-        return "jsFunction";
-    }
-
     @Test
     public void testClick() {
-        String[] names = new String[] {"Alex", "John", "Kate"};
-        for (String name : names) {
-            getWebDriver().findElement(By.xpath(NAME_XPATH.replace("{0}", name))).click();
+        for (String name : getPage().getNames().keySet()) {
+            getPage().getNames().get(name).click();
             new WebDriverWait(getWebDriver())
                 .failWith("After clicking on the name <" + name + ">, the name should appear in the output area.")
-                .until(TextEquals.getInstance().locator(OUTPUT).text(name));
+                .until(TextEquals.getInstance().element(getPage().getOutput()).text(name));
         }
     }
+
+    @Override
+    protected JsFunctionJsFunctionPage createPage() {
+        return new JsFunctionJsFunctionPage();
+    }
+    
     
 }

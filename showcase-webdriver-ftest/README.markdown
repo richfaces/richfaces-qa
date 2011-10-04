@@ -17,7 +17,7 @@ Available Properties
     - context root where the tested application is running
  * `context.path = <path>`
     - context path to the tested application
- * `showcase.version = <common|mobile>
+ * `showcase.layout = <common|mobile>`
     - sets a showcase version
     - if the property is not set, the web driver type determines showcase version  
  * `skin.name = <blueSky|classic|deepMarine|emeraldTown|japanCherry|ruby|wine>`

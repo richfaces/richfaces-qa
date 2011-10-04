@@ -19,45 +19,27 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.jboss.test.selenium.support.ui;
+package org.richfaces.tests.showcase.ftest.webdriver.page;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class ElementNotPresent implements ExpectedCondition<Boolean> {
+public abstract class AbstractCommandPage implements ShowcasePage {
 
-    private By locator;
+    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='text']")
+    private WebElement input;
+    @FindBy(xpath = "//*[@class='example-cnt']//span[@class='outhello']")
+    private WebElement output;
     
-    public static ElementNotPresent getInstance() {
-        return new ElementNotPresent();
+    public WebElement getInput() {
+        return input;
     }
-    
-    public Boolean apply(WebDriver driver) {
-        try {
-            return !driver.findElement(locator).isDisplayed();
-        } catch(StaleElementReferenceException ignored) {
-            return false;
-        } catch (NoSuchElementException e) {
-            return true;
-        }    
+    public WebElement getOutput() {
+        return output;
     }
-    
-    public ElementNotPresent locator(By locator) {
-        ElementNotPresent copy = copy();
-        copy.locator = locator;
-        return copy;
-    }
-    
-    private ElementNotPresent copy() {
-        ElementNotPresent copy = new ElementNotPresent();
-        copy.locator = this.locator;
-        return copy;
-    }    
+ 
     
 }

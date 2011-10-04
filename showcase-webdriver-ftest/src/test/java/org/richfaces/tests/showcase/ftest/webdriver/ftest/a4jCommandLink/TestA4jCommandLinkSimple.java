@@ -21,43 +21,32 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jCommandLink;
 
-import org.jboss.test.selenium.By;
 import org.jboss.test.selenium.support.ui.TextEquals;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.ftest.webdriver.page.CommandLinkCommandLinkPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jCommandLinkSimple extends AbstractWebDriverTest {
-
-    private static final By INPUT = By.xpath("//*[@class='example-cnt']//input[@type='text']");
-    private static final By LINK = By.xpath("//*[@class='example-cnt']//a[text()='Say Hello']");
-    private static final By OUTPUT = By.xpath("//*[@class='example-cnt']//span[@class='outhello']");
-    
-    @Override
-    protected String getDemoName() {
-        return "commandLink";
-    }
-
-    @Override
-    protected String getSampleName() {
-        return "commandLink";
-    }
+public class TestA4jCommandLinkSimple extends AbstractWebDriverTest<CommandLinkCommandLinkPage> {
 
     @Test
     public void testTypeAndSend() {
-        WebElement input = getWebDriver().findElement(INPUT);
-        input.click();
-        input.sendKeys("something");
+        getPage().getInput().click();
+        getPage().getInput().sendKeys("something");
         
-        getWebDriver().findElement(LINK).click();
+        getPage().getLink().click();
         
         new WebDriverWait(getWebDriver())
             .failWith("After typing something into the input and clicking on the command link, the text should appear in the output area.")
-            .until(TextEquals.getInstance().locator(OUTPUT).text("Hello something !"));  
+            .until(TextEquals.getInstance().element(getPage().getOutput()).text("Hello something !"));  
+    }
+
+    @Override
+    protected CommandLinkCommandLinkPage createPage() {
+        return new CommandLinkCommandLinkPage();
     }
     
 }

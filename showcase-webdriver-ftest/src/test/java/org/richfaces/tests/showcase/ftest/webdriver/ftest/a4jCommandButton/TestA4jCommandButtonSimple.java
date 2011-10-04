@@ -21,43 +21,31 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jCommandButton;
 
-import org.jboss.test.selenium.By;
 import org.jboss.test.selenium.support.ui.TextEquals;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.ftest.webdriver.page.CommandButtonCommandButtonPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jCommandButtonSimple extends AbstractWebDriverTest {
-
-    private static final By BUTTON = By.xpath("//*[@class='example-cnt']//input[@type='submit']");
-    private static final By INPUT = By.xpath("//*[@class='example-cnt']//input[@type='text']");
-    private static final By OUTPUT = By.xpath("//*[@class='example-cnt']//span[@class='outhello']");
-    
-    @Override
-    protected String getDemoName() {
-        return "commandButton";
-    }
-
-    @Override
-    protected String getSampleName() {
-        return "commandButton";
-    }
+public class TestA4jCommandButtonSimple extends AbstractWebDriverTest<CommandButtonCommandButtonPage> {
 
     @Test
     public void testTypeAndSend() {
-        WebElement input = getWebDriver().findElement(INPUT);
-        input.click();
-        input.sendKeys("something");
+        getPage().getInput().click();
+        getPage().getInput().sendKeys("something");
         
-        getWebDriver().findElement(BUTTON).click();
+        getPage().getButton().click();
         
         new WebDriverWait(getWebDriver())
             .failWith("After typing something into the input and clicking on the command button, the text should appear in the output area.")
-            .until(TextEquals.getInstance().locator(OUTPUT).text("Hello something !"));  
+            .until(TextEquals.getInstance().element(getPage().getOutput()).text("Hello something !"));  
+    }
+    
+    protected CommandButtonCommandButtonPage createPage() {
+        return new CommandButtonCommandButtonPage();
     }
     
 }

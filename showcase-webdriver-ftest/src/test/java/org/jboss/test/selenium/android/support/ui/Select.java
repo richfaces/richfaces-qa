@@ -27,9 +27,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
-import org.jboss.test.selenium.By;
 import org.jboss.test.selenium.android.Key;
 import org.jboss.test.selenium.android.ToolKit;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 /**

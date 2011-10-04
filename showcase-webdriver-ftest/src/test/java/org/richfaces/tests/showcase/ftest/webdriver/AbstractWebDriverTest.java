@@ -24,17 +24,24 @@ package org.richfaces.tests.showcase.ftest.webdriver;
 import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
 
+import org.jboss.test.selenium.android.support.pagefactory.StaleReferenceAwareFieldDecorator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.android.AndroidDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
+import org.openqa.selenium.support.pagefactory.FieldDecorator;
+import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 /**
 * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
 */
-public abstract class AbstractWebDriverTest extends AbstractShowcaseTest {
+public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends AbstractShowcaseTest {
   
+    private Page page;
     private WebDriver webDriver;
     
     /**
@@ -71,12 +78,36 @@ public abstract class AbstractWebDriverTest extends AbstractShowcaseTest {
         webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
     
+    @BeforeClass(alwaysRun = true, dependsOnMethods = { "initializeWebDriver" })
+    public void initializePage() {
+        ElementLocatorFactory locatorFactory = new AjaxElementLocatorFactory(getWebDriver(), 10);
+        FieldDecorator decorator = new StaleReferenceAwareFieldDecorator(locatorFactory, 5);
+        PageFactory.initElements(decorator, getPage());
+    }
+    
     /**
      * Initializes web driver to open a test page 
      */
     @BeforeMethod(alwaysRun = true)
-    public void initPage() {
+    public void initializePageUrl() {
         webDriver.get(getPath());        
+    }
+    
+    @Override
+    protected String getDemoName() {
+        return getPage().getDemoName();
+    }
+    
+    protected Page getPage() {
+        if (page == null) {
+            page = createPage();
+        }
+        return page;
+    }
+    
+    @Override
+    protected String getSampleName() {
+        return getPage().getSampleName();
     }
     
     /**
@@ -87,5 +118,7 @@ public abstract class AbstractWebDriverTest extends AbstractShowcaseTest {
     protected WebDriver getWebDriver() {
         return webDriver;
     }
+    
+    protected abstract Page createPage();
 }
  

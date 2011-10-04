@@ -27,11 +27,12 @@ import org.apache.commons.lang.Validate;
 import org.jboss.test.selenium.android.PropertyToolKitConfiguration;
 import org.jboss.test.selenium.android.ToolKit;
 import org.jboss.test.selenium.android.ToolKitConfiguration;
+import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 
 /**
 * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
 */
-public abstract class AbstractAndroidTest extends AbstractWebDriverTest {
+public abstract class AbstractAndroidTest<Page extends ShowcasePage> extends AbstractWebDriverTest<Page> {
 
     private ToolKit toolKit;
     

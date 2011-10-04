@@ -21,9 +21,8 @@
  *******************************************************************************/
 package org.jboss.test.selenium.support.ui;
 
-import org.jboss.test.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
@@ -31,25 +30,21 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
  */
 public class TextNotEquals implements ExpectedCondition<Boolean> {
 
-    private By locator;
+    private WebElement element;
     private String text;
 
     public static TextNotEquals getInstance() {
         return new TextNotEquals();
-    }    
-    
+    }
+
     @Override
     public Boolean apply(WebDriver driver) {
-        try {
-            return !driver.findElement(locator).getText().equals(text);
-        } catch(StaleElementReferenceException ignored) {
-            return false;
-        }
-    } 
+        return element.getText().equals(text);
+    }
 
-    public TextNotEquals locator(By locator) {
+    public TextNotEquals element(WebElement element) {
         TextNotEquals copy = copy();
-        copy.locator = locator;
+        copy.element = element;
         return copy;
     }
 
@@ -57,11 +52,11 @@ public class TextNotEquals implements ExpectedCondition<Boolean> {
         TextNotEquals copy = copy();
         copy.text = text;
         return copy;
-    }    
-    
+    }
+
     private TextNotEquals copy() {
         TextNotEquals copy = new TextNotEquals();
-        copy.locator = locator;
+        copy.element = element;
         copy.text = text;
         return copy;
     }
