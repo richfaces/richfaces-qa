@@ -21,11 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jCommandButton;
 
-import org.jboss.test.selenium.support.ui.TextEquals;
+import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.CommandButtonCommandButtonPage;
 import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -40,8 +41,9 @@ public class TestA4jCommandButtonSimple extends AbstractWebDriverTest<CommandBut
         getPage().getButton().click();
         
         new WebDriverWait(getWebDriver())
-            .failWith("After typing something into the input and clicking on the command button, the text should appear in the output area.")
-            .until(TextEquals.getInstance().element(getPage().getOutput()).text("Hello something !"));  
+            .until(ElementPresent.getInstance().element(getPage().getOutput()));
+        
+        assertEquals(getPage().getOutput().getText(), "Hello something !", "After typing something into the input and clicking on the command button, the text should appear in the output area.");
     }
     
     protected CommandButtonCommandButtonPage createPage() {

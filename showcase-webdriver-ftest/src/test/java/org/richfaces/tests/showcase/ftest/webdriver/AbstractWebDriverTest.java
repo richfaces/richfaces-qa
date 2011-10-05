@@ -29,7 +29,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.android.AndroidDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
 import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
@@ -80,8 +80,7 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
     
     @BeforeClass(alwaysRun = true, dependsOnMethods = { "initializeWebDriver" })
     public void initializePage() {
-        ElementLocatorFactory locatorFactory = new AjaxElementLocatorFactory(getWebDriver(), getConfiguration().getWebDriverTimeout());
-        FieldDecorator decorator = new StaleReferenceAwareFieldDecorator(locatorFactory, getConfiguration().getWebDriverElementTries());
+        FieldDecorator decorator = new StaleReferenceAwareFieldDecorator(createLocatorFactory(), getConfiguration().getWebDriverElementTries());
         PageFactory.initElements(decorator, getPage());
     }
     
@@ -90,7 +89,16 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
      */
     @BeforeMethod(alwaysRun = true)
     public void initializePageUrl() {
-        webDriver.get(getPath());        
+        webDriver.get(getPath());
+        // HACK: because of the bug in mobile version of showcase
+        if (getConfiguration().isMobile()) {
+            webDriver.get(getPath());
+        }
+    }
+    
+    protected ElementLocatorFactory createLocatorFactory() {
+        return new DefaultElementLocatorFactory(getWebDriver());
+//        return new AjaxElementLocatorFactory(getWebDriver(), getConfiguration().getWebDriverTimeout());
     }
     
     @Override

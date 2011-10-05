@@ -21,8 +21,9 @@
  *******************************************************************************/
 package org.jboss.test.selenium.support.ui;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
@@ -30,29 +31,30 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
  */
 public class ElementPresent implements ExpectedCondition<Boolean> {
 
-    private By locator;
-    
+    private WebElement element;
+
     public static ElementPresent getInstance() {
         return new ElementPresent();
     }
     
     public Boolean apply(WebDriver driver) {
         try {
-            return driver.findElement(locator).isDisplayed();
-        } catch(Exception ignored) {
+            element.isDisplayed();
+            return true;
+        } catch(NoSuchElementException ignored) {
             return false;
         }        
     }
     
-    public ElementPresent locator(By locator) {
+    public ElementPresent element(WebElement element) {
         ElementPresent copy = copy();
-        copy.locator = locator;
+        copy.element = element;
         return copy;
     }
     
     private ElementPresent copy() {
         ElementPresent copy = new ElementPresent();
-        copy.locator = this.locator;
+        copy.element = this.element;
         return copy;
     }
 }

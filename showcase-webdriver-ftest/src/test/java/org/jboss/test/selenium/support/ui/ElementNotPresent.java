@@ -21,10 +21,9 @@
  *******************************************************************************/
 package org.jboss.test.selenium.support.ui;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
@@ -32,7 +31,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
  */
 public class ElementNotPresent implements ExpectedCondition<Boolean> {
 
-    private By locator;
+    private WebElement element;
     
     public static ElementNotPresent getInstance() {
         return new ElementNotPresent();
@@ -40,23 +39,21 @@ public class ElementNotPresent implements ExpectedCondition<Boolean> {
     
     public Boolean apply(WebDriver driver) {
         try {
-            return !driver.findElement(locator).isDisplayed();
-        } catch(StaleElementReferenceException ignored) {
-            return false;
+            return !element.isDisplayed();
         } catch (NoSuchElementException e) {
             return true;
         }    
     }
     
-    public ElementNotPresent locator(By locator) {
+    public ElementNotPresent element(WebElement element) {
         ElementNotPresent copy = copy();
-        copy.locator = locator;
+        copy.element = element;
         return copy;
     }
     
     private ElementNotPresent copy() {
         ElementNotPresent copy = new ElementNotPresent();
-        copy.locator = this.locator;
+        copy.element = this.element;
         return copy;
     }    
     

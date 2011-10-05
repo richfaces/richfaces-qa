@@ -21,7 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jCommandLink;
 
-import org.jboss.test.selenium.support.ui.TextEquals;
+import static org.testng.Assert.assertEquals;
+
+import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.CommandLinkCommandLinkPage;
@@ -40,8 +42,9 @@ public class TestA4jCommandLinkSimple extends AbstractWebDriverTest<CommandLinkC
         getPage().getLink().click();
         
         new WebDriverWait(getWebDriver())
-            .failWith("After typing something into the input and clicking on the command link, the text should appear in the output area.")
-            .until(TextEquals.getInstance().element(getPage().getOutput()).text("Hello something !"));  
+            .until(ElementPresent.getInstance().element(getPage().getOutput()));        
+        
+        assertEquals(getPage().getOutput().getText(), "Hello something !", "After typing something into the input and clicking on the command link, the text should appear in the output area.");
     }
 
     @Override
