@@ -1,0 +1,116 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.richfaces.tests</groupId>
+    <artifactId>richfaces-showcase-webdriver-ftest</artifactId>
+    <version>4.1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>richfaces-showcase-webdriver-ftest</name>
+
+    <properties>
+        <showcase.version>4.1.0-SNAPSHOT</showcase.version>
+        <showcase.classifier>tomcat6</showcase.classifier>
+        <testng.listeners>org.jboss.arquillian.testng.container.TestListener</testng.listeners>
+        <testng.suite.xml>src/test/resources/testng.xml</testng.suite.xml>
+    </properties>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>jboss-qa-snapshots</id>
+            <name>JBoss QA snapshot repository</name>
+            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>jboss-qa-releases</id>
+            <name>JBoss QA selease repository</name>
+            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/releases</url>
+        </repository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Maven Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+            <releases>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>central</id>
+            <name>Maven Repository Switchboard</name>
+            <url>http://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!-- RichFaces dependencies -->
+        <dependency>
+            <groupId>org.richfaces.examples</groupId>
+            <artifactId>richfaces-showcase</artifactId>
+            <type>war</type>
+            <version>${showcase.version}</version>
+            <classifier>${showcase.classifier}</classifier>
+        </dependency>
+        <!-- Selenium -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+        <!-- TestNG -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.1.1</version>
+            <scope>test</scope>
+        </dependency>        
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <inherited>true</inherited>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.9</version>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties</argLine>
+                </configuration>
+            </plugin>
+<!--             <plugin> -->
+<!--                 <groupId>org.apache.maven.plugins</groupId> -->
+<!--                 <artifactId>maven-resources-plugin</artifactId> -->
+<!--                 <version>2.5</version> -->
+<!--                 <executions> -->
+<!--                     <execution> -->
+<!--                         <id>copy-resources</id> -->
+<!--                         <phase>validate</phase> -->
+<!--                         <goals> -->
+<!--                             <goal>copy-resources</goal> -->
+<!--                         </goals> -->
+<!--                         <configuration> -->
+<!--                             <outputDirectory>${basedir}/src/test/resources</outputDirectory> -->
+<!--                             <overwrite>true</overwrite> -->
+<!--                         </configuration> -->
+<!--                     </execution> -->
+<!--                 </executions> -->
+<!--             </plugin> -->
+        </plugins>
+    </build>
+</project>
