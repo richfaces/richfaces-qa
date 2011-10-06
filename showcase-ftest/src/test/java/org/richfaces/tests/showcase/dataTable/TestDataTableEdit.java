@@ -39,15 +39,15 @@ import org.testng.annotations.Test;
  */
 public class TestDataTableEdit extends AbstractDataIterationWithCars {
 	
-	private JQueryLocator deleteButtonInPoppup = jq("input[value=Delete]:visible");
-	private JQueryLocator cancelButtonInPoppup = jq("input[value=Cancel]:visible");
-	private JQueryLocator storeButtonInPoppup = jq("input[value=Store]:visible");
+	private JQueryLocator deleteButtonInpopup = jq("input[value=Delete]:visible");
+	private JQueryLocator cancelButtonInpopup = jq("input[value=Cancel]:visible");
+	private JQueryLocator storeButtonInpopup = jq("input[value=Store]:visible");
 	
-	private JQueryLocator vendorPoppup = jq("table[id$=editGrid] tbody tr:eq(0) td:eq(1)");
-	private JQueryLocator modelPoppup = jq("table[id$=editGrid] tbody tr:eq(1) td:eq(1)");
-	private JQueryLocator priceInputPoppup = jq("input[id$=price]");
-	private JQueryLocator mileageInputPoppup = jq("input[id$=mage]");
-	private JQueryLocator vinInputPoppup = jq("input[id$=vin]");
+	private JQueryLocator vendorpopup = jq("table[id$=editGrid] tbody tr:eq(0) td:eq(1)");
+	private JQueryLocator modelpopup = jq("table[id$=editGrid] tbody tr:eq(1) td:eq(1)");
+	private JQueryLocator priceInputpopup = jq("input[id$=price]");
+	private JQueryLocator mileageInputpopup = jq("input[id$=mage]");
+	private JQueryLocator vinInputpopup = jq("input[id$=vin]");
 	
 	private JQueryLocator errorMsgPrice = jq("span[id$=price] span");
 	private JQueryLocator errorMsgMileage = jq("span[id$=mage] span");
@@ -79,7 +79,7 @@ public class TestDataTableEdit extends AbstractDataIterationWithCars {
 		
 		guardXhr(selenium).click(rowDeleteButton);
 		
-		guardNoRequest(selenium).click(cancelButtonInPoppup);
+		guardNoRequest(selenium).click(cancelButtonInpopup);
 		
 		assertTrue(containsTableParticularCar(car), "The table should contain this car " + car + ", since there was click on the cancel button");
 		
@@ -104,137 +104,137 @@ public class TestDataTableEdit extends AbstractDataIterationWithCars {
 	@Test
 	public void testInsertCarCancelButton() {
 		
-		Car carWhichWillNotBeChanged = callTheInsertPoppup(7);
+		Car carWhichWillNotBeChanged = callTheInsertpopup(7);
 		
-		eraseInput(priceInputPoppup);
-		eraseInput(mileageInputPoppup);
-		eraseInput(vinInputPoppup);
+		eraseInput(priceInputpopup);
+		eraseInput(mileageInputpopup);
+		eraseInput(vinInputpopup);
 		
-		fillAnyInput(priceInputPoppup, "1");
-		fillAnyInput(mileageInputPoppup, "2");
-		fillInputWithStringOfLength(vinInputPoppup, 17);
+		fillAnyInput(priceInputpopup, "1");
+		fillAnyInput(mileageInputpopup, "2");
+		fillInputWithStringOfLength(vinInputpopup, 17);
 		
-		guardNoRequest(selenium).click(cancelButtonInPoppup);
+		guardNoRequest(selenium).click(cancelButtonInpopup);
 		
 		assertTrue(containsTableParticularCar(carWhichWillNotBeChanged), "This car should be in the table, since " +
 				"the cancel button was pressed!");
 	}
 	
 	@Test
-	public void testInsertCarCheckThePoppupCarInformation() {
+	public void testInsertCarCheckThepopupCarInformation() {
 		
-		checkTheCarInThePoppupAccordingToTheTable(0);
+		checkTheCarInThepopupAccordingToTheTable(0);
 		
-		checkTheCarInThePoppupAccordingToTheTable(5);
+		checkTheCarInThepopupAccordingToTheTable(5);
 		
-		checkTheCarInThePoppupAccordingToTheTable(10);
+		checkTheCarInThepopupAccordingToTheTable(10);
 	}
 	
 	@Test
 	public void testPopupValidationStringInsteadOfDouble() {
 		
-		callTheInsertPoppup(2);
+		callTheInsertpopup(2);
 		
-		fillInputWithStringOfLength(priceInputPoppup, 5);
-		fillInputWithStringOfLength(mileageInputPoppup, 5);
+		fillInputWithStringOfLength(priceInputpopup, 5);
+		fillInputWithStringOfLength(mileageInputpopup, 5);
 		
-		guardXhr(selenium).click(storeButtonInPoppup);
+		guardXhr(selenium).click(storeButtonInpopup);
 		
 		isThereErrorMessage(errorMsgPrice, ERROR_MSG_PRICE, true);
 		isThereErrorMessage(errorMsgMileage, ERROR_MSG_MILEAGE, true);
 	
-		guardNoRequest(selenium).click(cancelButtonInPoppup);
+		guardNoRequest(selenium).click(cancelButtonInpopup);
 	}
 	
 	@Test
 	public void testPopupValidationTooBigNumber() {
 	
-		callTheInsertPoppup(3);
+		callTheInsertpopup(3);
 		
-		fillAnyInput(priceInputPoppup, "1111111111111111111111111111111111111111111");
+		fillAnyInput(priceInputpopup, "1111111111111111111111111111111111111111111");
 		
-		guardXhr(selenium).click(storeButtonInPoppup);
+		guardXhr(selenium).click(storeButtonInpopup);
 		
 		isThereErrorMessage(errorMsgPrice, ERROR_MSG_PRICE, true);
 		
-		guardNoRequest(selenium).click(cancelButtonInPoppup);
+		guardNoRequest(selenium).click(cancelButtonInpopup);
 	}
 	
 	@Test
 	public void testPopupValidationValuesRequired() {
 	
-		callTheInsertPoppup(1);
+		callTheInsertpopup(1);
 		
-		eraseInput(priceInputPoppup);
-		eraseInput(vinInputPoppup);
+		eraseInput(priceInputpopup);
+		eraseInput(vinInputpopup);
 		
-		guardXhr(selenium).click(storeButtonInPoppup);
+		guardXhr(selenium).click(storeButtonInpopup);
 		
 		isThereErrorMessage(errorMsgPrice, ERROR_MSG_PRICE_RQ, true);
 		isThereErrorMessage(errorMsgVin, ERROR_MSG_VIN_RQ, true);
 		
-		guardNoRequest(selenium).click(cancelButtonInPoppup);
+		guardNoRequest(selenium).click(cancelButtonInpopup);
 	}
 		
 	@Test
 	public void testPopupValidationVinLength() {	
 	
-		callTheInsertPoppup(4);
+		callTheInsertpopup(4);
 		
-		fillInputWithStringOfLength(vinInputPoppup, 16);
+		fillInputWithStringOfLength(vinInputpopup, 16);
 		
-		guardXhr(selenium).click(storeButtonInPoppup);
+		guardXhr(selenium).click(storeButtonInpopup);
 		
 		isThereErrorMessage(errorMsgVin, ERROR_MSG_VIN, true);
 		
-		eraseInput(vinInputPoppup);
+		eraseInput(vinInputpopup);
 		
-		guardXhr(selenium).click(storeButtonInPoppup);
+		guardXhr(selenium).click(storeButtonInpopup);
 		
 		isThereErrorMessage(errorMsgVin, ERROR_MSG_VIN_RQ, true);
 		
-		fillInputWithStringOfLength(vinInputPoppup, 18);
+		fillInputWithStringOfLength(vinInputpopup, 18);
 		
-		guardXhr(selenium).click(storeButtonInPoppup);
+		guardXhr(selenium).click(storeButtonInpopup);
 		
 		isThereInfoMessage(errorMsgVin, ERROR_MSG_VIN, true);
 		
-		guardNoRequest(selenium).click(cancelButtonInPoppup);
+		guardNoRequest(selenium).click(cancelButtonInpopup);
 		
 	}
 	
 	@Test
 	public void testPopupValidationNegativeValues() {
 		
-		callTheInsertPoppup(5);
+		callTheInsertpopup(5);
 		
-		fillAnyInput(priceInputPoppup, "-1");
-		fillAnyInput(mileageInputPoppup, "-1");
+		fillAnyInput(priceInputpopup, "-1");
+		fillAnyInput(mileageInputpopup, "-1");
 		
-		guardXhr(selenium).click(storeButtonInPoppup);
+		guardXhr(selenium).click(storeButtonInpopup);
 		
 		isThereErrorMessage(errorMsgPrice, ERROR_MSG_PRICE, true);
 		isThereErrorMessage(errorMsgMileage, ERROR_MSG_MILEAGE, true);
 		
-		guardNoRequest(selenium).click(cancelButtonInPoppup);
+		guardNoRequest(selenium).click(cancelButtonInpopup);
 	}
 	
 	@Test
 	public void testPopupCorrectValues() {
 		
-		Car carWhichWillBeChanged = callTheInsertPoppup(6);
+		Car carWhichWillBeChanged = callTheInsertpopup(6);
 		
-		eraseInput(priceInputPoppup);
-		eraseInput(mileageInputPoppup);
-		eraseInput(vinInputPoppup);
+		eraseInput(priceInputpopup);
+		eraseInput(mileageInputpopup);
+		eraseInput(vinInputpopup);
 		
-		fillAnyInput(priceInputPoppup, "1");
-		fillAnyInput(mileageInputPoppup, "2");
-		fillInputWithStringOfLength(vinInputPoppup, 17);
+		fillAnyInput(priceInputpopup, "1");
+		fillAnyInput(mileageInputpopup, "2");
+		fillInputWithStringOfLength(vinInputpopup, 17);
 		
-		Car alteredCar = retrieveCarFromPoppup();
+		Car alteredCar = retrieveCarFrompopup();
 		
-		guardXhr(selenium).click(storeButtonInPoppup);
+		guardXhr(selenium).click(storeButtonInpopup);
 		
 		assertTrue(containsTableParticularCar(alteredCar), "The table should contains now the altered car");
 		assertFalse(containsTableParticularCar(carWhichWillBeChanged), "This car should not be in the table" +
@@ -283,7 +283,7 @@ public class TestDataTableEdit extends AbstractDataIterationWithCars {
 		
 		guardXhr(selenium).click(rowDeleteButton);
 		
-		guardXhr(selenium).click(deleteButtonInPoppup);
+		guardXhr(selenium).click(deleteButtonInpopup);
 		
 		return car;
 	}
@@ -301,19 +301,19 @@ public class TestDataTableEdit extends AbstractDataIterationWithCars {
 	}
 	
 	/**
-	 * Retrieves car from the poppup
+	 * Retrieves car from the popup
 	 * 
-	 * @return car which is in the poppup
+	 * @return car which is in the popup
 	 */
-	private Car retrieveCarFromPoppup() {
+	private Car retrieveCarFrompopup() {
 		
 		Car car = new Car();
 		
-		car.setVendor(selenium.getText(vendorPoppup));
-		car.setModel(selenium.getText(modelPoppup));
-		car.setPrice(selenium.getValue(priceInputPoppup));
-		car.setMileage(selenium.getValue(mileageInputPoppup));
-		car.setVin(selenium.getValue(vinInputPoppup));
+		car.setVendor(selenium.getText(vendorpopup));
+		car.setModel(selenium.getText(modelpopup));
+		car.setPrice(selenium.getValue(priceInputpopup));
+		car.setMileage(selenium.getValue(mileageInputpopup));
+		car.setVin(selenium.getValue(vinInputpopup));
 		
 		return car;
 	}
@@ -321,25 +321,25 @@ public class TestDataTableEdit extends AbstractDataIterationWithCars {
 	/**
 	 * Checks whether the information about car is the same as the information in the table
 	 * 
-	 * @param indexOfRow the row which will be checked in the poppup
+	 * @param indexOfRow the row which will be checked in the popup
 	 */
-	private void checkTheCarInThePoppupAccordingToTheTable( int indexOfRow ) {
+	private void checkTheCarInThepopupAccordingToTheTable( int indexOfRow ) {
 		
-		Car car = callTheInsertPoppup(indexOfRow);
+		Car car = callTheInsertpopup(indexOfRow);
 		
-		Car carFromPoppup = retrieveCarFromPoppup();
+		Car carFrompopup = retrieveCarFrompopup();
 		
-		assertEquals(carFromPoppup, car, "The car information differs in the poppup!");
+		assertEquals(carFrompopup, car, "The car information differs in the popup!");
 		
-		guardNoRequest(selenium).click(cancelButtonInPoppup);
+		guardNoRequest(selenium).click(cancelButtonInpopup);
 	}
 	
 	/**
-	 * Calls the insert poppup menu for the particular row
+	 * Calls the insert popup menu for the particular row
 	 * 
 	 * @param indexOfRow the row from which the menu will be called
 	 */
-	private Car callTheInsertPoppup( int indexOfRow ) {
+	private Car callTheInsertpopup( int indexOfRow ) {
 		
 		JQueryLocator row = returnRow(indexOfRow);
 		Car car = retrieveCarFromRow(row, 1, 5);
