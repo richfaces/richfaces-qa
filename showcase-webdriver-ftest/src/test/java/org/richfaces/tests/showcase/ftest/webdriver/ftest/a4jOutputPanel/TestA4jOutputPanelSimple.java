@@ -45,7 +45,7 @@ public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<OutputPanelS
         assertTrue(ElementNotPresent.getInstance().element(getPage().getFirstError()).apply(getWebDriver()), "After typing a correct value into the first input field no error message text should be present.");
         getPage().getFirstInput().submit();
         new WebDriverWait(getWebDriver())
-            .failWith("After typing a correct value and into the first input field submitting  the output text should be present.")
+            .failWith("After typing a correct value and into the first input field and submitting  the output text should be present.")
             .until(ElementPresent.getInstance().element(getPage().getFirstOutput()));
         assertEquals(getPage().getFirstOutput().getText(), "Approved Text: " + CORRECT, "The output text doesn't match.");        
     }
@@ -58,7 +58,7 @@ public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<OutputPanelS
         assertTrue(ElementNotPresent.getInstance().element(getPage().getFirstError()).apply(getWebDriver()), "After typing a wrong value into the first input field no error message should be present.");
         getPage().getFirstInput().submit();
         new WebDriverWait(getWebDriver())
-            .failWith("After typing a wrong value and into the first input field and  submitting the error message should be present.")
+            .failWith("After typing a wrong value and into the first input field and submitting the error message should be present.")
             .until(ElementPresent.getInstance().element(getPage().getFirstError()));
         assertTrue(ElementNotPresent.getInstance().element(getPage().getFirstOutput()).apply(getWebDriver()), "After typing a wrong value into the first input field and submitting no output text should be present.");
     }
