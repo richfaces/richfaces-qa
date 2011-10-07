@@ -37,7 +37,7 @@ public class PropertyTestConfiguration implements TestConfiguration {
     public static final String DEFAULT_WEBDRIVER_HOST = "";
     public static final String DEFAULT_WEBDRIVER_HOST_ANDROID = "http://localhost:4444/wd/hub";
     public static final String DEFAULT_WEBDRIVER_STALE_TRIES = "5";
-    public static final String DEFAULT_WEBDRIVER_TIMEOUT = "10";
+    public static final String DEFAULT_WEBDRIVER_TIMEOUT = "30";
     
     
     private static Map<String, Capabilities> availableCapabilities;

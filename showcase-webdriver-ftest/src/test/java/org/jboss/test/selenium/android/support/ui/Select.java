@@ -29,8 +29,11 @@ import java.util.List;
 import org.apache.commons.lang.Validate;
 import org.jboss.test.selenium.android.Key;
 import org.jboss.test.selenium.android.ToolKit;
+import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -39,8 +42,8 @@ public class Select extends AbstractComponent {
 
     private List<Option> options;
     
-    public Select(ToolKit toolKit, WebElement webElement) {
-        super(toolKit, webElement);
+    public Select(WebDriver webDriver, ToolKit toolKit, WebElement webElement) {
+        super(webDriver, toolKit, webElement);
     }
     
     public int getIndexByValue(String value) {
@@ -60,7 +63,7 @@ public class Select extends AbstractComponent {
             List<WebElement> elements = getWebElement().findElements(By.tagName("option"));
             List<Option> newOptions = new ArrayList<Option>(elements.size());
             for (WebElement el : elements) {
-                newOptions.add(new Option(getToolKit(), el));
+                newOptions.add(new Option(getWebDriver(), getToolKit(), el));
             }
             options = Collections.unmodifiableList(newOptions);
         }
@@ -82,7 +85,7 @@ public class Select extends AbstractComponent {
         return getOptions().get(getSelectedIndex());
     }
 
-    public void selectByIndex(int index) {
+    public void selectByIndex(final int index) {
         if (index < 0 || index >= getOptions().size()) {
             throw new IndexOutOfBoundsException("The index is out of the range [0, " + getOptions().size() + "]");
         }
@@ -105,7 +108,19 @@ public class Select extends AbstractComponent {
             getToolKit().sendKey(Key.ENTER);
         } catch(IOException e) {
             throw new IllegalStateException("The option can't be selected.", e);
-        }        
+        }
+        new WebDriverWait(getWebDriver())
+            .until(new ExpectedCondition<Boolean>() {
+                @Override
+                public Boolean apply(WebDriver arg0) {
+                    try {
+                        return getSelectedIndex() == index;
+                    } catch(IllegalStateException ignored) {
+                        return false;
+                    }
+                }
+                
+            });
     }
     
     public void selectByValue(String value) {

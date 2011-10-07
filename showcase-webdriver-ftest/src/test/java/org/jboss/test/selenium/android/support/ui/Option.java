@@ -22,6 +22,7 @@
 package org.jboss.test.selenium.android.support.ui;
 
 import org.jboss.test.selenium.android.ToolKit;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -32,8 +33,8 @@ public class Option extends AbstractComponent {
     private String label;
     private String value;
     
-    public Option(ToolKit toolKit, WebElement webElement) {
-        super(toolKit, webElement);
+    public Option(WebDriver webDriver, ToolKit toolKit, WebElement webElement) {
+        super(webDriver, toolKit, webElement);
     }
 
     public String getLabel() {
