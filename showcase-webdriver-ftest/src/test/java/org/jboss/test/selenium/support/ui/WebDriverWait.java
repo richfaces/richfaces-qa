@@ -34,7 +34,7 @@ import com.google.common.base.Function;
  */
 public class WebDriverWait extends org.openqa.selenium.support.ui.WebDriverWait {
 
-    public static final long DEFAULT_TIMEOUT = 10;    
+    public static final long DEFAULT_TIMEOUT = 30;    
     private String message;
     
     protected WebDriverWait(WebDriver driver, Clock clock, Sleeper sleeper, long timeOutInSeconds, long sleepTimeOut) {

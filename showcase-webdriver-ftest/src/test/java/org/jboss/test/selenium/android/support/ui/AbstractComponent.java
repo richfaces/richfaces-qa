@@ -23,6 +23,7 @@ package org.jboss.test.selenium.android.support.ui;
 
 import org.apache.commons.lang.Validate;
 import org.jboss.test.selenium.android.ToolKit;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -32,11 +33,14 @@ public abstract class AbstractComponent implements Component {
 
 
     private ToolKit toolKit;
+    private WebDriver webDriver;
     private WebElement webElement;
     
-    public AbstractComponent(ToolKit toolKit, WebElement webElement) {
+    public AbstractComponent(WebDriver webDriver, ToolKit toolKit, WebElement webElement) {
+        Validate.notNull(webDriver);
         Validate.notNull(toolKit);
         Validate.notNull(webElement);
+        this.webDriver = webDriver;
         this.toolKit = toolKit;
         this.webElement = webElement;
     }
@@ -47,5 +51,9 @@ public abstract class AbstractComponent implements Component {
     
     protected ToolKit getToolKit() {
         return toolKit;
+    }
+    
+    protected WebDriver getWebDriver() {
+        return webDriver;
     }
 }
