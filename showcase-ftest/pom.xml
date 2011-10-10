@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-showcase-ftest</artifactId>
-    <version>4.1.0.20111011-M3</version>
+    <version>4.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>RichFaces ShowCase Smoke Ftest</name>
 
@@ -31,7 +31,7 @@
         <tomcat6.home>${project.build.directory}/apache-tomcat-${version.tomcat6}</tomcat6.home>
         <tomcat7.home>${project.build.directory}/apache-tomcat-${version.tomcat7}</tomcat7.home>
 
-        <version.showcase>4.1.0.20111011-M3</version.showcase>
+        <version.showcase>4.1.0-SNAPSHOT</version.showcase>
         <showcase.classifier>jee6</showcase.classifier>
 
     </properties>
