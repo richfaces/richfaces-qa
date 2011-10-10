@@ -19,31 +19,42 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jAjax;
+package org.richfaces.tests.showcase.ftest.webdriver.page.a4jAjax;
 
-import org.jboss.test.selenium.support.ui.TextEquals;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
-import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.ftest.webdriver.page.a4jAjax.AjaxPage;
-import org.testng.annotations.Test;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
+
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jAjaxSimple extends AbstractWebDriverTest<AjaxPage> {
+public class AjaxPage implements ShowcasePage {
+
+    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='text']")
+    private WebElement input;
     
-    @Test
-    public void testType() {
-        getPage().getInput().click();
-        getPage().getInput().sendKeys("something");
-        
-        new WebDriverWait(getWebDriver())
-            .failWith("After typing something into the input, the text should appear in the output area.")
-            .until(TextEquals.getInstance().element(getPage().getOutput()).text("something"));
+    @FindBy(xpath = "//*[@class='example-cnt']//span")
+    private WebElement output;
+    
+    @Override
+    public String getDemoName() {
+        return "ajax";
     }
 
-    protected AjaxPage createPage() {
-        return new AjaxPage();
+    @Override
+    public String getSampleName() {
+        return "ajax";
     }
+
+    public WebElement getInput() {
+        return input;
+    }
+
+    public WebElement getOutput() {
+        return output;
+    }
+
+    
     
 }

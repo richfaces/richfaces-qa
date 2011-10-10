@@ -24,27 +24,27 @@ package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jPush;
 import org.jboss.test.selenium.support.ui.TextNotEquals;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.ftest.webdriver.page.PushPushPage;
+import org.richfaces.tests.showcase.ftest.webdriver.page.a4jPush.PushPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jPushSimple extends AbstractWebDriverTest<PushPushPage>{
+public class TestA4jPushSimple extends AbstractWebDriverTest<PushPage>{
     
     @Test
     public void testDateUpdates() {
         for(int i=0; i<2; i++) {
             String before = getPage().getDate().getText();
             new WebDriverWait(getWebDriver())
-                .failWith("The updating doesn't work correctly." + i)
+                .failWith("The updating doesn't work correctly. Iteration <" + i + ">.")
                 .until(TextNotEquals.getInstance().element(getPage().getDate()).text(before));            
         }
     }
        
     @Override
-    protected PushPushPage createPage() {
-        return new PushPushPage();
+    protected PushPage createPage() {
+        return new PushPage();
     }
 
 }

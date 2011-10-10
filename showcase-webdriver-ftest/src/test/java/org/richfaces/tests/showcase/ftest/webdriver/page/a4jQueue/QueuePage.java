@@ -19,61 +19,63 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.page;
+package org.richfaces.tests.showcase.ftest.webdriver.page.a4jQueue;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class OutputPanelSimplePage implements ShowcasePage {
+public class QueuePage implements ShowcasePage {
 
-    @FindBy(xpath = "//*[@class='example-cnt']//span[contains(text(), 'text1')]")
-    private WebElement firstError;
-    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='text'][contains(@name, 'text1')]")
-    private WebElement firstInput;
-    @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'out1')]")
-    private WebElement firstOutput;
-    @FindBy(xpath = "//*[@class='example-cnt']//span[contains(text(), 'text2')]")
-    private WebElement secondError;    
-    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='text'][contains(@name, 'text2')]")
-    private WebElement secondInput;
-    @FindBy(xpath = "//*[@class='example-cnt']//div[contains(@id, 'out2')]")
-    private WebElement secondOutput;
-    
+    @FindBy(xpath = "//*[@class='example-cnt']//td[text()='DOM updates count:']/../td/span")
+    private WebElement domUpdates;
+    @FindBy(xpath = "//*[@class='example-cnt']//td[text()='Events count:']/../td/span")
+    private WebElement events;
+    @FindBy(xpath = "//*[@class='example-cnt']//td[text()='Type here:']/../td/input")
+    private WebElement input;
+    @FindBy(xpath = "//*[@class='example-cnt']//td[text()='Repeated text:']/../td/span")
+    private WebElement output;
+    @FindBy(xpath = "//*[@class='example-cnt']//td[text()='Request delay:']/../td/input")
+    private WebElement requestDelay;
+    @FindBy(xpath = "//*[@class='example-cnt']//td[text()='Requests count:']/../td/span")
+    private WebElement requests;
     @Override
     public String getDemoName() {
-        return "outputPanel";
+        return "queue";
     }
 
     @Override
     public String getSampleName() {
-        return "simple";
+        return "queue";
     }
 
-    public WebElement getFirstError() {
-        return firstError;
+    public WebElement getInput() {
+        return input;
     }
 
-    public WebElement getFirstInput() {
-        return firstInput;
+    public WebElement getEvents() {
+        return events;
+    }
+ 
+    public WebElement getRequests() {
+        return requests;
+    }    
+    
+    public WebElement getUpdates() {
+        return domUpdates;
+    }
+    
+    public WebElement getOutput() {
+        return output;
     }
 
-    public WebElement getFirstOutput() {
-        return firstOutput;
-    }
-
-    public WebElement getSecondError() {
-        return secondError;
-    }
-
-    public WebElement getSecondInput() {
-        return secondInput;
-    }
-
-    public WebElement getSecondOutput() {
-        return secondOutput;
+    public void setRequestDelay(int delay) {
+        requestDelay.click();
+        requestDelay.clear();
+        requestDelay.sendKeys(String.valueOf(delay));
     }
 
 }

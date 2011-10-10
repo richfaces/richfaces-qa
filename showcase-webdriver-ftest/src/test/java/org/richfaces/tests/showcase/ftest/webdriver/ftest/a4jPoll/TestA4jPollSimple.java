@@ -25,13 +25,13 @@ import org.jboss.test.selenium.support.ui.TextEquals;
 import org.jboss.test.selenium.support.ui.TextNotEquals;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.ftest.webdriver.page.PollPollPage;
+import org.richfaces.tests.showcase.ftest.webdriver.page.a4jPoll.PollPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jPollSimple extends AbstractWebDriverTest<PollPollPage> {
+public class TestA4jPollSimple extends AbstractWebDriverTest<PollPage> {
     
     @Test
     public void testStop() throws InterruptedException {
@@ -54,8 +54,8 @@ public class TestA4jPollSimple extends AbstractWebDriverTest<PollPollPage> {
         }
     }
     
-    protected PollPollPage createPage() {
-        return new PollPollPage();
+    protected PollPage createPage() {
+        return new PollPage();
     }
     
 }

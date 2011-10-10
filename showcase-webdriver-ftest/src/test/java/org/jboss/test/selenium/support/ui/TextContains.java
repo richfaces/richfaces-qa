@@ -19,31 +19,51 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.page;
+package org.jboss.test.selenium.support.ui;
 
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class CommandLinkCommandLinkPage extends AbstractCommandPage {
+public class TextContains implements ExpectedCondition<Boolean> {
 
-    @FindBy(xpath = "//*[@class='example-cnt']//a[text()='Say Hello']")
-    private WebElement link;
-    
-    public WebElement getLink() {
-        return link;
-    }
+    private WebElement element;
+    private String text;
+
+    public static TextContains getInstance() {
+        return new TextContains();
+    }    
     
     @Override
-    public String getDemoName() {
-        return "commandLink";
+    public Boolean apply(WebDriver driver) {
+        try {
+            return element.getText().contains(text);
+        } catch(StaleElementReferenceException ignored) {
+            return false;
+        }
+    } 
+
+    public TextContains element(WebElement element) {
+        TextContains copy = copy();
+        copy.element = element;
+        return copy;
     }
 
-    @Override
-    public String getSampleName() {
-        return "commandLink";
+    public TextContains text(String text) {
+        TextContains copy = copy();
+        copy.text = text;
+        return copy;
+    }    
+    
+    private TextContains copy() {
+        TextContains copy = new TextContains();
+        copy.element = element;
+        copy.text = text;
+        return copy;
     }
 
 }

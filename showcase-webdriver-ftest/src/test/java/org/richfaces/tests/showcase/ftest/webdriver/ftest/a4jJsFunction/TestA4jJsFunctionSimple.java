@@ -24,13 +24,13 @@ package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jJsFunction;
 import org.jboss.test.selenium.support.ui.TextEquals;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.ftest.webdriver.page.JsFunctionJsFunctionPage;
+import org.richfaces.tests.showcase.ftest.webdriver.page.a4jJsFunction.JsFunctionPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jJsFunctionSimple extends AbstractWebDriverTest<JsFunctionJsFunctionPage> {
+public class TestA4jJsFunctionSimple extends AbstractWebDriverTest<JsFunctionPage> {
     
     @Test
     public void testClick() {
@@ -43,8 +43,8 @@ public class TestA4jJsFunctionSimple extends AbstractWebDriverTest<JsFunctionJsF
     }
 
     @Override
-    protected JsFunctionJsFunctionPage createPage() {
-        return new JsFunctionJsFunctionPage();
+    protected JsFunctionPage createPage() {
+        return new JsFunctionPage();
     }
     
     

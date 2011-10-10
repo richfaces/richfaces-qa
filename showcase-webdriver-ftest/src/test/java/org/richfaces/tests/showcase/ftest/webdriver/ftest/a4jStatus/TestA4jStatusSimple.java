@@ -25,14 +25,14 @@ import org.jboss.test.selenium.support.ui.ElementNotPresent;
 import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.ftest.webdriver.page.StatusViewUsagePage;
+import org.richfaces.tests.showcase.ftest.webdriver.page.a4jStatus.ViewUsagePage;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jStatusSimple extends AbstractWebDriverTest<StatusViewUsagePage>{
+public class TestA4jStatusSimple extends AbstractWebDriverTest<ViewUsagePage>{
 
     @Test
     public void testSubmitSearch() {
@@ -50,7 +50,6 @@ public class TestA4jStatusSimple extends AbstractWebDriverTest<StatusViewUsagePa
         getPage().getUsernameInput().sendKeys("something");
         getPage().getAddressInput().click();
         getPage().getAddressInput().sendKeys("something");
-        System.err.println("click");
         getPage().getUserSubmit().click();
         new WebDriverWait(getWebDriver())
             .failWith("After submitting the username and the address, the request image should be present.")
@@ -87,8 +86,8 @@ public class TestA4jStatusSimple extends AbstractWebDriverTest<StatusViewUsagePa
     }
     
     @Override
-    protected StatusViewUsagePage createPage() {
-        return new StatusViewUsagePage();
+    protected ViewUsagePage createPage() {
+        return new ViewUsagePage();
     }
 
 }

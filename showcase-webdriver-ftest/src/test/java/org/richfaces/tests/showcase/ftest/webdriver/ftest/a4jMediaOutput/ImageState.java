@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jMediaOutput;
 
-import org.richfaces.tests.showcase.ftest.webdriver.page.MediaOutputImgUsagePage;
+import org.richfaces.tests.showcase.ftest.webdriver.page.a4jMediaOutput.ImgUsagePage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -57,15 +57,15 @@ public enum ImageState {
     }
 
     public enum Color {
-        LEFT_BLUE(MediaOutputImgUsagePage.INDEX_BLUE, -15993869),
-        LEFT_GREEN(MediaOutputImgUsagePage.INDEX_GREEN, -15991296),
-        LEFT_RED(MediaOutputImgUsagePage.INDEX_RED, -851957),
-        RIGHT_DARK_BLUE(MediaOutputImgUsagePage.INDEX_DARK_BLUE, -16449286),
-        RIGHT_RED(MediaOutputImgUsagePage.INDEX_RED, -391931),
-        RIGHT_YELLOW(MediaOutputImgUsagePage.INDEX_YELLOW, -327936),
-        TEXT_DARK_BLUE(MediaOutputImgUsagePage.INDEX_DARK_BLUE, -16776962),
-        TEXT_GREEN(MediaOutputImgUsagePage.INDEX_GREEN, -16712192),
-        TEXT_RED(MediaOutputImgUsagePage.INDEX_RED, -131072);
+        LEFT_BLUE(ImgUsagePage.INDEX_BLUE, -15993869),
+        LEFT_GREEN(ImgUsagePage.INDEX_GREEN, -15991296),
+        LEFT_RED(ImgUsagePage.INDEX_RED, -851957),
+        RIGHT_DARK_BLUE(ImgUsagePage.INDEX_DARK_BLUE, -16449286),
+        RIGHT_RED(ImgUsagePage.INDEX_RED, -391931),
+        RIGHT_YELLOW(ImgUsagePage.INDEX_YELLOW, -327936),
+        TEXT_DARK_BLUE(ImgUsagePage.INDEX_DARK_BLUE, -16776962),
+        TEXT_GREEN(ImgUsagePage.INDEX_GREEN, -16712192),
+        TEXT_RED(ImgUsagePage.INDEX_RED, -131072);
                 
         private int index;
         private long value;

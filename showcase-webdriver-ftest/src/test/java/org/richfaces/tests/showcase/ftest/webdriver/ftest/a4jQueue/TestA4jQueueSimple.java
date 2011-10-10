@@ -24,14 +24,14 @@ package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jQueue;
 import org.jboss.test.selenium.support.ui.TextEquals;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.ftest.webdriver.page.QueueQueuePage;
+import org.richfaces.tests.showcase.ftest.webdriver.page.a4jQueue.QueuePage;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jQueueSimple extends AbstractWebDriverTest<QueueQueuePage>{
+public class TestA4jQueueSimple extends AbstractWebDriverTest<QueuePage>{
 
     @Test
     public void testType() {
@@ -53,8 +53,8 @@ public class TestA4jQueueSimple extends AbstractWebDriverTest<QueueQueuePage>{
     }
     
     @Override
-    protected QueueQueuePage createPage() {
-        return new QueueQueuePage();
+    protected QueuePage createPage() {
+        return new QueuePage();
     }
 
 }

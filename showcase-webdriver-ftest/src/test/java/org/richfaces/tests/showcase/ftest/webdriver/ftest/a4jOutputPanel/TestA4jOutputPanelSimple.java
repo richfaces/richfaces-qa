@@ -25,14 +25,14 @@ import org.jboss.test.selenium.support.ui.ElementNotPresent;
 import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.ftest.webdriver.page.OutputPanelSimplePage;
+import org.richfaces.tests.showcase.ftest.webdriver.page.a4jOutputPanel.SimplePage;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<OutputPanelSimplePage>{
+public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<SimplePage>{
 
     private static final String CORRECT = "aaaaaaaaaa";
     private static final String WRONG = "aaaaaaaaaaa";
@@ -85,8 +85,8 @@ public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<OutputPanelS
     }
     
     @Override
-    protected OutputPanelSimplePage createPage() {
-        return new OutputPanelSimplePage();
+    protected SimplePage createPage() {
+        return new SimplePage();
     }
 
 }
