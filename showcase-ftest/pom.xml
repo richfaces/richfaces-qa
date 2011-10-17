@@ -298,7 +298,6 @@
                     <version>${arquillian.tomcat.version}</version>
                     <scope>test</scope>
                 </dependency>
-
                 <!-- Weld servlet, EL and JSP required for testing CDI injections -->
                 <dependency>
                     <groupId>org.jboss.weld.servlet</groupId>
