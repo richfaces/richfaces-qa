@@ -41,7 +41,7 @@ public class TestJsfValidators extends AbstractClientValidationTest {
 	private JQueryLocator nameInput = jq("input[id$=name]");
 	private JQueryLocator emailInput = jq("input[id$=email]");
 	private JQueryLocator ageInput = jq("input[id$=age]");
-	private JQueryLocator errorMessageAboutEmail = jq("span:contains('bad email')");
+	private JQueryLocator errorMessageAboutEmail = jq("span:contains('Invalid email address')");
 	private JQueryLocator errorMessageAboutNumber = jq("span:contains('must be a number between')");
 	private JQueryLocator errorMessageAboutRange = jq("span:contains('Validation Error: Specified " +
 			"attribute is not between the expected values of')");
@@ -55,7 +55,7 @@ public class TestJsfValidators extends AbstractClientValidationTest {
 		"name: Validation Error: Specified attribute is not between the expected values of 3 and 8.";
 	
 	private final String ERROR_MESSAGE_ABOUT_EMAIL = 
-		"bad email";
+		"Validation error: Invalid email address";
 	
 	private final String ERROR_MESSAGE_ABOUT_AGE =
 		"must be a number between -2147483648 and 2147483647 Example: 9346";
