@@ -19,41 +19,32 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.page;
+package org.richfaces.tests.showcase.ftest.webdriver.page.a4jCommandButton;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
+import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractCommandPage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class AjaxAjaxPage implements ShowcasePage {
+public class CommandButtonPage extends AbstractCommandPage {
 
-    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='text']")
-    private WebElement input;
+    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='submit']")
+    private WebElement button;
     
-    @FindBy(xpath = "//*[@class='example-cnt']//span")
-    private WebElement output;
+    public WebElement getButton() {
+        return button;
+    }
     
     @Override
     public String getDemoName() {
-        return "ajax";
+        return "commandButton";
     }
 
     @Override
     public String getSampleName() {
-        return "ajax";
+        return "commandButton";
     }
 
-    public WebElement getInput() {
-        return input;
-    }
-
-    public WebElement getOutput() {
-        return output;
-    }
-
-    
-    
 }

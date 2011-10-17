@@ -1,4 +1,4 @@
-package org.richfaces.tests.showcase.ftest.webdriver.page;
+package org.richfaces.tests.showcase.ftest.webdriver.page.a4jJsFunction;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -6,8 +6,9 @@ import java.util.Map;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 
-public class JsFunctionJsFunctionPage implements ShowcasePage {
+public class JsFunctionPage implements ShowcasePage {
 
     @FindBy(xpath = "//*[@class='example-cnt']//span[text()='Alex']")
     private WebElement nameAlex; 

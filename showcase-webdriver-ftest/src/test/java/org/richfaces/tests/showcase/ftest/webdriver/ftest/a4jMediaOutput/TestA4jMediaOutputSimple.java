@@ -30,13 +30,13 @@ import javax.imageio.ImageIO;
 
 import org.jboss.test.selenium.android.support.ui.Select;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractAndroidTest;
-import org.richfaces.tests.showcase.ftest.webdriver.page.MediaOutputImgUsagePage;
+import org.richfaces.tests.showcase.ftest.webdriver.page.a4jMediaOutput.ImgUsagePage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jMediaOutputSimple extends AbstractAndroidTest<MediaOutputImgUsagePage> {
+public class TestA4jMediaOutputSimple extends AbstractAndroidTest<ImgUsagePage> {
 
     @Test
     public void testStates() throws Exception {
@@ -57,8 +57,8 @@ public class TestA4jMediaOutputSimple extends AbstractAndroidTest<MediaOutputImg
     }
     
     @Override
-    protected MediaOutputImgUsagePage createPage() {
-        return new MediaOutputImgUsagePage();
+    protected ImgUsagePage createPage() {
+        return new ImgUsagePage();
     }
 
     private void testImage(long expectedRightBottomCornerColor, long expectedLeftTopCornerColor, long expectedTextColor)

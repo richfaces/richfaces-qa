@@ -19,15 +19,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.page;
+package org.richfaces.tests.showcase.ftest.webdriver.page.a4jMediaOutput;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class MediaOutputImgUsagePage implements ShowcasePage {
+public class ImgUsagePage implements ShowcasePage {
 
     public static final int INDEX_RED = 0;
     public static final int INDEX_DARK_BLUE = 1;

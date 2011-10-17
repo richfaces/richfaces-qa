@@ -19,31 +19,62 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.page;
+package org.richfaces.tests.showcase.ftest.webdriver.page.a4jOutputPanel;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class CommandButtonCommandButtonPage extends AbstractCommandPage {
+public class SimplePage implements ShowcasePage {
 
-    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='submit']")
-    private WebElement button;
-    
-    public WebElement getButton() {
-        return button;
-    }
+    @FindBy(xpath = "//*[@class='example-cnt']//span[contains(text(), 'text1')]")
+    private WebElement firstError;
+    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='text'][contains(@name, 'text1')]")
+    private WebElement firstInput;
+    @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'out1')]")
+    private WebElement firstOutput;
+    @FindBy(xpath = "//*[@class='example-cnt']//span[contains(text(), 'text2')]")
+    private WebElement secondError;    
+    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='text'][contains(@name, 'text2')]")
+    private WebElement secondInput;
+    @FindBy(xpath = "//*[@class='example-cnt']//div[contains(@id, 'out2')]")
+    private WebElement secondOutput;
     
     @Override
     public String getDemoName() {
-        return "commandButton";
+        return "outputPanel";
     }
 
     @Override
     public String getSampleName() {
-        return "commandButton";
+        return "simple";
+    }
+
+    public WebElement getFirstError() {
+        return firstError;
+    }
+
+    public WebElement getFirstInput() {
+        return firstInput;
+    }
+
+    public WebElement getFirstOutput() {
+        return firstOutput;
+    }
+
+    public WebElement getSecondError() {
+        return secondError;
+    }
+
+    public WebElement getSecondInput() {
+        return secondInput;
+    }
+
+    public WebElement getSecondOutput() {
+        return secondOutput;
     }
 
 }

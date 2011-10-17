@@ -26,13 +26,13 @@ import static org.testng.Assert.assertEquals;
 import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.ftest.webdriver.page.CommandLinkCommandLinkPage;
+import org.richfaces.tests.showcase.ftest.webdriver.page.a4jCommandLink.CommandLinkPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jCommandLinkSimple extends AbstractWebDriverTest<CommandLinkCommandLinkPage> {
+public class TestA4jCommandLinkSimple extends AbstractWebDriverTest<CommandLinkPage> {
 
     @Test
     public void testTypeAndSend() {
@@ -48,8 +48,8 @@ public class TestA4jCommandLinkSimple extends AbstractWebDriverTest<CommandLinkC
     }
 
     @Override
-    protected CommandLinkCommandLinkPage createPage() {
-        return new CommandLinkCommandLinkPage();
+    protected CommandLinkPage createPage() {
+        return new CommandLinkPage();
     }
     
 }

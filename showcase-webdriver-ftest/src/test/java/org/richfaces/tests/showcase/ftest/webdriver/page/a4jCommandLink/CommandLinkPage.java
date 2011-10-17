@@ -19,40 +19,32 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.page;
+package org.richfaces.tests.showcase.ftest.webdriver.page.a4jCommandLink;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractCommandPage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class PollPollPage implements ShowcasePage {
+public class CommandLinkPage extends AbstractCommandPage {
 
-    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='submit']")
-    private WebElement button;
+    @FindBy(xpath = "//*[@class='example-cnt']//a[text()='Say Hello']")
+    private WebElement link;
     
-    @FindBy(xpath = "//*[@class='example-cnt']//td/span")
-    private WebElement date;
+    public WebElement getLink() {
+        return link;
+    }
     
     @Override
     public String getDemoName() {
-        return "poll";
+        return "commandLink";
     }
 
     @Override
     public String getSampleName() {
-        return "poll";
+        return "commandLink";
     }
 
-    public WebElement getButton() {
-        return button;
-    }
-
-    public WebElement getDate() {
-        return date;
-    }
-
-    
-    
 }

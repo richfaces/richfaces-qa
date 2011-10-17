@@ -19,15 +19,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.page;
+package org.richfaces.tests.showcase.ftest.webdriver.page.a4jStatus;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class StatusViewUsagePage implements ShowcasePage {
+public class ViewUsagePage implements ShowcasePage {
 
     @FindBy(xpath = "//*[@class='example-cnt']//td[text()='Address:']/../td/input")
     private WebElement addressInput;

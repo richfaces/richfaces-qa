@@ -24,14 +24,14 @@ package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jCommandButton;
 import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.ftest.webdriver.page.CommandButtonCommandButtonPage;
+import org.richfaces.tests.showcase.ftest.webdriver.page.a4jCommandButton.CommandButtonPage;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jCommandButtonSimple extends AbstractWebDriverTest<CommandButtonCommandButtonPage> {
+public class TestA4jCommandButtonSimple extends AbstractWebDriverTest<CommandButtonPage> {
 
     @Test
     public void testTypeAndSend() {
@@ -46,8 +46,8 @@ public class TestA4jCommandButtonSimple extends AbstractWebDriverTest<CommandBut
         assertEquals(getPage().getOutput().getText(), "Hello something !", "After typing something into the input and clicking on the command button, the text should appear in the output area.");
     }
     
-    protected CommandButtonCommandButtonPage createPage() {
-        return new CommandButtonCommandButtonPage();
+    protected CommandButtonPage createPage() {
+        return new CommandButtonPage();
     }
     
 }
