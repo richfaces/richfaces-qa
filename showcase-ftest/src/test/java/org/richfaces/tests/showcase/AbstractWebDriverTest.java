@@ -23,7 +23,7 @@ package org.richfaces.tests.showcase;
 
 import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -33,7 +33,7 @@ import org.testng.annotations.BeforeMethod;
 public class AbstractWebDriverTest extends AbstractShowcaseTest {
 
 	@Drone
-	protected WebDriver webDriver;
+	protected FirefoxDriver webDriver;
 
 	@BeforeMethod
 	public void loadPage() {
