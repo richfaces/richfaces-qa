@@ -292,7 +292,9 @@ public class TestTableFiltering extends AbstractDataIterationWithCars {
 
 		for (Iterator<JQueryLocator> i = trs.iterator(); i.hasNext();) {
 
-			boolean result = checkValueInTheRow(i.next(), mileagefilter,
+			JQueryLocator row = i.next();
+			
+			boolean result = checkValueInTheRow(row, mileagefilter,
 					"mileage");
 
 			if (!result) {
@@ -300,7 +302,7 @@ public class TestTableFiltering extends AbstractDataIterationWithCars {
 				return false;
 			}
 
-			result = checkValueInTheRow(i.next(), vinFilter, "vin");
+			result = checkValueInTheRow(row, vinFilter, "vin");
 
 			if (!result) {
 
