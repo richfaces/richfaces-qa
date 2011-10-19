@@ -21,29 +21,19 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jStatus;
 
-import org.jboss.test.selenium.support.ui.ElementNotPresent;
+import static org.testng.Assert.assertEquals;
+
 import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.a4jStatus.ViewUsagePage;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestA4jStatusSimple extends AbstractWebDriverTest<ViewUsagePage>{
 
-    @Test
-    public void testSubmitSearch() {
-        getPage().getSearchInput().click();
-        getPage().getSearchInput().sendKeys("something");
-        getPage().getSearchSubmit().click();
-        new WebDriverWait(getWebDriver())
-        .failWith("After submitting the search, the request image should be present.")
-        .until(ElementPresent.getInstance().element(getPage().getRequestImage()));            
-    }
-    
     @Test
     public void testSubmitUser() {
         getPage().getUsernameInput().click();
@@ -68,14 +58,7 @@ public class TestA4jStatusSimple extends AbstractWebDriverTest<ViewUsagePage>{
             .failWith("After typing the address, the request image should be present.")
             .until(ElementPresent.getInstance().element(getPage().getRequestImage()));        
     }
-    
-    @Test
-    public void testTypeSearch() {
-        getPage().getSearchInput().click();
-        getPage().getSearchInput().sendKeys("something");
-        assertTrue(ElementNotPresent.getInstance().element(getPage().getRequestImage()).apply(getWebDriver()), "After typing a text into the search input field, the request image shouldn't be present.");
-    }
-    
+   
     @Test
     public void testTypeUsername() {
         getPage().getUsernameInput().click();

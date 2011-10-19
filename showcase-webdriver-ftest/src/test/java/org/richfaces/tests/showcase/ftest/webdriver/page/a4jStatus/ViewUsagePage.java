@@ -34,10 +34,6 @@ public class ViewUsagePage implements ShowcasePage {
     private WebElement addressInput;
     @FindBy(xpath = "//*[@class='example-cnt']//span[@class='rf-st-start']/img")
     private WebElement requestImage;
-    @FindBy(xpath = "//*[@class='example-cnt']//div[text()='Simple search panel']/..//input[@type='text']")
-    private WebElement searchInput;
-    @FindBy(xpath = "//*[@class='example-cnt']//div[text()='Simple search panel']/..//input[@type='button']")
-    private WebElement searchSubmit;
     @FindBy(xpath = "//*[@class='example-cnt']//td[text()='User name:']/../td/input")
     private WebElement usernameInput;
     @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'out')]")
@@ -58,14 +54,6 @@ public class ViewUsagePage implements ShowcasePage {
     public WebElement getAddressInput() {
         return addressInput;
     }    
-    
-    public WebElement getSearchInput() {
-        return searchInput;
-    }
-    
-    public WebElement getSearchSubmit() {
-        return searchSubmit;
-    }
     
     public WebElement getRequestImage() {
         return requestImage;

@@ -39,7 +39,8 @@ public class ElementNotPresent implements ExpectedCondition<Boolean> {
     
     public Boolean apply(WebDriver driver) {
         try {
-            return !element.isDisplayed();
+            element.isDisplayed();
+            return false;
         } catch (NoSuchElementException e) {
             return true;
         }    
