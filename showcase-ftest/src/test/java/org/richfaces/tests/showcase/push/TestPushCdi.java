@@ -88,7 +88,7 @@ public class TestPushCdi extends AbstractWebDriverTest {
 
 		Set<String> windows = null;
 
-		// 3 times will be new consumer invoked
+		// 5 times will be new consumer invoked
 		for (int i = 0; i < 5; i++) {
 
 			windows = webDriver.getWindowHandles();
