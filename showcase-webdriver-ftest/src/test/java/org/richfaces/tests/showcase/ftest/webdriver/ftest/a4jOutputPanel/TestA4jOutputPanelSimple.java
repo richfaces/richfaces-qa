@@ -24,7 +24,6 @@ package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jOutputPanel;
 import org.jboss.test.selenium.support.ui.ElementNotPresent;
 import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.jboss.test.selenium.support.ui.TextContains;
-import org.jboss.test.selenium.support.ui.TextNotEquals;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.a4jOutputPanel.SimplePage;
@@ -39,7 +38,7 @@ public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<SimplePage>{
     private static final String CORRECT = "aaaaaaaaaa";
     private static final String WRONG = "aaaaaaaaaaa";
     
-//    @Test
+    @Test
     public void testFirstCorrectInput() {
         getPage().getFirstInput().click();
         getPage().getFirstInput().sendKeys(CORRECT);
@@ -52,7 +51,7 @@ public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<SimplePage>{
         assertEquals(getPage().getFirstOutput().getText(), "Approved Text: " + CORRECT, "The output text doesn't match.");        
     }
     
-//    @Test
+    @Test
     public void testFirstWrongInput() {
         getPage().getFirstInput().click();
         getPage().getFirstInput().sendKeys(WRONG);
@@ -65,7 +64,7 @@ public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<SimplePage>{
         assertTrue(ElementNotPresent.getInstance().element(getPage().getFirstOutput()).apply(getWebDriver()), "After typing a wrong value into the first input field and submitting no output text should be present.");
     }
     
-//    @Test
+    @Test
     public void testSecondCorrectInput() {
         getPage().getSecondInput().click();
         getPage().getSecondInput().sendKeys(CORRECT);
