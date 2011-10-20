@@ -41,15 +41,14 @@ public class TestInplaceSelect extends AbstractAjocadoTest {
 	 */
 
 	protected JQueryLocator selectSimple = jq("input[id$=Input]:eq(0)");
-	protected JQueryLocator selectCustomization = jq("input[id$=Input]:eq(1)");
+	//protected JQueryLocator selectCustomization = jq("input[id$=Input]:eq(1)");
 
 	protected JQueryLocator selectSimpleLabel = jq("span[id$=Label]:eq(0)");
-	protected JQueryLocator selectCustomizationLabel = jq("span[id$=Label]:eq(1)");
+	//protected JQueryLocator selectCustomizationLabel = jq("span[id$=Label]:eq(1)");
 
 	protected JQueryLocator optionLocator = jq("span.rf-is-opt:contains('{0}')");
 	
-	protected JQueryLocator acceptButton = jq("input[class*=rf-is-btn]:eq(0)");
-	protected JQueryLocator declineButton = jq("input.rf-is-btn:eq(1)");
+	//protected JQueryLocator declineButton = jq("input.rf-is-btn:eq(1)");
 	
 	/* *********************************************************************************************
 	 * Tests
@@ -67,15 +66,15 @@ public class TestInplaceSelect extends AbstractAjocadoTest {
 
 	}
 	
-	@Test 
-	public void testCustomizationSelect() {
+	//@Test 
+	/*public void testCustomizationSelect() {
 		
 		checkSelect(selectCustomization, selectCustomizationLabel, "Alabama", true);
 		
 		checkSelect(selectCustomization, selectCustomizationLabel, "Florida", true);
 		
 		checkSelect(selectCustomization, selectCustomizationLabel, "California", true);
-	}
+	}*/
 	
 	/* *********************************************************************************************************
 	 * Help methods
@@ -87,8 +86,11 @@ public class TestInplaceSelect extends AbstractAjocadoTest {
 	 * Checks the select, when it is select which is activated by double click, then also there is need for click on 
 	 * accept button.
 	 */
+	
 	private void checkSelect( JQueryLocator select, JQueryLocator labelWhenSomethingIsSelected, 
 			String optionLabelFromPoppup, boolean doubleClick) {
+
+		JQueryLocator acceptButton = jq("input[class*=rf-is-btn]:eq(0)");
 		
 		if( doubleClick ) {
 			
@@ -109,5 +111,5 @@ public class TestInplaceSelect extends AbstractAjocadoTest {
 		
 		assertEquals( optionFromLabel, optionFromLabel, "The selected option is different as the select shows!");
 	}
-
+	
 }
