@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.page.a4jStatus;
+package org.richfaces.tests.showcase.ftest.webdriver.page.richGraphValidator;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -28,46 +28,55 @@ import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class ViewUsagePage implements ShowcasePage {
+public class PasswordValidationPage implements ShowcasePage {
 
-    @FindBy(xpath = "//*[@class='example-cnt']//td[text()='Address:']/../td/input")
-    private WebElement addressInput;
-    @FindBy(xpath = "//*[@class='example-cnt']//span[@class='rf-st-start']/img")
-    private WebElement requestImage;
-    @FindBy(xpath = "//*[@class='example-cnt']//td[text()='User name:']/../td/input")
-    private WebElement usernameInput;
-    @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'out')]")
-    private WebElement userOutput;
-    @FindBy(xpath = "//*[@class='example-cnt']//div[text()='User Details Panel']/..//input[@type='button']")
-    private WebElement userSubmit;
+    @FindBy(xpath = "//*[@class='example-cnt']//input[contains(@id, 'pass')]")
+    private WebElement confirmation;
+    @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'gv')]")
+    private WebElement graphValidatorMessageArea;    
+    @FindBy(xpath = "//*[@class='example-cnt']//span[@class='rf-msgs-inf']")
+    private WebElement infoMessageArea;
+    @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'pass')][@class='rf-msg-err']")
+    private WebElement validatorMessageArea;
+    @FindBy(xpath = "//*[@class='example-cnt']//input[contains(@id, 'conf')]")
+    private WebElement password;
+    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='submit']")
+    private WebElement submit;
     
     @Override
     public String getDemoName() {
-        return "status";
+        return "graphValidator";
     }
 
     @Override
     public String getSampleName() {
-        return "viewusage";
+        return "passwordValidation";
     }
 
-    public WebElement getAddressInput() {
-        return addressInput;
+    public WebElement getConfirmation() {
+        return confirmation;
+    }
+
+    public WebElement getGraphValidatorMessageArea() {
+        return graphValidatorMessageArea;
     }    
     
-    public WebElement getRequestImage() {
-        return requestImage;
-    }
-
-    public WebElement getUsernameInput() {
-        return usernameInput;
-    }
-
-    public WebElement getUserOutput() {
-        return userOutput;
-    }
+    public WebElement getInfoMessageArea() {
+        return infoMessageArea;
+    }    
     
-    public WebElement getUserSubmit() {
-        return userSubmit;
+    public WebElement getValidatorMessageArea() {
+        return validatorMessageArea;
     }
+
+    public WebElement getPassword() {
+        return password;
+    }
+
+    public WebElement getSubmit() {
+        return submit;
+    }
+
+    
+    
 }

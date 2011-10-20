@@ -60,7 +60,7 @@ public class TestCsvJsf extends AbstractWebDriverTest<JsfValidatorsPage>{
         getPage().getEmailInput().clear();
         getPage().getEmailInput().sendKeys("name@domain.com"); 
         getPage().getNameInput().click();
-        getPage().getEmailInput().clear();
+        getPage().getNameInput().clear();
         getPage().getNameInput().sendKeys("12345678");    
         getPage().loseFocus(); 
         new WebDriverWait(getWebDriver())
