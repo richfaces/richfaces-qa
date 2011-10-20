@@ -90,10 +90,10 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
     @BeforeMethod(alwaysRun = true)
     public void initializePageUrl() {
         webDriver.get(getPath());
-        // HACK: because of the bug in mobile version of showcase
-        if (getConfiguration().isMobile()) {
-            webDriver.get(getPath());
-        }
+//        // HACK: because of the bug in mobile version of showcase
+//        if (getConfiguration().isMobile()) {
+//            webDriver.get(getPath());
+//        }
     }
     
     protected ElementLocatorFactory createLocatorFactory() {
