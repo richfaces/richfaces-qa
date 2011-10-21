@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richMessages;
 
-import org.richfaces.tests.showcase.ftest.wbdriver.ftest.AbstractRichMessageTest;
+import org.richfaces.tests.showcase.ftest.webdriver.ftest.AbstractRichMessageTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.richMessages.MessagesPage;
 import org.testng.annotations.Test;
 
