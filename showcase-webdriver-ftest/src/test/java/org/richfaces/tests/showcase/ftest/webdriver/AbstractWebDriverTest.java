@@ -41,6 +41,7 @@ import org.testng.annotations.BeforeMethod;
 */
 public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends AbstractShowcaseTest {
   
+    private FieldDecorator fieldDecorator;
     private Page page;
     private WebDriver webDriver;
     
@@ -80,8 +81,7 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
     
     @BeforeClass(alwaysRun = true, dependsOnMethods = { "initializeWebDriver" })
     public void initializePage() {
-        FieldDecorator decorator = new StaleReferenceAwareFieldDecorator(createLocatorFactory(), getConfiguration().getWebDriverElementTries());
-        PageFactory.initElements(decorator, getPage());
+        initializePage(getPage());
     }
     
     /**
@@ -90,10 +90,6 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
     @BeforeMethod(alwaysRun = true)
     public void initializePageUrl() {
         webDriver.get(getPath());
-//        // HACK: because of the bug in mobile version of showcase
-//        if (getConfiguration().isMobile()) {
-//            webDriver.get(getPath());
-//        }
     }
     
     protected ElementLocatorFactory createLocatorFactory() {
@@ -125,6 +121,17 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
      */
     protected WebDriver getWebDriver() {
         return webDriver;
+    }
+    
+    protected void initializePage(Object page) {
+        PageFactory.initElements(getFieldDecorator(), page);        
+    }
+    
+    private FieldDecorator getFieldDecorator() {
+        if (fieldDecorator == null) {
+            fieldDecorator = new StaleReferenceAwareFieldDecorator(createLocatorFactory(), getConfiguration().getWebDriverElementTries());
+        }
+        return fieldDecorator;
     }
     
     protected abstract Page createPage();
