@@ -19,29 +19,53 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.ftest.richExtendedDataTable;
+package org.richfaces.tests.showcase.ftest.webdriver.model;
 
-import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.ftest.webdriver.model.CarWithVinCode;
-import org.richfaces.tests.showcase.ftest.webdriver.page.richExtendedDataTable.SimpleTablePage;
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+import org.apache.commons.lang.Validate;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichExtendedDataTableSimple extends AbstractWebDriverTest<SimpleTablePage>{
+public class CarWithVinCode extends Car{
 
-    private static final CarWithVinCode FIRST_CAR = new CarWithVinCode("Chevrolet", "Corvette", "LRAZJGURJUKEWMIXV");
+    private String vinCode;
     
-    @Test(enabled=false)
-    public void testInit() {
-        assertEquals(getPage().getFirstCar(), FIRST_CAR, "The first car doesn't match.");
+    public CarWithVinCode(String vendor, String model, String vinCode) {
+        super(vendor, model);
+        Validate.notNull(vinCode);
+        this.vinCode = vinCode;
+    }
+    public String getVinCode() {
+        return vinCode;
+    }
+
+    public String toString() {
+        return super.toString() + " " + vinCode;
     }
     
     @Override
-    protected SimpleTablePage createPage() {
-        return new SimpleTablePage();
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((vinCode == null) ? 0 : vinCode.hashCode());
+        return result;
     }
-
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        CarWithVinCode other = (CarWithVinCode) obj;
+        if (vinCode == null) {
+            if (other.vinCode != null)
+                return false;
+        } else if (!vinCode.equals(other.vinCode))
+            return false;
+        return true;
+    }
+    
+   
 }

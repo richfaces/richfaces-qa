@@ -30,17 +30,14 @@ public class Car {
 
     private String model;
     private String vendor;
-    private String vinCode;
     
-    public Car(String vendor, String model, String vinCode) {
+    public Car(String vendor, String model) {
         Validate.notNull(vendor);
         Validate.notNull(vendor);
-        Validate.notNull(vinCode);
         this.model = model;
         this.vendor = vendor;
-        this.vinCode = vinCode;
     }
-
+    
     public String getModel() {
         return model;
     }
@@ -48,22 +45,18 @@ public class Car {
     public String getVendor() {
         return vendor;
     }
-
-    public String getVinCode() {
-        return vinCode;
-    }
-
-    public String toString() {
-        return vendor + " " + model + " " + vinCode;
-    }
     
+    @Override
+    public String toString() {
+        return vendor + " " + model;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((model == null) ? 0 : model.hashCode());
         result = prime * result + ((vendor == null) ? 0 : vendor.hashCode());
-        result = prime * result + ((vinCode == null) ? 0 : vinCode.hashCode());
         return result;
     }
 
@@ -86,12 +79,6 @@ public class Car {
                 return false;
         } else if (!vendor.equals(other.vendor))
             return false;
-        if (vinCode == null) {
-            if (other.vinCode != null)
-                return false;
-        } else if (!vinCode.equals(other.vinCode))
-            return false;
         return true;
     }
-    
 }

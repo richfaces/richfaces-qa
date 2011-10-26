@@ -19,47 +19,52 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.page.richExtendedDataTable;
+package org.richfaces.tests.showcase.ftest.webdriver.page.richDataScroller;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.showcase.ftest.webdriver.model.CarWithVinCode;
+import org.richfaces.tests.showcase.ftest.webdriver.model.Car;
+import org.richfaces.tests.showcase.ftest.webdriver.page.DataScrollablePage;
 import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class SimpleTablePage implements ShowcasePage {
-
-    @FindBy(xpath = "//*[@class='example-cnt']//table[contains(@id, 'table:tbtf')]")
-    private WebElement scrollableArea;
-    @FindBy(xpath = "//*[@class='example-cnt']//table[contains(@id, 'table:tbtn')]")
-    private WebElement table;
-   
-    public CarWithVinCode getFirstCar() {
-        return getCarAtPosition("1");
-    }
+public class SimpleScrollingPage extends DataScrollablePage implements ShowcasePage {
     
-    public CarWithVinCode getLastCar() {
-        return getCarAtPosition("last()");
+    @FindBy(xpath = "//table[contains(@id, 'table')]/tbody[1]/tr[1]")
+    private WebElement firstCarRow;
+    @FindBy(xpath = "//table[contains(@id, 'table')]/tbody[1]/tr[last()]")
+    private WebElement lastCarRow;
+    
+    public SimpleScrollingPage(WebDriver webDriver) {
+        super(webDriver);
     }
     
     @Override
     public String getDemoName() {
-        return "extendedDataTable";
+        return "dataScroller";
     }
 
     @Override
     public String getSampleName() {
-        return "simpleTable";
+        return "simpleScrolling";
     }
 
-    private CarWithVinCode getCarAtPosition(String position) {
-        return new CarWithVinCode(
-            table.findElement(By.xpath("//tr[" + position + "]/td[1]")).getText(),
-            table.findElement(By.xpath("//tr[" + position + "]/td[2]")).getText(),
-            scrollableArea.findElement(By.xpath("//tr[" + position + "]/td[3]")).getText()
+    public Car getFirstCar() {
+        return createCarFromRow(firstCarRow);
+    }
+    
+    public Car getLastCar() {
+        return createCarFromRow(lastCarRow);
+    }
+    
+    private Car createCarFromRow(WebElement row) {
+        return new Car(
+            row.findElement(By.xpath("td[1]")).getText(),
+            row.findElement(By.xpath("td[2]")).getText()
         );
     }
     

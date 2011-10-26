@@ -25,6 +25,8 @@ import org.apache.commons.lang.Validate;
 import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.jboss.test.selenium.support.ui.TextNotEquals;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -51,27 +53,27 @@ public class DataScrollablePage {
     private WebElement buttonWithNumberOfCurrentPage;
     @FindBy(xpath="//*[@class='example-cnt']//a[@class='" + CLASS_OF_BUTTON_FAST_FWD + "']")
     private WebElement fastNextButton;
-    @FindBy(xpath="//*[@class='example-cnt']//a[@class='" + CLASS_OF_BUTTON_FAST_FWD + " " + CLASS_OF_BUTTON_DIS + "']")
+    @FindBy(xpath="//*[@class='example-cnt']//span[@class='" + CLASS_OF_BUTTON_FAST_FWD + " " + CLASS_OF_BUTTON_DIS + "']")
     private WebElement fastNextButtonDis;        
     @FindBy(xpath="//*[@class='example-cnt']//a[@class='" + CLASS_OF_BUTTON_FAST_RWD + "']")
     private WebElement fastPreviousButton;
-    @FindBy(xpath="//*[@class='example-cnt']//a[@class='" + CLASS_OF_BUTTON_FAST_RWD + " " + CLASS_OF_BUTTON_DIS + "']")
+    @FindBy(xpath="//*[@class='example-cnt']//span[@class='" + CLASS_OF_BUTTON_FAST_RWD + " " + CLASS_OF_BUTTON_DIS + "']")
     private WebElement fastPreviousButtonDis;
     @FindBy(xpath="//*[@class='example-cnt']//a[@class='" + CLASS_OF_BUTTON_FIRST + "']")
     private WebElement firstPageButton;
-    @FindBy(xpath="//*[@class='example-cnt']//a[@class='" + CLASS_OF_BUTTON_FIRST + " " + CLASS_OF_BUTTON_DIS + "']")
+    @FindBy(xpath="//*[@class='example-cnt']//span[@class='" + CLASS_OF_BUTTON_FIRST + " " + CLASS_OF_BUTTON_DIS + "']")
     private WebElement firstPageButtonDis;     
     @FindBy(xpath="//*[@class='example-cnt']//a[@class='" + CLASS_OF_BUTTON_LAST + "']")
     private WebElement lastPageButton;
-    @FindBy(xpath="//*[@class='example-cnt']//a[@class='" + CLASS_OF_BUTTON_LAST + " " + CLASS_OF_BUTTON_DIS + "']")
+    @FindBy(xpath="//*[@class='example-cnt']//span[@class='" + CLASS_OF_BUTTON_LAST + " " + CLASS_OF_BUTTON_DIS + "']")
     private WebElement lastPageButtonDis;      
     @FindBy(xpath="//*[@class='example-cnt']//a[@class='" + CLASS_OF_BUTTON_NEXT + "']")
     private WebElement nextButton;
-    @FindBy(xpath="//*[@class='example-cnt']//a[@class='" + CLASS_OF_BUTTON_NEXT + " " + CLASS_OF_BUTTON_DIS + "']")
+    @FindBy(xpath="//*[@class='example-cnt']//span[@class='" + CLASS_OF_BUTTON_NEXT + " " + CLASS_OF_BUTTON_DIS + "']")
     private WebElement nextButtonDis;
     @FindBy(xpath="//*[@class='example-cnt']//a[@class='" + CLASS_OF_BUTTON_PREV + "']")
     private WebElement previousButton;
-    @FindBy(xpath="//*[@class='example-cnt']//a[@class='" + CLASS_OF_BUTTON_PREV + " " + CLASS_OF_BUTTON_DIS + "']")
+    @FindBy(xpath="//*[@class='example-cnt']//span[@class='" + CLASS_OF_BUTTON_PREV + " " + CLASS_OF_BUTTON_DIS + "']")
     private WebElement previousButtonDis;
     
     // OTHER
@@ -98,7 +100,7 @@ public class DataScrollablePage {
         return ElementPresent.getInstance().element(lastPageButtonDis).apply(webDriver);
     }
     
-    public boolean iNextButtonDisabled() {
+    public boolean isNextButtonDisabled() {
         return ElementPresent.getInstance().element(nextButtonDis).apply(webDriver);
     }    
     
@@ -106,17 +108,36 @@ public class DataScrollablePage {
         return ElementPresent.getInstance().element(fastNextButtonDis).apply(webDriver);
     }    
     
+    public boolean isPageNumberPresent(int pageNumber) {
+        try {
+            getWebDriver().findElement(By.xpath("//*[@class='example-cnt']//*[contains(@class, '" + CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER +"')][text()='" + pageNumber + "']"));
+            return true;
+        } catch(NoSuchElementException ignored) {
+            return false;
+        }
+    }
+    
     public boolean isPreviousButtonDisabled() {
         return ElementPresent.getInstance().element(previousButtonDis).apply(webDriver);
     }    
     
-    public boolean iPreviousFastDisabled() {
+    public boolean isPreviousFastButtonDisabled() {
         return ElementPresent.getInstance().element(fastPreviousButtonDis).apply(webDriver);
     }    
     
     public void last() {
         clickAndWaitForPageChanged(lastPageButton);
     }    
+    
+    public void page(int pageNumber) {
+        if (pageNumber == getNumberOfCurrentPage()) {
+            throw new IllegalArgumentException("The page <" + pageNumber + "> is already selected.");
+        }
+        if (!isPageNumberPresent(pageNumber)) {
+            throw new IllegalArgumentException("The page number <" + pageNumber + "> is not present.");
+        }
+        clickAndWaitForPageChanged(getWebDriver().findElement(By.xpath("//*[@class='example-cnt']//*[contains(@class, '" + CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER +"')][text()='" + pageNumber + "']")));
+    }
     
     public void next() {
         clickAndWaitForPageChanged(nextButton);
