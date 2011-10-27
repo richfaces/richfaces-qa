@@ -21,12 +21,28 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver;
 
+import java.io.File;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.RunAsClient;
+import org.jboss.arquillian.testng.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public abstract class AbstractShowcaseTest {
+@RunAsClient
+public abstract class AbstractShowcaseTest extends Arquillian {
     
     private TestConfiguration configuration;
+    
+    @Deployment(testable = false)
+    public static WebArchive createTestArchive() {
+        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class,
+            new File("target/showcase.war"));
+        return war;
+    }     
     
     /**
      * Creates a new instance of {@link AbstractShowcaseTest} with

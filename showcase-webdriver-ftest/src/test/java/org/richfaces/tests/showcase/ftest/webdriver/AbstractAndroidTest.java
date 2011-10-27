@@ -30,8 +30,8 @@ import org.jboss.test.selenium.android.ToolKitConfiguration;
 import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 
 /**
-* @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
-*/
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ */
 public abstract class AbstractAndroidTest<Page extends ShowcasePage> extends AbstractWebDriverTest<Page> {
 
     private ToolKit toolKit;
