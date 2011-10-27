@@ -31,6 +31,7 @@ public class PropertyToolKitConfiguration implements ToolKitConfiguration {
     public static final long DEFAULT_SEND_KEY_DELAY = 500;
     
     private File directory;
+    private int inPath = -1;
     private String prefix;
     private long sendKeyDelay = -1;
     
@@ -50,6 +51,13 @@ public class PropertyToolKitConfiguration implements ToolKitConfiguration {
         return directory;
     }
 
+    public boolean isInPath() {
+        if (inPath == -1) {
+            inPath = System.getProperty(prefix + "inpath") == null ? 0 : 1;
+        }
+        return inPath == 1;
+    }
+    
     @Override
     public long getSendKeyDelay() {
         if (sendKeyDelay == -1) {

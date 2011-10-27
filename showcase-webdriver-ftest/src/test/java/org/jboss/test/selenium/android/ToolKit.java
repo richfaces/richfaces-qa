@@ -67,7 +67,11 @@ public class ToolKit {
      */
     public void sendKey(Key key, long delay) throws ToolKitException {
         try {
-            Runtime.getRuntime().exec(configuration.getDirectory().getAbsolutePath() + "/" + ADB_DIR + "/adb shell input keyevent " + key.getCode());
+            if (configuration.isInPath()) {
+                Runtime.getRuntime().exec("adb shell input keyevent " + key.getCode());
+            } else {
+                Runtime.getRuntime().exec(configuration.getDirectory().getAbsolutePath() + "/" + ADB_DIR + "/adb shell input keyevent " + key.getCode());
+            }
             Thread.sleep(delay);
         } catch(IOException e) {
             throw new ToolKitException("The key can't be sent to the device.", e);

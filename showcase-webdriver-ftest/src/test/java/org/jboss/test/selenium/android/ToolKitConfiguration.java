@@ -45,4 +45,6 @@ public interface ToolKitConfiguration {
      */
     long getSendKeyDelay();
     
+    boolean isInPath();
+    
 }

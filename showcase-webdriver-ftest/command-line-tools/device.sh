@@ -1,7 +1,7 @@
 #!/bin/bash
 SCRIPT_DIR=`dirname $BASH_SOURCE`;
 
-source "$SCRIPT_DIR/config.sh";
+source "$SCRIPT_DIR/device-arguments.sh";
 if [ $ARG_START_DEVICE == 1 ]; then
 	msg "deleting old devices";
 	$ARG_ANDROID_SDK/tools/android delete avd -n $ARG_DEVICE_NAME;
@@ -19,21 +19,12 @@ fi
 
 
 if [ $ARG_INSTALL_WEBDRIVER == 1 ]; then
-	WEBDRIVER=${WEBDRIVER_FILE_PREFIX}${ARG_WEBDRIVER_FILE_VERSION}${WEBDRIVER_FILE_SUFFIX};
-	if [ ! -e $ARG_WORKSPACE/$WEBDRIVER ]; then
-		msg "downloading webdriver to [$ARG_WORKSPACE/$WEBDRIVER]";
-		wget $WEBDRIVER_DOWNLOAD_URL/$WEBDRIVER --output-document $ARG_WORKSPACE/$WEBDRIVER;
-	fi	
-	msg "installing web driver [$WEBDRIVER]";	
-	$ARG_ANDROID_SDK/platform-tools/adb -s $DEVICE_SERIAL -e install -r $ARG_WORKSPACE/$WEBDRIVER;
-	msg "forwarding tcp: host port $ARG_HOST_PORT -> device port $ARG_DEVICE_PORT";
-	$ARG_ANDROID_SDK/platform-tools/adb -s $DEVICE_SERIAL forward tcp:$ARG_HOST_PORT tcp:$ARG_DEVICE_PORT;
+	${SCRIPT_DIR}/install-selenium.sh "$ARG_ANDROID_SDK/platform-tools/adb" $DEVICE_SERIAL $ARG_DEVICE_PORT $ARG_HOST_PORT $ARG_WEBDRIVER_FILE_VERSION;
 fi
 
 msg "unlocking screen";
 $ARG_ANDROID_SDK/platform-tools/adb shell input keyevent 82;
 
 if [ $ARG_INSTALL_WEBDRIVER == 1 ]; then
-	msg "starting web driver";
-	$ARG_ANDROID_SDK/platform-tools/adb shell am start -a android.intent.action.MAIN -n org.openqa.selenium.android.app/.MainActivity;
+	${SCRIPT_DIR}/start-selenium.sh "$ARG_ANDROID_SDK/platform-tools/adb";
 fi
