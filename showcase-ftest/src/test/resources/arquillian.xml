@@ -17,14 +17,12 @@
 
     <container qualifier="jbossas-managed-6">
         <configuration>
-            <property name="jbossHome">target/jboss-6.0.0.Final</property>
             <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
         </configuration>
     </container>
 
     <container qualifier="jbossas-managed-7">
         <configuration>
-            <property name="jbossHome">target/jboss-as-7.0.2.Final</property>
             <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
             <property name="serverConfig">standalone-preview.xml</property>
         </configuration>
@@ -33,7 +31,7 @@
         </protocol>
     </container>
     
-    <container qualifier="jbossas-remote-7" default="true">
+    <container qualifier="jbossas-remote-7">
         <protocol type="jmx-as7">
             <property name="executionType">REMOTE</property>
         </protocol>

@@ -28,8 +28,12 @@
         <version.tomcat6>6.0.32</version.tomcat6>
         <version.tomcat7>7.0.20</version.tomcat7>
 
+        <!--  these are set as Environmental variables to let Arquillian know where distribution of managed containers are-->
         <tomcat6.home>${project.build.directory}/apache-tomcat-${version.tomcat6}</tomcat6.home>
         <tomcat7.home>${project.build.directory}/apache-tomcat-${version.tomcat7}</tomcat7.home>
+
+        <jboss7Home>${project.build.directory}/jboss-as-${version.jbossas7}</jboss7Home>
+        <jboss6Home>${project.build.directory}/jboss-${version.jbossas6}</jboss6Home>
 
         <version.showcase>4.1.0-SNAPSHOT</version.showcase>
         <showcase.classifier>jee6</showcase.classifier>
@@ -179,6 +183,15 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.9</version>
+                        <configuration>
+                            <environmentVariables>
+                                <JBOSS_HOME>${jboss6Home}</JBOSS_HOME>
+                            </environmentVariables>
+                        </configuration>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -245,6 +258,7 @@
                         <configuration>
                             <environmentVariables>
                                 <HTTPStesting>true</HTTPStesting>
+                                <JBOSS_HOME>${version.jbossas6}</JBOSS_HOME>
                             </environmentVariables>
                         </configuration>
                     </plugin>
@@ -258,6 +272,7 @@
                     <groupId>org.jboss.as</groupId>
                     <artifactId>jboss-as-arquillian-container-managed</artifactId>
                     <version>${version.jbossas7}</version>
+                    <scope>test</scope>
                 </dependency>
             </dependencies>
             <build>
@@ -286,6 +301,15 @@
                                 </configuration>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.9</version>
+                        <configuration>
+                            <environmentVariables>
+                                <JBOSS_HOME>${version.jbossas7}</JBOSS_HOME>
+                            </environmentVariables>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
