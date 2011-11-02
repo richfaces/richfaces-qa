@@ -41,14 +41,14 @@ public class TestInplaceSelect extends AbstractAjocadoTest {
 	 */
 
 	protected JQueryLocator selectSimple = jq("input[id$=Input]:eq(0)");
-	//protected JQueryLocator selectCustomization = jq("input[id$=Input]:eq(1)");
+	protected JQueryLocator selectCustomization = jq("input[id$=Input]:eq(1)");
 
 	protected JQueryLocator selectSimpleLabel = jq("span[id$=Label]:eq(0)");
-	//protected JQueryLocator selectCustomizationLabel = jq("span[id$=Label]:eq(1)");
+	protected JQueryLocator selectCustomizationLabel = jq("span[id$=Label]:eq(1)");
 
 	protected JQueryLocator optionLocator = jq("span.rf-is-opt:contains('{0}')");
 	
-	//protected JQueryLocator declineButton = jq("input.rf-is-btn:eq(1)");
+	protected JQueryLocator declineButton = jq("input.rf-is-btn:eq(1)");
 	
 	/* *********************************************************************************************
 	 * Tests
@@ -66,15 +66,15 @@ public class TestInplaceSelect extends AbstractAjocadoTest {
 
 	}
 	
-	//@Test 
-	/*public void testCustomizationSelect() {
+	@Test 
+	public void testCustomizationSelect() {
 		
 		checkSelect(selectCustomization, selectCustomizationLabel, "Alabama", true);
 		
 		checkSelect(selectCustomization, selectCustomizationLabel, "Florida", true);
 		
 		checkSelect(selectCustomization, selectCustomizationLabel, "California", true);
-	}*/
+	}
 	
 	/* *********************************************************************************************************
 	 * Help methods
