@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-showcase-ftest</artifactId>
-    <version>4.1.0.20111030-M4</version>
+    <version>4.1.0.20111101-M4</version>
     <packaging>jar</packaging>
     <name>RichFaces ShowCase Smoke Ftest</name>
 
@@ -35,7 +35,7 @@
         <jboss7Home>${project.build.directory}/jboss-as-${version.jbossas7}</jboss7Home>
         <jboss6Home>${project.build.directory}/jboss-${version.jbossas6}</jboss6Home>
 
-        <version.showcase>4.1.0.20111030-M4</version.showcase>
+        <version.showcase>4.1.0.20111101-M4</version.showcase>
         <showcase.classifier>jee6</showcase.classifier>
 
     </properties>
@@ -258,7 +258,7 @@
                         <configuration>
                             <environmentVariables>
                                 <HTTPStesting>true</HTTPStesting>
-                                <JBOSS_HOME>${version.jbossas6}</JBOSS_HOME>
+                                <JBOSS_HOME>${jboss6Home}</JBOSS_HOME>
                             </environmentVariables>
                         </configuration>
                     </plugin>
@@ -307,7 +307,7 @@
                         <version>2.9</version>
                         <configuration>
                             <environmentVariables>
-                                <JBOSS_HOME>${version.jbossas7}</JBOSS_HOME>
+                                <JBOSS_HOME>${jboss7Home}</JBOSS_HOME>
                             </environmentVariables>
                         </configuration>
                     </plugin>
