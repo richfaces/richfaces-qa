@@ -15,9 +15,8 @@
         <property name="deploymentExportPath">target/</property>
     </engine>
 
-    <container qualifier="jbossas-managed-6-https">
+    <container qualifier="jbossas-managed-6-https" default="true">
         <configuration>
-            <property name="jbossHome">target/jboss-6.0.0.Final</property>
             <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
         </configuration>
     </container>
@@ -26,7 +25,8 @@
         <property name="port">8444</property>
         <property name="browserSessionReuse">true</property>
         <property name="firefoxProfileTemplate">${firefoxProfileTemplate}</property>
-        <!--<property name="trustStore">${trustStore}</property> -->
+        <property name="trustStore">${trustStore}</property>
+        <property name="trustStorePassword">abc123</property>
     </extension>
 
     <extension qualifier="ajocado">
