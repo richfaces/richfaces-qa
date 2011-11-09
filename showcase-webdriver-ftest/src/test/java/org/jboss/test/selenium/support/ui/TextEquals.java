@@ -41,6 +41,7 @@ public class TextEquals implements ExpectedCondition<Boolean> {
     @Override
     public Boolean apply(WebDriver driver) {
         try {
+//            System.out.println(element.getText() + " ?=? " + text);
             return element.getText().equals(text);
         } catch(StaleElementReferenceException ignored) {
             return false;
