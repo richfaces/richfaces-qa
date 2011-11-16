@@ -38,19 +38,6 @@ import org.testng.annotations.Test;
  */
 public class TestStackingMessages extends AbstractNotifyTest {
 
-	// this is overired since the name of the sample contains dashes which can
-	// not be in the name of class
-	@Override
-	@BeforeMethod
-	public void loadPage() {
-
-		String addition = "richfaces/component-sample.jsf?skin=blueSky&demo=notify&sample=stacking-messages&skin=blueSky";
-
-		this.contextRoot = getContextRoot();
-
-		selenium.open(URLUtils.buildUrl(contextRoot, "/showcase/", addition));
-	}
-	
 	/* *********************************************************
 	 * Constants
 	 ***********************************************************/

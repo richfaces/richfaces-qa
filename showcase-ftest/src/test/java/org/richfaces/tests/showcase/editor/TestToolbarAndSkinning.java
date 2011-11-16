@@ -37,18 +37,6 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestToolbarAndSkinning extends AbstractAjocadoTest {
-
-	//this is overired since the name of the sample contains dashes which can not be in the name of class
-	@Override
-	@BeforeMethod
-	public void loadPage() {
-
-		String addition = "richfaces/component-sample.jsf?skin=blueSky&demo=editor&sample=toolbar-and-skinning&skin=blueSky";
-
-		this.contextRoot = getContextRoot();
-
-		selenium.open(URLUtils.buildUrl(contextRoot, "/showcase/", addition));
-	}
 	
 	/* ***************************************************************************************
 	 * Locators
