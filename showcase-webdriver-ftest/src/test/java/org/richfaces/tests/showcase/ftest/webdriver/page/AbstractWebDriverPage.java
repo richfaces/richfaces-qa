@@ -19,52 +19,25 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.jboss.test.selenium.support.ui;
+package org.richfaces.tests.showcase.ftest.webdriver.page;
 
-import org.openqa.selenium.StaleElementReferenceException;
+import org.apache.commons.lang.Validate;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TextEquals implements ExpectedCondition<Boolean> {
+public abstract class AbstractWebDriverPage implements ShowcasePage {
 
-    private WebElement element;
-    private String text;
-
-    public static TextEquals getInstance() {
-        return new TextEquals();
-    }    
+    private WebDriver webDriver;
     
-    @Override
-    public Boolean apply(WebDriver driver) {
-        try {
-//            System.out.println(element.getText() + " ?=? " + text);
-            return element.getText().equals(text);
-        } catch(StaleElementReferenceException ignored) {
-            return false;
-        }
-    } 
-
-    public TextEquals element(WebElement element) {
-        TextEquals copy = copy();
-        copy.element = element;
-        return copy;
+    protected AbstractWebDriverPage(WebDriver webDriver) {
+        Validate.notNull(webDriver);
+        this.webDriver = webDriver;
     }
-
-    public TextEquals text(String text) {
-        TextEquals copy = copy();
-        copy.text = text;
-        return copy;
-    }    
     
-    private TextEquals copy() {
-        TextEquals copy = new TextEquals();
-        copy.element = element;
-        copy.text = text;
-        return copy;
+    protected WebDriver getWebDriver() {
+        return webDriver;
     }
-
+    
 }

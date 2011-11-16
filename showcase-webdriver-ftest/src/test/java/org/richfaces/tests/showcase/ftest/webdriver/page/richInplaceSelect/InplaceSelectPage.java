@@ -19,52 +19,48 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.jboss.test.selenium.support.ui;
+package org.richfaces.tests.showcase.ftest.webdriver.page.richInplaceSelect;
 
-import org.openqa.selenium.StaleElementReferenceException;
+import org.jboss.test.selenium.android.ToolKit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractAndroidPage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TextEquals implements ExpectedCondition<Boolean> {
+public class InplaceSelectPage extends AbstractAndroidPage{
 
-    private WebElement element;
-    private String text;
+    private static final String SELECT_LOCATOR = "//*[@class='example-cnt']//span[contains(@class, 'rf-is')]";
+    
+    @FindBy(xpath = SELECT_LOCATOR + "//span[contains(@class, 'rf-is-lbl')]")
+    private WebElement label;
+    @FindBy(xpath = SELECT_LOCATOR +  "//span[contains(@class,'rf-is-lbl')]")
+    private WebElement openPopupArea;
+    @FindBy(xpath = "//body/span[@class='rf-is-lst-cord']")
+    private WebElement popup;
 
-    public static TextEquals getInstance() {
-        return new TextEquals();
+    private Select select;
+    
+    public InplaceSelectPage(WebDriver webDriver, ToolKit toolKit) {
+        super(webDriver, toolKit);
     }    
     
     @Override
-    public Boolean apply(WebDriver driver) {
-        try {
-//            System.out.println(element.getText() + " ?=? " + text);
-            return element.getText().equals(text);
-        } catch(StaleElementReferenceException ignored) {
-            return false;
-        }
-    } 
-
-    public TextEquals element(WebElement element) {
-        TextEquals copy = copy();
-        copy.element = element;
-        return copy;
+    public String getDemoName() {
+        return "inplaceSelect";
     }
-
-    public TextEquals text(String text) {
-        TextEquals copy = copy();
-        copy.text = text;
-        return copy;
-    }    
+    @Override
+    public String getSampleName() {
+        return "inplaceSelect";
+    }
     
-    private TextEquals copy() {
-        TextEquals copy = new TextEquals();
-        copy.element = element;
-        copy.text = text;
-        return copy;
+    public Select getSelect() {
+        if (select == null) {
+            select = new Select(getWebDriver(), getToolKit(), label, popup, openPopupArea);
+        }
+        return select;
     }
-
+    
 }

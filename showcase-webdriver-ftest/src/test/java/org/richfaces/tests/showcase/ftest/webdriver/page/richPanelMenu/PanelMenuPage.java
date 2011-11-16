@@ -19,52 +19,48 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.jboss.test.selenium.support.ui;
+package org.richfaces.tests.showcase.ftest.webdriver.page.richPanelMenu;
 
-import org.openqa.selenium.StaleElementReferenceException;
+import org.jboss.test.selenium.android.ToolKit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractAndroidPage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TextEquals implements ExpectedCondition<Boolean> {
+public class PanelMenuPage extends AbstractAndroidPage {
 
-    private WebElement element;
-    private String text;
-
-    public static TextEquals getInstance() {
-        return new TextEquals();
-    }    
+    @FindBy(xpath = "//*[@class='example-cnt']//div[@class='rf-pm']")
+    private WebElement panelMenuElement;
+    private PanelMenu panelMenu;
+    @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'current')]")
+    private WebElement selectionElement;
     
+    public PanelMenuPage(WebDriver webDriver, ToolKit toolKit) {
+        super(webDriver, toolKit);
+    }
+
     @Override
-    public Boolean apply(WebDriver driver) {
-        try {
-//            System.out.println(element.getText() + " ?=? " + text);
-            return element.getText().equals(text);
-        } catch(StaleElementReferenceException ignored) {
-            return false;
-        }
-    } 
-
-    public TextEquals element(WebElement element) {
-        TextEquals copy = copy();
-        copy.element = element;
-        return copy;
+    public String getDemoName() {
+        return "panelMenu";
     }
 
-    public TextEquals text(String text) {
-        TextEquals copy = copy();
-        copy.text = text;
-        return copy;
-    }    
+    @Override
+    public String getSampleName() {
+        return "panelMenu";
+    }
+
+    public String getCurrentSelection() {
+        return selectionElement.getText();
+    }
     
-    private TextEquals copy() {
-        TextEquals copy = new TextEquals();
-        copy.element = element;
-        copy.text = text;
-        return copy;
+    public PanelMenu getPanelMenu() {
+        if (panelMenu == null) {
+            panelMenu = new PanelMenu(getWebDriver(), getToolKit(), panelMenuElement);
+        }
+        return panelMenu;
     }
-
+    
 }

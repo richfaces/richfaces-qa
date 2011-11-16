@@ -11,7 +11,21 @@ public enum Key {
     DOWN_ARROW(20),
     LEFT_ARROW(21),
     RIGHT_ARROW(22),
-    ENTER(66);
+    A(29),
+    B(30),
+    C(31),
+    D(32),
+    E(33),
+    F(34),
+    G(35),
+    H(36),
+    I(37),
+    J(38),
+    K(39),
+    L(40),
+    ENTER(66),
+    DELETE(67);
+    
     
     private int code;
     

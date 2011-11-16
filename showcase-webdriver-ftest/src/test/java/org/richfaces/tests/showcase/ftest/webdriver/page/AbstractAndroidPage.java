@@ -19,52 +19,27 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.jboss.test.selenium.support.ui;
+package org.richfaces.tests.showcase.ftest.webdriver.page;
 
-import org.openqa.selenium.StaleElementReferenceException;
+import org.apache.commons.lang.Validate;
+import org.jboss.test.selenium.android.ToolKit;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TextEquals implements ExpectedCondition<Boolean> {
+public abstract class AbstractAndroidPage extends AbstractWebDriverPage {
 
-    private WebElement element;
-    private String text;
-
-    public static TextEquals getInstance() {
-        return new TextEquals();
-    }    
+    private ToolKit toolKit;
     
-    @Override
-    public Boolean apply(WebDriver driver) {
-        try {
-//            System.out.println(element.getText() + " ?=? " + text);
-            return element.getText().equals(text);
-        } catch(StaleElementReferenceException ignored) {
-            return false;
-        }
-    } 
-
-    public TextEquals element(WebElement element) {
-        TextEquals copy = copy();
-        copy.element = element;
-        return copy;
+    protected AbstractAndroidPage(WebDriver webDriver, ToolKit toolKit) {
+        super(webDriver);
+        Validate.notNull(toolKit);
+        this.toolKit = toolKit;
     }
 
-    public TextEquals text(String text) {
-        TextEquals copy = copy();
-        copy.text = text;
-        return copy;
-    }    
-    
-    private TextEquals copy() {
-        TextEquals copy = new TextEquals();
-        copy.element = element;
-        copy.text = text;
-        return copy;
+    protected ToolKit getToolKit() {
+        return toolKit;
     }
-
+    
 }
