@@ -91,8 +91,8 @@ public class TestSimple extends AbstractAjocadoTest {
 		selenium.fireEvent(submitButton, Event.SUBMIT);
 		
 		handleSendAssertPictureIsVisibleHandleComplete();
-        
-        assertEquals(selenium.getText(userStoredSuccessfully).trim(), "User a stored succesfully", "There should appear " +
+     
+        assertEquals(selenium.getText(userStoredSuccessfully).trim(), "User a stored successfully", "There should appear " +
         		"notification that user stored successfully!");
 	}
 	

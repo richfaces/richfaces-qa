@@ -45,11 +45,11 @@ public class TestGraphValidator extends AbstractAjocadoTest {
 	private JQueryLocator storeChangesButton = jq("input[type=submit]");
 	private JQueryLocator passwordError = jq("span[id$=pass] span[class=rf-msg-det]");
 	private JQueryLocator differentPasswordError = jq("span:contains('Different passwords entered!')");
-	private JQueryLocator successfullyChangedInfo = jq("span:contains('Succesfully changed!')");
+	private JQueryLocator successfullyChangedInfo = jq("span:contains('Successfully changed!')");
 
 	private final String ERROR_MESSAGE_WRONG_SIZE_FOR_PASSWORD = "Password length must be between 5 and 15 characters.";
 	private final String ERROR_MESSAGE_DIFFERENT_PASSWORD_ENTERED = "Different passwords entered!";
-	private final String INFO_MESSAGE_SUCCESSFULLY_CHANGED = "Succesfully changed!";
+	private final String INFO_MESSAGE_SUCCESSFULLY_CHANGED = "Successfully changed!";
 
 	private final int MIN_CORRECT_LENGTH_OF_PASSWORD = 5;
 	private final int MAX_CORRECT_LEGTH_OF_PASSWORD = 15;
