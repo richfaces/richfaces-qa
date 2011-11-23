@@ -76,6 +76,25 @@ Ajocado.Page.XHRHalter.XHRWrapperInjection = {
 		send : Ajocado.XHRWrapper.prototype.send
 };
 
+/* ###################################################### */
+Ajocado.Page.XHRHalter._repeatWait = function(id) {
+	var halter = Ajocado.Page.XHRHalter._instances[id];
+	halter.tryProcessStates();
+	if (!halter.isXhrCompleted()) {
+		setTimeout("Ajocado.Page.XHRHalter._repeatWait(" + id + ")", 100);
+	}
+};
+
+Ajocado.Page.XHRHalter.prototype.isXhrCompleted = function() {
+	return this.currentState == Ajocado.Page.XHRHalter.STATE_COMPLETE;
+};
+
+Ajocado.Page.XHRHalter.prototype.getLastAvailableState = function() {
+	return this.availableStates.length - 1;
+};
+
+/* ###################################################### */
+
 Ajocado.Page.XHRHalter.continueTo = function(id, state) {
 	var halter = Ajocado.Page.XHRHalter._instances[id];
 	if (state < halter.continueToState) {
@@ -84,46 +103,100 @@ Ajocado.Page.XHRHalter.continueTo = function(id, state) {
 	halter.continueToState = state;
 };
 
+/* ###################################################### */
+Ajocado.Page.XHRHalter.isWaitingForSend = function(id) {
+	var halter = Ajocado.Page.XHRHalter._instances[id];
+	return halter.currentState == Ajocado.Page.XHRHalter.STATE_OPEN && halter.continueToState == Ajocado.Page.XHRHalter.STATE_OPEN;
+};
+
+Ajocado.Page.XHRHalter.prototype.tryProcessStates = function() {
+	while (this.currentState < this.continueToState && this.currentState < this.getLastAvailableState()) {
+		this.currentState += 1;
+		this.processState(this.currentState);
+	}
+};
+
+Ajocado.Page.XHRHalter.prototype.processState = function(state) {
+	if (this.currentState > 0 && this.availableStates[state] === undefined) {
+		return;
+	}
+	this.loadXhrParams(state);
+	switch (state) {
+		case Ajocado.Page.XHRHalter.STATE_SEND :
+			Ajocado.Page.XHRHalter.XHRWrapperInjection.send.call(this.xhr, this.sendParams['content']);
+			break;
+		case Ajocado.Page.XHRHalter.STATE_UNITIALIZED :
+			break;
+		default :
+			this.callback(this.xhr);
+	}
+	this.loadXhrParams(this.lastAvailableState);
+};
+
+Ajocado.Page.XHRHalter.prototype.loadXhrParams = function(state) {
+	state = Math.max(state, Ajocado.Page.XHRHalter.STATE_UNITIALIZED);
+	var holder = this.availableStates[state];
+	this.xhr.readyState = state;
+	this.xhr.responseText = holder.responseText;
+	this.xhr.responseXML = holder.responseXML;
+	this.xhr.status = holder.status;
+	this.xhr.statusText = holder.statusText;
+	this.xhr.onreadystatechange = holder.onreadystatechange;
+};
+
+Ajocado.Page.XHRHalter.prototype.saveXhrParams = function() {
+	this.lastAvailableState = Math.max(this.lastAvailableState, this.xhr.readyState);
+	this.availableStates[this.xhr.readyState] = {};
+	var holder = this.availableStates[this.xhr.readyState];
+	holder.responseText = this.xhr.responseText;
+	holder.responseXML = this.xhr.responseXML;
+	holder.status = this.xhr.status;
+	holder.statusText = this.xhr.statusText;
+	holder.onreadystatechange = this.xhr.onreadystatechange;
+};
+
+/* ###################################################### */
+
 Ajocado.Page.XHRHalter.prototype.wait = function() {
 	Ajocado.Page.XHRHalter._repeatWait(this.id);
 };
 
 Ajocado.Page.XHRHalter.isHandleAvailable = function() {
+	
 	return Ajocado.Page.XHRHalter._instances.length - 1 >= Ajocado.Page.XHRHalter._haltCounter;
 };
 
-Ajocado.RequestGuard.XHRWrapper.prototype.onreadystatechangeCallback = function() {
-	alert("sds");
-	if (XHRHalter.isEnabled()) {
-		var halter = XHRHalter._associations[this];
+Ajocado.XHRWrapper.prototype.onreadystatechangeCallback = function() {
+	if (Ajocado.Page.XHRHalter.isEnabled()) {
+		var halter = Ajocado.Page.XHRHalter._associations[this];
 		halter.saveXhrParams();
 	} else {
-		XHRHalter.XHRWrapperInjection.onreadystatechangeCallback.call(this);
+		Ajocado.Page.XHRHalter.XHRWrapperInjection.onreadystatechangeCallback.call(this);
 	}
 };
 
-Ajocado.RequestGuard.XHRWrapper.prototype.open = function(method, url, asyncFlag, userName, password) {
-	if (XHRHalter.isEnabled()) {
-		var halter = XHRHalter._associations[this];
+Ajocado.XHRWrapper.prototype.open = function(method, url, asyncFlag, userName, password) {
+	if (Ajocado.Page.XHRHalter.isEnabled()) {
+		var halter = Ajocado.Page.XHRHalter._associations[this];
 		if (halter === undefined) {
-			halter = new XHRHalter(this);
+			halter = new Ajocado.Page.XHRHalter(this);
 		} else {
-			XHRHalter.call(halter, this);
+			Ajocado.Page.XHRHalter.call(halter, this);
 		}
 		halter.wait();
 	}
 	asyncFlag = (asyncFlag !== false);
-	return XHRHalter.XHRWrapperInjection.open.call(this, method, url, asyncFlag, userName, password);
+	return Ajocado.Page.XHRHalter.XHRWrapperInjection.open.call(this, method, url, asyncFlag, userName, password);
 };
 
-Ajocado.RequestGuard.XHRWrapper.prototype.send = function(content) {
-	if (XHRHalter.isEnabled()) {
-		var halter = XHRHalter._associations[this];
+Ajocado.XHRWrapper.prototype.send = function(content) {
+	if (Ajocado.Page.XHRHalter.isEnabled()) {
+		var halter = Ajocado.Page.XHRHalter._associations[this];
 		halter.sendParams['content'] = content;
 		halter.saveXhrParams();
 		halter.wait();
 	} else {
-		return XHRHalter.XHRWrapperInjection.send.call(this, content);
+		return Ajocado.Page.XHRHalter.XHRWrapperInjection.send.call(this, content);
 	}
 };
 
