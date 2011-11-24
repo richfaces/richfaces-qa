@@ -40,10 +40,10 @@ public class AbstractOrderingTest extends AbstractAjocadoTest {
 	 * **********************************************************************
 	 */
 
-	protected JQueryLocator firstButton = jq(".rf-ord-up-top:eq({0})");
+	protected JQueryLocator firstButton = jq(".rf-ord-up-tp:eq({0})");
 	protected JQueryLocator upButton = jq(".rf-ord-up:eq({0})");
-	protected JQueryLocator downButton = jq(".rf-ord-down:eq({0})");
-	protected JQueryLocator lastButton = jq(".rf-ord-down-bottom:eq({0})");
+	protected JQueryLocator downButton = jq(".rf-ord-dn:eq({0})");
+	protected JQueryLocator lastButton = jq(".rf-ord-dn-bt:eq({0})");
 
 	/* ******************************************************************************
 	 * Constants

@@ -36,8 +36,8 @@ public class TestOrderingList extends AbstractOrderingTest {
 	 * Locators
 	 ****************************************************************************/
 	
-	private JQueryLocator optionToOrderSimpleList = jq(".rf-ord-list:eq(0) .rf-ord-opt{0}");
-	private JQueryLocator optionToOrderWithColumns = jq(".rf-ord-list:eq(1) .rf-ord-opt{0}");
+	private JQueryLocator optionToOrderSimpleList = jq(".rf-ord:eq(0) .rf-ord-opt{0}");
+	private JQueryLocator optionToOrderWithColumns = jq(".rf-ord:eq(1) .rf-ord-opt{0}");
 	
 	/* ******************************************************************************
 	 * Tests
