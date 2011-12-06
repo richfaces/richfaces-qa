@@ -173,6 +173,8 @@ public class TestNotifyAttributes extends AbstractNotifyTest {
 
 	private void checkNonBlockingOpacity(String opacity) {
 
+		waitUntilNotifyDissappeares(TIMEOUT);
+		
 		selenium.check(nonBlockingCheckBox);
 		guardXhr(selenium).fireEvent(nonBlockingCheckBox, Event.CLICK);
 
@@ -181,7 +183,11 @@ public class TestNotifyAttributes extends AbstractNotifyTest {
 		guardXhr(selenium).click(showNotification);
 
 		waitUntilNotifyAppears(TIMEOUT);
-
+		
+		selenium.mouseOver(notify);
+		
+		waitForSomeTime(1000);
+		
 		String style = selenium.getAttribute(notify
 				.getAttribute(Attribute.STYLE));
 		String actualOpacity = style.split("opacity:")[1];
@@ -222,6 +228,15 @@ public class TestNotifyAttributes extends AbstractNotifyTest {
 						+ " milisec, but was: " + delta + " milisec");
 	}
 
-	
+	public static void waitForSomeTime(long howLongInMilis) {
+		
+		long timeout = System.currentTimeMillis() + howLongInMilis;
+		long currentTime = System.currentTimeMillis();
+		
+		while( timeout > currentTime ) {
+			
+			currentTime = System.currentTimeMillis();
+		}
+	}
 
 }
