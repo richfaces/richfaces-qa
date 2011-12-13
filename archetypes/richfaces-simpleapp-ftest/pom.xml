@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<!--
+		JBoss, Home of Professional Open Source Copyright 2010, Red Hat, Inc.
+		and individual contributors by the @authors tag. See the copyright.txt
+		in the distribution for a full listing of individual contributors.
+
+		This is free software; you can redistribute it and/or modify it under
+		the terms of the GNU Lesser General Public License as published by the
+		Free Software Foundation; either version 2.1 of the License, or (at
+		your option) any later version. This software is distributed in the
+		hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+		the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+		PURPOSE. See the GNU Lesser General Public License for more details.
+
+		You should have received a copy of the GNU Lesser General Public
+		License along with this software; if not, write to the Free Software
+		Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301
+		USA, or see the FSF site: http://www.fsf.org.
+	-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>functional-test-jboss-ci-template</artifactId>
+		<groupId>org.jboss.test.richfaces-selenium</groupId>
+		<version>1.5.3.Final</version>
+	</parent>
+
+	<groupId>org.richfaces.tests.archetypes</groupId>
+	<artifactId>richfaces-simpleapp-ftest</artifactId>
+	<version>4.1.0-SNAPSHOT</version>
+	<name>richfaces-simpleapp-ftest</name>
+	<description>Functional Test for richfaces-archetype-simpleapp</description>
+
+	<scm>
+		<connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/modules/tests/archetypes/richfaces-simpleapp-ftest/trunk</connection>
+		<developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/modules/tests/archetypes/richfaces-simpleapp-ftest/trunk</developerConnection>
+		<url>http://fisheye.jboss.org/browse/RichFaces/modules/tests/archetypes/richfaces-simpleapp-ftest/trunk</url>
+	</scm>
+
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License, Version 2.1</name>
+			<distribution>repo</distribution>
+			<url>http://www.gnu.org/licenses/lgpl-2.1.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Lukas Fryc</name>
+			<email>lfryc@redhat.com</email>
+		</developer>
+	</developers>
+
+	<issueManagement>
+		<system>jira</system>
+		<url>https://jira.jboss.org/jira/browse/RFPL</url>
+	</issueManagement>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>jboss-qa-snapshots</id>
+			<name>JBoss QA snapshot repository</name>
+			<url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>jboss-qa-releases</id>
+			<name>JBoss QA selease repository</name>
+			<url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/releases</url>
+		</repository>
+	</distributionManagement>
+
+	<properties>
+		<context.path>/richfaces-simpleapp/</context.path>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<test>*</test>
+				</configuration>
+			</plugin>
+			<plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <arguments>-Dselenium.test.skip=true -Dselenium.server.skip=true</arguments>
+                    <tagBase>https://svn.jboss.org/repos/richfaces/modules/tests/archetypes/richfaces-simpleapp-ftest/tags</tagBase>
+                    <branchBase>https://svn.jboss.org/repos/richfaces/modules/tests/archetypes/richfaces-simpleapp-ftest/branches</branchBase>
+                </configuration>
+            </plugin>
+            <plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>stop-container</id>
+						<phase>none</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>
