@@ -21,7 +21,7 @@
 
 	<groupId>org.richfaces.tests.archetypes</groupId>
 	<artifactId>richfaces-archetypes-ftest</artifactId>
-	<version>4.1.0-SNAPSHOT</version>
+	<version>4.1.1-SNAPSHOT</version>
 	<name>richfaces-archetypes-ftest</name>
     <packaging>pom</packaging>
 	<description>Functional Test for RichFaces archetypes</description>
