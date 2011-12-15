@@ -1,0 +1,3 @@
+[submodule "enterprise-maven-bootstrap"]
+	path = enterprise-maven-bootstrap
+	url = git://github.com/jboss-eap/maven-bootstrap.git
