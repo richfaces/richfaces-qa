@@ -1,10 +1,9 @@
 Executing Tests
 ====================
 
-Tests needs the applications generated from archetypes. Just type into to command line:
+Just type into to command line:
 	
-	$ ./apps/richfaces-archetype-simpleapp.sh
-	$ mvn clean verify -P<profile>
+	$ mvn clean verify -Pprepare-simpleapp,<profile>
 	
 Available Profiles
 --------------------
