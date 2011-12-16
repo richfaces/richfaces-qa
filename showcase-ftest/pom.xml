@@ -25,8 +25,8 @@
         <!-- selenium version used to download selenium-server via selenium-server.sh script in ${project.basedir} -->
         <version.selenium>2.6.0</version.selenium>
 
-        <version.tomcat6>6.0.32</version.tomcat6>
-        <version.tomcat7>7.0.20</version.tomcat7>
+        <version.tomcat6>6.0.35</version.tomcat6>
+        <version.tomcat7>7.0.23</version.tomcat7>
 
         <!--  these are set as Environmental variables to let Arquillian know where distribution of managed containers are-->
         <tomcat6.home>${project.build.directory}/apache-tomcat-${version.tomcat6}</tomcat6.home>
