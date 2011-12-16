@@ -14,7 +14,7 @@
 
         <!-- arquillian versions -->
         <arquillian.tomcat.version>1.0.0.CR2</arquillian.tomcat.version>
-        <arquillian.drone.version>1.0.0.CR2</arquillian.drone.version>
+        <arquillian.drone.version>1.0.0.CR3</arquillian.drone.version>
         <arquillian.ajocado-testng.version>1.0.0-SNAPSHOT</arquillian.ajocado-testng.version>
         <arquillian.jboss-as6.version>1.0.0.CR2</arquillian.jboss-as6.version>
 
