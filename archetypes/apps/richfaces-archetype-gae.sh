@@ -3,6 +3,7 @@ SCRIPT_DIR=`dirname $BASH_SOURCE`;
 SCRIPT_DIR=`readlink -m $SCRIPT_DIR`;
 
 source "$SCRIPT_DIR/version.sh";
+source "$SCRIPT_DIR/config.sh";
 
 usage()
 {
@@ -34,10 +35,10 @@ if [ -d "$SCRIPT_DIR/richfaces-gae" ]; then
     rm -rf "$SCRIPT_DIR/richfaces-gae";
 fi
 cd $SCRIPT_DIR;
-mvn archetype:generate -U -DarchetypeGroupId=org.richfaces.archetypes -DarchetypeArtifactId=richfaces-archetype-gae -DarchetypeVersion=${RICHFACES_VERSION} -DgroupId=org.richfaces.tests.archetypes -DartifactId=richfaces-gae -Dversion=${RICHFACES_VERSION} -Dpackage=org.richfaces.tests.archetypes.gae -DinteractiveMode=false ${@:3};
-cd richfaces-gae;
-mvn clean package;
-cd ..;
+${MAVEN} archetype:generate -U -DarchetypeGroupId=org.richfaces.archetypes -DarchetypeArtifactId=richfaces-archetype-gae -DarchetypeVersion=${RICHFACES_VERSION} -DgroupId=org.richfaces.tests.archetypes -DartifactId=richfaces-gae -Dversion=${RICHFACES_VERSION} -Dpackage=org.richfaces.tests.archetypes.gae -DinteractiveMode=false ${@:3};
+cd $SCRIPT_DIR/richfaces-gae;
+${MAVEN} clean package;
+cd $SCRIPT_DIR;
 
 if [ ! -d "$SCRIPT_DIR/appengine-java-sdk" ]; then
     wget http://googleappengine.googlecode.com/files/appengine-java-sdk-1.6.1.zip -O $SCRIPT_DIR/appengine-java-sdk.zip;
