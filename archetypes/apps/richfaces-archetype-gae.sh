@@ -35,9 +35,9 @@ if [ -d "$SCRIPT_DIR/richfaces-gae" ]; then
     rm -rf "$SCRIPT_DIR/richfaces-gae";
 fi
 cd $SCRIPT_DIR;
-${MAVEN} archetype:generate -U -DarchetypeGroupId=org.richfaces.archetypes -DarchetypeArtifactId=richfaces-archetype-gae -DarchetypeVersion=${RICHFACES_VERSION} -DgroupId=org.richfaces.tests.archetypes -DartifactId=richfaces-gae -Dversion=${RICHFACES_VERSION} -Dpackage=org.richfaces.tests.archetypes.gae -DinteractiveMode=false ${@:3};
+mvn ${MAVEN_ARGS} archetype:generate -DarchetypeGroupId=org.richfaces.archetypes -DarchetypeArtifactId=richfaces-archetype-gae -DarchetypeVersion=${RICHFACES_VERSION} -DgroupId=org.richfaces.tests.archetypes -DartifactId=richfaces-gae -Dversion=${RICHFACES_VERSION} -Dpackage=org.richfaces.tests.archetypes.gae -DinteractiveMode=false ${@:3};
 cd $SCRIPT_DIR/richfaces-gae;
-${MAVEN} clean package;
+${MAVEN} ${MAVEN_ARGS} -f $SCRIPT_DIR/richfaces-gae/pom.xml clean package;
 cd $SCRIPT_DIR;
 
 if [ ! -d "$SCRIPT_DIR/appengine-java-sdk" ]; then
