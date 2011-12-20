@@ -1,5 +1,7 @@
 #!/bin/bash
 SCRIPT_DIR=`dirname $BASH_SOURCE`;
+SCRIPT_DIR=`readlink -m $SCRIPT_DIR`;
+
 source "$SCRIPT_DIR/version.sh";
 
 usage()
