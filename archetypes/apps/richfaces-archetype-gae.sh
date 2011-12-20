@@ -41,10 +41,4 @@ ${MAVEN} ${MAVEN_ARGS} archetype:generate -Dbasedir=${SCRIPT_DIR} -DarchetypeGro
 ${MAVEN} ${MAVEN_ARGS} -f $SCRIPT_DIR/richfaces-gae/pom.xml clean package;
 cd $WORKING_DIR;
 
-if [ ! -d "$SCRIPT_DIR/appengine-java-sdk" ]; then
-    wget http://googleappengine.googlecode.com/files/appengine-java-sdk-1.6.1.zip -O $SCRIPT_DIR/appengine-java-sdk.zip;
-    unzip $SCRIPT_DIR/appengine-java-sdk.zip -d $SCRIPT_DIR;
-    rm -rf $SCRIPT_DIR/appengine-java-sdk.zip;
-    mv $SCRIPT_DIR/appengine-java-sdk-1.6.1 $SCRIPT_DIR/appengine-java-sdk; 
-fi
-echo "$2" | $SCRIPT_DIR/appengine-java-sdk/bin/appcfg.sh  -e $1 update $SCRIPT_DIR/richfaces-gae/target/richfaces-gae;
+source "$SCRIPT_DIR/prepare-gae-sdk-and-deploy.sh";
