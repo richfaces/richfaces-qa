@@ -127,53 +127,16 @@
     <build>
         <plugins>
             <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <test>*</test>
+                    <test>TestInput</test>
                     <systemProperties>
-                        <application.war>${application.war}</application.war>
                         <webdriver.stale.tries>5</webdriver.stale.tries>
                         <context.root>http://localhost:8080</context.root>
                         <context.path>${context.path}</context.path>
-                        <arquillian.launch>${arquillian.launch}</arquillian.launch>
                     </systemProperties>
                 </configuration>
-            </plugin>
-            <!-- check whether the WAR file with application is prepared -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <version>1.0.1</version>
-                <executions>
-                    <execution>
-                        <id>enforce-files-exist</id>
-                        <phase>integration-test</phase>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <requireFilesExist>
-                                    <files>
-                                        <file>${application.war}</file>
-                                    </files>
-                                    <message>
-                                        Pre-prepared WAR with simpleapp has to exist!
-                                    </message>
-                                </requireFilesExist>
-                            </rules>
-                            <fail>true</fail>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
@@ -391,6 +354,59 @@
                 </plugins>
             </build>
         </profile>  
+        <profile>
+            <id>deploy-and-test</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <source>1.6</source>
+                            <target>1.6</target>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <test>TestInputWithDeploying</test>
+                            <systemProperties>
+                                <application.war>${application.war}</application.war>
+                                <arquillian.launch>${arquillian.launch}</arquillian.launch>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                    <!-- check whether the WAR file with application is prepared -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <version>1.0.1</version>
+                        <executions>
+                            <execution>
+                                <id>enforce-files-exist</id>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireFilesExist>
+                                            <files>
+                                                <file>${application.war}</file>
+                                            </files>
+                                            <message>
+                                                Pre-prepared WAR with simpleapp has to exist!
+                                            </message>
+                                        </requireFilesExist>
+                                    </rules>
+                                    <fail>true</fail>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>        
+        </profile>
         <profile>
             <id>prepare-simpleapp</id>
             <build>

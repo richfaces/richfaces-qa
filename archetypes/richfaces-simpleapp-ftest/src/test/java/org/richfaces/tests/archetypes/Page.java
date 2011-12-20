@@ -19,32 +19,12 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.archetypes.simpleapp.ftest;
+package org.richfaces.tests.archetypes;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.archetypes.simpleapp.Page;
-
-public class WithInputPage implements Page {
-
-    @FindBy(css = "input[id=nameInput]")
-    private WebElement input;
-    @FindBy(css = "span[id=output]")
-    private WebElement output;
+/**
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ */
+public interface Page {
     
-    public WebElement getInput() {
-        return input;
-    }
-    
-    public WebElement getOutput() {
-        return output;
-    }
-    
-    @Override
-    public String getUrl() {
-        return "faces/index.xhtml";
-    }
-    
-    
-    
+    String getUrl();
 }

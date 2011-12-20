@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2011, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -19,28 +19,38 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.archetypes.simpleapp.ftest;
+package org.richfaces.tests.archetypes;
 
-import org.richfaces.tests.archetypes.PropertyTestConfiguration;
-import org.richfaces.tests.archetypes.TestConfiguration;
-import org.richfaces.tests.archetypes.ftest.AbstractTestInput;
-import org.testng.annotations.Test;
+import java.io.File;
 
-
-/**
- * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
- */
-public class TestInput extends AbstractTestInput {
-
-    private static final TestConfiguration DEFAULT_CONFIGURATION = new PropertyTestConfiguration();
+public class PropertyTestConfiguration implements TestConfiguration {
     
-    public TestInput() {
-        super(DEFAULT_CONFIGURATION);
+    public File getApplicationWar() {
+        return new File(getProperty("application.war"));
     }
     
-    @Test
-    public void testTypeName() {
-        super.testTypeName();
+    @Override
+    public String getContextPath() {
+        return getProperty("context.path");
+    }
+
+    @Override
+    public String getContextRoot() {
+        return getProperty("context.root");
+    }
+
+    @Override
+    public int getWebDriverElementTries() {
+        return Integer.parseInt(getProperty("webdriver.stale.tries"));
+    }    
+    
+    private String getProperty(String key) {
+        String value = System.getProperty(key);
+        if (value == null) {
+            throw new IllegalStateException("The property <" + key + "> is not set.");
+        }
+        return value;
     }
     
 }
+ 

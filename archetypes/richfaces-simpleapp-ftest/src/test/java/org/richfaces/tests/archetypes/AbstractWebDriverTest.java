@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.archetypes.simpleapp;
+package org.richfaces.tests.archetypes;
 
 import org.jboss.test.selenium.webdriver.pagefactory.StaleReferenceAwareFieldDecorator;
 import org.openqa.selenium.WebDriver;
@@ -41,6 +41,10 @@ public abstract class AbstractWebDriverTest<P extends Page> extends AbstractTest
     private P page;
     public WebDriver webDriver;
 
+    protected AbstractWebDriverTest(TestConfiguration configuration) {
+        super(configuration);
+    }
+    
     @BeforeClass(alwaysRun = true, dependsOnMethods = { "initializeWebDriver" })
     public void initializePage() {
         initializePage(getPage());

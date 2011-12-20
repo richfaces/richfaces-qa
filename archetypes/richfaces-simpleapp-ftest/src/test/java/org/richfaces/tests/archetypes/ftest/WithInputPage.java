@@ -19,38 +19,32 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.archetypes.simpleapp;
+package org.richfaces.tests.archetypes.ftest;
 
-import java.io.File;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.archetypes.Page;
 
-public class PropertyTestConfiguration implements TestConfiguration {
+public class WithInputPage implements Page {
+
+    @FindBy(css = "input[id=nameInput]")
+    private WebElement input;
+    @FindBy(css = "span[id=output]")
+    private WebElement output;
     
-    public File getApplicationWar() {
-        return new File(getProperty("application.war"));
+    public WebElement getInput() {
+        return input;
+    }
+    
+    public WebElement getOutput() {
+        return output;
     }
     
     @Override
-    public String getContextPath() {
-        return getProperty("context.path");
+    public String getUrl() {
+        return "faces/index.xhtml";
     }
-
-    @Override
-    public String getContextRoot() {
-        return getProperty("context.root");
-    }
-
-    @Override
-    public int getWebDriverElementTries() {
-        return Integer.parseInt(getProperty("webdriver.stale.tries"));
-    }    
     
-    private String getProperty(String key) {
-        String value = System.getProperty(key);
-        if (value == null) {
-            throw new IllegalStateException("The property <" + key + "> is not set.");
-        }
-        return value;
-    }
+    
     
 }
- 

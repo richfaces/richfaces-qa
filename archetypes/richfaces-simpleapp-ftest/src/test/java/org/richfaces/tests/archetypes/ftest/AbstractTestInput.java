@@ -19,28 +19,46 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.archetypes.simpleapp.ftest;
+package org.richfaces.tests.archetypes.ftest;
 
-import org.richfaces.tests.archetypes.PropertyTestConfiguration;
+import org.jboss.test.selenium.support.ui.TextEquals;
+import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.richfaces.tests.archetypes.AbstractWebDriverTest;
 import org.richfaces.tests.archetypes.TestConfiguration;
-import org.richfaces.tests.archetypes.ftest.AbstractTestInput;
-import org.testng.annotations.Test;
-
 
 /**
+ * <p>
+ * Tests that input reacts to keyup events by sending XHR request and rerendering output as greeting to given name.
+ * </p>
+ * 
+ * <p>
+ * If input has empty value, output is also empty.
+ * </p>
+ * 
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestInput extends AbstractTestInput {
+public abstract class AbstractTestInput extends AbstractWebDriverTest<WithInputPage> {
 
-    private static final TestConfiguration DEFAULT_CONFIGURATION = new PropertyTestConfiguration();
-    
-    public TestInput() {
-        super(DEFAULT_CONFIGURATION);
+    private final String inputName = "RichFaces Fan";
+
+    protected AbstractTestInput(TestConfiguration configuration) {
+        super(configuration);
     }
     
-    @Test
-    public void testTypeName() {
-        super.testTypeName();
+    @Override
+    protected WithInputPage createPage() {
+        return new WithInputPage();
     }
+
+    protected void testTypeName() {
+        getPage().getInput().click();
+        getPage().getInput().clear();
+        getPage().getInput().sendKeys(inputName);
+        new WebDriverWait(getWebDriver())
+            .failWith("The output text doesn't match.")
+            .until(TextEquals.getInstance().element(getPage().getOutput()).text("Hello " + inputName + "!"));
+        
+    }    
     
 }

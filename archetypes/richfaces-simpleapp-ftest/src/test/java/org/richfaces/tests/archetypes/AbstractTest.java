@@ -19,12 +19,9 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.archetypes.simpleapp;
+package org.richfaces.tests.archetypes;
 
-import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.testng.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -32,18 +29,6 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 public abstract class AbstractTest extends Arquillian {
 
     private TestConfiguration configuration;
-
-    private static TestConfiguration defaultConfiguration = new PropertyTestConfiguration();
-    
-    @Deployment(testable = false)
-    public static WebArchive createTestArchive() {
-        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, defaultConfiguration.getApplicationWar());
-        return war;
-    }    
-    
-    protected AbstractTest() {
-        this(defaultConfiguration);
-    }
     
     /**
      * Creates a new instance of {@link AbstractShowcaseTest} with
@@ -51,7 +36,7 @@ public abstract class AbstractTest extends Arquillian {
      * 
      * @param configuration
      */
-    private AbstractTest(TestConfiguration configuration) {
+    protected AbstractTest(TestConfiguration configuration) {
         this.configuration = configuration;
     }    
  
