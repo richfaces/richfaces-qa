@@ -41,7 +41,25 @@ if [ ! -e $WORKSPACE/$WEBDRIVER ]; then
 	msg "downloading webdriver to [$ARG_WORKSPACE/$WEBDRIVER]";
 	wget $WEBDRIVER_DOWNLOAD_URL/$WEBDRIVER --output-document $WORKSPACE/$WEBDRIVER;
 fi	
-msg "installing web driver [$WEBDRIVER]";	
-$ARG_ADB -s $DEVICE_SERIAL -e install -r $WORKSPACE/$WEBDRIVER;
+
+msg "installing web driver [$WEBDRIVER]";
+for ((I=0; I<$TIMOUT_TRIES; I++)); do	
+    msg "... try $I";
+    GREPPED=`$ARG_ADB -s $DEVICE_SERIAL -e install -r $WORKSPACE/$WEBDRIVER | grep Error`;
+    if [ "$GREPPED" == "" ]; then
+        INSTALLED=1;
+        msg "... success";
+        break;
+    else
+        msg "... failed";
+    fi
+    sleep $SLEEP_AMOUNT;
+done
+
+if [ $INSTALLED == "" ]; then
+    msg "installation of web driver failed";
+    exit 1;
+fi
+
 msg "forwarding tcp: host port $ARG_HOST_PORT -> device port $ARG_DEVICE_PORT";
 $ARG_ADB -s $DEVICE_SERIAL forward tcp:$ARG_HOST_PORT tcp:$ARG_DEVICE_PORT;

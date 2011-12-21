@@ -22,6 +22,10 @@ ANDROID_DOWNLOAD_URL=http://dl.google.com/android;
 # Workspace
 WORKSPACE_DEFAULT=$SCRIPT_DIR/android-workspace;
 
+# Other
+SLEEP_AMOUNT=5
+TIMOUT_TRIES=10
+
 # Functions
 
 function msg()

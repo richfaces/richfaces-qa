@@ -17,14 +17,13 @@ if [ $ARG_START_DEVICE == 1 ]; then
 	done
 fi
 
-
 if [ $ARG_INSTALL_WEBDRIVER == 1 ]; then
-	${SCRIPT_DIR}/install-selenium.sh "$ARG_ANDROID_SDK/platform-tools/adb" $DEVICE_SERIAL $ARG_DEVICE_PORT $ARG_HOST_PORT $ARG_WEBDRIVER_FILE_VERSION;
+    ${SCRIPT_DIR}/install-selenium.sh "$ARG_ANDROID_SDK/platform-tools/adb" $DEVICE_SERIAL $ARG_DEVICE_PORT $ARG_HOST_PORT $ARG_WEBDRIVER_FILE_VERSION;
 fi
-
-msg "unlocking screen";
-$ARG_ANDROID_SDK/platform-tools/adb shell input keyevent 82;
 
 if [ $ARG_INSTALL_WEBDRIVER == 1 ]; then
 	${SCRIPT_DIR}/start-selenium.sh "$ARG_ANDROID_SDK/platform-tools/adb";
 fi
+
+msg "unlocking screen";
+$ARG_ANDROID_SDK/platform-tools/adb shell input keyevent 82;
