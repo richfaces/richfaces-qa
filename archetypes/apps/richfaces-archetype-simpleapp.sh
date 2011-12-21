@@ -1,7 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR=`dirname $BASH_SOURCE`;
 SCRIPT_DIR=`readlink -f $SCRIPT_DIR`;
-echo "$SCRIPT_DIR/version.sh"; exit 1;
 WORKING_DIR=`pwd`;
 source "$SCRIPT_DIR/version.sh";
 source "$SCRIPT_DIR/config.sh";
