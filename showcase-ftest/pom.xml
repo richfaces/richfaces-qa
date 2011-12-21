@@ -23,7 +23,7 @@
         <version.jbossas7>7.0.2.Final</version.jbossas7>
 
         <!-- selenium version used to download selenium-server via selenium-server.sh script in ${project.basedir} -->
-        <version.selenium>2.6.0</version.selenium>
+        <version.selenium>2.15.0</version.selenium>
 
         <version.tomcat6>6.0.35</version.tomcat6>
         <version.tomcat7>7.0.23</version.tomcat7>
@@ -81,7 +81,7 @@
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
-                <version>1.0.0.CR5</version>
+                <version>1.0.0.CR7</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
