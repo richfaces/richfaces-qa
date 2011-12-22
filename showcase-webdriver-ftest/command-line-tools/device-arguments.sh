@@ -1,5 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR=`dirname $BASH_SOURCE`;
+SCRIPT_DIR=`readlink -f $SCRIPT_DIR`;
 
 source "$SCRIPT_DIR/config.sh";
 
@@ -95,3 +96,6 @@ if [ ! -d "$ARG_WORKSPACE" ]; then
 	msg "creating workspace [$ARG_WORKSPACE]";
 	mkdir -p "$ARG_WORKSPACE";
 fi
+
+# Info messages
+msg "worksapce is set to [$ARG_WORKSPACE]";

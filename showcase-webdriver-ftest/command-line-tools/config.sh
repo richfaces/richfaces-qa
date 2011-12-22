@@ -1,5 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR=`dirname $BASH_SOURCE`;
+SCRIPT_DIR=`readlink -f $SCRIPT_DIR`;
 
 # Device properties
 DEVICE_MEMORY=500M;

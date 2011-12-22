@@ -1,5 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR=`dirname $BASH_SOURCE`;
+SCRIPT_DIR=`readlink -f $SCRIPT_DIR`;
 
 source "$SCRIPT_DIR/config.sh";
 
@@ -9,7 +10,7 @@ ARG_DEVICE_PORT=$3;
 ARG_HOST_PORT=$4;
 ARG_SELENIUM_VERSION=$5;
 
-WORKSPACE=/tmp
+WORKSPACE=$WORKSPACE_DEFAULT;
 
 if [ ! ${ARG_ADB} ]; then
 	echo "The argument [1] is missining";
