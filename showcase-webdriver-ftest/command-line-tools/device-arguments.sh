@@ -84,6 +84,10 @@ do
 	esac
 done
 
+# Info messages
+
+msg "workspace is set to [$ARG_WORKSPACE]";
+
 # Argument validation
 
 if [ ! -d "$ARG_ANDROID_SDK" ]; then
@@ -96,6 +100,3 @@ if [ ! -d "$ARG_WORKSPACE" ]; then
 	msg "creating workspace [$ARG_WORKSPACE]";
 	mkdir -p "$ARG_WORKSPACE";
 fi
-
-# Info messages
-msg "worksapce is set to [$ARG_WORKSPACE]";
