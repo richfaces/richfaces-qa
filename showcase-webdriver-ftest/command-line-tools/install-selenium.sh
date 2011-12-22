@@ -10,7 +10,7 @@ ARG_DEVICE_PORT=$3;
 ARG_HOST_PORT=$4;
 ARG_SELENIUM_VERSION=$5;
 
-WORKSPACE=$WORKSPACE_DEFAULT;
+ARG_WORKSPACE=$WORKSPACE_DEFAULT;
 
 if [ ! ${ARG_ADB} ]; then
 	echo "The argument [1] is missining";
@@ -38,15 +38,15 @@ if [ ! ${ARG_SELENIUM_VERSION} ]; then
 fi
 
 WEBDRIVER=${WEBDRIVER_FILE_PREFIX}${ARG_SELENIUM_VERSION}${WEBDRIVER_FILE_SUFFIX};
-if [ ! -e $WORKSPACE/$WEBDRIVER ]; then
+if [ ! -e $ARG_WORKSPACE/$WEBDRIVER ]; then
 	msg "downloading webdriver to [$ARG_WORKSPACE/$WEBDRIVER]";
-	wget $WEBDRIVER_DOWNLOAD_URL/$WEBDRIVER --output-document $WORKSPACE/$WEBDRIVER;
+	wget $WEBDRIVER_DOWNLOAD_URL/$WEBDRIVER --output-document $ARG_WORKSPACE/$WEBDRIVER;
 fi	
 
 msg "installing web driver [$WEBDRIVER]";
 for ((I=0; I<$TIMOUT_TRIES; I++)); do	
     msg "... try $I";
-    GREPPED=`$ARG_ADB -s $DEVICE_SERIAL -e install -r $WORKSPACE/$WEBDRIVER | grep Error`;
+    GREPPED=`$ARG_ADB -s $ARG_DEVICE_SERIAL -e install -r $ARG_WORKSPACE/$WEBDRIVER | grep Error`;
     if [ "$GREPPED" == "" ]; then
         INSTALLED=1;
         msg "... success";
@@ -63,4 +63,4 @@ if [ $INSTALLED == "" ]; then
 fi
 
 msg "forwarding tcp: host port $ARG_HOST_PORT -> device port $ARG_DEVICE_PORT";
-$ARG_ADB -s $DEVICE_SERIAL forward tcp:$ARG_HOST_PORT tcp:$ARG_DEVICE_PORT;
+$ARG_ADB -s $ARG_DEVICE_SERIAL forward tcp:$ARG_HOST_PORT tcp:$ARG_DEVICE_PORT;

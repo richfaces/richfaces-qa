@@ -6,8 +6,6 @@ source "$SCRIPT_DIR/config.sh";
 
 ARG_ADB=$1;
 
-WORKSPACE=/tmp
-
 if [ ! ${ARG_ADB} ]; then
 	exit 1;
 fi
