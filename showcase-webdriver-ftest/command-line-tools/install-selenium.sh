@@ -12,6 +12,11 @@ ARG_SELENIUM_VERSION=$5;
 
 ARG_WORKSPACE=$WORKSPACE_DEFAULT;
 
+if [ ! -d "$ARG_WORKSPACE" ]; then
+	msg "creating workspace [$ARG_WORKSPACE]";
+	mkdir -p "$ARG_WORKSPACE";
+fi
+
 if [ ! ${ARG_ADB} ]; then
 	echo "The argument [1] is missining";
 	exit 1;
@@ -63,4 +68,4 @@ if [ $INSTALLED == "" ]; then
 fi
 
 msg "forwarding tcp: host port $ARG_HOST_PORT -> device port $ARG_DEVICE_PORT";
-$ARG_ADB -s $ARG_DEVICE_SERIAL forward tcp:$ARG_HOST_PORT tcp:$ARG_DEVICE_PORT;
+$ARG_ADB -n $ARG_DEVICE_SERIAL forward tcp:$ARG_HOST_PORT tcp:$ARG_DEVICE_PORT;
