@@ -68,4 +68,4 @@ if [ $INSTALLED == "" ]; then
 fi
 
 msg "forwarding tcp: host port $ARG_HOST_PORT -> device port $ARG_DEVICE_PORT";
-$ARG_ADB -n $ARG_DEVICE_SERIAL forward tcp:$ARG_HOST_PORT tcp:$ARG_DEVICE_PORT;
+$ARG_ADB -s $ARG_DEVICE_SERIAL forward tcp:$ARG_HOST_PORT tcp:$ARG_DEVICE_PORT;
