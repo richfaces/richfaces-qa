@@ -14,7 +14,7 @@
         <testng.listeners>org.jboss.arquillian.testng.container.TestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng.xml</testng.suite.xml>
         <arquillian.drone.version>1.0.0.CR2</arquillian.drone.version>
-        <arquillian.version>1.0.0-SNAPSHOT</arquillian.version>
+        <arquillian.version>1.0.0.CR2</arquillian.version>
     </properties>
 
     <distributionManagement>
