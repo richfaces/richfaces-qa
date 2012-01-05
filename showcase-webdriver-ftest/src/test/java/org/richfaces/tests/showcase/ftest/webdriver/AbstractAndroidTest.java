@@ -59,10 +59,10 @@ public abstract class AbstractAndroidTest<Page extends ShowcasePage> extends Abs
         super(testConfiguration);
         Validate.notNull(toolKitConfiguration);
         this.toolKit = new ToolKit(toolKitConfiguration);
+        System.err.println("--------------------------------------------------------------------------------");
+        System.err.println(System.getProperties());
+        System.err.println("--------------------------------------------------------------------------------");        
         if (!getConfiguration().isAndroid()) {
-            System.err.println("--------------------------------------------------------------------------------");
-            System.err.println(System.getProperties());
-            System.err.println("--------------------------------------------------------------------------------");
             throw new IllegalStateException("The android test is used, but android web driver isn't turned on.");
         }
     }
