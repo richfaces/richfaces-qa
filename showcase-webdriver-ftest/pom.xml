@@ -187,21 +187,5 @@
                 </plugins>
             </build>
         </profile>
-        <profile>
-            <id>jenkins-android</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <systemProperties>
-                                <webdriver.android>true</webdriver.android>
-                                <android.sdk.dir>${env.ANDROID_SDK_DIRECTORY}</android.sdk.dir>
-                            </systemProperties>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
     </profiles>
 </project>
