@@ -9,8 +9,7 @@
     <name>richfaces-showcase-webdriver-ftest</name>
 
     <properties>
-        <showcase.version>4.1.0-SNAPSHOT</showcase.version>
-        <showcase.classifier>tomcat6</showcase.classifier>
+        <showcase.version>4.1.1-SNAPSHOT</showcase.version>
         <testng.listeners>org.jboss.arquillian.testng.container.TestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng.xml</testng.suite.xml>
         <arquillian.drone.version>1.0.0.CR2</arquillian.drone.version>
@@ -65,14 +64,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <!-- RichFaces dependencies -->
-        <dependency>
-            <groupId>org.richfaces.examples</groupId>
-            <artifactId>richfaces-showcase</artifactId>
-            <type>war</type>
-            <version>${showcase.version}</version>
-            <classifier>${showcase.classifier}</classifier>
-        </dependency>
         <!-- Selenium -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -84,20 +75,7 @@
             <artifactId>selenium-android-driver</artifactId>
             <version>2.9.0</version>
         </dependency>
-        <!-- TestNG -->
-<!--         <dependency> -->
-<!--             <groupId>org.testng</groupId> -->
-<!--             <artifactId>testng</artifactId> -->
-<!--             <version>6.1.1</version> -->
-<!--             <scope>test</scope> -->
-<!--         </dependency> -->
         <!--  Arquillian -->
-<!--         <dependency> -->
-<!--             <groupId>org.jboss.arquillian</groupId> -->
-<!--             <artifactId>arquillian-testng</artifactId> -->
-<!--             <version>${arquillian.version}</version> -->
-<!--             <scope>test</scope> -->
-<!--         </dependency> -->
         <dependency>
             <groupId>org.jboss.arquillian.ajocado</groupId>
             <artifactId>arquillian-ajocado-testng</artifactId>
@@ -122,37 +100,19 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
-<!--             <plugin> -->
-<!--                 <groupId>org.apache.maven.plugins</groupId> -->
-<!--                 <artifactId>maven-surefire-plugin</artifactId> -->
-<!--                 <version>2.9</version> -->
-<!--                 <executions> -->
-<!--                     <execution> -->
-<!--                         <id>functional-test</id> -->
-<!--                         <phase>integration-test</phase> -->
-<!--                         <goals> -->
-<!--                             <goal>test</goal> -->
-<!--                         </goals> -->
-<!--                         <configuration> -->
-<!--                             <testFailureIgnore>true</testFailureIgnore> -->
-<!--                             <argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties</argLine> -->
-<!--                         </configuration> -->
-<!--                     </execution> -->
-<!--                 </executions> -->
-<!--             </plugin> -->
         </plugins>
     </build>
-
     <profiles>
         <profile>
             <id>jbossas-managed-7</id>
             <properties>
-                <showcase.classifier>jbas7</showcase.classifier>
                 <container.groupId>org.jboss.as</container.groupId>
                 <container.artifactId>jboss-as-dist</container.artifactId>
                 <container.version>7.0.2.Final</container.version>
                 <container.archive.type>zip</container.archive.type>
+                <container.home>${project.build.directory}/jboss-as-${container.version}</container.home>
                 <arquillian.launch>jbossas-managed-7</arquillian.launch>
+                <showcase.classifier>jbas7</showcase.classifier>
             </properties>
             <dependencies>
                 <dependency>
@@ -160,21 +120,28 @@
                     <artifactId>jboss-as-arquillian-container-managed</artifactId>
                     <version>${container.version}</version>
                 </dependency>
+                <dependency>
+                    <groupId>org.richfaces.examples</groupId>
+                    <artifactId>richfaces-showcase</artifactId>
+                    <type>war</type>
+                    <version>${showcase.version}</version>
+                    <classifier>${showcase.classifier}</classifier>
+                </dependency>
             </dependencies>
-        </profile>
-        <profile>
-            <id>managed-container</id>
-            <activation>
-                <property>
-                    <name>!container.managed.disable</name>
-                </property>
-            </activation>
             <build>
                 <plugins>
                     <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <environmentVariables>
+                                <JBOSS_HOME>${container.home}</JBOSS_HOME>
+                                <arquillian.launch>${arquillian.launch}</arquillian.launch>
+                            </environmentVariables>
+                        </configuration>
+                    </plugin>
+                    <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
-                        <version>2.3</version>
                         <executions>
                             <execution>
                                 <id>unpack</id>
@@ -216,29 +183,6 @@
                                 </configuration>
                             </execution>
                         </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>jenkins-android</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>some-execution</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <executable>${basedir}/command-line-tools/jenkins.sh</executable>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
