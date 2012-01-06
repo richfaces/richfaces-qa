@@ -12,8 +12,7 @@
         <showcase.version>${project.version}</showcase.version>
         <testng.listeners>org.jboss.arquillian.testng.container.TestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng.xml</testng.suite.xml>
-        <arquillian.drone.version>1.0.0.CR2</arquillian.drone.version>
-        <arquillian.version>1.0.0.CR2</arquillian.version>
+        <arquillian.version>1.0.0.CR6</arquillian.version>
     </properties>
 
     <distributionManagement>
@@ -28,6 +27,18 @@
             <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/releases</url>
         </repository>
     </distributionManagement>
+
+    <developers>
+        <developer>
+            <name>Jan Papousek</name>
+            <email>jpapouse@redhat.com</email>
+        </developer>
+    </developers>
+
+    <issueManagement>
+        <system>jira</system>
+        <url>https://jira.jboss.org/jira/browse/RFPL</url>
+    </issueManagement>
 
     <repositories>
         <repository>
@@ -51,18 +62,6 @@
         </repository>
     </repositories>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.jboss.arquillian</groupId>
-                <artifactId>arquillian-bom</artifactId>
-                <version>1.0.0.CR5</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
         <!-- Selenium -->
         <dependency>
@@ -77,17 +76,16 @@
         </dependency>
         <!--  Arquillian -->
         <dependency>
-            <groupId>org.jboss.arquillian.ajocado</groupId>
-            <artifactId>arquillian-ajocado-testng</artifactId>
+            <groupId>org.jboss.arquillian.testng</groupId>
+            <artifactId>arquillian-testng-container</artifactId>
             <version>${arquillian.version}</version>
-            <type>pom</type>
-            <scope>test</scope>
         </dependency>
+        <!-- TestNG -->  
         <dependency>
-            <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-drone-webdriver</artifactId>
-            <version>${arquillian.drone.version}</version>
-        </dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.2.1</version>
+        </dependency>      
     </dependencies>
 
     <build>
@@ -99,8 +97,8 @@
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>
-            </plugin>
-        </plugins>
+            </plugin>    
+        </plugins>        
     </build>
     <profiles>
         <profile>
@@ -137,6 +135,9 @@
                                 <JBOSS_HOME>${container.home}</JBOSS_HOME>
                                 <arquillian.launch>${arquillian.launch}</arquillian.launch>
                             </environmentVariables>
+                            <suiteXmlFiles>
+                                <suiteXmlFile>${testng.suite.xml}</suiteXmlFile>
+                            </suiteXmlFiles>
                         </configuration>
                     </plugin>
                     <plugin>
