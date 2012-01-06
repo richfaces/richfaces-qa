@@ -4,12 +4,12 @@
 
     <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-showcase-webdriver-ftest</artifactId>
-    <version>4.1.0-SNAPSHOT</version>
+    <version>4.1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>richfaces-showcase-webdriver-ftest</name>
 
     <properties>
-        <showcase.version>4.1.1-SNAPSHOT</showcase.version>
+        <showcase.version>${project.version}</showcase.version>
         <testng.listeners>org.jboss.arquillian.testng.container.TestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng.xml</testng.suite.xml>
         <arquillian.drone.version>1.0.0.CR2</arquillian.drone.version>
