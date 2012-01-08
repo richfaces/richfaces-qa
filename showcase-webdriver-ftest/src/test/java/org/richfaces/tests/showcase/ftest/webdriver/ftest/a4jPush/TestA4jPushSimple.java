@@ -32,7 +32,7 @@ import org.testng.annotations.Test;
  */
 public class TestA4jPushSimple extends AbstractWebDriverTest<PushPage>{
     
-    @Test
+    @Test(groups = {"broken"})
     public void testDateUpdates() {
         for(int i=0; i<2; i++) {
             String before = getPage().getDate().getText();

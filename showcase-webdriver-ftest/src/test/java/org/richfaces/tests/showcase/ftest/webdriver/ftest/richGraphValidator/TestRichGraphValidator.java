@@ -52,7 +52,7 @@ public class TestRichGraphValidator extends AbstractWebDriverTest<PasswordValida
         new WebDriverWait(getWebDriver())
             .failWith("After submitting a form with correctt value, sucess message should be present.")
             .until(ElementPresent.getInstance().element(getPage().getInfoMessageArea()));
-        assertTrue(getPage().getInfoMessageArea().getText().contains("Succesfully changed!"));
+        assertTrue(getPage().getInfoMessageArea().getText().contains("Successfully changed!"));
     }
     
     @Test
