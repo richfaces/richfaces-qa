@@ -47,7 +47,7 @@ public class TestA4jStatusSimple extends AbstractWebDriverTest<ViewUsagePage>{
         new WebDriverWait(getWebDriver())
             .failWith("After submitting the username and the address, the output text should be present.")
             .until(ElementPresent.getInstance().element(getPage().getUserOutput()));
-        assertEquals(getPage().getUserOutput().getText(), "User stored succesfully");
+        assertEquals(getPage().getUserOutput().getText(), "User stored successfully");
     }    
     
     @Test
@@ -59,6 +59,7 @@ public class TestA4jStatusSimple extends AbstractWebDriverTest<ViewUsagePage>{
             .until(ElementPresent.getInstance().element(getPage().getRequestImage()));        
     }
    
+    
     @Test
     public void testTypeUsername() {
         getPage().getUsernameInput().click();

@@ -107,7 +107,7 @@ public class PropertyTestConfiguration implements TestConfiguration {
     
     @Override
     public boolean isAndroid() {
-        return System.getProperty("webdriver.android") != null;
+        return System.getProperty("webdriver.android") != null || System.getenv("ANDROID_SDK_DIRECTORY") != null; 
     }
 
     @Override
