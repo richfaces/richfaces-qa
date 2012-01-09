@@ -151,7 +151,7 @@ public abstract class AbstractShowcaseTest extends Arquillian {
             default:
                 status = "UNKNOWN";
         }
-        logMessage("[" + status + "] " + result.getTestClass().getName() + "." + result.getMethod().getMethodName());
+        logMessage("[" + status + "] [" + (result.getEndMillis() - result.getStartMillis()) + " ms] " + result.getTestClass().getName() + "." + result.getMethod().getMethodName());
     }
     
 }
