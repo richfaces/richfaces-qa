@@ -43,7 +43,7 @@ public class TestTopMenu extends AbstractAjocadoTest {
 	
 	protected final String TOP_LVL_MENU = "td[class*=rf-tb-itm]";
 	protected final String LABEL = "div[id*=label]";
-	protected String  fileMenuItems = "div.rf-ddm-pos:eq(0) div[class*=rf-ddm-itm]";
+	protected String  fileMenuItems = "div.rf-ddm-pos:eq(0) .rf-ddm-itm-lbl";
 	
 	/* **********************************************************************************
 	 * Locators 
