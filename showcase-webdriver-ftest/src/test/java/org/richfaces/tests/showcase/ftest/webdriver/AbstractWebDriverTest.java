@@ -21,11 +21,17 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.jboss.test.selenium.android.support.pagefactory.StaleReferenceAwareFieldDecorator;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.android.AndroidDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -33,6 +39,8 @@ import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
 import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
@@ -90,6 +98,14 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
     @BeforeMethod(alwaysRun = true)
     public void initializePageUrl() {
         webDriver.get(getPath());
+    }
+    
+    @AfterMethod(alwaysRun = true)
+    public void takeScreenShotOnFailure(ITestResult result) throws WebDriverException, IOException {
+        if (!result.isSuccess() && getWebDriver() instanceof TakesScreenshot) {
+            TakesScreenshot screenShotter = (TakesScreenshot) (getWebDriver());
+            FileUtils.copyFile(screenShotter.getScreenshotAs(OutputType.FILE), new File("target" + File.separator + "screenshots" + File.separator + result.getTestClass().getName().replace(".", File.separator) + result.getMethod().getMethodName() + ".png"));
+        }
     }
     
     protected ElementLocatorFactory createLocatorFactory() {
