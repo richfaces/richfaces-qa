@@ -1,5 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR=`dirname $BASH_SOURCE`;
+SCRIPT_DIR=`readlink -f $SCRIPT_DIR`;
 
 usage()
 {
@@ -35,11 +36,11 @@ git submodule update;
 if [ -f "$SCRIPT_DIR/settings.xml" ]; then
     rm -rf "$SCRIPT_DIR/settings.xml";
 fi
-rm -rf $SCRIPT_DIR/enterprise-maven-bootstrap/jboss*repository
+rm -rf $SCRIPT_DIR/../enterprise-maven-bootstrap/jboss*repository
 
 
 # Download and unpack repositories
-cd $SCRIPT_DIR/enterprise-maven-bootstrap;
+cd $SCRIPT_DIR/../enterprise-maven-bootstrap;
 EAP_ARCHIVE=`basename $1`;
 WFK_ARCHIVE=`basename $2`;
 if [ ! -f $EAP_ARCHIVE ]; then
