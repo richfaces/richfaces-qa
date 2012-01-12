@@ -107,7 +107,7 @@ public class TestCompositemessages extends
 
 	}
 
-	@Test
+	@Test( groups = {"4.2"} )
 	public void testUserNameFilledIncorrectlyMoreThan12() {
 
 		prepareStringBuildersClickOnTheButton(
@@ -125,7 +125,7 @@ public class TestCompositemessages extends
 		isUserSuccessfullyAddedPresent(false);
 	}
 
-	@Test
+	@Test( groups = {"4.2"} )
 	public void testUserNameFilledIncorrectlyLessThan3MoreThan0() {
 
 		prepareStringBuildersClickOnTheButton(
@@ -179,7 +179,7 @@ public class TestCompositemessages extends
 		isUserSuccessfullyAddedPresent(false);
 	}
 
-	@Test
+	@Test( groups = {"4.2"} )
 	public void testAddressFilledIncorrectlyLengthMoreThan100() {
 
 		prepareStringBuildersClickOnTheButton(
@@ -197,7 +197,7 @@ public class TestCompositemessages extends
 		isUserSuccessfullyAddedPresent(false);
 	}
 
-	@Test
+	@Test( groups = {"4.2"} )
 	public void testNameIncorrectlyMoreThan12AddressIncorrectlyLength0() {
 
 		prepareStringBuildersClickOnTheButton(
@@ -217,7 +217,7 @@ public class TestCompositemessages extends
 		isUserSuccessfullyAddedPresent(false);
 	}
 
-	@Test
+	@Test( groups = {"4.2"} )
 	public void testNameIncorrectlyMoreThan12AddressIncorrectlyMoreThan100() {
 
 		prepareStringBuildersClickOnTheButton(
@@ -237,7 +237,7 @@ public class TestCompositemessages extends
 		isUserSuccessfullyAddedPresent(false);
 	}
 
-	@Test
+	@Test( groups = {"4.2"} )
 	public void testNameIncorrectlyLessThan3MoreThan0AddressIncorrectlyLength0() {
 
 		prepareStringBuildersClickOnTheButton(
@@ -257,7 +257,7 @@ public class TestCompositemessages extends
 		isUserSuccessfullyAddedPresent(false);
 	}
 
-	@Test
+	@Test( groups = {"4.2"} )
 	public void testNameIncorrectlyLessThan3MoreThan0AddressIncorrectlyMoreThan100() {
 
 		prepareStringBuildersClickOnTheButton(
@@ -296,7 +296,7 @@ public class TestCompositemessages extends
 		isUserSuccessfullyAddedPresent(false);
 	}
 
-	@Test
+	@Test( groups = {"4.2"} )
 	public void testNameIncorrectlyLength0AddressIncorrectlyMoreThan100() {
 
 		prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_EMPTY,

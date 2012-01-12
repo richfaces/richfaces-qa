@@ -55,13 +55,13 @@ public class TestNotifyMessages extends AbstractTestMessage {
 	 * *********************************************************************
 	 * ******
 	 */
-	@Test
+	@Test( groups = {"4.2"} )
 	public void testAllInputsIncorrectValuesBlurActivation() {
 
 		checkNotifyMessages(false);
 	}
 
-	@Test
+	@Test( groups = {"4.2"} )
 	public void testAllInputsIncorrectValuesSubmitActivation() {
 
 		checkNotifyMessages(true);
