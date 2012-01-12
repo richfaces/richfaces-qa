@@ -33,7 +33,7 @@ import static org.testng.Assert.*;
  */
 public class TestA4jQueueSimple extends AbstractWebDriverTest<QueuePage>{
 
-    @Test
+    @Test(groups = { "broken" })
     public void testType() {
         StringBuilder inputAll = new StringBuilder();
         for(int n=1; n<=3; n++) {

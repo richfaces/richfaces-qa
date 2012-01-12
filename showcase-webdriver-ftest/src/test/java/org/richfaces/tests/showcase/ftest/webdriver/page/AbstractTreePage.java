@@ -27,6 +27,8 @@ import org.apache.commons.lang.Validate;
 import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -113,6 +115,11 @@ public abstract class AbstractTreePage implements ShowcasePage {
     }
     
     private void toggle(WebElement toToggle) {
+        if (webDriver instanceof JavascriptExecutor) {
+            Point location = toToggle.getLocation();
+            JavascriptExecutor jsExecutor = (JavascriptExecutor) webDriver;
+            jsExecutor.executeScript("window.moveTo(" + location.getX() + ", " + location.getY() + ")");
+        }
         toToggle.click();
         new WebDriverWait(webDriver)
             .failWith("Unable to toggle the given element.")

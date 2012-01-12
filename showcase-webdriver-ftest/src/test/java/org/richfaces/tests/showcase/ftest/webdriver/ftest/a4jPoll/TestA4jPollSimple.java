@@ -33,7 +33,8 @@ import org.testng.annotations.Test;
  */
 public class TestA4jPollSimple extends AbstractWebDriverTest<PollPage> {
     
-    @Test
+    // https://issues.jboss.org/browse/RF-11872
+    @Test(groups = {"reported-without-fix-version"})
     public void testStop() throws InterruptedException {
         getPage().getButton().click();
         String before = getPage().getDate().getText();

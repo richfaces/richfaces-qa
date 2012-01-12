@@ -28,13 +28,15 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 @RunAsClient
 public abstract class AbstractShowcaseTest extends Arquillian {
-    
+
     private TestConfiguration configuration;
     
     @Deployment(testable = false)
@@ -43,6 +45,14 @@ public abstract class AbstractShowcaseTest extends Arquillian {
             new File("target/showcase.war"));
         return war;
     }     
+    
+    @AfterMethod(alwaysRun=true)
+    public void processResultAfterMethod(ITestResult result) {
+        logResultStatus(result);
+        if (!result.isSuccess() && result.getThrowable() != null) {
+            logMessage("\t" + result.getThrowable().getMessage());
+        }
+    }    
     
     /**
      * Creates a new instance of {@link AbstractShowcaseTest} with
@@ -118,5 +128,30 @@ public abstract class AbstractShowcaseTest extends Arquillian {
      * @return sample name
      */
     protected abstract String getSampleName();
+
+    private void logMessage(String message) {
+        System.out.println(message);
+    }    
+    
+    private void logResultStatus(ITestResult result) {
+        String status;
+        switch(result.getStatus()) {
+            case ITestResult.FAILURE:
+                status = "FAILURE";
+                break;
+            case ITestResult.SKIP:
+                status = "SKIP";
+                break;
+            case ITestResult.STARTED:
+                status = "STARTED";
+                break;           
+            case ITestResult.SUCCESS:
+                status = "SUCCESS";
+                break;
+            default:
+                status = "UNKNOWN";
+        }
+        logMessage("[" + status + "] [" + (result.getEndMillis() - result.getStartMillis()) + " ms] " + result.getTestClass().getName() + "." + result.getMethod().getMethodName());
+    }
     
 }
