@@ -35,8 +35,12 @@
         <jboss7Home>${project.build.directory}/jboss-as-${version.jbossas7}</jboss7Home>
         <jboss6Home>${project.build.directory}/jboss-${version.jbossas6}</jboss6Home>
 
+        <!-- the version of showcase war and the classifier to deploy on container during testing -->
         <version.showcase>4.1.1-SNAPSHOT</version.showcase>
         <showcase.classifier>jbas7</showcase.classifier>
+        
+        <!-- which tests should be run and which not -->
+        <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
 
     </properties>
 
@@ -133,6 +137,9 @@
                 <version>2.9</version>
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
+                    <suiteXmlFiles>
+                        <suiteXmlFiles>${testng.suite.xml}</suiteXmlFiles>
+                    </suiteXmlFiles>
                     <!-- Logging configuration for Selenium -->
                     <argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties</argLine>
                 </configuration>
