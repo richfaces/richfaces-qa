@@ -3,7 +3,7 @@ Executing Tests
 
 Tests need the device with Selenium server running. Just type into to command line: 
 
-	$ mvn clean verify -D webdriver.android -D android.skd.dir=<directory>
+	$ mvn clean verify -D webdriver.android -D android.sdk.dir=<directory>
  
 Available Properties
 --------------------
