@@ -52,10 +52,7 @@ public class AbstractPickListTest extends AbstractOrderingTest {
 			selenium.click(oneCity);
 			selenium.focus(oneCity);
 
-			selenium.keyDownNative(KeyEvent.VK_CONTROL);
-			selenium.keyPressNative(KeyEvent.VK_RIGHT);
-			selenium.keyUpNative(KeyEvent.VK_CONTROL);
-
+			selenium.keyPressNative(KeyEvent.VK_END);
 		} else {
 			selenium.click(addAllButton.format(0));
 		}
@@ -136,10 +133,7 @@ public class AbstractPickListTest extends AbstractOrderingTest {
 			selenium.click(oneOption);
 			selenium.focus(oneOption);
 			
-			selenium.keyDownNative( KeyEvent.VK_CONTROL );
-			selenium.keyPressNative( KeyEvent.VK_LEFT );
-			selenium.keyUpNative( KeyEvent.VK_CONTROL );
-			
+			selenium.keyPressNative( KeyEvent.VK_HOME );
 		} else {
 
 			selenium.click(removeAllButton.format(whichRemoveAllButton));
@@ -273,8 +267,8 @@ public class AbstractPickListTest extends AbstractOrderingTest {
 		} else {
 
 			assertTrue(cities.equals(""),
-					"There should be no selected cities, in other words in the list"
-							+ where + " should ne nothing");
+					"There should be no selected cities, in other words in the list: "
+							+ where + " should be nothing");
 		}
 
 	}

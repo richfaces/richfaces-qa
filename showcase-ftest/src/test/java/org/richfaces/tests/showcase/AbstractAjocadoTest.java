@@ -45,7 +45,7 @@ public abstract class AbstractAjocadoTest extends AbstractShowcaseTest {
 	@Drone
 	protected AjaxSelenium selenium;
 
-	@BeforeMethod
+	@BeforeMethod( groups={"arquillian"} )
 	public void loadPage() {
 
 		// this is beacuse of permission denied failures, this interceptor
