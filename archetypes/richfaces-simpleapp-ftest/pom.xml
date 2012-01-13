@@ -37,7 +37,7 @@
 
         <!-- arquillian versions -->
         <arquillian.tomcat.version>1.0.0.CR2</arquillian.tomcat.version>
-        <arquillian.ajocado-testng.version>1.0.0-SNAPSHOT</arquillian.ajocado-testng.version>
+        <arquillian.version>1.0.0.CR7</arquillian.version>
         
         <!-- version of JBoss containers to use and download -->
         <jbossas7.version>7.0.2.Final</jbossas7.version>
@@ -104,12 +104,16 @@
         </dependency>
         <!-- Arquillian -->
         <dependency>
-            <groupId>org.jboss.arquillian.ajocado</groupId>
-            <artifactId>arquillian-ajocado-testng</artifactId>
-            <version>${arquillian.ajocado-testng.version}</version>
-            <type>pom</type>
-            <scope>test</scope>
+            <groupId>org.jboss.arquillian.testng</groupId>
+            <artifactId>arquillian-testng-container</artifactId>
+            <version>${arquillian.version}</version>
         </dependency>
+        <!-- TestNG -->  
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.2.1</version>
+        </dependency>           
 <!--         <dependency> -->
 <!--             <groupId>org.jboss.arquillian.extension</groupId> -->
 <!--             <artifactId>arquillian-drone-selenium</artifactId> -->
@@ -206,6 +210,7 @@
                 <container.version>${tomcat7.version}</container.version>
                 <container.archive.type>zip</container.archive.type>
                 <container.home>${project.build.directory}/apache-tomcat-${container.version}</container.home>
+                <arquillian.version>1.0.0.CR2</arquillian.version>
                 <arquillian.launch>tomcat-managed-7</arquillian.launch>
                 <context.path>/richfaces-simpleapp/</context.path>
                 <application.war>${application.target.directory}/richfaces-simpleapp.war</application.war>
@@ -283,6 +288,7 @@
                 <container.version>${tomcat6.version}</container.version>
                 <container.archive.type>zip</container.archive.type>
                 <container.home>${project.build.directory}/apache-tomcat-${container.version}</container.home>
+                <arquillian.version>1.0.0.CR2</arquillian.version>
                 <arquillian.launch>tomcat-managed-6</arquillian.launch>
                 <context.path>/richfaces-simpleapp/</context.path>
                 <application.war>${application.target.directory}/richfaces-simpleapp.war</application.war>
