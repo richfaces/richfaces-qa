@@ -18,7 +18,8 @@ The tests can be run from command line with this command, assuming that your cur
 
 Notes:
 ======
--note that you have to have assign correct path to the containers installations in src/test/resources/arquillian.xml
+-note that binary distributions for all containers are downloaded automatically, either as maven dependency or as ant download. 
+ You can also use your binaries, but you have to assign correct path to the containers installations in src/test/resources/arquillian.xml
 
 -It is recommended to use vncsession.sh script, to run tests in other desktop, since some of them are sensitive on mouse movements, clicks etc.
 
