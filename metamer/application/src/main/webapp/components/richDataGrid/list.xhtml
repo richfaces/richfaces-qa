@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/list.xhtml">
+
+        <ui:define name="pageTitle">Rich Data Grid</ui:define>
+
+        <ui:define name="links">
+
+            <metamer:testPageLink id="simple" outcome="simple" value="Simple">
+                Simple page that contains <b>rich:dataGrid</b> (with model containing capitals) and
+                input boxes for all its attributes.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="facets" outcome="facets" value="Facets">
+                Page for testing of facets.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="scroller" outcome="scroller" value="Data Scroller">
+                Page that contains <b>rich:dataGrid</b> (with model containing capitals), data
+                scroller and input boxes for all its attributes.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="hGraphicImage" outcome="hGraphicImage" value="Graphic Image">
+                Page that contains <b>rich:dataGrid</b> (with model containing employees) with <b>h:graphicImage</b> inside it.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="hSelectBooleanCheckbox" outcome="hSelectBooleanCheckbox" value="Select Boolean Checkbox">
+                Page that contains <b>rich:dataGrid</b> (with model containing employees) with <b>h:selectBooleanCheckbox</b> inside it.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="a4jRepeat" outcome="a4jRepeat" value="A4J Repeat">
+                Page that contains <b>rich:dataGrid</b> (with model containing employees) with <b>a4j:repeat</b> inside it.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="keepSaved" outcome="keepSaved" value="Keep Saved">
+                Page for testing attribute keepSaved of <b>rich:dataGrid</b>.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="iterationStatus" outcome="iterationStatus" value="Iteration Status">
+                Simple page that contains <b>rich:dataGrid</b> (with model containing capitals) with iteration status and
+                input boxes for all its attributes.
+            </metamer:testPageLink>
+
+        </ui:define>
+
+    </ui:composition>
+
+</html>

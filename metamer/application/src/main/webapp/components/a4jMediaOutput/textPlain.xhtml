@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head"/>
+
+        <ui:define name="component">
+            <a4j:mediaOutput id="mediaOutput"
+                             accesskey="#{a4jMediaOutputBean.attributes['accesskey'].value}"
+                             align="#{a4jMediaOutputBean.attributes['align'].value}"
+                             archive="#{a4jMediaOutputBean.attributes['archive'].value}"
+                             border="#{a4jMediaOutputBean.attributes['border'].value}"
+                             cacheable="#{a4jMediaOutputBean.attributes['cacheable'].value}"
+                             charset="#{a4jMediaOutputBean.attributes['charset'].value}"
+                             classid="#{a4jMediaOutputBean.attributes['classid'].value}"
+                             codebase="#{a4jMediaOutputBean.attributes['codebase'].value}"
+                             codetype="#{a4jMediaOutputBean.attributes['codetype'].value}"
+                             converter="#{a4jMediaOutputBean.attributes['converter'].value}"
+                             coords="#{a4jMediaOutputBean.attributes['coords'].value}"
+                             createContent="#{a4jMediaOutputBean.createContentTextPlain}"
+                             declare="#{a4jMediaOutputBean.attributes['declare'].value}"
+                             dir="#{a4jMediaOutputBean.attributes['dir'].value}"
+                             element="object"
+                             expires="#{a4jMediaOutputBean.attributes['expires'].value}"
+                             hreflang="#{a4jMediaOutputBean.attributes['hreflang'].value}"
+                             hspace="#{a4jMediaOutputBean.attributes['hspace'].value}"
+                             ismap="#{a4jMediaOutputBean.attributes['ismap'].value}"
+                             lang="#{a4jMediaOutputBean.attributes['lang'].value}"
+                             lastModified="#{a4jMediaOutputBean.attributes['lastModified'].value}"
+                             mimeType="text/plain"
+                             onblur="#{a4jMediaOutputBean.attributes['onblur'].value}"
+                             onclick="#{a4jMediaOutputBean.attributes['onclick'].value}"
+                             ondblclick="#{a4jMediaOutputBean.attributes['ondblclick'].value}"
+                             onfocus="#{a4jMediaOutputBean.attributes['onfocus'].value}"
+                             onkeydown="#{a4jMediaOutputBean.attributes['onkeydown'].value}"
+                             onkeypress="#{a4jMediaOutputBean.attributes['onkeypress'].value}"
+                             onkeyup="#{a4jMediaOutputBean.attributes['onkeyup'].value}"
+                             onmousedown="#{a4jMediaOutputBean.attributes['onmousedown'].value}"
+                             onmousemove="#{a4jMediaOutputBean.attributes['onmousemove'].value}"
+                             onmouseout="#{a4jMediaOutputBean.attributes['onmouseout'].value}"
+                             onmouseover="#{a4jMediaOutputBean.attributes['onmouseover'].value}"
+                             onmouseup="#{a4jMediaOutputBean.attributes['onmouseup'].value}"
+                             rel="#{a4jMediaOutputBean.attributes['rel'].value}"
+                             rendered="#{a4jMediaOutputBean.attributes['rendered'].value}"
+                             rev="#{a4jMediaOutputBean.attributes['rev'].value}"
+                             shape="#{a4jMediaOutputBean.attributes['shape'].value}"
+                             standby="#{a4jMediaOutputBean.attributes['standby'].value}"
+                             style="#{a4jMediaOutputBean.attributes['style'].value}"
+                             styleClass="#{a4jMediaOutputBean.attributes['styleClass'].value}"
+                             tabindex="#{a4jMediaOutputBean.attributes['tabindex'].value}"
+                             target="#{a4jMediaOutputBean.attributes['target'].value}"
+                             title="#{a4jMediaOutputBean.attributes['title'].value}"
+                             type="#{a4jMediaOutputBean.attributes['type'].value}"
+                             uriAttribute="data"
+                             usemap="#{a4jMediaOutputBean.attributes['usemap'].value}"
+                             value="#{mediaData}"
+                             vspace="#{a4jMediaOutputBean.attributes['vspace'].value}"
+                             />
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{a4jMediaOutputBean.attributes}" id="attributes" render="panel"/>
+        </ui:define>
+
+    </ui:composition>
+</html>

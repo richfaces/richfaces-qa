@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+		
+		<ui:define name="view">
+			<f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+
+            <h:panelGrid id="panel" columns="2">
+                <h:inputText id="input" value="#{buttonBean.input}" />
+
+                <h:commandButton id="commandButton"
+                                 accesskey="#{buttonBean.attributes['accesskey'].value}"
+                                 action="#{buttonBean.attributes.action}"
+                                 actionListener="#{buttonBean.attributes.actionListener}"
+                                 alt="#{buttonBean.attributes['alt'].value}"
+                                 dir="#{buttonBean.attributes['dir'].value}"
+                                 disabled="#{buttonBean.attributes['disabled'].value}"
+                                 immediate="#{buttonBean.attributes['immediate'].value}"
+                                 label="#{buttonBean.attributes['label'].value}"
+                                 lang="#{buttonBean.attributes['lang'].value}"
+                                 onblur="#{buttonBean.attributes['onblur'].value}"
+                                 onchange="#{buttonBean.attributes['onchange'].value}"
+                                 onclick="#{buttonBean.attributes['onclick'].value}"
+                                 ondblclick="#{buttonBean.attributes['ondblclick'].value}"
+                                 onfocus="#{buttonBean.attributes['onfocus'].value}"
+                                 onkeydown="#{buttonBean.attributes['onkeydown'].value}"
+                                 onkeypress="#{buttonBean.attributes['onkeypress'].value}"
+                                 onkeyup="#{buttonBean.attributes['onkeyup'].value}"
+                                 onmousedown="#{buttonBean.attributes['onmousedown'].value}"
+                                 onmousemove="#{buttonBean.attributes['onmousemove'].value}"
+                                 onmouseout="#{buttonBean.attributes['onmouseout'].value}"
+                                 onmouseover="#{buttonBean.attributes['onmouseover'].value}"
+                                 onmouseup="#{buttonBean.attributes['onmouseup'].value}"
+                                 onselect="#{buttonBean.attributes['onselect'].value}"
+                                 readonly="#{buttonBean.attributes['readonly'].value}"
+                                 rendered="#{buttonBean.attributes['rendered'].value}"
+                                 style="#{buttonBean.attributes['style'].value}"
+                                 styleClass="#{buttonBean.attributes['styleClass'].value}"
+                                 tabindex="#{buttonBean.attributes['tabindex'].value}"
+                                 title="#{buttonBean.attributes['title'].value}"
+                                 type="#{buttonBean.attributes['type'].value}"
+                                 value="#{buttonBean.attributes['value'].value}"
+                                 execute="@form" />
+            </h:panelGrid>
+
+            <h:panelGrid id="outputs" columns="2">
+                output: <h:outputText value="#{buttonBean.input}" id="output1" />
+                action: <h:outputText value="#{buttonBean.input2}" id="output2" />
+                action listener:<h:outputText value="#{buttonBean.input3}" id="output3" />
+            </h:panelGrid>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{buttonBean.attributes}" id="attributes" render="panel"/>
+        </ui:define>
+
+    </ui:composition>
+</html>

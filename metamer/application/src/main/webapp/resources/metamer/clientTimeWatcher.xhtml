@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+<h:body>
+	<composite:interface>
+		<composite:attribute name="events" type="java.lang.Integer" default="1" />
+		<composite:attribute name="reverseOrder" type="java.lang.Boolean" default="false" shortDescription="use when you are getting negative values since event time is always lower than begin times" />
+	</composite:interface>
+
+	<composite:implementation>
+		<h:outputScript target="head"  library="script" name="clientTime-refresh.js" />
+		<h:outputScript target="head"  library="script" name="clientTime-updateDifference.js" />
+		
+		<h:panelGrid id="grid" columns="1">
+			<c:forEach var="event" begin="1" end="#{cc.attrs.events}">
+				<metamer:clientTime id="event#{event}"
+					label="Event #{cc.attrs.events > 1 ? event : ''} Time:" />
+			</c:forEach>
+			<metamer:clientTime id="begin" label="Begin Time:" />
+			<metamer:clientTime id="complete" label="Complete Time:" />
+			<h:panelGroup>
+       			Difference ms: <h:outputText id="difference" value="-" />
+       		</h:panelGroup>
+		</h:panelGrid>
+		
+		<script>
+			(function( undefined ) {
+				grid = #{rich:element('grid')};
+	
+				grid.event = function(event) {
+					event = (event) ? event : 1;
+					var id = "#{rich:clientId('event1')}:outputTime".replace("event1", "event" + event);
+					Metamer.ClientTime.refresh(document.getElementById(id));
+				}
+	
+				grid.begin = function() {
+					Metamer.ClientTime.refresh(this.getBeginElement());
+				}
+	
+				grid.complete = function() {
+					var id = "#{rich:clientId('complete')}:outputTime";
+					Metamer.ClientTime.refresh(document.getElementById(id));
+				}
+	
+				grid.difference = function() {
+					var differenceElement = #{rich:element('difference')};
+					var beginTimeElement = this.getBeginElement();
+					var eventTimeId = "#{rich:clientId('event1')}".replace(/1$/, "");
+					Metamer.ClientTime.updateDifference(differenceElement, beginTimeElement, eventTimeId, #{cc.attrs.reverseOrder});
+				}
+	
+				grid.getBeginElement = function() {
+					var id = "#{rich:clientId('begin')}:outputTime";
+					return document.getElementById(id);
+				}
+			})();
+		</script>
+        
+	</composite:implementation>
+</h:body>
+</html>

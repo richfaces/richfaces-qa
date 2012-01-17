@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition>
+        <h:panelGrid id="headerTable" columns="7" border="1" styleClass="external-table"
+                     columnClasses="header-column, header-column, header-column, header-column, header-column, header-column, header-column">
+
+            <h:form id="controlsForm">
+                <h:panelGrid columns="4">
+                    <h:link id="goHomeLink" outcome="/index">
+                        <h:graphicImage id="goHomeImage" library="images" name="home.png" title="Go Home" style="width: 36px;" alt="Go Home" />
+                    </h:link>
+                    <h:link id="goToListLink" outcome="list">
+                        <h:graphicImage id="goToListImage" library="images" name="back.png" title="Go to List of Pages"
+                                        style="width: 36px;" alt="Go to List of Pages"/>
+                    </h:link>
+                    <h:commandLink>
+                        <h:graphicImage id="fullPageRefreshImage" library="images" name="recycle.png" title="Full Page Refresh"
+                                        style="width: 36px;" alt="Full Page Refresh" />
+                    </h:commandLink>
+                    <h:graphicImage id="reRenderAllImage" library="images" name="refresh.png" title="Rerender All"
+                                    style="width: 36px;" alt="Rerender All">
+                        <a4j:ajax event="click" render="@all" />
+                    </h:graphicImage>
+                </h:panelGrid>
+            </h:form>
+
+            <h:panelGrid columns="2" width="230px">
+                <h:outputText id="a4jLogLabel" value="Display log" />
+
+                <h:selectBooleanCheckbox id="a4jLogCheckbox" value="false" onchange="showOrHideLog()" />
+
+                <h:outputLabel id="a4jStatusLabel" value="Status" for="a4jStatusPanel"/>
+                <a4j:outputPanel id="a4jStatusPanel" ajaxRendered="true">
+                    <a4j:status id="a4jStatus" onstop="updateLog('#{phasesBean.phases}')">
+                        <f:facet name="start">
+                            <h:outputText value="WORKING" style="color: red;" />
+                        </f:facet>
+                        <f:facet name="error">
+                            <h:outputText value="ERROR" style="color: red;" />
+                        </f:facet>
+                    </a4j:status>
+                </a4j:outputPanel>
+
+                <h:outputLabel id="localeLabel" value="Locale" for="locale" />
+                <h:outputText id="locale" value="#{facesContext.viewRoot.locale}" />
+
+                <h:outputLabel id="renderCheckerLabel" value="Render Checker" for="renderChecker"/>
+                <a4j:outputPanel id="renderChecker">
+                    <h:outputText value="#{phasesBean.date}">
+                        <f:convertDateTime pattern="HH:MM:ss.SSS" />
+                    </h:outputText>
+                </a4j:outputPanel>
+
+                <h:outputLabel id="statusCheckerLabel" value="Status Checker" for="statusChecker" />
+                <a4j:outputPanel id="statusCheckerPanel">
+                    <a4j:status id="statusChecker" name="statusChecker" onstop="updateStatusChecker()" />
+                    <h:outputText id="statusCheckerOutput" value="" />
+
+                    <h:outputScript target="head" library="script" name="date-format.js" />
+                    <h:outputScript target="head" library="script" name="clientTime-refresh.js" />
+                    <script type="text/javascript">
+                        function updateStatusChecker() {
+                            Metamer.ClientTime.refresh(#{rich:element('statusCheckerOutput')});
+                        }
+                        updateStatusChecker();
+                    </script>
+                </a4j:outputPanel>
+
+                <h:outputLabel id="jsFunctionCheckerLabel" value="jsFunction Checker" for="jsFunctionChecker"/>
+                <a4j:outputPanel id="jsFunctionChecker">
+                    <h:outputText value="#{phasesBean.date}">
+                        <f:convertDateTime pattern="HH:MM:ss.SSS" />
+                    </h:outputText>
+                </a4j:outputPanel>
+				
+				<!-- 
+				TODO: disabled because of MyFaces issue: MYFACES-3061 (RF-10668)
+                h:outputLabel id="showUiDebugLabel" value="Show ui:debug" for="showUiDebug"
+                h:outputText id="showUiDebug" value="Ctrl+Shift+L "
+                
+                ui:debug hotkey="L"
+                -->
+                <a4j:jsFunction name="functionChecker" render="jsFunctionChecker"/>
+            </h:panelGrid>
+
+
+
+            <h:form id="displayControlsForm">
+                <h:panelGrid columns="2">
+                    <h:outputLabel id="reTestsCheckboxLabel" value="Display tests" for="reTestsCheckbox" />
+                    <h:selectBooleanCheckbox id="reTestsCheckbox" value="#{richBean.reTests}" onchange="submit();"
+                                             disabled="true" />
+
+                    <h:outputLabel id="reComponentCheckboxLabel" value="Display component" for="reComponentCheckbox" />
+                    <h:selectBooleanCheckbox id="reComponentCheckbox" value="#{richBean.reComponent}" onchange="submit();" />
+                </h:panelGrid>
+            </h:form>
+
+            <h:form id="skinsForm">
+                <h:panelGrid columns="1">
+                    <h:outputLabel id="skinSelectLabel" value="Select skin: " for="skinSelect" />
+
+                    <h:selectOneMenu id="skinSelect" value="#{richBean.skin}" style="width: 130px;" onchange="submit();">
+                        <f:selectItems value="#{richBean.skins}" />
+                    </h:selectOneMenu>
+
+                    <h:selectOneMenu id="skinningSelect" value="#{richBean.skinning}" style="width: 130px;" onchange="submit();"
+                                     disabled="true">
+                        <f:selectItems value="#{richBean.skinningList}" />
+                    </h:selectOneMenu>
+                </h:panelGrid>
+            </h:form>
+
+            <h:form id="templatesForm">
+                <h:panelGrid id="templatesSelector" columns="1">
+                    <h:outputText id="templateSelectMenuLabel" value="Template:" />
+
+                    <ui:repeat id="templates" var="var" value="#{templateBean.templates}" varStatus="status">
+                        <h:selectOneMenu value="#{templateBean.templates[status.index]}" id="templateSelect"
+                                         style="width: 150px;">
+                            <f:selectItems value="#{templateBean.availableTemplates}" />
+                            <f:converter converterId="templateNameConverter" />
+                            <a4j:ajax event="change" render="templatesForm" />
+                        </h:selectOneMenu>
+                        <br />
+                    </ui:repeat>
+
+                    <h:commandLink id="loadTemplate" value="Load" render="commonGrid" />
+
+                </h:panelGrid>
+            </h:form>
+
+            <h:panelGrid columns="1">
+                <a4j:outputPanel id="phasesPanel" layout="block" ajaxRendered="true">
+                    <h:outputText id="requestTime" value="#{phasesBean.date}">
+                        <f:convertDateTime pattern="HH:mm:ss.SSS" />
+                    </h:outputText>
+                    <ul class="phases-list">
+                        <a4j:repeat value="#{phasesBean.phases}" var="phase">
+                            <li>#{phase}</li>
+                        </a4j:repeat>
+                    </ul>
+                </a4j:outputPanel>
+            </h:panelGrid>
+
+            <h:form id="invalidateSessionForm">
+                <h:panelGrid columns="1">
+                    <h:commandButton id="invalidateSessionButton" action="#{richBean.invalidateSession}"
+                                     value="Invalidate Session" image="#{resource['images:cancel.png']}" title="Invalidate Session"
+                                     style="width: 36px;" />
+                </h:panelGrid>
+            </h:form>
+
+
+        </h:panelGrid>
+
+
+
+    </ui:composition>
+
+</html>

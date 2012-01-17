@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+        <ui:param name="componentId" value="richEDT" />
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head">
+            <style type="text/css">
+                .rf-edt[id$=richEDT] .rf-edt-c {
+                    height: 30px !important;
+                    vertical-align: middle;
+                }
+
+                .rf-edt[id$=richEDT] {
+                    width: 820px !important;
+                    height: 400px !important;
+                }
+
+                .rf-edt[id$=richEDT] .rf-edt-hdr-c  {
+                    height: 5.3em !important;
+                }
+
+                .rf-edt[id$=richEDT] .rf-edt-c-columnSex {
+                    width: 100px !important;
+                    text-align: center;
+                }
+
+                .rf-edt[id$=richEDT] .rf-edt-c-columnName {
+                    width: 150px !important;
+                }
+
+                .rf-edt[id$=richEDT] .rf-edt-c-columnTitle {
+                    width: 150px !important;
+                }
+
+                .rf-edt[id$=richEDT] .rf-edt-c-columnNumberOfKids {
+                    text-align: center;
+                    width: 150px !important;
+                }
+
+                .rf-edt[id$=richEDT] .rf-edt-c-columnNumberOfKids2 {
+                    text-align: center;
+                    width: 250px !important;
+                }
+            </style>
+        </ui:define>
+
+        <ui:define name="outOfTemplateBefore">
+            <br/>
+            <h:outputText value="Show data in table: " />
+            <h:selectBooleanCheckbox id="noDataCheckbox" value="#{richExtendedDataTableBean.state}">
+                <a4j:ajax render="#{nestedComponentId} scroller1"/>
+            </h:selectBooleanCheckbox>
+            <br/><br/>
+            <rich:dataScroller id="scroller1" for="richEDT" page="#{richExtendedDataTableBean.page}" maxPages="7" render="#{nestedComponentId}"/>
+        </ui:define>
+
+        <ui:define name="component">
+            <rich:extendedDataTable id="richEDT"
+                                    columnClasses="#{richExtendedDataTableBean.attributes['columnClasses'].value}"
+                                    first="#{richExtendedDataTableBean.attributes['first'].value}"
+                                    footerClass="#{richExtendedDataTableBean.attributes['footerClass'].value}"
+                                    frozenColumns="#{richExtendedDataTableBean.attributes['frozenColumns'].value}"
+                                    headerClass="#{richExtendedDataTableBean.attributes['headerClass'].value}"
+                                    keepSaved="#{richExtendedDataTableBean.attributes['keepSaved'].value}"
+                                    noDataLabel="#{richExtendedDataTableBean.attributes['noDataLabel'].value}"
+                                    onbeforeselectionchange="#{richExtendedDataTableBean.attributes['onbeforeselectionchange'].value}"
+                                    onrowclick="#{richExtendedDataTableBean.attributes['onrowclick'].value}"
+                                    onrowdblclick="#{richExtendedDataTableBean.attributes['onrowdblclick'].value}"
+                                    onrowkeydown="#{richExtendedDataTableBean.attributes['onrowkeydown'].value}"
+                                    onrowkeypress="#{richExtendedDataTableBean.attributes['onrowkeypress'].value}"
+                                    onrowkeyup="#{richExtendedDataTableBean.attributes['onrowkeyup'].value}"
+                                    onrowmousedown="#{richExtendedDataTableBean.attributes['onrowmousedown'].value}"
+                                    onrowmousemove="#{richExtendedDataTableBean.attributes['onrowmousemove'].value}"
+                                    onrowmouseout="#{richExtendedDataTableBean.attributes['onrowmouseout'].value}"
+                                    onrowmouseover="#{richExtendedDataTableBean.attributes['onrowmouseover'].value}"
+                                    onrowmouseup="#{richExtendedDataTableBean.attributes['onrowmouseup'].value}"
+                                    onselectionchange="#{richExtendedDataTableBean.attributes['onselectionchange'].value}"
+                                    rendered="#{richExtendedDataTableBean.attributes['rendered'].value}"
+                                    rowClass="#{richExtendedDataTableBean.attributes['rowClass'].value}"
+                                    rowClasses="#{richExtendedDataTableBean.attributes['rowClasses'].value}"
+                                    rows="#{richExtendedDataTableBean.attributes['rows'].value}"
+                                    selection="#{richExtendedDataTableBean.attributes['selection'].value}"
+                                    selectionMode="#{richExtendedDataTableBean.attributes['selectionMode'].value}"
+                                    sortMode="#{richExtendedDataTableBean.attributes['sortMode'].value}"
+                                    sortPriority="#{richExtendedDataTableBean.attributes['sortPriority'].value}"
+                                    style="#{richExtendedDataTableBean.attributes['style'].value}"
+                                    styleClass="#{richExtendedDataTableBean.attributes['styleClass'].value}"
+                                    value="#{richExtendedDataTableBean.state ? model.employees : null}"
+                                    var="record"
+                                    >
+
+                <f:facet name="noData">
+                    <h:outputText value="There is no data." style="color: red;"/>
+                </f:facet>
+
+                <rich:column id="columnSex" filter="#{richExtendedDataTableBean.filterSexImpl}">
+                    <f:facet name="header">
+                        <h:panelGroup>
+                            <h:outputText id="columnHeaderSex" value="Sex"  />
+                            <br/>
+                            <h:outputText id="columnHeaderSexType" value="(filter)"  />
+                            <br/>
+                            <h:selectOneMenu id="columnHeaderSexInput" value="#{richExtendedDataTableBean.filtering['sex']}" >
+                                <f:selectItem itemValue="ALL" itemLabel="all"/>
+                                <f:selectItem itemValue="FEMALE" itemLabel="female"/>
+                                <f:selectItem itemValue="MALE" itemLabel="male"/>
+                                <a4j:ajax render="commonGrid" event="change"/>
+                            </h:selectOneMenu>
+                        </h:panelGroup>
+                    </f:facet>
+
+                    <h:graphicImage library="images" name="#{record.sex == 'MALE' ? 'male.png' : 'female.png'}" alt="#{record.sex}" />
+
+                    <f:facet name="footer">
+                        <h:outputText id="columnFooterSex" value="Sex" />
+                    </f:facet>
+                </rich:column>
+
+
+                <rich:column id="columnName" filterExpression="#{fn:containsIgnoreCase(record.name, richExtendedDataTableBean.filtering['name'])}">
+                    <f:facet name="header">
+                        <h:outputText id="columnHeaderName" value="Name" />
+                        <br/>
+                        <h:outputText id="columnHeaderNameType" value="(expression contains ignore case)" />
+                        <br/>
+                        <h:inputText id="columnHeaderNameInput" value="#{richExtendedDataTableBean.filtering['name']}">
+                            <a4j:ajax render="commonGrid" event="change"/>
+                        </h:inputText> 	
+                    </f:facet>
+
+                    <h:outputText value="#{record.name}" />
+                    <f:facet name="footer">
+                        <h:outputText id="columnFooterState" value="Name" />
+                    </f:facet>
+                </rich:column>
+
+                <rich:column id="columnTitle" filterExpression="#{richExtendedDataTableBean.filtering['title'] == null || richExtendedDataTableBean.filtering['title'] == '' || record.title == richExtendedDataTableBean.filtering['title']}">
+                    <f:facet name="header">
+                        <h:outputText id="columnHeaderTitle" value="Title" />
+                        <br/>
+                        <h:outputText id="columnHeaderTitleType" value="(expression equals)" />
+                        <br/>
+                        <h:inputText id="columnHeaderTitleInput" value="#{richExtendedDataTableBean.filtering['title']}">
+                            <a4j:ajax render="commonGrid" event="change"/>
+                        </h:inputText>
+                    </f:facet>
+
+                    <h:outputText value="#{record.title}" />
+                    <f:facet name="footer">
+                        <h:outputText id="columnFooterTitle" value="Title" />
+                    </f:facet>
+                </rich:column>
+
+                <rich:column id="columnNumberOfKids1" filterExpression="#{empty richExtendedDataTableBean.filtering['numberOfKids1'] || record.numberOfKids >= richExtendedDataTableBean.filtering['numberOfKids1']}">
+                    <f:facet name="header">
+                        <h:outputText id="columnHeaderNumberOfKids" value="Number of Kids" />
+                        <br/>
+                        <h:outputText id="columnHeaderNumberOfKidsType" value="(expression &gt;=)" />
+                        <br/>
+                        <rich:inputNumberSpinner id="spinnerFilter" minValue="0" maxValue="6" cycled="false" value="#{richExtendedDataTableBean.filtering['numberOfKids1']}">
+                            <a4j:ajax event="change" render="commonGrid" />
+                        </rich:inputNumberSpinner>
+                    </f:facet>
+
+                    <h:outputText value="#{record.numberOfKids}" />
+                    <f:facet name="footer">
+                        <h:outputText id="columnFooterNumberOfKids" value="Number of Kids" />
+                    </f:facet>
+                </rich:column>
+
+                <rich:column id="columnNumberOfKids2">
+                    <f:facet name="header">
+                        <h:outputText id="columnHeaderNumberOfKids2" value="Number of Kids" />
+                        <br/>
+                        <h:outputText id="columnHeaderNumberOfKids2Type" value="(expression &lt;)" />
+                        <br/>
+                        <rich:inputNumberSlider id="sliderFilter" minValue="0" maxValue="6" value="#{richExtendedDataTableBean.filtering['numberOfKids2']}">
+                            <!-- <a4j:ajax render="commonGrid" /> -->
+                        </rich:inputNumberSlider>
+                        <br />
+                        (a4j:ajax disabled - RF-9900)
+                    </f:facet>
+
+                    <h:outputText value="#{record.numberOfKids}" />
+                    <f:facet name="footer">
+                        <h:outputText id="columnFooterNumberOfKids2" value="Number of Kids" />
+                    </f:facet>
+                </rich:column>
+
+                <f:facet name="footer">
+                    <rich:dataScroller id="scroller2" for="richEDT" page="#{richExtendedDataTableBean.page}" maxPages="7" render="richEDT scroller1" />
+                </f:facet>
+            </rich:extendedDataTable>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{richExtendedDataTableBean.attributes}" id="attributes" />
+        </ui:define>
+
+    </ui:composition>
+</html>

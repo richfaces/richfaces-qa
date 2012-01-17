@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+
+            <rich:dataTable id="richDataTable" rows="10" value="#{model.employees}" var="record">
+
+                <f:facet name="header">
+
+
+                    <rich:columnGroup id="columnGroupHeader"
+                                      rendered="#{richColumnGroupBean.attributes['rendered'].value}">
+                        <rich:column id="colHeaderName" rowspan="2">
+                            <h:outputText id="colHeaderNameText" value="Name" />
+                        </rich:column>
+                        <rich:column id="colHeaderInfo" colspan="4">
+                            <h:outputText id="colHeaderInfoText" value="Information" />
+                        </rich:column>
+                        <rich:column id="colHeaderTitle" breakRowBefore="true">
+                            <h:outputText id="colHeaderTitleText" value="Title" />
+                        </rich:column>
+                        <rich:column id="colHeaderSmoker">
+                            <h:outputText id="colHeaderSmokerText" value="Smoker" />
+                        </rich:column>
+                        <rich:column id="colHeaderColor">
+                            <h:outputText id="colHeaderColorText" value="Favorite Color" />
+                        </rich:column>
+                        <rich:column id="colHeaderNumberOfKids">
+                            <h:outputText id="colHeaderNumberOfKidsText" value="Number of Kids" />
+                        </rich:column>
+                    </rich:columnGroup>
+
+                </f:facet>
+
+                <rich:column id="columnName">
+                    <h:outputText value="#{record.name}" />
+                </rich:column>
+
+                <rich:column id="columnTitle">
+                    <h:outputText value="#{record.title}" />
+                </rich:column>
+
+                <rich:column id="columnSmoker">
+                    <h:selectBooleanCheckbox id="smokerCheckbox" value="#{record.smoker}">
+                        <a4j:ajax/>
+                    </h:selectBooleanCheckbox>
+                </rich:column>
+
+                <rich:column id="columnFavoriteColor">
+                    <h:outputText value="#{record.favoriteColor}" />
+                </rich:column>
+
+                <rich:column id="columnNumberOfKids">
+                    <rich:inputNumberSpinner id="numberOfKidsSpinner" value="#{record.numberOfKids}">
+                        <a4j:ajax/>
+                    </rich:inputNumberSpinner>
+                </rich:column>
+
+                <f:facet name="footer">
+
+
+                    <rich:columnGroup id="columnGroupFooter"
+                                      rendered="#{richColumnGroupBean.attributes['rendered'].value}">
+                        <rich:column colspan="5">
+                            <rich:dataScroller />
+                        </rich:column>
+                        <rich:column id="colFooterName" rowspan="2"  breakRowBefore="true">
+                            <h:outputText id="colFooterNameText" value="Name" />
+                        </rich:column>
+                        <rich:column id="colFooterTitle" >
+                            <h:outputText id="colFooterTitleText" value="Title" />
+                        </rich:column>
+                        <rich:column id="colFooterSmoker">
+                            <h:outputText id="colFooterSmokerText" value="Smoker" />
+                        </rich:column>
+                        <rich:column id="colFooterColor">
+                            <h:outputText id="colFooterColorText" value="Favorite Color" />
+                        </rich:column>
+                        <rich:column id="colFooterNumberOfKids">
+                            <h:outputText id="colFooterNumberOfKidsText" value="Number of Kids" />
+                        </rich:column>
+                        <rich:column id="colFooterInfo" colspan="4" breakRowBefore="true">
+                            <h:outputText id="colFooterInfoText" value="Information" />
+                        </rich:column>
+                    </rich:columnGroup>
+
+                </f:facet>
+
+            </rich:dataTable>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{richColumnGroupBean.attributes}" id="attributes" />
+        </ui:define>
+
+    </ui:composition>
+</html>

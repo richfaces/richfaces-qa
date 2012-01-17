@@ -1,0 +1,45 @@
+.metamer-droppable {
+	border: 1px solid blue;
+	margin: 1em;
+	padding: 1em;
+	height: 15em;
+	width: 15em;
+	background-color: yellow;
+	overflow: auto;
+}
+
+.metamer-draggable {
+	border: 1px solid #000000;
+	background-color: silver;
+	margin: 2px;
+	width: 8em;
+	padding: 1em;
+}
+
+.rf-ind {
+	opacity: 0.5;
+	height: 20px;
+	width: 20px;
+	border: 1px dotted red;
+	background-color: blue
+}
+
+.rf-ind-acpt {
+	background-color: green;
+}
+
+.rf-ind-rejt {
+	background-color: red;
+}
+
+.draggingClass {
+	border: 5px dashed black;
+}
+
+.acceptClass {
+	border: 5px solid black;
+}
+
+.rejectClass {
+	border: 5px solid #E80000;
+}

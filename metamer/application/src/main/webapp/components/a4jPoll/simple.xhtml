@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+                <f:viewParam name="enabled" value="#{a4jPollBean.attributes['enabled'].value}" />
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head">
+            <h:outputScript library="script" name="date-format.js" />
+        </ui:define>
+
+        <ui:define name="component">
+            <h:panelGroup id="pollPanel">
+                <a4j:poll id="poll"
+                          action="#{a4jPollBean.attributes.action}"
+                          actionListener="#{a4jPollBean.attributes.actionListener}"
+                          bypassUpdates="#{a4jPollBean.attributes['bypassUpdates'].value}"
+                          data="#{a4jPollBean.attributes['data'].value}"
+                          enabled="#{a4jPollBean.attributes['enabled'].value}"
+                          execute="#{a4jPollBean.attributes['execute'].value}"
+                          immediate="#{a4jPollBean.attributes['immediate'].value}"
+                          interval="#{a4jPollBean.attributes['interval'].value}"
+                          limitRender="#{a4jPollBean.attributes['limitRender'].value}"
+                          onbeforedomupdate="#{a4jPollBean.attributes['onbeforedomupdate'].value}"
+                          onbegin="#{rich:element('timeWatcher:grid')}.begin(); #{a4jPollBean.attributes['onbegin'].value}"
+                          oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{a4jPollBean.attributes['oncomplete'].value}"
+                          ontimer="#{rich:element('timeWatcher:grid')}.event(); #{rich:element('timeWatcher:grid')}.difference(); #{a4jPollBean.attributes['ontimer'].value}"
+                          render="#{a4jPollBean.attributes['render'].value} output"
+                          rendered="#{a4jPollBean.attributes['rendered'].value}"
+                          status="#{a4jPollBean.attributes['status'].value}"
+                          value="#{a4jPollBean.attributes['value'].value}"
+                          >
+                </a4j:poll>
+            </h:panelGroup>
+
+            <script type="text/javascript">
+    //<![CDATA[
+       var lastCounter = null;
+    //]]>
+            </script>
+
+            <h:panelGroup id="output">
+                <h:outputText value="Server: " />
+                <h:outputText id="serverDate" value="#{a4jPollBean.date}" title="#{a4jPollBean.date.time}">
+                    <f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss.SSS" />
+                </h:outputText>
+                ***
+                <h:outputText value="Counter: " />
+                <h:outputText id="outputCounter" value="#{a4jPollBean.counter}"/>
+                <span id="counterDelta"></span>
+                <script type="text/javascript">
+               	//<![CDATA[
+                                var counterDelta = document.getElementById('counterDelta');
+                                document.title = lastCounter;
+                    if (lastCounter) {
+                        counterDelta.innerHTML = '(delta: ' + (#{a4jPollBean.counter} - lastCounter) + ')';
+                    }
+                    lastCounter = #{a4jPollBean.counter};
+               	//]]>
+               	</script>
+            </h:panelGroup>
+
+            <metamer:clientTimeWatcher id="timeWatcher" reverseOrder="true" />
+        </ui:define>
+
+
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{a4jPollBean.attributes}" id="attributes" />
+        </ui:define>
+
+    </ui:composition>
+</html>

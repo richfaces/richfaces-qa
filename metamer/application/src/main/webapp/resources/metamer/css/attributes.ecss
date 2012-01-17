@@ -1,0 +1,26 @@
+.attributes {
+    border-width: 0px;
+    border-collapse: collapse;
+}
+
+.attributes-first-column {
+    border-width: 1px;
+    padding: 10px;
+    border-style: dotted;
+    border-color: '#{a4jSkin.panelBorderColor}';
+    border-right: none;
+}
+
+.attributes-second-column {
+    border-width: 1px;
+    padding: 10px;
+    padding-left: 0px;
+    border-style: dotted;
+    border-color: '#{a4jSkin.panelBorderColor}';
+    border-left: none;
+}
+
+.attributes-second-column table input {
+    margin-left: 0px;
+}
+

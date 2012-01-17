@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/list.xhtml">
+
+        <ui:define name="pageTitle">A4J Media Output</ui:define>
+
+        <ui:define name="links">
+
+            <metamer:testPageLink id="elementA" outcome="elementA" value="Element &lt;a&gt;&lt;/a&gt;">
+                Simple page that contains <b>a4j:mediaOutput</b> (a, text/html) and input boxes for all its attributes.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="elementLink" outcome="elementLink" value="Element &lt;link/&gt;">
+                Simple page that contains <b>a4j:mediaOutput</b> (link, text/css) and input boxes for all its attributes.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="elementScript" outcome="elementScript" value="Element &lt;script&gt;&lt;/script&gt;">
+                Simple page that contains <b>a4j:mediaOutput</b> (script, text/javascript) and input boxes for all its attributes.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="imagePng" outcome="imagePng" value="Image Png">
+                Simple page that contains <b>a4j:mediaOutput</b> (img, image/png) and input boxes for all its attributes.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="textHtml" outcome="textHtml" value="Text HTML">
+                Simple page that contains <b>a4j:mediaOutput</b> (object, text/html) and input boxes for all its attributes.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="textPlain" outcome="textPlain" value="Text Plain">
+                Simple page that contains <b>a4j:mediaOutput</b> (object, text/plain) and input boxes for all its attributes.
+            </metamer:testPageLink>
+
+            <ui:remove>
+                <metamer:testPageLink id="audioMpeg" outcome="audioMpeg" value="Audio Mpeg">
+                    Simple page that contains <b>a4j:mediaOutput</b> (object, audio/mpeg) and input boxes for all its attributes.
+                </metamer:testPageLink>               
+                <metamer:testPageLink id="flash" outcome="flash" value="Flash">
+                    Simple page that contains <b>a4j:mediaOutput</b> (flash) and input boxes for all its attributes.
+                </metamer:testPageLink>         
+            </ui:remove>
+
+        </ui:define>
+
+    </ui:composition>
+
+</html>

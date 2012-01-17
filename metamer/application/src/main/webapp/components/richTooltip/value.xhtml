@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich" >
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head">
+            <style type="text/css">
+                .sample-panel {
+                    border: 1px solid black;
+                    background: white;
+                }
+            </style>
+        </ui:define>
+
+        <ui:define name="component">
+
+            <rich:panel id="panel" style="width: 200px">
+
+            	Panel's content 8
+
+                <rich:tooltip id="tooltip"
+                              attached="#{richTooltipBean.attributes['attached'].value}"
+                              data="#{richTooltipBean.attributes['data'].value}"
+                              dir="#{richTooltipBean.attributes['dir'].value}"
+                              direction="#{richTooltipBean.attributes['direction'].value}"
+                              followMouse="#{richTooltipBean.attributes['followMouse'].value}"
+                              hideDelay="#{richTooltipBean.attributes['hideDelay'].value}"
+                              hideEvent="#{richTooltipBean.attributes['hideEvent'].value}"
+                              horizontalOffset="#{richTooltipBean.attributes['horizontalOffset'].value}"
+                              jointPoint="#{richTooltipBean.attributes['jointPoint'].value}"
+                              lang="#{richTooltipBean.attributes['lang'].value}"
+                              layout="#{richTooltipBean.attributes['layout'].value}"
+                              limitRender="#{richTooltipBean.attributes['limitRender'].value}"
+                              mode="#{richTooltipBean.attributes['mode'].value}"
+                              onbeforehide="#{richTooltipBean.attributes['onbeforehide'].value}"
+                              onbeforeshow="#{richTooltipBean.attributes['onbeforeshow'].value}"
+                              onclick="#{richTooltipBean.attributes['onclick'].value}"
+                              ondblclick="#{richTooltipBean.attributes['ondblclick'].value}"
+                              onhide="#{richTooltipBean.attributes['onhide'].value}"
+                              onmousedown="#{richTooltipBean.attributes['onmousedown'].value}"
+                              onmousemove="#{richTooltipBean.attributes['onmousemove'].value}"
+                              onmouseout="#{richTooltipBean.attributes['onmouseout'].value}"
+                              onmouseover="#{richTooltipBean.attributes['onmouseover'].value}"
+                              onmouseup="#{richTooltipBean.attributes['onmouseup'].value}"
+                              onbegin="#{richTooltipBean.attributes['onbegin'].value}"
+                              onbeforedomupdate="#{richTooltipBean.attributes['onbeforedomupdate'].value}"
+                              oncomplete="#{richTooltipBean.attributes['oncomplete'].value}"
+                              onshow="#{richTooltipBean.attributes['onshow'].value}"
+                              render="#{richTooltipBean.attributes['render'].value}"
+                              rendered="#{richTooltipBean.attributes['rendered'].value}"
+                              showDelay="#{richTooltipBean.attributes['showDelay'].value}"
+                              showEvent="#{richTooltipBean.attributes['showEvent'].value}"
+                              status="#{richTooltipBean.attributes['status'].value}"
+                              style="#{richTooltipBean.attributes['style'].value}"
+                              styleClass="#{richTooltipBean.attributes['styleClass'].value}"
+                              title="#{richTooltipBean.attributes['title'].value}"
+                              value="#{richTooltipBean.attributes['value'].value}"
+                              verticalOffset="#{richTooltipBean.attributes['verticalOffset'].value}"
+                              zindex="#{richTooltipBean.attributes['zindex'].value}"
+                              />
+            </rich:panel>
+
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{richTooltipBean.attributes}" id="attributes" />
+        </ui:define>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j" xmlns:h="http://java.sun.com/jsf/html">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head">
+            <style type="text/css">
+                .yellowDay {
+                    background: yellow !important;
+                }
+
+                .aquaDay {
+                    background: aqua !important;
+                }
+
+            </style>
+
+            <script type="text/javascript">
+                function yellowTuesdays(day) {
+                    if (day.date.getDay() == 2) {
+                        return 'yellowDay';
+                    }
+                    return false;
+                }
+
+                function aquaWeekends(day) {
+                    if (day.isWeekend) {
+                        return 'aquaDay';
+                    }
+                    return false;
+                }
+
+                function disableTuesdays(day) {
+                    if (day.date.getDay() == 2) {
+                        return false;
+                    }
+                    return true;
+                }
+
+                function disableWeekends(day) {
+                    if (day.isWeekend) {
+                        return false;
+                    }
+                    return true;
+                }
+
+                testedComponentId = "#{rich:clientId('calendar')}";
+            </script>
+        </ui:define>
+
+        <ui:define name="component">
+            <div style="padding: 250px">
+                <rich:calendar id="calendar"
+                               boundaryDatesMode="#{richCalendarBean.attributes['boundaryDatesMode'].value}"
+                               buttonClass="#{richCalendarBean.attributes['buttonClass'].value}"
+                               buttonDisabledIcon="#{richCalendarBean.attributes['buttonDisabledIcon'].value}"
+                               buttonIcon="#{richCalendarBean.attributes['buttonIcon'].value}"
+                               buttonLabel="#{richCalendarBean.attributes['buttonLabel'].value}"
+                               converterMessage="#{richCalendarBean.attributes['converterMessage'].value}"
+                               currentDate="#{richCalendarBean.attributes['currentDate'].value}"
+                               datePattern="#{richCalendarBean.attributes['datePattern'].value}"
+                               dayClassFunction="#{richCalendarBean.attributes['dayClassFunction'].value}"
+                               dayDisableFunction="#{richCalendarBean.attributes['dayDisableFunction'].value}"
+                               defaultLabel="#{richCalendarBean.attributes['defaultLabel'].value}"
+                               defaultTime="#{richCalendarBean.attributes['defaultTime'].value}"
+                               direction="#{richCalendarBean.attributes['direction'].value}"
+                               disabled="#{richCalendarBean.attributes['disabled'].value}"
+                               enableManualInput="#{richCalendarBean.attributes['enableManualInput'].value}"
+                               firstWeekDay="#{richCalendarBean.attributes['firstWeekDay'].value}"
+                               horizontalOffset="#{richCalendarBean.attributes['horizontalOffset'].value}"
+                               immediate="#{richCalendarBean.attributes['immediate'].value}"
+                               inputClass="#{richCalendarBean.attributes['inputClass'].value}"
+                               inputSize="#{richCalendarBean.attributes['inputSize'].value}"
+                               inputStyle="#{richCalendarBean.attributes['inputStyle'].value}"
+                               jointPoint="#{richCalendarBean.attributes['jointPoint'].value}"
+                               locale="#{richCalendarBean.attributes['locale'].value}"
+                               minDaysInFirstWeek="#{richCalendarBean.attributes['minDaysInFirstWeek'].value}"
+                               mode="#{richCalendarBean.attributes['mode'].value}"
+                               monthLabels="#{richCalendarBean.attributes['monthLabels'].value}"
+                               monthLabelsShort="#{richCalendarBean.attributes['monthLabelsShort'].value}"
+                               onbeforecurrentdateselect="#{richCalendarBean.attributes['onbeforecurrentdateselect'].value}"
+                               onbeforedateselect="#{richCalendarBean.attributes['onbeforedateselect'].value}"
+                               onbeforetimeselect="#{richCalendarBean.attributes['onbeforetimeselect'].value}"
+                               onchange="#{richCalendarBean.attributes['onchange'].value}"
+                               onclean="#{richCalendarBean.attributes['onclean'].value}"
+                               oncomplete="#{richCalendarBean.attributes['oncomplete'].value}"
+                               oncurrentdateselect="#{richCalendarBean.attributes['oncurrentdateselect'].value}"
+                               ondatemouseout="#{richCalendarBean.attributes['ondatemouseout'].value}"
+                               ondatemouseover="#{richCalendarBean.attributes['ondatemouseover'].value}"
+                               ondateselect="#{richCalendarBean.attributes['ondateselect'].value}"
+                               onhide="#{richCalendarBean.attributes['ondateselect'].value}"
+                               oninputblur="#{richCalendarBean.attributes['oninputblur'].value}"
+                               oninputchange="#{richCalendarBean.attributes['oninputchange'].value}"
+                               oninputclick="#{richCalendarBean.attributes['oninputclick'].value}"
+                               oninputdblclick="#{richCalendarBean.attributes['oninputdblclick'].value}"
+                               oninputfocus="#{richCalendarBean.attributes['oninputfocus'].value}"
+                               oninputkeydown="#{richCalendarBean.attributes['oninputkeydown'].value}"
+                               oninputkeypress="#{richCalendarBean.attributes['oninputkeypress'].value}"
+                               oninputkeyup="#{richCalendarBean.attributes['oninputkeyup'].value}"
+                               oninputmousedown="#{richCalendarBean.attributes['oninputmousedown'].value}"
+                               oninputmousemove="#{richCalendarBean.attributes['oninputmousemove'].value}"
+                               oninputmouseout="#{richCalendarBean.attributes['oninputmouseout'].value}"
+                               oninputmouseover="#{richCalendarBean.attributes['oninputmouseover'].value}"
+                               oninputmouseup="#{richCalendarBean.attributes['oninputmouseup'].value}"
+                               oninputselect="#{richCalendarBean.attributes['oninputselect'].value}"
+                               onshow="#{richCalendarBean.attributes['onshow'].value}"
+                               ontimeselect="#{richCalendarBean.attributes['ontimeselect'].value}"
+                               popup="#{richCalendarBean.attributes['popup'].value}"
+                               popupClass="#{richCalendarBean.attributes['popupClass'].value}"
+                               popupStyle="#{richCalendarBean.attributes['popupStyle'].value}"
+                               preloadDateRangeBegin="#{richCalendarBean.attributes['preloadDateRangeBegin'].value}"
+                               preloadDateRangeEnd="#{richCalendarBean.attributes['preloadDateRangeEnd'].value}"
+                               rendered="#{richCalendarBean.attributes['rendered'].value}"
+                               required="#{richCalendarBean.attributes['required'].value}"
+                               requiredMessage="#{richCalendarBean.attributes['requiredMessage'].value}"
+                               resetTimeOnDateSelect="#{richCalendarBean.attributes['resetTimeOnDateSelect'].value}"
+                               showApplyButton="#{richCalendarBean.attributes['showApplyButton'].value}"
+                               showFooter="#{richCalendarBean.attributes['showFooter'].value}"
+                               showHeader="#{richCalendarBean.attributes['showHeader'].value}"
+                               showInput="#{richCalendarBean.attributes['showInput'].value}"
+                               showWeekDaysBar="#{richCalendarBean.attributes['showWeekDaysBar'].value}"
+                               showWeeksBar="#{richCalendarBean.attributes['showWeeksBar'].value}"
+                               style="#{richCalendarBean.attributes['style'].value}"
+                               styleClass="#{richCalendarBean.attributes['styleClass'].value}"
+                               tabindex="#{richCalendarBean.attributes['tabindex'].value}"
+                               timeZone="#{richCalendarBean.timeZone}"
+                               todayControlMode="#{richCalendarBean.attributes['todayControlMode'].value}"
+                               validatorMessage="#{richCalendarBean.attributes['validatorMessage'].value}"
+                               value="#{richCalendarBean.attributes['value'].value}"
+                               valueChangeListener="#{richCalendarBean.valueChangeListener}"
+                               verticalOffset="#{richCalendarBean.attributes['verticalOffset'].value}"
+                               weekDayLabels="#{richCalendarBean.attributes['weekDayLabels'].value}"
+                               weekDayLabelsShort="#{richCalendarBean.attributes['weekDayLabelsShort'].value}"
+                               zindex="#{richCalendarBean.attributes['zindex'].value}"
+                               >
+                    <f:ajax event="change" render="output :phasesPanel" />
+                </rich:calendar>
+                <rich:message id="msg" for="calendar"/>
+            </div>
+
+            <br/><br/>
+            <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
+            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
+            <br/><br/>
+
+            output:
+            <h:outputText id="output" value="#{richCalendarBean.attributes['value'].value}">
+                <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
+                                   timeZone="#{richCalendarBean.timeZone}"/>
+            </h:outputText>
+
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{richCalendarBean.attributes}" id="attributes" />
+        </ui:define>
+
+    </ui:composition>
+</html>

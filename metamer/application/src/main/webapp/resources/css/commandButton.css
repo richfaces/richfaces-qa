@@ -1,0 +1,16 @@
+.big {
+	height: 40px;
+	width: 200px;
+}
+
+.wide {
+	width: 200px;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.strike {
+	text-decoration: line-through;	
+}

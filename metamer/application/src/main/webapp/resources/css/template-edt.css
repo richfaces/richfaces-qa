@@ -1,0 +1,20 @@
+.rf-edt[id$=containerRichExtendedDataTable] {
+    width: 1200px;
+}
+
+.rf-edt[id$=containerRichExtendedDataTable] .rf-edt-c-col1 {
+    width: 100px !important;
+}
+
+.rf-edt[id$=containerRichExtendedDataTable] .rf-edt-c-col2 {
+    width: 1095px !important;
+}
+
+.rf-edt[id$=containerRichExtendedDataTable] tr:nth-child(3) .rf-edt-c-col1{
+    height: 400px !important;
+}
+
+.rf-edt[id$=containerRichExtendedDataTable] tr:nth-child(3) .rf-edt-c-col2{
+    height: 400px !important;
+    overflow: auto;
+}

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head">
+            <style type="text/css">
+                .pic {
+                    margin-bottom: -4px;
+                    margin-right: 2px;
+                }
+
+                .search .rf-ddm-itm-sel {
+                    background-color: transparent;
+                    background-image:none;
+                    border-color: transparent;
+                    cursor: default;
+                }
+            </style>
+        </ui:define>
+
+        <ui:define name="component">
+            <rich:toolbar id="toolbar" height="26px" width="500px;">
+                <rich:dropDownMenu id="menu1" mode="ajax">
+                    <f:facet name="label">
+                        <h:panelGroup>
+                            <h:graphicImage library="images/icons" name="copy.gif" styleClass="pic" />
+                            <h:outputText value="File" />
+                        </h:panelGroup>
+                    </f:facet>
+
+                    <rich:menuItem id="menuItem1" label="New" icon="/resources/images/icons/create_doc.gif"/>
+
+                    <rich:menuItem id="menuItem2" label="Open" icon="/resources/images/icons/open.gif" />
+
+                    <rich:menuGroup id="menuGroup3" label="Open Recent..." disabled="true">
+                        <rich:menuItem id="menuItem31" label="Save" icon="/resources/images/icons/save.gif" />
+                        <rich:menuItem id="menuItem32" label="Save All">
+                            <f:facet name="icon">
+                                <h:graphicImage library="images/icons" name="save_all.gif" />
+                            </f:facet>
+                        </rich:menuItem>
+                    </rich:menuGroup>
+
+                    <rich:menuSeparator id="menuSeparator11" />
+
+                    <rich:menuGroup id="menuGroup4"
+                                    dir="#{richMenuGroupBean.attributes['dir'].value}"
+                                    direction="#{richMenuGroupBean.attributes['direction'].value}"
+                                    disabled="#{richMenuGroupBean.attributes['disabled'].value}"
+                                    horizontalOffset="#{richMenuGroupBean.attributes['horizontalOffset'].value}"
+                                    icon="#{richMenuGroupBean.attributes['icon'].value}"
+                                    iconDisabled="#{richMenuGroupBean.attributes['iconDisabled'].value}"
+                                    jointPoint="#{richMenuGroupBean.attributes['jointPoint'].value}"
+                                    label="#{richMenuGroupBean.attributes['label'].value}"
+                                    lang="#{richMenuGroupBean.attributes['lang'].value}"
+                                    onclick="#{richMenuGroupBean.attributes['onclick'].value}"
+                                    ondblclick="#{richMenuGroupBean.attributes['ondblclick'].value}"
+                                    onhide="#{richMenuGroupBean.attributes['onhide'].value}"
+                                    onkeydown="#{richMenuGroupBean.attributes['onkeydown'].value}"
+                                    onkeypress="#{richMenuGroupBean.attributes['onkeypress'].value}"
+                                    onkeyup="#{richMenuGroupBean.attributes['onkeyup'].value}"
+                                    onmousedown="#{richMenuGroupBean.attributes['onmousedown'].value}"
+                                    onmousemove="#{richMenuGroupBean.attributes['onmousemove'].value}"
+                                    onmouseout="#{richMenuGroupBean.attributes['onmouseout'].value}"
+                                    onmouseover="#{richMenuGroupBean.attributes['onmouseover'].value}"
+                                    onmouseup="#{richMenuGroupBean.attributes['onmouseup'].value}"
+                                    onshow="#{richMenuGroupBean.attributes['onshow'].value}"
+                                    rendered="#{richMenuGroupBean.attributes['rendered'].value}"
+                                    style="#{richMenuGroupBean.attributes['style'].value}"
+                                    styleClass="#{richMenuGroupBean.attributes['styleClass'].value}"
+                                    title="#{richMenuGroupBean.attributes['title'].value}"
+                                    verticalOffset="#{richMenuGroupBean.attributes['verticalOffset'].value}"
+                                    >
+                        <rich:menuItem id="menuItem41" label="Save" icon="/resources/images/icons/save.gif" />
+                        <rich:menuItem id="menuItem42" label="Save All" >
+                            <f:facet name="icon">
+                                <h:graphicImage library="images/icons" name="save_all.gif" />
+                            </f:facet>
+                        </rich:menuItem>
+                        <rich:menuItem id="menuItem43" label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
+                    </rich:menuGroup>
+
+                    <rich:menuItem id="menuItem5" label="Print" disabled="true"/>
+
+                    <rich:menuItem id="menuItem6" label="Close" />
+
+                    <rich:menuSeparator id="menuSeparator12" />
+
+                    <rich:menuItem id="menuItem7" label="Exit" />
+
+                </rich:dropDownMenu>
+
+            </rich:toolbar>
+
+            <br /><br />
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{richMenuGroupBean.attributes}" id="attributes" />
+        </ui:define>
+
+    </ui:composition>
+</html>

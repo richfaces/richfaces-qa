@@ -1,0 +1,44 @@
+body {
+	background: white;
+}
+
+.button {
+	width: 100px;
+	height: 21px;
+}
+
+.header .external-table {
+    border-width: 0px;
+    border-collapse: collapse;
+    border-style: dotted;
+}
+
+.header-column {
+    border-width: 1px;
+    padding: 5px;
+    border-style: dotted;
+    border-color: '#{a4jSkin.panelBorderColor}';
+}
+
+.phases-list {
+	font-size: 0.7em;
+	height: 130px;
+	overflow: visible;
+}
+
+a img {
+    border: 0px;
+}
+
+.valign-top {
+    vertical-align: top;
+}
+
+ul a.link {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.log-panel {
+    display: none;
+}

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+<ui:composition template="/templates/template.xhtml">
+    <ui:param name="dontRenderForm" value="true" />
+
+    <ui:define name="view">
+        <f:metadata>
+            <f:viewParam name="templates" value="#{templateBean.templates}">
+                <f:converter converterId="templatesListConverter" />
+            </f:viewParam>
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="head" />
+
+    <ui:define name="outOfTemplateBefore">
+
+        <a4j:queue id="globalQueue" ignoreDupResponses="#{a4jQueueBean.globalQueue.attributes['ignoreDupResponses'].value}"
+            onbeforedomupdate="#{a4jQueueBean.globalQueue.attributes['onbeforedomupdate'].value}"
+            oncomplete="#{a4jQueueBean.globalQueue.attributes['oncomplete'].value}"
+            onerror="#{a4jQueueBean.globalQueue.attributes['onerror'].value}"
+            onevent="#{a4jQueueBean.globalQueue.attributes['onevent'].value}"
+            onrequestdequeue="#{a4jQueueBean.globalQueue.attributes['onrequestdequeue'].value}"
+            onrequestqueue="#{a4jQueueBean.globalQueue.attributes['onrequestqueue'].value}"
+            onsubmit="#{a4jQueueBean.globalQueue.attributes['onsubmit'].value}"
+            rendered="#{a4jQueueBean.globalQueue.attributes['rendered'].value}"
+            requestDelay="#{a4jQueueBean.globalQueue.attributes['requestDelay'].value}" />
+
+    </ui:define>
+
+    <ui:define name="component">
+
+        <c:forEach var="i" begin="1" end="2" step="1">
+            <rich:panel id="formQueue${i}Panel" header="Form Based Queue ${i}">
+                <h:form id="formQueue${i}Form">
+
+                    <a4j:queue id="queue"
+                        ignoreDupResponses="#{a4jQueueBean.formQueues[i-1].attributes['ignoreDupResponses'].value}"
+                        name="#{a4jQueueBean.formQueues[i-1].attributes['name'].value}"
+                        onbeforedomupdate="#{a4jQueueBean.formQueues[i-1].attributes['onbeforedomupdate'].value}"
+                        oncomplete="#{a4jQueueBean.formQueues[i-1].attributes['oncomplete'].value}"
+                        onerror="#{a4jQueueBean.formQueues[i-1].attributes['onerror'].value}"
+                        onevent="#{a4jQueueBean.formQueues[i-1].attributes['event'].value}"
+                        onrequestdequeue="#{a4jQueueBean.formQueues[i-1].attributes['onrequestdequeue'].value}"
+                        onrequestqueue="#{a4jQueueBean.formQueues[i-1].attributes['onrequestqueue'].value}"
+                        onsubmit="#{a4jQueueBean.formQueues[i-1].attributes['onsubmit'].value}"
+                        rendered="#{a4jQueueBean.formQueues[i-1].attributes['rendered'].value}"
+                        requestDelay="#{a4jQueueBean.formQueues[i-1].attributes['requestDelay'].value}" />
+
+                    <script type="text/javascript">
+                            function add(element) {
+                                element.innerHTML = 1 + parseInt(element.innerHTML);
+                            }
+                        </script>
+
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Event 1:" />
+                        <h:inputText id="input1" value="#{a4jQueueBean.text}"
+                            onkeypress="add(#{rich:element('events1')}); #{rich:element('timeWatcher:grid')}.event(1); ">
+                            <a4j:ajax event="keypress"
+                                onbegin="add(#{rich:element('requests')});  #{rich:element('timeWatcher:grid')}.begin(); "
+                                render="outtext"
+                                oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference();"
+                                onbeforedomupdate="add(#{rich:element('updates')}); " />
+                        </h:inputText>
+                        <h:outputText value="Event 2:" />
+                        <h:inputText id="input2" value="#{a4jQueueBean.text}"
+                            onkeypress="add(#{rich:element('events2')}); #{rich:element('timeWatcher:grid')}.event(2) ">
+                            <a4j:ajax event="keypress"
+                                onbegin="add(#{rich:element('requests')});  #{rich:element('timeWatcher:grid')}.begin(); "
+                                render="outtext"
+                                oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference();"
+                                onbeforedomupdate="add(#{rich:element('updates')}); " />
+                        </h:inputText>
+
+
+                        <h:outputText value="Repeated text:" />
+                        <h:outputText value="#{a4jQueueBean.text}" id="outtext" style="font-weight:bold;" />
+                        <h:outputText value="Click here (with error):" />
+                        <a4j:commandButton id="errorButton" value="Action with error" action="#{richBean.causeError}" />
+                        <h:outputText value="Event 1 count:" />
+                        <h:outputText value="0" id="events1" />
+                        <h:outputText value="Event 2 count:" />
+                        <h:outputText value="0" id="events2" />
+                        <h:outputText value="Requests count:" />
+                        <h:outputText value="0" id="requests" />
+                        <h:outputText value="DOM updates count:" />
+                        <h:outputText value="0" id="updates" />
+
+                    </h:panelGrid>
+
+                    <metamer:clientTimeWatcher id="timeWatcher" events="2" />
+
+                </h:form>
+            </rich:panel>
+
+        </c:forEach>
+
+    </ui:define>
+
+    <ui:define name="outOfTemplateAfter">
+        <h:form id="attributeForm">
+            <rich:panel id="formQueue1AttributesPanel" header="Form Queue 1 Attributes">
+                <metamer:attributes value="#{a4jQueueBean.formQueue1.attributes}" id="formQueue1Attributes" />
+            </rich:panel>
+            <rich:panel id="formQueue2AttributesPanel" header="Form Queue 2 Attributes">
+                <metamer:attributes value="#{a4jQueueBean.formQueue2.attributes}" id="formQueue2Attributes" />
+            </rich:panel>
+            <rich:panel id="globalQueueAttributesPanel" header="Global Queue Attributes">
+                <metamer:attributes value="#{a4jQueueBean.globalQueue.attributes}" id="globalQueueAttributes" />
+            </rich:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+</html>

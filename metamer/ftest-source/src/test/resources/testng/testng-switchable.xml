@@ -1,0 +1,27 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="seleniumTest">
+
+    <test name="Switchable Components">
+        <groups>
+            <run>
+                <exclude name="4.2" />
+                <exclude name="4.Future" />
+            </run>
+        </groups>
+
+        <packages>
+            <package name="org.richfaces.tests.metamer.ftest.richAccordion" />
+            <package name="org.richfaces.tests.metamer.ftest.richAccordionItem" />
+            <package name="org.richfaces.tests.metamer.ftest.richCollapsiblePanel" />
+            <package name="org.richfaces.tests.metamer.ftest.richPanelMenu" />
+            <package name="org.richfaces.tests.metamer.ftest.richPanelMenuGroup" />
+            <package name="org.richfaces.tests.metamer.ftest.richPanelMenuItem" />
+            <package name="org.richfaces.tests.metamer.ftest.richTab" />
+            <package name="org.richfaces.tests.metamer.ftest.richTabPanel" />
+            <package name="org.richfaces.tests.metamer.ftest.richTogglePanel" />
+            <package name="org.richfaces.tests.metamer.ftest.richTogglePanelItem" />
+        </packages>
+    </test>
+
+</suite>
+

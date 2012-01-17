@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head">
+            <h:outputStylesheet library="css" name="richPanel.css"/>
+
+        </ui:define>
+
+        <ui:define name="component">
+            <style type="text/css">
+                .rf-panel-header {
+                    color: fuchsia;
+                }
+
+                .panel {
+                    vertical-align:top;
+                }
+
+                .top {
+                    width:200px;height:100px;
+                }
+
+                .head2 {
+                    background-image : url();
+                    background-color : #4C9600;
+                    height:18px;
+                    text-align:center;
+                    vertical-align:middle;
+                    color:#CFF;
+                    padding:4px 0;
+                }
+
+                .body3 {
+                    height:100px;
+                    overflow:auto;
+                }
+            </style>
+
+            <h:panelGrid columnClasses="panel" border="0" columns="2">
+                <rich:panel id="panel1">
+                    <f:facet name="header">
+                        Panel #1. Changing Style Synchronously
+                    </f:facet>
+                    Each component in the RichFaces has a pre-defined set of classes you can manipulate with. If defined, those
+                    classes overwrite the ones come from the skin.
+                </rich:panel>
+
+                <rich:panel id="panel2">
+                    <f:facet name="header">
+                        Panel #2. Changing Style Synchronously
+                    </f:facet>
+                    In this example, we define header color using the .rf-panel-header class and all panels located on the same page
+                    inherit this color
+                </rich:panel>
+
+            </h:panelGrid>
+
+            <h:panelGrid columnClasses="panel" border="0" columns="3">
+                <rich:panel  id="panel3"
+                             onmouseover="document.getElementById(this.id+'_header').style.background='#60BA01';document.getElementById(this.id+'_body').style.background='#F4FFF8'"
+                             onmouseout="document.getElementById(this.id+'_header').style.background='#4C9600';document.getElementById(this.id+'_body').style.background='#E4FFC8'"
+                             style="width:200px;" headerClass="head2" bodyClass="body3">
+                    <f:facet name="header">
+                        Panel header
+                    </f:facet>
+                    Base on the previous layout, but some javascript behaviour added.
+                </rich:panel>
+
+                <rich:panel  id="panel4" style="width:200px;"  bodyClass="body3">
+                    <f:facet name="header">
+                        Scrolling Text Panel
+                    </f:facet>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec
+                    ligula non metus dictum aliquet. Etiam non leo venenatis libero mollis aliquet.
+                    Vivamus in augue lorem. Donec sagittis pretium cursus. Vivamus id arcu at dui
+                    aliquam faucibus ut in neque. Nulla facilisi. Donec sed arcu et velit egestas
+                    condimentum ut ut sem. Quisque quis arcu est. Mauris nec metus congue tortor
+                    sagittis porta in in orci. Suspendisse iaculis ipsum non.
+                </rich:panel>
+            </h:panelGrid>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+        </ui:define>
+
+    </ui:composition>
+</html>

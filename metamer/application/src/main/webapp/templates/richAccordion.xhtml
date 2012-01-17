@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition>
+        <rich:accordion id="containerRichAccordion" activeItem="containerItem3" switchType="client">
+
+            <rich:accordionItem id="containerItem1" name="containerItem1"  header="Item 1">
+                content of item 1
+            </rich:accordionItem>
+            <rich:accordionItem id="containerItem2" name="containerItem2"  header="Item 2">
+                content of item 2
+            </rich:accordionItem>
+            <rich:accordionItem id="containerItem3" name="containerItem3"  header="Item 3">
+                <ui:decorate template="#{templateBean.nextTemplate}.xhtml" />
+            </rich:accordionItem>
+            <rich:accordionItem id="containerItem4" name="containerItem4"  header="Item 4 (disabled)" disabled="true">
+                content of item 4
+            </rich:accordionItem>
+            <rich:accordionItem id="containerItem5" name="containerItem5"  header="Item 5">
+                content of item 5
+            </rich:accordionItem>
+
+        </rich:accordion>
+
+    </ui:composition>
+</html>

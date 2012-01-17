@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich">
+
+<!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+<ui:composition>
+    <h:commandLink id="containerTcLink1" value="Item 1">
+        <rich:toggleControl targetPanel="containerRichTogglePanel" targetItem="containerItem1" />
+    </h:commandLink>
+    <h:outputText value=" | " />
+    <h:commandLink id="containerTcLink2" value="Item 2">
+        <rich:toggleControl targetPanel="containerRichTogglePanel" targetItem="containerItem2" />
+    </h:commandLink>
+    <h:outputText value=" | " />
+    <h:commandLink id="containerTcLink3" value="Item 3">
+        <rich:toggleControl targetPanel="containerRichTogglePanel" targetItem="containerItem3" />
+    </h:commandLink>
+    <h:outputText value=" | " />
+    <h:commandLink id="containerTcLink4" value="Item 4">
+        <rich:toggleControl targetPanel="containerRichTogglePanel" targetItem="containerItem4" />
+    </h:commandLink>
+    <h:outputText value=" | " />
+    <h:commandLink id="containerTcLink5" value="Item 5">
+        <rich:toggleControl targetPanel="containerRichTogglePanel" targetItem="containerItem5" />
+    </h:commandLink>
+    <br />
+    <br />
+
+    <rich:togglePanel id="containerRichTogglePanel" activeItem="containerItem3" switchType="client">
+
+        <rich:togglePanelItem id="containerItem1" name="containerItem1">
+                content of item 1
+            </rich:togglePanelItem>
+        <rich:togglePanelItem id="containerItem2" name="containerItem2">
+                content of item 2
+            </rich:togglePanelItem>
+        <rich:togglePanelItem id="containerItem3" name="containerItem3">
+            <ui:decorate template="#{templateBean.nextTemplate}.xhtml" />
+        </rich:togglePanelItem>
+        <rich:togglePanelItem id="containerItem4" name="containerItem4">
+                content of item 4
+            </rich:togglePanelItem>
+        <rich:togglePanelItem id="containerItem5" name="containerItem5">
+                content of item 5
+            </rich:togglePanelItem>
+
+    </rich:togglePanel>
+
+</ui:composition>
+</html>

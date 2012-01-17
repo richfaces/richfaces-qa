@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j" xmlns:h="http://java.sun.com/jsf/html">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head">
+            <script type="text/javascript">
+                testedComponentId = "#{rich:clientId('calendar')}";
+            </script>
+        </ui:define>
+
+        <ui:define name="component">
+
+            <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
+            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
+            <br/><br/>
+            
+            <h:panelGrid columns="3">
+                past
+                <rich:calendar id="calendar1"
+                               datePattern="#{richCalendarBean.attributes['datePattern'].value}"
+                               timeZone="#{richCalendarBean.timeZone}"
+                               value="#{richCalendarBean.date1}"
+                               >
+                    <a4j:ajax event="change" render="output1" />
+                </rich:calendar>
+                <rich:message id="calendarMsg1" for="calendar1"/>
+
+                future
+                <rich:calendar id="calendar2"
+                               datePattern="#{richCalendarBean.attributes['datePattern'].value}"
+                               timeZone="#{richCalendarBean.timeZone}"
+                               value="#{richCalendarBean.date2}"
+                               >
+                    <a4j:ajax event="change" render="output2" />
+                </rich:calendar>
+                <rich:message id="calendarMsg2" for="calendar2"/>
+
+                last year
+                <rich:calendar id="calendar3"
+                               datePattern="#{richCalendarBean.attributes['datePattern'].value}"
+                               timeZone="#{richCalendarBean.timeZone}"
+                               value="#{richCalendarBean.date3}"
+                               >
+                    <a4j:ajax event="change" render="output3" />
+                    <f:validator validatorId="org.richfaces.LastYearValidator"/>
+                </rich:calendar>
+                <rich:message id="calendarMsg3" for="calendar3"/>
+            </h:panelGrid>
+            <br/><br/>
+
+            <h:panelGrid columns="2">
+                output1:
+                <h:outputText id="output1" value="#{richCalendarBean.date1}">
+                    <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
+                                       timeZone="#{richCalendarBean.timeZone}"/>
+                </h:outputText>
+
+                output2:
+                <h:outputText id="output2" value="#{richCalendarBean.date2}">
+                    <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
+                                       timeZone="#{richCalendarBean.timeZone}"/>
+                </h:outputText>
+
+                output3:
+                <h:outputText id="output3" value="#{richCalendarBean.date3}">
+                    <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
+                                       timeZone="#{richCalendarBean.timeZone}"/>
+                </h:outputText>
+            </h:panelGrid>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{richCalendarBean.attributes}" id="attributes" />
+        </ui:define>
+
+    </ui:composition>
+</html>

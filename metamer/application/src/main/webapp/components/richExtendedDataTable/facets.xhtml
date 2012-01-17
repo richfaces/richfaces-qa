@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+        <ui:param name="componentId" value="richEDT" />
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head">
+            <style type="text/css">
+                .rf-edt[id$=richEDT] {
+                    width: 215px !important;
+                    height: 300px !important;
+                }
+            </style>
+        </ui:define>
+
+        <ui:define name="outOfTemplateBefore">
+            <br/>
+            <h:outputText value="Show data in table: " />
+            <h:selectBooleanCheckbox id="noDataCheckbox" value="#{richExtendedDataTableBean.state}">
+                <a4j:ajax render="#{nestedComponentId} scroller1"/>
+            </h:selectBooleanCheckbox>
+            <br/><br/>
+        </ui:define>
+
+        <ui:define name="component">
+
+            <rich:extendedDataTable id="richEDT"
+                                    columnClasses="#{richExtendedDataTableBean.attributes['columnClasses'].value}"
+                                    first="#{richExtendedDataTableBean.attributes['first'].value}"
+                                    footerClass="#{richExtendedDataTableBean.attributes['footerClass'].value}"
+                                    frozenColumns="#{richExtendedDataTableBean.attributes['frozenColumns'].value}"
+                                    headerClass="#{richExtendedDataTableBean.attributes['headerClass'].value}"
+                                    keepSaved="#{richExtendedDataTableBean.attributes['keepSaved'].value}"
+                                    noDataLabel="#{richExtendedDataTableBean.attributes['noDataLabel'].value}"
+                                    onbeforeselectionchange="#{richExtendedDataTableBean.attributes['onbeforeselectionchange'].value}"
+                                    onrowclick="#{richExtendedDataTableBean.attributes['onrowclick'].value}"
+                                    onrowdblclick="#{richExtendedDataTableBean.attributes['onrowdblclick'].value}"
+                                    onrowkeydown="#{richExtendedDataTableBean.attributes['onrowkeydown'].value}"
+                                    onrowkeypress="#{richExtendedDataTableBean.attributes['onrowkeypress'].value}"
+                                    onrowkeyup="#{richExtendedDataTableBean.attributes['onrowkeyup'].value}"
+                                    onrowmousedown="#{richExtendedDataTableBean.attributes['onrowmousedown'].value}"
+                                    onrowmousemove="#{richExtendedDataTableBean.attributes['onrowmousemove'].value}"
+                                    onrowmouseout="#{richExtendedDataTableBean.attributes['onrowmouseout'].value}"
+                                    onrowmouseover="#{richExtendedDataTableBean.attributes['onrowmouseover'].value}"
+                                    onrowmouseup="#{richExtendedDataTableBean.attributes['onrowmouseup'].value}"
+                                    onselectionchange="#{richExtendedDataTableBean.attributes['onselectionchange'].value}"
+                                    rendered="#{richExtendedDataTableBean.attributes['rendered'].value}"
+                                    rowClass="#{richExtendedDataTableBean.attributes['rowClass'].value}"
+                                    rowClasses="#{richExtendedDataTableBean.attributes['rowClasses'].value}"
+                                    rows="#{richExtendedDataTableBean.attributes['rows'].value}"
+                                    selection="#{richExtendedDataTableBean.attributes['selection'].value}"
+                                    selectionMode="#{richExtendedDataTableBean.attributes['selectionMode'].value}"
+                                    sortMode="#{richExtendedDataTableBean.attributes['sortMode'].value}"
+                                    sortPriority="#{richExtendedDataTableBean.attributes['sortPriority'].value}"
+                                    style="#{richExtendedDataTableBean.attributes['style'].value}"
+                                    styleClass="#{richExtendedDataTableBean.attributes['styleClass'].value}"
+                                    value="#{richExtendedDataTableBean.state ? model.capitals : null}"
+                                    var="record"
+                                    >
+
+                <f:facet name="noData">
+                    <h:outputText value="#{richExtendedDataTableBean.facets['noData']}" style="color: red;"/>
+                </f:facet>
+
+                <f:facet name="header">
+                    <h:outputText id="header" value="#{richExtendedDataTableBean.facets['header']}"
+                                  rendered="#{not empty richExtendedDataTableBean.facets['header']}"/>
+                </f:facet>
+
+                <rich:column id="columnState" sortBy="#{record.state}">
+                    <f:facet name="header">
+                        <h:outputText id="columnHeaderState" value="#{richExtendedDataTableBean.facets['columnStateHeader']}"
+                                      rendered="#{not empty richExtendedDataTableBean.facets['columnStateHeader']}"/>
+                    </f:facet>
+                    <h:outputText value="#{record.state}" />
+                    <f:facet name="footer">
+                        <h:outputText id="columnFooterState" value="#{richExtendedDataTableBean.facets['columnStateFooter']}" 
+                                      rendered="#{not empty richExtendedDataTableBean.facets['columnStateFooter']}"/>
+                    </f:facet>
+                </rich:column>
+
+                <rich:column id="columnCapital" sortBy="#{record.name}">
+                    <f:facet name="header">
+                        <h:outputText id="columnHeaderCapital" value="#{richExtendedDataTableBean.facets['columnCapitalHeader']}" 
+                                      rendered="#{not empty richExtendedDataTableBean.facets['columnCapitalHeader']}"/>
+                    </f:facet>
+
+                    <h:outputText value="#{record.name}" />
+                    <f:facet name="footer">
+                        <h:outputText id="columnFooterCapital" value="#{richExtendedDataTableBean.facets['columnCapitalFooter']}"
+                                      rendered="#{not empty richExtendedDataTableBean.facets['columnCapitalFooter']}"/>
+                    </f:facet>
+                </rich:column>
+
+                <f:facet name="footer">
+                    <h:outputText id="footer" value="#{richExtendedDataTableBean.facets['footer']}"
+                                  rendered="#{not empty richExtendedDataTableBean.facets['footer']}"/>
+                </f:facet>
+
+            </rich:extendedDataTable>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <a4j:ajax render="#{nestedComponentId}">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="No Data Facet: " />
+                    <h:inputText id="noDataInput" value="#{richExtendedDataTableBean.facets['noData']}" />
+
+                    <h:outputLabel value="Header Facet:" />
+                    <h:inputText id="headerInput" value="#{richExtendedDataTableBean.facets['header']}" />
+
+                    <h:outputLabel value="Footer Facet:" />
+                    <h:inputText id="footerInput" value="#{richExtendedDataTableBean.facets['footer']}" />
+
+                    <h:outputLabel value="State Column Header:" />
+                    <h:inputText id="stateHeaderInput" value="#{richExtendedDataTableBean.facets['columnStateHeader']}" />
+
+                    <h:outputLabel value="State Column Footer:" />
+                    <h:inputText id="stateFooterInput" value="#{richExtendedDataTableBean.facets['columnStateFooter']}" />
+
+                    <h:outputLabel value="Capital Column Header:" />
+                    <h:inputText id="capitalHeaderInput" value="#{richExtendedDataTableBean.facets['columnCapitalHeader']}" />
+
+                    <h:outputLabel value="Capital Column Footer:" />
+                    <h:inputText id="capitalFooterInput" value="#{richExtendedDataTableBean.facets['columnCapitalFooter']}" />
+                </h:panelGrid>
+            </a4j:ajax>
+
+            <br/><br/>
+
+            <metamer:attributes value="#{richExtendedDataTableBean.attributes}" id="attributes" />
+        </ui:define>
+
+    </ui:composition>
+</html>

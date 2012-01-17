@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="outOfTemplateBefore">
+            <br/>
+            <h:outputText value="Show data in table: " />
+            <h:selectBooleanCheckbox id="noDataCheckbox" value="#{richSubTableBean.state}">
+                <a4j:ajax render="richDataTable"/>
+            </h:selectBooleanCheckbox>
+            <br/><br/>
+        </ui:define>
+
+        <ui:define name="component">
+
+            <rich:dataTable id="richDataTable" value="#{richSubTableBean.lists}" var="list" keepSaved="true">
+                <f:facet name="header">
+                    <rich:columnGroup id="columnGroup">
+                        <rich:column id="columnHeaderEmployees" colspan="3">
+                            <h:outputText id="columnHeaderEmployeesText" value="Employees" />
+                        </rich:column>
+                        <rich:column id="columnHeaderName" breakRowBefore="true">
+                            <h:outputText id="columnHeaderNameText" value="Name" />
+                        </rich:column>
+                        <rich:column id="columnHeaderTitle">
+                            <h:outputText id="columnHeaderTitleText" value="Title" />
+                        </rich:column>
+                        <rich:column id="columnHeaderBirthdate">
+                            <h:outputText id="columnHeaderBirthdateText" value="Birthdate" />
+                        </rich:column>
+                    </rich:columnGroup>
+                </f:facet>
+
+                <rich:column id="columnSubTable" colspan="3">
+                    <rich:collapsibleSubTableToggler id="subTableTC" for="richSubTable"/>
+                    <h:outputText value="#{list[0].sex == 'MALE' ? 'Men' : 'Women'}" />
+                </rich:column>
+
+                <rich:collapsibleSubTable id="richSubTable"
+                                          expanded="#{richSubTableBean.expanded[list]}"
+                                          expandMode="#{richSubTableBean.attributes['expandMode'].value}"
+                                          filterVar="#{richSubTableBean.attributes['filterVar'].value}"
+                                          first="#{richSubTableBean.attributes['first'].value}"
+                                          iterationStatusVar="#{richSubTableBean.attributes['iterationStatusVar'].value}"
+                                          keepSaved="#{richSubTableBean.attributes['keepSaved'].value}"
+                                          noDataLabel="#{richSubTableBean.attributes['noDataLabel'].value}"
+                                          onrowclick="#{richSubTableBean.attributes['onrowclick'].value}"
+                                          onrowdblclick="#{richSubTableBean.attributes['onrowdblclick'].value}"
+                                          onrowkeydown="#{richSubTableBean.attributes['onrowkeydown'].value}"
+                                          onrowkeypress="#{richSubTableBean.attributes['onrowkeypress'].value}"
+                                          onrowkeyup="#{richSubTableBean.attributes['onrowkeyup'].value}"
+                                          onrowmousedown="#{richSubTableBean.attributes['onrowmousedown'].value}"
+                                          onrowmousemove="#{richSubTableBean.attributes['onrowmousemove'].value}"
+                                          onrowmouseout="#{richSubTableBean.attributes['onrowmouseout'].value}"
+                                          onrowmouseover="#{richSubTableBean.attributes['onrowmouseover'].value}"
+                                          onrowmouseup="#{richSubTableBean.attributes['onrowmouseup'].value}"
+                                          rendered="#{richSubTableBean.attributes['rendered'].value}"
+                                          rowKeyConverter="#{richSubTableBean.attributes['rowKeyConverter'].value}"
+                                          rows="#{richSubTableBean.attributes['rows'].value}"
+                                          sortMode="#{richSubTableBean.attributes['sortMode'].value}"
+                                          sortPriority="#{richSubTableBean.attributes['sortPriority'].value}"
+                                          columnClasses="#{richSubTableBean.attributes['columnClasses'].value}"
+                                          footerClass="#{richSubTableBean.attributes['footerClass'].value}"
+                                          headerClass="#{richSubTableBean.attributes['headerClass'].value}"
+                                          rowClass="#{richSubTableBean.attributes['rowClass'].value}"
+                                          rowClasses="#{richSubTableBean.attributes['rowClasses'].value}"
+                                          style="#{richSubTableBean.attributes['style'].value}"
+                                          styleClass="#{richSubTableBean.attributes['styleClass'].value}"
+                                          value="#{richSubTableBean.state ? list : null}"
+                                          var="item">
+
+                    <rich:column id="columnName">
+                        <h:outputText id="name" value="#{item.name}" />
+                    </rich:column>
+                    <rich:column id="columnTitle">
+                        <h:outputText id="title" value="#{item.title}" />
+                    </rich:column>
+                    <rich:column id="columnBirthdate">
+                        <h:outputText id="birthdate" value="#{item.birthdate}">
+                            <f:convertDateTime pattern="d MMM yyyy"/>
+                        </h:outputText>
+                    </rich:column>
+
+                </rich:collapsibleSubTable>
+            </rich:dataTable>
+
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{richSubTableBean.attributes}" id="attributes" />
+        </ui:define>
+
+    </ui:composition>
+</html>

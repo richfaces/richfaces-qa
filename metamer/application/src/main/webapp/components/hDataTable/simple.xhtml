@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" >
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head">
+            <h:outputStylesheet library="css" name="hDataTable.css"/>
+        </ui:define>
+
+        <ui:define name="outOfTemplateBefore">
+            <br/>
+            <h:outputText value="Show data in table: " />
+            <h:selectBooleanCheckbox id="noDataCheckbox" value="#{hDataTableBean.state}">
+                <a4j:ajax render="hDataTable scroller1"/>
+            </h:selectBooleanCheckbox>
+            <br/><br/>
+        </ui:define>
+
+        <ui:define name="component">
+
+            <h:dataTable id="hDataTable"
+                         bgcolor="#{hDataTableBean.attributes['bgcolor'].value}"
+                         border="#{hDataTableBean.attributes['border'].value}"
+                         captionClass="#{hDataTableBean.attributes['captionClass'].value}"
+                         captionStyle="#{hDataTableBean.attributes['captionStyle'].value}"
+                         cellpadding="#{hDataTableBean.attributes['cellpadding'].value}"
+                         cellspacing="#{hDataTableBean.attributes['cellspacing'].value}"
+                         columnClasses="#{hDataTableBean.attributes['columnClasses'].value}"
+                         dir="#{hDataTableBean.attributes['dir'].value}"
+                         first="#{hDataTableBean.attributes['first'].value}"
+                         footerClass="#{hDataTableBean.attributes['footerClass'].value}"
+                         frame="#{hDataTableBean.attributes['frame'].value}"
+                         headerClass="#{hDataTableBean.attributes['headerClass'].value}"
+                         lang="#{hDataTableBean.attributes['lang'].value}"
+                         onclick="#{hDataTableBean.attributes['onclick'].value}"
+                         ondblclick="#{hDataTableBean.attributes['ondblclick'].value}"
+                         onkeydown="#{hDataTableBean.attributes['onkeydown'].value}"
+                         onkeypress="#{hDataTableBean.attributes['onkeypress'].value}"
+                         onkeyup="#{hDataTableBean.attributes['onkeyup'].value}"
+                         onmousedown="#{hDataTableBean.attributes['onmousedown'].value}"
+                         onmousemove="#{hDataTableBean.attributes['onmousemove'].value}"
+                         onmouseout="#{hDataTableBean.attributes['onmouseout'].value}"
+                         onmouseover="#{hDataTableBean.attributes['onmouseover'].value}"
+                         onmouseup="#{hDataTableBean.attributes['onmouseup'].value}"
+                         rendered="#{hDataTableBean.attributes['rendered'].value}"
+                         rowAvailable="#{hDataTableBean.attributes['rowAvailable'].value}"
+                         rowClasses="#{hDataTableBean.attributes['rowClasses'].value}"
+                         rowCount="#{hDataTableBean.attributes['rowCount'].value}"
+                         rowData="#{hDataTableBean.attributes['rowData'].value}"
+                         rows="#{hDataTableBean.attributes['rows'].value}"
+                         rules="#{hDataTableBean.attributes['rules'].value}"
+                         style="#{hDataTableBean.attributes['style'].value}"
+                         styleClass="#{hDataTableBean.attributes['styleClass'].value}"
+                         summary="#{hDataTableBean.attributes['summary'].value}"
+                         title="#{hDataTableBean.attributes['title'].value}"
+                         value="#{hDataTableBean.state ? model.capitals : null}"
+                         var="record"
+                         width="#{hDataTableBean.attributes['width'].value}"
+                         >
+
+                <f:facet name="caption">
+                    <h:outputText id="captionFacet" value="Caption Facet" />
+                </f:facet>
+
+                <f:facet name="header">
+                    <h:outputText value="Header Facet" />
+                </f:facet>
+
+                <h:column id="columnState">
+                    <f:facet name="header">
+                        <h:outputText id="columnHeaderState" value="State Header" />
+                    </f:facet>
+
+                    <h:outputText value="#{record.state}" />
+                    <f:facet name="footer">
+                        <h:outputText id="columnFooterState" value="State Footer" />
+                    </f:facet>
+                </h:column>
+
+                <h:column id="columnCapital">
+                    <f:facet name="header">
+                        <h:outputText id="columnHeaderCapital" value="Capital Header" />
+                    </f:facet>
+
+                    <h:outputText value="#{record.name}" />
+                    <f:facet name="footer">
+                        <h:outputText id="columnFooterCapital" value="Capital Footer" />
+                    </f:facet>
+                </h:column>
+
+                <f:facet name="footer">
+                    <h:outputText value="Footer Facet" />
+                </f:facet>
+
+            </h:dataTable>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{hDataTableBean.attributes}" id="attributes" />
+        </ui:define>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+            <rich:progressBar id="progressBar"
+                              data="#{richProgressBarBean.attributes['data'].value}"
+                              enabled="#{richProgressBarBean.attributes['enabled'].value}"
+                              finishClass="#{richProgressBarBean.attributes['finishClass'].value}"
+                              initialClass="#{richProgressBarBean.attributes['initialClass'].value}"
+                              interval="#{richProgressBarBean.attributes['interval'].value}"
+                              label="#{richProgressBarBean.attributes['label'].value}"
+                              maxValue="#{richProgressBarBean.attributes['maxValue'].value}"
+                              minValue="#{richProgressBarBean.attributes['minValue'].value}"
+                              mode="ajax"
+                              onbeforedomupdate="#{richProgressBarBean.attributes['onbeforedomupdate'].value}"
+                              onbegin="#{richProgressBarBean.attributes['onbegin'].value}"
+                              onclick="#{richProgressBarBean.attributes['onclick'].value}"
+                              oncomplete="#{richProgressBarBean.attributes['oncomplete'].value}"
+                              ondblclick="#{richProgressBarBean.attributes['ondblclick'].value}"
+                              onfinish="#{richProgressBarBean.attributes['onfinish'].value}"
+                              onmousedown="#{richProgressBarBean.attributes['onmousedown'].value}"
+                              onmousemove="#{richProgressBarBean.attributes['onmousemove'].value}"
+                              onmouseout="#{richProgressBarBean.attributes['onmouseout'].value}"
+                              onmouseover="#{richProgressBarBean.attributes['onmouseover'].value}"
+                              onmouseup="#{richProgressBarBean.attributes['onmouseup'].value}"
+                              progressClass="#{richProgressBarBean.attributes['progressClass'].value}"
+                              remainingClass="#{richProgressBarBean.attributes['remainingClass'].value}"
+                              rendered="#{richProgressBarBean.attributes['rendered'].value}"
+                              style="#{richProgressBarBean.attributes['style'].value}"
+                              styleClass="#{richProgressBarBean.attributes['styleClass'].value}"
+                              value="#{richProgressBarBean.currentValue}"
+                              >
+
+                <f:facet name="initial">
+                    <h:outputText id="initialOutput" value="Process hasn't started yet" />
+                    <br/>
+                    <a4j:commandButton id="startButton"
+                                       action="#{richProgressBarBean.startProcess}"
+                                       value="Start Process" execute="@form"
+                                       render="progressBar"
+                                       rendered="#{richProgressBarBean.buttonRendered}"
+                                       style="margin: 9px 0px 5px;" />
+                </f:facet>
+                <f:facet name="finish">
+                    <h:outputText id="completeOutput" value="Process Done" />
+                    <br/>
+                    <a4j:commandButton id="restartButton"
+                                       action="#{richProgressBarBean.startProcess}"
+                                       value="Restart Process" execute="@form"
+                                       render="progressBar"
+                                       rendered="#{richProgressBarBean.buttonRendered}"
+                                       style="margin: 9px 0px 5px;" />
+                </f:facet>
+                <h:outputText value="#{richProgressBarBean.currentValue} %"/>
+            </rich:progressBar>
+
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{richProgressBarBean.attributes}" id="attributes" render="log"/>
+        </ui:define>
+
+    </ui:composition>
+</html>

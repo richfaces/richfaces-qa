@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+        
+            <rich:messages globalOnly="true" />
+        	<rich:messages for="editor" />
+            <rich:editor id="editor"
+           				 height="#{richEditorBean.attributes['height'].value}"
+           				 immediate="#{richEditorBean.attributes['immediate'].value}"
+            			 lang="#{richEditorBean.attributes['lang'].value}"
+            			 onblur="#{richEditorBean.attributes['onblur'].value}"
+                         ondirty="#{richEditorBean.attributes['ondirty'].value}"
+            			 onchange="#{richEditorBean.attributes['onchange'].value}"
+            			 onfocus="#{richEditorBean.attributes['onfocus'].value}"
+                		 oninit="#{richEditorBean.attributes['oninit'].value}"
+                		 readonly="#{richEditorBean.attributes['readonly'].value}"
+                		 rendered="#{richEditorBean.attributes['rendered'].value}"
+                		 required="#{richEditorBean.attributes['required'].value}"
+                		 requiredMessage="#{richEditorBean.attributes['requiredMessage'].value}"
+                         skin="#{richEditorBean.attributes['skin'].value}"
+                		 style="#{richEditorBean.attributes['style'].value}"
+                		 styleClass="#{richEditorBean.attributes['styleClass'].value}"
+                		 title="#{richEditorBean.attributes['title'].value}"
+                		 toolbar="#{richEditorBean.attributes['toolbar'].value}"
+                		 validator="#{richEditorBean.validateEditorValue}"
+                		 value="#{richEditorBean.attributes['value'].value}"
+                		 valueChangeListener="#{richBean.valueChangeListenerImproved}"
+                		 width="#{richEditorBean.attributes['width'].value}" >                            
+               <c:if test="#{richEditorBean.attributes['toolbar'].value=='custom'}" >
+                  <f:facet name="config" >
+                    toolbar: "MyToolbar",
+                    toolbar_MyToolbar:
+                        [
+                            { name: 'document', items : [ 'NewPage','Preview' ] },
+                            { name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
+                            { name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','Scayt' ] },
+                            { name: 'insert', items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'
+                                     ,'Iframe' ] },
+                                    '/',
+                            { name: 'styles', items : [ 'Styles','Format' ] },
+                            { name: 'basicstyles', items : [ 'Bold','Italic','Strike','-','RemoveFormat' ] },
+                            { name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote' ] },
+                            { name: 'links', items : [ 'Link','Unlink','Anchor' ] },
+                            { name: 'tools', items : [ 'Maximize','-','About' ] }
+                        ]
+                  </f:facet>
+               </c:if>
+               <a4j:ajax event="change" listener="#{richBean.actionListener}" render="output" />               
+            </rich:editor>
+                		 
+            <br/>
+            <h:commandButton id="hButton" value="[h] Submit" />
+            <a4j:commandButton id="a4jButton" value="[a4j] Submit" render="output" />
+            
+            <br/><br/>
+            Your text: <h:outputText id="output" value="#{richEditorBean.attributes['value'].value}"/>
+            
+            <br/><br/>
+            <fieldset>
+                <legend>JavaScript API of rich:editor by h:commandButton</legend>
+
+                <h:commandButton id="setReadOnly" value="setReadonly()">
+                    <rich:componentControl event="click" operation="setReadonly" target="editor" />                        
+                </h:commandButton>
+                
+                <h:commandButton id="setValue" value="setValue()">
+                    <rich:componentControl event="click" operation="setVallue" target="editor" >
+                        <f:param value="NEW EDITOR VALUE SET BY EDITOR JS API!" />
+                    </rich:componentControl>                        
+                </h:commandButton>
+                
+            </fieldset>
+
+            <br/>
+            <fieldset>
+                <legend>JavaScript API of rich:editor by a4j:commandButton</legend>
+                
+                <input type="button" value="getValue()" onclick="alert('Editor value: '+#{rich:component('editor')}.getValue());" />
+                <input type="button" value="setValue()" onclick="#{rich:component('editor')}.setValue('NEW VALUE SET BY JS!')" />
+                <input type="button" value="getInput()" onclick="alert('Inut value: '+#{rich:component('editor')}.getInput());" />
+                <input type="button" value="focus()" onclick="#{rich:component('editor')}.focus()" />
+                <input type="button" value="blur()" onclick="#{rich:component('editor')}.blur()" />
+                <input type="button" value="isFocused()" onclick="alert('Is editor focused: '+#{rich:component('editor')}.isFocused());" />
+                <input type="button" value="isDirty()" onclick="alert('Is editor dirty: '+#{rich:component('editor')}.isDirty());" />
+                <input type="button" value="isValueChanged()" onclick="alert('Is editor value changed: '+#{rich:component('editor')}.isValueChanged());" />
+                <input type="button" value="isReadonly()" onclick="alert('Is editor readonly: '+#{rich:component('editor')}.isReadonly());" />
+                <input type="button" value="setReadonly()" onclick="#{rich:component('editor')}.setReadonly()" />
+                
+            </fieldset>
+            
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{richEditorBean.attributes}" id="attributes" />
+        </ui:define>
+
+    </ui:composition>
+</html>

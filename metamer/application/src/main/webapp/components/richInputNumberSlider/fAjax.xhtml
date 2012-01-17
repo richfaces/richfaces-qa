@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j" xmlns:h="http://java.sun.com/jsf/html">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+            <rich:inputNumberSlider id="slider"
+                                    accesskey="#{richInputNumberSliderBean.attributes['accesskey'].value}"
+                                    decreaseClass="#{richInputNumberSliderBean.attributes['decreaseClass'].value}"
+                                    decreaseSelectedClass="#{richInputNumberSliderBean.attributes['decreaseSelectedClass'].value}"
+                                    delay="#{richInputNumberSliderBean.attributes['delay'].value}"
+                                    dir="#{richInputNumberSliderBean.attributes['dir'].value}"
+                                    disabled="#{richInputNumberSliderBean.attributes['disabled'].value}"
+                                    enableManualInput="#{richInputNumberSliderBean.attributes['enableManualInput'].value}"
+                                    handleClass="#{richInputNumberSliderBean.attributes['handleClass'].value}"
+                                    handleSelectedClass="#{richInputNumberSliderBean.attributes['handleSelectedClass'].value}"
+                                    immediate="#{richInputNumberSliderBean.attributes['immediate'].value}"
+                                    increaseClass="#{richInputNumberSliderBean.attributes['increaseClass'].value}"
+                                    increaseSelectedClass="#{richInputNumberSliderBean.attributes['increaseSelectedClass'].value}"
+                                    inputClass="#{richInputNumberSliderBean.attributes['inputClass'].value}"
+                                    inputPosition="#{richInputNumberSliderBean.attributes['inputPosition'].value}"
+                                    inputSize="#{richInputNumberSliderBean.attributes['inputSize'].value}"
+                                    label="#{richInputNumberSliderBean.attributes['label'].value}"
+                                    lang="#{richInputNumberSliderBean.attributes['lang'].value}"
+                                    maxValue="#{richInputNumberSliderBean.attributes['maxValue'].value}"
+                                    maxlength="#{richInputNumberSliderBean.attributes['maxlength'].value}"
+                                    minValue="#{richInputNumberSliderBean.attributes['minValue'].value}"
+                                    onblur="#{richInputNumberSliderBean.attributes['onblur'].value}"
+                                    onchange="#{richInputNumberSliderBean.attributes['onchange'].value}"
+                                    onclick="#{richInputNumberSliderBean.attributes['onclick'].value}"
+                                    ondblclick="#{richInputNumberSliderBean.attributes['ondblclick'].value}"
+                                    onfocus="#{richInputNumberSliderBean.attributes['onfocus'].value}"
+                                    onkeydown="#{richInputNumberSliderBean.attributes['onkeydown'].value}"
+                                    onkeypress="#{richInputNumberSliderBean.attributes['onkeypress'].value}"
+                                    onkeyup="#{richInputNumberSliderBean.attributes['onkeyup'].value}"
+                                    onmousedown="#{richInputNumberSliderBean.attributes['onmousedown'].value}"
+                                    onmousemove="#{richInputNumberSliderBean.attributes['onmousemove'].value}"
+                                    onmouseout="#{richInputNumberSliderBean.attributes['onmouseout'].value}"
+                                    onmouseover="#{richInputNumberSliderBean.attributes['onmouseover'].value}"
+                                    onmouseup="#{richInputNumberSliderBean.attributes['onmouseup'].value}"
+                                    onselect="#{richInputNumberSliderBean.attributes['onselect'].value}"
+                                    rendered="#{richInputNumberSliderBean.attributes['rendered'].value}"
+                                    required="#{richInputNumberSliderBean.attributes['required'].value}"
+                                    requiredMessage="#{richInputNumberSliderBean.attributes['requiredMessage'].value}"
+                                    showArrows="#{richInputNumberSliderBean.attributes['showArrows'].value}"
+                                    showBoundaryValues="#{richInputNumberSliderBean.attributes['showBoundaryValues'].value}"
+                                    showInput="#{richInputNumberSliderBean.attributes['showInput'].value}"
+                                    showTooltip="#{richInputNumberSliderBean.attributes['showTooltip'].value}"
+                                    step="#{richInputNumberSliderBean.attributes['step'].value}"
+                                    style="#{richInputNumberSliderBean.attributes['style'].value}"
+                                    styleClass="#{richInputNumberSliderBean.attributes['styleClass'].value}"
+                                    tabindex="#{richInputNumberSliderBean.attributes['tabindex'].value}"
+                                    title="#{richInputNumberSliderBean.attributes['title'].value}"
+                                    tooltipClass="#{richInputNumberSliderBean.attributes['tooltipClass'].value}"
+                                    trackClass="#{richInputNumberSliderBean.attributes['trackClass'].value}"
+                                    value="#{richInputNumberSliderBean.attributes['value'].value}"
+                                    valueChangeListener="#{richBean.valueChangeListener}"
+                                    >
+
+                <f:ajax event="change" render="output :phasesPanel"/>
+
+            </rich:inputNumberSlider>
+            <rich:message id="msg" for="slider"/>
+
+            <br/><br/>
+            <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
+            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
+            <br/><br/>
+
+            output: <h:outputText id="output" value="#{richInputNumberSliderBean.attributes['value'].value}"/>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{richInputNumberSliderBean.attributes}" id="attributes" />
+        </ui:define>
+
+    </ui:composition>
+</html>

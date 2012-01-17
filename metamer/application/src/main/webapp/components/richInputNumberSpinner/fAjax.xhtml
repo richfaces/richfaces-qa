@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j" xmlns:h="http://java.sun.com/jsf/html">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head">
+            <script type="text/javascript">
+                    testedComponentId = "#{rich:clientId('spinner')}";
+            </script>
+        </ui:define>
+
+        <ui:define name="component">
+            <rich:inputNumberSpinner id="spinner"
+                                     accesskey="#{richInputNumberSpinnerBean.attributes['accesskey'].value}"
+                                     cycled="#{richInputNumberSpinnerBean.attributes['cycled'].value}"
+                                     dir="#{richInputNumberSpinnerBean.attributes['dir'].value}"
+                                     disabled="#{richInputNumberSpinnerBean.attributes['disabled'].value}"
+                                     enableManualInput="#{richInputNumberSpinnerBean.attributes['enableManualInput'].value}"
+                                     immediate="#{richInputNumberSpinnerBean.attributes['immediate'].value}"
+                                     inputClass="#{richInputNumberSpinnerBean.attributes['inputClass'].value}"
+                                     inputSize="#{richInputNumberSpinnerBean.attributes['inputSize'].value}"
+                                     label="#{richInputNumberSpinnerBean.attributes['label'].value}"
+                                     lang="#{richInputNumberSpinnerBean.attributes['lang'].value}"
+                                     maxValue="#{richInputNumberSpinnerBean.attributes['maxValue'].value}"
+                                     minValue="#{richInputNumberSpinnerBean.attributes['minValue'].value}"
+                                     onblur="#{richInputNumberSpinnerBean.attributes['onblur'].value}"
+                                     onchange="#{richInputNumberSpinnerBean.attributes['onchange'].value}"
+                                     onclick="#{richInputNumberSpinnerBean.attributes['onclick'].value}"
+                                     ondblclick="#{richInputNumberSpinnerBean.attributes['ondblclick'].value}"
+                                     ondownclick="#{richInputNumberSpinnerBean.attributes['ondownclick'].value}"
+                                     onfocus="#{richInputNumberSpinnerBean.attributes['onfocus'].value}"
+                                     oninputclick="#{richInputNumberSpinnerBean.attributes['oninputclick'].value}"
+                                     oninputdblclick="#{richInputNumberSpinnerBean.attributes['oninputdblclick'].value}"
+                                     oninputkeydown="#{richInputNumberSpinnerBean.attributes['oninputkeydown'].value}"
+                                     oninputkeypress="#{richInputNumberSpinnerBean.attributes['oninputkeypress'].value}"
+                                     oninputkeyup="#{richInputNumberSpinnerBean.attributes['oninputkeyup'].value}"
+                                     oninputmousedown="#{richInputNumberSpinnerBean.attributes['oninputmousedown'].value}"
+                                     oninputmousemove="#{richInputNumberSpinnerBean.attributes['oninputmousemove'].value}"
+                                     oninputmouseout="#{richInputNumberSpinnerBean.attributes['oninputmouseout'].value}"
+                                     oninputmouseover="#{richInputNumberSpinnerBean.attributes['oninputmouseover'].value}"
+                                     oninputmouseup="#{richInputNumberSpinnerBean.attributes['oninputmouseup'].value}"
+                                     onkeydown="#{richInputNumberSpinnerBean.attributes['onkeydown'].value}"
+                                     onkeypress="#{richInputNumberSpinnerBean.attributes['onkeypress'].value}"
+                                     onkeyup="#{richInputNumberSpinnerBean.attributes['onkeyup'].value}"
+                                     onmousedown="#{richInputNumberSpinnerBean.attributes['onmousedown'].value}"
+                                     onmousemove="#{richInputNumberSpinnerBean.attributes['onmousemove'].value}"
+                                     onmouseout="#{richInputNumberSpinnerBean.attributes['onmouseout'].value}"
+                                     onmouseover="#{richInputNumberSpinnerBean.attributes['onmouseover'].value}"
+                                     onmouseup="#{richInputNumberSpinnerBean.attributes['onmouseup'].value}"
+                                     onselect="#{richInputNumberSpinnerBean.attributes['onselect'].value}"
+                                     onupclick="#{richInputNumberSpinnerBean.attributes['onupclick'].value}"
+                                     rendered="#{richInputNumberSpinnerBean.attributes['rendered'].value}"
+                                     required="#{richInputNumberSpinnerBean.attributes['required'].value}"
+                                     requiredMessage="#{richInputNumberSpinnerBean.attributes['requiredMessage'].value}"
+                                     step="#{richInputNumberSpinnerBean.attributes['step'].value}"
+                                     style="#{richInputNumberSpinnerBean.attributes['style'].value}"
+                                     styleClass="#{richInputNumberSpinnerBean.attributes['styleClass'].value}"
+                                     tabindex="#{richInputNumberSpinnerBean.attributes['tabindex'].value}"
+                                     title="#{richInputNumberSpinnerBean.attributes['title'].value}"
+                                     value="#{richInputNumberSpinnerBean.attributes['value'].value}"
+                                     valueChangeListener="#{richBean.valueChangeListener}"
+                                     >
+
+                <f:ajax event="change" render="output :phasesPanel" />
+
+            </rich:inputNumberSpinner>
+            <rich:message id="msg" for="spinner"/>
+
+            <br/><br/>
+            <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
+            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
+            <br/><br/>
+
+            output: <h:outputText id="output" value="#{richInputNumberSpinnerBean.attributes['value'].value}"/>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{richInputNumberSpinnerBean.attributes}" id="attributes" />
+        </ui:define>
+
+    </ui:composition>
+</html>

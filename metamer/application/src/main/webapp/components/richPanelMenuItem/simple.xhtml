@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+
+            <rich:panelMenu id="panelMenu" style="width: 250px; "
+                            activeItem="#{richPanelMenuBean.attributes['activeItem'].value}"
+                            itemChangeListener="#{richPanelMenuBean.itemChangeListener}">
+
+                <rich:panelMenuGroup id="group1" name="group1" label="Group 1" expanded="true">
+                    <rich:panelMenuItem id="item11" name="item11" label="Item 1.1"/>
+                    <rich:panelMenuItem id="item12" name="item12" label="Item 1.2 (influenced by attributes)"
+                                        action="#{richBean.dummyAction}"
+                                        actionListener="#{richBean.dummyActionListener}"
+                                        bypassUpdates="#{richPanelMenuItemBean.attributes['bypassUpdates'].value}"
+                                        data="#{richPanelMenuItemBean.attributes['data'].value}"
+                                        disabled="#{richPanelMenuItemBean.attributes['disabled'].value}"
+                                        disabledClass="#{richPanelMenuItemBean.attributes['disabledClass'].value}"
+                                        execute="#{richPanelMenuItemBean.attributes['execute'].value}"
+                                        leftIcon="#{richPanelMenuItemBean.attributes['leftIcon'].value}"
+                                        leftIconClass="#{richPanelMenuItemBean.attributes['leftIconClass'].value}"
+                                        leftDisabledIcon="#{richPanelMenuItemBean.attributes['leftDisabledIcon'].value}"
+                                        rightIcon="#{richPanelMenuItemBean.attributes['rightIcon'].value}"
+                                        rightIconClass="#{richPanelMenuItemBean.attributes['rightIconClass'].value}"
+                                        rightDisabledIcon="#{richPanelMenuItemBean.attributes['rightDisabledIcon'].value}"
+                                        immediate="#{richPanelMenuItemBean.attributes['immediate'].value}"
+                                        limitRender="#{richPanelMenuItemBean.attributes['limitRender'].value}"
+                                        mode="#{richPanelMenuItemBean.attributes['mode'].value}"
+                                        onbeforedomupdate="#{richPanelMenuItemBean.attributes['onbeforedomupdate'].value}"
+                                        onbeforeselect="#{richPanelMenuItemBean.attributes['onbeforeselect'].value}"
+                                        onbegin="#{richPanelMenuItemBean.attributes['onbegin'].value}"
+                                        onclick="#{richPanelMenuItemBean.attributes['onclick'].value}"
+                                        oncomplete="#{richPanelMenuItemBean.attributes['oncomplete'].value}"
+                                        ondblclick="#{richPanelMenuItemBean.attributes['ondblclick'].value}"
+                                        onmousedown="#{richPanelMenuItemBean.attributes['onmousedown'].value}"
+                                        onmousemove="#{richPanelMenuItemBean.attributes['onmousemove'].value}"
+                                        onmouseout="#{richPanelMenuItemBean.attributes['onmouseout'].value}"
+                                        onmouseover="#{richPanelMenuItemBean.attributes['onmouseover'].value}"
+                                        onmouseup="#{richPanelMenuItemBean.attributes['onmouseup'].value}"
+                                        onselect="#{richPanelMenuItemBean.attributes['onselect'].value}"
+                                        onunselect="#{richPanelMenuItemBean.attributes['onunselect'].value}"
+                                        render="#{richPanelMenuItemBean.attributes['render'].value}"
+                                        rendered="#{richPanelMenuItemBean.attributes['rendered'].value}"
+                                        selectable="#{richPanelMenuItemBean.attributes['selectable'].value}"
+                                        status="#{richPanelMenuItemBean.attributes['status'].value}"
+                                        style="#{richPanelMenuItemBean.attributes['style'].value}"
+                                        styleClass="#{richPanelMenuItemBean.attributes['styleClass'].value}" 
+                                        />
+                    <rich:panelMenuItem id="item13" name="item13" label="Item 1.3"/>
+                </rich:panelMenuGroup>
+            </rich:panelMenu>
+
+            <br/><br/>
+
+            <fieldset>
+                <legend>selected item</legend>
+
+                <a4j:outputPanel id="selectedPanel" ajaxRendered="true">
+                    <h:outputText id="current" value="#{richPanelMenuBean.activeItem}" />
+                </a4j:outputPanel>
+            </fieldset>
+
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{richPanelMenuItemBean.attributes}" id="attributes" render="log"/>
+        </ui:define>
+
+    </ui:composition>
+</html>

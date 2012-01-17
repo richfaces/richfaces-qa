@@ -1,0 +1,8 @@
+.cell {
+    width: 120px;
+    padding: 10px;
+}
+
+.cell-even.row-even,.cell-odd.row-odd {
+    background-color: #CFC;
+}

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+        <ui:param name="componentId" value="richDataGrid" />
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head"/>
+
+        <ui:define name="outOfTemplateBefore">
+            <br/>
+            <h:outputText value="Show data in table: " />
+            <h:selectBooleanCheckbox id="noDataCheckbox" value="#{richDataGridBean.state}">
+                <a4j:ajax render="#{nestedComponentId} scroller1"/>
+            </h:selectBooleanCheckbox>
+            <br/><br/>
+            <rich:dataScroller id="scroller1" for="richDataGrid" page="#{richDataGridBean.page}" maxPages="7" render="#{nestedComponentId}"/>
+        </ui:define>
+
+        <ui:define name="component">
+            <rich:dataGrid id="richDataGrid"
+                           columns="#{richDataGridBean.attributes['columns'].value}"
+                           elements="#{richDataGridBean.attributes['elements'].value}"
+                           first="#{richDataGridBean.attributes['first'].value}"
+                           iterationStatusVar="#{richDataGridBean.attributes['iterationStatusVar'].value}"
+                           keepSaved="#{richDataGridBean.attributes['keepSaved'].value}"
+                           rendered="#{richDataGridBean.attributes['rendered'].value}"
+                           rowKeyConverter="#{richDataGridBean.attributes['rowKeyConverter'].value}"
+                           style="#{richDataGridBean.attributes['style'].value}"
+                           styleClass="#{richDataGridBean.attributes['styleClass'].value}"
+                           title="#{richDataGridBean.attributes['title'].value}"
+                           value="#{richDataGridBean.state ? model.capitals : null}"
+                           var="record">
+
+                <f:facet name="noData">
+                    <h:outputText value="There is no data." style="color: red;"/>
+                </f:facet>
+
+                <f:facet name="header">
+                    <h:outputText value="header" />
+                </f:facet>
+
+                <f:facet name="сaption">
+                    <h:outputText value="caption" />
+                </f:facet>
+
+                <h:outputText value="#{record.state}" style="font-weight: bold;" />
+                <br />
+                <h:outputText value="#{record.name}" />
+
+                <f:facet name="footer">
+                    <rich:dataScroller id="scroller2" for="richDataGrid" page="#{richDataGridBean.page}" maxPages="7" render="richDataGrid scroller1" />
+                </f:facet>
+            </rich:dataGrid>
+
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <br/><br/>
+
+            <fieldset>
+                <legend>scroller1</legend>
+
+                <h:commandButton id="scrollerButtonFirst1" value="&lt;&lt; first">
+                    <rich:componentControl event="click" target="#{rich:clientId('scroller1')}" operation="switchToPage">
+                        <f:param value="first" />
+                    </rich:componentControl>
+                </h:commandButton>
+
+                <h:commandButton id="scrollerButtonPrev1" value="&lt; previous">
+                    <rich:componentControl event="click" target="#{rich:clientId('scroller1')}" operation="previous" />
+                </h:commandButton>
+
+                <h:commandButton id="scrollerButtonNext1" value="next &gt;">
+                    <rich:componentControl event="click" target="#{rich:clientId('scroller1')}" operation="next" />
+                </h:commandButton>
+
+                <h:commandButton id="scrollerButtonLast1" value="last &gt;&gt;">
+                    <rich:componentControl event="click" target="#{rich:clientId('scroller1')}" operation="switchToPage">
+                        <f:param value="last" />
+                    </rich:componentControl>
+                </h:commandButton>
+            </fieldset>
+
+            <br/>
+
+            <fieldset>
+                <legend>scroller2</legend>
+                <h:commandButton id="scrollerButtonFirst2" value="&lt;&lt; first">
+                    <rich:componentControl event="click" target="#{rich:clientId('scroller2')}" operation="switchToPage">
+                        <f:param value="first" />
+                    </rich:componentControl>
+                </h:commandButton>
+
+                <h:commandButton id="scrollerButtonPrev2" value="&lt; previous">
+                    <rich:componentControl event="click" target="#{rich:clientId('scroller2')}" operation="previous" />
+                </h:commandButton>
+
+                <h:commandButton id="scrollerButtonNext2" value="next &gt;">
+                    <rich:componentControl event="click" target="#{rich:clientId('scroller2')}" operation="next" />
+                </h:commandButton>
+
+                <h:commandButton id="scrollerButtonLast2" value="last &gt;&gt;">
+                    <rich:componentControl event="click" target="#{rich:clientId('scroller2')}" operation="switchToPage">
+                        <f:param value="last" />
+                    </rich:componentControl>
+                </h:commandButton>
+            </fieldset>
+
+            <br/><br/>
+
+            <metamer:attributes value="#{richDataGridBean.attributes}" id="attributes" />
+        </ui:define>
+
+    </ui:composition>
+</html>

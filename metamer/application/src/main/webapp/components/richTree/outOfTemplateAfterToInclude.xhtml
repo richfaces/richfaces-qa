@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+            <a4j:commandButton id="expandAll" value="Expand All" action="#{richTreeBean.expandAll}" render="#{nestedComponentId}" />
+            <a4j:commandButton id="collapseAll" value="Collapse All" action="#{richTreeBean.collapseAll}" render="#{nestedComponentId}" />
+
+            <a4j:outputPanel id="panel" ajaxRendered="true">
+                <h:panelGrid columns="2">
+
+                    <h:outputLabel value="Test Loading Facet:" />
+                    <h:selectBooleanCheckbox id="loadingFacet" value="#{richTreeBean.testLoadingFacet}">
+                        <a4j:ajax render="#{nestedComponentId}" />
+                    </h:selectBooleanCheckbox>
+
+                    <h:outputLabel value="Delayed Render (1sec):" />
+                    <h:selectBooleanCheckbox value="#{richTreeBean.delayedRender}">
+                        <a4j:ajax />
+                    </h:selectBooleanCheckbox>
+
+                    <h:outputLabel value="Selection:" />
+                    <h:outputText id="selection" value="#{richTreeBean.selection}" />
+
+                    <h:outputLabel value="Selection Change Event:" rendered="#{not empty richTreeListenerBean.treeSelectionChangeEvent}" />
+                    <h:panelGrid columns="2" rendered="#{not empty richTreeListenerBean.treeSelectionChangeEvent}">
+                        <h:outputLabel value="Client ID:" />
+                        <h:outputText id="selectionEventClientId" value="#{richTreeListenerBean.treeSelectionChangeEvent.component.id}" />
+
+                        <h:outputLabel value="New Selection:" />
+                        <h:outputText id="selectionEventNewSelection" value="#{richTreeListenerBean.treeSelectionChangeEvent.newSelection}" />
+
+                        <h:outputLabel value="Old Selection:" />
+                        <h:outputText id="selectionEventOldSelection" value="#{richTreeListenerBean.treeSelectionChangeEvent.oldSelection}" />
+                    </h:panelGrid>
+
+                    <h:outputLabel value="Tree Toggle Event:" rendered="#{not empty richTreeListenerBean.treeToggleEvent}" />
+                    <h:panelGrid columns="2" rendered="#{not empty richTreeListenerBean.treeToggleEvent}">
+                        <h:outputLabel value="Client ID:" />
+                        <h:outputText id="toggleEventClientId" value="#{richTreeListenerBean.treeToggleEvent.component.id}" />
+
+                        <h:outputLabel value="Collapsed:" />
+                        <h:outputText id="toggleEventCollapsed" value="#{richTreeListenerBean.treeToggleEvent.collapsed}" />
+
+                        <h:outputLabel value="Expanded:" />
+                        <h:outputText id="toggleEventExpanded" value="#{richTreeListenerBean.treeToggleEvent.expanded}" />
+                    </h:panelGrid>
+                </h:panelGrid>
+            </a4j:outputPanel>           
+
+            <fieldset>
+                <legend>rich:tree</legend>
+                <metamer:attributes value="#{richTreeBean.attributes}" id="attributes" />
+            </fieldset>
+            <fieldset>
+                <legend>rich:treeNode type="country"</legend>
+                <metamer:attributes value="#{richTreeNodeBean.attributes[0]}" id="treeNode1Attributes" />
+            </fieldset>
+            <fieldset>
+                <legend>rich:treeNode type="company"</legend>
+                <metamer:attributes value="#{richTreeNodeBean.attributes[1]}" id="treeNode2Attributes" />
+            </fieldset>
+            <fieldset>
+                <legend>rich:treeNode type="cd"</legend>
+                <metamer:attributes value="#{richTreeNodeBean.attributes[2]}" id="treeNode3Attributes" />
+            </fieldset>
+
+</html>

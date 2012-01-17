@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j" 
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+
+            <h:panelGrid id="panel" columns="2">
+                <h:inputText id="input" value="#{a4jLinkBean.input}" />
+
+                <a4j:commandLink id="a4jCommandLink" 
+                                 action="#{a4jLinkBean.attributes.action}"
+                                 actionListener="#{a4jLinkBean.attributes.actionListener}"
+                                 bypassUpdates="#{a4jLinkBean.attributes['bypassUpdates'].value}"
+                                 charset="#{a4jLinkBean.attributes['charset'].value}"
+                                 coords="#{a4jLinkBean.attributes['coords'].value}"
+                                 data="#{a4jLinkBean.attributes['data'].value}"
+                                 disabled="#{a4jLinkBean.attributes['disabled'].value}"
+                                 execute="#{a4jLinkBean.attributes['execute'].value}"
+                                 hreflang="#{a4jLinkBean.attributes['hreflang'].value}"
+                                 immediate="#{a4jLinkBean.attributes['immediate'].value}"
+                                 limitRender="#{a4jLinkBean.attributes['limitRender'].value}"
+                                 onbeforedomupdate="#{a4jLinkBean.attributes['onbeforedomupdate'].value}"
+                                 onbegin="#{a4jLinkBean.attributes['onbegin'].value}"
+                                 onclick="#{a4jLinkBean.attributes['onclick'].value}"
+                                 oncomplete="#{a4jLinkBean.attributes['oncomplete'].value}"
+                                 ondblclick="#{a4jLinkBean.attributes['ondblclick'].value}"
+                                 onkeydown="#{a4jLinkBean.attributes['onkeydown'].value}"
+                                 onkeypress="#{a4jLinkBean.attributes['onkeypress'].value}"
+                                 onkeyup="#{a4jLinkBean.attributes['onkeyup'].value}"
+                                 onmousedown="#{a4jLinkBean.attributes['onmousedown'].value}"
+                                 onmousemove="#{a4jLinkBean.attributes['onmousemove'].value}"
+                                 onmouseout="#{a4jLinkBean.attributes['onmouseout'].value}"
+                                 onmouseover="#{a4jLinkBean.attributes['onmouseover'].value}"
+                                 onmouseup="#{a4jLinkBean.attributes['onmouseup'].value}"
+                                 rel="#{a4jLinkBean.attributes['rel'].value}"
+                                 render="#{a4jLinkBean.attributes['render'].value}"
+                                 rendered="#{a4jLinkBean.attributes['rendered'].value}"
+                                 rev="#{a4jLinkBean.attributes['rev'].value}"
+                                 shape="#{a4jLinkBean.attributes['shape'].value}"
+                                 status="#{a4jLinkBean.attributes['status'].value}"
+                                 style="#{a4jLinkBean.attributes['style'].value}"
+                                 styleClass="#{a4jLinkBean.attributes['styleClass'].value}"
+                                 title="#{a4jLinkBean.attributes['title'].value}"
+                                 type="#{a4jLinkBean.attributes['type'].value}"
+                                 value="#{a4jLinkBean.attributes['value'].value}"
+                                 />
+            </h:panelGrid>
+
+            <h:panelGrid id="outputs" columns="2">
+                output: <h:outputText value="#{a4jLinkBean.input}" id="output1" />
+                action: <h:outputText value="#{a4jLinkBean.input2}" id="output2" />
+                action listener:<h:outputText value="#{a4jLinkBean.input3}" id="output3" />
+            </h:panelGrid>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{a4jLinkBean.attributes}" id="attributes" render="log"/>
+        </ui:define>
+
+    </ui:composition>
+</html>
