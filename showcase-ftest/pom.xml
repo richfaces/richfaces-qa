@@ -1,9 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
     <modelVersion>4.0.0</modelVersion>
+        
+    <parent>
+        <groupId>org.richfaces.qa</groupId>
+        <artifactId>richfaces-qa-parent</artifactId>
+        <version>4.1.1-SNAPSHOT</version>
+        <relativePath>../parent/pom.xml</relativePath>
+    </parent>
+
     <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-showcase-ftest</artifactId>
-    <version>4.1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>RichFaces ShowCase Smoke Ftest</name>
 
@@ -43,19 +51,6 @@
         <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
 
     </properties>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>jboss-qa-snapshots</id>
-            <name>JBoss QA snapshot repository</name>
-            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>jboss-qa-releases</id>
-            <name>JBoss QA selease repository</name>
-            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/releases</url>
-        </repository>
-    </distributionManagement>
 
     <dependencies>
         <!-- RichFaces dependencies -->
@@ -532,10 +527,4 @@
         </profile>
     </profiles>
 
-    <!-- SCM and distribution management -->
-    <scm>
-        <connection>scm:git:git://github.com/richfaces/qa.git</connection>
-        <developerConnection>scm:git:git@github.com:richfaces/qa.git</developerConnection>
-        <url>https://github.com/richfaces/qa</url>
-    </scm>
 </project>

@@ -4,6 +4,7 @@
     <test name="All Components">
         <groups>
             <run>
+                <include name="arquillian" />
                 <include name="4.2" />
             </run>
         </groups>

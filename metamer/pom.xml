@@ -24,112 +24,21 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.richfaces</groupId>
-        <artifactId>richfaces-parent</artifactId>
-        <version>11</version>
+        <groupId>org.richfaces.qa</groupId>
+        <artifactId>richfaces-qa-parent</artifactId>
+        <version>4.1.1-SNAPSHOT</version>
+        <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
     <groupId>org.richfaces.tests</groupId>
     <artifactId>metamer-root</artifactId>
-    <version>4.1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Metamer: RichFaces Testing Application - Project Root</name>
 
     <modules>
         <module>application</module>
-        <module>ftest-source</module>
+        <module>ftest</module>
     </modules>
-
-    <licenses>
-        <license>
-            <name>GNU Lesser General Public License, Version 2.1</name>
-            <distribution>repo</distribution>
-            <url>http://www.gnu.org/licenses/lgpl-2.1.txt</url>
-        </license>
-    </licenses>
-
-    <scm>
-        <connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/modules/tests/metamer/trunk</connection>
-        <developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/modules/tests/metamer/trunk</developerConnection>
-        <url>http://fisheye.jboss.org/browse/RichFaces/modules/tests/metamer/trunk</url>
-    </scm>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>jboss-qa-snapshots</id>
-            <name>JBoss QA snapshot repository</name>
-            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>jboss-qa-releases</id>
-            <name>JBoss QA selease repository</name>
-            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/releases</url>
-        </repository>
-    </distributionManagement>
-
-    <issueManagement>
-        <system>jira</system>
-        <url>https://jira.jboss.org/jira/browse/RFPL</url>
-    </issueManagement>
-
-    <developers>
-        <developer>
-            <name>Pavol Pitonak</name>
-            <email>ppitonak @ redhat.com</email>
-        </developer>
-        <developer>
-            <name>Lukas Fryc</name>
-            <email>lfryc @ redhat.com</email>
-        </developer>
-        <developer>
-            <name>Jan Jamrich</name>
-            <email>jjamrich @ redhat.com</email>
-        </developer>
-        <developer>
-            <name>Juraj Huska</name>
-            <email>jhuska @ redhat.com</email>
-        </developer>
-        <developer>
-            <name>Jan Papousek</name>
-            <email>jpapouse @ redhat.com</email>
-        </developer>
-    </developers>
-
-    <repositories>
-        <repository>
-            <id>jboss-qa-releases</id>
-            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/releases</url>
-            <releases>
-                <updatePolicy>never</updatePolicy>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>jboss-qa-snapshots-repository</id>
-            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <updatePolicy>daily</updatePolicy>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>jboss-public-repository-group</id>
-            <name>JBoss Public Maven Repository Group</name>
-            <url>https://repository.jboss.org/nexus/content/groups/public</url>
-            <releases>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <updatePolicy>daily</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

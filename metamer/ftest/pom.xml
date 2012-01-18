@@ -18,10 +18,9 @@
         <artifactId>metamer-root</artifactId>
         <version>4.1.1-SNAPSHOT</version>
     </parent>
-    <!--<groupId>org.richfaces.tests</groupId> -->
-    <artifactId>metamer-ftest-source</artifactId>
-    <name>Metamer: RichFaces Testing Application - Functional Test Source</name>
-    <!-- <version>4.1.1-SNAPSHOT</version> -->
+
+    <artifactId>metamer-ftest</artifactId>
+    <name>Metamer: RichFaces Testing Application - Functional Tests</name>
 
     <repositories>
         <repository>
@@ -60,6 +59,10 @@
     </repositories>
 
     <properties>
+        
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        
         <!-- arquillian versions -->
         <arquillian.tomcat.version>1.0.0.CR2</arquillian.tomcat.version>
         <arquillian.drone.version>1.0.0.CR3</arquillian.drone.version>
@@ -87,6 +90,7 @@
 
         <testng.listeners>org.richfaces.tests.metamer.ftest.MatrixConfigurator,org.richfaces.tests.metamer.ftest.MetamerSeleniumLoggingTestListener,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
+        
     </properties>
 
     <dependencyManagement>
@@ -168,6 +172,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
