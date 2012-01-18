@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2011, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -28,12 +28,9 @@ import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
 import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
 import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.listClass;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -45,27 +42,23 @@ import javax.faces.event.PhaseId;
 import org.jboss.arquillian.ajocado.css.CssProperty;
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.javascript.KeyCode;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
 import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page faces/components/richSelect/simple.xhtml.
  * 
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22733 $
  */
 public class TestRichSelect extends AbstractAjocadoTest {
 
     private JQueryLocator select = pjq("div[id$=select]");
     private JQueryLocator input = pjq("input.rf-sel-inp[id$=selectInput]");
-    private AttributeLocator inputValue = input.getAttribute(Attribute.VALUE);
+    private AttributeLocator<?> inputValue = input.getAttribute(Attribute.VALUE);
     private JQueryLocator popup = jq("div.rf-sel-lst-cord");
     private JQueryLocator options = jq("div.rf-sel-opt:eq({0})"); // 00..49
     private JQueryLocator button = pjq("span.rf-sel-btn");
@@ -95,7 +88,7 @@ public class TestRichSelect extends AbstractAjocadoTest {
             assertTrue(selenium.isVisible(options.format(i)), "Select option " + i + " should be displayed.");
         }
 
-        String[] selectOptions = {"Alabama", "Hawaii", "Massachusetts", "New Mexico", "South Dakota"};
+        String[] selectOptions = { "Alabama", "Hawaii", "Massachusetts", "New Mexico", "South Dakota" };
         for (int i = 0; i < 50; i += 10) {
             assertEquals(selenium.getText(options.format(i)), selectOptions[i / 10], "Select option nr. " + i);
         }
@@ -119,7 +112,7 @@ public class TestRichSelect extends AbstractAjocadoTest {
             assertTrue(selenium.isVisible(options.format(i)), "Select option " + i + " should be displayed.");
         }
 
-        String[] selectOptions = {"Alabama", "Hawaii", "Massachusetts", "New Mexico", "South Dakota"};
+        String[] selectOptions = { "Alabama", "Hawaii", "Massachusetts", "New Mexico", "South Dakota" };
         for (int i = 0; i < 50; i += 10) {
             assertEquals(selenium.getText(options.format(i)), selectOptions[i / 10], "Select option nr. " + i);
         }
@@ -127,25 +120,26 @@ public class TestRichSelect extends AbstractAjocadoTest {
         for (int i = 0; i < 11; i++) {
             selenium.keyPressNative(40); // arrow down
         }
-//        FIXME
-//        guardNoRequest(selenium).keyDown(options.format(10), "\\13"); // enter
-//        guardXhr(selenium).fireEvent(input, Event.BLUR);
-//        assertTrue(selenium.belongsClass(options.format(10), "rf-sel-sel"));
-//
-//        waitGui.failWith("Bean was not updated").until(textEquals.locator(output).text("Hawaii"));
-//        phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
+        // FIXME
+        // guardNoRequest(selenium).keyDown(options.format(10), "\\13"); // enter
+        // guardXhr(selenium).fireEvent(input, Event.BLUR);
+        // assertTrue(selenium.belongsClass(options.format(10), "rf-sel-sel"));
+        //
+        // waitGui.failWith("Bean was not updated").until(textEquals.locator(output).text("Hawaii"));
+        // phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-11320")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11320")
     public void testFiltering() {
         selenium.focus(input);
-        selenium.click(input);
-        guardNoRequest(selenium).keyPress(input, 'a');
+        selenium.typeKeys(input, "a");
+        guardNoRequest(selenium).fireEvent(input, Event.KEYDOWN);
+        guardNoRequest(selenium).fireEvent(input, Event.KEYPRESS); // keydown works in Chrome and keypress in Firefox
 
         assertEquals(selenium.getCount(jq("div.rf-sel-opt")), 4, "Count of filtered options ('a')");
 
-        String[] selectOptions = {"Alabama", "Alaska", "Arizona", "Arkansas"};
+        String[] selectOptions = { "Alabama", "Alaska", "Arizona", "Arkansas" };
         for (int i = 0; i < 4; i++) {
             assertTrue(selenium.isVisible(options.format(i)), "Select option " + i + " should be displayed.");
             assertEquals(selenium.getText(options.format(i)), selectOptions[i], "Select option nr. " + i);
@@ -189,18 +183,18 @@ public class TestRichSelect extends AbstractAjocadoTest {
         assertEquals(selenium.getValue(input), "Hawaii", "Value of input");
         assertFalse(selenium.isVisible(popup), "Popup should not be visible on the page.");
         assertTrue(selenium.belongsClass(button, "rf-sel-btn-dis"), "Button should contain class rf-sel-btn-dis.");
-        AttributeLocator disabledAttr = input.getAttribute(new Attribute("disabled"));
+        AttributeLocator<?> disabledAttr = input.getAttribute(new Attribute("disabled"));
         assertTrue(selenium.isAttributePresent(disabledAttr), "Input should be disabled.");
         assertEquals(selenium.getAttribute(disabledAttr), "true", "Input should be disabled.");
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9855")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9855")
     public void testEnableManualInput() {
         selenium.click(pjq("input[type=radio][name$=enableManualInputInput][value=false]"));
         selenium.waitForPageToLoad();
 
-        AttributeLocator readonlyAttr = input.getAttribute(new Attribute("readonly"));
+        AttributeLocator<?> readonlyAttr = input.getAttribute(new Attribute("readonly"));
         assertEquals(selenium.getAttribute(readonlyAttr), "true", "Input should be read-only");
 
         selenium.mouseDown(button);
@@ -227,7 +221,7 @@ public class TestRichSelect extends AbstractAjocadoTest {
         waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
 
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
-                PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
+            PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
         phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: -> Hawaii");
     }
 
@@ -238,13 +232,13 @@ public class TestRichSelect extends AbstractAjocadoTest {
         selenium.waitForPageToLoad();
 
         for (int i = 0; i < 50; i++) {
-            assertTrue(selenium.belongsClass(options.format(i), value), "Select option "
-                    + selenium.getText(options.format(i)) + " does not contain class " + value);
+            assertTrue(selenium.belongsClass(options.format(i), value),
+                "Select option " + selenium.getText(options.format(i)) + " does not contain class " + value);
         }
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9735")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9735")
     public void testListClass() {
         testStyleClass(popup, listClass);
     }
@@ -336,8 +330,7 @@ public class TestRichSelect extends AbstractAjocadoTest {
         selenium.click(options.format(10));
         selenium.fireEvent(input, Event.BLUR);
 
-        waitGui.failWith("Attribute onchange does not work correctly").until(
-                new EventFiredCondition(Event.CHANGE));
+        waitGui.failWith("Attribute onchange does not work correctly").until(new EventFiredCondition(Event.CHANGE));
     }
 
     @Test
@@ -454,7 +447,7 @@ public class TestRichSelect extends AbstractAjocadoTest {
         selenium.click(options.format(10));
 
         waitGui.failWith("Attribute onchange does not work correctly").until(
-                new EventFiredCondition(new Event("selectitem")));
+            new EventFiredCondition(new Event("selectitem")));
     }
 
     @Test
@@ -466,20 +459,20 @@ public class TestRichSelect extends AbstractAjocadoTest {
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-11320")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11320")
     public void testSelectFirst() {
         selenium.click(pjq("input[type=radio][name$=selectFirstInput][value=true]"));
         selenium.waitForPageToLoad();
 
         selenium.focus(input);
-        selenium.click(input);
-        selenium.keyPress(input, 'a');
-        selenium.keyDown(input, KeyCode.DOWN_ARROW); // arrow down
+        selenium.typeKeys(input, "a");
+        selenium.fireEvent(input, Event.KEYDOWN);
+        selenium.fireEvent(input, Event.KEYPRESS); // keydown works in Chrome and keypress in Firefox
 
-        waitFor(5000);
+        waitFor(3000);
         assertEquals(selenium.getCount(jq("div.rf-sel-opt")), 4, "Count of filtered options ('a')");
 
-        String[] selectOptions = {"Alabama", "Alaska", "Arizona", "Arkansas"};
+        String[] selectOptions = { "Alabama", "Alaska", "Arizona", "Arkansas" };
         for (int i = 0; i < 4; i++) {
             assertTrue(selenium.isVisible(options.format(i)), "Select option " + i + " should be displayed.");
             assertEquals(selenium.getText(options.format(i)), selectOptions[i], "Select option nr. " + i);
@@ -499,9 +492,11 @@ public class TestRichSelect extends AbstractAjocadoTest {
         selenium.keyPressNative(40); // arrow down
         waitModel.withDelay(true).failWith("Popup did not show").until(elementVisible.locator(popup));
 
-        assertTrue(selenium.belongsClass(options.format(0), "metamer-ftest-class"), "Selected item does not contain defined class.");
+        assertTrue(selenium.belongsClass(options.format(0), "metamer-ftest-class"),
+            "Selected item does not contain defined class.");
         for (int i = 1; i < 50; i++) {
-            assertFalse(selenium.belongsClass(options.format(i), "metamer-ftest-class"), "Not selected item " + i + " should not contain defined class.");
+            assertFalse(selenium.belongsClass(options.format(i), "metamer-ftest-class"), "Not selected item " + i
+                + " should not contain defined class.");
         }
     }
 
@@ -524,24 +519,24 @@ public class TestRichSelect extends AbstractAjocadoTest {
             assertTrue(selenium.isVisible(options.format(i)), "Select option " + i + " should be displayed.");
         }
 
-        String[] selectOptions = {"Alabama", "Hawaii", "Massachusetts", "New Mexico", "South Dakota"};
+        String[] selectOptions = { "Alabama", "Hawaii", "Massachusetts", "New Mexico", "South Dakota" };
         for (int i = 0; i < 50; i += 10) {
             assertEquals(selenium.getText(options.format(i)), selectOptions[i / 10], "Select option nr. " + i);
         }
 
-//        FIXME
-//        for (int i = 0; i < 11; i++) {
-//            selenium.keyPressNative(40); // arrow down
-//        }
-//        selenium.keyDown(input, "\\13"); // enter
-//        guardXhr(selenium).fireEvent(input, Event.BLUR);
-//        assertTrue(selenium.belongsClass(options.format(10), "rf-sel-sel"));
-//
-//        waitGui.failWith("Bean was not updated").until(textEquals.locator(output).text("Hawaii"));
+        // FIXME
+        // for (int i = 0; i < 11; i++) {
+        // selenium.keyPressNative(40); // arrow down
+        // }
+        // selenium.keyDown(input, "\\13"); // enter
+        // guardXhr(selenium).fireEvent(input, Event.BLUR);
+        // assertTrue(selenium.belongsClass(options.format(10), "rf-sel-sel"));
+        //
+        // waitGui.failWith("Bean was not updated").until(textEquals.locator(output).text("Hawaii"));
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9663")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9663")
     public void testShowButtonClick() {
         selenium.click(pjq("input[type=radio][name$=showButtonInput][value=false]"));
         selenium.waitForPageToLoad();
@@ -557,7 +552,7 @@ public class TestRichSelect extends AbstractAjocadoTest {
             assertTrue(selenium.isVisible(options.format(i)), "Select option " + i + " should be displayed.");
         }
 
-        String[] selectOptions = {"Alabama", "Hawaii", "Massachusetts", "New Mexico", "South Dakota"};
+        String[] selectOptions = { "Alabama", "Hawaii", "Massachusetts", "New Mexico", "South Dakota" };
         for (int i = 0; i < 50; i += 10) {
             assertEquals(selenium.getText(options.format(i)), selectOptions[i / 10], "Select option nr. " + i);
         }
