@@ -7,13 +7,13 @@ The tests can be run from command line with this command, assuming that your cur
 
 **mvn clean verify -PnameOfTheProfile [-Dtest=nameOfTheTest] [-Dshowcase.classifier=classifier] [-Darquillian.launch=whichSettingsForContainer]**
 
--nameOfTheProfile - for example jbossas-managed-6, all profiles can be found in pom.xml
+- `nameOfTheProfile` - for example jbossas-managed-6, all profiles can be found in pom.xml
 
--nameOfTheTest - define the test which will be run, it is optional, when not assigned all tests are run
+- `nameOfTheTest` - define the test which will be run, it is optional, when not assigned all tests are run
 
--showcase.classifier - for various containers there is need to deploy various showcase wars, jee6(default)
+- `showcase.classifier` - for various containers there is need to deploy various showcase wars, jee6(default)
 
--whichSettingsForContainer - when this is set, the configuration for container with qualifier whichSettingsForContainer will be launched, different qualifiers 
+- `whichSettingsForContainer` - when this is set, the configuration for container with qualifier whichSettingsForContainer will be launched, different qualifiers 
 	can be set in arquillian.xml
 
 Notes:
