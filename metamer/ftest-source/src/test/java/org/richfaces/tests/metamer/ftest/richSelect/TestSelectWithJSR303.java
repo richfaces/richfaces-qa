@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2011, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -25,7 +25,7 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 
@@ -63,7 +63,7 @@ public class TestSelectWithJSR303 extends TestSelectsWithJSR303 {
     }
     
     @Test 
-    @IssueTracking("https://issues.jboss.org/browse/RF-11264")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11264")
     public void testAllInputsWrong() {
         verifyAllInputsWrong();
     }

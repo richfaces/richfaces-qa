@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2011, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -23,6 +23,7 @@ package org.richfaces.tests.metamer.ftest.richSelect;
 
 import static org.jboss.arquillian.ajocado.Ajocado.attributeEquals;
 import static org.jboss.arquillian.ajocado.Ajocado.attributePresent;
+import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
 import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
@@ -100,6 +101,7 @@ public abstract class TestSelectsWithJSR303 extends AbstractAjocadoTest {
     protected void verifyNotEmpty() {
         setAllCorrect();
         
+        waitFor(1000);
         selenium.click(notEmptyInput);
         selenium.click(notEmptySelect.getDescendant(optionEmpty));
         selenium.fireEvent(notEmptyInput, Event.BLUR);
@@ -223,8 +225,10 @@ public abstract class TestSelectsWithJSR303 extends AbstractAjocadoTest {
     
     protected void verifyAllInputsWrong() {
         setAllCorrect();
+        waitFor(1000);
         setAllWrong();
-        selenium.click(a4jCommandButton);
+        waitFor(1000);
+        guardXhr(selenium).click(a4jCommandButton);
         waitGui
             .failWith("After submitting (a4j:commandButton) empty value, the correct message is not displayed.")
             .until(TextContainsCondition.getInstance().locator(input1Msg).text(NOT_EMPTY_VALIDATION_MSG));
