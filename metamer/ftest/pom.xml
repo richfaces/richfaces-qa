@@ -19,8 +19,8 @@
         <version>4.1.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>metamer-ftest-source</artifactId>
-    <name>Metamer: RichFaces Testing Application - Functional Test Source</name>
+    <artifactId>metamer-ftest</artifactId>
+    <name>Metamer: RichFaces Testing Application - Functional Tests</name>
 
     <repositories>
         <repository>

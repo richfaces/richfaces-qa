@@ -37,7 +37,7 @@
 
     <modules>
         <module>application</module>
-        <module>ftest-source</module>
+        <module>ftest</module>
     </modules>
 
     <licenses>
