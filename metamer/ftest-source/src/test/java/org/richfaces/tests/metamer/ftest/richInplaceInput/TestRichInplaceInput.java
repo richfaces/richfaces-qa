@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2011, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -24,13 +24,11 @@ package org.richfaces.tests.metamer.ftest.richInplaceInput;
 import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
 import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
 import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
+import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.disabledClass;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -50,7 +48,6 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page faces/components/richInplaceInput/simple.xhtml.
@@ -98,9 +95,10 @@ public class TestRichInplaceInput extends AbstractAjocadoTest {
             "Edit should contain class rf-ii-none when popup is closed.");
 
         assertEquals(selenium.getText(label), "new value", "Label should contain selected value.");
-        assertEquals(selenium.getText(output), "new value", "Output did not change.");
-
+        waitGui.failWith("Output did not change.").until(textEquals.locator(output).text("new value"));
+        
         String listenerText = selenium.getText(jq("div#phasesPanel li:eq(3)"));
+
         assertEquals(listenerText, "*1 value changed: RichFaces 4 -> new value",
             "Value change listener was not invoked.");
 
@@ -415,13 +413,13 @@ public class TestRichInplaceInput extends AbstractAjocadoTest {
 
         String timeValue = selenium.getText(time);
         selenium.click(inplaceInput);
-        guardNoRequest(selenium).keyPress(input, 'x');
+        guardNoRequest(selenium).typeKeys(input, "x");
         guardXhr(selenium).mouseDown(okButton);
         waitGui.failWith("Page was not updated").waitForChange(timeValue, retrieveText.locator(time));
 
-        assertEquals(selenium.getText(label), "RichFaces 4x", "Label");
-        assertEquals(selenium.getValue(input), "RichFaces 4x", "Value of inplace input");
-        assertEquals(selenium.getText(output), "RichFaces 4x", "Output");
+        assertEquals(selenium.getText(label), "x", "Label");
+        assertEquals(selenium.getValue(input), "x", "Value of inplace input");
+        assertEquals(selenium.getText(output), "x", "Output");
     }
 
     @Test
@@ -431,7 +429,7 @@ public class TestRichInplaceInput extends AbstractAjocadoTest {
         selenium.waitForPageToLoad();
 
         selenium.click(inplaceInput);
-        guardNoRequest(selenium).keyPress(input, 'x');
+        guardNoRequest(selenium).typeKeys(input, "x");
         guardNoRequest(selenium).mouseDown(cancelButton);
 
         assertEquals(selenium.getText(label), "RichFaces 4", "Label");
