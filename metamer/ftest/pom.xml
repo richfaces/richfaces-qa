@@ -17,6 +17,7 @@
         <groupId>org.richfaces.tests</groupId>
         <artifactId>metamer-root</artifactId>
         <version>4.2.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>metamer-ftest</artifactId>

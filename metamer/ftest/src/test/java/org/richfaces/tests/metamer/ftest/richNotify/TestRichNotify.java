@@ -86,8 +86,8 @@ public class TestRichNotify extends AbstractRichNotifyTest {
         // wait for <1000>
         delay(1000);
         assertFalse(selenium.isElementPresent(notify), "The delay is set to 1000 and after some little waiting the notify shouldn't be present.");
-        // wait for <1500>
-        delay(1500);
+        // wait for <2000>
+        delay(2000);
         assertTrue(selenium.isElementPresent(notify), "The delay is set to 1000 and after some waiting the notify should be present.");
     }
 
