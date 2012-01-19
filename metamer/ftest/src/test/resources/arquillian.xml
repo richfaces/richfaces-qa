@@ -48,7 +48,7 @@
     
     <container qualifier="tomcat-managed-7">
         <configuration>
-            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
+            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8089 -Djava.rmi.server.hostname=localhost</property>
             <property name="user">tomcat</property>
             <property name="pass">tomcat</property>
         </configuration>

@@ -80,7 +80,7 @@ public class MatrixConfigurator extends TestMethodSelector implements IInvokedMe
         for (IMethodInstance methodInstance : methodInstances) {
 
             for (int i = 0; i < methodInstance.getMethod().getInvocationCount(); i++) {
-                methods.add(methodInstance.getMethod().getMethod());
+                methods.add(methodInstance.getMethod().getConstructorOrMethod().getMethod());
             }
             
             if (methodInstance.getMethod().getInvocationCount() > 0) {

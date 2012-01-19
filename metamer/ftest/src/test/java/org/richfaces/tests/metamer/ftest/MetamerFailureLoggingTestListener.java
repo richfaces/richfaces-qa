@@ -57,7 +57,7 @@ public class MetamerFailureLoggingTestListener extends FailureLoggingTestListene
         
         List<String> issueList = new LinkedList<String>();
         //IssueTracking issueTracking = result.getMethod().getConstructorOrMethod().getMethod().getAnnotation(IssueTracking.class);
-        IssueTracking issueTracking = result.getMethod().getMethod().getAnnotation(IssueTracking.class);
+        IssueTracking issueTracking = result.getMethod().getConstructorOrMethod().getMethod().getAnnotation(IssueTracking.class);
         if (issueTracking != null) {
             issueList.addAll(asList(issueTracking.value()));
         }
