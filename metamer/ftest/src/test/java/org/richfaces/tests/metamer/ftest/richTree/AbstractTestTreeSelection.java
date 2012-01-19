@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.richTree;
 import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.treeAttributes;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;

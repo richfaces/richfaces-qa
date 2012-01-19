@@ -21,8 +21,6 @@
  *******************************************************************************/
 package org.jboss.test.selenium.listener;
 
-import static java.lang.System.getProperty;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;

@@ -26,12 +26,7 @@ import static org.testng.Assert.assertEquals;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
-import org.jboss.arquillian.ajocado.locator.frame.FrameIndexLocator;
-import org.jboss.arquillian.ajocado.locator.frame.FrameRelativeLocator;
-
 import org.testng.annotations.Test;
-import org.jboss.arquillian.ajocado.framework.AjocadoConfigurationContext;
-import static org.jboss.arquillian.ajocado.Ajocado.*;
 
 
 

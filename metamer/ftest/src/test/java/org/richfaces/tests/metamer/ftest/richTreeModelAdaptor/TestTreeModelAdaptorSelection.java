@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richTreeModelAdaptor;
 
 import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
+
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
@@ -36,8 +37,6 @@ import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.richfaces.tests.metamer.ftest.richTree.AbstractTestTreeSelection;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.jboss.arquillian.ajocado.framework.AjocadoConfigurationContext;
-import static org.jboss.arquillian.ajocado.Ajocado.*;
 
 
 /**

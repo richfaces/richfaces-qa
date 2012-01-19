@@ -22,30 +22,60 @@
 package org.richfaces.tests.metamer.ftest.richPickList;
 
 import static java.text.MessageFormat.format;
+import static org.jboss.arquillian.ajocado.Ajocado.countEquals;
+import static org.jboss.arquillian.ajocado.Ajocado.elementPresent;
 import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
+import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
+import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
+
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.pickListAttributes;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.addAllText;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.addText;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.disabled;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.downBottomText;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.downText;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.immediate;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.itemClass;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.listHeight;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.listWidth;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.maxListHeight;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.minListHeight;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.onadditems;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.onremoveitems;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.orderable;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.removeAllText;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.removeText;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.rendered;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.required;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.requiredMessage;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.selectItemClass;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.sourceCaption;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.switchByClick;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.switchByDblClick;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.targetCaption;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.upText;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.upTopText;
+import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.validatorMessage;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.pickListAttributes;
-import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.*;
 
 import java.net.URL;
 
+import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
-import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import static org.jboss.arquillian.ajocado.Ajocado.*;
-
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
 import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
-import org.jboss.arquillian.ajocado.framework.AjocadoConfigurationContext;
-import static org.jboss.arquillian.ajocado.Ajocado.*;
 
 
 /**

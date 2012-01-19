@@ -21,16 +21,19 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richHotKey;
 
+import static org.jboss.arquillian.ajocado.Ajocado.countEquals;
+import static org.jboss.arquillian.ajocado.Ajocado.elementPresent;
+import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+
 import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
+
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import static org.jboss.arquillian.ajocado.Ajocado.*;
-
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import org.jboss.test.selenium.waiting.NegationCondition;
 import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
 import org.richfaces.tests.metamer.ftest.attributes.Attributes;

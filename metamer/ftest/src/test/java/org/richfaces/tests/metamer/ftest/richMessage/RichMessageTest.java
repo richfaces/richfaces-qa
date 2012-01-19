@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richMessage;
 
-import static org.jboss.arquillian.ajocado.Ajocado.elementNotVisible;
 import static org.jboss.arquillian.ajocado.Ajocado.elementPresent;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;

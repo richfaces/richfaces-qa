@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richGraphValidator;
 
 import static org.jboss.arquillian.ajocado.Ajocado.elementNotPresent;
-import static org.jboss.arquillian.ajocado.Ajocado.elementNotVisible;
 import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
 

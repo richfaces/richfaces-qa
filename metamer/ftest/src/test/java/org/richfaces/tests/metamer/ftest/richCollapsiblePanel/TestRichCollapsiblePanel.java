@@ -24,33 +24,35 @@ package org.richfaces.tests.metamer.ftest.richCollapsiblePanel;
 import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
 import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
 import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
+import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
+import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+
 import static org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory.optionLabel;
+
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+
+import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
+import static org.richfaces.tests.metamer.ftest.BasicAttributes.bodyClass;
+import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerClass;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-import static org.richfaces.tests.metamer.ftest.BasicAttributes.*;
 
 import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.ajocado.css.CssProperty;
-import org.jboss.arquillian.ajocado.javascript.KeyCode;
+import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
-import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import static org.jboss.arquillian.ajocado.Ajocado.*;
-
 import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
-import org.jboss.arquillian.ajocado.framework.AjocadoConfigurationContext;
-import static org.jboss.arquillian.ajocado.Ajocado.*;
 
 
 /**
