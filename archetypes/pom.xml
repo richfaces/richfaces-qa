@@ -24,7 +24,7 @@
         <groupId>org.richfaces.qa</groupId>
         <artifactId>richfaces-qa-parent</artifactId>
         <version>4.1.1-SNAPSHOT</version>
-        <relativePath>../parent/pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
 	<groupId>org.richfaces.tests.archetypes</groupId>

@@ -34,18 +34,18 @@ USA, or see the FSF site: http://www.fsf.org.
   <version>4.1.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>Richfaces QA Aggregator</name>
+  <name>Richfaces QA Parent</name>
     
   <description>The parent for all Richfaces qa sub-projects. It specifies build and project meta-data</description>
 
   <modules>
-    <module>../archetypes</module>
-<!--<module>../command-line-tools</module>-->
-    <module>../metamer</module>
-    <module>../showcase-ftest</module>
-    <module>../showcase-webdriver-ftest</module>
-    <module>../testng-listeners</module>
-<!--<module>../enterprise-maven-bootstrap</module>-->
+    <module>archetypes</module>
+<!--<module>command-line-tools</module>-->
+    <module>metamer</module>
+    <module>showcase-ftest</module>
+    <module>showcase-webdriver-ftest</module>
+    <module>testng-listeners</module>
+<!--<module>enterprise-maven-bootstrap</module>-->
   </modules>
 
   <licenses>
