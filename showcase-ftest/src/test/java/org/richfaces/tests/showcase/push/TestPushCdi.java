@@ -67,8 +67,7 @@ public class TestPushCdi extends AbstractWebDriverTest {
 			put(3, "Test string 5\nTest string 4");
 			put(2, "Test string 5\nTest string 4\nTest string 3");
 			put(1, "Test string 5\nTest string 4\nTest string 3\nTest string 2");
-			put(0,
-					"Test string 5\nTest string 4\nTest string 3\nTest string 2\nTest string 1");
+			put(0,	"Test string 5\nTest string 4\nTest string 3\nTest string 2\nTest string 1");
 		}
 	};
 
@@ -77,7 +76,8 @@ public class TestPushCdi extends AbstractWebDriverTest {
 	 * ************************************************************************
 	 */
 
-	@Test
+	
+	@Test( groups = {"4.2"} )
 	public void testSendMessagesToSequentiallyOpenedConsumers() {
 
 		String firstWindow = closeAllpreviouslyOpenedWindows();
