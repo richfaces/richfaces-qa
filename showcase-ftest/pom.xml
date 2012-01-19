@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.richfaces.qa</groupId>
         <artifactId>richfaces-qa-parent</artifactId>
-        <version>4.1.1-SNAPSHOT</version>
+        <version>4.2.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -44,7 +44,7 @@
         <jboss6Home>${project.build.directory}/jboss-${version.jbossas6}</jboss6Home>
 
         <!-- the version of showcase war and the classifier to deploy on container during testing -->
-        <version.showcase>4.1.1-SNAPSHOT</version.showcase>
+        <version.showcase>${project.version}</version.showcase>
         <showcase.classifier>jbas7</showcase.classifier>
         
         <!-- which tests should be run and which not -->

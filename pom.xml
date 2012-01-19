@@ -31,13 +31,13 @@ USA, or see the FSF site: http://www.fsf.org.
 
   <groupId>org.richfaces.qa</groupId>
   <artifactId>richfaces-qa-parent</artifactId>
-  <version>4.1.1-SNAPSHOT</version>
+  <version>4.2.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Richfaces QA Parent</name>
     
   <description>The parent for all Richfaces qa sub-projects. It specifies build and project meta-data</description>
-
+ 
   <modules>
     <module>archetypes</module>
 <!--<module>command-line-tools</module>-->

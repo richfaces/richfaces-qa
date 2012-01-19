@@ -26,7 +26,7 @@
     <parent>
         <groupId>org.richfaces.qa</groupId>
         <artifactId>richfaces-qa-parent</artifactId>
-        <version>4.1.1-SNAPSHOT</version>
+        <version>4.2.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -44,7 +44,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <richfaces.checkstyle.version>3</richfaces.checkstyle.version>
-        <version.richfaces>4.1.1-SNAPSHOT</version.richfaces>
+        <version.richfaces>${project.version}</version.richfaces>
     </properties>
 
     <dependencyManagement>

@@ -24,7 +24,8 @@
     <parent>
         <artifactId>richfaces-archetypes-ftest</artifactId>
         <groupId>org.richfaces.tests.archetypes</groupId>
-        <version>4.1.1-SNAPSHOT</version>
+        <version>4.2.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>richfaces-simpleapp-ftest</artifactId>
@@ -53,14 +54,6 @@
         <application.target.directory>${basedir}/../apps/richfaces-simpleapp/target</application.target.directory>
     </properties>
 
-    <licenses>
-        <license>
-            <name>GNU Lesser General Public License, Version 2.1</name>
-            <distribution>repo</distribution>
-            <url>http://www.gnu.org/licenses/lgpl-2.1.txt</url>
-        </license>
-    </licenses>
-
     <developers>
         <developer>
             <name>Lukas Fryc</name>
@@ -71,25 +64,7 @@
             <email>jpapouse@redhat.com</email>
         </developer>
     </developers>
-
-    <issueManagement>
-        <system>jira</system>
-        <url>https://jira.jboss.org/jira/browse/RFPL</url>
-    </issueManagement>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>jboss-qa-snapshots</id>
-            <name>JBoss QA snapshot repository</name>
-            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>jboss-qa-releases</id>
-            <name>JBoss QA selease repository</name>
-            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/releases</url>
-        </repository>
-    </distributionManagement>
-
+    
     <dependencies>
         <!-- Selenium -->
         <dependency>
