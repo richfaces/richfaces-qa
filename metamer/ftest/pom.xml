@@ -289,6 +289,9 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.9</version>
                         <configuration>
+                            <systemProperties>
+                                <arquillian.launch>jbossas-managed-6</arquillian.launch>
+                            </systemProperties>                        
                             <environmentVariables>
                                 <JBOSS_HOME>${jboss6Home}</JBOSS_HOME>
                             </environmentVariables>
@@ -338,6 +341,9 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.9</version>
                         <configuration>
+                            <systemProperties>
+                                <arquillian.launch>jbossas-managed-7</arquillian.launch>
+                            </systemProperties>
                             <environmentVariables>
                                 <JBOSS_HOME>${jboss7Home}</JBOSS_HOME>
                             </environmentVariables>
@@ -362,6 +368,19 @@
                     <version>${version.jbossas7}</version>
                 </dependency>
             </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.9</version>
+                        <configuration>
+                            <systemProperties>
+                                <arquillian.launch>jbossas-remote-7</arquillian.launch>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>     
+                </plugins>
+            </build>
         </profile>
         <profile>
             <id>tomcat-managed-6</id>
@@ -424,6 +443,9 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.9</version>
                         <configuration>
+                            <systemProperties>
+                                <arquillian.launch>tomcat-managed-6</arquillian.launch>
+                            </systemProperties>                        
                             <environmentVariables>
                                 <CATALINA_HOME>${tomcat6.home}</CATALINA_HOME>
                             </environmentVariables>
@@ -492,6 +514,9 @@
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
+                            <systemProperties>
+                                <arquillian.launch>tomcat-managed-7</arquillian.launch>
+                            </systemProperties>                              
                             <environmentVariables>
                                 <CATALINA_HOME>${tomcat7.home}</CATALINA_HOME>
                             </environmentVariables>
