@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2011, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -86,7 +86,7 @@ import org.testng.annotations.Test;
 public class TestTreeNodeSimple extends AbstractAjocadoTest {
 
     private static final String SAMPLE_CLASS = "sample-class";
-    private static final String JQ_SAMPLE_CLASS = "[sample-class]";
+    private static final String JQ_SAMPLE_CLASS = ".sample-class";
     private static final String IMAGE_URL = "/resources/images/loading.gif";
 
     Attributes<TreeAttributes> attributesTree = new Attributes<TreeAttributes>(jq("span[id$=attributes:panel]"));
@@ -136,8 +136,8 @@ public class TestTreeNodeSimple extends AbstractAjocadoTest {
 
         attributes.set(handleClass, SAMPLE_CLASS);
 
-        assertEquals(selenium.getCount(append(tree.getAnyNode().getHandle(), JQ_SAMPLE_CLASS)), 0);
-        assertEquals(selenium.getCount(not(tree.getAnyNode().getHandle(), JQ_SAMPLE_CLASS)), 4);
+        assertEquals(selenium.getCount(append(tree.getAnyNode().getHandle(), JQ_SAMPLE_CLASS)), 4);
+        assertEquals(selenium.getCount(not(tree.getAnyNode().getHandle(), JQ_SAMPLE_CLASS)), 0);
     }
 
     @Test
@@ -146,8 +146,8 @@ public class TestTreeNodeSimple extends AbstractAjocadoTest {
 
         attributes.set(iconClass, SAMPLE_CLASS);
 
-        assertEquals(selenium.getCount(append(tree.getAnyNode().getIcon(), JQ_SAMPLE_CLASS)), 0);
-        assertEquals(selenium.getCount(not(tree.getAnyNode().getIcon(), JQ_SAMPLE_CLASS)), 4);
+        assertEquals(selenium.getCount(append(tree.getAnyNode().getIcon(), JQ_SAMPLE_CLASS)), 4);
+        assertEquals(selenium.getCount(not(tree.getAnyNode().getIcon(), JQ_SAMPLE_CLASS)), 0);
     }
 
     @Test
@@ -228,8 +228,8 @@ public class TestTreeNodeSimple extends AbstractAjocadoTest {
 
         attributes.set(labelClass, SAMPLE_CLASS);
 
-        assertEquals(selenium.getCount(append(tree.getAnyNode().getLabel(), JQ_SAMPLE_CLASS)), 0);
-        assertEquals(selenium.getCount(not(tree.getAnyNode().getLabel(), JQ_SAMPLE_CLASS)), 4);
+        assertEquals(selenium.getCount(append(tree.getAnyNode().getLabel(), JQ_SAMPLE_CLASS)), 4);
+        assertEquals(selenium.getCount(not(tree.getAnyNode().getLabel(), JQ_SAMPLE_CLASS)), 0);
     }
 
     @Test

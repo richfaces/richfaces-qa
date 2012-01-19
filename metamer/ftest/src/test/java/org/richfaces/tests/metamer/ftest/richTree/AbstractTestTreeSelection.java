@@ -33,10 +33,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import static org.jboss.arquillian.ajocado.Ajocado.*;
-
 import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
+import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.component.SwitchType;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
