@@ -48,12 +48,12 @@ public class TestRichNotifyMoreStacks extends AbstractRichNotifyTest {
     /**
      * locator of the first stack 
      */
-    private final JQueryLocator stack1 = jq("div.topRight");
+    private final JQueryLocator stack1 = jq("div.tr");
     
     /**
      * locator of the second stack
      */
-    private final JQueryLocator stack2 = jq("div.bottomRight");
+    private final JQueryLocator stack2 = jq("div.br");
     
     /**
      * locator of the input which is associated with messages for the first stack
