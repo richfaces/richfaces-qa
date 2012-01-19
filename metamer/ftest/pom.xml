@@ -23,42 +23,6 @@
     <artifactId>metamer-ftest</artifactId>
     <name>Metamer: RichFaces Testing Application - Functional Tests</name>
 
-    <repositories>
-        <repository>
-            <id>jboss-qa-releases-repository</id>
-            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/releases</url>
-            <releases>
-                <updatePolicy>never</updatePolicy>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>jboss-qa-snapshots-repository</id>
-            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <updatePolicy>daily</updatePolicy>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>jboss-public-repository-group</id>
-            <name>JBoss Public Maven Repository Group</name>
-            <url>https://repository.jboss.org/nexus/content/groups/public</url>
-            <releases>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <updatePolicy>daily</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
-
     <properties>
         
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -85,7 +49,6 @@
         <jboss6Home>${project.build.directory}/jboss-${version.jbossas6}</jboss6Home>
 
         <metamer.classifier>jee6</metamer.classifier>
-        <version.metamer>${project.version}</version.metamer>
         <version.richfaces>${project.version}</version.richfaces>
         <templates>plain</templates>
 
@@ -215,7 +178,7 @@
                                 <artifactItem>
                                     <groupId>org.richfaces.tests</groupId>
                                     <artifactId>metamer</artifactId>
-                                    <version>${version.metamer}</version>
+                                    <version>${version.richfaces}</version>
                                     <classifier>${metamer.classifier}</classifier>
                                     <type>war</type>
                                     <destFileName>metamer.war</destFileName>
@@ -496,6 +459,22 @@
                                 <CATALINA_HOME>${tomcat7.home}</CATALINA_HOME>
                             </environmentVariables>
                         </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>checkstyle</id>
+            <activation>
+                <property>
+                    <name>!eclipse</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>

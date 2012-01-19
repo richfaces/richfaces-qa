@@ -41,18 +41,18 @@
             <artifactId>selenium-android-driver</artifactId>
             <version>2.9.0</version>
         </dependency>
-        <!--  Arquillian -->
+        <!-- Arquillian -->
         <dependency>
             <groupId>org.jboss.arquillian.testng</groupId>
             <artifactId>arquillian-testng-container</artifactId>
             <version>${arquillian.version}</version>
         </dependency>
-        <!-- TestNG -->  
+        <!-- TestNG -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>6.2.1</version>
-        </dependency>      
+        </dependency>
     </dependencies>
 
     <build>
@@ -64,8 +64,8 @@
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>
-            </plugin>    
-        </plugins>        
+            </plugin>
+        </plugins>
     </build>
     <profiles>
         <profile>
@@ -151,6 +151,21 @@
                                 </configuration>
                             </execution>
                         </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>checkstyle</id>
+            <activation>
+                <property>
+                    <name>!eclipse</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>

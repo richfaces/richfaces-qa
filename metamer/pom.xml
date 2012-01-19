@@ -90,26 +90,9 @@
                 <configuration>
                     <arguments>-Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces -Dselenium.test.skip=true
                         -Dselenium.server.skip=true</arguments>
-                    <tagBase>https://svn.jboss.org/repos/richfaces/modules/tests/metamer/tags</tagBase>
-                    <branchBase>https://svn.jboss.org/repos/richfaces/modules/tests/metamer/branches</branchBase>
                 </configuration>
             </plugin>
         </plugins>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>2.6</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.richfaces</groupId>
-                            <artifactId>richfaces-build-checkstyle</artifactId>
-                            <version>${richfaces.checkstyle.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
 
     <profiles>
