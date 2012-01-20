@@ -35,53 +35,53 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
  * @version $Revision$
  */
 public class TestSimple extends AbstractPanelTest {
-	
-	/* *************************************************************************************
-	 * Locators
-	 ***************************************************************************************/
-	
-	JQueryLocator firstCollapsiblePanelControl = jq("div[class*=rf-cp-hdr]:eq(0)");
-	JQueryLocator secondCollapsiblePanelControl = jq("div[class*=rf-cp-hdr]:eq(1)");
-	String bodyOfTheFirstPanel = "div.rf-cp-b:eq(0):visible";
-	String bodyOfTheSecondPanel = "div.rf-cp-b:eq(1)";
-	
-	/* **************************************************************************************
-	 * Tests
-	 *****************************************************************************************/
-	
-	@Test
-	public void testCollapsAndShowPanels() {
-		
-		JQueryLocator bodyOfTheFirstPanelLoc = jq(bodyOfTheFirstPanel);
-		JQueryLocator bodyOfTheSecondPanelLoc = jq(bodyOfTheSecondPanel);
-		
-		if( !selenium.isElementPresent(bodyOfTheFirstPanelLoc) ) {
-			
-			guardNoRequest(selenium).click(firstCollapsiblePanelControl);
-		}
-		
-		checkContentOfPanel(bodyOfTheFirstPanel, RICH_FACES_INFO);
-		
-		guardNoRequest(selenium).click(firstCollapsiblePanelControl);
-		
-		if( selenium.isElementPresent(bodyOfTheFirstPanelLoc)) {
-			
-			fail("The content of the first panel should not be visible, since the panel is collapsed!");
-		}
-		
-		if( !selenium.isElementPresent(bodyOfTheSecondPanelLoc) ) {
-			
-			guardXhr(selenium).click(secondCollapsiblePanelControl);
-		}
-		
-		checkContentOfPanel(bodyOfTheSecondPanel, RICH_FACES_JSF_INFO);
-		
-		guardXhr(selenium).click(secondCollapsiblePanelControl);
-		
-		if( selenium.isElementPresent(bodyOfTheSecondPanelLoc)) {
-			
-			fail("The content of the second panel should not be visible, since the panel is collapsed!");
-		}
-		
-	}
+
+    /* *************************************************************************************
+     * Locators*************************************************************************************
+     */
+
+    JQueryLocator firstCollapsiblePanelControl = jq("div[class*=rf-cp-hdr]:eq(0)");
+    JQueryLocator secondCollapsiblePanelControl = jq("div[class*=rf-cp-hdr]:eq(1)");
+    String bodyOfTheFirstPanel = "div.rf-cp-b:eq(0):visible";
+    String bodyOfTheSecondPanel = "div.rf-cp-b:eq(1)";
+
+    /* **************************************************************************************
+     * Tests***************************************************************************************
+     */
+
+    @Test
+    public void testCollapsAndShowPanels() {
+
+        JQueryLocator bodyOfTheFirstPanelLoc = jq(bodyOfTheFirstPanel);
+        JQueryLocator bodyOfTheSecondPanelLoc = jq(bodyOfTheSecondPanel);
+
+        if (!selenium.isElementPresent(bodyOfTheFirstPanelLoc)) {
+
+            guardNoRequest(selenium).click(firstCollapsiblePanelControl);
+        }
+
+        checkContentOfPanel(bodyOfTheFirstPanel, RICH_FACES_INFO);
+
+        guardNoRequest(selenium).click(firstCollapsiblePanelControl);
+
+        if (selenium.isElementPresent(bodyOfTheFirstPanelLoc)) {
+
+            fail("The content of the first panel should not be visible, since the panel is collapsed!");
+        }
+
+        if (!selenium.isElementPresent(bodyOfTheSecondPanelLoc)) {
+
+            guardXhr(selenium).click(secondCollapsiblePanelControl);
+        }
+
+        checkContentOfPanel(bodyOfTheSecondPanel, RICH_FACES_JSF_INFO);
+
+        guardXhr(selenium).click(secondCollapsiblePanelControl);
+
+        if (selenium.isElementPresent(bodyOfTheSecondPanelLoc)) {
+
+            fail("The content of the second panel should not be visible, since the panel is collapsed!");
+        }
+
+    }
 }

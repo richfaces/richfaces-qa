@@ -29,22 +29,20 @@ import org.testng.annotations.Test;
  */
 public class TestClientStylingDisablement extends AbstractCalendarTest {
 
-	/* ***************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * ******
-	 */
+    /* ***************************************************************************
+     * Tests ********************************************************************* ******
+     */
 
-	@Test
-	public void testClickingOnDisabledComponents() {
+    @Test
+    public void testClickingOnDisabledComponents() {
 
-		abstractTestClickOnDisabledComponents(holiday);
-	}
+        abstractTestClickOnDisabledComponents(holiday);
+    }
 
-	@Test
-	public void testThereAreAllRequiredComponents() {
+    @Test
+    public void testThereAreAllRequiredComponents() {
 
-		abstractTestThereAreAllRequiredComponents();
-	}
+        abstractTestThereAreAllRequiredComponents();
+    }
 
 }

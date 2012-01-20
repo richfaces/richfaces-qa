@@ -42,47 +42,45 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 @RunAsClient
 public abstract class AbstractShowcaseTest extends Arquillian {
 
-	@ArquillianResource
-	protected URL contextRoot;
+    @ArquillianResource
+    protected URL contextRoot;
 
-	@Deployment(testable = false)
-	public static WebArchive createTestArchive() {
+    @Deployment(testable = false)
+    public static WebArchive createTestArchive() {
 
-		WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class,
-				new File("target/showcase.war"));
-		return war;
-	}
+        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/showcase.war"));
+        return war;
+    }
 
-	protected String getAdditionToContextRoot() {
+    protected String getAdditionToContextRoot() {
 
-		// sample name - removes Test- prefix from class name and uncapitalize
-		// first letter
-		String sampleName = this.getClass().getSimpleName().substring(4);
-		sampleName = WordUtils.uncapitalize(sampleName);
+        // sample name - removes Test- prefix from class name and uncapitalize
+        // first letter
+        String sampleName = this.getClass().getSimpleName().substring(4);
+        sampleName = WordUtils.uncapitalize(sampleName);
 
-		// demo name - takes last part of package name
-		String demoName = this.getClass().getPackage().getName();
-		demoName = StringUtils.substringAfterLast(demoName, ".");
+        // demo name - takes last part of package name
+        String demoName = this.getClass().getPackage().getName();
+        demoName = StringUtils.substringAfterLast(demoName, ".");
 
-		String addition = SimplifiedFormat
-				.format("richfaces/component-sample.jsf?skin=blueSky&demo={0}&sample={1}",
-						demoName, sampleName);
+        String addition = SimplifiedFormat.format("richfaces/component-sample.jsf?skin=blueSky&demo={0}&sample={1}",
+            demoName, sampleName);
 
-		return addition;
-	}
-	
-	protected URL getContextRoot() {
-		
-		String isHTTPTesting = System.getenv("HTTPStesting");
-		
-		if( isHTTPTesting != null && isHTTPTesting.equals("true")) {
-			try {
-				return new URL("https://localhost:8443");
-			} catch (MalformedURLException e) {
-				//it is not malformed URL for sure
-			}
-		}
-		
-		return this.contextRoot;
-	}
+        return addition;
+    }
+
+    protected URL getContextRoot() {
+
+        String isHTTPTesting = System.getenv("HTTPStesting");
+
+        if (isHTTPTesting != null && isHTTPTesting.equals("true")) {
+            try {
+                return new URL("https://localhost:8443");
+            } catch (MalformedURLException e) {
+                // it is not malformed URL for sure
+            }
+        }
+
+        return this.contextRoot;
+    }
 }

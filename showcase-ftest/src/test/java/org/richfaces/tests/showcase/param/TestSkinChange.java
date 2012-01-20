@@ -34,35 +34,31 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestSkinChange extends AbstractAjocadoTest {
-	
-	/* *******************************************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * *************************************
-	 */
-	
-	protected JQueryLocator deepMarineSkin = jq("fieldset form a:first");
-	protected JQueryLocator blueSky = jq("fieldset form a:last");
-	
-	/* ********************************************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * ***********************************
-	 */
-	
-	@Test
-	public void testChangeSkin() {
-		
-		//This method of testing is not ideal
-		//but selenium 1 is not ableto click on the link, therefore I choose this primitive way of testing
-		String hrefOfLink1 = selenium.getAttribute(deepMarineSkin.getAttribute(Attribute.HREF));
-		
-		assertTrue(hrefOfLink1.contains("skin=deepMarine"), "The link should contains deep marine");
-		
-		String hrefOfLink2 = selenium.getAttribute(blueSky.getAttribute(Attribute.HREF));
-		
-		assertTrue(hrefOfLink2.contains("skin=blueSky"), "The link should contains blue sky");
-		
-	}
+
+    /* *******************************************************************************************************
+     * Locators ****************************************************************** *************************************
+     */
+
+    protected JQueryLocator deepMarineSkin = jq("fieldset form a:first");
+    protected JQueryLocator blueSky = jq("fieldset form a:last");
+
+    /* ********************************************************************************************************
+     * Tests ********************************************************************* ***********************************
+     */
+
+    @Test
+    public void testChangeSkin() {
+
+        // This method of testing is not ideal
+        // but selenium 1 is not ableto click on the link, therefore I choose this primitive way of testing
+        String hrefOfLink1 = selenium.getAttribute(deepMarineSkin.getAttribute(Attribute.HREF));
+
+        assertTrue(hrefOfLink1.contains("skin=deepMarine"), "The link should contains deep marine");
+
+        String hrefOfLink2 = selenium.getAttribute(blueSky.getAttribute(Attribute.HREF));
+
+        assertTrue(hrefOfLink2.contains("skin=blueSky"), "The link should contains blue sky");
+
+    }
 
 }

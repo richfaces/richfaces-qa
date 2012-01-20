@@ -36,70 +36,71 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestTopMenu extends AbstractAjocadoTest {
-	
-	/* *********************************************************************************
-	 * Constants
-	 ***********************************************************************************/
-	
-	protected final String TOP_LVL_MENU = "td[class*=rf-tb-itm]";
-	protected final String LABEL = "div[id*=label]";
-	protected String  fileMenuItems = "div.rf-ddm-pos:eq(0) .rf-ddm-itm-lbl";
-	
-	/* **********************************************************************************
-	 * Locators 
-	 ************************************************************************************/
-	
-	JQueryLocator fileMenu = jq( TOP_LVL_MENU + ":eq(0) " + LABEL );
-	JQueryLocator linksMenu = jq( TOP_LVL_MENU + ":eq(1) " + LABEL );
-	JQueryLocator currentSelection = jq("span:contains('Current Selection') > span");
-	
-	/* ************************************************************************************
-	 * Tests
-	 **************************************************************************************/
-	
-	@Test
-	public void testSelectFromFileMenu() {
-		
-		int numberOfFileMenuItems = selenium.getCount( jq( fileMenuItems ) );
-		
-		for( int i = 0; i < numberOfFileMenuItems; i++) {
-			
-			if( (i == 3) || (i == 4) ) {
-				continue;
-			}
-			
-			JQueryLocator item = jq( fileMenuItems + ":eq(" + i +")");
-			
-			if( (i != 2) && (i != 3) && (i != 4) ) {
-				
-				guardNoRequest(selenium).fireEvent( fileMenu, Event.MOUSEOVER );
-				
-				clickSomewhereAndCheckCurrentSelection(item);
-				
-			} 
-			
-		}
-	}
-	
-	/* **************************************************************************************************
-	 * Help methods
-	 ****************************************************************************************************/
-	
-	/**
-	 * Click somewhere in the menu and check the current selection info
-	 * 
-	 * @param whereToClick the item from menu, where it will be clicked
-	 */
-	private void clickSomewhereAndCheckCurrentSelection( JQueryLocator whereToClick ) {
-		
-		String textFromMenu = selenium.getText(whereToClick);
-		
-		guardXhr(selenium).click( whereToClick );
-		
-		String textFromCurrentSelectionInfo = selenium.getText(currentSelection);
-		
-		assertEquals( textFromCurrentSelectionInfo, textFromMenu, "Something else was selected than the current selection info says");
-	}
-	
-	
+
+    /* *********************************************************************************
+     * Constants*********************************************************************************
+     */
+
+    protected final String TOP_LVL_MENU = "td[class*=rf-tb-itm]";
+    protected final String LABEL = "div[id*=label]";
+    protected String fileMenuItems = "div.rf-ddm-pos:eq(0) .rf-ddm-itm-lbl";
+
+    /* **********************************************************************************
+     * Locators**********************************************************************************
+     */
+
+    JQueryLocator fileMenu = jq(TOP_LVL_MENU + ":eq(0) " + LABEL);
+    JQueryLocator linksMenu = jq(TOP_LVL_MENU + ":eq(1) " + LABEL);
+    JQueryLocator currentSelection = jq("span:contains('Current Selection') > span");
+
+    /* ************************************************************************************
+     * Tests************************************************************************************
+     */
+
+    @Test
+    public void testSelectFromFileMenu() {
+
+        int numberOfFileMenuItems = selenium.getCount(jq(fileMenuItems));
+
+        for (int i = 0; i < numberOfFileMenuItems; i++) {
+
+            if ((i == 3) || (i == 4)) {
+                continue;
+            }
+
+            JQueryLocator item = jq(fileMenuItems + ":eq(" + i + ")");
+
+            if ((i != 2) && (i != 3) && (i != 4)) {
+
+                guardNoRequest(selenium).fireEvent(fileMenu, Event.MOUSEOVER);
+
+                clickSomewhereAndCheckCurrentSelection(item);
+
+            }
+
+        }
+    }
+
+    /* **************************************************************************************************
+     * Help methods**************************************************************************************************
+     */
+
+    /**
+     * Click somewhere in the menu and check the current selection info
+     *
+     * @param whereToClick
+     *            the item from menu, where it will be clicked
+     */
+    private void clickSomewhereAndCheckCurrentSelection(JQueryLocator whereToClick) {
+
+        String textFromMenu = selenium.getText(whereToClick);
+
+        guardXhr(selenium).click(whereToClick);
+
+        String textFromCurrentSelectionInfo = selenium.getText(currentSelection);
+
+        assertEquals(textFromCurrentSelectionInfo, textFromMenu,
+            "Something else was selected than the current selection info says");
+    }
+
 }

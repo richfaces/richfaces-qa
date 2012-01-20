@@ -38,68 +38,66 @@ import org.testng.annotations.Test;
  */
 public class TestAutosaving extends AbstractAjocadoTest {
 
-	JQueryLocator outputFromEditor = jq(".rf-p-b");
-	JQueryLocator editorArea = jq("body.rf-ed-b");
-	FrameIndexLocator frameLocator = new FrameIndexLocator(0);
+    JQueryLocator outputFromEditor = jq(".rf-p-b");
+    JQueryLocator editorArea = jq("body.rf-ed-b");
+    FrameIndexLocator frameLocator = new FrameIndexLocator(0);
 
-	private final String[] EXPECTED_PARAGRAPHS = {
-			"\"Little Red Riding Hood\" is a famous fairy tale about a young girl's encounter with a wolf. "
-					+ "The story has been changed considerably in its history and subject to numerous modern adaptations and readings.",
+    private final String[] EXPECTED_PARAGRAPHS = {
+        "\"Little Red Riding Hood\" is a famous fairy tale about a young girl's encounter with a wolf. "
+            + "The story has been changed considerably in its history and subject to numerous modern adaptations and readings.",
 
-			"The version most widely known today is based on the Brothers Grimm variant. "
-					+ "It is about a girl called Little Red Riding Hood, after the red hooded cape or cloak she wears. "
-					+ "The girl walks through the woods to deliver food to her sick grandmother.",
+        "The version most widely known today is based on the Brothers Grimm variant. "
+            + "It is about a girl called Little Red Riding Hood, after the red hooded cape or cloak she wears. "
+            + "The girl walks through the woods to deliver food to her sick grandmother.",
 
-			"A wolf wants to eat the girl but is afraid to do so in public. "
-					+ "He approaches the girl, and she naïvely tells him where she is going. "
-					+ "He suggests the girl pick some flowers, which she does. In the meantime, he goes to "
-					+ "the grandmother's house and gains entry by pretending to be the girl. He swallows the "
-					+ "grandmother whole, and waits for the girl, disguised as the grandmother.",
+        "A wolf wants to eat the girl but is afraid to do so in public. "
+            + "He approaches the girl, and she naïvely tells him where she is going. "
+            + "He suggests the girl pick some flowers, which she does. In the meantime, he goes to "
+            + "the grandmother's house and gains entry by pretending to be the girl. He swallows the "
+            + "grandmother whole, and waits for the girl, disguised as the grandmother.",
 
-			"When the girl arrives, she notices he looks very strange to be her grandma. In most retellings",
+        "When the girl arrives, she notices he looks very strange to be her grandma. In most retellings",
 
-			"A hunter, however, comes to the rescue and cuts the wolf open. Little "
-					+ "Red Riding Hood and her grandmother emerge unharmed. They fill the wolf's body with "
-					+ "heavy stones, which drown him when he falls into a well. Other versions of the story have "
-					+ "had the grandmother shut in the closet instead of eaten, and some have Little Red Riding "
-					+ "Hood saved by the hunter as the wolf advances on her rather than after she is eaten.",
+        "A hunter, however, comes to the rescue and cuts the wolf open. Little "
+            + "Red Riding Hood and her grandmother emerge unharmed. They fill the wolf's body with "
+            + "heavy stones, which drown him when he falls into a well. Other versions of the story have "
+            + "had the grandmother shut in the closet instead of eaten, and some have Little Red Riding "
+            + "Hood saved by the hunter as the wolf advances on her rather than after she is eaten.",
 
-			"The tale makes the clearest contrast between the safe world of the village and the "
-					+ "dangers of the forest, conventional antitheses that are essentially medieval, though no written versions are as old as that." };
+        "The tale makes the clearest contrast between the safe world of the village and the "
+            + "dangers of the forest, conventional antitheses that are essentially medieval, though no written versions are as old as that." };
 
-	@Test
-	public void testContentOfEditor() {
+    @Test
+    public void testContentOfEditor() {
 
-		String contentOfEditorInput = selenium.getText(outputFromEditor);
+        String contentOfEditorInput = selenium.getText(outputFromEditor);
 
-		int j = 1;
-		for (String i : EXPECTED_PARAGRAPHS) {
-			assertTrue(contentOfEditorInput.contains(i), "The " + j
-					+ ". paragraph of initial content is corrupted!");
-			j++;
-		}
-	}
-	
-	@Test( groups = {"4.2"} )
-	public void testAutoSaving() {
-	
-		fail("Implement me correctly");
-		
-		selenium.selectFrame(frameLocator);
+        int j = 1;
+        for (String i : EXPECTED_PARAGRAPHS) {
+            assertTrue(contentOfEditorInput.contains(i), "The " + j + ". paragraph of initial content is corrupted!");
+            j++;
+        }
+    }
 
-		selenium.fireEvent(editorArea, Event.FOCUS);
-		
-		String text = selenium.getText(editorArea);
-		
-		eraseInput(editorArea);
-		
-		selenium.typeKeys(editorArea, "Test String");
-		
-		guardXhr(selenium).fireEvent(editorArea, Event.BLUR);
-		
-		String outputAfterSave = selenium.getText(outputFromEditor);
-		
-	}
-	
-	
+    @Test(groups = { "4.2" })
+    public void testAutoSaving() {
+
+        fail("Implement me correctly");
+
+        selenium.selectFrame(frameLocator);
+
+        selenium.fireEvent(editorArea, Event.FOCUS);
+
+        String text = selenium.getText(editorArea);
+
+        eraseInput(editorArea);
+
+        selenium.typeKeys(editorArea, "Test String");
+
+        guardXhr(selenium).fireEvent(editorArea, Event.BLUR);
+
+        String outputAfterSave = selenium.getText(outputFromEditor);
+
+    }
+
 }

@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.progressBar;
 
-
 import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
 import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
@@ -43,98 +42,88 @@ import org.testng.annotations.Test;
  */
 public class TestAjaxProgressBar extends AbstractAjocadoTest {
 
-	/* ***************************************************************************
-	 * Constants
-	 * *****************************************************************
-	 * **********
-	 */
+    /* ***************************************************************************
+     * Constants ***************************************************************** **********
+     */
 
-	private final int MAX_DEVIATION = 3;
+    private final int MAX_DEVIATION = 3;
 
-	/* *****************************************************************************
-	 * Fields
-	 * ********************************************************************
-	 * *********
-	 */
+    /* *****************************************************************************
+     * Fields ******************************************************************** *********
+     */
 
-	private List<Integer> numbersOfProcess = new ArrayList<Integer>();
+    private List<Integer> numbersOfProcess = new ArrayList<Integer>();
 
-	/* **************************************************************
-	 * Locators**************************************************************
-	 */
+    /* **************************************************************
+     * Locators**************************************************************
+     */
 
-	protected JQueryLocator progressBar = jq("div.rf-pb-rmng");
-	protected JQueryLocator startProcessButton = jq("input[type=submit]");
+    protected JQueryLocator progressBar = jq("div.rf-pb-rmng");
+    protected JQueryLocator startProcessButton = jq("input[type=submit]");
 
-	/* *********************************************************************
-	 * Tests
-	 * *********************************************************************
-	 */
+    /* *********************************************************************
+     * Tests *********************************************************************
+     */
 
-	@Test
-	public void testProgressBarIsRisingByMax3() {
+    @Test
+    public void testProgressBarIsRisingByMax3() {
 
-		TextRetriever processRetriever = retrieveText.locator(progressBar);
-		processRetriever.initializeValue();
+        TextRetriever processRetriever = retrieveText.locator(progressBar);
+        processRetriever.initializeValue();
 
-		guardXhr(selenium).click(startProcessButton);
+        guardXhr(selenium).click(startProcessButton);
 
-		while (true) {
+        while (true) {
 
-			try {
-				waitAjax.waitForChangeAndReturn(processRetriever);
-				getTheNumberFromTextRetrieverAndSaveToList(processRetriever);
+            try {
+                waitAjax.waitForChangeAndReturn(processRetriever);
+                getTheNumberFromTextRetrieverAndSaveToList(processRetriever);
 
-			} catch (WaitTimeoutException ex) {
-				break;
-			}
-		}
+            } catch (WaitTimeoutException ex) {
+                break;
+            }
+        }
 
-		checkTheDeviationInList(MAX_DEVIATION);
-	}
+        checkTheDeviationInList(MAX_DEVIATION);
+    }
 
-	/* *****************************************************************************************************
-	 * Help methods
-	 * **************************************************************
-	 * ***************************************
-	 */
+    /* *****************************************************************************************************
+     * Help methods **************************************************************
+     * ***************************************
+     */
 
-	/**
-	 * Gets the number from text retriever, the value in the text retriever is
-	 * in format 'number %'
-	 * 
-	 * @param textRetriever
-	 *            the text retriever which holds the number
-	 */
-	private void getTheNumberFromTextRetrieverAndSaveToList(
-			TextRetriever textRetriever) {
+    /**
+     * Gets the number from text retriever, the value in the text retriever is in format 'number %'
+     *
+     * @param textRetriever
+     *            the text retriever which holds the number
+     */
+    private void getTheNumberFromTextRetrieverAndSaveToList(TextRetriever textRetriever) {
 
-		String valueWithPercentageSign = textRetriever.getValue();
-		String[] partsOfvalueWithPercentageSign = valueWithPercentageSign
-				.split(" ");
-		String valueWithoutPercentageSign = partsOfvalueWithPercentageSign[0];
+        String valueWithPercentageSign = textRetriever.getValue();
+        String[] partsOfvalueWithPercentageSign = valueWithPercentageSign.split(" ");
+        String valueWithoutPercentageSign = partsOfvalueWithPercentageSign[0];
 
-		if (!valueWithoutPercentageSign.isEmpty()) {
-			numbersOfProcess.add(Integer.valueOf(valueWithoutPercentageSign));
-		}
+        if (!valueWithoutPercentageSign.isEmpty()) {
+            numbersOfProcess.add(Integer.valueOf(valueWithoutPercentageSign));
+        }
 
-	}
+    }
 
-	private void checkTheDeviationInList(int maxDeviation) {
+    private void checkTheDeviationInList(int maxDeviation) {
 
-		for (int i = 0; i < numbersOfProcess.size(); i++) {
+        for (int i = 0; i < numbersOfProcess.size(); i++) {
 
-			if (i == (numbersOfProcess.size() - 1)) {
-				break;
-			}
+            if (i == (numbersOfProcess.size() - 1)) {
+                break;
+            }
 
-			if ((numbersOfProcess.get(i + 1) - numbersOfProcess.get(i)) > maxDeviation) {
+            if ((numbersOfProcess.get(i + 1) - numbersOfProcess.get(i)) > maxDeviation) {
 
-				fail("The deviation between each step in the progress should not be higher than "
-						+ maxDeviation);
-			}
+                fail("The deviation between each step in the progress should not be higher than " + maxDeviation);
+            }
 
-		}
-	}
+        }
+    }
 
 }

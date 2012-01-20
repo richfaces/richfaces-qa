@@ -32,50 +32,49 @@ import org.richfaces.tests.showcase.AbstractAjocadoTest;
  * @version $Revision$
  */
 public class AbstractTreeTest extends AbstractAjocadoTest {
-	
-	/* *************************************************************************************************
-	 * Constants
-	 * *****************************************************************
-	 * ********************************
-	 */
 
-	protected final String FIRST_LVL_NODE = "div.rf-tr > div[class*=rf-tr-nd]";
-	protected final String SECOND_LVL_NODE = "div[class*='rf-tr-nd']";
-	protected final String LABEL_NODE = "div > span > span.rf-trn-lbl";
-	protected final String EXPAND_SIGN = "div > span[class*='rf-trn-hnd-colps']";
-	protected final String COLLAPSE_SIGN = "div > span[class*='rf-trn-hnd-exp']";
-	protected final String LEAF = "div[class*=rf-tr-nd-lf]";
-	
-	/* **************************************************************************************************************
-	 * Locators 
-	 ***************************************************************************************************************/
-	
-	protected JQueryLocator allExpandedHnd = jq("div.rf-tr-nd div.rf-trn span[class*='rf-trn-hnd-exp']");
-	protected JQueryLocator allColapsedHnd = jq("div.rf-tr-nd div.rf-trn span[class*='rf-trn-hnd-colps']");
-	
-	/* *****************************************************************************************************
-	 * Help methods
-	 *******************************************************************************************************/
-	
-	/**
-	 * Collapses or expands all nodes
-	 * 
-	 * @param collapseOrExpand
-	 *            the locator of all expaned or collapsed nodes, when it is
-	 *            allExpandedHnd it collapse all nodes, and vice versa
-	 * @return the number of nodes which was expanded or collapsed
-	 */
-	protected int collapseOrExpandAllNodes(JQueryLocator collapseOrExpand) {
+    /* *************************************************************************************************
+     * Constants ***************************************************************** ********************************
+     */
 
-		int numberOfNodes = selenium.getCount(collapseOrExpand);
+    protected final String FIRST_LVL_NODE = "div.rf-tr > div[class*=rf-tr-nd]";
+    protected final String SECOND_LVL_NODE = "div[class*='rf-tr-nd']";
+    protected final String LABEL_NODE = "div > span > span.rf-trn-lbl";
+    protected final String EXPAND_SIGN = "div > span[class*='rf-trn-hnd-colps']";
+    protected final String COLLAPSE_SIGN = "div > span[class*='rf-trn-hnd-exp']";
+    protected final String LEAF = "div[class*=rf-tr-nd-lf]";
 
-		for (int i = 0; i < numberOfNodes; i++) {
+    /* **************************************************************************************************************
+     * Locators
+     * *************************************************************************************************************
+     */
 
-			selenium.click(collapseOrExpand);
-		}
+    protected JQueryLocator allExpandedHnd = jq("div.rf-tr-nd div.rf-trn span[class*='rf-trn-hnd-exp']");
+    protected JQueryLocator allColapsedHnd = jq("div.rf-tr-nd div.rf-trn span[class*='rf-trn-hnd-colps']");
 
-		return numberOfNodes;
+    /* *****************************************************************************************************
+     * Help methods*****************************************************************************************************
+     */
 
-	}
+    /**
+     * Collapses or expands all nodes
+     *
+     * @param collapseOrExpand
+     *            the locator of all expaned or collapsed nodes, when it is allExpandedHnd it collapse all nodes, and
+     *            vice versa
+     * @return the number of nodes which was expanded or collapsed
+     */
+    protected int collapseOrExpandAllNodes(JQueryLocator collapseOrExpand) {
+
+        int numberOfNodes = selenium.getCount(collapseOrExpand);
+
+        for (int i = 0; i < numberOfNodes; i++) {
+
+            selenium.click(collapseOrExpand);
+        }
+
+        return numberOfNodes;
+
+    }
 
 }

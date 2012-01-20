@@ -27,7 +27,6 @@ import static org.testng.Assert.assertEquals;
 import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
 import static org.jboss.arquillian.ajocado.Ajocado.elementPresent;
 
-
 import java.awt.event.KeyEvent;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.showcase.AbstractAjocadoTest;
@@ -38,21 +37,21 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestFunctions extends AbstractAjocadoTest {
-	
-	private JQueryLocator input = jq("input[type=text]");
-	private JQueryLocator out = jq("span[id$=out]");
-	
-	@Test
-	public void testFunctionFindComponentCall() {
-		
-		String testString = "test string";
-		
-		selenium.type(input, testString);
-		selenium.focus(input);
-		guardHttp(selenium).keyPressNative( KeyEvent.VK_ENTER );
-		
-		waitModel.until( elementPresent.locator(out) );
-		assertEquals( selenium.getText(out), testString, "The output should be different!");
-	}
+
+    private JQueryLocator input = jq("input[type=text]");
+    private JQueryLocator out = jq("span[id$=out]");
+
+    @Test
+    public void testFunctionFindComponentCall() {
+
+        String testString = "test string";
+
+        selenium.type(input, testString);
+        selenium.focus(input);
+        guardHttp(selenium).keyPressNative(KeyEvent.VK_ENTER);
+
+        waitModel.until(elementPresent.locator(out));
+        assertEquals(selenium.getText(out), testString, "The output should be different!");
+    }
 
 }

@@ -37,65 +37,63 @@ import org.testng.annotations.Test;
  */
 public class TestCommandLink extends AbstractTestA4jCommand {
 
-	/* *****************************************************************************
-	 * Locators
-	 *******************************************************************************/
-	
-	protected JQueryLocator commandLink = jq("fieldset form a");
+    /* *****************************************************************************
+     * Locators*****************************************************************************
+     */
 
-	/* ******************************************************************************
-	 * Tests
-	 ********************************************************************************/
-	
-	@Test
-	public void testClickOnTheLinkWhileInputIsEmpty() {
+    protected JQueryLocator commandLink = jq("fieldset form a");
 
-		/*
-		 * click on the link, the output should be empty string
-		 */
-		guardXhr(selenium).click(commandLink);
+    /* ******************************************************************************
+     * Tests******************************************************************************
+     */
 
-		String expectedOutput = "Hello !";
-		assertEquals(selenium.getText(outHello).trim(), expectedOutput,
-				"The output should be " + expectedOutput);
-	}
+    @Test
+    public void testClickOnTheLinkWhileInputIsEmpty() {
 
-	@Test
-	public void testTypeSomeCharactersAndClickOnTheLink() {
+        /*
+         * click on the link, the output should be empty string
+         */
+        guardXhr(selenium).click(commandLink);
 
-		/*
-		 * type a string and click on the link, check the outHello
-		 */
-		String testString = "Test string";
+        String expectedOutput = "Hello !";
+        assertEquals(selenium.getText(outHello).trim(), expectedOutput, "The output should be " + expectedOutput);
+    }
 
-		selenium.typeKeys(input, testString);
+    @Test
+    public void testTypeSomeCharactersAndClickOnTheLink() {
 
-		guardXhr(selenium).click(commandLink);
+        /*
+         * type a string and click on the link, check the outHello
+         */
+        String testString = "Test string";
 
-		String expectedOutput = "Hello " + testString + " !";
-		assertEquals(selenium.getText(outHello), expectedOutput,
-				"The output should be: " + expectedOutput);
-	}
+        selenium.typeKeys(input, testString);
 
-	@Test
-	public void testEraseSomeStringAndClickOnTheLink() {
+        guardXhr(selenium).click(commandLink);
 
-		/*
-		 * erases string and check the output is empty string
-		 */
-		
-		String testString = "Test string";
+        String expectedOutput = "Hello " + testString + " !";
+        assertEquals(selenium.getText(outHello), expectedOutput, "The output should be: " + expectedOutput);
+    }
 
-		selenium.typeKeys(input, testString);
-		
-		guardXhr(selenium).click(commandLink);
-		
-		eraseInput(input);
+    @Test
+    public void testEraseSomeStringAndClickOnTheLink() {
 
-		guardXhr(selenium).click(commandLink);
+        /*
+         * erases string and check the output is empty string
+         */
 
-		String expectedOutput = "Hello !";
-		waitAjax.until(textEquals.locator(outHello).text(expectedOutput));
-	}
+        String testString = "Test string";
+
+        selenium.typeKeys(input, testString);
+
+        guardXhr(selenium).click(commandLink);
+
+        eraseInput(input);
+
+        guardXhr(selenium).click(commandLink);
+
+        String expectedOutput = "Hello !";
+        waitAjax.until(textEquals.locator(outHello).text(expectedOutput));
+    }
 
 }

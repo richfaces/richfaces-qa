@@ -34,132 +34,116 @@ import org.testng.annotations.Test;
  */
 public class TestGraphValidator extends AbstractAjocadoTest {
 
-	/* *****************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * ***********
-	 */
+    /* *****************************************************************************
+     * Locators ****************************************************************** ***********
+     */
 
-	private JQueryLocator newPasswordInput = jq("input[id$=pass]");
-	private JQueryLocator confirmNewPasswordInput = jq("input[id$=conf]");
-	private JQueryLocator storeChangesButton = jq("input[type=submit]");
-	private JQueryLocator passwordError = jq("span[id$=pass] span[class=rf-msg-det]");
-	private JQueryLocator differentPasswordError = jq("span:contains('Different passwords entered!')");
-	private JQueryLocator successfullyChangedInfo = jq("span:contains('Successfully changed!')");
+    private JQueryLocator newPasswordInput = jq("input[id$=pass]");
+    private JQueryLocator confirmNewPasswordInput = jq("input[id$=conf]");
+    private JQueryLocator storeChangesButton = jq("input[type=submit]");
+    private JQueryLocator passwordError = jq("span[id$=pass] span[class=rf-msg-det]");
+    private JQueryLocator differentPasswordError = jq("span:contains('Different passwords entered!')");
+    private JQueryLocator successfullyChangedInfo = jq("span:contains('Successfully changed!')");
 
-	private final String ERROR_MESSAGE_WRONG_SIZE_FOR_PASSWORD = "Password length must be between 5 and 15 characters.";
-	private final String ERROR_MESSAGE_DIFFERENT_PASSWORD_ENTERED = "Different passwords entered!";
-	private final String INFO_MESSAGE_SUCCESSFULLY_CHANGED = "Successfully changed!";
+    private final String ERROR_MESSAGE_WRONG_SIZE_FOR_PASSWORD = "Password length must be between 5 and 15 characters.";
+    private final String ERROR_MESSAGE_DIFFERENT_PASSWORD_ENTERED = "Different passwords entered!";
+    private final String INFO_MESSAGE_SUCCESSFULLY_CHANGED = "Successfully changed!";
 
-	private final int MIN_CORRECT_LENGTH_OF_PASSWORD = 5;
-	private final int MAX_CORRECT_LEGTH_OF_PASSWORD = 15;
+    private final int MIN_CORRECT_LENGTH_OF_PASSWORD = 5;
+    private final int MAX_CORRECT_LEGTH_OF_PASSWORD = 15;
 
-	/* ******************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * *********
-	 */
+    /* ******************************************************************************
+     * Tests ********************************************************************* *********
+     */
 
-	@Test
-	public void testCorrectPasswords() {
+    @Test
+    public void testCorrectPasswords() {
 
-		fillInCorrectPasswordsClickOnTheButtonAndCheckForMessages(MIN_CORRECT_LENGTH_OF_PASSWORD);
+        fillInCorrectPasswordsClickOnTheButtonAndCheckForMessages(MIN_CORRECT_LENGTH_OF_PASSWORD);
 
-		eraseAllInputsAndClickOnTheButton();
+        eraseAllInputsAndClickOnTheButton();
 
-		fillInCorrectPasswordsClickOnTheButtonAndCheckForMessages(MAX_CORRECT_LEGTH_OF_PASSWORD);
-	}
+        fillInCorrectPasswordsClickOnTheButtonAndCheckForMessages(MAX_CORRECT_LEGTH_OF_PASSWORD);
+    }
 
-	@Test
-	public void testNewPasswordTooShort() {
+    @Test
+    public void testNewPasswordTooShort() {
 
-		fillInInputsCheckForMessages(MIN_CORRECT_LENGTH_OF_PASSWORD - 1,
-				MIN_CORRECT_LENGTH_OF_PASSWORD, true, false, false);
+        fillInInputsCheckForMessages(MIN_CORRECT_LENGTH_OF_PASSWORD - 1, MIN_CORRECT_LENGTH_OF_PASSWORD, true, false,
+            false);
 
-	}
+    }
 
-	@Test
-	public void testNewPasswordTooLong() {
+    @Test
+    public void testNewPasswordTooLong() {
 
-		fillInInputsCheckForMessages(MAX_CORRECT_LEGTH_OF_PASSWORD + 1,
-				MIN_CORRECT_LENGTH_OF_PASSWORD, true, false, false);
-	}
+        fillInInputsCheckForMessages(MAX_CORRECT_LEGTH_OF_PASSWORD + 1, MIN_CORRECT_LENGTH_OF_PASSWORD, true, false,
+            false);
+    }
 
-	@Test
-	public void testDifferentPasswords() {
+    @Test
+    public void testDifferentPasswords() {
 
-		fillAnyInput(newPasswordInput, "12345");
-		fillAnyInput(confirmNewPasswordInput, "ThisIsDifferent");
+        fillAnyInput(newPasswordInput, "12345");
+        fillAnyInput(confirmNewPasswordInput, "ThisIsDifferent");
 
-		guardXhr(selenium).click(storeChangesButton);
+        guardXhr(selenium).click(storeChangesButton);
 
-		checkForAllMessages(false, true, false);
+        checkForAllMessages(false, true, false);
 
-		eraseAllInputsAndClickOnTheButton();
+        eraseAllInputsAndClickOnTheButton();
 
-		fillInCorrectPasswordsClickOnTheButtonAndCheckForMessages(MIN_CORRECT_LENGTH_OF_PASSWORD);
-	}
+        fillInCorrectPasswordsClickOnTheButtonAndCheckForMessages(MIN_CORRECT_LENGTH_OF_PASSWORD);
+    }
 
-	/* ******************************************************************************
-	 * Help methods
-	 * **************************************************************
-	 * ****************
-	 */
+    /* ******************************************************************************
+     * Help methods ************************************************************** ****************
+     */
 
-	private void fillInInputsCheckForMessages(int lengthOfNewPassword,
-			int lenthOfConfirmedPassword,
-			boolean shouldBeThereLenghtPasswordError,
-			boolean souldBeThereDifferentPasswordError,
-			boolean shouldBeThereInfoSuccessfullyChanged) {
+    private void fillInInputsCheckForMessages(int lengthOfNewPassword, int lenthOfConfirmedPassword,
+        boolean shouldBeThereLenghtPasswordError, boolean souldBeThereDifferentPasswordError,
+        boolean shouldBeThereInfoSuccessfullyChanged) {
 
-		fillInputWithStringOfLength(newPasswordInput, lengthOfNewPassword);
-		fillInputWithStringOfLength(confirmNewPasswordInput,
-				lenthOfConfirmedPassword);
+        fillInputWithStringOfLength(newPasswordInput, lengthOfNewPassword);
+        fillInputWithStringOfLength(confirmNewPasswordInput, lenthOfConfirmedPassword);
 
-		guardXhr(selenium).click(storeChangesButton);
+        guardXhr(selenium).click(storeChangesButton);
 
-		checkForAllMessages(shouldBeThereLenghtPasswordError,
-				souldBeThereDifferentPasswordError,
-				shouldBeThereInfoSuccessfullyChanged);
+        checkForAllMessages(shouldBeThereLenghtPasswordError, souldBeThereDifferentPasswordError,
+            shouldBeThereInfoSuccessfullyChanged);
 
-		eraseAllInputsAndClickOnTheButton();
+        eraseAllInputsAndClickOnTheButton();
 
-		fillInCorrectPasswordsClickOnTheButtonAndCheckForMessages(MIN_CORRECT_LENGTH_OF_PASSWORD);
+        fillInCorrectPasswordsClickOnTheButtonAndCheckForMessages(MIN_CORRECT_LENGTH_OF_PASSWORD);
 
-	}
+    }
 
-	private void fillInCorrectPasswordsClickOnTheButtonAndCheckForMessages(
-			int lengthOfPasswords) {
+    private void fillInCorrectPasswordsClickOnTheButtonAndCheckForMessages(int lengthOfPasswords) {
 
-		fillInputWithStringOfLength(newPasswordInput, lengthOfPasswords);
-		fillInputWithStringOfLength(confirmNewPasswordInput, lengthOfPasswords);
+        fillInputWithStringOfLength(newPasswordInput, lengthOfPasswords);
+        fillInputWithStringOfLength(confirmNewPasswordInput, lengthOfPasswords);
 
-		guardXhr(selenium).click(storeChangesButton);
+        guardXhr(selenium).click(storeChangesButton);
 
-		checkForAllMessages(false, false, true);
+        checkForAllMessages(false, false, true);
 
-	}
+    }
 
-	private void checkForAllMessages(boolean shouldBeThereLengthPasswordError,
-			boolean souldBeThereDifferentPasswordError,
-			boolean shouldBeThereInfoSuccessfullyChanged) {
+    private void checkForAllMessages(boolean shouldBeThereLengthPasswordError,
+        boolean souldBeThereDifferentPasswordError, boolean shouldBeThereInfoSuccessfullyChanged) {
 
-		isThereErrorMessage(passwordError,
-				ERROR_MESSAGE_WRONG_SIZE_FOR_PASSWORD,
-				shouldBeThereLengthPasswordError);
-		isThereErrorMessage(differentPasswordError,
-				ERROR_MESSAGE_DIFFERENT_PASSWORD_ENTERED,
-				souldBeThereDifferentPasswordError);
-		isThereInfoMessage(successfullyChangedInfo,
-				INFO_MESSAGE_SUCCESSFULLY_CHANGED,
-				shouldBeThereInfoSuccessfullyChanged);
-	}
+        isThereErrorMessage(passwordError, ERROR_MESSAGE_WRONG_SIZE_FOR_PASSWORD, shouldBeThereLengthPasswordError);
+        isThereErrorMessage(differentPasswordError, ERROR_MESSAGE_DIFFERENT_PASSWORD_ENTERED,
+            souldBeThereDifferentPasswordError);
+        isThereInfoMessage(successfullyChangedInfo, INFO_MESSAGE_SUCCESSFULLY_CHANGED,
+            shouldBeThereInfoSuccessfullyChanged);
+    }
 
-	private void eraseAllInputsAndClickOnTheButton() {
+    private void eraseAllInputsAndClickOnTheButton() {
 
-		eraseInput(newPasswordInput);
-		eraseInput(confirmNewPasswordInput);
-		guardXhr(selenium).click(storeChangesButton);
-	}
+        eraseInput(newPasswordInput);
+        eraseInput(confirmNewPasswordInput);
+        guardXhr(selenium).click(storeChangesButton);
+    }
 
 }

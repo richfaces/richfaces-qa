@@ -31,25 +31,22 @@ import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars;
  * @version $Revision$
  */
 public class AbstractExtendedTableTest extends AbstractDataIterationWithCars {
-	
-	/**
-	 * Checks whether there is correct car in the row, according to given vendor and model strings
-	 * 
-	 * @param vendor
-	 * @param model
-	 * @param row
-	 */
-	protected void checkTheRow( String vendor, String model, JQueryLocator row ) {
-		
-		Car expectedCar = new Car();
-		expectedCar.setVendor(vendor);
-		expectedCar.setModel(model);
-	
-		Car actualCar = retrieveCarFromRow(row, 0, 1);
-		
-		assertEquals(actualCar, expectedCar, "The car in the row should be different!");
-	}
-	
-	
 
+    /**
+     * Checks whether there is correct car in the row, according to given vendor and model strings
+     *
+     * @param vendor
+     * @param model
+     * @param row
+     */
+    protected void checkTheRow(String vendor, String model, JQueryLocator row) {
+
+        Car expectedCar = new Car();
+        expectedCar.setVendor(vendor);
+        expectedCar.setModel(model);
+
+        Car actualCar = retrieveCarFromRow(row, 0, 1);
+
+        assertEquals(actualCar, expectedCar, "The car in the row should be different!");
+    }
 }

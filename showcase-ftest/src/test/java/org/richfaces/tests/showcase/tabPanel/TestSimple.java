@@ -34,39 +34,37 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestSimple extends AbstractPanelTest {
-	
-	/* **************************************************************************************
-	 * Locators
-	 *****************************************************************************************/
-	
-	private JQueryLocator bodyOfPanel = jq( "div.rf-tab:visible" );
-	private JQueryLocator firstTabButton = jq("fieldset.example-cnt td[class*=rf-tab-hdr]:visible:eq(1)");
-	private JQueryLocator secondTabButton = jq("fieldset.example-cnt td[class*=rf-tab-hdr]:visible:eq(3)");
-	
-	/* **************************************************************************************
-	 * Tests
-	 ****************************************************************************************/
-	
-	@Test
-	public void testTabsAreNotEmpty() {
-		
-		checkToogleTab(firstTabButton, RICH_FACES_INFO);
-		
-		checkToogleTab(secondTabButton, RICH_FACES_JSF_INFO);
-	}
-	
-	/* ********************************************************************************
-	 * Help methods
-	 **********************************************************************************/
 
-	private void checkToogleTab( JQueryLocator button, String expectedContent ) {
-		
-		guardNoRequest(selenium).click(button);
-		
-		String actualContent = selenium.getText(bodyOfPanel);
+    /* **************************************************************************************
+     * Locators***************************************************************************************
+     */
 
-		assertTrue(actualContent.contains(expectedContent) , "The content of " + button.getRawLocator() + 
-				" is diferent!");
-	}
+    private JQueryLocator bodyOfPanel = jq("div.rf-tab:visible");
+    private JQueryLocator firstTabButton = jq("fieldset.example-cnt td[class*=rf-tab-hdr]:visible:eq(1)");
+    private JQueryLocator secondTabButton = jq("fieldset.example-cnt td[class*=rf-tab-hdr]:visible:eq(3)");
+
+    /* **************************************************************************************
+     * Tests**************************************************************************************
+     */
+
+    @Test
+    public void testTabsAreNotEmpty() {
+        checkToogleTab(firstTabButton, RICH_FACES_INFO);
+
+        checkToogleTab(secondTabButton, RICH_FACES_JSF_INFO);
+    }
+
+    /* ********************************************************************************
+     * Help methods********************************************************************************
+     */
+
+    private void checkToogleTab(JQueryLocator button, String expectedContent) {
+        guardNoRequest(selenium).click(button);
+
+        String actualContent = selenium.getText(bodyOfPanel);
+
+        assertTrue(actualContent.contains(expectedContent), "The content of " + button.getRawLocator()
+            + " is diferent!");
+    }
 
 }

@@ -31,12 +31,12 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
  * @version $Revision$
  */
 public class AbstractTestA4jCommand extends AbstractAjocadoTest {
-	
-	/* *********************************************************************
-	 * Locators
-	 ***********************************************************************/
-	
-	protected JQueryLocator input = jq("fieldset form input[type=text]");
-	protected JQueryLocator outHello = jq("fieldset span#out");
+
+    /* *********************************************************************
+     * Locators*********************************************************************
+     */
+
+    protected JQueryLocator input = jq("fieldset form input[type=text]");
+    protected JQueryLocator outHello = jq("fieldset span#out");
 
 }

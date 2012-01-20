@@ -29,10 +29,9 @@ import org.testng.annotations.Test;
  */
 public class TestDragDrop extends AbstractDragAndDropTest {
 
-	@Test
-	public void testDragAndDropAllSourcesToCorrectTarget() {
-		
-		dragAndDropAllSourcesToCorrectTarget(false);
-	}
+    @Test
+    public void testDragAndDropAllSourcesToCorrectTarget() {
+        dragAndDropAllSourcesToCorrectTarget(false);
+    }
 
 }

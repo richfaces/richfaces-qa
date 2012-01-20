@@ -34,97 +34,78 @@ import org.testng.annotations.Test;
  */
 public class TestPickList extends AbstractPickListTest {
 
-	private JQueryLocator sourceItemsWithColumns = jq("[id$='SourceItems']:eq(1)");
+    private JQueryLocator sourceItemsWithColumns = jq("[id$='SourceItems']:eq(1)");
 
-	private JQueryLocator targetItemsWithColumns = jq("[id$='TargetItems']:eq(1)");
+    private JQueryLocator targetItemsWithColumns = jq("[id$='TargetItems']:eq(1)");
 
-	/* *************************************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * ***************************
-	 */
+    /* *************************************************************************************************
+     * Tests ********************************************************************* ***************************
+     */
 
-	@Test
-	public void testAddAllButtonSimplePickList() {
+    @Test
+    public void testAddAllButtonSimplePickList() {
+        super.testAddAllButtonSimplePickList();
+    }
 
-		super.testAddAllButtonSimplePickList();
-	}
+    @Test
+    public void testRemoveAllButtonSimplePickList() {
+        super.testRemoveAllButtonSimplePickList();
+    }
 
-	@Test
-	public void testRemoveAllButtonSimplePickList() {
+    @Test
+    public void testRemoveButton() {
+        super.testRemoveButton();
+    }
 
-		super.testRemoveAllButtonSimplePickList();
-	}
-	
-	@Test
-	public void testRemoveButton() {
-		
-		super.testRemoveButton();
-	}
+    @Test
+    public void testAddAllButtonWithColumnsPickList() {
+        String[] availableCities = selenium.getText(sourceItemsWithColumns).split("\n");
+        int numberOfFlagsInAvailableCities = selenium.getCount(jq(sourceItemsWithColumns.getRawLocator() + " img"));
 
-	@Test
-	public void testAddAllButtonWithColumnsPickList() {
+        selenium.click(addAllButton.format(1));
 
-		String[] availableCities = selenium.getText(sourceItemsWithColumns)
-				.split("\n");
-		int numberOfFlagsInAvailableCities = selenium
-				.getCount(jq(sourceItemsWithColumns.getRawLocator() + " img"));
+        areThereSomeSelectedCities(targetItemsWithColumns, true);
 
-		selenium.click(addAllButton.format(1));
+        checkThatListContains(availableCities, targetItemsWithColumns);
 
-		areThereSomeSelectedCities(targetItemsWithColumns, true);
+        int numberOfFlagsInSelectedCities = selenium.getCount(jq(targetItemsWithColumns.getRawLocator() + " img"));
 
-		checkThatListContains(availableCities, targetItemsWithColumns);
+        assertEquals(numberOfFlagsInAvailableCities, numberOfFlagsInSelectedCities,
+            "the number of flags should be the same in the avaiable cities and selected cities!");
+    }
 
-		int numberOfFlagsInSelectedCities = selenium
-				.getCount(jq(targetItemsWithColumns.getRawLocator() + " img"));
+    @Test
+    public void testRemoveAllButtonWithColumnsPickList() {
+        checkRemoveAllButton(1, targetItemsWithColumns, 1);
+    }
 
-		assertEquals(
-				numberOfFlagsInAvailableCities,
-				numberOfFlagsInSelectedCities,
-				"the number of flags should be the same in the avaiable cities and selected cities!");
-	}
+    @Test
+    public void testAddButtonSimplePickList() {
+        super.testAddButtonSimplePickList();
+    }
 
-	@Test
-	public void testRemoveAllButtonWithColumnsPickList() {
+    @Test
+    public void testAddButtonWithColumnsPickList() {
+        checkAddButton(sourceItemsWithColumns, addButton.format(1), targetItemsWithColumns);
+    }
 
-		checkRemoveAllButton(1, targetItemsWithColumns, 1);
-	}
+    @Test
+    public void testFirstButtonOrdering() {
+        super.testFirstButtonOrdering();
+    }
 
-	@Test
-	public void testAddButtonSimplePickList() {
+    @Test
+    public void testUpButtonOrdering() {
+        super.testUpButtonOrdering();
+    }
 
-		super.testAddButtonSimplePickList();
-	}
+    @Test
+    public void testDownButtonOrdering() {
+        super.testDownButtonOrdering();
+    }
 
-	@Test
-	public void testAddButtonWithColumnsPickList() {
-
-		checkAddButton(sourceItemsWithColumns, addButton.format(1),
-				targetItemsWithColumns);
-	}
-
-	@Test
-	public void testFirstButtonOrdering() {
-
-		super.testFirstButtonOrdering();
-	}
-
-	@Test
-	public void testUpButtonOrdering() {
-
-		super.testUpButtonOrdering();
-	}
-
-	@Test
-	public void testDownButtonOrdering() {
-
-		super.testDownButtonOrdering();
-	}
-
-	@Test
-	public void testLastButtonOrdering() {
-
-		super.testLastButtonOrdering();
-	}
+    @Test
+    public void testLastButtonOrdering() {
+        super.testLastButtonOrdering();
+    }
 }

@@ -22,7 +22,6 @@
 package org.richfaces.tests.showcase.status;
 
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
 import static org.jboss.arquillian.ajocado.Ajocado.elementNotVisible;
@@ -37,56 +36,29 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestSimple extends AbstractAjocadoTest {
+public class TestReferencedUsage extends AbstractAjocadoTest {
 
     /* *******************************************************************************************************
      * Locators ****************************************************************** *************************************
      */
 
     protected JQueryLocator userNameInput = jq("input[type=text]:first");
-    protected JQueryLocator address = jq("input[type=text]:last");
-    protected JQueryLocator submitButton = jq("input[type=button]");
-    protected JQueryLocator userStoredSuccessfully = jq("span[id$=out]");
-    protected JQueryLocator imageOfAjaxRequestProgress = jq("span[class=rf-st-start] img");
+    protected JQueryLocator addressInput = jq("input[type=text]:last");
+    protected JQueryLocator firstAjaxRequestProgressImage = jq("span[class=rf-st-start] img:first");
+    protected JQueryLocator secondAjaxRequestProgressImage = jq("span[class=rf-st-start] img:last");
 
     /* ********************************************************************************************************
      * Tests ********************************************************************* ***********************************
      */
 
     @Test
-    public void testUserNameAndAjaxRequestProgress() {
-        XHRHalter.enable();
-
-        selenium.type(userNameInput, "a");
-        selenium.fireEvent(userNameInput, Event.KEYUP);
-
-        handleSendAssertPictureIsVisibleHandleComplete();
+    public void testUserNameAndAjaxRequestProgressImage() {
+        writeSomethingToTheInputAndCheckTheImageOfAjaxProgress(userNameInput, firstAjaxRequestProgressImage);
     }
 
     @Test
-    public void testAddressAndAjaxRequestProgress() {
-        XHRHalter.enable();
-
-        selenium.type(address, "a");
-        selenium.fireEvent(address, Event.KEYUP);
-
-        handleSendAssertPictureIsVisibleHandleComplete();
-    }
-
-    @Test
-    public void testSubmitButtonAndAjaxRequestProgress() {
-        selenium.typeKeys(userNameInput, "a");
-        selenium.fireEvent(userNameInput, Event.KEYUP);
-
-        XHRHalter.enable();
-
-        selenium.click(submitButton);
-        selenium.fireEvent(submitButton, Event.SUBMIT);
-
-        handleSendAssertPictureIsVisibleHandleComplete();
-
-        assertEquals(selenium.getText(userStoredSuccessfully).trim(), "User a stored successfully",
-            "There should appear " + "notification that user stored successfully!");
+    public void testAddressAndAjaxRequestProgressImage() {
+        writeSomethingToTheInputAndCheckTheImageOfAjaxProgress(addressInput, secondAjaxRequestProgressImage);
     }
 
     /* ********************************************************************************************************
@@ -95,10 +67,21 @@ public class TestSimple extends AbstractAjocadoTest {
      */
 
     /**
-     * Catches the ajax request, send it, checks whether there is a picture of Ajax request progress visible, completes
-     * the request and checks whether the picture disappeared
+     * Writes something to the input and checks whether there is picture of Ajax request progress
+     *
+     * @param whichInput
+     *            input where something will be written
+     * @param imageOfAjaxRequestProgress
+     *            image of ajax request progress which should appear when ajax request is being handled
      */
-    private void handleSendAssertPictureIsVisibleHandleComplete() {
+    private void writeSomethingToTheInputAndCheckTheImageOfAjaxProgress(JQueryLocator whichInput,
+        JQueryLocator imageOfAjaxRequestProgress) {
+
+        XHRHalter.enable();
+
+        selenium.type(whichInput, "a");
+        selenium.fireEvent(whichInput, Event.KEYUP);
+
         XHRHalter handle = XHRHalter.getHandleBlocking();
         handle.send();
 
@@ -109,4 +92,5 @@ public class TestSimple extends AbstractAjocadoTest {
         waitGui.failWith("There can not be image of ajax request, since it is completed!").until(
             elementNotVisible.locator(imageOfAjaxRequestProgress));
     }
+
 }

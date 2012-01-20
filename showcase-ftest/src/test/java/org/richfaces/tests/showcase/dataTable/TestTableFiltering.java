@@ -42,343 +42,314 @@ import org.testng.annotations.Test;
  */
 public class TestTableFiltering extends AbstractDataIterationWithCars {
 
-	private JQueryLocator vendorSelect = jq("select");
-	private JQueryLocator mileageInput = jq("input[type=text]:first");
-	private JQueryLocator vinInput = jq("input[type=text]:last");
-	private JQueryLocator errorMessageLocator = jq("span[class=rf-msgs-sum]");
-	private JQueryLocator tBody = jq("tbody[class=rf-dt-b]");
-
-	/*
-	 * Constants
-	 * *****************************************************************
-	 * ***********************************************
-	 */
-
-	private final String MILEAGE_FILTER = "40000";
-	private final String VENDOR_FILTER = "Chevrolet";
-	private final String VIN_FILTER = "A";
-	private final String ERROR_MESSAGE = "is not a number";
-
-	/*
-	 * Tests
-	 * 
-	 * tests conditions are depending on some non deterministic conditions, when
-	 * are not satisfied the fail() is called
-	 * ************************************
-	 * **************************************
-	 * *****************************************
-	 */
-
-	@Test
-	public void testNoFilters() {
-
-		// this solution I choose to achieve that it does not matter in which
-		// order are tests running
-		// because this state can be inherited from other tests and therefore
-		// there is no request
-		try {
-			guardXhr(selenium).select(vendorSelect, new OptionLabelLocator(""));
-		} catch (RequestGuardException ex) {
-
-			guardNoRequest(selenium).select(vendorSelect,
-					new OptionLabelLocator(""));
-		}
-
-		assertFalse(testWhetherTableContainsNonEmptyStrings(tBody),
-				"Table should not contains empty strings");
-	}
-
-	@Test
-	public void testVendorFilter() {
-
-		// this solution I choose to achieve that it does not matter in which
-		// order are tests running
-		// because this state can be inherited from other tests and therefore
-		// there is no request
-		try {
-			guardXhr(selenium).select(vendorSelect,
-					new OptionLabelLocator(VENDOR_FILTER));
-		} catch (RequestGuardException ex) {
-
-			guardNoRequest(selenium).select(vendorSelect,
-					new OptionLabelLocator(VENDOR_FILTER));
-		}
-
-		assertTrue(
-				checkWhetherAllRowsHaveCorrectValue("vendor", VENDOR_FILTER),
-				"There should be only rows which contains only "
-						+ VENDOR_FILTER);
-	}
-
-	@Test
-	public void testMileageFilter() {
-
-		// this solution I choose to achieve that it does not matter in which
-		// order are tests running
-		// because this state can be inherited from other tests and therefore
-		// there is no request
-		try {
-			guardXhr(selenium).select(vendorSelect, new OptionLabelLocator(""));
-		} catch (RequestGuardException ex) {
-
-			guardNoRequest(selenium).select(vendorSelect,
-					new OptionLabelLocator(""));
-		}
-
-		selenium.type(mileageInput, MILEAGE_FILTER);
-
-		guardXhr(selenium).fireEvent(mileageInput, Event.BLUR);
-
-		assertTrue(
-				checkWhetherAllRowsHaveCorrectValue("mileage", MILEAGE_FILTER),
-				"There should be only rows with mileage less or equal to "
-						+ MILEAGE_FILTER);
-
-		// this is to not affect other tests
-		eraseInput(mileageInput);
-		guardXhr(selenium).fireEvent(mileageInput, Event.BLUR);
-	}
-
-	@Test
-	public void testVinFilter() {
-
-		// this solution I choose to achieve that it does not matter in which
-		// order are tests running
-		// because this state can be inherited from other tests and therefore
-		// there is no request
-		try {
-			guardXhr(selenium).select(vendorSelect, new OptionLabelLocator(""));
-		} catch (RequestGuardException ex) {
-
-			guardNoRequest(selenium).select(vendorSelect,
-					new OptionLabelLocator(""));
-		}
-
-		selenium.type(vinInput, VIN_FILTER);
-		guardXhr(selenium).fireEvent(vinInput, Event.BLUR);
-
-		assertTrue(checkWhetherAllRowsHaveCorrectValue("vin", VIN_FILTER),
-				"all vins of the car should contain " + VIN_FILTER);
-
-		// this is to not affect other tests
-		eraseInput(vinInput);
-		guardXhr(selenium).fireEvent(vinInput, Event.BLUR);
-	}
-
-	@Test
-	public void testErrorMessage() {
-
-		selenium.type(mileageInput, "foo");
-		guardXhr(selenium).fireEvent(mileageInput, Event.BLUR);
+    private JQueryLocator vendorSelect = jq("select");
+    private JQueryLocator mileageInput = jq("input[type=text]:first");
+    private JQueryLocator vinInput = jq("input[type=text]:last");
+    private JQueryLocator errorMessageLocator = jq("span[class=rf-msgs-sum]");
+    private JQueryLocator tBody = jq("tbody[class=rf-dt-b]");
+
+    /*
+     * Constants *****************************************************************
+     * ***********************************************
+     */
+
+    private final String MILEAGE_FILTER = "40000";
+    private final String VENDOR_FILTER = "Chevrolet";
+    private final String VIN_FILTER = "A";
+    private final String ERROR_MESSAGE = "is not a number";
+
+    /*
+     * Tests
+     *
+     * tests conditions are depending on some non deterministic conditions, when are not satisfied the fail() is called
+     * ************************************ **************************************
+     * *****************************************
+     */
+
+    @Test
+    public void testNoFilters() {
+
+        // this solution I choose to achieve that it does not matter in which
+        // order are tests running
+        // because this state can be inherited from other tests and therefore
+        // there is no request
+        try {
+            guardXhr(selenium).select(vendorSelect, new OptionLabelLocator(""));
+        } catch (RequestGuardException ex) {
+
+            guardNoRequest(selenium).select(vendorSelect, new OptionLabelLocator(""));
+        }
+
+        assertFalse(testWhetherTableContainsNonEmptyStrings(tBody), "Table should not contains empty strings");
+    }
+
+    @Test
+    public void testVendorFilter() {
+
+        // this solution I choose to achieve that it does not matter in which
+        // order are tests running
+        // because this state can be inherited from other tests and therefore
+        // there is no request
+        try {
+            guardXhr(selenium).select(vendorSelect, new OptionLabelLocator(VENDOR_FILTER));
+        } catch (RequestGuardException ex) {
+
+            guardNoRequest(selenium).select(vendorSelect, new OptionLabelLocator(VENDOR_FILTER));
+        }
+
+        assertTrue(checkWhetherAllRowsHaveCorrectValue("vendor", VENDOR_FILTER),
+            "There should be only rows which contains only " + VENDOR_FILTER);
+    }
+
+    @Test
+    public void testMileageFilter() {
+
+        // this solution I choose to achieve that it does not matter in which
+        // order are tests running
+        // because this state can be inherited from other tests and therefore
+        // there is no request
+        try {
+            guardXhr(selenium).select(vendorSelect, new OptionLabelLocator(""));
+        } catch (RequestGuardException ex) {
+
+            guardNoRequest(selenium).select(vendorSelect, new OptionLabelLocator(""));
+        }
+
+        selenium.type(mileageInput, MILEAGE_FILTER);
+
+        guardXhr(selenium).fireEvent(mileageInput, Event.BLUR);
+
+        assertTrue(checkWhetherAllRowsHaveCorrectValue("mileage", MILEAGE_FILTER),
+            "There should be only rows with mileage less or equal to " + MILEAGE_FILTER);
+
+        // this is to not affect other tests
+        eraseInput(mileageInput);
+        guardXhr(selenium).fireEvent(mileageInput, Event.BLUR);
+    }
+
+    @Test
+    public void testVinFilter() {
+
+        // this solution I choose to achieve that it does not matter in which
+        // order are tests running
+        // because this state can be inherited from other tests and therefore
+        // there is no request
+        try {
+            guardXhr(selenium).select(vendorSelect, new OptionLabelLocator(""));
+        } catch (RequestGuardException ex) {
+
+            guardNoRequest(selenium).select(vendorSelect, new OptionLabelLocator(""));
+        }
 
-		String actualErrorMessage = selenium.getText(errorMessageLocator);
-		assertTrue(actualErrorMessage.contains(ERROR_MESSAGE),
-				"There should be error message, since there is string in the mileage input!");
-
-		eraseInput(mileageInput);
-		guardXhr(selenium).fireEvent(vinInput, Event.BLUR);
-	}
-
-	@Test
-	public void testMileageVinFilter() {
-
-		// this solution I choose to achieve that it does not matter in which
-		// order are tests running
-		// because this state can be inherited from other tests and therefore
-		// there is no request
-		try {
-			guardXhr(selenium).select(vendorSelect, new OptionLabelLocator(""));
-		} catch (RequestGuardException ex) {
-
-			guardNoRequest(selenium).select(vendorSelect,
-					new OptionLabelLocator(""));
-		}
+        selenium.type(vinInput, VIN_FILTER);
+        guardXhr(selenium).fireEvent(vinInput, Event.BLUR);
 
-		selenium.type(mileageInput, MILEAGE_FILTER);
-		guardXhr(selenium).fireEvent(mileageInput, Event.BLUR);
-
-		selenium.type(vinInput, VIN_FILTER);
-		guardXhr(selenium).fireEvent(vinInput, Event.BLUR);
+        assertTrue(checkWhetherAllRowsHaveCorrectValue("vin", VIN_FILTER), "all vins of the car should contain "
+            + VIN_FILTER);
 
-		assertTrue(
-				checkWhetherAllRowsHaveCorrectMileageAndVin(MILEAGE_FILTER,
-						VIN_FILTER), "There should be only rows with mileage"
-						+ " less or equal to " + MILEAGE_FILTER
-						+ " and vin which contains " + VIN_FILTER);
+        // this is to not affect other tests
+        eraseInput(vinInput);
+        guardXhr(selenium).fireEvent(vinInput, Event.BLUR);
+    }
 
-		eraseAllInputs();
-	}
+    @Test
+    public void testErrorMessage() {
 
-	@Test
-	public void testNoRowsSatisfyConditions() {
+        selenium.type(mileageInput, "foo");
+        guardXhr(selenium).fireEvent(mileageInput, Event.BLUR);
 
-		selenium.type(mileageInput, "1111111111111111111111");
-		guardXhr(selenium).fireEvent(mileageInput, Event.BLUR);
+        String actualErrorMessage = selenium.getText(errorMessageLocator);
+        assertTrue(actualErrorMessage.contains(ERROR_MESSAGE),
+            "There should be error message, since there is string in the mileage input!");
 
-		selenium.type(vinInput,
-				"I hope this will not be there, but for sure I type also my name, jhuska");
-		guardXhr(selenium).fireEvent(vinInput, Event.BLUR);
+        eraseInput(mileageInput);
+        guardXhr(selenium).fireEvent(vinInput, Event.BLUR);
+    }
 
-		boolean nothingFoundPresent = selenium.isElementPresent(tBody
-				.getChild(jq("tr > td:contains('Nothing found')")));
+    @Test
+    public void testMileageVinFilter() {
 
-		assertTrue(nothingFoundPresent,
-				"No rows should satisfy the filter conditions");
+        // this solution I choose to achieve that it does not matter in which
+        // order are tests running
+        // because this state can be inherited from other tests and therefore
+        // there is no request
+        try {
+            guardXhr(selenium).select(vendorSelect, new OptionLabelLocator(""));
+        } catch (RequestGuardException ex) {
 
-		eraseAllInputs();
-	}
+            guardNoRequest(selenium).select(vendorSelect, new OptionLabelLocator(""));
+        }
 
-	/* ********************************************************************************************************************
-	 * help methods
-	 * **************************************************************
-	 * *****************************************************
-	 */
-	/**
-	 * Check that all rows in the table have a price, which is correct according
-	 * to the filter. So whether the price is lower or equal than value in the
-	 * filterValue parameter.
-	 * 
-	 * @param filterValue
-	 *            which should be bigger or equal to all price values in the
-	 *            table
-	 * @return true if all rows have correct value, false otherwise
-	 */
-	private boolean checkWhetherAllRowsHaveCorrectValue(
-			String whatAreWeChecking, String filterValue) {
+        selenium.type(mileageInput, MILEAGE_FILTER);
+        guardXhr(selenium).fireEvent(mileageInput, Event.BLUR);
 
-		JQueryLocator trs = jq(tBody.getRawLocator() + " > tr");
+        selenium.type(vinInput, VIN_FILTER);
+        guardXhr(selenium).fireEvent(vinInput, Event.BLUR);
 
-		boolean nothingFoundPresent = selenium.isElementPresent(tBody
-				.getChild(jq("tr > td:contains('Nothing found')")));
+        assertTrue(checkWhetherAllRowsHaveCorrectMileageAndVin(MILEAGE_FILTER, VIN_FILTER),
+            "There should be only rows with mileage" + " less or equal to " + MILEAGE_FILTER
+                + " and vin which contains " + VIN_FILTER);
 
-		if (nothingFoundPresent) {
+        eraseAllInputs();
+    }
 
-			fail("Test condition was not correct for this run of test, change it, or try rerun the test!");
-		}
+    @Test
+    public void testNoRowsSatisfyConditions() {
 
-		for (Iterator<JQueryLocator> i = trs.iterator(); i.hasNext();) {
+        selenium.type(mileageInput, "1111111111111111111111");
+        guardXhr(selenium).fireEvent(mileageInput, Event.BLUR);
 
-			boolean result = checkValueInTheRow(i.next(), filterValue,
-					whatAreWeChecking);
+        selenium.type(vinInput, "I hope this will not be there, but for sure I type also my name, jhuska");
+        guardXhr(selenium).fireEvent(vinInput, Event.BLUR);
 
-			if (!result) {
+        boolean nothingFoundPresent = selenium
+            .isElementPresent(tBody.getChild(jq("tr > td:contains('Nothing found')")));
 
-				return false;
-			}
-		}
+        assertTrue(nothingFoundPresent, "No rows should satisfy the filter conditions");
 
-		return true;
-	}
+        eraseAllInputs();
+    }
 
-	/**
-	 * checks whether all rows have correct mileage and vin
-	 * 
-	 * @param mileagefilter
-	 * @param vinFilter
-	 * @return true when all rows have correct mileage and von, false otherwise
-	 */
-	private boolean checkWhetherAllRowsHaveCorrectMileageAndVin(
-			String mileagefilter, String vinFilter) {
+    /* ********************************************************************************************************************
+     * help methods **************************************************************
+     * *****************************************************
+     */
+    /**
+     * Check that all rows in the table have a price, which is correct according to the filter. So whether the price is
+     * lower or equal than value in the filterValue parameter.
+     *
+     * @param filterValue
+     *            which should be bigger or equal to all price values in the table
+     * @return true if all rows have correct value, false otherwise
+     */
+    private boolean checkWhetherAllRowsHaveCorrectValue(String whatAreWeChecking, String filterValue) {
 
-		JQueryLocator trs = jq(tBody.getRawLocator() + " > tr");
+        JQueryLocator trs = jq(tBody.getRawLocator() + " > tr");
 
-		boolean nothingFoundPresent = selenium.isElementPresent(tBody
-				.getChild(jq("tr > td:contains('Nothing found')")));
+        boolean nothingFoundPresent = selenium
+            .isElementPresent(tBody.getChild(jq("tr > td:contains('Nothing found')")));
 
-		if (nothingFoundPresent) {
+        if (nothingFoundPresent) {
 
-			fail("Test condition was not correct for this run of test, change it, or try rerun the test!");
-		}
+            fail("Test condition was not correct for this run of test, change it, or try rerun the test!");
+        }
 
-		for (Iterator<JQueryLocator> i = trs.iterator(); i.hasNext();) {
+        for (Iterator<JQueryLocator> i = trs.iterator(); i.hasNext();) {
 
-			JQueryLocator row = i.next();
-			
-			boolean result = checkValueInTheRow(row, mileagefilter,
-					"mileage");
+            boolean result = checkValueInTheRow(i.next(), filterValue, whatAreWeChecking);
 
-			if (!result) {
+            if (!result) {
 
-				return false;
-			}
+                return false;
+            }
+        }
 
-			result = checkValueInTheRow(row, vinFilter, "vin");
+        return true;
+    }
 
-			if (!result) {
+    /**
+     * checks whether all rows have correct mileage and vin
+     *
+     * @param mileagefilter
+     * @param vinFilter
+     * @return true when all rows have correct mileage and von, false otherwise
+     */
+    private boolean checkWhetherAllRowsHaveCorrectMileageAndVin(String mileagefilter, String vinFilter) {
 
-				return false;
-			}
-		}
+        JQueryLocator trs = jq(tBody.getRawLocator() + " > tr");
 
-		return true;
-	}
+        boolean nothingFoundPresent = selenium
+            .isElementPresent(tBody.getChild(jq("tr > td:contains('Nothing found')")));
 
-	/**
-	 * Check that the row has correct price, so whether the price from row is
-	 * less or equal to filterValue
-	 * 
-	 * @param row
-	 * @param filterValue
-	 * @return true if the value in the row is correct, false otherwise
-	 */
-	private boolean checkValueInTheRow(JQueryLocator row, String filterValue,
-			String whatAreWeChecking) {
+        if (nothingFoundPresent) {
 
-		JQueryLocator tds = jq(row.getRawLocator() + " > td");
+            fail("Test condition was not correct for this run of test, change it, or try rerun the test!");
+        }
 
-		int i = 0;
-		for (Iterator<JQueryLocator> iterator = tds.iterator(); iterator
-				.hasNext();) {
+        for (Iterator<JQueryLocator> i = trs.iterator(); i.hasNext();) {
 
-			JQueryLocator currentTd = iterator.next();
+            JQueryLocator row = i.next();
 
-			String valueFromTd = selenium.getText(currentTd);
+            boolean result = checkValueInTheRow(row, mileagefilter, "mileage");
 
-			// this is what are we checking for nofilter option
-			if (whatAreWeChecking.equals("nofilter")) {
+            if (!result) {
 
-				return !valueFromTd.trim().equals("");
-			}
+                return false;
+            }
 
-			// this is what are we checking for vendor option
-			if ((i == 0) && (whatAreWeChecking.equals("vendor"))) {
+            result = checkValueInTheRow(row, vinFilter, "vin");
 
-				return filterValue.equals(valueFromTd);
-			}
+            if (!result) {
 
-			// this is what are we checking for price option
-			if ((i == 3) && (whatAreWeChecking.equals("mileage"))) {
+                return false;
+            }
+        }
 
-				Double filterValueInt = new Double(filterValue);
-				Double valueFromTdInt = new Double(valueFromTd);
+        return true;
+    }
 
-				return (valueFromTdInt.doubleValue() <= filterValueInt
-						.doubleValue());
-			}
+    /**
+     * Check that the row has correct price, so whether the price from row is less or equal to filterValue
+     *
+     * @param row
+     * @param filterValue
+     * @return true if the value in the row is correct, false otherwise
+     */
+    private boolean checkValueInTheRow(JQueryLocator row, String filterValue, String whatAreWeChecking) {
 
-			// this is what are we checking for vin option
-			if ((i == 4) && (whatAreWeChecking.equals("vin"))) {
-				if (!valueFromTd.contains(VIN_FILTER)) {
-					System.out.println(valueFromTd);
-				}
-				return valueFromTd.contains(filterValue);
-			}
+        JQueryLocator tds = jq(row.getRawLocator() + " > td");
 
-			i++;
-		}
+        int i = 0;
+        for (Iterator<JQueryLocator> iterator = tds.iterator(); iterator.hasNext();) {
 
-		return false;
-	}
+            JQueryLocator currentTd = iterator.next();
 
-	/**
-	 * erases all inputs
-	 */
-	private void eraseAllInputs() {
+            String valueFromTd = selenium.getText(currentTd);
 
-		eraseInput(mileageInput);
-		guardXhr(selenium).fireEvent(mileageInput, Event.BLUR);
+            // this is what are we checking for nofilter option
+            if (whatAreWeChecking.equals("nofilter")) {
 
-		eraseInput(vinInput);
-		guardXhr(selenium).fireEvent(vinInput, Event.BLUR);
-	}
+                return !valueFromTd.trim().equals("");
+            }
+
+            // this is what are we checking for vendor option
+            if ((i == 0) && (whatAreWeChecking.equals("vendor"))) {
+
+                return filterValue.equals(valueFromTd);
+            }
+
+            // this is what are we checking for price option
+            if ((i == 3) && (whatAreWeChecking.equals("mileage"))) {
+
+                Double filterValueInt = new Double(filterValue);
+                Double valueFromTdInt = new Double(valueFromTd);
+
+                return (valueFromTdInt.doubleValue() <= filterValueInt.doubleValue());
+            }
+
+            // this is what are we checking for vin option
+            if ((i == 4) && (whatAreWeChecking.equals("vin"))) {
+                if (!valueFromTd.contains(VIN_FILTER)) {
+                    System.out.println(valueFromTd);
+                }
+                return valueFromTd.contains(filterValue);
+            }
+
+            i++;
+        }
+
+        return false;
+    }
+
+    /**
+     * erases all inputs
+     */
+    private void eraseAllInputs() {
+
+        eraseInput(mileageInput);
+        guardXhr(selenium).fireEvent(mileageInput, Event.BLUR);
+
+        eraseInput(vinInput);
+        guardXhr(selenium).fireEvent(vinInput, Event.BLUR);
+    }
 }

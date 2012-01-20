@@ -10,29 +10,23 @@ import org.richfaces.tests.showcase.AbstractAjocadoTest;
 
 public class AbstractNotifyTest extends AbstractAjocadoTest {
 
-	/* *********************************************************************
-	 * Locators
-	 ***********************************************************************/
-	protected JQueryLocator notify = jq(".rf-ntf");
+    /* *********************************************************************
+     * Locators*********************************************************************
+     */
+    protected JQueryLocator notify = jq(".rf-ntf");
 
-	
-	/* **********************************************************************
-	 * Methods
-	 ************************************************************************/
-	protected void waitUntilNotifyDissappeares(int timeout) {
+    /* **********************************************************************
+     * Methods**********************************************************************
+     */
+    protected void waitUntilNotifyDissappeares(int timeout) {
+        waitGui.failWith(new RuntimeException("The message should once dissapear!")).interval(100).timeout(timeout)
+            .until(elementNotPresent.locator(notify));
+    }
 
-		waitGui.failWith(
-				new RuntimeException("The message should once dissapear!"))
-				.interval(100).timeout(timeout)
-				.until(elementNotPresent.locator(notify));
-	}
+    protected void waitUntilNotifyAppears(int timeout) {
+        waitGui.failWith(new RuntimeException("The message should appear!")).interval(50).timeout(timeout)
+            .until(elementPresent.locator(notify));
 
-	protected void waitUntilNotifyAppears(int timeout) {
-
-		waitGui.failWith(new RuntimeException("The message should appear!"))
-				.interval(50).timeout(timeout)
-				.until(elementPresent.locator(notify));
-
-	}
+    }
 
 }

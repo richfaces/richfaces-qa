@@ -30,71 +30,68 @@ import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.testng.annotations.Test;
 
-
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
 public class TestCommandButton extends AbstractTestA4jCommand {
 
-	/* *****************************************************************************
-	 * Locators
-	 *******************************************************************************/
-	
-	protected JQueryLocator commandButton = jq("fieldset form input[type=submit]");
+    /* *****************************************************************************
+     * Locators*****************************************************************************
+     */
 
-	/* ******************************************************************************
-	 * Tests
-	 ********************************************************************************/
-	
-	@Test
-	public void testClickOnTheButtonWhileInputIsEmpty() {
+    protected JQueryLocator commandButton = jq("fieldset form input[type=submit]");
 
-		/*
-		 * click on the button, the output should be empty string
-		 */
-		guardXhr(selenium).click(commandButton);
+    /* ******************************************************************************
+     * Tests******************************************************************************
+     */
 
-		String expectedOutput = "";
-		assertEquals(selenium.getText(outHello).trim(), expectedOutput,
-				"The output should be emtpy string");
-	}
+    @Test
+    public void testClickOnTheButtonWhileInputIsEmpty() {
 
-	@Test
-	public void testTypeSomeCharactersAndClickOnTheButton() {
+        /*
+         * click on the button, the output should be empty string
+         */
+        guardXhr(selenium).click(commandButton);
 
-		/*
-		 * type a string and click on the button, check the outHello
-		 */
-		String testString = "Test string";
+        String expectedOutput = "";
+        assertEquals(selenium.getText(outHello).trim(), expectedOutput, "The output should be emtpy string");
+    }
 
-		selenium.typeKeys(input, testString);
+    @Test
+    public void testTypeSomeCharactersAndClickOnTheButton() {
 
-		guardXhr(selenium).click(commandButton);
+        /*
+         * type a string and click on the button, check the outHello
+         */
+        String testString = "Test string";
 
-		String expectedOutput = "Hello " + testString + " !";
-		assertEquals(selenium.getText(outHello), expectedOutput,
-				"The output should be: " + expectedOutput);
-	}
+        selenium.typeKeys(input, testString);
 
-	@Test
-	public void testEraseSomeStringAndClickOnTheButton() {
+        guardXhr(selenium).click(commandButton);
 
-		/*
-		 * erases string and check the output is empty string
-		 */
-		String testString = "Test string";
+        String expectedOutput = "Hello " + testString + " !";
+        assertEquals(selenium.getText(outHello), expectedOutput, "The output should be: " + expectedOutput);
+    }
 
-		selenium.typeKeys(input, testString);
-		
-		guardXhr(selenium).click(commandButton);
-		
-		eraseInput(input);
+    @Test
+    public void testEraseSomeStringAndClickOnTheButton() {
 
-		guardXhr(selenium).click(commandButton);
+        /*
+         * erases string and check the output is empty string
+         */
+        String testString = "Test string";
 
-		String expectedOutput = "";
-		waitAjax.until(textEquals.locator(outHello).text(expectedOutput));
-	}
+        selenium.typeKeys(input, testString);
+
+        guardXhr(selenium).click(commandButton);
+
+        eraseInput(input);
+
+        guardXhr(selenium).click(commandButton);
+
+        String expectedOutput = "";
+        waitAjax.until(textEquals.locator(outHello).text(expectedOutput));
+    }
 
 }

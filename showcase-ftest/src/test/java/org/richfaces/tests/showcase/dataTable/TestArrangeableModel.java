@@ -39,142 +39,127 @@ import org.testng.annotations.Test;
  */
 public class TestArrangeableModel extends AbstractAjocadoTest {
 
-	/* *******************************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * *************************
-	 */
+    /* *******************************************************************************************
+     * Locators ****************************************************************** *************************
+     */
 
-	protected JQueryLocator firstNameFilterInput = jq("input[type=text]:eq(0)");
-	protected JQueryLocator secondNameFilterInput = jq("input[type=text]:eq(1)");
-	protected JQueryLocator emailFilterInput = jq("input[type=text]:eq(2)");
-	protected JQueryLocator table = jq("tbody.rf-dt-b");
-	// these are links for filtering rows in a ascending, descending way
-	// 0 is for first name column, 1 surname, 2 email
-	protected JQueryLocator unsortedLink = jq("a[onClick*='RichFaces']:eq({0})");
-	protected JQueryLocator ascendingLink = jq("a:contains(ascending)");
-	protected JQueryLocator descendingLink = jq("a:contains(descending)");
-	protected JQueryLocator firstRowSomeColumn = jq(table.getRawLocator()
-			+ " > tr:eq(0) > td:eq({0})");
+    protected JQueryLocator firstNameFilterInput = jq("input[type=text]:eq(0)");
+    protected JQueryLocator secondNameFilterInput = jq("input[type=text]:eq(1)");
+    protected JQueryLocator emailFilterInput = jq("input[type=text]:eq(2)");
+    protected JQueryLocator table = jq("tbody.rf-dt-b");
+    // these are links for filtering rows in a ascending, descending way
+    // 0 is for first name column, 1 surname, 2 email
+    protected JQueryLocator unsortedLink = jq("a[onClick*='RichFaces']:eq({0})");
+    protected JQueryLocator ascendingLink = jq("a:contains(ascending)");
+    protected JQueryLocator descendingLink = jq("a:contains(descending)");
+    protected JQueryLocator firstRowSomeColumn = jq(table.getRawLocator() + " > tr:eq(0) > td:eq({0})");
 
-	/* *******************************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * **********************
-	 */
+    /* *******************************************************************************************
+     * Tests ********************************************************************* **********************
+     */
 
-	@Test
-	public void testTableIsNotEmpty() {
+    @Test
+    public void testTableIsNotEmpty() {
 
-		testWhetherTableContainsNonEmptyStrings(table);
-	}
+        testWhetherTableContainsNonEmptyStrings(table);
+    }
 
-	@Test
-	public void testFirstNameFilter() {
+    @Test
+    public void testFirstNameFilter() {
 
-		filterAnColumn(firstNameFilterInput, "as", "td:eq(0)");
-		eraseInput(firstNameFilterInput);
-		guardXhr(selenium).fireEvent(firstNameFilterInput, Event.KEYUP);
-	}
+        filterAnColumn(firstNameFilterInput, "as", "td:eq(0)");
+        eraseInput(firstNameFilterInput);
+        guardXhr(selenium).fireEvent(firstNameFilterInput, Event.KEYUP);
+    }
 
-	@Test
-	public void testSurnameFilter() {
+    @Test
+    public void testSurnameFilter() {
 
-		filterAnColumn(secondNameFilterInput, "al", "td:eq(1)");
-		eraseInput(secondNameFilterInput);
-		guardXhr(selenium).fireEvent(secondNameFilterInput, Event.KEYUP);
-	}
+        filterAnColumn(secondNameFilterInput, "al", "td:eq(1)");
+        eraseInput(secondNameFilterInput);
+        guardXhr(selenium).fireEvent(secondNameFilterInput, Event.KEYUP);
+    }
 
-	@Test
-	public void testEmailFilter() {
+    @Test
+    public void testEmailFilter() {
 
-		filterAnColumn(emailFilterInput, "ac", "td:eq(2)");
-		eraseInput(emailFilterInput);
-		guardXhr(selenium).fireEvent(emailFilterInput, Event.KEYUP);
+        filterAnColumn(emailFilterInput, "ac", "td:eq(2)");
+        eraseInput(emailFilterInput);
+        guardXhr(selenium).fireEvent(emailFilterInput, Event.KEYUP);
 
-	}
+    }
 
-	@Test
-	public void testFirstNameSorting() {
+    @Test
+    public void testFirstNameSorting() {
 
-		ascendingDescendingSortingOnColumn(0, "Z");
-	}
-	
-	@Test 
-	public void testSurnameSorting() {
-		
-		ascendingDescendingSortingOnColumn(1, "Z");
-	}
-	
-	@Test
-	public void testEmailSorting() {
-		
-		ascendingDescendingSortingOnColumn(2, "v");
-	}
+        ascendingDescendingSortingOnColumn(0, "Z");
+    }
 
-	/* **********************************************************************************************
-	 * Help methods
-	 * **************************************************************
-	 * ********************************
-	 */
+    @Test
+    public void testSurnameSorting() {
 
-	private boolean doesColumnContainsOnlyRowsWithData(String column,
-			String data) {
-		
-		JQueryLocator table = jq(this.table.getRawLocator() + " > tr");
-		
-		for (Iterator<JQueryLocator> i = table.iterator(); i.hasNext(); ) {
+        ascendingDescendingSortingOnColumn(1, "Z");
+    }
 
-			JQueryLocator td = jq(i.next().getRawLocator() + " > " + column);
+    @Test
+    public void testEmailSorting() {
 
-			String tdText = selenium.getText(td);
+        ascendingDescendingSortingOnColumn(2, "v");
+    }
 
-			if (!tdText.toLowerCase().contains(data)) {
+    /* **********************************************************************************************
+     * Help methods ************************************************************** ********************************
+     */
 
-				return false;
-			}
+    private boolean doesColumnContainsOnlyRowsWithData(String column, String data) {
 
-		}
+        JQueryLocator table = jq(this.table.getRawLocator() + " > tr");
 
-		return true;
-	}
+        for (Iterator<JQueryLocator> i = table.iterator(); i.hasNext();) {
 
-	private void filterAnColumn(JQueryLocator filterInput, String filterValue,
-			String column) {
+            JQueryLocator td = jq(i.next().getRawLocator() + " > " + column);
 
-		selenium.type(filterInput, filterValue);
-		guardXhr(selenium).fireEvent(filterInput, Event.KEYUP);
+            String tdText = selenium.getText(td);
 
-		boolean result = doesColumnContainsOnlyRowsWithData(column, filterValue);
+            if (!tdText.toLowerCase().contains(data)) {
 
-		assertTrue(result, "The table should contains only rows, which column "
-				+ column + " contains only data " + filterValue);
-	}
+                return false;
+            }
 
-	private void ascendingDescendingSortingOnColumn( int column, String firstCharOfRowWhenDescending ) {
-		
-		// ascending
-		guardXhr(selenium).click(unsortedLink.format(column));
+        }
 
-		JQueryLocator td = firstRowSomeColumn.format(column);
-		String checkedValue = selenium.getText(td);
+        return true;
+    }
 
-		assertEquals(
-				String.valueOf(checkedValue.charAt(0)),
-				"A",
-				"Rows should be sorted in an ascending order, by column "
-						+ td.getRawLocator());
+    private void filterAnColumn(JQueryLocator filterInput, String filterValue, String column) {
 
-		// descending
-		guardXhr(selenium).click(ascendingLink);
+        selenium.type(filterInput, filterValue);
+        guardXhr(selenium).fireEvent(filterInput, Event.KEYUP);
 
-		checkedValue = selenium.getText(td);
+        boolean result = doesColumnContainsOnlyRowsWithData(column, filterValue);
 
-		assertEquals(
-				String.valueOf(checkedValue.charAt(0)),
-				firstCharOfRowWhenDescending,
-				"Rows should be sorted in an descending order, by column "
-						+ td.getRawLocator());
-	}
+        assertTrue(result, "The table should contains only rows, which column " + column + " contains only data "
+            + filterValue);
+    }
+
+    private void ascendingDescendingSortingOnColumn(int column, String firstCharOfRowWhenDescending) {
+
+        // ascending
+        guardXhr(selenium).click(unsortedLink.format(column));
+
+        JQueryLocator td = firstRowSomeColumn.format(column);
+        String checkedValue = selenium.getText(td);
+
+        assertEquals(String.valueOf(checkedValue.charAt(0)), "A",
+            "Rows should be sorted in an ascending order, by column " + td.getRawLocator());
+
+        // descending
+        guardXhr(selenium).click(ascendingLink);
+
+        checkedValue = selenium.getText(td);
+
+        assertEquals(String.valueOf(checkedValue.charAt(0)), firstCharOfRowWhenDescending,
+            "Rows should be sorted in an descending order, by column " + td.getRawLocator());
+    }
 
 }

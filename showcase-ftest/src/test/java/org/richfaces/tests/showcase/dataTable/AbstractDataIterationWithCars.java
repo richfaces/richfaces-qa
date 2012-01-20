@@ -32,223 +32,217 @@ import org.richfaces.tests.showcase.AbstractAjocadoTest;
  * @version $Revision$
  */
 public class AbstractDataIterationWithCars extends AbstractAjocadoTest {
-	
-	//help class for saving data about car
-	public class Car {
-		
-		String vendor;
-		String model;
-		String price;
-		String mileage;
-		String vin;
-		String stock;
-		
-		public Car() {
-		}
 
-		public Car(String vendor, String model, String price, String mileage,
-				String vin, String stock) {
-			this.vendor = vendor;
-			this.model = model;
-			this.price = price;
-			this.mileage = mileage;
-			this.vin = vin;
-			this.stock = stock;
-		}
-		
-		private void controlWhetherParameterIsNotEmptyOrNull( String parameter ) {
-			
-			if( parameter == null || parameter.isEmpty() ) {
-				
-				throw new IllegalArgumentException("Parameter can not be empty or null!");
-			}
-		}
+    // help class for saving data about car
+    public class Car {
 
-		public String getStock() {
-		
-			return this.stock;
-		}
-		
-		public Car setStock( String stock ) {
-			
-			controlWhetherParameterIsNotEmptyOrNull(stock);
-			this.stock = stock;
-			return this;
-		}
-		
-		public String getVendor() {
-			return vendor;
-		}
+        String vendor;
+        String model;
+        String price;
+        String mileage;
+        String vin;
+        String stock;
 
-		public Car setVendor(String vendor) {
-			
-			controlWhetherParameterIsNotEmptyOrNull(vendor);
-			this.vendor = vendor;
-			return this;
-		}
+        public Car() {
+        }
 
-		public String getModel() {
-			return model;
-		}
+        public Car(String vendor, String model, String price, String mileage, String vin, String stock) {
+            this.vendor = vendor;
+            this.model = model;
+            this.price = price;
+            this.mileage = mileage;
+            this.vin = vin;
+            this.stock = stock;
+        }
 
-		public Car setModel(String model) {
-			
-			controlWhetherParameterIsNotEmptyOrNull(model);
-			this.model = model;
-			return this;
-		}
+        private void controlWhetherParameterIsNotEmptyOrNull(String parameter) {
 
-		public String getPrice() {
-			return price;
-		}
+            if (parameter == null || parameter.isEmpty()) {
 
-		public Car setPrice(String price) {
-			
-			controlWhetherParameterIsNotEmptyOrNull(price);
-			this.price = price;
-			return this;
-		}
+                throw new IllegalArgumentException("Parameter can not be empty or null!");
+            }
+        }
 
-		public String getMileage() {
-			return mileage;
-		}
+        public String getStock() {
 
-		public Car setMileage(String mileage) {
-			
-			controlWhetherParameterIsNotEmptyOrNull(mileage);
-			this.mileage = mileage;
-			return this;
-		}
+            return this.stock;
+        }
 
-		public String getVin() {
-			return vin;
-		}
+        public Car setStock(String stock) {
 
-		public Car setVin(String vin) {
-			
-			controlWhetherParameterIsNotEmptyOrNull(vin);
-			this.vin = vin;
-			return this;
-		}
+            controlWhetherParameterIsNotEmptyOrNull(stock);
+            this.stock = stock;
+            return this;
+        }
 
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + getOuterType().hashCode();
-			result = prime * result
-					+ ((mileage == null) ? 0 : mileage.hashCode());
-			result = prime * result + ((model == null) ? 0 : model.hashCode());
-			result = prime * result + ((price == null) ? 0 : price.hashCode());
-			result = prime * result
-					+ ((vendor == null) ? 0 : vendor.hashCode());
-			result = prime * result + ((vin == null) ? 0 : vin.hashCode());
-			return result;
-		}
+        public String getVendor() {
+            return vendor;
+        }
 
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			Car other = (Car) obj;
-			if (!getOuterType().equals(other.getOuterType()))
-				return false;
-			if (mileage == null) {
-				if (other.mileage != null)
-					return false;
-			} else if (!mileage.equals(other.mileage))
-				return false;
-			if (model == null) {
-				if (other.model != null)
-					return false;
-			} else if (!model.equals(other.model))
-				return false;
-			if (price == null) {
-				if (other.price != null)
-					return false;
-			} else if (!price.equals(other.price))
-				return false;
-			if (vendor == null) {
-				if (other.vendor != null)
-					return false;
-			} else if (!vendor.equals(other.vendor))
-				return false;
-			if (vin == null) {
-				if (other.vin != null)
-					return false;
-			} else if (!vin.equals(other.vin))
-				return false;
-			return true;
-		}
+        public Car setVendor(String vendor) {
 
-		private AbstractDataIterationWithCars getOuterType() {
-			return AbstractDataIterationWithCars.this;
-		}
+            controlWhetherParameterIsNotEmptyOrNull(vendor);
+            this.vendor = vendor;
+            return this;
+        }
 
-		@Override
-		public String toString() {
-			return "Car [vendor=" + vendor + ", model=" + model + ", price="
-					+ price + ", mileage=" + mileage + ", vin=" + vin + "]";
-		}
-	}
-	
-	/**
-	 * retrieves info about car from the row, it starts collecting data on the row
-	 * specified by startingIndexTd and ends on the endIndexOfTd, other values from car
-	 * lets uninitialized
-	 * 
-	 * @param row
-	 * @param startingIndexOfTd
-	 * @param endIndexOfTd
-	 * @return
-	 */
-	public Car retrieveCarFromRow( JQueryLocator row, int startingIndexOfTd, int endIndexOfTd ) {
-		
-		Car car = new Car();
-		
-		JQueryLocator td = jq(row.getRawLocator() + " > td");
-		
-		int j = 0;
-		for( Iterator<JQueryLocator> i = td.iterator(); i.hasNext(); ) {
-			
-			if( j < startingIndexOfTd ) {
-				i.next();
-			}
-			
-			if( j == startingIndexOfTd ) {
-				car.setVendor(selenium.getText(i.next()));
-			}
-			
-			if( j == (startingIndexOfTd + 1)) {
-				car.setModel(selenium.getText(i.next()));
-			}
-			
-			if( j == (startingIndexOfTd + 2)) {
-				car.setPrice(selenium.getText(i.next()));
-			}
-			
-			if( j == (startingIndexOfTd + 3)) {
-				car.setMileage(selenium.getText(i.next()));
-			}
-			
-			if( j == (startingIndexOfTd + 4)) {
-				car.setVin(selenium.getText(i.next()));
-			}
-			
-			if( j > endIndexOfTd ) {
-				break;
-			}
-			
-			j++;
-		}
-		
-		return car;
-	}
-	
-	
-	
+        public String getModel() {
+            return model;
+        }
+
+        public Car setModel(String model) {
+
+            controlWhetherParameterIsNotEmptyOrNull(model);
+            this.model = model;
+            return this;
+        }
+
+        public String getPrice() {
+            return price;
+        }
+
+        public Car setPrice(String price) {
+
+            controlWhetherParameterIsNotEmptyOrNull(price);
+            this.price = price;
+            return this;
+        }
+
+        public String getMileage() {
+            return mileage;
+        }
+
+        public Car setMileage(String mileage) {
+
+            controlWhetherParameterIsNotEmptyOrNull(mileage);
+            this.mileage = mileage;
+            return this;
+        }
+
+        public String getVin() {
+            return vin;
+        }
+
+        public Car setVin(String vin) {
+
+            controlWhetherParameterIsNotEmptyOrNull(vin);
+            this.vin = vin;
+            return this;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + getOuterType().hashCode();
+            result = prime * result + ((mileage == null) ? 0 : mileage.hashCode());
+            result = prime * result + ((model == null) ? 0 : model.hashCode());
+            result = prime * result + ((price == null) ? 0 : price.hashCode());
+            result = prime * result + ((vendor == null) ? 0 : vendor.hashCode());
+            result = prime * result + ((vin == null) ? 0 : vin.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Car other = (Car) obj;
+            if (!getOuterType().equals(other.getOuterType()))
+                return false;
+            if (mileage == null) {
+                if (other.mileage != null)
+                    return false;
+            } else if (!mileage.equals(other.mileage))
+                return false;
+            if (model == null) {
+                if (other.model != null)
+                    return false;
+            } else if (!model.equals(other.model))
+                return false;
+            if (price == null) {
+                if (other.price != null)
+                    return false;
+            } else if (!price.equals(other.price))
+                return false;
+            if (vendor == null) {
+                if (other.vendor != null)
+                    return false;
+            } else if (!vendor.equals(other.vendor))
+                return false;
+            if (vin == null) {
+                if (other.vin != null)
+                    return false;
+            } else if (!vin.equals(other.vin))
+                return false;
+            return true;
+        }
+
+        private AbstractDataIterationWithCars getOuterType() {
+            return AbstractDataIterationWithCars.this;
+        }
+
+        @Override
+        public String toString() {
+            return "Car [vendor=" + vendor + ", model=" + model + ", price=" + price + ", mileage=" + mileage
+                + ", vin=" + vin + "]";
+        }
+    }
+
+    /**
+     * retrieves info about car from the row, it starts collecting data on the row specified by startingIndexTd and ends
+     * on the endIndexOfTd, other values from car lets uninitialized
+     *
+     * @param row
+     * @param startingIndexOfTd
+     * @param endIndexOfTd
+     * @return
+     */
+    public Car retrieveCarFromRow(JQueryLocator row, int startingIndexOfTd, int endIndexOfTd) {
+
+        Car car = new Car();
+
+        JQueryLocator td = jq(row.getRawLocator() + " > td");
+
+        int j = 0;
+        for (Iterator<JQueryLocator> i = td.iterator(); i.hasNext();) {
+
+            if (j < startingIndexOfTd) {
+                i.next();
+            }
+
+            if (j == startingIndexOfTd) {
+                car.setVendor(selenium.getText(i.next()));
+            }
+
+            if (j == (startingIndexOfTd + 1)) {
+                car.setModel(selenium.getText(i.next()));
+            }
+
+            if (j == (startingIndexOfTd + 2)) {
+                car.setPrice(selenium.getText(i.next()));
+            }
+
+            if (j == (startingIndexOfTd + 3)) {
+                car.setMileage(selenium.getText(i.next()));
+            }
+
+            if (j == (startingIndexOfTd + 4)) {
+                car.setVin(selenium.getText(i.next()));
+            }
+
+            if (j > endIndexOfTd) {
+                break;
+            }
+
+            j++;
+        }
+
+        return car;
+    }
+
 }

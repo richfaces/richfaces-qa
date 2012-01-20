@@ -36,62 +36,62 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestJquery extends AbstractAjocadoTest {
-	
-	/* *************************************************************************
-	 * Constants
-	 **************************************************************************/
-	
-	private final int NUMBER_OF_IMGS = 9;
-	private final String WIDTH_OF_IMG_WITHOUT_BORDERS = "180px";
-	private final int WIDTH_OF_IMG_BEFORE_HOVER = 124; //these widths includes also borders
-	private final int WIDTH_OF_IMG_AFTER_HOVER = 184;
-	
-	
-	/* *************************************************************************
-	 * Locators
-	 ***************************************************************************/
-	
-	protected JQueryLocator images = jq("#gallery img:eq({0})");
-	
-	/* ***************************************************************************
-	 * Tests 
-	 *****************************************************************************/
-	
-	@Test
-	public void testImagesAreBecomingBiggerAfterHover() {
-		
-		for( int i = 0; i < NUMBER_OF_IMGS; i++ ) {
-			
-			JQueryLocator img = images.format(i);
-			
-			int widthBeforeHover = getWidthOfImage( img );
-			
-			selenium.mouseOver( img );
-			
-			waitModel.until(styleEquals.locator(img).property(CssProperty.WIDTH).value(WIDTH_OF_IMG_WITHOUT_BORDERS));
-			
-			int widthAfterHover = getWidthOfImage(img);
-			
-			assertEquals( widthBeforeHover, WIDTH_OF_IMG_BEFORE_HOVER, "The initial width is wrong");
-			assertEquals( widthAfterHover, WIDTH_OF_IMG_AFTER_HOVER, "The width of image after hovering is wrong!");
-			
-			selenium.mouseOut(img);
-		}
-	}
-	
-	/* ****************************************************************************
-	 * Help methods
-	 ******************************************************************************/
-	
-	/**
-	 * Gets the width of image element, but it also includes width of borders of image
-	 * 
-	 * @param img the particular image which width will be returned
-	 * @return the width of image with width of image's borders
-	 */
-	private int getWidthOfImage( JQueryLocator img ) {
-		
-		return selenium.getElementWidth(img);
-	}
+
+    /* *************************************************************************
+     * Constants************************************************************************
+     */
+
+    private final int NUMBER_OF_IMGS = 9;
+    private final String WIDTH_OF_IMG_WITHOUT_BORDERS = "180px";
+    private final int WIDTH_OF_IMG_BEFORE_HOVER = 124; // these widths includes also borders
+    private final int WIDTH_OF_IMG_AFTER_HOVER = 184;
+
+    /* *************************************************************************
+     * Locators*************************************************************************
+     */
+
+    protected JQueryLocator images = jq("#gallery img:eq({0})");
+
+    /* ***************************************************************************
+     * Tests***************************************************************************
+     */
+
+    @Test
+    public void testImagesAreBecomingBiggerAfterHover() {
+
+        for (int i = 0; i < NUMBER_OF_IMGS; i++) {
+
+            JQueryLocator img = images.format(i);
+
+            int widthBeforeHover = getWidthOfImage(img);
+
+            selenium.mouseOver(img);
+
+            waitModel.until(styleEquals.locator(img).property(CssProperty.WIDTH).value(WIDTH_OF_IMG_WITHOUT_BORDERS));
+
+            int widthAfterHover = getWidthOfImage(img);
+
+            assertEquals(widthBeforeHover, WIDTH_OF_IMG_BEFORE_HOVER, "The initial width is wrong");
+            assertEquals(widthAfterHover, WIDTH_OF_IMG_AFTER_HOVER, "The width of image after hovering is wrong!");
+
+            selenium.mouseOut(img);
+        }
+    }
+
+    /* ****************************************************************************
+     * Help methods****************************************************************************
+     */
+
+    /**
+     * Gets the width of image element, but it also includes width of borders of image
+     *
+     * @param img
+     *            the particular image which width will be returned
+     * @return the width of image with width of image's borders
+     */
+    private int getWidthOfImage(JQueryLocator img) {
+
+        return selenium.getElementWidth(img);
+    }
 
 }

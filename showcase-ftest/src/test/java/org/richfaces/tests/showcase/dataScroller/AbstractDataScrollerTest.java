@@ -32,58 +32,68 @@ import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars;
  */
 public class AbstractDataScrollerTest extends AbstractDataIterationWithCars {
 
-	/* *******************************************************************************************************
-	 * Constants
-	 *********************************************************************************************************/
-	
-	protected final String CLASS_OF_BUTTON_FIRST = "rf-ds-btn rf-ds-btn-first";
-	protected final String CLASS_OF_BUTTON_FAST_RWD = "rf-ds-btn rf-ds-btn-fastrwd";
-	protected final String CLASS_OF_BUTTON_PREV = "rf-ds-btn rf-ds-btn-prev";
-	protected final String CLASS_OF_BUTTON_NEXT = "rf-ds-btn rf-ds-btn-next";
-	protected final String CLASS_OF_BUTTON_FAST_FWD = "rf-ds-btn rf-ds-btn-fastfwd";
-	protected final String CLASS_OF_BUTTON_LAST = "rf-ds-btn rf-ds-btn-last";
-	protected final String CLASS_OF_BUTTON_DIS = "rf-ds-dis";
-	
-	protected final String CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER = "rf-ds-nmb-btn";
-	protected final String CLASS_OF_ACTIVE_BUTTON_WITH_NUMBER = CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER + " rf-ds-act";
-	
-	/* ***********************************************************************************************************
-	 * Locators
-	 *************************************************************************************************************/
+    /* *******************************************************************************************************
+     * Constants*******************************************************************************************************
+     */
 
-	protected JQueryLocator nextButton =  jq("a[class='" + CLASS_OF_BUTTON_NEXT + "']");
-	protected JQueryLocator nextButtonDis = jq("span[class='" + CLASS_OF_BUTTON_NEXT + " " + CLASS_OF_BUTTON_DIS + "']");
-	
-	protected JQueryLocator previousButton = jq("a[class='" + CLASS_OF_BUTTON_PREV + "']");
-	protected JQueryLocator previousButtonDis = jq("span[class='" + CLASS_OF_BUTTON_PREV + " " + CLASS_OF_BUTTON_DIS + "']");
-	
-	protected JQueryLocator firstPageButton = jq("a[class='" + CLASS_OF_BUTTON_FIRST + "']");
-	protected JQueryLocator firstPageButtonDis = jq("span[class='" + CLASS_OF_BUTTON_FIRST + " " + CLASS_OF_BUTTON_DIS + "']");
-	
-	protected JQueryLocator lastPageButton = jq("a[class='" + CLASS_OF_BUTTON_LAST + "']");
-	protected JQueryLocator lastPageButtonDis = jq("span[class='" + CLASS_OF_BUTTON_LAST + " " + CLASS_OF_BUTTON_DIS + "']");
-	
-	protected JQueryLocator fastPrevButton = jq("a[class='" + CLASS_OF_BUTTON_FAST_RWD + "']");
-	protected JQueryLocator fastPrevButtonDis = jq("span[class='" + CLASS_OF_BUTTON_FAST_RWD + " " + CLASS_OF_BUTTON_DIS + "']");
-	
-	protected JQueryLocator fastNextButton = jq("a[class='" + CLASS_OF_BUTTON_FAST_FWD + "']");
-	protected JQueryLocator fastNextButtonDis = jq("span[class='" + CLASS_OF_BUTTON_FAST_FWD + " " + CLASS_OF_BUTTON_DIS + "']");
-	
-	protected JQueryLocator buttonWithNumberOfPageActive = jq("span[class*='" + CLASS_OF_ACTIVE_BUTTON_WITH_NUMBER + "']");
-	
-	/* *********************************************************************************************************************************
-	 * Help methods
-	 *************************************************************************************************************************************/
+    protected final String CLASS_OF_BUTTON_FIRST = "rf-ds-btn rf-ds-btn-first";
+    protected final String CLASS_OF_BUTTON_FAST_RWD = "rf-ds-btn rf-ds-btn-fastrwd";
+    protected final String CLASS_OF_BUTTON_PREV = "rf-ds-btn rf-ds-btn-prev";
+    protected final String CLASS_OF_BUTTON_NEXT = "rf-ds-btn rf-ds-btn-next";
+    protected final String CLASS_OF_BUTTON_FAST_FWD = "rf-ds-btn rf-ds-btn-fastfwd";
+    protected final String CLASS_OF_BUTTON_LAST = "rf-ds-btn rf-ds-btn-last";
+    protected final String CLASS_OF_BUTTON_DIS = "rf-ds-dis";
 
-	/**
-	 * Gets the number of the current page
-	 * @return number of the current page
-	 */
-	protected int getNumberOfCurrentPage() {
-		
-		String currentPage = selenium.getText( buttonWithNumberOfPageActive ).trim();
-		int currentPageInt = Integer.valueOf(currentPage).intValue();
-		
-		return currentPageInt;
-	}
+    protected final String CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER = "rf-ds-nmb-btn";
+    protected final String CLASS_OF_ACTIVE_BUTTON_WITH_NUMBER = CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER + " rf-ds-act";
+
+    /* ***********************************************************************************************************
+     * Locators
+     * ***********************************************************************************************************
+     */
+
+    protected JQueryLocator nextButton = jq("a[class='" + CLASS_OF_BUTTON_NEXT + "']");
+    protected JQueryLocator nextButtonDis = jq("span[class='" + CLASS_OF_BUTTON_NEXT + " " + CLASS_OF_BUTTON_DIS + "']");
+
+    protected JQueryLocator previousButton = jq("a[class='" + CLASS_OF_BUTTON_PREV + "']");
+    protected JQueryLocator previousButtonDis = jq("span[class='" + CLASS_OF_BUTTON_PREV + " " + CLASS_OF_BUTTON_DIS
+        + "']");
+
+    protected JQueryLocator firstPageButton = jq("a[class='" + CLASS_OF_BUTTON_FIRST + "']");
+    protected JQueryLocator firstPageButtonDis = jq("span[class='" + CLASS_OF_BUTTON_FIRST + " " + CLASS_OF_BUTTON_DIS
+        + "']");
+
+    protected JQueryLocator lastPageButton = jq("a[class='" + CLASS_OF_BUTTON_LAST + "']");
+    protected JQueryLocator lastPageButtonDis = jq("span[class='" + CLASS_OF_BUTTON_LAST + " " + CLASS_OF_BUTTON_DIS
+        + "']");
+
+    protected JQueryLocator fastPrevButton = jq("a[class='" + CLASS_OF_BUTTON_FAST_RWD + "']");
+    protected JQueryLocator fastPrevButtonDis = jq("span[class='" + CLASS_OF_BUTTON_FAST_RWD + " "
+        + CLASS_OF_BUTTON_DIS + "']");
+
+    protected JQueryLocator fastNextButton = jq("a[class='" + CLASS_OF_BUTTON_FAST_FWD + "']");
+    protected JQueryLocator fastNextButtonDis = jq("span[class='" + CLASS_OF_BUTTON_FAST_FWD + " "
+        + CLASS_OF_BUTTON_DIS + "']");
+
+    protected JQueryLocator buttonWithNumberOfPageActive = jq("span[class*='" + CLASS_OF_ACTIVE_BUTTON_WITH_NUMBER
+        + "']");
+
+    /* *********************************************************************************************************************************
+     * Help methods
+     * ******************************************************************************************************
+     * *****************************
+     */
+
+    /**
+     * Gets the number of the current page
+     *
+     * @return number of the current page
+     */
+    protected int getNumberOfCurrentPage() {
+
+        String currentPage = selenium.getText(buttonWithNumberOfPageActive).trim();
+        int currentPageInt = Integer.valueOf(currentPage).intValue();
+
+        return currentPageInt;
+    }
 }

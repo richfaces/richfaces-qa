@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataTable;
 
-
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -37,70 +36,74 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestTableStyling extends AbstractDataIterationWithCars {
-	
-	/*
-	 * Locators
-	 **************************************************************************************************************/
-	JQueryLocator firstRow = jq("tbody.rf-dt-b tr:eq(0)");
-	JQueryLocator tenthRow = jq("tbody.rf-dt-b tr:eq(9)");
-	JQueryLocator lastRow = jq("tbody.rf-dt-b tr:last");
-	JQueryLocator tbody = jq("tbody.rf-dt-b");
-	
-	
-	/*
-	 * Since the samples with the cars are created dynamically, I am testing only whether rows in the table
-	 * are non empty strings, and then whether the class of row is changed, when the mouse is over them
-	 */
-	@Test
-	public void testTableContainsSomeData() {
-		
-		assertFalse(testWhetherTableContainsNonEmptyStrings(tbody), "The table should contain some data!");
-		
-	}
-	
-	@Test
-	public void testAllRowsHighlighting() {
-		
-		assertTrue(isAllRowsHighLightedWhenMouseIsOverThem(), "The rows should be highlighted when the mouse is over them!");
-		
-	}
-	
-	/*
-	 * help methods
-	 *********************************************************************************************************************************/
-	
-	private boolean isAllRowsHighLightedWhenMouseIsOverThem() {
-		
-		JQueryLocator trs = jq( tbody.getRawLocator() + " > tr");
-		
-		for( Iterator<JQueryLocator> i = trs.iterator(); i.hasNext(); ) {
-			
-			boolean result = isRowHighlighted(i.next());
-			
-			if(!result) {
-				
-				return false;
-			}
-			
-		}
-		
-		return true;
-	}
-	
-	/**
-	 * Tests whether the row is higlighted when mouse is over it, the class of the row is changed, it then contains
-	 * active row string
-	 * @param row
-	 * @return true if the row is highlighted, false otherwise
-	 */
-	private boolean isRowHighlighted(JQueryLocator row) {
-		
-		selenium.mouseOver(row);
-		
-		String rowClass = (selenium.getAttribute(row.getAttribute(Attribute.CLASS)));
-		
-		selenium.mouseOut(row);
-	
-		return rowClass.contains("active-row");
-	}
+
+    /*
+     * Locators
+     * ************************************************************************************************************
+     */
+    JQueryLocator firstRow = jq("tbody.rf-dt-b tr:eq(0)");
+    JQueryLocator tenthRow = jq("tbody.rf-dt-b tr:eq(9)");
+    JQueryLocator lastRow = jq("tbody.rf-dt-b tr:last");
+    JQueryLocator tbody = jq("tbody.rf-dt-b");
+
+    /*
+     * Since the samples with the cars are created dynamically, I am testing only whether rows in the table are non
+     * empty strings, and then whether the class of row is changed, when the mouse is over them
+     */
+    @Test
+    public void testTableContainsSomeData() {
+
+        assertFalse(testWhetherTableContainsNonEmptyStrings(tbody), "The table should contain some data!");
+
+    }
+
+    @Test
+    public void testAllRowsHighlighting() {
+
+        assertTrue(isAllRowsHighLightedWhenMouseIsOverThem(),
+            "The rows should be highlighted when the mouse is over them!");
+
+    }
+
+    /*
+     * help methods
+     * ******************************************************************************************************
+     * *************************
+     */
+
+    private boolean isAllRowsHighLightedWhenMouseIsOverThem() {
+
+        JQueryLocator trs = jq(tbody.getRawLocator() + " > tr");
+
+        for (Iterator<JQueryLocator> i = trs.iterator(); i.hasNext();) {
+
+            boolean result = isRowHighlighted(i.next());
+
+            if (!result) {
+
+                return false;
+            }
+
+        }
+
+        return true;
+    }
+
+    /**
+     * Tests whether the row is higlighted when mouse is over it, the class of the row is changed, it then contains
+     * active row string
+     *
+     * @param row
+     * @return true if the row is highlighted, false otherwise
+     */
+    private boolean isRowHighlighted(JQueryLocator row) {
+
+        selenium.mouseOver(row);
+
+        String rowClass = (selenium.getAttribute(row.getAttribute(Attribute.CLASS)));
+
+        selenium.mouseOut(row);
+
+        return rowClass.contains("active-row");
+    }
 }

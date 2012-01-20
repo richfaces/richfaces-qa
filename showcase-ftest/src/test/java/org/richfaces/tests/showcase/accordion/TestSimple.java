@@ -29,7 +29,6 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.showcase.panel.AbstractPanelTest;
 import org.testng.annotations.Test;
 
-
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
@@ -37,50 +36,44 @@ import org.testng.annotations.Test;
 
 public class TestSimple extends AbstractPanelTest {
 
-	/* *************************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * *******************
-	 */
+    /* *************************************************************************************
+     * Locators ****************************************************************** *******************
+     */
 
-	protected JQueryLocator firstAccordionPanelControl = jq("div.rf-ac-itm div[class*=rf-ac-itm-hdr]:eq(0)");
-	protected JQueryLocator secondAccordionPanelControl = jq("div.rf-ac-itm div[class*=rf-ac-itm-hdr]:eq(1)");
-	protected String bodyOfTheFirstPanel = "div.rf-ac-itm-cnt:eq(0)";
-	protected String bodyOfTheSecondPanel = "div.rf-ac-itm-cnt:eq(1)";
+    protected JQueryLocator firstAccordionPanelControl = jq("div.rf-ac-itm div[class*=rf-ac-itm-hdr]:eq(0)");
+    protected JQueryLocator secondAccordionPanelControl = jq("div.rf-ac-itm div[class*=rf-ac-itm-hdr]:eq(1)");
+    protected String bodyOfTheFirstPanel = "div.rf-ac-itm-cnt:eq(0)";
+    protected String bodyOfTheSecondPanel = "div.rf-ac-itm-cnt:eq(1)";
 
-	/* ***************************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * ******************
-	 */
+    /* ***************************************************************************************
+     * Tests ********************************************************************* ******************
+     */
 
-	@Test
-	public void testAccordionAndContent() {
+    @Test
+    public void testAccordionAndContent() {
 
-		JQueryLocator bodyOfTheFirstPanelLoc = jq(bodyOfTheFirstPanel);
-		JQueryLocator bodyOfTheSecondPanelLoc = jq(bodyOfTheSecondPanel);
+        JQueryLocator bodyOfTheFirstPanelLoc = jq(bodyOfTheFirstPanel);
+        JQueryLocator bodyOfTheSecondPanelLoc = jq(bodyOfTheSecondPanel);
 
-		if (!selenium.isVisible(bodyOfTheFirstPanelLoc)) {
+        if (!selenium.isVisible(bodyOfTheFirstPanelLoc)) {
 
-			guardNoRequest(selenium).click(firstAccordionPanelControl);
-		}
+            guardNoRequest(selenium).click(firstAccordionPanelControl);
+        }
 
-		checkContentOfPanel(bodyOfTheFirstPanel, RICH_FACES_INFO);
+        checkContentOfPanel(bodyOfTheFirstPanel, RICH_FACES_INFO);
 
-		guardNoRequest(selenium).click(secondAccordionPanelControl);
+        guardNoRequest(selenium).click(secondAccordionPanelControl);
 
-		assertFalse(selenium.isVisible(bodyOfTheFirstPanelLoc),
-				"The body of the first panel should not be visible, since "
-						+ "the panel is hidden!");
+        assertFalse(selenium.isVisible(bodyOfTheFirstPanelLoc),
+            "The body of the first panel should not be visible, since " + "the panel is hidden!");
 
-		checkContentOfPanel(bodyOfTheSecondPanel, RICH_FACES_JSF_INFO);
+        checkContentOfPanel(bodyOfTheSecondPanel, RICH_FACES_JSF_INFO);
 
-		guardNoRequest(selenium).click(firstAccordionPanelControl);
+        guardNoRequest(selenium).click(firstAccordionPanelControl);
 
-		assertFalse(selenium.isVisible(bodyOfTheSecondPanelLoc),
-				"The body of the second panel should not be visible, since "
-						+ "the panel is hidden!");
+        assertFalse(selenium.isVisible(bodyOfTheSecondPanelLoc),
+            "The body of the second panel should not be visible, since " + "the panel is hidden!");
 
-	}
+    }
 
 }

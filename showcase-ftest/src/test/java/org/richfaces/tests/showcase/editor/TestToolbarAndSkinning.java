@@ -27,9 +27,7 @@ import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.richfaces.tests.showcase.AbstractAjocadoTest;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -37,65 +35,62 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestToolbarAndSkinning extends AbstractAjocadoTest {
-	
-	/* ***************************************************************************************
-	 * Locators
-	 *****************************************************************************************/
 
-	protected JQueryLocator buttonOfEditor = jq(".cke_button"); 
-	
-	protected JQueryLocator basicEditorCheckbox = jq("input[id*='toolbarSelection:0']");
-	protected JQueryLocator fullEditorCheckbox = jq("input[id*='toolbarSelection:1']");
-	protected JQueryLocator customEditorCheckbox = jq("input[id*='toolbarSelection:2']");
-	
-	
-	/* **********************************************************************************************************************
-	 * Constants
-	 * *****************************************************************
-	 * *****************************************************
-	 */
-	
-	protected final int BASIC_NUMBERS = 28; //there are four skins therefore 4 * 7 buttons
-	protected final int FULL_NUMBERS = 83; // the same
-	protected final int CUSTOM_NUMBERS = 56; // the same
+    /* ***************************************************************************************
+     * Locators***************************************************************************************
+     */
 
-	/* ***********************************************************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * ***************************************************
-	 */
-	
-	@Test
-	public void testNumberOfButtonsBasicEditor() {
-		
-		selenium.check(basicEditorCheckbox);
-		guardXhr(selenium).fireEvent(basicEditorCheckbox, Event.CLICK);
-		
-		int numberOfButtonsActual = selenium.getCount(buttonOfEditor);
-		
-		assertEquals(numberOfButtonsActual, BASIC_NUMBERS, "The number of buttons in basic mode is incorrect!");
-	}
-	
-	@Test
-	public void testNumberOfButtonsFullEditor() {
-		
-		selenium.check(fullEditorCheckbox);
-		guardXhr(selenium).fireEvent(fullEditorCheckbox, Event.CLICK);
-		
-		int numberOfButtonsActual = selenium.getCount(buttonOfEditor);
-		
-		assertEquals(numberOfButtonsActual, FULL_NUMBERS, "The number of buttons in full mode is incorrect!");
-	}
-	
-	@Test 
-	public void testNumberOfButtonsCustomEditor() {
-		
-		selenium.check(customEditorCheckbox);
-		guardXhr(selenium).fireEvent(customEditorCheckbox, Event.CLICK);
-		
-		int numberOfButtonsActual = selenium.getCount(buttonOfEditor);
-		
-		assertEquals(numberOfButtonsActual, CUSTOM_NUMBERS, "The number of buttons in custom mode is incorrect!");
-	}
+    protected JQueryLocator buttonOfEditor = jq(".cke_button");
+
+    protected JQueryLocator basicEditorCheckbox = jq("input[id*='toolbarSelection:0']");
+    protected JQueryLocator fullEditorCheckbox = jq("input[id*='toolbarSelection:1']");
+    protected JQueryLocator customEditorCheckbox = jq("input[id*='toolbarSelection:2']");
+
+    /* **********************************************************************************************************************
+     * Constants *****************************************************************
+     * *****************************************************
+     */
+
+    protected final int BASIC_NUMBERS = 28; // there are four skins therefore 4 * 7 buttons
+    protected final int FULL_NUMBERS = 83; // the same
+    protected final int CUSTOM_NUMBERS = 56; // the same
+
+    /* ***********************************************************************************************************************
+     * Tests *********************************************************************
+     * ***************************************************
+     */
+
+    @Test
+    public void testNumberOfButtonsBasicEditor() {
+
+        selenium.check(basicEditorCheckbox);
+        guardXhr(selenium).fireEvent(basicEditorCheckbox, Event.CLICK);
+
+        int numberOfButtonsActual = selenium.getCount(buttonOfEditor);
+
+        assertEquals(numberOfButtonsActual, BASIC_NUMBERS, "The number of buttons in basic mode is incorrect!");
+    }
+
+    @Test
+    public void testNumberOfButtonsFullEditor() {
+
+        selenium.check(fullEditorCheckbox);
+        guardXhr(selenium).fireEvent(fullEditorCheckbox, Event.CLICK);
+
+        int numberOfButtonsActual = selenium.getCount(buttonOfEditor);
+
+        assertEquals(numberOfButtonsActual, FULL_NUMBERS, "The number of buttons in full mode is incorrect!");
+    }
+
+    @Test
+    public void testNumberOfButtonsCustomEditor() {
+
+        selenium.check(customEditorCheckbox);
+        guardXhr(selenium).fireEvent(customEditorCheckbox, Event.CLICK);
+
+        int numberOfButtonsActual = selenium.getCount(buttonOfEditor);
+
+        assertEquals(numberOfButtonsActual, CUSTOM_NUMBERS, "The number of buttons in custom mode is incorrect!");
+    }
 
 }

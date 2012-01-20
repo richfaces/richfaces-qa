@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.push;
 
-
 import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
 import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
@@ -44,77 +43,68 @@ import org.testng.annotations.Test;
  */
 public class TestPushTopicsContext extends AbstractAjocadoTest {
 
-	/* *****************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * ***********
-	 */
-	private JQueryLocator uuid = jq("div[id$=uuid]");
+    /* *****************************************************************************
+     * Locators ****************************************************************** ***********
+     */
+    private JQueryLocator uuid = jq("div[id$=uuid]");
 
-	/* *****************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * ********
-	 */
-	@Test
-	public void testUuidIsChangingInSomeIntervals() {
+    /* *****************************************************************************
+     * Tests ********************************************************************* ********
+     */
+    @Test
+    public void testUuidIsChangingInSomeIntervals() {
+        TextRetriever uuidRetriever = retrieveText.locator(uuid);
+        uuidRetriever.initializeValue();
 
-		TextRetriever uuidRetriever = retrieveText.locator(uuid);
-		uuidRetriever.initializeValue();
-		
-		checkTheUuid(uuidRetriever);
-		
-		List<Long> deviations = new ArrayList<Long>();
-		
-		for( int i = 0; i < 20; i++ ) {
-			
-			Long deviation = checkDeviation(uuidRetriever);
-			
-			deviations.add(deviation);
-		}
-		
-		Collections.sort(deviations);
-		
-		long median = deviations.get(9);
-		assertTrue( ((median > 4800) && (median < 5200)), "The median of five measurements should be in range of (4800ms, 5200ms)");
-	}
+        checkTheUuid(uuidRetriever);
 
-	/* *******************************************************************************
-	 * Help methods
-	 * **************************************************************
-	 * *****************
-	 */
+        List<Long> deviations = new ArrayList<Long>();
 
-	/**
-	 * Checks the deviation between two pushes, also checking that the uuid is changing
-	 * 
-	 * @param uuidRetriever retriever which points to the uuid text
-	 * @return the deviation between two pushes
-	 */
-	private Long checkDeviation( TextRetriever uuidRetriever ) {
+        for (int i = 0; i < 20; i++) {
 
-		Long beforePush = System.currentTimeMillis();
+            Long deviation = checkDeviation(uuidRetriever);
 
-		waitAjax.failWith(
-				new RuntimeException(
-						"The uuid is not changing, it is still the same!"))
-				.waitForChangeAndReturn(uuidRetriever);
-		
-		Long afterPush = System.currentTimeMillis();
-		
-		checkTheUuid(uuidRetriever);
-		
-		return new Long(afterPush - beforePush);
-	}
-	
-	/**
-	 * Check very simply whether uuid is correct, it means whether it has 36 characters and that contains 4 hyphens
-	 */
-	private void checkTheUuid( TextRetriever uuidRetriever ) {
-		
-		String uuid = uuidRetriever.getValue();
-		
-		assertEquals(uuid.length(), 36, "The length of uuid is wrong!");
-		assertEquals(StringUtils.countMatches(uuid, "-"), 4, "Wrong uuid, there should be 4 hyphens");
-	}
+            deviations.add(deviation);
+        }
+
+        Collections.sort(deviations);
+
+        long median = deviations.get(9);
+        assertTrue(((median > 4800) && (median < 5200)),
+            "The median of five measurements should be in range of (4800ms, 5200ms)");
+    }
+
+    /* *******************************************************************************
+     * Help methods ************************************************************** *****************
+     */
+
+    /**
+     * Checks the deviation between two pushes, also checking that the uuid is changing
+     *
+     * @param uuidRetriever
+     *            retriever which points to the uuid text
+     * @return the deviation between two pushes
+     */
+    private Long checkDeviation(TextRetriever uuidRetriever) {
+        Long beforePush = System.currentTimeMillis();
+
+        waitAjax.failWith(new RuntimeException("The uuid is not changing, it is still the same!"))
+            .waitForChangeAndReturn(uuidRetriever);
+
+        Long afterPush = System.currentTimeMillis();
+
+        checkTheUuid(uuidRetriever);
+
+        return new Long(afterPush - beforePush);
+    }
+
+    /**
+     * Check very simply whether uuid is correct, it means whether it has 36 characters and that contains 4 hyphens
+     */
+    private void checkTheUuid(TextRetriever uuidRetriever) {
+        String uuid = uuidRetriever.getValue();
+
+        assertEquals(uuid.length(), 36, "The length of uuid is wrong!");
+        assertEquals(StringUtils.countMatches(uuid, "-"), 4, "Wrong uuid, there should be 4 hyphens");
+    }
 }

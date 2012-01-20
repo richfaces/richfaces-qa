@@ -8,81 +8,70 @@ import static org.testng.Assert.fail;
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.richfaces.tests.showcase.AbstractAjocadoTest;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TestAdvancedConfiguration extends AbstractAjocadoTest {
 
-	/* ******************************************************************************
-	 * Constants
-	 * *****************************************************************
-	 * ****************
-	 */
-	
-	protected final String NEW_PAGE_ENG = "New Page";
-	protected final String NEW_PAGE_FR = "Nouvelle page";
-	protected final String NEW_PAGE_DE = "Neue Seite";
+    /* ******************************************************************************
+     * Constants ***************************************************************** ****************
+     */
 
-	/* ***************************************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * *********************************
-	 */
+    protected final String NEW_PAGE_ENG = "New Page";
+    protected final String NEW_PAGE_FR = "Nouvelle page";
+    protected final String NEW_PAGE_DE = "Neue Seite";
 
-	protected JQueryLocator englishCheckbox = jq("input[type=radio]:eq(0)");
-	protected JQueryLocator frenchCheckbox = jq("input[type=radio]:eq(1)");
-	protected JQueryLocator germanCheckbox = jq("input[type=radio]:eq(2)");
+    /* ***************************************************************************************************
+     * Locators ****************************************************************** *********************************
+     */
 
-	protected JQueryLocator newPageButton = jq(".cke_button_newpage");
+    protected JQueryLocator englishCheckbox = jq("input[type=radio]:eq(0)");
+    protected JQueryLocator frenchCheckbox = jq("input[type=radio]:eq(1)");
+    protected JQueryLocator germanCheckbox = jq("input[type=radio]:eq(2)");
 
-	/* **************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * *****
-	 */
+    protected JQueryLocator newPageButton = jq(".cke_button_newpage");
 
-	@Test
-	public void testEnglishLanguage() {
-		
-		selenium.check(englishCheckbox);
-		guardXhr(selenium).fireEvent(englishCheckbox, Event.CLICK);
-		
-		String titleOfNewPageButton = 
-				selenium.getAttribute(newPageButton.getAttribute(Attribute.TITLE));
-		
-		assertEquals( titleOfNewPageButton, NEW_PAGE_ENG, "The language was not changed to english!");
-	}
-	
-	@Test
-	public void testFrenchLanguage() {
-		
-		selenium.check(frenchCheckbox);
-		guardXhr(selenium).fireEvent(frenchCheckbox, Event.CLICK);
-		
-		String titleOfNewPageButton = 
-				selenium.getAttribute(newPageButton.getAttribute(Attribute.TITLE));
-		
-		assertEquals( titleOfNewPageButton, NEW_PAGE_FR, "The language was not changed to french!");
-	}
-	
-	@Test
-	public void testGermanLanguage() {
-		
-		selenium.check(germanCheckbox);
-		guardXhr(selenium).fireEvent(germanCheckbox, Event.CLICK);
-		
-		String titleOfNewPageButton = 
-				selenium.getAttribute(newPageButton.getAttribute(Attribute.TITLE));
-		
-		assertEquals( titleOfNewPageButton, NEW_PAGE_DE, "The language was not changed to german!");
-	}
-	
-	@Test( groups = {"4.2"} )
-	public void testUserFocusAutomaticallyOnEditor() {
-		
-		fail("implement me correctly!");
-	}
-	
+    /* **************************************************************************
+     * Tests ********************************************************************* *****
+     */
+
+    @Test
+    public void testEnglishLanguage() {
+
+        selenium.check(englishCheckbox);
+        guardXhr(selenium).fireEvent(englishCheckbox, Event.CLICK);
+
+        String titleOfNewPageButton = selenium.getAttribute(newPageButton.getAttribute(Attribute.TITLE));
+
+        assertEquals(titleOfNewPageButton, NEW_PAGE_ENG, "The language was not changed to english!");
+    }
+
+    @Test
+    public void testFrenchLanguage() {
+
+        selenium.check(frenchCheckbox);
+        guardXhr(selenium).fireEvent(frenchCheckbox, Event.CLICK);
+
+        String titleOfNewPageButton = selenium.getAttribute(newPageButton.getAttribute(Attribute.TITLE));
+
+        assertEquals(titleOfNewPageButton, NEW_PAGE_FR, "The language was not changed to french!");
+    }
+
+    @Test
+    public void testGermanLanguage() {
+
+        selenium.check(germanCheckbox);
+        guardXhr(selenium).fireEvent(germanCheckbox, Event.CLICK);
+
+        String titleOfNewPageButton = selenium.getAttribute(newPageButton.getAttribute(Attribute.TITLE));
+
+        assertEquals(titleOfNewPageButton, NEW_PAGE_DE, "The language was not changed to german!");
+    }
+
+    @Test(groups = { "4.2" })
+    public void testUserFocusAutomaticallyOnEditor() {
+
+        fail("implement me correctly!");
+    }
+
 }

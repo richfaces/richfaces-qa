@@ -27,9 +27,7 @@ import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.richfaces.tests.showcase.JQueryScriptWindowObject;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -38,70 +36,68 @@ import org.testng.annotations.Test;
  */
 public class TestStackingMessages extends AbstractNotifyTest {
 
-	/* *********************************************************
-	 * Constants
-	 ***********************************************************/
-	
-	private final int TIMEOUT_RENDER = 2000;
-	private final int TIMEOUT_DISAPPEAR = 11000;
-	
-	/* ***************************************************************************************************
-	 * Locators
-	 *****************************************************************************************************/
-	
-	private JQueryLocator  renderFirstButtonTopLeft = jq("input[type=submit]:eq(0)");
-	private JQueryLocator renderSecondBottomRight = jq("input[type=submit]:eq(1)");
-	
-	/* **********************************************************************
-	 * Tests
-	 ***********************************************************************/
-	
-	@Test
-	public void testRenderFirst() {
-		
-		waitUntilNotifyDissappeares(TIMEOUT_DISAPPEAR);
-		
-		guardXhr(selenium).click(renderFirstButtonTopLeft);
-		
-		waitUntilNotifyAppears(TIMEOUT_RENDER);
-		
-		Point notifyPosition = selenium.getElementPosition(notify);
-		
-		JQueryScriptWindowObject heightJQ = new JQueryScriptWindowObject("height()");
-		JQueryScriptWindowObject widthJQ = new JQueryScriptWindowObject("width()");
-		
-		String screenHeight = selenium.getEval( heightJQ );
-		String screenWidth = selenium.getEval( widthJQ );
-		
-		System.err.println(screenHeight + " " + screenWidth);
-		System.err.println(notifyPosition.getX() + " " + notifyPosition.getY());
-	
-		assertTrue( notifyPosition.getX() < ((Integer.valueOf(screenWidth) / 10)), "The X coordination is wrong");
-		assertTrue( notifyPosition.getY() < ((Integer.valueOf(screenHeight) / 10)), "The Y coordination is wrong");
-	}
-	
-	@Test
-	public void testRenderSecond() {
-		
-		waitUntilNotifyDissappeares(TIMEOUT_DISAPPEAR);
-		
-		guardXhr(selenium).click(renderSecondBottomRight);
-		
-		waitUntilNotifyAppears(TIMEOUT_RENDER);
-		
-		Point notifyPosition = selenium.getElementPosition(notify);
-		
-		JQueryScriptWindowObject heightJQ = new JQueryScriptWindowObject("height()");
-		JQueryScriptWindowObject widthJQ = new JQueryScriptWindowObject("width()");
-		
-		String screenHeight = selenium.getEval( heightJQ );
-		String screenWidth = selenium.getEval( widthJQ );
-		
-		System.err.println(screenHeight + " " + screenWidth);
-		System.err.println(notifyPosition.getX() + " " + notifyPosition.getY());
-		
-		assertTrue( notifyPosition.getX() > ((Integer.valueOf(screenWidth) / 10) * 6), "The X coordination is wrong");
-		assertTrue( notifyPosition.getY() > ((Integer.valueOf(screenHeight) / 10) * 8), "The Y coordination is wrong");
-	}
+    /* *********************************************************
+     * Constants*********************************************************
+     */
+
+    private final int TIMEOUT_RENDER = 2000;
+    private final int TIMEOUT_DISAPPEAR = 11000;
+
+    /* ***************************************************************************************************
+     * Locators***************************************************************************************************
+     */
+
+    private JQueryLocator renderFirstButtonTopLeft = jq("input[type=submit]:eq(0)");
+    private JQueryLocator renderSecondBottomRight = jq("input[type=submit]:eq(1)");
+
+    /* **********************************************************************
+     * Tests*********************************************************************
+     */
+
+    @Test
+    public void testRenderFirst() {
+        waitUntilNotifyDissappeares(TIMEOUT_DISAPPEAR);
+
+        guardXhr(selenium).click(renderFirstButtonTopLeft);
+
+        waitUntilNotifyAppears(TIMEOUT_RENDER);
+
+        Point notifyPosition = selenium.getElementPosition(notify);
+
+        JQueryScriptWindowObject heightJQ = new JQueryScriptWindowObject("height()");
+        JQueryScriptWindowObject widthJQ = new JQueryScriptWindowObject("width()");
+
+        String screenHeight = selenium.getEval(heightJQ);
+        String screenWidth = selenium.getEval(widthJQ);
+
+        System.err.println(screenHeight + " " + screenWidth);
+        System.err.println(notifyPosition.getX() + " " + notifyPosition.getY());
+
+        assertTrue(notifyPosition.getX() < ((Integer.valueOf(screenWidth) / 10)), "The X coordination is wrong");
+        assertTrue(notifyPosition.getY() < ((Integer.valueOf(screenHeight) / 10)), "The Y coordination is wrong");
+    }
+
+    @Test
+    public void testRenderSecond() {
+        waitUntilNotifyDissappeares(TIMEOUT_DISAPPEAR);
+
+        guardXhr(selenium).click(renderSecondBottomRight);
+
+        waitUntilNotifyAppears(TIMEOUT_RENDER);
+
+        Point notifyPosition = selenium.getElementPosition(notify);
+
+        JQueryScriptWindowObject heightJQ = new JQueryScriptWindowObject("height()");
+        JQueryScriptWindowObject widthJQ = new JQueryScriptWindowObject("width()");
+
+        String screenHeight = selenium.getEval(heightJQ);
+        String screenWidth = selenium.getEval(widthJQ);
+
+        System.err.println(screenHeight + " " + screenWidth);
+        System.err.println(notifyPosition.getX() + " " + notifyPosition.getY());
+
+        assertTrue(notifyPosition.getX() > ((Integer.valueOf(screenWidth) / 10) * 6), "The X coordination is wrong");
+        assertTrue(notifyPosition.getY() > ((Integer.valueOf(screenHeight) / 10) * 8), "The Y coordination is wrong");
+    }
 
 }

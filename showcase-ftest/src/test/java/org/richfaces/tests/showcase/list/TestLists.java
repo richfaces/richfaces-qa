@@ -37,55 +37,57 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestLists extends AbstractAjocadoTest {
-	
-	/* *****************************************************************************
-	 * Locators
-	 *******************************************************************************/
-	
-	private JQueryLocator orderedList = jq("a:contains('ordered')");
-	private JQueryLocator unordered = jq("a:contains('unordered')");
-	private JQueryLocator definitions = jq("a:contains('definitions')");
-	
-	/* ***********************************************************************************************
-	 * Tests
-	 *************************************************************************************************/
-	
-	@Test
-	public void testOrderedList() {
-	
-		checkList(orderedList, "ol#list");
-	}
-	
-	@Test
-	public void testUnorderedList() {
-		
-		checkList(unordered, "ul#list");
-	}
-	
-	@Test
-	public void testDefinitionsList() {
-		
-		checkList(definitions, "dl#list");
-	}
-	
-	/* ********************************************************************************************************************
-	 * Help methods
-	 **********************************************************************************************************************/
-	
-	private void checkList( JQueryLocator typeOfList, String listString) {
-		
-		guardXhr(selenium).click(typeOfList);
-		
-		JQueryLocator list = jq(listString);
-		
-		assertTrue( selenium.isElementPresent(list), "There should list " + listString );
-		
-		JQueryLocator liElement = jq( listString + " > li");
-		
-		for( Iterator<JQueryLocator> i = liElement.iterator(); i.hasNext(); ) {
-			
-			String textOfLi = selenium.getText(i.next()).trim();
-			assertFalse( textOfLi.equals(""), "The list should not contain empty strings");
-		}
-	}
+
+    /* *****************************************************************************
+     * Locators*****************************************************************************
+     */
+
+    private JQueryLocator orderedList = jq("a:contains('ordered')");
+    private JQueryLocator unordered = jq("a:contains('unordered')");
+    private JQueryLocator definitions = jq("a:contains('definitions')");
+
+    /* ***********************************************************************************************
+     * Tests***********************************************************************************************
+     */
+
+    @Test
+    public void testOrderedList() {
+
+        checkList(orderedList, "ol#list");
+    }
+
+    @Test
+    public void testUnorderedList() {
+
+        checkList(unordered, "ul#list");
+    }
+
+    @Test
+    public void testDefinitionsList() {
+
+        checkList(definitions, "dl#list");
+    }
+
+    /* ********************************************************************************************************************
+     * Help methods
+     * ******************************************************************************************************
+     * **************
+     */
+
+    private void checkList(JQueryLocator typeOfList, String listString) {
+
+        guardXhr(selenium).click(typeOfList);
+
+        JQueryLocator list = jq(listString);
+
+        assertTrue(selenium.isElementPresent(list), "There should list " + listString);
+
+        JQueryLocator liElement = jq(listString + " > li");
+
+        for (Iterator<JQueryLocator> i = liElement.iterator(); i.hasNext();) {
+
+            String textOfLi = selenium.getText(i.next()).trim();
+            assertFalse(textOfLi.equals(""), "The list should not contain empty strings");
+        }
+    }
 }

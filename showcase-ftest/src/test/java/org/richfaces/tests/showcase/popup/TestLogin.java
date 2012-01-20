@@ -35,49 +35,48 @@ import org.testng.annotations.Test;
  */
 public class TestLogin extends AbstractPoppupPanel {
 
-	/* ********************************************************************************
-	 * Locators 
-	 **********************************************************************************/
-	
-	protected JQueryLocator loginAnchorOnTheToolbar = jq("a:contains('Login'):eq(0)");
-	protected JQueryLocator loginAnchorOnThePoppup = jq("a:contains('Login'):eq(1)");
-	protected JQueryLocator searchAnchorOnTheToolbar = jq("a:contains('Search'):eq(0)");
-	protected JQueryLocator searchAnchorOnThePoppup = jq("a:contains('Search'):eq(1)");
-	
-	/* **********************************************************************************
-	 * Tests
-	 ************************************************************************************/
-	
-	@Test
-	public void testLoginPoppup() {
-		
-		checkPoppupPanel(loginAnchorOnTheToolbar, loginAnchorOnThePoppup);
-	}
-	
-	@Test 
-	public void testSearchPoppup() {
-		
-		checkPoppupPanel(searchAnchorOnTheToolbar, searchAnchorOnThePoppup);
-	}
-	
-	/* *****************************************************************************************************
-	 * Help methods
-	 *******************************************************************************************************/
-	
-	/**
-	 * Call the poppup panel, and then hides it, check for presence
-	 * 
-	 * @param callPoppupButton the button by which the poppup is called
-	 * @param closingPoppupButton the button by which the poppup is closed
-	 */
-	private void checkPoppupPanel( JQueryLocator callPoppupButton, JQueryLocator closingPoppupButton) {
-		
-		guardNoRequest(selenium).click(callPoppupButton);
-		
-		assertTrue( selenium.isElementPresent(poppupPanelContent), "The poppup panel should be visible!" );
-		
-		guardNoRequest(selenium).click(closingPoppupButton);
-		
-		assertFalse(selenium.isVisible(poppupPanelContent), "The poppup panel should not be visible!");
-	}
+    /* ********************************************************************************
+     * Locators********************************************************************************
+     */
+
+    protected JQueryLocator loginAnchorOnTheToolbar = jq("a:contains('Login'):eq(0)");
+    protected JQueryLocator loginAnchorOnThePoppup = jq("a:contains('Login'):eq(1)");
+    protected JQueryLocator searchAnchorOnTheToolbar = jq("a:contains('Search'):eq(0)");
+    protected JQueryLocator searchAnchorOnThePoppup = jq("a:contains('Search'):eq(1)");
+
+    /* **********************************************************************************
+     * Tests**********************************************************************************
+     */
+
+    @Test
+    public void testLoginPoppup() {
+        checkPoppupPanel(loginAnchorOnTheToolbar, loginAnchorOnThePoppup);
+    }
+
+    @Test
+    public void testSearchPoppup() {
+        checkPoppupPanel(searchAnchorOnTheToolbar, searchAnchorOnThePoppup);
+    }
+
+    /* *****************************************************************************************************
+     * Help methods*****************************************************************************************************
+     */
+
+    /**
+     * Call the poppup panel, and then hides it, check for presence
+     *
+     * @param callPoppupButton
+     *            the button by which the poppup is called
+     * @param closingPoppupButton
+     *            the button by which the poppup is closed
+     */
+    private void checkPoppupPanel(JQueryLocator callPoppupButton, JQueryLocator closingPoppupButton) {
+        guardNoRequest(selenium).click(callPoppupButton);
+
+        assertTrue(selenium.isElementPresent(poppupPanelContent), "The poppup panel should be visible!");
+
+        guardNoRequest(selenium).click(closingPoppupButton);
+
+        assertFalse(selenium.isVisible(poppupPanelContent), "The poppup panel should not be visible!");
+    }
 }

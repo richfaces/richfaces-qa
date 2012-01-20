@@ -35,42 +35,36 @@ import org.testng.annotations.Test;
  */
 public class TestImgUpload extends AbstractAjocadoTest {
 
-	/* ***********************************************************************
-	 * Locators
-	 * ***********************************************************************
-	 */
+    /* ***********************************************************************
+     * Locators ***********************************************************************
+     */
 
-	private JQueryLocator addButton = jq(".rf-fu-btn-add");
-	private JQueryLocator uploadArea = jq("div[id$=upload]");
-	private JQueryLocator uploadFilesInfo = jq("div[id$=info]");
-	private JQueryLocator divWithUploadFilesMessage = jq("div.rf-p-b.info");
+    private JQueryLocator addButton = jq(".rf-fu-btn-add");
+    private JQueryLocator uploadArea = jq("div[id$=upload]");
+    private JQueryLocator uploadFilesInfo = jq("div[id$=info]");
+    private JQueryLocator divWithUploadFilesMessage = jq("div.rf-p-b.info");
 
-	/* ************************************************************************
-	 * Constants
-	 * ************************************************************************
-	 */
+    /* ************************************************************************
+     * Constants ************************************************************************
+     */
 
-	private final String MSG_NO_FILES = "No files currently uploaded";
+    private final String MSG_NO_FILES = "No files currently uploaded";
 
-	/* *********************************************************************
-	 * Tests
-	 * *********************************************************************
-	 */
-	
-	@Test
-	public void testThereAreAllRequiredElements() {
+    /* *********************************************************************
+     * Tests *********************************************************************
+     */
 
-		assertTrue(selenium.isElementPresent(addButton),
-				"The add button should be there!");
-		assertTrue(selenium.isElementPresent(uploadArea),
-				"The upload area should be there!");
-		assertTrue(selenium.isElementPresent(uploadFilesInfo),
-				"The upload files info should be there!");
-		assertTrue(selenium.isElementPresent(divWithUploadFilesMessage),
-				"The div with uplad files messages should be there!");
-		assertEquals(selenium.getText(divWithUploadFilesMessage), MSG_NO_FILES,
-				"The message that no files is currently uploaded should be there!");
-		
-	}
-	
+    @Test
+    public void testThereAreAllRequiredElements() {
+
+        assertTrue(selenium.isElementPresent(addButton), "The add button should be there!");
+        assertTrue(selenium.isElementPresent(uploadArea), "The upload area should be there!");
+        assertTrue(selenium.isElementPresent(uploadFilesInfo), "The upload files info should be there!");
+        assertTrue(selenium.isElementPresent(divWithUploadFilesMessage),
+            "The div with uplad files messages should be there!");
+        assertEquals(selenium.getText(divWithUploadFilesMessage), MSG_NO_FILES,
+            "The message that no files is currently uploaded should be there!");
+
+    }
+
 }

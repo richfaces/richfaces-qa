@@ -33,9 +33,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.richfaces.tests.showcase.message.AbstractTestMessage;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -44,77 +42,66 @@ import org.testng.annotations.Test;
  */
 public class TestNotifyMessages extends AbstractTestMessage {
 
-	/* ****************************************************************
-	 * Locators****************************************************************
-	 */
+    /* ****************************************************************
+     * Locators****************************************************************
+     */
 
-	protected JQueryLocator notify = jq(".rf-ntf");
+    protected JQueryLocator notify = jq(".rf-ntf");
 
-	/* ***************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * ******
-	 */
-	@Test( groups = {"4.2"} )
-	public void testAllInputsIncorrectValuesBlurActivation() {
+    /* ***************************************************************************
+     * Tests ********************************************************************* ******
+     */
+    @Test(groups = { "4.2" })
+    public void testAllInputsIncorrectValuesBlurActivation() {
+        checkNotifyMessages(false);
+    }
 
-		checkNotifyMessages(false);
-	}
+    @Test(groups = { "4.2" })
+    public void testAllInputsIncorrectValuesSubmitActivation() {
+        checkNotifyMessages(true);
+    }
 
-	@Test( groups = {"4.2"} )
-	public void testAllInputsIncorrectValuesSubmitActivation() {
+    /* ********************************************************************************************************************
+     * Help methods **************************************************************
+     * ******************************************************
+     */
 
-		checkNotifyMessages(true);
-	}
+    private void checkNotifyMessages(boolean submitActivation) {
+        List<String> messages = new ArrayList<String>();
 
-	/* ********************************************************************************************************************
-	 * Help methods
-	 * **************************************************************
-	 * ******************************************************
-	 */
+        fillInputWithStringOfLength(nameInput, MINIMUM_OF_NAME - 1);
+        fillInputWithStringOfLength(jobInput, MINIMUM_OF_JOB - 1);
+        fillInputWithStringOfLength(addressInput, MINIMUM_OF_ADDRESS - 1);
+        fillInputWithStringOfLength(zipInput, MINIMUM_OF_ZIP - 1);
 
-	private void checkNotifyMessages(boolean submitActivation) {
+        if (submitActivation) {
 
-		List<String> messages = new ArrayList<String>();
+            waitGui.until(elementNotPresent.locator(notify));
 
-		fillInputWithStringOfLength(nameInput, MINIMUM_OF_NAME - 1);
-		fillInputWithStringOfLength(jobInput, MINIMUM_OF_JOB - 1);
-		fillInputWithStringOfLength(addressInput, MINIMUM_OF_ADDRESS - 1);
-		fillInputWithStringOfLength(zipInput, MINIMUM_OF_ZIP - 1);
+            guardXhr(selenium).click(ajaxValidateButton);
+        }
 
-		if (submitActivation) {
-			
-			waitGui.until( elementNotPresent.locator(notify));
-			
-			guardXhr(selenium).click(ajaxValidateButton);
-		}
+        int numberOfNotifyMessages = selenium.getCount(notify);
 
-		int numberOfNotifyMessages = selenium.getCount(notify);
+        assertEquals(numberOfNotifyMessages, 4, "There should be 4 notify messages!");
 
-		assertEquals(numberOfNotifyMessages, 4,
-				"There should be 4 notify messages!");
+        for (Iterator<JQueryLocator> i = notify.iterator(); i.hasNext();) {
 
-		for (Iterator<JQueryLocator> i = notify.iterator(); i.hasNext();) {
+            String notifyText = selenium.getText(i.next());
 
-			String notifyText = selenium.getText(i.next());
+            messages.add(notifyText);
+        }
 
-			messages.add(notifyText);
-		}
+        // checking that rich:message is there, and has correct value
+        isThereErrorMessage(nameError, NAME_ERROR_LESS_THAN_MINIMUM, true);
+        isThereErrorMessage(jobError, JOB_ERROR_LESS_THAN_MINIMUM, true);
+        isThereErrorMessage(addressError, ADDRESS_ERROR_LESS_THAN_MINIMUM, true);
+        isThereErrorMessage(zipError, ZIP_ERROR_LESS_THAN_MINIMUM, true);
 
-		// checking that rich:message is there, and has correct value
-		isThereErrorMessage(nameError, NAME_ERROR_LESS_THAN_MINIMUM, true);
-		isThereErrorMessage(jobError, JOB_ERROR_LESS_THAN_MINIMUM, true);
-		isThereErrorMessage(addressError, ADDRESS_ERROR_LESS_THAN_MINIMUM, true);
-		isThereErrorMessage(zipError, ZIP_ERROR_LESS_THAN_MINIMUM, true);
-
-		// checking the content of the rich:notify messages
-		assertTrue(messages.contains(NAME_ERROR_LESS_THAN_MINIMUM),
-				"The notify message for name is incorrect");
-		assertTrue(messages.contains(ADDRESS_ERROR_LESS_THAN_MINIMUM),
-				"The notify message for address is incorrect");
-		assertTrue(messages.contains(JOB_ERROR_LESS_THAN_MINIMUM),
-				"The notify message for job is incorrect");
-		assertTrue(messages.contains(ZIP_ERROR_LESS_THAN_MINIMUM),
-				"The notify message for zip is incorrect");
-	}
+        // checking the content of the rich:notify messages
+        assertTrue(messages.contains(NAME_ERROR_LESS_THAN_MINIMUM), "The notify message for name is incorrect");
+        assertTrue(messages.contains(ADDRESS_ERROR_LESS_THAN_MINIMUM), "The notify message for address is incorrect");
+        assertTrue(messages.contains(JOB_ERROR_LESS_THAN_MINIMUM), "The notify message for job is incorrect");
+        assertTrue(messages.contains(ZIP_ERROR_LESS_THAN_MINIMUM), "The notify message for zip is incorrect");
+    }
 }

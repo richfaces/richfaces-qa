@@ -38,83 +38,83 @@ import org.testng.annotations.Test;
  */
 public class TestSimple extends AbstractAjocadoTest {
 
-	/* *******************************************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * *************************************
-	 */
-	
-	protected JQueryLocator firstWrongInput = jq("input[id$=text1]");
-	protected JQueryLocator secondRightInput = jq("input[id$=text2]");
-	protected JQueryLocator approvedTextWichShouldBeEmpty = jq("");
-	protected JQueryLocator approvedText = jq("div[id$=out2]");
-	protected JQueryLocator errorValidationLength = jq("div:contains('text2: Validation Error')");
-	
-	/* ********************************************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * ***********************************
-	 */
-	
-	@Test
-	public void testFirstWrongInputStringLessThan10() {
-		
-		String testStringLessThan10 = "foo";
-		
-		selenium.typeKeys(firstWrongInput, testStringLessThan10);
-		
-		guardXhr(selenium).fireEvent(firstWrongInput, KEYUP);
-		
-		assertFalse(selenium.isTextPresent(testStringLessThan10), "The string: " + testStringLessThan10 + " should not be present!");
-		
-		assertFalse(selenium.isTextPresent("Validation Error: Value"), "The error message about length of string should not appear!");
-	}
-	
-	@Test
-	public void testFirstWrongInputStringMoreThan10() {
-		
-		String testStringMoreThan10 = "This string has definitely length more than 10";
-		
-		selenium.typeKeys(firstWrongInput, testStringMoreThan10);
-		
-		guardXhr(selenium).fireEvent(firstWrongInput, KEYUP);
-		
-		assertFalse(selenium.isTextPresent(testStringMoreThan10), "The string: " + testStringMoreThan10 + " should not be present!");
-		
-		assertFalse(selenium.isTextPresent("Validation Error: Value"), "The error message about length of string should not appear!");
-	}
-	
-	@Test
-	public void testSecondRightInput() {
-		
-		StringBuilder sb = new StringBuilder();
-		
-		// try to type 10 characters and check whether the text is still approved
-		// and also whether text appears in the approved text part 
-		for( int i = 0; i < 10; i++ ) {
-			sb.append(i);
-			
-			selenium.typeKeys(secondRightInput, sb.toString());
-			guardXhr(selenium).fireEvent(secondRightInput, KEYUP);
-			
-			assertEquals(selenium.getText(approvedText), "Approved Text: " + sb.toString(), "The text still" +
-					"should appear in the approved text part, since it is no longer than 10 characters!");
-			
-			assertFalse(selenium.isElementPresent(errorValidationLength), "The error message should not appear, there are " +
-					"not more than 10 characters!");
-		}
-		
-		// now there are 10 characters, adding one more should render error message and approved
-		// text should be empty
-		sb.append("X");
-		selenium.typeKeys(secondRightInput, sb.toString());
-		guardXhr(selenium).fireEvent(secondRightInput, KEYUP);
-		
-		assertEquals(selenium.getText(approvedText).trim(), "", "The text from element approved text should be" +
-				"empty string, since there are more than 10 characters in the input!");
-		
-		assertTrue(selenium.isElementPresent(errorValidationLength), "The error message about text length should " +
-				"be present and visible because there are more than 10 characters in the input!");
-		
-	}
+    /* *******************************************************************************************************
+     * Locators ****************************************************************** *************************************
+     */
+
+    protected JQueryLocator firstWrongInput = jq("input[id$=text1]");
+    protected JQueryLocator secondRightInput = jq("input[id$=text2]");
+    protected JQueryLocator approvedTextWichShouldBeEmpty = jq("");
+    protected JQueryLocator approvedText = jq("div[id$=out2]");
+    protected JQueryLocator errorValidationLength = jq("div:contains('text2: Validation Error')");
+
+    /* ********************************************************************************************************
+     * Tests ********************************************************************* ***********************************
+     */
+
+    @Test
+    public void testFirstWrongInputStringLessThan10() {
+
+        String testStringLessThan10 = "foo";
+
+        selenium.typeKeys(firstWrongInput, testStringLessThan10);
+
+        guardXhr(selenium).fireEvent(firstWrongInput, KEYUP);
+
+        assertFalse(selenium.isTextPresent(testStringLessThan10), "The string: " + testStringLessThan10
+            + " should not be present!");
+
+        assertFalse(selenium.isTextPresent("Validation Error: Value"),
+            "The error message about length of string should not appear!");
+    }
+
+    @Test
+    public void testFirstWrongInputStringMoreThan10() {
+
+        String testStringMoreThan10 = "This string has definitely length more than 10";
+
+        selenium.typeKeys(firstWrongInput, testStringMoreThan10);
+
+        guardXhr(selenium).fireEvent(firstWrongInput, KEYUP);
+
+        assertFalse(selenium.isTextPresent(testStringMoreThan10), "The string: " + testStringMoreThan10
+            + " should not be present!");
+
+        assertFalse(selenium.isTextPresent("Validation Error: Value"),
+            "The error message about length of string should not appear!");
+    }
+
+    @Test
+    public void testSecondRightInput() {
+
+        StringBuilder sb = new StringBuilder();
+
+        // try to type 10 characters and check whether the text is still approved
+        // and also whether text appears in the approved text part
+        for (int i = 0; i < 10; i++) {
+            sb.append(i);
+
+            selenium.typeKeys(secondRightInput, sb.toString());
+            guardXhr(selenium).fireEvent(secondRightInput, KEYUP);
+
+            assertEquals(selenium.getText(approvedText), "Approved Text: " + sb.toString(), "The text still"
+                + "should appear in the approved text part, since it is no longer than 10 characters!");
+
+            assertFalse(selenium.isElementPresent(errorValidationLength),
+                "The error message should not appear, there are " + "not more than 10 characters!");
+        }
+
+        // now there are 10 characters, adding one more should render error message and approved
+        // text should be empty
+        sb.append("X");
+        selenium.typeKeys(secondRightInput, sb.toString());
+        guardXhr(selenium).fireEvent(secondRightInput, KEYUP);
+
+        assertEquals(selenium.getText(approvedText).trim(), "", "The text from element approved text should be"
+            + "empty string, since there are more than 10 characters in the input!");
+
+        assertTrue(selenium.isElementPresent(errorValidationLength), "The error message about text length should "
+            + "be present and visible because there are more than 10 characters in the input!");
+
+    }
 }

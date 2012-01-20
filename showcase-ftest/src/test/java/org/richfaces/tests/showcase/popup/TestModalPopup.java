@@ -34,37 +34,39 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestModalPopup extends AbstractPoppupPanel {
-	
-	/* ************************************************************************************************************************
-	 * Constants
-	 ***************************************************************************************************************************/
-	
-	protected final String BODY_OF_POPPUP = "You can also check and trigger events if the use clicks outside of the panel.\n" +
-	 " In this example clicking outside closes the panel.";
-	
-	/* **************************************************************************************************************************
-	 * Locators 
-	 ****************************************************************************************************************************/
-	
-	JQueryLocator poppupShadow = jq("div#popup_shade");
-	
-	/* *****************************************************************************
-	 * Tests
-	 *******************************************************************************/
-	
-	@Test
-	public void testModalPoppupPanelAndHisContent() {
-		
-		guardNoRequest(selenium).click(callthePoppupButton);
-		
-		assertTrue( selenium.isElementPresent(poppupPanelContent), "The poppup panel should be visible now!");
-	
-		checkContentOfPanel(poppupPanelContent, BODY_OF_POPPUP);
-		
-		guardNoRequest(selenium).click(poppupShadow);
-		
-		assertFalse( selenium.isElementPresent(poppupPanelContent), "The poppup panel should not be visible now!");
-		
-	}
+
+    /* ************************************************************************************************************************
+     * Constants
+     * *********************************************************************************************************
+     * ****************
+     */
+
+    protected final String BODY_OF_POPPUP = "You can also check and trigger events if the use clicks outside of the panel.\n"
+        + " In this example clicking outside closes the panel.";
+
+    /* **************************************************************************************************************************
+     * Locators
+     * **********************************************************************************************************
+     * ****************
+     */
+
+    JQueryLocator poppupShadow = jq("div#popup_shade");
+
+    /* *****************************************************************************
+     * Tests*****************************************************************************
+     */
+
+    @Test
+    public void testModalPoppupPanelAndHisContent() {
+        guardNoRequest(selenium).click(callthePoppupButton);
+
+        assertTrue(selenium.isElementPresent(poppupPanelContent), "The poppup panel should be visible now!");
+
+        checkContentOfPanel(poppupPanelContent, BODY_OF_POPPUP);
+
+        guardNoRequest(selenium).click(poppupShadow);
+
+        assertFalse(selenium.isElementPresent(poppupPanelContent), "The poppup panel should not be visible now!");
+    }
 
 }

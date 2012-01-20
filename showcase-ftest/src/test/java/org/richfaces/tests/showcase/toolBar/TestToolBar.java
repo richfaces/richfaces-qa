@@ -39,99 +39,80 @@ import org.testng.annotations.Test;
  */
 public class TestToolBar extends AbstractAjocadoTest {
 
-	/* **********************************************************************
-	 * Constants
-	 * **********************************************************************
-	 */
-	
-	private final String CONTEXT = "/showcase/images/icons"; 
+    /* **********************************************************************
+     * Constants **********************************************************************
+     */
 
-	private final String[] EXPECTED_ELEMENTS = {
-			CONTEXT + "/create_doc.gif",
-			CONTEXT + "/create_folder.gif",
-			CONTEXT + "/copy.gif",
-			CONTEXT + "/save.gif",
-			CONTEXT + "/save_as.gif",
-			CONTEXT + "/save_all.gif" };
+    private final String CONTEXT = "/showcase/images/icons";
 
-	/* *********************************************************************
-	 * Locators
-	 * *********************************************************************
-	 */
+    private final String[] EXPECTED_ELEMENTS = { CONTEXT + "/create_doc.gif", CONTEXT + "/create_folder.gif",
+        CONTEXT + "/copy.gif", CONTEXT + "/save.gif", CONTEXT + "/save_as.gif", CONTEXT + "/save_all.gif" };
 
-	private JQueryLocator separator = jq("div.rf-tb-sep-grid");
-	private JQueryLocator searchInput = jq(".barsearch");
-	private JQueryLocator searchButton = jq(".barsearchbutton");
-	private JQueryLocator toolBar = jq(".rf-tb-cntr td");
+    /* *********************************************************************
+     * Locators *********************************************************************
+     */
 
-	/* *****************************************************************************
-	 * Fields
-	 * ********************************************************************
-	 * *********
-	 */
+    private JQueryLocator separator = jq("div.rf-tb-sep-grid");
+    private JQueryLocator searchInput = jq(".barsearch");
+    private JQueryLocator searchButton = jq(".barsearchbutton");
+    private JQueryLocator toolBar = jq(".rf-tb-cntr td");
 
-	private Set<String> actualElements = new HashSet<String>();
+    /* *****************************************************************************
+     * Fields ******************************************************************** *********
+     */
 
-	/* ********************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * ***********
-	 */
+    private Set<String> actualElements = new HashSet<String>();
 
-	@Test
-	public void testAllExpectedElementsPresention() {
+    /* ********************************************************************************
+     * Tests ********************************************************************* ***********
+     */
 
-		for (Iterator<JQueryLocator> i = toolBar.iterator(); i.hasNext();) {
+    @Test
+    public void testAllExpectedElementsPresention() {
 
-			JQueryLocator childrenOfTd = i.next().getChild(jq("img"));
+        for (Iterator<JQueryLocator> i = toolBar.iterator(); i.hasNext();) {
 
-			if (selenium.isElementPresent(childrenOfTd)) {
+            JQueryLocator childrenOfTd = i.next().getChild(jq("img"));
 
-				actualElements.add(getSrc(selenium.getAttribute(childrenOfTd
-						.getAttribute(Attribute.SRC))));
-			}
-		}
+            if (selenium.isElementPresent(childrenOfTd)) {
 
-		checkExpectedSrcs(actualElements);
+                actualElements.add(getSrc(selenium.getAttribute(childrenOfTd.getAttribute(Attribute.SRC))));
+            }
+        }
 
-		assertTrue(selenium.isElementPresent(separator),
-				"The separator element is missing");
-		assertTrue(selenium.isElementPresent(searchInput),
-				"The search input is missing");
-		assertTrue(selenium.isElementPresent(searchButton),
-				"The search input is missing");
+        checkExpectedSrcs(actualElements);
 
-	}
+        assertTrue(selenium.isElementPresent(separator), "The separator element is missing");
+        assertTrue(selenium.isElementPresent(searchInput), "The search input is missing");
+        assertTrue(selenium.isElementPresent(searchButton), "The search input is missing");
 
-	/* ***********************************************************************************
-	 * Help methods
-	 * **************************************************************
-	 * *********************
-	 */
+    }
 
-	/**
-	 * Gets the src part from the line, since there is also some junk
-	 * information
-	 */
-	private String getSrc(String line) {
+    /* ***********************************************************************************
+     * Help methods ************************************************************** *********************
+     */
 
-		String[] partsOfTheLine = line.split(";");
+    /**
+     * Gets the src part from the line, since there is also some junk information
+     */
+    private String getSrc(String line) {
 
-		return partsOfTheLine[0];
-	}
+        String[] partsOfTheLine = line.split(";");
 
-	/**
-	 * Checks whether particular set contians all expected values
-	 * 
-	 * @param set
-	 */
-	private void checkExpectedSrcs(Set<String> set) {
+        return partsOfTheLine[0];
+    }
 
-		for (int i = 0; i < EXPECTED_ELEMENTS.length; i++) {
+    /**
+     * Checks whether particular set contians all expected values
+     *
+     * @param set
+     */
+    private void checkExpectedSrcs(Set<String> set) {
 
-			assertTrue(set.contains(EXPECTED_ELEMENTS[i]),
-					"There is missing element " + EXPECTED_ELEMENTS[i]);
-		}
-	}
+        for (int i = 0; i < EXPECTED_ELEMENTS.length; i++) {
+
+            assertTrue(set.contains(EXPECTED_ELEMENTS[i]), "There is missing element " + EXPECTED_ELEMENTS[i]);
+        }
+    }
 
 }

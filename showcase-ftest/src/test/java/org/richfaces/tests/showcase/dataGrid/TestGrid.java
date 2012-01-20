@@ -36,90 +36,90 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestGrid extends AbstractDataScrollerTest {
-	
-	/* *****************************************************************************************************
-	 * Locators
-	 *******************************************************************************************************/
-	JQueryLocator firstPanelGridOnThePage = jq("td.rf-dg-c:first");
-	JQueryLocator lastPanelGridOnThePage = jq("td.rf-dg-c:contains('Price'):last");
-	
-	/* ********************************************************************************************************
-	 * Tests
-	 **********************************************************************************************************/
-	
-	@Test
-	public void testDataGridIsNotEmpty() {
-		
-		@SuppressWarnings("unused")
-		Car pageFirstCar = retrieveCarFromThePanelGrid(firstPanelGridOnThePage);
-		@SuppressWarnings("unused")
-		Car pageLastCar = retrieveCarFromThePanelGrid(lastPanelGridOnThePage);
-		
-		guardXhr(selenium).click(lastPageButton);
-		
-		pageFirstCar = retrieveCarFromThePanelGrid(firstPanelGridOnThePage);
-		pageLastCar = retrieveCarFromThePanelGrid(lastPanelGridOnThePage);
-	}
-	
-	@Test
-	public void testDataGridIsScrollable() {
-		
-		int numberOfThePageBeforeClick;
-		Car carBeforeClicking; 
-		
-		if( !selenium.isElementPresent(firstPageButton) ) {
-			
-			numberOfThePageBeforeClick = getNumberOfCurrentPage();
-			carBeforeClicking = retrieveCarFromThePanelGrid(firstPanelGridOnThePage);
-			
-			guardXhr(selenium).click(nextButton);
-			
-		} else {
-		
-			guardXhr(selenium).click(firstPageButton);
-			
-			numberOfThePageBeforeClick = getNumberOfCurrentPage();
-			carBeforeClicking = retrieveCarFromThePanelGrid(firstPanelGridOnThePage);
-			
-			guardXhr(selenium).click(nextButton);
-			
-		}
-		
-		int numberOfThePageAfterClick = getNumberOfCurrentPage();
-		Car carAfterClicking = retrieveCarFromThePanelGrid(firstPanelGridOnThePage);
-		
-		assertEquals(numberOfThePageBeforeClick, numberOfThePageAfterClick - 1, 
-				"The next button does not works!");
-		
-		assertFalse( carBeforeClicking.equals(carAfterClicking), "Data should be different on the different pages!");
-	}
-	
-	/* *********************************************************************************************************
-	 * Help methods
-	 ************************************************************************************************************/
-	private Car retrieveCarFromThePanelGrid( JQueryLocator panelGrid ) {
-		
-		Car car = new Car();
-		
-		String panelGridText = selenium.getText(panelGrid);
 
-		String[] partsOfPanelGrid = panelGridText.split(" ");
-		
-		try {
-		
-			car.setVendor(partsOfPanelGrid[0].trim());
-			car.setModel(partsOfPanelGrid[1].trim());
-			car.setPrice(partsOfPanelGrid[3].trim());
-			car.setMileage(partsOfPanelGrid[5].trim());
-			car.setVin(partsOfPanelGrid[7].trim());
-			car.setStock(partsOfPanelGrid[9]);
-			
-		} catch (IllegalArgumentException ex) {
-			
-			fail("The table should not be empty");
-		}
-		
-		return car;
-	}
+    /* *****************************************************************************************************
+     * Locators*****************************************************************************************************
+     */
+    JQueryLocator firstPanelGridOnThePage = jq("td.rf-dg-c:first");
+    JQueryLocator lastPanelGridOnThePage = jq("td.rf-dg-c:contains('Price'):last");
+
+    /* ********************************************************************************************************
+     * Tests********************************************************************************************************
+     */
+
+    @Test
+    public void testDataGridIsNotEmpty() {
+
+        @SuppressWarnings("unused")
+        Car pageFirstCar = retrieveCarFromThePanelGrid(firstPanelGridOnThePage);
+        @SuppressWarnings("unused")
+        Car pageLastCar = retrieveCarFromThePanelGrid(lastPanelGridOnThePage);
+
+        guardXhr(selenium).click(lastPageButton);
+
+        pageFirstCar = retrieveCarFromThePanelGrid(firstPanelGridOnThePage);
+        pageLastCar = retrieveCarFromThePanelGrid(lastPanelGridOnThePage);
+    }
+
+    @Test
+    public void testDataGridIsScrollable() {
+
+        int numberOfThePageBeforeClick;
+        Car carBeforeClicking;
+
+        if (!selenium.isElementPresent(firstPageButton)) {
+
+            numberOfThePageBeforeClick = getNumberOfCurrentPage();
+            carBeforeClicking = retrieveCarFromThePanelGrid(firstPanelGridOnThePage);
+
+            guardXhr(selenium).click(nextButton);
+
+        } else {
+
+            guardXhr(selenium).click(firstPageButton);
+
+            numberOfThePageBeforeClick = getNumberOfCurrentPage();
+            carBeforeClicking = retrieveCarFromThePanelGrid(firstPanelGridOnThePage);
+
+            guardXhr(selenium).click(nextButton);
+
+        }
+
+        int numberOfThePageAfterClick = getNumberOfCurrentPage();
+        Car carAfterClicking = retrieveCarFromThePanelGrid(firstPanelGridOnThePage);
+
+        assertEquals(numberOfThePageBeforeClick, numberOfThePageAfterClick - 1, "The next button does not works!");
+
+        assertFalse(carBeforeClicking.equals(carAfterClicking), "Data should be different on the different pages!");
+    }
+
+    /* *********************************************************************************************************
+     * Help methods
+     * **********************************************************************************************************
+     */
+    private Car retrieveCarFromThePanelGrid(JQueryLocator panelGrid) {
+
+        Car car = new Car();
+
+        String panelGridText = selenium.getText(panelGrid);
+
+        String[] partsOfPanelGrid = panelGridText.split(" ");
+
+        try {
+
+            car.setVendor(partsOfPanelGrid[0].trim());
+            car.setModel(partsOfPanelGrid[1].trim());
+            car.setPrice(partsOfPanelGrid[3].trim());
+            car.setMileage(partsOfPanelGrid[5].trim());
+            car.setVin(partsOfPanelGrid[7].trim());
+            car.setStock(partsOfPanelGrid[9]);
+
+        } catch (IllegalArgumentException ex) {
+
+            fail("The table should not be empty");
+        }
+
+        return car;
+    }
 
 }

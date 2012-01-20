@@ -36,48 +36,49 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestSideMenu extends AbstractAjocadoTest {
-	
-	/* ****************************************************************************
-	 * Locators
-	 ******************************************************************************/
-	
-	protected JQueryLocator optionList = jq("td.optionList");
-	protected String firstLvlLabels = "div[id$=label]";
-	protected String styleOfSecondLvlOptions  = "div.rf-ddm-pos";
 
-	/* ****************************************************************************
-	 * Tests
-	 ******************************************************************************/
-	
-	@Test
-	public void testShowSubOptions() {
-		
-		hoverOverOptionAndCheckTheSubmenu(0);
-		
-		hoverOverOptionAndCheckTheSubmenu(1);
-		
-		hoverOverOptionAndCheckTheSubmenu(2);
-		
-	}
-	
-	/* **********************************************************************************************************
-	 * Help methods
-	 ************************************************************************************************************/
-	
-	private void hoverOverOptionAndCheckTheSubmenu( int numberOfSubmenu ) {
-		
-		JQueryLocator optionLabel = jq( optionList.getRawLocator() + ":eq(" + numberOfSubmenu + ") " + firstLvlLabels );
-		JQueryLocator optionSecondLvlStyle = jq( styleOfSecondLvlOptions + ":eq(" + numberOfSubmenu + ") > div");
-		
-		boolean isDisplayedBeforeHovering = selenium.isVisible(optionSecondLvlStyle);
-		assertFalse(isDisplayedBeforeHovering, "The second lvl options should not be displayed since the " +
-				"was no hovering over " + optionLabel + " yet");
-		
-		guardNoRequest(selenium).fireEvent(optionLabel, Event.MOUSEOVER);
-		
-		boolean isDisplayedAfterHovering = selenium.isVisible(optionSecondLvlStyle);
-		assertTrue( isDisplayedAfterHovering, "The second lvl options should be displayed " +
-				"since there was hover over element " + optionLabel);
-		
-	}
+    /* ****************************************************************************
+     * Locators****************************************************************************
+     */
+
+    protected JQueryLocator optionList = jq("td.optionList");
+    protected String firstLvlLabels = "div[id$=label]";
+    protected String styleOfSecondLvlOptions = "div.rf-ddm-pos";
+
+    /* ****************************************************************************
+     * Tests****************************************************************************
+     */
+
+    @Test
+    public void testShowSubOptions() {
+
+        hoverOverOptionAndCheckTheSubmenu(0);
+
+        hoverOverOptionAndCheckTheSubmenu(1);
+
+        hoverOverOptionAndCheckTheSubmenu(2);
+
+    }
+
+    /* **********************************************************************************************************
+     * Help methods
+     * **********************************************************************************************************
+     */
+
+    private void hoverOverOptionAndCheckTheSubmenu(int numberOfSubmenu) {
+
+        JQueryLocator optionLabel = jq(optionList.getRawLocator() + ":eq(" + numberOfSubmenu + ") " + firstLvlLabels);
+        JQueryLocator optionSecondLvlStyle = jq(styleOfSecondLvlOptions + ":eq(" + numberOfSubmenu + ") > div");
+
+        boolean isDisplayedBeforeHovering = selenium.isVisible(optionSecondLvlStyle);
+        assertFalse(isDisplayedBeforeHovering, "The second lvl options should not be displayed since the "
+            + "was no hovering over " + optionLabel + " yet");
+
+        guardNoRequest(selenium).fireEvent(optionLabel, Event.MOUSEOVER);
+
+        boolean isDisplayedAfterHovering = selenium.isVisible(optionSecondLvlStyle);
+        assertTrue(isDisplayedAfterHovering, "The second lvl options should be displayed "
+            + "since there was hover over element " + optionLabel);
+
+    }
 }

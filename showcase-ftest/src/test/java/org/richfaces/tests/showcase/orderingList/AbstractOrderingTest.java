@@ -35,207 +35,171 @@ import org.richfaces.tests.showcase.AbstractAjocadoTest;
  */
 public class AbstractOrderingTest extends AbstractAjocadoTest {
 
-	/* **********************************************************************
-	 * Locators
-	 * **********************************************************************
-	 */
+    /* **********************************************************************
+     * Locators **********************************************************************
+     */
 
-	protected JQueryLocator firstButton = jq(".rf-ord-up-tp:eq({0})");
-	protected JQueryLocator upButton = jq(".rf-ord-up:eq({0})");
-	protected JQueryLocator downButton = jq(".rf-ord-dn:eq({0})");
-	protected JQueryLocator lastButton = jq(".rf-ord-dn-bt:eq({0})");
+    protected JQueryLocator firstButton = jq(".rf-ord-up-tp:eq({0})");
+    protected JQueryLocator upButton = jq(".rf-ord-up:eq({0})");
+    protected JQueryLocator downButton = jq(".rf-ord-dn:eq({0})");
+    protected JQueryLocator lastButton = jq(".rf-ord-dn-bt:eq({0})");
 
-	/* ******************************************************************************
-	 * Constants
-	 * *****************************************************************
-	 * **************
-	 */
+    /* ******************************************************************************
+     * Constants ***************************************************************** **************
+     */
 
-	protected String DISABLED_BUTTON_CLASS = "rf-ord-btn-dis";
+    protected String DISABLED_BUTTON_CLASS = "rf-ord-btn-dis";
 
-	/* ********************************************************************************************
-	 * Abstract methods
-	 * **************************************************************
-	 * ******************************
-	 */
+    /* ********************************************************************************************
+     * Abstract methods ************************************************************** ******************************
+     */
 
-	/**
-	 * 
-	 * @param optionLocator
-	 *            this should be something that determines all options, there
-	 *            should be place for calling method format on that so it will
-	 *            be possible to add there e.g. :eq(1) or :last JQuery selector
-	 *            parameter
-	 * @param firstButton
-	 */
-	protected void checkFirstButton(JQueryLocator optionLocator,
-			JQueryLocator firstButton) {
+    /**
+     *
+     * @param optionLocator
+     *            this should be something that determines all options, there should be place for calling method format
+     *            on that so it will be possible to add there e.g. :eq(1) or :last JQuery selector parameter
+     * @param firstButton
+     */
+    protected void checkFirstButton(JQueryLocator optionLocator, JQueryLocator firstButton) {
 
-		checkButton(optionLocator.format(":eq(2)"), firstButton,
-				optionLocator.format(":first"));
+        checkButton(optionLocator.format(":eq(2)"), firstButton, optionLocator.format(":first"));
 
-		checkButton(optionLocator.format(":eq(10)"), firstButton,
-				optionLocator.format(":first"));
-	}
+        checkButton(optionLocator.format(":eq(10)"), firstButton, optionLocator.format(":first"));
+    }
 
-	/**
-	 * 
-	 * @param optionLocator
-	 *            this should be something that determines all options, there
-	 *            should be place for calling method format on that so it will
-	 *            be possible to add there e.g. :eq(1) or :last JQuery selector
-	 *            parameter
-	 * @param firstButton
-	 */
-	protected void checkLastButton(JQueryLocator optionLocator,
-			JQueryLocator lastButton) {
+    /**
+     *
+     * @param optionLocator
+     *            this should be something that determines all options, there should be place for calling method format
+     *            on that so it will be possible to add there e.g. :eq(1) or :last JQuery selector parameter
+     * @param firstButton
+     */
+    protected void checkLastButton(JQueryLocator optionLocator, JQueryLocator lastButton) {
 
-		checkButton(optionLocator.format(":eq(2)"), lastButton,
-				optionLocator.format(":last"));
+        checkButton(optionLocator.format(":eq(2)"), lastButton, optionLocator.format(":last"));
 
-		checkButton(optionLocator.format(":eq(10)"), lastButton,
-				optionLocator.format(":last"));
-	}
+        checkButton(optionLocator.format(":eq(10)"), lastButton, optionLocator.format(":last"));
+    }
 
-	/**
-	 * 
-	 * @param optionLocator
-	 *            this should be something that determines all options, there
-	 *            should be place for calling method format on that so it will
-	 *            be possible to add there e.g. :eq(1) or :last JQuery selector
-	 *            parameter
-	 * @param firstButton
-	 */
-	protected void checkUpButton(JQueryLocator optionLocator,
-			JQueryLocator upButton) {
+    /**
+     *
+     * @param optionLocator
+     *            this should be something that determines all options, there should be place for calling method format
+     *            on that so it will be possible to add there e.g. :eq(1) or :last JQuery selector parameter
+     * @param firstButton
+     */
+    protected void checkUpButton(JQueryLocator optionLocator, JQueryLocator upButton) {
 
-		checkButton(optionLocator.format(":eq(2)"), upButton,
-				optionLocator.format(":eq(1)"));
+        checkButton(optionLocator.format(":eq(2)"), upButton, optionLocator.format(":eq(1)"));
 
-		checkButton(optionLocator.format(":eq(10)"), upButton,
-				optionLocator.format(":eq(9)"));
-	}
+        checkButton(optionLocator.format(":eq(10)"), upButton, optionLocator.format(":eq(9)"));
+    }
 
-	/**
-	 * 
-	 * @param optionLocator
-	 *            this should be something that determines all options, there
-	 *            should be place for calling method format on that so it will
-	 *            be possible to add there e.g. :eq(1) or :last JQuery selector
-	 *            parameter
-	 * @param firstButton
-	 */
-	protected void checkDownButton(JQueryLocator optionLocator,
-			JQueryLocator downButton) {
+    /**
+     *
+     * @param optionLocator
+     *            this should be something that determines all options, there should be place for calling method format
+     *            on that so it will be possible to add there e.g. :eq(1) or :last JQuery selector parameter
+     * @param firstButton
+     */
+    protected void checkDownButton(JQueryLocator optionLocator, JQueryLocator downButton) {
 
-		checkButton(optionLocator.format(":eq(2)"), downButton,
-				optionLocator.format(":eq(3)"));
+        checkButton(optionLocator.format(":eq(2)"), downButton, optionLocator.format(":eq(3)"));
 
-		checkButton(optionLocator.format(":eq(10)"), downButton,
-				optionLocator.format(":eq(11)"));
-	}
+        checkButton(optionLocator.format(":eq(10)"), downButton, optionLocator.format(":eq(11)"));
+    }
 
-	/**
-	 * 
-	 * @param optionLocator
-	 *            optionLocator this should be something that determines all
-	 *            options, there should be place for calling method format on
-	 *            that so it will be possible to add there e.g. :eq(1) or :last
-	 *            JQuery selector parameter
-	 * @param buttonToPress 
-	 * @param buttonsToBeDisabled
-	 */
-	protected void checkFirstAndUpButtonsDisabled(JQueryLocator optionLocator,
-			JQueryLocator buttonToPress, JQueryLocator... buttonsToBeDisabled) {
+    /**
+     *
+     * @param optionLocator
+     *            optionLocator this should be something that determines all options, there should be place for calling
+     *            method format on that so it will be possible to add there e.g. :eq(1) or :last JQuery selector
+     *            parameter
+     * @param buttonToPress
+     * @param buttonsToBeDisabled
+     */
+    protected void checkFirstAndUpButtonsDisabled(JQueryLocator optionLocator, JQueryLocator buttonToPress,
+        JQueryLocator... buttonsToBeDisabled) {
 
-		checkDisableButtonWhenSuitable(optionLocator.format(":eq(1)"),
-				buttonToPress, buttonsToBeDisabled);
-	}
+        checkDisableButtonWhenSuitable(optionLocator.format(":eq(1)"), buttonToPress, buttonsToBeDisabled);
+    }
 
-	/**
-	 * 
-	 * @param optionLocator
-	 *            optionLocator this should be something that determines all
-	 *            options, there should be place for calling method format on
-	 *            that so it will be possible to add there e.g. :eq(1) or :last
-	 *            JQuery selector parameter
-	 * @param buttonToPress 
-	 * @param buttonsToBeDisabled
-	 */
-	protected void checkDownAndLastButtonsDisabled(JQueryLocator optionLocator,
-			JQueryLocator buttonToPress, JQueryLocator... buttonsToBeDisabled) {
+    /**
+     *
+     * @param optionLocator
+     *            optionLocator this should be something that determines all options, there should be place for calling
+     *            method format on that so it will be possible to add there e.g. :eq(1) or :last JQuery selector
+     *            parameter
+     * @param buttonToPress
+     * @param buttonsToBeDisabled
+     */
+    protected void checkDownAndLastButtonsDisabled(JQueryLocator optionLocator, JQueryLocator buttonToPress,
+        JQueryLocator... buttonsToBeDisabled) {
 
-		int howManyOptions = selenium.getCount(optionLocator.format(""));
+        int howManyOptions = selenium.getCount(optionLocator.format(""));
 
-		checkDisableButtonWhenSuitable(
-				optionLocator.format(":eq(" + (howManyOptions - 2) + ")"),
-				buttonToPress, buttonsToBeDisabled);
-	}
+        checkDisableButtonWhenSuitable(optionLocator.format(":eq(" + (howManyOptions - 2) + ")"), buttonToPress,
+            buttonsToBeDisabled);
+    }
 
-	/* *********************************************************************************************************************
-	 * Help methods
-	 * **************************************************************
-	 * *******************************************************
-	 */
+    /* *********************************************************************************************************************
+     * Help methods **************************************************************
+     * *******************************************************
+     */
 
-	/**
-	 * Checks particular button, select option whichOptionToMove, uses button
-	 * and checks that it moved at position whereItShouldBe
-	 * 
-	 * @param whichOptionToMove
-	 * @param button
-	 * @param whereItShouldBe
-	 */
-	private void checkButton(JQueryLocator whichOptionToMove,
-			JQueryLocator button, JQueryLocator whereItShouldBe) {
+    /**
+     * Checks particular button, select option whichOptionToMove, uses button and checks that it moved at position
+     * whereItShouldBe
+     *
+     * @param whichOptionToMove
+     * @param button
+     * @param whereItShouldBe
+     */
+    private void checkButton(JQueryLocator whichOptionToMove, JQueryLocator button, JQueryLocator whereItShouldBe) {
 
-		String textOptionToMove = selenium.getText(whichOptionToMove);
+        String textOptionToMove = selenium.getText(whichOptionToMove);
 
-		selectSomthingAndPressButton(whichOptionToMove, button);
+        selectSomthingAndPressButton(whichOptionToMove, button);
 
-		String textWhereItShouldBe = selenium.getText(whereItShouldBe);
+        String textWhereItShouldBe = selenium.getText(whereItShouldBe);
 
-		assertEquals(textWhereItShouldBe, textOptionToMove, "The option: "
-				+ whichOptionToMove + "should be now at the position: "
-				+ whereItShouldBe);
-	}
+        assertEquals(textWhereItShouldBe, textOptionToMove, "The option: " + whichOptionToMove
+            + "should be now at the position: " + whereItShouldBe);
+    }
 
-	/**
-	 * Selects a option and presses the particular button
-	 * 
-	 * @param whichOptionToMove
-	 * @param button
-	 */
-	private void selectSomthingAndPressButton(JQueryLocator whichOptionToMove,
-			JQueryLocator button) {
+    /**
+     * Selects a option and presses the particular button
+     *
+     * @param whichOptionToMove
+     * @param button
+     */
+    private void selectSomthingAndPressButton(JQueryLocator whichOptionToMove, JQueryLocator button) {
 
-		selenium.click(whichOptionToMove);
+        selenium.click(whichOptionToMove);
 
-		selenium.click(button);
-	}
+        selenium.click(button);
+    }
 
-	/**
-	 * Checks buttons that they are disabled after pressing particular button,
-	 * e.g. the first option is selected, then First button together with Up
-	 * button should be disabled
-	 * 
-	 * @param whichOptionToMove
-	 * @param buttonToPress
-	 * @param buttonsToBeDisabled
-	 */
-	private void checkDisableButtonWhenSuitable(
-			JQueryLocator whichOptionToMove, JQueryLocator buttonToPress,
-			JQueryLocator... buttonsToBeDisabled) {
+    /**
+     * Checks buttons that they are disabled after pressing particular button, e.g. the first option is selected, then
+     * First button together with Up button should be disabled
+     *
+     * @param whichOptionToMove
+     * @param buttonToPress
+     * @param buttonsToBeDisabled
+     */
+    private void checkDisableButtonWhenSuitable(JQueryLocator whichOptionToMove, JQueryLocator buttonToPress,
+        JQueryLocator... buttonsToBeDisabled) {
 
-		selectSomthingAndPressButton(whichOptionToMove, buttonToPress);
+        selectSomthingAndPressButton(whichOptionToMove, buttonToPress);
 
-		for (JQueryLocator i : buttonsToBeDisabled) {
+        for (JQueryLocator i : buttonsToBeDisabled) {
 
-			String clazz = selenium.getAttribute(i
-					.getAttribute(Attribute.CLASS));
+            String clazz = selenium.getAttribute(i.getAttribute(Attribute.CLASS));
 
-			assertTrue(clazz.contains(DISABLED_BUTTON_CLASS));
-		}
-	}
+            assertTrue(clazz.contains(DISABLED_BUTTON_CLASS));
+        }
+    }
 
 }

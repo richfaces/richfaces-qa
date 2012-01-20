@@ -42,202 +42,191 @@ import org.testng.annotations.BeforeMethod;
 @RunAsClient
 public abstract class AbstractAjocadoTest extends AbstractShowcaseTest {
 
-	@Drone
-	protected AjaxSelenium selenium;
+    @Drone
+    protected AjaxSelenium selenium;
 
-	@BeforeMethod( groups={"arquillian"} )
-	public void loadPage() {
+    @BeforeMethod(groups = { "arquillian" })
+    public void loadPage() {
 
-		// this is beacuse of permission denied failures, this interceptor
-		// intercept this type of exception and tries to
-		// repeat that command several times
-		selenium.getCommandInterceptionProxy().registerInterceptor(
-				new AjaxAwareInterceptor());
+        // this is beacuse of permission denied failures, this interceptor
+        // intercept this type of exception and tries to
+        // repeat that command several times
+        selenium.getCommandInterceptionProxy().registerInterceptor(new AjaxAwareInterceptor());
 
-		// workaround for jboss as 7, since it throws error when is looking up
-		// for contextRoot
+        // workaround for jboss as 7, since it throws error when is looking up
+        // for contextRoot
 
-		//try {
-			//contextRoot = new URL("http://localhost:8080");
-		//} catch (MalformedURLException e) { // TODO Auto-generated catch block
-			//e.printStackTrace();
-		//}
+        // try {
+        // contextRoot = new URL("http://localhost:8080");
+        // } catch (MalformedURLException e) { // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // }
 
-		String addition = getAdditionToContextRoot();
+        String addition = getAdditionToContextRoot();
 
-		this.contextRoot = getContextRoot();
-		
-		selenium.open(URLUtils.buildUrl(contextRoot, "/showcase/", addition));
-	}
-	
-	/* ***********************************************************************************************************************
-	 * ajocado specific methods *********************************
-	 * *****************************************
-	 * **********************************************
-	 */
+        this.contextRoot = getContextRoot();
 
-	/**
-	 * Wait for presention of given element for given timeout
-	 * 
-	 * @param element the element which should be displayed
-	 * @param timeout the time for which the presention of element will be checked
-	 * @return true when elements is found in given timeout, false otherwise
-	 */
-	public boolean waitForElementPresent(JQueryLocator element, long timeout) {
-		
-		long end = System.currentTimeMillis() + timeout;
-		
-		while (System.currentTimeMillis() < end) {
-			
-			if(selenium.isElementPresent(element)) {
-		
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
-	/**
-	 * Erases the content of input
-	 * 
-	 * @param input
-	 */
-	public void eraseInput(JQueryLocator input) {
+        selenium.open(URLUtils.buildUrl(contextRoot, "/showcase/", addition));
+    }
 
-		selenium.type(input, "");
-		
-		//the old way
-		/*
-		selenium.focus(input);
+    /* ***********************************************************************************************************************
+     * ajocado specific methods ********************************* *****************************************
+     * **********************************************
+     */
 
-		selenium.keyDownNative(KeyEvent.VK_CONTROL);
-		selenium.keyPressNative(KeyEvent.VK_A);
-		selenium.keyUpNative(KeyEvent.VK_CONTROL);
+    /**
+     * Wait for presention of given element for given timeout
+     *
+     * @param element
+     *            the element which should be displayed
+     * @param timeout
+     *            the time for which the presention of element will be checked
+     * @return true when elements is found in given timeout, false otherwise
+     */
+    public boolean waitForElementPresent(JQueryLocator element, long timeout) {
 
-		selenium.keyPressNative(KeyEvent.VK_BACK_SPACE);*/
-	}
+        long end = System.currentTimeMillis() + timeout;
 
-	/**
-	 * Fills input with string
-	 * 
-	 * @param input
-	 * @param value
-	 */
-	public void fillAnyInput(JQueryLocator input, String value) {
+        while (System.currentTimeMillis() < end) {
 
-		selenium.type(input, value);
-	}
+            if (selenium.isElementPresent(element)) {
 
-	/**
-	 * Checks whether there is particular message and checks whether the message
-	 * is correct
-	 * 
-	 * @param errorMessageLocator
-	 * @param errorMessage
-	 * @param shouldErrorMessagePresented
-	 */
-	public void isThereErrorMessage(JQueryLocator errorMessageLocator,
-			String errorMessage, boolean shouldErrorMessagePresented) {
+                return true;
+            }
+        }
 
-		if (shouldErrorMessagePresented) {
-			assertTrue(
-					selenium.getText(errorMessageLocator)
-							.contains(errorMessage), errorMessage
-							+ " /// should be presented!");
-		} else {
-			assertFalse(selenium.isElementPresent(errorMessageLocator),
-					errorMessage + " /// should not be presented!");
+        return false;
+    }
 
-		}
-	}
+    /**
+     * Erases the content of input
+     *
+     * @param input
+     */
+    public void eraseInput(JQueryLocator input) {
 
-	/**
-	 * Checks whether there is particular message and checks whether the message
-	 * is correct
-	 * 
-	 * @param infoMessageLocator
-	 * @param infoMessage
-	 * @param shouldBeInfoMessagePresented
-	 */
-	public void isThereInfoMessage(JQueryLocator infoMessageLocator,
-			String infoMessage, boolean shouldBeInfoMessagePresented) {
+        selenium.type(input, "");
 
-		isThereErrorMessage(infoMessageLocator, infoMessage,
-				shouldBeInfoMessagePresented);
-	}
+        // the old way
+        /*
+         * selenium.focus(input);
+         *
+         * selenium.keyDownNative(KeyEvent.VK_CONTROL); selenium.keyPressNative(KeyEvent.VK_A);
+         * selenium.keyUpNative(KeyEvent.VK_CONTROL);
+         *
+         * selenium.keyPressNative(KeyEvent.VK_BACK_SPACE);
+         */
+    }
 
-	/**
-	 * Fills input with string of length defined via parameter, the string is
-	 * always the same
-	 * 
-	 * @param input
-	 * @param lengthOfString
-	 */
-	public void fillInputWithStringOfLength(JQueryLocator input,
-			int lengthOfString) {
+    /**
+     * Fills input with string
+     *
+     * @param input
+     * @param value
+     */
+    public void fillAnyInput(JQueryLocator input, String value) {
 
-		StringBuilder sb = new StringBuilder();
+        selenium.type(input, value);
+    }
 
-		for (int i = 1; i <= lengthOfString; i++) {
+    /**
+     * Checks whether there is particular message and checks whether the message is correct
+     *
+     * @param errorMessageLocator
+     * @param errorMessage
+     * @param shouldErrorMessagePresented
+     */
+    public void isThereErrorMessage(JQueryLocator errorMessageLocator, String errorMessage,
+        boolean shouldErrorMessagePresented) {
 
-			sb.append("x");
-		}
+        if (shouldErrorMessagePresented) {
+            assertTrue(selenium.getText(errorMessageLocator).contains(errorMessage), errorMessage
+                + " /// should be presented!");
+        } else {
+            assertFalse(selenium.isElementPresent(errorMessageLocator), errorMessage + " /// should not be presented!");
 
-		selenium.type(input, sb.toString());
-	}
+        }
+    }
 
-	/**
-	 * test whether all rows in the table contains empty strings
-	 * 
-	 * @return true if there is a row in the table with empty string, false
-	 *         otherwise
-	 */
-	public boolean testWhetherTableContainsNonEmptyStrings(JQueryLocator table) {
+    /**
+     * Checks whether there is particular message and checks whether the message is correct
+     *
+     * @param infoMessageLocator
+     * @param infoMessage
+     * @param shouldBeInfoMessagePresented
+     */
+    public void isThereInfoMessage(JQueryLocator infoMessageLocator, String infoMessage,
+        boolean shouldBeInfoMessagePresented) {
 
-		JQueryLocator tr = jq(table.getRawLocator() + " > tr");
+        isThereErrorMessage(infoMessageLocator, infoMessage, shouldBeInfoMessagePresented);
+    }
 
-		for (Iterator<JQueryLocator> i = tr.iterator(); i.hasNext();) {
+    /**
+     * Fills input with string of length defined via parameter, the string is always the same
+     *
+     * @param input
+     * @param lengthOfString
+     */
+    public void fillInputWithStringOfLength(JQueryLocator input, int lengthOfString) {
 
-			boolean result = testWhetherRowContainsNonEmptyStrings(i.next());
+        StringBuilder sb = new StringBuilder();
 
-			if (result) {
+        for (int i = 1; i <= lengthOfString; i++) {
 
-				return true;
-			}
+            sb.append("x");
+        }
 
-		}
+        selenium.type(input, sb.toString());
+    }
 
-		return false;
+    /**
+     * test whether all rows in the table contains empty strings
+     *
+     * @return true if there is a row in the table with empty string, false otherwise
+     */
+    public boolean testWhetherTableContainsNonEmptyStrings(JQueryLocator table) {
 
-	}
+        JQueryLocator tr = jq(table.getRawLocator() + " > tr");
 
-	/* ***************************************************************************************************
-	 * help methods
-	 * **************************************************************
-	 * *************************************
-	 */
+        for (Iterator<JQueryLocator> i = tr.iterator(); i.hasNext();) {
 
-	/**
-	 * tests whether the rows tds contains some non empty strings
-	 * 
-	 * @param row
-	 * @return true if contains empty strings, false otherwise
-	 */
-	private boolean testWhetherRowContainsNonEmptyStrings(JQueryLocator row) {
+            boolean result = testWhetherRowContainsNonEmptyStrings(i.next());
 
-		JQueryLocator td = jq(row.getRawLocator() + " > td");
+            if (result) {
 
-		for (Iterator<JQueryLocator> i = td.iterator(); i.hasNext();) {
+                return true;
+            }
 
-			String tdInTable = selenium.getText(i.next()).trim();
+        }
 
-			if (tdInTable.isEmpty()) {
+        return false;
 
-				return true;
-			}
-		}
+    }
 
-		return false;
-	}
+    /* ***************************************************************************************************
+     * help methods ************************************************************** *************************************
+     */
+
+    /**
+     * tests whether the rows tds contains some non empty strings
+     *
+     * @param row
+     * @return true if contains empty strings, false otherwise
+     */
+    private boolean testWhetherRowContainsNonEmptyStrings(JQueryLocator row) {
+
+        JQueryLocator td = jq(row.getRawLocator() + " > td");
+
+        for (Iterator<JQueryLocator> i = td.iterator(); i.hasNext();) {
+
+            String tdInTable = selenium.getText(i.next()).trim();
+
+            if (tdInTable.isEmpty()) {
+
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

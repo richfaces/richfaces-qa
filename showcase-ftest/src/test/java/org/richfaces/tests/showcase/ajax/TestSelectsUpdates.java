@@ -35,64 +35,63 @@ import org.richfaces.tests.showcase.AbstractAjocadoTest;
 import org.testng.annotations.Test;
 
 /**
- * 
+ *
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
 public class TestSelectsUpdates extends AbstractAjocadoTest {
-	
-	/* *************************************************************************************
-	 * Locators
-	 ***************************************************************************************/
-	
-	protected JQueryLocator firstSelect = jq("fieldset form select:eq(0)");
-	protected JQueryLocator secondSelect = jq("fieldset form select:eq(1)");
-	
-	/* ***************************************************************************************
-	 * Tests
-	 *****************************************************************************************/
-	
-	@Test
-	public void testDynamicSelects() {
-		
-		List<String> fruitsExpected = new ArrayList<String>();
-		fruitsExpected.add("");
-		fruitsExpected.add("Banana");
-		fruitsExpected.add("Cranberry");
-		fruitsExpected.add("Blueberry");
-		fruitsExpected.add("Orange");
-		
-		List<String> vegetablesExpected = new ArrayList<String>();
-		vegetablesExpected.add("");
-		vegetablesExpected.add("Potatoes");
-		vegetablesExpected.add("Broccoli");
-		vegetablesExpected.add("Garlic");
-		vegetablesExpected.add("Carrot");
-		
-		boolean isFirstSelectDispalyed = selenium.isElementPresent(firstSelect);
-		assertTrue(isFirstSelectDispalyed, "First select should be displayed!");
-		
-		boolean isSecondSelectDisplayed = selenium.isElementPresent(secondSelect);
-		assertFalse(isSecondSelectDisplayed, "Second select should be dispayed");
-		
-		guardXhr(selenium).select(firstSelect, optionLabel("Fruits"));
-		
-		List<String> fruitsActual = selenium.getSelectOptions(secondSelect);
-		
 
-		isSecondSelectDisplayed = selenium.isElementPresent(secondSelect);
-		assertTrue(isSecondSelectDisplayed, "Second select should be dispayed");
-		
-		assertEquals(fruitsActual, fruitsExpected, "When selected fruits in first select, in the second " +
-				"should be some examples of Fruits");
-		
-		guardXhr(selenium).select(firstSelect, optionLabel("Vegetables"));
-		
-		List<String> vegetablesActual = selenium.getSelectOptions(secondSelect);
-	
-		assertEquals(vegetablesActual, vegetablesExpected, "When selected vegetables in first select, in the second " +
-				"should be some examples of vegetables");
-		
-	}
+    /* *************************************************************************************
+     * Locators*************************************************************************************
+     */
+
+    protected JQueryLocator firstSelect = jq("fieldset form select:eq(0)");
+    protected JQueryLocator secondSelect = jq("fieldset form select:eq(1)");
+
+    /* ***************************************************************************************
+     * Tests***************************************************************************************
+     */
+
+    @Test
+    public void testDynamicSelects() {
+
+        List<String> fruitsExpected = new ArrayList<String>();
+        fruitsExpected.add("");
+        fruitsExpected.add("Banana");
+        fruitsExpected.add("Cranberry");
+        fruitsExpected.add("Blueberry");
+        fruitsExpected.add("Orange");
+
+        List<String> vegetablesExpected = new ArrayList<String>();
+        vegetablesExpected.add("");
+        vegetablesExpected.add("Potatoes");
+        vegetablesExpected.add("Broccoli");
+        vegetablesExpected.add("Garlic");
+        vegetablesExpected.add("Carrot");
+
+        boolean isFirstSelectDispalyed = selenium.isElementPresent(firstSelect);
+        assertTrue(isFirstSelectDispalyed, "First select should be displayed!");
+
+        boolean isSecondSelectDisplayed = selenium.isElementPresent(secondSelect);
+        assertFalse(isSecondSelectDisplayed, "Second select should be dispayed");
+
+        guardXhr(selenium).select(firstSelect, optionLabel("Fruits"));
+
+        List<String> fruitsActual = selenium.getSelectOptions(secondSelect);
+
+        isSecondSelectDisplayed = selenium.isElementPresent(secondSelect);
+        assertTrue(isSecondSelectDisplayed, "Second select should be dispayed");
+
+        assertEquals(fruitsActual, fruitsExpected, "When selected fruits in first select, in the second "
+            + "should be some examples of Fruits");
+
+        guardXhr(selenium).select(firstSelect, optionLabel("Vegetables"));
+
+        List<String> vegetablesActual = selenium.getSelectOptions(secondSelect);
+
+        assertEquals(vegetablesActual, vegetablesExpected, "When selected vegetables in first select, in the second "
+            + "should be some examples of vegetables");
+
+    }
 
 }

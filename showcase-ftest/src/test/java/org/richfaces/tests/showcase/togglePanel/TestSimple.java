@@ -34,48 +34,48 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestSimple extends AbstractAjocadoTest {
-	
-	/* ****************************************************************************
-	 * Constants
-	 ******************************************************************************/
-	protected final String CONTENT_OF_TAB1 = "For now you are at Panel 1";
-	protected final String CONTENT_OF_TAB2 = "For now you are at Panel 2";
-	
-	/* ****************************************************************************
-	 * Locators
-	 ******************************************************************************/
-	
-	JQueryLocator toogleTab1 = jq("div[id$=tabs] > div:eq(0)");
-	JQueryLocator toogleTab2 = jq("div[id$=tabs] > div:eq(1)");
-	JQueryLocator bodyOfPanel = jq("div.rf-tgp-itm:visible");
-	
-	/* ****************************************************************************
-	 * Tests
-	 ******************************************************************************/
-	
-	@Test
-	public void testTooglePanelItem1() {
-		
-		checkToogleTab(toogleTab1, CONTENT_OF_TAB1);
-	}
-	
-	@Test 
-	public void testTooglePanelItem2() {
-		
-		checkToogleTab(toogleTab2, CONTENT_OF_TAB2);
-	}
-	
-	/* ********************************************************************************
-	 * Help methods
-	 **********************************************************************************/
 
-	private void checkToogleTab( JQueryLocator button, String expectedContent ) {
-		
-		guardXhr(selenium).click(button);
-		
-		String actualContent = selenium.getText(bodyOfPanel);
-		
-		assertTrue(actualContent.contains(expectedContent) , "The content of " + button.getRawLocator() + 
-				" is diferent!");
-	}
+    /* ****************************************************************************
+     * Constants****************************************************************************
+     */
+    protected final String CONTENT_OF_TAB1 = "For now you are at Panel 1";
+    protected final String CONTENT_OF_TAB2 = "For now you are at Panel 2";
+
+    /* ****************************************************************************
+     * Locators****************************************************************************
+     */
+
+    JQueryLocator toogleTab1 = jq("div[id$=tabs] > div:eq(0)");
+    JQueryLocator toogleTab2 = jq("div[id$=tabs] > div:eq(1)");
+    JQueryLocator bodyOfPanel = jq("div.rf-tgp-itm:visible");
+
+    /* ****************************************************************************
+     * Tests****************************************************************************
+     */
+
+    @Test
+    public void testTooglePanelItem1() {
+
+        checkToogleTab(toogleTab1, CONTENT_OF_TAB1);
+    }
+
+    @Test
+    public void testTooglePanelItem2() {
+
+        checkToogleTab(toogleTab2, CONTENT_OF_TAB2);
+    }
+
+    /* ********************************************************************************
+     * Help methods********************************************************************************
+     */
+
+    private void checkToogleTab(JQueryLocator button, String expectedContent) {
+
+        guardXhr(selenium).click(button);
+
+        String actualContent = selenium.getText(bodyOfPanel);
+
+        assertTrue(actualContent.contains(expectedContent), "The content of " + button.getRawLocator()
+            + " is diferent!");
+    }
 }

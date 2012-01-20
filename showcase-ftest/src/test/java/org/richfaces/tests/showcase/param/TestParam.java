@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.param;
 
-
 import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
@@ -35,46 +34,41 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestParam extends AbstractAjocadoTest {
-	
-	/* *******************************************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * *************************************
-	 */
-	
-	protected JQueryLocator buttonAlex = jq("fieldset form input[type=submit]:first");
-	protected JQueryLocator buttonJohn = jq("fieldset form input[type=submit]:last");
-	protected JQueryLocator selectedName = jq("span[id$=rep]");
-	
-	/* ********************************************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * ***********************************
-	 */
-	
-	@Test
-	public void testWhetherThereIsNothigSetAtFirst() {
 
-		String actualString = selenium.getText(selectedName).trim();
-		assertEquals(actualString, "Selected Name:", "There can not be anything selected at first after page first load!");
-	}
-	
-	@Test
-	public void testClickToButtonAndCheckTheSelectedName() {
-		
-		guardXhr(selenium).click(buttonAlex);
-		
-		String actualString = selenium.getText(selectedName).trim();
-		assertEquals(actualString, "Selected Name:Alex", "Selected name shoud be Alex!");
-		
-		guardXhr(selenium).click(buttonJohn);
-		
-		actualString = selenium.getText(selectedName).trim();
-		assertEquals(actualString, "Selected Name:John", "Selected name shoud be John!");
-		
-		guardXhr(selenium).click(buttonAlex);
-		actualString = selenium.getText(selectedName).trim();
-		assertEquals(actualString, "Selected Name:Alex", "Selected name shoud be again Alex!");
-	}
+    /* *******************************************************************************************************
+     * Locators ****************************************************************** *************************************
+     */
+
+    protected JQueryLocator buttonAlex = jq("fieldset form input[type=submit]:first");
+    protected JQueryLocator buttonJohn = jq("fieldset form input[type=submit]:last");
+    protected JQueryLocator selectedName = jq("span[id$=rep]");
+
+    /* ********************************************************************************************************
+     * Tests ********************************************************************* ***********************************
+     */
+
+    @Test
+    public void testWhetherThereIsNothigSetAtFirst() {
+        String actualString = selenium.getText(selectedName).trim();
+        assertEquals(actualString, "Selected Name:",
+            "There can not be anything selected at first after page first load!");
+    }
+
+    @Test
+    public void testClickToButtonAndCheckTheSelectedName() {
+        guardXhr(selenium).click(buttonAlex);
+
+        String actualString = selenium.getText(selectedName).trim();
+        assertEquals(actualString, "Selected Name:Alex", "Selected name shoud be Alex!");
+
+        guardXhr(selenium).click(buttonJohn);
+
+        actualString = selenium.getText(selectedName).trim();
+        assertEquals(actualString, "Selected Name:John", "Selected name shoud be John!");
+
+        guardXhr(selenium).click(buttonAlex);
+        actualString = selenium.getText(selectedName).trim();
+        assertEquals(actualString, "Selected Name:Alex", "Selected name shoud be again Alex!");
+    }
 
 }

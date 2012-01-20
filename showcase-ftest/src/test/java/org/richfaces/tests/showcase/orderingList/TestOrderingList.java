@@ -31,90 +31,80 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestOrderingList extends AbstractOrderingTest {
-	
-	/* **************************************************************************
-	 * Locators
-	 ****************************************************************************/
-	
-	private JQueryLocator optionToOrderSimpleList = jq(".rf-ord:eq(0) .rf-ord-opt{0}");
-	private JQueryLocator optionToOrderWithColumns = jq(".rf-ord:eq(1) .rf-ord-opt{0}");
-	
-	/* ******************************************************************************
-	 * Tests
-	 *******************************************************************************/
-	
-	@Test
-	public void testFirstButtonSimpleOrderingList() {
-		
-		checkFirstButton(optionToOrderSimpleList, firstButton.format(0));
-	}
-	
-	@Test
-	public void testUpButtonSimpleOrderingList() {
-		
-		checkUpButton(optionToOrderSimpleList, upButton.format(0));
-	}
-	
-	@Test
-	public void testDownButtonSimpleOrderingList() {
-		
-		checkDownButton(optionToOrderSimpleList, downButton.format(0));
-	}
-	
-	@Test
-	public void testLastButtonSimpleOrderingList() {
-		
-		checkLastButton(optionToOrderSimpleList, lastButton.format(0));
-	}
-	
-	@Test
-	public void testFirstButtonWithColumnsOrderingList() {
-		
-		checkFirstButton(optionToOrderWithColumns, firstButton.format(1));
-	}
-	
-	@Test
-	public void testUpButtonWithColumnsOrderingList() {
-		
-		checkUpButton(optionToOrderWithColumns, upButton.format(1));
-	}
-	
-	@Test
-	public void testDownButtonWithColumnsOrderingList() {
-		
-		checkDownButton(optionToOrderWithColumns, downButton.format(1));
-	}
-	
-	@Test
-	public void testLastButtonWithColumnsOrderingList() {
-		
-		checkLastButton(optionToOrderWithColumns, lastButton.format(1));
-	}
-	
-	@Test
-	public void testFirstAndUpButtonsDisabledAfterFirst() {
-		
-		checkFirstAndUpButtonsDisabled(optionToOrderSimpleList, 
-				firstButton.format(0), firstButton.format(0), upButton.format(0));
-	}
-	
-	@Test
-	public void testFirstAndUpButtonDisabledAfterUp() {
-		
-		checkFirstAndUpButtonsDisabled(optionToOrderSimpleList, 
-				upButton.format(0), firstButton.format(0), upButton.format(0));
-	}
-	
-	@Test
-	public void testLastAndDownButtonDisabledAfterLast() {
-		
-		checkDownAndLastButtonsDisabled(optionToOrderSimpleList, lastButton.format(0), lastButton.format(0), downButton.format(0));
-	}
-	
-	@Test
-	public void testLastAndDownButtonDisabledAfterDown() {
-		
-		checkDownAndLastButtonsDisabled(optionToOrderSimpleList, downButton.format(0), lastButton.format(0), downButton.format(0));
-	}
-	
+
+    /* **************************************************************************
+     * Locators**************************************************************************
+     */
+
+    private JQueryLocator optionToOrderSimpleList = jq(".rf-ord:eq(0) .rf-ord-opt{0}");
+    private JQueryLocator optionToOrderWithColumns = jq(".rf-ord:eq(1) .rf-ord-opt{0}");
+
+    /* ******************************************************************************
+     * Tests*****************************************************************************
+     */
+
+    @Test
+    public void testFirstButtonSimpleOrderingList() {
+        checkFirstButton(optionToOrderSimpleList, firstButton.format(0));
+    }
+
+    @Test
+    public void testUpButtonSimpleOrderingList() {
+        checkUpButton(optionToOrderSimpleList, upButton.format(0));
+    }
+
+    @Test
+    public void testDownButtonSimpleOrderingList() {
+        checkDownButton(optionToOrderSimpleList, downButton.format(0));
+    }
+
+    @Test
+    public void testLastButtonSimpleOrderingList() {
+        checkLastButton(optionToOrderSimpleList, lastButton.format(0));
+    }
+
+    @Test
+    public void testFirstButtonWithColumnsOrderingList() {
+        checkFirstButton(optionToOrderWithColumns, firstButton.format(1));
+    }
+
+    @Test
+    public void testUpButtonWithColumnsOrderingList() {
+        checkUpButton(optionToOrderWithColumns, upButton.format(1));
+    }
+
+    @Test
+    public void testDownButtonWithColumnsOrderingList() {
+        checkDownButton(optionToOrderWithColumns, downButton.format(1));
+    }
+
+    @Test
+    public void testLastButtonWithColumnsOrderingList() {
+        checkLastButton(optionToOrderWithColumns, lastButton.format(1));
+    }
+
+    @Test
+    public void testFirstAndUpButtonsDisabledAfterFirst() {
+        checkFirstAndUpButtonsDisabled(optionToOrderSimpleList, firstButton.format(0), firstButton.format(0),
+            upButton.format(0));
+    }
+
+    @Test
+    public void testFirstAndUpButtonDisabledAfterUp() {
+        checkFirstAndUpButtonsDisabled(optionToOrderSimpleList, upButton.format(0), firstButton.format(0),
+            upButton.format(0));
+    }
+
+    @Test
+    public void testLastAndDownButtonDisabledAfterLast() {
+        checkDownAndLastButtonsDisabled(optionToOrderSimpleList, lastButton.format(0), lastButton.format(0),
+            downButton.format(0));
+    }
+
+    @Test
+    public void testLastAndDownButtonDisabledAfterDown() {
+        checkDownAndLastButtonsDisabled(optionToOrderSimpleList, downButton.format(0), lastButton.format(0),
+            downButton.format(0));
+    }
+
 }

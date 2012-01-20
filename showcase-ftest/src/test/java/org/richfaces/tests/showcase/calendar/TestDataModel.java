@@ -25,35 +25,36 @@ import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.testng.annotations.Test;
+
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestDataModel  extends AbstractCalendarTest {
-	
-	/* *********************************************************************
-	 * Locators
-	 ***********************************************************************/
-	
-	protected JQueryLocator busyDays = jq("td[class*=bdc]");
-	
-	/* *************************************************************************
-	 * Tests
-	 ***************************************************************************/
-	
-	@Test
-	public void testDisabledComponents() {
-		
-		abstractTestClickOnDisabledComponents(holiday);
-		
-		abstractTestClickOnDisabledComponents(busyDays);
-		
-	}
-	
-	@Test
-	public void testThereAreAllRequiredComponents() {
+public class TestDataModel extends AbstractCalendarTest {
 
-		abstractTestThereAreAllRequiredComponents();
-	}
+    /* *********************************************************************
+     * Locators*********************************************************************
+     */
+
+    protected JQueryLocator busyDays = jq("td[class*=bdc]");
+
+    /* *************************************************************************
+     * Tests*************************************************************************
+     */
+
+    @Test
+    public void testDisabledComponents() {
+
+        abstractTestClickOnDisabledComponents(holiday);
+
+        abstractTestClickOnDisabledComponents(busyDays);
+
+    }
+
+    @Test
+    public void testThereAreAllRequiredComponents() {
+
+        abstractTestThereAreAllRequiredComponents();
+    }
 
 }

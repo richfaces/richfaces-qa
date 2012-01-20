@@ -38,34 +38,34 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestClientFilter extends AbstractAjocadoTest {
-	
-	/* ********************************************************************
-	 * Locators
-	 **********************************************************************/
-	
-	protected JQueryLocator input = jq("input[type=text]");
-	protected JQueryLocator selection = jq("div.rf-au-itm");
-	
-	/* *********************************************************************
-	 * Tests
-	 ***********************************************************************/
-	
-	@Test
-	public void testClientFilterFunctionContains() {
-		
-		selenium.focus(input);
-		
-		selenium.type(input, "ska");
-		
-		guardNoRequest(selenium).fireEvent(input, Event.KEYPRESS);
-		
-		assertTrue( selenium.isVisible(selection), "The selection should be visible, since there is correct sequence of chars!");
-		
-		selenium.keyPressNative( KeyEvent.VK_ENTER );
-		
-		String actualValueOfInput = selenium.getValue(input);
-		assertEquals(actualValueOfInput, "Alaska", "The content should be Alaska, since it contains string ska");
-	}
-	
+
+    /* ********************************************************************
+     * Locators********************************************************************
+     */
+
+    protected JQueryLocator input = jq("input[type=text]");
+    protected JQueryLocator selection = jq("div.rf-au-itm");
+
+    /* *********************************************************************
+     * Tests*********************************************************************
+     */
+
+    @Test
+    public void testClientFilterFunctionContains() {
+
+        selenium.focus(input);
+
+        selenium.type(input, "ska");
+
+        guardNoRequest(selenium).fireEvent(input, Event.KEYPRESS);
+
+        assertTrue(selenium.isVisible(selection),
+            "The selection should be visible, since there is correct sequence of chars!");
+
+        selenium.keyPressNative(KeyEvent.VK_ENTER);
+
+        String actualValueOfInput = selenium.getValue(input);
+        assertEquals(actualValueOfInput, "Alaska", "The content should be Alaska, since it contains string ska");
+    }
 
 }

@@ -35,48 +35,41 @@ import org.testng.annotations.Test;
  */
 public class TestValueManagement extends AbstractAjocadoTest {
 
-	/* **********************************************************************
-	 * Constants
-	 * **********************************************************************
-	 */
+    /* **********************************************************************
+     * Constants **********************************************************************
+     */
 
-	private final String BODY_OF_PANEL = "Here is tab #";
-	private final String BODY_OF_PANEL_1 = BODY_OF_PANEL + 1;
-	private final String BODY_OF_PANEL_2 = BODY_OF_PANEL + 2;
+    private final String BODY_OF_PANEL = "Here is tab #";
+    private final String BODY_OF_PANEL_1 = BODY_OF_PANEL + 1;
+    private final String BODY_OF_PANEL_2 = BODY_OF_PANEL + 2;
 
-	/* **********************************************************************
-	 * Locators
-	 ***********************************************************************/
-	
+    /* **********************************************************************
+     * Locators*********************************************************************
+     */
 
-	JQueryLocator previousTabButton = jq("a:contains('Previous')");
-	JQueryLocator nextTabButton = jq("a:contains('Next')");
-	JQueryLocator firstTabButton = jq("span:contains('First'):visible");
-	JQueryLocator bodyOfPanel = jq("div.rf-tab div[id$=content]:visible");
+    JQueryLocator previousTabButton = jq("a:contains('Previous')");
+    JQueryLocator nextTabButton = jq("a:contains('Next')");
+    JQueryLocator firstTabButton = jq("span:contains('First'):visible");
+    JQueryLocator bodyOfPanel = jq("div.rf-tab div[id$=content]:visible");
 
-	/* *********************************************************************
-	 * Tests
-	 * **********************************************************************
-	 */
+    /* *********************************************************************
+     * Tests **********************************************************************
+     */
 
-	@Test
-	public void testExternalControlsForSwitchingThePanel() {
+    @Test
+    public void testExternalControlsForSwitchingThePanel() {
+        guardXhr(selenium).click(firstTabButton);
 
-		guardXhr(selenium).click(firstTabButton);
+        guardXhr(selenium).click(nextTabButton);
 
-		guardXhr(selenium).click(nextTabButton);
-		
-		String actualContent = selenium.getText(bodyOfPanel);
+        String actualContent = selenium.getText(bodyOfPanel);
 
-		assertEquals(actualContent, BODY_OF_PANEL_2,
-				"The next button does not work!");
+        assertEquals(actualContent, BODY_OF_PANEL_2, "The next button does not work!");
 
-		guardXhr(selenium).click(previousTabButton);
-		
-		actualContent = selenium.getText(bodyOfPanel);
-		
-		assertEquals(actualContent, BODY_OF_PANEL_1,
-		"The previous button does not work!");
+        guardXhr(selenium).click(previousTabButton);
 
-	}
+        actualContent = selenium.getText(bodyOfPanel);
+
+        assertEquals(actualContent, BODY_OF_PANEL_1, "The previous button does not work!");
+    }
 }

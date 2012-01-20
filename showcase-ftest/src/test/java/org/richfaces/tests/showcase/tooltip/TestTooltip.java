@@ -36,57 +36,52 @@ import org.testng.annotations.Test;
  */
 public class TestTooltip extends AbstractAjocadoTest {
 
-	/* ************************************************************************************
-	 * Constants
-	 *************************************************************************************/
-	
-	private final String TOOLTIP_TEXT_AJAX = "This tool-tip content was rendered on server\n"
-			+ " tooltips requested: 0";
+    /* ************************************************************************************
+     * Constants***********************************************************************************
+     */
 
-	/* *******************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * *************
-	 */
+    private final String TOOLTIP_TEXT_AJAX = "This tool-tip content was rendered on server\n"
+        + " tooltips requested: 0";
 
-	//private JQueryLocator clientTooltipActivatingArea = jq("div[class*='rf-p tooltip-text']:eq(0)");
-	//private JQueryLocator clientWithDelayTooltipActivatingArea = jq("div[class*='rf-p tooltip-text']:eq(1)");
-	//private JQueryLocator ajaxTooltipActivatingArea = jq("div[id$=sample3]");
-	private JQueryLocator ajaxClickTooltipActivatingArea = jq("div[class*='rf-p tooltip-text']:eq(3)");
+    /* *******************************************************************************
+     * Locators ****************************************************************** *************
+     */
 
-	private JQueryLocator tooltip = jq("div[class*='rf-tt tooltip']:visible");
+    // private JQueryLocator clientTooltipActivatingArea = jq("div[class*='rf-p tooltip-text']:eq(0)");
+    // private JQueryLocator clientWithDelayTooltipActivatingArea = jq("div[class*='rf-p tooltip-text']:eq(1)");
+    // private JQueryLocator ajaxTooltipActivatingArea = jq("div[id$=sample3]");
+    private JQueryLocator ajaxClickTooltipActivatingArea = jq("div[class*='rf-p tooltip-text']:eq(3)");
 
-	/* ***************************************************************************************************
-	 * Tests, other tooltips should be tested as well, but they are not called
-	 * when the mouseover is fired, should be investigated later on
-	 * *********************************************************************
-	 * ******************************
-	 */
+    private JQueryLocator tooltip = jq("div[class*='rf-tt tooltip']:visible");
 
-	//@Test
-	public void testClientTooltip() {
-		
-		
-	}
+    /* ***************************************************************************************************
+     * Tests, other tooltips should be tested as well, but they are not called when the mouseover is fired, should be
+     * investigated later on *********************************************************************
+     * ******************************
+     */
 
-	// @Test
-	public void testClientWithDelayTooltip() {
+    // @Test
+    public void testClientTooltip() {
 
-	}
+    }
 
-	//@Test
-	public void testAjaxTooltip() {
-		
-	}
+    // @Test
+    public void testClientWithDelayTooltip() {
 
-	@Test
-	public void testAjaxClickTooltip() {
+    }
 
-		guardXhr(selenium).clickAt(ajaxClickTooltipActivatingArea,
-				new Point(5, 5));
+    // @Test
+    public void testAjaxTooltip() {
 
-		String actualTooltipText = selenium.getText(tooltip);
-		assertEquals(actualTooltipText, TOOLTIP_TEXT_AJAX, "The tool tip text is different!");
-	}
+    }
+
+    @Test
+    public void testAjaxClickTooltip() {
+
+        guardXhr(selenium).clickAt(ajaxClickTooltipActivatingArea, new Point(5, 5));
+
+        String actualTooltipText = selenium.getText(tooltip);
+        assertEquals(actualTooltipText, TOOLTIP_TEXT_AJAX, "The tool tip text is different!");
+    }
 
 }

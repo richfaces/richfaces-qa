@@ -38,103 +38,88 @@ import org.testng.annotations.Test;
  */
 public class TestSelect extends AbstractAjocadoTest {
 
-	/* *************************************************************************************
-	 * Constants
-	 * *****************************************************************
-	 * ********************
-	 */
+    /* *************************************************************************************
+     * Constants ***************************************************************** ********************
+     */
 
-	protected final String CLASS_OF_SELECTED_OTPION = "rf-sel-sel";
-	protected final String ERROR_MSG_WHEN_POPUP_NOT_DISPLAYED = "The popup with options was not displayed in 1 second!";
+    protected final String CLASS_OF_SELECTED_OTPION = "rf-sel-sel";
+    protected final String ERROR_MSG_WHEN_POPUP_NOT_DISPLAYED = "The popup with options was not displayed in 1 second!";
 
-	/* ***********************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * *****************
-	 */
+    /* ***********************************************************************************
+     * Locators ****************************************************************** *****************
+     */
 
-	protected JQueryLocator selectOpenButton = jq("span.rf-sel-btn:eq({0})");
-	protected JQueryLocator option = jq("div.rf-sel-opt:contains('{0}')");
-	protected JQueryLocator manualInput = jq("input[type=text]:eq(1)");
-	protected JQueryLocator popupWithOptions = jq("div.rf-sel-shdw:eq({0}):visible");
+    protected JQueryLocator selectOpenButton = jq("span.rf-sel-btn:eq({0})");
+    protected JQueryLocator option = jq("div.rf-sel-opt:contains('{0}')");
+    protected JQueryLocator manualInput = jq("input[type=text]:eq(1)");
+    protected JQueryLocator popupWithOptions = jq("div.rf-sel-shdw:eq({0}):visible");
 
-	/* ***********************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * *****************
-	 */
+    /* ***********************************************************************************
+     * Locators ****************************************************************** *****************
+     */
 
-	@Test
-	public void testSimpleSelectMouseSelect() {
+    @Test
+    public void testSimpleSelectMouseSelect() {
 
-		for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 5; i++) {
 
-			selenium.mouseDown(selectOpenButton.format(0));
+            selenium.mouseDown(selectOpenButton.format(0));
 
-			JQueryLocator particularOption = option.format("Option " + i);
+            JQueryLocator particularOption = option.format("Option " + i);
 
-			if (!waitForElementPresent(particularOption, 1000)) {
+            if (!waitForElementPresent(particularOption, 1000)) {
 
-				fail(ERROR_MSG_WHEN_POPUP_NOT_DISPLAYED);
-			}
+                fail(ERROR_MSG_WHEN_POPUP_NOT_DISPLAYED);
+            }
 
-			selenium.click(particularOption);
+            selenium.click(particularOption);
 
-			String classOfSelectedOption = selenium
-					.getAttribute(particularOption
-							.getAttribute(Attribute.CLASS));
+            String classOfSelectedOption = selenium.getAttribute(particularOption.getAttribute(Attribute.CLASS));
 
-			assertTrue(
-					classOfSelectedOption.contains(CLASS_OF_SELECTED_OTPION),
-					"The option " + particularOption.getRawLocator()
-							+ " should be selected");
-		}
+            assertTrue(classOfSelectedOption.contains(CLASS_OF_SELECTED_OTPION),
+                "The option " + particularOption.getRawLocator() + " should be selected");
+        }
 
-	}
+    }
 
-	@Test
-	public void testSelectManualInputByMouse() {
+    @Test
+    public void testSelectManualInputByMouse() {
 
-		selectSomethingFromCapitalsSelectAndCheck("Arizona");
+        selectSomethingFromCapitalsSelectAndCheck("Arizona");
 
-		selectSomethingFromCapitalsSelectAndCheck("Florida");
+        selectSomethingFromCapitalsSelectAndCheck("Florida");
 
-		selectSomethingFromCapitalsSelectAndCheck("California");
-	}
+        selectSomethingFromCapitalsSelectAndCheck("California");
+    }
 
-	/* *******************************************************************************
-	 * Help methods
-	 * **************************************************************
-	 * *****************
-	 */
+    /* *******************************************************************************
+     * Help methods ************************************************************** *****************
+     */
 
-	/**
-	 * Types the beginning of capital and then selects from poppup and check
-	 * whether right option was selected
-	 */
-	private void selectSomethingFromCapitalsSelectAndCheck(String capital) {
+    /**
+     * Types the beginning of capital and then selects from poppup and check whether right option was selected
+     */
+    private void selectSomethingFromCapitalsSelectAndCheck(String capital) {
 
-		eraseInput(manualInput);
+        eraseInput(manualInput);
 
-		JQueryLocator particularOption = option.format(capital);
+        JQueryLocator particularOption = option.format(capital);
 
-		selenium.click(manualInput);
+        selenium.click(manualInput);
 
-		selenium.type(manualInput, capital.substring(0, 2));
-		selenium.fireEvent(manualInput, Event.KEYPRESS);
+        selenium.type(manualInput, capital.substring(0, 2));
+        selenium.fireEvent(manualInput, Event.KEYPRESS);
 
-		if (!waitForElementPresent(popupWithOptions.format(1), 1000)) {
+        if (!waitForElementPresent(popupWithOptions.format(1), 1000)) {
 
-			fail(ERROR_MSG_WHEN_POPUP_NOT_DISPLAYED);
-		}
+            fail(ERROR_MSG_WHEN_POPUP_NOT_DISPLAYED);
+        }
 
-		String classOfSelectedOption = selenium.getAttribute(particularOption
-				.getAttribute(Attribute.CLASS));
+        String classOfSelectedOption = selenium.getAttribute(particularOption.getAttribute(Attribute.CLASS));
 
-		assertTrue(classOfSelectedOption.contains(CLASS_OF_SELECTED_OTPION),
-				"The option " + particularOption.getRawLocator()
-						+ " should be selected");
+        assertTrue(classOfSelectedOption.contains(CLASS_OF_SELECTED_OTPION),
+            "The option " + particularOption.getRawLocator() + " should be selected");
 
-	}
+    }
 
 }

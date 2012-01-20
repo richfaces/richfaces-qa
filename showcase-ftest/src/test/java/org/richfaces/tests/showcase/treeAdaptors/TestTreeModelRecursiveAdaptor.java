@@ -25,7 +25,6 @@ import static org.testng.Assert.assertTrue;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
 
-
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.retrievers.AttributeRetriever;
@@ -38,88 +37,64 @@ import org.testng.annotations.Test;
  */
 public class TestTreeModelRecursiveAdaptor extends AbstractTreeTest {
 
-	/* *******************************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * **********************
-	 */
+    /* *******************************************************************************************
+     * Tests ********************************************************************* **********************
+     */
 
-	@Test
-	public void testTreeIsNotEmpty() {
+    @Test
+    public void testTreeIsNotEmpty() {
+        collapseOrExpandAllNodes(allExpandedHnd);
 
-		collapseOrExpandAllNodes(allExpandedHnd);
+        JQueryLocator folders = jq(FIRST_LVL_NODE);
 
-		JQueryLocator folders = jq(FIRST_LVL_NODE);
+        int numberOfFolders = selenium.getCount(folders);
 
-		int numberOfFolders = selenium.getCount(folders);
+        assertTrue(numberOfFolders > 0, "The number of first lvl folders should be more than 0");
 
-		assertTrue(numberOfFolders > 0,
-				"The number of first lvl folders should be more than 0");
+        JQueryLocator leavesOfFirstFolder = jq(FIRST_LVL_NODE + ":eq(0) > " + LEAF);
 
-		JQueryLocator leavesOfFirstFolder = jq(FIRST_LVL_NODE + ":eq(0) > "
-				+ LEAF);
+        JQueryLocator expandSignFirstNode = jq(FIRST_LVL_NODE + ":eq(0) > " + EXPAND_SIGN);
 
-		JQueryLocator expandSignFirstNode = jq(FIRST_LVL_NODE + ":eq(0) > "
-				+ EXPAND_SIGN);
+        selenium.click(expandSignFirstNode);
+        waitModel.waitForChange(AttributeRetriever.getInstance().attributeLocator(
+            jq(FIRST_LVL_NODE + ":eq(0)").getAttribute(Attribute.CLASS)));
 
-		selenium.click(expandSignFirstNode);
-		waitModel.waitForChange(AttributeRetriever.getInstance()
-				.attributeLocator(
-						jq(FIRST_LVL_NODE + ":eq(0)").getAttribute(
-								Attribute.CLASS)));
+        int numberOfFirstFolderLeaves = selenium.getCount(leavesOfFirstFolder);
 
-		int numberOfFirstFolderLeaves = selenium.getCount(leavesOfFirstFolder);
+        assertTrue(numberOfFirstFolderLeaves > 0, "The number of first folder " + "leaves should be more than 0!");
+    }
 
-		assertTrue(numberOfFirstFolderLeaves > 0, "The number of first folder "
-				+ "leaves should be more than 0!");
-	}
+    @Test
+    public void testRememberExpandedNodeWhenParentIsCollapsed() {
+        collapseOrExpandAllNodes(allExpandedHnd);
 
-	@Test
-	public void testRememberExpandedNodeWhenParentIsCollapsed() {
+        JQueryLocator secondFolderExpand = jq(FIRST_LVL_NODE + ":eq(1) > " + EXPAND_SIGN);
 
-		collapseOrExpandAllNodes(allExpandedHnd);
+        selenium.click(secondFolderExpand);
+        waitModel.waitForChange(AttributeRetriever.getInstance().attributeLocator(
+            jq(FIRST_LVL_NODE + ":eq(1)").getAttribute(Attribute.CLASS)));
 
-		JQueryLocator secondFolderExpand = jq(FIRST_LVL_NODE + ":eq(1) > "
-				+ EXPAND_SIGN);
+        JQueryLocator secondFolderFirstFolderExpand = jq(FIRST_LVL_NODE + ":eq(1) > " + SECOND_LVL_NODE + ":eq(0) > "
+            + EXPAND_SIGN);
 
-		selenium.click(secondFolderExpand);
-		waitModel.waitForChange(AttributeRetriever.getInstance()
-				.attributeLocator(
-						jq(FIRST_LVL_NODE + ":eq(1)").getAttribute(
-								Attribute.CLASS)));
+        selenium.click(secondFolderFirstFolderExpand);
+        waitModel.waitForChange(AttributeRetriever.getInstance().attributeLocator(
+            jq(FIRST_LVL_NODE + ":eq(1) > " + SECOND_LVL_NODE + ":eq(0)").getAttribute(Attribute.CLASS)));
 
-		JQueryLocator secondFolderFirstFolderExpand = jq(FIRST_LVL_NODE
-				+ ":eq(1) > " + SECOND_LVL_NODE + ":eq(0) > " + EXPAND_SIGN);
+        JQueryLocator secondFolderCollapse = jq(FIRST_LVL_NODE + ":eq(1) > " + COLLAPSE_SIGN);
 
-		selenium.click(secondFolderFirstFolderExpand);
-		waitModel.waitForChange(AttributeRetriever.getInstance()
-				.attributeLocator(
-						jq(
-								FIRST_LVL_NODE + ":eq(1) > " + SECOND_LVL_NODE
-										+ ":eq(0)").getAttribute(
-								Attribute.CLASS)));
+        selenium.click(secondFolderCollapse);
+        waitModel.waitForChange(AttributeRetriever.getInstance().attributeLocator(
+            jq(FIRST_LVL_NODE + ":eq(1)").getAttribute(Attribute.CLASS)));
 
-		JQueryLocator secondFolderCollapse = jq(FIRST_LVL_NODE + ":eq(1) > "
-				+ COLLAPSE_SIGN);
+        selenium.click(secondFolderExpand);
+        waitModel.waitForChange(AttributeRetriever.getInstance().attributeLocator(
+            jq(FIRST_LVL_NODE + ":eq(1)").getAttribute(Attribute.CLASS)));
 
-		selenium.click(secondFolderCollapse);
-		waitModel.waitForChange(AttributeRetriever.getInstance()
-				.attributeLocator(
-						jq(FIRST_LVL_NODE + ":eq(1)").getAttribute(
-								Attribute.CLASS)));
-
-		selenium.click(secondFolderExpand);
-		waitModel.waitForChange(AttributeRetriever.getInstance()
-				.attributeLocator(
-						jq(FIRST_LVL_NODE + ":eq(1)").getAttribute(
-								Attribute.CLASS)));
-
-		JQueryLocator secondFolderFirstFolderCollapse = jq(FIRST_LVL_NODE
-				+ ":eq(1) > " + SECOND_LVL_NODE + ":eq(0) > " + COLLAPSE_SIGN);
-		assertTrue(selenium.isElementPresent(secondFolderFirstFolderCollapse),
-				"The expansion of the subfolder should be remained, "
-						+ "when the parent node is collapsed");
-
-	}
+        JQueryLocator secondFolderFirstFolderCollapse = jq(FIRST_LVL_NODE + ":eq(1) > " + SECOND_LVL_NODE + ":eq(0) > "
+            + COLLAPSE_SIGN);
+        assertTrue(selenium.isElementPresent(secondFolderFirstFolderCollapse),
+            "The expansion of the subfolder should be remained, " + "when the parent node is collapsed");
+    }
 
 }

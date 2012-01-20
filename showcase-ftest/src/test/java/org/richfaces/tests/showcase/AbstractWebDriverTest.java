@@ -32,26 +32,25 @@ import org.testng.annotations.BeforeMethod;
  */
 public class AbstractWebDriverTest extends AbstractShowcaseTest {
 
-	@Drone
-	protected FirefoxDriver webDriver;
+    @Drone
+    protected FirefoxDriver webDriver;
 
-	@BeforeMethod
-	public void loadPage() {
+    @BeforeMethod
+    public void loadPage() {
 
-		// workaround for jboss as 7, since it throws error when is looking up
-		// for contextRoot
+        // workaround for jboss as 7, since it throws error when is looking up
+        // for contextRoot
 
-		//try {
-			//contextRoot = new URL("http://localhost:8080");
-		//} catch (MalformedURLException e) { // TODO Auto-generated catch block
-			//e.printStackTrace();
-		//}
+        // try {
+        // contextRoot = new URL("http://localhost:8080");
+        // } catch (MalformedURLException e) { // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // }
 
-		String addition = getAdditionToContextRoot();
+        String addition = getAdditionToContextRoot();
 
-		this.contextRoot = getContextRoot();
-		
-		webDriver.get(URLUtils.buildUrl(contextRoot, "/showcase/", addition)
-				.toExternalForm());
-	}
+        this.contextRoot = getContextRoot();
+
+        webDriver.get(URLUtils.buildUrl(contextRoot, "/showcase/", addition).toExternalForm());
+    }
 }

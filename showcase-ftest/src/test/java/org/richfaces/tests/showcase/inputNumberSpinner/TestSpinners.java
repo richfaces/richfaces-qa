@@ -35,140 +35,127 @@ import org.testng.annotations.Test;
  */
 public class TestSpinners extends AbstractAjocadoTest {
 
-	/* *********************************************************************************
-	 * Constants
-	 * *****************************************************************
-	 * ****************
-	 */
+    /* *********************************************************************************
+     * Constants ***************************************************************** ****************
+     */
 
-	protected final int MAX_VALUE = 100;
-	protected final int MIN_VALUE = 0;
+    protected final int MAX_VALUE = 100;
+    protected final int MIN_VALUE = 0;
 
-	protected final int FIRST_INPUT_STEP = 1;
-	protected final int SECOND_INPUT_STEP = 10;
+    protected final int FIRST_INPUT_STEP = 1;
+    protected final int SECOND_INPUT_STEP = 10;
 
-	/* *********************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * ***************
-	 */
+    /* *********************************************************************************
+     * Locators ****************************************************************** ***************
+     */
 
-	protected JQueryLocator inputChangingByOne = jq("input[type=text]:eq(0)");
-	protected JQueryLocator inputChangingByTen = jq("input[type=text]:eq(1)");
+    protected JQueryLocator inputChangingByOne = jq("input[type=text]:eq(0)");
+    protected JQueryLocator inputChangingByTen = jq("input[type=text]:eq(1)");
 
-	protected JQueryLocator increaseByOne = jq("span.rf-insp-inc:eq(0)");
-	protected JQueryLocator increaseByTen = jq("span.rf-insp-inc:eq(1)");
+    protected JQueryLocator increaseByOne = jq("span.rf-insp-inc:eq(0)");
+    protected JQueryLocator increaseByTen = jq("span.rf-insp-inc:eq(1)");
 
-	protected JQueryLocator decreaseByOne = jq("span.rf-insp-dec:eq(0)");
-	protected JQueryLocator decreaseByTen = jq("span.rf-insp-dec:eq(1)");
+    protected JQueryLocator decreaseByOne = jq("span.rf-insp-dec:eq(0)");
+    protected JQueryLocator decreaseByTen = jq("span.rf-insp-dec:eq(1)");
 
-	/* *********************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * ************
-	 */
+    /* *********************************************************************************
+     * Tests ********************************************************************* ************
+     */
 
-	@Test
-	public void testInputIncreasedByOne() {
+    @Test
+    public void testInputIncreasedByOne() {
 
-		increaseByStep(inputChangingByOne, increaseByOne, FIRST_INPUT_STEP);
+        increaseByStep(inputChangingByOne, increaseByOne, FIRST_INPUT_STEP);
 
-	}
+    }
 
-	@Test
-	public void testInputIcreaseByTen() {
+    @Test
+    public void testInputIcreaseByTen() {
 
-		increaseByStep(inputChangingByTen, increaseByTen, SECOND_INPUT_STEP);
+        increaseByStep(inputChangingByTen, increaseByTen, SECOND_INPUT_STEP);
 
-	}
-	
-	@Test
-	public void testInputDecreaseByOne() {
-		
-		decreaseByStep(inputChangingByOne, decreaseByOne, FIRST_INPUT_STEP);
-	}
-	
-	@Test
-	public void testInputDecreaseByTen() {
-		
-		decreaseByStep(inputChangingByTen, decreaseByTen, SECOND_INPUT_STEP);
-	}
+    }
 
-	/* **************************************************************************************************************************
-	 * Help methods
-	 * **************************************************************
-	 * ************************************************************
-	 */
+    @Test
+    public void testInputDecreaseByOne() {
 
-	/**
-	 * Decrease by step via decrease spinner
-	 * 
-	 * @param input
-	 *            which value will be decreased
-	 * @param increaseSpinner
-	 *            the decrease spinner which will be clicked on
-	 * @param step
-	 *            the step by which will be the value decreased
-	 */
-	private void decreaseByStep(JQueryLocator input,
-			JQueryLocator decreaseSpinner, int step) {
+        decreaseByStep(inputChangingByOne, decreaseByOne, FIRST_INPUT_STEP);
+    }
 
-		int currentValueOfInput = Integer.valueOf(selenium.getValue(input));
+    @Test
+    public void testInputDecreaseByTen() {
 
-		for (int i = currentValueOfInput; i > MIN_VALUE; i -= step) {
+        decreaseByStep(inputChangingByTen, decreaseByTen, SECOND_INPUT_STEP);
+    }
 
-			selenium.clickAt(decreaseSpinner, new Point(1, 1));
+    /* **************************************************************************************************************************
+     * Help methods **************************************************************
+     * ************************************************************
+     */
 
-			assertEquals(Integer.valueOf(selenium.getValue(input)).intValue(),
-					currentValueOfInput - step,
-					"The value should be decreased by " + step);
+    /**
+     * Decrease by step via decrease spinner
+     *
+     * @param input
+     *            which value will be decreased
+     * @param increaseSpinner
+     *            the decrease spinner which will be clicked on
+     * @param step
+     *            the step by which will be the value decreased
+     */
+    private void decreaseByStep(JQueryLocator input, JQueryLocator decreaseSpinner, int step) {
 
-			currentValueOfInput = Integer.valueOf(selenium.getValue(input));
-		}
+        int currentValueOfInput = Integer.valueOf(selenium.getValue(input));
 
-		selenium.clickAt(decreaseSpinner, new Point(1, 1));
+        for (int i = currentValueOfInput; i > MIN_VALUE; i -= step) {
 
-		currentValueOfInput = Integer.valueOf(selenium.getValue(input));
+            selenium.clickAt(decreaseSpinner, new Point(1, 1));
 
-		assertEquals(currentValueOfInput, MAX_VALUE,
-				"The current value in the input should be minimal, so "
-						+ MAX_VALUE);
-	}
+            assertEquals(Integer.valueOf(selenium.getValue(input)).intValue(), currentValueOfInput - step,
+                "The value should be decreased by " + step);
 
-	/**
-	 * Increase by step via increase spinner
-	 * 
-	 * @param input
-	 *            which value will be increased
-	 * @param increaseSpinner
-	 *            the increase spinner which will be clicked on
-	 * @param step
-	 *            the step by which will be the value increased
-	 * 
-	 */
-	private void increaseByStep(JQueryLocator input,
-			JQueryLocator increaseSpinner, int step) {
+            currentValueOfInput = Integer.valueOf(selenium.getValue(input));
+        }
 
-		int currentValueOfInput = Integer.valueOf(selenium.getValue(input));
+        selenium.clickAt(decreaseSpinner, new Point(1, 1));
 
-		for (int i = currentValueOfInput; i < MAX_VALUE; i += step) {
+        currentValueOfInput = Integer.valueOf(selenium.getValue(input));
 
-			selenium.clickAt(increaseSpinner, new Point(1, 1));
+        assertEquals(currentValueOfInput, MAX_VALUE, "The current value in the input should be minimal, so "
+            + MAX_VALUE);
+    }
 
-			assertEquals(Integer.valueOf(selenium.getValue(input)).intValue(),
-					currentValueOfInput + step,
-					"The value should be increased by " + step);
+    /**
+     * Increase by step via increase spinner
+     *
+     * @param input
+     *            which value will be increased
+     * @param increaseSpinner
+     *            the increase spinner which will be clicked on
+     * @param step
+     *            the step by which will be the value increased
+     *
+     */
+    private void increaseByStep(JQueryLocator input, JQueryLocator increaseSpinner, int step) {
 
-			currentValueOfInput = Integer.valueOf(selenium.getValue(input));
-		}
+        int currentValueOfInput = Integer.valueOf(selenium.getValue(input));
 
-		selenium.clickAt(increaseSpinner, new Point(1, 1));
+        for (int i = currentValueOfInput; i < MAX_VALUE; i += step) {
 
-		currentValueOfInput = Integer.valueOf(selenium.getValue(input));
+            selenium.clickAt(increaseSpinner, new Point(1, 1));
 
-		assertEquals(currentValueOfInput, MIN_VALUE,
-				"The current value in the input should be minimal, so "
-						+ MIN_VALUE);
-	}
+            assertEquals(Integer.valueOf(selenium.getValue(input)).intValue(), currentValueOfInput + step,
+                "The value should be increased by " + step);
+
+            currentValueOfInput = Integer.valueOf(selenium.getValue(input));
+        }
+
+        selenium.clickAt(increaseSpinner, new Point(1, 1));
+
+        currentValueOfInput = Integer.valueOf(selenium.getValue(input));
+
+        assertEquals(currentValueOfInput, MIN_VALUE, "The current value in the input should be minimal, so "
+            + MIN_VALUE);
+    }
 
 }

@@ -39,40 +39,34 @@ import org.testng.annotations.Test;
  */
 public class TestPoll extends AbstractPoolTest {
 
-	/* *******************************************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * *************************************
-	 */
+    /* *******************************************************************************************************
+     * Locators ****************************************************************** *************************************
+     */
 
-	protected JQueryLocator serverDate = jq("span[id$=serverDate]");
-	protected JQueryLocator button = jq("input[type=submit]");
+    protected JQueryLocator serverDate = jq("span[id$=serverDate]");
+    protected JQueryLocator button = jq("input[type=submit]");
 
-	/* ********************************************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * ***********************************
-	 */
+    /* ********************************************************************************************************
+     * Tests ********************************************************************* ***********************************
+     */
 
-	@Test
-	public void testPooling() {
+    @Test
+    public void testPooling() {
+        List<Integer> deviations = new ArrayList<Integer>();
 
-		List<Integer> deviations = new ArrayList<Integer>();
+        TextRetriever dateRetriever = retrieveText.locator(serverDate);
+        dateRetriever.initializeValue();
 
-		TextRetriever dateRetriever = retrieveText.locator(serverDate);
-		dateRetriever.initializeValue();
+        Integer deviation = null;
 
-		Integer deviation = null;
-		
-		for( int i = 0; i < 5; i++ ) {
-			
-			deviation = waitForServerActionAndReturnDeviation(dateRetriever, "poll");
-			
-			deviations.add(deviation);
-		}
-		
-		Collections.sort(deviations);
-		assertFalse(deviations.get(2) > 3,
-				"The median of deviations is bigger than 3");
-	}	
+        for (int i = 0; i < 5; i++) {
+
+            deviation = waitForServerActionAndReturnDeviation(dateRetriever, "poll");
+
+            deviations.add(deviation);
+        }
+
+        Collections.sort(deviations);
+        assertFalse(deviations.get(2) > 3, "The median of deviations is bigger than 3");
+    }
 }

@@ -39,131 +39,118 @@ import org.testng.annotations.Test;
  */
 public class TestHashOptionsPopup extends AbstractAjocadoTest {
 
-	/* **************************************************************************
-	 * Constants
-	 * *****************************************************************
-	 * *********
-	 */
+    /* **************************************************************************
+     * Constants ***************************************************************** *********
+     */
 
-	private final String WIDTH = "500px";
-	private final String HEIGHT = "300px";
+    private final String WIDTH = "500px";
+    private final String HEIGHT = "300px";
 
-	/* ***************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * *********
-	 */
+    /* ***************************************************************************
+     * Locators ****************************************************************** *********
+     */
 
-	protected JQueryLocator callThePoppup = jq("input[type=submit]");
-	protected JQueryLocator shade = jq("div.rf-pp-shade:visible");
-	protected JQueryLocator poppup = jq("div.rf-pp-cntr:visible");
+    protected JQueryLocator callThePoppup = jq("input[type=submit]");
+    protected JQueryLocator shade = jq("div.rf-pp-shade:visible");
+    protected JQueryLocator poppup = jq("div.rf-pp-cntr:visible");
 
-	/* ****************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * *******
-	 */
+    /* ****************************************************************************
+     * Tests ********************************************************************* *******
+     */
 
-	@Test
-	public void testWhetherThePopupIsCentered() {
+    @Test
+    public void testWhetherThePopupIsCentered() {
 
-		selenium.click(callThePoppup);
+        selenium.click(callThePoppup);
 
-		waitModel.until(elementPresent.locator(poppup));
+        waitModel.until(elementPresent.locator(poppup));
 
-		StyleAttributesOfPoppup styleAttributesOfPoppup = getStyleAttributesOfPoppup();
-		
-		assertEquals( styleAttributesOfPoppup.getHeight(), HEIGHT, "The hash param did not bring the height value");
-		assertEquals( styleAttributesOfPoppup.getWidth(), WIDTH, "The hash param did not bring the width value");
-	
-		JQueryScriptWindowObject heightJQ = new JQueryScriptWindowObject("height()");
-		JQueryScriptWindowObject widthJQ = new JQueryScriptWindowObject("width()");
-		
-		String screenHeight = selenium.getEval( heightJQ );
-		String screenWidth = selenium.getEval( widthJQ );
-		
-		String expectedTop = String.valueOf((Integer.valueOf(screenHeight) / 2) - 150)
-		.concat("px");
-		String expectedLeft = String.valueOf((Integer.valueOf(screenWidth) / 2) - 250)
-		.concat("px");
-		
-		assertEquals( styleAttributesOfPoppup.getTop(), expectedTop, "The hash param did not bring the top value correctly");
-		assertEquals( styleAttributesOfPoppup.getLeft(), expectedLeft, "The hash param did not bring the left value correctly");
-		
-	}
+        StyleAttributesOfPoppup styleAttributesOfPoppup = getStyleAttributesOfPoppup();
 
-	/* ******************************************************************************
-	 * Help methods
-	 * **************************************************************
-	 * ****************
-	 */
+        assertEquals(styleAttributesOfPoppup.getHeight(), HEIGHT, "The hash param did not bring the height value");
+        assertEquals(styleAttributesOfPoppup.getWidth(), WIDTH, "The hash param did not bring the width value");
 
-	/**
-	 * Gets the width, height, top and left style attributes
-	 * 
-	 * @return the width, height, top and left style attributes
-	 */
-	private StyleAttributesOfPoppup getStyleAttributesOfPoppup() {
+        JQueryScriptWindowObject heightJQ = new JQueryScriptWindowObject("height()");
+        JQueryScriptWindowObject widthJQ = new JQueryScriptWindowObject("width()");
 
-		String width = selenium.getStyle(poppup, CssProperty.WIDTH);
-		String height = selenium.getStyle(poppup, CssProperty.HEIGHT);
+        String screenHeight = selenium.getEval(heightJQ);
+        String screenWidth = selenium.getEval(widthJQ);
 
-		String style = selenium.getAttribute(poppup
-				.getAttribute(Attribute.STYLE));
+        String expectedTop = String.valueOf((Integer.valueOf(screenHeight) / 2) - 150).concat("px");
+        String expectedLeft = String.valueOf((Integer.valueOf(screenWidth) / 2) - 250).concat("px");
 
-		int indexOfTop = style.indexOf("top");
+        assertEquals(styleAttributesOfPoppup.getTop(), expectedTop,
+            "The hash param did not bring the top value correctly");
+        assertEquals(styleAttributesOfPoppup.getLeft(), expectedLeft,
+            "The hash param did not bring the left value correctly");
 
-		String topAndRest = style.substring(indexOfTop);
-		String top = topAndRest.substring(5, topAndRest.indexOf(";"));
+    }
 
-		int indexOfLeft = style.indexOf("left");
+    /* ******************************************************************************
+     * Help methods ************************************************************** ****************
+     */
 
-		String leftAndRest = style.substring(indexOfLeft);
-		String left = leftAndRest.substring(6, leftAndRest.indexOf(";"));
+    /**
+     * Gets the width, height, top and left style attributes
+     *
+     * @return the width, height, top and left style attributes
+     */
+    private StyleAttributesOfPoppup getStyleAttributesOfPoppup() {
 
-		StyleAttributesOfPoppup attOfStyleOfPoppup = new StyleAttributesOfPoppup(
-				width, height, left, top);
+        String width = selenium.getStyle(poppup, CssProperty.WIDTH);
+        String height = selenium.getStyle(poppup, CssProperty.HEIGHT);
 
-		return attOfStyleOfPoppup;
+        String style = selenium.getAttribute(poppup.getAttribute(Attribute.STYLE));
 
-	}
+        int indexOfTop = style.indexOf("top");
 
-	/* *******************************************************************************
-	 * Nested class
-	 * **************************************************************
-	 * *****************
-	 */
+        String topAndRest = style.substring(indexOfTop);
+        String top = topAndRest.substring(5, topAndRest.indexOf(";"));
 
-	private class StyleAttributesOfPoppup {
+        int indexOfLeft = style.indexOf("left");
 
-		private String width;
-		private String height;
-		private String left;
-		private String top;
+        String leftAndRest = style.substring(indexOfLeft);
+        String left = leftAndRest.substring(6, leftAndRest.indexOf(";"));
 
-		public StyleAttributesOfPoppup(String width, String height,
-				String left, String top) {
-			this.width = width;
-			this.height = height;
-			this.left = left;
-			this.top = top;
-		}
+        StyleAttributesOfPoppup attOfStyleOfPoppup = new StyleAttributesOfPoppup(width, height, left, top);
 
-		public String getWidth() {
-			return width;
-		}
+        return attOfStyleOfPoppup;
 
-		public String getHeight() {
-			return height;
-		}
+    }
 
-		public String getLeft() {
-			return left;
-		}
+    /* *******************************************************************************
+     * Nested class ************************************************************** *****************
+     */
 
-		public String getTop() {
-			return top;
-		}
+    private class StyleAttributesOfPoppup {
 
-	}
+        private String width;
+        private String height;
+        private String left;
+        private String top;
+
+        public StyleAttributesOfPoppup(String width, String height, String left, String top) {
+            this.width = width;
+            this.height = height;
+            this.left = left;
+            this.top = top;
+        }
+
+        public String getWidth() {
+            return width;
+        }
+
+        public String getHeight() {
+            return height;
+        }
+
+        public String getLeft() {
+            return left;
+        }
+
+        public String getTop() {
+            return top;
+        }
+
+    }
 }

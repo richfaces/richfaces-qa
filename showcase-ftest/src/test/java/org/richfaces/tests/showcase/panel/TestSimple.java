@@ -32,40 +32,39 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestSimple extends AbstractPanelTest {
-	
-	/* ******************************************************************************
-	 * Constants
-	 ********************************************************************************/
-	
-	protected final String PANEL_WITH_HEADER = "fieldset div[class*=rf-p]:first";
-	protected final String PANEL_WITHOUT_HEADER = "fieldset div[class*=rf-p]:last";
-	protected final String HEADER = "div[class*=rf-p-hdr]";
-	protected final String BODY = "div[class*=rf-p-b]";
-	
-	protected final String HEADER_CONTENT = "Panel with default Look-n-feel";
-	
-	protected final String BODY_OF_PANEL_WITHOUT_HDR = "JSF 2 and RichFaces 4:";
-	
-			 
-	/* *******************************************************************************
-	 * Tests
-	 *********************************************************************************/
-	
-	@Test
-	public void testPanelWithHeader() {
-		
-		checkContentOfPanel(PANEL_WITH_HEADER + " > " + HEADER, HEADER_CONTENT);
-		
-		checkContentOfPanel(PANEL_WITH_HEADER + " > " + BODY, RICH_FACES_INFO);
-	}
-	
-	@Test
-	public void testPanelWithoutHeader() {
-		
-		JQueryLocator secondPanelHeader = jq( PANEL_WITHOUT_HEADER + " > " + HEADER );
-		
-		assertFalse( selenium.isElementPresent( secondPanelHeader ));
-		
-		checkContentOfPanel(PANEL_WITHOUT_HEADER, BODY_OF_PANEL_WITHOUT_HDR);
-	}
+
+    /* ******************************************************************************
+     * Constants******************************************************************************
+     */
+
+    protected final String PANEL_WITH_HEADER = "fieldset div[class*=rf-p]:first";
+    protected final String PANEL_WITHOUT_HEADER = "fieldset div[class*=rf-p]:last";
+    protected final String HEADER = "div[class*=rf-p-hdr]";
+    protected final String BODY = "div[class*=rf-p-b]";
+
+    protected final String HEADER_CONTENT = "Panel with default Look-n-feel";
+
+    protected final String BODY_OF_PANEL_WITHOUT_HDR = "JSF 2 and RichFaces 4:";
+
+    /* *******************************************************************************
+     * Tests*******************************************************************************
+     */
+
+    @Test
+    public void testPanelWithHeader() {
+
+        checkContentOfPanel(PANEL_WITH_HEADER + " > " + HEADER, HEADER_CONTENT);
+
+        checkContentOfPanel(PANEL_WITH_HEADER + " > " + BODY, RICH_FACES_INFO);
+    }
+
+    @Test
+    public void testPanelWithoutHeader() {
+
+        JQueryLocator secondPanelHeader = jq(PANEL_WITHOUT_HEADER + " > " + HEADER);
+
+        assertFalse(selenium.isElementPresent(secondPanelHeader));
+
+        checkContentOfPanel(PANEL_WITHOUT_HEADER, BODY_OF_PANEL_WITHOUT_HDR);
+    }
 }

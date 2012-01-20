@@ -32,117 +32,113 @@ import org.jboss.cheiron.halt.XHRHalter;
 import org.richfaces.tests.showcase.AbstractAjocadoTest;
 import org.testng.annotations.Test;
 
-
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
 public class TestAttachQueue extends AbstractAjocadoTest {
 
-	/* *************************************************************************************
-	 * Locators
-	 ***************************************************************************************/
-	
-	protected JQueryLocator input = jq("input[type=text]:visible");
-	protected JQueryLocator submit = jq("input[type=submit]");
-	protected JQueryLocator ajaxRequestProcessing = jq("span[class=rf-st-start]");
-	
-	/* ***************************************************************************************
-	 * Constants
-	 *****************************************************************************************/
-	private final int DELAY_IN_MILISECONDS = 2000;
-	private final int NO_DELAY = 0;
-	
-	/* *****************************************************************************************
-	 * Fields
-	 ******************************************************************************************/
-	
-	protected XHRHalter handle;
-	
-	/* ***************************************************************************************
-	 * Tests
-	 *****************************************************************************************/
-	
-	@Test
-	public void testInput() {
-		
-		for (int i = 0; i < 5; i++) {
-			typeToTheInputAndCheckTheDelay();
-		}
-	}
-	
-	@Test
-	public void testButton() {
+    /* *************************************************************************************
+     * Locators*************************************************************************************
+     */
 
-		for(int i = 0; i < 5; i++) {
-			clickOnTheButtonAndCheckTheDelay();
-		}
-		
-	}
-	
-	/*
-	 * types a character to the input and check whether delay after which the ajax processing is visible 
-	 * is between DELAY_IN_MILISECONDS and DELAY_IN_MILISECONDS + 1000
-	 */
-	private void typeToTheInputAndCheckTheDelay() {
-		
-		XHRHalter.enable();
-		
-		selenium.type(input, "a");
-		selenium.fireEvent(input, Event.KEYUP);
-		
-		long timeBeforePressingKey = System.currentTimeMillis();
-		
-		waitGui.until(elementVisible.locator(ajaxRequestProcessing));
-		
-		long timeAfterAjaxRequestIsPresent = System.currentTimeMillis();
-		
-		if (handle == null) {
-			handle = XHRHalter.getHandleBlocking();
-		} else {
-			handle.waitForOpen();
-		}
-        handle.complete();
-        
-        waitGui.until(elementNotVisible.locator(ajaxRequestProcessing));
-		
-		
-		
-		long actualDelay = timeAfterAjaxRequestIsPresent - timeBeforePressingKey;
+    protected JQueryLocator input = jq("input[type=text]:visible");
+    protected JQueryLocator submit = jq("input[type=submit]");
+    protected JQueryLocator ajaxRequestProcessing = jq("span[class=rf-st-start]");
 
-		assertTrue((actualDelay >= DELAY_IN_MILISECONDS) && (actualDelay <= DELAY_IN_MILISECONDS + 1000), 
-			"The delay should be between " + DELAY_IN_MILISECONDS + "ms and " + (DELAY_IN_MILISECONDS + 1000) + "ms but was:" +
-			actualDelay);
-	}
-	
-	/*
-	 * clicks on the button and check whether delay after which the ajax processing is visible is NO_DELAY
-	 */
-	private void clickOnTheButtonAndCheckTheDelay() {
-		
-		XHRHalter.enable();
-		
-		selenium.click(submit);
-		
-		long timeBeforePressingKey = System.currentTimeMillis();
-		
-		waitGui.until(elementVisible.locator(ajaxRequestProcessing));
-		
-		long timeAfterAjaxRequestIsPresent = System.currentTimeMillis();
-		
-		if (handle == null) {
-			handle = XHRHalter.getHandleBlocking();
-		} else {
-			handle.waitForOpen();
-		}
+    /* ***************************************************************************************
+     * Constants***************************************************************************************
+     */
+    private final int DELAY_IN_MILISECONDS = 2000;
+    private final int NO_DELAY = 0;
+
+    /* *****************************************************************************************
+     * Fields****************************************************************************************
+     */
+
+    protected XHRHalter handle;
+
+    /* ***************************************************************************************
+     * Tests***************************************************************************************
+     */
+
+    @Test
+    public void testInput() {
+
+        for (int i = 0; i < 5; i++) {
+            typeToTheInputAndCheckTheDelay();
+        }
+    }
+
+    @Test
+    public void testButton() {
+
+        for (int i = 0; i < 5; i++) {
+            clickOnTheButtonAndCheckTheDelay();
+        }
+
+    }
+
+    /*
+     * types a character to the input and check whether delay after which the ajax processing is visible is between
+     * DELAY_IN_MILISECONDS and DELAY_IN_MILISECONDS + 1000
+     */
+    private void typeToTheInputAndCheckTheDelay() {
+
+        XHRHalter.enable();
+
+        selenium.type(input, "a");
+        selenium.fireEvent(input, Event.KEYUP);
+
+        long timeBeforePressingKey = System.currentTimeMillis();
+
+        waitGui.until(elementVisible.locator(ajaxRequestProcessing));
+
+        long timeAfterAjaxRequestIsPresent = System.currentTimeMillis();
+
+        if (handle == null) {
+            handle = XHRHalter.getHandleBlocking();
+        } else {
+            handle.waitForOpen();
+        }
         handle.complete();
-        
+
         waitGui.until(elementNotVisible.locator(ajaxRequestProcessing));
-		
-		long actualDelay = timeAfterAjaxRequestIsPresent - timeBeforePressingKey;
-		
-		assertTrue((actualDelay >= NO_DELAY) && (actualDelay <= NO_DELAY + 500), 
-			"The delay should be between " + NO_DELAY + "ms and " + (NO_DELAY + 500) + "ms but was:!" +
-			actualDelay);
-	}
+
+        long actualDelay = timeAfterAjaxRequestIsPresent - timeBeforePressingKey;
+
+        assertTrue((actualDelay >= DELAY_IN_MILISECONDS) && (actualDelay <= DELAY_IN_MILISECONDS + 1000),
+            "The delay should be between " + DELAY_IN_MILISECONDS + "ms and " + (DELAY_IN_MILISECONDS + 1000)
+                + "ms but was:" + actualDelay);
+    }
+
+    /*
+     * clicks on the button and check whether delay after which the ajax processing is visible is NO_DELAY
+     */
+    private void clickOnTheButtonAndCheckTheDelay() {
+
+        XHRHalter.enable();
+
+        selenium.click(submit);
+
+        long timeBeforePressingKey = System.currentTimeMillis();
+
+        waitGui.until(elementVisible.locator(ajaxRequestProcessing));
+
+        long timeAfterAjaxRequestIsPresent = System.currentTimeMillis();
+
+        if (handle == null) {
+            handle = XHRHalter.getHandleBlocking();
+        } else {
+            handle.waitForOpen();
+        }
+        handle.complete();
+
+        waitGui.until(elementNotVisible.locator(ajaxRequestProcessing));
+
+        long actualDelay = timeAfterAjaxRequestIsPresent - timeBeforePressingKey;
+
+        assertTrue((actualDelay >= NO_DELAY) && (actualDelay <= NO_DELAY + 500), "The delay should be between "
+            + NO_DELAY + "ms and " + (NO_DELAY + 500) + "ms but was:!" + actualDelay);
+    }
 }

@@ -14,263 +14,238 @@ import org.richfaces.tests.showcase.orderingList.AbstractOrderingTest;
 
 public class AbstractPickListTest extends AbstractOrderingTest {
 
-	/* *******************************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * ************************
-	 */
+    /* *******************************************************************************************
+     * Locators ****************************************************************** ************************
+     */
 
-	protected JQueryLocator addAllButton = jq(".rf-pick-add-all:eq({0})");
-	protected JQueryLocator removeAllButton = jq(".rf-pick-rem-all:eq({0})");
+    protected JQueryLocator addAllButton = jq(".rf-pick-add-all:eq({0})");
+    protected JQueryLocator removeAllButton = jq(".rf-pick-rem-all:eq({0})");
 
-	protected JQueryLocator addButton = jq(".rf-pick-add:eq({0})");
-	protected JQueryLocator removeButton = jq(".rf-pick-rem:eq({0})");
+    protected JQueryLocator addButton = jq(".rf-pick-add:eq({0})");
+    protected JQueryLocator removeButton = jq(".rf-pick-rem:eq({0})");
 
-	protected JQueryLocator sourceItemsSimple = jq("[id$='SourceItems']:eq(0)");
-	protected JQueryLocator targetItemsSimple = jq("[id$='TargetItems']:eq(0)");
+    protected JQueryLocator sourceItemsSimple = jq("[id$='SourceItems']:eq(0)");
+    protected JQueryLocator targetItemsSimple = jq("[id$='TargetItems']:eq(0)");
 
-	protected String optionToPick = ".rf-pick-opt";
-	protected JQueryLocator optionToOrder = jq(targetItemsSimple
-			.getRawLocator() + " " + optionToPick + "{0}");
+    protected String optionToPick = ".rf-pick-opt";
+    protected JQueryLocator optionToOrder = jq(targetItemsSimple.getRawLocator() + " " + optionToPick + "{0}");
 
-	/* *************************************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * ***************************
-	 */
+    /* *************************************************************************************************
+     * Tests ********************************************************************* ***************************
+     */
 
-	public void testAddAllButtonSimplePickList(boolean... hotKey) {
+    public void testAddAllButtonSimplePickList(boolean... hotKey) {
 
-		String[] availableCities = selenium.getText(sourceItemsSimple).split(
-				"\n");
+        String[] availableCities = selenium.getText(sourceItemsSimple).split("\n");
 
-		if ((hotKey.length != 0) && (hotKey[0] == true)) {
+        if ((hotKey.length != 0) && (hotKey[0] == true)) {
 
-			JQueryLocator oneCity = jq(sourceItemsSimple.format(0)
-					.getRawLocator() + " " + optionToPick + ":eq(0)");
+            JQueryLocator oneCity = jq(sourceItemsSimple.format(0).getRawLocator() + " " + optionToPick + ":eq(0)");
 
-			selenium.click(oneCity);
-			selenium.focus(oneCity);
+            selenium.click(oneCity);
+            selenium.focus(oneCity);
 
-			selenium.keyPressNative(KeyEvent.VK_END);
-		} else {
-			selenium.click(addAllButton.format(0));
-		}
+            selenium.keyPressNative(KeyEvent.VK_END);
+        } else {
+            selenium.click(addAllButton.format(0));
+        }
 
-		checkThatListContains(availableCities, targetItemsSimple);
-	}
+        checkThatListContains(availableCities, targetItemsSimple);
+    }
 
-	public void testRemoveAllButtonSimplePickList( boolean...hotKey ) {
+    public void testRemoveAllButtonSimplePickList(boolean... hotKey) {
 
-		checkRemoveAllButton(0, targetItemsSimple, 0, hotKey);
+        checkRemoveAllButton(0, targetItemsSimple, 0, hotKey);
 
-	}
+    }
 
-	public void testRemoveButton(boolean... hotKey) {
+    public void testRemoveButton(boolean... hotKey) {
 
-		checkRemoveButton(0, 0, hotKey);
-	}
+        checkRemoveButton(0, 0, hotKey);
+    }
 
-	public void testAddButtonSimplePickList(boolean... hotKey) {
+    public void testAddButtonSimplePickList(boolean... hotKey) {
 
-		checkAddButton(sourceItemsSimple, addButton.format(0),
-				targetItemsSimple, hotKey);
-	}
+        checkAddButton(sourceItemsSimple, addButton.format(0), targetItemsSimple, hotKey);
+    }
 
-	public void testFirstButtonOrdering() {
+    public void testFirstButtonOrdering() {
 
-		selenium.click(addAllButton.format(0));
+        selenium.click(addAllButton.format(0));
 
-		checkFirstButton(optionToOrder, firstButton.format(0));
+        checkFirstButton(optionToOrder, firstButton.format(0));
 
-	}
+    }
 
-	public void testUpButtonOrdering() {
+    public void testUpButtonOrdering() {
 
-		selenium.click(addAllButton.format(0));
+        selenium.click(addAllButton.format(0));
 
-		checkUpButton(optionToOrder, upButton.format(0));
-	}
+        checkUpButton(optionToOrder, upButton.format(0));
+    }
 
-	public void testDownButtonOrdering() {
+    public void testDownButtonOrdering() {
 
-		selenium.click(addAllButton.format(0));
+        selenium.click(addAllButton.format(0));
 
-		checkDownButton(optionToOrder, downButton.format(0));
-	}
+        checkDownButton(optionToOrder, downButton.format(0));
+    }
 
-	public void testLastButtonOrdering() {
+    public void testLastButtonOrdering() {
 
-		selenium.click(addAllButton.format(0));
+        selenium.click(addAllButton.format(0));
 
-		checkLastButton(optionToOrder, lastButton.format(0));
-	}
+        checkLastButton(optionToOrder, lastButton.format(0));
+    }
 
-	/* **************************************************************************************************************************
-	 * Help methods
-	 * **************************************************************
-	 * ************************************************************
-	 */
+    /* **************************************************************************************************************************
+     * Help methods **************************************************************
+     * ************************************************************
+     */
 
-	/**
-	 * At first adds all to the list, checks whether someting was added and then
-	 * removes all and again checks whether it was removed all
-	 * 
-	 * @param whichRemoveAllButton
-	 */
-	protected void checkRemoveAllButton(int whichAddAllButton,
-			JQueryLocator whichTargetList, int whichRemoveAllButton,
-			boolean... hotKey) {
-
-		selenium.click(addAllButton.format(whichAddAllButton));
-
-		areThereSomeSelectedCities(whichTargetList, true);
-
-		if (hotKey.length != 0 && hotKey[0] == true) {
-
-			JQueryLocator oneOption = optionToOrder.format(":eq(0)");
-			
-			selenium.click(oneOption);
-			selenium.focus(oneOption);
-			
-			selenium.keyPressNative( KeyEvent.VK_HOME );
-		} else {
-
-			selenium.click(removeAllButton.format(whichRemoveAllButton));
-		}
+    /**
+     * At first adds all to the list, checks whether someting was added and then removes all and again checks whether it
+     * was removed all
+     *
+     * @param whichRemoveAllButton
+     */
+    protected void checkRemoveAllButton(int whichAddAllButton, JQueryLocator whichTargetList, int whichRemoveAllButton,
+        boolean... hotKey) {
 
-		areThereSomeSelectedCities(whichTargetList, false);
-	}
-
-	/**
-	 * 
-	 * @param whichAddAllButton
-	 * @param whichTargetList
-	 * @param whichRemoveButton
-	 * @param hotKey
-	 */
-	protected void checkRemoveButton(int whichAddAllButton,
-			int whichRemoveButton, boolean... hotKey) {
-
-		selenium.click(addAllButton.format(whichAddAllButton));
-
-		JQueryLocator cityToRemove = optionToOrder.format("");
-		int numberOfCities = selenium.getCount(cityToRemove);
-
-		for (int i = 0; i < numberOfCities; i++) {
-
-			selenium.click(cityToRemove.format("eq(0)"));
-			String expectedRemovedCity = selenium.getText(cityToRemove
-					.format("eq(0)"));
-
-			if ((hotKey.length != 0) && (hotKey[0] == true)) {
-
-				selenium.focus(cityToRemove);
-				selenium.keyPressNative(Integer.valueOf(KeyCode.LEFT_ARROW
-						.getCode()));
-			} else {
-
-				selenium.click(removeButton.format(whichRemoveButton));
-			}
-
-			String actualRemovedCity = selenium.getText(jq(sourceItemsSimple
-					.format(0).getRawLocator() + " " + optionToPick + ":last"));
-
-			assertEquals(actualRemovedCity, expectedRemovedCity,
-					"Removing the city by does not work");
-		}
-	}
-
-	/**
-	 * Check add button, select one city, adds it via add button and checks
-	 * whether the city is then on selected cities list.
-	 * 
-	 * @param whichSourceItems
-	 * @param whichAddButton
-	 * @param whichTargetItems
-	 */
-	protected void checkAddButton(JQueryLocator whichSourceItems,
-			JQueryLocator whichAddButton, JQueryLocator whichTargetItems,
-			boolean... hotKey) {
-
-		JQueryLocator cities = jq(whichSourceItems.getRawLocator() + " "
-				+ optionToPick);
-		int numberOfCities = selenium.getCount(cities);
-
-		for (int i = 0; i < numberOfCities; i++) {
-
-			JQueryLocator cityToAdd = jq(cities.getRawLocator() + ":eq(0)");
-			String cityToAddString = selenium.getText(cityToAdd);
-
-			selenium.click(cityToAdd);
-
-			if (hotKey.length != 0 && hotKey[0] == true) {
-
-				selenium.focus(cityToAdd);
-				selenium.keyPressNative(Integer.valueOf(KeyCode.RIGHT_ARROW
-						.getCode()));
-
-			} else {
-				selenium.click(whichAddButton);
-			}
-
-			JQueryLocator addedCity = jq(whichTargetItems.getRawLocator() + " "
-					+ optionToPick + ":contains('"
-					+ cityToAddString.split(" ")[0] + "')");
-
-			assertTrue(selenium.isElementPresent(addedCity), "The city: "
-					+ cityToAddString + " should be added to selected cities");
-		}
-	}
-
-	/**
-	 * Checks that the list from sample contains everything in the same order as
-	 * it is in the parameter cities. The list is determined by which list
-	 * parameter.
-	 */
-	protected void checkThatListContains(String[] cities,
-			JQueryLocator whichList) {
-
-		String[] citiesFromWhichList = selenium.getText(whichList).split("\n");
-
-		assertEquals(cities.length, citiesFromWhichList.length,
-				"The number of selected cities is different as it should be!");
-
-		for (int i = 0; i < cities.length; i++) {
-
-			assertEquals(
-					cities[i].trim(),
-					citiesFromWhichList[i].trim(),
-					"The order of selected cities is different as should be, or there is other difference!");
-
-		}
-	}
-
-	/**
-	 * Simple test whether the list for instance after selection is not empty
-	 * 
-	 * @param where
-	 *            determines which list is checked
-	 * @param shouldThey
-	 *            determines whether the list has to be empty or not
-	 */
-	protected void areThereSomeSelectedCities(JQueryLocator where,
-			boolean shouldThey) {
-
-		String cities = selenium.getText(where).trim();
-
-		if (shouldThey) {
-
-			assertFalse(cities.equals(""),
-					"Some cities should be selected, in other words they should be in the list: "
-							+ where);
-		} else {
-
-			assertTrue(cities.equals(""),
-					"There should be no selected cities, in other words in the list: "
-							+ where + " should be nothing");
-		}
-
-	}
+        selenium.click(addAllButton.format(whichAddAllButton));
+
+        areThereSomeSelectedCities(whichTargetList, true);
+
+        if (hotKey.length != 0 && hotKey[0] == true) {
+
+            JQueryLocator oneOption = optionToOrder.format(":eq(0)");
+
+            selenium.click(oneOption);
+            selenium.focus(oneOption);
+
+            selenium.keyPressNative(KeyEvent.VK_HOME);
+        } else {
+
+            selenium.click(removeAllButton.format(whichRemoveAllButton));
+        }
+
+        areThereSomeSelectedCities(whichTargetList, false);
+    }
+
+    /**
+     *
+     * @param whichAddAllButton
+     * @param whichTargetList
+     * @param whichRemoveButton
+     * @param hotKey
+     */
+    protected void checkRemoveButton(int whichAddAllButton, int whichRemoveButton, boolean... hotKey) {
+
+        selenium.click(addAllButton.format(whichAddAllButton));
+
+        JQueryLocator cityToRemove = optionToOrder.format("");
+        int numberOfCities = selenium.getCount(cityToRemove);
+
+        for (int i = 0; i < numberOfCities; i++) {
+
+            selenium.click(cityToRemove.format("eq(0)"));
+            String expectedRemovedCity = selenium.getText(cityToRemove.format("eq(0)"));
+
+            if ((hotKey.length != 0) && (hotKey[0] == true)) {
+
+                selenium.focus(cityToRemove);
+                selenium.keyPressNative(Integer.valueOf(KeyCode.LEFT_ARROW.getCode()));
+            } else {
+
+                selenium.click(removeButton.format(whichRemoveButton));
+            }
+
+            String actualRemovedCity = selenium.getText(jq(sourceItemsSimple.format(0).getRawLocator() + " "
+                + optionToPick + ":last"));
+
+            assertEquals(actualRemovedCity, expectedRemovedCity, "Removing the city by does not work");
+        }
+    }
+
+    /**
+     * Check add button, select one city, adds it via add button and checks whether the city is then on selected cities
+     * list.
+     *
+     * @param whichSourceItems
+     * @param whichAddButton
+     * @param whichTargetItems
+     */
+    protected void checkAddButton(JQueryLocator whichSourceItems, JQueryLocator whichAddButton,
+        JQueryLocator whichTargetItems, boolean... hotKey) {
+
+        JQueryLocator cities = jq(whichSourceItems.getRawLocator() + " " + optionToPick);
+        int numberOfCities = selenium.getCount(cities);
+
+        for (int i = 0; i < numberOfCities; i++) {
+
+            JQueryLocator cityToAdd = jq(cities.getRawLocator() + ":eq(0)");
+            String cityToAddString = selenium.getText(cityToAdd);
+
+            selenium.click(cityToAdd);
+
+            if (hotKey.length != 0 && hotKey[0] == true) {
+
+                selenium.focus(cityToAdd);
+                selenium.keyPressNative(Integer.valueOf(KeyCode.RIGHT_ARROW.getCode()));
+
+            } else {
+                selenium.click(whichAddButton);
+            }
+
+            JQueryLocator addedCity = jq(whichTargetItems.getRawLocator() + " " + optionToPick + ":contains('"
+                + cityToAddString.split(" ")[0] + "')");
+
+            assertTrue(selenium.isElementPresent(addedCity), "The city: " + cityToAddString
+                + " should be added to selected cities");
+        }
+    }
+
+    /**
+     * Checks that the list from sample contains everything in the same order as it is in the parameter cities. The list
+     * is determined by which list parameter.
+     */
+    protected void checkThatListContains(String[] cities, JQueryLocator whichList) {
+
+        String[] citiesFromWhichList = selenium.getText(whichList).split("\n");
+
+        assertEquals(cities.length, citiesFromWhichList.length,
+            "The number of selected cities is different as it should be!");
+
+        for (int i = 0; i < cities.length; i++) {
+
+            assertEquals(cities[i].trim(), citiesFromWhichList[i].trim(),
+                "The order of selected cities is different as should be, or there is other difference!");
+
+        }
+    }
+
+    /**
+     * Simple test whether the list for instance after selection is not empty
+     *
+     * @param where
+     *            determines which list is checked
+     * @param shouldThey
+     *            determines whether the list has to be empty or not
+     */
+    protected void areThereSomeSelectedCities(JQueryLocator where, boolean shouldThey) {
+
+        String cities = selenium.getText(where).trim();
+
+        if (shouldThey) {
+
+            assertFalse(cities.equals(""),
+                "Some cities should be selected, in other words they should be in the list: " + where);
+        } else {
+
+            assertTrue(cities.equals(""), "There should be no selected cities, in other words in the list: " + where
+                + " should be nothing");
+        }
+
+    }
 
 }

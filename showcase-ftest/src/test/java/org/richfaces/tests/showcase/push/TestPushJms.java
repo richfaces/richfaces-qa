@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.push;
 
-
 import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
 import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
@@ -42,41 +41,39 @@ import org.testng.annotations.Test;
  */
 public class TestPushJms extends AbstractPoolTest {
 
-	/* ***************************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * *********************
-	 */
-	protected JQueryLocator serverDate = jq("table tbody:visible:last");
+    /* ***************************************************************************************
+     * Locators ****************************************************************** *********************
+     */
+    protected JQueryLocator serverDate = jq("table tbody:visible:last");
 
-	/* ***************************************************************************************
-	 * 
-	 * ***************************************************************************************
-	 */
-	@Test
-	public void testDeviationInServerDate() {
+    /* ***************************************************************************************
+     *
+     * ***************************************************************************************
+     */
+    @Test
+    public void testDeviationInServerDate() {
 
-		List<Integer> deviations = new ArrayList<Integer>();
+        List<Integer> deviations = new ArrayList<Integer>();
 
-		TextRetriever dateRetriever = retrieveText.locator(serverDate);
-		dateRetriever.initializeValue();
+        TextRetriever dateRetriever = retrieveText.locator(serverDate);
+        dateRetriever.initializeValue();
 
-		//this first wait is because there is not server time at initial state, 
-		//the server date is rendered after first push 
-		waitAjax.waitForChangeAndReturn(dateRetriever); 
-		
-		Integer deviation = null;
-		
-		for(int i = 0; i < 20; i++) {
-			
-			deviation = waitForServerActionAndReturnDeviation(dateRetriever, "push");
-			
-			deviations.add(deviation);
-		}
-		
-		Collections.sort(deviations);
-		
-		assertEquals(deviations.get(9).intValue(), 5, "Median of push deviations is wrong!");
-	}
+        // this first wait is because there is not server time at initial state,
+        // the server date is rendered after first push
+        waitAjax.waitForChangeAndReturn(dateRetriever);
+
+        Integer deviation = null;
+
+        for (int i = 0; i < 20; i++) {
+
+            deviation = waitForServerActionAndReturnDeviation(dateRetriever, "push");
+
+            deviations.add(deviation);
+        }
+
+        Collections.sort(deviations);
+
+        assertEquals(deviations.get(9).intValue(), 5, "Median of push deviations is wrong!");
+    }
 
 }

@@ -36,35 +36,36 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestTableFilteringAPI extends AbstractDataIterationWithCars {
-	
-	/* ***********************************************************************
-	 * Locators
-	 *************************************************************************/
-	
-	protected JQueryLocator filterValues = jq("a[name*=form]:eq({0})"); 
-	protected JQueryLocator tableRow = jq("tbody.rf-dt-b tr[class*=rf-dt-r]");
-	
-	/* *************************************************************************
-	 * Tests
-	 ***************************************************************************/
-	
-	@Test
-	public void testFilteringOnTheFirstPage() {
-		
-		for( int i = 0; i < 6; i++ ) {
-			
-			JQueryLocator filterValue = filterValues.format(i);
-			guardXhr(selenium).click( filterValue );
-			
-			for( Iterator<JQueryLocator> j = tableRow.iterator(); j.hasNext(); ) {
-				
-				Car carFromRow = retrieveCarFromRow(j.next(), 0, 0);
-				
-				String expectedVendor = selenium.getText(filterValue);
-				assertEquals( carFromRow.getVendor(), expectedVendor, "The table should contain cars with vendors " + expectedVendor);
-			}
-		}
-		
-	}
+
+    /* ***********************************************************************
+     * Locators***********************************************************************
+     */
+
+    protected JQueryLocator filterValues = jq("a[name*=form]:eq({0})");
+    protected JQueryLocator tableRow = jq("tbody.rf-dt-b tr[class*=rf-dt-r]");
+
+    /* *************************************************************************
+     * Tests*************************************************************************
+     */
+
+    @Test
+    public void testFilteringOnTheFirstPage() {
+
+        for (int i = 0; i < 6; i++) {
+
+            JQueryLocator filterValue = filterValues.format(i);
+            guardXhr(selenium).click(filterValue);
+
+            for (Iterator<JQueryLocator> j = tableRow.iterator(); j.hasNext();) {
+
+                Car carFromRow = retrieveCarFromRow(j.next(), 0, 0);
+
+                String expectedVendor = selenium.getText(filterValue);
+                assertEquals(carFromRow.getVendor(), expectedVendor, "The table should contain cars with vendors "
+                    + expectedVendor);
+            }
+        }
+
+    }
 
 }

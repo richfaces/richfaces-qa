@@ -32,12 +32,12 @@ import org.richfaces.tests.showcase.panel.AbstractPanelTest;
  */
 public class AbstractPoppupPanel extends AbstractPanelTest {
 
-	/* ********************************************************************
-	 * Locators
-	 **********************************************************************/
-	
-	protected JQueryLocator callthePoppupButton = jq("input[type=submit]");
-	protected JQueryLocator sourceOfPage = jq("td.gutter:visible");
-	protected JQueryLocator anchorOfSource = jq("a.show");
-	protected JQueryLocator poppupPanelContent = jq("div.rf-pp-cnt:visible");
+    /* ********************************************************************
+     * Locators********************************************************************
+     */
+
+    protected JQueryLocator callthePoppupButton = jq("input[type=submit]");
+    protected JQueryLocator sourceOfPage = jq("td.gutter:visible");
+    protected JQueryLocator anchorOfSource = jq("a.show");
+    protected JQueryLocator poppupPanelContent = jq("div.rf-pp-cnt:visible");
 }

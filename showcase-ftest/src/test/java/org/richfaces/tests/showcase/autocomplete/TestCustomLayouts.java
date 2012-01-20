@@ -39,92 +39,99 @@ import org.testng.annotations.Test;
  */
 public class TestCustomLayouts extends AbstractAjocadoTest {
 
-	/* *********************************************************************************************************************
-	 * Locators
-	 **********************************************************************************************************************/
-	
-	private JQueryLocator inputWithTableLayout = jq("input[type=text]:eq(0)");
-	private JQueryLocator inputWithDivLayout = jq("input[type=text]:eq(1)");
-	private JQueryLocator firstRowOfSelectOfFirstInput = jq("tr.rf-au-itm:eq(0):visible");
-	private JQueryLocator firstRowOfSelectOfSecondInput = jq("div.rf-au-itm:eq(0):visible");
+    /* *********************************************************************************************************************
+     * Locators
+     * **********************************************************************************************************
+     * **********
+     */
 
-	/* ********************************************************************************************************************
-	 * Constants
-	 **********************************************************************************************************************/
-	
-	private final String EXP_SUGG_AFTER_V_FST_INPUT = "Vermont Montpelier";
-	private final String EXP_SUGG_AFTER_ALA_FST_INPUT = "Alabama Montgomery";
-	private final String EXP_SUGG_AFTER_V_SC_INPUT = "Vermont - (Montpelier)";
-	private final String EXP_SUGG_AFTER_ALA_SC_INPUT = "Alabama - (Montgomery)";
+    private JQueryLocator inputWithTableLayout = jq("input[type=text]:eq(0)");
+    private JQueryLocator inputWithDivLayout = jq("input[type=text]:eq(1)");
+    private JQueryLocator firstRowOfSelectOfFirstInput = jq("tr.rf-au-itm:eq(0):visible");
+    private JQueryLocator firstRowOfSelectOfSecondInput = jq("div.rf-au-itm:eq(0):visible");
 
-	/* **********************************************************************************************************************
-	 * Tests
-	 ***********************************************************************************************************************/
-	
-	@Test( groups = {"4.2"} )
-	public void testAutocompletionOfInputWithTableLayout() {
+    /* ********************************************************************************************************************
+     * Constants
+     * *********************************************************************************************************
+     * ***********
+     */
 
-		typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(inputWithTableLayout, firstRowOfSelectOfFirstInput, "v", EXP_SUGG_AFTER_V_FST_INPUT,
-				EXP_SUGG_AFTER_V_FST_INPUT.split(" ")[0]);
+    private final String EXP_SUGG_AFTER_V_FST_INPUT = "Vermont Montpelier";
+    private final String EXP_SUGG_AFTER_ALA_FST_INPUT = "Alabama Montgomery";
+    private final String EXP_SUGG_AFTER_V_SC_INPUT = "Vermont - (Montpelier)";
+    private final String EXP_SUGG_AFTER_ALA_SC_INPUT = "Alabama - (Montgomery)";
 
-		typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(inputWithTableLayout, firstRowOfSelectOfFirstInput, "ala", EXP_SUGG_AFTER_ALA_FST_INPUT,
-				EXP_SUGG_AFTER_ALA_FST_INPUT.split(" ")[0]);
-	}
-	
-	@Test( groups = {"4.2"} )
-	public void testAutocompletionOfInputWithDivlayput() {
-		
-		typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(inputWithDivLayout, firstRowOfSelectOfSecondInput, "v", 
-				EXP_SUGG_AFTER_V_SC_INPUT, EXP_SUGG_AFTER_V_SC_INPUT.split(" ")[0]);
-		
-		typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(inputWithDivLayout, firstRowOfSelectOfSecondInput, "ala", 
-				EXP_SUGG_AFTER_ALA_SC_INPUT, EXP_SUGG_AFTER_ALA_SC_INPUT.split(" ")[0]);
+    /* **********************************************************************************************************************
+     * Tests
+     * *************************************************************************************************************
+     * ********
+     */
 
-	}
-	
-	@Test
-	public void testFirstInputPopupIsCreatedFromTable() {
-		
-		selenium.type(inputWithTableLayout, "a");
-		guardXhr(selenium).fireEvent(inputWithTableLayout, Event.KEYPRESS);
+    @Test(groups = { "4.2" })
+    public void testAutocompletionOfInputWithTableLayout() {
 
-		assertTrue(selenium.isElementPresent(firstRowOfSelectOfFirstInput), "The poppup with suggestions should be visible!");
+        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(inputWithTableLayout,
+            firstRowOfSelectOfFirstInput, "v", EXP_SUGG_AFTER_V_FST_INPUT, EXP_SUGG_AFTER_V_FST_INPUT.split(" ")[0]);
 
-		JQueryLocator tdState = jq(firstRowOfSelectOfFirstInput.getRawLocator() + " > td:eq(1)");
-		
-		assertTrue( selenium.isElementPresent(tdState), "The popup should be built from table!");
-		
-		eraseInput(inputWithTableLayout);
-	}
-	
+        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(inputWithTableLayout,
+            firstRowOfSelectOfFirstInput, "ala", EXP_SUGG_AFTER_ALA_FST_INPUT,
+            EXP_SUGG_AFTER_ALA_FST_INPUT.split(" ")[0]);
+    }
 
-	/* ******************************************************************************************************************
-	 * Help methods
-	 ********************************************************************************************************************/
-	
-	private void typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue( JQueryLocator input, JQueryLocator firstRow, String whatTotype, 
-			String expectedValueInPopup, String expectedValueInInputAfterEnter) {
-		
-		selenium.type(input, whatTotype);
-		guardXhr(selenium).fireEvent(input, Event.KEYPRESS);
+    @Test(groups = { "4.2" })
+    public void testAutocompletionOfInputWithDivlayput() {
 
-		assertTrue(selenium.isElementPresent(firstRow));
+        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(inputWithDivLayout,
+            firstRowOfSelectOfSecondInput, "v", EXP_SUGG_AFTER_V_SC_INPUT, EXP_SUGG_AFTER_V_SC_INPUT.split(" ")[0]);
 
-		String firstRowContent = selenium.getText(firstRow).trim();
+        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(inputWithDivLayout,
+            firstRowOfSelectOfSecondInput, "ala", EXP_SUGG_AFTER_ALA_SC_INPUT,
+            EXP_SUGG_AFTER_ALA_SC_INPUT.split(" ")[0]);
 
-		assertTrue(expectedValueInPopup.equals(firstRowContent),
-				"The first row of popup should suggest "
-						+ expectedValueInPopup + " " + "when " + whatTotype
-						+ " is typed in input");
+    }
 
-		guardXhr(selenium).keyPressNative(KeyEvent.VK_ENTER);
+    @Test
+    public void testFirstInputPopupIsCreatedFromTable() {
 
-		String valueInInput = selenium.getValue(input);
+        selenium.type(inputWithTableLayout, "a");
+        guardXhr(selenium).fireEvent(inputWithTableLayout, Event.KEYPRESS);
 
-		assertEquals(valueInInput, expectedValueInInputAfterEnter,
-				"The value in input should be different!");
+        assertTrue(selenium.isElementPresent(firstRowOfSelectOfFirstInput),
+            "The poppup with suggestions should be visible!");
 
-		eraseInput(input);
-	}
+        JQueryLocator tdState = jq(firstRowOfSelectOfFirstInput.getRawLocator() + " > td:eq(1)");
+
+        assertTrue(selenium.isElementPresent(tdState), "The popup should be built from table!");
+
+        eraseInput(inputWithTableLayout);
+    }
+
+    /* ******************************************************************************************************************
+     * Help methods
+     * ******************************************************************************************************
+     * ************
+     */
+
+    private void typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(JQueryLocator input,
+        JQueryLocator firstRow, String whatTotype, String expectedValueInPopup, String expectedValueInInputAfterEnter) {
+
+        selenium.type(input, whatTotype);
+        guardXhr(selenium).fireEvent(input, Event.KEYPRESS);
+
+        assertTrue(selenium.isElementPresent(firstRow));
+
+        String firstRowContent = selenium.getText(firstRow).trim();
+
+        assertTrue(expectedValueInPopup.equals(firstRowContent), "The first row of popup should suggest "
+            + expectedValueInPopup + " " + "when " + whatTotype + " is typed in input");
+
+        guardXhr(selenium).keyPressNative(KeyEvent.VK_ENTER);
+
+        String valueInInput = selenium.getValue(input);
+
+        assertEquals(valueInInput, expectedValueInInputAfterEnter, "The value in input should be different!");
+
+        eraseInput(input);
+    }
 
 }

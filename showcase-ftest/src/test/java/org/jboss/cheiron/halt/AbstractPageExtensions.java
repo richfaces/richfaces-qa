@@ -32,7 +32,7 @@ import org.jboss.arquillian.ajocado.waiting.Wait;
 
 /**
  * Defines methods for installing JavaScript page extension to the target page.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 21353 $
  */
@@ -63,7 +63,7 @@ public abstract class AbstractPageExtensions {
 
     /**
      * Checks if RichFacesSelenium is already installed
-     * 
+     *
      * @return true, if is installed
      */
     public boolean isInstalled() {
@@ -90,7 +90,7 @@ public abstract class AbstractPageExtensions {
 
     /**
      * Loads the page JS extensions from resources defined by list of resource names.
-     * 
+     *
      * @param resourceNames
      *            the list of full paths to resources
      */

@@ -41,108 +41,109 @@ import org.jboss.arquillian.ajocado.waiting.WaitTimeoutException;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestClientProgressBar extends AbstractAjocadoTest { 
-	
-	/* **************************************************************************
-	 * Constants 
-	 ******************************************************************************/
-	
-	private final int MAX_DEVIATION = 2500;
-	private final int GRAPHICAL_DEVIATION = 5;
-	
-	/* **************************************************************************
-	 * Fields
-	 ****************************************************************************/
-	
-	List<Integer> widths = null;
-	
-	/* **************************************************************************
-	 * Locators
-	 ****************************************************************************/
-	
-	protected JQueryLocator progressBar = jq("div.rf-pb-prgs");
-	protected JQueryLocator startProgress = jq("input[type=button]:eq(0)");
-	protected JQueryLocator pauseProgress = jq("input[type=button]:eq(1)");
-	
-	/* **************************************************************************
-	 * Tests
-	 ****************************************************************************/
-	
-	@Test
-	public void testClientProgressBarIsRisingGraphically() {
-		
-		widths = new ArrayList<Integer>();
-		
-		AttributeRetriever styleRetriever = 
-			retrieveAttribute.attributeLocator( progressBar.getAttribute(Attribute.STYLE));
-		styleRetriever.initializeValue();
-		
-		guardNoRequest(selenium).click(startProgress);
-		
-		while(true) {
-			
-			try {
-				
-				long currentTimeBeforeChange = System.currentTimeMillis();
-				
-				waitGui.waitForChangeAndReturn(styleRetriever);
-				
-				long currentTimeAfterChange = System.currentTimeMillis();
-				
-				long duration = currentTimeAfterChange - currentTimeBeforeChange; 
-				if( duration > MAX_DEVIATION ) {
-					
-					fail("The graphical rising of progress bar should not take more than " + MAX_DEVIATION + ", and " +
-							"was " + duration);
-				}
-				
-				getsTheWidthFromRetrieverAndStoresinList(styleRetriever);
-				
-				styleRetriever.initializeValue();
-	
-			} catch (WaitTimeoutException ex) {
-				break;
-			}
-			
-		}
-		
-		checkTheWidthDeviaton();
-	}
-	
-	/* *******************************************************************************************
-	 * Help methods 
-	 **********************************************************************************************/
-	
-	/**
-	 * Gets the width from the retriever, the value which the retriever holds is in format 'width value%;'
-	 * 
-	 * @param retriever the retriever which holds the value
-	 */
-	private void getsTheWidthFromRetrieverAndStoresinList( AttributeRetriever retriever ) {
-		
-		String widthWithPercentageSign = retriever.getValue();
-		String[] partsOfWidthWithPercentageSign = widthWithPercentageSign.split(" ");
-		String width = partsOfWidthWithPercentageSign[1].split("%")[0];
-		
-		widths.add(Integer.valueOf(width));
-	}
-	
-	/**
-	 * Check the width deviation of progress bar
-	 */
-	private void checkTheWidthDeviaton() {
-		
-		for( int i = 0; i < widths.size(); i++ ) {
-			
-			if( i == widths.size() - 1) {
-				break;
-			}
-			
-			if( (widths.get(i + 1) - widths.get(i)) != GRAPHICAL_DEVIATION ) {
-				
-				fail("The graphical deciation should be " + GRAPHICAL_DEVIATION );
-			}
-		}
-	}
+public class TestClientProgressBar extends AbstractAjocadoTest {
+
+    /* **************************************************************************
+     * Constants****************************************************************************
+     */
+
+    private final int MAX_DEVIATION = 2500;
+    private final int GRAPHICAL_DEVIATION = 5;
+
+    /* **************************************************************************
+     * Fields**************************************************************************
+     */
+
+    List<Integer> widths = null;
+
+    /* **************************************************************************
+     * Locators**************************************************************************
+     */
+
+    protected JQueryLocator progressBar = jq("div.rf-pb-prgs");
+    protected JQueryLocator startProgress = jq("input[type=button]:eq(0)");
+    protected JQueryLocator pauseProgress = jq("input[type=button]:eq(1)");
+
+    /* **************************************************************************
+     * Tests**************************************************************************
+     */
+
+    @Test
+    public void testClientProgressBarIsRisingGraphically() {
+
+        widths = new ArrayList<Integer>();
+
+        AttributeRetriever styleRetriever = retrieveAttribute.attributeLocator(progressBar
+            .getAttribute(Attribute.STYLE));
+        styleRetriever.initializeValue();
+
+        guardNoRequest(selenium).click(startProgress);
+
+        while (true) {
+
+            try {
+
+                long currentTimeBeforeChange = System.currentTimeMillis();
+
+                waitGui.waitForChangeAndReturn(styleRetriever);
+
+                long currentTimeAfterChange = System.currentTimeMillis();
+
+                long duration = currentTimeAfterChange - currentTimeBeforeChange;
+                if (duration > MAX_DEVIATION) {
+
+                    fail("The graphical rising of progress bar should not take more than " + MAX_DEVIATION + ", and "
+                        + "was " + duration);
+                }
+
+                getsTheWidthFromRetrieverAndStoresinList(styleRetriever);
+
+                styleRetriever.initializeValue();
+
+            } catch (WaitTimeoutException ex) {
+                break;
+            }
+
+        }
+
+        checkTheWidthDeviaton();
+    }
+
+    /* *******************************************************************************************
+     * Help methods********************************************************************************************
+     */
+
+    /**
+     * Gets the width from the retriever, the value which the retriever holds is in format 'width value%;'
+     *
+     * @param retriever
+     *            the retriever which holds the value
+     */
+    private void getsTheWidthFromRetrieverAndStoresinList(AttributeRetriever retriever) {
+
+        String widthWithPercentageSign = retriever.getValue();
+        String[] partsOfWidthWithPercentageSign = widthWithPercentageSign.split(" ");
+        String width = partsOfWidthWithPercentageSign[1].split("%")[0];
+
+        widths.add(Integer.valueOf(width));
+    }
+
+    /**
+     * Check the width deviation of progress bar
+     */
+    private void checkTheWidthDeviaton() {
+
+        for (int i = 0; i < widths.size(); i++) {
+
+            if (i == widths.size() - 1) {
+                break;
+            }
+
+            if ((widths.get(i + 1) - widths.get(i)) != GRAPHICAL_DEVIATION) {
+
+                fail("The graphical deciation should be " + GRAPHICAL_DEVIATION);
+            }
+        }
+    }
 
 }

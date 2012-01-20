@@ -28,35 +28,29 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestMessage extends AbstractTestMessage {
-	
-	/* ********************************************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * ***********************************
-	 */
-	
-	@Test
-	public void testCorrectValues() {
-		
-		abstractTestCorrectValues();
-	}
-	
-	@Test( groups={"4.2"} )
-	public void testLessThanMinimum() {
-		
-		abstractTestLessThanMinimum();
-	}
-	
-	@Test
-	public void testEmptyInputs() {
-		
-		abstractTestEmptyInputs();
-	}
-	
-	@Test( groups={"4.2"} ) 
-	public void testGreaterThanMaximum() {
-		
-		abstractTestGreaterThanMaximum();
-	}
+
+    /* ********************************************************************************************************
+     * Tests ********************************************************************* ***********************************
+     */
+
+    @Test
+    public void testCorrectValues() {
+        abstractTestCorrectValues();
+    }
+
+    @Test(groups = { "4.2" })
+    public void testLessThanMinimum() {
+        abstractTestLessThanMinimum();
+    }
+
+    @Test
+    public void testEmptyInputs() {
+        abstractTestEmptyInputs();
+    }
+
+    @Test(groups = { "4.2" })
+    public void testGreaterThanMaximum() {
+        abstractTestGreaterThanMaximum();
+    }
 
 }

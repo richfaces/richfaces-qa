@@ -35,76 +35,76 @@ import org.testng.annotations.Test;
  */
 public class TestJsFunction extends AbstractAjocadoTest {
 
-	/* *****************************************************************************
-	 * Locators
-	 *******************************************************************************/
-	
-	protected JQueryLocator firstTd = jq("fieldset table tr:first td:first span");
-	protected JQueryLocator secondTd = jq("fieldset table tr:first td:odd span");
-	protected JQueryLocator lastTd = jq("fieldset table tr:first td:last span");
-	protected JQueryLocator showName = jq("span#showname");
-	
-	/* ******************************************************************************
-	 * Tests
-	 ********************************************************************************/
-	
-	@Test
-	public void testInitialState() {
-		
-		String textInShowName = selenium.getText(showName).trim();
-		assertEquals("", textInShowName, "The text in shownName should be empty");
-	}
-	
-	@Test
-	public void testMouseOverSpecificTdElement() {
-		/*
-		 * Move mouse over all td elements and check whether the showName is same as text of particular td element
-		 * then move mouse out of td element and check whether the showName is empty
-		 */
-		//first td
-		String textInFirstTd = selenium.getText(firstTd).trim();
-		
-		guardXhr(selenium).mouseOver(firstTd);
-		
-		String textInShowName = selenium.getText(showName).trim();
-		
-		assertEquals(textInShowName, textInFirstTd, "The text in shownName should be same as in the first td!");
-		
-		guardXhr(selenium).mouseOut(firstTd);
-		
-		textInShowName = selenium.getText(showName).trim();
-		
-		assertEquals(textInShowName, "", "The text in shownName should be empty");
-		
-		//second td
-		String textInSecondTd = selenium.getText(secondTd).trim();
-		
-		guardXhr(selenium).mouseOver(secondTd);
-		
-		textInShowName = selenium.getText(showName).trim();
-		
-		assertEquals(textInShowName, textInSecondTd, "The text in shownName should be same as in the second td!");
-		
-		guardXhr(selenium).mouseOut(secondTd);
-		
-		textInShowName = selenium.getText(showName).trim();
-		
-		assertEquals(textInShowName, "", "The text in shownName should be empty");
-		
-		//last td
-		String textLastTd = selenium.getText(lastTd).trim();
-		
-		guardXhr(selenium).mouseOver(lastTd);
-		
-		textInShowName = selenium.getText(showName).trim();
-		
-		assertEquals(textInShowName, textLastTd, "The text in shownName should be same as in the last td!");
-		
-		guardXhr(selenium).mouseOut(lastTd);
-		
-		textInShowName = selenium.getText(showName).trim();
-		
-		assertEquals(textInShowName, "", "The text in shownName should be empty");
-		
-	}
+    /* *****************************************************************************
+     * Locators*****************************************************************************
+     */
+
+    protected JQueryLocator firstTd = jq("fieldset table tr:first td:first span");
+    protected JQueryLocator secondTd = jq("fieldset table tr:first td:odd span");
+    protected JQueryLocator lastTd = jq("fieldset table tr:first td:last span");
+    protected JQueryLocator showName = jq("span#showname");
+
+    /* ******************************************************************************
+     * Tests******************************************************************************
+     */
+
+    @Test
+    public void testInitialState() {
+
+        String textInShowName = selenium.getText(showName).trim();
+        assertEquals("", textInShowName, "The text in shownName should be empty");
+    }
+
+    @Test
+    public void testMouseOverSpecificTdElement() {
+        /*
+         * Move mouse over all td elements and check whether the showName is same as text of particular td element then
+         * move mouse out of td element and check whether the showName is empty
+         */
+        // first td
+        String textInFirstTd = selenium.getText(firstTd).trim();
+
+        guardXhr(selenium).mouseOver(firstTd);
+
+        String textInShowName = selenium.getText(showName).trim();
+
+        assertEquals(textInShowName, textInFirstTd, "The text in shownName should be same as in the first td!");
+
+        guardXhr(selenium).mouseOut(firstTd);
+
+        textInShowName = selenium.getText(showName).trim();
+
+        assertEquals(textInShowName, "", "The text in shownName should be empty");
+
+        // second td
+        String textInSecondTd = selenium.getText(secondTd).trim();
+
+        guardXhr(selenium).mouseOver(secondTd);
+
+        textInShowName = selenium.getText(showName).trim();
+
+        assertEquals(textInShowName, textInSecondTd, "The text in shownName should be same as in the second td!");
+
+        guardXhr(selenium).mouseOut(secondTd);
+
+        textInShowName = selenium.getText(showName).trim();
+
+        assertEquals(textInShowName, "", "The text in shownName should be empty");
+
+        // last td
+        String textLastTd = selenium.getText(lastTd).trim();
+
+        guardXhr(selenium).mouseOver(lastTd);
+
+        textInShowName = selenium.getText(showName).trim();
+
+        assertEquals(textInShowName, textLastTd, "The text in shownName should be same as in the last td!");
+
+        guardXhr(selenium).mouseOut(lastTd);
+
+        textInShowName = selenium.getText(showName).trim();
+
+        assertEquals(textInShowName, "", "The text in shownName should be empty");
+
+    }
 }

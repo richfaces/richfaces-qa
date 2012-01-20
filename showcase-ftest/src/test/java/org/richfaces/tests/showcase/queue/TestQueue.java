@@ -44,145 +44,140 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestQueue extends AbstractAjocadoTest {
-	
-	/* *******************************************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * *************************************
-	 */
-	
-	protected JQueryLocator inputQueue = jq("fieldset table input[id$=myinput]");
-	protected JQueryLocator repeatedText = jq("fieldset table span[id$=outtext]");
-	protected JQueryLocator eventCounts = jq("fieldset table span[id$=events]");
-	protected JQueryLocator requestCounts = jq("fieldset table span[id$=requests]");
-	protected JQueryLocator DOMupdatesCounts = jq("fieldset table span[id$=updates]");
-	protected JQueryLocator requestDelay = jq("fieldset table input[name$=delay]");
-	protected JQueryLocator ignoreDuplicates = jq("fieldset table input[type=checkbox]");
-	protected JQueryLocator applyButton = jq("fieldset table input[type=submit]");
-	
-	/* ********************************************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * ***********************************
-	 */
-	
-	@Test
-	public void testRequestDelay500() {
-		testRequestDelay("500");
-	}
-	
-	@Test 
-	public void testRequestDelay1000() {
-		testRequestDelay("1000");
-	}
-	
-	@Test
-	public void testRequestDelay5000() {
-		testRequestDelay("5000");
-	}
-	
-	@Test
-	public void testQueueIgnoreDuplicatesDisabled() {
-		
-		selenium.uncheck(ignoreDuplicates);
-		guardHttp(selenium).click(applyButton);
-		
-	    XHRHalter.enable();
-        
+
+    /* *******************************************************************************************************
+     * Locators ****************************************************************** *************************************
+     */
+
+    protected JQueryLocator inputQueue = jq("fieldset table input[id$=myinput]");
+    protected JQueryLocator repeatedText = jq("fieldset table span[id$=outtext]");
+    protected JQueryLocator eventCounts = jq("fieldset table span[id$=events]");
+    protected JQueryLocator requestCounts = jq("fieldset table span[id$=requests]");
+    protected JQueryLocator DOMupdatesCounts = jq("fieldset table span[id$=updates]");
+    protected JQueryLocator requestDelay = jq("fieldset table input[name$=delay]");
+    protected JQueryLocator ignoreDuplicates = jq("fieldset table input[type=checkbox]");
+    protected JQueryLocator applyButton = jq("fieldset table input[type=submit]");
+
+    /* ********************************************************************************************************
+     * Tests ********************************************************************* ***********************************
+     */
+
+    @Test
+    public void testRequestDelay500() {
+        testRequestDelay("500");
+    }
+
+    @Test
+    public void testRequestDelay1000() {
+        testRequestDelay("1000");
+    }
+
+    @Test
+    public void testRequestDelay5000() {
+        testRequestDelay("5000");
+    }
+
+    @Test
+    public void testQueueIgnoreDuplicatesDisabled() {
+
+        selenium.uncheck(ignoreDuplicates);
+        guardHttp(selenium).click(applyButton);
+
+        XHRHalter.enable();
+
         selenium.type(inputQueue, "a");
         selenium.fireEvent(inputQueue, KEYUP);
         XHRHalter handle = XHRHalter.getHandleBlocking();
         handle.send();
-        
+
         selenium.type(inputQueue, "b");
         selenium.fireEvent(inputQueue, KEYUP);
-        
+
         handle.complete();
-        
+
         waitGui.dontFail().waitForChange("", retrieveText.locator(repeatedText));
         assertEquals(getTextFromElementRepeatedText(), "a", "The text in the repeated text should be 'a'!");
-        
+
         handle.waitForOpen();
         handle.complete();
-        
+
         waitGui.dontFail().waitForChange("a", retrieveText.locator(repeatedText));
         assertEquals(getTextFromElementRepeatedText(), "b", "The text in the repeated text should be 'b'!");
-	
-	}
-	
-	@Test
-	public void testQueueIgnoreDuplicatesEnabled() {
-		
-		selenium.check(ignoreDuplicates);
-		guardHttp(selenium).click(applyButton);
-		
-		XHRHalter.enable();
-        
+
+    }
+
+    @Test
+    public void testQueueIgnoreDuplicatesEnabled() {
+
+        selenium.check(ignoreDuplicates);
+        guardHttp(selenium).click(applyButton);
+
+        XHRHalter.enable();
+
         selenium.type(inputQueue, "a");
         selenium.fireEvent(inputQueue, KEYUP);
         XHRHalter handle = XHRHalter.getHandleBlocking();
         handle.send();
-        
+
         selenium.type(inputQueue, "b");
         selenium.fireEvent(inputQueue, KEYUP);
-        
+
         handle.complete();
-        
+
         try {
-        	waitGui.waitForChange("", retrieveText.locator(repeatedText));
+            waitGui.waitForChange("", retrieveText.locator(repeatedText));
         } catch (WaitTimeoutException e) {
-        	//expected timeout
+            // expected timeout
         }
-        
+
         assertEquals(getTextFromElementRepeatedText(), "", "The text should be empty string!");
-        
+
         handle.waitForOpen();
         handle.complete();
-        
+
         waitGui.waitForChange("", retrieveText.locator(repeatedText));
         assertEquals(getTextFromElementRepeatedText(), "b", "The text in the repeated text should be 'b'!");
-		
-	}
-	
-	/* ********************************************************************************************************
-	 * Help methods
-	 * *********************************************************************
-	 * ***********************************
-	 */
-	
-	/**
-	 * Set delay according to delayInMiliSeconds and then test the actual delay 
-	 * with use of System.currentTimeMillis(), the actual delay has to be in the range of
-	 * delayInMiliSeconds <= actual delay <= delayInMiliSeconds + 1000 
-	 */
-	private void testRequestDelay(String delayInMiliSeconds) {
-		
-		selenium.type(requestDelay, delayInMiliSeconds);
-		guardHttp(selenium).click(applyButton);
-	
-		TextRetriever requestCountRetriever = retrieveText.locator(requestCounts);
-		requestCountRetriever.initializeValue();
-		
-		selenium.type(inputQueue, "a");
-		selenium.fireEvent(inputQueue, KEYUP);
-		long currentTimeBeforeRequest = System.currentTimeMillis();
-		
-		waitGui.interval(50).timeout(Long.valueOf(delayInMiliSeconds) + 2000).waitForChangeAndReturn(requestCountRetriever);
-		
-		long currentTimeAfterRequest = System.currentTimeMillis();
-		
-		long actualDelay = currentTimeAfterRequest - currentTimeBeforeRequest;
-		long bottomBorderOfDelay = Long.valueOf(delayInMiliSeconds);
-		long upperBorderOfDelay = Long.valueOf(delayInMiliSeconds) + 1000;
-		
-		assertTrue((actualDelay >= bottomBorderOfDelay) && (actualDelay <= upperBorderOfDelay), 
-			"The delay should be between " + bottomBorderOfDelay + "ms and " + upperBorderOfDelay + "ms but was:!" +
-			actualDelay);
-	}
-	
-	private String getTextFromElementRepeatedText() {
-		
-		return selenium.getText(repeatedText);
-	}
+
+    }
+
+    /* ********************************************************************************************************
+     * Help methods *********************************************************************
+     * ***********************************
+     */
+
+    /**
+     * Set delay according to delayInMiliSeconds and then test the actual delay with use of System.currentTimeMillis(),
+     * the actual delay has to be in the range of delayInMiliSeconds <= actual delay <= delayInMiliSeconds + 1000
+     */
+    private void testRequestDelay(String delayInMiliSeconds) {
+
+        selenium.type(requestDelay, delayInMiliSeconds);
+        guardHttp(selenium).click(applyButton);
+
+        TextRetriever requestCountRetriever = retrieveText.locator(requestCounts);
+        requestCountRetriever.initializeValue();
+
+        selenium.type(inputQueue, "a");
+        selenium.fireEvent(inputQueue, KEYUP);
+        long currentTimeBeforeRequest = System.currentTimeMillis();
+
+        waitGui.interval(50).timeout(Long.valueOf(delayInMiliSeconds) + 2000)
+            .waitForChangeAndReturn(requestCountRetriever);
+
+        long currentTimeAfterRequest = System.currentTimeMillis();
+
+        long actualDelay = currentTimeAfterRequest - currentTimeBeforeRequest;
+        long bottomBorderOfDelay = Long.valueOf(delayInMiliSeconds);
+        long upperBorderOfDelay = Long.valueOf(delayInMiliSeconds) + 1000;
+
+        assertTrue((actualDelay >= bottomBorderOfDelay) && (actualDelay <= upperBorderOfDelay),
+            "The delay should be between " + bottomBorderOfDelay + "ms and " + upperBorderOfDelay + "ms but was:!"
+                + actualDelay);
+    }
+
+    private String getTextFromElementRepeatedText() {
+
+        return selenium.getText(repeatedText);
+    }
 
 }

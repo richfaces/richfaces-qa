@@ -31,31 +31,31 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestSimpleTable extends AbstractExtendedTableTest {
-	
-	JQueryLocator tableNonScrollablePart = jq("tbody[id$=tbf]");
-	
-	/*
-	 * Tests
-	 * 
-	 * The method of testing should be improved in the future, but I chose this way of testing due 
-	 * to problems of scrolling with selenium over extended data table 
-	 * I also have to test manually the expanding of columns and that there is a possibility to change the
-	 * order of columns, it should be implemented in the future too.
-	 **********************************************************************************************/
-	@Test
-	public void testFirstRow() {
-		
-		JQueryLocator row = tableNonScrollablePart.getChild(jq("tr:eq(0)"));
-		
-		checkTheRow("Chevrolet", "Corvette", row);
-		
-	}
-	
-	@Test
-	public void testLastRow() {
-		
-		JQueryLocator row = tableNonScrollablePart.getChild(jq("tr:last"));
-		
-		checkTheRow("Infiniti", "EX35", row);
-	}
+
+    JQueryLocator tableNonScrollablePart = jq("tbody[id$=tbf]");
+
+    /*
+     * Tests
+     *
+     * The method of testing should be improved in the future, but I chose this way of testing due to problems of
+     * scrolling with selenium over extended data table I also have to test manually the expanding of columns and that
+     * there is a possibility to change the order of columns, it should be implemented in the future too.
+     * ********************************************************************************************
+     */
+    @Test
+    public void testFirstRow() {
+
+        JQueryLocator row = tableNonScrollablePart.getChild(jq("tr:eq(0)"));
+
+        checkTheRow("Chevrolet", "Corvette", row);
+
+    }
+
+    @Test
+    public void testLastRow() {
+
+        JQueryLocator row = tableNonScrollablePart.getChild(jq("tr:last"));
+
+        checkTheRow("Infiniti", "EX35", row);
+    }
 }

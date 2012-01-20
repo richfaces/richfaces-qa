@@ -32,55 +32,50 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for page faces/components/richInplaceInput/simple.xhtml.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22196 $
  */
 public class TestInplaceInput extends AbstractAjocadoTest {
-	
-	/* *******************************************************************************
-	 * Locators
-	 *********************************************************************************/
-	
-	protected JQueryLocator nameInputLabel = jq("span.rf-ii-lbl:eq(0)");
-	protected JQueryLocator emailInputLabel = jq("span.rf-ii-lbl:eq(1)");
-	protected JQueryLocator nameInput = jq("input[id$=Input]:eq(0)");
-	protected JQueryLocator emailInput = jq("input[id$=Input]:eq(1)");
-	
-	/* ********************************************************************************
-	 * Tests
-	 **********************************************************************************/
-	
-	@Test
-	public void testEnterSomethingToNameInput() {
-		
-		enterSomethingToInputAndCheck(nameInput, nameInputLabel);
-	}
-	
-	@Test
-	public void testEnterSomethingToEmail() {
-		
-		enterSomethingToInputAndCheck(emailInput, emailInputLabel);
-	}
-	
-	/* ***********************************************************************************
-	 * Help methods
-	 *************************************************************************************/
-	
-	private void enterSomethingToInputAndCheck( JQueryLocator input, JQueryLocator label ) {
-		
-		selenium.click(input);
-		
-		String expectedString = "Test string";
-		selenium.type(input, expectedString);
-		selenium.focus(input);
-		selenium.keyPressNative( KeyEvent.VK_ENTER );
-		
-		String actualString = selenium.getText(label);
-		
-		assertEquals( actualString, expectedString, "The value in the input is not what have been typed there!");
-	}
-	
-	
+
+    /* *******************************************************************************
+     * Locators*******************************************************************************
+     */
+
+    protected JQueryLocator nameInputLabel = jq("span.rf-ii-lbl:eq(0)");
+    protected JQueryLocator emailInputLabel = jq("span.rf-ii-lbl:eq(1)");
+    protected JQueryLocator nameInput = jq("input[id$=Input]:eq(0)");
+    protected JQueryLocator emailInput = jq("input[id$=Input]:eq(1)");
+
+    /* ********************************************************************************
+     * Tests********************************************************************************
+     */
+
+    @Test
+    public void testEnterSomethingToNameInput() {
+        enterSomethingToInputAndCheck(nameInput, nameInputLabel);
+    }
+
+    @Test
+    public void testEnterSomethingToEmail() {
+        enterSomethingToInputAndCheck(emailInput, emailInputLabel);
+    }
+
+    /* ***********************************************************************************
+     * Help methods***********************************************************************************
+     */
+
+    private void enterSomethingToInputAndCheck(JQueryLocator input, JQueryLocator label) {
+        selenium.click(input);
+
+        String expectedString = "Test string";
+        selenium.type(input, expectedString);
+        selenium.focus(input);
+        selenium.keyPressNative(KeyEvent.VK_ENTER);
+
+        String actualString = selenium.getText(label);
+
+        assertEquals(actualString, expectedString, "The value in the input is not what have been typed there!");
+    }
 
 }

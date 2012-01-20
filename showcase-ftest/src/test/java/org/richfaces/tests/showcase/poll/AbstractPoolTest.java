@@ -37,109 +37,93 @@ import org.richfaces.tests.showcase.AbstractAjocadoTest;
  */
 public class AbstractPoolTest extends AbstractAjocadoTest {
 
-	/**
-	 * Initialize GregorianCalendar with time which is give from dateRetriever
-	 * 
-	 * @param dateRetriever
-	 *            TextRetriever from which the calendar with specific time will
-	 *            be inicialized
-	 */
-	public GregorianCalendar initializeCalendarFromDateRetriever(
-			TextRetriever dateRetriever) {
+    /**
+     * Initialize GregorianCalendar with time which is give from dateRetriever
+     *
+     * @param dateRetriever
+     *            TextRetriever from which the calendar with specific time will be inicialized
+     */
+    public GregorianCalendar initializeCalendarFromDateRetriever(TextRetriever dateRetriever) {
 
-		String[] serverDateParsed = dateRetriever.getValue().split(":");
+        String[] serverDateParsed = dateRetriever.getValue().split(":");
 
-		String hours = serverDateParsed[1].substring(
-				serverDateParsed[1].length() - 2, serverDateParsed[1].length());
-		String minutes = serverDateParsed[2];
-		String seconds = serverDateParsed[3].substring(0, 2);
+        String hours = serverDateParsed[1].substring(serverDateParsed[1].length() - 2, serverDateParsed[1].length());
+        String minutes = serverDateParsed[2];
+        String seconds = serverDateParsed[3].substring(0, 2);
 
-		GregorianCalendar calendar = new GregorianCalendar();
-		calendar.setTime(Time.valueOf(hours.trim() + ":" + minutes + ":"
-				+ seconds));
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(Time.valueOf(hours.trim() + ":" + minutes + ":" + seconds));
 
-		return calendar;
+        return calendar;
 
-	}
+    }
 
-	/**
-	 * Computes deviation between two times, consider possibility of minute
-	 * changing
-	 * 
-	 * @param calendarInitial
-	 *            the calendar with specific time which was before
-	 *            calendarAfterPool
-	 * @param calendarAferPool
-	 *            the calendar with specific time which was after
-	 *            calendarInitial
-	 */
-	public Integer computeDeviation(GregorianCalendar calendarInitial,
-			GregorianCalendar calendarAfterServerAction) {
+    /**
+     * Computes deviation between two times, consider possibility of minute changing
+     *
+     * @param calendarInitial
+     *            the calendar with specific time which was before calendarAfterPool
+     * @param calendarAferPool
+     *            the calendar with specific time which was after calendarInitial
+     */
+    public Integer computeDeviation(GregorianCalendar calendarInitial, GregorianCalendar calendarAfterServerAction) {
 
-		int secondsInitial = calendarInitial.get(Calendar.SECOND);
-		int secondsAfterServerAction = calendarAfterServerAction
-				.get(Calendar.SECOND);
+        int secondsInitial = calendarInitial.get(Calendar.SECOND);
+        int secondsAfterServerAction = calendarAfterServerAction.get(Calendar.SECOND);
 
-		// if there is more than one minute or one hour or deviation is return
-		// error value -1
-		if (secondsAfterServerAction == secondsInitial) {
+        // if there is more than one minute or one hour or deviation is return
+        // error value -1
+        if (secondsAfterServerAction == secondsInitial) {
 
-			return -1;
-		}
+            return -1;
+        }
 
-		if ((calendarAfterServerAction.get(Calendar.MINUTE) - calendarInitial
-				.get(Calendar.MINUTE)) >= 2) {
-			return -1;
-		}
+        if ((calendarAfterServerAction.get(Calendar.MINUTE) - calendarInitial.get(Calendar.MINUTE)) >= 2) {
+            return -1;
+        }
 
-		if ((calendarAfterServerAction.get(Calendar.HOUR) - calendarInitial
-				.get(Calendar.HOUR)) >= 2) {
-			return -1;
-		}
+        if ((calendarAfterServerAction.get(Calendar.HOUR) - calendarInitial.get(Calendar.HOUR)) >= 2) {
+            return -1;
+        }
 
-		int deviation = -1;
+        int deviation = -1;
 
-		if (secondsAfterServerAction < secondsInitial) {
+        if (secondsAfterServerAction < secondsInitial) {
 
-			deviation = secondsAfterServerAction + (60 - secondsInitial);
+            deviation = secondsAfterServerAction + (60 - secondsInitial);
 
-		} else {
+        } else {
 
-			deviation = secondsAfterServerAction - secondsInitial;
-		}
+            deviation = secondsAfterServerAction - secondsInitial;
+        }
 
-		return deviation;
-	}
+        return deviation;
+    }
 
-	/**
-	 * Waits for particular server action, gets the deviation between two
-	 * states(before particular server action and after), checks that the
-	 * deviation is not zero or bigger than one hour or one minute
-	 * 
-	 * @param dateRetriever
-	 *            retriever which points to the server date
-	 * @return deviation between two states of rendered server date(before particular
-	 *         server action and after)
-	 */
-	public Integer waitForServerActionAndReturnDeviation(
-			TextRetriever dateRetriever, String whatServerAction) {
+    /**
+     * Waits for particular server action, gets the deviation between two states(before particular server action and
+     * after), checks that the deviation is not zero or bigger than one hour or one minute
+     *
+     * @param dateRetriever
+     *            retriever which points to the server date
+     * @return deviation between two states of rendered server date(before particular server action and after)
+     */
+    public Integer waitForServerActionAndReturnDeviation(TextRetriever dateRetriever, String whatServerAction) {
 
-		GregorianCalendar calendarInitial = initializeCalendarFromDateRetriever(dateRetriever);
+        GregorianCalendar calendarInitial = initializeCalendarFromDateRetriever(dateRetriever);
 
-		waitAjax.waitForChangeAndReturn(dateRetriever);
+        waitAjax.waitForChangeAndReturn(dateRetriever);
 
-		GregorianCalendar calendarAfterPush = initializeCalendarFromDateRetriever(dateRetriever);
+        GregorianCalendar calendarAfterPush = initializeCalendarFromDateRetriever(dateRetriever);
 
-		assertTrue(
-				calendarAfterPush.after(calendarInitial),
-				"The time after" + whatServerAction + "is before the initial time! You are returning to the past!");
+        assertTrue(calendarAfterPush.after(calendarInitial), "The time after" + whatServerAction
+            + "is before the initial time! You are returning to the past!");
 
-		Integer deviation = computeDeviation(calendarInitial, calendarAfterPush);
+        Integer deviation = computeDeviation(calendarInitial, calendarAfterPush);
 
-		assertTrue(deviation > 0, "Deviaton: " + deviation
-				+ " between two " + whatServerAction + "s/es is either too "
-				+ "big (more than one minute/hour) or too small(zero)");
+        assertTrue(deviation > 0, "Deviaton: " + deviation + " between two " + whatServerAction + "s/es is either too "
+            + "big (more than one minute/hour) or too small(zero)");
 
-		return deviation;
-	}
+        return deviation;
+    }
 }

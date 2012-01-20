@@ -31,62 +31,61 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.showcase.AbstractAjocadoTest;
 import org.testng.annotations.Test;
 
-
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
 public class TestAjax extends AbstractAjocadoTest {
-	
-	/* *************************************************************************************
-	 * Locators
-	 ***************************************************************************************/
-	protected JQueryLocator input = jq("fieldset input:text");
-	protected JQueryLocator ajaxOutput = jq("fieldset form span");
-	
-	/* ***************************************************************************************
-	 * Tests
-	 *****************************************************************************************/
-	
-	@Test
-	public void testTypeSomeStringToTheInputAndCheckTheOutput() {
-		
-		String testString = "Test string";
-		
-		/*
-		 * Simulates user input, key by key
-		 */
-		for( int i=0; i < testString.length(); i++ ) {
-			if ( i == 0 ) {
-				selenium.type(input, String.valueOf(testString.charAt(0)));
-			} else {
-				selenium.type(input, testString.subSequence(0, i + 1).toString());
-			}
-			
-			guardXhr(selenium).fireEvent(input, Event.KEYUP);
-			
-			if( i == 0 ) {
-				assertTrue((testString.charAt(0) == selenium.getText(ajaxOutput).charAt(0)),  "The ajax output " +
-						"should be equal to the given input");
-			} else {
-				assertEquals((testString.substring(0, i + 1).trim()), selenium.getText(ajaxOutput).trim(), "The ajax output " +
-					"should be equal to the given input");
-			}
-		}
-	}
-	
-	@Test
-	public void testEraseStringFromInputAndCheckTheOutput() {
-				
-		selenium.typeKeys(input, "This will be erased");
-		guardXhr(selenium).fireEvent(input, Event.KEYUP);
-		
-		eraseInput(input);
-		guardXhr(selenium).fireEvent(input, Event.KEYUP);
-		
-		String expectedOutput = "";
-		
-		assertEquals(selenium.getText(ajaxOutput), expectedOutput, "The ajax output should be deleted");
-	}
+
+    /* *************************************************************************************
+     * Locators*************************************************************************************
+     */
+    protected JQueryLocator input = jq("fieldset input:text");
+    protected JQueryLocator ajaxOutput = jq("fieldset form span");
+
+    /* ***************************************************************************************
+     * Tests***************************************************************************************
+     */
+
+    @Test
+    public void testTypeSomeStringToTheInputAndCheckTheOutput() {
+
+        String testString = "Test string";
+
+        /*
+         * Simulates user input, key by key
+         */
+        for (int i = 0; i < testString.length(); i++) {
+            if (i == 0) {
+                selenium.type(input, String.valueOf(testString.charAt(0)));
+            } else {
+                selenium.type(input, testString.subSequence(0, i + 1).toString());
+            }
+
+            guardXhr(selenium).fireEvent(input, Event.KEYUP);
+
+            if (i == 0) {
+                assertTrue((testString.charAt(0) == selenium.getText(ajaxOutput).charAt(0)), "The ajax output "
+                    + "should be equal to the given input");
+            } else {
+                assertEquals((testString.substring(0, i + 1).trim()), selenium.getText(ajaxOutput).trim(),
+                    "The ajax output " + "should be equal to the given input");
+            }
+        }
+    }
+
+    @Test
+    public void testEraseStringFromInputAndCheckTheOutput() {
+
+        selenium.typeKeys(input, "This will be erased");
+        guardXhr(selenium).fireEvent(input, Event.KEYUP);
+
+        eraseInput(input);
+        guardXhr(selenium).fireEvent(input, Event.KEYUP);
+
+        String expectedOutput = "";
+
+        assertEquals(selenium.getText(ajaxOutput), expectedOutput, "The ajax output should be deleted");
+    }
 
 }

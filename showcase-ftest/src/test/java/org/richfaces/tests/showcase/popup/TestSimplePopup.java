@@ -34,44 +34,45 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestSimplePopup extends AbstractPoppupPanel {
-	
-	/* *************************************************************************************
-	 *Constants 
-	 ***************************************************************************************/
-	protected final String BODY_OF_THE_POPPUP = "Any content might be inside this panel.\n" +
- " The popup panel is open and closed from the javascript function of component client side object. " +
- "The following code hide this panel: #{rich:component('popup')}.hide()";
-	
-	/* *************************************************************************************
-	 * Locators
-	 ***************************************************************************************/
-	
-	JQueryLocator poppupPanelHideAnchor = jq("div.rf-pp-cnt:visible a");
-	
-	/* ***************************************************************************************
-	 * Tests
-	 *****************************************************************************************/
-	
-	@Test
-	public void testCallTheNonModalPopupAndHideIt() {
-		
-		guardNoRequest(selenium).click(callthePoppupButton);
-		
-		assertTrue( selenium.isElementPresent(poppupPanelContent), "The panel should be visible!");
-	
-		checkContentOfPanel( poppupPanelContent, BODY_OF_THE_POPPUP);
-		
-		guardNoRequest(selenium).click(anchorOfSource);
-		
-		assertTrue( selenium.isElementPresent(sourceOfPage), "The source of the page should be visible, since " +
-				"the poppup panel is not modal, and therefore clicking on the source should show the source");
-		
-		assertTrue( selenium.isElementPresent(poppupPanelContent), "The panel should not disappear when clicking somewhere else!");
-		
-		guardNoRequest(selenium).click(poppupPanelHideAnchor);
-		
-		assertFalse( selenium.isElementPresent(poppupPanelContent), "The poppup panel should not be visible, since there was a click " +
-				"on the hide anchor!");
-	}
+
+    /* *************************************************************************************
+     * Constants*************************************************************************************
+     */
+    protected final String BODY_OF_THE_POPPUP = "Any content might be inside this panel.\n"
+        + " The popup panel is open and closed from the javascript function of component client side object. "
+        + "The following code hide this panel: #{rich:component('popup')}.hide()";
+
+    /* *************************************************************************************
+     * Locators*************************************************************************************
+     */
+
+    JQueryLocator poppupPanelHideAnchor = jq("div.rf-pp-cnt:visible a");
+
+    /* ***************************************************************************************
+     * Tests***************************************************************************************
+     */
+
+    @Test
+    public void testCallTheNonModalPopupAndHideIt() {
+
+        guardNoRequest(selenium).click(callthePoppupButton);
+
+        assertTrue(selenium.isElementPresent(poppupPanelContent), "The panel should be visible!");
+
+        checkContentOfPanel(poppupPanelContent, BODY_OF_THE_POPPUP);
+
+        guardNoRequest(selenium).click(anchorOfSource);
+
+        assertTrue(selenium.isElementPresent(sourceOfPage), "The source of the page should be visible, since "
+            + "the poppup panel is not modal, and therefore clicking on the source should show the source");
+
+        assertTrue(selenium.isElementPresent(poppupPanelContent),
+            "The panel should not disappear when clicking somewhere else!");
+
+        guardNoRequest(selenium).click(poppupPanelHideAnchor);
+
+        assertFalse(selenium.isElementPresent(poppupPanelContent),
+            "The poppup panel should not be visible, since there was a click " + "on the hide anchor!");
+    }
 
 }

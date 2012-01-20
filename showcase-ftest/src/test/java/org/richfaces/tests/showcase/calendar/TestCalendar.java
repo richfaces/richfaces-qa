@@ -35,43 +35,39 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
  */
 public class TestCalendar extends AbstractCalendarTest {
 
-	/* ************************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * ******************
-	 */
+    /* ************************************************************************************
+     * Locators ****************************************************************** ******************
+     */
 
-	protected JQueryLocator disabledCheckBox = jq("input[type=checkbox]:eq(0)");
-	protected JQueryLocator poppupModeCheckBox = jq("input[type=checkbox]:eq(1)");
-	protected JQueryLocator applyButtonCheckBox = jq("input[type=checkbox]:eq(2)");
-	protected JQueryLocator dataPetternSelect = jq("select");
-	protected JQueryLocator USLocale = jq("input[type=radio]:eq(0)");
-	protected JQueryLocator DELocale = jq("input[type=radio]:eq(1)");
-	protected JQueryLocator FRLocale = jq("input[type=radio]:eq(2)");
-	protected JQueryLocator RULocale = jq("input[type=radio]:eq(3)");
+    protected JQueryLocator disabledCheckBox = jq("input[type=checkbox]:eq(0)");
+    protected JQueryLocator poppupModeCheckBox = jq("input[type=checkbox]:eq(1)");
+    protected JQueryLocator applyButtonCheckBox = jq("input[type=checkbox]:eq(2)");
+    protected JQueryLocator dataPetternSelect = jq("select");
+    protected JQueryLocator USLocale = jq("input[type=radio]:eq(0)");
+    protected JQueryLocator DELocale = jq("input[type=radio]:eq(1)");
+    protected JQueryLocator FRLocale = jq("input[type=radio]:eq(2)");
+    protected JQueryLocator RULocale = jq("input[type=radio]:eq(3)");
 
-	/* **************************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * *****************
-	 */
+    /* **************************************************************************************
+     * Tests ********************************************************************* *****************
+     */
 
-	@Test
-	public void testThereAreAllRequiredComponents() {
+    @Test
+    public void testThereAreAllRequiredComponents() {
 
-		abstractTestThereAreAllRequiredComponents();
+        abstractTestThereAreAllRequiredComponents();
 
-		checkTheTimeSetterAndCleanButtonPresent();
-	}
+        checkTheTimeSetterAndCleanButtonPresent();
+    }
 
-	@Test
-	public void testDisabledCheckBox() {
+    @Test
+    public void testDisabledCheckBox() {
 
-		selenium.check(disabledCheckBox);
-		guardXhr(selenium).fireEvent(disabledCheckBox, Event.CLICK);
+        selenium.check(disabledCheckBox);
+        guardXhr(selenium).fireEvent(disabledCheckBox, Event.CLICK);
 
-		guardNoRequest(selenium).click(imgWhichCallsTheCalendar);
+        guardNoRequest(selenium).click(imgWhichCallsTheCalendar);
 
-		checkWhetherTheseComponentsArePresent(addAllComponentsToTheSet(), false);
-	}
+        checkWhetherTheseComponentsArePresent(addAllComponentsToTheSet(), false);
+    }
 }

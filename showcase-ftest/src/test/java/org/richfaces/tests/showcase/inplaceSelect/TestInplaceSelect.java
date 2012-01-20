@@ -34,82 +34,74 @@ import org.testng.annotations.Test;
  */
 public class TestInplaceSelect extends AbstractAjocadoTest {
 
-	/* ********************************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * **************************
-	 */
+    /* ********************************************************************************************
+     * Locators ****************************************************************** **************************
+     */
 
-	protected JQueryLocator selectSimple = jq("input[id$=Input]:eq(0)");
-	protected JQueryLocator selectCustomization = jq("input[id$=Input]:eq(1)");
+    protected JQueryLocator selectSimple = jq("input[id$=Input]:eq(0)");
+    protected JQueryLocator selectCustomization = jq("input[id$=Input]:eq(1)");
 
-	protected JQueryLocator selectSimpleLabel = jq("span[id$=Label]:eq(0)");
-	protected JQueryLocator selectCustomizationLabel = jq("span[id$=Label]:eq(1)");
+    protected JQueryLocator selectSimpleLabel = jq("span[id$=Label]:eq(0)");
+    protected JQueryLocator selectCustomizationLabel = jq("span[id$=Label]:eq(1)");
 
-	protected JQueryLocator optionLocator = jq("span.rf-is-opt:contains('{0}')");
-	
-	protected JQueryLocator declineButton = jq("input.rf-is-btn:eq(1)");
-	
-	/* *********************************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * ************************
-	 */
+    protected JQueryLocator optionLocator = jq("span.rf-is-opt:contains('{0}')");
 
-	@Test
-	public void testSimpleSelect() {
-		
-		for( int i = 1; i <= 5; i++) {
-			
-			checkSelect(selectSimple, selectSimpleLabel, "Option " + i, false);
-		}
+    protected JQueryLocator declineButton = jq("input.rf-is-btn:eq(1)");
 
-	}
-	
-	@Test 
-	public void testCustomizationSelect() {
-		
-		checkSelect(selectCustomization, selectCustomizationLabel, "Alabama", true);
-		
-		checkSelect(selectCustomization, selectCustomizationLabel, "Florida", true);
-		
-		checkSelect(selectCustomization, selectCustomizationLabel, "California", true);
-	}
-	
-	/* *********************************************************************************************************
-	 * Help methods
-	 * **************************************************************
-	 * *******************************************
-	 */
-	
-	/**
-	 * Checks the select, when it is select which is activated by double click, then also there is need for click on 
-	 * accept button.
-	 */
-	
-	private void checkSelect( JQueryLocator select, JQueryLocator labelWhenSomethingIsSelected, 
-			String optionLabelFromPoppup, boolean doubleClick) {
+    /* *********************************************************************************************
+     * Tests ********************************************************************* ************************
+     */
 
-		JQueryLocator acceptButton = jq("input[class*=rf-is-btn]:eq(0)");
-		
-		if( doubleClick ) {
-			
-			selenium.doubleClick( select );
-		} else {
-			
-			selenium.click( select );
-		}
-			
-		selenium.click( optionLocator.format( optionLabelFromPoppup ) );
-		
-		if( doubleClick ) {
-			
-			selenium.mouseDown(acceptButton);
-		}
-		
-		String optionFromLabel = selenium.getText( labelWhenSomethingIsSelected );
-		
-		assertEquals( optionFromLabel, optionFromLabel, "The selected option is different as the select shows!");
-	}
-	
+    @Test
+    public void testSimpleSelect() {
+        for (int i = 1; i <= 5; i++) {
+
+            checkSelect(selectSimple, selectSimpleLabel, "Option " + i, false);
+        }
+    }
+
+    @Test
+    public void testCustomizationSelect() {
+        checkSelect(selectCustomization, selectCustomizationLabel, "Alabama", true);
+
+        checkSelect(selectCustomization, selectCustomizationLabel, "Florida", true);
+
+        checkSelect(selectCustomization, selectCustomizationLabel, "California", true);
+    }
+
+    /* *********************************************************************************************************
+     * Help methods **************************************************************
+     * *******************************************
+     */
+
+    /**
+     * Checks the select, when it is select which is activated by double click, then also there is need for click on
+     * accept button.
+     */
+
+    private void checkSelect(JQueryLocator select, JQueryLocator labelWhenSomethingIsSelected,
+        String optionLabelFromPoppup, boolean doubleClick) {
+
+        JQueryLocator acceptButton = jq("input[class*=rf-is-btn]:eq(0)");
+
+        if (doubleClick) {
+
+            selenium.doubleClick(select);
+        } else {
+
+            selenium.click(select);
+        }
+
+        selenium.click(optionLocator.format(optionLabelFromPoppup));
+
+        if (doubleClick) {
+
+            selenium.mouseDown(acceptButton);
+        }
+
+        String optionFromLabel = selenium.getText(labelWhenSomethingIsSelected);
+
+        assertEquals(optionFromLabel, optionFromLabel, "The selected option is different as the select shows!");
+    }
+
 }

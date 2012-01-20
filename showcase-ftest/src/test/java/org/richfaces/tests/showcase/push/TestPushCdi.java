@@ -43,177 +43,163 @@ import org.testng.annotations.Test;
  */
 public class TestPushCdi extends AbstractWebDriverTest {
 
-	/* **********************************************************************
-	 * Locators
-	 * **********************************************************************
-	 */
+    /* **********************************************************************
+     * Locators **********************************************************************
+     */
 
-	private final By MESSAGE_CONSUMER_INVOKE_LINK = By.className("popupLink");
-	private final By INPUT_FOR_MESSAGES = By.className("message");
-	private final By CONSUMER_MESSAGE = By.id("messages");
-	private final By SUBMIT = By.xpath("//input[@type='submit']");
+    private final By MESSAGE_CONSUMER_INVOKE_LINK = By.className("popupLink");
+    private final By INPUT_FOR_MESSAGES = By.className("message");
+    private final By CONSUMER_MESSAGE = By.id("messages");
+    private final By SUBMIT = By.xpath("//input[@type='submit']");
 
-	/* ************************************************************************
-	 * Constants
-	 * ************************************************************************
-	 */
+    /* ************************************************************************
+     * Constants ************************************************************************
+     */
 
-	private final Map<Integer, String> EXPECTED_MESSAGES_ON_CONSUMERS = new HashMap<Integer, String>() {
-		// just for avoiding of warning about serialVersionUID declaration
-		private static final long serialVersionUID = -1113582265865921787L;
+    private final Map<Integer, String> EXPECTED_MESSAGES_ON_CONSUMERS = new HashMap<Integer, String>() {
+        // just for avoiding of warning about serialVersionUID declaration
+        private static final long serialVersionUID = -1113582265865921787L;
 
-		{
-			put(4, "Test string 5");
-			put(3, "Test string 5\nTest string 4");
-			put(2, "Test string 5\nTest string 4\nTest string 3");
-			put(1, "Test string 5\nTest string 4\nTest string 3\nTest string 2");
-			put(0,	"Test string 5\nTest string 4\nTest string 3\nTest string 2\nTest string 1");
-		}
-	};
+        {
+            put(4, "Test string 5");
+            put(3, "Test string 5\nTest string 4");
+            put(2, "Test string 5\nTest string 4\nTest string 3");
+            put(1, "Test string 5\nTest string 4\nTest string 3\nTest string 2");
+            put(0, "Test string 5\nTest string 4\nTest string 3\nTest string 2\nTest string 1");
+        }
+    };
 
-	/* ************************************************************************
-	 * Tests
-	 * ************************************************************************
-	 */
+    /* ************************************************************************
+     * Tests ************************************************************************
+     */
 
-	
-	@Test( groups = {"4.2"} )
-	public void testSendMessagesToSequentiallyOpenedConsumers() {
+    @Test(groups = { "4.2" })
+    public void testSendMessagesToSequentiallyOpenedConsumers() {
 
-		String firstWindow = closeAllpreviouslyOpenedWindows();
+        String firstWindow = closeAllpreviouslyOpenedWindows();
 
-		Map<Integer, String> consumersWindows = new HashMap<Integer, String>();
+        Map<Integer, String> consumersWindows = new HashMap<Integer, String>();
 
-		WebElement input = webDriver.findElement(INPUT_FOR_MESSAGES);
+        WebElement input = webDriver.findElement(INPUT_FOR_MESSAGES);
 
-		Set<String> windows = null;
+        Set<String> windows = null;
 
-		// 5 times will be new consumer invoked
-		for (int i = 0; i < 5; i++) {
+        // 5 times will be new consumer invoked
+        for (int i = 0; i < 5; i++) {
 
-			windows = webDriver.getWindowHandles();
+            windows = webDriver.getWindowHandles();
 
-			String newConsumer = waitForConsumerWindowLoadingAfterInvocation(i,
-					windows);
+            String newConsumer = waitForConsumerWindowLoadingAfterInvocation(i, windows);
 
-			windows = webDriver.getWindowHandles();
-			windows.remove(firstWindow);
+            windows = webDriver.getWindowHandles();
+            windows.remove(firstWindow);
 
-			consumersWindows.put(i, newConsumer);
+            consumersWindows.put(i, newConsumer);
 
-			String message = "Test string " + (i + 1);
+            String message = "Test string " + (i + 1);
 
-			input.sendKeys(message);
+            input.sendKeys(message);
 
-			webDriver.findElement(SUBMIT).click();
+            webDriver.findElement(SUBMIT).click();
 
-			assertTrue(input.getText().equals(""),
-					"The input should be empty after submiting!");
-			
-			webDriver.switchTo().window(newConsumer);
-			
-			String messagesAfterPush = webDriver.findElement(CONSUMER_MESSAGE)
-					.getText();
+            assertTrue(input.getText().equals(""), "The input should be empty after submiting!");
 
-			long end = System.currentTimeMillis() + 5000;
-			while (System.currentTimeMillis() < end) {
+            webDriver.switchTo().window(newConsumer);
 
-				boolean isPushedToAllConsumers = true;
+            String messagesAfterPush = webDriver.findElement(CONSUMER_MESSAGE).getText();
 
-				for (String window : windows) {
+            long end = System.currentTimeMillis() + 5000;
+            while (System.currentTimeMillis() < end) {
 
-					webDriver.switchTo().window(window);
+                boolean isPushedToAllConsumers = true;
 
-					messagesAfterPush = webDriver.findElement(CONSUMER_MESSAGE)
-							.getText();
+                for (String window : windows) {
 
-					if (!messagesAfterPush.contains(message)) {
-						isPushedToAllConsumers = false;
-					}
+                    webDriver.switchTo().window(window);
 
-				}
+                    messagesAfterPush = webDriver.findElement(CONSUMER_MESSAGE).getText();
 
-				if (isPushedToAllConsumers)
-					break;
-			}
+                    if (!messagesAfterPush.contains(message)) {
+                        isPushedToAllConsumers = false;
+                    }
 
-			webDriver.switchTo().window(firstWindow);
-		}
+                }
 
-		checkExpectedMessagesOnConsumers(consumersWindows);
+                if (isPushedToAllConsumers)
+                    break;
+            }
 
-	}
+            webDriver.switchTo().window(firstWindow);
+        }
 
-	/* ***************************************************************************************************
-	 * Help methods
-	 * **************************************************************
-	 * *************************************
-	 */
+        checkExpectedMessagesOnConsumers(consumersWindows);
 
-	private String closeAllpreviouslyOpenedWindows() {
+    }
 
-		String firstWindow = webDriver.getWindowHandle();
+    /* ***************************************************************************************************
+     * Help methods ************************************************************** *************************************
+     */
 
-		Set<String> windows = webDriver.getWindowHandles();
-		windows.remove(firstWindow);
+    private String closeAllpreviouslyOpenedWindows() {
 
-		for (String i : windows) {
+        String firstWindow = webDriver.getWindowHandle();
 
-			webDriver.switchTo().window(i);
-			webDriver.close();
-		}
+        Set<String> windows = webDriver.getWindowHandles();
+        windows.remove(firstWindow);
 
-		webDriver.switchTo().window(firstWindow);
+        for (String i : windows) {
 
-		return firstWindow;
-	}
+            webDriver.switchTo().window(i);
+            webDriver.close();
+        }
 
-	/**
-	 * 
-	 * @param currentNumberOfConsumerWindows
-	 * @param oldWindows
-	 * @return
-	 */
-	private String waitForConsumerWindowLoadingAfterInvocation(
-			final int currentNumberOfConsumerWindows, Set<String> oldWindows) {
+        webDriver.switchTo().window(firstWindow);
 
-		webDriver.findElement(MESSAGE_CONSUMER_INVOKE_LINK).click();
+        return firstWindow;
+    }
 
-		(new WebDriverWait(webDriver, 4))
-				.until(new ExpectedCondition<Boolean>() {
+    /**
+     *
+     * @param currentNumberOfConsumerWindows
+     * @param oldWindows
+     * @return
+     */
+    private String waitForConsumerWindowLoadingAfterInvocation(final int currentNumberOfConsumerWindows,
+        Set<String> oldWindows) {
 
-					public Boolean apply(WebDriver d) {
+        webDriver.findElement(MESSAGE_CONSUMER_INVOKE_LINK).click();
 
-						return (d.getWindowHandles().size() - 1) > currentNumberOfConsumerWindows;
-					}
-				});
+        (new WebDriverWait(webDriver, 4)).until(new ExpectedCondition<Boolean>() {
 
-		Set<String> currentWindows = webDriver.getWindowHandles();
-		currentWindows.removeAll(oldWindows);
+            public Boolean apply(WebDriver d) {
 
-		return Collections.list(Collections.enumeration(currentWindows)).get(0);
-	}
+                return (d.getWindowHandles().size() - 1) > currentNumberOfConsumerWindows;
+            }
+        });
 
-	/**
-	 * 
-	 * @param consumersWindows
-	 */
-	private void checkExpectedMessagesOnConsumers(
-			Map<Integer, String> consumersWindows) {
+        Set<String> currentWindows = webDriver.getWindowHandles();
+        currentWindows.removeAll(oldWindows);
 
-		for (Map.Entry<Integer, String> entry : consumersWindows.entrySet()) {
+        return Collections.list(Collections.enumeration(currentWindows)).get(0);
+    }
 
-			webDriver.switchTo().window(entry.getValue());
+    /**
+     *
+     * @param consumersWindows
+     */
+    private void checkExpectedMessagesOnConsumers(Map<Integer, String> consumersWindows) {
 
-			String actualMessage = webDriver.findElement(CONSUMER_MESSAGE)
-					.getText();
+        for (Map.Entry<Integer, String> entry : consumersWindows.entrySet()) {
 
-			Integer key = entry.getKey();
-			String expectedMessages = EXPECTED_MESSAGES_ON_CONSUMERS.get(key);
-			assertEquals(actualMessage, expectedMessages,
-					"The window invoked in the order as " + key
-							+ " should contains different messages");
-		}
-	}
+            webDriver.switchTo().window(entry.getValue());
+
+            String actualMessage = webDriver.findElement(CONSUMER_MESSAGE).getText();
+
+            Integer key = entry.getKey();
+            String expectedMessages = EXPECTED_MESSAGES_ON_CONSUMERS.get(key);
+            assertEquals(actualMessage, expectedMessages, "The window invoked in the order as " + key
+                + " should contains different messages");
+        }
+    }
 
 }

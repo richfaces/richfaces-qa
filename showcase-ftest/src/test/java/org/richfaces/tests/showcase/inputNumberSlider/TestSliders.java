@@ -36,165 +36,148 @@ import org.testng.annotations.Test;
  */
 public class TestSliders extends AbstractAjocadoTest {
 
-	/* *****************************************************************************************************
-	 * Constants
-	 *******************************************************************************************************/
-	
-	protected final int PADDING_WHEN_CLICK_ON_200 = 100;
-	protected final int PADDING_WHEN_CLICK_ON_30 = 14;
+    /* *****************************************************************************************************
+     * Constants*****************************************************************************************************
+     */
 
-	protected final int PADDING_WHEN_CLICK_ON_30_ANOTHER = 15;
-	
-	protected final int DEFAULT_PADDING_OF_DISABLED_SLIDER = 50;
-	
-	/* *******************************************************************************************************
-	 * Locators
-	 * ******************************************************************
-	 * *************************************
-	 */
+    protected final int PADDING_WHEN_CLICK_ON_200 = 100;
+    protected final int PADDING_WHEN_CLICK_ON_30 = 14;
 
-	protected JQueryLocator defaultNumberSliderHandle = jq("span.rf-insl-hnd-cntr:eq(0)");
-	protected JQueryLocator defalutInputOfNumberSlider = jq("input[type=text]:eq(0)");
-	protected JQueryLocator defaultBodyNumberSlider = jq("span.rf-insl-trc:eq(0)");
+    protected final int PADDING_WHEN_CLICK_ON_30_ANOTHER = 15;
 
-	protected JQueryLocator minimalisticNumberSliderHandle = jq("span.rf-insl-hnd-cntr:eq(1)");
-	protected JQueryLocator minimalisticBodyNumberSlider = jq("span.rf-insl-trc:eq(1)");
+    protected final int DEFAULT_PADDING_OF_DISABLED_SLIDER = 50;
 
-	protected JQueryLocator anotherNumberSliderHandle = jq("span.rf-insl-hnd-cntr:eq(2)");
-	protected JQueryLocator anotherInputOfNumberSlider = jq("input[type=text]:eq(2)");
-	protected JQueryLocator anotherBodyNumberSlider = jq("span.rf-insl-trc:eq(2)");
-	
-	protected JQueryLocator disabledNumberSliderHandle = jq("span.rf-insl-hnd-cntr:eq(3)");
-	protected JQueryLocator disabledInputOfNumberSlider = jq("input[type=text]:eq(3)");
-	protected JQueryLocator disabledBodyNumberSlider = jq("span.rf-insl-trc:eq(3)");
+    /* *******************************************************************************************************
+     * Locators ****************************************************************** *************************************
+     */
 
-	/* ********************************************************************************************************
-	 * Tests
-	 * *********************************************************************
-	 * ***********************************
-	 */
+    protected JQueryLocator defaultNumberSliderHandle = jq("span.rf-insl-hnd-cntr:eq(0)");
+    protected JQueryLocator defalutInputOfNumberSlider = jq("input[type=text]:eq(0)");
+    protected JQueryLocator defaultBodyNumberSlider = jq("span.rf-insl-trc:eq(0)");
 
-	@Test
-	public void testDefaultInputNumberSliderClickOnBody() {
+    protected JQueryLocator minimalisticNumberSliderHandle = jq("span.rf-insl-hnd-cntr:eq(1)");
+    protected JQueryLocator minimalisticBodyNumberSlider = jq("span.rf-insl-trc:eq(1)");
 
-		int padding = clickOnSliderAndCheckThePadding(defaultBodyNumberSlider,
-				defaultNumberSliderHandle, PADDING_WHEN_CLICK_ON_200, 200);
+    protected JQueryLocator anotherNumberSliderHandle = jq("span.rf-insl-hnd-cntr:eq(2)");
+    protected JQueryLocator anotherInputOfNumberSlider = jq("input[type=text]:eq(2)");
+    protected JQueryLocator anotherBodyNumberSlider = jq("span.rf-insl-trc:eq(2)");
 
-		checkTheInputAccordingToPositionOfHandler(defalutInputOfNumberSlider,
-				padding);
+    protected JQueryLocator disabledNumberSliderHandle = jq("span.rf-insl-hnd-cntr:eq(3)");
+    protected JQueryLocator disabledInputOfNumberSlider = jq("input[type=text]:eq(3)");
+    protected JQueryLocator disabledBodyNumberSlider = jq("span.rf-insl-trc:eq(3)");
 
-		padding = clickOnSliderAndCheckThePadding(defaultBodyNumberSlider,
-				defaultNumberSliderHandle, PADDING_WHEN_CLICK_ON_30, 30);
+    /* ********************************************************************************************************
+     * Tests ********************************************************************* ***********************************
+     */
 
-		checkTheInputAccordingToPositionOfHandler(defalutInputOfNumberSlider,
-				padding);
-	}
+    @Test
+    public void testDefaultInputNumberSliderClickOnBody() {
 
-	@Test
-	public void testMinimalisticInputNumberSliderClickOnBody() {
+        int padding = clickOnSliderAndCheckThePadding(defaultBodyNumberSlider, defaultNumberSliderHandle,
+            PADDING_WHEN_CLICK_ON_200, 200);
 
-		clickOnSliderAndCheckThePadding(minimalisticBodyNumberSlider,
-				minimalisticNumberSliderHandle, PADDING_WHEN_CLICK_ON_200, 200);
+        checkTheInputAccordingToPositionOfHandler(defalutInputOfNumberSlider, padding);
 
-		clickOnSliderAndCheckThePadding(minimalisticBodyNumberSlider,
-				minimalisticNumberSliderHandle, PADDING_WHEN_CLICK_ON_30, 30);
+        padding = clickOnSliderAndCheckThePadding(defaultBodyNumberSlider, defaultNumberSliderHandle,
+            PADDING_WHEN_CLICK_ON_30, 30);
 
-	}
+        checkTheInputAccordingToPositionOfHandler(defalutInputOfNumberSlider, padding);
+    }
 
-	@Test
-	public void testAnotherInputNumberSliderClickOnTheBody() {
+    @Test
+    public void testMinimalisticInputNumberSliderClickOnBody() {
 
-		int padding = clickOnSliderAndCheckThePadding(anotherBodyNumberSlider,
-				anotherNumberSliderHandle, PADDING_WHEN_CLICK_ON_200, 200);
+        clickOnSliderAndCheckThePadding(minimalisticBodyNumberSlider, minimalisticNumberSliderHandle,
+            PADDING_WHEN_CLICK_ON_200, 200);
 
-		checkTheInputAccordingToPositionOfHandler(anotherInputOfNumberSlider,
-				padding * 10);
+        clickOnSliderAndCheckThePadding(minimalisticBodyNumberSlider, minimalisticNumberSliderHandle,
+            PADDING_WHEN_CLICK_ON_30, 30);
 
-		padding = clickOnSliderAndCheckThePadding(anotherBodyNumberSlider,
-				anotherNumberSliderHandle, PADDING_WHEN_CLICK_ON_30_ANOTHER, 30);
+    }
 
-		checkTheInputAccordingToPositionOfHandler(anotherInputOfNumberSlider,
-				padding * 10);
-	}
-	
-	@Test
-	public void testDisabledControlInputNumberSlider() {
-		
-		int padding = clickOnSliderAndCheckThePadding(disabledBodyNumberSlider, 
-				disabledNumberSliderHandle, DEFAULT_PADDING_OF_DISABLED_SLIDER, 200);
-		
-		checkTheInputAccordingToPositionOfHandler(disabledInputOfNumberSlider,
-				padding * 10);
-	}
+    @Test
+    public void testAnotherInputNumberSliderClickOnTheBody() {
 
-	/* *********************************************************************************************************
-	 * Help methods
-	 * **************************************************************
-	 * *******************************************
-	 */
+        int padding = clickOnSliderAndCheckThePadding(anotherBodyNumberSlider, anotherNumberSliderHandle,
+            PADDING_WHEN_CLICK_ON_200, 200);
 
-	/**
-	 * Clicks on the particular place on the slider and check the padding left
-	 * style property
-	 * 
-	 * @param sliderBody
-	 *            the body of The slider where selenium will click
-	 * @param sliderHandler
-	 *            the handler which padding left will be checked
-	 * @param expectedPadding
-	 *            the expected padding after click
-	 * @param whereToClick
-	 *            the pixel where to click on the body, it is on the X axis
-	 */
-	private int clickOnSliderAndCheckThePadding(JQueryLocator sliderBody,
-			JQueryLocator sliderHandler, int expectedPadding, int whereToClick) {
+        checkTheInputAccordingToPositionOfHandler(anotherInputOfNumberSlider, padding * 10);
 
-		selenium.mouseDownAt(sliderBody, new Point(whereToClick, 0));
+        padding = clickOnSliderAndCheckThePadding(anotherBodyNumberSlider, anotherNumberSliderHandle,
+            PADDING_WHEN_CLICK_ON_30_ANOTHER, 30);
 
-		int paddingAfterClick = getPaddingLeftOfInputNumberSlider(sliderHandler);
+        checkTheInputAccordingToPositionOfHandler(anotherInputOfNumberSlider, padding * 10);
+    }
 
-		assertEquals(paddingAfterClick, expectedPadding,
-				"The padding now should be " + expectedPadding);
+    @Test
+    public void testDisabledControlInputNumberSlider() {
 
-		return paddingAfterClick;
-	}
+        int padding = clickOnSliderAndCheckThePadding(disabledBodyNumberSlider, disabledNumberSliderHandle,
+            DEFAULT_PADDING_OF_DISABLED_SLIDER, 200);
 
-	/**
-	 * Checks the value in the input and compare it to the real position of
-	 * handler
-	 * 
-	 * @param input
-	 *            the input from which the value will be checked
-	 * @param currentPaddingOfHandler
-	 *            the current padding of the handler
-	 */
-	private void checkTheInputAccordingToPositionOfHandler(JQueryLocator input,
-			int currentPaddingOfHandler) {
+        checkTheInputAccordingToPositionOfHandler(disabledInputOfNumberSlider, padding * 10);
+    }
 
-		assertEquals(Integer.valueOf(selenium.getValue(input)).intValue(),
-				currentPaddingOfHandler,
-				"The value in input does not relflect the real value of position of handler!");
+    /* *********************************************************************************************************
+     * Help methods **************************************************************
+     * *******************************************
+     */
 
-	}
+    /**
+     * Clicks on the particular place on the slider and check the padding left style property
+     *
+     * @param sliderBody
+     *            the body of The slider where selenium will click
+     * @param sliderHandler
+     *            the handler which padding left will be checked
+     * @param expectedPadding
+     *            the expected padding after click
+     * @param whereToClick
+     *            the pixel where to click on the body, it is on the X axis
+     */
+    private int clickOnSliderAndCheckThePadding(JQueryLocator sliderBody, JQueryLocator sliderHandler,
+        int expectedPadding, int whereToClick) {
 
-	/**
-	 * Gets the padding left value, this can achieved via calling method
-	 * getStyle(locator, cssProperty), but it returns padding in pixels.
-	 */
-	private int getPaddingLeftOfInputNumberSlider(JQueryLocator handler) {
+        selenium.mouseDownAt(sliderBody, new Point(whereToClick, 0));
 
-		String style = selenium.getAttribute(handler
-				.getAttribute(Attribute.STYLE));
+        int paddingAfterClick = getPaddingLeftOfInputNumberSlider(sliderHandler);
 
-		int indexOfPaddingLeft = style.indexOf("padding-left");
+        assertEquals(paddingAfterClick, expectedPadding, "The padding now should be " + expectedPadding);
 
-		String paddingLeftAndOther = style.substring(indexOfPaddingLeft);
+        return paddingAfterClick;
+    }
 
-		int indexOfFirstSemicolon = paddingLeftAndOther.indexOf(';');
+    /**
+     * Checks the value in the input and compare it to the real position of handler
+     *
+     * @param input
+     *            the input from which the value will be checked
+     * @param currentPaddingOfHandler
+     *            the current padding of the handler
+     */
+    private void checkTheInputAccordingToPositionOfHandler(JQueryLocator input, int currentPaddingOfHandler) {
 
-		String paddingLeft = paddingLeftAndOther.substring(14,
-				indexOfFirstSemicolon - 1);
+        assertEquals(Integer.valueOf(selenium.getValue(input)).intValue(), currentPaddingOfHandler,
+            "The value in input does not relflect the real value of position of handler!");
 
-		return Integer.valueOf(paddingLeft);
-	}
+    }
+
+    /**
+     * Gets the padding left value, this can achieved via calling method getStyle(locator, cssProperty), but it returns
+     * padding in pixels.
+     */
+    private int getPaddingLeftOfInputNumberSlider(JQueryLocator handler) {
+
+        String style = selenium.getAttribute(handler.getAttribute(Attribute.STYLE));
+
+        int indexOfPaddingLeft = style.indexOf("padding-left");
+
+        String paddingLeftAndOther = style.substring(indexOfPaddingLeft);
+
+        int indexOfFirstSemicolon = paddingLeftAndOther.indexOf(';');
+
+        String paddingLeft = paddingLeftAndOther.substring(14, indexOfFirstSemicolon - 1);
+
+        return Integer.valueOf(paddingLeft);
+    }
 }
