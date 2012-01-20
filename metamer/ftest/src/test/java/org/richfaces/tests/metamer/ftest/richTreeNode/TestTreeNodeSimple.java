@@ -27,6 +27,9 @@ import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
 
 import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
+import static org.jboss.arquillian.ajocado.dom.Event.KEYDOWN;
+import static org.jboss.arquillian.ajocado.dom.Event.KEYPRESS;
+import static org.jboss.arquillian.ajocado.dom.Event.KEYUP;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEDOWN;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEMOVE;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOUT;
@@ -107,8 +110,8 @@ public class TestTreeNodeSimple extends AbstractAjocadoTest {
     @Inject
     @Use(empty = true)
     Event event = CLICK;
-    Event[] events = new Event[] { CLICK, DBLCLICK, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER, MOUSEUP };
-
+    Event[] events = new Event[] { CLICK, DBLCLICK, KEYDOWN, KEYPRESS, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER, MOUSEUP };
+    
     @Inject
     @Use(empty = true)
     SwitchType toggleType;
@@ -253,7 +256,7 @@ public class TestTreeNodeSimple extends AbstractAjocadoTest {
         selenium.type(eventInput, value);
         selenium.waitForPageToLoad(TIMEOUT);
 
-        fireEventAt(treeNode.getLabel(), event);
+        fireEventAt(treeNode.getTreeNode(), event);
 
         waitGui.failWith("Attribute on" + attributeName + " does not work correctly").until(
             new EventFiredCondition(event));
