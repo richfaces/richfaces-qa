@@ -39,15 +39,12 @@ public class RichBeanTestCase {
      */
     @Test
     public void testValueChangeListenerImproved() {
-        
         RichBean rb = new RichBean();
         String oldValue = "";
         String newValue = "";
-        
-        ValueChangeEvent changeEvent = new ValueChangeEvent(null, oldValue, newValue);
-        
-        rb.valueChangeListenerImproved(changeEvent);
-        
-    }
 
+        ValueChangeEvent changeEvent = new ValueChangeEvent(null, oldValue, newValue);
+
+        rb.valueChangeListenerImproved(changeEvent);
+    }
 }
