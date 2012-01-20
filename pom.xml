@@ -30,6 +30,14 @@
 
     <properties>
         <richfaces.checkstyle.version>3</richfaces.checkstyle.version>
+        
+        <!-- version of JBoss containers to use and download -->
+        <version.jbossas6>6.0.0.Final</version.jbossas6>
+        <version.jbossas7>7.0.2.Final</version.jbossas7>
+
+        <!-- version of Tomcat containers to use and download -->
+        <version.tomcat6>6.0.35</version.tomcat6>
+        <version.tomcat7>7.0.23</version.tomcat7>        
     </properties>
 
     <modules>

@@ -40,13 +40,6 @@
         <arquillian.tomcat.version>1.0.0.CR2</arquillian.tomcat.version>
         <arquillian.version>1.0.0.CR7</arquillian.version>
         
-        <!-- version of JBoss containers to use and download -->
-        <jbossas7.version>7.0.2.Final</jbossas7.version>
-        
-        <!-- version of Tomcat containers to use and download -->
-        <tomcat7.version>7.0.22</tomcat7.version>   
-        <tomcat6.version>6.0.32</tomcat6.version>
-        
         <!-- version of Selenium -->
         <selenium.version>2.9.0</selenium.version>
         
@@ -126,7 +119,7 @@
             <properties>
                 <container.groupId>org.jboss.as</container.groupId>
                 <container.artifactId>jboss-as-dist</container.artifactId>
-                <container.version>${jbossas7.version}</container.version>
+                <container.version>${version.jbossas7}</container.version>
                 <container.archive.type>zip</container.archive.type>
                 <container.home>${project.build.directory}/jboss-as-${container.version}</container.home>
                 <arquillian.launch>jbossas-managed-7</arquillian.launch>
@@ -182,7 +175,7 @@
         <profile>
             <id>tomcat-managed-7</id>
             <properties>
-                <container.version>${tomcat7.version}</container.version>
+                <container.version>${version.tomcat7}</container.version>
                 <container.archive.type>zip</container.archive.type>
                 <container.home>${project.build.directory}/apache-tomcat-${container.version}</container.home>
                 <arquillian.version>1.0.0.CR2</arquillian.version>
@@ -260,7 +253,7 @@
         <profile>
             <id>tomcat-managed-6</id>
             <properties>
-                <container.version>${tomcat6.version}</container.version>
+                <container.version>${version.tomcat6}</container.version>
                 <container.archive.type>zip</container.archive.type>
                 <container.home>${project.build.directory}/apache-tomcat-${container.version}</container.home>
                 <arquillian.version>1.0.0.CR2</arquillian.version>
@@ -387,46 +380,7 @@
                     </plugin>
                 </plugins>
             </build>        
-        </profile>
-        <profile>
-            <id>prepare-simpleapp</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.2.1</version>
-                        <executions>
-                            <execution>
-                                <id>some-execution</id>
-                                <phase>validate</phase>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <executable>${basedir}/../apps/richfaces-archetype-simpleapp.sh</executable>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile> 
-         <profile>
-            <id>checkstyle</id>
-            <activation>
-                <property>
-                    <name>!eclipse</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-checkstyle-plugin</artifactId>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>             
+        </profile>            
     </profiles>
 
 </project>
