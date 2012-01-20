@@ -38,11 +38,11 @@ public class GridPage extends DataScrollablePage implements ShowcasePage {
     private WebElement firstCarHeader;
     @FindBy(xpath = "//*[@class='example-cnt']//table[@class='rf-dg']/tbody/tr[last()]/td[last()]/div/div[1]")
     private WebElement lastCarHeader;
-    
+
     public GridPage(WebDriver webDriver) {
         super(webDriver);
-    }    
-    
+    }
+
     @Override
     public String getDemoName() {
         return "dataGrid";
@@ -59,8 +59,8 @@ public class GridPage extends DataScrollablePage implements ShowcasePage {
 
     public Car getLastCar() {
         return createCar(lastCarHeader);
-    }    
-    
+    }
+
     private Car createCar(WebElement header) {
         String[] vendorAndModel = header.getText().split(" ");
         return new Car(
@@ -68,5 +68,5 @@ public class GridPage extends DataScrollablePage implements ShowcasePage {
             vendorAndModel[1]
         );
     }
-    
+
 }

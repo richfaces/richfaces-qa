@@ -45,9 +45,9 @@ public class TestA4jLogSimple extends AbstractAndroidTest<LogPage> {
         getPage().getClear().click();
         new WebDriverWait(getWebDriver())
             .failWith("After setting severity to <info>, submitting and clicking on the clear button, the logging area should be empty.")
-            .until(TextContains.getInstance().element(getPage().getLoggingArea()).text(""));        
+            .until(TextContains.getInstance().element(getPage().getLoggingArea()).text(""));
     }
-    
+
     @Test(groups = { "4.2" })
     public void testLogDebug() {
         Select select = new Select(getWebDriver(), getToolKit(), getPage().getSeveritySelect());
@@ -68,9 +68,9 @@ public class TestA4jLogSimple extends AbstractAndroidTest<LogPage> {
         getPage().getSubmit().click();
         new WebDriverWait(getWebDriver())
             .failWith("After setting severity to <error> and submitting, the logging area should contain no message.")
-            .until(TextContains.getInstance().element(getPage().getLoggingArea()).text(""));        
-    }    
-    
+            .until(TextContains.getInstance().element(getPage().getLoggingArea()).text(""));
+    }
+
     @Test
     public void testLogInfo() {
         Select select = new Select(getWebDriver(), getToolKit(), getPage().getSeveritySelect());
@@ -79,8 +79,8 @@ public class TestA4jLogSimple extends AbstractAndroidTest<LogPage> {
         new WebDriverWait(getWebDriver())
             .failWith("After setting severity to <info> and submitting, the logging area should contain a message with severity <info>.")
             .until(TextContains.getInstance().element(getPage().getLoggingArea()).text("info"));
-    }    
-    
+    }
+
     @Test(groups = { "4.2" })
     public void testLogWarn() {
         Select select = new Select(getWebDriver(), getToolKit(), getPage().getSeveritySelect());
@@ -88,9 +88,9 @@ public class TestA4jLogSimple extends AbstractAndroidTest<LogPage> {
         getPage().getSubmit().click();
         new WebDriverWait(getWebDriver())
             .failWith("After setting severity to <warn> and submitting, the logging area should contain no message.")
-            .until(TextContains.getInstance().element(getPage().getLoggingArea()).text(""));        
+            .until(TextContains.getInstance().element(getPage().getLoggingArea()).text(""));
     }
-    
+
     @Test
     public void testSubmitEmpty() {
         getPage().getSubmit().click();
@@ -98,7 +98,7 @@ public class TestA4jLogSimple extends AbstractAndroidTest<LogPage> {
             .failWith("After submitting empty input, the output should contain nothing.")
             .until(TextEquals.getInstance().element(getPage().getOutput()).text(""));
     }
-    
+
     @Test
     public void testSubmitSomething() {
         getPage().getInput().click();
@@ -106,9 +106,9 @@ public class TestA4jLogSimple extends AbstractAndroidTest<LogPage> {
         getPage().getSubmit().click();
         new WebDriverWait(getWebDriver())
             .failWith("After submitting the input, the content of the output should match.")
-            .until(TextEquals.getInstance().element(getPage().getOutput()).text("Hello something!"));        
+            .until(TextEquals.getInstance().element(getPage().getOutput()).text("Hello something!"));
     }
-    
+
     @Override
     protected LogPage createPage() {
         return new LogPage();

@@ -38,75 +38,75 @@ import org.testng.annotations.AfterMethod;
 public abstract class AbstractShowcaseTest extends Arquillian {
 
     private TestConfiguration configuration;
-    
+
     @Deployment(testable = false)
     public static WebArchive createTestArchive() {
         WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class,
             new File("target/showcase.war"));
         return war;
-    }     
-    
+    }
+
     @AfterMethod(alwaysRun=true)
     public void processResultAfterMethod(ITestResult result) {
         logResultStatus(result);
         if (!result.isSuccess() && result.getThrowable() != null) {
             logMessage("\t" + result.getThrowable().getMessage());
         }
-    }    
-    
+    }
+
     /**
      * Creates a new instance of {@link AbstractShowcaseTest} with
      * the given configuration
-     * 
+     *
      * @param configuration
      */
     protected AbstractShowcaseTest(TestConfiguration configuration) {
         this.configuration = configuration;
     }
-    
+
     /**
      * Creates a new instance of {@link AbstractShowcaseTest} with
      * the default configuration {@link PropertyTestConfiguration}
-     * 
+     *
      */
     protected AbstractShowcaseTest() {
         this(new PropertyTestConfiguration());
     }
-    
+
     /**
      * Returns a test configuration
-     * 
+     *
      * @return test configuration
      */
     protected TestConfiguration getConfiguration() {
         return configuration;
     }
-    
+
     /**
      * Returns a full path where the test page is located
-     * 
+     *
      * @return full path with the demo
      */
     protected String getPath() {
         return getConfiguration().getContextRoot() + "/" + getConfiguration().getContextPath() + "/" + getTestUrl();
     }
-    
+
     /**
      * Returns a skin name which is used in tests.
      * The skin is defaultly set by the configuration.
-     * 
+     *
      * @return skin name
      * @see TestConfiguration#getSkinName()
      */
     protected String getSkinName() {
         return getConfiguration().getSkinName();
     }
-    
+
     /**
      * Returns the url to test page to be opened by Selenium (without context root and context path)
-     * 
+     *
      * @return url to the test page to be opened by Selenium - it doesn't contain context root and context path
-     */    
+     */
     protected String getTestUrl() {
         if (getConfiguration().isMobile()) {
             return "#" + getDemoName() + ":" + getSampleName();
@@ -114,25 +114,25 @@ public abstract class AbstractShowcaseTest extends Arquillian {
             return "richfaces/component-sample.jsf?skin=" + getSkinName() + "&demo=" + getDemoName() + "&sample=" + getSampleName();
         }
     }
-    
+
     /**
      * Returns a demo name which is currently tested
-     * 
+     *
      * @return demo name
      */
     protected abstract String getDemoName();
-    
+
     /**
      * Returns a sample name which is currently tested
-     * 
+     *
      * @return sample name
      */
     protected abstract String getSampleName();
 
     private void logMessage(String message) {
         System.out.println(message);
-    }    
-    
+    }
+
     private void logResultStatus(ITestResult result) {
         String status;
         switch(result.getStatus()) {
@@ -144,7 +144,7 @@ public abstract class AbstractShowcaseTest extends Arquillian {
                 break;
             case ITestResult.STARTED:
                 status = "STARTED";
-                break;           
+                break;
             case ITestResult.SUCCESS:
                 status = "SUCCESS";
                 break;
@@ -153,5 +153,5 @@ public abstract class AbstractShowcaseTest extends Arquillian {
         }
         logMessage("[" + status + "] [" + (result.getEndMillis() - result.getStartMillis()) + " ms] " + result.getTestClass().getName() + "." + result.getMethod().getMethodName());
     }
-    
+
 }

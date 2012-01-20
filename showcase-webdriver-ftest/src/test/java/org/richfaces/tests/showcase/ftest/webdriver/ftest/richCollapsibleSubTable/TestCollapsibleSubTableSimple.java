@@ -43,14 +43,14 @@ public class TestCollapsibleSubTableSimple extends AbstractWebDriverTest<SubTabl
         getPage().toggleGmc();
         getPage().toggleInfinity();
         getPage().toggleNissan();
-        getPage().toggleToyota();        
+        getPage().toggleToyota();
     }
-    
+
     @Override
     protected SubTableToggleControlPage createPage() {
         return new SubTableToggleControlPage(getWebDriver());
     }
 
-    
-    
+
+
 }

@@ -36,22 +36,22 @@ public class ElementPresent implements ExpectedCondition<Boolean> {
     public static ElementPresent getInstance() {
         return new ElementPresent();
     }
-    
+
     public Boolean apply(WebDriver driver) {
         try {
             element.isDisplayed();
             return true;
         } catch(NoSuchElementException ignored) {
             return false;
-        }        
+        }
     }
-    
+
     public ElementPresent element(WebElement element) {
         ElementPresent copy = copy();
         copy.element = element;
         return copy;
     }
-    
+
     private ElementPresent copy() {
         ElementPresent copy = new ElementPresent();
         copy.element = this.element;

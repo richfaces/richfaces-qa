@@ -31,20 +31,20 @@ public interface ToolKitConfiguration {
 
     /**
      * Returns a directory where the Android SDK is located
-     * 
+     *
      * @return Android SDK directory
      */
     File getDirectory();
-    
+
     /**
      * Returns an amount of time in miliseconds which is used to delay after
      * sending the key to the running device through the Android SDK
-     * 
+     *
      * @return amount of time in miliseconds
      * @see ToolKit#sendKey(Key)
      */
     long getSendKeyDelay();
-    
+
     boolean isInPath();
-    
+
 }

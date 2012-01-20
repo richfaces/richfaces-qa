@@ -34,7 +34,7 @@ public class SelectPage extends AbstractAndroidPage {
 
     private static final String FIRST_SELECT_LOCATOR = "//*[@class='example-cnt']//div[@class='rf-p '][1]//div[@class='rf-sel']";
     private static final String SECOND_SELECT_LOCATOR = "//*[@class='example-cnt']//div[@class='rf-p '][2]//div[@class='rf-sel']";
-    
+
     @FindBy(xpath = FIRST_SELECT_LOCATOR + "//span[@class='rf-sel-btn-arrow']")
     private WebElement firstSelectArrow;
     @FindBy(xpath = FIRST_SELECT_LOCATOR + "//input[@type='text']")
@@ -45,11 +45,11 @@ public class SelectPage extends AbstractAndroidPage {
     private WebElement secondSelectArrow;
     @FindBy(xpath = SECOND_SELECT_LOCATOR + "//input[@type='text']")
     private WebElement secondSelectInput;
-    private Select secondSelect;    
+    private Select secondSelect;
 
     @FindBy(xpath = "//body/div[@class='rf-sel-lst-cord']")
-    private WebElement popup;    
-    
+    private WebElement popup;
+
     public SelectPage(WebDriver webDriver, ToolKit toolKit) {
         super(webDriver, toolKit);
     }

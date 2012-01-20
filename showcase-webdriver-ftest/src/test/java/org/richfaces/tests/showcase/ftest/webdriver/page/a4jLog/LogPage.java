@@ -60,7 +60,7 @@ public class LogPage implements ShowcasePage {
     public WebElement getInput() {
         return input;
     }
-    
+
     public WebElement getLoggingArea() {
         return loggingArea;
     }
@@ -88,7 +88,7 @@ public class LogPage implements ShowcasePage {
         public int getIndex() {
             return index;
         }
-        
+
         public String toString() {
             return super.toString().toLowerCase();
         }

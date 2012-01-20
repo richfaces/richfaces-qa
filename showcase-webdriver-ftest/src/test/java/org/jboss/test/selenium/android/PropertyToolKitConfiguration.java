@@ -29,14 +29,14 @@ import java.io.File;
 public class PropertyToolKitConfiguration implements ToolKitConfiguration {
 
     public static final long DEFAULT_SEND_KEY_DELAY = 500;
-    
+
     private File directory;
     private int inPath = -1;
     private String prefix;
     private long sendKeyDelay = -1;
-    
+
     public PropertyToolKitConfiguration(String prefix) {
-        this.prefix = prefix == null ? "" : (prefix.endsWith(".") ? prefix : (prefix + ".")); 
+        this.prefix = prefix == null ? "" : (prefix.endsWith(".") ? prefix : (prefix + "."));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class PropertyToolKitConfiguration implements ToolKitConfiguration {
         }
         return inPath == 1;
     }
-    
+
     @Override
     public long getSendKeyDelay() {
         if (sendKeyDelay == -1) {
@@ -66,5 +66,5 @@ public class PropertyToolKitConfiguration implements ToolKitConfiguration {
         }
         return sendKeyDelay;
     }
-    
+
 }

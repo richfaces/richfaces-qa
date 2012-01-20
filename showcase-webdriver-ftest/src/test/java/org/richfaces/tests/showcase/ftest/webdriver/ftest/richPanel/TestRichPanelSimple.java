@@ -37,9 +37,9 @@ public class TestRichPanelSimple extends AbstractWebDriverTest<SimplePage>{
         assertTrue(getPage().isSecondPanelPresent());
         assertTrue(getPage().hasFirstPanelHeader());
         assertFalse(getPage().hasSecondPanelHeader());
-        
+
     }
-    
+
     @Override
     protected SimplePage createPage() {
         return new SimplePage(getWebDriver());

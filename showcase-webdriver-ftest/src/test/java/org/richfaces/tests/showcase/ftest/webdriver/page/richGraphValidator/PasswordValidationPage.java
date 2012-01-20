@@ -33,7 +33,7 @@ public class PasswordValidationPage implements ShowcasePage {
     @FindBy(xpath = "//*[@class='example-cnt']//input[contains(@id, 'pass')]")
     private WebElement confirmation;
     @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'gv')]")
-    private WebElement graphValidatorMessageArea;    
+    private WebElement graphValidatorMessageArea;
     @FindBy(xpath = "//*[@class='example-cnt']//span[@class='rf-msgs-inf']")
     private WebElement infoMessageArea;
     @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'pass')][@class='rf-msg-err']")
@@ -42,7 +42,7 @@ public class PasswordValidationPage implements ShowcasePage {
     private WebElement password;
     @FindBy(xpath = "//*[@class='example-cnt']//input[@type='submit']")
     private WebElement submit;
-    
+
     @Override
     public String getDemoName() {
         return "graphValidator";
@@ -59,12 +59,12 @@ public class PasswordValidationPage implements ShowcasePage {
 
     public WebElement getGraphValidatorMessageArea() {
         return graphValidatorMessageArea;
-    }    
-    
+    }
+
     public WebElement getInfoMessageArea() {
         return infoMessageArea;
-    }    
-    
+    }
+
     public WebElement getValidatorMessageArea() {
         return validatorMessageArea;
     }
@@ -77,6 +77,6 @@ public class PasswordValidationPage implements ShowcasePage {
         return submit;
     }
 
-    
-    
+
+
 }

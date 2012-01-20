@@ -29,7 +29,7 @@ import org.apache.commons.lang.Validate;
 public class CarWithVinCode extends Car{
 
     private String vinCode;
-    
+
     public CarWithVinCode(String vendor, String model, String vinCode) {
         super(vendor, model);
         Validate.notNull(vinCode);
@@ -42,7 +42,7 @@ public class CarWithVinCode extends Car{
     public String toString() {
         return super.toString() + " " + vinCode;
     }
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -66,6 +66,6 @@ public class CarWithVinCode extends Car{
             return false;
         return true;
     }
-    
-   
+
+
 }

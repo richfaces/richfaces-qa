@@ -40,30 +40,30 @@ public abstract class AbstractRichMessageTest<Page extends AbstractRichMessagePa
             .failWith("Error message should disappear.")
             .until(ElementNotPresent.getInstance().element(errorArea));
     }
-    
+
     protected void checkErrorPresent(WebElement errorArea) {
         new WebDriverWait(getWebDriver())
             .failWith("Error message should appear.")
             .until(ElementPresent.getInstance().element(errorArea));
         assertTrue(errorArea.getText().contains("Validation Error"));
     }
-    
+
     protected void setAddressCorrect() {
         setInputText(getPage().getAddressInput(), "1234567890");
-    }    
-    
+    }
+
     protected void setAddressWrong() {
         setInputText(getPage().getAddressInput(), "123456789");
-    }       
-    
+    }
+
     protected void setJobCorrect() {
         setInputText(getPage().getJobInput(), "123");
-    }    
-    
+    }
+
     protected void setJobWrong() {
         setInputText(getPage().getJobInput(), "12");
-    }       
-    
+    }
+
     protected void setInputText(WebElement input, String text) {
         input.click();
         input.clear();
@@ -72,20 +72,20 @@ public abstract class AbstractRichMessageTest<Page extends AbstractRichMessagePa
 
     protected void setNameCorrect() {
         setInputText(getPage().getNameInput(), "123");
-    }    
-    
+    }
+
     protected void setNameWrong() {
         setInputText(getPage().getNameInput(), "12");
-    }            
-    
+    }
+
     protected void setZipCorrect() {
         setInputText(getPage().getZipInput(), "1234");
-    }    
-    
+    }
+
     protected void setZipWrong() {
         setInputText(getPage().getZipInput(), "123");
-    }      
-    
+    }
+
     protected void testAddressWrongAndCorrect() {
         setAddressWrong();
         getPage().getSubmitButton().click();
@@ -93,8 +93,8 @@ public abstract class AbstractRichMessageTest<Page extends AbstractRichMessagePa
         setAddressCorrect();
         getPage().getSubmitButton().click();
         checkErrorNotPresent(getPage().getAddressErrorMessageArea());
-    }    
-    
+    }
+
     protected void testAllWrongAndCorrect() {
         setAddressWrong();
         setJobWrong();
@@ -113,9 +113,9 @@ public abstract class AbstractRichMessageTest<Page extends AbstractRichMessagePa
         checkErrorNotPresent(getPage().getAddressErrorMessageArea());
         checkErrorNotPresent(getPage().getJobErrorMessageArea());
         checkErrorNotPresent(getPage().getNameErrorMessageArea());
-        checkErrorNotPresent(getPage().getZipErrorMessageArea());        
+        checkErrorNotPresent(getPage().getZipErrorMessageArea());
     }
-    
+
     protected void testJobWrongAndCorrect() {
         setJobWrong();
         getPage().getSubmitButton().click();
@@ -123,24 +123,24 @@ public abstract class AbstractRichMessageTest<Page extends AbstractRichMessagePa
         setJobCorrect();
         getPage().getSubmitButton().click();
         checkErrorNotPresent(getPage().getJobErrorMessageArea());
-    }    
-    
+    }
+
     protected void testNameWrongAndCorrect() {
         setNameWrong();
         getPage().getSubmitButton().click();
         checkErrorPresent(getPage().getNameErrorMessageArea());
         setNameCorrect();
         getPage().getSubmitButton().click();
-        checkErrorNotPresent(getPage().getNameErrorMessageArea());        
+        checkErrorNotPresent(getPage().getNameErrorMessageArea());
     }
-    
+
     protected void testZipWrongAndCorrect() {
         setZipWrong();
         getPage().getSubmitButton().click();
         checkErrorPresent(getPage().getZipErrorMessageArea());
         setZipCorrect();
         getPage().getSubmitButton().click();
-        checkErrorNotPresent(getPage().getZipErrorMessageArea());        
-    }    
-    
+        checkErrorNotPresent(getPage().getZipErrorMessageArea());
+    }
+
 }

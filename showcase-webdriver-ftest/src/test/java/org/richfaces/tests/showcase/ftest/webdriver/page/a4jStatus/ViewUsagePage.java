@@ -40,7 +40,7 @@ public class ViewUsagePage implements ShowcasePage {
     private WebElement userOutput;
     @FindBy(xpath = "//*[@class='example-cnt']//div[text()='User Details Panel']/..//input[@type='button']")
     private WebElement userSubmit;
-    
+
     @Override
     public String getDemoName() {
         return "status";
@@ -53,8 +53,8 @@ public class ViewUsagePage implements ShowcasePage {
 
     public WebElement getAddressInput() {
         return addressInput;
-    }    
-    
+    }
+
     public WebElement getRequestImage() {
         return requestImage;
     }
@@ -66,7 +66,7 @@ public class ViewUsagePage implements ShowcasePage {
     public WebElement getUserOutput() {
         return userOutput;
     }
-    
+
     public WebElement getUserSubmit() {
         return userSubmit;
     }

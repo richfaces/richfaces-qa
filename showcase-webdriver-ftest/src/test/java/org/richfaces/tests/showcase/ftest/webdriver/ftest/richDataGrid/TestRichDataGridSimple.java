@@ -38,7 +38,7 @@ public class TestRichDataGridSimple extends AbstractWebDriverTest<GridPage>{
     private static final Car LAST_CAR_FIRST_PAGE = new Car("Chevrolet", "Malibu");
     private static final Car LAST_CAR_SECOND_PAGE = new Car("Chevrolet", "Tahoe");
     private static final Car LAST_CAR_THIRD_PAGE = new Car("Ford", "Taurus");
-    
+
     @Test
     public void testInit() {
         testFirstCar(FIRST_CAR_FIRST_PAGE);
@@ -57,8 +57,8 @@ public class TestRichDataGridSimple extends AbstractWebDriverTest<GridPage>{
         getPage().page(3);
         testFirstCar(FIRST_CAR_THIRD_PAGE);
         testLastCar(LAST_CAR_THIRD_PAGE);
-    }    
-    
+    }
+
     @Override
     protected GridPage createPage() {
         return new GridPage(getWebDriver());
@@ -67,9 +67,9 @@ public class TestRichDataGridSimple extends AbstractWebDriverTest<GridPage>{
     private void testFirstCar(Car expected) {
         assertEquals(getPage().getFirstCar(), expected, "The first car doesn't match.");
     }
-    
+
     private void testLastCar(Car expected) {
         assertEquals(getPage().getLastCar(), expected, "The last car doesn't match.");
-    }    
-    
+    }
+
 }

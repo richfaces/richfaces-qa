@@ -8,7 +8,7 @@ public class PushPage implements ShowcasePage {
 
     @FindBy(xpath = "//*[@class='example-cnt']//td/label/../../td/div")
     private WebElement date;
-    
+
     @Override
     public String getDemoName() {
         return "push";
@@ -22,5 +22,5 @@ public class PushPage implements ShowcasePage {
     public WebElement getDate() {
         return date;
     }
-    
+
 }

@@ -32,11 +32,11 @@ public class CommandButtonPage extends AbstractCommandPage {
 
     @FindBy(xpath = "//*[@class='example-cnt']//input[@type='submit']")
     private WebElement button;
-    
+
     public WebElement getButton() {
         return button;
     }
-    
+
     @Override
     public String getDemoName() {
         return "commandButton";

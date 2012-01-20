@@ -35,17 +35,17 @@ public class ElementDisplayed implements ExpectedCondition<Boolean> {
     public static ElementDisplayed getInstance() {
         return new ElementDisplayed();
     }
-    
+
     public Boolean apply(WebDriver driver) {
         return element.isDisplayed();
     }
-    
+
     public ElementDisplayed element(WebElement element) {
         ElementDisplayed copy = copy();
         copy.element = element;
         return copy;
     }
-    
+
     private ElementDisplayed copy() {
         ElementDisplayed copy = new ElementDisplayed();
         copy.element = this.element;

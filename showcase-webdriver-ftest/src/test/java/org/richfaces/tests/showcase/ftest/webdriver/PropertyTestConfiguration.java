@@ -38,10 +38,10 @@ public class PropertyTestConfiguration implements TestConfiguration {
     public static final String DEFAULT_WEBDRIVER_HOST_ANDROID = "http://localhost:4444/wd/hub";
     public static final String DEFAULT_WEBDRIVER_STALE_TRIES = "5";
     public static final String DEFAULT_WEBDRIVER_TIMEOUT = "30";
-    
-    
+
+
     private static Map<String, Capabilities> availableCapabilities;
-    
+
     @Override
     public String getWebDriverHost() {
         if (isAndroid()) {
@@ -71,7 +71,7 @@ public class PropertyTestConfiguration implements TestConfiguration {
     public String getSkinName() {
         return System.getProperty("skin.name", DEFAULT_SKIN_NAME);
     }
-    
+
     @Override
     public Capabilities getWebDriverCapabilities() {
         if (availableCapabilities == null) {
@@ -83,9 +83,9 @@ public class PropertyTestConfiguration implements TestConfiguration {
             availableCapabilities.put("iphone", DesiredCapabilities.iphone());
             availableCapabilities.put("opera", DesiredCapabilities.opera());
         }
-        
+
         if (System.getProperty("webdriver.capabilities") == null) {
-            return DEFAULT_WEBDRIVER_CAPABALITIES;  
+            return DEFAULT_WEBDRIVER_CAPABALITIES;
         }
         else {
             if (availableCapabilities.get(System.getProperty("webdriver.capabilities")) == null) {
@@ -93,21 +93,21 @@ public class PropertyTestConfiguration implements TestConfiguration {
             }
             return availableCapabilities.get(System.getProperty("webdriver.capabilities"));
         }
-    }    
-    
+    }
+
     @Override
     public int getWebDriverElementTries() {
         return Integer.parseInt(System.getProperty("webdriver.stale.tries", DEFAULT_WEBDRIVER_STALE_TRIES));
     }
-    
+
     @Override
     public int getWebDriverTimeout() {
         return Integer.parseInt(System.getProperty("webdriver.timout", DEFAULT_WEBDRIVER_TIMEOUT));
     }
-    
+
     @Override
     public boolean isAndroid() {
-        return System.getProperty("webdriver.android") != null || System.getenv("ANDROID_SDK_DIRECTORY") != null; 
+        return System.getProperty("webdriver.android") != null || System.getenv("ANDROID_SDK_DIRECTORY") != null;
     }
 
     @Override
@@ -117,6 +117,5 @@ public class PropertyTestConfiguration implements TestConfiguration {
         }
         return isAndroid();
     }
-   
+
 }
- 

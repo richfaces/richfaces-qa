@@ -47,15 +47,15 @@ public class ListsPage implements ShowcasePage {
     @FindBy(xpath = "//*[@class='example-cnt']//a[text()='ordered']")
     private WebElement setOrderedLink;
     @FindBy(xpath = "//*[@class='example-cnt']//a[text()='unordered']")
-    private WebElement setUnorderedLink;    
-    
+    private WebElement setUnorderedLink;
+
     private WebDriver webDriver;
-    
+
     public ListsPage(WebDriver webDriver) {
         Validate.notNull(webDriver);
         this.webDriver = webDriver;
     }
-    
+
     @Override
     public String getDemoName() {
         return "list";
@@ -73,19 +73,19 @@ public class ListsPage implements ShowcasePage {
             return webDriver.findElements(By.xpath("//*[@class='example-cnt']//li")).size();
         }
     }
-    
+
     public boolean isDefinition() {
         return isListPresent(definitionList);
-    }    
-    
+    }
+
     public boolean isOrdered() {
         return isListPresent(orderedList);
     }
 
     public boolean isUnordered() {
         return isListPresent(unorderedList);
-    }    
-    
+    }
+
     public void setDefinition() {
         setDefinitionLink.click();
         waitUntilListPresent(definitionList);
@@ -94,13 +94,13 @@ public class ListsPage implements ShowcasePage {
     public void setOrdered() {
         setOrderedLink.click();
         waitUntilListPresent(orderedList);
-    }    
-    
+    }
+
     public void setUnordered() {
         setUnorderedLink.click();
         waitUntilListPresent(unorderedList);
-    }    
-    
+    }
+
     private boolean isListPresent(WebElement list) {
         try {
             list.isDisplayed();
@@ -109,11 +109,11 @@ public class ListsPage implements ShowcasePage {
             return false;
         }
     }
-    
+
     private void waitUntilListPresent(WebElement list) {
         new WebDriverWait(webDriver)
             .failWith("Unable to change the list type.")
             .until(ElementPresent.getInstance().element(list));
     }
-    
+
 }

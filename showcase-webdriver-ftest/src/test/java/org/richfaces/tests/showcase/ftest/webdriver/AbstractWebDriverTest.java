@@ -48,11 +48,11 @@ import org.testng.annotations.BeforeMethod;
 * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
 */
 public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends AbstractShowcaseTest {
-  
+
     private FieldDecorator fieldDecorator;
     private Page page;
     private WebDriver webDriver;
-    
+
     /**
      * Creates a new instance of {@link AbstractWebDriverTest}
      * with the default configuration {@link PropertyTestConfiguration}
@@ -60,20 +60,20 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
     public AbstractWebDriverTest() {
         this(new PropertyTestConfiguration());
     }
-    
+
     /**
      * Creates a new instance of {@link AbstractWebDriverTest} with
      * the given configuration
-     * 
+     *
      * @param configuration
      */
     public AbstractWebDriverTest(TestConfiguration configuration) {
         super(configuration);
     }
-    
+
     /**
      * Initializes web driver instance
-     * 
+     *
      * @throws MalformedURLException
      */
     @BeforeClass(alwaysRun = true)
@@ -86,20 +86,20 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
         }
         webDriver.manage().timeouts().implicitlyWait(getConfiguration().getWebDriverTimeout(), TimeUnit.SECONDS);
     }
-    
+
     @BeforeClass(alwaysRun = true, dependsOnMethods = { "initializeWebDriver" })
     public void initializePage() {
         initializePage(getPage());
     }
-    
+
     /**
-     * Initializes web driver to open a test page 
+     * Initializes web driver to open a test page
      */
     @BeforeMethod(alwaysRun = true)
     public void initializePageUrl() {
         webDriver.get(getPath());
     }
-    
+
     @AfterMethod(alwaysRun = true)
     public void takeScreenShotOnFailure(ITestResult result) throws WebDriverException, IOException {
         if (!result.isSuccess() && getWebDriver() instanceof TakesScreenshot) {
@@ -107,49 +107,48 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
             FileUtils.copyFile(screenShotter.getScreenshotAs(OutputType.FILE), new File("target" + File.separator + "screenshots" + File.separator + result.getTestClass().getName().replace(".", File.separator) + result.getMethod().getMethodName() + ".png"));
         }
     }
-    
+
     protected ElementLocatorFactory createLocatorFactory() {
         return new DefaultElementLocatorFactory(getWebDriver());
 //        return new AjaxElementLocatorFactory(getWebDriver(), getConfiguration().getWebDriverTimeout());
     }
-    
+
     @Override
     protected String getDemoName() {
         return getPage().getDemoName();
     }
-    
+
     protected Page getPage() {
         if (page == null) {
             page = createPage();
         }
         return page;
     }
-    
+
     @Override
     protected String getSampleName() {
         return getPage().getSampleName();
     }
-    
+
     /**
      * Returns a web driver
-     * 
+     *
      * @return web driver
      */
     protected WebDriver getWebDriver() {
         return webDriver;
     }
-    
+
     protected void initializePage(Object page) {
-        PageFactory.initElements(getFieldDecorator(), page);        
+        PageFactory.initElements(getFieldDecorator(), page);
     }
-    
+
     private FieldDecorator getFieldDecorator() {
         if (fieldDecorator == null) {
             fieldDecorator = new StaleReferenceAwareFieldDecorator(createLocatorFactory(), getConfiguration().getWebDriverElementTries());
         }
         return fieldDecorator;
     }
-    
+
     protected abstract Page createPage();
 }
- 

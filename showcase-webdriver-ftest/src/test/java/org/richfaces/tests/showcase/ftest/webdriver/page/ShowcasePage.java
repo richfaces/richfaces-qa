@@ -27,7 +27,7 @@ package org.richfaces.tests.showcase.ftest.webdriver.page;
 public interface ShowcasePage {
 
     String getDemoName();
-    
+
     String getSampleName();
-    
+
 }

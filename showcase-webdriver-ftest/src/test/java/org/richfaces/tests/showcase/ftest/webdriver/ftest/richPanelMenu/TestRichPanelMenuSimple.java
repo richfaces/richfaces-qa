@@ -67,7 +67,7 @@ public class TestRichPanelMenuSimple extends AbstractAndroidTest<PanelMenuPage> 
                 }
             });
     }
-    
+
     @Override
     protected PanelMenuPage createPage() {
         return new PanelMenuPage(getWebDriver(), getToolKit());

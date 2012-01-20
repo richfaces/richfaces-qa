@@ -31,7 +31,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestA4jJsFunctionSimple extends AbstractWebDriverTest<JsFunctionPage> {
-    
+
     @Test
     public void testClick() {
         for (String name : getPage().getNames().keySet()) {
@@ -46,6 +46,6 @@ public class TestA4jJsFunctionSimple extends AbstractWebDriverTest<JsFunctionPag
     protected JsFunctionPage createPage() {
         return new JsFunctionPage();
     }
-    
-    
+
+
 }

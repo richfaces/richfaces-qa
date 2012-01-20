@@ -36,7 +36,7 @@ public class AttachQueuePage implements ShowcasePage {
     private WebElement input;
     @FindBy(xpath = "//*[@class='example-cnt']//input[@type='submit']")
     private WebElement submit;
-    
+
     @Override
     public String getDemoName() {
         return "attachQueue";
@@ -58,5 +58,5 @@ public class AttachQueuePage implements ShowcasePage {
     public WebElement getSubmit() {
         return submit;
     }
-    
+
 }

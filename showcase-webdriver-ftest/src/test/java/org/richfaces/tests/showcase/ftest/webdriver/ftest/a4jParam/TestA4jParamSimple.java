@@ -38,10 +38,10 @@ public class TestA4jParamSimple extends AbstractWebDriverTest<ParamPage>{
             getPage().setName(name);
             new WebDriverWait(getWebDriver())
                 .failWith("After selecting name, the output should contain the name.")
-                .until(TextEquals.getInstance().element(getPage().getOutput()).text("Selected Name:" + name));               
+                .until(TextEquals.getInstance().element(getPage().getOutput()).text("Selected Name:" + name));
         }
     }
-    
+
     @Override
     protected ParamPage createPage() {
         return new ParamPage();

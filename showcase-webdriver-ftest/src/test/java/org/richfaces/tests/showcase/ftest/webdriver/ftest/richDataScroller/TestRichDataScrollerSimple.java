@@ -40,15 +40,15 @@ public class TestRichDataScrollerSimple extends AbstractWebDriverTest<SimpleScro
     private static final Car LAST_CAR_FIRST_PAGE = new Car("Chevrolet", "Malibu");
     private static final Car LAST_CAR_SECOND_PAGE = new Car("Ford", "Taurus");
     private static final Car ONLY_CAR_LAST_PAGE = new Car("Infiniti", "EX35");
-    
+
     @Test
     public void testInit() {
         testFirstPage();
     }
-    
+
     @Test
     public void testNextAndPreviousPage() {
-        hackScrolling();   
+        hackScrolling();
         // move to the second page
         getPage().next();
         // move back to the first page
@@ -56,10 +56,10 @@ public class TestRichDataScrollerSimple extends AbstractWebDriverTest<SimpleScro
         // test
         testFirstPage();
     }
-    
+
     @Test
     public void testNextPage() {
-        hackScrolling();   
+        hackScrolling();
         // move to the second page
         getPage().next();
         // current page number
@@ -72,15 +72,15 @@ public class TestRichDataScrollerSimple extends AbstractWebDriverTest<SimpleScro
         assertFalse(getPage().isFirstPageButtonDisabled(), "The first page button shouldn't be disabled.");
         assertFalse(getPage().isPreviousButtonDisabled(), "The previous button shouldn't be disabled.");
         assertFalse(getPage().isPreviousFastButtonDisabled(), "The fast previous button shouldn't be disabled.");
-        
+
         assertFalse(getPage().isLastPageButtonDisabled(), "The last page button shouldn't be disabled.");
         assertFalse(getPage().isNextButtonDisabled(), "The next button shouldn't be disabled.");
-        assertFalse(getPage().isNextFastButtonDisabled(), "The fast next button shouldn't be disabled.");      
+        assertFalse(getPage().isNextFastButtonDisabled(), "The fast next button shouldn't be disabled.");
         // test table content
         testFirstCar(FIRST_CAR_SECOND_PAGE);
-        testLastCar(LAST_CAR_SECOND_PAGE);        
+        testLastCar(LAST_CAR_SECOND_PAGE);
     }
-    
+
     @Test
     public void testLastAndFirstPage() {
         hackScrolling();
@@ -89,9 +89,9 @@ public class TestRichDataScrollerSimple extends AbstractWebDriverTest<SimpleScro
         // move back to the first page
         getPage().first();
         // test
-        testFirstPage();        
+        testFirstPage();
     }
-    
+
     @Test
     public void testLastPage() {
         hackScrolling();
@@ -103,30 +103,30 @@ public class TestRichDataScrollerSimple extends AbstractWebDriverTest<SimpleScro
         // move to the last page
         getPage().last();
         // current page number
-        assertEquals(getPage().getNumberOfCurrentPage(), 13, "The current page number should be <13>."); 
+        assertEquals(getPage().getNumberOfCurrentPage(), 13, "The current page number should be <13>.");
         // page numbers
         for(int page=9; page<=13; page++) {
             assertTrue(getPage().isPageNumberPresent(page), "The page number <" + page + "> should be present.");
-        }        
+        }
         // control buttons
         assertFalse(getPage().isFirstPageButtonDisabled(), "The first page button shouldn't be disabled.");
         assertFalse(getPage().isPreviousButtonDisabled(), "The previous button shouldn't be disabled.");
         assertFalse(getPage().isPreviousFastButtonDisabled(), "The fast previous button shouldn't be disabled.");
-        
+
         assertTrue(getPage().isLastPageButtonDisabled(), "The last page button should be disabled.");
         assertTrue(getPage().isNextButtonDisabled(), "The next button should be disabled.");
         assertTrue(getPage().isNextFastButtonDisabled(), "The fast next button should be disabled.");
-        
+
         // test table content
         testFirstCar(ONLY_CAR_LAST_PAGE);
-        testLastCar(ONLY_CAR_LAST_PAGE);        
+        testLastCar(ONLY_CAR_LAST_PAGE);
     }
-    
+
     @Override
     protected SimpleScrollingPage createPage() {
         return new SimpleScrollingPage(getWebDriver());
     }
-   
+
     private void hackScrolling() {
         if (getConfiguration().isMobile()) {
             // HACK: because of the scrolling
@@ -134,15 +134,15 @@ public class TestRichDataScrollerSimple extends AbstractWebDriverTest<SimpleScro
             getPage().first();
         }
     }
-    
+
     private void testFirstCar(Car expected) {
         assertEquals(getPage().getFirstCar(), expected, "The first car doesn't match.");
     }
-    
+
     private void testLastCar(Car expected) {
         assertEquals(getPage().getLastCar(), expected, "The last car doesn't match.");
     }
-    
+
     private void testFirstPage() {
         // current page number
         assertEquals(getPage().getNumberOfCurrentPage(), 1, "The current page number should be <1>.");
@@ -154,13 +154,13 @@ public class TestRichDataScrollerSimple extends AbstractWebDriverTest<SimpleScro
         assertTrue(getPage().isFirstPageButtonDisabled(), "The first page button should be disabled.");
         assertTrue(getPage().isPreviousButtonDisabled(), "The previous button should be disabled.");
         assertTrue(getPage().isPreviousFastButtonDisabled(), "The fast previous button should be disabled.");
-        
+
         assertFalse(getPage().isLastPageButtonDisabled(), "The last page button shouldn't be disabled.");
         assertFalse(getPage().isNextButtonDisabled(), "The next button shouldn't be disabled.");
-        assertFalse(getPage().isNextFastButtonDisabled(), "The fast next button shouldn't be disabled.");           
+        assertFalse(getPage().isNextFastButtonDisabled(), "The fast next button shouldn't be disabled.");
         // test table content
         testFirstCar(FIRST_CAR_FIRST_PAGE);
         testLastCar(LAST_CAR_FIRST_PAGE);
     }
-    
+
 }

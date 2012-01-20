@@ -41,7 +41,7 @@ public class Spinner extends AbstractComponent {
     private WebElement input;
     private int step;
     private WebElement upArrow;
-    
+
     public Spinner(WebDriver webDriver, ToolKit toolKit, WebElement input, WebElement downArrow, WebElement upArrow, int step) {
         super(webDriver, toolKit, input);
         Validate.notNull(downArrow);
@@ -68,7 +68,7 @@ public class Spinner extends AbstractComponent {
     public int getNumber() {
         return Integer.valueOf(getInput().getAttribute("value"));
     }
-    
+
     public void increase() {
         final int before = getNumber();
         getUpArrow().click();
@@ -80,8 +80,8 @@ public class Spinner extends AbstractComponent {
                     return getNumber() == before + step;
                 }
             });
-    }    
-    
+    }
+
     public void setNumber(int number) throws ToolKitException {
         getInput().click();
         getInput().clear();
@@ -92,11 +92,11 @@ public class Spinner extends AbstractComponent {
             .until(TextEquals.getInstance().element(getInput()).text(""));
         getInput().sendKeys(String.valueOf(number));
     }
-    
+
     private WebElement getDownArrow() {
         return downArrow;
     }
-    
+
     private WebElement getInput() {
         return input;
     }

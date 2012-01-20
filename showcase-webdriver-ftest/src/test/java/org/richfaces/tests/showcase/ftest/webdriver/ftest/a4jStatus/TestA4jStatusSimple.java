@@ -43,23 +43,23 @@ public class TestA4jStatusSimple extends AbstractWebDriverTest<ViewUsagePage>{
         getPage().getUserSubmit().click();
         new WebDriverWait(getWebDriver())
             .failWith("After submitting the username and the address, the request image should be present.")
-            .until(ElementPresent.getInstance().element(getPage().getRequestImage()));        
+            .until(ElementPresent.getInstance().element(getPage().getRequestImage()));
         new WebDriverWait(getWebDriver())
             .failWith("After submitting the username and the address, the output text should be present.")
             .until(ElementPresent.getInstance().element(getPage().getUserOutput()));
         assertEquals(getPage().getUserOutput().getText(), "User stored successfully");
-    }    
-    
+    }
+
     @Test
     public void testTypeAddress() {
         getPage().getAddressInput().click();
         getPage().getAddressInput().sendKeys("something");
         new WebDriverWait(getWebDriver())
             .failWith("After typing the address, the request image should be present.")
-            .until(ElementPresent.getInstance().element(getPage().getRequestImage()));        
+            .until(ElementPresent.getInstance().element(getPage().getRequestImage()));
     }
-   
-    
+
+
     @Test
     public void testTypeUsername() {
         getPage().getUsernameInput().click();
@@ -68,7 +68,7 @@ public class TestA4jStatusSimple extends AbstractWebDriverTest<ViewUsagePage>{
             .failWith("After typing the username, the request image should be present.")
             .until(ElementPresent.getInstance().element(getPage().getRequestImage()));
     }
-    
+
     @Override
     protected ViewUsagePage createPage() {
         return new ViewUsagePage();

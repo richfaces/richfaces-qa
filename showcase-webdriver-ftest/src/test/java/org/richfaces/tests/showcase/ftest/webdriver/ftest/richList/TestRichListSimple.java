@@ -38,24 +38,24 @@ public class TestRichListSimple extends AbstractWebDriverTest<ListsPage>{
         assertTrue(getPage().isOrdered(), "Initally, the unordered list should be present.");
         testNumberOfItems();
     }
-    
+
     @Test
     public void testSetDefinition() {
         getPage().setDefinition();
         testNumberOfItems();
     }
-    
+
     @Test
     public void testSetUnordered() {
         getPage().setUnordered();
         testNumberOfItems();
     }
-    
+
     @Override
     protected ListsPage createPage() {
         return new ListsPage(getWebDriver());
     }
-    
+
     private void testNumberOfItems() {
         assertEquals(getPage().getNumberOfItems(), 6, "Number of items doesn't match.");
     }

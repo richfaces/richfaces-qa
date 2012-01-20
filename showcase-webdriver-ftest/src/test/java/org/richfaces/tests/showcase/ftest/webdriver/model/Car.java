@@ -30,14 +30,14 @@ public class Car {
 
     private String model;
     private String vendor;
-    
+
     public Car(String vendor, String model) {
         Validate.notNull(vendor);
         Validate.notNull(vendor);
         this.model = model;
         this.vendor = vendor;
     }
-    
+
     public String getModel() {
         return model;
     }
@@ -45,7 +45,7 @@ public class Car {
     public String getVendor() {
         return vendor;
     }
-    
+
     @Override
     public String toString() {
         return vendor + " " + model;

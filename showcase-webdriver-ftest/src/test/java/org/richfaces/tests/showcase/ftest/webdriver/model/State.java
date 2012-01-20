@@ -31,7 +31,7 @@ public class State {
     private String capital;
     private String state;
     private String timeZone;
-    
+
     public State(String state, String capital, String timeZone) {
         Validate.notNull(state);
         Validate.notNull(capital);
@@ -40,7 +40,7 @@ public class State {
         this.capital = capital;
         this.timeZone = timeZone;
     }
-    
+
     public String getCapital() {
         return capital;
     }
@@ -93,6 +93,6 @@ public class State {
     @Override
     public String toString() {
         return this.state + " " + this.capital + " " + this.timeZone;
-    }    
-    
+    }
+
 }

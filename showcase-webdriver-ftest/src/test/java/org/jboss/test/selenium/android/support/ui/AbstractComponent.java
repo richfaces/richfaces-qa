@@ -35,7 +35,7 @@ public abstract class AbstractComponent implements Component {
     private ToolKit toolKit;
     private WebDriver webDriver;
     private WebElement webElement;
-    
+
     public AbstractComponent(WebDriver webDriver, ToolKit toolKit, WebElement webElement) {
         Validate.notNull(webDriver);
         Validate.notNull(toolKit);
@@ -44,15 +44,15 @@ public abstract class AbstractComponent implements Component {
         this.toolKit = toolKit;
         this.webElement = webElement;
     }
-    
+
     public WebElement getWebElement() {
         return webElement;
     }
-    
+
     protected ToolKit getToolKit() {
         return toolKit;
     }
-    
+
     protected WebDriver getWebDriver() {
         return webDriver;
     }

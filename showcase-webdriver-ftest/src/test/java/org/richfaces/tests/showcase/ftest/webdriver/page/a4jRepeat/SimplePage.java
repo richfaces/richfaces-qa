@@ -37,12 +37,12 @@ public class SimplePage extends DataScrollablePage implements ShowcasePage {
     @FindBy(xpath="//*[@class='example-cnt']//div[@class='rf-p '][1]")
     private WebElement firstStateBody;
     @FindBy(xpath="//*[@class='example-cnt']//div[@class='rf-p '][last()]")
-    private WebElement lastStateBody; 
-    
+    private WebElement lastStateBody;
+
     public SimplePage(WebDriver webDriver) {
         super(webDriver);
     }
-    
+
     @Override
     public String getDemoName() {
         return "repeat";
@@ -56,11 +56,11 @@ public class SimplePage extends DataScrollablePage implements ShowcasePage {
     public State getFirstState() {
         return createStateFromBodyElement(firstStateBody);
     }
-    
+
     public State getLastState() {
         return createStateFromBodyElement(lastStateBody);
     }
-    
+
     private State createStateFromBodyElement(WebElement body) {
 //        return new State(
 //            body.findElement(By.xpath("div/span")).getText(),
@@ -76,5 +76,5 @@ public class SimplePage extends DataScrollablePage implements ShowcasePage {
             capitalAndTimeZone[5]
         );
     }
-    
+
 }

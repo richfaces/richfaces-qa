@@ -24,8 +24,8 @@ package org.jboss.test.selenium.android;
 import java.io.IOException;
 
 /**
- * Thrown when calling the Android SDK fails 
- * 
+ * Thrown when calling the Android SDK fails
+ *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class ToolKitException extends IOException {

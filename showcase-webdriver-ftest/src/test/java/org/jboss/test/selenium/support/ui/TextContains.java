@@ -36,8 +36,8 @@ public class TextContains implements ExpectedCondition<Boolean> {
 
     public static TextContains getInstance() {
         return new TextContains();
-    }    
-    
+    }
+
     @Override
     public Boolean apply(WebDriver driver) {
         try {
@@ -45,7 +45,7 @@ public class TextContains implements ExpectedCondition<Boolean> {
         } catch(StaleElementReferenceException ignored) {
             return false;
         }
-    } 
+    }
 
     public TextContains element(WebElement element) {
         TextContains copy = copy();
@@ -57,8 +57,8 @@ public class TextContains implements ExpectedCondition<Boolean> {
         TextContains copy = copy();
         copy.text = text;
         return copy;
-    }    
-    
+    }
+
     private TextContains copy() {
         TextContains copy = new TextContains();
         copy.element = element;

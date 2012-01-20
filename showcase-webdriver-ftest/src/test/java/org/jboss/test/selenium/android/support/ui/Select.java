@@ -41,11 +41,11 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 public class Select extends AbstractComponent {
 
     private List<Option> options;
-    
+
     public Select(WebDriver webDriver, ToolKit toolKit, WebElement webElement) {
         super(webDriver, toolKit, webElement);
     }
-    
+
     public int getIndexByValue(String value) {
         Validate.notNull(value);
         int index = 0;
@@ -57,7 +57,7 @@ public class Select extends AbstractComponent {
         }
         throw new IllegalStateException("The option with the given value[" + value + "] doesn't exist.");
     }
-    
+
     public List<Option> getOptions() {
         if (options == null) {
             List<WebElement> elements = getWebElement().findElements(By.tagName("option"));
@@ -68,8 +68,8 @@ public class Select extends AbstractComponent {
             options = Collections.unmodifiableList(newOptions);
         }
         return options;
-    }    
-    
+    }
+
     public int getSelectedIndex() {
         int index = 0;
         for(Option option : getOptions()) {
@@ -80,7 +80,7 @@ public class Select extends AbstractComponent {
         }
         throw new IllegalStateException("No option is selected.");
     }
-    
+
     public Option getSelectedOption() {
         return getOptions().get(getSelectedIndex());
     }
@@ -98,7 +98,7 @@ public class Select extends AbstractComponent {
              key = Key.DOWN_ARROW;
         }
         else {
-            key = Key.UP_ARROW; 
+            key = Key.UP_ARROW;
         }
         getWebElement().click();
         try {
@@ -119,12 +119,12 @@ public class Select extends AbstractComponent {
                         return false;
                     }
                 }
-                
+
             });
     }
-    
+
     public void selectByValue(String value) {
         selectByIndex(getIndexByValue(value));
     }
-    
+
 }

@@ -33,10 +33,10 @@ public class AjaxPage implements ShowcasePage {
 
     @FindBy(xpath = "//*[@class='example-cnt']//input[@type='text']")
     private WebElement input;
-    
+
     @FindBy(xpath = "//*[@class='example-cnt']//span")
     private WebElement output;
-    
+
     @Override
     public String getDemoName() {
         return "ajax";
@@ -55,6 +55,6 @@ public class AjaxPage implements ShowcasePage {
         return output;
     }
 
-    
-    
+
+
 }

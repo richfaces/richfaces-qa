@@ -31,19 +31,19 @@ public enum ImageState {
     STATE0(Color.LEFT_RED, Color.RIGHT_DARK_BLUE,Color.TEXT_GREEN),
     STATE1(Color.LEFT_GREEN, Color.RIGHT_YELLOW, Color.TEXT_RED),
     STATE2(Color.LEFT_BLUE, Color.RIGHT_RED, Color.TEXT_DARK_BLUE);
-    
+
     public static int RED_INDEX = 0;
-    
+
     private Color leftColor;
     private Color rightColor;
     private Color textColor;
- 
+
     private ImageState(Color leftColor, Color rightColor, Color textColor) {
         this.leftColor = leftColor;
         this.rightColor = rightColor;
         this.textColor = textColor;
     }
-    
+
     public Color getLeftColor() {
         return leftColor;
     }
@@ -66,10 +66,10 @@ public enum ImageState {
         TEXT_DARK_BLUE(ImgUsagePage.INDEX_DARK_BLUE, -16776962),
         TEXT_GREEN(ImgUsagePage.INDEX_GREEN, -16712192),
         TEXT_RED(ImgUsagePage.INDEX_RED, -131072);
-                
+
         private int index;
         private long value;
-        
+
         private Color(int index, long value) {
             this.index = index;
             this.value = value;
@@ -80,7 +80,7 @@ public enum ImageState {
         public long getValue() {
             return value;
         }
-        
+
     }
-    
+
 }

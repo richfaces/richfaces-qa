@@ -30,9 +30,9 @@ public interface Component {
 
     /**
      * Returns instance of WebElement representing a component located on the page.
-     * 
+     *
      * @return web element
      */
     WebElement getWebElement();
-    
+
 }

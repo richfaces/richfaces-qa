@@ -37,18 +37,18 @@ public class TestRichDataTableSimple extends AbstractWebDriverTest<SimpleTablePa
         assertEquals(getPage().getSanJoseMeals(), "$65.02");
         assertEquals(getPage().getSanJoseSubtotals(), "$379.02");
         assertEquals(getPage().getSanJoseTransport(), "$90.00");
-        
+
         assertEquals(getPage().getSeattleHotels(), "$218.00");
         assertEquals(getPage().getSeattleMeals(), "$131.25");
         assertEquals(getPage().getSeattleTransport(), "$72.00");
         assertEquals(getPage().getSeattleSubtotals(), "$421.25");
-        
+
         assertEquals(getPage().getTotalsOfHotels(), "$442.00");
         assertEquals(getPage().getTotalsOfMeals(), "$196.27");
         assertEquals(getPage().getTotalsOfTransport(), "$162.00");
         assertEquals(getPage().getTotalsOfSubtotals(), "$800.27");
     }
-    
+
     @Override
     protected SimpleTablePage createPage() {
         return new SimpleTablePage();

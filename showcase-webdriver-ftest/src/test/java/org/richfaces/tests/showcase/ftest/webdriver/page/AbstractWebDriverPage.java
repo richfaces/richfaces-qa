@@ -30,14 +30,14 @@ import org.openqa.selenium.WebDriver;
 public abstract class AbstractWebDriverPage implements ShowcasePage {
 
     private WebDriver webDriver;
-    
+
     protected AbstractWebDriverPage(WebDriver webDriver) {
         Validate.notNull(webDriver);
         this.webDriver = webDriver;
     }
-    
+
     protected WebDriver getWebDriver() {
         return webDriver;
     }
-    
+
 }

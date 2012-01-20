@@ -32,7 +32,7 @@ public class Option extends AbstractComponent {
 
     private String label;
     private String value;
-    
+
     public Option(WebDriver webDriver, ToolKit toolKit, WebElement webElement) {
         super(webDriver, toolKit, webElement);
     }
@@ -43,21 +43,21 @@ public class Option extends AbstractComponent {
         }
         return label;
     }
-    
+
     public String getValue() {
         if (value == null) {
             value = getWebElement().getAttribute("value");
         }
         return value;
     }
-    
+
     public boolean isSelected() {
         return getWebElement().isSelected();
     }
-    
+
     @Override
     public String toString() {
         return getLabel() + " => " + getValue();
     }
-    
+
 }

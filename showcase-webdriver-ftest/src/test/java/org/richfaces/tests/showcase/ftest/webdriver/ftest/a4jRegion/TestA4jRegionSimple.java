@@ -43,8 +43,8 @@ public class TestA4jRegionSimple extends AbstractWebDriverTest<RegionPage> {
         assertEquals(getPage().getBrokenNameInput().getText(), "", "After submitting the broken form, the output should stay empty.");
         assertEquals(getPage().getBrokenEmailInput().getText(), "", "After submitting the broken form, the output should stay empty.");
     }
-    
-    // https://issues.jboss.org/browse/RF-11872    
+
+    // https://issues.jboss.org/browse/RF-11872
     @Test(groups = {"reported-without-fix-version"})
     public void testWorking() {
         getPage().getEmailInput().click();
@@ -57,14 +57,14 @@ public class TestA4jRegionSimple extends AbstractWebDriverTest<RegionPage> {
             .until(TextEquals.getInstance().element(getPage().getNameOutput()).text("name"));
         new WebDriverWait(getWebDriver())
         .failWith("After submitting the broken form, the output should contain the correct values")
-        .until(TextEquals.getInstance().element(getPage().getEmailOutput()).text("email"));        
+        .until(TextEquals.getInstance().element(getPage().getEmailOutput()).text("email"));
     }
-    
+
     @Override
     protected RegionPage createPage() {
         return new RegionPage();
     }
 
-    
-    
+
+
 }

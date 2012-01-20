@@ -37,9 +37,9 @@ import org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler;
 /**
  * Decorates {@link WebElement} to try to avoid throwing {@link StaleElementReferenceException}. When the exception is
  * thrown, the mechanism tries to locate element again.
- * 
+ *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
- * 
+ *
  * @see http://www.brimllc.com/2011/01/extending-selenium-2-0-webdriver-to-support-ajax/
  */
 public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
@@ -48,7 +48,7 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
 
     /**
      * Creates a new instance of the decorator
-     * 
+     *
      * @param factory
      *            locator factory
      * @param numberOfTries

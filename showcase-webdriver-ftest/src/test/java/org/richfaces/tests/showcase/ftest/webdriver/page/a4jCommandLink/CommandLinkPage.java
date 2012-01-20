@@ -32,11 +32,11 @@ public class CommandLinkPage extends AbstractCommandPage {
 
     @FindBy(xpath = "//*[@class='example-cnt']//a[text()='Say Hello']")
     private WebElement link;
-    
+
     public WebElement getLink() {
         return link;
     }
-    
+
     @Override
     public String getDemoName() {
         return "commandLink";

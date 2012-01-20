@@ -33,13 +33,13 @@ public abstract class AbstractCommandPage implements ShowcasePage {
     private WebElement input;
     @FindBy(xpath = "//*[@class='example-cnt']//span[@class='outhello']")
     private WebElement output;
-    
+
     public WebElement getInput() {
         return input;
     }
     public WebElement getOutput() {
         return output;
     }
- 
-    
+
+
 }

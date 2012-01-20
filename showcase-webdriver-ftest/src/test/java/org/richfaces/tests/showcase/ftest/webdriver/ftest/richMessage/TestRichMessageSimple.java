@@ -29,37 +29,37 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichMessageSimple extends AbstractRichMessageTest<MessagePage> {    
-   
+public class TestRichMessageSimple extends AbstractRichMessageTest<MessagePage> {
+
     @Test
     public void testAddressWrongAndCorrect() {
         super.testAddressWrongAndCorrect();
-    }    
-    
+    }
+
     @Test
     public void testAllWrongAndCorrect() {
         super.testAllWrongAndCorrect();
     }
-    
+
     @Test
     public void testJobWrongAndCorrect() {
         super.testJobWrongAndCorrect();
-    }    
-    
+    }
+
     @Test
     public void testNameWrongAndCorrect() {
-        super.testNameWrongAndCorrect();        
+        super.testNameWrongAndCorrect();
     }
 
     @Test
     public void testZipWrongAndCorrect() {
-        super.testZipWrongAndCorrect();        
-    }    
-    
+        super.testZipWrongAndCorrect();
+    }
+
     @Override
     protected MessagePage createPage() {
         return new MessagePage();
     }
-    
-    
+
+
 }

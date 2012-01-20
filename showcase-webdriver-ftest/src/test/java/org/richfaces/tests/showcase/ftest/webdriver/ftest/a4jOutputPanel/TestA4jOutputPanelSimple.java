@@ -37,7 +37,7 @@ public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<SimplePage>{
 
     private static final String CORRECT = "aaaaaaaaaa";
     private static final String WRONG = "aaaaaaaaaaa";
-    
+
     @Test(groups = { "4.2" })
     public void testFirstCorrectInput() {
         getPage().getFirstInput().click();
@@ -48,9 +48,9 @@ public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<SimplePage>{
         new WebDriverWait(getWebDriver())
             .failWith("After typing a correct value and into the first input field and submitting  the output text should be present.")
             .until(ElementPresent.getInstance().element(getPage().getFirstOutput()));
-        assertEquals(getPage().getFirstOutput().getText(), "Approved Text: " + CORRECT, "The output text doesn't match.");        
+        assertEquals(getPage().getFirstOutput().getText(), "Approved Text: " + CORRECT, "The output text doesn't match.");
     }
-    
+
     @Test
     public void testFirstWrongInput() {
         getPage().getFirstInput().click();
@@ -63,7 +63,7 @@ public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<SimplePage>{
             .until(ElementPresent.getInstance().element(getPage().getFirstError()));
         assertTrue(ElementNotPresent.getInstance().element(getPage().getFirstOutput()).apply(getWebDriver()), "After typing a wrong value into the first input field and submitting no output text should be present.");
     }
-    
+
     @Test
     public void testSecondCorrectInput() {
         getPage().getSecondInput().click();
@@ -74,7 +74,7 @@ public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<SimplePage>{
         assertEquals(getPage().getSecondOutput().getText(), "Approved Text: " + CORRECT, "The output text doesn't match.");
         assertTrue(ElementNotPresent.getInstance().element(getPage().getSecondError()).apply(getWebDriver()), "After typing a wrong value into the second input field no error message should be present.");
     }
-    
+
     @Test
     public void testSecondWrongInput() {
         getPage().getSecondInput().click();
@@ -88,7 +88,7 @@ public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<SimplePage>{
             !TextContains.getInstance().element(getPage().getSecondOutput()).text("Approved Text").apply(getWebDriver()),
             "After typing a wrong value into the second input field no output text should be present.");
     }
-    
+
     @Override
     protected SimplePage createPage() {
         return new SimplePage();

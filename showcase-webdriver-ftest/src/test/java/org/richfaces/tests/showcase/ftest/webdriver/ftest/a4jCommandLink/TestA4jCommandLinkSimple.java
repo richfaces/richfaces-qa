@@ -38,12 +38,12 @@ public class TestA4jCommandLinkSimple extends AbstractWebDriverTest<CommandLinkP
     public void testTypeAndSend() {
         getPage().getInput().click();
         getPage().getInput().sendKeys("something");
-        
+
         getPage().getLink().click();
-        
+
         new WebDriverWait(getWebDriver())
-            .until(ElementPresent.getInstance().element(getPage().getOutput()));        
-        
+            .until(ElementPresent.getInstance().element(getPage().getOutput()));
+
         assertEquals(getPage().getOutput().getText(), "Hello something !", "After typing something into the input and clicking on the command link, the text should appear in the output area.");
     }
 
@@ -51,5 +51,5 @@ public class TestA4jCommandLinkSimple extends AbstractWebDriverTest<CommandLinkP
     protected CommandLinkPage createPage() {
         return new CommandLinkPage();
     }
-    
+
 }

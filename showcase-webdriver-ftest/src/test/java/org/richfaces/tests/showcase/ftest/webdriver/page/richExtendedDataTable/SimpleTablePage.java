@@ -36,15 +36,15 @@ public class SimpleTablePage implements ShowcasePage {
     private WebElement scrollableArea;
     @FindBy(xpath = "//*[@class='example-cnt']//table[contains(@id, 'table:tbtn')]")
     private WebElement table;
-   
+
     public CarWithVinCode getFirstCar() {
         return getCarAtPosition("1");
     }
-    
+
     public CarWithVinCode getLastCar() {
         return getCarAtPosition("last()");
     }
-    
+
     @Override
     public String getDemoName() {
         return "extendedDataTable";
@@ -62,5 +62,5 @@ public class SimpleTablePage implements ShowcasePage {
             scrollableArea.findElement(By.xpath("//tr[" + position + "]/td[3]")).getText()
         );
     }
-    
+
 }

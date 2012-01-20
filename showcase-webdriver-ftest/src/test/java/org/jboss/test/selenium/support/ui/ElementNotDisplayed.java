@@ -35,17 +35,17 @@ public class ElementNotDisplayed implements ExpectedCondition<Boolean> {
     public static ElementNotDisplayed getInstance() {
         return new ElementNotDisplayed();
     }
-    
+
     public Boolean apply(WebDriver driver) {
         return !element.isDisplayed();
     }
-    
+
     public ElementNotDisplayed element(WebElement element) {
         ElementNotDisplayed copy = copy();
         copy.element = element;
         return copy;
     }
-    
+
     private ElementNotDisplayed copy() {
         ElementNotDisplayed copy = new ElementNotDisplayed();
         copy.element = this.element;

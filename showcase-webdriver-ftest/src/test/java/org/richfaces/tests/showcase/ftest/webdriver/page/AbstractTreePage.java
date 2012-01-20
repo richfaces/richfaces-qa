@@ -40,15 +40,15 @@ public abstract class AbstractTreePage implements ShowcasePage {
 
     private static final String COLLAPSED_XPATH = "span[contains(@class, 'rf-trn-hnd-colps')]";
     private static final String EXPANDED_CLASS = "span[contains(@class, 'rf-trn-hnd-exp')]";
-    
+
     private static final String FIRST_LVL_COLLAPSED_XPATH = "//*[@class='example-cnt']//div[@class='rf-tr']/div/div[contains(@class, 'rf-trn')]/" + COLLAPSED_XPATH;
     private static final String FIRST_LVL_EXPANDED_XPATH = "//*[@class='example-cnt']//div[@class='rf-tr']/div/div[contains(@class, 'rf-trn')]/" + EXPANDED_CLASS;
-    
+
     private static final String SECOND_LVL_COLLAPSED_XPATH = "//*[@class='example-cnt']//div[@class='rf-tr']/div/div/div[contains(@class, 'rf-trn')]/" + COLLAPSED_XPATH;
-    private static final String SECOND_LVL_EXPANDED_XPATH = "//*[@class='example-cnt']//div[@class='rf-tr']/div/div/div[contains(@class, 'rf-trn')]/" + EXPANDED_CLASS;    
+    private static final String SECOND_LVL_EXPANDED_XPATH = "//*[@class='example-cnt']//div[@class='rf-tr']/div/div/div[contains(@class, 'rf-trn')]/" + EXPANDED_CLASS;
     private static final String SECOND_LVL_VISIBLE_XPATH = FIRST_LVL_EXPANDED_XPATH + "/../../div[position()>1]";
     private static final String SECOND_LVL_VISIBLE_EXPANDED_XPATH = SECOND_LVL_VISIBLE_XPATH + "/div/" + EXPANDED_CLASS;
-    
+
     private static final String THIRD_LVL_VISIBLE_XPATH = SECOND_LVL_VISIBLE_EXPANDED_XPATH + "/../../div[position()>1]";
 
     @FindBy(xpath = FIRST_LVL_COLLAPSED_XPATH)
@@ -59,14 +59,14 @@ public abstract class AbstractTreePage implements ShowcasePage {
     private WebElement secondLvlCollapsed;
     @FindBy(xpath = SECOND_LVL_EXPANDED_XPATH)
     private WebElement secondLvlExpandend;
-    
+
     private WebDriver webDriver;
-    
+
     protected AbstractTreePage(WebDriver webDriver) {
         Validate.notNull(webDriver);
         this.webDriver = webDriver;
     }
-    
+
     public void collapseFirstLevelAll() {
         toggleAll(By.xpath(FIRST_LVL_EXPANDED_XPATH));
     }
@@ -74,46 +74,46 @@ public abstract class AbstractTreePage implements ShowcasePage {
     public void collapseFirstLevelFirstNode() {
         toggle(firstLvlExpandend);
     }
-    
+
     public void collapseSecondLevelAll() {
         toggleAll(By.xpath(SECOND_LVL_EXPANDED_XPATH));
-    }    
- 
+    }
+
     public void collapseSecondLevelFirstNode() {
         toggle(secondLvlExpandend);
-    }      
-    
+    }
+
     public int countSecondLevelVisible() {
         return webDriver.findElements(By.xpath(SECOND_LVL_VISIBLE_XPATH)).size();
     }
-    
+
     public int countThirdLevelVisible() {
         return webDriver.findElements(By.xpath(THIRD_LVL_VISIBLE_XPATH)).size();
     }
-    
+
     public void expandFirstLevelAll() {
         toggleAll(By.xpath(FIRST_LVL_COLLAPSED_XPATH));
     }
 
     public void expandFirstLevelFirstNode() {
         toggle(firstLvlCollapsed);
-    }    
-    
+    }
+
     public void expandSecondLevel() {
         toggleAll(By.xpath(SECOND_LVL_COLLAPSED_XPATH));
     }
 
     public void expandSecondLevelFirstNode() {
         toggle(secondLvlCollapsed);
-    }    
-    
+    }
+
     private void toggleAll(By locator) {
         List<WebElement> toToggle = webDriver.findElements(locator);
         for(WebElement icon: toToggle) {
             toggle(icon);
         }
     }
-    
+
     private void toggle(WebElement toToggle) {
         if (webDriver instanceof JavascriptExecutor) {
             Point location = toToggle.getLocation();
@@ -123,6 +123,6 @@ public abstract class AbstractTreePage implements ShowcasePage {
         toToggle.click();
         new WebDriverWait(webDriver)
             .failWith("Unable to toggle the given element.")
-            .until(ElementPresent.getInstance().element(toToggle));        
+            .until(ElementPresent.getInstance().element(toToggle));
     }
 }

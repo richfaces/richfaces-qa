@@ -38,11 +38,11 @@ public class SimplePage extends AbstractWebDriverPage {
     private WebElement firstPanel;
     @FindBy(xpath = "//*[@class='example-cnt']//div[@class='rf-p '][2]")
     private WebElement secondPanel;
-    
+
     public SimplePage(WebDriver webDriver) {
         super(webDriver);
-    }   
-    
+    }
+
     @Override
     public String getDemoName() {
         return "panel";
@@ -51,23 +51,23 @@ public class SimplePage extends AbstractWebDriverPage {
     public String getSampleName() {
         return "simple";
     }
-    
+
     public boolean hasFirstPanelHeader() {
         return hasPanelHeader(firstPanel);
     }
-    
+
     public boolean hasSecondPanelHeader() {
         return hasPanelHeader(secondPanel);
     }
-    
+
     public boolean isFirstPanelPresent() {
         return isPanelPresent(firstPanel);
     }
-    
+
     public boolean isSecondPanelPresent() {
         return isPanelPresent(secondPanel);
     }
-    
+
     private boolean hasPanelHeader(WebElement panel) {
         try {
             panel.findElement(By.xpath("div[@class='rf-p-hdr ']"));
@@ -80,5 +80,5 @@ public class SimplePage extends AbstractWebDriverPage {
     private boolean isPanelPresent(WebElement panel) {
         return ElementPresent.getInstance().element(panel).apply(getWebDriver());
     }
-    
+
 }

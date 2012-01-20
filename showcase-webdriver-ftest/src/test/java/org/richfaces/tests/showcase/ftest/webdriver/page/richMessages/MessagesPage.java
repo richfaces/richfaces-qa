@@ -33,12 +33,12 @@ public class MessagesPage extends AbstractRichMessagePage {
     @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'address')][contains(@class, 'rf-msgs-err')]")
     private WebElement addressErrorMessageArea;
     @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'job')][contains(@class, 'rf-msgs-err')]")
-    private WebElement jobErrorMessageArea;    
+    private WebElement jobErrorMessageArea;
     @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'name')][contains(@class, 'rf-msgs-err')]")
     private WebElement nameErrorMessageArea;
     @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'zip')][contains(@class, 'rf-msgs-err')]")
-    private WebElement zipErrorMessageArea;    
-    
+    private WebElement zipErrorMessageArea;
+
     @Override
     public String getDemoName() {
         return "messages";
@@ -60,7 +60,7 @@ public class MessagesPage extends AbstractRichMessagePage {
     public WebElement getNameErrorMessageArea() {
         return nameErrorMessageArea;
     }
-    
+
     public WebElement getZipErrorMessageArea() {
         return zipErrorMessageArea;
     }

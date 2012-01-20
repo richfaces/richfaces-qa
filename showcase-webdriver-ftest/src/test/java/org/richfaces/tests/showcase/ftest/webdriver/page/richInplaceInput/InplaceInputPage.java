@@ -64,7 +64,7 @@ public class InplaceInputPage extends AbstractWebDriverPage {
     public boolean isEmailInputFocused() {
         return isFocused(emailInput);
     }
-    
+
     public boolean isNameInputFocused() {
         return isFocused(nameInput);
     }
@@ -74,13 +74,13 @@ public class InplaceInputPage extends AbstractWebDriverPage {
             .failWith("The input should be focused.)")
             .until(ElementPresent.getInstance().element(input));
     }
-    
+
     public void waitUntilNotFocused(WebElement input) {
         new WebDriverWait(getWebDriver())
             .failWith("The input shouldn't be focused.)")
             .until(ElementNotPresent.getInstance().element(input));
-    }        
-    
+    }
+
     private boolean isFocused(WebElement input) {
         return input.getAttribute("class").contains("rf-ii-act");
     }

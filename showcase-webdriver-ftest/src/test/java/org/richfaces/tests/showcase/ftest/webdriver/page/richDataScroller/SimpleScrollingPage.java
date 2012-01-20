@@ -33,16 +33,16 @@ import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class SimpleScrollingPage extends DataScrollablePage implements ShowcasePage {
-    
+
     @FindBy(xpath = "//table[contains(@id, 'table')]/tbody[1]/tr[1]")
     private WebElement firstCarRow;
     @FindBy(xpath = "//table[contains(@id, 'table')]/tbody[1]/tr[last()]")
     private WebElement lastCarRow;
-    
+
     public SimpleScrollingPage(WebDriver webDriver) {
         super(webDriver);
     }
-    
+
     @Override
     public String getDemoName() {
         return "dataScroller";
@@ -56,16 +56,16 @@ public class SimpleScrollingPage extends DataScrollablePage implements ShowcaseP
     public Car getFirstCar() {
         return createCarFromRow(firstCarRow);
     }
-    
+
     public Car getLastCar() {
         return createCarFromRow(lastCarRow);
     }
-    
+
     private Car createCarFromRow(WebElement row) {
         return new Car(
             row.findElement(By.xpath("td[1]")).getText(),
             row.findElement(By.xpath("td[2]")).getText()
         );
     }
-    
+
 }

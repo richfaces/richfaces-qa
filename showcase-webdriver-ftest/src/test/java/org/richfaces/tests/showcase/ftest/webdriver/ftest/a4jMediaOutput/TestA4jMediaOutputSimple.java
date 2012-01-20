@@ -55,7 +55,7 @@ public class TestA4jMediaOutputSimple extends AbstractAndroidTest<ImgUsagePage> 
             );
         }
     }
-    
+
     @Override
     protected ImgUsagePage createPage() {
         return new ImgUsagePage();

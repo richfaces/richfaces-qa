@@ -37,18 +37,18 @@ public class TestRichInplaceSelectSimple extends AbstractAndroidTest<InplaceSele
     public void testInit() {
         assertFalse(getPage().getSelect().isPopupPresent());
     }
-    
+
     @Test
     public void testShowPopupByClickingOnInput() {
         getPage().getSelect().showPopupByClick();
     }
-    
+
     @Test
     public void testSelectByMouse() throws ToolKitException {
         getPage().getSelect().showPopupByClick();
         getPage().getSelect().selectFromPopupByIndex(0);
-    }    
-    
+    }
+
     @Override
     protected InplaceSelectPage createPage() {
         return new InplaceSelectPage(getWebDriver(), getToolKit());

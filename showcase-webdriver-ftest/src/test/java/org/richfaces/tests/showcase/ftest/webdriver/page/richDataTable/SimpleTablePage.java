@@ -39,8 +39,8 @@ public class SimpleTablePage implements ShowcasePage {
     @Override
     public String getSampleName() {
         return "simpleTable";
-    }    
-    
+    }
+
     // Subtables
     @FindBy(xpath = "//*[@class='example-cnt']//tbody[@class='rf-cst'][1]/tr[4]")
     private WebElement sanJoseSubtable;
@@ -56,15 +56,15 @@ public class SimpleTablePage implements ShowcasePage {
     public String getSanJoseMeals() {
         return getMeals(sanJoseSubtable);
     }
-    
+
     public String getSanJoseSubtotals() {
         return getSubtotals(sanJoseSubtable);
     }
-    
+
     public String getSanJoseTransport() {
         return getTransport(sanJoseSubtable);
-    }    
-    
+    }
+
     public String getSeattleHotels() {
         return getHotels(seattleSubtable);
     }
@@ -72,14 +72,14 @@ public class SimpleTablePage implements ShowcasePage {
     public String getSeattleMeals() {
         return getMeals(seattleSubtable);
     }
-    
+
     public String getSeattleSubtotals() {
         return getSubtotals(seattleSubtable);
     }
-    
+
     public String getSeattleTransport() {
         return getTransport(seattleSubtable);
-    }    
+    }
 
     public String getTotalsOfHotels() {
         return getHotels(footSubtable);
@@ -88,19 +88,19 @@ public class SimpleTablePage implements ShowcasePage {
     public String getTotalsOfMeals() {
         return getMeals(footSubtable);
     }
-    
+
     public String getTotalsOfSubtotals() {
         return getSubtotals(footSubtable);
     }
-    
+
     public String getTotalsOfTransport() {
         return getTransport(footSubtable);
     }
-    
+
     private String getHotels(WebElement subtable) {
         return subtable.findElement(By.xpath("td[3]")).getText();
-    }    
-    
+    }
+
     private String getMeals(WebElement subtable) {
         return subtable.findElement(By.xpath("td[2]")).getText();
     }
@@ -108,9 +108,9 @@ public class SimpleTablePage implements ShowcasePage {
     private String getSubtotals(WebElement subtable) {
         return subtable.findElement(By.xpath("td[5]")).getText();
     }
-    
+
     private String getTransport(WebElement subtable) {
         return subtable.findElement(By.xpath("td[4]")).getText();
     }
-      
+
 }

@@ -38,28 +38,28 @@ public class TestA4jRepeatSimple extends AbstractWebDriverTest<SimplePage>{
     private static final State LAST_STATE_FIRST_PAGE = new State("Maryland", "Annapolis", "GMT-5");
     private static final State LAST_STATE_SECOND_PAGE = new State("South Carolina", "Columbia", "GMT-5");
     private static final State LAST_STATE_THIRD_PAGE = new State("Wyoming", "Cheyenne", "GMT-7");
-    
+
     @Test
     public void testInit() {
         assertEquals(getPage().getFirstState(), FIRST_STATE_FIRST_PAGE, "The first state on doesn't match.");
         assertEquals(getPage().getLastState(), LAST_STATE_FIRST_PAGE, "The last state on doesn't match.");
     }
-    
+
     @Test
     public void testSecondPage() {
         getPage().next();
         assertEquals(getPage().getFirstState(), FIRST_STATE_SECOND_PAGE, "The first state on doesn't match.");
-        assertEquals(getPage().getLastState(), LAST_STATE_SECOND_PAGE, "The last state on doesn't match.");        
+        assertEquals(getPage().getLastState(), LAST_STATE_SECOND_PAGE, "The last state on doesn't match.");
     }
-    
+
     @Test
     public void testThirdPage() {
         getPage().next();
         getPage().next();
         assertEquals(getPage().getFirstState(), FIRST_STATE_THIRD_PAGE, "The first state on doesn't match.");
-        assertEquals(getPage().getLastState(), LAST_STATE_THIRD_PAGE, "The last state on doesn't match.");        
-    }    
-    
+        assertEquals(getPage().getLastState(), LAST_STATE_THIRD_PAGE, "The last state on doesn't match.");
+    }
+
     @Override
     protected SimplePage createPage() {
         return new SimplePage(getWebDriver());

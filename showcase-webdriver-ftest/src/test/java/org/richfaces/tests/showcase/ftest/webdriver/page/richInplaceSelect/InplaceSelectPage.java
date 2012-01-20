@@ -33,7 +33,7 @@ import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractAndroidPage;
 public class InplaceSelectPage extends AbstractAndroidPage{
 
     private static final String SELECT_LOCATOR = "//*[@class='example-cnt']//span[contains(@class, 'rf-is')]";
-    
+
     @FindBy(xpath = SELECT_LOCATOR + "//span[contains(@class, 'rf-is-lbl')]")
     private WebElement label;
     @FindBy(xpath = SELECT_LOCATOR +  "//span[contains(@class,'rf-is-lbl')]")
@@ -42,11 +42,11 @@ public class InplaceSelectPage extends AbstractAndroidPage{
     private WebElement popup;
 
     private Select select;
-    
+
     public InplaceSelectPage(WebDriver webDriver, ToolKit toolKit) {
         super(webDriver, toolKit);
-    }    
-    
+    }
+
     @Override
     public String getDemoName() {
         return "inplaceSelect";
@@ -55,12 +55,12 @@ public class InplaceSelectPage extends AbstractAndroidPage{
     public String getSampleName() {
         return "inplaceSelect";
     }
-    
+
     public Select getSelect() {
         if (select == null) {
             select = new Select(getWebDriver(), getToolKit(), label, popup, openPopupArea);
         }
         return select;
     }
-    
+
 }

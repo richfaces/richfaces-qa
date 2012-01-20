@@ -31,7 +31,7 @@ import org.openqa.selenium.WebDriver;
 public abstract class AbstractAndroidPage extends AbstractWebDriverPage {
 
     private ToolKit toolKit;
-    
+
     protected AbstractAndroidPage(WebDriver webDriver, ToolKit toolKit) {
         super(webDriver);
         Validate.notNull(toolKit);
@@ -41,5 +41,5 @@ public abstract class AbstractAndroidPage extends AbstractWebDriverPage {
     protected ToolKit getToolKit() {
         return toolKit;
     }
-    
+
 }

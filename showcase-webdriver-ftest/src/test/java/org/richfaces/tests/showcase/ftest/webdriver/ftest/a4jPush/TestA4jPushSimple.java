@@ -31,17 +31,17 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestA4jPushSimple extends AbstractWebDriverTest<PushPage>{
-    
+
     @Test(groups = {"broken"})
     public void testDateUpdates() {
         for(int i=0; i<2; i++) {
             String before = getPage().getDate().getText();
             new WebDriverWait(getWebDriver())
                 .failWith("The updating doesn't work correctly. Iteration <" + i + ">.")
-                .until(TextNotEquals.getInstance().element(getPage().getDate()).text(before));            
+                .until(TextNotEquals.getInstance().element(getPage().getDate()).text(before));
         }
     }
-       
+
     @Override
     protected PushPage createPage() {
         return new PushPage();

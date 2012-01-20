@@ -31,7 +31,7 @@ import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 public class JsfValidatorsPage implements ShowcasePage {
 
     @FindBy(xpath = "//*[@class='example-cnt']//span[@class='rf-msg-err'][contains(@id, 'age')]")
-    private WebElement ageErrorArea;    
+    private WebElement ageErrorArea;
     @FindBy(xpath = "//*[@class='example-cnt']//input[contains(@id, 'age')]")
     private WebElement ageInput;
     @FindBy(xpath = "//*[@class='example-cnt']//span[@class='rf-msg-err'][contains(@id, 'email')]")
@@ -44,7 +44,7 @@ public class JsfValidatorsPage implements ShowcasePage {
     private WebElement nameInput;
     @FindBy(xpath = "//*[@class='example-cnt']//div[contains(@class, 'rf-p-hdr')]")
     private WebElement clickToLoseFocus;
-    
+
     @Override
     public String getDemoName() {
         return "clientValidation";
@@ -52,8 +52,8 @@ public class JsfValidatorsPage implements ShowcasePage {
     @Override
     public String getSampleName() {
         return "jsfValidators";
-    }    
-    
+    }
+
     public WebElement getAgeErrorArea() {
         return ageErrorArea;
     }

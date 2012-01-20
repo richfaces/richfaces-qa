@@ -33,37 +33,37 @@ public interface TestConfiguration {
     /**
      * Context path will be used to retrieve pages from right URL. Don't hesitate to use it in cases of building absolute
      * URLs.
-     * 
+     *
      * @return context path
-     */    
+     */
     String getContextPath();
-    
+
     /**
      * Context root can be used to obtaining full URL paths, is set to actual tested application's context root
-     * 
+     *
      * @return context root
-     */        
+     */
     String getContextRoot();
 
     String getSkinName();
-    
+
     /**
      * Returns web driver capabalities
-     * 
+     *
      * @return web driver capabalities
      */
     Capabilities getWebDriverCapabilities();
-    
+
     /**
      * URL which is used to control web driver
-     *  
+     *
      * @return webdriver host URL
      */
-    String getWebDriverHost();    
-    
+    String getWebDriverHost();
+
     /**
      * Returns number of tries which is used for {@link StaleReferenceAwareFieldDecorator}
-     * 
+     *
      * @return number of tries
      */
     int getWebDriverElementTries();
@@ -71,23 +71,23 @@ public interface TestConfiguration {
     /**
      * Returns timout in seconds which is used for {@link AjaxElementLocator}
      * and other timout settings
-     * 
+     *
      * @return timout in seconds
      */
-    int getWebDriverTimeout();    
-    
+    int getWebDriverTimeout();
+
     /**
      * Checks whether the tests are executed on an android web driver
-     * 
+     *
      * @return true if the android web driver is enabled, otherwise false
      */
-    boolean isAndroid(); 
-    
+    boolean isAndroid();
+
     /**
      * Checks whether the tests should use mobile version of the Showcase
-     * 
+     *
      * @return true if the Showcase should be in mobile version
      */
     boolean isMobile();
-    
+
 }

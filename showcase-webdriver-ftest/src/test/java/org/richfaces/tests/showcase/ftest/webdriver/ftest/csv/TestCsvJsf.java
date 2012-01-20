@@ -34,35 +34,35 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestCsvJsf extends AbstractWebDriverTest<JsfValidatorsPage>{
-    
+
     @Test
     public void testAllWrongAndCorrect() {
         getPage().getAgeInput().click();
         getPage().getAgeInput().sendKeys("17");
         getPage().getEmailInput().click();
-        getPage().getEmailInput().sendKeys("name@domain"); 
+        getPage().getEmailInput().sendKeys("name@domain");
         getPage().getNameInput().click();
-        getPage().getNameInput().sendKeys("123456789");          
-        getPage().loseFocus(); 
+        getPage().getNameInput().sendKeys("123456789");
+        getPage().loseFocus();
         new WebDriverWait(getWebDriver())
             .failWith("After typing invalid value into the age input field, an error message should be present.")
-            .until(ElementPresent.getInstance().element(getPage().getAgeErrorArea()));        
+            .until(ElementPresent.getInstance().element(getPage().getAgeErrorArea()));
         new WebDriverWait(getWebDriver())
             .failWith("After typing invalid value into the e-mail input field, an error message should be present.")
             .until(ElementPresent.getInstance().element(getPage().getEmailErrorArea()));
         new WebDriverWait(getWebDriver())
             .failWith("After typing invalid value into the name input field, an error message should be present.")
-            .until(ElementPresent.getInstance().element(getPage().getNameErrorArea()));        
+            .until(ElementPresent.getInstance().element(getPage().getNameErrorArea()));
         getPage().getAgeInput().click();
         getPage().getAgeInput().clear();
         getPage().getAgeInput().sendKeys("18");
         getPage().getEmailInput().click();
         getPage().getEmailInput().clear();
-        getPage().getEmailInput().sendKeys("name@domain.com"); 
+        getPage().getEmailInput().sendKeys("name@domain.com");
         getPage().getNameInput().click();
         getPage().getNameInput().clear();
-        getPage().getNameInput().sendKeys("12345678");    
-        getPage().loseFocus(); 
+        getPage().getNameInput().sendKeys("12345678");
+        getPage().loseFocus();
         new WebDriverWait(getWebDriver())
             .failWith("After typing a valid value into the age input field, no error message should be present.")
             .until(ElementNotPresent.getInstance().element(getPage().getAgeErrorArea()));
@@ -71,14 +71,14 @@ public class TestCsvJsf extends AbstractWebDriverTest<JsfValidatorsPage>{
             .until(ElementNotPresent.getInstance().element(getPage().getEmailErrorArea()));
         new WebDriverWait(getWebDriver())
             .failWith("After typing a valid value into the name input field, no error message should be present.")
-            .until(ElementNotPresent.getInstance().element(getPage().getNameErrorArea()));        
+            .until(ElementNotPresent.getInstance().element(getPage().getNameErrorArea()));
     }
-    
+
     @Test
     public void testWrongNotNumberAndCorrectAge() {
         getPage().getAgeInput().click();
         getPage().getAgeInput().sendKeys("aa");
-        getPage().loseFocus();        
+        getPage().loseFocus();
         new WebDriverWait(getWebDriver())
             .failWith("After typing invalid value into the age input field, an error message should be present.")
             .until(ElementPresent.getInstance().element(getPage().getAgeErrorArea()));
@@ -86,12 +86,12 @@ public class TestCsvJsf extends AbstractWebDriverTest<JsfValidatorsPage>{
         getPage().getAgeInput().click();
         getPage().getAgeInput().clear();
         getPage().getAgeInput().sendKeys("18");
-        getPage().loseFocus();           
+        getPage().loseFocus();
         new WebDriverWait(getWebDriver())
             .failWith("After typing a valid value into the age input field, no error message should be present.")
             .until(ElementNotPresent.getInstance().element(getPage().getAgeErrorArea()));
     }
-    
+
     @Test
     public void testWrongAndCorrectEmail() {
         getPage().getEmailInput().click();
@@ -100,16 +100,16 @@ public class TestCsvJsf extends AbstractWebDriverTest<JsfValidatorsPage>{
         new WebDriverWait(getWebDriver())
             .failWith("After typing invalid value into the e-mail input field, an error message should be present.")
             .until(ElementPresent.getInstance().element(getPage().getEmailErrorArea()));
-        assertTrue(getPage().getEmailErrorArea().getText().contains("Invalid email address"));        
+        assertTrue(getPage().getEmailErrorArea().getText().contains("Invalid email address"));
         getPage().getEmailInput().click();
         getPage().getEmailInput().clear();
         getPage().getEmailInput().sendKeys("name@domain.com");
         getPage().loseFocus();
         new WebDriverWait(getWebDriver())
             .failWith("After typing a valid e-mail into the e-mail input field, no error message should be present.")
-            .until(ElementNotPresent.getInstance().element(getPage().getEmailErrorArea()));             
+            .until(ElementNotPresent.getInstance().element(getPage().getEmailErrorArea()));
     }
-    
+
     @Test
     public void testWrongLongAndCorrectName() {
         getPage().getNameInput().click();
@@ -125,31 +125,31 @@ public class TestCsvJsf extends AbstractWebDriverTest<JsfValidatorsPage>{
         getPage().loseFocus();
         new WebDriverWait(getWebDriver())
             .failWith("After typing a correct string into the name input field, no error message should be present.")
-            .until(ElementNotPresent.getInstance().element(getPage().getNameErrorArea()));        
+            .until(ElementNotPresent.getInstance().element(getPage().getNameErrorArea()));
     }
 
     @Test
     public void testWrongHighAge() {
         getPage().getAgeInput().click();
         getPage().getAgeInput().sendKeys("100");
-        getPage().loseFocus();        
+        getPage().loseFocus();
         new WebDriverWait(getWebDriver())
             .failWith("After typing invalid value into the age input field, an error message should be present.")
             .until(ElementPresent.getInstance().element(getPage().getAgeErrorArea()));
-        assertTrue(getPage().getAgeErrorArea().getText().contains("between the expected values"));            
-    }    
-    
+        assertTrue(getPage().getAgeErrorArea().getText().contains("between the expected values"));
+    }
+
     @Test
     public void testWrongLowAge() {
         getPage().getAgeInput().click();
         getPage().getAgeInput().sendKeys("17");
-        getPage().loseFocus();        
+        getPage().loseFocus();
         new WebDriverWait(getWebDriver())
             .failWith("After typing invalid value into the age input field, an error message should be present.")
             .until(ElementPresent.getInstance().element(getPage().getAgeErrorArea()));
-        assertTrue(getPage().getAgeErrorArea().getText().contains("between the expected values"));   
+        assertTrue(getPage().getAgeErrorArea().getText().contains("between the expected values"));
     }
-    
+
     @Test
     public void testWrongShortName() {
         getPage().getNameInput().click();
@@ -158,9 +158,9 @@ public class TestCsvJsf extends AbstractWebDriverTest<JsfValidatorsPage>{
         new WebDriverWait(getWebDriver())
             .failWith("After typing a short string into the name input field, an error message should be present.")
             .until(ElementPresent.getInstance().element(getPage().getNameErrorArea()));
-        assertTrue(getPage().getNameErrorArea().getText().contains("Specified attribute is not between the expected values of 3 and 8"));            
-    } 
-    
+        assertTrue(getPage().getNameErrorArea().getText().contains("Specified attribute is not between the expected values of 3 and 8"));
+    }
+
     @Override
     protected JsfValidatorsPage createPage() {
         return new JsfValidatorsPage();

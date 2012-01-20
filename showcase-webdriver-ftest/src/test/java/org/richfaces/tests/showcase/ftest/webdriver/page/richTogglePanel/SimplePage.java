@@ -44,7 +44,7 @@ public class SimplePage extends AbstractWebDriverPage {
     private WebElement firstTab;
     @FindBy(xpath = "//*[@class='example-cnt']//div[@class='tabDiv'][2]")
     private WebElement secondTab;
-    
+
     public SimplePage(WebDriver webDriver) {
         super(webDriver);
     }
@@ -62,31 +62,31 @@ public class SimplePage extends AbstractWebDriverPage {
     public boolean isFirstPanelOpened() {
         return isPanelOpened(firstPanel);
     }
-    
+
     public boolean isSecondPanelOpened() {
         return isPanelOpened(secondPanel);
     }
-    
+
     public boolean isFirstTabFocused() {
         return isTabFocused(firstTab);
     }
 
     public boolean isSecondTabFocused() {
         return isTabFocused(secondTab);
-    }    
-    
+    }
+
     public void openFirstPanel() {
         openPanel(firstPanel, firstTab);
     }
-    
+
     public void openSecondPanel() {
         openPanel(secondPanel, secondTab);
     }
-    
+
     private boolean isPanelOpened(WebElement panel) {
         return ElementPresent.getInstance().element(panel).apply(getWebDriver());
     }
-    
+
     private boolean isTabFocused(WebElement tab) {
         try {
             tab.findElement(By.xpath("span[@style='font-weight:bold']"));
@@ -103,4 +103,3 @@ public class SimplePage extends AbstractWebDriverPage {
             .until(ElementDisplayed.getInstance().element(panel));
     }
 }
- 

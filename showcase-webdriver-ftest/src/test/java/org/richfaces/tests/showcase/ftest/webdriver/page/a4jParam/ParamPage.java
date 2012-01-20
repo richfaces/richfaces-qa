@@ -61,7 +61,7 @@ public class ParamPage implements ShowcasePage {
                 break;
         }
     }
-    
+
     public static enum Name {
         ALEX("Alex"), JOHN("John");
         private String name;
@@ -73,7 +73,7 @@ public class ParamPage implements ShowcasePage {
         public static Name[] getAll() {
             return new Name[] {ALEX, JOHN};
         }
-        
+
         public String toString() {
             return name;
         }

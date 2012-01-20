@@ -34,7 +34,7 @@ public class SpinnersPage extends AbstractAndroidPage {
 
     private static final String FIRST_SPINNER_LOCATOR = "//*[@class='example-cnt']//span[@class='rf-insp '][1]";
     private static final String SECOND_SPINNER_LOCATOR = "//*[@class='example-cnt']//span[@class='rf-insp '][2]";
-    
+
     @FindBy(xpath = FIRST_SPINNER_LOCATOR + "/input")
     private WebElement firstSpinnerInputElement;
     @FindBy(xpath = FIRST_SPINNER_LOCATOR + "/span/span[@class='rf-insp-inc']")
@@ -42,7 +42,7 @@ public class SpinnersPage extends AbstractAndroidPage {
     @FindBy(xpath = FIRST_SPINNER_LOCATOR + "/span/span[@class='rf-insp-dec']")
     private WebElement firstSpinnerDownArrowElement;
     private Spinner firstSpinner;
-    
+
     @FindBy(xpath = SECOND_SPINNER_LOCATOR + "/input")
     private WebElement secondSpinnerInputElement;
     @FindBy(xpath = SECOND_SPINNER_LOCATOR + "/span/span[@class='rf-insp-inc']")
@@ -50,10 +50,10 @@ public class SpinnersPage extends AbstractAndroidPage {
     @FindBy(xpath = SECOND_SPINNER_LOCATOR + "/span/span[@class='rf-insp-dec']")
     private WebElement secondSpinnerDownArrowElement;
     private Spinner secondSpinner;
-    
+
     public SpinnersPage(WebDriver webDriver, ToolKit toolKit) {
         super(webDriver, toolKit);
-    }    
+    }
 
     @Override
     public String getDemoName() {
@@ -77,5 +77,5 @@ public class SpinnersPage extends AbstractAndroidPage {
             secondSpinner = new Spinner(getWebDriver(), getToolKit(), secondSpinnerInputElement, secondSpinnerDownArrowElement, secondSpinnerUpArrowElement, 10);
         }
         return secondSpinner;
-    }    
+    }
 }

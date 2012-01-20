@@ -40,7 +40,7 @@ public class Select extends AbstractComponent {
     private WebElement label;
     private WebElement openPopupArea;
     private WebElement popup;
-    
+
     public Select(WebDriver webDriver, ToolKit toolKit, WebElement label, WebElement popup, WebElement openPopupArea) {
         super(webDriver, toolKit, label);
         Validate.notNull(popup);
@@ -53,7 +53,7 @@ public class Select extends AbstractComponent {
     public String getText() {
         return getLabel().getText();
     }
-    
+
     public boolean isPopupPresent() {
         try {
             popup.isDisplayed();
@@ -61,8 +61,8 @@ public class Select extends AbstractComponent {
         } catch(NoSuchElementException ignored) {
             return false;
         }
-    }    
-    
+    }
+
     public void selectFromPopupByIndex(int index) {
         if (!isPopupPresent()) {
             throw new IllegalStateException("The popup is not present, so the user can't select an option.");
@@ -79,12 +79,12 @@ public class Select extends AbstractComponent {
                 }
             });
     }
-    
+
     public void showPopupByClick() {
         getOpenPopupArea().click();
         waitUntilPopupPresent();
-    }    
-    
+    }
+
     private WebElement getLabel() {
         return label;
     }
@@ -92,15 +92,15 @@ public class Select extends AbstractComponent {
     private WebElement getOpenPopupArea() {
         return openPopupArea;
     }
-    
+
     private WebElement getPopup() {
         return popup;
     }
-    
+
     private void waitUntilPopupPresent() {
         new WebDriverWait(getWebDriver())
             .failWith("The popup isn't present.")
             .until(ElementPresent.getInstance().element(getPopup()));
-    } 
-    
+    }
+
 }

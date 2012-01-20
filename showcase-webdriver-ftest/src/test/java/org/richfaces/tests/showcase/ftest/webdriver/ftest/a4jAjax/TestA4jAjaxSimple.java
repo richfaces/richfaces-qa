@@ -31,12 +31,12 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestA4jAjaxSimple extends AbstractWebDriverTest<AjaxPage> {
-    
+
     @Test
     public void testType() {
         getPage().getInput().click();
         getPage().getInput().sendKeys("something");
-        
+
         new WebDriverWait(getWebDriver())
             .failWith("After typing something into the input, the text should appear in the output area.")
             .until(TextEquals.getInstance().element(getPage().getOutput()).text("something"));
@@ -45,5 +45,5 @@ public class TestA4jAjaxSimple extends AbstractWebDriverTest<AjaxPage> {
     protected AjaxPage createPage() {
         return new AjaxPage();
     }
-    
+
 }

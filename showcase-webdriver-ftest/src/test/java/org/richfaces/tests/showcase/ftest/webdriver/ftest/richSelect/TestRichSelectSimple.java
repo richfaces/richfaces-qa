@@ -38,28 +38,28 @@ public class TestRichSelectSimple extends AbstractAndroidTest<SelectPage>{
         assertFalse(getPage().getFirstSelect().isPopupPresent());
         assertFalse(getPage().getSecondSelect().isPopupPresent());
     }
-    
+
     @Test
     public void testShowPopupByClickingOnArrow() {
         getPage().getFirstSelect().showPopupByArrow();
         getPage().getSecondSelect().showPopupByArrow();
     }
-    
+
     @Test
     public void testShowPopupByClickingOnInput() {
         getPage().getFirstSelect().showPopupByClick();
         getPage().getSecondSelect().showPopupByClick();
     }
-    
+
     @Test
     public void testSelectByMouse() throws ToolKitException {
         getPage().getFirstSelect().showPopupByArrow();
         getPage().getFirstSelect().selectFromPopupByIndex(0);
-        
+
         getPage().getSecondSelect().showPopupByArrow();
         getPage().getSecondSelect().selectFromPopupByIndex(0);
     }
-    
+
     @Override
     protected SelectPage createPage() {
         return new SelectPage(getWebDriver(), getToolKit());

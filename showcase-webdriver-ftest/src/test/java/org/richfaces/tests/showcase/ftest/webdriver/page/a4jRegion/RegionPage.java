@@ -29,7 +29,7 @@ import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class RegionPage implements ShowcasePage {
-   
+
     @FindBy(xpath = "//*[@class='example-cnt']//table[contains(@id, 'userInfoPanel1')]//td[contains(text(), 'User email')]/..//input")
     private WebElement brokenEmailInput;
     @FindBy(xpath = "//*[@class='example-cnt']//table[contains(@id, 'userInfoPanel1')]//td[contains(text(), 'User Name')]/..//input")
@@ -50,7 +50,7 @@ public class RegionPage implements ShowcasePage {
     private WebElement nameOutput;
     @FindBy(xpath = "//*[@class='example-cnt']//input[@type='submit'][@value='submit']")
     private WebElement submit;
-    
+
     @Override
     public String getDemoName() {
         return "region";

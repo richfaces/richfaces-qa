@@ -42,32 +42,32 @@ public class TestRichInputNumberSpinner extends AbstractAndroidTest<SpinnersPage
     @Test
     public void testSecondDecreaseAndIncrease() {
         testDecreaseAndIncrease(getPage().getSecondSpinner(), getPage().getFirstSpinner());
-    }    
-    
+    }
+
     @Test(enabled = false)
     // Fails beacuse https://issues.jboss.org/browse/RF-11628
     public void testFirstSetAndDecrease() throws ToolKitException {
         testSetAndDecrease(getPage().getFirstSpinner(), getPage().getSecondSpinner());
     }
-    
+
     @Test(enabled = false)
-    // Fails beacuse https://issues.jboss.org/browse/RF-11628    
+    // Fails beacuse https://issues.jboss.org/browse/RF-11628
     public void testSecondSetAndDecrease() throws ToolKitException {
         testSetAndDecrease(getPage().getSecondSpinner(), getPage().getFirstSpinner());
-    }    
-    
+    }
+
     @Test(enabled = false)
     // Fails beacuse https://issues.jboss.org/browse/RF-11628
     public void testFirstSetAndIncrease() throws ToolKitException {
         testSetAndIncrease(getPage().getFirstSpinner(), getPage().getSecondSpinner());
     }
-    
+
     @Test(enabled = false)
     // Fails beacuse https://issues.jboss.org/browse/RF-11628
     public void testSecondSetAndIncrease() throws ToolKitException {
         testSetAndIncrease(getPage().getSecondSpinner(), getPage().getFirstSpinner());
     }
-    
+
     @Test
     public void testInit() {
         assertEquals(getPage().getFirstSpinner().getNumber(), 50);
@@ -85,19 +85,19 @@ public class TestRichInputNumberSpinner extends AbstractAndroidTest<SpinnersPage
         toTest.increase();
         assertEquals(toStay.getNumber(), 50);
     }
-    
+
     private void testSetAndIncrease(Spinner toTest, Spinner toStay) throws ToolKitException {
         toTest.setNumber(23);
         assertEquals(toTest.getNumber(), 23);
         toTest.increase();
         assertEquals(toStay.getNumber(), 50);
-    }    
+    }
 
     private void testSetAndDecrease(Spinner toTest, Spinner toStay) throws ToolKitException {
         toTest.setNumber(23);
         assertEquals(toTest.getNumber(), 23);
         toTest.decrease();
         assertEquals(toStay.getNumber(), 50);
-    }  
-    
+    }
+
 }

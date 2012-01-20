@@ -45,17 +45,17 @@ public class SubTableToggleControlPage implements ShowcasePage {
     @FindBy(xpath = "//*[@class='example-cnt']//table[@class='rf-dt']/tbody[7]//span[not(contains(@style, 'none'))]/img")
     private WebElement infinityToggler;
     @FindBy(xpath = "//*[@class='example-cnt']//table[@class='rf-dt']/tbody[9]//span[not(contains(@style, 'none'))]/img")
-    private WebElement nissanToggler;      
+    private WebElement nissanToggler;
     @FindBy(xpath = "//*[@class='example-cnt']//table[@class='rf-dt']/tbody[11]//span[not(contains(@style, 'none'))]/img")
-    private WebElement toyotaToggler;    
-    
+    private WebElement toyotaToggler;
+
     private WebDriver webDriver;
-    
+
     public SubTableToggleControlPage(WebDriver webDriver) {
         Validate.notNull(webDriver);
         this.webDriver = webDriver;
     }
-    
+
     @Override
     public String getDemoName() {
         return "subTableToggleControl";
@@ -68,32 +68,32 @@ public class SubTableToggleControlPage implements ShowcasePage {
 
     public void toggleChevrolet() {
         toggleSubTable(chevroletToggler);
-    }    
-    
+    }
+
     public void toggleFord() {
         toggleSubTable(fordToggler);
     }
-    
+
     public void toggleGmc() {
         toggleSubTable(gmcToggler);
-    }    
-    
+    }
+
     public void toggleInfinity() {
         toggleSubTable(infinityToggler);
-    }    
+    }
 
     public void toggleNissan() {
         toggleSubTable(nissanToggler);
-    }  
-    
+    }
+
     public void toggleToyota() {
         toggleSubTable(toyotaToggler);
     }
-    
+
     private WebElement createContentElement(WebElement toggler) {
         return toggler.findElement(By.xpath("following::tbody[1]"));
     }
-    
+
     private void toggleSubTable(WebElement toggler) {
         WebElement content = createContentElement(toggler);
         boolean contentDisplayed = content.isDisplayed();
@@ -101,13 +101,13 @@ public class SubTableToggleControlPage implements ShowcasePage {
         if (contentDisplayed) {
             new WebDriverWait(webDriver)
                 .failWith("After clicking on the toggler, the content subtable shouldn't be displayed.")
-                .until(ElementNotDisplayed.getInstance().element(content));            
+                .until(ElementNotDisplayed.getInstance().element(content));
         } else {
             new WebDriverWait(webDriver)
                 .failWith("After clicking on the toggler, the content subtable should be displayed.")
-                .until(ElementDisplayed.getInstance().element(content));                        
+                .until(ElementDisplayed.getInstance().element(content));
         }
-        
 
-    }   
+
+    }
 }

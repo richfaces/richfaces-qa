@@ -48,10 +48,10 @@ public class TestA4jQueueSimple extends AbstractWebDriverTest<QueuePage>{
                 .until(TextEquals.getInstance().element(getPage().getOutput()).text(inputAll.toString()));
             assertEquals(getPage().getEvents().getText(), String.valueOf(inputAll.toString().length()));
             assertEquals(getPage().getUpdates().getText(), String.valueOf(n));
-            assertEquals(getPage().getRequests().getText(), String.valueOf(n));            
+            assertEquals(getPage().getRequests().getText(), String.valueOf(n));
         }
     }
-    
+
     @Override
     protected QueuePage createPage() {
         return new QueuePage();

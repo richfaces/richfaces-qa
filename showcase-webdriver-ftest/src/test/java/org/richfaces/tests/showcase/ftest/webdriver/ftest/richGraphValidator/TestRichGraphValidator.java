@@ -40,7 +40,7 @@ public class TestRichGraphValidator extends AbstractWebDriverTest<PasswordValida
         getPage().getPassword().sendKeys("12345");
         getPage().getConfirmation().click();
         getPage().getConfirmation().sendKeys("1234a");
-        getPage().getSubmit().click();        
+        getPage().getSubmit().click();
         new WebDriverWait(getWebDriver())
             .failWith("After submitting a form wrong confirmation, validation message should be present.")
             .until(ElementPresent.getInstance().element(getPage().getGraphValidatorMessageArea()));
@@ -54,7 +54,7 @@ public class TestRichGraphValidator extends AbstractWebDriverTest<PasswordValida
             .until(ElementPresent.getInstance().element(getPage().getInfoMessageArea()));
         assertTrue(getPage().getInfoMessageArea().getText().contains("Successfully changed!"));
     }
-    
+
     @Test
     public void testLongPassword() {
         getPage().getPassword().click();
@@ -63,9 +63,9 @@ public class TestRichGraphValidator extends AbstractWebDriverTest<PasswordValida
         new WebDriverWait(getWebDriver())
             .failWith("After submitting a form with long password, validation message should be present.")
             .until(ElementPresent.getInstance().element(getPage().getValidatorMessageArea()));
-        assertTrue(getPage().getValidatorMessageArea().getText().contains("between 5 and 15 characters"));              
+        assertTrue(getPage().getValidatorMessageArea().getText().contains("between 5 and 15 characters"));
     }
-    
+
     @Test
     public void testShortPassword() {
         getPage().getPassword().click();
@@ -74,9 +74,9 @@ public class TestRichGraphValidator extends AbstractWebDriverTest<PasswordValida
         new WebDriverWait(getWebDriver())
             .failWith("After submitting a form with short password, validation message should be present.")
             .until(ElementPresent.getInstance().element(getPage().getValidatorMessageArea()));
-        assertTrue(getPage().getValidatorMessageArea().getText().contains("between 5 and 15 characters"));        
+        assertTrue(getPage().getValidatorMessageArea().getText().contains("between 5 and 15 characters"));
     }
-    
+
     @Override
     protected PasswordValidationPage createPage() {
         return new PasswordValidationPage();

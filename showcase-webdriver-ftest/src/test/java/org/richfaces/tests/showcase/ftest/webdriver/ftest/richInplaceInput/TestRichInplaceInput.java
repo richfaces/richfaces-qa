@@ -56,7 +56,7 @@ public class TestRichInplaceInput extends AbstractWebDriverTest<InplaceInputPage
         getPage().getNameInput().click();
         assertTrue(getPage().getEmailInput().getText().contains("Hello"));
     }
-    
+
     @Override
     protected InplaceInputPage createPage() {
         return new InplaceInputPage(getWebDriver());

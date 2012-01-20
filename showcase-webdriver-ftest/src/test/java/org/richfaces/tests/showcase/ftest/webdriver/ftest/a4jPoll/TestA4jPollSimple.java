@@ -32,7 +32,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestA4jPollSimple extends AbstractWebDriverTest<PollPage> {
-    
+
     // https://issues.jboss.org/browse/RF-11872
     @Test(groups = {"reported-without-fix-version"})
     public void testStop() throws InterruptedException {
@@ -41,10 +41,10 @@ public class TestA4jPollSimple extends AbstractWebDriverTest<PollPage> {
         Thread.sleep(1500);
         new WebDriverWait(getWebDriver())
             .failWith("After clicking on the stop button, there should be not updates.")
-            .until(TextEquals.getInstance().element(getPage().getDate()).text(before));        
-                
+            .until(TextEquals.getInstance().element(getPage().getDate()).text(before));
+
     }
-    
+
     @Test
     public void testUpdates() {
         for (int i=0; i<2; i++) {
@@ -54,9 +54,9 @@ public class TestA4jPollSimple extends AbstractWebDriverTest<PollPage> {
                 .until(TextNotEquals.getInstance().element(getPage().getDate()).text(before));
         }
     }
-    
+
     protected PollPage createPage() {
         return new PollPage();
     }
-    
+
 }

@@ -35,12 +35,12 @@ import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 public abstract class AbstractAndroidTest<Page extends ShowcasePage> extends AbstractWebDriverTest<Page> {
 
     private ToolKit toolKit;
-    
+
     /**
      * Creates a new instance of {@link AbstractAndroidTest} with
      * the default configuration {@link PropertyTestConfiguration}
      * and default toolkit configuration {@link PropertyToolKitConfiguration}
-     * 
+     *
      * @throws IllegalStateException if the android web driver isn't turned on
      */
     public AbstractAndroidTest() {
@@ -50,7 +50,7 @@ public abstract class AbstractAndroidTest<Page extends ShowcasePage> extends Abs
     /**
      * Creates a new instance of {@link AbstractAndroidTest} with
      * the given configuration
-     * 
+     *
      * @param testConfiguration
      * @param toolKitConfiguration
      * @throws IllegalStateException if the android web driver isn't turned on
@@ -58,20 +58,20 @@ public abstract class AbstractAndroidTest<Page extends ShowcasePage> extends Abs
     public AbstractAndroidTest(TestConfiguration testConfiguration, ToolKitConfiguration toolKitConfiguration) {
         super(testConfiguration);
         Validate.notNull(toolKitConfiguration);
-        this.toolKit = new ToolKit(toolKitConfiguration);       
+        this.toolKit = new ToolKit(toolKitConfiguration);
         if (!getConfiguration().isAndroid()) {
             throw new IllegalStateException("The android test is used, but android web driver isn't turned on.");
         }
     }
-    
+
     /**
      * Returns a toolkit to control running device through Android SDK.
      * Its configurations is set in the {@link Constructor}.
-     * 
+     *
      * @return toolkit
      */
     protected ToolKit getToolKit() {
         return toolKit;
     }
-    
+
 }

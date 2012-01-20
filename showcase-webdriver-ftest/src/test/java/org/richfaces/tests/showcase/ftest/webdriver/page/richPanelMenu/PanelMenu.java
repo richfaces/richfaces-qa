@@ -35,7 +35,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class PanelMenu extends AbstractComponent{
-    
+
     public PanelMenu(WebDriver webDriver, ToolKit toolKit, WebElement webElement) {
         super(webDriver, toolKit, webElement);
     }
@@ -43,7 +43,7 @@ public class PanelMenu extends AbstractComponent{
     public int getNumberOfFirstLevelGroups() {
         return getWebElement().findElements(By.xpath("div[@class='rf-pm-top-gr']")).size();
     }
-    
+
     public boolean isFirstLevelGroupExpanded(int index) {
         try {
             getWebElement().findElement(By.xpath("div[@class='rf-pm-top-gr'][" + (index+1) + "]/div[contains(@class,'rf-pm-hdr-exp')]"));
@@ -53,7 +53,7 @@ public class PanelMenu extends AbstractComponent{
         catch(StaleElementReferenceException ignored) {}
         return false;
     }
-    
+
     public void toggleFirstLevelGroup(final int index) {
         boolean expanded = isFirstLevelGroupExpanded(index);
         getWebElement().findElement(By.xpath("div[@class='rf-pm-top-gr'][" + (index+1) + "]/div[1]")).click();
@@ -77,7 +77,7 @@ public class PanelMenu extends AbstractComponent{
             .failWith("The group <" + index + "> in panel menu can't be " + (expanded ? "collapsed" : "expanded") + ".")
             .until(condition);
     }
-    
+
     public void selectSecondLevelItem(int groupIndex, int itemIndex) {
         final String itemLocator = "div[@class='rf-pm-top-gr'][" + (groupIndex+1) + "]//div[contains(@class, 'rf-pm-itm')][" + (itemIndex+1) + "]";
         getWebElement().findElement(By.xpath(itemLocator + "//td[@class='rf-pm-itm-lbl']")).click();
@@ -94,5 +94,5 @@ public class PanelMenu extends AbstractComponent{
                 }
             });
     }
-    
+
 }

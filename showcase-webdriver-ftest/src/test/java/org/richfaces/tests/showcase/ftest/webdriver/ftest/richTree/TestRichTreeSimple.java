@@ -32,7 +32,7 @@ import static org.testng.Assert.*;
  */
 public class TestRichTreeSimple extends AbstractWebDriverTest<TreePage>{
 
-    
+
     @Test
     public void testExpandFirstLevel() {
         getPage().expandFirstLevelAll();
@@ -46,13 +46,13 @@ public class TestRichTreeSimple extends AbstractWebDriverTest<TreePage>{
         getPage().expandSecondLevel();
         assertEquals(getPage().countThirdLevelVisible(), 26, "Number of visible third level nodes after expanding the second level nodes doesn't match.");
     }
-    
+
     @Test(groups = {"broken"})
     public void testInit() {
         assertEquals(getPage().countSecondLevelVisible(), 0, "Number of visible second level nodes doesn't match.");
         assertEquals(getPage().countThirdLevelVisible(), 0, "Number of visible third level nodes doesn't match.");
     }
-    
+
     @Override
     protected TreePage createPage() {
         return new TreePage(getWebDriver());

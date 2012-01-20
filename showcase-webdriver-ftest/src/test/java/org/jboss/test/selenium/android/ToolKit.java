@@ -28,39 +28,39 @@ import org.apache.commons.lang.Validate;
 /**
  * The Android SDK driver. It provides basic functionality to
  * control running device.
- * 
+ *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class ToolKit {
 
     public static String ADB_DIR = "platform-tools";
-    
+
     private ToolKitConfiguration configuration;
-    
+
     /**
      * Creates a new instance of ToolKit based on the given configuration
-     * 
+     *
      * @param configuration
      */
     public ToolKit(ToolKitConfiguration configuration) {
         Validate.notNull(configuration);
         this.configuration = configuration;
     }
-    
+
     /**
      * Sends a key event to the running device and delays for the time set
      * in the configuration.
-     * 
+     *
      * @param key
      * @throws ToolKitException if the events can't be sent or the delay fails
      */
     public void sendKey(Key key) throws ToolKitException {
         sendKey(key, configuration.getSendKeyDelay());
     }
-    
+
     /**
      * Sends a key event to the running device and delays for the given time
-     * 
+     *
      * @param key
      * @param delay amount of time in miliseconds
      * @throws ToolKitException if the events can't be sent or the delay fails
@@ -78,7 +78,7 @@ public class ToolKit {
         } catch(InterruptedException e) {
             throw new ToolKitException("The key can't be sent to the device.", e);
         }
-        
+
     }
-    
+
 }

@@ -59,15 +59,15 @@ public class QueuePage implements ShowcasePage {
     public WebElement getEvents() {
         return events;
     }
- 
+
     public WebElement getRequests() {
         return requests;
-    }    
-    
+    }
+
     public WebElement getUpdates() {
         return domUpdates;
     }
-    
+
     public WebElement getOutput() {
         return output;
     }

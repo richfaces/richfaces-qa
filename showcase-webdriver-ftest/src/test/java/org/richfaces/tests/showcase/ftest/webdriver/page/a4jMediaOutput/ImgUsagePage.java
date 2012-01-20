@@ -35,7 +35,7 @@ public class ImgUsagePage implements ShowcasePage {
     public static final int INDEX_GREEN = 2;
     public static final int INDEX_YELLOW = 3;
     public static final int INDEX_BLUE = 4;
-    
+
     @FindBy(xpath = "//*[@class='example-cnt']//img[contains(@id, 'img')]")
     private WebElement image;
     @FindBy(xpath = "//*[@class='example-cnt']//td[contains(text(), 'Color 1')]/../td[position()=2]/select")
@@ -46,7 +46,7 @@ public class ImgUsagePage implements ShowcasePage {
     private WebElement selectTextColor;
     @FindBy(xpath = "//*[@class='example-cnt']//input[@type='submit']")
     private WebElement submitButton;
-    
+
     @Override
     public String getDemoName() {
         return "mediaOutput";
@@ -72,9 +72,9 @@ public class ImgUsagePage implements ShowcasePage {
     public WebElement getSelectTextColor() {
         return selectTextColor;
     }
-    
+
     public WebElement getSubmitButton() {
         return submitButton;
     }
-    
+
 }

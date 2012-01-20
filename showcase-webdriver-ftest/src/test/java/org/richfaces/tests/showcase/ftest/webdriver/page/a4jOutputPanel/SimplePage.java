@@ -37,12 +37,12 @@ public class SimplePage implements ShowcasePage {
     @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'out1')]")
     private WebElement firstOutput;
     @FindBy(xpath = "//*[@class='example-cnt']//span[contains(text(), 'text2')]")
-    private WebElement secondError;    
+    private WebElement secondError;
     @FindBy(xpath = "//*[@class='example-cnt']//input[@type='text'][contains(@name, 'text2')]")
     private WebElement secondInput;
     @FindBy(xpath = "//*[@class='example-cnt']//div[contains(@id, 'out2')]")
     private WebElement secondOutput;
-    
+
     @Override
     public String getDemoName() {
         return "outputPanel";

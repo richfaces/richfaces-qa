@@ -37,17 +37,17 @@ public class TestA4jCommandButtonSimple extends AbstractWebDriverTest<CommandBut
     public void testTypeAndSend() {
         getPage().getInput().click();
         getPage().getInput().sendKeys("something");
-        
+
         getPage().getButton().click();
-        
+
         new WebDriverWait(getWebDriver())
             .until(ElementPresent.getInstance().element(getPage().getOutput()));
-        
+
         assertEquals(getPage().getOutput().getText(), "Hello something !", "After typing something into the input and clicking on the command button, the text should appear in the output area.");
     }
-    
+
     protected CommandButtonPage createPage() {
         return new CommandButtonPage();
     }
-    
+
 }

@@ -37,7 +37,7 @@ public class PanelMenuPage extends AbstractAndroidPage {
     private PanelMenu panelMenu;
     @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'current')]")
     private WebElement selectionElement;
-    
+
     public PanelMenuPage(WebDriver webDriver, ToolKit toolKit) {
         super(webDriver, toolKit);
     }
@@ -55,12 +55,12 @@ public class PanelMenuPage extends AbstractAndroidPage {
     public String getCurrentSelection() {
         return selectionElement.getText();
     }
-    
+
     public PanelMenu getPanelMenu() {
         if (panelMenu == null) {
             panelMenu = new PanelMenu(getWebDriver(), getToolKit(), panelMenuElement);
         }
         return panelMenu;
     }
-    
+
 }

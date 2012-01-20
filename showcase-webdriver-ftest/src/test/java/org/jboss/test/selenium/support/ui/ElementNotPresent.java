@@ -32,30 +32,30 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 public class ElementNotPresent implements ExpectedCondition<Boolean> {
 
     private WebElement element;
-    
+
     public static ElementNotPresent getInstance() {
         return new ElementNotPresent();
     }
-    
+
     public Boolean apply(WebDriver driver) {
         try {
             element.isDisplayed();
             return false;
         } catch (NoSuchElementException e) {
             return true;
-        }    
+        }
     }
-    
+
     public ElementNotPresent element(WebElement element) {
         ElementNotPresent copy = copy();
         copy.element = element;
         return copy;
     }
-    
+
     private ElementNotPresent copy() {
         ElementNotPresent copy = new ElementNotPresent();
         copy.element = this.element;
         return copy;
-    }    
-    
+    }
+
 }

@@ -32,10 +32,10 @@ public class PollPage implements ShowcasePage {
 
     @FindBy(xpath = "//*[@class='example-cnt']//input[@type='submit']")
     private WebElement button;
-    
+
     @FindBy(xpath = "//*[@class='example-cnt']//td/span")
     private WebElement date;
-    
+
     @Override
     public String getDemoName() {
         return "poll";
@@ -54,6 +54,6 @@ public class PollPage implements ShowcasePage {
         return date;
     }
 
-    
-    
+
+
 }

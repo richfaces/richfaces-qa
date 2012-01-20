@@ -30,16 +30,16 @@ import org.openqa.selenium.support.FindBy;
 public abstract class AbstractRichMessagePage implements ShowcasePage {
 
     @FindBy(xpath = "//*[@class='example-cnt']//input[contains(@id, 'address')]")
-    private WebElement addressInput;    
+    private WebElement addressInput;
     @FindBy(xpath = "//*[@class='example-cnt']//input[contains(@id, 'job')]")
     private WebElement jobInput;
     @FindBy(xpath = "//*[@class='example-cnt']//input[contains(@id, 'name')]")
     private WebElement nameInput;
     @FindBy(xpath = "//*[@class='example-cnt']//input[@type='submit']")
-    private WebElement submitButton;    
+    private WebElement submitButton;
     @FindBy(xpath = "//*[@class='example-cnt']//input[contains(@id, 'zip')]")
-    private WebElement zipInput;   
-    
+    private WebElement zipInput;
+
     public WebElement getAddressInput() {
         return addressInput;
     }
@@ -55,14 +55,14 @@ public abstract class AbstractRichMessagePage implements ShowcasePage {
     public WebElement getSubmitButton() {
         return submitButton;
     }
-    
+
     public WebElement getZipInput() {
         return zipInput;
-    }    
-    
-    abstract public WebElement getAddressErrorMessageArea();
-    abstract public WebElement getJobErrorMessageArea();
-    abstract public WebElement getNameErrorMessageArea();
-    abstract public WebElement getZipErrorMessageArea();
-    
+    }
+
+    public abstract WebElement getAddressErrorMessageArea();
+    public abstract WebElement getJobErrorMessageArea();
+    public abstract WebElement getNameErrorMessageArea();
+    public abstract WebElement getZipErrorMessageArea();
+
 }

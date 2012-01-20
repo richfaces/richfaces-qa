@@ -33,12 +33,12 @@ import static org.testng.Assert.*;
 public class TestRichExtendedDataTableSimple extends AbstractWebDriverTest<SimpleTablePage>{
 
     private static final CarWithVinCode FIRST_CAR = new CarWithVinCode("Chevrolet", "Corvette", "LRAZJGURJUKEWMIXV");
-    
+
     @Test(enabled=false)
     public void testInit() {
         assertEquals(getPage().getFirstCar(), FIRST_CAR, "The first car doesn't match.");
     }
-    
+
     @Override
     protected SimpleTablePage createPage() {
         return new SimpleTablePage();

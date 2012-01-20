@@ -37,14 +37,14 @@ public class TestRichTreeModelRecursiveAdaptorSimple extends AbstractWebDriverTe
         getPage().expandFirstLevelFirstNode();
         assertTrue(getPage().countSecondLevelVisible() > 0, "Number of visible second level nodes after expanding the fist level nodes doesn't match.");
         assertEquals(getPage().countThirdLevelVisible(), 0, "Number of visible third level nodes after expanding the fist level nodes doesn't match.");
-    }    
-    
+    }
+
     @Test
     public void testInit() {
         assertEquals(getPage().countSecondLevelVisible(), 0, "Number of visible second level nodes doesn't match.");
-        assertEquals(getPage().countThirdLevelVisible(), 0, "Number of visible third level nodes doesn't match.");        
+        assertEquals(getPage().countThirdLevelVisible(), 0, "Number of visible third level nodes doesn't match.");
     }
-    
+
     @Override
     protected TreeModelRecursiveAdaptorPage createPage() {
         return new TreeModelRecursiveAdaptorPage(getWebDriver());

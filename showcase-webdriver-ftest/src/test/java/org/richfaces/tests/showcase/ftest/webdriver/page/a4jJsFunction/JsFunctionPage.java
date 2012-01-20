@@ -11,16 +11,16 @@ import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 public class JsFunctionPage implements ShowcasePage {
 
     @FindBy(xpath = "//*[@class='example-cnt']//span[text()='Alex']")
-    private WebElement nameAlex; 
+    private WebElement nameAlex;
     @FindBy(xpath = "//*[@class='example-cnt']//span[text()='John']")
     private WebElement nameJohn;
     @FindBy(xpath = "//*[@class='example-cnt']//span[text()='Kate']")
     private WebElement nameKate;
-    private Map<String, WebElement> names;    
+    private Map<String, WebElement> names;
     @FindBy(xpath = "//*[@class='example-cnt']//b/span")
     private WebElement output;
-    
-    
+
+
     @Override
     public String getDemoName() {
         return "jsFunction";
@@ -34,7 +34,7 @@ public class JsFunctionPage implements ShowcasePage {
     public WebElement getOutput() {
         return output;
     }
-    
+
     public Map<String, WebElement> getNames() {
         if (names == null) {
             Map<String, WebElement> newNames = new HashMap<String, WebElement>();
@@ -45,5 +45,5 @@ public class JsFunctionPage implements ShowcasePage {
         }
         return names;
     }
-    
+
 }
