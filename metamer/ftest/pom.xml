@@ -21,7 +21,7 @@
     </parent>
 
     <artifactId>metamer-ftest</artifactId>
-    <name>Metamer: RichFaces Testing Application - Functional Tests</name>
+    <name>RichFaces Metamer Ftest</name>
 
     <properties>
         

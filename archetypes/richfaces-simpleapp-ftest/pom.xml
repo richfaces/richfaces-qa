@@ -29,7 +29,7 @@
     </parent>
 
     <artifactId>richfaces-simpleapp-ftest</artifactId>
-    <name>richfaces-simpleapp-ftest</name>
+    <name>RichFaces Archetype Simpleapp Ftest</name>
     <description>Functional Test for richfaces-archetype-simpleapp</description>
 
     <properties>

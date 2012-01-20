@@ -13,7 +13,7 @@
     <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-showcase-ftest</artifactId>
     <packaging>jar</packaging>
-    <name>RichFaces ShowCase Smoke Ftest</name>
+    <name>RichFaces Showcase Smoke Ftest</name>
 
     <properties>
 

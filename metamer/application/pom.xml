@@ -23,7 +23,7 @@
 
     <artifactId>metamer</artifactId>
     <packaging>war</packaging>
-    <name>Metamer: RichFaces Testing Application</name>
+    <name>RichFaces Metamer Testing Application</name>
 
     <properties>
         <jetty.port>8080</jetty.port>

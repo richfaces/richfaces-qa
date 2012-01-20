@@ -33,7 +33,7 @@
     <groupId>org.richfaces.tests</groupId>
     <artifactId>metamer-root</artifactId>
     <packaging>pom</packaging>
-    <name>Metamer: RichFaces Testing Application - Project Root</name>
+    <name>RichFaces Metamer Root</name>
 
     <modules>
         <module>application</module>
