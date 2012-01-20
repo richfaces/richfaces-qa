@@ -41,22 +41,5 @@
         <module>richfaces-simpleapp-ftest</module>
     </modules>
 
-    <profiles>
-        <profile>
-            <id>checkstyle</id>
-            <activation>
-                <property>
-                    <name>!eclipse</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-checkstyle-plugin</artifactId>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>
+

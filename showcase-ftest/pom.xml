@@ -515,21 +515,6 @@
                 </plugins>
             </build>
         </profile>
-         <profile>
-            <id>checkstyle</id>
-            <activation>
-                <property>
-                    <name>!eclipse</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-checkstyle-plugin</artifactId>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
     </profiles>
 
 </project>
