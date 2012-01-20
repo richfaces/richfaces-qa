@@ -45,7 +45,7 @@ import org.testng.annotations.Test;
  */
 @IssueTracking("https://issues.jboss.org/browse/RF-10254")
 public class TestAutocompleteByKeys extends AbstractAutocompleteTest {
-    
+
     @Inject
     @Use(booleans = { true, false })
     Boolean autofill;
@@ -84,7 +84,7 @@ public class TestAutocompleteByKeys extends AbstractAutocompleteTest {
         assertCompletionVisible(false);
         assertTrue(getAutocomplete().getInputText().toLowerCase().startsWith(getExpectedStateForPrefix().toLowerCase()));
     }
-    
+
     @Test
     public void testSimpleSelection() {
        String expected = "Alaska"; // this item is 2nd if type filter "ala", so it ensure that it was not picked first item

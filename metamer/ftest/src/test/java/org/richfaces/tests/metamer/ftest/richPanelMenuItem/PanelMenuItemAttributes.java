@@ -28,7 +28,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @version $Revision: 22751 $
  */
 public enum PanelMenuItemAttributes implements AttributeEnum {
-    
+
     bypassUpdates,
     data,
     disabled,
@@ -50,5 +50,5 @@ public enum PanelMenuItemAttributes implements AttributeEnum {
     status,
     style,
     styleClass,
-    
+
 }

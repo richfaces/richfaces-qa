@@ -30,7 +30,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @version $Revision: 22748 $
  */
 public enum MessageAttributes implements AttributeEnum {
-    
+
     ajaxRendered,
     dir,
     FOR,
@@ -41,5 +41,5 @@ public enum MessageAttributes implements AttributeEnum {
     showSummary,
     style,
     title,
-    
+
 }

@@ -72,7 +72,7 @@ public class TestFormQueue extends AbstractAjocadoTest {
      * <p>
      * Tests request delays for one form queue.
      * </p>
-     * 
+     *
      * <p>
      * Uses one form queue, which controls events from two distinct event sources.
      * </p>
@@ -104,11 +104,11 @@ public class TestFormQueue extends AbstractAjocadoTest {
     /**
      * <p>
      * Tests the event handlers producing count of events (count of events, requests and updates).
-     * 
+     *
      * <p>
      * Uses one form queue, which controls events from two distinct event sources.
      * </p>
-     * 
+     *
      * <p>
      * When one source waits for delay and another source produces event, events from first source should be immediately
      * processed.
@@ -142,11 +142,11 @@ public class TestFormQueue extends AbstractAjocadoTest {
      * <p>
      * Tests request delays for two form queues.
      * </p>
-     * 
+     *
      * <p>
      * Uses two form queues, controlling events from four distinct event sources (two for each queue).
      * </p>
-     * 
+     *
      * <p>
      * When one source waits for delay and another source produces event, events from first source should be immediately
      * processed.
@@ -187,11 +187,11 @@ public class TestFormQueue extends AbstractAjocadoTest {
     /**
      * <p>
      * Tests the event handlers producing count of events (count of events, requests and updates).
-     * 
+     *
      * <p>
      * Uses two form queues, controlling events from four distinct event sources (two for each queue).
      * </p>
-     * 
+     *
      * <p>
      * When one source waits for delay and another source produces event, events from first source should be immediately
      * processed.

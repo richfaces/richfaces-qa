@@ -109,7 +109,7 @@ public class TestPanelMenuItemSimple extends AbstractAjocadoTest {
         JQueryLocator input = pjq("select[id$=leftDisabledIcon]");
         ElementLocator<JQueryLocator> icon = leftIcon.getIcon();
         ElementLocator<JQueryLocator> image = jq(leftIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, ""); 
+        verifyStandardIcons(input, icon, image, "");
     }
 
     @Test
@@ -117,7 +117,7 @@ public class TestPanelMenuItemSimple extends AbstractAjocadoTest {
         JQueryLocator input = pjq("select[id$=leftIcon]");
         ElementLocator<JQueryLocator> icon = leftIcon.getIcon();
         ElementLocator<JQueryLocator> image = jq(leftIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, ""); 
+        verifyStandardIcons(input, icon, image, "");
 
         panelMenuItemAttributes.set(disabled, true);
         assertTrue(leftIcon.isTransparent());
@@ -155,7 +155,7 @@ public class TestPanelMenuItemSimple extends AbstractAjocadoTest {
         JQueryLocator input = pjq("select[id$=rightDisabledIcon]");
         ElementLocator<JQueryLocator> icon = rightIcon.getIcon();
         ElementLocator<JQueryLocator> image = jq(rightIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, ""); 
+        verifyStandardIcons(input, icon, image, "");
     }
 
     @Test
@@ -164,7 +164,7 @@ public class TestPanelMenuItemSimple extends AbstractAjocadoTest {
         JQueryLocator input = pjq("select[id$=rightIcon]");
         ElementLocator<JQueryLocator> icon = rightIcon.getIcon();
         ElementLocator<JQueryLocator> image = jq(rightIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, ""); 
+        verifyStandardIcons(input, icon, image, "");
 
         panelMenuItemAttributes.set(disabled, true);
         assertTrue(rightIcon.isTransparent());
@@ -218,12 +218,12 @@ public class TestPanelMenuItemSimple extends AbstractAjocadoTest {
     public void testStyleClass() {
         super.testStyleClass(item);
     }
-    
+
     private void verifyStandardIcons(ElementLocator<JQueryLocator> input, ElementLocator<JQueryLocator> icon, ElementLocator<JQueryLocator> image, String classSuffix) {
         IconsChecker checker = new IconsChecker(selenium, "rf-ico-", "");
         checker.checkCssImageIcons(input, icon, classSuffix);
         checker.checkCssNoImageIcons(input, icon, classSuffix);
         checker.checkImageIcons(input, icon, image, classSuffix, false);
         checker.checkNone(input, icon, classSuffix);
-    }       
+    }
 }

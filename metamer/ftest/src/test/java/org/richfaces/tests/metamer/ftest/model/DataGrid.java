@@ -63,13 +63,13 @@ public class DataGrid extends AbstractModel<JQueryLocator> {
     }
 
     public int getRowCount() {
-    	return selenium.getCount(ColumnModel.getNthChildElement(rows.getChild(rowToElement), 1));
-        //return selenium.getCount(rows.getChild(rowToElement).getNthChildElement(1));
+        return selenium.getCount(ColumnModel.getNthChildElement(rows.getChild(rowToElement), 1));
+        // return selenium.getCount(rows.getChild(rowToElement).getNthChildElement(1));
     }
 
     public JQueryLocator getElementOnCoordinates(int row, int column) {
         return ColumnModel.getNthChildElement(rows.get(row).getChild(rowToNonEmptyElement), column);
-    	//return rows.get(row).getChild(rowToNonEmptyElement).getNthChildElement(column);
+        // return rows.get(row).getChild(rowToNonEmptyElement).getNthChildElement(column);
     }
 
     public JQueryLocator getElementOnIndex(int index) {

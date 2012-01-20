@@ -28,10 +28,10 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @version $Revision: 22741 $
  */
 public enum DragIndicatorAttributes implements AttributeEnum {
-    
+
     acceptClass,
     draggingClass,
     rejectClass,
     rendered
-    
+
 }

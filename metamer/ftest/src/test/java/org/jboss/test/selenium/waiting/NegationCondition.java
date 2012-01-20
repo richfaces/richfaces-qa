@@ -34,23 +34,23 @@ import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
 public class NegationCondition implements SeleniumCondition, JavaScriptCondition{
 
     private SeleniumCondition condition;
-    
+
     /**
      * Factory method.
-     * 
+     *
      * @return single instance of NegationCondition
      */
     public static NegationCondition getInstance() {
         return new NegationCondition();
-    }    
-    
+    }
+
     public NegationCondition condition(SeleniumCondition condition) {
         Validate.notNull(condition);
         NegationCondition copy = new NegationCondition();
         copy.condition = condition;
         return copy;
     }
-    
+
     @Override
     public JavaScript getJavaScriptCondition() {
         if (!(condition instanceof JavaScriptCondition)) {

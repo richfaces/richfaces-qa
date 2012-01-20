@@ -78,7 +78,7 @@ public class TestFacets extends AbstracStatusTest {
     private static enum IterateStatus {
         START, STOP, ERROR
     }
-    
+
     /**
      * Routine to set value into input with specified locator
      * @param locator
@@ -88,7 +88,7 @@ public class TestFacets extends AbstracStatusTest {
         selenium.type(locator, value);
         guardXhr(selenium).click(applyFacetsButton);
     }
-    
+
     private String getValueFrom(ElementLocator<?> locator) {
         return selenium.getValue(locator);
     }

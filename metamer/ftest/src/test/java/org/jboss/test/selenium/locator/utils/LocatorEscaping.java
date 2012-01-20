@@ -5,52 +5,48 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 
 public class LocatorEscaping {
 
-	public static final JQueryLocator jq(String locator) {
+    public static final JQueryLocator jq(String locator) {
 
-		String escapedString = locator;
+        String escapedString = locator;
 
-		if (locator.indexOf("[") != -1) {
-			escapedString = escapeSelector(locator);
-		}
+        if (locator.indexOf("[") != -1) {
+            escapedString = escapeSelector(locator);
+        }
 
-		return new JQueryLocator(escapedString);
-	}
+        return new JQueryLocator(escapedString);
+    }
 
-	private static String escapeSelector(String jquerySelector) {
+    private static String escapeSelector(String jquerySelector) {
 
-		// find the text between []
-		int indexOpen = jquerySelector.indexOf("[");
-		String escapedString = null;
+        // find the text between []
+        int indexOpen = jquerySelector.indexOf("[");
+        String escapedString = null;
 
-		if (indexOpen != -1) {
-			int indexClose = jquerySelector.indexOf("]");
-			int indexEqualsSign = indexOpen + (jquerySelector.substring(indexOpen)).indexOf("=");
-			
-			String onlyThisNeedToBeEscaped = jquerySelector.substring(
-					indexEqualsSign + 1, indexClose);
+        if (indexOpen != -1) {
+            int indexClose = jquerySelector.indexOf("]");
+            int indexEqualsSign = indexOpen + (jquerySelector.substring(indexOpen)).indexOf("=");
 
-			// see the http://api.jquery.com/category/selectors/ NOTE that I left {, }, ' since they are used in attribute value
-			//and do not need escaping
-			char[] escapedChars = { '!', '"', '#', '$', '%', '&', '(',
-					')', '*', '+', ',', '.', '/', ':', ';', '<', '=', '>', '?',
-					'@', '[', '\\', ']', '^', '`', '|', '~' };
-			
-			escapedString = StringUtils.escape(onlyThisNeedToBeEscaped,
-					escapedChars, '\\');
+            String onlyThisNeedToBeEscaped = jquerySelector.substring(indexEqualsSign + 1, indexClose);
 
-			escapedString = jquerySelector.replace(onlyThisNeedToBeEscaped,
-					escapedString);
+            // see the http://api.jquery.com/category/selectors/ NOTE that I left {, }, ' since they are used in
+            // attribute value
+            // and do not need escaping
+            char[] escapedChars = { '!', '"', '#', '$', '%', '&', '(', ')', '*', '+', ',', '.', '/', ':', ';', '<',
+                '=', '>', '?', '@', '[', '\\', ']', '^', '`', '|', '~' };
 
-			String checkFurther = jquerySelector.substring( indexClose + 1);
+            escapedString = StringUtils.escape(onlyThisNeedToBeEscaped, escapedChars, '\\');
 
-			if (checkFurther.indexOf("[") != -1) {
+            escapedString = jquerySelector.replace(onlyThisNeedToBeEscaped, escapedString);
 
-				String furtherEscapedPart = escapeSelector(checkFurther);
-				escapedString = escapedString.replace(checkFurther,
-						furtherEscapedPart);
-			}
-		}
+            String checkFurther = jquerySelector.substring(indexClose + 1);
 
-		return escapedString;
-	}
+            if (checkFurther.indexOf("[") != -1) {
+
+                String furtherEscapedPart = escapeSelector(checkFurther);
+                escapedString = escapedString.replace(checkFurther, furtherEscapedPart);
+            }
+        }
+
+        return escapedString;
+    }
 }

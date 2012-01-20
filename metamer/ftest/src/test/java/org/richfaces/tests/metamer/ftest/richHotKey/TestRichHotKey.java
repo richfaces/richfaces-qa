@@ -32,7 +32,7 @@ import org.testng.annotations.Test;
 public class TestRichHotKey extends AbstractRichHotKeyTest {
 
     private static final int NUMBER_OF_TESTS = 5;
-    
+
     @Test
     public void testFirstAndSecondPair() {
         for (int i=1; i<=NUMBER_OF_TESTS; i++) {
@@ -46,7 +46,7 @@ public class TestRichHotKey extends AbstractRichHotKeyTest {
                 selenium.keyPressNative(KeyEvent.VK_X);
                 selenium.keyDownNative(KeyEvent.VK_ALT);
                 selenium.keyPressNative(KeyEvent.VK_X);
-                selenium.keyUpNative(KeyEvent.VK_ALT);                
+                selenium.keyUpNative(KeyEvent.VK_ALT);
             }
             checkEvent("hotkey 1 : onkeydown", i);
             checkEvent("hotkey 2 : onkeydown", i);
@@ -54,7 +54,7 @@ public class TestRichHotKey extends AbstractRichHotKeyTest {
             clearHotKeyEvents();
         }
     }
-    
+
     @Test
     public void testFirstOne() {
         ATTRIBUTES_FIRST.set(HotKeyAttributes.key, "x");
@@ -68,12 +68,12 @@ public class TestRichHotKey extends AbstractRichHotKeyTest {
             clearHotKeyEvents();
         }
     }
-    
+
     @Test
     public void testFirstPair() {
         testPair(KeyEvent.VK_CONTROL, KeyEvent.VK_X, "hotkey 1 : onkeydown");
     }
-    
+
     @Test
     public void testSecondPair() {
         testPair(KeyEvent.VK_ALT, KeyEvent.VK_X, "hotkey 2 : onkeydown");
@@ -91,7 +91,7 @@ public class TestRichHotKey extends AbstractRichHotKeyTest {
             checkEvent(text, i);
             checkEvent("onkeydown", i);
             clearHotKeyEvents();
-        }        
-    }    
-    
+        }
+    }
+
 }

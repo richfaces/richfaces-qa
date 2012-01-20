@@ -45,10 +45,10 @@ public class TestTreeModelAdaptorSimple extends AbstractAjocadoTest {
 
     protected TreeModel tree = new TreeModel(pjq("div.rf-tr[id$=richTree]"));
     protected TreeNodeModel treeNode;
-    
+
     private Attributes<ModelAdaptorAttributes> modelAdaptorAttributes = new Attributes<ModelAdaptorAttributes>(
         pjq("span[id$=:listAttributes:panel]"));
-    private Attributes<RecursiveModelAdaptorAttributes> recursiveModelAdaptorAttributes = 
+    private Attributes<RecursiveModelAdaptorAttributes> recursiveModelAdaptorAttributes =
         new Attributes<RecursiveModelAdaptorAttributes>(pjq("span[id$=:recursiveAttributes:panel]"));
 
 
@@ -91,7 +91,7 @@ public class TestTreeModelAdaptorSimple extends AbstractAjocadoTest {
             }
         }
     }
-    
+
     private enum ModelAdaptorAttributes implements AttributeEnum {
         rendered,
     }

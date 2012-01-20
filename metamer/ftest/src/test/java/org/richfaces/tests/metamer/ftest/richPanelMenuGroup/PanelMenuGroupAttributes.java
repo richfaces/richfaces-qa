@@ -28,7 +28,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @version $Revision: 22750 $
  */
 public enum PanelMenuGroupAttributes implements AttributeEnum {
-    
+
     bypassUpdates,
     collapseEvent,
     data,

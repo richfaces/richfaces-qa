@@ -39,7 +39,7 @@ import org.jboss.arquillian.ajocado.locator.option.OptionLabelLocator;
 
 /**
  * Checker for icon attributes (e.g. rich:accordion, rich:panelMenu)
- * 
+ *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class IconsChecker {
@@ -47,12 +47,12 @@ public class IconsChecker {
     private String iconPrefix;
     private String iconSuffix;
     private AjaxSelenium selenium;
-    
+
     /**
      * Create a new instance of icons checker
-     * 
+     *
      * @param selenium instance of ajax selenium
-     * @param iconPrefix prefix used for icon elements 
+     * @param iconPrefix prefix used for icon elements
      * @param iconSuffix suffix used for icon elements
      */
     public IconsChecker(AjaxSelenium selenium, String iconPrefix, String iconSuffix) {
@@ -63,10 +63,10 @@ public class IconsChecker {
         this.iconSuffix = iconSuffix;
         this.selenium = selenium;
     }
-    
+
     /**
      * Checks whether icons controlled by CSS work properly (only icons which produce an image)
-     * 
+     *
      * @param attributeInput
      * @param icon
      * @param classSuffix
@@ -95,12 +95,12 @@ public class IconsChecker {
             assertTrue(
                 selenium.getStyle(icon, CssProperty.BACKGROUND_IMAGE).contains(cssIcon + imageNameSuffix),
                 "Icon should contain a " + cssIcon + ".");
-        }        
+        }
     }
-    
+
     /**
      * Checks whether icons controlled by CSS work properly (only icons which don't produce any image)
-     * 
+     *
      * @param attributeInput
      * @param icon
      * @param classSuffix
@@ -114,13 +114,13 @@ public class IconsChecker {
             assertTrue(selenium.belongsClass(icon, iconPrefix + cssIcon + iconSuffix + classSuffix),
                 "Div should have set class " + iconPrefix + cssIcon + iconSuffix + classSuffix +".");
             assertTrue(selenium.getStyle(icon, CssProperty.BACKGROUND_IMAGE).equals("none"),
-                "Icon should not contain any image.");            
-        }        
+                "Icon should not contain any image.");
+        }
     }
-    
+
     /**
-     * Checks whether icon with custom URL works properly  
-     * 
+     * Checks whether icon with custom URL works properly
+     *
      * @param attributeInput
      * @param icon
      * @param image
@@ -129,10 +129,10 @@ public class IconsChecker {
     public void checkImageIcons(ElementLocator<JQueryLocator> attributeInput, ElementLocator<JQueryLocator> icon, ElementLocator<JQueryLocator> image, String classSuffix) {
         checkImageIcons(attributeInput, icon, image, classSuffix, true);
     }
-    
+
     /**
      * Checks whether icon with custom URL works properly
-     * 
+     *
      * @param attributeInput
      * @param icon
      * @param image
@@ -153,17 +153,17 @@ public class IconsChecker {
             }
             assertTrue(selenium.isElementPresent(image), "Icon's image should be rendered (" + image.getRawLocator() + ") when icon=" + imageIcon + ".");
             assertTrue(selenium.getAttribute(image.getAttribute(Attribute.SRC)).contains(imageIcons.get(imageIcon)),
-                "Icon's src attribute (" + image.getRawLocator() + ") should contain " + imageIcons.get(imageIcon) + " when icon=" + imageIcon + ".");            
-        }      
+                "Icon's src attribute (" + image.getRawLocator() + ") should contain " + imageIcons.get(imageIcon) + " when icon=" + imageIcon + ".");
+        }
     }
-    
+
     public void checkNone(ElementLocator<JQueryLocator> attributeInput, ElementLocator<JQueryLocator> icon, String classSuffix) {
         if (!selectOptionSilently(attributeInput, "none")) {
             return;
         }
-        assertFalse(selenium.isElementPresent(icon), "Icon should not be present when icon=none.");          
+        assertFalse(selenium.isElementPresent(icon), "Icon should not be present when icon=none.");
     }
-    
+
     public String getIconPrefix() {
         return iconPrefix;
     }
@@ -171,7 +171,7 @@ public class IconsChecker {
     public String getIconSuffix() {
         return iconSuffix;
     }
-    
+
     private boolean selectOptionSilently(ElementLocator<?> selectLocator, String label) {
         OptionLabelLocator optionLocator = optionLabel(label);
         try {

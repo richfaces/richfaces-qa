@@ -50,7 +50,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/a4jCommandLink/simple.xhtml
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22733 $
  */
@@ -255,7 +255,7 @@ public class TestA4JCommandLink extends AbstractAjocadoTest {
         assertEquals(selenium.getText(output2), "", "Output 2 should not change");
         assertEquals(selenium.getText(output3), "", "Output 3 should not change");
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
-        
+
         String listenerOutput = selenium.getText(jq("div#phasesPanel li:eq(2)"));
         assertEquals(listenerOutput, "* action listener invoked", "Action listener's output");
         listenerOutput = selenium.getText(jq("div#phasesPanel li:eq(3)"));

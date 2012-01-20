@@ -80,9 +80,9 @@ import org.testng.annotations.Test;
 
 /**
  * Test for rich:pickList on page faces/components/richPickList/simple.xhtml.
- * 
+ *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * 
+ *
  * @version $Revision$
  */
 public class TestPickList extends AbstractAjocadoTest {
@@ -272,7 +272,7 @@ public class TestPickList extends AbstractAjocadoTest {
         // move to columns layout test
         /*
          * String headerClass = "my-cool-header-class"; pickListAttributes.setHeaderClass(headerClass);
-         * 
+         *
          * String found = selenium.getAttribute(pickListTop.getAttribute(classAttr)); assertTrue(found != null);
          * assertTrue(found.contains(headerClass));
          */
@@ -979,7 +979,7 @@ public class TestPickList extends AbstractAjocadoTest {
     /**
      * Verify that item keep selected even moved from source to target, or back. If selected Alaska from sources, and
      * then added to target, it should remain selected in target list
-     * 
+     *
      * @return
      */
     @Test
@@ -1054,31 +1054,31 @@ public class TestPickList extends AbstractAjocadoTest {
                 + classAfterSelect);
 
     }
-    
+
     /**
      * Verify switchByClick attribute
      */
     @Test
-    public void testSwitchByClick() {        
+    public void testSwitchByClick() {
         String itemLabel = "Colorado";
-        
+
         pickListAttributes.set(switchByClick, Boolean.TRUE);
         selenium.click(pickListSrcItemByText.format(itemLabel));
-        
+
         // verify that item "added" to target list really appears in target (staging) container.
         waitModel.until(elementPresent.locator(pickListTrgtItemStageByText.format(itemLabel)));
     }
-    
+
     /**
      * Verify switchByDblClick attribute
      */
     @Test
     public void testSwitchByDblClick() {
         String itemLabel = "Delaware";
-        
+
         pickListAttributes.set(switchByDblClick, Boolean.TRUE);
         selenium.doubleClick(pickListSrcItemByText.format(itemLabel));
-        
+
         // verify that item "added" to target list really appears in target (staging) container.
         waitModel.until(elementPresent.locator(pickListTrgtItemStageByText.format(itemLabel)));
     }

@@ -35,5 +35,5 @@ public enum DataTableAttributes implements AttributeEnum {
     rows,
     sortMode,
     sortPriority,
-    
+
 }

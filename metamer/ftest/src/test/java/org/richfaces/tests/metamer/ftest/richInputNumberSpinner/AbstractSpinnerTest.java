@@ -37,7 +37,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 
 /**
  * Abstract test case for rich:inputNumberSpinner.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22499 $
  */

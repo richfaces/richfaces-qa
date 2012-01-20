@@ -40,41 +40,41 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for pages faces/components/notify/moreStacks.xhtml
- * 
+ *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestRichNotifyMoreStacks extends AbstractRichNotifyTest {
-    
+
     /**
-     * locator of the first stack 
+     * locator of the first stack
      */
     private final JQueryLocator stack1 = jq("div.tr");
-    
+
     /**
      * locator of the second stack
      */
     private final JQueryLocator stack2 = jq("div.br");
-    
+
     /**
      * locator of the input which is associated with messages for the first stack
      */
     private final JQueryLocator number1 = pjq("input[id$=number1]");
-    
+
     /**
      * locator of the input which is associated with messages for the second stack
      */
     private final JQueryLocator number2 = pjq("input[id$=number2]");
-    
+
     /**
-     * locator of the h:commnadButton submit 
+     * locator of the h:commnadButton submit
      */
     private final JQueryLocator submitHCommandButton = pjq("input[id$=hCommandButtonSubmit]");
-    
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richNotify/moreStacks.xhtml");
-    }    
-    
+    }
+
     @Test
     public void testInit() {
         assertTrue(selenium.isElementPresent(inStack(stack1, notify)), "The notify in the first stack is not present.");
@@ -82,7 +82,7 @@ public class TestRichNotifyMoreStacks extends AbstractRichNotifyTest {
         assertEquals(1, getNumberOfNotifies(stack1), "The initial number of notifies in the first stack should be <1>, found <" + getNumberOfNotifies(stack1) + ">.");
         assertEquals(1, getNumberOfNotifies(stack2), "The initial number of notifies in the second stack should be <1>, found <" + getNumberOfNotifies(stack2) + ">.");
     }
-    
+
     @Test
     public void testValidationErrorInTwoStacks() {
         // notify in stacks
@@ -110,19 +110,19 @@ public class TestRichNotifyMoreStacks extends AbstractRichNotifyTest {
             .until(countEquals.locator(message2).count(1));
         waitGui
             .failWith("After wrong filling the second form field the number of messages in the first stack should be <0>, found <" + selenium.getCount(message1) + ">")
-            .until(countEquals.locator(message1).count(0));        
+            .until(countEquals.locator(message1).count(0));
     }
-    
+
     /**
      * It returns a number of notifes (only notifies, not messages) in the given stack
-     * 
+     *
      * @param stack the stack where the notifies should be present
      * @return number of notifies
      */
     private int getNumberOfNotifies(JQueryLocator stack) {
         return selenium.getCount(inStack(stack, notify)) - (selenium.getCount(inStack(stack, notifyError)) + selenium.getCount(inStack(stack, notifyFatal)) + selenium.getCount(inStack(stack, notifyInfo)) + selenium.getCount(inStack(stack, notifyWarn)));
     }
-    
+
     /**
      * It returns a new locator of the given message in the given stack
      * @param stack
@@ -135,5 +135,5 @@ public class TestRichNotifyMoreStacks extends AbstractRichNotifyTest {
         String locator = "div[class*=" + splittedStackLocator[splittedStackLocator.length - 1] + "][class*=" + splittedMessageLocator[splittedMessageLocator.length - 1] + "]";
         return jq(locator);
     }
-    
+
 }

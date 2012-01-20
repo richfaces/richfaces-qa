@@ -215,9 +215,9 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
         Comparator<Employee> employeeComparator = getPropertyComparator(Employee.class, columns);
         sortedEmployees = new ArrayList<Employee>(EMPLOYEES);
         Collections.sort(sortedEmployees, employeeComparator);
-        
+
         dataScroller2.gotoFirstPage();
-        
+
         int firstPageRows = model.getRows();
 
         for (rowIndex = 0; rowIndex < model.getRows(); rowIndex++) {

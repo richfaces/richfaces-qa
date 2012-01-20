@@ -66,7 +66,7 @@ public class TreeNodeModel extends AbstractTreeNodeModel {
     public TreeNodeHandle getHandle() {
         return new TreeNodeHandle(handle.getReferenced());
     }
-    
+
     public TreeNodeHandleLoading getHandleLoading() {
         return new TreeNodeHandleLoading(handleLoading.getReferenced());
     }

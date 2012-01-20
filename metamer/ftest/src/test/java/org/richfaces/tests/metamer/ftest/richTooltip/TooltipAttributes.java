@@ -42,5 +42,5 @@ public enum TooltipAttributes implements AttributeEnum {
     target,
     verticalOffset,
     zindex,
-    
+
 }

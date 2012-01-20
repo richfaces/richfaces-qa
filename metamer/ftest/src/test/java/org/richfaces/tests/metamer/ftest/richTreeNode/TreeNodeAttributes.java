@@ -43,6 +43,5 @@ public enum TreeNodeAttributes implements AttributeEnum {
         rendered,
         style,
         styleClass,
-        title,
-    
+        title
 }

@@ -41,7 +41,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test for faces/components/richInputNumberSpinner/jsr303.xhtml page
- * 
+ *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision: 23011 $
  */

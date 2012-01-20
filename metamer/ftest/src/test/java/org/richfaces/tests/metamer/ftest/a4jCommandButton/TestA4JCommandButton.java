@@ -54,7 +54,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/a4jCommandButton/simple.xhtml
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22733 $
  */
@@ -205,7 +205,7 @@ public class TestA4JCommandButton extends AbstractAjocadoTest {
     @Test
     public void testDisabled() {
         AttributeLocator<JQueryLocator> disabledAttribute = button.getAttribute(new Attribute("disabled"));
-        
+
         selenium.click(pjq("input[name$=disabledInput][value=true]"));
         selenium.waitForPageToLoad();
 

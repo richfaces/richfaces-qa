@@ -32,7 +32,7 @@ import org.testng.annotations.Test;
  * <p>
  * Templates: doesn't work inside iteration components.
  * </p>
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22407 $
  */

@@ -43,9 +43,9 @@ import org.testng.annotations.Test;
 
 /**
  * Test for @target attribute on page faces/components/richTooltip/targetting.xhtml
- * 
+ *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * 
+ *
  * @version $Revision$
  */
 public class TestTooltipTarget extends AbstractAjocadoTest {

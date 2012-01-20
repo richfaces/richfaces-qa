@@ -34,7 +34,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestRichHotKeyAttributes extends AbstractRichHotKeyTest {
-   
+
     @Test
     public void enabledInInput() {
         ATTRIBUTES_FIRST.set(HotKeyAttributes.key, "x");
@@ -68,15 +68,15 @@ public class TestRichHotKeyAttributes extends AbstractRichHotKeyTest {
         } finally {
             selenium.keyPressNative(KeyEvent.VK_ESCAPE);
         }
-    }    
-    
+    }
+
     @Test
     public void testPreventDefaultTrue() {
         testKeyForPreventDefault(KeyEvent.VK_CONTROL, KeyEvent.VK_F, "ctrl+f", 2);
         testKeyForPreventDefault(KeyEvent.VK_CONTROL, KeyEvent.VK_H, "ctrl+h", 2);
         testKeyForPreventDefault(KeyEvent.VK_CONTROL, KeyEvent.VK_U, "ctrl+u", 2);
     }
-    
+
     @Test
     public void testRendered() {
         ATTRIBUTES_FIRST.set(HotKeyAttributes.rendered, false);
@@ -84,7 +84,7 @@ public class TestRichHotKeyAttributes extends AbstractRichHotKeyTest {
         selenium.keyPressNative(KeyEvent.VK_X);
         checkEvent("hotkey 1", 0);
     }
-    
+
     @Test
     public void testSelector() {
         ATTRIBUTES_FIRST.set(HotKeyAttributes.key, "x");
@@ -98,7 +98,7 @@ public class TestRichHotKeyAttributes extends AbstractRichHotKeyTest {
         selenium.keyPressNative(KeyEvent.VK_X);
         checkEvent("hotkey 1", 2);
     }
-    
+
     private void testKeyForPreventDefault(int firstKey, int secondKey, String keyString, int expectedNum) {
         clearHotKeyEvents();
         ATTRIBUTES_FIRST.set(HotKeyAttributes.key, keyString);
@@ -108,5 +108,5 @@ public class TestRichHotKeyAttributes extends AbstractRichHotKeyTest {
         selenium.keyUpNative(firstKey);
         checkEvent("onkeydown", expectedNum);
     }
-    
+
 }

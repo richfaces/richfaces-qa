@@ -67,7 +67,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/richInputNumberSlider/simple.xhtml
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 23011 $
  */
@@ -783,7 +783,7 @@ public class TestRichSlider extends AbstractSliderTest {
 
     /**
      * Clicks on slider's arrow.
-     * 
+     *
      * @param arrow
      *            slider's left or right arrow locator
      * @param clicks
@@ -803,7 +803,7 @@ public class TestRichSlider extends AbstractSliderTest {
 
     /**
      * Clicks on slider's arrow and verifies delay.
-     * 
+     *
      * @param arrow
      *            slider's left or right arrow locator
      * @param delay

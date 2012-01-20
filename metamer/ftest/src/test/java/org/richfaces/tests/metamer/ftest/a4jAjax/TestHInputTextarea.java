@@ -32,7 +32,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/a4jAjax/hInputTextarea.xhtml
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 21287 $
  */

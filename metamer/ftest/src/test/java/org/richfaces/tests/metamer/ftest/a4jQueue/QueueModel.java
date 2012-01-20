@@ -37,7 +37,7 @@ import org.jboss.test.selenium.locator.reference.ReferencedLocator;
  * @version $Revision: 22729 $
  */
 public class QueueModel {
-    
+
     List<Long> deviations = new ArrayList<Long>();
     LocatorReference<JQueryLocator> form = new LocatorReference<JQueryLocator>(null);
 
@@ -65,7 +65,7 @@ public class QueueModel {
     Retriever<Long> retrieveEvent2Time = longAdapter(retrieveAttribute.attributeLocator(event2Time));
     Retriever<Long> retrieveBeginTime = longAdapter(retrieveAttribute.attributeLocator(beginTime));
     Retriever<Long> retrieveCompleteTime = longAdapter(retrieveAttribute.attributeLocator(completeTime));
-    
+
     private AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
 
     private Boolean event2Present = null;
@@ -96,15 +96,15 @@ public class QueueModel {
             selenium.fireEvent(input, KEYPRESS);
         }
     }
-    
+
     public void clickButton() {
         selenium.click(button);
     }
-    
+
     public void type(String text) {
         selenium.type(input1, text);
     }
-    
+
     public String getRepeatedText() {
         return selenium.getText(repeatedText);
     }
@@ -163,7 +163,7 @@ public class QueueModel {
         long deviation = Math.abs(actualDelay - requestDelay);
         long maxDeviation = Math.max(300, requestDelay / 2);
         System.err.println(actualDelay);
-        System.err.println(requestDelay);        
+        System.err.println(requestDelay);
         checkDeviation(deviation, maxDeviation);
 
         deviations.add(deviation);

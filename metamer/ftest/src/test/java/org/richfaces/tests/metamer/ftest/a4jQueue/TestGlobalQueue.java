@@ -115,7 +115,7 @@ public class TestGlobalQueue extends AbstractAjocadoTest {
      * <p>
      * When no requestDelay (0) is set, events should fire request immediately.
      * </p>
-     * 
+     *
      * <p>
      * However, when one event is waiting in queue for processing of previous request, events should be stacked.
      * </p>

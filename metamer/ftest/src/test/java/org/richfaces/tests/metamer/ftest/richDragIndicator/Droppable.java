@@ -33,5 +33,5 @@ public class Droppable extends AbstractModel<JQueryLocator> {
     public Droppable(String name, JQueryLocator root) {
         super(name, root);
     }
-    
+
 }

@@ -42,7 +42,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/richProgressBar/static.xhtml
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22733 $
  */
@@ -190,11 +190,11 @@ public class TestProgressBarStatic extends AbstractAjocadoTest {
         selenium.type(pjq("input[id$=valueInput]"), "0");
         selenium.waitForPageToLoad();
         assertEquals(getProgress(), 0, "Progress when value=0.");
-        
+
         selenium.type(pjq("input[id$=valueInput]"), "37");
         selenium.waitForPageToLoad();
         assertEquals(getProgress(), 37, "Progress when value=37.");
-        
+
         selenium.type(pjq("input[id$=valueInput]"), "100");
         selenium.waitForPageToLoad();
         assertEquals(getProgress(), 100, "Progress when value=100.");

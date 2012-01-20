@@ -27,13 +27,13 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22679 $
  */
-public enum AttachQueueAttributes implements AttributeEnum {    
-    
+public enum AttachQueueAttributes implements AttributeEnum {
+
     ignoreDupResponses,
-    name,    
+    name,
     onrequestdequeue,
-    onrequestqueue, 
+    onrequestqueue,
     rendered,
-    requestDelay,    
+    requestDelay,
     requestGroupingId
 }

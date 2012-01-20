@@ -54,7 +54,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for page faces/components/richSelect/simple.xhtml.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  */
 public class TestRichSelect extends AbstractAjocadoTest {

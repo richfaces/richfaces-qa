@@ -10,11 +10,11 @@ public class CollapsibleSubTableToggler extends AbstractModel<JQueryLocator> {
 
     ReferencedLocator<JQueryLocator> collapsedTogglers = ref(root, "> span[id$=collapsed]");
     ReferencedLocator<JQueryLocator> expandedTogglers = ref(root, "> span[id$=expanded]");
-    
+
     public CollapsibleSubTableToggler(JQueryLocator root) {
         super(root);
     }
-    
+
     public ExtendedLocator<JQueryLocator> getCollapsed() {
         return collapsedTogglers;
     }

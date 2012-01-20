@@ -28,9 +28,9 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @version $Revision: 22739 $
  */
 public enum ComponentControlAttributes implements AttributeEnum {
-    
+
     operation,
     selector,
     target
-    
-}   
+
+}

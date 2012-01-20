@@ -30,64 +30,64 @@ import org.testng.annotations.Test;
 
 /**
  * Selenium tests for page faces/components/richOrderingList/withColumn.xhtml.
- * 
+ *
  * It checks whether the moving is OK.
- * 
+ *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestOrderingListMoving extends AbstractOrderingListTest {
-    
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richOrderingList/withColumn.xhtml");
     }
-    
+
     @Test
     public void testMoveFirstBottom() {
         selectItem(0);
         moveBottom();
-    }    
-    
+    }
+
     @Test
     public void testMoveFirstDown() {
         selectItem(0);
         moveDown();
-    }    
-    
+    }
+
     @Test
     public void testMoveLastTop() {
         selectItem(getOrderingList().getNumberOfItems() - 1);
         moveTop();
     }
-    
+
     @Test
     public void testMoveLastUp() {
         selectItem(getOrderingList().getNumberOfItems() - 1);
-        moveUp();        
+        moveUp();
     }
-    
+
     @Test
     public void testMoveMiddleBottom() {
         selectItem(2);
-        moveBottom();        
+        moveBottom();
     }
-    
+
     @Test
     public void testMoveMiddleDown() {
         selectItem(2);
-        moveDown();        
-    }    
-    
+        moveDown();
+    }
+
     @Test
     public void testMoveMiddleTop() {
         selectItem(2);
-        moveTop();        
-    }    
-    
+        moveTop();
+    }
+
     @Test
     public void testMoveMiddleUp() {
         selectItem(2);
-        moveUp();        
-    }      
-     
+        moveUp();
+    }
+
 }

@@ -37,15 +37,15 @@ public abstract class AbstractAutocompleteTest extends AbstractAjocadoTest {
 
     Autocomplete autocomplete = new Autocomplete();
     List<Capital> capitals = Model.unmarshallCapitals();
-    
+
     protected Autocomplete getAutocomplete() {
         return autocomplete;
     }
-    
+
     protected List<Capital> getCapitals() {
         return Collections.unmodifiableList(capitals);
     }
-    
+
     protected List<String> getStatesByPrefix(String prefix) {
         List<String> states = new LinkedList<String>();
 
@@ -57,5 +57,5 @@ public abstract class AbstractAutocompleteTest extends AbstractAjocadoTest {
 
         return states;
     }
-    
+
 }

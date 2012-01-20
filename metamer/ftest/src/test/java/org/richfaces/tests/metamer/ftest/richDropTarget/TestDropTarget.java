@@ -210,17 +210,17 @@ public class TestDropTarget extends AbstractDragNDropTest {
         dropTargetAttributes.set(onbegin, "metamerEvents += \"begin \"");
         dropTargetAttributes.set(oncomplete, "metamerEvents += \"complete \"");
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
-        
+
         testAcception(drg1, ACCEPTING);
         guardedDrop(RequestType.XHR);
-        
+
         String[] events = selenium.getEval(new JavaScript("window.metamerEvents")).split(" ");
         assertEquals(events.length, 3, "3 events should be fired.");
         assertEquals(events[0], "begin", "Attribute onbegin doesn't work");
         assertEquals(events[1], "beforedomupdate", "Attribute onbeforedomupdate doesn't work");
-        assertEquals(events[2], "complete", "Attribute oncomplete doesn't work");        
+        assertEquals(events[2], "complete", "Attribute oncomplete doesn't work");
     }
-    
+
     private void testAcceptedDropping(Draggable draggable) {
         testAcception(draggable, ACCEPTING);
 

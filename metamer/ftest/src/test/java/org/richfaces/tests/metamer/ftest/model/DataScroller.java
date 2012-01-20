@@ -36,7 +36,7 @@ import org.jboss.test.selenium.locator.reference.ReferencedLocator;
 
 /**
  * Provides DataScroller control methods.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision: 23043 $
@@ -61,14 +61,14 @@ public class DataScroller extends AbstractModel<JQueryLocator> {
     ReferencedLocator<JQueryLocator> firstVisiblePage = ref(root, "> .rf-ds-nmb-btn:first");
     ReferencedLocator<JQueryLocator> lastVisiblePage = ref(root, "> .rf-ds-nmb-btn:last");
     ReferencedLocator<JQueryLocator> currentPage = ref(root, "> .rf-ds-act");
-    
+
     // buttons with direct operation bound to rich:componentControll
     JQueryLocator firstJsApiBtn = jq("input[id$=buttonStpFirst{0}]");
     JQueryLocator previousJsApiBtn = jq("input[id$=buttonStpPrev{0}]");
     JQueryLocator nextJsApiBtn = jq("input[id$=buttonStpNext{0}]");
     JQueryLocator lastJsApiBtn = jq("input[id$=buttonStpLast{0}]");
-    
-    // buttons with "switchToPage" action bound to rich:componentControll and 
+
+    // buttons with "switchToPage" action bound to rich:componentControll and
     // operation specified by param
     JQueryLocator firstStpJsApiBtn = jq("input[id$=buttonStpFirst{0}]");
     JQueryLocator previousStpJsApiBtn = jq("input[id$=buttonStpPrev{0}]");
@@ -118,7 +118,7 @@ public class DataScroller extends AbstractModel<JQueryLocator> {
         if (lastPage != null && (pageNumber < 1 || pageNumber > lastPage)) {
             throw new IllegalStateException(SimplifiedFormat.format("The given pageNumber '{0}' is out of range of pages <1,{1}>", pageNumber, lastPage));
         }
-        
+
         int counter = 50; // to prevent infinite loops
         while (pageNumber > getLastVisiblePage() && counter > 0) {
             fastForward(pageNumber);
@@ -128,17 +128,17 @@ public class DataScroller extends AbstractModel<JQueryLocator> {
         if (counter == 0) {
             fail("Scroller doesn't change pages.");
         }
-        
+
         counter = 50; // to prevent inifinite loops
         while (pageNumber < getFirstVisiblePage() && counter > 0) {
             fastRewind(pageNumber);
             counter--;
         }
-        
+
         if (counter == 0) {
             fail("Scroller doesn't change pages.");
         }
-        
+
         if (pageNumber == getCurrentPage()) {
             return;
         }
@@ -245,15 +245,15 @@ public class DataScroller extends AbstractModel<JQueryLocator> {
         }
         return integer(selenium.getText(currentPage));
     }
-    
+
     public boolean isFastForwardButtonPresent() {
         return selenium.isElementPresent(fastForwardButton);
-    }    
-    
+    }
+
     public boolean isFastRewindButtonPresent() {
         return selenium.isElementPresent(fastRewindButton);
     }
-    
+
     public boolean isFirstPage() {
         return getCurrentPage() == 1;
     }
@@ -261,27 +261,27 @@ public class DataScroller extends AbstractModel<JQueryLocator> {
     public boolean isFirstPageButtonPresent() {
         return selenium.isElementPresent(firstPageButton);
     }
-    
+
     public boolean isLastPage() {
         return getCurrentPage() == getLastVisiblePage();
     }
 
     public boolean isLastPageButtonPresent() {
         return selenium.isElementPresent(lastPageButton);
-    }    
+    }
 
     public boolean isNextButtonPresent() {
         return selenium.isElementPresent(previousButton);
     }
-    
+
     public boolean isPreviousButtonPresent() {
         return selenium.isElementPresent(previousButton);
     }
-    
+
     public boolean isPresent() {
         return selenium.isElementPresent(root.getLocator()) && selenium.isVisible(root.getLocator());
     }
-    
+
     public static int integer(String string) {
         return Integer.valueOf(string);
     }
@@ -305,7 +305,7 @@ public class DataScroller extends AbstractModel<JQueryLocator> {
     public void clickFastRewind() {
         guardXhr(selenium).click(fastRewindButton);
     }
-    
+
     public void clickStepForward() {
         guardXhr(selenium).click(nextButton);
     }
@@ -313,37 +313,37 @@ public class DataScroller extends AbstractModel<JQueryLocator> {
     public void clickStepPrevious() {
         guardXhr(selenium).click(previousButton);
     }
-    
+
     // actions performed on buttons with JS API operation
-    
+
     public void clickJsApiFirst(int scrollerNo) {
         guardXhr(selenium).click(firstJsApiBtn.format(scrollerNo));
     }
-    
+
     public void clickJsApiStpFirst(int scrollerNo) {
         guardXhr(selenium).click(firstStpJsApiBtn.format(scrollerNo));
     }
-    
+
     public void clickJsApiPrevious(int scrollerNo) {
         guardXhr(selenium).click(previousJsApiBtn.format(scrollerNo));
     }
-    
+
     public void clickJsApiStpPrevious(int scrollerNo) {
         guardXhr(selenium).click(previousStpJsApiBtn.format(scrollerNo));
     }
-    
+
     public void clickJsApiNext(int scrollerNo) {
         guardXhr(selenium).click(nextJsApiBtn.format(scrollerNo));
     }
-    
+
     public void clickJsApiStpNext(int scrollerNo) {
         guardXhr(selenium).click(nextStpJsApiBtn.format(scrollerNo));
     }
-    
+
     public void clickJsApiLast(int scrollerNo) {
         guardXhr(selenium).click(lastJsApiBtn.format(scrollerNo));
     }
-    
+
     public void clickJsApiStpLast(int scrollerNo) {
         guardXhr(selenium).click(lastStpJsApiBtn.format(scrollerNo));
     }

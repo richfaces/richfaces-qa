@@ -51,7 +51,7 @@ public class TestExtendingAttachQueue extends AbstractAttachQueueTest {
         attachQueueAttrs2.set(AttachQueueAttributes.requestDelay, DELAY_B);
         queueAttributes.set(QueueAttributes.requestDelay, GLOBAL_DELAY);
     }
-    
+
     @Test
     public void testDelay() {
         super.testDelay();
@@ -71,9 +71,9 @@ public class TestExtendingAttachQueue extends AbstractAttachQueueTest {
     public void testRendered() {
         super.testRendered();
     }
-    
+
     @Test
     public void testQueueAndDequeueEvents() {
         super.testQueueAndDequeueEvents();
-    }    
+    }
 }

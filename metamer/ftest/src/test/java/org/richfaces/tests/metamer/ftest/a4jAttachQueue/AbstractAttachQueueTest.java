@@ -47,17 +47,17 @@ public abstract class AbstractAttachQueueTest extends AbstractAjocadoTest {
     protected static final Long DELAY_B = 5000L;
 
     private QueueModel queue = new QueueModel();
-    
+
     protected QueueModel getQueue() {
         return queue;
     }
-    
+
     protected void testDelay() {
         queue.initializeTimes();
         queue.fireEvent(Input.FIRST, 1);
-        queue.checkTimes(Input.FIRST, DELAY_A);        
+        queue.checkTimes(Input.FIRST, DELAY_A);
     }
-    
+
     protected void testNoDelay() {
         attachQueueAttrs1.set(AttachQueueAttributes.requestDelay, 0);
 
@@ -79,8 +79,8 @@ public abstract class AbstractAttachQueueTest extends AbstractAjocadoTest {
 
         halter.complete();
         queue.checkCounts(4, 0, 2, 2);
-    }   
-    
+    }
+
     protected void testTimingOneQueueTwoEvents() {
         queue.initializeTimes();
 
@@ -96,8 +96,8 @@ public abstract class AbstractAttachQueueTest extends AbstractAjocadoTest {
 
         queue.checkTimes(Input.SECOND, DELAY_B);
         queue.checkNoDelayBetweenEvents();
-    } 
-    
+    }
+
     protected void testRendered() {
         attachQueueAttrs1.set(AttachQueueAttributes.requestDelay, 1500);
         attachQueueAttrs1.set(onrequestqueue, JavaScript.js("alert('requestQueued')"));
@@ -110,21 +110,21 @@ public abstract class AbstractAttachQueueTest extends AbstractAjocadoTest {
         // check that no requestDelay is applied while renderer=false
         queue.checkTimes(0);
         assertFalse(selenium.isAlertPresent());
-    }    
-    
+    }
+
     protected void testQueueAndDequeueEvents() {
         attachQueueAttrs1.set(AttachQueueAttributes.requestDelay, 0);
         attachQueueAttrs2.set(AttachQueueAttributes.requestDelay, 0);
-        
+
         attachQueueAttrs1.set(AttachQueueAttributes.onrequestqueue, "metamerEvents += \"requestqueue \"");
         attachQueueAttrs1.set(AttachQueueAttributes.onrequestdequeue, "metamerEvents += \"requestdequeue \"");
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
-        
-        queue.fireEvent(Input.FIRST, 1);    
-                
+
+        queue.fireEvent(Input.FIRST, 1);
+
         String[] events = selenium.getEval(new JavaScript("window.metamerEvents")).split(" ");
         assertEquals(events.length, 2, "2 events should be fired, was [" + selenium.getEval(new JavaScript("window.metamerEvents")) + "]");
         assertEquals(events[0], "requestqueue", "Attribute onrequestqueue doesn't work");
-        assertEquals(events[1], "requestdequeue", "Attribute onrequestdequeue doesn't work");        
+        assertEquals(events[1], "requestdequeue", "Attribute onrequestdequeue doesn't work");
     }
 }

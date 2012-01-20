@@ -34,7 +34,7 @@ import org.richfaces.tests.metamer.ftest.richColumn.ColumnModel;
 
 /**
  * Provides methods to control DataTable
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22407 $
  */

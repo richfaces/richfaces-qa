@@ -35,9 +35,9 @@ import org.richfaces.tests.metamer.ftest.richTree.TreeAttributes;
 
 public class AttributeList {
     public static Attributes<BasicAttributes> basicAttributes = new Attributes<BasicAttributes>();
-    
+
     public static Attributes<TooltipAttributes> tooltipAttributes = new Attributes<TooltipAttributes>();
-    public static Attributes<AttachQueueAttributes> attachQueueAttrs1 = new Attributes<AttachQueueAttributes>(pjq("table.attributes[id$=attributes1]")); 
+    public static Attributes<AttachQueueAttributes> attachQueueAttrs1 = new Attributes<AttachQueueAttributes>(pjq("table.attributes[id$=attributes1]"));
     public static Attributes<AttachQueueAttributes> attachQueueAttrs2 = new Attributes<AttachQueueAttributes>(pjq("table.attributes[id$=attributes2]"));
     public static Attributes<QueueAttributes> queueAttributes = new Attributes<QueueAttributes>(pjq("table.attributes[id$=queueAttributes]"));
     public static Attributes<PollAttributes> pollAttributes = new Attributes<PollAttributes>();
@@ -46,7 +46,7 @@ public class AttributeList {
     public static Attributes<DataTableAttributes> dataTableAttributes = new Attributes<DataTableAttributes>();
     public static Attributes<DataTableFacets> dataTableFacets = new Attributes<DataTableFacets>(RequestType.XHR); // for facets use XHR by default
     public static Attributes<AutocompleteAttributes> autocompleteAttributes = new Attributes<AutocompleteAttributes>();
-    public static Attributes<CollapsibleSubTableTogglerAttributes> collapsibleSubTableTogglerAttributes = 
+    public static Attributes<CollapsibleSubTableTogglerAttributes> collapsibleSubTableTogglerAttributes =
         new Attributes<CollapsibleSubTableTogglerAttributes>();
     public static Attributes<ColumnAttributes> columnAttributes = new Attributes<ColumnAttributes>();
     public static Attributes<ComponentControlAttributes> componentControllAttributes = new Attributes<ComponentControlAttributes>();
@@ -65,5 +65,5 @@ public class AttributeList {
     public static Attributes<PickListAttributes> pickListAttributes = new Attributes<PickListAttributes>();
     public static Attributes<TreeAttributes> treeAttributes = new Attributes<TreeAttributes>(jq("span[id*=attributes]"));
     public static Attributes<MenuItemAttributes> menuItemAttributes = new Attributes<MenuItemAttributes>();
-    
+
 }

@@ -32,91 +32,90 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/a4jAjax/hCommandButton.xhtml
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22865 $
  */
 @RegressionTest("https://issues.jboss.org/browse/RF-10482")
 public class TestHCommandButton extends AbstractTestCommand {
 
-	private JQueryLocator button = pjq("input[type=submit][id$=commandButton]");
+    private JQueryLocator button = pjq("input[type=submit][id$=commandButton]");
 
-	@Override
-	public URL getTestUrl() {
-		return buildUrl(contextPath,
-				"faces/components/a4jAjax/hCommandButton.xhtml");
-	}
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/a4jAjax/hCommandButton.xhtml");
+    }
 
-	@Test
-	public void testSimpleClick() {
-		testClick(button, "RichFaces 4");
-	}
+    @Test
+    public void testSimpleClick() {
+        testClick(button, "RichFaces 4");
+    }
 
-	@Test
-	@IssueTracking("https://issues.jboss.org/browse/RF-9665")
-	// </editor-fold>
-	public void testSimpleClickUnicode() {
-		testClick(button, "ľščťžýáíéúôň фывацукйешгщь");
-	}
+    @Test
+    @IssueTracking("https://issues.jboss.org/browse/RF-9665")
+    // </editor-fold>
+    public void testSimpleClickUnicode() {
+        testClick(button, "ľščťžýáíéúôň фывацукйешгщь");
+    }
 
-	@Test
-	public void testBypassUpdates() {
-		testBypassUpdates(button);
-	}
+    @Test
+    public void testBypassUpdates() {
+        testBypassUpdates(button);
+    }
 
-	@Test
-	public void testData() {
-		testData(button);
-	}
+    @Test
+    public void testData() {
+        testData(button);
+    }
 
-	@Test
-	public void testDisabled() {
-		testDisabled(button);
-	}
+    @Test
+    public void testDisabled() {
+        testDisabled(button);
+    }
 
-	@Test
-	public void testExecute() {
-		testExecute(button);
-	}
+    @Test
+    public void testExecute() {
+        testExecute(button);
+    }
 
-	@Test
-	public void testImmediate() {
-		testImmediate(button);
-	}
+    @Test
+    public void testImmediate() {
+        testImmediate(button);
+    }
 
-	@Test
-	public void testImmediateBypassUpdates() {
-		testImmediateBypassUpdates(button);
-	}
+    @Test
+    public void testImmediateBypassUpdates() {
+        testImmediateBypassUpdates(button);
+    }
 
-	@Test
-	public void testLimitRender() {
-		testLimitRender(button);
-	}
+    @Test
+    public void testLimitRender() {
+        testLimitRender(button);
+    }
 
-	@Test
-	public void testEvents() {
-		testEvents(button);
-	}
+    @Test
+    public void testEvents() {
+        testEvents(button);
+    }
 
-	@Test
-	public void testRender() {
-		testRender(button);
-	}
+    @Test
+    public void testRender() {
+        testRender(button);
+    }
 
-	@Test
-	public void testStatus() {
-		testStatus(button);
-	}
+    @Test
+    public void testStatus() {
+        testStatus(button);
+    }
 
-	@Test
-	public void testFullPageRefresh() {
-		testFullPageRefresh(button);
-	}
+    @Test
+    public void testFullPageRefresh() {
+        testFullPageRefresh(button);
+    }
 
-	@Test(groups = { "4.Future" })
-	@IssueTracking("https://issues.jboss.org/browse/RF-11341")
-	public void testRerenderAll() {
-		testRerenderAll(button);
-	}
+    @Test(groups = { "4.Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-11341")
+    public void testRerenderAll() {
+        testRerenderAll(button);
+    }
 }

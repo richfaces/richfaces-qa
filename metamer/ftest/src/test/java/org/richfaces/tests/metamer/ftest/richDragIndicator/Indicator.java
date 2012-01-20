@@ -46,7 +46,7 @@ public class Indicator extends AbstractModel<JQueryLocator> {
     public Indicator(String name, JQueryLocator root) {
         super(name, root);
     }
-    
+
     public void setDefaultIndicator(boolean defaultIndicator) {
         this.defaultIndicator = defaultIndicator;
     }

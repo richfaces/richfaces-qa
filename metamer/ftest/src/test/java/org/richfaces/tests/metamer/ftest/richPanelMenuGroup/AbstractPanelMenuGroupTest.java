@@ -49,7 +49,7 @@ public abstract class AbstractPanelMenuGroupTest extends AbstractAjocadoTest {
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richPanelMenuGroup/simple.xhtml");
     }
-    
+
     @BeforeMethod
     public void setupModes() {
         panelMenuGroupAttributes.set(mode, ajax);

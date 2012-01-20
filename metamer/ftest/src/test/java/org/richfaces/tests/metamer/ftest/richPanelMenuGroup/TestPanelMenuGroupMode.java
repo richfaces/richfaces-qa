@@ -132,7 +132,7 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
                 return UPDATE_MODEL_VALUES;
             }
         }
-        
+
         if ("item changed".equals(listener)) {
             if (phases.length == 6) {
                 return UPDATE_MODEL_VALUES;

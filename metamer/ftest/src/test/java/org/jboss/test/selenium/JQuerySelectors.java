@@ -33,15 +33,15 @@ import org.jboss.arquillian.ajocado.locator.element.ExtendedLocator;
  * @version $Revision: 22505 $
  */
 public final class JQuerySelectors {
-    
+
     /* According to checkstyle made class final, without default ctor.
      * In case of need modify class accordingly */
     private JQuerySelectors() { };
-    
+
     public static JQueryLocator not(ExtendedLocator<JQueryLocator> locator, String expression) {
         return jq(SimplifiedFormat.format("{0}:not({1})", locator.getRawLocator(), expression));
     }
-    
+
     public static JQueryLocator append(ExtendedLocator<JQueryLocator> locator, String expression) {
         return jq(SimplifiedFormat.format("{0}{1}", locator.getRawLocator(), expression));
     }

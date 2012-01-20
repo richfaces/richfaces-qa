@@ -34,13 +34,13 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/a4jMediaOutput/elementLink.xhtml
- * 
+ *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestElementLink extends AbstractMediaOutputTest {
 
     private static final JQueryLocator MARKED_TEXT = pjq("*#mediaOutputMarked");
-    
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jMediaOutput/elementLink.xhtml");

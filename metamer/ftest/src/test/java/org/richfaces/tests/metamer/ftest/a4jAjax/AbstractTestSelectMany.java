@@ -42,7 +42,7 @@ import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
 
 /**
  * Abstract test case for testing h:selectManyMenu and h:selectManyListbox with a4j:ajax.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22054 $
  */

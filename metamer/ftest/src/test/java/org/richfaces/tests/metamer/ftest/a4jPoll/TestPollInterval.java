@@ -22,19 +22,14 @@
 package org.richfaces.tests.metamer.ftest.a4jPoll;
 
 import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
-
 import static org.jboss.arquillian.ajocado.utils.PrimitiveUtils.asLong;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.pollAttributes;
-
 import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
 import java.net.URL;
 
-import org.apache.commons.httpclient.HttpException;
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.framework.AjocadoConfigurationContext;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
@@ -49,7 +44,7 @@ import org.testng.annotations.Test;
 
 /**
  * Tests the a4j:poll component.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22681 $
  */
@@ -81,14 +76,14 @@ public class TestPollInterval extends AbstractAjocadoTest {
 
     @Test
     @Use(field = "interval", ints = { 1000 })
-    public void testClientAllTemplates() throws HttpException, IOException {
+    public void testClientAllTemplates() throws IOException {
         testClient();
     }
 
     @Test
     @Use(field = "interval", ints = { 500, 5000 })
     @Templates(value = "plain")
-    public void testClientDifferentIntervals() throws HttpException, IOException {
+    public void testClientDifferentIntervals() throws IOException {
         testClient();
     }
 
@@ -96,21 +91,21 @@ public class TestPollInterval extends AbstractAjocadoTest {
      * <p>
      * Test the progress of polling for 3 different values from client side.
      * </p>
-     * 
+     *
      * <p>
      * It defines the new interval value first for each iteration and then enable polling.
      * </p>
-     * 
+     *
      * <p>
      * Then, it waits for first poll event (zero iteration).
      * </p>
-     * 
+     *
      * <p>
      * For 5 following poll events it checks that runtime visible from client (output from JavaScript's new
      * Date().getTime()) between the events haven't greater deviation from defined interval than defined
      * {@link #MAX_DEVIATION}.
      * </p>
-     * 
+     *
      * <p>
      * Test also computes average value of deviation and checks that the average value of all obtained particular
      * deviations isn't greater than {@link #MAX_AVERAGE_DEVIATION}.
@@ -137,7 +132,7 @@ public class TestPollInterval extends AbstractAjocadoTest {
     private void waitForPoll() {
         selenium.getPageExtensions().install();
         selenium.getRequestGuard().clearRequestDone();
-        selenium.getRequestGuard().waitForRequest();;
+        selenium.getRequestGuard().waitForRequest();
     }
 
     private void validateInterval() {
@@ -170,7 +165,7 @@ public class TestPollInterval extends AbstractAjocadoTest {
 
     /**
      * Returns the time of poll event (the time when arrived the response from server)
-     * 
+     *
      * @return the time of poll event (the time when arrived the response from server)
      */
     private long getClientTime() {

@@ -29,24 +29,22 @@ import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 
 public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
-	
-	@Drone
-	protected WebDriver webDriver;
-	
-	/**
-	 * Opens the tested page. If templates is not empty nor null, it appends url
-	 * parameter with templates.
-	 * 
-	 * @param templates
-	 *            templates that will be used for test, e.g. "red_div"
-	 */
-	@BeforeMethod(alwaysRun = true)
-	public void loadPage(Object[] templates) {
-		if (webDriver == null) {
-			throw new SkipException("webDriver isn't initialized");
-		}
-		webDriver.get(buildUrl(getTestUrl() + "?templates="
-				+ template.toString()).toExternalForm());
-	}
+
+    @Drone
+    protected WebDriver webDriver;
+
+    /**
+     * Opens the tested page. If templates is not empty nor null, it appends url parameter with templates.
+     *
+     * @param templates
+     *            templates that will be used for test, e.g. "red_div"
+     */
+    @BeforeMethod(alwaysRun = true)
+    public void loadPage(Object[] templates) {
+        if (webDriver == null) {
+            throw new SkipException("webDriver isn't initialized");
+        }
+        webDriver.get(buildUrl(getTestUrl() + "?templates=" + template.toString()).toExternalForm());
+    }
 
 }

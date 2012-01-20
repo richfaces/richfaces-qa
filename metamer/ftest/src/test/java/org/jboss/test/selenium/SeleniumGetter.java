@@ -31,7 +31,7 @@ import org.jboss.arquillian.ajocado.waiting.conversion.Convertor;
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22728 $
- * 
+ *
  * @param <P>
  *            type of parameter
  */

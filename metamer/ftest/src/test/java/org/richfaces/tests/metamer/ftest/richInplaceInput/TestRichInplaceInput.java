@@ -54,7 +54,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for page faces/components/richInplaceInput/simple.xhtml.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22788 $
  */
@@ -99,7 +99,7 @@ public class TestRichInplaceInput extends AbstractAjocadoTest {
 
         assertEquals(selenium.getText(label), "new value", "Label should contain selected value.");
         waitGui.failWith("Output did not change.").until(textEquals.locator(output).text("new value"));
-        
+
         String listenerText = selenium.getText(jq("div#phasesPanel li:eq(3)"));
 
         assertEquals(listenerText, "*1 value changed: RichFaces 4 -> new value",

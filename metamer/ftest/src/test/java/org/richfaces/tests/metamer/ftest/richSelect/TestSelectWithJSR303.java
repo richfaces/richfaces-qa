@@ -36,38 +36,38 @@ import org.testng.annotations.Test;
  * @version $Revision: 22638 $
  */
 public class TestSelectWithJSR303 extends TestSelectsWithJSR303 {
-    
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richSelect/jsr303.xhtml");
     }
-    
+
     @Test
     public void testNotEmpty() {
         verifyNotEmpty();
     }
-    
+
     @Test
     public void testRegExpPattern() {
         verifyRegExpPattern();
     }
-    
+
     @Test
     public void testStringSize() {
         verifyStringSize();
     }
-    
+
     @Test
     public void testCustomString() {
         verifyCustomString();
     }
-    
-    @Test 
+
+    @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11264")
     public void testAllInputsWrong() {
         verifyAllInputsWrong();
     }
-    
+
     @Test
     public void testAllInputsCorrect() {
         verifyAllInputsCorrect();

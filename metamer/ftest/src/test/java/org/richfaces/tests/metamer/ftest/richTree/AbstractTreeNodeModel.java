@@ -37,21 +37,21 @@ import org.richfaces.tests.metamer.ftest.model.ModelIterable;
  * @version $Revision: 22499 $
  */
 public class AbstractTreeNodeModel extends AbstractModel<JQueryLocator> {
-    
+
     static JQueryLocator treeNode = jq("div.rf-tr-nd");
     static JQueryLocator treeNodeExpanded = jq("div.rf-tr-nd-exp");
     static JQueryLocator treeNodeCollapsed = jq("div.rf-tr-nd-colps");
     static JQueryLocator treeNodeSelected = jq("div.rf-tr-nd:has(> .rf-trn > .rf-trn-sel)");
-    
+
     protected TreeModel tree;
     ReferencedLocator<JQueryLocator> nodes = ref(root, "> " + treeNode.getRawLocator());
     ReferencedLocator<JQueryLocator> anyNodes = ref(root, treeNode.getRawLocator());
     ReferencedLocator<JQueryLocator> nodesCollapsed = ref(root, "> " + treeNodeCollapsed.getRawLocator());
     ReferencedLocator<JQueryLocator> nodesExpanded = ref(root, "> " + treeNodeExpanded.getRawLocator());
     ReferencedLocator<JQueryLocator> anyNodesSelected = ref(root, treeNodeSelected.getRawLocator());
-    
+
     private AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
-    
+
     public AbstractTreeNodeModel(JQueryLocator root) {
         super(root);
     }
@@ -93,7 +93,7 @@ public class AbstractTreeNodeModel extends AbstractModel<JQueryLocator> {
             new Object[] { tree });
         return result;
     }
-    
+
     public int getNodesCount() {
         return selenium.getCount(nodes);
     }

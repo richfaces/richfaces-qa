@@ -86,13 +86,13 @@ AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
             pressUp();
         }
     }
-    
+
     /**
      * Method for select option from autocomplete suggestions. This method doesn't invoke/display suggestions.
      * Is should be already done by another selenium invocation.
-     * 
-     * For now, it is just selenium.clickAt() 
-     * 
+     *
+     * For now, it is just selenium.clickAt()
+     *
      * @param label
      */
     public void selectByMouse(String label) {

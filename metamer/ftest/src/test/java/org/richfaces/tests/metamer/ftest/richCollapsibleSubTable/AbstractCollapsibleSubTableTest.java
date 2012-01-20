@@ -53,7 +53,7 @@ public abstract class AbstractCollapsibleSubTableTest extends AbstractAjocadoTes
 
     Attributes<CollapsibleSubTableAttributes> collapsibleSubTabAttributes = new Attributes<CollapsibleSubTableAttributes>();
     DataTable dataTable = new DataTable(pjq("table[id$=richDataTable]"));;
-    
+
     JQueryLocator showDataLocator = pjq("input[id$=noDataCheckbox]");
 
     @Inject

@@ -82,7 +82,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
         JQueryLocator input = pjq("select[id$=lefttDisabledIcon]");
         ElementLocator<JQueryLocator> icon = leftIcon.getIcon();
         ElementLocator<JQueryLocator> image = jq(leftIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, ""); 
+        verifyStandardIcons(input, icon, image, "");
     }
 
     @Test
@@ -91,7 +91,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
         JQueryLocator input = pjq("select[id$=leftCollapsedIcon]");
         ElementLocator<JQueryLocator> icon = leftIcon.getIcon();
         ElementLocator<JQueryLocator> image = jq(leftIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");     
+        verifyStandardIcons(input, icon, image, "");
 
         panelMenuGroupAttributes.set(disabled, true);
         assertTrue(leftIcon.isTransparent());
@@ -102,7 +102,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
         JQueryLocator input = pjq("select[id$=leftExpandedIcon]");
         ElementLocator<JQueryLocator> icon = leftIcon.getIcon();
         ElementLocator<JQueryLocator> image = jq(leftIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");  
+        verifyStandardIcons(input, icon, image, "");
 
         panelMenuGroupAttributes.set(disabled, true);
         assertTrue(rightIcon.isTransparent());
@@ -135,7 +135,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
         JQueryLocator input = pjq("select[id$=rightDisabledIcon]");
         ElementLocator<JQueryLocator> icon = rightIcon.getIcon();
         ElementLocator<JQueryLocator> image = jq(rightIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");          
+        verifyStandardIcons(input, icon, image, "");
     }
 
     @Test
@@ -143,7 +143,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
         JQueryLocator input = pjq("select[id$=rightExpandedIcon]");
         ElementLocator<JQueryLocator> icon = rightIcon.getIcon();
         ElementLocator<JQueryLocator> image = jq(rightIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");  
+        verifyStandardIcons(input, icon, image, "");
 
         panelMenuGroupAttributes.set(disabled, true);
         assertTrue(rightIcon.isTransparent());
@@ -155,8 +155,8 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
         JQueryLocator input = pjq("select[id$=rightCollapsedIcon]");
         ElementLocator<JQueryLocator> icon = rightIcon.getIcon();
         ElementLocator<JQueryLocator> image = jq(rightIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");        
-        
+        verifyStandardIcons(input, icon, image, "");
+
         panelMenuGroupAttributes.set(disabled, true);
         assertTrue(rightIcon.isTransparent());
     }
@@ -193,12 +193,12 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     public void testStyleClass() {
         super.testStyleClass(topGroup);
     }
-    
+
     private void verifyStandardIcons(ElementLocator<JQueryLocator> input, ElementLocator<JQueryLocator> icon, ElementLocator<JQueryLocator> image, String classSuffix) {
         IconsChecker checker = new IconsChecker(selenium, "rf-ico-", "");
         checker.checkCssImageIcons(input, icon, classSuffix);
         checker.checkCssNoImageIcons(input, icon, classSuffix);
         checker.checkImageIcons(input, icon, image, classSuffix, false);
         checker.checkNone(input, icon, classSuffix);
-    }    
+    }
 }

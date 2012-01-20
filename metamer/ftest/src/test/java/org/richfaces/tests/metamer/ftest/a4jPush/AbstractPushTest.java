@@ -22,16 +22,13 @@
 package org.richfaces.tests.metamer.ftest.a4jPush;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.SeleniumGetter.getText;
-
 import static org.testng.Assert.assertEquals;
 
 import java.io.IOException;
 import java.net.URL;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
@@ -41,7 +38,7 @@ import org.testng.annotations.BeforeClass;
 
 /**
  * Abstract test case for testing a4j:push component.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 23061 $
  */
@@ -73,7 +70,7 @@ public abstract class AbstractPushTest extends AbstractAjocadoTest {
 
     /**
      * Returns the value of counter as pushed value
-     * 
+     *
      * @return the value of counter as pushed value
      */
     protected int getCounter() {
@@ -82,11 +79,11 @@ public abstract class AbstractPushTest extends AbstractAjocadoTest {
 
     /**
      * Push the event specified number times and then waits for observation of event by client.
-     * 
+     *
      * @param numberOfPushes
      *            the number of events should be generated
      */
-    protected void pushAndWait(int numberOfPushes) throws HttpException, IOException {
+    protected void pushAndWait(int numberOfPushes) throws IOException {
         selenium.getPageExtensions().install();
         selenium.getRequestGuard().clearRequestDone();
 
@@ -94,7 +91,7 @@ public abstract class AbstractPushTest extends AbstractAjocadoTest {
             generatePushEvent();
         }
 
-        selenium.getRequestGuard().waitForRequest();;
+        selenium.getRequestGuard().waitForRequest();
         RequestType requestDone = selenium.getRequestGuard().clearRequestDone();
 
         assertEquals(requestDone, RequestType.XHR);
@@ -104,12 +101,12 @@ public abstract class AbstractPushTest extends AbstractAjocadoTest {
      * <p>
      * Generates the push event for all registered listeners from a4j:push test Simple page.
      * </p>
-     * 
+     *
      * <p>
      * Internally use HttpClient to ping URL triggering push event in preRenderView phase.
      * </p>
      */
-    private void generatePushEvent() throws HttpException, IOException {
+    private void generatePushEvent() throws IOException {
         httpClient.executeMethod(pushMethod);
         assertEquals(pushMethod.getStatusCode(), STATUS_CODE_OK);
     }

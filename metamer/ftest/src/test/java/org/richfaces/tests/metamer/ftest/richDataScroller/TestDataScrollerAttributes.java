@@ -50,7 +50,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test the functionality of switching pages using DataScroller bound to DataTable.
- * 
+ *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 @Use(field = "scroller", value = { "scrollerOutsideTable", "scrollerInsideTable" })

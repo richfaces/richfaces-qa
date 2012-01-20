@@ -35,7 +35,7 @@ import org.testng.annotations.BeforeClass;
 
 /**
  * Abstract class with selenium test for validators
- * 
+ *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision: 22997 $
  */

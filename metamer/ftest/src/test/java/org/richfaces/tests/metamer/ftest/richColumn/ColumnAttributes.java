@@ -28,7 +28,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @version $Revision: 22738 $
  */
 public enum ColumnAttributes implements AttributeEnum {
-    
+
     breakRowBefore,
     colspan,
     rendered,

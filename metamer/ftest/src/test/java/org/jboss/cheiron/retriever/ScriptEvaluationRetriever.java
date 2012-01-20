@@ -72,9 +72,9 @@ public class ScriptEvaluationRetriever extends AbstractRetriever<String> impleme
 
     /**
      * Returns a copy of this textRetriever with exactly same settings.
-     * 
+     *
      * Keeps the immutability of this class.
-     * 
+     *
      * @return the exact copy of this textRetriever
      */
     private ScriptEvaluationRetriever copy() {

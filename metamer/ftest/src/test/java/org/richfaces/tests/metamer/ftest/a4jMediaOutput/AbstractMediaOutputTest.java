@@ -38,7 +38,7 @@ import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
 public abstract class AbstractMediaOutputTest extends AbstractAjocadoTest {
 
     protected static final JQueryLocator MEDIA_OUTPUT = pjq("*[id$=mediaOutput]");
-    
+
     protected String getTextContentByUrlAttribute(AttributeLocator urlAttribute) throws IOException {
         URL url = buildUrl(contextPath, selenium.getAttribute(urlAttribute));
         BufferedReader input = null;
@@ -56,5 +56,5 @@ public abstract class AbstractMediaOutputTest extends AbstractAjocadoTest {
         }
         return foundContent.toString();
     }
-    
+
 }

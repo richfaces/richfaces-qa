@@ -28,11 +28,11 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @version $Revision: 22684 $
  */
 public enum StatusAttributes implements AttributeEnum {
-    
+
     onerror,
     onstart,
     onstop,
     onsuccess,
     rendered
-    
+
 }

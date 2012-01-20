@@ -46,19 +46,19 @@ import org.testng.annotations.Test;
 
 
 /**
- * Test for example with formatted suggestions on page faces/components/richAutocomplete/autocomplete.xhtml 
+ * Test for example with formatted suggestions on page faces/components/richAutocomplete/autocomplete.xhtml
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  *
  * @version $Revision$
  */
 public class TestAutocompleteFormatting extends AbstractAjocadoTest {
-    
+
     Autocomplete autocomplete = new Autocomplete();
     StringBuilder partialInput;
-    
+
     List<Capital> capitals = Model.unmarshallCapitals();
-    
+
     @Inject
     @Use(booleans = { true, false })
     Boolean autofill;
@@ -71,7 +71,7 @@ public class TestAutocompleteFormatting extends AbstractAjocadoTest {
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richAutocomplete/fetchValueAttr.xhtml");
     }
-    
+
     @BeforeMethod
     public void prepareProperties() {
         autocompleteAttributes.set(AutocompleteAttributes.autofill, autofill);
@@ -97,37 +97,37 @@ public class TestAutocompleteFormatting extends AbstractAjocadoTest {
         assertFalse(autocomplete.isCompletionVisible());
         assertTrue(autocomplete.getInputText().toLowerCase().startsWith(getExpectedStateForPrefix().toLowerCase()));
     }
-    
+
     @Test
     public void testLayout() {
-        
+
         JQueryLocator suggestionsGridDiv = new JQueryLocator("div.rf-au-lst-scrl > div[id$=autocompleteItems] > div:contains({0})");
         JQueryLocator suggestionsList = new JQueryLocator("div.rf-au-lst-scrl > ul[id$=autocompleteItems] > li:contains({0})");
         JQueryLocator suggestionsTable = new JQueryLocator("div.rf-au-lst-scrl > table[id$=autocompleteItems] tr>td:contains({0})");
-        
+
         verifyLayout("div", suggestionsGridDiv);
-        
+
         verifyLayout("grid", suggestionsGridDiv);
-        
+
         verifyLayout("list", suggestionsList);
-        
+
         verifyLayout("table", suggestionsTable);
-        
+
     }
-    
+
     private void verifyLayout(String layout, JQueryLocator suggestionLocatorFormat) {
-        
+
         autocompleteAttributes.set(AutocompleteAttributes.layout, layout);
-        
+
         autocomplete.typeKeys("Co");
-               
+
         assertTrue(selenium.isElementPresent(suggestionLocatorFormat.format("Colorado")));
         assertTrue(selenium.isElementPresent(suggestionLocatorFormat.format("[Denver]")));
-        
+
         assertTrue(selenium.isElementPresent(suggestionLocatorFormat.format("Connecticut")));
         assertTrue(selenium.isElementPresent(suggestionLocatorFormat.format("[Hartford]")));
     }
-    
+
     public void typePrefix(String wholeInput) {
         partialInput = new StringBuilder(autocomplete.getInputText());
 
@@ -141,7 +141,7 @@ public class TestAutocompleteFormatting extends AbstractAjocadoTest {
             assertEquals(autocomplete.getSelectedOptionIndex(), getExpectedSelectedOptionIndex());
         }
     }
-    
+
     public String getExpectedStateForPrefix() {
         if (selectFirst && autofill && partialInput.length() > 0) {
             return getStatesByPrefix(partialInput.toString()).get(0).toLowerCase();
@@ -149,7 +149,7 @@ public class TestAutocompleteFormatting extends AbstractAjocadoTest {
 
         return partialInput.toString();
     }
-    
+
     public String getExpectedCompletionForPrefix() {
         if (selectFirst && autofill && partialInput.length() > 0) {
             return getCompletionByPrefix(partialInput.toString()).get(0).toLowerCase();
@@ -157,7 +157,7 @@ public class TestAutocompleteFormatting extends AbstractAjocadoTest {
 
         return partialInput.toString();
     }
-    
+
     public List<String> getStatesByPrefix(String prefix) {
         List<String> states = new LinkedList<String>();
 
@@ -169,7 +169,7 @@ public class TestAutocompleteFormatting extends AbstractAjocadoTest {
 
         return states;
     }
-    
+
     public List<String> getCompletionByPrefix(String prefix) {
         List<String> states = new LinkedList<String>();
 
@@ -181,11 +181,11 @@ public class TestAutocompleteFormatting extends AbstractAjocadoTest {
 
         return states;
     }
-    
+
     public int getExpectedSelectedOptionIndex() {
         return (selectFirst && partialInput.length() > 0) ? 0 : -1;
     }
-    
+
     public void confirm() {
         autocomplete.confirmByKeys();
         autocomplete.waitForCompletionVisible();

@@ -27,19 +27,19 @@ public class CollapsibleSubTable extends AbstractModel<JQueryLocator> {
     public CollapsibleSubTable(JQueryLocator root) {
         super(root);
     }
-    
+
     public JQueryLocator getAnyRow() {
         return root.getLocator().getChild(subtableRow);
     }
-    
+
     public JQueryLocator getAnyCellInColumn(int column) {
-    	return ColumnModel.getNthChildElement(root.getLocator().getChild(subtableRow).getChild(subtableCell), column);
+        return ColumnModel.getNthChildElement(root.getLocator().getChild(subtableRow).getChild(subtableCell), column);
     }
 
     public JQueryLocator getRows() {
-        //return jq(root.getLocator().getRawLocator() + " > " + subtableRow);
+        // return jq(root.getLocator().getRawLocator() + " > " + subtableRow);
         return root.getLocator().getChild(subtableRow);
-    	//return root.getLocator().getChildren(subtableRow);
+        // return root.getLocator().getChildren(subtableRow);
     }
 
     public JQueryLocator getRow(int rowIndex) {
@@ -74,7 +74,7 @@ public class CollapsibleSubTable extends AbstractModel<JQueryLocator> {
             return selenium.getText(noData).isEmpty();
         }
     }
-    
+
     public boolean isVisible() {
         return selenium.isElementPresent(root.getLocator()) && selenium.isVisible(root.getLocator());
     }

@@ -31,7 +31,7 @@ import org.jboss.arquillian.ajocado.locator.IdLocator;
 
 /**
  * The control point for setting different attributes for a4j:push test page.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22407 $
  */

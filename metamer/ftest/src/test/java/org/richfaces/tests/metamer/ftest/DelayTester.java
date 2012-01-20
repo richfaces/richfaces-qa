@@ -44,7 +44,7 @@ public abstract class DelayTester {
 
     long actualDelay;
     long expectedDelay;
-    
+
     List<Long> deviations = new ArrayList<Long>();
 
     public DelayTester(long expectedDelay) {

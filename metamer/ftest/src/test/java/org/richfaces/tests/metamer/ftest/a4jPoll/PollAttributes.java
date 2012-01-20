@@ -25,7 +25,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
  * Tests the a4j:poll component.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22681 $
  */
@@ -44,5 +44,5 @@ public enum PollAttributes implements AttributeEnum {
     render,
     rendered,
     status
-    
+
 }

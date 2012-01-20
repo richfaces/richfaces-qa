@@ -28,7 +28,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @version $Revision: 22685 $
  */
 public enum CollapsibleSubTableAttributes implements AttributeEnum {
-    
+
     columnClasses,
     expandMode,
     expanded,

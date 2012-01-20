@@ -82,7 +82,7 @@ public class MatrixConfigurator extends TestMethodSelector implements IInvokedMe
             for (int i = 0; i < methodInstance.getMethod().getInvocationCount(); i++) {
                 methods.add(methodInstance.getMethod().getConstructorOrMethod().getMethod());
             }
-            
+
             if (methodInstance.getMethod().getInvocationCount() > 0) {
                 result.add(methodInstance);
             }
@@ -95,9 +95,9 @@ public class MatrixConfigurator extends TestMethodSelector implements IInvokedMe
             if (isAfterConfiguration(invokedMethod.getTestMethod())) {
                 return;
             }
-            
+
             if (invokedMethod.getTestMethod().isBeforeSuiteConfiguration()) {
-            	return;
+                return;
             }
 
             configureMethod(testResult);
@@ -106,7 +106,7 @@ public class MatrixConfigurator extends TestMethodSelector implements IInvokedMe
         }
     }
 
-	public void onTestStart(ITestResult result) {
+    public void onTestStart(ITestResult result) {
         if (!methodConfigured) {
             configureMethod(result);
             methodConfigured = true;
@@ -235,7 +235,7 @@ public class MatrixConfigurator extends TestMethodSelector implements IInvokedMe
         if (parameters.size() == 0) {
             return 1;
         }
-        
+
         return count;
     }
 
@@ -308,9 +308,9 @@ public class MatrixConfigurator extends TestMethodSelector implements IInvokedMe
     }
 
     private List<? extends Object> getUseParameter(Class<?> testClass, Class<?> parameterType, Use useAnnotation) {
-        
+
         List<Object> result = new LinkedList<Object>();
-        
+
         if (useAnnotation.empty()) {
             result.addAll(Arrays.asList(new Object[] { null }));
         }
@@ -320,30 +320,30 @@ public class MatrixConfigurator extends TestMethodSelector implements IInvokedMe
                 result.addAll(Arrays.asList(ArrayUtils.toObject(useAnnotation.ints())));
             }
         }
-        
+
         if (useAnnotation.decimals().length > 0) {
             if (parameterType == double.class || parameterType == Double.class) {
                 result.addAll(Arrays.asList(ArrayUtils.toObject(useAnnotation.decimals())));
             }
         }
-        
+
         if (useAnnotation.strings().length > 0) {
             if (parameterType == String.class) {
                 result.addAll(Arrays.asList(useAnnotation.strings()));
             }
         }
-        
+
         if (useAnnotation.booleans().length > 0) {
             if (parameterType == boolean.class || parameterType == Boolean.class) {
                 result.addAll(Arrays.asList(ArrayUtils.toObject(useAnnotation.booleans())));
             }
         }
-        
+
         if (useAnnotation.enumeration()) {
             if (!parameterType.isEnum()) {
                 throw new IllegalArgumentException(parameterType + "have to be enumeration");
             }
-            
+
             result.addAll(Arrays.asList(parameterType.getEnumConstants()));
         }
 
@@ -355,7 +355,7 @@ public class MatrixConfigurator extends TestMethodSelector implements IInvokedMe
                 String namePattern = useAnnotation.value()[i];
                 namePattern = StringUtils.replace(namePattern, "*", ".+");
                 namePattern = StringUtils.replace(namePattern, "?", ".");
-    
+
                 for (Field field : getAllFields(testClass)) {
                     Pattern pattern = Pattern.compile(namePattern);
                     if (pattern.matcher(field.getName()).matches()) {
@@ -385,17 +385,17 @@ public class MatrixConfigurator extends TestMethodSelector implements IInvokedMe
                     + useAnnotation.value()[i]);
             }
         }
-        
+
         if (useAnnotation.useNull()) {
             if (parameterType.isPrimitive()) {
                 throw new IllegalArgumentException("parameterType is primitive, can't use null value");
             }
-            
+
             if (result.contains(null)) {
                 result.addAll(null);
             }
         }
-        
+
         return result;
     }
 
@@ -555,7 +555,7 @@ public class MatrixConfigurator extends TestMethodSelector implements IInvokedMe
 
     public void onFinish(ITestContext context) {
     }
-    
+
     public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
     }
 }

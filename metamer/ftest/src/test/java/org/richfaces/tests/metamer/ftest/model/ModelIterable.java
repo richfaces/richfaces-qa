@@ -16,7 +16,7 @@ public class ModelIterable<E extends ExtendedLocator<E>, T extends AbstractModel
         this.iterable = iterable;
         this.classT = classT;
     }
-    
+
     public ModelIterable(Iterator<E> iterable, Class<T> classT, Class[] constructorParamTypes, Object[] constructorParams) {
         this.iterable = iterable;
         this.classT = classT;
@@ -42,7 +42,7 @@ public class ModelIterable<E extends ExtendedLocator<E>, T extends AbstractModel
         public T next() {
             ExtendedLocator<E> locator = iterator.next();
 
-            try { 
+            try {
             constructorLoop:
                 for (Constructor<?> constructor : classT.getConstructors()) {
                     if (ExtendedLocator.class.isAssignableFrom(constructor.getParameterTypes()[0])) {

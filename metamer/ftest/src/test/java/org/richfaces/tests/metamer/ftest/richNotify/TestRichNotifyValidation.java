@@ -36,13 +36,13 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for pages faces/components/notify/validation.xhtml
- * 
+ *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestRichNotifyValidation extends AbstractRichNotifyTest {
 
     private JQueryLocator number = pjq("input[id$=number]");
-    
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richNotify/validation.xhtml");
@@ -50,9 +50,9 @@ public class TestRichNotifyValidation extends AbstractRichNotifyTest {
 
     @Test
     public void testAttributeMessagesGlobalOnly() {
-        
+
     }
-    
+
     @Test
     public void testValidationMessageAppear() {
         closeAll(notify);
@@ -62,7 +62,7 @@ public class TestRichNotifyValidation extends AbstractRichNotifyTest {
             .failWith("After typing <4> into the number field, the error should appear.")
             .until(elementPresent.locator(notifyError));
     }
-    
+
     @Test
     public void testValidationMessageNotAppear() {
         closeAll(notify);
@@ -70,7 +70,7 @@ public class TestRichNotifyValidation extends AbstractRichNotifyTest {
         selenium.fireEvent(number, Event.BLUR);
         waitGui
             .failWith("After typing <5> into the number field, the error should appear.")
-            .until(NegationCondition.getInstance().condition(elementPresent.locator(notifyError)));        
+            .until(NegationCondition.getInstance().condition(elementPresent.locator(notifyError)));
     }
-    
+
 }

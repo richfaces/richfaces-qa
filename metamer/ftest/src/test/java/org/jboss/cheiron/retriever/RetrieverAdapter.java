@@ -27,12 +27,12 @@ import org.jboss.arquillian.ajocado.waiting.retrievers.Retriever;
 
 /**
  * Adapts the value for final representation using predefined set of converters.
- * 
- * 
- * 
+ *
+ *
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 21424 $
- * 
+ *
  * @param <T>
  *            the type of retrieved value
  * @param <C>

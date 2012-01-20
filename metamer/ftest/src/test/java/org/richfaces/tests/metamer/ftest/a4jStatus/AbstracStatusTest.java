@@ -46,12 +46,12 @@ public abstract class AbstracStatusTest extends AbstractAjocadoTest {
     TextRetriever retrieveStatus = retrieveText.locator(status);
 
     XHRHalter haltHandler;
-    
+
     @BeforeMethod
     public void cleanXHRHalter() {
         haltHandler = null;
     }
-    
+
     protected XHRHalter getCurrentXHRHalter() {
         if (haltHandler == null) {
             haltHandler = XHRHalter.getHandleBlocking();
@@ -60,11 +60,11 @@ public abstract class AbstracStatusTest extends AbstractAjocadoTest {
         }
         return haltHandler;
     }
-    
+
     void testRequestButton(ElementLocator<?> button, String startStatusText, String stopStatusText) {
         XHRHalter.enable();
         selenium.click(button);
-        
+
         XHRHalter halt = getCurrentXHRHalter();
         assertEquals(retrieveStatus.retrieve(), startStatusText);
         retrieveStatus.initializeValue();

@@ -28,7 +28,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @version $Revision: 22977 $
  */
 public enum DataScrollerAttributes implements AttributeEnum {
-    
+
     boundaryControls,
     data,
     execute,
@@ -49,5 +49,5 @@ public enum DataScrollerAttributes implements AttributeEnum {
     style,
     styleClass,
     title
-    
+
 }

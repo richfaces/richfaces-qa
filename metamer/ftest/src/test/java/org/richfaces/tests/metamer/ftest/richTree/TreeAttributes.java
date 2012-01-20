@@ -28,7 +28,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @version $Revision: 22753 $
  */
 public enum TreeAttributes implements AttributeEnum {
-    
+
     data,
     execute,
     iconCollapsed,
@@ -46,5 +46,5 @@ public enum TreeAttributes implements AttributeEnum {
     title,
     toggleNodeEvent,
     toggleType,
-    
+
 }

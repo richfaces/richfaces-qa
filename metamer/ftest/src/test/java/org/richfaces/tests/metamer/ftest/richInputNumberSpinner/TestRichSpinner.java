@@ -50,7 +50,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/richInputNumberSpinner/simple.xhtml
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22789 $
  */

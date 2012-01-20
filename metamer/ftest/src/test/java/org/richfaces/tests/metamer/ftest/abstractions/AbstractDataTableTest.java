@@ -66,7 +66,7 @@ public abstract class AbstractDataTableTest extends AbstractAjocadoTest {
     protected DataScroller dataScroller1 = new AssertingDataScroller("outside-table", pjq("span.rf-ds[id$=scroller1]"));
     protected DataScroller dataScroller2 = new AssertingDataScroller("inside-table-footer",
         pjq("span.rf-ds[id$=scroller2]"));
-    
+
     JQueryLocator showDataLocator = pjq("input[id$=noDataCheckbox]");
 
     public class EmployeeTableModel {
@@ -88,7 +88,7 @@ public abstract class AbstractDataTableTest extends AbstractAjocadoTest {
             return Integer.valueOf(selenium.getText(model.getElement(COLUMN_NUMBER_OF_KIDS1, row)));
         }
     }
-    
+
     protected void enableShowData(final boolean showData) {
         new GuardRequest(RequestType.XHR) {
             public void command() {

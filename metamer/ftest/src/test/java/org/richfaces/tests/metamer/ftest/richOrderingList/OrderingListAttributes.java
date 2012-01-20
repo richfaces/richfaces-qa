@@ -27,7 +27,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public enum OrderingListAttributes implements AttributeEnum{
-    
+
     columnClasses,
     columnVar,
     converter,

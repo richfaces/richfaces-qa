@@ -77,7 +77,7 @@ public final class MetamerTestInfo {
     public static String getConfigurationInfoInParenthesses() {
         return "{ " + getConfigurationInfo() + " }";
     }
-    
+
     public static String getAssociatedFilename(ITestResult result) {
         String packageName = TestInfo.getContainingPackageName(result);
         String className = TestInfo.getClassName(result);

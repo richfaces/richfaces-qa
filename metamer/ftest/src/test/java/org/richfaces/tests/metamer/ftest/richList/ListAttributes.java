@@ -39,5 +39,5 @@ public enum ListAttributes implements AttributeEnum {
     styleClass,
     title,
     type
-    
+
 }

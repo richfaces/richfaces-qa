@@ -45,7 +45,7 @@ import com.thoughtworks.selenium.SeleniumException;
 /**
  * Test listener which provides the methods injected in lifecycle of test case to catch the additional information in
  * context of test failure.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision$
  */

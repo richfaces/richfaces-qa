@@ -36,7 +36,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
 
     @Test
     public void testGroupCollapsedLeftIcon() {
-        group2.toggle();        
+        group2.toggle();
         JQueryLocator input = pjq("select[id$=groupCollapsedLeftIcon]");
         ElementLocator<JQueryLocator> icon = group24.getLeftIcon().getIcon();
         ElementLocator<JQueryLocator> image = jq(group24.getLeftIcon().getIcon().getRawLocator()).getChild(jq("img"));
@@ -45,7 +45,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
 
     @Test
     public void testGroupCollapsedRightIcon() {
-        group2.toggle();        
+        group2.toggle();
         JQueryLocator input = pjq("select[id$=groupCollapsedRightIcon]");
         ElementLocator<JQueryLocator> icon = group24.getRightIcon().getIcon();
         ElementLocator<JQueryLocator> image = jq(group24.getRightIcon().getIcon().getRawLocator()).getChild(jq("img"));
@@ -54,26 +54,26 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
 
     @Test
     public void testGroupDisabledLeftIcon() {
-        group2.toggle();        
+        group2.toggle();
         JQueryLocator input = pjq("select[id$=groupDisabledLeftIcon]");
         ElementLocator<JQueryLocator> icon = group26.getRightIcon().getIcon();
         ElementLocator<JQueryLocator> image = jq(group26.getRightIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");   
+        verifyStandardIcons(input, icon, image, "");
     }
 
     @Test
     public void testDisabledRightIcon() {
-        group2.toggle();        
+        group2.toggle();
         JQueryLocator input = pjq("select[id$=disabledRightIcon]");
         ElementLocator<JQueryLocator> icon = group26.getRightIcon().getIcon();
         ElementLocator<JQueryLocator> image = jq(group26.getRightIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");        
+        verifyStandardIcons(input, icon, image, "");
     }
 
     @Test
     public void testGroupExpandedLeftIcon() {
         group2.toggle();
-        group24.toggle();        
+        group24.toggle();
         JQueryLocator input = pjq("select[id$=groupExpandedLeftIcon]");
         ElementLocator<JQueryLocator> icon = group24.getLeftIcon().getIcon();
         ElementLocator<JQueryLocator> image = jq(group24.getLeftIcon().getIcon().getRawLocator()).getChild(jq("img"));
@@ -83,11 +83,11 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     @Test
     public void testGroupExpandedRightIcon() {
         group2.toggle();
-        group24.toggle();        
+        group24.toggle();
         JQueryLocator input = pjq("select[id$=groupExpandedRightIcon]");
         ElementLocator<JQueryLocator> icon = group24.getRightIcon().getIcon();
         ElementLocator<JQueryLocator> image = jq(group24.getRightIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");         
+        verifyStandardIcons(input, icon, image, "");
     }
 
     @Test
@@ -96,7 +96,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
         JQueryLocator input = pjq("select[id$=itemDisabledLeftIcon]");
         ElementLocator<JQueryLocator> icon = item25.getLeftIcon().getIcon();
         ElementLocator<JQueryLocator> image = jq(item25.getLeftIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, ""); 
+        verifyStandardIcons(input, icon, image, "");
     }
 
     @Test
@@ -105,7 +105,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
         JQueryLocator input = pjq("select[id$=itemDisabledRightIcon]");
         ElementLocator<JQueryLocator> icon = item25.getRightIcon().getIcon();
         ElementLocator<JQueryLocator> image = jq(item25.getRightIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, ""); 
+        verifyStandardIcons(input, icon, image, "");
     }
 
     @Test
@@ -114,7 +114,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
         JQueryLocator input = pjq("select[id$=itemLeftIcon]");
         ElementLocator<JQueryLocator> icon = item22.getLeftIcon().getIcon();
         ElementLocator<JQueryLocator> image = jq(item22.getLeftIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, ""); 
+        verifyStandardIcons(input, icon, image, "");
     }
 
     @Test
@@ -123,7 +123,7 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
         JQueryLocator input = pjq("select[id$=itemRightIcon]");
         ElementLocator<JQueryLocator> icon = item22.getRightIcon().getIcon();
         ElementLocator<JQueryLocator> image = jq(item22.getRightIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");        
+        verifyStandardIcons(input, icon, image, "");
     }
 
     @Test

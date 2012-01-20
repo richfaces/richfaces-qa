@@ -67,7 +67,7 @@ public class TestCollapsibleSubTableToggler extends AbstractAjocadoTest {
 
     private static final String IMAGE_URL = "/resources/images/star.png";
     private static final String LABEL = "Label";
-    
+
     DataTable dataTable = new DataTable(pjq("table.rf-dt[id$=richDataTable]"));
 
     JQueryLocator link = jq("a");

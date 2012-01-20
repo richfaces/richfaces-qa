@@ -43,7 +43,7 @@ public final class RequestTypeModelGuard implements MethodHandler {
 
     @SuppressWarnings("unchecked")
     private static <T extends Model> T guard(T model, RequestType requestExpected, boolean interlayed) {
-    	RequestGuardInterceptor guard = new RequestGuardInterceptor(requestExpected, interlayed);
+        RequestGuardInterceptor guard = new RequestGuardInterceptor(requestExpected, interlayed);
 
         ProxyFactory f = new ProxyFactory();
         f.setSuperclass(model.getClass());
@@ -70,7 +70,7 @@ public final class RequestTypeModelGuard implements MethodHandler {
 
     /**
      * Shortcut for registering a XMLHttpRequest on given selenium object.
-     * 
+     *
      * @param selenium
      *            where should be registered XMLHttpRequest guard
      * @return the selenium guarded to use XMLHttpRequest
@@ -81,7 +81,7 @@ public final class RequestTypeModelGuard implements MethodHandler {
 
     /**
      * Shortcut for registering a regular HTTP request on given selenium object.
-     * 
+     *
      * @param selenium
      *            where should be registered regular HTTP request guard
      * @return the selenium guarded to use regular HTTP requests
@@ -92,7 +92,7 @@ public final class RequestTypeModelGuard implements MethodHandler {
 
     /**
      * Shortcut for registering a guard for no request on given selenium object.
-     * 
+     *
      * @param selenium
      *            where should be registered no request guard
      * @return the selenium guarded to use no request during interaction
@@ -103,7 +103,7 @@ public final class RequestTypeModelGuard implements MethodHandler {
 
     /**
      * Shortcut for registering guard waiting for interception of XHR type request
-     * 
+     *
      * @param selenium
      *            where should be the guard registered
      * @return the selenium waiting for interception of XHR type request
@@ -114,7 +114,7 @@ public final class RequestTypeModelGuard implements MethodHandler {
 
     /**
      * Shortcut for registering guard waiting for interception of HTTP type request
-     * 
+     *
      * @param selenium
      *            selenium where should be the guard registered
      * @return the selenium waitinf for interception of HTTP type request

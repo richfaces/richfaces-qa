@@ -27,11 +27,11 @@ import org.testng.TestListenerAdapter;
 
 /**
  * This class is used as ITestListener in testNG tests to put test's status to the console output
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>, <a href="mailto:pjha@redhat.com">Prabhat Jha</a>, <a
  *         href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision$
- * 
+ *
  */
 public class ConsoleStatusTestListener extends TestListenerAdapter {
 
@@ -62,18 +62,18 @@ public class ConsoleStatusTestListener extends TestListenerAdapter {
 
     /**
      * This method will output method name and status on the standard output
-     * 
+     *
      * @param result
      *            from the fine-grained listener's method such as onTestFailure(ITestResult)
      */
     private void logStatus(ITestResult result) {
-        String message = getMessage(result); 
+        String message = getMessage(result);
         System.out.println(message);
         if (result.getStatus() != ITestResult.STARTED) {
             System.out.println();
         }
     }
-    
+
     protected String getMessage(ITestResult result) {
         return TestLoggingUtils.getTestDescription(result);
     }

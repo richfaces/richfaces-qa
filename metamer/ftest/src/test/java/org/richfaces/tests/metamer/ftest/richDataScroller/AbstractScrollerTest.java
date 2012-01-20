@@ -39,7 +39,7 @@ import org.testng.annotations.BeforeMethod;
 
 /**
  * Test the functionality of switching pages using DataScroller bound to DataTable.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22740 $
  */
@@ -57,7 +57,7 @@ public abstract class AbstractScrollerTest extends AbstractAjocadoTest {
     DataScroller dataScroller;
     DataScroller dataScroller1 = PaginationTester.DATA_SCROLLER_OUTSIDE_TABLE;
     DataScroller dataScroller2 = PaginationTester.DATA_SCROLLER_IN_TABLE_FOOTER;
-    
+
     PaginationTester paginationTester = new PaginationTester() {
 
         @Override

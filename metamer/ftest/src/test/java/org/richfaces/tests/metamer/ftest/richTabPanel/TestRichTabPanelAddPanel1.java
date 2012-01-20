@@ -43,7 +43,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/richTabPanel/simple.xhtml
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22999 $
  */
@@ -76,7 +76,7 @@ public class TestRichTabPanelAddPanel1 extends AbstractAjocadoTest {
 
     /**
      * Simple create new tab (without tab switch)
-     * 
+     *
      * @param addTabBtn
      */
     private void verifyCreateTab(JQueryLocator addTabBtn) {
@@ -116,7 +116,7 @@ public class TestRichTabPanelAddPanel1 extends AbstractAjocadoTest {
         selenium.waitForPageToLoad();
 
         System.out.println("testSwitchTypeAjax: tab count: " + selenium.getCount(tabsCount));
-        
+
         for (int i = STATIC_TAB_COUNT + MAX_NEW_TAB_COUNT; i > STATIC_TAB_COUNT; i--) {
             selenium.click(inactiveHeadersFormat.format(i));
             waitGui.failWith("Tab " + i + " doesn't display correct content.").until(

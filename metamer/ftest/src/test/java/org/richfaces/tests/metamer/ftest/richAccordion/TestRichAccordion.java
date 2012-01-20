@@ -61,7 +61,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/richAccordion/simple.xhtml
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22733 $
  */
@@ -136,7 +136,7 @@ public class TestRichAccordion extends AbstractAjocadoTest {
             accordionDisplayed = selenium.isVisible(itemHeaders[i]);
             assertTrue(accordionDisplayed, "Item" + (i + 1) + "'s header should be visible.");
         }
-        
+
         accordionDisplayed = selenium.isVisible(itemContents[0]);
         assertTrue(accordionDisplayed, "Content of item1 should be visible.");
 

@@ -34,18 +34,18 @@ import org.testng.annotations.Test;
 
 /**
  * Selenium tests for page faces/components/richOrderingList/withColumn.xhtml.
- * 
+ *
  * It checks whether the moving is OK.
- * 
+ *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestOrderingList extends AbstractOrderingListTest {
-    
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richOrderingList/withColumn.xhtml");
     }
-    
+
     @Test
     public void testInit() {
         assertTrue(getOrderingList().isOrderingListPresent(), "The ordering list should be present.");
@@ -54,25 +54,25 @@ public class TestOrderingList extends AbstractOrderingListTest {
         assertFalse(getOrderingList().isButtonTopEnabled(), "The button [top] should be disabled.");
         assertFalse(getOrderingList().isButtonUpEnabled(), "The button [up] should be disabled.");
     }
-    
+
     @Test
     public void testSelectFirst() {
         getOrderingList().selectItem(0);
         checkButtonsTop();
     }
-    
+
     @Test
     public void testSelectLast() {
         getOrderingList().selectItem(getOrderingList().getNumberOfItems() - 1);
         checkButtonsBottom();
     }
-    
+
     @Test
     public void testSelectMiddle() {
         getOrderingList().selectItem(2);
         checkButtonsMiddle();
     }
-    
+
     @Test
     public void testSubmit() {
         getOrderingList().selectItem(1);
@@ -82,5 +82,5 @@ public class TestOrderingList extends AbstractOrderingListTest {
         String foundState = getOrderingList().getItemColumnValue(0, 0);
         assertEquals(expectedState, foundState, "After submitting the ordering list doesn't preserve the chosen order.");
     }
-     
+
 }

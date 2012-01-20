@@ -33,14 +33,14 @@ import com.thoughtworks.selenium.SeleniumException;
 
 
 public class Attributes<T extends AttributeEnum>  {
-    
+
     protected AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
-    LocatorReference<ExtendedLocator<JQueryLocator>> root = 
+    LocatorReference<ExtendedLocator<JQueryLocator>> root =
         new LocatorReference<ExtendedLocator<JQueryLocator>>(pjq(""));
     ReferencedLocator<JQueryLocator> propertyLocator = referenceInferred(root, ":input[id*={0}Input]{1}");
-    
+
     RequestType requestType = RequestType.HTTP;
-    
+
     /**
      * Ctor for create Attributes instance with different root locator
      * @param <LT> - ExtentedLocator type definition
@@ -49,57 +49,57 @@ public class Attributes<T extends AttributeEnum>  {
     public <LT extends ExtendedLocator<JQueryLocator>> Attributes(LT root) {
         this.root.setLocator(root);
     }
-    
+
     public Attributes() { }
-    
+
     public Attributes(RequestType reqType) {
         this.requestType = reqType;
     }
-    
+
     public void set(T attribute, String string) {
         setProperty(attribute.toString(), string);
     }
-    
+
     /**
      * Setter for special cases. For example, 'for' is reserved java word, but valid richfaces attribute as well.
      * So we use this attribute name in upper case in enum, and then set by special method to avoid overload by
-     * toLowerCase-in over the whole world of richfaces attributes  
+     * toLowerCase-in over the whole world of richfaces attributes
      * @param attribute
      * @param string
      */
     public void setLower(T attribute, String string) {
         setProperty(attribute.toString().toLowerCase(), string);
     }
-    
+
     // TODO jjamrich 2011-09-02: make sure that this resolve to correct string representation of number given as attr
     public void set(T attribute, Number no) {
         setProperty(attribute.toString(), no);
     }
-    
+
     public void set(T attribute, Boolean bool) {
         setProperty(attribute.toString(), bool);
     }
-    
+
     public void set(T attribute, JavaScript js) {
         setProperty(attribute.toString(), js);
     }
-    
+
     public void set(T attribute, JQueryLocator locator) {
         setProperty(attribute.toString(), locator.getRawLocator());
     }
-    
+
     public void set(T attribute, Enum<?> item) {
         setProperty(attribute.toString(), item.toString());
     }
-    
+
     public void set(T attribute, Event event) {
         setProperty(attribute.toString(), event.getEventName());
     }
-    
+
     public void reset(T attribute) {
         setProperty(attribute.toString(), "");
     }
-    
+
     /**
      * Retrieve current attribute value
      * @param attribute
@@ -108,11 +108,11 @@ public class Attributes<T extends AttributeEnum>  {
     public String get(T attribute) {
         return getProperty(attribute.toString());
     }
-    
+
     /*protected void set(String propertyName, Object value) {
-        
+
     }*/
-    
+
     protected void setProperty(String propertyName, Object value) {
         selenium.getCommandInterceptionProxy().registerInterceptor(new RepeatForElementNotFound());
 
@@ -132,7 +132,7 @@ public class Attributes<T extends AttributeEnum>  {
         if (value == null) {
             value = "";
         }
-        
+
         String valueAsString = value.toString();
         // System.out.println("\n ###setting following value as string: '" + valueAsString + "'");
 
@@ -144,7 +144,7 @@ public class Attributes<T extends AttributeEnum>  {
         } else if ("radio".equals(inputType)) {
             locator = propertyLocator.format(propertyName, "[value="
                 + ("".equals(valueAsString) ? "null" : valueAsString) + "]");
-           
+
             if (!selenium.isChecked(locator)) {
                 applyRadio(locator);
             }
@@ -158,7 +158,7 @@ public class Attributes<T extends AttributeEnum>  {
 
         selenium.getCommandInterceptionProxy().unregisterInterceptorType(RepeatForElementNotFound.class);
     }
-    
+
     protected String getProperty(String propertyName) {
         final ReferencedLocator<JQueryLocator> locator = propertyLocator.format(propertyName, "");
         if (selenium.getCount(locator) > 1) {
@@ -166,7 +166,7 @@ public class Attributes<T extends AttributeEnum>  {
         }
         return selenium.getValue(locator);
     }
-    
+
     protected void applyText(ElementLocator<?> locator, String value) {
         guard(selenium, requestType).type(locator, value);
     }
@@ -182,7 +182,7 @@ public class Attributes<T extends AttributeEnum>  {
 
     protected void applySelect(ElementLocator<?> locator, String value) {
         OptionValueLocator optionLocator = new OptionValueLocator(value);
-        
+
         LocatorFactory.jq(locator.getRawLocator());
         JQueryLocator fullLocator = jq(locator.getRawLocator()).getChild(jq(optionLocator.getRawLocator()));
         if (selenium.isElementPresent(fullLocator)) {
@@ -190,9 +190,9 @@ public class Attributes<T extends AttributeEnum>  {
         } else {
             OptionLabelLocator optionLabelLocator = new OptionLabelLocator(value);
             guard(selenium, requestType).select(locator, optionLabelLocator);
-        }        
+        }
     }
-    
+
     private class RepeatForElementNotFound implements CommandInterceptor {
         @Override
         public void intercept(CommandContext ctx) throws CommandInterceptorException {
@@ -213,7 +213,7 @@ public class Attributes<T extends AttributeEnum>  {
             }
         }
     }
-    
+
     public RequestType getRequestType() {
         return requestType;
     }
@@ -221,7 +221,7 @@ public class Attributes<T extends AttributeEnum>  {
     public void setRequestType(RequestType requestType) {
         this.requestType = requestType;
     }
-    
+
     public ExtendedLocator<JQueryLocator> getRoot() {
         return root.getLocator();
     }

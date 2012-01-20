@@ -30,10 +30,10 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @version $Revision: 22745 $
  */
 public enum GraphValidatorAttributes implements AttributeEnum {
-    
+   $
     rendered,
     summary,
     value,
     groups
-    
+   $
 }

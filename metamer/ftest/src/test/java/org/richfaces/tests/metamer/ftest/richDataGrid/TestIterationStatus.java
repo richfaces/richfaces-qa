@@ -47,7 +47,7 @@ public class TestIterationStatus extends AbstractDataGridTest {
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richDataGrid/iterationStatus.xhtml");
     }
-    
+
     @Test
     public void testBegin() {
         for(int i=0; i<dataGrid.getElementCount(); i++) {
@@ -55,25 +55,25 @@ public class TestIterationStatus extends AbstractDataGridTest {
             assertEquals(selenium.getText(beginLocator), "begin=0", "The iteration status property <begin> doesn't match (item: " + i + ").");
         }
     }
-    
+
     @Test
     public void testCount() {
         for(int i=0; i<dataGrid.getElementCount(); i++) {
             JQueryLocator propertyLocator = jq("span[id$=statusCount]:eq(" + i + ")");
             String expected = "count=" + (i + 1);
             assertEquals(selenium.getText(propertyLocator), expected, "The iteration status property <count> doesn't match (item: " + i + ").");
-        }        
-    }    
-    
+        }
+    }
+
     @Test
     public void testEnd() {
         String expected = "end=" + (dataGrid.getElementCount() - 1);
         for(int i=0; i<dataGrid.getElementCount(); i++) {
             JQueryLocator propertyLocator = jq("span[id$=statusEnd]:eq(" + i + ")");
             assertEquals(selenium.getText(propertyLocator), expected, "The iteration status property <end> doesn't match (item: " + i + ").");
-        }        
+        }
     }
- 
+
     @Test
     public void testEven() {
         for(int i=0; i<dataGrid.getElementCount(); i++) {
@@ -83,9 +83,9 @@ public class TestIterationStatus extends AbstractDataGridTest {
             }
             JQueryLocator propertyLocator = jq("span[id$=statusEven]:eq(" + i + ")");
             assertEquals(selenium.getText(propertyLocator), "even=" + Boolean.toString(expected), "The iteration status property <even> doesn't match (item: " + i + ").");
-        }        
-    }        
-    
+        }
+    }
+
     @Test
     public void testFirst() {
         for(int i=0; i<dataGrid.getElementCount(); i++) {
@@ -95,18 +95,18 @@ public class TestIterationStatus extends AbstractDataGridTest {
             }
             JQueryLocator propertyLocator = jq("span[id$=statusFirst]:eq(" + i + ")");
             assertEquals(selenium.getText(propertyLocator), "first=" + Boolean.toString(expected), "The iteration status property <first> doesn't match (item: " + i + ").");
-        }        
+        }
     }
-    
+
     @Test
     public void testIndex() {
         for(int i=0; i<dataGrid.getElementCount(); i++) {
             JQueryLocator propertyLocator = jq("span[id$=statusIndex]:eq(" + i + ")");
             String expected = "index=" + i;
             assertEquals(selenium.getText(propertyLocator), expected, "The iteration status property <index> doesn't match (item: " + i + ").");
-        }        
+        }
     }
-    
+
     @Test
     public void testLast() {
         for(int i=0; i<dataGrid.getElementCount(); i++) {
@@ -116,15 +116,15 @@ public class TestIterationStatus extends AbstractDataGridTest {
             }
             JQueryLocator propertyLocator = jq("span[id$=statusLast]:eq(" + i + ")");
             assertEquals(selenium.getText(propertyLocator), "last=" + Boolean.toString(expected), "The iteration status property <last> doesn't match (item: " + i + ").");
-        }        
+        }
     }
-    
+
     @Test
     public void testRowCount() {
         String expected = "rowCount=" + dataGrid.getElementCount();
         for(int i=0; i<dataGrid.getElementCount(); i++) {
             JQueryLocator propertyLocator = jq("span[id$=statusRowCount]:eq(" + i + ")");
             assertEquals(selenium.getText(propertyLocator), expected, "The iteration status property <rowCount> doesn't match (item: " + i + ").");
-        }        
-    }    
+        }
+    }
 }

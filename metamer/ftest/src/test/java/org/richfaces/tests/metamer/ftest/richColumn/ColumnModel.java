@@ -43,119 +43,103 @@ import org.richfaces.tests.metamer.model.Capital;
  */
 public class ColumnModel extends AbstractModel<JQueryLocator> {
 
-	AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
 
-	private ReferencedLocator<JQueryLocator> tableHeader = ref(root,
-			"> thead.rf-dt-thd");
-	private ReferencedLocator<JQueryLocator> tableBody = ref(root,
-			"> tbody.rf-dt-b");
-	private ReferencedLocator<JQueryLocator> tableFooter = ref(root,
-			"> tfoot.rf-dt-tft");
+    private ReferencedLocator<JQueryLocator> tableHeader = ref(root, "> thead.rf-dt-thd");
+    private ReferencedLocator<JQueryLocator> tableBody = ref(root, "> tbody.rf-dt-b");
+    private ReferencedLocator<JQueryLocator> tableFooter = ref(root, "> tfoot.rf-dt-tft");
 
-	private ReferencedLocator<JQueryLocator> headerRow = ref(tableHeader,
-			"> tr.rf-dt-hdr");
-	private ReferencedLocator<JQueryLocator> bodyRow = ref(tableBody,
-			"> tr.rf-dt-r");
-	private ReferencedLocator<JQueryLocator> footerRow = ref(tableFooter,
-			"> tr.rf-dt-ftr");
+    private ReferencedLocator<JQueryLocator> headerRow = ref(tableHeader, "> tr.rf-dt-hdr");
+    private ReferencedLocator<JQueryLocator> bodyRow = ref(tableBody, "> tr.rf-dt-r");
+    private ReferencedLocator<JQueryLocator> footerRow = ref(tableFooter, "> tr.rf-dt-ftr");
 
-	private JQueryLocator headerCell = jq("th.rf-dt-hdr-c");
-	private JQueryLocator bodyCell = jq("td.rf-dt-c");
-	private JQueryLocator footerCell = jq("td.rf-dt-ftr-c");
+    private JQueryLocator headerCell = jq("th.rf-dt-hdr-c");
+    private JQueryLocator bodyCell = jq("td.rf-dt-c");
+    private JQueryLocator footerCell = jq("td.rf-dt-ftr-c");
 
-	public ColumnModel(String name, JQueryLocator root) {
-		super(name, root);
-	}
+    public ColumnModel(String name, JQueryLocator root) {
+        super(name, root);
+    }
 
-	public int getBodyRowCount() {
-		return selenium.getCount(getNthChildElement(bodyRow.getChild(bodyCell),
-				1));
-		// return
-		// selenium.getCount(bodyRow.getChild(bodyCell).getNthChildElement(1));
-	}
+    public int getBodyRowCount() {
+        return selenium.getCount(getNthChildElement(bodyRow.getChild(bodyCell), 1));
+        // return
+        // selenium.getCount(bodyRow.getChild(bodyCell).getNthChildElement(1));
+    }
 
-	public int getHeaderRowCount() {
-		return selenium.getCount(getNthChildElement(
-				headerRow.getChild(headerCell), 1));
-		// return
-		// selenium.getCount(headerRow.getChild(headerCell).getNthChildElement(1));
-	}
+    public int getHeaderRowCount() {
+        return selenium.getCount(getNthChildElement(headerRow.getChild(headerCell), 1));
+        // return
+        // selenium.getCount(headerRow.getChild(headerCell).getNthChildElement(1));
+    }
 
-	public int getFooterRowCount() {
-		return selenium.getCount(getNthChildElement(
-				footerRow.getChild(footerCell), 1));
-		// return selenium.getCount(footerRow.getChild(footerCell)
-		// .getNthChildElement(1));
-	}
+    public int getFooterRowCount() {
+        return selenium.getCount(getNthChildElement(footerRow.getChild(footerCell), 1));
+        // return selenium.getCount(footerRow.getChild(footerCell)
+        // .getNthChildElement(1));
+    }
 
-	public int getBodyRowCellCount(int row) {
-		return selenium.getCount(getNthChildElement(bodyRow, row).getChild(
-				bodyCell));
-		// return selenium.getCount(bodyRow.getNthChildElement(row).getChild(
-		// bodyCell));
-	}
+    public int getBodyRowCellCount(int row) {
+        return selenium.getCount(getNthChildElement(bodyRow, row).getChild(bodyCell));
+        // return selenium.getCount(bodyRow.getNthChildElement(row).getChild(
+        // bodyCell));
+    }
 
-	public int getHeaderRowCellCount(int row) {
-		return selenium.getCount(getNthChildElement(headerRow, row).getChild(
-				headerCell));
-		// return selenium.getCount(headerRow.getNthChildElement(row).getChild(
-		// headerCell));
-	}
+    public int getHeaderRowCellCount(int row) {
+        return selenium.getCount(getNthChildElement(headerRow, row).getChild(headerCell));
+        // return selenium.getCount(headerRow.getNthChildElement(row).getChild(
+        // headerCell));
+    }
 
-	public int getFooterRowCellCount(int row) {
-		return selenium.getCount(getNthChildElement(footerRow, row).getChild(
-				footerCell));
-		// return selenium.getCount(footerRow.getNthChildElement(row).getChild(
-		// footerCell));
-	}
+    public int getFooterRowCellCount(int row) {
+        return selenium.getCount(getNthChildElement(footerRow, row).getChild(footerCell));
+        // return selenium.getCount(footerRow.getNthChildElement(row).getChild(
+        // footerCell));
+    }
 
-	public JQueryLocator getBodyCell(int row, int column) {
-		return getNthChildElement(
-				getNthChildElement(bodyRow, row).getChild(bodyCell), column);
-		// return bodyRow.getNthChildElement(row).getChild(bodyCell)
-		// .getNthChildElement(column);
-	}
+    public JQueryLocator getBodyCell(int row, int column) {
+        return getNthChildElement(getNthChildElement(bodyRow, row).getChild(bodyCell), column);
+        // return bodyRow.getNthChildElement(row).getChild(bodyCell)
+        // .getNthChildElement(column);
+    }
 
-	public JQueryLocator getHeaderCell(int row, int column) {
-		return getNthChildElement(getNthChildElement(headerRow, row).getChild(headerCell), column);
-		// return headerRow.getNthChildElement(row).getChild(headerCell)
-		// .getNthChildElement(column);
-	}
+    public JQueryLocator getHeaderCell(int row, int column) {
+        return getNthChildElement(getNthChildElement(headerRow, row).getChild(headerCell), column);
+        // return headerRow.getNthChildElement(row).getChild(headerCell)
+        // .getNthChildElement(column);
+    }
 
-	public JQueryLocator getFooterCell(int row, int column) {
-		return getNthChildElement(getNthChildElement(footerRow, row).getChild(footerCell),column);
-//		return footerRow.getNthChildElement(row).getChild(footerCell)
-//				.getNthChildElement(column);
-	}
+    public JQueryLocator getFooterCell(int row, int column) {
+        return getNthChildElement(getNthChildElement(footerRow, row).getChild(footerCell), column);
+        // return footerRow.getNthChildElement(row).getChild(footerCell)
+        // .getNthChildElement(column);
+    }
 
-	public static JQueryLocator getNthChildElement(JQueryLocator parent, int index) {
+    public static JQueryLocator getNthChildElement(JQueryLocator parent, int index) {
 
-		return new JQueryLocator(SimplifiedFormat.format("{0}:nth-child({1})",
-				parent.getRawLocator(), index));
-	}
+        return new JQueryLocator(SimplifiedFormat.format("{0}:nth-child({1})", parent.getRawLocator(), index));
+    }
 
-	public JQueryLocator getNthChildElement(
-			ReferencedLocator<JQueryLocator> parent, int index) {
+    public JQueryLocator getNthChildElement(ReferencedLocator<JQueryLocator> parent, int index) {
 
-		return new JQueryLocator(SimplifiedFormat.format("{0}:nth-child({1})",
-				parent.getRawLocator(), index));
-	}
+        return new JQueryLocator(SimplifiedFormat.format("{0}:nth-child({1})", parent.getRawLocator(), index));
+    }
 
-	public Capital getCapital(int index) {
-		String state = selenium.getText(getBodyCell(index + 1, 1));
-		String name = selenium.getText(getBodyCell(index + 1, 2));
-		Capital result = new Capital();
-		result.setName(name);
-		result.setState(state);
-		return result;
-	}
+    public Capital getCapital(int index) {
+        String state = selenium.getText(getBodyCell(index + 1, 1));
+        String name = selenium.getText(getBodyCell(index + 1, 2));
+        Capital result = new Capital();
+        result.setName(name);
+        result.setState(state);
+        return result;
+    }
 
-	public Collection<Capital> getCapitals() {
-		int count = getBodyRowCount();
-		List<Capital> capitals = new LinkedList<Capital>();
-		for (int i = 0; i < count; i++) {
-			capitals.add(getCapital(i));
-		}
-		return capitals;
-	}
+    public Collection<Capital> getCapitals() {
+        int count = getBodyRowCount();
+        List<Capital> capitals = new LinkedList<Capital>();
+        for (int i = 0; i < count; i++) {
+            capitals.add(getCapital(i));
+        }
+        return capitals;
+    }
 }

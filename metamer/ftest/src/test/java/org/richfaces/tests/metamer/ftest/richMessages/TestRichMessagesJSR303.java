@@ -34,7 +34,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/richMessages/jsr303.xhtml
- * 
+ *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision: 23138 $
  */

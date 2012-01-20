@@ -36,7 +36,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/a4jMediaOutput/elementA.xhtml
- * 
+ *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestElementA extends AbstractMediaOutputTest {

@@ -41,7 +41,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for basic functionality of calendar on page faces/components/richCalendar/dataModel.xhtml.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22661 $
  */

@@ -37,7 +37,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for time editor of a calendar on page faces/components/richCalendar/simple.xhtml.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 21568 $
  */

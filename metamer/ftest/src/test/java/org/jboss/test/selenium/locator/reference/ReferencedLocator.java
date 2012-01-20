@@ -31,7 +31,7 @@ import org.jboss.arquillian.ajocado.locator.element.ExtendedLocator;
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 21424 $
- * 
+ *
  * @param <T>
  *            type of referenced locator
  */
@@ -59,8 +59,9 @@ public final class ReferencedLocator<T extends ExtendedLocator<T>> extends Abstr
         result.reference = reference;
         return result;
     }
-    
-    public static <N extends ExtendedLocator<N>> ReferencedLocator<N> ref(ReferencedLocator<N> referencedLocator, String locator) {
+
+    public static <N extends ExtendedLocator<N>> ReferencedLocator<N> ref(ReferencedLocator<N> referencedLocator,
+        String locator) {
         LocatorReference<ExtendedLocator<N>> reference = new LocatorReference<ExtendedLocator<N>>(referencedLocator);
         return referenceInferred(reference, locator);
     }
@@ -111,18 +112,18 @@ public final class ReferencedLocator<T extends ExtendedLocator<T>> extends Abstr
         }
     }
 
-	@Override
-	public T get(int index) {
-		return getReferenced().get(index);
-	}
-	
-	@Override
-	public Iterator<T> iterator() {
-		return getReferenced().iterator();
-	}
+    @Override
+    public T get(int index) {
+        return getReferenced().get(index);
+    }
 
-	@Override
-	public int size() {
-		return getReferenced().size();
-	}
+    @Override
+    public Iterator<T> iterator() {
+        return getReferenced().iterator();
+    }
+
+    @Override
+    public int size() {
+        return getReferenced().size();
+    }
 }

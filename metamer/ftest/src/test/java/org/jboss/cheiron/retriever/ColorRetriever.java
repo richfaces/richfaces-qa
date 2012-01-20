@@ -79,9 +79,9 @@ public class ColorRetriever extends AbstractRetriever<Color> implements Retrieve
 
     /**
      * Returns a copy of this textRetriever with exactly same settings.
-     * 
+     *
      * Keeps the immutability of this class.
-     * 
+     *
      * @return the exact copy of this textRetriever
      */
     private ColorRetriever copy() {

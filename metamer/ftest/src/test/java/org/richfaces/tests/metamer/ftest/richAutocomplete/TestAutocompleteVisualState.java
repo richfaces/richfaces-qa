@@ -34,41 +34,41 @@ import org.testng.annotations.Test;
 
 
 /**
- * Test for keeping visual state for autocomplete on page: 
+ * Test for keeping visual state for autocomplete on page:
  *  faces/components/richAutocomplete/autocomplete.xhtml
- *  
- *  There were some problems with 
+ *
+ *  There were some problems with
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision$
  */
 public class TestAutocompleteVisualState extends AbstractAutocompleteTest {
-    
+
     AutocompleteReloadTester reloadTester = new AutocompleteReloadTester();
 
     @Override
-    public URL getTestUrl() {        
+    public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richAutocomplete/autocomplete.xhtml");
     }
-    
+
 
     @Test
     public void testRefreshFullPage() {
         reloadTester.testFullPageRefresh();
     }
-    
+
     @Test
-    public void testRerenderAll() {        
+    public void testRerenderAll() {
         reloadTester.testRerenderAll();
     }
-    
+
     private class AutocompleteReloadTester extends ReloadTester<String> {
 
         @Override
         public void doRequest(String inputValue) {
             // autocomplete.clearInputValue();
             getAutocomplete().type(inputValue);
-            waitAjax.until(textEquals.locator(pjq("span[id$=:output]")).text(inputValue));            
+            waitAjax.until(textEquals.locator(pjq("span[id$=:output]")).text(inputValue));
         }
 
         @Override
@@ -78,10 +78,10 @@ public class TestAutocompleteVisualState extends AbstractAutocompleteTest {
         }
 
         @Override
-        public String[] getInputValues() {            
+        public String[] getInputValues() {
             return new String[] {"not-in-list-value"};
         }
-        
+
     }
 
 }

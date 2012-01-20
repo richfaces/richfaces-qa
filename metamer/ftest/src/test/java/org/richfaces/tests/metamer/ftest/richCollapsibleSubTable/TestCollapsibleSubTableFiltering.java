@@ -52,7 +52,7 @@ import com.google.common.collect.Collections2;
 public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTableTest {
 
     int rows = 0;
-    
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/filtering.xhtml");

@@ -62,7 +62,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for attributes of a calendar on page faces/components/richCalendar/simple.xhtml.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22786 $
  */
@@ -943,7 +943,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     /**
      * Checks that no date in the open month is selected except of one passed as argument.
-     * 
+     *
      * @param exceptOfDate
      *            date that should be selected (e.g. "13")
      */

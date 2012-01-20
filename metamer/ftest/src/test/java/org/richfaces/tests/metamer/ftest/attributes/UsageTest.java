@@ -21,15 +21,15 @@ import org.testng.annotations.Test;
 
 
 public class UsageTest extends AbstractAjocadoTest {
-    
+
     JQueryLocator panel = pjq("div[id$=panel]");
     TooltipModel tooltip = new TooltipModel(jq(".rf-tt"), panel);
-    
+
     @Test
     public void test1() {
         tooltipAttributes.set(direction, Positioning.auto);
     }
-    
+
     @Test
     public void testHideEvent() {
         tooltipAttributes.set(hideEvent, "mouseup");

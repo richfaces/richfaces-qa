@@ -28,7 +28,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @version $Revision: 22746 $
  */
 public enum RichJQueryAttributes implements AttributeEnum {
-    
+
     attachType,
     event,
     query,

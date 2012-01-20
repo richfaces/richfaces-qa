@@ -23,7 +23,7 @@ import org.richfaces.PanelMenuMode;
 public class PanelMenu extends AbstractModel<JQueryLocator> implements Model {
 
     AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
-    
+
     PanelMenuMode groupMode;
     PanelMenuMode itemMode;
 
@@ -294,7 +294,7 @@ public class PanelMenu extends AbstractModel<JQueryLocator> implements Model {
     }
 
     public abstract class Icon extends AbstractModel<JQueryLocator> {
-        
+
         ReferencedLocator<JQueryLocator> img = ref(root, "> img");
         AttributeLocator<?> imgSrc = img.getAttribute(SRC);
 

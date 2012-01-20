@@ -28,12 +28,12 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @version $Revision: 22737 $
  */
 public enum CollapsibleSubTableTogglerAttributes implements AttributeEnum {
-    
+
     collapsedIcon,
     collapsedLabel,
     event,
     expandedIcon,
     expandedLabel,
     rendered
-    
+
 }

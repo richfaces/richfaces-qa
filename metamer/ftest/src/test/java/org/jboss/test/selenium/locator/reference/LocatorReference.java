@@ -27,7 +27,7 @@ import org.jboss.arquillian.ajocado.locator.Locator;
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 21424 $
- * 
+ *
  * @param <T>
  *            type of referenced locator
  */

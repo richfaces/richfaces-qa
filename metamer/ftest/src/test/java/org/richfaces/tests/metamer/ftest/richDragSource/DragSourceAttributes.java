@@ -28,9 +28,9 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @version $Revision: 22742 $
  */
 public enum DragSourceAttributes implements AttributeEnum {
-    
+
     dragIndicator,
     type,
     rendered
-    
+
 }

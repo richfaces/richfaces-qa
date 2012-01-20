@@ -46,7 +46,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test for page /faces/components/richGraphValidator/all.xhtml
- * 
+ *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision: 22622 $
  */

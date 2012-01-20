@@ -39,7 +39,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestNestedAttachQueue extends AbstractAttachQueueTest {
-    
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jAttachQueue/nested.xhtml");
@@ -51,7 +51,7 @@ public class TestNestedAttachQueue extends AbstractAttachQueueTest {
         attachQueueAttrs2.set(AttachQueueAttributes.requestDelay, DELAY_B);
         queueAttributes.set(QueueAttributes.requestDelay, GLOBAL_DELAY);
     }
-    
+
     @Test
     public void testDelay() {
         super.testDelay();
@@ -71,9 +71,9 @@ public class TestNestedAttachQueue extends AbstractAttachQueueTest {
     public void testRendered() {
         super.testRendered();
     }
-    
+
     @Test
     public void testQueueAndDequeueEvents() {
         super.testQueueAndDequeueEvents();
-    } 
+    }
 }

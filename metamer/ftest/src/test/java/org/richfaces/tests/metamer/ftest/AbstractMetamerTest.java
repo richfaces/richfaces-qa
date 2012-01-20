@@ -49,154 +49,135 @@ import org.richfaces.tests.metamer.ftest.annotations.Templates;
 
 /**
  * Abstract test case used as a basis for majority of test cases.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22749 $
  */
 @RunAsClient
 public abstract class AbstractMetamerTest extends Arquillian {
 
-	@ArquillianResource
-	protected URL contextPath;
+    @ArquillianResource
+    protected URL contextPath;
 
-	/**
-	 * The path to the metamer application.
-	 */
-	public static final String WEBAPP_SRC = "../application/src/main/webapp";
+    /**
+     * The path to the metamer application.
+     */
+    public static final String WEBAPP_SRC = "../application/src/main/webapp";
 
-	/**
-	 * timeout in miliseconds
-	 */
-	public static final long TIMEOUT = 5000;
+    /**
+     * timeout in miliseconds
+     */
+    public static final long TIMEOUT = 5000;
 
-	protected JQueryLocator time = jq("span[id$=requestTime]");
-	protected JQueryLocator renderChecker = jq("span[id$=renderChecker]");
-	protected JQueryLocator statusChecker = jq("span[id$=statusCheckerOutput]");
-	protected JQueryLocator jsFunctionChecker = jq("span[id$=jsFunctionChecker]");
-	protected IdLocator fullPageRefreshIcon = id("controlsForm:fullPageRefreshImage");
-	protected IdLocator rerenderAllIcon = id("controlsForm:reRenderAllImage");
-	protected TextRetriever retrieveRequestTime = retrieveText.locator(time);
-	protected Retriever<String> retrieveWindowData = new ScriptEvaluationRetriever()
-			.script(js("window.data"));
-	protected TextRetriever retrieveRenderChecker = retrieveText
-			.locator(jq("#renderChecker"));
-	protected TextRetriever retrieveStatusChecker = retrieveText
-			.locator(jq("#statusCheckerOutput"));
-	protected TextRetriever retrieveJsFunctionChecker = retrieveText
-			.locator(jsFunctionChecker);
-	protected PhaseInfo phaseInfo = new PhaseInfo();
-	protected LocatorReference<JQueryLocator> attributesRoot = new LocatorReference<JQueryLocator>(
-			pjq("span[id$=:attributes:panel]"));
+    protected JQueryLocator time = jq("span[id$=requestTime]");
+    protected JQueryLocator renderChecker = jq("span[id$=renderChecker]");
+    protected JQueryLocator statusChecker = jq("span[id$=statusCheckerOutput]");
+    protected JQueryLocator jsFunctionChecker = jq("span[id$=jsFunctionChecker]");
+    protected IdLocator fullPageRefreshIcon = id("controlsForm:fullPageRefreshImage");
+    protected IdLocator rerenderAllIcon = id("controlsForm:reRenderAllImage");
+    protected TextRetriever retrieveRequestTime = retrieveText.locator(time);
+    protected Retriever<String> retrieveWindowData = new ScriptEvaluationRetriever().script(js("window.data"));
+    protected TextRetriever retrieveRenderChecker = retrieveText.locator(jq("#renderChecker"));
+    protected TextRetriever retrieveStatusChecker = retrieveText.locator(jq("#statusCheckerOutput"));
+    protected TextRetriever retrieveJsFunctionChecker = retrieveText.locator(jsFunctionChecker);
+    protected PhaseInfo phaseInfo = new PhaseInfo();
+    protected LocatorReference<JQueryLocator> attributesRoot = new LocatorReference<JQueryLocator>(
+        pjq("span[id$=:attributes:panel]"));
 
-	@Inject
-	@Templates({ "plain", "richAccordion", "richDataTable",
-			"richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-			"richList", "richCollapsiblePanel", "richPanel", "richTabPanel",
-			"richTogglePanel", "richPopupPanel", "a4jRegion", "a4jRepeat",
-			"hDataTable", "hPanelGrid", "uiRepeat" })
-	protected TemplatesList template;
+    @Inject
+    @Templates({ "plain", "richAccordion", "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable",
+        "richDataGrid", "richList", "richCollapsiblePanel", "richPanel", "richTabPanel", "richTogglePanel",
+        "richPopupPanel", "a4jRegion", "a4jRepeat", "hDataTable", "hPanelGrid", "uiRepeat" })
+    protected TemplatesList template;
 
-	/**
-	 * Returns the url to test page to be opened by Selenium
-	 * 
-	 * @return absolute url to the test page to be opened by Selenium
-	 */
-	public abstract URL getTestUrl();
+    /**
+     * Returns the url to test page to be opened by Selenium
+     *
+     * @return absolute url to the test page to be opened by Selenium
+     */
+    public abstract URL getTestUrl();
 
-	@Deployment(testable = false)
-	public static WebArchive createTestArchive() {
+    @Deployment(testable = false)
+    public static WebArchive createTestArchive() {
 
-		WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class,
-				new File("target/metamer.war"));
-		return war;
-	}
+        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/metamer.war"));
+        return war;
+    }
 
-	/**
-	 * Factory method for creating instances of class JQueryLocator which
-	 * locates the element using <a
-	 * href="http://api.jquery.com/category/selectors/">JQuery Selector</a>
-	 * syntax. It adds "div.content " in front of each selector.
-	 * 
-	 * @param jquerySelector
-	 *            the jquery selector
-	 * @return the j query locator
-	 * @see JQueryLocator
-	 */
-	public static JQueryLocator pjq(String jquerySelector) {
+    /**
+     * Factory method for creating instances of class JQueryLocator which locates the element using <a
+     * href="http://api.jquery.com/category/selectors/">JQuery Selector</a> syntax. It adds "div.content " in front of
+     * each selector.
+     *
+     * @param jquerySelector
+     *            the jQuery selector
+     * @return the jQuery locator
+     * @see JQueryLocator
+     */
+    public static JQueryLocator pjq(String jquerySelector) {
 
-		String escapedString = jq(jquerySelector).getRawLocator();
+        String escapedString = jq(jquerySelector).getRawLocator();
 
-		//if (jquerySelector.trim().length() > 0 && jquerySelector.contains("[")) {
-			//escapedString = escapeSelector(jquerySelector);
-		//}
+        // if (jquerySelector.trim().length() > 0 && jquerySelector.contains("[")) {
+        // escapedString = escapeSelector(jquerySelector);
+        // }
 
-		return new JQueryLocator("div.content " + escapedString);
-	}
+        return new JQueryLocator("div.content " + escapedString);
+    }
 
-	/*private static String escapeSelector(String jquerySelector) {
+    /*
+     * private static String escapeSelector(String jquerySelector) {
+     *
+     * // find the text between [] int indexOpen = jquerySelector.indexOf("["); String escapedString = null;
+     *
+     * if (indexOpen != -1) { int indexClose = jquerySelector.indexOf("]"); String onlyThisNeedToBeEscaped =
+     * jquerySelector.substring( indexOpen, indexClose + 1);
+     *
+     * char[] escapedChars = { ':' }; escapedString = StringUtils.escape(onlyThisNeedToBeEscaped, escapedChars, '\\');
+     *
+     * escapedString = jquerySelector.replace(onlyThisNeedToBeEscaped, escapedString);
+     *
+     * String checkFurther= escapedString.substring(escapedString.indexOf("]"));
+     *
+     * if( checkFurther.indexOf("[") != -1 ) {
+     *
+     * String furtherEscapedPart = escapeSelector(checkFurther); escapedString = escapedString.replace(checkFurther,
+     * furtherEscapedPart); } }
+     *
+     * return escapedString; }
+     */
 
-		// find the text between []
-		int indexOpen = jquerySelector.indexOf("[");
-		String escapedString = null;
-		
-		if (indexOpen != -1) {
-			int indexClose = jquerySelector.indexOf("]");
-			String onlyThisNeedToBeEscaped = jquerySelector.substring(
-					indexOpen, indexClose + 1);
-			
-			char[] escapedChars = { ':' };
-			escapedString = StringUtils.escape(onlyThisNeedToBeEscaped,
-					escapedChars, '\\');
+    /**
+     * This method should be called in each test class from the method with annotation @Deployment, to ensure that
+     * deployed war will contain all environment specific files. In other words when war is deployed on Tomcat or other
+     * containers needs to have some specific files, the same apply for testing with different JSF implementations.
+     *
+     * @param war
+     *            to be altered
+     * @return war which is altered according to the test environment
+     */
+    protected static WebArchive alterWarAccordingToTestEnvironment(WebArchive war) {
 
-			escapedString = jquerySelector.replace(onlyThisNeedToBeEscaped,
-					escapedString);
-			
-			String checkFurther= escapedString.substring(escapedString.indexOf("]")); 
-			
-			if( checkFurther.indexOf("[") != -1 ) {
-				
-				String furtherEscapedPart = escapeSelector(checkFurther);
-				escapedString = escapedString.replace(checkFurther, furtherEscapedPart);
-			}
-		}
+        String tomcat = System.getProperty("TOMCAT");
 
-		return escapedString;
-	}*/
+        if (tomcat != null && tomcat.equals("true")) {
+            war = alterAccordingToTomcat(war);
+        }
 
-	/**
-	 * This method should be called in each test class from the method with
-	 * annotation @Deployment, to ensure that deployed war will contain all
-	 * environment specific files. In other words when war is deployed on Tomcat
-	 * or other containers needs to have some specific files, the same apply for
-	 * testing with different JSF implementations.
-	 * 
-	 * @param war
-	 *            to be altered
-	 * @return war which is altered according to the test environment
-	 */
-	protected static WebArchive alterWarAccordingToTestEnvironment(
-			WebArchive war) {
+        // TODO
+        return (WebArchive) war;
+    }
 
-		String tomcat = System.getProperty("TOMCAT");
+    /**
+     * Alter the war according to the Tomcat specifics
+     *
+     * @param war
+     *            to be altered
+     * @return war to be altered
+     */
+    private static WebArchive alterAccordingToTomcat(WebArchive war) {
 
-		if (tomcat != null && tomcat.equals("true")) {
-			war = alterAccordingToTomcat(war);
-		}
-
-		// TODO
-		return (WebArchive) war;
-	}
-
-	/**
-	 * Alter the war according to the Tomcat specifics
-	 * 
-	 * @param war
-	 *            to be altered
-	 * @return war to be altered
-	 */
-	private static WebArchive alterAccordingToTomcat(WebArchive war) {
-
-		// TODO
-		return war;
-	}
+        // TODO
+        return war;
+    }
 }

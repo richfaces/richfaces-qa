@@ -40,7 +40,7 @@ import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
 
 /**
  * Abstract test case for calendar.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 21691 $
  */

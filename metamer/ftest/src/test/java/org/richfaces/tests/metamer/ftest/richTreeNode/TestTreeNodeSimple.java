@@ -111,7 +111,7 @@ public class TestTreeNodeSimple extends AbstractAjocadoTest {
     @Use(empty = true)
     Event event = CLICK;
     Event[] events = new Event[] { CLICK, DBLCLICK, KEYDOWN, KEYPRESS, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER, MOUSEUP };
-    
+
     @Inject
     @Use(empty = true)
     SwitchType toggleType;
@@ -274,11 +274,11 @@ public class TestTreeNodeSimple extends AbstractAjocadoTest {
         attributes.set(onbeforetoggle, "functionChecker()");
         retrieveJsFunctionChecker.initializeValue();
         XHRHalter.enable();
-        
+
         selenium.click(treeNode.getHandle());
         XHRHalter handle = XHRHalter.getHandleBlocking();
         handle.complete();
-        
+
         retrieveRequestTime.initializeValue();
         waitGui.waitForChange(retrieveJsFunctionChecker);
         phaseInfo.assertNoListener("tree toggle listener invoked");
@@ -288,10 +288,10 @@ public class TestTreeNodeSimple extends AbstractAjocadoTest {
         waitModel
             .failWith("The toggle listener hasn't been invoked.")
             .until(phaseInfo.getListenerCondition(PhaseId.PROCESS_VALIDATIONS, "tree toggle listener invoked"));
-        
+
         XHRHalter.disable();
     }
-    
+
     @Test
     public void testRendered() {
         treeNode.expand();

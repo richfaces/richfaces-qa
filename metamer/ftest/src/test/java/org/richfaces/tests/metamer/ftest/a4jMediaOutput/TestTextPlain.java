@@ -41,7 +41,7 @@ public class TestTextPlain extends AbstractMediaOutputTest {
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jMediaOutput/textPlain.xhtml");
     }
-    
+
     @Test
     public void testInit() throws IOException {
         assertTrue(
@@ -49,5 +49,5 @@ public class TestTextPlain extends AbstractMediaOutputTest {
             "The plain text content doesn't match."
         );
     }
-    
+
 }

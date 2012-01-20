@@ -39,7 +39,7 @@ import org.testng.annotations.Test;
  * @version $Revision: 22747 $
  */
 public class TestSimple extends AbstractListTest {
-    
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richList/simple.xhtml");

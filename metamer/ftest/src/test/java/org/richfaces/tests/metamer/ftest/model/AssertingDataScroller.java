@@ -29,7 +29,7 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 
 /**
  * Provides DataScroller control methods with assertions about scroller state.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22407 $
  */

@@ -30,7 +30,7 @@ import org.testng.ITestResult;
 
 /**
  * Obtains informations about status of test, obtains method names from test result.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
@@ -56,7 +56,7 @@ public final class TestInfo {
 
     /**
      * Get package + class + method name from ITestResult
-     * 
+     *
      * @param result
      *            from the fine-grained listener's method such as onTestFailure(ITestResult)
      * @return the package + class + method name in current context
@@ -67,7 +67,7 @@ public final class TestInfo {
 
     /**
      * Get class + method name from ITestResult
-     * 
+     *
      * @param result
      *            from the fine-grained listener's method such as onTestFailure(ITestResult)
      * @return the class + method name in current context
@@ -78,7 +78,7 @@ public final class TestInfo {
 
     /**
      * Get method name from ITestResult
-     * 
+     *
      * @param result
      *            from the fine-grained listener's method such as onTestFailure(ITestResult)
      * @return the method name in current context
@@ -90,7 +90,7 @@ public final class TestInfo {
 
     /**
      * Get class name from ITestResult
-     * 
+     *
      * @param result
      *            from the fine-grained listener's method such as onTestFailure(ITestResult)
      * @return the class name in current context
@@ -102,7 +102,7 @@ public final class TestInfo {
 
     /**
      * Get last containing package name from ITestResult
-     * 
+     *
      * @param result
      *            from the fine-grained listener's method such as onTestFailure(ITestResult)
      * @return the package name in current context

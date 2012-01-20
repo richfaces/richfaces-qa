@@ -40,11 +40,11 @@ import org.richfaces.tests.metamer.ftest.richColumn.ColumnModel;
 public class ListModel extends AbstractModel<JQueryLocator> {
 
     ListType type;
-    
+
     ReferencedLocator<JQueryLocator> rows = ref(root, "li");
 
     private AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
-    
+
     public ListModel(JQueryLocator root) {
         super(root);
     }
@@ -68,7 +68,7 @@ public class ListModel extends AbstractModel<JQueryLocator> {
     public JQueryLocator getRow(int position) {
         return ColumnModel.getNthChildElement(getRoot().getChild(getInnerElement()), position);
     }
-    
+
     /*
     public Iterable<JQueryLocator> getRows() {
         return getRoot().getChild(getInnerElement()).getAllChildren();
@@ -87,7 +87,7 @@ public class ListModel extends AbstractModel<JQueryLocator> {
             case definitions:
                 return jq("dd.rf-dlst-dfn");
             default:
-                // default case required by checkstyle. 
+                // default case required by checkstyle.
                 // Kept Exception throw as without 'default'
                 break;
         }

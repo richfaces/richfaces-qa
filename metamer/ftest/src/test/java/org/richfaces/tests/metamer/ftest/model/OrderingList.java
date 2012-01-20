@@ -32,7 +32,7 @@ import org.jboss.test.selenium.RequestTypeModelGuard.Model;
 
 /**
  * Object representing ordering list and all its elements
- * 
+ *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class OrderingList implements Model {

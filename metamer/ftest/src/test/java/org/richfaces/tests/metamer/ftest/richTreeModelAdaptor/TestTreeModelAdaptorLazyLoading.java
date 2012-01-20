@@ -48,14 +48,14 @@ import org.testng.annotations.Test;
  * @version $Revision: 22753 $
  */
 public class TestTreeModelAdaptorLazyLoading extends AbstractAjocadoTest {
-    
+
     protected TreeModel tree = new TreeModel(pjq("div.rf-tr[id$=richTree]"));
     protected TreeNodeModel treeNode;
-    
+
     protected Integer[][] paths = new Integer[][] {{1, 1, 1, 8, 1}, {4, 4, 11, 4}};
 
     JQueryLocator lazyInitialized = pjq("span[id$=lazyInitialized]");
-    
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richTree/treeAdaptors.xhtml");

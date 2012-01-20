@@ -128,7 +128,7 @@ public class NestedRegionModel {
         public boolean isComponentBased() {
             return componentBase != null;
         }
-        
+
         public Component getComponentBase() {
             return componentBase;
         }

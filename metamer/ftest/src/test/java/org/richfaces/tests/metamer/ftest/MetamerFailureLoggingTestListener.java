@@ -54,7 +54,7 @@ public class MetamerFailureLoggingTestListener extends FailureLoggingTestListene
     @Override
     protected void onFailure(ITestResult result) {
         super.onFailure(result);
-        
+
         List<String> issueList = new LinkedList<String>();
         //IssueTracking issueTracking = result.getMethod().getConstructorOrMethod().getMethod().getAnnotation(IssueTracking.class);
         IssueTracking issueTracking = result.getMethod().getConstructorOrMethod().getMethod().getAnnotation(IssueTracking.class);
@@ -65,7 +65,7 @@ public class MetamerFailureLoggingTestListener extends FailureLoggingTestListene
         if (issueTracking != null) {
             issueList.addAll(asList(issueTracking.value()));
         }
-        
+
         if (!issueList.isEmpty()) {
             String issues = StringUtils.join(issueList, "\n");
             String filenameIdentification = getFilenameIdentification(result);

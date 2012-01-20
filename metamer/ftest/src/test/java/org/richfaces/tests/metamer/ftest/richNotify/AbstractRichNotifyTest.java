@@ -34,7 +34,7 @@ import org.richfaces.tests.metamer.ftest.attributes.Attributes;
 
 /**
  * Abstract test case for pages faces/components/notify/
- * 
+ *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public abstract class AbstractRichNotifyTest extends AbstractAjocadoTest {
@@ -42,66 +42,66 @@ public abstract class AbstractRichNotifyTest extends AbstractAjocadoTest {
     /**
      * attributes for rich:notifyMessages tag
      */
-    protected final Attributes<NotifyMessagesAttributes> attributesMessages = new Attributes<NotifyMessagesAttributes>(pjq("table.attributes[id$=attributesNotifyMessages]"));    
-    
+    protected final Attributes<NotifyMessagesAttributes> attributesMessages = new Attributes<NotifyMessagesAttributes>(pjq("table.attributes[id$=attributesNotifyMessages]"));
+
     /**
      * attributes for rich:notify tag
      */
     protected final Attributes<NotifyAttributes> attributesNotify = new Attributes<NotifyAttributes>(pjq("table.attributes[id$=attributesNotify]"));
-    
+
     /**
      * attributes for rich:notifyStack tag
      */
     protected final Attributes<NotifyStackAttributes> attributesStack = new Attributes<NotifyStackAttributes>(pjq("table.attributes[id$=attributesNotifyStack]"));
-    
+
     /**
      * attributes for test
      */
     protected final Attributes<NotifyTestAttributes> attributesTest = new Attributes<NotifyTestAttributes>(pjq("table.attributes[id$=attributesBean]"));
-    
+
     /**
      * notify locator which matches on all notifies and messages
      */
     protected final JQueryLocator notify = jq("div.rf-ntf");
-    
+
     /**
      * error message locator
      */
     protected final JQueryLocator notifyError = jq("div.rf-ntf-err");
-    
+
     /**
      * fatal message locator
      */
     protected final JQueryLocator notifyFatal = jq("div.rf-ntf-ftl");
-    
+
     /**
      * history of notifies and notify messages
      */
     protected final JQueryLocator notifyHistory = jq("div.rf-ntf-hstr-hdr");
-    
+
     /**
      * 'all' button in the history menu
      */
     protected final JQueryLocator notifyHistoryAll = jq("button.rf-ntf-hstr-all");
-    
+
     /**
      * 'last' button in the history menu
      */
     protected final JQueryLocator notifyHistoryLast = jq("button.rf-ntf-hstr-last");
-    
+
     /**
      * info message locator
      */
     protected final JQueryLocator notifyInfo = jq("div.rf-ntf-inf");
-    
+
     /**
      * warn message locator
      */
     protected final JQueryLocator notifyWarn = jq("div.rf-ntf-wrn");
-    
+
     /**
      * It closes a message defined by the given locator
-     * 
+     *
      * @param locator the message locator
      */
     protected void close(final JQueryLocator locator) {
@@ -110,11 +110,11 @@ public abstract class AbstractRichNotifyTest extends AbstractAjocadoTest {
         waitGui
             .failWith("Message " + locator.getRawLocator() + " can't be closed.")
             .until(countEquals.locator(locator).count(before - 1));
-    }    
-    
+    }
+
     /**
      * It closes all message defined by the given locator
-     * 
+     *
      * @param locator the message locator
      */
     protected void closeAll(final JQueryLocator locator) {
@@ -122,10 +122,10 @@ public abstract class AbstractRichNotifyTest extends AbstractAjocadoTest {
             close(locator);
         }
     }
-    
+
     /**
      * It delays for the given number of ms. If there is any exception thrown, it's logged by logger of this class.
-     * 
+     *
      * @param ms number of miliseconds
      */
     protected void delay(int ms) {
@@ -133,62 +133,62 @@ public abstract class AbstractRichNotifyTest extends AbstractAjocadoTest {
             Thread.sleep(ms);
         } catch (InterruptedException e) {
             Logger.getLogger(getClass().getName()).log(Level.WARNING, e.toString());
-        }    
-    }    
-    
+        }
+    }
+
     /**
      * It returns a close button of a message defined by the given locator
-     * 
+     *
      * @param message the message locator
      * @return the close button locator
      */
     protected JQueryLocator getCloseButton(JQueryLocator message) {
         return jq(message.getRawLocator() + " > div.rf-ntf-cnt > div.rf-ntf-cls > span.rf-ntf-cls-ico");
     }
-    
+
     /**
      * It returns a detail element of a message defined by the given locator
-     * 
+     *
      * @param message the message locator
      * @return the detail locator
      */
     protected JQueryLocator getDetail(JQueryLocator message) {
         return jq(notify.getRawLocator() + " > div.rf-ntf-cnt > div.rf-ntf-det");
     }
-    
+
     /**
      * It returns the first available close button of a message defined by the given locator
-     *  
+     *
      * @param message the message locator
      * @return the close button locator
      */
     protected JQueryLocator getFirstCloseButton(JQueryLocator message) {
         return jq(getCloseButton(message).getRawLocator() + ":first");
     }
-    
+
     /**
      * It returns a number of notifes (only notifies, not messages) in the given stack.
-     * 
+     *
      * @return number of notifies
      */
     protected int getNumberOfNotifies() {
         return selenium.getCount(notify) - (selenium.getCount(notifyError) + selenium.getCount(notifyFatal) /*+ selenium.getCount(notifyInfo)*/ + selenium.getCount(notifyWarn));
     }
-    
+
     /**
      * It returns a summary element of a message defined by the given locator
-     * 
+     *
      * @param message the message locator
      * @return the summary locator
-     */    
+     */
     protected JQueryLocator getSummary(JQueryLocator message) {
         return jq(notify.getRawLocator() + " > div.rf-ntf-cnt > div.rf-ntf-sum");
     }
-    
+
     /**
      * It produces a message defined by the given message locator and the given type.
      * It waits until the <expected> number of message is produced.
-     * 
+     *
      * @param message the message locator
      * @param type the name of the message type (started with capital letter)
      * @param expected expected number of produced messages
@@ -198,7 +198,7 @@ public abstract class AbstractRichNotifyTest extends AbstractAjocadoTest {
         selenium.click(pjq("input[id$=produce" + type + "]"));
         waitGui
             .failWith("Number of produced messages has been set to <" + expected + "> but <" + selenium.getCount(message) + "> " + type + " messages is present (" + message.getRawLocator() + ").")
-            .until(countEquals.locator(message).count(expected + before));        
-    }    
-    
+            .until(countEquals.locator(message).count(expected + before));
+    }
+
 }

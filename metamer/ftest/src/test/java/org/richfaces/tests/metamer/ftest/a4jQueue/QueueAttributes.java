@@ -28,7 +28,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @version $Revision: 22680 $
  */
 public enum QueueAttributes implements AttributeEnum {
-    
+
     ignoreDupResponses,
     name,
     onbeforedomupdate,

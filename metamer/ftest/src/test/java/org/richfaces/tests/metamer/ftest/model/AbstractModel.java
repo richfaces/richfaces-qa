@@ -31,10 +31,10 @@ import org.jboss.test.selenium.locator.reference.LocatorReference;
 
 /**
  * Abstract DataModel defining root reference for deriving all other locators.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22407 $
- * 
+ *
  * @param <T>
  *            the iterable locator type of root
  */
@@ -64,7 +64,7 @@ public abstract class AbstractModel<T extends ExtendedLocator<T>> implements Ext
     public String toString() {
         return name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
@@ -98,29 +98,29 @@ public abstract class AbstractModel<T extends ExtendedLocator<T>> implements Ext
     public ExtendedLocator<T> format(Object... args) {
         return root.getLocator().format(args);
     }
-    
+
     @Override
-	public T get(int index) {
-		// TODO Auto-generated method stub
-		return root.getLocator().get(index);
-	}
+    public T get(int index) {
+        // TODO Auto-generated method stub
+        return root.getLocator().get(index);
+    }
 
-	@Override
-	public Iterator<T> iterator() {
-		// TODO Auto-generated method stub
-		return root.getLocator().iterator();
-	}
+    @Override
+    public Iterator<T> iterator() {
+        // TODO Auto-generated method stub
+        return root.getLocator().iterator();
+    }
 
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return root.getLocator().size();
-	}
+    @Override
+    public int size() {
+        // TODO Auto-generated method stub
+        return root.getLocator().size();
+    }
 
-	@Override
-	public String inSeleniumRepresentation() {
-		// TODO Auto-generated method stub
-		return root.getLocator().inSeleniumRepresentation();
-	}
+    @Override
+    public String inSeleniumRepresentation() {
+        // TODO Auto-generated method stub
+        return root.getLocator().inSeleniumRepresentation();
+    }
 
 }

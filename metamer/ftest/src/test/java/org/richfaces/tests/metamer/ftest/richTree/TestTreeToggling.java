@@ -45,11 +45,11 @@ public class TestTreeToggling extends AbstractTestTree {
     private static final int TOP_LEVEL_NODES = 4;
 
     protected int[][] paths = new int[][] {{1, 2, 1 }, {4, 4, 1 }};
-    
+
     @Inject
     @Use(enumeration = true)
     SwitchType toggleType = SwitchType.ajax;
-    
+
     private TreeModel tree = new TreeModel(pjq("div.rf-tr[id$=richTree]"));
     private TreeNodeModel treeNode;
 

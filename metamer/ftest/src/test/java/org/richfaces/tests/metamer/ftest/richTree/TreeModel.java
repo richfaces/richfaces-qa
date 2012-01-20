@@ -53,7 +53,7 @@ public class TreeModel extends AbstractTreeNodeModel {
     public SwitchType getSelectionType() {
         return selectionType;
     }
-    
+
     public TreeNodeModel getAnyNode() {
         return new TreeNodeModel(root.getLocator().getDescendant(treeNode), tree);
     }

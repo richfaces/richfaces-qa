@@ -44,7 +44,7 @@ import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
 
 /**
  * Retrieves and asserts the info about life-cycle.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Lukas Fryc</a>
  * @version $Revision: 23059 $
  */
@@ -70,7 +70,7 @@ public class PhaseInfo {
     /**
      * Asserts that in the given phase has occurred the listener or order producer writing the log message to phases
      * list.
-     * 
+     *
      * @param phaseId
      *            the phase where the listener occurred
      * @param message
@@ -91,7 +91,7 @@ public class PhaseInfo {
 
     /**
      * Asserts that there is no specified message in phases list.
-     * 
+     *
      * @param message
      *            the part of the message which it should be looked up
      */
@@ -127,7 +127,7 @@ public class PhaseInfo {
         };
 
     }
-    
+
     private void initialize() {
         if (retrieveRequestTime.isValueChanged()) {
             map.clear();

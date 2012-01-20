@@ -51,7 +51,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for pages faces/components/notify/simple.xhtml
- * 
+ *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestRichNotify extends AbstractRichNotifyTest {
@@ -60,12 +60,12 @@ public class TestRichNotify extends AbstractRichNotifyTest {
      * notify stack locator
      */
     private JQueryLocator notifyStack = jq("div.rf-ntf");
-    
+
     /**
-     * Map containing locators of all tested messages. Type of the message is a key in the map.  
+     * Map containing locators of all tested messages. Type of the message is a key in the map.
      */
     private Map<String, JQueryLocator> messages = new HashMap<String, JQueryLocator>();
-    
+
     @BeforeClass
     public void init() {
         messages.put("Error", notifyError);
@@ -73,7 +73,7 @@ public class TestRichNotify extends AbstractRichNotifyTest {
 //        messages.put("Info", notifyInfo);
         messages.put("Warn", notifyWarn);
     }
-    
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richNotify/simple.xhtml");
@@ -123,9 +123,9 @@ public class TestRichNotify extends AbstractRichNotifyTest {
         selenium.click(notifyHistoryLast);
         waitModel
             .failWith("After clicking on <Last> in history menu there should be last notify.")
-            .until(elementPresent.locator(notify));       
-    }    
-    
+            .until(elementPresent.locator(notify));
+    }
+
     @Test
     public void testAttributesStayTime() {
         // stayTime is set to a very high number
@@ -137,7 +137,7 @@ public class TestRichNotify extends AbstractRichNotifyTest {
         delay(1000);
         assertFalse(selenium.isElementPresent(notify), "The stayTime is set to 500 but after some delay the notify is still present.");
     }
-    
+
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11433")
     public void testAttributeSticky() {
@@ -155,7 +155,7 @@ public class TestRichNotify extends AbstractRichNotifyTest {
         }
         waitGui
             .failWith("The stayTime is set to <0> and sticky to <false>, so the notify shouldn't be present.")
-            .until(NegationCondition.getInstance().condition(elementPresent.locator(notify)));        
+            .until(NegationCondition.getInstance().condition(elementPresent.locator(notify)));
         // set the sticky to <true>
         attributesNotify.set(NotifyAttributes.sticky, true);
         waitGui
@@ -168,15 +168,15 @@ public class TestRichNotify extends AbstractRichNotifyTest {
         }
         waitGui
             .failWith("The stayTime is set to <0> and sticky to <true>, so the notify should be present.")
-            .until(elementPresent.locator(notify));               
+            .until(elementPresent.locator(notify));
     }
-    
+
     @Test
     public void testAttributeStyleClass() {
         attributesNotify.set(NotifyAttributes.styleClass, "someStyleClass");
         assertTrue(selenium.belongsClass(notify, "someStyleClass"), "The cssStyle has been set but notify doesn't belong to the set class.");
     }
-    
+
     @Test
     public void testAttributeMessagesDelay() {
         // set the delay to <1000>
@@ -190,7 +190,7 @@ public class TestRichNotify extends AbstractRichNotifyTest {
             assertTrue(selenium.isElementPresent(messages.get(type)), "The delay is set to 1000 and after some waiting the " + type + " message should be present.");
         }
     }
-    
+
     @Test
     public void testAttributeMessagesRendered() {
         // set the rendered to <false>
@@ -201,13 +201,13 @@ public class TestRichNotify extends AbstractRichNotifyTest {
             selenium.click(pjq("input[id$=produce" + type + "]"));
             waitGui.until(NegationCondition.getInstance().condition(textEquals.locator(jq("span[id=requestTime]")).text(before)));
             assertFalse(selenium.isElementPresent(messages.get(type)), "The attribute rendered is set to <false> but the " + type + " message is still present.");
-        }        
+        }
     }
-    
+
     @Test(enabled=false)
     public void testAttributeMessagesShowCloseButton() {
         // set the showCloseButton to <false>
-        attributesMessages.set(NotifyMessagesAttributes.showCloseButton, false);  
+        attributesMessages.set(NotifyMessagesAttributes.showCloseButton, false);
         for(String type : messages.keySet()) {
             produceMessage(messages.get(type), type, 1);
             assertTrue(selenium.getStyle(jq(messages.get(type) + " > div.rf-ntf-co > div.rf-ntf-cls"), new CssProperty("visibility")).contains("hidden"), "The showCloseButton is set to <false> and therefore the close button shouldn't be displayed.");
@@ -221,22 +221,22 @@ public class TestRichNotify extends AbstractRichNotifyTest {
             produceMessage(messages.get(type), type, 1);
             // FIXME:
             assertTrue(selenium.getStyle(jq(messages.get(type) + " > div.rf-ny-co > div.rf-ny-te"), new CssProperty("display")).contains("none"));
-        }        
+        }
         // set showDetail to <true>
         selenium.click(pjq("input[type=radio][name*='attributesNotifyMessages:showDetail'][value=true]"));
         selenium.waitForPageToLoad();
         for(String type : messages.keySet()) {
             // FIXME:
             assertFalse(selenium.getStyle(jq(messages.get(type) + " > div.rf-ny-co > div.rf-ny-te"), new CssProperty("display")).contains("none"));
-        }   
+        }
     }
-    
+
     @Test
     public void testAttributeMessagesShowHistory() {
-        // check whether the history isn't present (showHistory is set to <false>) 
+        // check whether the history isn't present (showHistory is set to <false>)
         assertFalse(selenium.isElementPresent(notifyHistory), "The showHistory is set to <false> and there shouldn't be any history menu.");
         // set the showHistory to <true>
-        attributesMessages.set(NotifyMessagesAttributes.showHistory, true);     
+        attributesMessages.set(NotifyMessagesAttributes.showHistory, true);
         close(notify);
         // check whether the history isn't displayed (there is no message in the history)
         assertFalse(selenium.isElementPresent(notifyHistory), "The showHistory is set to <true>, but there is no message, so there shouldn't be any history menu.");
@@ -255,7 +255,7 @@ public class TestRichNotify extends AbstractRichNotifyTest {
                 public boolean isTrue() {
                     return selenium.getCount(notify) == expected;
                 }
-            });    
+            });
         for(int i=0; i<expected; i++) {
             close(notify);
         }
@@ -268,9 +268,9 @@ public class TestRichNotify extends AbstractRichNotifyTest {
                 public boolean isTrue() {
                     return selenium.getCount(notify) == 1;
                 }
-            });         
+            });
     }
-    
+
     @Test
     public void testAttributeMessagesStayTime() {
         // produce messages and check whether the stay at least 1000 ms (stayTime is set to a very high number)
@@ -287,16 +287,16 @@ public class TestRichNotify extends AbstractRichNotifyTest {
             produceMessage(messages.get(type), type, 1);
             delay(1000);
             assertFalse(selenium.isElementPresent(messages.get(type)), "The stayTime is set to 500 but after some delay the " + type + " message is still present.");
-        }                
+        }
     }
-    
+
     @Test
     public void testAttributeMessagesSticky() {
         // set the stayTime to <0>
         attributesMessages.set(NotifyMessagesAttributes.stayTime, 0);
         // set the sticky to <false>
         attributesMessages.set(NotifyMessagesAttributes.sticky, false);
-        // produce messages and check whether they disappear quickly 
+        // produce messages and check whether they disappear quickly
         for(String type : messages.keySet()) {
             produceMessage(messages.get(type), type, 1);
             waitGui
@@ -306,7 +306,7 @@ public class TestRichNotify extends AbstractRichNotifyTest {
         }
         // set the sticky to <true>
         selenium.click(pjq("input[type=radio][name*='attributesNotifyMessages:sticky'][value=true]"));
-        selenium.waitForPageToLoad();   
+        selenium.waitForPageToLoad();
         for(String type : messages.keySet()) {
             // produce message
             produceMessage(messages.get(type), type, 1);
@@ -314,11 +314,11 @@ public class TestRichNotify extends AbstractRichNotifyTest {
             // check whether the messages are still present
             waitGui
                 .failWith("The stayTime is set to <0> and sticky to <true>, so the " + type + " message should be present.")
-                .until(elementPresent.locator(messages.get(type)));      
+                .until(elementPresent.locator(messages.get(type)));
             closeAll(notify);
-        }        
+        }
     }
-    
+
     @Test
     public void testAttributeMessagesStyleClass() {
         attributesMessages.set(NotifyMessagesAttributes.styleClass, "someStyleClass");
@@ -326,22 +326,22 @@ public class TestRichNotify extends AbstractRichNotifyTest {
             produceMessage(messages.get(type), type, 1);
             assertTrue(selenium.belongsClass(messages.get(type), "someStyleClass"), "The cssStyle has been set but " + type + " message doesn't belong to the set class.");
         }
-    }    
-    
+    }
+
     @Test
     public void testAttributeStackRendered() {
         // set the rendered to <false>
         attributesStack.set(NotifyStackAttributes.rendered, false);
         assertFalse(selenium.isElementPresent(notifyStack), "The attribute rendered is set to <false> but messages in the notify stack are still present.");
     }
-    
+
     @Test
     public void testInit() {
         assertTrue(selenium.isElementPresent(notify), "There is no notify message after page is loaded.");
         assertEquals(selenium.getText(getDetail(notify)), RichNotifyBean.DEFAULT_DETAIL, "The notify detail doesn't match.");
         assertEquals(selenium.getText(getSummary(notify)), RichNotifyBean.DEFAULT_SUMMARY, "The notify summary doesn't match.");
     }
-    
+
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11433")
     public void testCloseAndProduceNotify() {
@@ -357,9 +357,9 @@ public class TestRichNotify extends AbstractRichNotifyTest {
         }
         waitGui
             .failWith("After producing messages there should be no notify. Expected <0>, was <" + selenium.getCount(notify)  + ">")
-            .until(countEquals.locator(notify).count(0));    
-    }    
-    
+            .until(countEquals.locator(notify).count(0));
+    }
+
     @Test
     public void testProduceAndCloseMessages() {
         for(String type : messages.keySet()) {
@@ -367,7 +367,7 @@ public class TestRichNotify extends AbstractRichNotifyTest {
             close(messages.get(type));
         }
     }
-    
+
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11433")
     public void testProduceMoreMessages() {
@@ -379,6 +379,6 @@ public class TestRichNotify extends AbstractRichNotifyTest {
             produceMessage(messages.get(type), type, testedNumber);
             assertEquals(getNumberOfNotifies(), 0, "Number of produced messages has been set to <" + testedNumber + "> but number of notifies should be still <0>.");
             closeAll(messages.get(type));
-        }           
+        }
     }
 }

@@ -34,7 +34,7 @@ import org.jboss.arquillian.ajocado.waiting.conversion.Convertor;
 
 /**
  * Simplifies manipulation with results of evaluated JavaScript.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 21424 $
  */
@@ -47,7 +47,7 @@ public final class JavaScriptEvaluator {
 
     /**
      * Returns the evaluated JavaScript result.
-     * 
+     *
      * @param script
      *            to evaluate
      * @return the evaluated JavaScript result.
@@ -58,7 +58,7 @@ public final class JavaScriptEvaluator {
 
     /**
      * Returns the evaluated JavaScript result as Boolean.
-     * 
+     *
      * @param script
      *            to evaluate
      * @return the evaluated JavaScript result as Boolean.
@@ -69,7 +69,7 @@ public final class JavaScriptEvaluator {
 
     /**
      * Returns the evaluated JavaScript result as Float.
-     * 
+     *
      * @param script
      *            to evaluate
      * @return the evaluated JavaScript result as Float.
@@ -80,7 +80,7 @@ public final class JavaScriptEvaluator {
 
     /**
      * Returns the evaluated JavaScript result as Double.
-     * 
+     *
      * @param script
      *            to evaluate
      * @return the evaluated JavaScript result as Double.
@@ -91,7 +91,7 @@ public final class JavaScriptEvaluator {
 
     /**
      * Returns the evaluated JavaScript result as Long.
-     * 
+     *
      * @param script
      *            to evaluate
      * @return the evaluated JavaScript result as Long.
@@ -102,7 +102,7 @@ public final class JavaScriptEvaluator {
 
     /**
      * Returns the evaluated JavaScript result as Integer.
-     * 
+     *
      * @param script
      *            to evaluate
      * @return the evaluated JavaScript result as Integer.
@@ -113,7 +113,7 @@ public final class JavaScriptEvaluator {
 
     /**
      * Returns the evaluated JavaScript result converted to T by specified converter.
-     * 
+     *
      * @param script
      *            the script to evaluate
      * @return the evaluated JavaScript result converted to T by specified converter.

@@ -31,7 +31,7 @@ import org.testng.annotations.Test;
 
 /**
  * Selenium tests for page faces/components/richValidator/wrapping.xhtml
- * 
+ *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision$
  */

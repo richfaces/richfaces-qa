@@ -106,8 +106,8 @@ public abstract class RichMessagesTest extends AbstractRichMessageTest {
      * When <b>true</b> only messages not bound to any input are displayed
      *      <b>false</b> all messages are displayed
      * This attribute cannot be set with <i>for</i> attribute.
-     * 
-     * In this case, second messages component is relevant 
+     *
+     * In this case, second messages component is relevant
      * (with label "Messages2 - without 'for' but 'globalOnly' attribute instead")
      * This is the reason why used "mainMsg2" instead of  getTestElemLocator()
      */
@@ -120,7 +120,7 @@ public abstract class RichMessagesTest extends AbstractRichMessageTest {
 
         selenium.click(generateMsgsBtn);
 
-        // All messages should appear: 
+        // All messages should appear:
         //  for simpleInput1
         waitModel.until(countEquals.count(2).locator(mainMsg2.getChild(jq("span[id$=:msgs2:form:simpleInput1]"))));
         //  for simpleInput2

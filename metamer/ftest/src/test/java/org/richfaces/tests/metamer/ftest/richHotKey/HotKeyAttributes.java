@@ -35,5 +35,5 @@ public enum HotKeyAttributes implements AttributeEnum {
     preventDefault,
     rendered,
     selector
-    
+
 }

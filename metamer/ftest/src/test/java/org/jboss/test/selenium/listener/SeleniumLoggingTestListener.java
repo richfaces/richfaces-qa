@@ -31,12 +31,12 @@ import org.testng.TestListenerAdapter;
 /**
  * Class determined to logging into Selenium Server's logs server.log via the Selenium.getEval(String) method which will
  * evaluate JavaScript comment.
- * 
+ *
  * You must rewrite the Selenium selenium property to allow logging facility.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision$
- * 
+ *
  */
 public class SeleniumLoggingTestListener extends TestListenerAdapter {
 
@@ -73,7 +73,7 @@ public class SeleniumLoggingTestListener extends TestListenerAdapter {
     /**
      * This method will output method name and status into Selenium Server's log server.log via the
      * Selenium.getEval(String) method which will evaluate JavaScript comment
-     * 
+     *
      * @param result
      *            from the fine-grained listener's method such as onTestFailure(ITestResult)
      */
@@ -89,7 +89,7 @@ public class SeleniumLoggingTestListener extends TestListenerAdapter {
             selenium.logToBrowser(output);
         }
     }
-    
+
     protected String getMessage(ITestResult result) {
         return TestLoggingUtils.getTestDescription(result);
     }

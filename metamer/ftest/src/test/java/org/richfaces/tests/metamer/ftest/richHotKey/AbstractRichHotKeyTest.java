@@ -44,34 +44,34 @@ import org.richfaces.tests.metamer.ftest.attributes.Attributes;
 public abstract class AbstractRichHotKeyTest extends AbstractAjocadoTest {
 
     protected static final String INPUT_1_LOCATOR = "input.first-input";
-    protected static final String INPUT_2_LOCATOR = "input.second-input";    
+    protected static final String INPUT_2_LOCATOR = "input.second-input";
 
     protected static final JQueryLocator HOTKEY_1 = pjq("span[id$=richHotKey1]");
     protected static final JQueryLocator HOTKEY_2 = pjq("span[id$=richHotKey2]");
-    
+
     protected static final JQueryLocator INPUT_1 = pjq(INPUT_1_LOCATOR);
     protected static final JQueryLocator INPUT_2 = pjq(INPUT_2_LOCATOR);
-    
+
     private static final JQueryLocator CLEAR_BUTTON = pjq("button.rf-log-element");
     private static final String HOT_KEY_EVENT_LOCATOR_WITH_CONTENT = "span.rf-log-entry-msg-info:contains({0})";
     private static final String HOT_KEY_EVENT_LOCATOR_WITH_ORDER = "span.rf-log-entry-msg-info:eq({0})";
-    
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richHotKey/simple.xhtml");
-    }    
-    
+    }
+
     protected void checkEvent(String text, int number) {
         waitGui
             .failWith("The number of hotkey events doesn't match. Found <" + selenium.getCount(pjq(format(HOT_KEY_EVENT_LOCATOR_WITH_CONTENT, text))) + ">, expected <" + number + ">.")
             .until(countEquals.locator(pjq(format(HOT_KEY_EVENT_LOCATOR_WITH_CONTENT, text))).count(number));
     }
-    
+
     protected void clearHotKeyEvents() {
         selenium.click(CLEAR_BUTTON);
         waitGui.until(NegationCondition.getInstance().condition(elementPresent.locator(pjq(format(HOT_KEY_EVENT_LOCATOR_WITH_CONTENT, "''")))));
-    }    
-    
+    }
+
     protected List<String> getEvents() {
         List<String> events = new ArrayList<String>();
         int eventsCount = selenium.getCount(pjq(format(HOT_KEY_EVENT_LOCATOR_WITH_CONTENT, "''")));
@@ -80,9 +80,9 @@ public abstract class AbstractRichHotKeyTest extends AbstractAjocadoTest {
         }
         return events;
     }
-    
+
     protected static final Attributes<HotKeyAttributes> ATTRIBUTES_FIRST = new Attributes<HotKeyAttributes>(pjq("table.attributes[id$=attributes1]"));
-    
+
     protected static final Attributes<HotKeyAttributes> ATTRIBUTES_SECOND = new Attributes<HotKeyAttributes>(pjq("table.attributes[id$=attributes2]"));
-    
+
 }

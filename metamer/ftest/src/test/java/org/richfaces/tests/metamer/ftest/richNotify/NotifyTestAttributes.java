@@ -31,5 +31,5 @@ public enum NotifyTestAttributes implements AttributeEnum {
     messageCount,
     messageDetail,
     messageText
-    
+
 }

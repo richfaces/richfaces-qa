@@ -31,7 +31,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @version $Revision$
  */
 public enum EditorAttributes implements AttributeEnum {
-    
+
     immediate,
     lang,
     height,
@@ -51,5 +51,5 @@ public enum EditorAttributes implements AttributeEnum {
     title,
     value,
     width,
-      
+
 }

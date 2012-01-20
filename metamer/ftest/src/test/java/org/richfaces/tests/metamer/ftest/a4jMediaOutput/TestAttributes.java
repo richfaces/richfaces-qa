@@ -38,7 +38,7 @@ import org.testng.annotations.Test;
 
 /**
  * Tests for attributes (page /faces/components/a4jMediaOutput/imagePng.xhtml)
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
@@ -47,8 +47,8 @@ public class TestAttributes extends AbstractMediaOutputTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jMediaOutput/imagePng.xhtml");
-    }    
-    
+    }
+
     @Test
     public void testAccesskey() {
         testHtmlAttribute(MEDIA_OUTPUT, "accesskey", "r");
@@ -208,6 +208,6 @@ public class TestAttributes extends AbstractMediaOutputTest {
     @Test
     public void testUsemap() {
         testHtmlAttribute(MEDIA_OUTPUT, "usemap", "metamer");
-    }    
-    
+    }
+
 }

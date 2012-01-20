@@ -28,7 +28,7 @@ import org.testng.ITestResult;
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 19564 $
- * 
+ *
  */
 public class MetamerConsoleStatusTestListener extends ConsoleStatusTestListener {
     protected String getMessage(ITestResult result) {

@@ -66,7 +66,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/richMenuItem/simple.xhtml
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22768 $
  */
@@ -142,7 +142,7 @@ public class TestRichMenuItem extends AbstractAjocadoTest {
     @Test
     public void testBypassUpdates() {
         menuItemAttributes.set(bypassUpdates, Boolean.TRUE);
-        
+
         String reqTime = selenium.getText(time);
         selenium.mouseOver(fileMenuLabel);
         guardXhr(selenium).click(menuItem1);
@@ -292,7 +292,7 @@ public class TestRichMenuItem extends AbstractAjocadoTest {
     @Test
     public void testMode() {
         String reqTime = selenium.getText(time);
-        
+
         // test for @mode=ajax
         selenium.mouseOver(fileMenu);
         guardXhr(selenium).click(menuItem1);
@@ -319,7 +319,7 @@ public class TestRichMenuItem extends AbstractAjocadoTest {
         assertEquals(listenerOutput, "* action listener invoked", "Action listener's output");
         listenerOutput = selenium.getText(jq("div#phasesPanel li:eq(6)"));
         assertEquals(listenerOutput, "* action invoked", "Action's output");
-  
+
     }
 
     @Test

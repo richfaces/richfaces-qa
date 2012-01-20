@@ -22,18 +22,15 @@
 package org.richfaces.tests.metamer.ftest.a4jPush;
 
 import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
-
 import static org.testng.Assert.assertNotSame;
 
 import java.io.IOException;
 
-import org.apache.commons.httpclient.HttpException;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for simple usage of a4j:push component.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 23061 $
  */
@@ -44,18 +41,18 @@ public class TestCounter extends AbstractPushTest {
      * <p>
      * Sets the interval to value {@link #SIMPLE_INTERVAL}.
      * </p>
-     * 
+     *
      * <p>
      * Then try to generate push event, wait for client observation.
      * </p>
-     * 
+     *
      * <p>
      * Validates that counter is changed between iterations.
      * </p>
      */
     @Test(enabled = false)
-    public void testSimple() throws HttpException, IOException {
-        
+    public void testSimple() throws IOException {
+
         int beginCounter = getCounter();
         pushAndWait(1);
         int endCounter = getCounter();

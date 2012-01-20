@@ -46,7 +46,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/richToolbar/simple.xhtml
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 23119 $
  */

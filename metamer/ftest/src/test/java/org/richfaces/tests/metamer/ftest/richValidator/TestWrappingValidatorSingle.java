@@ -38,10 +38,10 @@ import org.testng.annotations.Test;
 
 /**
  * Selenium tests for page faces/components/richValidator/single.xhtml
- * 
+ *
  * Test no-request handling client side validation. Validation for min is done by javax.validation.constraints.Min, and
  * this should completely handle validation on client side.
- * 
+ *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision$
  */
@@ -72,7 +72,7 @@ public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
 
     /**
      * Check validation on input after blur event fired and no XHR request as well
-     * 
+     *
      */
     @Test
     public void testValidateOnBlur() {

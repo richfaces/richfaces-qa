@@ -28,7 +28,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @version $Revision: 22749 $
  */
 public enum PanelMenuAttributes implements AttributeEnum {
-    
+
     bubbleSelection,
     collapseEvent,
     disabled,
