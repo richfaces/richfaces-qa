@@ -38,15 +38,15 @@ import org.richfaces.tests.metamer.converter.CollectionConverter;
 
 /**
  * Representation an attribute of a JSF component.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22330 $
+ * @version$Revision: 22330$
  */
 @XmlRootElement(name = "property", namespace = "http://java.sun.com/xml/ns/javaee")
 public class Attribute implements Serializable {
-    
+
     private static final long serialVersionUID = 6142493504360646686L;
-    
+
     private String name;
     private Object value;
     private Class<?> type;
@@ -177,17 +177,17 @@ public class Attribute implements Serializable {
     public boolean isRequired() {
         return extensions.getRequired();
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
     }
-    
+
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this, true);
     }
-    
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);

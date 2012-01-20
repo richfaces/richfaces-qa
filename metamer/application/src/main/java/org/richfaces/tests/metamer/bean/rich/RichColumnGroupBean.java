@@ -34,9 +34,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for rich:columnGroup.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 23047 $
+ * @version$Revision: 23047$
  */
 @ManagedBean(name = "richColumnGroupBean")
 @ViewScoped

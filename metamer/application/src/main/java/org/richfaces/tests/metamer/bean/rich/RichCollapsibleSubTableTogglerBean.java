@@ -39,9 +39,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for rich:collapsibleSubTableToggler.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22460 $
+ * @version$Revision: 22460$
  */
 @ManagedBean(name="richSubTableTogglerBean")
 @ViewScoped
@@ -63,7 +63,7 @@ public class RichCollapsibleSubTableTogglerBean implements Serializable {
     public void init() {
         logger = LoggerFactory.getLogger(getClass());
         logger.debug("initializing bean " + getClass().getName());
-        
+
         attributes = Attributes.getComponentAttributesFromFacesConfig(UICollapsibleSubTableToggleControl.class, getClass());
         attributes.setAttribute("event", "click");
         attributes.setAttribute("rendered", true);

@@ -28,19 +28,19 @@ import javax.validation.constraints.Min;
 
 /**
  * Simple bean with property with more than one validation.
- * This is not very logic validation, but its useful for testing 
+ * This is not very logic validation, but its useful for testing
  * rich:messages component - where need more validation messages per input
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision: 22492 $
+ * @version$Revision: 22492$
  */
 @ManagedBean
 public class MultipleValidationRulesBean extends Validable<Integer> {
- 
+
     public MultipleValidationRulesBean(){
         value = 10;
     }
-    
+
     @Digits(integer=2, fraction=0)
     @Min(5)
     @Max(150)
@@ -48,7 +48,7 @@ public class MultipleValidationRulesBean extends Validable<Integer> {
     public Integer getValue() {
         return value;
     }
-    
+
     @Override
     public void setValue(Integer value) {
         this.value = value;

@@ -34,9 +34,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for a4j:log.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22460 $
+ * @version$Revision: 22460$
  */
 @ManagedBean(name = "a4jLogBean")
 @ViewScoped
@@ -65,7 +65,7 @@ public class A4JLogBean implements Serializable {
 
     /**
      * Getter for attributes.
-     * 
+     *
      * @return A map containing all attributes of tested component. Name of the component is key in the map.
      */
     public Attributes getAttributes() {
@@ -74,7 +74,7 @@ public class A4JLogBean implements Serializable {
 
     /**
      * Setter for attributes.
-     * 
+     *
      * @param attributes
      *            map containing all attributes of tested component. Name of the component is key in the map.
      */

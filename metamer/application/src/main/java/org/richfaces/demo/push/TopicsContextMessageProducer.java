@@ -1,6 +1,6 @@
 /**
  * JBoss, Home of Professional Open Source.
- * Copyright 2010, Red Hat, Inc., and individual contributors
+ * Copyright 2010-2012, Red Hat, Inc., and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -38,7 +38,7 @@ import org.richfaces.tests.metamer.Message;
 public class TopicsContextMessageProducer implements MessageProducer {
 
     public static final String PUSH_TOPICS_CONTEXT_TOPIC = "pushTopicsContext";
-    
+
     private String text = "Servus!";
     private String author = "Janko Hrasko";
 
@@ -51,11 +51,11 @@ public class TopicsContextMessageProducer implements MessageProducer {
         try {
             TopicKey topicKey = new TopicKey(PUSH_TOPICS_CONTEXT_TOPIC, "xxx");
             TopicsContext topicsContext = TopicsContext.lookup();
-            
+
             DateFormat dateFormat = DateFormat.getDateTimeInstance();
             dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
             String dateMessage = dateFormat.format(new Date());
-            
+
             topicsContext.publish(topicKey, new Message(text, author, dateMessage));
         } catch (MessageException e) {
             if (!e.getMessage().matches("^Topic .* not found$")) {

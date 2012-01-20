@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for notify:notify
- * 
+ *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 @ManagedBean(name = "notifyBean")
@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
 public class RichNotifyBean implements Serializable {
 
     public static final String DEFAULT_DETAIL = "Message detail";
-    public static final String DEFAULT_SUMMARY = "Message summary";        
+    public static final String DEFAULT_SUMMARY = "Message summary";
     private static final long serialVersionUID = 8408544368608166106L;
     private static Logger logger;
     private Attributes attributesNotify;
@@ -55,11 +55,11 @@ public class RichNotifyBean implements Serializable {
     private Attributes attributesNotifyStackFirst;
     private Attributes attributesNotifyStackSecond;
     private Attributes attributesBean;
-    
+
     /**
      * Initializes the managed bean.
      */
-    @PostConstruct    
+    @PostConstruct
     public void init() {
         logger = LoggerFactory.getLogger(getClass());
         logger.debug("initializing bean " + getClass().getName());
@@ -68,29 +68,29 @@ public class RichNotifyBean implements Serializable {
         attributesNotifyStackFirst = Attributes.getComponentAttributesFromClass(AbstractNotifyStack.class, getClass());
         attributesNotifyStackSecond = Attributes.getComponentAttributesFromClass(AbstractNotifyStack.class, getClass());
         attributesBean = Attributes.getEmptyAttributes(getClass());
-        
+
         attributesNotify.putAll(getGeneralAttributes());
         attributesNotify.setAttribute("detail", DEFAULT_DETAIL);
         attributesNotify.setAttribute("rendered", true);
         attributesNotify.setAttribute("summary", DEFAULT_SUMMARY);
-        
+
         attributesNotifyMessages.putAll(getGeneralAttributes());
         attributesNotifyMessages.setAttribute("interval", 800);
         attributesNotifyMessages.setAttribute("showSummary", true);
         attributesNotifyMessages.setAttribute("rendered", true);
         attributesNotifyMessages.remove("for");
         attributesNotifyMessages.remove("ajaxRendered");
-        
+
         attributesNotifyStackFirst.setAttribute("direction", "vertical");
         attributesNotifyStackFirst.setAttribute("method", "first");
         attributesNotifyStackFirst.setAttribute("position", "topRight");
         attributesNotifyStackFirst.setAttribute("rendered", true);
-        
+
         attributesNotifyStackSecond.setAttribute("direction", "vertical");
         attributesNotifyStackSecond.setAttribute("method", "first");
         attributesNotifyStackSecond.setAttribute("position", "bottomRight");
         attributesNotifyStackSecond.setAttribute("rendered", true);
-        
+
         attributesBean.setAttribute("messageCount", "1");
         attributesBean.setAttribute("messageDetail", DEFAULT_DETAIL);
         attributesBean.setAttribute("messageText", DEFAULT_SUMMARY);
@@ -116,33 +116,33 @@ public class RichNotifyBean implements Serializable {
     public void produceInfo() {
         produceMessage(FacesMessage.SEVERITY_INFO);
     }
-    
+
     /**
      * Produces warn message which is handled by notify:notifyMessages component.
      */
     public void produceWarn() {
         produceMessage(FacesMessage.SEVERITY_WARN);
     }
-    
+
     /**
      * General attributes for this bean
      */
     public Attributes getAttributesBean() {
         return attributesBean;
-    }    
-    
+    }
+
     /**
      * Attributes for notify:notify component
-     * 
+     *
      * @return A map containing all attributes of tested component. Name of the component is key in the map.
      */
     public Attributes getAttributesNotify() {
         return attributesNotify;
     }
-    
+
     /**
      * Attributes for notify:notifyMessages component
-     * 
+     *
      * @return A map containing all attributes of tested component. Name of the component is key in the map.
      */
     public Attributes getAttributesNotifyMessages() {
@@ -151,7 +151,7 @@ public class RichNotifyBean implements Serializable {
 
     /**
      * Attributes for notify:notifyStack (1) component
-     * 
+     *
      * @return A map containing all attributes of tested component. Name of the component is key in the map.
      */
     public Attributes getAttributesNotifyStackFirst() {
@@ -160,15 +160,15 @@ public class RichNotifyBean implements Serializable {
 
     /**
      * Attributes for notify:notifyStack (2) component
-     * 
+     *
      * @return A map containing all attributes of tested component. Name of the component is key in the map.
-     */    
+     */
     public Attributes getAttributesNotifyStackSecond() {
         return attributesNotifyStackSecond;
     }
     /**
      * General attributes for this bean
-     * 
+     *
      * @param attributesBean
      *            map containing all attributes of tested component. Name of the component is key in the map.
      */
@@ -178,7 +178,7 @@ public class RichNotifyBean implements Serializable {
 
     /**
      * Attributes for notify:notify component
-     * 
+     *
      * @param attributesNotify
      *            map containing all attributes of tested component. Name of the component is key in the map.
      */
@@ -188,39 +188,39 @@ public class RichNotifyBean implements Serializable {
 
     /**
      * Attributes for notify:notifyMessages component
-     * 
+     *
      * @param attributesNotifyMessages
      *            map containing all attributes of tested component. Name of the component is key in the map.
-     */    
+     */
     public void setAttributesNotifyMessages(Attributes attributesNotifyMessages) {
         this.attributesNotifyMessages = attributesNotifyMessages;
     }
 
     /**
      * Attributes for notify:notifyStack (1) component
-     * 
+     *
      * @param attributesNotifyStack
      *            map containing all attributes of tested component. Name of the component is key in the map.
-     */    
+     */
     public void setAttributesNotifyStackFirst(Attributes attributesNotifyStack) {
         this.attributesNotifyStackFirst = attributesNotifyStack;
     }
-    
+
     /**
      * Attributes for notify:notifyStack (2) component
-     * 
+     *
      * @param attributesNotifyStack
      *            map containing all attributes of tested component. Name of the component is key in the map.
-     */        
+     */
     public void setAttributesNotifyStackSecond(Attributes attributesNotifyStack) {
         this.attributesNotifyStackSecond = attributesNotifyStack;
-    }    
-    
+    }
+
     /**
      * Produces a message which is handled by notify:notifyMessages component.
-     * 
+     *
      * @param severity the severity
-     */    
+     */
     private void produceMessage(FacesMessage.Severity severity) {
         int messageCount = Integer.valueOf((String)attributesBean.get("messageCount").getValue());
         String text = (String) attributesBean.get("messageText").getValue();
@@ -228,11 +228,11 @@ public class RichNotifyBean implements Serializable {
         for(int i=0; i<messageCount; i++) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, text, detail));
         }
-    }    
-    
+    }
+
     /**
      * It returns attributes shared by AbstractNotify and AbstractNotifyMessages (NotifyAttributes)
-     * 
+     *
      * @return map containing all attributes of tested component. Name of the component is key in the map.
      */
     private Attributes getGeneralAttributes() {

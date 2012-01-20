@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  * http://community.jboss.org/wiki/richfacesautocompletecomponentbehavior
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22883 $
+ * @version$Revision: 22883$
  */
 @ManagedBean(name = "richAutocompleteBean")
 // cannot be view-scoped (see https://jira.jboss.org/browse/RF-9287)
@@ -58,7 +58,7 @@ public class RichAutocompleteBean implements Serializable {
     private Attributes ajaxAttributes;
     @ManagedProperty(value = "#{model.capitals}")
     private List<Capital> capitals;
-    
+
     // properties for jsr303 validations
     private String value1;
     private String value2;
@@ -79,13 +79,13 @@ public class RichAutocompleteBean implements Serializable {
         attributes.setAttribute("rendered", true);
         attributes.setAttribute("tokens", ", ");
         attributes.setAttribute("validatorMessage", "validator message");
-        
+
         ajaxAttributes = Attributes.getEmptyAttributes(getClass());
         ajaxAttributes.setAttribute("render", "output");
         ajaxAttributes.setAttribute("execute", "autocomplete");
-        
+
         attributes.remove("var"); // this attr is supposed to be used with @fetchValue, and cannot be changed
-        
+
         // since this bean is session scoped, valueX should be reset explicitly
         value1 = null;
         value2 = null;
@@ -100,11 +100,11 @@ public class RichAutocompleteBean implements Serializable {
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
     }
-    
+
     public Attributes getAjaxAttributes() {
         return ajaxAttributes;
     }
-    
+
     public void setAjaxAttributes(Attributes ajaxAttributes) {
         this.ajaxAttributes = ajaxAttributes;
     }
@@ -127,14 +127,14 @@ public class RichAutocompleteBean implements Serializable {
         }
         return result;
     }
-    
+
     /**
      * Since @fetchValue introduced to rich:autocomplete component,
      *  there is possible to serve objects instead of simple string,
      *  and provide more flexible UI
-     *  
+     *
      * With @fetchValue is possible display additional information,
-     * even the letters typed into autocomplete input are different 
+     * even the letters typed into autocomplete input are different
      * @param prefix
      * @return List<Capital> with matching prefix
      */
@@ -156,7 +156,7 @@ public class RichAutocompleteBean implements Serializable {
         }
         return result;
     }
-    
+
     public void setCapitals(List<Capital> capitals) {
         this.capitals = capitals;
     }

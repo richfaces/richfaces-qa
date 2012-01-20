@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * Managed bean for storing appropriate data for rich:editor component
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision$
+ * @version$Revision$
  */
 @ManagedBean(name = "richEditorBean")
 @ViewScoped
@@ -49,25 +49,25 @@ public class RichEditorBean implements Serializable {
     public static final Logger LOG = LoggerFactory.getLogger(RichEditorBean.class);
     /** Generated serial UID */
     private static final long serialVersionUID = -6029256813894981250L;
-    
+
     private Attributes attributes;
-    
+
     @PostConstruct
     public void init(){
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIEditor.class, getClass());
-        
+
         attributes.setAttribute("rendered", Boolean.TRUE);
         attributes.setAttribute("requiredMessage", "Editor's value cannot be empty!");
         attributes.setAttribute("toolbar", "basic");
         attributes.setAttribute("skin", "richfaces");
-        
+
         attributes.remove("config"); // config facet covered with @toolbar=custom
         attributes.remove("converter");
         attributes.remove("converterMessage");
         attributes.remove("validator");
         attributes.remove("validatorMessage");
     }
-    
+
     /**
      * Test method for verify validator attribute
      * @param context
@@ -78,7 +78,7 @@ public class RichEditorBean implements Serializable {
         String testValue = value.toString();
         if (testValue != null && testValue.contains("#")) {
             throw new ValidatorException(
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Editor must not contains '#' value!", "Editor must not contains '#' value!"));
         }
     }
@@ -90,5 +90,5 @@ public class RichEditorBean implements Serializable {
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
     }
-    
+
 }

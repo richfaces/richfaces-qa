@@ -30,7 +30,7 @@ import org.richfaces.tests.metamer.bean.RichBean;
  * Tests for RichBean testing methods
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision$
+ * @version$Revision$
  */
 public class RichBeanTestCase {
 

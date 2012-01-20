@@ -66,9 +66,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Representation of all attributes of a JSF component or behavior.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22596 $
+ * @version$Revision: 22596$
  */
 public final class Attributes implements Map<String, Attribute>, Serializable {
 
@@ -82,7 +82,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
     /**
      * Constructor for empty Attributes.
-     * 
+     *
      * @param beanClass
      *            class object of a managed bean
      */
@@ -90,10 +90,10 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         this.beanClass = beanClass;
         attributes = new TreeMap<String, Attribute>();
     }
-    
+
     /**
      * Constructor for class Attributes.
-     * 
+     *
      * @param componentClass
      *            class object of a JSF component whose attributes will be stored
      * @param beanClass
@@ -101,7 +101,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
      */
     private Attributes(Class<?> componentClass, Class<?> beanClass, boolean loadFromClass) {
         this.beanClass = beanClass;
-        
+
         logger.debug("creating attributes map for " + componentClass);
 
         if (!loadFromClass && richfacesAttributes == null) {
@@ -132,11 +132,11 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
     /**
      * Constructor for empty class Attributes.
-     * 
+     *
      * @param componentClass
      *            class object of a JSF component whose attributes will be stored
      * @param beanClass
-     *            class object of a managed bean 
+     *            class object of a managed bean
      */
     private Attributes(Class<?> componentClass, Class<?> beanClass) {
         logger.debug("creating attributes map for " + componentClass);
@@ -163,11 +163,11 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
      *            general class object whose attributes will be stored
      * @param beanClass
      *            class object of a managed bean
-     */    
+     */
     public static Attributes getAttributesFromClass(Class<?> interfaze, Class<?> beanClass) {
         return new Attributes(interfaze, beanClass, true);
-    }    
-    
+    }
+
     /**
      * Factory method for creating instances of class Attributes. Attributes are loaded from class.
      *
@@ -203,7 +203,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     public static Attributes getBehaviorAttributesFromClass(Class<? extends BehaviorBase> clazz, Class<?> beanClass) {
         return new Attributes(clazz, beanClass, true);
     }
-    
+
     /**
      * Factory method for creating empty instance of class Attributes.
      * Needs to be filled with attributes explicitly.
@@ -271,7 +271,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
     /**
      * Loads select options used on the page for selecting attribute value.
-     * 
+     *
      * @return map where key is attribute's name and value is list of select items usable to select attribute value
      */
     private void loadSelectOptions() {
@@ -406,7 +406,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
     /**
      * Getter for exclude set.
-     * 
+     *
      * @return set containing all attributes of a JSF component that cannot/shouldn't be set on page.
      */
     private Set<String> getExcludeSet() {
@@ -446,7 +446,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
     /**
      * Determines whether given object represents an EL expression, e.g. #{bean.property}.
-     * 
+     *
      * @param value
      *            value of a property of tested JSF component
      * @return true if object is a string representing an expression, e.g. #{bean.property}, false otherwise
@@ -461,7 +461,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
     /**
      * An action for tested JSF component. Can be modified dynamically.
-     * 
+     *
      * @return outcome of an action or null if no navigation should be performed
      */
     public String action() {
@@ -501,7 +501,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
     /**
      * An action listener for tested JSF component. Can be modified dynamically.
-     * 
+     *
      * @param event
      *            event representing the activation of a user interface component
      */
@@ -578,7 +578,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
     /**
      * Method used for creating EL expressions for methods.
-     * 
+     *
      * @param methodName
      *            name of the action or action listener, e.g. toUpperCaseAction
      * @return string containing an expression for an action or action listener, e.g. #{bean.toUpperCaseAction}
@@ -603,7 +603,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
     /**
      * Decides if there are any select options for given attribute. If true, radio buttons should be rendered on a page.
-     * 
+     *
      * @param attributeName
      *            name of a component attribute
      * @return true if select options were defined, false otherwise
@@ -636,7 +636,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
     /**
      * Obtains the ExpressionFactory instance from current context.
-     * 
+     *
      * @return the ExpressionFactory instance from current context
      */
     private ExpressionFactory getExpressionFactory() {

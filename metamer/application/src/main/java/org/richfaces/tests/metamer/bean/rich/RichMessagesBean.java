@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * Simple bean for rich:messages component example.
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision: 23138 $
+ * @version$Revision: 23138$
  */
 @ManagedBean(name = "richMessagesBean")
 @ViewScoped
@@ -69,7 +69,7 @@ public class RichMessagesBean implements Serializable {
         attributes.setAttribute("for", "simpleInput1");
         attributes.setAttribute("showSummary", true);
 
-        // add attributes with missing appropriate annotation 
+        // add attributes with missing appropriate annotation
         attributes.setAttribute("lang", null);
         attributes.setAttribute("dir", null);
         attributes.setAttribute("style", null);
@@ -86,13 +86,11 @@ public class RichMessagesBean implements Serializable {
         attributes.setAttribute("onmouseup", null);
         attributes.setAttribute("onmouseout", null);
         attributes.setAttribute("onmouseover", null);
-
     }
 
     public void generateFacesError(ActionEvent event) {
-
         logger.info(" ### Just called generateFacesError()");
-        
+
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 "Generated error message without binding to any component (global)",

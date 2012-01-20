@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  * XML Adapter for converting primitive types and class types to instances of Class<?>.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 21299 $
+ * @version$Revision: 21299$
  */
 public class JavaTypeAdapter extends XmlAdapter<String, Class<?>> {
 

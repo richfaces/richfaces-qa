@@ -28,20 +28,19 @@ import javax.validation.constraints.Size;
 
 /**
  * Helper bean for testing JSR-303.
- * 
+ *
  * This bean doesn't extend the {@link org.richfaces.tests.metamer.validation.Validable}
  * because of the {@link https://issues.jboss.org/browse/RF-11710}.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
- * @version $Revision: 23064 $
- * 
+ * @version$Revision: 23064$
  */
 @ManagedBean
 public class SizeBean {
 
     private List<String> value;
-    
+
     public SizeBean() {
         value = new ArrayList<String>();
         value.add("A");

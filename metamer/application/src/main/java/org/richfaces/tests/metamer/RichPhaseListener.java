@@ -34,9 +34,9 @@ import org.slf4j.LoggerFactory;
 /**
  * A phase listener that notifies at the beginning and ending of processing for each standard phase of the request
  * processing lifecycle.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 21299 $
+ * @version$Revision: 21299$
  */
 public class RichPhaseListener implements javax.faces.event.PhaseListener {
 

@@ -29,10 +29,10 @@ import org.richfaces.tests.metamer.model.Labeled;
 public interface TreeNodeWithContent<Content extends Labeled> {
 
     Content getContent();
- 
+
     String getType();
-    
+
     void setContent(Content content);
-    
+
     void setType(String type);
 }

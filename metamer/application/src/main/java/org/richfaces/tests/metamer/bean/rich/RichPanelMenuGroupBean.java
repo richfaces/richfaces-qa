@@ -37,9 +37,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for rich:panelMenu.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22460 $
+ * @version$Revision: 22460$
  */
 @ManagedBean(name = "richPanelMenuGroupBean")
 @ViewScoped
@@ -70,7 +70,7 @@ public class RichPanelMenuGroupBean implements Serializable {
         attributes.remove("changeExpandListener");
         attributes.remove("action");
         attributes.remove("actionListener");
-        
+
         // expanded needs to be set separately
         attributes.remove("expanded");
         expanded.put("group2", true);
@@ -84,7 +84,7 @@ public class RichPanelMenuGroupBean implements Serializable {
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
     }
-    
+
     public Map<String, Boolean> getExpanded() {
         return expanded;
     }

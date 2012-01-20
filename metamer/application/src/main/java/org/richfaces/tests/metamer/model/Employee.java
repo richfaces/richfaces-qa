@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * Java bean representing an employee.
  *
  * @author Exadel, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 21299 $
+ * @version$Revision: 21299$
  */
 @XmlRootElement(name = "employeee")
 public class Employee implements Serializable {

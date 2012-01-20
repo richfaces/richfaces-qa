@@ -25,22 +25,13 @@ import java.util.Comparator;
 
 import javax.faces.model.SelectItem;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Comparator for javax.faces.model.SelectItem comparing item's label.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 21299 $
+ * @version$Revision: 21299$
  */
 public class SelectItemComparator implements Comparator<SelectItem> {
-
-    private Logger logger;
-
-    public SelectItemComparator() {
-        logger = LoggerFactory.getLogger(getClass());
-    }
 
     /**
      * {@inheritDoc}
@@ -49,7 +40,7 @@ public class SelectItemComparator implements Comparator<SelectItem> {
         if (o1 == null || o1.getLabel() == null || o1.getLabel().equals("null")) {
             return -1;
         }
-        
+
         if (o2 == null || o2.getLabel() == null || o2.getLabel().equals("null")) {
             return 1;
         }

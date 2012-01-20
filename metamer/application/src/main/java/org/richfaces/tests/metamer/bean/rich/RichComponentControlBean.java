@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * Managed bean for rich:componentControl.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22460 $
+ * @version$Revision: 22460$
  */
 @ManagedBean(name = "richComponentControlBean")
 @ViewScoped
@@ -46,7 +46,7 @@ public class RichComponentControlBean implements Serializable {
     private static final long serialVersionUID = 4476643239809L;
     private static Logger logger;
     private Attributes attributes;
-    
+
     /**
      * Initializes the managed bean.
      */
@@ -56,10 +56,10 @@ public class RichComponentControlBean implements Serializable {
         logger.debug("initializing bean " + getClass().getName());
 
         attributes = Attributes.getBehaviorAttributesFromFacesConfig(ComponentControlBehavior.class, getClass());
-        
+
         attributes.setAttribute("operation", "previous");
         attributes.setAttribute("target", "scroller");
-        
+
         // The 'event' attribute for behavior tag must be a literal
         attributes.remove("event");
     }

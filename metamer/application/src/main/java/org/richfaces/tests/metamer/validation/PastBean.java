@@ -30,7 +30,7 @@ import javax.validation.constraints.Past;
  * Helper bean for testing JSR-303.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22492 $
+ * @version$Revision: 22492$
  */
 @ManagedBean
 public class PastBean extends Validable<Date> {

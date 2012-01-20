@@ -36,9 +36,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for rich:panelMenu.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22460 $
+ * @version$Revision: 22460$
  */
 @ManagedBean(name = "richPanelMenuBean")
 @ViewScoped
@@ -78,7 +78,7 @@ public class RichPanelMenuBean implements Serializable {
 
     /**
      * An item change listener that logs to the page old and new value.
-     * 
+     *
      * @param event
      *            an event representing the activation of a user interface component
      */

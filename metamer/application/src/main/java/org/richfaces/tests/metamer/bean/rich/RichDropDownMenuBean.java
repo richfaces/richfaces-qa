@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * Managed bean for rich:dropDownMenu.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 23042 $
+ * @version$Revision: 23042$
  */
 @ManagedBean(name = "richDropDownMenuBean")
 @ViewScoped
@@ -50,7 +50,7 @@ public class RichDropDownMenuBean implements Serializable {
     private static Logger logger;
     private Attributes attributes;
     private String current;
-    
+
     private List<SelectItemGroup> dynamicMenuGroups = new ArrayList<SelectItemGroup>();
 
     /**
@@ -67,7 +67,7 @@ public class RichDropDownMenuBean implements Serializable {
         attributes.setAttribute("rendered", true);
         initializeDynamicMenuGroups();
     }
-    
+
     /**
      * This method/actionListener change list of available tabs (from empty to initialized and back)
      */
@@ -78,7 +78,7 @@ public class RichDropDownMenuBean implements Serializable {
             dynamicMenuGroups = new ArrayList<SelectItemGroup>();
         }
     }
-    
+
     private void initializeDynamicMenuGroups() {
         dynamicMenuGroups.add(new SelectItemGroup("Group1", "Menu Group 1", false, new SelectItem[] {}));
         dynamicMenuGroups.add(new SelectItemGroup("Group2", "Menu Group 2", false, new SelectItem[] {}));

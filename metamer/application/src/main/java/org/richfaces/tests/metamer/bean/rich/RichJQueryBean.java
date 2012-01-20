@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * Managed bean for rich:jQuery.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>, Nick Belaevski
- * @version $Revision: 22460 $
+ * @version$Revision: 22460$
  */
 @ManagedBean(name = "richJQueryBean")
 @ViewScoped

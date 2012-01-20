@@ -38,9 +38,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for rich:column
- * 
+ *
  * @author <a href="mailto:pjha@redhat.com">Prabhat Jha</a>, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22460 $
+ * @version$Revision: 22460$
  */
 @ManagedBean(name = "richColumnBean")
 @ViewScoped
@@ -120,7 +120,7 @@ public class RichColumnBean implements Serializable {
     public SortOrder getSortOrder() {
         return sortOrder;
     }
-    
+
     private class StateFilter implements Filter<Capital>, Serializable {
         private static final long serialVersionUID = 1L;
 

@@ -26,7 +26,7 @@ public abstract class ColumnSortingMap extends TreeMap<String, ColumnSortingMap.
 
     public class ColumnSorting implements Serializable {
         private static final long serialVersionUID = 1L;
-        
+
         private String columnName;
         private SortOrder order = SortOrder.unsorted;
 

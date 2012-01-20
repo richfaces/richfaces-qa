@@ -30,7 +30,7 @@ public class State implements Labeled, Serializable {
 
     private static final long serialVersionUID = 1L;
     private String name;
-    
+
     @Override
     public String getLabel() {
         return name;
@@ -43,7 +43,7 @@ public class State implements Labeled, Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     @Override
     public String toString() {
         return "Country [name=" + name + "]";
@@ -72,6 +72,6 @@ public class State implements Labeled, Serializable {
         } else if (!name.equals(other.name))
             return false;
         return true;
-    }    
-    
+    }
+
 }

@@ -34,9 +34,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for rich:tab.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22825 $
+ * @version$Revision: 22825$
  */
 @ManagedBean(name = "richTabBean")
 @ViewScoped

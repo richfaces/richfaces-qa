@@ -36,10 +36,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for a4j:repeat.
- * 
- * <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * 
- * @version $Revision: 21194 $
+ *
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @version$Revision: 21194$
  */
 @ManagedBean(name = "uiRepeatBean")
 @ViewScoped
@@ -50,8 +49,6 @@ public class UiRepeatBean implements Serializable {
     private Attributes attributes;
     private List<Data> dataList;
     private Data selectedDataItem = null;
-
-    private Object binding;
 
     /**
      * Initializes the managed bean.

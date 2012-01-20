@@ -26,18 +26,18 @@ import java.util.Map;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22493 $
+ * @version$Revision: 22493$
  */
 public interface RecursiveNode extends Node {
 
-    public abstract ModelNode getModel();
+    ModelNode getModel();
 
-    public abstract boolean isLeaf();
+    boolean isLeaf();
 
-    public abstract List<RecursiveNode> getRecursiveList();
+    List<RecursiveNode> getRecursiveList();
 
-    public abstract Map<Integer, RecursiveNode> getRecursiveMap();
+    Map<Integer, RecursiveNode> getRecursiveMap();
 
-    public abstract int getRecursionLevel();
+    int getRecursionLevel();
 
 }

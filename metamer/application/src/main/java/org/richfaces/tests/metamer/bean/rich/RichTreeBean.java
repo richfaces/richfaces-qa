@@ -60,14 +60,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 23123 $
+ * @version$Revision: 23123$
  */
 @ManagedBean(name = "richTreeBean")
 @ViewScoped
 public class RichTreeBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     private static Logger logger;
     private Attributes attributes;
     private RichFacesTreeNode<Labeled> richfacesTreeNodeRoot;
@@ -82,7 +82,7 @@ public class RichTreeBean implements Serializable {
 
     private boolean testLoadingFacet = false;
     private boolean delayedRender = false;
-    
+
     private Map<TreeNodeWithContent<Labeled>, Boolean> expanded = new HashMap<TreeNodeWithContent<Labeled>, Boolean>();
 
     private Comparator<Labeled> labeledComparator = new Comparator<Labeled>() {
@@ -91,7 +91,7 @@ public class RichTreeBean implements Serializable {
             return o1.getLabel().compareTo(o2.getLabel());
         }
     };
-    
+
     /**
      * Initializes the managed bean.
      */
@@ -130,9 +130,8 @@ public class RichTreeBean implements Serializable {
         this.attributes = attributes;
     }
 
-   
     public void processDragging(DropEvent dropEvent) {
-        RichBean.logToPage("* dropListener");        
+        RichBean.logToPage("* dropListener");
     }
 
     public TreeDataModel<?> getRichFacesTreeDataModelRoot() {
@@ -142,12 +141,13 @@ public class RichTreeBean implements Serializable {
         }
         return richFacesTreeDataModelRoot;
     }
-    
+
     public RichFacesTreeNode<Labeled> getRichFacesTreeNodeRoot() {
         if (richfacesTreeNodeRoot == null) {
-            List<RichFacesTreeNode<Labeled>> richfacesTreeNodeList = (List<RichFacesTreeNode<Labeled>>) (List<?>) buildTree(RichFacesTreeNode.createFactory());
+            List<RichFacesTreeNode<Labeled>> richfacesTreeNodeList = (List<RichFacesTreeNode<Labeled>>) (List<?>) buildTree(RichFacesTreeNode
+                .createFactory());
             richfacesTreeNodeRoot = new RichFacesTreeNode<Labeled>();
-            int i=0;
+            int i = 0;
             for (RichFacesTreeNode<?> node : richfacesTreeNodeList) {
                 richfacesTreeNodeRoot.addChild(i, node);
                 i++;
@@ -155,11 +155,12 @@ public class RichTreeBean implements Serializable {
         }
         return richfacesTreeNodeRoot;
     }
-    
+
     public List<SwingTreeNode<Labeled>> getSwingTreeNodeRoot() {
         if (swingTreeNodeRoot == null) {
-            List<SwingTreeNode<Labeled>> swingTreeNodeList = (List<SwingTreeNode<Labeled>>) (List<?>) buildTree(SwingTreeNode.createFactory());
-            swingTreeNodeRoot = swingTreeNodeList;            
+            List<SwingTreeNode<Labeled>> swingTreeNodeList = (List<SwingTreeNode<Labeled>>) (List<?>) buildTree(SwingTreeNode
+                .createFactory());
+            swingTreeNodeRoot = swingTreeNodeList;
         }
         return swingTreeNodeRoot;
     }
@@ -179,15 +180,15 @@ public class RichTreeBean implements Serializable {
     public void setTestLoadingFacet(boolean testLoadingFacet) {
         this.testLoadingFacet = testLoadingFacet;
     }
-    
+
     public boolean isDelayedRender() {
         return delayedRender;
     }
-    
+
     public void setDelayedRender(boolean delayedRender) {
         this.delayedRender = delayedRender;
     }
-    
+
     public void preRenderView(ComponentSystemEvent event) {
         if (delayedRender) {
             try {
@@ -197,29 +198,30 @@ public class RichTreeBean implements Serializable {
             }
         }
     }
-    
+
     public Map<TreeNodeWithContent<Labeled>, Boolean> getExpanded() {
         return expanded;
     }
-    
+
     public void expandAll() {
         for (Entry<TreeNodeWithContent<Labeled>, Boolean> entry : expanded.entrySet()) {
             entry.setValue(true);
         }
     }
-    
+
     public void collapseAll() {
         for (Entry<TreeNodeWithContent<Labeled>, Boolean> entry : expanded.entrySet()) {
             entry.setValue(false);
         }
     }
-    
-    private List<TreeNodeWithContent<Labeled>> buildTree(TreeNodeWithContentFactory<TreeNodeWithContent<Labeled>> treeNodeFactory) {
+
+    private List<TreeNodeWithContent<Labeled>> buildTree(
+        TreeNodeWithContentFactory<TreeNodeWithContent<Labeled>> treeNodeFactory) {
         List<TreeNodeWithContent<Labeled>> firstLevelNodes = new ArrayList<TreeNodeWithContent<Labeled>>();
-        for(State state : companiesCache.keySet()) {
+        for (State state : companiesCache.keySet()) {
             TreeNodeWithContent<Labeled> stateTreeNode = treeNodeFactory.createTreeNode(null, state);
             stateTreeNode.setType("country");
-            for(Company company : companiesCache.get(state)) {
+            for (Company company : companiesCache.get(state)) {
                 TreeNodeWithContent<Labeled> companyTreeNode = treeNodeFactory.createTreeNode(stateTreeNode, company);
                 companyTreeNode.setType("company");
                 for (CompactDisc cd : cdCache.get(company)) {
@@ -234,7 +236,7 @@ public class RichTreeBean implements Serializable {
         }
         return firstLevelNodes;
     }
-    
+
     private CompactDisc createCompactDisc(CompactDiscXmlDescriptor descriptor) {
         final Company company = findOrCreateCompany(descriptor);
         CompactDisc cd = new CompactDisc(descriptor.getTitle(), descriptor.getArtist());
@@ -260,5 +262,5 @@ public class RichTreeBean implements Serializable {
             companiesCache.put(country, new TreeSet<Company>(labeledComparator));
         }
         return country;
-    }    
+    }
 }

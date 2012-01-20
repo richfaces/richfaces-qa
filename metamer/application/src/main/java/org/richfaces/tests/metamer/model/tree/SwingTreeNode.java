@@ -42,19 +42,19 @@ public class SwingTreeNode<Content extends Labeled> implements TreeNode, TreeNod
     private List<TreeNode> children = new ArrayList<TreeNode>();
     private TreeNode parent;
     private String type;
-    
+
     public void addChild(TreeNode child) {
         children.add(child);
     }
-    
+
     @Override
     public Content getContent() {
         return content;
     }
-    
+
     @Override
     public void setContent(Content content) {
-        this.content = content;        
+        this.content = content;
     }
 
     @Override
@@ -86,7 +86,7 @@ public class SwingTreeNode<Content extends Labeled> implements TreeNode, TreeNod
     public TreeNode getParent() {
         return parent;
     }
-    
+
     public void setParent(TreeNode parent) {
         this.parent = parent;
     }
@@ -104,8 +104,8 @@ public class SwingTreeNode<Content extends Labeled> implements TreeNode, TreeNod
     @Override
     public void setType(String type) {
         this.type = type;
-    }    
-    
+    }
+
     public static TreeNodeWithContentFactory<TreeNodeWithContent<Labeled>> createFactory() {
         return new TreeNodeWithContentFactory<TreeNodeWithContent<Labeled>>() {
             @Override
@@ -126,5 +126,5 @@ public class SwingTreeNode<Content extends Labeled> implements TreeNode, TreeNod
     public String toString() {
         return content == null ? super.toString() : content.toString();
     }
-    
+
 }

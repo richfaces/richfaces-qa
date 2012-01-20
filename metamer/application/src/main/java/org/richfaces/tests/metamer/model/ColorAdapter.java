@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  * Adapter for marshalling and unmarshalling of class java.awt.Color.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 21299 $
+ * @version$Revision: 21299$
  */
 public class ColorAdapter extends XmlAdapter<String, Color> {
 

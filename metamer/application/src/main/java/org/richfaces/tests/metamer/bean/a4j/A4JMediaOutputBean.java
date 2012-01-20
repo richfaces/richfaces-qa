@@ -42,9 +42,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for a4j:mediaOutput.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22720 $
+ * @version$Revision: 22720$
  */
 @ManagedBean(name = "a4jMediaOutputBean")
 @RequestScoped
@@ -57,7 +57,7 @@ public class A4JMediaOutputBean implements Serializable {
     private static final long serialVersionUID = -1L;
     private static Logger logger;
     private Attributes attributes;
-    
+
     /**
      * Initializes the managed bean.
      */
@@ -79,7 +79,7 @@ public class A4JMediaOutputBean implements Serializable {
 
     /**
      * Getter for attributes.
-     * 
+     *
      * @return A map containing all attributes of tested component. Name of the component is key in the map.
      */
     public Attributes getAttributes() {
@@ -88,7 +88,7 @@ public class A4JMediaOutputBean implements Serializable {
 
     /**
      * Setter for attributes.
-     * 
+     *
      * @param attributes
      *            map containing all attributes of tested component. Name of the component is key in the map.
      */
@@ -99,15 +99,16 @@ public class A4JMediaOutputBean implements Serializable {
     public void createContentAudioMpeg(OutputStream out, Object data) throws IOException {
         createContentFromResource(out, data, "audio/alarm.mp3");
     }
-    
+
     public void createContentFlash(OutputStream out, Object data) throws IOException {
         createContentFromResource(out, data, "flash/text.swf");
-    }    
-    
+    }
+
     public void createContentImagePng(OutputStream out, Object data) throws IOException {
         if (data instanceof MediaData) {
             MediaData paintData = (MediaData) data;
-            BufferedImage img = new BufferedImage(paintData.getWidth(), paintData.getHeight(), BufferedImage.TYPE_INT_RGB);
+            BufferedImage img = new BufferedImage(paintData.getWidth(), paintData.getHeight(),
+                BufferedImage.TYPE_INT_RGB);
             Graphics2D graphics2D = img.createGraphics();
             graphics2D.clearRect(0, 0, paintData.getWidth(), paintData.getHeight());
 
@@ -121,7 +122,8 @@ public class A4JMediaOutputBean implements Serializable {
             graphics2D.fillRect(0, paintData.getHeight() / 2, paintData.getWidth() / 2, paintData.getHeight() / 2);
 
             graphics2D.setColor(Color.GREEN);
-            graphics2D.fillRect(paintData.getWidth() / 2, paintData.getHeight() / 2, paintData.getWidth() / 2, paintData.getHeight() / 2);
+            graphics2D.fillRect(paintData.getWidth() / 2, paintData.getHeight() / 2, paintData.getWidth() / 2,
+                paintData.getHeight() / 2);
 
             ImageIO.write(img, "png", out);
         }
@@ -130,23 +132,23 @@ public class A4JMediaOutputBean implements Serializable {
     public void createContentTextCss(OutputStream out, Object data) throws IOException {
         out.write(CSS_TEXT.getBytes());
         out.flush();
-    }    
-    
+    }
+
     public void createContentTextHtml(OutputStream out, Object data) throws IOException {
         out.write(HTML_TEXT.getBytes());
         out.flush();
     }
-    
+
     public void createContentTextJavascript(OutputStream out, Object data) throws IOException {
         out.write(JAVASCRIPT_TEXT.getBytes());
         out.flush();
     }
-    
+
     public void createContentTextPlain(OutputStream out, Object data) throws IOException {
         out.write(PLAIN_TEXT.getBytes());
         out.flush();
     }
-    
+
     private void copy(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[2048];
         int read;
@@ -165,6 +167,6 @@ public class A4JMediaOutputBean implements Serializable {
             if (in != null) {
                 in.close();
             }
-        }        
+        }
     }
 }

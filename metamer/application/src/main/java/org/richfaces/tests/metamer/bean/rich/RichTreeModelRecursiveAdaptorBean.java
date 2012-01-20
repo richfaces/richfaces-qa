@@ -44,17 +44,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22460 $
+ * @version$Revision: 22460$
  */
 @ManagedBean(name = "richTreeModelRecursiveAdaptorBean")
 @ViewScoped
 public class RichTreeModelRecursiveAdaptorBean implements Serializable {
 
-    
     private static final long serialVersionUID = 1L;
     private static Logger logger;
     private static List<RecursiveNode> rootNodes;
-    
+
     private Attributes attributes;
     private AtomicReference<Boolean> leafChildrenNullable = new AtomicReference<Boolean>(true);
     private boolean useMapModel;
@@ -105,23 +104,23 @@ public class RichTreeModelRecursiveAdaptorBean implements Serializable {
     public void setLeafChildrenNullable(boolean leafChildrenNullable) {
         this.leafChildrenNullable.set(leafChildrenNullable);
     }
-    
+
     public boolean isUseMapModel() {
         return useMapModel;
     }
-    
+
     public void setUseMapModel(boolean useMapModel) {
         this.useMapModel = useMapModel;
     }
-    
+
     public Map<String, Boolean> getExpanded() {
         return expanded;
     }
-    
+
     public static List<RecursiveNode> getRootNodesStatically() {
         return rootNodes;
     }
-    
+
     public static RichTreeModelRecursiveAdaptorBean getFacesContext() {
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
         return (RichTreeModelRecursiveAdaptorBean) elContext.getELResolver().getValue(elContext, null, "richTreeModelRecursiveAdaptorBean");

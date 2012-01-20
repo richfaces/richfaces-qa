@@ -40,9 +40,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for a4j:ajax.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22769 $
+ * @version$Revision: 22769$
  */
 @ManagedBean(name = "a4jAjaxBean")
 @ViewScoped
@@ -93,7 +93,7 @@ public class A4JAjaxBean implements Serializable {
 
     /**
      * Getter for attributes.
-     * 
+     *
      * @return A map containing all attributes of tested component. Name of the component is key in the map.
      */
     public Attributes getAttributes() {
@@ -102,7 +102,7 @@ public class A4JAjaxBean implements Serializable {
 
     /**
      * Setter for attributes.
-     * 
+     *
      * @param attributes
      *            map containing all attributes of tested component. Name of the component is key in the map.
      */

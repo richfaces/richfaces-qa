@@ -47,9 +47,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for rich:calendar.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22820 $
+ * @version$Revision: 22820$
  */
 @ManagedBean(name = "richCalendarBean")
 @ViewScoped
@@ -149,7 +149,7 @@ public class RichCalendarBean implements Serializable {
 
     /**
      * A value change listener that logs to the page old and new value.
-     * 
+     *
      * @param event
      *            an event representing the activation of a user interface component
      */

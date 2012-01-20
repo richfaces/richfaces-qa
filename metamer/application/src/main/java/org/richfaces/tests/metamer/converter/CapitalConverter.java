@@ -40,14 +40,13 @@ import org.slf4j.LoggerFactory;
 @FacesConverter(value = "capitalConverter")
 public class CapitalConverter implements Converter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CapitalConverter.class); 
+    private static final Logger LOGGER = LoggerFactory.getLogger(CapitalConverter.class);
     // FIXME: @ManagedProperty(value="#{model.capitals}")
     private List<Capital> capitals = Model.unmarshallCapitals();
-   
-    
+
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        for(Capital capital : capitals) {
+        for (Capital capital : capitals) {
             if (capitalAsString(capital).equals(value)) {
                 Capital toReturn = new Capital();
                 toReturn.setName(capital.getName());
@@ -86,6 +85,4 @@ public class CapitalConverter implements Converter {
             return capital.getName();
         }
     }
-    
 }
- 

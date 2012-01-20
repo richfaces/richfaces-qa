@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * Managed bean for a4j:outputPanel.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22460 $
+ * @version$Revision: 22460$
  */
 @ManagedBean(name = "a4jOutputPanelBean")
 @ViewScoped

@@ -34,9 +34,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for storing information about invoked phases of JSF lifecycle.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 21194 $
+ * @version$Revision: 21194$
  */
 @ManagedBean(name = "phasesBean")
 @RequestScoped

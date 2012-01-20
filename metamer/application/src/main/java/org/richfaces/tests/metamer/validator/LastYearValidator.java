@@ -34,7 +34,7 @@ import javax.faces.validator.ValidatorException;
  * Custom date validator that accepts only last year's dates.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22493 $
+ * @version$Revision: 22493$
  */
 @FacesValidator("org.richfaces.LastYearValidator")
 public class LastYearValidator implements Validator {

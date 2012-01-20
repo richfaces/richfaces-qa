@@ -27,5 +27,5 @@ package org.richfaces.tests.metamer.model;
 public interface Labeled {
 
     String getLabel();
-    
+
 }

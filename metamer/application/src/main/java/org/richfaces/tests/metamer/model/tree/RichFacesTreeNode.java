@@ -30,7 +30,6 @@ import java.util.Map;
 
 import org.richfaces.model.TreeNode;
 import org.richfaces.tests.metamer.model.Labeled;
-import org.richfaces.tests.metamer.model.tree.TreeNodeWithContent;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -42,7 +41,7 @@ public class RichFacesTreeNode<Content extends Labeled> implements TreeNode, Tre
     private List<Object> keys = new ArrayList<Object>();
     private Content content;
     private String type;
-    
+
     @Override
     public void addChild(Object key, TreeNode child) {
         children.put(key, child);
@@ -53,7 +52,7 @@ public class RichFacesTreeNode<Content extends Labeled> implements TreeNode, Tre
     public Content getContent() {
         return content;
     }
-    
+
     @Override
     public TreeNode getChild(Object key) {
         return children.get(key);
@@ -84,13 +83,13 @@ public class RichFacesTreeNode<Content extends Labeled> implements TreeNode, Tre
     public void removeChild(Object key) {
         children.remove(key);
         keys.remove(key);
-    }    
-    
+    }
+
     @Override
     public void setContent(Content content) {
         this.content = content;
     }
-    
+
     @Override
     public String getType() {
         return type;
@@ -99,13 +98,13 @@ public class RichFacesTreeNode<Content extends Labeled> implements TreeNode, Tre
     @Override
     public void setType(String type) {
         this.type = type;
-    }    
-    
+    }
+
     @Override
     public String toString() {
         return content == null ? super.toString() : content.toString();
-    }    
-    
+    }
+
     public static TreeNodeWithContentFactory<TreeNodeWithContent<Labeled>> createFactory() {
         return new TreeNodeWithContentFactory<TreeNodeWithContent<Labeled>>() {
             @Override
@@ -119,5 +118,5 @@ public class RichFacesTreeNode<Content extends Labeled> implements TreeNode, Tre
                 return treeNode;
             }
         };
-    }    
+    }
 }

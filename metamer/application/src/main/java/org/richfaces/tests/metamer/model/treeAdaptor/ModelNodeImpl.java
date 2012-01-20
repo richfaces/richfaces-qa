@@ -32,7 +32,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22493 $
+ * @version$Revision: 22493$
  */
 public class ModelNodeImpl extends AbstractNode implements ModelNode {
     private static final long serialVersionUID = 1L;
@@ -54,7 +54,7 @@ public class ModelNodeImpl extends AbstractNode implements ModelNode {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.tests.metamer.model.treeAdaptor.IModelNode#getLabel()
      */
     @Override
@@ -64,7 +64,7 @@ public class ModelNodeImpl extends AbstractNode implements ModelNode {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.tests.metamer.model.treeAdaptor.IModelNode#getValue()
      */
     @Override
@@ -74,7 +74,7 @@ public class ModelNodeImpl extends AbstractNode implements ModelNode {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.tests.metamer.model.treeAdaptor.IModelNode#getList()
      */
     @Override
@@ -90,7 +90,7 @@ public class ModelNodeImpl extends AbstractNode implements ModelNode {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.tests.metamer.model.treeAdaptor.IModelNode#getMap()
      */
     @Override
@@ -106,7 +106,7 @@ public class ModelNodeImpl extends AbstractNode implements ModelNode {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.tests.metamer.model.treeAdaptor.IModelNode#getRecursive()
      */
     @Override
@@ -136,7 +136,7 @@ public class ModelNodeImpl extends AbstractNode implements ModelNode {
 
         int number;
         String parentLabel;
-        
+
         public B(String parentLabel, int number) {
             this.parentLabel = parentLabel;
             this.number = number;

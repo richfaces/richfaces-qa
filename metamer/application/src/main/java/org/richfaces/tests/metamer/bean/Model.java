@@ -43,11 +43,11 @@ import org.richfaces.tests.metamer.model.tree.CompactDiscXmlDescriptor;
 
 /**
  * Application scoped managed bean holding models usable e.g. in iteration components.
- * 
+ *
  * @author Exadel
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22372 $
+ * @version$Revision: 22372$
  */
 @ManagedBean
 @ApplicationScoped
@@ -71,7 +71,7 @@ public class Model implements Serializable {
 
     /**
      * Model containing US states, their capitals and timezones.
-     * 
+     *
      * @return list of US states and their capitals
      */
     public synchronized List<Capital> getCapitals() {
@@ -84,7 +84,7 @@ public class Model implements Serializable {
 
     /**
      * Model containing employees. Can be used to test various components inside iteration components.
-     * 
+     *
      * @return list of employees
      */
     public synchronized List<Employee> getEmployees() {
@@ -97,7 +97,7 @@ public class Model implements Serializable {
 
     /**
      * Model containing compact discs. Suitable to be used in Tree-structured components.
-     * 
+     *
      * @return list of compact discs
      */
     public synchronized List<CompactDiscXmlDescriptor> getCompactDiscs() {
@@ -110,7 +110,7 @@ public class Model implements Serializable {
 
     /**
      * Unmarshalls the list of capitals
-     * 
+     *
      * @return the list of capitals
      * @throws JAXBException
      *             if any unexpected errors occurs during unmarshalling
@@ -150,9 +150,9 @@ public class Model implements Serializable {
 
     private static interface ListHolder<T> {
 
-        public List<T> getList();
+        List<T> getList();
 
-        public void setList(List<T> list);
+        void setList(List<T> list);
     }
 
     @XmlRootElement(name = "capitals")
@@ -202,7 +202,7 @@ public class Model implements Serializable {
 
     /**
      * Model containing various job titles, e.g. CEO, President, Director.
-     * 
+     *
      * @return set of job titles
      */
     public synchronized Set<String> getJobTitles() {
@@ -218,7 +218,7 @@ public class Model implements Serializable {
 
     /**
      * Model containing select items with various job titles.
-     * 
+     *
      * @return set of job titles
      */
     public synchronized List<SelectItem> getJobTitlesSelectItems() {

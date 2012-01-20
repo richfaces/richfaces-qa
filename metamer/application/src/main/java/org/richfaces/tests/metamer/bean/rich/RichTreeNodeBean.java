@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22460 $
+ * @version$Revision: 22460$
  */
 @ManagedBean(name = "richTreeNodeBean")
 @ViewScoped
@@ -55,7 +55,7 @@ public class RichTreeNodeBean implements Serializable {
         for (int i = 0; i < attributes.length; i++) {
             attributes[i] = Attributes.getComponentAttributesFromFacesConfig(UITreeNode.class, getClass());
             attributes[i].get("rendered").setValue(true);
-            
+
             // attributes which needs to be tested another way
             attributes[i].remove("type");
             attributes[i].remove("expanded");

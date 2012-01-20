@@ -31,7 +31,7 @@ public class CompactDisc implements Labeled, Serializable {
     private static final long serialVersionUID = 1L;
     private String artist;
     private String title;
-    
+
     public CompactDisc(String title, String artist) {
         this.artist = artist;
         this.title = title;
@@ -40,7 +40,7 @@ public class CompactDisc implements Labeled, Serializable {
     @Override
     public String getLabel() {
         return artist + " - " + title;
-    }       
+    }
 
     public String getArtist() {
         return artist;
@@ -92,7 +92,5 @@ public class CompactDisc implements Labeled, Serializable {
         } else if (!title.equals(other.title))
             return false;
         return true;
-    }        
-    
-    
+    }
 }

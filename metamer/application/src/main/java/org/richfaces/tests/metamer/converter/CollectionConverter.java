@@ -32,7 +32,7 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22330 $
+ * @version$Revision: 22330$
  */
 public final class CollectionConverter<E, C extends Collection<E>> {
 

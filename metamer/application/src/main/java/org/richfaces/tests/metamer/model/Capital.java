@@ -28,9 +28,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Java bean representing a capital.
- * 
+ *
  * @author Exadel, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22716 $
+ * @version$Revision: 22716$
  */
 @XmlRootElement(name = "capital")
 public class Capital implements Serializable {
@@ -81,7 +81,7 @@ public class Capital implements Serializable {
     public void setTimeZone(String timeZone) {
         this.timeZone = timeZone;
     }
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -108,7 +108,7 @@ public class Capital implements Serializable {
                 return false;
             }
         } else if (!name.equals(other.name)) {
-            return false;            
+            return false;
         }
         if (state == null) {
             if (other.state != null) {

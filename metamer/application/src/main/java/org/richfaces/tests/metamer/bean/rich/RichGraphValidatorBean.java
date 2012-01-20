@@ -51,41 +51,41 @@ import org.slf4j.LoggerFactory;
  * Managed Bean for rich:graphValidator
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision: 22498 $
+ * @version$Revision: 22498$
  */
 @ManagedBean(name = "richGraphValidatorBean")
 @ViewScoped
 public class RichGraphValidatorBean implements Serializable, Cloneable {
-    
+
     /** Valid value of numeric inputs */
     public static final int REQUIRED_INT_VALUE = 10;
-    
+
     /** Generated UID */
     private static final long serialVersionUID = -960575870621302059L;
-    
+
     private static Logger logger;
     private final String smile = ":-)";
     private Attributes attributes;
-    
+
     private List<SelectItem> selectItems;
-    
+
     @NotNull
     @NotEmpty
-    private String autocompleteInput = smile;    
+    private String autocompleteInput = smile;
     @NotNull
     @NotEmpty
-    private String inplaceSelect = smile;    
+    private String inplaceSelect = smile;
     @NotNull
     @NotEmpty
-    private String inplaceInput = smile;    
+    private String inplaceInput = smile;
     @NotNull
     @NotEmpty
-    private String select = smile;    
+    private String select = smile;
     private Integer inputNumberSlider = new Integer(REQUIRED_INT_VALUE);
     private Integer inputNumberSpinner = new Integer(REQUIRED_INT_VALUE);
     @NotNull
     @NotEmpty
-    private String inputText = smile;    
+    private String inputText = smile;
     @NotNull
     @NotEmpty
     private String inputSecret = smile;
@@ -110,22 +110,21 @@ public class RichGraphValidatorBean implements Serializable, Cloneable {
     private String selectOneRadio = smile;
     @NotNull
     private Date calendar = new Date(System.currentTimeMillis());
-    
+
     @PostConstruct
     public void init(){
         logger = LoggerFactory.getLogger(getClass());
         logger.info("initializing bean " + getClass().getName());
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIGraphValidator.class, getClass());
-        
+
         attributes.setAttribute("rendered", true);
         attributes.setAttribute("type", "org.richfaces.BeanValidator");
     }
-    
+
     @AssertTrue(message = "One of following inputs doesn't contain smile or numeric value "
                     + REQUIRED_INT_VALUE + " or date is from future!",
                 groups = {Default.class, ValidationGroupAllComponents.class})
     public boolean isAllInputsCorrect() {
-        
         return autocompleteInput.contains(smile)
             && inplaceSelect.contains(smile)
             && inplaceInput.contains(smile)
@@ -144,26 +143,26 @@ public class RichGraphValidatorBean implements Serializable, Cloneable {
             && selectOneRadio.contains(smile)
             && !calendar.after(new Date(System.currentTimeMillis()));
     }
-    
-    @AssertTrue(message = "One of following numeric inputs doesn't contain value " 
+
+    @AssertTrue(message = "One of following numeric inputs doesn't contain value "
                     + REQUIRED_INT_VALUE + "!",
                 groups = {ValidationGroupNumericInputs.class})
     public boolean isAllTextInputsCorrect() {
         return inputNumberSlider.equals(new Integer(REQUIRED_INT_VALUE))
             && inputNumberSpinner.equals(new Integer(REQUIRED_INT_VALUE));
     }
-    
+
     @AssertTrue(message = "Select Boolean Checkbox isn't checked!",
         groups = {ValidationGroupBooleanInputs.class})
     public boolean isAllBooleanInputsCorrect() {
         return selectBooleanCheckbox.booleanValue();
     }
-    
+
     public void anotherActionOnAllComponents() {
         FacesContext.getCurrentInstance().addMessage(null,
             new FacesMessage(FacesMessage.SEVERITY_INFO, "Action sucessfully done!", "Action sucessfully done!"));
     }
-    
+
     private List<SelectItem> createSelectItems() {
         List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem("a", "Abcd"));
@@ -171,13 +170,13 @@ public class RichGraphValidatorBean implements Serializable, Cloneable {
         result.add(new SelectItem("c", "Cdef"));
         result.add(new SelectItem("d", "Defg"));
         result.add(new SelectItem(smile, smile));
-        
+
         return result;
     }
-    
+
     public List<String> autocomplete(String prefix) {
         ArrayList<String> result = new ArrayList<String>();
-        if ((prefix == null) || (prefix.length() == 0)) {            
+        if ((prefix == null) || (prefix.length() == 0)) {
             for (int i = 0; i < 10; i++) {
                 result.add(getSelectItems().get(i).getLabel());
             }
@@ -195,16 +194,16 @@ public class RichGraphValidatorBean implements Serializable, Cloneable {
 
         return result;
     }
-    
+
     public Class<?>[] getValidationGroups() throws ClassNotFoundException {
-        Attribute groups = attributes.get("groups");        
+        Attribute groups = attributes.get("groups");
         Class<?> group;
         if (groups.getValue() != null && !"".equals(groups.getValue())) {
             group = Class.forName(groups.getValue().toString());
         } else {
             group = Default.class;
         }
-        return new Class[]{group};        
+        return new Class[]{group};
     }
 
     public Attributes getAttributes() {

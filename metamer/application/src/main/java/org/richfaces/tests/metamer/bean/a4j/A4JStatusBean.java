@@ -34,9 +34,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for a4j:status.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22460 $
+ * @version$Revision: 22460$
  */
 @ManagedBean(name = "a4jStatusBean")
 @ViewScoped
@@ -100,7 +100,7 @@ public class A4JStatusBean implements Serializable {
 
     /**
      * Action that creates a 2-second delay.
-     * 
+     *
      * @throws InterruptedException
      *             if any thread has interrupted the current thread. The interrupted status of the current thread is
      *             cleared when this exception is thrown.

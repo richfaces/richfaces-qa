@@ -34,9 +34,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for a4j:queue.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22460 $
+ * @version$Revision: 22460$
  */
 @ManagedBean(name = "a4jQueueBean")
 @ViewScoped
@@ -118,11 +118,11 @@ public class A4JQueueBean implements Serializable {
         }
         this.text = text;
     }
-    
+
     public boolean isIntroduceDelay() {
         return introduceDelay;
     }
-    
+
     public void setIntroduceDelay(boolean introduceDelay) {
         this.introduceDelay = introduceDelay;
     }

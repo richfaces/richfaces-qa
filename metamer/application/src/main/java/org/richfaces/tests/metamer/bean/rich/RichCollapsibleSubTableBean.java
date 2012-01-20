@@ -43,9 +43,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for rich:collapsibleSubTable.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 23004 $
+ * @version$Revision: 23004$
  */
 @ManagedBean(name = "richSubTableBean")
 @ViewScoped
@@ -79,8 +79,8 @@ public class RichCollapsibleSubTableBean implements Serializable {
     private Map<String, Object> filtering = new HashMap<String, Object>();
     // expanded
     private Map<List<Employee>, Boolean> expanded = new HashMap<List<Employee>, Boolean>();
-    
-    // expanded state for employee detail (for RF-11656) 
+
+    // expanded state for employee detail (for RF-11656)
     private Map<Employee, Boolean> expandedEmployee = new HashMap<Employee, Boolean>();
 
     /**
@@ -184,7 +184,7 @@ public class RichCollapsibleSubTableBean implements Serializable {
     public Map<List<Employee>, Boolean> getExpanded() {
         return expanded;
     }
-    
+
     public Map<Employee, Boolean> getExpandedEmployee() {
         return expandedEmployee;
     }

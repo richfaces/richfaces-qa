@@ -42,9 +42,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for rich:extendedDataTable.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22460 $
+ * @version$Revision: 22460$
  */
 @ManagedBean(name = "richExtendedDataTableBean")
 @ViewScoped
@@ -134,7 +134,7 @@ public class RichExtendedDataTableBean implements Serializable {
 
     /**
      * Getter for page.
-     * 
+     *
      * @return page number that will be used by data scroller
      */
     public int getPage() {
@@ -143,7 +143,7 @@ public class RichExtendedDataTableBean implements Serializable {
 
     /**
      * Setter for page.
-     * 
+     *
      * @param page
      *            page number that will be used by data scroller
      */
@@ -169,7 +169,7 @@ public class RichExtendedDataTableBean implements Serializable {
 
     /**
      * Getter for state.
-     * 
+     *
      * @return true if data should be displayed in table
      */
     public boolean isState() {
@@ -178,7 +178,7 @@ public class RichExtendedDataTableBean implements Serializable {
 
     /**
      * Setter for state.
-     * 
+     *
      * @param state
      *            true if data should be displayed in table
      */

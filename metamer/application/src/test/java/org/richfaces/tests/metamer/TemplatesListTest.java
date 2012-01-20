@@ -29,7 +29,7 @@ import static org.testng.Assert.*;
 /**
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 21299 $
+ * @version$Revision: 21299$
  */
 public class TemplatesListTest {
 

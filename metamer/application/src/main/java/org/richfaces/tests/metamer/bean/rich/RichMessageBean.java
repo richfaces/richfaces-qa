@@ -34,9 +34,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Simple bean for rich:message component example.
- * 
+ *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision: 23138 $
+ * @version$Revision: 23138$
  */
 @ManagedBean(name = "richMessageBean")
 @ViewScoped
@@ -66,9 +66,9 @@ public class RichMessageBean implements Serializable {
         attributes.setAttribute("showSummary", true);
         attributes.setAttribute("ajaxRendered", true); // make sense for a4j:commandButton submit
 
-        // workaround for missing attribute def from rich.taglib.xml 
-        // to get it in list of attrs in metamer 
-        attributes.setAttribute("dir", null); // direction       
+        // workaround for missing attribute def from rich.taglib.xml
+        // to get it in list of attrs in metamer
+        attributes.setAttribute("dir", null); // direction
         attributes.setAttribute("lang", null);
         attributes.setAttribute("onclick", null);
         attributes.setAttribute("ondblclick", null);

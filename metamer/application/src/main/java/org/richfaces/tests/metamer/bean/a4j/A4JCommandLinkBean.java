@@ -35,9 +35,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for a4j:commandLink.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22460 $
+ * @version$Revision: 22460$
  */
 @ManagedBean(name = "a4jLinkBean")
 @ViewScoped
@@ -71,7 +71,7 @@ public class A4JCommandLinkBean implements Serializable {
 
     /**
      * Getter for attributes.
-     * 
+     *
      * @return A map containing all attributes of tested component. Name of the component is key in the map.
      */
     public Attributes getAttributes() {
@@ -80,7 +80,7 @@ public class A4JCommandLinkBean implements Serializable {
 
     /**
      * Setter for attributes.
-     * 
+     *
      * @param attributes
      *            map containing all attributes of tested component. Name of the component is key in the map.
      */
@@ -90,7 +90,7 @@ public class A4JCommandLinkBean implements Serializable {
 
     /**
      * Getter for input.
-     * 
+     *
      * @return value entered by a user
      */
     public String getInput() {
@@ -99,7 +99,7 @@ public class A4JCommandLinkBean implements Serializable {
 
     /**
      * Getter for input2.
-     * 
+     *
      * @return value entered by a user modified by selected action
      */
     public String getInput2() {
@@ -108,7 +108,7 @@ public class A4JCommandLinkBean implements Serializable {
 
     /**
      * Getter for input3.
-     * 
+     *
      * @return value entered by a user modified by selected action listener
      */
     public String getInput3() {
@@ -117,7 +117,7 @@ public class A4JCommandLinkBean implements Serializable {
 
     /**
      * Setter for input.
-     * 
+     *
      * @param input
      *            value which user entered into text input on the page
      */
@@ -127,7 +127,7 @@ public class A4JCommandLinkBean implements Serializable {
 
     /**
      * An action that takes the first six characters from input and stores it to input2.
-     * 
+     *
      * @return null since no navigation should be performed
      */
     public String first6CharsAction() {
@@ -142,7 +142,7 @@ public class A4JCommandLinkBean implements Serializable {
 
     /**
      * An action that takes user's input, doubles it and stores it to input2.
-     * 
+     *
      * @return null since no navigation should be performed
      */
     public String doubleStringAction() {
@@ -157,7 +157,7 @@ public class A4JCommandLinkBean implements Serializable {
 
     /**
      * An action that takes user's input, converts it to upper case and stores it to input2.
-     * 
+     *
      * @return null since no navigation should be performed
      */
     public String toUpperCaseAction() {
@@ -171,7 +171,7 @@ public class A4JCommandLinkBean implements Serializable {
 
     /**
      * An action listener that takes the first six characters from input and stores it to input3.
-     * 
+     *
      * @param event
      *            an event representing the activation of a user interface component (not used)
      */
@@ -186,7 +186,7 @@ public class A4JCommandLinkBean implements Serializable {
 
     /**
      * An action listener that takes user's input, doubles it and stores it to input3.
-     * 
+     *
      * @param event
      *            an event representing the activation of a user interface component (not used)
      */
@@ -200,7 +200,7 @@ public class A4JCommandLinkBean implements Serializable {
 
     /**
      * An action listener that takes user's input, converts it to upper case and stores it to input3.
-     * 
+     *
      * @param event
      *            an event representing the activation of a user interface component (not used)
      */

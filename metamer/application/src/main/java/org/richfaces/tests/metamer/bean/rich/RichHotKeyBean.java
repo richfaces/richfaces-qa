@@ -36,10 +36,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for rich:hotKey.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
- * @version $Revision: 23135 $
+ * @version$Revision: 23135$
  */
 @ManagedBean(name = "richHotKeyBean")
 @ViewScoped
@@ -63,7 +63,7 @@ public class RichHotKeyBean implements Serializable {
         attributes2 = Attributes.getComponentAttributesFromFacesConfig(UIHotKey.class, getClass());
 
         String[] attrsToHide = { "onkeydown", "onkeyup" };
-        
+
         attributes.setAttribute("enabledInInput", true);
         attributes.setAttribute("key", "ctrl+x");
         attributes.setAttribute("rendered", true);
@@ -73,7 +73,7 @@ public class RichHotKeyBean implements Serializable {
         attributes2.setAttribute("key", "alt+x");
         attributes2.setAttribute("rendered", true);
         attributes2.setAttribute("preventDefault", true);
-        
+
         for (String attrToHide : attrsToHide) {
             attributes.remove(attrToHide);
             attributes2.remove(attrToHide);
@@ -96,11 +96,11 @@ public class RichHotKeyBean implements Serializable {
     public void setAttributes2(Attributes attributes) {
         this.attributes2 = attributes;
     }
-    
+
     public Collection<String> getHiddenAttributes() {
         return hiddenAttributes;
-    }    
-    
+    }
+
     public void setHiddenAttributes(Collection<String> hiddenAttributes) {
         this.hiddenAttributes = hiddenAttributes;
     }

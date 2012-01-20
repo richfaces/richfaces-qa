@@ -25,13 +25,13 @@ package org.richfaces.tests.metamer.model.treeAdaptor;
  * <p>
  * Marks that given object can be checked for lazy loading.
  * </p>
- * 
+ *
  * <p>
  * Needs to implement {@link #notifyLoaded()} which performs notification about accessing object by external entity.
  * </p>
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22493 $
+ * @version$Revision: 22493$
  */
 public interface LazyLoadable {
     void notifyLoaded();

@@ -38,9 +38,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for a4j:region.
- * 
+ *
  * @author Exadel, Nick Belaevski, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22620 $
+ * @version$Revision: 22620$
  */
 @ManagedBean(name = "a4jRegionBean")
 @ViewScoped

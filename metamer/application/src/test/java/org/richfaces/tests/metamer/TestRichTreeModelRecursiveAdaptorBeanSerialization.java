@@ -47,7 +47,7 @@ import com.google.common.io.NullOutputStream;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22848 $
+ * @version$Revision: 22848$
  */
 public class TestRichTreeModelRecursiveAdaptorBeanSerialization {
 

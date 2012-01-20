@@ -56,26 +56,26 @@ public class RichOrderingListBean implements Serializable {
     private Collection<String> hiddenAttributes = new ArrayList<String>();
     @ManagedProperty(value="#{capitalConverter}")
     private Converter converter;
-    
+
     @PostConstruct
     public void init() {
         logger = LoggerFactory.getLogger(getClass());
         logger.info("initializing bean " + getClass().getName());
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIOrderingList.class, getClass());
-                
+
         attributes.setAttribute("columnVar", "capital");
         attributes.setAttribute("converter", getConverter());
         attributes.setAttribute("downText", "Down");
         attributes.setAttribute("downBottomText", "Last");
         attributes.setAttribute("listWidth", 300);
-        attributes.setAttribute("listHeight", 500);        
+        attributes.setAttribute("listHeight", 500);
         attributes.setAttribute("rendered", true);
         attributes.setAttribute("var", "capital");
         attributes.setAttribute("upText", "Up");
         attributes.setAttribute("upTopText", "First");
-        
+
         String[] attrsToHide = new String[] {
-            "itemLabel", "itemValue", "value", "var", 
+            "itemLabel", "itemValue", "value", "var",
             // TODO has to be tested in another way
             "converter", "converterMessage", "validator", "validatorMessage", "valueChangeListener"
         };
@@ -83,7 +83,7 @@ public class RichOrderingListBean implements Serializable {
             hiddenAttributes.add(attribute);
             attributes.remove(attribute);
         }
-        
+
         // FIXME
         capitals = Model.unmarshallCapitals();
     }
@@ -95,20 +95,20 @@ public class RichOrderingListBean implements Serializable {
     public List<Capital> getCapitals() {
         logger.info("size of returned capitals is <" + capitals.size() + ">");
         return capitals;
-    }    
-    
+    }
+
     public Converter getConverter() {
         return converter;
     }
-    
+
     public Collection<String> getHiddenAttributes() {
         return hiddenAttributes;
     }
-    
+
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
-    }    
-    
+    }
+
     public void setCapitals(List<Capital> capitals) {
         logger.info("size of set capitals is <" + capitals.size() + ">");
         this.capitals = capitals;
@@ -117,9 +117,9 @@ public class RichOrderingListBean implements Serializable {
     public void setConverter(Converter converter) {
         this.converter = converter;
     }
-    
+
     public void setHiddenAttributes(Collection<String> hiddenAttributes) {
         this.hiddenAttributes = hiddenAttributes;
-    }       
-    
+    }
+
 }

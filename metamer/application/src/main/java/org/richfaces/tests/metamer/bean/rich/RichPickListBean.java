@@ -43,9 +43,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Backing Bean for rich:pickList component at
- * 
+ *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision$
+ * @version$Revision$
  */
 @ManagedBean(name = "richPickListBean")
 @ViewScoped
@@ -84,7 +84,7 @@ public class RichPickListBean implements Serializable {
 
         attributes.setAttribute("requiredMessage", "Not empty target list is required!");
         attributes.setAttribute("validatorMessage", "We are sorry, but @ is not allowed to join us!");
-        
+
         attributes.setAttribute("addText", ">");
         attributes.setAttribute("addAllText", ">>");
         attributes.setAttribute("removeText", "<");
@@ -94,7 +94,7 @@ public class RichPickListBean implements Serializable {
         attributes.setAttribute("upText", "↑ Up");
         attributes.setAttribute("downText", "↓ Down");
         attributes.setAttribute("downBottomText", "⇓ Last");
-        
+
         attributes.setAttribute("listWidth", "220");
 
         attributes.remove("converter");
@@ -105,7 +105,7 @@ public class RichPickListBean implements Serializable {
 
     /**
      * Test method for verify validator attribute
-     * 
+     *
      * @param context
      * @param component
      * @param value
@@ -123,7 +123,7 @@ public class RichPickListBean implements Serializable {
     }
 
     /**
-     * 
+     *
      * @return attributes
      */
     public Attributes getAttributes() {
@@ -131,7 +131,7 @@ public class RichPickListBean implements Serializable {
     }
 
     /**
-     * 
+     *
      * @param attributes
      */
     public void setAttributes(Attributes attributes) {
@@ -139,7 +139,7 @@ public class RichPickListBean implements Serializable {
     }
 
     /**
-     * 
+     *
      * @return capitals
      */
     public List<Capital> getCapitals() {
@@ -147,7 +147,7 @@ public class RichPickListBean implements Serializable {
     }
 
     /**
-     * 
+     *
      * @param capitals
      */
     public void setCapitals(List<Capital> capitals) {

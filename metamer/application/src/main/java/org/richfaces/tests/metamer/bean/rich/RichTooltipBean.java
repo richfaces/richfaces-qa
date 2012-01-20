@@ -35,21 +35,21 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for rich:list.
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 23150 $
+ * @version$Revision: 23150$
  */
 @ManagedBean(name = "richTooltipBean")
 @ViewScoped
 public class RichTooltipBean implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     private static Logger logger;
     private Attributes attributes;
 
     private int counter = 0;
-    
+
     private String testProperty;
 
     /**
@@ -61,8 +61,7 @@ public class RichTooltipBean implements Serializable {
         logger.debug("initializing bean " + getClass().getName());
 
         attributes = Attributes.getComponentAttributesFromFacesConfig(UITooltip.class, getClass());
-        
-        
+
         // set defaults
         attributes.setAttribute("attached", true);
         attributes.setAttribute("rendered", true);
@@ -73,14 +72,14 @@ public class RichTooltipBean implements Serializable {
         attributes.setAttribute("hideEvent", "mouseleave");
         attributes.setAttribute("target", "panel");
         attributes.setAttribute("value", "Tooltip content");
-        
+
         // attributes that needs to be tested in other way
         attributes.remove("converter");
-        
+
         // intentionally hidden attributes
         attributes.remove("localValue");
     }
-    
+
     public void changePropertyVal() {
         this.testProperty = "blablabl";
     }

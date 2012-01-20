@@ -27,11 +27,13 @@ import java.util.Iterator;
 /**
  * An implementation of list for storing templates. This list ensures that the last item
  * in list is always template "plain".
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 21299 $
+ * @version$Revision: 21299$
  */
 public class TemplatesList extends ArrayList<Template> {
+
+    private static final long serialVersionUID = 3822067099609304855L;
 
     public TemplatesList() {
         super.add(Template.PLAIN);
@@ -82,7 +84,7 @@ public class TemplatesList extends ArrayList<Template> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        Iterator<Template> iterator = iterator(); 
+        Iterator<Template> iterator = iterator();
         while (iterator.hasNext()) {
             final Template template = iterator.next();
             if (sb.length() > 0) {
