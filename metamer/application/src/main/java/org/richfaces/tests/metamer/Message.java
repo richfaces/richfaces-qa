@@ -25,11 +25,13 @@ import java.io.Serializable;
 
 /**
  * Representation of a message pushed to the page using JMS.
- *
+ * 
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version$Revision: 22493$
  */
 public class Message implements Serializable {
+
+    private static final long serialVersionUID = 6869835374685376541L;
 
     private String text;
     private String author;

@@ -1,6 +1,4 @@
-package org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler;
 /*******************************************************************************
-
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -21,6 +19,7 @@ package org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler;
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
+package org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler;
 
 import static org.jboss.arquillian.ajocado.Ajocado.elementNotVisible;
 import static org.jboss.arquillian.ajocado.Ajocado.elementVisible;
@@ -57,7 +56,6 @@ import org.richfaces.tests.metamer.ftest.model.CollapsibleSubTable;
 import org.richfaces.tests.metamer.ftest.model.CollapsibleSubTableToggler;
 import org.richfaces.tests.metamer.ftest.model.DataTable;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
