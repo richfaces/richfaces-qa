@@ -31,20 +31,20 @@ public class WithInputPage implements Page {
     private WebElement input;
     @FindBy(css = "span[id=output]")
     private WebElement output;
-    
+
     public WebElement getInput() {
         return input;
     }
-    
+
     public WebElement getOutput() {
         return output;
     }
-    
+
     @Override
     public String getUrl() {
         return "faces/index.xhtml";
     }
-    
-    
-    
+
+
+
 }

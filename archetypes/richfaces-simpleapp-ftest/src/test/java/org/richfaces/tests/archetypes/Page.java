@@ -25,6 +25,6 @@ package org.richfaces.tests.archetypes;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public interface Page {
-    
+
     String getUrl();
 }

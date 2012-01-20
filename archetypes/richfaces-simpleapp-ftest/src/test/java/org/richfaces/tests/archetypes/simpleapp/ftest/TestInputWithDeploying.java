@@ -36,7 +36,7 @@ import org.testng.annotations.Test;
 public class TestInputWithDeploying extends AbstractTestInput {
 
     private static final TestConfiguration DEFAULT_CONFIGURATION = new PropertyTestConfiguration();
-    
+
     public TestInputWithDeploying() {
         super(DEFAULT_CONFIGURATION);
     }
@@ -45,11 +45,11 @@ public class TestInputWithDeploying extends AbstractTestInput {
     public static WebArchive createTestArchive() {
         WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, DEFAULT_CONFIGURATION.getApplicationWar());
         return war;
-    }  
-    
+    }
+
     @Test
     public void testTypeName() {
         super.testTypeName();
     }
-    
+
 }

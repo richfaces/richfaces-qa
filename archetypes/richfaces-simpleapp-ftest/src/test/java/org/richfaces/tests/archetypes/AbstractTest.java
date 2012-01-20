@@ -29,40 +29,40 @@ import org.jboss.arquillian.testng.Arquillian;
 public abstract class AbstractTest extends Arquillian {
 
     private TestConfiguration configuration;
-    
+
     /**
      * Creates a new instance of {@link AbstractShowcaseTest} with
      * the given configuration
-     * 
+     *
      * @param configuration
      */
     protected AbstractTest(TestConfiguration configuration) {
         this.configuration = configuration;
-    }    
- 
+    }
+
     /**
      * Returns a test configuration
-     * 
+     *
      * @return test configuration
      */
     protected TestConfiguration getConfiguration() {
         return configuration;
-    }        
+    }
 
     /**
      * Returns a full path where the test page is located
-     * 
+     *
      * @return full path with the demo
      */
     protected String getPath() {
         return getConfiguration().getContextRoot() + "/" + getConfiguration().getContextPath() + "/" + getTestUrl();
-    }    
-    
+    }
+
     /**
      * Returns the url to test page to be opened by Selenium (without context root and context path)
-     * 
+     *
      * @return url to the test page to be opened by Selenium - it doesn't contain context root and context path
-     */    
-    abstract protected String getTestUrl();
-    
+     */
+    protected abstract String getTestUrl();
+
 }

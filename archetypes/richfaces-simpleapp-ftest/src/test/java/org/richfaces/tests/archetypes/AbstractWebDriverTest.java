@@ -44,19 +44,19 @@ public abstract class AbstractWebDriverTest<P extends Page> extends AbstractTest
     protected AbstractWebDriverTest(TestConfiguration configuration) {
         super(configuration);
     }
-    
+
     @BeforeClass(alwaysRun = true, dependsOnMethods = { "initializeWebDriver" })
     public void initializePage() {
         initializePage(getPage());
-    }    
-    
+    }
+
     /**
-     * Initializes web driver to open a test page 
+     * Initializes web driver to open a test page
      */
     @BeforeMethod(alwaysRun = true)
     public void initializePageUrl() {
         webDriver.get(getPath());
-    }    
+    }
 
     /**
      * Initializes web driver instance
@@ -64,27 +64,27 @@ public abstract class AbstractWebDriverTest<P extends Page> extends AbstractTest
     @BeforeClass(alwaysRun = true)
     public void initializeWebDriver() {
         webDriver = new HtmlUnitDriver(DesiredCapabilities.chrome());
-    }    
-    
+    }
+
     protected P getPage() {
         if (page == null) {
             page = createPage();
         }
         return page;
     }
-    
+
     protected String getTestUrl() {
         return getPage().getUrl();
     }
-    
+
     protected WebDriver getWebDriver() {
         return webDriver;
     }
-    
+
     protected void initializePage(Object page) {
-        PageFactory.initElements(getFieldDecorator(), page);        
-    }  
-    
+        PageFactory.initElements(getFieldDecorator(), page);
+    }
+
     private FieldDecorator getFieldDecorator() {
         if (fieldDecorator == null) {
             fieldDecorator = new StaleReferenceAwareFieldDecorator(createLocatorFactory(), getConfiguration().getWebDriverElementTries());
@@ -94,8 +94,8 @@ public abstract class AbstractWebDriverTest<P extends Page> extends AbstractTest
 
     private ElementLocatorFactory createLocatorFactory() {
         return new DefaultElementLocatorFactory(getWebDriver());
-    }    
-    
-    abstract protected P createPage(); 
-    
+    }
+
+    protected abstract P createPage();
+
 }

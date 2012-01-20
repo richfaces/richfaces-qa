@@ -24,11 +24,11 @@ package org.richfaces.tests.archetypes;
 import java.io.File;
 
 public class PropertyTestConfiguration implements TestConfiguration {
-    
+
     public File getApplicationWar() {
         return new File(getProperty("application.war"));
     }
-    
+
     @Override
     public String getContextPath() {
         return getProperty("context.path");
@@ -42,8 +42,8 @@ public class PropertyTestConfiguration implements TestConfiguration {
     @Override
     public int getWebDriverElementTries() {
         return Integer.parseInt(getProperty("webdriver.stale.tries"));
-    }    
-    
+    }
+
     private String getProperty(String key) {
         String value = System.getProperty(key);
         if (value == null) {
@@ -51,6 +51,5 @@ public class PropertyTestConfiguration implements TestConfiguration {
         }
         return value;
     }
-    
+
 }
- 

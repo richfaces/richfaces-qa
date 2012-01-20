@@ -30,31 +30,31 @@ public interface TestConfiguration {
 
     /**
      * WAR file which is deployed by Arquillian.
-     * 
+     *
      * @return war file
      */
     File getApplicationWar();
-    
+
     /**
      * Context path will be used to retrieve pages from right URL. Don't hesitate to use it in cases of building absolute
      * URLs.
-     * 
+     *
      * @return context path
-     */    
+     */
     String getContextPath();
-    
+
     /**
      * Context root can be used to obtaining full URL paths, is set to actual tested application's context root
-     * 
+     *
      * @return context root
-     */        
-    String getContextRoot();    
-    
+     */
+    String getContextRoot();
+
     /**
      * Returns number of tries which is used for {@link StaleReferenceAwareFieldDecorator}
-     * 
+     *
      * @return number of tries
      */
-    int getWebDriverElementTries();    
-    
+    int getWebDriverElementTries();
+
 }

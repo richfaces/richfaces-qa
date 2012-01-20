@@ -30,11 +30,11 @@ import org.richfaces.tests.archetypes.TestConfiguration;
  * <p>
  * Tests that input reacts to keyup events by sending XHR request and rerendering output as greeting to given name.
  * </p>
- * 
+ *
  * <p>
  * If input has empty value, output is also empty.
  * </p>
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
@@ -45,7 +45,7 @@ public abstract class AbstractTestInput extends AbstractWebDriverTest<WithInputP
     protected AbstractTestInput(TestConfiguration configuration) {
         super(configuration);
     }
-    
+
     @Override
     protected WithInputPage createPage() {
         return new WithInputPage();
@@ -58,7 +58,7 @@ public abstract class AbstractTestInput extends AbstractWebDriverTest<WithInputP
         new WebDriverWait(getWebDriver())
             .failWith("The output text doesn't match.")
             .until(TextEquals.getInstance().element(getPage().getOutput()).text("Hello " + inputName + "!"));
-        
-    }    
-    
+
+    }
+
 }
