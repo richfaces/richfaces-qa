@@ -20,6 +20,8 @@
 
     <groupId>org.richfaces.tests.testng</groupId>
     <artifactId>testng-listeners</artifactId>
+    
+    <name>RichFaces TestNG Listeners</name>
 
     <properties>
         <arquillian.ajocado-testng.version>1.0.0-SNAPSHOT</arquillian.ajocado-testng.version>

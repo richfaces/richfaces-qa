@@ -24,9 +24,9 @@
     <version>4.2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Richfaces QA Parent</name>
+    <name>RichFaces QA Parent</name>
 
-    <description>The parent for all Richfaces qa sub-projects. It specifies build and project meta-data</description>
+    <description>The parent for all RichFaces qa sub-projects. It specifies build and project meta-data</description>
 
     <properties>
         <richfaces.checkstyle.version>3</richfaces.checkstyle.version>

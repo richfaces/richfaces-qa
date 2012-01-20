@@ -21,7 +21,7 @@
 
     <groupId>org.richfaces.tests.archetypes</groupId>
     <artifactId>richfaces-archetypes-ftest</artifactId>
-    <name>richfaces-archetypes-ftest</name>
+    <name>RichFaces Archetypes Ftest Root</name>
     <packaging>pom</packaging>
     <description>Functional Test for RichFaces archetypes</description>
 

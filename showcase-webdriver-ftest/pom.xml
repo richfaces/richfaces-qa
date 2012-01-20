@@ -13,7 +13,7 @@
     <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-showcase-webdriver-ftest</artifactId>
     <packaging>jar</packaging>
-    <name>richfaces-showcase-webdriver-ftest</name>
+    <name>RichFaces Showcase Mobile Ftest</name>
 
     <properties>
         <showcase.version>${project.version}</showcase.version>

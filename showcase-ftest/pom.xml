@@ -13,12 +13,9 @@
     <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-showcase-ftest</artifactId>
     <packaging>jar</packaging>
-    <name>RichFaces ShowCase Smoke Ftest</name>
+    <name>RichFaces Showcase Smoke Ftest</name>
 
     <properties>
-
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- arquillian versions -->
         <arquillian.tomcat.version>1.0.0.CR2</arquillian.tomcat.version>
