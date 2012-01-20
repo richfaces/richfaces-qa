@@ -32,16 +32,16 @@ import org.testng.annotations.ITestAnnotation;
  * <p>
  * Uses system property "method" to determine, if the test method should be run or not.
  * </p>
- * 
+ *
  * <p>
  * Disables the such test methods, which doesn't match the given method name. The '*' wildcard can be used to filter
  * methods.
  * </p>
- * 
+ *
  * <p>
  * Must be registered in TestNG listeners to filter the methods.
  * <p>
- * 
+ *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision$
  */
