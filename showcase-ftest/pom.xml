@@ -26,15 +26,8 @@
         <arquillian.ajocado-testng.version>1.0.0-SNAPSHOT</arquillian.ajocado-testng.version>
         <arquillian.jboss-as6.version>1.0.0.CR2</arquillian.jboss-as6.version>
 
-        <!-- version of JBoss containers to use and download -->
-        <version.jbossas6>6.0.0.Final</version.jbossas6>
-        <version.jbossas7>7.0.2.Final</version.jbossas7>
-
         <!-- selenium version used to download selenium-server via selenium-server.sh script in ${project.basedir} -->
         <version.selenium>2.15.0</version.selenium>
-
-        <version.tomcat6>6.0.35</version.tomcat6>
-        <version.tomcat7>7.0.23</version.tomcat7>
 
         <!--  these are set as Environmental variables to let Arquillian know where distribution of managed containers are-->
         <tomcat6.home>${project.build.directory}/apache-tomcat-${version.tomcat6}</tomcat6.home>
@@ -521,6 +514,21 @@
                                 </configuration>
                             </execution>
                         </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+         <profile>
+            <id>checkstyle</id>
+            <activation>
+                <property>
+                    <name>!eclipse</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>

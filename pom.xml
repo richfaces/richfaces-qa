@@ -1,62 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-JBoss, Home of Professional Open Source Copyright 2010-2012, Red Hat, Inc.
-and individual contributors by the @authors tag. See the copyright.txt
-in the distribution for a full listing of individual contributors.
-
-This is free software; you can redistribute it and/or modify it under
-the terms of the GNU Lesser General Public License as published by the
-Free Software Foundation; either version 2.1 of the License, or (at
-your option) any later version. This software is distributed in the
-hope that it will be useful, but WITHOUT ANY WARRANTY; without even
-the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-PURPOSE. See the GNU Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with this software; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301
-USA, or see the FSF site: http://www.fsf.org.
--->
+<!-- JBoss, Home of Professional Open Source Copyright 2010-2012, Red Hat, Inc. and individual contributors by the @authors tag. 
+    See the copyright.txt in the distribution for a full listing of individual contributors. This is free software; you can redistribute 
+    it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either 
+    version 2.1 of the License, or (at your option) any later version. This software is distributed in the hope that it will be useful, 
+    but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser 
+    General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this 
+    software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the 
+    FSF site: http://www.fsf.org. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  
-  <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-      <groupId>org.richfaces</groupId>
-      <artifactId>richfaces-parent</artifactId>
-      <version>11</version>
-  </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.richfaces.qa</groupId>
-  <artifactId>richfaces-qa-parent</artifactId>
-  <version>4.2.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
+    <parent>
+        <groupId>org.richfaces</groupId>
+        <artifactId>richfaces-parent</artifactId>
+        <version>11</version>
+    </parent>
 
-  <name>Richfaces QA Parent</name>
-    
-  <description>The parent for all Richfaces qa sub-projects. It specifies build and project meta-data</description>
- 
-  <modules>
-    <module>archetypes</module>
-<!--<module>command-line-tools</module>-->
-    <module>metamer</module>
-    <module>showcase-ftest</module>
-    <module>showcase-webdriver-ftest</module>
-    <module>testng-listeners</module>
-<!--<module>enterprise-maven-bootstrap</module>-->
-  </modules>
+    <groupId>org.richfaces.qa</groupId>
+    <artifactId>richfaces-qa-parent</artifactId>
+    <version>4.2.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-  <licenses>
+    <name>Richfaces QA Parent</name>
+
+    <description>The parent for all Richfaces qa sub-projects. It specifies build and project meta-data</description>
+
+    <properties>
+        <richfaces.checkstyle.version>3</richfaces.checkstyle.version>
+        
+        <!-- version of JBoss containers to use and download -->
+        <version.jbossas6>6.0.0.Final</version.jbossas6>
+        <version.jbossas7>7.0.2.Final</version.jbossas7>
+
+        <!-- version of Tomcat containers to use and download -->
+        <version.tomcat6>6.0.35</version.tomcat6>
+        <version.tomcat7>7.0.23</version.tomcat7>        
+    </properties>
+
+    <modules>
+        <module>archetypes</module>
+        <!--<module>command-line-tools</module> -->
+        <module>metamer</module>
+        <module>showcase-ftest</module>
+        <module>showcase-webdriver-ftest</module>
+        <module>testng-listeners</module>
+        <!--<module>enterprise-maven-bootstrap</module> -->
+    </modules>
+
+    <build>
+        <!-- <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>2.6</version>
+                    <executions>
+                        <execution>
+                            <id>checkstyle</id>
+                            <phase>process-sources</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.richfaces</groupId>
+                            <artifactId>richfaces-build-checkstyle</artifactId>
+                            <version>${richfaces.checkstyle.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement> -->
+    </build>
+
+    <licenses>
         <license>
             <name>GNU Lesser General Public License, Version 2.1</name>
             <distribution>repo</distribution>
             <url>http://www.gnu.org/licenses/lgpl-2.1.txt</url>
         </license>
-  </licenses>
+    </licenses>
 
-  <distributionManagement>
+    <distributionManagement>
         <snapshotRepository>
             <id>jboss-qa-snapshots</id>
             <name>JBoss QA snapshot repository</name>
@@ -67,78 +97,78 @@ USA, or see the FSF site: http://www.fsf.org.
             <name>JBoss QA selease repository</name>
             <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/releases</url>
         </repository>
-  </distributionManagement>
+    </distributionManagement>
 
-  <issueManagement>
+    <issueManagement>
         <system>jira</system>
         <url>https://jira.jboss.org/jira/browse/RFPL</url>
-  </issueManagement>
+    </issueManagement>
 
-  <developers>
-      <developer>
-          <name>Pavol Pitonak</name>
-          <email>ppitonak @ redhat.com</email>
-      </developer>
-      <developer>
-          <name>Lukas Fryc</name>
-          <email>lfryc @ redhat.com</email>
-      </developer>
-      <developer>
-          <name>Jan Jamrich</name>
-          <email>jjamrich @ redhat.com</email>
-      </developer>
-      <developer>
-          <name>Juraj Huska</name>
-          <email>jhuska @ redhat.com</email>
-      </developer>
-      <developer>
-          <name>Jan Papousek</name>
-          <email>jpapouse @ redhat.com</email>
-      </developer>
-  </developers>
+    <developers>
+        <developer>
+            <name>Pavol Pitonak</name>
+            <email>ppitonak @ redhat.com</email>
+        </developer>
+        <developer>
+            <name>Lukas Fryc</name>
+            <email>lfryc @ redhat.com</email>
+        </developer>
+        <developer>
+            <name>Jan Jamrich</name>
+            <email>jjamrich @ redhat.com</email>
+        </developer>
+        <developer>
+            <name>Juraj Huska</name>
+            <email>jhuska @ redhat.com</email>
+        </developer>
+        <developer>
+            <name>Jan Papousek</name>
+            <email>jpapouse @ redhat.com</email>
+        </developer>
+    </developers>
 
-  <repositories>
-      <repository>
-        <id>jboss-qa-releases</id>
-        <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/releases</url>
-        <releases>
-          <updatePolicy>never</updatePolicy>
-          <enabled>true</enabled>
-        </releases>
-        <snapshots>
-          <enabled>false</enabled>
-        </snapshots>
-      </repository>
-      <repository>
-        <id>jboss-qa-snapshots-repository</id>
-        <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/snapshots</url>
-        <releases>
-          <enabled>false</enabled>
-        </releases>
-        <snapshots>
-          <updatePolicy>daily</updatePolicy>
-          <enabled>true</enabled>
-        </snapshots>
+    <repositories>
+        <repository>
+            <id>jboss-qa-releases</id>
+            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/releases</url>
+            <releases>
+                <updatePolicy>never</updatePolicy>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
         <repository>
-          <id>jboss-public-repository-group</id>
-          <name>JBoss Public Maven Repository Group</name>
-          <url>https://repository.jboss.org/nexus/content/groups/public</url>
-          <releases>
-            <updatePolicy>never</updatePolicy>
-          </releases>
-          <snapshots>
-            <updatePolicy>daily</updatePolicy>
-          </snapshots>
+            <id>jboss-qa-snapshots-repository</id>
+            <url>http://nexus.qa.jboss.com:8081/nexus/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <updatePolicy>daily</updatePolicy>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
-  </repositories>
+        <repository>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Maven Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public</url>
+            <releases>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
 
-  <!-- SCM and distribution management -->
-  <scm>
-      <connection>scm:git:git://github.com/richfaces/qa.git</connection>
-      <developerConnection>scm:git:git@github.com:richfaces/qa.git</developerConnection>
-       <url>https://github.com/richfaces/qa</url>
-  </scm>
+    <!-- SCM and distribution management -->
+    <scm>
+        <connection>scm:git:git://github.com/richfaces/qa.git</connection>
+        <developerConnection>scm:git:git@github.com:richfaces/qa.git</developerConnection>
+        <url>https://github.com/richfaces/qa</url>
+    </scm>
 
 </project>
 

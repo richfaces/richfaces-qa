@@ -84,7 +84,7 @@ public final class TestInfo {
      * @return the method name in current context
      */
     public static String getMethodName(ITestResult result) {
-        Method method = result.getMethod().getMethod();
+        Method method = result.getMethod().getConstructorOrMethod().getMethod();
         return method.getName();
     }
 
@@ -96,7 +96,7 @@ public final class TestInfo {
      * @return the class name in current context
      */
     public static String getClassName(ITestResult result) {
-        Class<?> dClass = result.getMethod().getMethod().getDeclaringClass();
+        Class<?> dClass = result.getMethod().getConstructorOrMethod().getMethod().getDeclaringClass();
         return dClass.getSimpleName();
     }
 
@@ -108,7 +108,7 @@ public final class TestInfo {
      * @return the package name in current context
      */
     public static String getContainingPackageName(ITestResult result) {
-        Package dPackage = result.getMethod().getMethod().getDeclaringClass().getPackage();
+        Package dPackage = result.getMethod().getConstructorOrMethod().getMethod().getDeclaringClass().getPackage();
         return dPackage.getName().replaceFirst("^.*\\.", "");
     }
 }
