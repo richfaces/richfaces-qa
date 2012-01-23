@@ -3,13 +3,16 @@
     xsi:schemaLocation="http://www.zeroturnaround.com http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd">
 
     <classpath>
-        <dir name="${rebel.workspace.path}/metamer/application/target/classes" />
+        <dir name="${rebel.workspace.path}/qa/metamer/application/target/classes" />
+        <dir name="${rebel.workspace.path}/qa/metamer/application/target/test-classes" />
     </classpath>
 
     <web>
         <link target="/">
-            <dir name="${rebel.workspace.path}/metamer/application/src/main/resources" />
-            <dir name="${rebel.workspace.path}/metamer/application/src/main/webapp" />
+            <dir name="${rebel.workspace.path}/qa/metamer/application/target/m2e-wtp/web-resources" />
+        </link>
+        <link target="/">
+            <dir name="${rebel.workspace.path}/qa/metamer/application/src/main/webapp" />
         </link>
     </web>
 
