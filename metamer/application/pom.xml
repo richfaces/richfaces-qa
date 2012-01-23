@@ -27,7 +27,6 @@
 
     <properties>
         <jetty.port>8080</jetty.port>
-        <hornetq.version>2.2.7.Final</hornetq.version>
     </properties>
 
     <dependencies>
@@ -73,17 +72,14 @@
         <dependency>
             <groupId>org.hornetq</groupId>
             <artifactId>hornetq-core</artifactId>
-            <version>${hornetq.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hornetq</groupId>
             <artifactId>hornetq-jms</artifactId>
-            <version>${hornetq.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hornetq</groupId>
             <artifactId>hornetq-logging</artifactId>
-            <version>${hornetq.version}</version>
         </dependency>
         <dependency>
             <groupId>org.atmosphere</groupId>
@@ -93,13 +89,11 @@
         <dependency>
             <groupId>org.jboss.netty</groupId>
             <artifactId>netty</artifactId>
-            <version>3.2.5.Final</version>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.6.1</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -127,7 +121,6 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>4.2.0.Final</version>
         </dependency>
 
         <!-- JBoss AS7 management -->
@@ -142,7 +135,6 @@
         <dependency>
             <groupId>org.jboss.as</groupId>
             <artifactId>jboss-as-controller-client</artifactId>
-            <version>[7.0.2.Final,)</version>
             <scope>provided</scope>
         </dependency>
 
@@ -179,8 +171,6 @@
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                         </manifest>
                         <manifestEntries>
-                            <SCM-Revision>${buildNumber}</SCM-Revision>
-                            <SCM-Timestamp>${timestamp}</SCM-Timestamp>
                             <!-- define SLF4J dependency in JBoss AS 7 -->
                             <Dependencies>org.slf4j,org.jboss.as.process-controller,org.jboss.as.controller-client,org.jboss.dmr</Dependencies>
                         </manifestEntries>
@@ -259,7 +249,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
-                <version>1.0</version>
                 <executions>
                     <execution>
                         <phase>validate</phase>
