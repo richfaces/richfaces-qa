@@ -42,6 +42,8 @@
         
         <!--  Other -->
         <application.target.directory>${basedir}/../apps/richfaces-simpleapp/target</application.target.directory>
+        <context.root>http://localhost:8080</context.root>
+        <context.path>richfaces-simpleapp-jee6</context.path>
     </properties>
 
     <developers>
@@ -102,8 +104,8 @@
                     <test>TestInput</test>
                     <systemProperties>
                         <webdriver.stale.tries>5</webdriver.stale.tries>
-                        <context.root>http://localhost:8080</context.root>
-                        <context.path>${context.path}</context.path>
+                        <context.root>${context.root}</context.root>
+                        <context.path>${context.path}</context.path>                        
                     </systemProperties>
                 </configuration>
             </plugin>
@@ -120,7 +122,7 @@
                 <container.archive.type>zip</container.archive.type>
                 <container.home>${project.build.directory}/jboss-as-${container.version}</container.home>
                 <arquillian.launch>jbossas-managed-7</arquillian.launch>
-                <context.path>/richfaces-simpleapp-jee6/</context.path>
+                <context.path>richfaces-simpleapp-jee6</context.path>
                 <application.war>${application.target.directory}/richfaces-simpleapp-jee6.war</application.war>
             </properties>
             <dependencies>
@@ -177,7 +179,7 @@
                 <container.home>${project.build.directory}/apache-tomcat-${container.version}</container.home>
                 <arquillian.version>1.0.0.CR2</arquillian.version>
                 <arquillian.launch>tomcat-managed-7</arquillian.launch>
-                <context.path>/richfaces-simpleapp/</context.path>
+                <context.path>richfaces-simpleapp</context.path>
                 <application.war>${application.target.directory}/richfaces-simpleapp.war</application.war>
             </properties>
             <dependencies>
@@ -255,7 +257,7 @@
                 <container.home>${project.build.directory}/apache-tomcat-${container.version}</container.home>
                 <arquillian.version>1.0.0.CR2</arquillian.version>
                 <arquillian.launch>tomcat-managed-6</arquillian.launch>
-                <context.path>/richfaces-simpleapp/</context.path>
+                <context.path>richfaces-simpleapp</context.path>
                 <application.war>${application.target.directory}/richfaces-simpleapp.war</application.war>
             </properties>
             <dependencies>
