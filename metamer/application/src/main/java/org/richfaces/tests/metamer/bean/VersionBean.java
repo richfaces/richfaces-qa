@@ -36,7 +36,7 @@ import org.richfaces.log.Logger;
 
 /**
  * Vendor and version information for project Metamer.
- * 
+ *
  * @author asmirnov@exadel.com
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
