@@ -36,7 +36,7 @@ import org.richfaces.log.Logger;
 
 /**
  * Vendor and version information for project Metamer.
- *
+ * 
  * @author asmirnov@exadel.com
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -51,8 +51,6 @@ public final class VersionBean {
     private String implementationVendor;
     private String implementationVersion;
     private String implementationTitle;
-    private String scmRevision;
-    private String scmTimestamp;
     private String fullVersion;
     private String shortVersion;
     private String richFacesVersion;
@@ -78,8 +76,6 @@ public final class VersionBean {
         implementationTitle = properties.getProperty("Implementation-Title");
         implementationVendor = properties.getProperty("Implementation-Vendor");
         implementationVersion = properties.getProperty("Implementation-Version");
-        scmRevision = properties.getProperty("SCM-Revision");
-        scmTimestamp = properties.getProperty("SCM-Timestamp");
         serverVersion = initializeServerVersion();
     }
 
@@ -89,14 +85,6 @@ public final class VersionBean {
 
     public String getTitle() {
         return implementationTitle;
-    }
-
-    public String getRevision() {
-        return scmRevision;
-    }
-
-    public String getTimestamp() {
-        return scmTimestamp;
     }
 
     public String getVersion() {
@@ -113,8 +101,7 @@ public final class VersionBean {
             return implementationVersion;
         }
 
-        fullVersion = implementationTitle + " by " + implementationVendor + ", version " + implementationVersion
-            + " SVN r. " + scmRevision;
+        fullVersion = implementationTitle + " by " + implementationVendor + ", version " + implementationVersion;
         return fullVersion;
     }
 
@@ -128,7 +115,7 @@ public final class VersionBean {
             return implementationVersion;
         }
 
-        shortVersion = "Metamer " + implementationVersion + " r." + scmRevision;
+        shortVersion = "Metamer " + implementationVersion;
         return shortVersion;
     }
 
@@ -319,6 +306,8 @@ public final class VersionBean {
     }
 
     public static class FailToRetrieveInfo extends RuntimeException {
+
+        private static final long serialVersionUID = 4905414716987875382L;
 
         public FailToRetrieveInfo(String message, Throwable cause) {
             super(message, cause);
