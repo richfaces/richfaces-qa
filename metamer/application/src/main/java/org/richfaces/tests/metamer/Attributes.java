@@ -702,7 +702,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
                 }
 
                 richfacesAttributes.put(c.getComponentClass(), c.getAttributes());
-                logger.info("attributes for component " + c.getComponentClass().getName() + " loaded");
+                logger.debug("attributes for component " + c.getComponentClass().getName() + " loaded");
             }
 
             for (Behavior b : behaviors) {
@@ -720,7 +720,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
                 }
 
                 richfacesAttributes.put(b.getBehaviorClass(), b.getAttributes());
-                logger.info("attributes for behavior " + b.getBehaviorClass().getName() + " loaded");
+                logger.debug("attributes for behavior " + b.getBehaviorClass().getName() + " loaded");
             }
 
         } catch (IOException ex) {
