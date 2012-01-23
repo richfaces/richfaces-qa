@@ -57,7 +57,7 @@ public class TestTreePhases extends AbstractTestTree {
         phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "selection change listener invoked");
     }
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.3" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
     @Use(field = "sample", strings = { "simpleRichFacesTreeNode" })
     public void testPhasesSelectionWithSimpleTreeNode() {

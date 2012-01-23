@@ -67,7 +67,7 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeSingleDoesntRememberOrder();
     }
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.3" })
     @Override
     @IssueTracking({ "https://issues.jboss.org/browse/RF-9932",
         "http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790" })
@@ -99,7 +99,7 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         super.testSortModeMultiReplacingOldOccurences();
     }
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.3" })
     @Override
     @IssueTracking({ "https://issues.jboss.org/browse/RF-9932",
         "http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790" })

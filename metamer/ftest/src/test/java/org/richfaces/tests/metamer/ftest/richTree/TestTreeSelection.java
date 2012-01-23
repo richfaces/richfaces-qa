@@ -47,7 +47,7 @@ public class TestTreeSelection extends AbstractTestTreeSelection {
         testTopLevelSelection();
     }
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.3" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
     @Uses({ @Use(field = "selectionType", value = "selectionTypeAjax"),
         @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
@@ -68,7 +68,7 @@ public class TestTreeSelection extends AbstractTestTreeSelection {
         testSubNodesSelection();
     }
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.3" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
     @Uses({ @Use(field = "selectionType", value = "selectionTypeAjax"),
         @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
@@ -83,7 +83,7 @@ public class TestTreeSelection extends AbstractTestTreeSelection {
         testSubNodesSelectionEvents();
     }
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.3" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
     @Uses({ @Use(field = "selectionType", value = "eventEnabledSelectionTypes"),
         @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })

@@ -84,7 +84,7 @@ public class TestTooltipTarget extends AbstractAjocadoTest {
         waitGui.until(elementVisible.locator(tooltip3));
     }
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.3" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11370")
     public void testTargetWithRegularDiv() {
         tooltipAttributes.set(target, "regular-div");
