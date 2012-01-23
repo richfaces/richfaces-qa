@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 /**
  * Representation of a message pushed to the page using JMS.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version$Revision: 22493$
  */
