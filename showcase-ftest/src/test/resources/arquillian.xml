@@ -31,6 +31,16 @@
         </protocol>
     </container>
     
+    <container qualifier="jbossas-managed-7-1">
+        <configuration>
+            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
+            <property name="serverConfig">standalone-full.xml</property>
+        </configuration>
+        <protocol type="jmx-as7">
+            <property name="executionType">REMOTE</property>
+        </protocol>
+    </container>
+    
     <container qualifier="jbossas-remote-7">
         <protocol type="jmx-as7">
             <property name="executionType">REMOTE</property>
