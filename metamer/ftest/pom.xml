@@ -38,7 +38,6 @@
         <jboss7Home>${project.build.directory}/jboss-as-${version.jbossas7}</jboss7Home>
         <jboss6Home>${project.build.directory}/jboss-${version.jbossas6}</jboss6Home>
 
-        <metamer.classifier>jee6</metamer.classifier>
         <version.richfaces>${project.version}</version.richfaces>
         <templates>plain</templates>
 
@@ -186,6 +185,9 @@
     <profiles>
         <profile>
             <id>jbossas-managed-6</id>
+            <properties>
+                <metamer.classifier>jee6</metamer.classifier>
+            </properties>
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.arquillian.container</groupId>
@@ -254,6 +256,9 @@
         </profile>
         <profile>
             <id>jbossas-managed-7</id>
+            <properties>
+                <metamer.classifier>jee6</metamer.classifier>
+            </properties>
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.as</groupId>
@@ -305,6 +310,9 @@
         </profile>
         <profile>
             <id>jbossas-remote-7</id>
+            <properties>
+                <metamer.classifier>jee6</metamer.classifier>
+            </properties>
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.spec</groupId>
@@ -335,6 +343,9 @@
         </profile>
         <profile>
             <id>tomcat-managed-6</id>
+            <properties>
+                <metamer.classifier>mojarra</metamer.classifier>
+            </properties>
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.arquillian.container</groupId>
@@ -406,6 +417,9 @@
         </profile>
         <profile>
             <id>tomcat-managed-7</id>
+            <properties>
+                <metamer.classifier>mojarra</metamer.classifier>
+            </properties>
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.arquillian.container</groupId>
