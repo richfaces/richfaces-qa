@@ -89,7 +89,7 @@
                     <groupId>org.richfaces.examples</groupId>
                     <artifactId>richfaces-showcase</artifactId>
                     <type>war</type>
-                    <version>${showcase.version}</version>
+                    <version>${project.version}</version>
                     <classifier>${showcase.classifier}</classifier>
                 </dependency>
             </dependencies>
@@ -142,7 +142,7 @@
                                             <groupId>org.richfaces.examples</groupId>
                                             <artifactId>richfaces-showcase</artifactId>
                                             <type>war</type>
-                                            <version>${showcase.version}</version>
+                                            <version>${project.version}</version>
                                             <classifier>${showcase.classifier}</classifier>
                                             <destFileName>showcase.war</destFileName>
                                         </artifactItem>
