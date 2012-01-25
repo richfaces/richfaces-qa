@@ -25,7 +25,8 @@ package org.richfaces.tests.metamer.validation.groups;
  * Validation group for page with many rich components
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version$Revision: 22492$
+ * @version $Revision: 22492 $
  */
 public interface ValidationGroupAllComponents {
+
 }

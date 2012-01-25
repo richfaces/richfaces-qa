@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * Managed bean for rich:list.
  *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version$Revision: 23150$
+ * @version $Revision: 23150 $
  */
 @ManagedBean(name = "richTooltipBean")
 @ViewScoped
@@ -61,6 +61,7 @@ public class RichTooltipBean implements Serializable {
         logger.debug("initializing bean " + getClass().getName());
 
         attributes = Attributes.getComponentAttributesFromFacesConfig(UITooltip.class, getClass());
+
 
         // set defaults
         attributes.setAttribute("attached", true);

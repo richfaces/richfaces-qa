@@ -27,7 +27,7 @@ import org.richfaces.tests.metamer.bean.rich.RichTreeModelRecursiveAdaptorBean;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version$Revision: 22493$
+ * @version $Revision: 22493 $
  */
 public abstract class AbstractNode implements Serializable, LazyLoadable, Node {
 

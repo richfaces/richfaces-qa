@@ -436,6 +436,7 @@ public class RichBean implements Serializable {
         logToPage("*2 value changed ");
     }
 
+
     /** A value change listener that logs to the page old and new value.
      *  But if event value was longer that 20 chars, only first 20 chars will
      *  be logged
@@ -444,7 +445,6 @@ public class RichBean implements Serializable {
      *            an event representing the activation of a user interface component
      */
     public void valueChangeListenerImproved(ValueChangeEvent event) {
-
         String oldVal = event.getOldValue() != null ? event.getOldValue().toString() : null;
         String newVal = event.getNewValue() != null ? event.getNewValue().toString() : null;
 

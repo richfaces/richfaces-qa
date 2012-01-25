@@ -38,7 +38,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </f:viewParam>
             </f:metadata>
         </ui:define>
-        
+
         <ui:define name="head">
             <h:outputStylesheet library="css" name="richDragAndDrop.css" />
         </ui:define>
@@ -47,38 +47,38 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <h3><b>JIRA <a href="https://issues.jboss.org/browse/RF-10994">RF-10994</a> simulation</b></h3>
 
-            <p><i>Tree by default using ajax mode. So when you expanding nodes -leafs which getting loaded should be draggable.<br/> 
+            <p><i>Tree by default using ajax mode. So when you expanding nodes -leafs which getting loaded should be draggable.<br/>
             But there is no draggable script resource so you could see JS errors instead saying that Draggable si not a constructor.<br/>
-            If change toggleType to client - works fine. 
+            If change toggleType to client - works fine.
             If add any draggable component to the page - it also starts works as scripts already inplace.
             </i></p>
-            
+
             <rich:dragIndicator id="indicator" />
-            
+
             <p>
             	<rich:tree value="#{richTreeBean.richFacesTreeNodeRoot}" nodeType="#{node.type}" var="node">
-                
+ 
         			<rich:treeNode type="country" title="Country node type" expanded="#{richTreeBean.expanded[node]}" >
         				<a4j:outputPanel layout="block">
                             <rich:dropTarget acceptedTypes="file" dropListener="#{richTreeBean.processDragging}" />        					
                             <h:outputText value="#{node.content.label}" />
         				</a4j:outputPanel>
         			</rich:treeNode>
-                    
+     
         			<rich:treeNode type="company" title="Company node type" expanded="#{richTreeBean.expanded[node]}" >
         				<a4j:outputPanel layout="block">
                             <rich:dragSource type="file" dragIndicator="indicator" />                                                                                					
         					<h:outputText value="#{node.content.label}" />
         				</a4j:outputPanel>
         			</rich:treeNode>
-                    
+     
                     <rich:treeNode type="cd" title="CD node type" expanded="#{richTreeBean.expanded[node]}" >
-                        <a4j:outputPanel layout="block">                            
+                        <a4j:outputPanel layout="block">             
                             <h:outputText value="#{node.content.label}" />
                         </a4j:outputPanel>
                     </rich:treeNode>
-                    
-        		</rich:tree>                
+     
+        		</rich:tree> 
             </p>
         </ui:define>
 
@@ -88,7 +88,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <legend>DnD in rich:tree</legend>
                 <metamer:attributes value="#{richTreeBean.attributes}" id="attributes" />
             </fieldset>
-           
+
         </ui:define>
 
     </ui:composition>

@@ -26,7 +26,7 @@ package org.richfaces.tests.metamer;
  * a view parameter.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22617$
+ * @version $Revision: 22617 $
  */
 public enum Template {
 

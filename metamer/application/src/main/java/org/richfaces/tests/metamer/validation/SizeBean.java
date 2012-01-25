@@ -34,7 +34,8 @@ import javax.validation.constraints.Size;
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
- * @version$Revision: 23064$
+ * @version $Revision: 23064 $
+ *
  */
 @ManagedBean
 public class SizeBean {

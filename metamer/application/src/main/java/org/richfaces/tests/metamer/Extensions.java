@@ -35,7 +35,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * Representation of CDK extension of a RichFaces component in faces-config.xml.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22092$
+ * @version $Revision: 22092 $
  */
 @XmlRootElement(name = "property-extension", namespace = "http://java.sun.com/xml/ns/javaee")
 public class Extensions implements Serializable {

@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Representation of a RichFaces behavior in faces-config.xml.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 21077$
+ * @version $Revision: 21077 $
  */
 @XmlRootElement(name = "behavior", namespace = "http://java.sun.com/xml/ns/javaee")
 public class Behavior implements Serializable {

@@ -34,7 +34,7 @@ import org.richfaces.tests.metamer.bean.rich.RichTreeModelRecursiveAdaptorBean;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version$Revision: 22493$
+ * @version $Revision: 22493 $
  */
 public class RecursiveNodeImpl extends AbstractNode implements RecursiveNode {
     private static final long serialVersionUID = 1L;

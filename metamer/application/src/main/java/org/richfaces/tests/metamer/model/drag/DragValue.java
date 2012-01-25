@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version$Revision: 21240$
+ * @version $Revision: 21240 $
  */
 public class DragValue implements Serializable {
 

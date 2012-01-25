@@ -42,67 +42,67 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-        
+
             <p><a href="https://issues.jboss.org/browse/RF-11850">RF-11850</a>:
                 <ol>
                     <li>try to resize columns on one table</li>
                     <li>then try resize a column on another column</li>
                     <li>NPE thrown (in server log)</li>
-                </ol> 
+                </ol>
             </p>
-            
+
             <rich:extendedDataTable id="edt1" var="item" style="height:300px; width:500px;"
                                     value="#{richExtendedDataTableBean.state ? model.capitals : null}">
                 <rich:column>
                   <f:facet name="header">Header State</f:facet>
                   #{item.state}
                 </rich:column>
-               
+
                 <rich:column>
                   <f:facet name="header">Header Name</f:facet>
                   #{item.name}
                 </rich:column>
-               
+
                 <rich:column>
                   <f:facet name="header">Header Name 2</f:facet>
                   #{item.name}
                 </rich:column>
-               
+
                 <rich:column>
                   <f:facet name="header">Header Name 3</f:facet>
                   #{item.name}
                 </rich:column>
-             
+
             </rich:extendedDataTable>
-            
+
             <br/><br/>
-             
+
             <rich:extendedDataTable id="edt2" var="item" style="height:300px; width:500px;"
                                     value="#{richExtendedDataTableBean.state ? model.capitals : null}">
                 <rich:column>
                   <f:facet name="header">Header State</f:facet>
                   #{item.state}
                 </rich:column>
-               
+
                 <rich:column>
                   <f:facet name="header">Header Name</f:facet>
                   #{item.name}
                 </rich:column>
-               
+
                 <rich:column>
                   <f:facet name="header">Header Name 2</f:facet>
                   #{item.name}
                 </rich:column>
-               
+
                 <rich:column>
                   <f:facet name="header">Header Name 3</f:facet>
                   #{item.name}
                 </rich:column>
-             
+
             </rich:extendedDataTable>
-                 
+  
             <br/><br/>
-            
+
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

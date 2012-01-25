@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * Managed bean for a4j:ajax.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22769$
+ * @version $Revision: 22769 $
  */
 @ManagedBean(name = "a4jAjaxBean")
 @ViewScoped

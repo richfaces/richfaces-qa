@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * Managed bean for a4j:mediaOutput.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22720$
+ * @version $Revision: 22720 $
  */
 @ManagedBean(name = "a4jMediaOutputBean")
 @RequestScoped
@@ -107,8 +107,7 @@ public class A4JMediaOutputBean implements Serializable {
     public void createContentImagePng(OutputStream out, Object data) throws IOException {
         if (data instanceof MediaData) {
             MediaData paintData = (MediaData) data;
-            BufferedImage img = new BufferedImage(paintData.getWidth(), paintData.getHeight(),
-                BufferedImage.TYPE_INT_RGB);
+            BufferedImage img = new BufferedImage(paintData.getWidth(), paintData.getHeight(), BufferedImage.TYPE_INT_RGB);
             Graphics2D graphics2D = img.createGraphics();
             graphics2D.clearRect(0, 0, paintData.getWidth(), paintData.getHeight());
 
@@ -122,8 +121,7 @@ public class A4JMediaOutputBean implements Serializable {
             graphics2D.fillRect(0, paintData.getHeight() / 2, paintData.getWidth() / 2, paintData.getHeight() / 2);
 
             graphics2D.setColor(Color.GREEN);
-            graphics2D.fillRect(paintData.getWidth() / 2, paintData.getHeight() / 2, paintData.getWidth() / 2,
-                paintData.getHeight() / 2);
+            graphics2D.fillRect(paintData.getWidth() / 2, paintData.getHeight() / 2, paintData.getWidth() / 2, paintData.getHeight() / 2);
 
             ImageIO.write(img, "png", out);
         }

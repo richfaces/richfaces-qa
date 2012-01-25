@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Java bean representing a company.
  *
  * @author Exadel, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 23001$
+ * @version $Revision: 23001 $
  */
 @XmlRootElement(name = "company")
 public class Company implements Labeled, Serializable {
@@ -102,4 +102,5 @@ public class Company implements Labeled, Serializable {
     public String toString() {
         return "Company [name=" + name + "]";
     }
+
 }

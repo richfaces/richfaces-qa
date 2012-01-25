@@ -68,7 +68,7 @@ import org.slf4j.LoggerFactory;
  * Representation of all attributes of a JSF component or behavior.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22596$
+ * @version $Revision: 22596 $
  */
 public final class Attributes implements Map<String, Attribute>, Serializable {
 

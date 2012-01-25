@@ -35,7 +35,7 @@ import org.richfaces.model.CalendarDataModelItem;
  * Managed bean with calendar's model.
  *
  * @author Ilya Shaikovsky, Exadel
- * @version$Revision: 21077$
+ * @version $Revision: 21077 $
  */
 @ManagedBean
 @ApplicationScoped

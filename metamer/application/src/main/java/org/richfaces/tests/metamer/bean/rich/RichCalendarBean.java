@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
  * Managed bean for rich:calendar.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22820$
+ * @version $Revision: 22820 $
  */
 @ManagedBean(name = "richCalendarBean")
 @ViewScoped

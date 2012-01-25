@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * Managed bean for h:dataTable.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 21194$
+ * @version $Revision: 21194 $
  */
 @ManagedBean(name = "hDataTableBean")
 @SessionScoped

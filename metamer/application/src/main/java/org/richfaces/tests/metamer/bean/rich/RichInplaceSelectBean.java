@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
  * Managed bean for rich:inplaceSelect.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22460$
+ * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richInplaceSelectBean")
 @ViewScoped

@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * Simple bean for rich:message component example.
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version$Revision: 23138$
+ * @version $Revision: 23138 $
  */
 @ManagedBean(name = "richMessageBean")
 @ViewScoped

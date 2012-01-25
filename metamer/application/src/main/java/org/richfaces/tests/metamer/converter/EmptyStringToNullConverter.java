@@ -30,7 +30,7 @@ import javax.faces.convert.FacesConverter;
  * Converter used for converting empty strings to null.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22493$
+ * @version $Revision: 22493 $
  */
 @FacesConverter(value = "emptyStringToNullConverter")
 public class EmptyStringToNullConverter implements Converter {
