@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j" >
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2012, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:param name="componentId" value="panelClick" />
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+            <h:panelGroup layout="block" style="width:500px; background-color: lightgreen; padding: 15px" id="panelClick">
+                    Righ click here for a contextMenu
+            </h:panelGroup>
+            <rich:contextMenu id="ctxMenu"
+                              attachTo="#{nestedComponentId}"
+                              dir="#{richContextMenuBean.attributes['dir'].value}"
+                              direction="#{richContextMenuBean.attributes['direction'].value}"
+                              disabled="#{richContextMenuBean.attributes['disabled'].value}"
+                              hideDelay="#{richContextMenuBean.attributes['hideDelay'].value}"
+                              horizontalOffset="#{richContextMenuBean.attributes['horizontalOffset'].value}"
+                              jointPoint="#{richContextMenuBean.attributes['jointPoint'].value}"
+                              lang="#{richContextMenuBean.attributes['lang'].value}"
+                              mode="#{richContextMenuBean.attributes['mode'].value}"
+                              onclick="#{richContextMenuBean.attributes['onclick'].value}"
+                              ondblclick="#{richContextMenuBean.attributes['ondblclick'].value}"
+                              ongrouphide="#{richContextMenuBean.attributes['ongrouphide'].value}"
+                              ongroupshow="#{richContextMenuBean.attributes['ongroupshow'].value}"
+                              onhide="#{richContextMenuBean.attributes['onhide'].value}"
+                              onitemclick="#{richContextMenuBean.attributes['onitemclick'].value}"
+                              onkeydown="#{richContextMenuBean.attributes['onkeydown'].value}"
+                              onkeypress="#{richContextMenuBean.attributes['onkeypress'].value}"
+                              onkeyup="#{richContextMenuBean.attributes['onkeyup'].value}"
+                              onmousedown="#{richContextMenuBean.attributes['onmousedown'].value}"
+                              onmousemove="#{richContextMenuBean.attributes['onmousemove'].value}"
+                              onmouseout="#{richContextMenuBean.attributes['onmouseout'].value}"
+                              onmouseover="#{richContextMenuBean.attributes['onmouseover'].value}"
+                              onmouseup="#{richContextMenuBean.attributes['onmouseup'].value}"
+                              onshow="#{richContextMenuBean.attributes['onshow'].value}"
+                              popupWidth="#{richContextMenuBean.attributes['popupWidth'].value}"
+                              rendered="#{richContextMenuBean.attributes['rendered'].value}"
+                              showDelay="#{richContextMenuBean.attributes['showDelay'].value}"
+                              showEvent="#{richContextMenuBean.attributes['showEvent'].value}"
+                              style="#{richContextMenuBean.attributes['style'].value}"
+                              styleClass="#{richContextMenuBean.attributes['styleClass'].value}"
+                              title="#{richContextMenuBean.attributes['title'].value}"
+                              verticalOffset="#{richContextMenuBean.attributes['verticalOffset'].value}"
+                             >
+                <rich:menuItem id="menuItem2" label="Open" action="#{richContextMenuBean.doOpen}" icon="/resources/images/icons/open.gif" />
+
+                    <rich:menuGroup id="menuGroup3" label="Open Recent..." disabled="true">
+                        <rich:menuItem id="menuItem31"  label="Save" action="#{richContextMenuBean.doSave}" icon="/resources/images/icons/save.gif" />
+                        <rich:menuItem id="menuItem32" label="Save All" action="#{richContextMenuBean.doSaveAll}">
+                            <f:facet name="icon">
+                                <h:graphicImage library="images/icons" name="save_all.gif" />
+                            </f:facet>
+                        </rich:menuItem>
+                    </rich:menuGroup>
+
+                    <rich:menuSeparator id="menuSeparator11" />
+
+                    <rich:menuGroup id="menuGroup4" label="Save As...">
+                        <rich:menuItem id="menuItem41" label="Save" action="#{richContextMenuBean.doSave}" icon="/resources/images/icons/save.gif" />
+                        <rich:menuItem id="menuItem42" label="Save All" action="#{richContextMenuBean.doSaveAll}" >
+                            <f:facet name="icon">
+                                <h:graphicImage library="images/icons" name="save_all.gif" />
+                            </f:facet>
+                        </rich:menuItem>
+                        <rich:menuItem id="menuItem43" label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
+                    </rich:menuGroup>
+
+                    <rich:menuItem id="menuItem5" label="Print" disabled="true"/>
+
+                    <rich:menuItem id="menuItem6" label="Close" />
+
+                    <rich:menuSeparator id="menuSeparator12" />
+
+                    <rich:menuItem id="menuItem7" label="Exit" />
+            </rich:contextMenu>
+            
+            <br/>
+            <a4j:outputPanel ajaxRendered="true">
+                Current Selection: 
+                <h:outputText id="output" style="font-weight:bold" value="#{richContextMenuBean.current}"></h:outputText>
+            </a4j:outputPanel>
+            
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{richContextMenuBean.attributes}" id="attributes" />
+        </ui:define>
+
+    </ui:composition>
+</html>

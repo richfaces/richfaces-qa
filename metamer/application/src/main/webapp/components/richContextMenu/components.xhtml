@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2012, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+        
+        <ui:define name="head">
+            
+        </ui:define>
+
+        <ui:define name="component">
+        
+            <table>
+                <thead>
+                    <td>h:graphicImage</td>
+                    <td>h:dataTable</td>
+                    <td>h:outputText</td>
+                    <td>div</td>
+                    <td>rich:panelGroup</td>
+                </thead>
+                <tfoot>
+                    <td><i>form:imageClick</i></td>
+                    <td><i>form:tableClick</i></td>
+                    <td><i>form:outputTextClick</i></td>
+                    <td><i>divClick</i></td>
+                    <td><i>form:panelClick</i></td>
+                </tfoot>
+                <tr>
+                    <td>
+                        <h:graphicImage id="imageClick" value="/resources/images/pics/pic9.jpg" style="border : 5px solid #E4EAEF"/>
+                    </td>
+                    <td>
+                        <h:dataTable id="tableClick" style="width:150px;  height: 130px; background-color: lightgreen; padding: 10px; border: 5px solid #E4EAEF" />
+                    </td>
+                    <td>
+                        <h:outputLabel id="outputTextClick" value="outputTextClick" />
+                    </td>
+                    <td>
+                        <div id="divClick" style="width:120px; height: 100px; background-color: lightgreen; padding: 10px; border: 5px solid #E4EAEF"/>
+                            
+                    </td>
+                    <td>
+                        <h:panelGroup id="panelClick" layout="block" style="width:120px;  height: 100px; background-color: lightgreen; padding: 10px; border: 5px solid #E4EAEF;"/>
+                    </td>
+                </tr>            
+            </table>
+        
+            <rich:contextMenu id="ctxmenu"
+                              attachTo="#{richContextMenuBean.attributes['attachTo'].value}"
+                              dir="#{richContextMenuBean.attributes['dir'].value}"
+                              direction="#{richContextMenuBean.attributes['direction'].value}"
+                              disabled="#{richContextMenuBean.attributes['disabled'].value}"
+                              hideDelay="#{richContextMenuBean.attributes['hideDelay'].value}"
+                              horizontalOffset="#{richContextMenuBean.attributes['horizontalOffset'].value}"
+                              jointPoint="#{richContextMenuBean.attributes['jointPoint'].value}"
+                              label="#{richContextMenuBean.attributes['label'].value}"
+                              lang="#{richContextMenuBean.attributes['lang'].value}"
+                              mode="#{richContextMenuBean.attributes['mode'].value}"
+                              onclick="#{richContextMenuBean.attributes['onclick'].value}"
+                              ondblclick="#{richContextMenuBean.attributes[''].value}"
+                              ongrouphide="#{richContextMenuBean.attributes['ongrouphide'].value}"
+                              ongroupshow="#{richContextMenuBean.attributes['ongroupshow'].value}"
+                              onhide="#{richContextMenuBean.attributes['onhide'].value}"
+                              onitemclick="#{richContextMenuBean.attributes['onitemclick'].value}"
+                              onkeydown="#{richContextMenuBean.attributes['onkeydown'].value}"
+                              onkeypress="#{richContextMenuBean.attributes['onkeypress'].value}"
+                              onkeyup="#{richContextMenuBean.attributes['onkeyup'].value}"
+                              onmousedown="#{richContextMenuBean.attributes['onmousedown'].value}"
+                              onmousemove="#{richContextMenuBean.attributes['onmousemove'].value}"
+                              onmouseout="#{richContextMenuBean.attributes['onmouseout'].value}"
+                              onmouseover="#{richContextMenuBean.attributes['onmouseover'].value}"
+                              onmouseup="#{richContextMenuBean.attributes['onmouseup'].value}"
+                              onshow="#{richContextMenuBean.attributes['onshow'].value}"
+                              popupWidth="#{richContextMenuBean.attributes['popupWidth'].value}"
+                              rendered="#{richContextMenuBean.attributes['rendered'].value}"
+                              showDelay="#{richContextMenuBean.attributes['showDelay'].value}"
+                              showEvent="#{richContextMenuBean.attributes['showEvent'].value}"
+                              style="#{richContextMenuBean.attributes['style'].value}"
+                              styleClass="#{richContextMenuBean.attributes['styleClass'].value}"
+                              title="#{richContextMenuBean.attributes['title'].value}"
+                              verticalOffset="#{richContextMenuBean.attributes['verticalOffset'].value}" 
+                              >
+                <rich:menuItem id="menuItem31"  label="Save" icon="/resources/images/icons/save.gif" />
+                <rich:menuItem id="zin" label="Zoom In" onclick="enlarge('imageClick');" />
+                <rich:menuItem id="zout" label="Zoom Out" onclick="decrease('imageClick');" />
+            </rich:contextMenu>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{richContextMenuBean.attributes}" id="attributes" />
+        </ui:define>
+
+    </ui:composition>
+</html>

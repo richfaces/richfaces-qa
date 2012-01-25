@@ -43,7 +43,7 @@ import static org.richfaces.demo.push.TopicsContextMessageProducer.PUSH_TOPICS_C
  * Managed bean for a4j:push.
  *
  * @author Nick Belaevski, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 23060$
+ * @version $Revision: 23169 $
  */
 @ManagedBean(name = "a4jPushBean")
 @SessionScoped
@@ -51,7 +51,7 @@ public class A4JPushBean implements Serializable {
 
     private static final long serialVersionUID = 4810889475400649809L;
     public static final String METAMER_SUBTOPIC = "xxx";
-
+    
     private static Logger logger;
     private transient TopicsContext topicsContext;
     private Attributes attributes;
@@ -68,18 +68,10 @@ public class A4JPushBean implements Serializable {
 
         // set up messaging
         // TODO JJa 2011-12-07: make sure if initialization is required even use initialization mechanism from showcase
-
+        
         topicsContext = TopicsContext.lookup();
 
         attributes = Attributes.getComponentAttributesFromClass(UIPush.class, getClass());
-//        attributes.setAttribute("interval", 1000);
-//        attributes.setAttribute("action", "increaseCounterAction");
-//        attributes.setAttribute("actionListener", "increaseCounterActionListener");
-//        attributes.setAttribute("rendered", true);
-//        attributes.setAttribute("enabled", true);
-//
-//        // will be set on page and cannot be changed
-//        attributes.remove("eventProducer");
     }
 
     /**
