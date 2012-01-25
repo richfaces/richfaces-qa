@@ -35,7 +35,7 @@ import static org.jboss.arquillian.ajocado.Ajocado.*;
 
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a> 
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 23169 $
  */

@@ -24,8 +24,8 @@ package org.richfaces.tests.metamer.ftest.richContextMenu;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
- * Component attributes for rich:contextMenu 
- * 
+ * Component attributes for rich:contextMenu
+ *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision$
  */

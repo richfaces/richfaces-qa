@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean for rich:contextMenu
- * 
+ *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision$
  */
@@ -45,10 +45,10 @@ public class RichContextMenuBean implements Serializable {
     /** Generated serial version UID */
     private static final long serialVersionUID = 1323565239250527128L;
     private static Logger log = LoggerFactory.getLogger(RichContextMenuBean.class);
-    
+
     private Attributes attributes;
     private String current;
-    
+
     @PostConstruct
     public void init() {
         log.info("ContextMenu attributes initialized.");
@@ -56,10 +56,10 @@ public class RichContextMenuBean implements Serializable {
         attributes.setAttribute("disabled", "false");
         attributes.setAttribute("rendered", "true");
         attributes.setAttribute("hideDelay", "600");
-        
+
         attributes.remove("attachTo");
     }
-    
+
     public String doNew() {
         this.current = "New";
         return null;
@@ -105,5 +105,5 @@ public class RichContextMenuBean implements Serializable {
     public void setCurrent(String current) {
         this.current = current;
     }
-    
+
 }

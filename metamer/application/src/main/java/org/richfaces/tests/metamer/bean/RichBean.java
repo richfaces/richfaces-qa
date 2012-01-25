@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Managed bean storing glogal setting for the application, e.g. skin.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 23169 $
  */
@@ -194,7 +194,7 @@ public class RichBean implements Serializable {
 
     /**
      * Getter for user's skin.
-     * 
+     *
      * @return a RichFaces skin
      */
     public String getSkin() {
@@ -203,7 +203,7 @@ public class RichBean implements Serializable {
 
     /**
      * Setter for user's skin.
-     * 
+     *
      * @param skin
      *            a RichFaces skin
      */
@@ -354,7 +354,7 @@ public class RichBean implements Serializable {
 
     /**
      * Action that causes an error. Suitable for testing 'onerror' attribute.
-     * 
+     *
      * @return method never returns any value
      * @throws FacesException
      *             thrown always
@@ -365,7 +365,7 @@ public class RichBean implements Serializable {
 
     /**
      * An action that does nothing.
-     * 
+     *
      * @return null
      */
     public String dummyAction() {
@@ -375,7 +375,7 @@ public class RichBean implements Serializable {
 
     /**
      * An action listener that does nothing.
-     * 
+     *
      * @param event
      *            an event representing the activation of a user interface component (not used)
      */
@@ -385,17 +385,17 @@ public class RichBean implements Serializable {
 
     /**
      * An action listener that does nothing.
-     * 
+     *
      * @param event
      *            an event representing the activation of a user interface component (not used)
      */
     public void actionListener(AjaxBehaviorEvent event) {
         logToPage("* action listener invoked");
     }
-    
+
     /**
      * An action listener that does nothing.
-     * 
+     *
      * @param event
      *            an event representing the activation of a user interface component (not used)
      */
@@ -405,7 +405,7 @@ public class RichBean implements Serializable {
 
     /**
      * An item change listener that logs to the page old and new value.
-     * 
+     *
      * @param event
      *            an event representing the activation of a user interface component
      */
@@ -416,39 +416,38 @@ public class RichBean implements Serializable {
 
     /**
      * A value change listener that logs to the page old and new value.
-     * 
+     *
      * @param event
      *            an event representing the activation of a user interface component
      */
     public void valueChangeListener(ValueChangeEvent event) {
         logToPage("*1 value changed: " + event.getOldValue() + " -> " + event.getNewValue());
     }
-    
+
     /**
      * A change event listener that logs to the page old and new value.
-     * This is 2nd ValueChacgeListener. Use 2 different listeners is 
+     * This is 2nd ValueChacgeListener. Use 2 different listeners is
      * useful when testing more than one listener definition for one component
-     * 
+     *
      * @param event
      *            an event representing the activation of a user interface component
      */
     public void changeEventListener(AjaxBehaviorEvent event) {
         logToPage("*2 value changed ");
     }
-    
-    
+
     /** A value change listener that logs to the page old and new value.
      *  But if event value was longer that 20 chars, only first 20 chars will
      *  be logged
-     * 
+     *
      * @param event
      *            an event representing the activation of a user interface component
      */
     public void valueChangeListenerImproved(ValueChangeEvent event) {
-        
+
         String oldVal = event.getOldValue() != null ? event.getOldValue().toString() : null;
         String newVal = event.getNewValue() != null ? event.getNewValue().toString() : null;
-        
+
         logToPage("*3 value changed: "
             + (oldVal != null && oldVal.length() > 21 ? oldVal.substring(0, 20) : oldVal != null ? oldVal : "null")
             + " -> "

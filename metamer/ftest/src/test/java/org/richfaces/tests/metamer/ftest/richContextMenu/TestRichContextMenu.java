@@ -21,13 +21,34 @@
  */
 package org.richfaces.tests.metamer.ftest.richContextMenu;
 
+import static org.jboss.arquillian.ajocado.Ajocado.attributeEquals;
+import static org.jboss.arquillian.ajocado.Ajocado.elementNotVisible;
+import static org.jboss.arquillian.ajocado.Ajocado.elementVisible;
 import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
 import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
 import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
+import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
+
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+
+import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.contextMenuAttributes;
-import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.*;
+import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.dir;
+import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.disabled;
+import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.hideDelay;
+import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.horizontalOffset;
+import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.lang;
+import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.mode;
+import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.onshow;
+import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.popupWidth;
+import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.rendered;
+import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.showEvent;
+import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.style;
+import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.styleClass;
+import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.title;
+import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.verticalOffset;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -35,42 +56,34 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.css.CssProperty;
-import org.jboss.arquillian.ajocado.javascript.KeyCode;
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.geometry.Dimension;
-import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
+import org.jboss.arquillian.ajocado.dom.Event;
+import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import static org.jboss.arquillian.ajocado.Ajocado.*;
-
+import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
-import org.richfaces.component.Positioning;
 import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
-import org.jboss.arquillian.ajocado.framework.AjocadoConfigurationContext;
-import static org.jboss.arquillian.ajocado.Ajocado.*;
-
 
 /**
  * Test for rich:contextMenu component at faces/components/richContextMenu/simple.xhtml
- * 
+ *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision$
  */
 public class TestRichContextMenu extends AbstractAjocadoTest {
-    
+
     private static final Logger log = LoggerFactory.getLogger(TestRichContextMenu.class);
-    
+
     private JQueryLocator menuElemFormat = pjq("div[id$=:{0}]");
     private String menuElemId = "panelClick";
     private JQueryLocator menuElem = menuElemFormat.format(menuElemId);
     // contextMenu elem is always present (and selenium consider it as displayed and visible as well)
     private JQueryLocator contextMenu = jq("div[id$=:ctxMenu]");
     private JQueryLocator ctxMenuItemFormat = jq("div.rf-ctx-itm:eq({0})");
-    
+
     // content display is triggered by action
     private JQueryLocator contextMenuContent = jq("div.rf-ctx-lst");
 
@@ -78,43 +91,42 @@ public class TestRichContextMenu extends AbstractAjocadoTest {
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richContextMenu/simple.xhtml");
     }
-    
+
     private void clickOnTarget(JQueryLocator target) {
         // mouseDownRight doesn't work, so have to use left click for common cases
         contextMenuAttributes.set(showEvent, Event.CLICK);
-        
+
         Point position = selenium.getElementPosition(target);
-        selenium.clickAt(target, position.minus(new Point(0, 70)));
+        selenium.clickAt(target, position.substract(new Point(0, 70)));
     }
-    
+
     private void testFireContextMenuEvent(Event event, ElementLocator<?> element) {
         testFireContextMenuEvent(event, element, event.getEventName());
     }
-    
+
     private void testFireContextMenuEvent(Event event, ElementLocator<?> element, String attributeName) {
         ElementLocator<?> eventInput = pjq("input[id$=on" + attributeName + "Input]");
         String value = "metamerEvents += \"" + event.getEventName() + " \"";
 
         guardHttp(selenium).type(eventInput, value);
-        
+
         clickOnTarget(menuElem);
-        
+
         waitModel.until(elementVisible.locator(contextMenuContent));
 
         selenium.fireEvent(element, event);
 
-        waitGui.failWith("Attribute on" + attributeName + " does not work correctly").until(
-            new EventFiredCondition(event));
+        waitGui.failWith("Attribute on" + attributeName + " does not work correctly").until(new EventFiredCondition(event));
     }
-    
+
     @Test
     public void testAttachTo() {
         // since @attachTo is set to nestedComponentId, just check if menu displayed correctly
-        
+
         // contextMenu element is present always. Check if is displayed
         assertFalse(selenium.isVisible(contextMenuContent));
         assertTrue(selenium.isVisible(contextMenuContent));
-        clickOnTarget(menuElem); 
+        clickOnTarget(menuElem);
         assertTrue(selenium.isVisible(contextMenuContent));
         assertTrue(selenium.isVisible(contextMenuContent));
     }
@@ -127,16 +139,16 @@ public class TestRichContextMenu extends AbstractAjocadoTest {
 
     // @Test
     public void testDirection() {
-        
+
     }
 
     @Test
     public void testDisabled() {
         assertTrue(selenium.isElementPresent(contextMenu));
         assertTrue(selenium.isElementPresent(contextMenuContent));
-        
+
         contextMenuAttributes.set(disabled, true);
-        
+
         // contextMenu is present
         assertTrue(selenium.isElementPresent(contextMenu));
         // but content not, when disabled
@@ -149,30 +161,30 @@ public class TestRichContextMenu extends AbstractAjocadoTest {
         clickOnTarget(menuElem);
         assertTrue(selenium.isVisible(contextMenuContent));
         assertTrue(selenium.isVisible(contextMenuContent));
-        
+
         selenium.fireEvent(menuElem, Event.MOUSEUP);
         waitModel.until(elementNotVisible.locator(contextMenuContent));
-        
+
         assertFalse(selenium.isVisible(contextMenuContent));
         assertFalse(selenium.isVisible(contextMenuContent));
-        
+
     }
 
     @Test
     public void testHorizontalOffset() {
-        
+
         int offset = 11;
-        
+
         clickOnTarget(menuElem);
         int positionBefore = selenium.getElementPositionLeft(contextMenuContent);
-        
+
         contextMenuAttributes.set(horizontalOffset, offset);
         clickOnTarget(menuElem);
-        
+
         int positionAfter = selenium.getElementPositionLeft(contextMenuContent);
-        
+
         assertEquals(positionAfter, positionBefore + offset);
-        
+
     }
 
     // @Test
@@ -181,32 +193,32 @@ public class TestRichContextMenu extends AbstractAjocadoTest {
     }
 
     @Test
-    public void testLang() {        
+    public void testLang() {
         String langVal = "cs";
         contextMenuAttributes.set(lang, langVal);
-        //clickOnTarget(menuElem);
-        waitModel.until(attributeEquals.locator(contextMenu.getAttribute(Attribute.LANG)).text(langVal));        
+        // clickOnTarget(menuElem);
+        waitModel.until(attributeEquals.locator(contextMenu.getAttribute(Attribute.LANG)).text(langVal));
     }
 
     @Test
     public void testMode() {
-        
+
         contextMenuAttributes.set(showEvent, Event.CLICK);
         Point position = selenium.getElementPosition(menuElem);
-        
+
         // ajax
         contextMenuAttributes.set(mode, "ajax");
-        selenium.clickAt(menuElem, position.minus(new Point(0, 70)));
+        selenium.clickAt(menuElem, position.substract(new Point(0, 70)));
         guardXhr(selenium).click(ctxMenuItemFormat.format("0"));
-        
+
         // client
         contextMenuAttributes.set(mode, "client");
-        guardNoRequest(selenium).clickAt(menuElem, position.minus(new Point(0, 70)));
-        
+        guardNoRequest(selenium).clickAt(menuElem, position.substract(new Point(0, 70)));
+
         // server
         contextMenuAttributes.set(mode, "server");
-        guardHttp(selenium).clickAt(menuElem, position.minus(new Point(0, 70)));
-        
+        guardHttp(selenium).clickAt(menuElem, position.substract(new Point(0, 70)));
+
     }
 
     @Test
@@ -233,7 +245,7 @@ public class TestRichContextMenu extends AbstractAjocadoTest {
     public void testOnhide() {
         contextMenuAttributes.set(hideDelay, "20");
         // contextMenuAttributes.set(showEvent, Event.CLICK);
-        
+
         String value = "metamerEvents += \"hide\"";
         ElementLocator<?> eventInput = pjq("input[id$=onhideInput]");
 
@@ -241,10 +253,9 @@ public class TestRichContextMenu extends AbstractAjocadoTest {
         clickOnTarget(menuElem);
         clickOnTarget(menuElem);
         // selenium.clickAt(menuElem, new Point(-10, -100));
-        
-        waitGui.failWith("Attribute onhide does not work correctly").until(
-            new EventFiredCondition(new Event("hide")));
-        
+
+        waitGui.failWith("Attribute onhide does not work correctly").until(new EventFiredCondition(new Event("hide")));
+
     }
 
     @Test
@@ -295,12 +306,11 @@ public class TestRichContextMenu extends AbstractAjocadoTest {
     @Test
     public void testOnshow() {
         contextMenuAttributes.set(onshow, "metamerEvents += \"show\"");
-        
+
         clickOnTarget(menuElem);
-        
+
         // verify appropriate event fired
-        waitGui.failWith("Attribute onshow does not work correctly").until(
-            new EventFiredCondition(new Event("show")));        
+        waitGui.failWith("Attribute onshow does not work correctly").until(new EventFiredCondition(new Event("show")));
     }
 
     @Test
@@ -358,15 +368,15 @@ public class TestRichContextMenu extends AbstractAjocadoTest {
     @Test
     public void testVerticalOffset() {
         int offset = 11;
-        
+
         clickOnTarget(menuElem);
         int positionBefore = selenium.getElementPositionTop(contextMenuContent);
-        
+
         contextMenuAttributes.set(verticalOffset, offset);
         clickOnTarget(menuElem);
-        
+
         int positionAfter = selenium.getElementPositionTop(contextMenuContent);
-        
+
         assertEquals(positionAfter, positionBefore - offset);
     }
 
