@@ -51,7 +51,8 @@ import com.thoughtworks.selenium.SeleniumException;
  */
 public class FailureLoggingTestListener extends TestListenerAdapter {
 
-    protected File mavenProjectBuildDirectory = new File(System.getProperty("maven.project.build.directory", "./target/"));
+    protected File mavenProjectBuildDirectory = new File(System.getProperty("maven.project.build.directory",
+        "./target/"));
     protected File failuresOutputDir = new File(mavenProjectBuildDirectory, "failures");
     private AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
 
@@ -123,6 +124,9 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
         if (browser == BrowserType.FIREFOX) {
             screenshot = selenium.captureEntirePageScreenshot();
         }
+        if (browser == BrowserType.GOOGLE_CHROME) {
+            screenshot = selenium.captureScreenshot();
+        }
 
         String htmlSource = selenium.getHtmlSource();
 
@@ -137,7 +141,7 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
             FileUtils.forceMkdir(directory);
 
             FileUtils.writeStringToFile(stacktraceOutputFile, stacktrace);
-            if (browser == BrowserType.FIREFOX) {
+            if (browser == BrowserType.FIREFOX || browser == BrowserType.GOOGLE_CHROME) {
                 ImageIO.write(screenshot, "PNG", imageOutputFile);
             }
             FileUtils.writeStringToFile(trafficOutputFile, traffic);
