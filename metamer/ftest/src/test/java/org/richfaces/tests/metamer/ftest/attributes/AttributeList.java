@@ -1,24 +1,3 @@
-/*******************************************************************************
- * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.attributes;
 
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
@@ -37,6 +16,7 @@ import org.richfaces.tests.metamer.ftest.richAutocomplete.AutocompleteAttributes
 import org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler.CollapsibleSubTableTogglerAttributes;
 import org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes;
 import org.richfaces.tests.metamer.ftest.richComponentControl.ComponentControlAttributes;
+import org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes;
 import org.richfaces.tests.metamer.ftest.richDataScroller.DataScrollerAttributes;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes;
 import org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes;
@@ -56,9 +36,9 @@ import org.richfaces.tests.metamer.ftest.richTree.TreeAttributes;
 
 public class AttributeList {
     public static Attributes<BasicAttributes> basicAttributes = new Attributes<BasicAttributes>();
-
+    
     public static Attributes<TooltipAttributes> tooltipAttributes = new Attributes<TooltipAttributes>();
-    public static Attributes<AttachQueueAttributes> attachQueueAttrs1 = new Attributes<AttachQueueAttributes>(pjq("table.attributes[id$=attributes1]"));
+    public static Attributes<AttachQueueAttributes> attachQueueAttrs1 = new Attributes<AttachQueueAttributes>(pjq("table.attributes[id$=attributes1]")); 
     public static Attributes<AttachQueueAttributes> attachQueueAttrs2 = new Attributes<AttachQueueAttributes>(pjq("table.attributes[id$=attributes2]"));
     public static Attributes<QueueAttributes> queueAttributes = new Attributes<QueueAttributes>(pjq("table.attributes[id$=queueAttributes]"));
     public static Attributes<PollAttributes> pollAttributes = new Attributes<PollAttributes>();
@@ -67,7 +47,7 @@ public class AttributeList {
     public static Attributes<DataTableAttributes> dataTableAttributes = new Attributes<DataTableAttributes>();
     public static Attributes<DataTableFacets> dataTableFacets = new Attributes<DataTableFacets>(RequestType.XHR); // for facets use XHR by default
     public static Attributes<AutocompleteAttributes> autocompleteAttributes = new Attributes<AutocompleteAttributes>();
-    public static Attributes<CollapsibleSubTableTogglerAttributes> collapsibleSubTableTogglerAttributes =
+    public static Attributes<CollapsibleSubTableTogglerAttributes> collapsibleSubTableTogglerAttributes = 
         new Attributes<CollapsibleSubTableTogglerAttributes>();
     public static Attributes<ColumnAttributes> columnAttributes = new Attributes<ColumnAttributes>();
     public static Attributes<ComponentControlAttributes> componentControllAttributes = new Attributes<ComponentControlAttributes>();
@@ -86,5 +66,6 @@ public class AttributeList {
     public static Attributes<PickListAttributes> pickListAttributes = new Attributes<PickListAttributes>();
     public static Attributes<TreeAttributes> treeAttributes = new Attributes<TreeAttributes>(jq("span[id*=attributes]"));
     public static Attributes<MenuItemAttributes> menuItemAttributes = new Attributes<MenuItemAttributes>();
-
+    public static Attributes<ContextMenuAttributes> contextMenuAttributes = new Attributes<ContextMenuAttributes>();
+    
 }

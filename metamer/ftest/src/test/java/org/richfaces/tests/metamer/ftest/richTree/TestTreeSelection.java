@@ -21,16 +21,23 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTree;
 
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.treeAttributes;
+
+import org.richfaces.component.SwitchType;
+import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.jboss.arquillian.ajocado.framework.AjocadoConfigurationContext;
+import static org.jboss.arquillian.ajocado.Ajocado.*;
 
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a> * @author <a href="mailto:ppitonak@redhat.com">Pavol
- *         Pitonak</a>
- * @version $Revision: 23132 $
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a> 
+ * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
+ * @version $Revision: 23169 $
  */
 public class TestTreeSelection extends AbstractTestTreeSelection {
 
@@ -47,7 +54,7 @@ public class TestTreeSelection extends AbstractTestTreeSelection {
         testTopLevelSelection();
     }
 
-    @Test(groups = { "4.3" })
+    @Test(groups = { "4.2" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
     @Uses({ @Use(field = "selectionType", value = "selectionTypeAjax"),
         @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
@@ -68,7 +75,7 @@ public class TestTreeSelection extends AbstractTestTreeSelection {
         testSubNodesSelection();
     }
 
-    @Test(groups = { "4.3" })
+    @Test(groups = { "4.2" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
     @Uses({ @Use(field = "selectionType", value = "selectionTypeAjax"),
         @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
@@ -83,7 +90,7 @@ public class TestTreeSelection extends AbstractTestTreeSelection {
         testSubNodesSelectionEvents();
     }
 
-    @Test(groups = { "4.3" })
+    @Test(groups = { "4.2" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
     @Uses({ @Use(field = "selectionType", value = "eventEnabledSelectionTypes"),
         @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
