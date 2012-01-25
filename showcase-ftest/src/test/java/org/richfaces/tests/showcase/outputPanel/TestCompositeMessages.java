@@ -27,8 +27,11 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import org.jboss.arquillian.ajocado.ajaxaware.AjaxAwareInterceptor;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -37,10 +40,22 @@ import org.testng.annotations.Test;
  */
 public class TestCompositeMessages extends AbstractAjocadoTest {
 
+    // wrong name for sample therefore override
+    @BeforeMethod(groups = { "arquillian" })
+    @Override
+    public void loadPage() {
+
+        selenium.getCommandInterceptionProxy().registerInterceptor(new AjaxAwareInterceptor());
+
+        this.contextRoot = getContextRoot();
+
+        selenium.open(URLUtils.buildUrl(contextRoot, "/showcase/",
+            "richfaces/component-sample.jsf?demo=outputPanel&sample=compositemessages&skin=blueSky"));
+    }
+
     /* *******************************************************************************************************
      * Locators ****************************************************************** *************************************
      */
-
     protected JQueryLocator userNameInput = jq("input[type=text]:first");
     protected JQueryLocator addressInput = jq("textarea:first");
     protected JQueryLocator button = jq("input[type=button]");
@@ -97,8 +112,7 @@ public class TestCompositeMessages extends AbstractAjocadoTest {
     @Test(groups = { "4.2" })
     public void testUserNameFilledIncorrectlyMoreThan12() {
 
-        prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_TOO_LONG,
-            LENGTH_OF_ADDRESS_CORRECT_MIDDLE_VALUE);
+        prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_TOO_LONG, LENGTH_OF_ADDRESS_CORRECT_MIDDLE_VALUE);
 
         isErrorMessageStartingWithNamePresent(true);
 
@@ -163,8 +177,7 @@ public class TestCompositeMessages extends AbstractAjocadoTest {
     @Test(groups = { "4.2" })
     public void testAddressFilledIncorrectlyLengthMoreThan100() {
 
-        prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_CORRECT_MIDDLE_VALUE,
-            LENGTH_OF_ADDRESS_WRONG_TOO_LONG);
+        prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_CORRECT_MIDDLE_VALUE, LENGTH_OF_ADDRESS_WRONG_TOO_LONG);
 
         isErrorMessageStartingWithAddressPresent(true);
 
@@ -216,8 +229,7 @@ public class TestCompositeMessages extends AbstractAjocadoTest {
     @Test(groups = { "4.2" })
     public void testNameIncorrectlyLessThan3MoreThan0AddressIncorrectlyLength0() {
 
-        prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_LESS_THAN_MINIMAL,
-            LENGTH_OF_ADDRESS_WRONG_EMPTY);
+        prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_LESS_THAN_MINIMAL, LENGTH_OF_ADDRESS_WRONG_EMPTY);
 
         isErrorMessageStartingWithAddressPresent(true);
 
@@ -235,8 +247,7 @@ public class TestCompositeMessages extends AbstractAjocadoTest {
     @Test(groups = { "4.2" })
     public void testNameIncorrectlyLessThan3MoreThan0AddressIncorrectlyMoreThan100() {
 
-        prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_LESS_THAN_MINIMAL,
-            LENGTH_OF_ADDRESS_WRONG_TOO_LONG);
+        prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_LESS_THAN_MINIMAL, LENGTH_OF_ADDRESS_WRONG_TOO_LONG);
 
         isErrorMessageStartingWithAddressPresent(true);
 
@@ -288,18 +299,15 @@ public class TestCompositeMessages extends AbstractAjocadoTest {
     }
 
     /* ********************************************************************************************************
-     * Help methods *********************************************************************
-     * ***********************************
+     * Help methods ********************************************************************* ***********************************
      */
 
     /**
-     * Fills in correct name and correct address and check error messages, lengths are for checking various length
-     * values and they should be asssigned correctly
+     * Fills in correct name and correct address and check error messages, lengths are for checking various length values and
+     * they should be asssigned correctly
      *
-     * @param lengthOfUserName
-     *            A numember which is bigger than 2 and less than 13
-     * @param lengthOfAddress
-     *            A number which is bigger than 0 and less than 101
+     * @param lengthOfUserName A numember which is bigger than 2 and less than 13
+     * @param lengthOfAddress A number which is bigger than 0 and less than 101
      */
     private void fillUseDataCorrectlyAndCheckErrorMessages(int lengthOfUserName, int lengthOfAddress) {
 
@@ -315,10 +323,8 @@ public class TestCompositeMessages extends AbstractAjocadoTest {
     /**
      * Fill in the user name and address according to the params and ten clicks on the button
      *
-     * @param lengthOfUserName
-     *            length of username which will be filled in
-     * @param lengthOfAddress
-     *            length of address which will be filled in
+     * @param lengthOfUserName length of username which will be filled in
+     * @param lengthOfAddress length of address which will be filled in
      */
     private void prepareStringBuildersClickOnTheButton(int lengthOfUserName, int lengthOfAddress) {
 
@@ -360,23 +366,20 @@ public class TestCompositeMessages extends AbstractAjocadoTest {
     }
 
     /**
-     * This method should catch messages other than are declared as locators and also checks for messages starting with
-     * name
+     * This method should catch messages other than are declared as locators and also checks for messages starting with name
      */
     private void isErrorMessageStartingWithNamePresent(boolean shouldBeElementPresent) {
 
         if (shouldBeElementPresent) {
-            assertTrue(selenium.isElementPresent(errorMessageStartWithName), "There should ne an error starting with "
-                + "Name");
+            assertTrue(selenium.isElementPresent(errorMessageStartWithName), "There should ne an error starting with " + "Name");
         } else {
-            assertFalse(selenium.isElementPresent(errorMessageStartWithName),
-                "There should not be an error starting with " + "Name");
+            assertFalse(selenium.isElementPresent(errorMessageStartWithName), "There should not be an error starting with "
+                + "Name");
         }
     }
 
     /**
-     * This method should catch messages other than are declared as locators and also checks for messages starting with
-     * adress
+     * This method should catch messages other than are declared as locators and also checks for messages starting with adress
      */
     private void isErrorMessageStartingWithAddressPresent(boolean shouldBeElementPresent) {
 

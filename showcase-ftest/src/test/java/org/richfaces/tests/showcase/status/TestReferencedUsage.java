@@ -26,10 +26,13 @@ import static org.testng.Assert.assertTrue;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
 import static org.jboss.arquillian.ajocado.Ajocado.elementNotVisible;
 
+import org.jboss.arquillian.ajocado.ajaxaware.AjaxAwareInterceptor;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.jboss.cheiron.halt.XHRHalter;
 import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -37,6 +40,17 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestReferencedUsage extends AbstractAjocadoTest {
+
+    // wrong name of the sample
+    @BeforeMethod(groups = { "arquillian" })
+    @Override
+    public void loadPage() {
+
+        this.contextRoot = getContextRoot();
+
+        selenium.open(URLUtils.buildUrl(contextRoot, "/showcase/",
+            "richfaces/component-sample.jsf?demo=status&sample=referencedusage&skin=blueSky"));
+    }
 
     /* *******************************************************************************************************
      * Locators ****************************************************************** *************************************
@@ -62,17 +76,14 @@ public class TestReferencedUsage extends AbstractAjocadoTest {
     }
 
     /* ********************************************************************************************************
-     * Help methods *********************************************************************
-     * ***********************************
+     * Help methods ********************************************************************* ***********************************
      */
 
     /**
      * Writes something to the input and checks whether there is picture of Ajax request progress
      *
-     * @param whichInput
-     *            input where something will be written
-     * @param imageOfAjaxRequestProgress
-     *            image of ajax request progress which should appear when ajax request is being handled
+     * @param whichInput input where something will be written
+     * @param imageOfAjaxRequestProgress image of ajax request progress which should appear when ajax request is being handled
      */
     private void writeSomethingToTheInputAndCheckTheImageOfAjaxProgress(JQueryLocator whichInput,
         JQueryLocator imageOfAjaxRequestProgress) {

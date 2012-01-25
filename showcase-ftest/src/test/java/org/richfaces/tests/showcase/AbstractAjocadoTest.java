@@ -48,19 +48,7 @@ public abstract class AbstractAjocadoTest extends AbstractShowcaseTest {
     @BeforeMethod(groups = { "arquillian" })
     public void loadPage() {
 
-        // this is beacuse of permission denied failures, this interceptor
-        // intercept this type of exception and tries to
-        // repeat that command several times
         selenium.getCommandInterceptionProxy().registerInterceptor(new AjaxAwareInterceptor());
-
-        // workaround for jboss as 7, since it throws error when is looking up
-        // for contextRoot
-
-        // try {
-        // contextRoot = new URL("http://localhost:8080");
-        // } catch (MalformedURLException e) { // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // }
 
         String addition = getAdditionToContextRoot();
 
