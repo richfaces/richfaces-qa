@@ -42,22 +42,22 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-        
-           <p>The button is initially disabled, then richTooltipBean.testProperty is set true and we do ajax render="myButton". 
+
+           <p>The button is initially disabled, then richTooltipBean.testProperty is set true and we do ajax render="myButton".
            The button should disappears from the screen. Removing the tooltip should makes it work as expected.
            <br/>
-           In my example button doesn't disappear, but button's value changes to "Undefined" which should be indicating problem. 
+           In my example button doesn't disappear, but button's value changes to "Undefined" which should be indicating problem.
 
            </p>
-        
-           <a4j:commandButton id="triggerUpdate" value="Update testValue and rerender next Button" 
-                              actionListener="#{richTooltipBean.changePropertyVal}" render="myButton" />                              
+
+           <a4j:commandButton id="triggerUpdate" value="Update testValue and rerender next Button"
+                              actionListener="#{richTooltipBean.changePropertyVal}" render="myButton" />               
            <br/>
-           <a4j:commandButton id="triggerUpdateEDT" value="Update testValue and rerender Button in EDT" 
+           <a4j:commandButton id="triggerUpdateEDT" value="Update testValue and rerender Button in EDT"
                               actionListener="#{richTooltipBean.changePropertyVal}" render="myEDTButton" />
            <br/>
            <br/>
-        
+
            <!-- component -->
            <a4j:commandButton id="myButton"
                               value=" test "
@@ -69,10 +69,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                    </h:panelGroup>
                 </rich:tooltip>
            </a4j:commandButton>
-           
+
            <br/>
            <br/>
-           
+
            <rich:extendedDataTable id="richEDT"
                                     rows="3"
                                     value="#{richExtendedDataTableBean.state ? model.capitals : null}"
@@ -87,7 +87,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <rich:column id="columnCapital" sortBy="#{record.name}">
                     <h:outputText value="#{record.name}" />
                 </rich:column>
-                
+ 
                 <f:facet name="footer">
                     <a4j:commandButton id="myEDTButton"
                               value=" test EDT "
@@ -99,10 +99,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                            </h:panelGroup>
                         </rich:tooltip>
                    </a4j:commandButton>
-                </f:facet>                
+                </f:facet> 
 
             </rich:extendedDataTable>
-            
+
         </ui:define>
 
     </ui:composition>

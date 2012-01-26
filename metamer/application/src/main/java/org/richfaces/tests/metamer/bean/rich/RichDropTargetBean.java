@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version$Revision: 22460$
+ * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richDropTargetBean")
 @ViewScoped

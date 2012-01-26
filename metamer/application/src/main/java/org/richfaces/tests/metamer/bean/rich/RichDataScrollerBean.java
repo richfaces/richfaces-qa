@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * Managed bean for rich:dataScroller.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22977$
+ * @version $Revision: 22977 $
  */
 @ManagedBean(name = "richDataScrollerBean")
 @ViewScoped
@@ -72,6 +72,7 @@ public class RichDataScrollerBean implements Serializable {
 
         tableAttributes = Attributes.getEmptyAttributes(getClass());
         tableAttributes.setAttribute("rows", 9);
+
     }
 
     public Attributes getAttributes() {

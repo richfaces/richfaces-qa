@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * Managed bean for rich:tabPanel.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 23062$
+ * @version $Revision: 23062 $
  */
 @ManagedBean(name = "richTabPanelBean")
 @ViewScoped

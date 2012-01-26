@@ -40,7 +40,7 @@ import org.richfaces.tests.metamer.converter.CollectionConverter;
  * Representation an attribute of a JSF component.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22330$
+ * @version $Revision: 22330 $
  */
 @XmlRootElement(name = "property", namespace = "http://java.sun.com/xml/ns/javaee")
 public class Attribute implements Serializable {

@@ -33,7 +33,7 @@ import org.richfaces.tests.metamer.Template;
  * Converter used for view parameter "template".
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22330$
+ * @version $Revision: 22330 $
  */
 @FacesConverter(value = "templateNameConverter")
 public class TemplateNameConverter implements Converter {

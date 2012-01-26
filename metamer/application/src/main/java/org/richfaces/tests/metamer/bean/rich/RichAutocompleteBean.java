@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  * http://community.jboss.org/wiki/richfacesautocompletecomponentbehavior
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22883$
+ * @version $Revision: 22883 $
  */
 @ManagedBean(name = "richAutocompleteBean")
 // cannot be view-scoped (see https://jira.jboss.org/browse/RF-9287)

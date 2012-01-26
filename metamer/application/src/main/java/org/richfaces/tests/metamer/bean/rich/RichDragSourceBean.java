@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version$Revision: 22460$
+ * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richDragSourceBean")
 @ViewScoped
@@ -66,6 +66,7 @@ public class RichDragSourceBean implements Serializable {
 
         attributes.remove("dragValue");
         attributes.remove("event");
+
 
         for (int i = 0; i < DRAG_VALUES; i++) {
             dragValues.add(new DragValue(i + 1));

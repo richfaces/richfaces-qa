@@ -51,7 +51,7 @@ var swfobject = function() {
 				a = new ActiveXObject(SHOCKWAVE_FLASH_AX + ".7");
 			}
 			catch(e) {
-				try { 
+				try {
 					a = new ActiveXObject(SHOCKWAVE_FLASH_AX + ".6");
 					playerVersion = [6,0,21];
 					a.AllowScriptAccess = "always";	 // Introduced in fp6.0.47
@@ -99,7 +99,7 @@ var swfobject = function() {
 	/* Cross-browser onDomLoad
 		- Based on Dean Edwards' solution: http://dean.edwards.name/weblog/2006/06/again/
 		- Will fire an event as soon as the DOM of a page is loaded (supported by Gecko based browsers - like Firefox -, IE, Opera9+, Safari)
-	*/ 
+	*/
 	var onDomLoad = function() {
 		if (!ua.w3cdom) {
 			return;
@@ -107,7 +107,7 @@ var swfobject = function() {
 		addDomLoadEvent(main);
 		if (ua.ie && ua.win) {
 			try {	 // Avoid a possible Operation Aborted error
-				doc.write("<scr" + "ipt id=__ie_ondomload defer=true src=//:></scr" + "ipt>"); // String is split into pieces to avoid Norton AV to add code that can cause errors 
+				doc.write("<scr" + "ipt id=__ie_ondomload defer=true src=//:></scr" + "ipt>"); // String is split into pieces to avoid Norton AV to add code that can cause errors
 				script = getElementById("__ie_ondomload");
 				if (script) {
 					addListener(script, "onreadystatechange", checkReadyState);
@@ -160,14 +160,14 @@ var swfobject = function() {
 		if (isDomLoaded) {
 			fn();
 		}
-		else { 
+		else {
 			domLoadFnArr[domLoadFnArr.length] = fn; // Array.push() is only available in IE5.5+
 		}
 	}
 	
 	/* Cross-browser onload
 		- Based on James Edwards' solution: http://brothercake.com/site/resources/scripts/onload/
-		- Will fire an event as soon as a web page including all of its assets are loaded 
+		- Will fire an event as soon as a web page including all of its assets are loaded
 	 */
 	function addLoadEvent(fn) {
 		if (typeof win.addEventListener != UNDEF) {
@@ -318,7 +318,7 @@ var swfobject = function() {
 		else {
 			obj.parentNode.replaceChild(abstractAltContent(obj), obj);
 		}
-	} 
+	}
 
 	function abstractAltContent(obj) {
 		var ac = createElement("div");
@@ -534,7 +534,7 @@ var swfobject = function() {
 		}
 	}
 
-	/* Filter to avoid XSS attacks 
+	/* Filter to avoid XSS attacks
 	*/
 	function urlEncodeIfNecessary(s) {
 		var regex = /[\\\"<>\.;]/;
@@ -574,7 +574,7 @@ var swfobject = function() {
 	return {
 		/* Public API
 			- Reference: http://code.google.com/p/swfobject/wiki/SWFObject_2_0_documentation
-		*/ 
+		*/
 		registerObject: function(objectIdStr, swfVersionStr, xiSwfUrlStr) {
 			if (!ua.w3cdom || !objectIdStr || !swfVersionStr) {
 				return;
@@ -623,7 +623,7 @@ var swfobject = function() {
 				att.data = swfUrlStr;
 				att.width = widthStr;
 				att.height = heightStr;
-				var par = {}; 
+				var par = {};
 				if (parObj && typeof parObj === OBJECT) {
 					for (var j in parObj) {
 						if (parObj[j] != Object.prototype[j]) { // Filter out prototype additions from other potential libraries
@@ -727,7 +727,7 @@ var swfobject = function() {
 					storedAltContentId = null;
 					isExpressInstallActive = false;
 				}
-			} 
+			}
 		}
 	};
 }();

@@ -51,7 +51,7 @@ import org.slf4j.LoggerFactory;
  * Managed Bean for rich:graphValidator
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version$Revision: 22498$
+ * @version $Revision: 22498 $
  */
 @ManagedBean(name = "richGraphValidatorBean")
 @ViewScoped
@@ -125,6 +125,7 @@ public class RichGraphValidatorBean implements Serializable, Cloneable {
                     + REQUIRED_INT_VALUE + " or date is from future!",
                 groups = {Default.class, ValidationGroupAllComponents.class})
     public boolean isAllInputsCorrect() {
+
         return autocompleteInput.contains(smile)
             && inplaceSelect.contains(smile)
             && inplaceInput.contains(smile)

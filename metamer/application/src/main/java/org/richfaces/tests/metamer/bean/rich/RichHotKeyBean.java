@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
- * @version$Revision: 23135$
+ * @version $Revision: 23135 $
  */
 @ManagedBean(name = "richHotKeyBean")
 @ViewScoped

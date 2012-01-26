@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Java bean representing a capital.
  *
  * @author Exadel, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22716$
+ * @version $Revision: 22716 $
  */
 @XmlRootElement(name = "capital")
 public class Capital implements Serializable {

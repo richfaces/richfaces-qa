@@ -28,15 +28,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     -->
 
     <ui:composition template="/templates/template.xhtml">
-    
+
         <ui:define name="view">
             <f:metadata>
                 <f:viewParam name="templates" value="#{templateBean.templates}">
                     <f:converter converterId="templatesListConverter" />
                 </f:viewParam>
             </f:metadata>
-        </ui:define>    
-    
+        </ui:define>
+
         <ui:define name="component">
 
         <a4j:outputPanel>
@@ -87,7 +87,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <a4j:commandButton id="produceWarn" value="Produce Warn" action="#{notifyBean.produceWarn}" execute="@form"/>
             </h:form>
         </ui:define>
-        
+
         <ui:define name="outOfTemplateAfter">
             <h2>Attributes - Notify</h2>
             <metamer:attributes value="#{notifyBean.attributesNotify}" id="attributesNotify" render="panel"/>
@@ -97,7 +97,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <metamer:attributes value="#{notifyBean.attributesNotifyStackFirst}" id="attributesNotifyStack" render="panel"/>
             <h2>Attributes - Bean</h2>
             <metamer:attributes value="#{notifyBean.attributesBean}" id="attributesBean" render="panel"/>
-        </ui:define>        
+        </ui:define>
     </ui:composition>
-      
+
 </html>

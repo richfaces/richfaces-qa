@@ -35,7 +35,7 @@ import com.google.common.base.Strings;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version$Revision: 22493$
+ * @version $Revision: 22493 $
  */
 @FacesConverter("treeAdaptorKeyConverter")
 public class KeyConverter implements Converter {

@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * Managed bean for storing appropriate data for rich:editor component
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version$Revision$
+ * @version $Revision$
  */
 @ManagedBean(name = "richEditorBean")
 @ViewScoped

@@ -43,13 +43,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="component">
             <script type="text/javascript">
             function setCorrectValues() {
-        $('input[id$=simpleInput1]').val('10');
-        $('input[id$=simpleInput2]').val('10');
+            $('input[id$=simpleInput1]').val('10');
+            $('input[id$=simpleInput2]').val('10');
         }
 
         function setWrongValues() {
-        $('input[id$=simpleInput1]').val('200');
-        $('input[id$=simpleInput2]').val('200');
+            $('input[id$=simpleInput1]').val('200');
+            $('input[id$=simpleInput2]').val('200');
         }
             </script>
 
@@ -60,7 +60,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <legend>Messages1 - with 'for' attribute</legend>
                 <rich:messages id="msgs1"
                                for="#{richMessagesBean.attributes['for'].value}"
-                               ajaxRendered="#{richMessagesBean.attributes['ajaxRendered'].value}"            			   
+                               ajaxRendered="#{richMessagesBean.attributes['ajaxRendered'].value}"            			
                                keepTransient="#{richMessagesBean.attributes['keepTransient'].value}"
                                rendered="#{richMessagesBean.attributes['rendered'].value}"
                                showDetail="#{richMessagesBean.attributes['showDetail'].value}"
@@ -95,7 +95,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                showDetail="#{richMessagesBean.attributes['showDetail'].value}"
                                showSummary="#{richMessagesBean.attributes['showSummary'].value}"
                                dir="#{richMessagesBean.attributes['dir'].value}"
-                               lang="#{richMessagesBean.attributes['lang'].value}"            			               			   
+                               lang="#{richMessagesBean.attributes['lang'].value}"            			               			
                                style="#{richMessagesBean.attributes['style'].value}"
                                styleClass="#{richMessagesBean.attributes['styleClass'].value}"
                                title="#{richMessagesBean.attributes['title'].value}"
@@ -116,9 +116,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <h:outputLabel for="simpleInput1" value="#{multipleValidationRulesBean.description}" />
                 <h:inputText id="simpleInput1" value="#{richMessagesBean.simpleInput1}" label="Input 1" >                	
                     <f:validateLongRange minimum="5" maximum="150" />
-                    <f:validateLength maximum="2" /> 
+                    <f:validateLength maximum="2" />
                 </h:inputText>
-                <rich:message id="simpleInputMsg1" ajaxRendered="true" for="simpleInput1" />            
+                <rich:message id="simpleInputMsg1" ajaxRendered="true" for="simpleInput1" />
 
                 <h:outputLabel for="simpleInput2" value="#{multipleValidationRulesBean.description}" />
                 <h:inputText id="simpleInput2" value="#{richMessagesBean.simpleInput2}" label="Input 2" >
@@ -132,7 +132,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
             <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
-            <a4j:commandButton id="generateMsgsBtn" value="Generate Msgs" 
+            <a4j:commandButton id="generateMsgsBtn" value="Generate Msgs"
                                actionListener="#{richMessagesBean.generateFacesError}" />
 
             <br/>

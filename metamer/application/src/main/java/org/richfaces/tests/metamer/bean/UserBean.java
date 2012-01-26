@@ -32,7 +32,7 @@ import javax.faces.bean.SessionScoped;
  * Session-scoped managed bean storing user's roles.
  *
  * @author Nick Belaevski, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 21194$
+ * @version $Revision: 21194 $
  */
 @ManagedBean(name = "userBean")
 @SessionScoped

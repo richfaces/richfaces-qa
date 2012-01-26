@@ -27,7 +27,7 @@ import org.richfaces.model.CalendarDataModelItem;
  * Item of calendar data model.
  *
  * @author Ilya Shaikovsky, Exadel
- * @version$Revision: 21077$
+ * @version $Revision: 21077 $
  */
 public class CalendarModelItem implements CalendarDataModelItem {
 

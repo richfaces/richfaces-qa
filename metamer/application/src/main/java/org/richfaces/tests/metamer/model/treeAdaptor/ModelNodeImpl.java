@@ -32,7 +32,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version$Revision: 22493$
+ * @version $Revision: 22493 $
  */
 public class ModelNodeImpl extends AbstractNode implements ModelNode {
     private static final long serialVersionUID = 1L;

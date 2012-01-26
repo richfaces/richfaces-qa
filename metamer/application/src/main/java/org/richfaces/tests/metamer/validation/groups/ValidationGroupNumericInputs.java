@@ -25,7 +25,7 @@ package org.richfaces.tests.metamer.validation.groups;
  * Validation Group for Numeric Inputs
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version$Revision: 22492$
+ * @version $Revision: 22492 $
  */
 public interface ValidationGroupNumericInputs {
 

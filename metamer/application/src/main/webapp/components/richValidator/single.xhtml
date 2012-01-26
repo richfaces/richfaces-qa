@@ -48,19 +48,19 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="component">
             <script type="text/javascript">
             function setCorrectValues() {
-            $('input[id$=min]').val('4');                
+                $('input[id$=min]').val('4'); 
             }
 
-            function setWrongValues() {              
-            $('input[id$=min]').val('1');              
+            function setWrongValues() {
+                $('input[id$=min]').val('1');
             }
             </script>
-            
+
             <input id="setCorrectValuesButton" type="button" value="set correct values" onclick="setCorrectValues()"/>
             <input id="setWrongValuesButton" type="button" value="set wrong values" onclick="setWrongValues()"/>
 
             <h:panelGrid columns="3">
-                    
+     
 	                <h:outputLabel for="min" value="#{minBean.description}" />
 	                <h:inputText id="min" value="#{minBean.value}" label="#{minBean.label}" converter="#{minBean.converter}">
                         <rich:validator data="#{richValidatorBean.attributes['data'].value}"
@@ -76,7 +76,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                 event="blur" />
                     </h:inputText>
 	                <rich:message id="minMsg" for="min" />
-                
+ 
             </h:panelGrid>
 
             <br/>

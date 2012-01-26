@@ -12,7 +12,7 @@
         version: typeof window.opera != "undefined" ? opera.version() : (userAgent.match( /.+(?:rv|it|ra|ie|me)[\/: ]([\d.]+)/ ) || [])[1],
         os : navigator.platform
     };
-    
+
     if (jQuery.browser.mozilla) {
     	var matcher = /firefox\/([\d.]+)/;
     	if (matcher.test(userAgent)) {

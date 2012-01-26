@@ -33,7 +33,7 @@ import javax.faces.bean.RequestScoped;
  * Request-scoped managed bean providing current time.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 21194$
+ * @version $Revision: 21194 $
  */
 @ManagedBean(name = "timeBean")
 @RequestScoped

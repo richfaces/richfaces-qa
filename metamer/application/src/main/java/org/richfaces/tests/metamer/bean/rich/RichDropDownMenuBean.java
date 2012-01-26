@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * Managed bean for rich:dropDownMenu.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 23042$
+ * @version $Revision: 23042 $
  */
 @ManagedBean(name = "richDropDownMenuBean")
 @ViewScoped

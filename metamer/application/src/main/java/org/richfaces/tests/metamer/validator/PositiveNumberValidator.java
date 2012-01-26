@@ -32,7 +32,7 @@ import javax.faces.validator.ValidatorException;
  * Custom number validator that accepts only positive numbers.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22492$
+ * @version $Revision: 22492 $
  */
 @FacesValidator("org.richfaces.PositiveNumberValidator")
 public class PositiveNumberValidator implements Validator {
