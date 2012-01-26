@@ -12,6 +12,7 @@
         <packages>
             <package name="org.richfaces.tests.metamer.ftest.hCommandButton" />
             <package name="org.richfaces.tests.metamer.ftest.richComponentControl" />
+            <package name="org.richfaces.tests.metamer.ftest.richContextMenu" />
             <package name="org.richfaces.tests.metamer.ftest.richDropDownMenu" />
             <package name="org.richfaces.tests.metamer.ftest.richFunctions" />
             <package name="org.richfaces.tests.metamer.ftest.richGraphValidator" />
