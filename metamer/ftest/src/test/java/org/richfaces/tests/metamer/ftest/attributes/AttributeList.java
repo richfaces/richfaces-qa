@@ -13,6 +13,7 @@ import org.richfaces.tests.metamer.ftest.a4jStatus.StatusAttributes;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets;
 import org.richfaces.tests.metamer.ftest.richAutocomplete.AutocompleteAttributes;
+import org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes;
 import org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler.CollapsibleSubTableTogglerAttributes;
 import org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes;
 import org.richfaces.tests.metamer.ftest.richComponentControl.ComponentControlAttributes;
@@ -71,5 +72,6 @@ public class AttributeList {
     public static Attributes<TreeAttributes> treeAttributes = new Attributes<TreeAttributes>(jq("span[id*=attributes]"));
     public static Attributes<MenuItemAttributes> menuItemAttributes = new Attributes<MenuItemAttributes>();
     public static Attributes<ContextMenuAttributes> contextMenuAttributes = new Attributes<ContextMenuAttributes>();
+    public static Attributes<CalendarAttributes> calendarAttributes = new Attributes<CalendarAttributes>();
 
 }
