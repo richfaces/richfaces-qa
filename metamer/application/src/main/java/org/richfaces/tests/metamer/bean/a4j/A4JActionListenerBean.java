@@ -33,7 +33,7 @@ import javax.faces.event.ActionListener;
  * Managed bean for a4j:ajax.
  *
  * @author Nick Belaevski, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22460$
+ * @version $Revision: 22460 $
  */
 @ManagedBean(name = "a4jActionListenerBean")
 @NoneScoped

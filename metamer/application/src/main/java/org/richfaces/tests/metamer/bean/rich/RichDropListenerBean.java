@@ -32,7 +32,7 @@ import org.richfaces.tests.metamer.model.drag.DropValue;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version$Revision: 22460$
+ * @version $Revision: 22460 $
  */
 @RequestScoped
 @ManagedBean(name = "richDropListenerBean")

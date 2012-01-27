@@ -29,11 +29,9 @@ import java.util.Iterator;
  * in list is always template "plain".
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 21299$
+ * @version $Revision: 21299 $
  */
 public class TemplatesList extends ArrayList<Template> {
-
-    private static final long serialVersionUID = 3822067099609304855L;
 
     public TemplatesList() {
         super.add(Template.PLAIN);

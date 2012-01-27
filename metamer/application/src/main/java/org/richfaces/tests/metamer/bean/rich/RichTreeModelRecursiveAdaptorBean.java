@@ -44,11 +44,12 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version$Revision: 22460$
+ * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richTreeModelRecursiveAdaptorBean")
 @ViewScoped
 public class RichTreeModelRecursiveAdaptorBean implements Serializable {
+
 
     private static final long serialVersionUID = 1L;
     private static Logger logger;

@@ -40,7 +40,7 @@ import org.richfaces.log.Logger;
  * @author asmirnov@exadel.com
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version$Revision: 22871$
+ * @version $Revision: 22871 $
  */
 @ManagedBean(name = "metamer")
 @ApplicationScoped

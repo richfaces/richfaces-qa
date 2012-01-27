@@ -23,7 +23,7 @@ package org.richfaces.tests.metamer.model.treeAdaptor;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version$Revision: 22493$
+ * @version $Revision: 22493 $
  */
 public interface Node {
 

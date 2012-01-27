@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * Managed bean for rich:popupPanel.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22630$
+ * @version $Revision: 22630 $
  */
 @ManagedBean(name = "richPopupPanelBean")
 @ViewScoped

@@ -31,7 +31,7 @@ package org.richfaces.tests.metamer.model.treeAdaptor;
  * </p>
  *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version$Revision: 22493$
+ * @version $Revision: 22493 $
  */
 public interface LazyLoadable {
     void notifyLoaded();

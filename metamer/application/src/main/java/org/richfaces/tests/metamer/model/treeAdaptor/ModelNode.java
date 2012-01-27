@@ -31,7 +31,7 @@ import org.richfaces.tests.metamer.model.treeAdaptor.ModelNodeImpl.V;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version$Revision: 22493$
+ * @version $Revision: 22493 $
  */
 public interface ModelNode extends Node {
     A getValue();

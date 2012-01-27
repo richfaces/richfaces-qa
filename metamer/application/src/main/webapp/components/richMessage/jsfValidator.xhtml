@@ -43,13 +43,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="component">
             <script type="text/javascript">
         function setCorrectValues() {
-        $('input[id$=simpleInput1]').val('4');
-        $('input[id$=simpleInput2]').val('4');
+            $('input[id$=simpleInput1]').val('4');
+            $('input[id$=simpleInput2]').val('4');
         }
 
         function setWrongValues() {
-        $('input[id$=simpleInput1]').val('-5');
-        $('input[id$=simpleInput2]').val('-5');                
+            $('input[id$=simpleInput1]').val('-5');
+            $('input[id$=simpleInput2]').val('-5'); 
         }
             </script>
 
@@ -57,7 +57,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <input id="setWrongValuesButton" type="button" value="set wrong values" onclick="setWrongValues()"/>
 
             <rich:message id="simpleInputMsg"
-                          ajaxRendered="#{richMessageBean.attributes['ajaxRendered'].value}" 
+                          ajaxRendered="#{richMessageBean.attributes['ajaxRendered'].value}"
                           for="#{richMessageBean.attributes['for'].value}"
                           keepTransient="#{richMessageBean.attributes['keepTransient'].value}"
                           rendered="#{richMessageBean.attributes['rendered'].value}"                	
@@ -86,7 +86,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <f:validateLongRange minimum="2" maximum="10" />
                 </h:inputText>
                 <rich:message id="simpleInputMsg1"
-                              ajaxRendered="#{richMessageBean.attributes['ajaxRendered'].value}" 
+                              ajaxRendered="#{richMessageBean.attributes['ajaxRendered'].value}"
                               for="simpleInput1"
                               keepTransient="#{richMessageBean.attributes['keepTransient'].value}"
                               rendered="#{richMessageBean.attributes['rendered'].value}"                	
@@ -107,7 +107,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                               style="#{richMessageBean.attributes['style'].value}"
                               styleClass="#{richMessageBean.attributes['styleClass'].value}"
                               title="#{richMessageBean.attributes['title'].value}"
-                              />            
+                              />
             </h:panelGrid>
 
             <h:panelGrid columns="3">
@@ -116,7 +116,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <f:validateLongRange minimum="2" maximum="10" />
                 </h:inputText>
                 <rich:message id="simpleInputMsg2"
-                              ajaxRendered="#{richMessageBean.attributes['ajaxRendered'].value}" 
+                              ajaxRendered="#{richMessageBean.attributes['ajaxRendered'].value}"
                               for="simpleInput2"
                               keepTransient="#{richMessageBean.attributes['keepTransient'].value}"
                               rendered="#{richMessageBean.attributes['rendered'].value}"                	

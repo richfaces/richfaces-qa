@@ -39,7 +39,7 @@ import org.richfaces.tests.metamer.bean.UserBean;
  * Filter for working with user roles. It is used by RichFaces client function rich:isUserInRole().
  *
  * @author Nick Belaevski, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 21299$
+ * @version $Revision: 21299 $
  */
 public class TestIdentityFilter implements Filter {
 

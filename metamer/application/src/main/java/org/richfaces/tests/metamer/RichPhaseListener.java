@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * processing lifecycle.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 21299$
+ * @version $Revision: 21299 $
  */
 public class RichPhaseListener implements javax.faces.event.PhaseListener {
 

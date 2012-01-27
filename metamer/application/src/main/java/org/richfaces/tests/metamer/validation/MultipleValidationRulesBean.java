@@ -32,7 +32,7 @@ import javax.validation.constraints.Min;
  * rich:messages component - where need more validation messages per input
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version$Revision: 22492$
+ * @version $Revision: 22492 $
  */
 @ManagedBean
 public class MultipleValidationRulesBean extends Validable<Integer> {

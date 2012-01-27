@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  * Managed bean for rich:collapsibleSubTable.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 23004$
+ * @version $Revision: 23004 $
  */
 @ManagedBean(name = "richSubTableBean")
 @ViewScoped

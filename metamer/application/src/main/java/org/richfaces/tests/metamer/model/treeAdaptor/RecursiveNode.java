@@ -26,7 +26,7 @@ import java.util.Map;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version$Revision: 22493$
+ * @version $Revision: 22493 $
  */
 public interface RecursiveNode extends Node {
 

@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Representation of a RichFaces component in faces-config.xml.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 21299$
+ * @version $Revision: 21299 $
  */
 @XmlRootElement(name = "component", namespace = "http://java.sun.com/xml/ns/javaee")
 public class Component implements Serializable {

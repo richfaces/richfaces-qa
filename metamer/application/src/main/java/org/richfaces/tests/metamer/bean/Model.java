@@ -47,7 +47,7 @@ import org.richfaces.tests.metamer.model.tree.CompactDiscXmlDescriptor;
  * @author Exadel
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version$Revision: 22372$
+ * @version $Revision: 22372 $
  */
 @ManagedBean
 @ApplicationScoped
@@ -140,7 +140,8 @@ public class Model implements Serializable {
     }
 
     @SuppressWarnings("unchecked")
-    static <R, T extends ListHolder<R>> List<R> unmarshall(Class<T> rootElementType, String resourceURL) throws JAXBException {
+    static <R, T extends ListHolder<R>> List<R> unmarshall(Class<T> rootElementType, String resourceURL)
+        throws JAXBException {
         ClassLoader ccl = Thread.currentThread().getContextClassLoader();
         URL resource = ccl.getResource(resourceURL);
         JAXBContext context = JAXBContext.newInstance(rootElementType);
@@ -149,7 +150,6 @@ public class Model implements Serializable {
     }
 
     private static interface ListHolder<T> {
-
         List<T> getList();
 
         void setList(List<T> list);

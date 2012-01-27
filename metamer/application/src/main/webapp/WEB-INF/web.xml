@@ -3,8 +3,8 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
     <display-name>metamer</display-name>
-     
-    <!-- disabled because of a bug in Mojarra 2.1 showing an error message on every page 
+
+    <!-- disabled because of a bug in Mojarra 2.1 showing an error message on every page
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
@@ -96,6 +96,6 @@
         <location>/faces/error/404.xhtml</location>
     </error-page>
 
-    
+
 
 </web-app>

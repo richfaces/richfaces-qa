@@ -41,7 +41,7 @@ import org.richfaces.tests.metamer.bean.RichBean;
  * Managed bean for rich:fileUpload.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22507$
+ * @version $Revision: 22507 $
  */
 @ManagedBean(name = "richFileUploadBean")
 @ViewScoped

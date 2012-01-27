@@ -42,14 +42,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-        
+
             <p>Demo demonstration problem with switching tab when @switchType set to <i>"ajax"</i></p>
-           
+
             <rich:tabPanel id="test-rf-11814" switchType="#{richTabPanelBean.attributes['switchType'].value}">
                 <rich:tab id="Query_Tab" header="Query">
-                   First tab content 
+                   First tab content
                 </rich:tab>
-            
+
                 <rich:tab>
                     <f:facet name="header">
                         <a4j:commandLink action="#{richTabPanelBean.generateNewTab}">
@@ -59,7 +59,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     Second tab content
                 </rich:tab>
             </rich:tabPanel>
-            
+
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

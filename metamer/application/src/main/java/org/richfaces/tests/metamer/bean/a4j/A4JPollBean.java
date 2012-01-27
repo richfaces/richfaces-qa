@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * Managed bean for a4j:poll.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22460$
+ * @version $Revision: 22460 $
  */
 @ManagedBean(name = "a4jPollBean")
 @ViewScoped

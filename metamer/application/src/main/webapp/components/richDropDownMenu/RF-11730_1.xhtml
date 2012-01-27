@@ -40,7 +40,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </f:viewParam>
             </f:metadata>
         </ui:define>
-        
+
         <ui:define name="head">
             <style type="text/css">
                 .rf-ddm-lbl-unsel {
@@ -56,28 +56,28 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 }
             </style>
         </ui:define>
-       
+
         <ui:define name="component">
-        
+
             <i>This menu contains conditionally rendered menu item (labeled 'Menu group 1,2 or Empty Menu Group')
             placed after item labeled 'Print'<br/>
             Using ui:fragment with @rendered causes error, and this option is not displayed, even condition is met.
             </i>
             <br/>
             <br/>
-        
+
            <!-- component -->
            <rich:toolbar id="toolbar" height="26px">
                <rich:toolbarGroup id="openedTabs" location="left">
                   <rich:dropDownMenu id="menu-opened-tabs">
-                      <f:facet name="label">  
+                      <f:facet name="label">
                          <h:graphicImage library="images/icons" name="copy.gif" styleClass="pic" />
                       </f:facet>
-                      
+       
                       <rich:menuItem id="menuItem1" label="New" action="#{richDropDownMenuBean.doNew}" icon="/resources/images/icons/create_doc.gif"/>
 
                       <rich:menuItem id="menuItem2" label="Open" action="#{richDropDownMenuBean.doOpen}" icon="/resources/images/icons/open.gif" />
-                      
+       
                       <rich:menuGroup id="menuGroup3" label="Open Recent..." disabled="true">
                          <rich:menuItem id="menuItem31" label="Save" action="#{richDropDownMenuBean.doSave}" icon="/resources/images/icons/save.gif" />
                          <rich:menuItem id="menuItem32"  label="Save All" action="#{richDropDownMenuBean.doSaveAll}">
@@ -86,9 +86,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                             </f:facet>
                          </rich:menuItem>
                       </rich:menuGroup>
-                      
+       
                       <rich:menuSeparator id="menuSeparator11" />
-    
+
                         <rich:menuGroup id="menuGroup4" label="Save As...">
                             <rich:menuItem id="menuItem41" label="Save" action="#{richDropDownMenuBean.doSave}" icon="/resources/images/icons/save.gif" />
                             <rich:menuItem id="menuItem42" label="Save All" action="#{richDropDownMenuBean.doSaveAll}">
@@ -98,35 +98,35 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                             </rich:menuItem>
                             <rich:menuItem id="menuItem43" label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
                         </rich:menuGroup>
-    
+
                         <rich:menuItem id="menuItem5" label="Print" action="#{richDropDownMenuBean.doPrint}" disabled="true"/>
-                        
+         
                         <ui:fragment rendered="${empty richDropDownMenuBean.dynamicMenuGroups}" >
                             <rich:menuItem label="Empty Menu Group" />
                         </ui:fragment>
-                        
+         
                         <ui:fragment rendered="${not empty richDropDownMenuBean.dynamicMenuGroups}" >
                             <c:forEach items="#{richDropDownMenuBean.dynamicMenuGroups}" var="tab">
                                 <rich:menuGroup id="menu-group-#{tab.label}" label="#{tab.description}">
                                      <rich:menuItem label="Sub Item 1" />
                                      <rich:menuItem label="Sub Item 2" />
                                   </rich:menuGroup>
-                            </c:forEach>                        
+                            </c:forEach>         
                         </ui:fragment>
-                        
+         
                         <rich:menuSeparator id="menuSeparator12" />
                         <rich:menuItem id="menuItem7" label="Exit" action="#{richDropDownMenuBean.doExit}" />
-                        
+         
                   </rich:dropDownMenu>
                </rich:toolbarGroup>
            </rich:toolbar>
-                		 
-           <br/>           
-           <a4j:commandButton id="a4jButton" value="[a4j] Change list of tabs" render="menu-opened-tabs" 
-            actionListener="${richDropDownMenuBean.changeTabList}" />            
-            
+                		
+           <br/>
+           <a4j:commandButton id="a4jButton" value="[a4j] Change list of tabs" render="menu-opened-tabs"
+            actionListener="${richDropDownMenuBean.changeTabList}" />
+
            <br/><br/>
-            
+
         </ui:define>
 
     </ui:composition>

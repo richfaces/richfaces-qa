@@ -42,7 +42,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-        
+
             <p>
                 Page with nested collapsibleSubTable to verify <a href="https://issues.jboss.org/browse/RF-11656" target="_blank">RF-11656</a>
                 <br/><br/>
@@ -52,7 +52,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 If you are not able to collapse Company details for employee, it is still not working<br/>
                 This attribute value (@expanded) for nested collapsibleSubTable should be set to false as well, and don't work.
             </p>
-        
+
             <rich:dataTable id="richDataTable" value="#{richSubTableBean.lists}" var="list" keepSaved="true">
                 <f:facet name="header">
                     <rich:columnGroup id="columnGroup">
@@ -75,16 +75,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <rich:collapsibleSubTableToggler id="subTableTC" for="richSubTable1"/>
                     <h:outputText value="#{list[0].sex == 'MALE' ? 'Men' : 'Women'}" />
                 </rich:column>
-        
-        
+
+
                 <rich:collapsibleSubTable id="richSubTable1"
                                           value="#{richSubTableBean.state ? list : null}"
                                           var="employee"
                                           rows="3"
-                                          expandMode="ajax" 
+                                          expandMode="ajax"
                                           expanded="#{richSubTableBean.expanded[list]}">
-                     
-                     <rich:column>                          
+      
+                     <rich:column>           
                          <h:outputText style="margin-left: 15px" value="#{employee.name}"/>
                      </rich:column>
                      <rich:column>
@@ -95,9 +95,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                             <f:convertDateTime pattern="d MMM yyyy"/>
                         </h:outputText>
                     </rich:column>
-                    
+     
                     <rich:collapsibleSubTable value="#{employee.companies}"
-                                              var="company" 
+                                              var="company"
                                               id="richSubTable2"
                                               rows="2"
                                               expandMode="ajax"
@@ -107,15 +107,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                              <f:facet name="header">
                                 <rich:collapsibleSubTableToggler id="subTableTC2" for="richSubTable2"/>
                             <h:outputText value="Employee's Company Details" />
-                             </f:facet>                             
+                             </f:facet>              
                          </rich:column>
-                         
+          
                          <rich:column>
                              <f:facet name="header">
                                 <h:outputText value="Company Name"/>
                              </f:facet>
                              <h:outputText style="margin-left: 30px" value="#{company.name}"/>
-                         </rich:column>                         
+                         </rich:column>          
                          <rich:column>
                             <f:facet name="header">
                                 <h:outputText value="Company Phone"/>
@@ -124,8 +124,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                          </rich:column>
                     </rich:collapsibleSubTable>
                </rich:collapsibleSubTable>
-        
-            </rich:dataTable>              
+
+            </rich:dataTable>
         </ui:define>
 
     </ui:composition>

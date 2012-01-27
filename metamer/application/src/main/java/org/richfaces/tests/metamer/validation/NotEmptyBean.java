@@ -28,7 +28,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * Helper bean for testing JSR-303.
  *
  * @author asmirnov, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22492$
+ * @version $Revision: 22492 $
  */
 @ManagedBean
 public class NotEmptyBean extends Validable<String> {

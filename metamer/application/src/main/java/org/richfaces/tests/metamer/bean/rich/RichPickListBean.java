@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  * Backing Bean for rich:pickList component at
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version$Revision$
+ * @version $Revision$
  */
 @ManagedBean(name = "richPickListBean")
 @ViewScoped

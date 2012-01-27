@@ -32,7 +32,7 @@ import javax.faces.validator.ValidatorException;
  * Custom string validator that accepts only string "RichFaces".
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version$Revision: 22492$
+ * @version $Revision: 22492 $
  */
 @FacesValidator("org.richfaces.StringRichFacesValidator")
 public class StringRichFacesValidator implements Validator {

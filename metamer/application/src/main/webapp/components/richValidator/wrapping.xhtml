@@ -52,27 +52,27 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 var inPast = new Date(today.getTime() - 4 * 24 * 3600 * 1000);
                 var inFuture = new Date(today.getTime() + 4 * 24 * 3600 * 1000);
 
-            $('input[id$=assertTrue]')[0].checked = true;
-            $('input[id$=assertFalse]')[0].checked = false;
-            $('input[id$=decimalMinMax]').val('3');
-            $('input[id$=digits]').val('2.567');
-            $('input[id$=max]').val('9');
-            $('input[id$=min]').val('4');
-            $('input[id$=minMax]').val('4');
-            $('input[id$=notEmpty]').val('RichFaces 4');
-            $('input[id$=notNull]').val('RichFaces 4');
-            $('input[id$=pattern]').val('richFaces 4');
-            $('input[id$=regexp]').val('100');
-            $('input[id$=custom]').val('RichFaces');
-            $('input[id$=past]').val(inPast.format("d mmm yyyy"));
-            $('input[id$=future]').val(inFuture.format("d mmm yyyy"));
-            $('input[id$=stringSize]').val('JSF');
-            $('input[value=A]')[0].checked=true
-            $('input[value=B]')[0].checked=true
-            $('input[value=C]')[0].checked=false
-            $('input[value=D]')[0].checked=false
-            $('input[value=E]')[0].checked=false
-            $('input[value=F]')[0].checked=false
+                $('input[id$=assertTrue]')[0].checked = true;
+                $('input[id$=assertFalse]')[0].checked = false;
+                $('input[id$=decimalMinMax]').val('3');
+                $('input[id$=digits]').val('2.567');
+                $('input[id$=max]').val('9');
+                $('input[id$=min]').val('4');
+                $('input[id$=minMax]').val('4');
+                $('input[id$=notEmpty]').val('RichFaces 4');
+                $('input[id$=notNull]').val('RichFaces 4');
+                $('input[id$=pattern]').val('richFaces 4');
+                $('input[id$=regexp]').val('100');
+                $('input[id$=custom]').val('RichFaces');
+                $('input[id$=past]').val(inPast.format("d mmm yyyy"));
+                $('input[id$=future]').val(inFuture.format("d mmm yyyy"));
+                $('input[id$=stringSize]').val('JSF');
+                $('input[value=A]')[0].checked=true
+                $('input[value=B]')[0].checked=true
+                $('input[value=C]')[0].checked=false
+                $('input[value=D]')[0].checked=false
+                $('input[value=E]')[0].checked=false
+                $('input[value=F]')[0].checked=false
             }
 
             function setWrongValues() {
@@ -80,35 +80,35 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 var inPast = new Date(today.getTime() - 4 * 24 * 3600 * 1000);
                 var inFuture = new Date(today.getTime() + 4 * 24 * 3600 * 1000);
 
-            $('input[id$=assertTrue]')[0].checked = false;
-            $('input[id$=assertFalse]')[0].checked = true;
-            $('input[id$=decimalMinMax]').val('10.668');
-            $('input[id$=digits]').val('15.627123');
-            $('input[id$=max]').val('122');
-            $('input[id$=min]').val('-544');
-            $('input[id$=minMax]').val('-5');
-            $('input[id$=notEmpty]').val('');
-            $('input[id$=notNull]').val('');
-            $('input[id$=pattern]').val('@@@');
-            $('input[id$=regexp]').val('@@@');
-            $('input[id$=custom]').val('@@@');
-            $('input[id$=past]').val(inFuture.format("d mmm yyyy"));
-            $('input[id$=future]').val(inPast.format("d mmm yyyy"));
-            $('input[id$=stringSize]').val('JSF 2');
-            $('input[value=A]')[0].checked=false
-            $('input[value=B]')[0].checked=false
-            $('input[value=C]')[0].checked=false
-            $('input[value=D]')[0].checked=false
-            $('input[value=E]')[0].checked=false
-            $('input[value=F]')[0].checked=true
+                $('input[id$=assertTrue]')[0].checked = false;
+                $('input[id$=assertFalse]')[0].checked = true;
+                $('input[id$=decimalMinMax]').val('10.668');
+                $('input[id$=digits]').val('15.627123');
+                $('input[id$=max]').val('122');
+                $('input[id$=min]').val('-544');
+                $('input[id$=minMax]').val('-5');
+                $('input[id$=notEmpty]').val('');
+                $('input[id$=notNull]').val('');
+                $('input[id$=pattern]').val('@@@');
+                $('input[id$=regexp]').val('@@@');
+                $('input[id$=custom]').val('@@@');
+                $('input[id$=past]').val(inFuture.format("d mmm yyyy"));
+                $('input[id$=future]').val(inPast.format("d mmm yyyy"));
+                $('input[id$=stringSize]').val('JSF 2');
+                $('input[value=A]')[0].checked=false
+                $('input[value=B]')[0].checked=false
+                $('input[value=C]')[0].checked=false
+                $('input[value=D]')[0].checked=false
+                $('input[value=E]')[0].checked=false
+                $('input[value=F]')[0].checked=true
             }
             </script>
-            
+
             <input id="setCorrectValuesButton" type="button" value="set correct values" onclick="setCorrectValues()"/>
             <input id="setWrongValuesButton" type="button" value="set wrong values" onclick="setWrongValues()"/>
 
             <h:panelGrid columns="3">
-            
+
                 <rich:validator data="#{richValidatorBean.attributes['data'].value}"
                                 disabled="#{richValidatorBean.attributes['disabled'].value}"
                                 immediate="#{richValidatorBean.attributes['immediate'].value}"
@@ -120,19 +120,19 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                 queueId="#{richValidatorBean.attributes['queueId'].value}"
                                 status="#{richValidatorBean.attributes['status'].value}"
                                 >
-                    
+     
                     <h:outputLabel for="assertTrue" value="#{assertTrueBean.description}" />
-	                <h:selectBooleanCheckbox id="assertTrue" value="#{assertTrueBean.value}" label="#{assertTrueBean.label}" />	                    
+	                <h:selectBooleanCheckbox id="assertTrue" value="#{assertTrueBean.value}" label="#{assertTrueBean.label}" />	     
 	                <rich:message id="assertTrueMsg" for="assertTrue" />
-	                
+	 
 	                <h:outputLabel for="assertFalse" value="#{assertFalseBean.description}" />
-	                <h:selectBooleanCheckbox id="assertFalse" value="#{assertFalseBean.value}" label="#{assertFalseBean.label}" />	                    
+	                <h:selectBooleanCheckbox id="assertFalse" value="#{assertFalseBean.value}" label="#{assertFalseBean.label}" />	     
 	                <rich:message id="assertFalseMsg" for="assertFalse" />
-	                
+	 
 	                <h:outputLabel for="decimalMinMax" value="#{decimalMinMaxBean.description}" />
 	                <h:inputText id="decimalMinMax" value="#{decimalMinMaxBean.value}" label="#{decimalMinMaxBean.label}" converter="#{decimalMinMaxBean.converter}" />
 	                <rich:message id="decimalMinMaxMsg" for="decimalMinMax" />
-	                
+	 
 	                <h:outputLabel for="digits" value="#{digitsBean.description}" />
                 	<h:inputText id="digits" value="#{digitsBean.value}" label="#{digitsBean.label}" converter="#{digitsBean.converter}" />
                 	<rich:message id="digitsMsg" for="digits" />
@@ -140,11 +140,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 	<h:outputLabel for="max" value="#{maxBean.description}" />
 	                <h:inputText id="max" value="#{maxBean.value}" label="#{maxBean.label}" converter="#{maxBean.converter}" />
 	                <rich:message id="maxMsg" for="max" />
-	                
+	 
 	                <h:outputLabel for="min" value="#{minBean.description}" />
 	                <h:inputText id="min" value="#{minBean.value}" label="#{minBean.label}" converter="#{minBean.converter}" />
 	                <rich:message id="minMsg" for="min" />
-	                
+	 
 	                <h:outputLabel for="minMax" value="#{minMaxBean.description}" />
                 	<h:inputText id="minMax" value="#{minMaxBean.value}" label="#{minMaxBean.label}" converter="#{minMaxBean.converter}" />
                 	<rich:message id="minMaxMsg" for="minMax" />
@@ -152,7 +152,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 	<h:outputLabel for="notEmpty" value="#{notEmptyBean.description}" />
 	                <h:inputText id="notEmpty" value="#{notEmptyBean.value}" label="#{notEmptyBean.label}" converter="#{notEmptyBean.converter}" />
 	                <rich:message id="notEmptyMsg" for="notEmpty" />
-	                
+	 
 	                <h:outputLabel for="notNull" value="#{notNullBean.description}" />
 	                <h:inputText id="notNull" value="#{notNullBean.value}" label="#{notNullBean.label}" converter="emptyStringToNullConverter" />
 	                <rich:message id="notNullMsg" for="notNull" />
@@ -163,16 +163,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
 	                <h:outputLabel for="custom" value="custom validator, RichFaces" />
 	                <h:inputText id="custom" value="#{richValidatorBean.stringValue}" label="custom">
-	                    <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>	                    
+	                    <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>	     
 	                </h:inputText>
 	                <rich:message id="customMsg" for="custom" />
-                
+ 
 	                <h:outputLabel for="regexp" value="custom regexp validator (pattern: #{richValidatorBean.regExp})" />
 	                <h:inputText id="regexp" value="#{richValidatorBean.regexpValue}" label="custom">
 	                    <f:validateRegex pattern="#{richValidatorBean.regExp}" />
 	                </h:inputText>
 	                <rich:message id="regexpMsg" for="regexp" />
-                
+ 
 	                <h:outputLabel for="past" value="#{pastBean.description}" />
 	                <h:inputText id="past" value="#{pastBean.value}" label="#{pastBean.label}" >
 	                    <f:convertDateTime pattern="d MMM yyyy"/>
@@ -201,7 +201,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 	                <rich:message id="sizeMsg" for="size" />
                 	
                 </rich:validator>
-                
+ 
             </h:panelGrid>
 
             <br/>

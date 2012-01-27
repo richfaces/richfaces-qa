@@ -60,7 +60,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version$Revision: 23123$
+ * @version $Revision: 23123 $
  */
 @ManagedBean(name = "richTreeBean")
 @ViewScoped
@@ -130,6 +130,7 @@ public class RichTreeBean implements Serializable {
         this.attributes = attributes;
     }
 
+
     public void processDragging(DropEvent dropEvent) {
         RichBean.logToPage("* dropListener");
     }
@@ -144,10 +145,9 @@ public class RichTreeBean implements Serializable {
 
     public RichFacesTreeNode<Labeled> getRichFacesTreeNodeRoot() {
         if (richfacesTreeNodeRoot == null) {
-            List<RichFacesTreeNode<Labeled>> richfacesTreeNodeList = (List<RichFacesTreeNode<Labeled>>) (List<?>) buildTree(RichFacesTreeNode
-                .createFactory());
+            List<RichFacesTreeNode<Labeled>> richfacesTreeNodeList = (List<RichFacesTreeNode<Labeled>>) (List<?>) buildTree(RichFacesTreeNode.createFactory());
             richfacesTreeNodeRoot = new RichFacesTreeNode<Labeled>();
-            int i = 0;
+            int i=0;
             for (RichFacesTreeNode<?> node : richfacesTreeNodeList) {
                 richfacesTreeNodeRoot.addChild(i, node);
                 i++;
@@ -158,8 +158,7 @@ public class RichTreeBean implements Serializable {
 
     public List<SwingTreeNode<Labeled>> getSwingTreeNodeRoot() {
         if (swingTreeNodeRoot == null) {
-            List<SwingTreeNode<Labeled>> swingTreeNodeList = (List<SwingTreeNode<Labeled>>) (List<?>) buildTree(SwingTreeNode
-                .createFactory());
+            List<SwingTreeNode<Labeled>> swingTreeNodeList = (List<SwingTreeNode<Labeled>>) (List<?>) buildTree(SwingTreeNode.createFactory());
             swingTreeNodeRoot = swingTreeNodeList;
         }
         return swingTreeNodeRoot;
@@ -215,13 +214,12 @@ public class RichTreeBean implements Serializable {
         }
     }
 
-    private List<TreeNodeWithContent<Labeled>> buildTree(
-        TreeNodeWithContentFactory<TreeNodeWithContent<Labeled>> treeNodeFactory) {
+    private List<TreeNodeWithContent<Labeled>> buildTree(TreeNodeWithContentFactory<TreeNodeWithContent<Labeled>> treeNodeFactory) {
         List<TreeNodeWithContent<Labeled>> firstLevelNodes = new ArrayList<TreeNodeWithContent<Labeled>>();
-        for (State state : companiesCache.keySet()) {
+        for(State state : companiesCache.keySet()) {
             TreeNodeWithContent<Labeled> stateTreeNode = treeNodeFactory.createTreeNode(null, state);
             stateTreeNode.setType("country");
-            for (Company company : companiesCache.get(state)) {
+            for(Company company : companiesCache.get(state)) {
                 TreeNodeWithContent<Labeled> companyTreeNode = treeNodeFactory.createTreeNode(stateTreeNode, company);
                 companyTreeNode.setType("company");
                 for (CompactDisc cd : cdCache.get(company)) {
