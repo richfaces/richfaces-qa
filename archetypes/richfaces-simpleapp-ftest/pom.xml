@@ -17,14 +17,13 @@
 		Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301
 		USA, or see the FSF site: http://www.fsf.org.
 	-->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <artifactId>richfaces-archetypes-ftest</artifactId>
         <groupId>org.richfaces.tests.archetypes</groupId>
-        <version>4.2.0-SNAPSHOT</version>
+        <version>4.2.0.20120127-CR1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -209,12 +208,8 @@
                                 <configuration>
                                     <tasks>
                                         <mkdir dir="${project.build.directory}/downloads" />
-                                        <get
-                                            src="http://archive.apache.org/dist/tomcat/tomcat-7/v${container.version}/bin/apache-tomcat-${container.version}.${container.archive.type}"
-                                            dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
-                                        <unzip
-                                            src="${project.build.directory}/downloads/apache-tomcat-${container.version}.${container.archive.type}"
-                                            dest="${project.build.directory}" overwrite="false" />
+                                        <get src="http://archive.apache.org/dist/tomcat/tomcat-7/v${container.version}/bin/apache-tomcat-${container.version}.${container.archive.type}" dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
+                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${container.version}.${container.archive.type}" dest="${project.build.directory}" overwrite="false" />
                                     </tasks>
                                 </configuration>
                                 <goals>
@@ -287,12 +282,8 @@
                                 <configuration>
                                     <tasks>
                                         <mkdir dir="${project.build.directory}/downloads" />
-                                        <get
-                                            src="http://archive.apache.org/dist/tomcat/tomcat-6/v${container.version}/bin/apache-tomcat-${container.version}.${container.archive.type}"
-                                            dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
-                                        <unzip
-                                            src="${project.build.directory}/downloads/apache-tomcat-${container.version}.${container.archive.type}"
-                                            dest="${project.build.directory}" overwrite="false" />
+                                        <get src="http://archive.apache.org/dist/tomcat/tomcat-6/v${container.version}/bin/apache-tomcat-${container.version}.${container.archive.type}" dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
+                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${container.version}.${container.archive.type}" dest="${project.build.directory}" overwrite="false" />
                                     </tasks>
                                 </configuration>
                                 <goals>

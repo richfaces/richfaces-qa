@@ -8,8 +8,7 @@
     General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this 
     software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the 
     FSF site: http://www.fsf.org. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -21,7 +20,7 @@
 
     <groupId>org.richfaces.qa</groupId>
     <artifactId>richfaces-qa-parent</artifactId>
-    <version>4.2.0-SNAPSHOT</version>
+    <version>4.2.0.20120127-CR1</version>
     <packaging>pom</packaging>
 
     <name>RichFaces QA Parent</name>
@@ -512,11 +511,8 @@
                                 <configuration>
                                     <tasks>
                                         <mkdir dir="${project.build.directory}/downloads" />
-                                        <get
-                                            src="http://archive.apache.org/dist/tomcat/tomcat-6/v${version.tomcat6}/bin/apache-tomcat-${version.tomcat6}.zip"
-                                            dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
-                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat6}.zip"
-                                            dest="${project.build.directory}" overwrite="false" />
+                                        <get src="http://archive.apache.org/dist/tomcat/tomcat-6/v${version.tomcat6}/bin/apache-tomcat-${version.tomcat6}.zip" dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
+                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat6}.zip" dest="${project.build.directory}" overwrite="false" />
                                     </tasks>
                                 </configuration>
                                 <goals>
@@ -588,11 +584,8 @@
                                 <configuration>
                                     <tasks>
                                         <mkdir dir="${project.build.directory}/downloads" />
-                                        <get
-                                            src="http://archive.apache.org/dist/tomcat/tomcat-7/v${version.tomcat7}/bin/apache-tomcat-${version.tomcat7}.zip"
-                                            dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
-                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat7}.zip"
-                                            dest="${project.build.directory}" overwrite="false" />
+                                        <get src="http://archive.apache.org/dist/tomcat/tomcat-7/v${version.tomcat7}/bin/apache-tomcat-${version.tomcat7}.zip" dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
+                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat7}.zip" dest="${project.build.directory}" overwrite="false" />
                                     </tasks>
                                 </configuration>
                                 <goals>
