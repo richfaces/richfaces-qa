@@ -29,7 +29,8 @@
     <description>The parent for all RichFaces qa sub-projects. It specifies build and project meta-data</description>
 
     <properties>
-        
+       
+        <version.richfaces>4.2.0-SNAPSHOT</version.richfaces> 
         <richfaces.checkstyle.version>3</richfaces.checkstyle.version>
         
         <!-- version of JBoss containers to use and download -->

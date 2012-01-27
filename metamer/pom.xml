@@ -42,7 +42,6 @@
 
     <properties>
         <richfaces.checkstyle.version>3</richfaces.checkstyle.version>
-        <version.richfaces>${project.version}</version.richfaces>
     </properties>
 
     <dependencyManagement>
