@@ -16,7 +16,7 @@
     <name>RichFaces Showcase Mobile Ftest</name>
 
     <properties>
-        <showcase.version>${project.version}</showcase.version>
+        <showcase.version>${version.richfaces}</showcase.version>
         <testng.listeners>org.jboss.arquillian.testng.container.TestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng.xml</testng.suite.xml>
         <arquillian.version>1.0.0.CR6</arquillian.version>
@@ -89,7 +89,7 @@
                     <groupId>org.richfaces.examples</groupId>
                     <artifactId>richfaces-showcase</artifactId>
                     <type>war</type>
-                    <version>${project.version}</version>
+                    <version>${version.richfaces}</version>
                     <classifier>${showcase.classifier}</classifier>
                 </dependency>
             </dependencies>
@@ -142,7 +142,7 @@
                                             <groupId>org.richfaces.examples</groupId>
                                             <artifactId>richfaces-showcase</artifactId>
                                             <type>war</type>
-                                            <version>${project.version}</version>
+                                            <version>${version.richfaces}</version>
                                             <classifier>${showcase.classifier}</classifier>
                                             <destFileName>showcase.war</destFileName>
                                         </artifactItem>
