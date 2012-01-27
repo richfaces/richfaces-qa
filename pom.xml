@@ -99,6 +99,13 @@
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <arguments>-DskipTests=true</arguments>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -251,13 +258,6 @@
                             <environmentVariables>
                                 <JBOSS_HOME>${jboss6Home}</JBOSS_HOME>
                             </environmentVariables>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-release-plugin</artifactId>
-                        <version>2.2.1</version>
-                        <configuration>
-                            <arguments>-Dmaven.test.skip-true -Dselenium.test.skip=true -Dselenium.server.skip=true</arguments>
                         </configuration>
                     </plugin>
                 </plugins>
