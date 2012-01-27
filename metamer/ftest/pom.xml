@@ -64,12 +64,12 @@
         <dependency>
             <groupId>org.richfaces.ui</groupId>
             <artifactId>richfaces-components-api</artifactId>
-            <version>${project.version}</version>
+            <version>${version.richfaces}</version>
         </dependency>
         <dependency>
             <groupId>org.richfaces.ui</groupId>
             <artifactId>richfaces-components-ui</artifactId>
-            <version>${project.version}</version>
+            <version>${version.richfaces}</version>
         </dependency>
         <!-- Arquillian dependencies -->
         <dependency>
