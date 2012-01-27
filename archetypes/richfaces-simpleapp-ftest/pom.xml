@@ -109,6 +109,13 @@
                     </systemProperties>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <arguments>-Dmaven.test.skip-true -Dselenium.test.skip=true -Dselenium.server.skip=true</arguments>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
