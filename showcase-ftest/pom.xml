@@ -31,7 +31,7 @@
             <groupId>org.richfaces.examples</groupId>
             <artifactId>richfaces-showcase</artifactId>
             <type>war</type>
-            <version>${project.version}</version>
+            <version>${version.richfaces}</version>
             <classifier>${showcase.classifier}</classifier>
         </dependency>
         <!-- Arquillian dependencies -->
@@ -87,7 +87,7 @@
                                 <artifactItem>
                                     <groupId>org.richfaces.examples</groupId>
                                     <artifactId>richfaces-showcase</artifactId>
-                                    <version>${project.version}</version>
+                                    <version>${version.richfaces}</version>
                                     <classifier>${showcase.classifier}</classifier>
                                     <type>war</type>
                                     <destFileName>showcase.war</destFileName>
