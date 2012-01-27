@@ -40,10 +40,6 @@
         <module>ftest</module>
     </modules>
 
-    <properties>
-        <richfaces.checkstyle.version>3</richfaces.checkstyle.version>
-    </properties>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
