@@ -34,20 +34,7 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.contextMenuAttributes;
-import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.dir;
-import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.disabled;
-import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.hideDelay;
-import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.horizontalOffset;
-import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.lang;
-import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.mode;
-import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.onshow;
-import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.popupWidth;
-import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.rendered;
-import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.showEvent;
-import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.style;
-import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.styleClass;
-import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.title;
-import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.verticalOffset;
+import static org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes.*;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -244,12 +231,7 @@ public class TestRichContextMenu extends AbstractAjocadoTest {
     @Test
     public void testOnhide() {
         contextMenuAttributes.set(hideDelay, "20");
-        // contextMenuAttributes.set(showEvent, Event.CLICK);
-
-        String value = "metamerEvents += \"hide\"";
-        ElementLocator<?> eventInput = pjq("input[id$=onhideInput]");
-
-        guardHttp(selenium).type(eventInput, value);
+        contextMenuAttributes.set(onhide, "metamerEvents += \"hide\"");
         clickOnTarget(menuElem);
         clickOnTarget(menuElem);
         // selenium.clickAt(menuElem, new Point(-10, -100));
