@@ -10,7 +10,7 @@ read -p 'Enter release version: ' RELEASE
 read -p 'Enter new development version: ' DEVELOPMENT
 read -p 'Enter path to the settings.xml: ' MVN_SETTINGS
 
-CONF="--batch-mode -Dtag=${RELEASE} -DreleaseVersion=${RELEASE} -DdevelopmentVersion=${DEVELOPMENT} -Dmaven.test.skip=true -DignoreSnapshots=true"
+CONF="--batch-mode -Dtag=${RELEASE} -DreleaseVersion=${RELEASE} -DdevelopmentVersion=${DEVELOPMENT} -Dmaven.test.skip=true -Dselenium.test.skip=true -DignoreSnapshots=true"
 
 if [ -n "$MVN_SETTINGS" ]; then
    CONF="$CONF -s $MVN_SETTINGS"; 
