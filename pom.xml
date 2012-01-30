@@ -29,7 +29,7 @@
 
     <properties>
        
-        <version.richfaces>4.2.0-SNAPSHOT</version.richfaces> 
+        <version.richfaces>4.2.0.CR1</version.richfaces> 
         <richfaces.checkstyle.version>3</richfaces.checkstyle.version>
         
         <!-- version of JBoss containers to use and download -->
@@ -44,7 +44,7 @@
         <!-- arquillian versions -->
         <arquillian.tomcat.version>1.0.0.CR2</arquillian.tomcat.version>
         <arquillian.drone.version>1.0.0.CR3</arquillian.drone.version>
-        <arquillian.ajocado-testng.version>1.0.0-SNAPSHOT</arquillian.ajocado-testng.version>
+        <arquillian.ajocado-testng.version>1.0.0.CR2</arquillian.ajocado-testng.version>
         <arquillian.jboss-as6.version>1.0.0.CR2</arquillian.jboss-as6.version>
         
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->
