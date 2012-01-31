@@ -40,19 +40,6 @@ import org.testng.annotations.Test;
  */
 public class TestCompositeMessages extends AbstractAjocadoTest {
 
-    // wrong name for sample therefore override
-    @BeforeMethod(groups = { "arquillian" })
-    @Override
-    public void loadPage() {
-
-        selenium.getCommandInterceptionProxy().registerInterceptor(new AjaxAwareInterceptor());
-
-        this.contextRoot = getContextRoot();
-
-        selenium.open(URLUtils.buildUrl(contextRoot, "/showcase/",
-            "richfaces/component-sample.jsf?demo=outputPanel&sample=compositemessages&skin=blueSky"));
-    }
-
     /* *******************************************************************************************************
      * Locators ****************************************************************** *************************************
      */

@@ -399,7 +399,7 @@
             <id>jbossas-managed-7-1</id>
             <properties>
                 <metamer.classifier>jee6</metamer.classifier>
-                <showcase.classifier>jbas7</showcase.classifier>
+                <showcase.classifier>jbas71</showcase.classifier>
             </properties>
             <dependencies>
                 <dependency>
