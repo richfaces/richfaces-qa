@@ -20,7 +20,7 @@
 
     <groupId>org.richfaces.qa</groupId>
     <artifactId>richfaces-qa-parent</artifactId>
-    <version>4.2.0-SNAPSHOT</version>
+    <version>4.2.0.20120201-CR1</version>
     <packaging>pom</packaging>
 
     <name>RichFaces QA Parent</name>
