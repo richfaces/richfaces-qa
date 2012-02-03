@@ -204,6 +204,7 @@ public class TestRichSpinnerWithJSR303 extends AbstractAjocadoTest {
     public void testAllCorrect() {
 
         setAllCorrect();
+        waitFor(1500); // FIXME
 
         waitGui.until(TextContainsCondition.getInstance().text(CORRECT_MIN_VAL)
             .locator(outputFormat.format(ID.MIN.val())));
