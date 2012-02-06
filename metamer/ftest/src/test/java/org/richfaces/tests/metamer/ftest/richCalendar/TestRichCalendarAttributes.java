@@ -33,6 +33,8 @@ import static org.richfaces.tests.metamer.ftest.BasicAttributes.buttonClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.inputClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.inputStyle;
 
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.calendarAttributes;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -95,16 +97,14 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testBoundaryDatesModeInactive() {
-        selenium.click(pjq("input[name$=boundaryDatesModeInput][value=inactive]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(boundaryDatesMode, "inactive");
 
         testBoundaryDatesModeNull();
     }
 
     @Test
     public void testBoundaryDatesModeScroll() {
-        selenium.click(pjq("input[name$=boundaryDatesModeInput][value=scroll]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(boundaryDatesMode, "scroll");
         selenium.click(input);
 
         String thisMonth = selenium.getText(monthLabel);
@@ -136,8 +136,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testBoundaryDatesModeSelect() {
-        selenium.click(pjq("input[name$=boundaryDatesModeInput][value=select]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(boundaryDatesMode, "select");
         selenium.click(input);
 
         String thisMonth = selenium.getText(monthLabel);
@@ -176,31 +175,27 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testButtonClassLabel() {
-        selenium.type(pjq("input[type=text][id$=buttonLabelInput]"), "label");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(buttonLabel, "label");
 
         testStyleClass(button, buttonClass);
     }
 
     @Test
     public void testButtonClassIcon() {
-        selenium.click(pjq("input[name$=buttonIconInput][value*=heart]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(buttonIcon, "heart");
 
         testStyleClass(image, buttonClass);
     }
 
     @Test
     public void testButtonIcon() {
-        selenium.click(pjq("input[name$=buttonIconInput][value*=star]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(buttonIcon, "star");
 
         AttributeLocator attr = image.getAttribute(Attribute.SRC);
         String src = selenium.getAttribute(attr);
         assertTrue(src.contains("star.png"), "Calendar's icon was not updated.");
 
-        selenium.click(pjq("td:has(label:contains(null)) > input[name$=buttonIconInput]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.reset(buttonIcon);
 
         src = selenium.getAttribute(attr);
         assertTrue(src.contains("calendarIcon.png"), "Calendar's icon was not updated.");
@@ -209,18 +204,15 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10255")
     public void testButtonDisabledIcon() {
-        selenium.click(pjq("input[name$=disabledInput][value=true]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(disabled, Boolean.TRUE);
 
-        selenium.click(pjq("input[name$=buttonDisabledIconInput][value*=heart]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(buttonDisabledIcon, "heart");
 
         AttributeLocator attr = image.getAttribute(Attribute.SRC);
         String src = selenium.getAttribute(attr);
         assertTrue(src.contains("heart.png"), "Calendar's icon was not updated.");
 
-        selenium.click(pjq("input[name$=buttonDisabledIconInput][value=]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.reset(buttonDisabledIcon);
 
         src = selenium.getAttribute(attr);
         assertTrue(src.contains("disabledCalendarIcon.png"), "Calendar's icon was not updated.");
@@ -228,8 +220,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testButtonLabel() {
-        selenium.type(pjq("input[type=text][id$=buttonLabelInput]"), "label");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(buttonLabel, "label");
 
         assertTrue(selenium.isVisible(button), "Button should be displayed.");
         assertEquals(selenium.getText(button), "label", "Label of the button.");
@@ -237,8 +228,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
             assertFalse(selenium.isVisible(image), "Image should not be displayed.");
         }
 
-        selenium.click(pjq("input[name$=buttonIconInput][value*=star]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(buttonIcon, "star");
 
         if (selenium.isElementPresent(image)) {
             assertFalse(selenium.isVisible(image), "Image should not be displayed.");
@@ -250,10 +240,8 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
     public void testConverterMessage() {
         JQueryLocator message = pjq("span[id$=msg] .rf-msg-det");
 
-        selenium.click(pjq("input[name$=enableManualInputInput][value=true]"));
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=converterMessageInput]"), "conversion error");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(enableManualInput, Boolean.TRUE);
+        calendarAttributes.set(converterMessage, "conversion error");
 
         selenium.type(input, "xxx");
         guardXhr(selenium).click(pjq("input[id$=a4jButton]"));
@@ -264,8 +252,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testDatePattern() {
-        selenium.type(pjq("input[type=text][id$=datePatternInput]"), "hh:mm:ss a MMMM d, yyyy");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(datePattern, "hh:mm:ss a MMMM d, yyyy");
 
         selenium.click(input);
 
@@ -290,8 +277,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testDayClassFunction() {
-        selenium.click(pjq("input[name$=dayClassFunctionInput][value=yellowTuesdays]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(dayClassFunction, "yellowTuesdays");
 
         selenium.click(input);
 
@@ -302,8 +288,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
             }
         }
 
-        selenium.click(pjq("input[name$=dayClassFunctionInput][value=]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.reset(dayClassFunction);
 
         selenium.click(input);
 
@@ -316,8 +301,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RF-9837", "https://issues.jboss.org/browse/RF-10085" })
     public void testDefaultTime() {
-        selenium.type(pjq("input[type=text][id$=defaultTimeInput]"), "21:24");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(defaultTime, "21:24");
 
         selenium.click(input);
         selenium.click(cellWeekDay.format(3, 3));
@@ -330,8 +314,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testDisabled() {
-        selenium.click(pjq("input[name$=disabledInput][value=true]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(disabled, Boolean.TRUE);
 
         AttributeLocator disabledAttr = input.getAttribute(new Attribute("disabled"));
         assertTrue(selenium.isAttributePresent(disabledAttr), "Disabled attribute of input should be defined.");
@@ -348,10 +331,10 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
     public void testEnableManualInput() {
         AttributeLocator readonlyAttr = input.getAttribute(new Attribute("readonly"));
         assertTrue(selenium.isAttributePresent(readonlyAttr), "Readonly attribute of input should be defined.");
+        // assertEquals(selenium.getAttribute(readonlyAttr), "readonly", "Input should be read-only.");
         assertEquals(selenium.getAttribute(readonlyAttr), "true", "Input should be read-only.");
 
-        selenium.click(pjq("input[name$=enableManualInputInput][value=true]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(enableManualInput, Boolean.TRUE);
 
         assertFalse(selenium.isAttributePresent(readonlyAttr), "Readonly attribute of input should not be defined.");
     }
@@ -359,8 +342,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-9646")
     public void testFirstWeekDay() {
-        selenium.type(pjq("input[type=text][id$=firstWeekDayInput]"), "6");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(firstWeekDay, "6");
 
         selenium.click(input);
 
@@ -388,8 +370,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
     @Test(groups = { "4.Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-10821")
     public void testImmediate() {
-        selenium.click(pjq("input[name$=immediateInput][value=true]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(immediate, Boolean.TRUE);
 
         selenium.click(input);
 
@@ -422,8 +403,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testInputSize() {
-        selenium.type(pjq("input[type=text][id$=inputSizeInput]"), "30");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(inputSize, "30");
 
         AttributeLocator sizeAttr = input.getAttribute(Attribute.SIZE);
         assertTrue(selenium.isAttributePresent(sizeAttr), "Size attribute of input should be defined.");
@@ -437,8 +417,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testLocale() {
-        selenium.type(pjq("input[type=text][id$=localeInput]"), "ru");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(locale, "ru");
 
         selenium.click(input);
 
@@ -473,8 +452,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
             "október", "november", "december" };
         String labelsString = "január,február,marec,apríl,máj,jún,   júl,august,september,október,november,december";
 
-        selenium.type(pjq("input[id$=monthLabelsInput]"), labelsString);
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(monthLabels, labelsString);
 
         int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
         String month = null;
@@ -494,8 +472,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
         String[] labels = { "jan", "feb", "mar", "apr", "máj", "jún", "júl", "aug", "sep", "okt", "nov", "dec" };
         String labelsString = "jan,feb,mar,apr,máj,jún,   júl,aug,sep,okt,nov,dec";
 
-        selenium.type(pjq("input[id$=monthLabelsShortInput]"), labelsString);
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(monthLabelsShort, labelsString);
 
         String month = null;
 
@@ -509,10 +486,8 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testOnbeforetimeselectOntimeselect() {
-        selenium.type(pjq("input[id$=onbeforetimeselectInput]"), "metamerEvents += \"beforetimeselect \"");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[id$=ontimeselectInput]"), "metamerEvents += \"timeselect \"");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(onbeforetimeselect, "metamerEvents += \"beforetimeselect \"");
+        calendarAttributes.set(ontimeselect, "metamerEvents += \"timeselect \"");
 
         selenium.click(input);
         selenium.click(cellDay.format(18));
@@ -529,8 +504,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testOnchange() {
-        selenium.type(pjq("input[id$=onchangeInput]"), "metamerEvents += \"change \"");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(onchange, "metamerEvents += \"change \"");
 
         selenium.click(input);
         selenium.click(cellDay.format(18));
@@ -542,8 +516,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testOnclean() {
-        selenium.type(pjq("input[id$=oncleanInput]"), "metamerEvents += \"clean \"");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(onclean, "metamerEvents += \"clean \"");
 
         selenium.click(input);
         selenium.click(cellDay.format(18));
@@ -555,11 +528,9 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testOncomplete() {
-        selenium.click(pjq("input[name$=modeInput][value=ajax]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(mode, "ajax");
 
-        selenium.type(pjq("input[id$=oncompleteInput]"), "metamerEvents += \"complete \"");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(oncomplete, "metamerEvents += \"complete \"");
 
         selenium.click(input);
         guardXhr(selenium).click(nextMonthButton);
@@ -569,8 +540,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testOndatemouseout() {
-        selenium.type(pjq("input[id$=ondatemouseoutInput]"), "metamerEvents += \"datemouseout \"");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(ondatemouseout, "metamerEvents += \"datemouseout \"");
 
         selenium.click(input);
         selenium.fireEvent(cellDay.format(18), Event.MOUSEOUT);
@@ -581,8 +551,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testOndatemouseover() {
-        selenium.type(pjq("input[id$=ondatemouseoverInput]"), "metamerEvents += \"datemouseover \"");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(ondatemouseover, "metamerEvents += \"datemouseover \"");
 
         selenium.click(input);
         selenium.fireEvent(cellDay.format(18), Event.MOUSEOVER);
@@ -593,8 +562,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testOndateselect() {
-        selenium.type(pjq("input[id$=ondateselectInput]"), "metamerEvents += \"dateselect \"");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(ondateselect, "metamerEvents += \"dateselect \"");
 
         selenium.click(input);
         selenium.click(cellDay.format(18));
@@ -605,8 +573,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testOnhide() {
-        selenium.type(pjq("input[id$=onhideInput]"), "metamerEvents += \"hide \"");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(onhide, "metamerEvents += \"hide \"");
 
         selenium.click(input);
         selenium.click(input);
@@ -622,11 +589,9 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-9602")
     public void testOninputchange() {
-        selenium.click(pjq("input[name$=enableManualInputInput][value=true]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(enableManualInput, Boolean.TRUE);
 
-        selenium.type(pjq("input[id$=oninputchangeInput]"), "metamerEvents += \"inputchange \"");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(oninputchange, "metamerEvents += \"inputchange \"");
 
         selenium.type(input, "Dec 23, 2010 19:27");
 
@@ -696,8 +661,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testOnshow() {
-        selenium.type(pjq("input[id$=onshowInput]"), "metamerEvents += \"show \"");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(onshow, "metamerEvents += \"show \"");
 
         selenium.click(input);
         selenium.click(input);
@@ -707,8 +671,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testPopup() {
-        selenium.click(pjq("input[name$=popupInput][value=false]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(CalendarAttributes.popup, Boolean.FALSE);
 
         boolean displayed = selenium.isVisible(calendar);
         assertTrue(displayed, "Calendar is not present on the page.");
@@ -732,16 +695,14 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testRendered() {
-        selenium.click(pjq("input[type=radio][name$=renderedInput][value=false]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(rendered, Boolean.FALSE);
 
         assertFalse(selenium.isElementPresent(calendar), "Panel should not be rendered when rendered=false.");
     }
 
     @Test
     public void testShowApplyButton() {
-        selenium.click(pjq("input[type=radio][name$=showApplyButtonInput][value=false]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(showApplyButton, Boolean.FALSE);
 
         selenium.click(input);
         if (selenium.isElementPresent(applyButton)) {
@@ -768,8 +729,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testShowFooter() {
-        selenium.click(pjq("input[type=radio][name$=showFooterInput][value=false]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(showFooter, Boolean.FALSE);
 
         selenium.click(input);
         boolean displayed = true;
@@ -805,8 +765,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testShowHeader() {
-        selenium.click(pjq("input[type=radio][name$=showHeaderInput][value=false]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(showHeader, Boolean.FALSE);
 
         selenium.click(input);
         boolean displayed = true;
@@ -844,8 +803,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testShowInput() {
-        selenium.click(pjq("input[type=radio][name$=showInputInput][value=false]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(showInput, Boolean.FALSE);
 
         if (selenium.isElementPresent(input)) {
             boolean displayed = selenium.isVisible(input);
@@ -855,8 +813,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testShowWeekDaysBar() {
-        selenium.click(pjq("input[type=radio][name$=showWeekDaysBarInput][value=false]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(showWeekDaysBar, Boolean.FALSE);
 
         for (int i = 0; i < 8; i++) {
             if (selenium.isElementPresent(weekDayLabel.format(i))) {
@@ -868,8 +825,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testShowWeeksBar() {
-        selenium.click(pjq("input[type=radio][name$=showWeeksBarInput][value=false]"));
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(showWeeksBar, Boolean.FALSE);
 
         for (int i = 0; i < 6; i++) {
             if (selenium.isElementPresent(week.format(i))) {
@@ -925,8 +881,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testZindex() {
-        selenium.type(pjq("input[id$=zindexInput]"), "30");
-        selenium.waitForPageToLoad();
+        calendarAttributes.set(zindex, "30");
 
         assertEquals(selenium.getStyle(popup, new CssProperty("z-index")), "30", "Z-index of the popup");
     }

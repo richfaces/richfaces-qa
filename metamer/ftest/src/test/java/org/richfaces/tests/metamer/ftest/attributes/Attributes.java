@@ -163,8 +163,14 @@ public class Attributes<T extends AttributeEnum>  {
             boolean checked = Boolean.valueOf(valueAsString);
             applyCheckbox(locator, checked);
         } else if ("radio".equals(inputType)) {
-            locator = propertyLocator.format(propertyName, "[value="
-                + ("".equals(valueAsString) ? "null" : valueAsString) + "]");
+            // experimental: radio-button doesn't have label the same as value. But value should be more complicated
+            // such as path to image. But it is possible that there are some values differing just in appendix.
+            // This should be collected and verified with this solution, to make tests stable
+            if ("".equals(valueAsString)) {
+                locator = pjq("td:has(label:contains(null)) > input[name$=" + propertyName + "Input]");
+            } else {
+                locator = propertyLocator.format(propertyName, "[value*=" + valueAsString + "]");
+            }
 
             if (!selenium.isChecked(locator)) {
                 applyRadio(locator);
