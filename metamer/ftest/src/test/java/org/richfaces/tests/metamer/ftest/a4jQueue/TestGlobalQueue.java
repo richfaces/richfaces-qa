@@ -69,7 +69,7 @@ public class TestGlobalQueue extends AbstractAjocadoTest {
      * Tests delay between time last event occurs and time when event triggers request (begin).
      */
     @Test
-    @Use(field = "requestDelay", ints = { 0, 750, 1500, 5000 })
+    @Use(field = "requestDelay", ints = { 4000, 900, 80 })
     public void testRequestDelay() {
         attributes.set(QueueAttributes.requestDelay, requestDelay);
 

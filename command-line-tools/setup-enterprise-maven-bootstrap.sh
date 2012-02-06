@@ -27,10 +27,13 @@ if [ "$2" == "" ]; then
     exit 1;
 fi
 
-# Init submodules
+# Init maven bootstrap
 cd $SCRIPT_DIR/..;
-git submodule init;
-git submodule update;
+rm -rf enterprise-maven-bootstrap;
+git clone git://github.com/jboss-eap/maven-bootstrap.git enterprise-maven-bootstrap;
+cd enterprise-maven-bootstrap;
+git checkout fdec9804a92f7b81ea7784ed836ff23dffe087aa;
+cd $SCRIPT_DIR/..;
 
 # Remove old files
 if [ -f "$SCRIPT_DIR/settings.xml" ]; then

@@ -64,6 +64,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </tfoot>
                 <tr>
                     <td>
+                        <h:outputScript library="script" name="pictureUtils.js"/>
                         <h:graphicImage id="imageClick" value="/resources/images/pics/pic9.jpg" style="border : 5px solid #E4EAEF"/>
                     </td>
                     <td>
@@ -118,8 +119,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                               verticalOffset="#{richContextMenuBean.attributes['verticalOffset'].value}"
                               >
                 <rich:menuItem id="menuItem31"  label="Save" icon="/resources/images/icons/save.gif" />
-                <rich:menuItem id="zin" label="Zoom In" onclick="enlarge('imageClick');" />
-                <rich:menuItem id="zout" label="Zoom Out" onclick="decrease('imageClick');" />
+                <rich:menuItem id="zin" label="Zoom In" onclick="enlarge('form:imageClick');" />
+                <rich:menuItem id="zout" label="Zoom Out" onclick="decrease('form:imageClick');" />
             </rich:contextMenu>
         </ui:define>
 

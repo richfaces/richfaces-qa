@@ -41,17 +41,6 @@ import org.testng.annotations.Test;
  */
 public class TestReferencedUsage extends AbstractAjocadoTest {
 
-    // wrong name of the sample
-    @BeforeMethod(groups = { "arquillian" })
-    @Override
-    public void loadPage() {
-
-        this.contextRoot = getContextRoot();
-
-        selenium.open(URLUtils.buildUrl(contextRoot, "/showcase/",
-            "richfaces/component-sample.jsf?demo=status&sample=referencedusage&skin=blueSky"));
-    }
-
     /* *******************************************************************************************************
      * Locators ****************************************************************** *************************************
      */

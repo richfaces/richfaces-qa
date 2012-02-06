@@ -8,8 +8,7 @@
     General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this 
     software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the 
     FSF site: http://www.fsf.org. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -29,7 +28,8 @@
     <description>The parent for all RichFaces qa sub-projects. It specifies build and project meta-data</description>
 
     <properties>
-        
+       
+        <version.richfaces>4.2.0.CR1</version.richfaces> 
         <richfaces.checkstyle.version>3</richfaces.checkstyle.version>
         
         <!-- version of JBoss containers to use and download -->
@@ -44,9 +44,12 @@
         <!-- arquillian versions -->
         <arquillian.tomcat.version>1.0.0.CR2</arquillian.tomcat.version>
         <arquillian.drone.version>1.0.0.CR3</arquillian.drone.version>
-        <arquillian.ajocado-testng.version>1.0.0-SNAPSHOT</arquillian.ajocado-testng.version>
+        <arquillian.ajocado-testng.version>1.0.0.CR2</arquillian.ajocado-testng.version>
         <arquillian.jboss-as6.version>1.0.0.CR2</arquillian.jboss-as6.version>
         
+        <version.selenium>2.18.0</version.selenium>
+        <version.selenium.server>2.18.0</version.selenium.server>
+ 
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->
         <tomcat6.home>${project.build.directory}/apache-tomcat-${version.tomcat6}</tomcat6.home>
         <tomcat7.home>${project.build.directory}/apache-tomcat-${version.tomcat7}</tomcat7.home>
@@ -96,6 +99,13 @@
                     <logViolationsToConsole>true</logViolationsToConsole>
                     <violationSeverity>error</violationSeverity>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <arguments>-DskipTests=true</arguments>
                 </configuration>
             </plugin>
         </plugins>
@@ -392,7 +402,7 @@
             <id>jbossas-managed-7-1</id>
             <properties>
                 <metamer.classifier>jee6</metamer.classifier>
-                <showcase.classifier>jbas7</showcase.classifier>
+                <showcase.classifier>jbas71</showcase.classifier>
             </properties>
             <dependencies>
                 <dependency>
@@ -504,11 +514,8 @@
                                 <configuration>
                                     <tasks>
                                         <mkdir dir="${project.build.directory}/downloads" />
-                                        <get
-                                            src="http://archive.apache.org/dist/tomcat/tomcat-6/v${version.tomcat6}/bin/apache-tomcat-${version.tomcat6}.zip"
-                                            dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
-                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat6}.zip"
-                                            dest="${project.build.directory}" overwrite="false" />
+                                        <get src="http://archive.apache.org/dist/tomcat/tomcat-6/v${version.tomcat6}/bin/apache-tomcat-${version.tomcat6}.zip" dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
+                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat6}.zip" dest="${project.build.directory}" overwrite="false" />
                                     </tasks>
                                 </configuration>
                                 <goals>
@@ -580,11 +587,8 @@
                                 <configuration>
                                     <tasks>
                                         <mkdir dir="${project.build.directory}/downloads" />
-                                        <get
-                                            src="http://archive.apache.org/dist/tomcat/tomcat-7/v${version.tomcat7}/bin/apache-tomcat-${version.tomcat7}.zip"
-                                            dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
-                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat7}.zip"
-                                            dest="${project.build.directory}" overwrite="false" />
+                                        <get src="http://archive.apache.org/dist/tomcat/tomcat-7/v${version.tomcat7}/bin/apache-tomcat-${version.tomcat7}.zip" dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
+                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat7}.zip" dest="${project.build.directory}" overwrite="false" />
                                     </tasks>
                                 </configuration>
                                 <goals>

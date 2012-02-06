@@ -77,13 +77,10 @@ import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
-
 /**
  * Test for rich:pickList on page faces/components/richPickList/simple.xhtml.
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- *
- * @version $Revision$
  */
 public class TestPickList extends AbstractAjocadoTest {
 
@@ -94,7 +91,7 @@ public class TestPickList extends AbstractAjocadoTest {
 
     private JQueryLocator pickListTop = pjq("div.rf-pick[id$=pickList]");
     private JQueryLocator pickListSource = pjq("div.rf-pick-src div.rf-pick-lst-dcrtn"); // this locator works for
-                                                                                            // sourcemouseover event
+                                                                                         // sourcemouseover event
     private JQueryLocator pickListTarget = pjq("div.rf-pick-tgt div.rf-pick-lst-dcrtn");
     private JQueryLocator output = pjq("span[id$=output]");
     private JQueryLocator pickListMsgBox = pjq("span.rf-msg-err[id$=pickList] > span.rf-msg-det");
@@ -206,11 +203,17 @@ public class TestPickList extends AbstractAjocadoTest {
 
     @Test
     public void testDisabled() {
-
         // add first item [idx=0], then submit and disable
         addItem(0);
         waitGui.until(elementPresent.locator(pickListTargetItem.format(0)));
         selenium.click(hSubmit);
+        selenium.waitForPageToLoad();
+
+        // add all and remove all buttons should be enabled, the other two disabled
+        assertTrue(selenium.isAttributePresent(addBtn.getAttribute(disabledAttr)));
+        assertFalse(selenium.isAttributePresent(addAllBtn.getAttribute(disabledAttr)));
+        assertTrue(selenium.isAttributePresent(removeBtn.getAttribute(disabledAttr)));
+        assertFalse(selenium.isAttributePresent(removeAllBtn.getAttribute(disabledAttr)));
 
         pickListAttributes.set(disabled, Boolean.TRUE);
 
@@ -220,21 +223,18 @@ public class TestPickList extends AbstractAjocadoTest {
 
         // all buttons should be disabled
         assertTrue(selenium.getAttribute(addBtn.getAttribute(classAttr)).contains(STYLE_CLASS_BTN_DISABLED));
-        assertTrue("disabled".equals(selenium.getAttribute(addBtn.getAttribute(disabledAttr))));
-
         assertTrue(selenium.getAttribute(addAllBtn.getAttribute(classAttr)).contains(STYLE_CLASS_BTN_DISABLED));
-        assertTrue("disabled".equals(selenium.getAttribute(addAllBtn.getAttribute(disabledAttr))));
-
         assertTrue(selenium.getAttribute(removeBtn.getAttribute(classAttr)).contains(STYLE_CLASS_BTN_DISABLED));
-        assertTrue("disabled".equals(selenium.getAttribute(removeBtn.getAttribute(disabledAttr))));
-
         assertTrue(selenium.getAttribute(removeAllBtn.getAttribute(classAttr)).contains(STYLE_CLASS_BTN_DISABLED));
-        assertTrue("disabled".equals(selenium.getAttribute(removeAllBtn.getAttribute(disabledAttr))));
+
+        assertTrue(selenium.isAttributePresent(addBtn.getAttribute(disabledAttr)));
+        assertTrue(selenium.isAttributePresent(addAllBtn.getAttribute(disabledAttr)));
+        assertTrue(selenium.isAttributePresent(removeBtn.getAttribute(disabledAttr)));
+        assertTrue(selenium.isAttributePresent(removeAllBtn.getAttribute(disabledAttr)));
 
         // check item added to target list if disabled (remember - item index in id didn't change)
         assertTrue(selenium.getAttribute(pickListTargetItem.format(0).getAttribute(classAttr)).contains(
             STYLE_CLASS_ITEM_DISABLED));
-
     }
 
     @Test

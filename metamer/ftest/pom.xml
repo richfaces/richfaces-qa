@@ -9,8 +9,7 @@
     software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the 
     FSF site: http://www.fsf.org. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -64,12 +63,12 @@
         <dependency>
             <groupId>org.richfaces.ui</groupId>
             <artifactId>richfaces-components-api</artifactId>
-            <version>${project.version}</version>
+            <version>${version.richfaces}</version>
         </dependency>
         <dependency>
             <groupId>org.richfaces.ui</groupId>
             <artifactId>richfaces-components-ui</artifactId>
-            <version>${project.version}</version>
+            <version>${version.richfaces}</version>
         </dependency>
         <!-- Arquillian dependencies -->
         <dependency>
@@ -82,6 +81,16 @@
             <groupId>org.jboss.arquillian.extension</groupId>
             <artifactId>arquillian-drone-webdriver</artifactId>
             <version>${arquillian.drone.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${version.selenium}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-server</artifactId>
+            <version>${version.selenium.server}</version>
         </dependency>
         <!-- Resolution of JAR libraries into WAR archive -->
         <dependency>

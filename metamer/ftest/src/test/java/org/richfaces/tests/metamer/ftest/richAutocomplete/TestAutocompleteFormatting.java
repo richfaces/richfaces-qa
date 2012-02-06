@@ -120,6 +120,7 @@ public class TestAutocompleteFormatting extends AbstractAjocadoTest {
         autocompleteAttributes.set(AutocompleteAttributes.layout, layout);
 
         autocomplete.typeKeys("Co");
+        waitFor(2000);
 
         assertTrue(selenium.isElementPresent(suggestionLocatorFormat.format("Colorado")));
         assertTrue(selenium.isElementPresent(suggestionLocatorFormat.format("[Denver]")));

@@ -207,6 +207,7 @@ public class TestRichSliderWithJSR303 extends AbstractAjocadoTest {
     public void testAllCorrect() {
 
         setAllCorrect();
+        waitFor(1500); // FIXME
 
         waitGui.until(textEquals.text(CORRECT_MIN_VAL).locator(outputFormat.format(ID.MIN.val())));
         Assert.assertEquals(selenium.getText(outputFormat.format(ID.MAX.val())), CORRECT_MAX_VAL);
