@@ -21,12 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richSelect;
 
+import static org.testng.Assert.assertFalse;
+
 import org.jboss.test.selenium.android.ToolKitException;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractAndroidTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.richSelect.SelectPage;
 import org.testng.annotations.Test;
-
-import static org.testng.Assert.*;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>

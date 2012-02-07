@@ -22,7 +22,8 @@
 package org.richfaces.tests.showcase.attachQueue;
 
 import static org.testng.Assert.assertTrue;
-import static org.jboss.arquillian.ajocado.Ajocado.*;
+import static org.jboss.arquillian.ajocado.Ajocado.elementNotVisible;
+import static org.jboss.arquillian.ajocado.Ajocado.elementVisible;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 

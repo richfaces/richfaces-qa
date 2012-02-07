@@ -149,7 +149,7 @@ public class Model implements Serializable {
         return holder.getList();
     }
 
-    private static interface ListHolder<T> {
+    private interface ListHolder<T> {
         List<T> getList();
 
         void setList(List<T> list);

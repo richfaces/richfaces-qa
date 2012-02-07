@@ -21,11 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richExtendedDataTable;
 
+import static org.testng.Assert.assertEquals;
+
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.model.CarWithVinCode;
 import org.richfaces.tests.showcase.ftest.webdriver.page.richExtendedDataTable.SimpleTablePage;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>

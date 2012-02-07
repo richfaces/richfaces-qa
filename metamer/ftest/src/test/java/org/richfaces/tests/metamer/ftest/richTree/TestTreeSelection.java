@@ -31,8 +31,6 @@ import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.jboss.arquillian.ajocado.framework.AjocadoConfigurationContext;
-import static org.jboss.arquillian.ajocado.Ajocado.*;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
