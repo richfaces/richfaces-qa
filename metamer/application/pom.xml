@@ -126,7 +126,7 @@
         <dependency>
             <groupId>org.jboss.as</groupId>
             <artifactId>jboss-as-process-controller</artifactId>
-            <version>[7.0.2.Final,)</version>
+            <version>${version.jbossas7}</version>
             <scope>provided</scope>
         </dependency>
 
