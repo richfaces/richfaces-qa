@@ -21,31 +21,33 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richPanelMenu;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractAndroidTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.richPanelMenu.PanelMenuPage;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestRichPanelMenuSimple extends AbstractAndroidTest<PanelMenuPage> {
 
-     @Test
+    @Test
     public void testExpandFirst() {
         getPage().getPanelMenu().toggleFirstLevelGroup(0);
     }
 
-     @Test
+    @Test
     public void testExpandAndCollapseFirst() {
         getPage().getPanelMenu().toggleFirstLevelGroup(0);
         getPage().getPanelMenu().toggleFirstLevelGroup(0);
     }
 
-     @Test
+    @Test
     public void testInit() {
         int numOfGroups = getPage().getPanelMenu().getNumberOfFirstLevelGroups();
         assertEquals(numOfGroups, 3);
@@ -58,9 +60,8 @@ public class TestRichPanelMenuSimple extends AbstractAndroidTest<PanelMenuPage> 
     public void testSelectFirstItemFromFristGroup() {
         getPage().getPanelMenu().toggleFirstLevelGroup(0);
         getPage().getPanelMenu().selectSecondLevelItem(0, 0);
-        new WebDriverWait(getWebDriver())
-            .failWith("The current selection doesn't match.")
-            .until(new ExpectedCondition<Boolean>() {
+        new WebDriverWait(getWebDriver()).failWith("The current selection doesn't match.").until(
+            new ExpectedCondition<Boolean>() {
                 @Override
                 public Boolean apply(WebDriver arg0) {
                     return getPage().getCurrentSelection().equals("Item_1_1 selected");

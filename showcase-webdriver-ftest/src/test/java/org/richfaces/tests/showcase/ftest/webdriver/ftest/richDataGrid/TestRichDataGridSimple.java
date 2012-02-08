@@ -21,16 +21,17 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richDataGrid;
 
+import static org.testng.Assert.assertEquals;
+
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.model.Car;
 import org.richfaces.tests.showcase.ftest.webdriver.page.richDataGrid.GridPage;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichDataGridSimple extends AbstractWebDriverTest<GridPage>{
+public class TestRichDataGridSimple extends AbstractWebDriverTest<GridPage> {
 
     private static final Car FIRST_CAR_FIRST_PAGE = new Car("Chevrolet", "Corvette");
     private static final Car FIRST_CAR_SECOND_PAGE = new Car("Chevrolet", "Malibu");

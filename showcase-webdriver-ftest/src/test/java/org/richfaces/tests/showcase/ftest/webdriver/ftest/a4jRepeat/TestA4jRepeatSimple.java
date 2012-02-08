@@ -21,11 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jRepeat;
 
+import static org.testng.Assert.assertEquals;
+
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.model.State;
 import org.richfaces.tests.showcase.ftest.webdriver.page.a4jRepeat.SimplePage;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>

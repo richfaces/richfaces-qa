@@ -21,15 +21,16 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richDataTable;
 
+import static org.testng.Assert.assertEquals;
+
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.richDataTable.SimpleTablePage;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichDataTableSimple extends AbstractWebDriverTest<SimpleTablePage>{
+public class TestRichDataTableSimple extends AbstractWebDriverTest<SimpleTablePage> {
 
     @Test
     public void testInit() {

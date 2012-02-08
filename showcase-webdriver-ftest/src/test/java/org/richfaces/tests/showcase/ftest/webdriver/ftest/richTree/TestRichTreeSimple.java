@@ -21,33 +21,35 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richTree;
 
+import static org.testng.Assert.assertEquals;
+
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.richTree.TreePage;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
-
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichTreeSimple extends AbstractWebDriverTest<TreePage>{
-
+public class TestRichTreeSimple extends AbstractWebDriverTest<TreePage> {
 
     @Test
     public void testExpandFirstLevel() {
         getPage().expandFirstLevelAll();
-        assertEquals(getPage().countSecondLevelVisible(), 22, "Number of visible second level nodes after expanding the first level nodes doesn't match.");
-        assertEquals(getPage().countThirdLevelVisible(), 0, "Number of visible third level nodes after expanding the first level nodes doesn't match.");
+        assertEquals(getPage().countSecondLevelVisible(), 22,
+            "Number of visible second level nodes after expanding the first level nodes doesn't match.");
+        assertEquals(getPage().countThirdLevelVisible(), 0,
+            "Number of visible third level nodes after expanding the first level nodes doesn't match.");
     }
 
-    @Test(groups = {"broken"})
+    @Test(groups = { "broken" })
     public void testExpandSecondLevel() {
         getPage().expandFirstLevelAll();
         getPage().expandSecondLevel();
-        assertEquals(getPage().countThirdLevelVisible(), 26, "Number of visible third level nodes after expanding the second level nodes doesn't match.");
+        assertEquals(getPage().countThirdLevelVisible(), 26,
+            "Number of visible third level nodes after expanding the second level nodes doesn't match.");
     }
 
-    @Test(groups = {"broken"})
+    @Test(groups = { "broken" })
     public void testInit() {
         assertEquals(getPage().countSecondLevelVisible(), 0, "Number of visible second level nodes doesn't match.");
         assertEquals(getPage().countThirdLevelVisible(), 0, "Number of visible third level nodes doesn't match.");

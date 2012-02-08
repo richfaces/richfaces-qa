@@ -21,7 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richTreeModelRecursiveAdaptor;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.richTreeModelRecursiveAdaptor.TreeModelRecursiveAdaptorPage;
@@ -30,13 +31,15 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichTreeModelRecursiveAdaptorSimple extends AbstractWebDriverTest<TreeModelRecursiveAdaptorPage>{
+public class TestRichTreeModelRecursiveAdaptorSimple extends AbstractWebDriverTest<TreeModelRecursiveAdaptorPage> {
 
     @Test
     public void testExpandFirstLevel() {
         getPage().expandFirstLevelFirstNode();
-        assertTrue(getPage().countSecondLevelVisible() > 0, "Number of visible second level nodes after expanding the fist level nodes doesn't match.");
-        assertEquals(getPage().countThirdLevelVisible(), 0, "Number of visible third level nodes after expanding the fist level nodes doesn't match.");
+        assertTrue(getPage().countSecondLevelVisible() > 0,
+            "Number of visible second level nodes after expanding the fist level nodes doesn't match.");
+        assertEquals(getPage().countThirdLevelVisible(), 0,
+            "Number of visible third level nodes after expanding the fist level nodes doesn't match.");
     }
 
     @Test

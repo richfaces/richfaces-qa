@@ -79,7 +79,6 @@
         <plugins>
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.2.1</version>
                 <configuration>
                     <arguments>-Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces -Dselenium.test.skip=true
                         -Dselenium.server.skip=true</arguments>

@@ -188,6 +188,8 @@ public abstract class TestComponentWithJSR303 extends AbstractAjocadoTest {
 
         selenium.type(customStringInput, WRONG_CUSTOM_STRING);
         if (withBlur) { selenium.fireEvent(customStringInput, Event.BLUR); }
+
+        waitFor(1500); // FIXME
     }
 
     private void setAllCorrect(boolean withBlur) {
@@ -202,6 +204,8 @@ public abstract class TestComponentWithJSR303 extends AbstractAjocadoTest {
 
         selenium.type(customStringInput, CORRECT_CUSTOM_STRING);
         if (withBlur) { selenium.fireEvent(customStringInput, Event.BLUR); }
+
+        waitFor(1500); // FIXME
     }
 
 }

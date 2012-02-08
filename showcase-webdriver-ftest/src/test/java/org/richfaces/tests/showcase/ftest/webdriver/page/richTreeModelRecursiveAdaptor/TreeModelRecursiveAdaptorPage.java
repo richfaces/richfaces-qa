@@ -43,6 +43,4 @@ public class TreeModelRecursiveAdaptorPage extends AbstractTreePage {
         return "treeModelRecursiveAdaptor";
     }
 
-
-
 }
