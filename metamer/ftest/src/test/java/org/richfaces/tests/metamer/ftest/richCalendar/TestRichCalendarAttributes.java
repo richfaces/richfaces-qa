@@ -26,15 +26,47 @@ import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
 import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
 import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.buttonClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.inputClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.inputStyle;
-
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.calendarAttributes;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.*;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.boundaryDatesMode;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.buttonDisabledIcon;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.buttonIcon;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.buttonLabel;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.converterMessage;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.datePattern;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.dayClassFunction;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.defaultTime;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.disabled;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.enableManualInput;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.firstWeekDay;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.immediate;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.inputSize;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.locale;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.mode;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.monthLabels;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.monthLabelsShort;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.onbeforetimeselect;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.onchange;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.onclean;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.oncomplete;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.ondatemouseout;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.ondatemouseover;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.ondateselect;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.onhide;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.oninputchange;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.onshow;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.ontimeselect;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.rendered;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.showApplyButton;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.showFooter;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.showHeader;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.showInput;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.showWeekDaysBar;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.showWeeksBar;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.zindex;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -191,7 +223,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
     public void testButtonIcon() {
         calendarAttributes.set(buttonIcon, "star");
 
-        AttributeLocator attr = image.getAttribute(Attribute.SRC);
+        AttributeLocator<JQueryLocator> attr = image.getAttribute(Attribute.SRC);
         String src = selenium.getAttribute(attr);
         assertTrue(src.contains("star.png"), "Calendar's icon was not updated.");
 
@@ -208,7 +240,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
         calendarAttributes.set(buttonDisabledIcon, "heart");
 
-        AttributeLocator attr = image.getAttribute(Attribute.SRC);
+        AttributeLocator<JQueryLocator> attr = image.getAttribute(Attribute.SRC);
         String src = selenium.getAttribute(attr);
         assertTrue(src.contains("heart.png"), "Calendar's icon was not updated.");
 
@@ -316,7 +348,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
     public void testDisabled() {
         calendarAttributes.set(disabled, Boolean.TRUE);
 
-        AttributeLocator disabledAttr = input.getAttribute(new Attribute("disabled"));
+        AttributeLocator<JQueryLocator> disabledAttr = input.getAttribute(new Attribute("disabled"));
         assertTrue(selenium.isAttributePresent(disabledAttr), "Disabled attribute of input should be defined.");
         assertEquals(selenium.getAttribute(disabledAttr), "true", "Input should be disabled.");
 
@@ -329,7 +361,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testEnableManualInput() {
-        AttributeLocator readonlyAttr = input.getAttribute(new Attribute("readonly"));
+        AttributeLocator<JQueryLocator> readonlyAttr = input.getAttribute(new Attribute("readonly"));
         assertTrue(selenium.isAttributePresent(readonlyAttr), "Readonly attribute of input should be defined.");
         // assertEquals(selenium.getAttribute(readonlyAttr), "readonly", "Input should be read-only.");
         assertEquals(selenium.getAttribute(readonlyAttr), "true", "Input should be read-only.");
