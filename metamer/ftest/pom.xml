@@ -29,6 +29,8 @@
         <testng.listeners>org.richfaces.tests.metamer.ftest.MatrixConfigurator,org.richfaces.tests.metamer.ftest.MetamerSeleniumLoggingTestListener,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
         
+        <version.jacoco.plugin>0.5.5.201112152213</version.jacoco.plugin>
+        <jvm.args.jacoco></jvm.args.jacoco>
     </properties>
 
     <dependencyManagement>
@@ -249,5 +251,261 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>code-coverage</id>
+            <activation>
+                <property>
+                    <name>coverage</name>
+                </property>
+            </activation>
+            <properties>
+                <jvm.args.jacoco>-javaagent:${project.build.directory}/jacoco-jars/agent/jacocoagent.jar=destfile=${project.build.directory}/jacoco.exec,includes=*,append=true,output=file</jvm.args.jacoco>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemPropertyVariables>
+                                <jvm.args.jacoco>${jvm.args.jacoco}</jvm.args.jacoco>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>                
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${version.jacoco.plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>jacoco-prepare</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                                <configuration>
+                                    <append>true</append>
+                                    <destFile>target/jacoco.exec</destFile>
+                                    <includes>
+                                        <include>*</include>
+                                    </includes>
+                                    <output>file</output>
+                                    <propertyName>jvm.args.jacoco</propertyName>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                           <!-- Copy the ant tasks jar. Needed for ts.jacoco.report-ant . -->
+                            <execution>
+                                <id>jacoco-dependency-ant</id>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <phase>process-test-resources</phase>
+                                <inherited>false</inherited>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.jacoco</groupId>
+                                            <artifactId>org.jacoco.ant</artifactId>
+                                            <version>${version.jacoco.plugin}</version>
+                                        </artifactItem>
+                                    </artifactItems>
+                                    <stripVersion>true</stripVersion>
+                                    <outputDirectory>${basedir}/target/jacoco-jars</outputDirectory>
+                                </configuration>
+                            </execution>
+                            <!-- Copy the agent jar. Needed for ${jvm.args.jacoco} to have this jar on known path. If the ts.jacoco-prepare worked and really put the value into the property, this might go away. -->
+                            <execution>
+                                <id>jacoco-dependency-agent</id>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <phase>process-test-resources</phase>
+                                <inherited>false</inherited>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.jacoco</groupId>
+                                            <artifactId>org.jacoco.agent</artifactId>
+                                            <version>${version.jacoco.plugin}</version>
+                                        </artifactItem>
+                                    </artifactItems>
+                                    <stripVersion>true</stripVersion>
+                                    <outputDirectory>${basedir}/target/jacoco-jars/agent</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- RichFaces sources -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>richfaces-sources-unpack</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.richfaces.core</groupId>
+                                            <artifactId>richfaces-core-api</artifactId>
+                                            <version>${version.richfaces}</version>
+                                            <classifier>sources</classifier>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${project.build.directory}/sources/richfaces-core-api</outputDirectory>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.richfaces.core</groupId>
+                                            <artifactId>richfaces-core-impl</artifactId>
+                                            <version>${version.richfaces}</version>
+                                            <classifier>sources</classifier>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${project.build.directory}/sources/richfaces-core-impl</outputDirectory>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.richfaces.ui</groupId>
+                                            <artifactId>richfaces-components-api</artifactId>
+                                            <version>${version.richfaces}</version>
+                                            <classifier>sources</classifier>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${project.build.directory}/sources/richfaces-components-api</outputDirectory>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.richfaces.ui</groupId>
+                                            <artifactId>richfaces-components-ui</artifactId>
+                                            <version>${version.richfaces}</version>
+                                            <classifier>sources</classifier>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${project.build.directory}/sources/richfaces-components-ui</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+
+                        </executions>
+                    </plugin>                    
+                   <!-- Ant plugin. -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <!-- Prepare Metamer -->
+                            <execution>
+                                <id>jacoco-metamer</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <unzip src="${project.build.directory}/metamer.war" dest="${project.build.directory}/metamer-war-unzipped"
+                                            overwrite="true" />
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                            <!-- DEBUG -->
+                            <execution>
+                                <id>jacoco-debug</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <inherited>false</inherited>
+                                <configuration>
+                                    <target>
+                                        <echo>Jacoco argline: ${jvm.args.jacoco}</echo>
+                                        <echo>Jacoco jar: ${basedir}/target/jacoco-jars/org.jacoco.ant.jar</echo>
+                                    </target>
+                                </configuration>
+                            </execution>
+                            <!-- Must be run using Ant due to https://sourceforge.net/tracker/?func=detail&aid=3474708&group_id=177969&atid=883354 -->
+                            <execution>
+                                <id>jacoco-report-ant</id>
+                                <phase>post-integration-test</phase> <!-- post-integration-test -->
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <inherited>false</inherited>
+                                <configuration>
+                                    <target>
+                                        <taskdef name="report" classname="org.jacoco.ant.ReportTask">
+                                            <classpath path="${basedir}/target/jacoco-jars/org.jacoco.ant.jar" />
+                                        </taskdef>
+                                        <echo>Creating JaCoCo test coverage reports...</echo>
+                                        <mkdir dir="${basedir}/target/coverage-report" />
+                                        <report>
+                                            <executiondata>
+                                                <fileset dir="${basedir}">
+                                                    <include name="**/target/jacoco.exec" />
+                                                </fileset>
+                                            </executiondata>
+                                            <structure name="RichFaces Project">
+                                                <group name="RichFaces Core API">
+                                                    <classfiles>
+                                                        <fileset dir="${project.build.directory}/metamer-war-unzipped/WEB-INF/lib">
+                                                            <include name="richfaces-core-api*" />
+                                                        </fileset>
+                                                    </classfiles>
+                                                    <sourcefiles encoding="UTF-8">
+                                                        <fileset dir="${project.build.directory}/sources/richfaces-core-api" />
+                                                    </sourcefiles>                                                
+                                                </group>
+                                                <group name="RichFaces Core Implementation">
+                                                    <classfiles>
+                                                        <fileset dir="${project.build.directory}/metamer-war-unzipped/WEB-INF/lib">
+                                                            <include name="richfaces-core-impl*" />
+                                                        </fileset>
+                                                    </classfiles>
+                                                    <sourcefiles encoding="UTF-8">
+                                                        <fileset dir="${project.build.directory}/sources/richfaces-core-impl" />
+                                                    </sourcefiles>                                                
+                                                </group>
+                                                <group name="RichFaces Components API">
+                                                    <classfiles>
+                                                        <fileset dir="${project.build.directory}/metamer-war-unzipped/WEB-INF/lib">
+                                                            <include name="richfaces-components-api*" />
+                                                        </fileset>
+                                                    </classfiles>
+                                                    <sourcefiles encoding="UTF-8">
+                                                        <fileset dir="${project.build.directory}/sources/richfaces-components-api" />
+                                                    </sourcefiles>                                                
+                                                </group>
+                                                <group name="RichFaces Components UI">
+                                                    <classfiles>
+                                                        <fileset dir="${project.build.directory}/metamer-war-unzipped/WEB-INF/lib">
+                                                            <include name="richfaces-components-ui*" />
+                                                        </fileset>
+                                                    </classfiles>
+                                                    <sourcefiles encoding="UTF-8">
+                                                        <fileset dir="${project.build.directory}/sources/richfaces-components-ui" />
+                                                    </sourcefiles>                                                
+                                                </group>                                                                                                
+                                            </structure>
+                                            <html destdir="${basedir}/target/coverage-report/html" />
+                                            <xml destfile="${basedir}/target/coverage-report/coverage-report.xml" />
+                                            <csv destfile="${basedir}/target/coverage-report/coverage-report.csv" />
+                                        </report>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.jacoco</groupId>
+                                <artifactId>org.jacoco.ant</artifactId>
+                                <version>${version.jacoco.plugin}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>        
     </profiles>
 </project>
