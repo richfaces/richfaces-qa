@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -15,13 +16,11 @@
     <name>RichFaces Showcase Smoke Ftest</name>
 
     <properties>
-
         <!-- selenium version used to download selenium-server via selenium-server.sh script in ${project.basedir} -->
         <version.selenium>2.15.0</version.selenium>
-
         <!-- which tests should be run and which not -->
         <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
-
+        <testng.listeners>org.jboss.test.selenium.listener.ConsoleStatusTestListener,org.jboss.test.selenium.listener.FailureLoggingTestListener,org.jboss.test.selenium.listener.SeleniumLoggingTestListener</testng.listeners>
     </properties>
 
     <dependencies>
@@ -44,6 +43,12 @@
             <groupId>org.jboss.arquillian.extension</groupId>
             <artifactId>arquillian-drone-webdriver</artifactId>
             <version>${arquillian.drone.version}</version>
+        </dependency>
+        <!-- TestNG listeners for better console output -->
+        <dependency>
+            <groupId>org.richfaces.tests.testng</groupId>
+            <artifactId>testng-listeners</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
@@ -109,6 +114,13 @@
                     </suiteXmlFiles>
                     <!-- Logging configuration for Selenium -->
                     <argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties</argLine>
+                    <!-- listeners for better console output -->
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>${testng.listeners}</value>
+                        </property>
+                    </properties>
                 </configuration>
             </plugin>
         </plugins>
