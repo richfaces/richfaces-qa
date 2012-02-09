@@ -39,8 +39,8 @@ public class TopicsContextMessageProducer implements MessageProducer {
 
     public static final String PUSH_TOPICS_CONTEXT_TOPIC = "pushTopicsContext";
 
-    private String text = "Servus!";
-    private String author = "Janko Hrasko";
+    private String text = "Hello, still alive!";
+    private String author = "Push Bot";
 
     /*
      * (non-Javadoc)
