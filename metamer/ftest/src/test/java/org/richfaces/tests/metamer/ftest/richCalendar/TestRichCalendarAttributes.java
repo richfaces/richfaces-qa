@@ -281,6 +281,11 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
         assertEquals(selenium.getText(message), "conversion error");
     }
+    
+    @Test
+    public void testCurrentDate () {
+        
+    }
 
     @Test
     public void testDatePattern() {
@@ -363,7 +368,6 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
     public void testEnableManualInput() {
         AttributeLocator<JQueryLocator> readonlyAttr = input.getAttribute(new Attribute("readonly"));
         assertTrue(selenium.isAttributePresent(readonlyAttr), "Readonly attribute of input should be defined.");
-        // assertEquals(selenium.getAttribute(readonlyAttr), "readonly", "Input should be read-only.");
         assertEquals(selenium.getAttribute(readonlyAttr), "true", "Input should be read-only.");
 
         calendarAttributes.set(enableManualInput, Boolean.TRUE);
@@ -437,7 +441,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
     public void testInputSize() {
         calendarAttributes.set(inputSize, "30");
 
-        AttributeLocator sizeAttr = input.getAttribute(Attribute.SIZE);
+        AttributeLocator<JQueryLocator> sizeAttr = input.getAttribute(Attribute.SIZE);
         assertTrue(selenium.isAttributePresent(sizeAttr), "Size attribute of input should be defined.");
         assertEquals(selenium.getAttribute(sizeAttr), "30", "Input should be disabled.");
     }
@@ -505,8 +509,6 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
         String labelsString = "jan,feb,mar,apr,máj,jún,   júl,aug,sep,okt,nov,dec";
 
         calendarAttributes.set(monthLabelsShort, labelsString);
-
-        String month = null;
 
         selenium.click(input);
         selenium.click(monthLabel);
