@@ -67,7 +67,7 @@ public class TestCustomLayouts extends AbstractAjocadoTest {
      * ********
      */
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.Future" })
     public void testAutocompletionOfInputWithTableLayout() {
 
         typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(inputWithTableLayout,
@@ -78,7 +78,7 @@ public class TestCustomLayouts extends AbstractAjocadoTest {
             EXP_SUGG_AFTER_ALA_FST_INPUT.split(" ")[0]);
     }
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.Future" })
     public void testAutocompletionOfInputWithDivlayput() {
 
         typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(inputWithDivLayout,

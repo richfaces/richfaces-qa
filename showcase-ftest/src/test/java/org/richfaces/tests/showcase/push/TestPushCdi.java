@@ -73,7 +73,7 @@ public class TestPushCdi extends AbstractWebDriverTest {
      * Tests ************************************************************************
      */
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.Future" })
     public void testSendMessagesToSequentiallyOpenedConsumers() {
 
         String firstWindow = closeAllpreviouslyOpenedWindows();

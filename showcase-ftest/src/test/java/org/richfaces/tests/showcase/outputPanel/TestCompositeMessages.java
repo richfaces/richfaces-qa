@@ -96,7 +96,7 @@ public class TestCompositeMessages extends AbstractAjocadoTest {
 
     }
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.Future" })
     public void testUserNameFilledIncorrectlyMoreThan12() {
 
         prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_TOO_LONG, LENGTH_OF_ADDRESS_CORRECT_MIDDLE_VALUE);
@@ -112,7 +112,7 @@ public class TestCompositeMessages extends AbstractAjocadoTest {
         isUserSuccessfullyAddedPresent(false);
     }
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.Future" })
     public void testUserNameFilledIncorrectlyLessThan3MoreThan0() {
 
         prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_LESS_THAN_MINIMAL,
@@ -161,7 +161,7 @@ public class TestCompositeMessages extends AbstractAjocadoTest {
         isUserSuccessfullyAddedPresent(false);
     }
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.Future" })
     public void testAddressFilledIncorrectlyLengthMoreThan100() {
 
         prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_CORRECT_MIDDLE_VALUE, LENGTH_OF_ADDRESS_WRONG_TOO_LONG);
@@ -177,7 +177,7 @@ public class TestCompositeMessages extends AbstractAjocadoTest {
         isUserSuccessfullyAddedPresent(false);
     }
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.Future" })
     public void testNameIncorrectlyMoreThan12AddressIncorrectlyLength0() {
 
         prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_TOO_LONG, LENGTH_OF_ADDRESS_WRONG_EMPTY);
@@ -195,7 +195,7 @@ public class TestCompositeMessages extends AbstractAjocadoTest {
         isUserSuccessfullyAddedPresent(false);
     }
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.Future" })
     public void testNameIncorrectlyMoreThan12AddressIncorrectlyMoreThan100() {
 
         prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_TOO_LONG, LENGTH_OF_ADDRESS_WRONG_TOO_LONG);
@@ -213,7 +213,7 @@ public class TestCompositeMessages extends AbstractAjocadoTest {
         isUserSuccessfullyAddedPresent(false);
     }
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.Future" })
     public void testNameIncorrectlyLessThan3MoreThan0AddressIncorrectlyLength0() {
 
         prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_LESS_THAN_MINIMAL, LENGTH_OF_ADDRESS_WRONG_EMPTY);
@@ -231,7 +231,7 @@ public class TestCompositeMessages extends AbstractAjocadoTest {
         isUserSuccessfullyAddedPresent(false);
     }
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.Future" })
     public void testNameIncorrectlyLessThan3MoreThan0AddressIncorrectlyMoreThan100() {
 
         prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_LESS_THAN_MINIMAL, LENGTH_OF_ADDRESS_WRONG_TOO_LONG);
@@ -267,7 +267,7 @@ public class TestCompositeMessages extends AbstractAjocadoTest {
         isUserSuccessfullyAddedPresent(false);
     }
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.Future" })
     public void testNameIncorrectlyLength0AddressIncorrectlyMoreThan100() {
 
         prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_EMPTY, LENGTH_OF_ADDRESS_WRONG_TOO_LONG);

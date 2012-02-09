@@ -31,7 +31,7 @@
             <property name="executionType">REMOTE</property>
         </protocol>
     </container>
-    
+
     <container qualifier="jbossas-managed-7-1">
         <configuration>
             <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
@@ -41,7 +41,7 @@
             <property name="executionType">REMOTE</property>
         </protocol>
     </container>
-    
+
     <container qualifier="jbossas-remote-7" default="true">
         <protocol type="jmx-as7">
             <property name="executionType">REMOTE</property>
@@ -50,15 +50,17 @@
 
     <container qualifier="tomcat-managed-6">
         <configuration>
-            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8089 -Djava.rmi.server.hostname=localhost</property>
+            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -Dcom.sun.management.jmxremote
+                -Dcom.sun.management.jmxremote.port=8089 -Djava.rmi.server.hostname=localhost</property>
             <property name="user">tomcat</property>
             <property name="pass">tomcat</property>
         </configuration>
     </container>
-    
+
     <container qualifier="tomcat-managed-7">
         <configuration>
-            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8089 -Djava.rmi.server.hostname=localhost</property>
+            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -Dcom.sun.management.jmxremote
+                -Dcom.sun.management.jmxremote.port=8089 -Djava.rmi.server.hostname=localhost</property>
             <property name="user">tomcat</property>
             <property name="pass">tomcat</property>
         </configuration>

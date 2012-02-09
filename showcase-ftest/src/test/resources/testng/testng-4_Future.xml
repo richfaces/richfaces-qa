@@ -5,7 +5,7 @@
         <groups>
             <run>
                 <include name="arquillian" />
-                <include name="4.2" />
+                <include name="4.Future" />
             </run>
         </groups>
 

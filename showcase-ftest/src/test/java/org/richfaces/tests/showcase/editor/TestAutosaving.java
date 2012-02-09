@@ -79,7 +79,7 @@ public class TestAutosaving extends AbstractAjocadoTest {
         }
     }
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.Future" })
     public void testAutoSaving() {
 
         fail("Implement me correctly");

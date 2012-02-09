@@ -39,7 +39,6 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc and Juraj Huska</a>
  * @version $Revision$
  */
-@RunAsClient
 public abstract class AbstractShowcaseTest extends Arquillian {
 
     @ArquillianResource

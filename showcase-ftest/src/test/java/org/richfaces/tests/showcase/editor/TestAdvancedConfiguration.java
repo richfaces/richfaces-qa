@@ -92,7 +92,7 @@ public class TestAdvancedConfiguration extends AbstractAjocadoTest {
         assertEquals(titleOfNewPageButton, NEW_PAGE_DE, "The language was not changed to german!");
     }
 
-    @Test(groups = { "4.2" })
+    @Test(groups = { "4.Future" })
     public void testUserFocusAutomaticallyOnEditor() {
 
         fail("implement me correctly!");
