@@ -45,12 +45,12 @@ public class TestAccordionKVS extends AbstractAjocadoTest {
         return buildUrl(contextPath, "faces/components/richAccordion/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = {"keepVisualStateTesting"})
     public void testRefreshFullPage() {
         reloadTester.testFullPageRefresh();
     }
 
-    @Test
+    @Test(groups = {"keepVisualStateTesting"})
     public void testRenderAll() {
         reloadTester.testRerenderAll();
     }
