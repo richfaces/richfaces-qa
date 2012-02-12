@@ -51,10 +51,10 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
  * @version $Revision$
  */
 public class TestSimplePush extends AbstractAjocadoTest {
-    
+
     protected JQueryLocator messagePanel = pjq("div[id$=messagePanel]");
     protected JQueryLocator timestamp = messagePanel.getDescendant(jq(" div > span.timestamp"));
-    
+
     @Override
     public URL getTestUrl() {
 
