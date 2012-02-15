@@ -62,7 +62,7 @@ public class TestSimple extends AbstractContextMenuTest {
     @Test
     public void testContextMenuRenderedAtCorrectPosition() {
 
-        checkContextMenuRenderedAtCorrectPosition(picture, new Point(20, 20));
+        checkContextMenuRenderedAtCorrectPosition(picture, new Point(20, 20), false);
     }
 
     /* ********************************************************
@@ -73,7 +73,7 @@ public class TestSimple extends AbstractContextMenuTest {
         int widthBeforeZoom = selenium.getElementWidth(picture);
 
         selenium.focus(picture);
-        selenium.contextMenuAt(picture, new Point(20, 20));
+        selenium.clickAt(picture, new Point(20, 20));
 
         waitGui.failWith(new RuntimeException("The context menu should be visible")).timeout(2000)
             .until(elementVisible.locator(contextMenu));
