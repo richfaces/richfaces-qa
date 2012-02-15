@@ -40,8 +40,12 @@ public class AbstractContextMenuTest extends AbstractAjocadoTest {
 
     protected JQueryLocator contextMenu = jq(".rf-ctx-lst");
 
-    protected void checkContextMenuRenderedAtCorrectPosition( JQueryLocator target, Point offset ) {
-        selenium.contextMenuAt(target, offset);
+    protected void checkContextMenuRenderedAtCorrectPosition(JQueryLocator target, Point offset, boolean invokedByRightClick) {
+        if (invokedByRightClick) {
+            selenium.contextMenuAt(target, offset);
+        } else {
+            selenium.clickAt(target, offset);
+        }
 
         waitGui.failWith(new RuntimeException("The context menu should be visible")).timeout(2000)
             .until(elementVisible.locator(contextMenu));
@@ -50,8 +54,8 @@ public class AbstractContextMenuTest extends AbstractAjocadoTest {
         Point targetPosition = selenium.getElementPosition(target);
         Point expectedContextMenuPosition = targetPosition.add(offset);
 
-        assertEquals(actualContextMenuPosition.getX(), expectedContextMenuPosition.getX());
-        assertEquals(actualContextMenuPosition.getY(), expectedContextMenuPosition.getY());
+        assertEquals(actualContextMenuPosition.getX() - 1, expectedContextMenuPosition.getX(), "The X coordinate is wrong!");
+        assertEquals(actualContextMenuPosition.getY(), expectedContextMenuPosition.getY(), "The Y coordinate is wrong!");
     }
 
 }

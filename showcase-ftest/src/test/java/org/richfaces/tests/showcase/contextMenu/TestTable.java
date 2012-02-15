@@ -95,6 +95,6 @@ public class TestTable extends AbstractContextMenuTest {
     @Test
     public void testContextMenuRenderedAtCorrectPosition() {
 
-        checkContextMenuRenderedAtCorrectPosition( jq(pricesTds.getRawLocator() + ":eq(0)"), new Point(3,3) );
+        checkContextMenuRenderedAtCorrectPosition( jq(pricesTds.getRawLocator() + ":eq(0)"), new Point(3,3), true );
     }
 }
