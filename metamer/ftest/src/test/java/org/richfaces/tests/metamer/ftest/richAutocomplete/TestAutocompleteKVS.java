@@ -34,7 +34,7 @@ import org.testng.annotations.Test;
 
 
 /**
- * Test for keeping visual state for autocomplete on page:
+ * Test for keeping visual state (KVS) for autocomplete on page:
  *  faces/components/richAutocomplete/autocomplete.xhtml
  *
  *  There were some problems with
@@ -42,7 +42,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision$
  */
-public class TestAutocompleteVisualState extends AbstractAutocompleteTest {
+public class TestAutocompleteKVS extends AbstractAutocompleteTest {
 
     AutocompleteReloadTester reloadTester = new AutocompleteReloadTester();
 
@@ -52,12 +52,12 @@ public class TestAutocompleteVisualState extends AbstractAutocompleteTest {
     }
 
 
-    @Test
+    @Test(groups = {"keepVisualStateTesting"})
     public void testRefreshFullPage() {
         reloadTester.testFullPageRefresh();
     }
 
-    @Test
+    @Test(groups = {"keepVisualStateTesting"})
     public void testRerenderAll() {
         reloadTester.testRerenderAll();
     }
