@@ -43,6 +43,7 @@ public class RichMenuItemBean implements Serializable {
     private static final long serialVersionUID = -1L;
     private static Logger logger;
     private Attributes attributes;
+    private int counter = 0;
 
     /**
      * Initializes the managed bean.
@@ -69,5 +70,13 @@ public class RichMenuItemBean implements Serializable {
 
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
+    }
+
+    public void incrementCounter() {
+        counter++;
+    }
+
+    public int getCounter() {
+        return counter;
     }
 }
