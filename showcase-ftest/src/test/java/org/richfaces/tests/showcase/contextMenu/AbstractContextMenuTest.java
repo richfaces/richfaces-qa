@@ -27,6 +27,7 @@ import static org.jboss.arquillian.ajocado.Ajocado.elementVisible;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
@@ -37,6 +38,8 @@ import org.richfaces.tests.showcase.AbstractAjocadoTest;
  * @version $Revision$
  */
 public class AbstractContextMenuTest extends AbstractAjocadoTest {
+
+    protected final int TOLERANCE = 10;
 
     protected JQueryLocator contextMenu = jq(".rf-ctx-lst");
 
@@ -54,8 +57,11 @@ public class AbstractContextMenuTest extends AbstractAjocadoTest {
         Point targetPosition = selenium.getElementPosition(target);
         Point expectedContextMenuPosition = targetPosition.add(offset);
 
-        assertEquals(actualContextMenuPosition.getX() - 1, expectedContextMenuPosition.getX(), "The X coordinate is wrong!");
-        assertEquals(actualContextMenuPosition.getY(), expectedContextMenuPosition.getY(), "The Y coordinate is wrong!");
+        boolean isXInTolerance = (actualContextMenuPosition.getX() > expectedContextMenuPosition.getX() - TOLERANCE)
+            && (actualContextMenuPosition.getX() < expectedContextMenuPosition.getX() + TOLERANCE);
+        boolean isYInTolerance = (actualContextMenuPosition.getY() > expectedContextMenuPosition.getY() - TOLERANCE)
+            && (actualContextMenuPosition.getY() < expectedContextMenuPosition.getY() + TOLERANCE);
+        assertTrue(isXInTolerance, "The X coordinate is wrong!");
+        assertTrue(isYInTolerance, "The Y coordinate is wrong!");
     }
-
 }
