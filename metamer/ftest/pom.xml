@@ -15,7 +15,7 @@
     <parent>
         <groupId>org.richfaces.tests</groupId>
         <artifactId>metamer-root</artifactId>
-        <version>4.2.0-SNAPSHOT</version>
+        <version>4.2.0.20120215-Final</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -30,7 +30,7 @@
         <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
         
         <version.jacoco.plugin>0.5.5.201112152213</version.jacoco.plugin>
-        <jvm.args.jacoco></jvm.args.jacoco>
+        <jvm.args.jacoco />
     </properties>
 
     <dependencyManagement>
@@ -415,8 +415,7 @@
                                 </goals>
                                 <configuration>
                                     <tasks>
-                                        <unzip src="${project.build.directory}/metamer.war" dest="${project.build.directory}/metamer-war-unzipped"
-                                            overwrite="true" />
+                                        <unzip src="${project.build.directory}/metamer.war" dest="${project.build.directory}/metamer-war-unzipped" overwrite="true" />
                                     </tasks>
                                 </configuration>
                             </execution>
