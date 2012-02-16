@@ -96,6 +96,15 @@ public class RichFileUploadBean implements Serializable {
             files.add(file);
         }
     }
+    
+    public void listener2(FileUploadEvent event) {
+        RichBean.logToPage("* upload listener2");
+        UploadedFile file = event.getUploadedFile();
+
+        if (file != null) {
+            files.add(file);
+        }
+    }
 
     public String clearUploadedData() {
         files.clear();
