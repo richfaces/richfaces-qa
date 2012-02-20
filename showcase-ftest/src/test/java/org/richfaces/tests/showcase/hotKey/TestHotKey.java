@@ -21,6 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.hotKey;
 
+import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+
+import static org.testng.Assert.assertTrue;
+
+import java.awt.event.KeyEvent;
+
+import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.showcase.pickList.AbstractPickListTest;
 import org.testng.annotations.Test;
 
@@ -28,6 +35,32 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc and Juraj Huska</a>
  */
 public class TestHotKey extends AbstractPickListTest {
+
+    @Test
+    public void testTargetHasToBeFocusedToProccessHotKey() {
+        String[] availableCities = selenium.getText(sourceItemsSimple).split("\n");
+
+        JQueryLocator oneCity = jq(sourceItemsSimple.format(0).getRawLocator() + " " + optionToPick + ":eq(0)");
+
+        selenium.focus(oneCity);
+        selenium.click(oneCity);
+
+        selenium.keyPressNative(KeyEvent.VK_END);
+
+        checkThatListContains(availableCities, targetItemsSimple);
+    }
+
+    @Test
+    public void testHotKeyIsNotProccessedWhenTargetIsNotFocused() {
+        selenium.keyPressNative(KeyEvent.VK_END);
+
+        String citiesFromTargetItemsSimple = selenium.getText(targetItemsSimple).trim();
+
+        System.out.println(citiesFromTargetItemsSimple);
+
+        assertTrue(citiesFromTargetItemsSimple.length() == 0,
+            "There should be no cities, since the pick list was not focused while hoKey was invoked");
+    }
 
     @Test
     public void testAddHotkey() {
