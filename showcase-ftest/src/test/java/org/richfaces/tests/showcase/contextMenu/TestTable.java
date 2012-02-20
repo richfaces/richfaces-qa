@@ -33,7 +33,6 @@ import java.util.Iterator;
 
 import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
 import org.testng.annotations.Test;
 
 /**

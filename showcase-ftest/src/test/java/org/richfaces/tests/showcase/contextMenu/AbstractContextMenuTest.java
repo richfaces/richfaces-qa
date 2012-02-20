@@ -21,12 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.contextMenu;
 
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-
 import static org.jboss.arquillian.ajocado.Ajocado.elementVisible;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
 
-import static org.testng.Assert.assertEquals;
+import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.ajocado.geometry.Point;
@@ -39,7 +38,7 @@ import org.richfaces.tests.showcase.AbstractAjocadoTest;
  */
 public class AbstractContextMenuTest extends AbstractAjocadoTest {
 
-    protected final int TOLERANCE = 10;
+    protected final int TOLERANCE = 2;
 
     protected JQueryLocator contextMenu = jq(".rf-ctx-lst");
 
