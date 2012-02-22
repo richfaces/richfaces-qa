@@ -37,10 +37,9 @@ Available Properties
 Command Line Tools
 ====================
 
- * `device.sh <directory>`
+ * `device.sh`
     - launches a new device on android emulator with Selenium server running
     - only one device can be running at one moment
-    - `<directory>` has to contain a directory with Android SDK
  * `fedora-64-packages.sh`
     - installs needed libraries on Fedora 64bit
  * `android-sdk.sh [<directory>]`
