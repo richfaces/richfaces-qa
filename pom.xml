@@ -8,7 +8,8 @@
     General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this 
     software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the 
     FSF site: http://www.fsf.org. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -28,10 +29,10 @@
     <description>The parent for all RichFaces qa sub-projects. It specifies build and project meta-data</description>
 
     <properties>
-       
-        <version.richfaces>4.3.0-SNAPSHOT</version.richfaces> 
+
+        <version.richfaces>4.3.0-SNAPSHOT</version.richfaces>
         <richfaces.checkstyle.version>3</richfaces.checkstyle.version>
-        
+
         <!-- version of JBoss containers to use and download -->
         <version.jbossas6>6.0.0.Final</version.jbossas6>
         <version.jbossas7>7.0.2.Final</version.jbossas7>
@@ -40,16 +41,18 @@
         <!-- version of Tomcat containers to use and download -->
         <version.tomcat6>6.0.35</version.tomcat6>
         <version.tomcat7>7.0.23</version.tomcat7>
-        
+
         <!-- arquillian versions -->
         <arquillian.tomcat.version>1.0.0.CR2</arquillian.tomcat.version>
         <arquillian.drone.version>1.0.0.CR3</arquillian.drone.version>
         <arquillian.ajocado-testng.version>1.0.0.CR2</arquillian.ajocado-testng.version>
         <arquillian.jboss-as6.version>1.0.0.CR2</arquillian.jboss-as6.version>
-        
+
         <version.selenium>2.18.0</version.selenium>
         <version.selenium.server>2.18.0</version.selenium.server>
- 
+        
+        <version.jacoco.plugin>0.5.5.201112152213</version.jacoco.plugin>
+
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->
         <tomcat6.home>${project.build.directory}/apache-tomcat-${version.tomcat6}</tomcat6.home>
         <tomcat7.home>${project.build.directory}/apache-tomcat-${version.tomcat7}</tomcat7.home>
@@ -57,7 +60,7 @@
         <jboss7Home>${project.build.directory}/jboss-as-${version.jbossas7}</jboss7Home>
         <jboss7-1Home>${project.build.directory}/jboss-as-${version.jbossas7-1}</jboss7-1Home>
         <jboss6Home>${project.build.directory}/jboss-${version.jbossas6}</jboss6Home>
-        
+
         <showcase.classifier>jbas7</showcase.classifier>
         <metamer.classifier>jee6</metamer.classifier>
 
@@ -74,10 +77,78 @@
     </modules>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>2.8</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.4</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.11</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.2.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.7</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>1.0.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.1.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>2.4.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.1.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.google.code.maven-replacer-plugin</groupId>
+                    <artifactId>maven-replacer-plugin</artifactId>
+                    <version>1.4.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.mortbay.jetty</groupId>
+                    <artifactId>maven-jetty-plugin</artifactId>
+                    <version>6.1.26</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>buildnumber-maven-plugin</artifactId>
+                    <version>1.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${version.jacoco.plugin}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
             <plugin>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.8</version>
                 <executions>
                     <execution>
                         <id>checkstyle</id>
@@ -103,7 +174,6 @@
             </plugin>
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.2.2</version>
                 <configuration>
                     <arguments>-DskipTests=true</arguments>
                 </configuration>
@@ -226,7 +296,6 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
                             <execution>
@@ -252,7 +321,6 @@
                     </plugin>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.11</version>
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>jbossas-managed-6</arquillian.launch>
@@ -288,7 +356,6 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.7</version>
                         <executions>
                             <execution>
                                 <phase>generate-resources</phase>
@@ -304,9 +371,7 @@
                         </executions>
                     </plugin>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-resources-plugin</artifactId>
-                        <version>2.5</version>
                         <executions>
                             <execution>
                                 <id>copy-resources</id>
@@ -359,7 +424,6 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
                             <execution>
@@ -385,7 +449,6 @@
                     </plugin>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.9</version>
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>jbossas-managed-7</arquillian.launch>
@@ -415,7 +478,6 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
                             <execution>
@@ -441,7 +503,6 @@
                     </plugin>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.9</version>
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>jbossas-managed-7-1</arquillian.launch>
@@ -478,7 +539,6 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.9</version>
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>jbossas-remote-7</arquillian.launch>
@@ -506,7 +566,6 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.6</version>
                         <executions>
                             <execution>
                                 <id>download tomcat 6</id>
@@ -514,8 +573,11 @@
                                 <configuration>
                                     <tasks>
                                         <mkdir dir="${project.build.directory}/downloads" />
-                                        <get src="http://archive.apache.org/dist/tomcat/tomcat-6/v${version.tomcat6}/bin/apache-tomcat-${version.tomcat6}.zip" dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
-                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat6}.zip" dest="${project.build.directory}" overwrite="false" />
+                                        <get
+                                            src="http://archive.apache.org/dist/tomcat/tomcat-6/v${version.tomcat6}/bin/apache-tomcat-${version.tomcat6}.zip"
+                                            dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
+                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat6}.zip"
+                                            dest="${project.build.directory}" overwrite="false" />
                                     </tasks>
                                 </configuration>
                                 <goals>
@@ -526,7 +588,6 @@
                     </plugin>
                     <plugin>
                         <artifactId>maven-resources-plugin</artifactId>
-                        <version>2.5</version>
                         <executions>
                             <execution>
                                 <id>copy-resources</id>
@@ -548,7 +609,6 @@
                     </plugin>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.9</version>
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>tomcat-managed-6</arquillian.launch>
@@ -579,7 +639,6 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.6</version>
                         <executions>
                             <execution>
                                 <id>download tomcat 7</id>
@@ -587,8 +646,11 @@
                                 <configuration>
                                     <tasks>
                                         <mkdir dir="${project.build.directory}/downloads" />
-                                        <get src="http://archive.apache.org/dist/tomcat/tomcat-7/v${version.tomcat7}/bin/apache-tomcat-${version.tomcat7}.zip" dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
-                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat7}.zip" dest="${project.build.directory}" overwrite="false" />
+                                        <get
+                                            src="http://archive.apache.org/dist/tomcat/tomcat-7/v${version.tomcat7}/bin/apache-tomcat-${version.tomcat7}.zip"
+                                            dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
+                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat7}.zip"
+                                            dest="${project.build.directory}" overwrite="false" />
                                     </tasks>
                                 </configuration>
                                 <goals>
@@ -599,7 +661,6 @@
                     </plugin>
                     <plugin>
                         <artifactId>maven-resources-plugin</artifactId>
-                        <version>2.5</version>
                         <executions>
                             <execution>
                                 <id>copy-resources</id>

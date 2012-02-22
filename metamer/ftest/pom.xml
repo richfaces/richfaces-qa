@@ -9,7 +9,8 @@
     software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the 
     FSF site: http://www.fsf.org. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -28,8 +29,7 @@
 
         <testng.listeners>org.richfaces.tests.metamer.ftest.MatrixConfigurator,org.richfaces.tests.metamer.ftest.MetamerSeleniumLoggingTestListener,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
-        
-        <version.jacoco.plugin>0.5.5.201112152213</version.jacoco.plugin>
+
         <jvm.args.jacoco />
     </properties>
 
@@ -101,10 +101,10 @@
             <scope>test</scope>
             <version>1.0.0-beta-5</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-            <artifactId>shrinkwrap-descriptors-api</artifactId>        
+            <artifactId>shrinkwrap-descriptors-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jboss.shrinkwrap.descriptors</groupId>
@@ -132,16 +132,13 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.11</version>
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
                     <suiteXmlFiles>
@@ -159,9 +156,7 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.4</version>
                 <executions>
                     <execution>
                         <id>copy-installed</id>
@@ -223,7 +218,6 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
                             <execution>
@@ -252,7 +246,7 @@
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>jbossas-managed-6</arquillian.launch>
-                            </systemProperties>                        
+                            </systemProperties>
                             <environmentVariables>
                                 <JBOSS_HOME>${jboss6Home}</JBOSS_HOME>
                             </environmentVariables>
@@ -280,11 +274,10 @@
                                 <jvm.args.jacoco>${jvm.args.jacoco}</jvm.args.jacoco>
                             </systemPropertyVariables>
                         </configuration>
-                    </plugin>                
+                    </plugin>
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>${version.jacoco.plugin}</version>
                         <executions>
                             <execution>
                                 <id>jacoco-prepare</id>
@@ -305,7 +298,6 @@
                         </executions>
                     </plugin>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
                            <!-- Copy the ant tasks jar. Needed for ts.jacoco.report-ant . -->
@@ -352,7 +344,6 @@
                     </plugin>
                     <!-- RichFaces sources -->
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
                             <execution>
@@ -403,7 +394,6 @@
                     </plugin>                    
                    <!-- Ant plugin. -->
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
                         <executions>
                             <!-- Prepare Metamer -->
@@ -415,7 +405,8 @@
                                 </goals>
                                 <configuration>
                                     <tasks>
-                                        <unzip src="${project.build.directory}/metamer.war" dest="${project.build.directory}/metamer-war-unzipped" overwrite="true" />
+                                        <unzip src="${project.build.directory}/metamer.war" dest="${project.build.directory}/metamer-war-unzipped"
+                                            overwrite="true" />
                                     </tasks>
                                 </configuration>
                             </execution>
@@ -464,7 +455,7 @@
                                                     </classfiles>
                                                     <sourcefiles encoding="UTF-8">
                                                         <fileset dir="${project.build.directory}/sources/richfaces-core-api" />
-                                                    </sourcefiles>                                                
+                                                    </sourcefiles>
                                                 </group>
                                                 <group name="RichFaces Core Implementation">
                                                     <classfiles>
@@ -474,7 +465,7 @@
                                                     </classfiles>
                                                     <sourcefiles encoding="UTF-8">
                                                         <fileset dir="${project.build.directory}/sources/richfaces-core-impl" />
-                                                    </sourcefiles>                                                
+                                                    </sourcefiles>
                                                 </group>
                                                 <group name="RichFaces Components API">
                                                     <classfiles>
@@ -484,7 +475,7 @@
                                                     </classfiles>
                                                     <sourcefiles encoding="UTF-8">
                                                         <fileset dir="${project.build.directory}/sources/richfaces-components-api" />
-                                                    </sourcefiles>                                                
+                                                    </sourcefiles>
                                                 </group>
                                                 <group name="RichFaces Components UI">
                                                     <classfiles>
@@ -494,8 +485,8 @@
                                                     </classfiles>
                                                     <sourcefiles encoding="UTF-8">
                                                         <fileset dir="${project.build.directory}/sources/richfaces-components-ui" />
-                                                    </sourcefiles>                                                
-                                                </group>                                                                                                
+                                                    </sourcefiles>
+                                                </group>
                                             </structure>
                                             <html destdir="${basedir}/target/coverage-report/html" />
                                             <xml destfile="${basedir}/target/coverage-report/coverage-report.xml" />
@@ -515,6 +506,6 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>        
+        </profile>
     </profiles>
 </project>

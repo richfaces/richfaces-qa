@@ -97,7 +97,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <test>TestInput</test>
@@ -149,7 +148,6 @@
                         </configuration>
                     </plugin>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
                             <execution>
@@ -218,7 +216,6 @@
                     </plugin>
                     <plugin>
                         <artifactId>maven-resources-plugin</artifactId>
-                        <version>2.5</version>
                         <executions>
                             <execution>
                                 <id>copy-resources</id>
@@ -272,7 +269,6 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.6</version>
                         <executions>
                             <execution>
                                 <id>download tomcat 6</id>
@@ -292,7 +288,6 @@
                     </plugin>
                     <plugin>
                         <artifactId>maven-resources-plugin</artifactId>
-                        <version>2.5</version>
                         <executions>
                             <execution>
                                 <id>copy-resources</id>
@@ -335,7 +330,6 @@
                         </configuration>
                     </plugin>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <test>TestInputWithDeploying</test>
@@ -347,9 +341,7 @@
                     </plugin>
                     <!-- check whether the WAR file with application is prepared -->
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-enforcer-plugin</artifactId>
-                        <version>1.0.1</version>
                         <executions>
                             <execution>
                                 <id>enforce-files-exist</id>
