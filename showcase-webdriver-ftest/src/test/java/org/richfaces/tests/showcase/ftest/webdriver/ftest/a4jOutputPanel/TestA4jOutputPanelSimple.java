@@ -40,7 +40,8 @@ public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<SimplePage>{
     private static final String CORRECT = "aaaaaaaaaa";
     private static final String WRONG = "aaaaaaaaaaa";
 
-    @Test(groups = { "4.2" })
+    // https://issues.jboss.org/browse/RF-11573
+    @Test(groups = { "4.3" })
     public void testFirstCorrectInput() {
         getPage().getFirstInput().click();
         getPage().getFirstInput().sendKeys(CORRECT);

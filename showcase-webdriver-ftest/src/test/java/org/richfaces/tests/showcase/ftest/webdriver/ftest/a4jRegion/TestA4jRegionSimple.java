@@ -46,7 +46,7 @@ public class TestA4jRegionSimple extends AbstractWebDriverTest<RegionPage> {
     }
 
     // https://issues.jboss.org/browse/RF-11872
-    @Test(groups = {"reported-without-fix-version"})
+    @Test(groups = {"4.3"})
     public void testWorking() {
         getPage().getEmailInput().click();
         getPage().getEmailInput().sendKeys("email");
