@@ -62,7 +62,7 @@ public class TestA4jLogSimple extends AbstractAndroidTest<LogPage> {
             .until(TextContains.getInstance().element(getPage().getLoggingArea()).text("info"));
     }
 
-    // https://issues.jboss.org/browse/RF-11872    
+    // https://issues.jboss.org/browse/RF-11872
     @Test(groups = { "4.Future" })
     public void testLogError() {
         Select select = new Select(getWebDriver(), getToolKit(), getPage().getSeveritySelect());
@@ -83,7 +83,7 @@ public class TestA4jLogSimple extends AbstractAndroidTest<LogPage> {
             .until(TextContains.getInstance().element(getPage().getLoggingArea()).text("info"));
     }
 
-    // https://issues.jboss.org/browse/RF-11872    
+    // https://issues.jboss.org/browse/RF-11872
     @Test(groups = { "4.Future" })
     public void testLogWarn() {
         Select select = new Select(getWebDriver(), getToolKit(), getPage().getSeveritySelect());

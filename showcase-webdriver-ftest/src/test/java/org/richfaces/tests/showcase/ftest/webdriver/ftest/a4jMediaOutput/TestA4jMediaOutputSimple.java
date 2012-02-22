@@ -38,7 +38,7 @@ import org.testng.annotations.Test;
  */
 public class TestA4jMediaOutputSimple extends AbstractAndroidTest<ImgUsagePage> {
 
-    // https://issues.jboss.org/browse/RF-11479    
+    // https://issues.jboss.org/browse/RF-11479
     @Test(groups = { "4.Future" })
     public void testStates() throws Exception {
         Select leftColor = new Select(getWebDriver(), getToolKit(), getPage().getSelectLeftColor());
