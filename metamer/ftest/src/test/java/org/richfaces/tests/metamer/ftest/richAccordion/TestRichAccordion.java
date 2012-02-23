@@ -27,16 +27,14 @@ import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
 import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
 import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemActiveHeaderClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemContentClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemDisabledHeaderClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemHeaderClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemInactiveHeaderClass;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.accordionAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -58,7 +56,6 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.checker.IconsChecker;
 import org.testng.annotations.Test;
 
-
 /**
  * Test case for page /faces/components/richAccordion/simple.xhtml
  *
@@ -68,19 +65,19 @@ import org.testng.annotations.Test;
 public class TestRichAccordion extends AbstractAjocadoTest {
 
     private JQueryLocator accordion = pjq("div[id$=accordion]");
-    private JQueryLocator[] itemHeaders = {pjq("div[id$=item1:header]"), pjq("div[id$=item2:header]"),
-        pjq("div[id$=item3:header]"), pjq("div[id$=item4:header]"), pjq("div[id$=item5:header]")};
-    private JQueryLocator[] itemContents = {pjq("div[id$=item1:content]"), pjq("div[id$=item2:content]"),
-        pjq("div[id$=item3:content]"), pjq("div[id$=item4:content]"), pjq("div[id$=item5:content]")};
-    private JQueryLocator[] activeHeaders = {pjq("div[id$=item1:header] div.rf-ac-itm-lbl-act"),
-        pjq("div[id$=item2:header] div.rf-ac-itm-lbl-act"), pjq("div[id$=item3:header] div.rf-ac-itm-lbl-act"),
-        pjq("div[id$=item4:header] div.rf-ac-itm-lbl-act"), pjq("div[id$=item5:header] div.rf-ac-itm-lbl-act")};
-    private JQueryLocator[] inactiveHeaders = {pjq("div[id$=item1:header] div.rf-ac-itm-lbl-inact"),
-        pjq("div[id$=item2:header] div.rf-ac-itm-lbl-inact"), pjq("div[id$=item3:header] div.rf-ac-itm-lbl-inact"),
-        pjq("div[id$=item4:header] div.rf-ac-itm-lbl-inact"), pjq("div[id$=item5:header] div.rf-ac-itm-lbl-inact")};
-    private JQueryLocator[] disabledHeaders = {pjq("div[id$=item1:header] div.rf-ac-itm-lbl-dis"),
-        pjq("div[id$=item2:header] div.rf-ac-itm-lbl-dis"), pjq("div[id$=item3:header] div.rf-ac-itm-lbl-dis"),
-        pjq("div[id$=item4:header] div.rf-ac-itm-lbl-dis"), pjq("div[id$=item5:header] div.rf-ac-itm-lbl-dis")};
+    private JQueryLocator[] itemHeaders = { pjq("div[id$=item1:header]"), pjq("div[id$=item2:header]"),
+            pjq("div[id$=item3:header]"), pjq("div[id$=item4:header]"), pjq("div[id$=item5:header]") };
+    private JQueryLocator[] itemContents = { pjq("div[id$=item1:content]"), pjq("div[id$=item2:content]"),
+            pjq("div[id$=item3:content]"), pjq("div[id$=item4:content]"), pjq("div[id$=item5:content]") };
+    private JQueryLocator[] activeHeaders = { pjq("div[id$=item1:header] div.rf-ac-itm-lbl-act"),
+            pjq("div[id$=item2:header] div.rf-ac-itm-lbl-act"), pjq("div[id$=item3:header] div.rf-ac-itm-lbl-act"),
+            pjq("div[id$=item4:header] div.rf-ac-itm-lbl-act"), pjq("div[id$=item5:header] div.rf-ac-itm-lbl-act") };
+    private JQueryLocator[] inactiveHeaders = { pjq("div[id$=item1:header] div.rf-ac-itm-lbl-inact"),
+            pjq("div[id$=item2:header] div.rf-ac-itm-lbl-inact"), pjq("div[id$=item3:header] div.rf-ac-itm-lbl-inact"),
+            pjq("div[id$=item4:header] div.rf-ac-itm-lbl-inact"), pjq("div[id$=item5:header] div.rf-ac-itm-lbl-inact") };
+    private JQueryLocator[] disabledHeaders = { pjq("div[id$=item1:header] div.rf-ac-itm-lbl-dis"),
+            pjq("div[id$=item2:header] div.rf-ac-itm-lbl-dis"), pjq("div[id$=item3:header] div.rf-ac-itm-lbl-dis"),
+            pjq("div[id$=item4:header] div.rf-ac-itm-lbl-dis"), pjq("div[id$=item5:header] div.rf-ac-itm-lbl-dis") };
     private JQueryLocator leftIcon = pjq("div[id$=item{0}] td.rf-ac-itm-ico");
     private JQueryLocator rightIcon = pjq("div[id$=item{0}] td.rf-ac-itm-exp-ico");
 
@@ -91,6 +88,7 @@ public class TestRichAccordion extends AbstractAjocadoTest {
 
     @Test
     public void testInit() {
+
         boolean accordionDisplayed = selenium.isVisible(accordion);
         assertTrue(accordionDisplayed, "Accordion is not present on the page.");
 
@@ -110,8 +108,7 @@ public class TestRichAccordion extends AbstractAjocadoTest {
 
     @Test
     public void testActiveItem() {
-        selenium.type(pjq("input[type=text][id$=activeItemInput]"), "item5");
-        selenium.waitForPageToLoad();
+        accordionAttributes.set(AccordionAttributes.activeItem, "item5");
 
         boolean accordionDisplayed = selenium.isVisible(accordion);
         assertTrue(accordionDisplayed, "Accordion is not present on the page.");
@@ -129,8 +126,7 @@ public class TestRichAccordion extends AbstractAjocadoTest {
             assertFalse(accordionDisplayed, "Item" + (i + 1) + "'s content should not be visible.");
         }
 
-        selenium.type(pjq("input[type=text][id$=activeItemInput]"), "item4");
-        selenium.waitForPageToLoad();
+        accordionAttributes.set(AccordionAttributes.activeItem, "item4");
 
         for (int i = 0; i < 5; i++) {
             accordionDisplayed = selenium.isVisible(itemHeaders[i]);
@@ -159,8 +155,7 @@ public class TestRichAccordion extends AbstractAjocadoTest {
         result = selenium.getEval(new JavaScript("window.RichFaces.$('" + accordionId + "').prevItem('item1')"));
         assertEquals(result, "null", "Result of function prevItem('item1')");
 
-        selenium.click(pjq("input[type=radio][name$=cycledSwitchingInput][value=true]"));
-        selenium.waitForPageToLoad();
+        accordionAttributes.set(AccordionAttributes.cycledSwitching, true);
 
         // RichFaces.$('form:accordion').nextItem('item5') will be item1
         result = selenium.getEval(new JavaScript("window.RichFaces.$('" + accordionId + "').nextItem('item5')"));
@@ -184,8 +179,7 @@ public class TestRichAccordion extends AbstractAjocadoTest {
         assertFalse(selenium.isAttributePresent(attribute), "Attribute style should not be present.");
 
         // height = 300px
-        selenium.type(pjq("input[type=text][id$=heightInput]"), "300px");
-        selenium.waitForPageToLoad(TIMEOUT);
+        accordionAttributes.set(AccordionAttributes.height, "300px");
 
         assertTrue(selenium.isAttributePresent(attribute), "Attribute style should be present.");
         String value = selenium.getStyle(accordion, CssProperty.HEIGHT);
@@ -194,8 +188,7 @@ public class TestRichAccordion extends AbstractAjocadoTest {
 
     @Test
     public void testImmediate() {
-        selenium.click(pjq("input[type=radio][name$=immediateInput][value=true]"));
-        selenium.waitForPageToLoad();
+        accordionAttributes.set(AccordionAttributes.immediate, true);
 
         selenium.click(itemHeaders[2]);
         waitGui.failWith("Item 3 is not displayed.").until(elementVisible.locator(itemContents[2]));
@@ -227,7 +220,7 @@ public class TestRichAccordion extends AbstractAjocadoTest {
         // icon=null
         for (int i = 1; i < 6; i++) {
             assertFalse(selenium.isElementPresent(leftIcon.format(i)), "Left icon of item" + i
-                    + " should not be present on the page.");
+                + " should not be present on the page.");
         }
 
         verifyStandardIcons(input, icon, image, "");
@@ -242,7 +235,7 @@ public class TestRichAccordion extends AbstractAjocadoTest {
         // icon=null
         for (int i = 1; i < 6; i++) {
             assertFalse(selenium.isElementPresent(rightIcon.format(i)), "Right icon of item" + i
-                    + " should not be present on the page.");
+                + " should not be present on the page.");
         }
 
         verifyStandardIcons(input, icon, image, "");
@@ -312,10 +305,8 @@ public class TestRichAccordion extends AbstractAjocadoTest {
 
     @Test
     public void testItemchangeEvents() {
-        selenium.type(pjq("input[type=text][id$=onbeforeitemchangeInput]"), "metamerEvents += \"beforeitemchange \"");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=onitemchangeInput]"), "metamerEvents += \"itemchange \"");
-        selenium.waitForPageToLoad();
+        accordionAttributes.set(AccordionAttributes.onbeforeitemchange, "metamerEvents += \"beforeitemchange \"");
+        accordionAttributes.set(AccordionAttributes.onitemchange, "metamerEvents += \"itemchange \"");
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
         String time1Value = selenium.getText(time);
@@ -331,14 +322,13 @@ public class TestRichAccordion extends AbstractAjocadoTest {
 
     @Test
     public void testOnbeforeitemchange() {
-        selenium.type(pjq("input[id$=onbeforeitemchangeInput]"), "metamerEvents += \"onbeforeitemchange \"");
-        selenium.waitForPageToLoad(TIMEOUT);
+        accordionAttributes.set(AccordionAttributes.onbeforeitemchange, "metamerEvents += \"onbeforeitemchange \"");
 
         guardXhr(selenium).click(itemHeaders[1]);
         waitGui.failWith("Item 2 is not displayed.").until(elementVisible.locator(itemContents[1]));
 
         waitGui.failWith("onbeforeitemchange attribute does not work correctly").until(
-                new EventFiredCondition(new Event("beforeitemchange")));
+            new EventFiredCondition(new Event("beforeitemchange")));
     }
 
     @Test
@@ -353,14 +343,13 @@ public class TestRichAccordion extends AbstractAjocadoTest {
 
     @Test
     public void testOnitemchange() {
-        selenium.type(pjq("input[id$=onitemchangeInput]"), "metamerEvents += \"onitemchange \"");
-        selenium.waitForPageToLoad(TIMEOUT);
+        accordionAttributes.set(AccordionAttributes.onitemchange, "metamerEvents += \"onitemchange \"");
 
         guardXhr(selenium).click(itemHeaders[1]);
         waitGui.failWith("Item 2 is not displayed.").until(elementVisible.locator(itemContents[1]));
 
         waitGui.failWith("onitemchange attribute does not work correctly").until(
-                new EventFiredCondition(new Event("itemchange")));
+            new EventFiredCondition(new Event("itemchange")));
     }
 
     @Test
@@ -390,8 +379,7 @@ public class TestRichAccordion extends AbstractAjocadoTest {
 
     @Test
     public void testRendered() {
-        selenium.click(pjq("input[type=radio][name$=renderedInput][value=false]"));
-        selenium.waitForPageToLoad();
+        accordionAttributes.set(AccordionAttributes.rendered, false);
 
         assertFalse(selenium.isElementPresent(accordion), "Accordion should not be rendered when rendered=false.");
     }
@@ -417,16 +405,14 @@ public class TestRichAccordion extends AbstractAjocadoTest {
 
     @Test
     public void testSwitchTypeAjax() {
-        selenium.click(pjq("input[type=radio][name$=switchTypeInput][value=ajax]"));
-        selenium.waitForPageToLoad();
+        accordionAttributes.set(AccordionAttributes.switchType, "ajax");
 
         testSwitchTypeNull();
     }
 
     @Test
     public void testSwitchTypeClient() {
-        selenium.click(pjq("input[type=radio][name$=switchTypeInput][value=client]"));
-        selenium.waitForPageToLoad();
+        accordionAttributes.set(AccordionAttributes.switchType, "client");
 
         for (int i = 2; i >= 0; i--) {
             final int index = i;
@@ -438,8 +424,7 @@ public class TestRichAccordion extends AbstractAjocadoTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10040")
     public void testSwitchTypeServer() {
-        selenium.click(pjq("input[type=radio][name$=switchTypeInput][value=server]"));
-        selenium.waitForPageToLoad();
+        accordionAttributes.set(AccordionAttributes.switchType, "server");
 
         for (int i = 2; i >= 0; i--) {
             final int index = i;
@@ -461,8 +446,7 @@ public class TestRichAccordion extends AbstractAjocadoTest {
         assertFalse(selenium.isAttributePresent(attribute), "Attribute style should not be present.");
 
         // width = 50%
-        selenium.type(pjq("input[type=text][id$=widthInput]"), "356px");
-        selenium.waitForPageToLoad(TIMEOUT);
+        accordionAttributes.set(AccordionAttributes.width, "356px");
 
         assertTrue(selenium.isAttributePresent(attribute), "Attribute style should be present.");
         String value = selenium.getStyle(accordion, CssProperty.WIDTH);
