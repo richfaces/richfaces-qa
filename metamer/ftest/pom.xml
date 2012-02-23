@@ -30,7 +30,7 @@
         <testng.listeners>org.richfaces.tests.metamer.ftest.MatrixConfigurator,org.richfaces.tests.metamer.ftest.MetamerSeleniumLoggingTestListener,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
 
-        <jvm.args.jacoco />
+        <jvm.args.jacoco>-Djacoco.disabled=true</jvm.args.jacoco>
     </properties>
 
     <dependencyManagement>
@@ -153,6 +153,9 @@
                             <value>${testng.listeners}</value>
                         </property>
                     </properties>
+                    <systemPropertyVariables>
+                        <jvm.args.jacoco>${jvm.args.jacoco}</jvm.args.jacoco>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
             <plugin>
@@ -340,12 +343,7 @@
                                     <outputDirectory>${basedir}/target/jacoco-jars/agent</outputDirectory>
                                 </configuration>
                             </execution>
-                        </executions>
-                    </plugin>
-                    <!-- RichFaces sources -->
-                    <plugin>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <executions>
+                            <!-- Richfaces sources -->
                             <execution>
                                 <id>richfaces-sources-unpack</id>
                                 <phase>process-test-classes</phase>
@@ -389,9 +387,8 @@
                                     </artifactItems>
                                 </configuration>
                             </execution>
-
                         </executions>
-                    </plugin>                    
+                    </plugin>               
                    <!-- Ant plugin. -->
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
