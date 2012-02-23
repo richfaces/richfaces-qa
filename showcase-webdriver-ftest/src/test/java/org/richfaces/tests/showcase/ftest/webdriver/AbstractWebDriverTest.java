@@ -24,16 +24,17 @@ package org.richfaces.tests.showcase.ftest.webdriver;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.test.selenium.android.support.pagefactory.StaleReferenceAwareFieldDecorator;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.android.AndroidDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
@@ -41,7 +42,6 @@ import org.openqa.selenium.support.pagefactory.FieldDecorator;
 import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -51,6 +51,7 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
 
     private FieldDecorator fieldDecorator;
     private Page page;
+    @Drone
     private WebDriver webDriver;
 
     /**
@@ -76,28 +77,26 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
      *
      * @throws MalformedURLException
      */
-    @BeforeClass(alwaysRun = true)
+    @BeforeMethod(alwaysRun = true)
     public void initializeWebDriver() throws MalformedURLException {
-        if (getConfiguration().isAndroid()) {
-            webDriver = new AndroidDriver(getConfiguration().getWebDriverHost());
-        }
-        else {
-            webDriver = new HtmlUnitDriver(getConfiguration().getWebDriverCapabilities());
-        }
         webDriver.manage().timeouts().implicitlyWait(getConfiguration().getWebDriverTimeout(), TimeUnit.SECONDS);
     }
 
-    @BeforeClass(alwaysRun = true, dependsOnMethods = { "initializeWebDriver" })
+    @BeforeMethod(alwaysRun = true, dependsOnMethods = { "initializeWebDriver" })
     public void initializePage() {
         initializePage(getPage());
     }
 
     /**
      * Initializes web driver to open a test page
+     * @throws MalformedURLException
      */
-    @BeforeMethod(alwaysRun = true)
-    public void initializePageUrl() {
-        webDriver.get(getPath());
+    @BeforeMethod(alwaysRun = true, dependsOnMethods = { "initializePage" })
+    public void initializePageUrl() throws MalformedURLException {
+        if (getConfiguration().isVerbose()) {
+            System.out.println("opening " + getPath().toString());
+        }
+        webDriver.get(getPath().toString());
     }
 
     @AfterMethod(alwaysRun = true)
@@ -110,7 +109,15 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
 
     protected ElementLocatorFactory createLocatorFactory() {
         return new DefaultElementLocatorFactory(getWebDriver());
-//        return new AjaxElementLocatorFactory(getWebDriver(), getConfiguration().getWebDriverTimeout());
+    }
+
+    @Override
+    protected URL getDeployedURL() throws MalformedURLException {
+        if (!(webDriver instanceof AndroidDriver) || getConfiguration().getContextRoot() != null) {
+            return super.getDeployedURL();
+        } else {
+            return new URL(super.getDeployedURL().toString().replace(super.getDeployedURL().getHost(), "10.0.2.2"));
+        }
     }
 
     @Override
