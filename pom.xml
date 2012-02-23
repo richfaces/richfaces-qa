@@ -51,7 +51,7 @@
         <version.selenium>2.18.0</version.selenium>
         <version.selenium.server>2.18.0</version.selenium.server>
         
-        <version.jacoco.plugin>0.5.5.201112152213</version.jacoco.plugin>
+        <version.jacoco.plugin>0.5.6.201201232323</version.jacoco.plugin>
 
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->
         <tomcat6.home>${project.build.directory}/apache-tomcat-${version.tomcat6}</tomcat6.home>
