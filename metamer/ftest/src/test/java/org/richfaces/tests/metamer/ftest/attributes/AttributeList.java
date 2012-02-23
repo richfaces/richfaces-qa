@@ -12,6 +12,8 @@ import org.richfaces.tests.metamer.ftest.a4jRepeat.RepeatAttributes;
 import org.richfaces.tests.metamer.ftest.a4jStatus.StatusAttributes;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets;
+import org.richfaces.tests.metamer.ftest.richAccordion.AccordionAttributes;
+import org.richfaces.tests.metamer.ftest.richAccordionItem.AccordionItemAttributes;
 import org.richfaces.tests.metamer.ftest.richAutocomplete.AutocompleteAttributes;
 import org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes;
 import org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler.CollapsibleSubTableTogglerAttributes;
@@ -52,6 +54,8 @@ public class AttributeList {
     public static Attributes<DataTableFacets> dataTableFacets = new Attributes<DataTableFacets>(RequestType.XHR); // for facets
                                                                                                                   // use XHR by
                                                                                                                   // default
+    public static Attributes<AccordionAttributes> accordionAttributes = new Attributes<AccordionAttributes>();
+    public static Attributes<AccordionItemAttributes> accordionItemAttributes = new Attributes<AccordionItemAttributes>();
     public static Attributes<AutocompleteAttributes> autocompleteAttributes = new Attributes<AutocompleteAttributes>();
     public static Attributes<CollapsibleSubTableTogglerAttributes> collapsibleSubTableTogglerAttributes = new Attributes<CollapsibleSubTableTogglerAttributes>();
     public static Attributes<ColumnAttributes> columnAttributes = new Attributes<ColumnAttributes>();
@@ -63,6 +67,7 @@ public class AttributeList {
     public static Attributes<EditorAttributes> editorAttributes = new Attributes<EditorAttributes>();
     public static Attributes<GraphValidatorAttributes> graphValidatorAttributes = new Attributes<GraphValidatorAttributes>();
     public static Attributes<RichJQueryAttributes> jQueryAttributes = new Attributes<RichJQueryAttributes>();
+
     public static Attributes<ListAttributes> listAttributes = new Attributes<ListAttributes>();
     public static Attributes<MessageAttributes> messageAttributes = new Attributes<MessageAttributes>();
     public static Attributes<PanelMenuAttributes> panelMenuAttributes = new Attributes<PanelMenuAttributes>();
