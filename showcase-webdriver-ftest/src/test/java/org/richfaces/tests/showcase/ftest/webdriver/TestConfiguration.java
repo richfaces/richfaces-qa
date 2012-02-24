@@ -22,21 +22,12 @@
 package org.richfaces.tests.showcase.ftest.webdriver;
 
 import org.jboss.test.selenium.android.support.pagefactory.StaleReferenceAwareFieldDecorator;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocator;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public interface TestConfiguration {
-
-    /**
-     * Context path will be used to retrieve pages from right URL. Don't hesitate to use it in cases of building absolute
-     * URLs.
-     *
-     * @return context path
-     */
-    String getContextPath();
 
     /**
      * Context root can be used to obtaining full URL paths, is set to actual tested application's context root
@@ -46,20 +37,6 @@ public interface TestConfiguration {
     String getContextRoot();
 
     String getSkinName();
-
-    /**
-     * Returns web driver capabalities
-     *
-     * @return web driver capabalities
-     */
-    Capabilities getWebDriverCapabilities();
-
-    /**
-     * URL which is used to control web driver
-     *
-     * @return webdriver host URL
-     */
-    String getWebDriverHost();
 
     /**
      * Returns number of tries which is used for {@link StaleReferenceAwareFieldDecorator}
@@ -77,17 +54,15 @@ public interface TestConfiguration {
     int getWebDriverTimeout();
 
     /**
-     * Checks whether the tests are executed on an android web driver
-     *
-     * @return true if the android web driver is enabled, otherwise false
-     */
-    boolean isAndroid();
-
-    /**
      * Checks whether the tests should use mobile version of the Showcase
      *
      * @return true if the Showcase should be in mobile version
      */
     boolean isMobile();
 
+    /**
+     * Checks whether the tests are executed in verbose mode
+     * @return
+     */
+    boolean isVerbose();
 }

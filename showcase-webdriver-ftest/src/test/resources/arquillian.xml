@@ -28,6 +28,17 @@ http://www.fsf.org. -->
     
     <extension qualifier="webdriver">
         <property name="implementationClass">org.openqa.selenium.android.AndroidDriver</property>
-        <property name="androidRemoteAddress">http://localhost:4444/wd/hub</property>
-    </extension>     
+        <property name="remoteAddress">http://localhost:14444/wd/hub</property>
+    </extension>
+
+    <extension qualifier="android-sdk">
+        <property name="home">${android.sdk.home}</property>
+        <property name="serialId">${android.serial}</property>
+        <property name="verbose">true</property>
+        <property name="force">true</property>
+        <property name="androidServerApk">target/android-server.apk</property>
+        <property name="apiLevel">8</property>
+        <property name="avdName">showcase-webdriver-ftest</property>
+        <property name="emulatorBootupTime">180000</property>
+    </extension>
 </arquillian>
