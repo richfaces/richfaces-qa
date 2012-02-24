@@ -8,7 +8,8 @@
     General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this 
     software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the 
     FSF site: http://www.fsf.org. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -45,7 +46,7 @@
 
         <version.selenium>2.18.0</version.selenium>
         <version.selenium.server>2.18.0</version.selenium.server>
-        
+
         <version.jacoco.plugin>0.5.6.201201232323</version.jacoco.plugin>
 
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->
@@ -142,6 +143,13 @@
         </pluginManagement>
 
         <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <executions>
@@ -582,8 +590,11 @@
                                 <configuration>
                                     <tasks>
                                         <mkdir dir="${project.build.directory}/downloads" />
-                                        <get src="http://archive.apache.org/dist/tomcat/tomcat-6/v${version.tomcat6}/bin/apache-tomcat-${version.tomcat6}.zip" dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
-                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat6}.zip" dest="${project.build.directory}" overwrite="false" />
+                                        <get
+                                            src="http://archive.apache.org/dist/tomcat/tomcat-6/v${version.tomcat6}/bin/apache-tomcat-${version.tomcat6}.zip"
+                                            dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
+                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat6}.zip"
+                                            dest="${project.build.directory}" overwrite="false" />
                                     </tasks>
                                 </configuration>
                                 <goals>
@@ -652,8 +663,11 @@
                                 <configuration>
                                     <tasks>
                                         <mkdir dir="${project.build.directory}/downloads" />
-                                        <get src="http://archive.apache.org/dist/tomcat/tomcat-7/v${version.tomcat7}/bin/apache-tomcat-${version.tomcat7}.zip" dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
-                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat7}.zip" dest="${project.build.directory}" overwrite="false" />
+                                        <get
+                                            src="http://archive.apache.org/dist/tomcat/tomcat-7/v${version.tomcat7}/bin/apache-tomcat-${version.tomcat7}.zip"
+                                            dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
+                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat7}.zip"
+                                            dest="${project.build.directory}" overwrite="false" />
                                     </tasks>
                                 </configuration>
                                 <goals>
