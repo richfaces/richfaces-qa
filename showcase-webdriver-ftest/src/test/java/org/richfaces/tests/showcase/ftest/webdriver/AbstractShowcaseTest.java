@@ -22,18 +22,14 @@
 package org.richfaces.tests.showcase.ftest.webdriver;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
-import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.log4testng.Logger;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -41,10 +37,7 @@ import org.testng.log4testng.Logger;
 @RunAsClient
 public abstract class AbstractShowcaseTest extends Arquillian {
 
-    protected final Logger logger = Logger.getLogger(this.getClass());
     private TestConfiguration configuration;
-    @ArquillianResource
-    private URL deployedURL;
 
     @Deployment(testable = false)
     public static WebArchive createTestArchive() {
@@ -90,25 +83,12 @@ public abstract class AbstractShowcaseTest extends Arquillian {
     }
 
     /**
-     * Returns a path to the deployed application
-     * @throws MalformedURLException
-     */
-    protected URL getDeployedURL() throws MalformedURLException {
-        if (configuration.getContextRoot() != null) {
-            return new URL(deployedURL.toString().replace(deployedURL.getHost(), configuration.getContextRoot()));
-        } else {
-            return deployedURL;
-        }
-    }
-
-    /**
      * Returns a full path where the test page is located
      *
      * @return full path with the demo
-     * @throws MalformedURLException
      */
-    protected URL getPath() throws MalformedURLException {
-        return new URL(getDeployedURL(), getTestUrl());
+    protected String getPath() {
+        return getConfiguration().getContextRoot() + "/" + getConfiguration().getContextPath() + "/" + getTestUrl();
     }
 
     /**

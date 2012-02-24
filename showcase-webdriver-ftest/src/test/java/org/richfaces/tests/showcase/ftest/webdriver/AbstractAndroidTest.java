@@ -27,9 +27,7 @@ import org.apache.commons.lang.Validate;
 import org.jboss.test.selenium.android.PropertyToolKitConfiguration;
 import org.jboss.test.selenium.android.ToolKit;
 import org.jboss.test.selenium.android.ToolKitConfiguration;
-import org.openqa.selenium.android.AndroidDriver;
 import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
-import org.testng.annotations.BeforeMethod;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -61,6 +59,9 @@ public abstract class AbstractAndroidTest<Page extends ShowcasePage> extends Abs
         super(testConfiguration);
         Validate.notNull(toolKitConfiguration);
         this.toolKit = new ToolKit(toolKitConfiguration);
+        if (!getConfiguration().isAndroid()) {
+            throw new IllegalStateException("The android test is used, but android web driver isn't turned on.");
+        }
     }
 
     /**
