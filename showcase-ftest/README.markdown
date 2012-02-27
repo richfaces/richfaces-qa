@@ -5,7 +5,8 @@ How to run tests:
 
 The tests can be run from command line with this command, assuming that your current directory is the directory with showcase-ftests:
 
-**mvn clean verify -PnameOfTheProfile [-Dtest=nameOfTheTest] [-Dshowcase.classifier=classifier] [-Darquillian.launch=whichSettingsForContainer]**
+**mvn clean verify -PnameOfTheProfile [-Dtest=nameOfTheTest] [-Dshowcase.classifier=classifier] [-Darquillian.launch=whichSettingsForContainer] [-Dtomcat6Zip=path/to/your/tomcat6/zip]
+[-Dtomcat7Zip=path/to/your/tomcat7/zip]**
 
 - `nameOfTheProfile` - for example jbossas-managed-6, all profiles can be found in pom.xml
 
@@ -15,6 +16,8 @@ The tests can be run from command line with this command, assuming that your cur
 
 - `whichSettingsForContainer` - when this is set, the configuration for container with qualifier whichSettingsForContainer will be launched, different qualifiers 
 	can be set in arquillian.xml
+
+- flags `tomcat6Zip` and `tomcat7Zip` are mandatory in case you want to test on Tomcat 6 or 7 respectively, the path should point to the Tomcat distribution zip file, versions of Tomcat distributions are defined in the parent pom.xml
 
 Notes:
 ======
