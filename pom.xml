@@ -44,8 +44,8 @@
         <arquillian.ajocado-testng.version>1.0.0.CR2</arquillian.ajocado-testng.version>
         <arquillian.jboss-as6.version>1.0.0.CR2</arquillian.jboss-as6.version>
 
-        <version.selenium>2.18.0</version.selenium>
-        <version.selenium.server>2.18.0</version.selenium.server>
+        <version.selenium>2.19.0</version.selenium>
+        <version.selenium.server>2.19.0</version.selenium.server>
 
         <version.jacoco.plugin>0.5.6.201201232323</version.jacoco.plugin>
 
