@@ -34,9 +34,11 @@
         <version.jbossas7>7.0.2.Final</version.jbossas7>
         <version.jbossas7-1>7.1.0.Final</version.jbossas7-1>
 
-        <!-- version of Tomcat containers to use and download -->
+        <!-- version of Tomcat containers to use-->
         <version.tomcat6>6.0.35</version.tomcat6>
-        <version.tomcat7>7.0.23</version.tomcat7>
+        <version.tomcat7>7.0.26</version.tomcat7>
+        <tomcat6Zip>path/to/your/tomcat/distribution/zip</tomcat6Zip>
+        <tomcat7Zip>path/to/your/tomcat/distribution/zip</tomcat7Zip>
 
         <!-- arquillian versions -->
         <arquillian.tomcat.version>1.0.0.CR2</arquillian.tomcat.version>
@@ -585,16 +587,10 @@
                         <artifactId>maven-antrun-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>download tomcat 6</id>
-                                <phase>generate-test-resources</phase>
+                                <phase>generate-resources</phase>
                                 <configuration>
                                     <tasks>
-                                        <mkdir dir="${project.build.directory}/downloads" />
-                                        <get
-                                            src="http://archive.apache.org/dist/tomcat/tomcat-6/v${version.tomcat6}/bin/apache-tomcat-${version.tomcat6}.zip"
-                                            dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
-                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat6}.zip"
-                                            dest="${project.build.directory}" overwrite="false" />
+                                        <unzip src="${tomcat6Zip}" dest="${project.build.directory}" />
                                     </tasks>
                                 </configuration>
                                 <goals>
@@ -658,16 +654,10 @@
                         <artifactId>maven-antrun-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>download tomcat 7</id>
-                                <phase>generate-test-resources</phase>
+                                <phase>generate-resources</phase>
                                 <configuration>
                                     <tasks>
-                                        <mkdir dir="${project.build.directory}/downloads" />
-                                        <get
-                                            src="http://archive.apache.org/dist/tomcat/tomcat-7/v${version.tomcat7}/bin/apache-tomcat-${version.tomcat7}.zip"
-                                            dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
-                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${version.tomcat7}.zip"
-                                            dest="${project.build.directory}" overwrite="false" />
+                                        <unzip src="${tomcat7Zip}" dest="${project.build.directory}" />
                                     </tasks>
                                 </configuration>
                                 <goals>
