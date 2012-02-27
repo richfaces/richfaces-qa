@@ -24,7 +24,7 @@ Notes:
 - note that binary distributions for JBoss containers are downloaded automatically as maven dependencies. 
  You can also use your binaries, but you have to assign correct path to the containers installations in src/test/resources/arquillian.xml
 
-- when testing on Tomcats 6 or 7, one has to set -Dtomcat6Zip or -Dtomcat7Zip respectively, to point to zip Tomcat distributions
+- when testing on Tomcats 6 or 7, one has to set `-Dtomcat6Zip` or `-Dtomcat7Zip` respectively, to point to zipped Tomcat distributions
 
 - It is recommended to use vncsession.sh script, to run tests in other desktop, since some of them are sensitive on mouse movements, clicks etc.
 
