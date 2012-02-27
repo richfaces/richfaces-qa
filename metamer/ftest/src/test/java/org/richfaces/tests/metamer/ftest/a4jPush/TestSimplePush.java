@@ -21,34 +21,28 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jPush;
 
+import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
+import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
+import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+
 import java.net.URL;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
-import org.junit.internal.runners.statements.Fail;
 import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
-import org.richfaces.tests.metamer.ftest.AbstractMetamerTest;
-import org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 /**
- *  Test for simple push example faces/components/a4jPush/simple.xhtml
+ * Test for simple push example faces/components/a4jPush/simple.xhtml
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision$
  */
 public class TestSimplePush extends AbstractAjocadoTest {
 

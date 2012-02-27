@@ -56,13 +56,6 @@
                 <version>2.2</version>
             </dependency>
             <dependency>
-                <groupId>org.richfaces.ui</groupId>
-                <artifactId>richfaces-ui-parent</artifactId>
-                <version>${version.richfaces}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-            <dependency>
                 <groupId>org.richfaces.cdk</groupId>
                 <artifactId>annotations</artifactId>
                 <version>${version.richfaces}</version>
