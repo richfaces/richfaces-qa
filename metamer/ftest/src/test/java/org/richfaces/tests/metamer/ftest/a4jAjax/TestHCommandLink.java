@@ -30,7 +30,6 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
-
 /**
  * Test case for page /faces/components/a4jAjax/hCommandLink.xhtml
  *

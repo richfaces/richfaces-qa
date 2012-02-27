@@ -24,13 +24,12 @@ package org.richfaces.tests.metamer.ftest.a4jAjax;
 import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.ajaxAttributes;
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page /faces/components/a4jAjax/hGraphicImage.xhtml
@@ -70,8 +69,7 @@ public class TestHGraphicImage extends AbstractTestCommand {
 
     @Test
     public void testDisabled() {
-        selenium.click(pjq("input[type=radio][name$=disabledInput][value=true]"));
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.disabled, true);
 
         guardNoRequest(selenium).click(button);
     }

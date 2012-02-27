@@ -5,6 +5,7 @@ import static org.richfaces.tests.metamer.ftest.AbstractMetamerTest.pjq;
 
 import org.jboss.arquillian.ajocado.request.RequestType;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.a4jAjax.AjaxAttributes;
 import org.richfaces.tests.metamer.ftest.a4jAttachQueue.AttachQueueAttributes;
 import org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes;
@@ -55,6 +56,7 @@ public class AttributeList {
                                                                                                                   // use XHR by
                                                                                                                   // default
     public static Attributes<AccordionAttributes> accordionAttributes = new Attributes<AccordionAttributes>();
+    public static Attributes<AjaxAttributes> ajaxAttributes = new Attributes<AjaxAttributes>();
     public static Attributes<AccordionItemAttributes> accordionItemAttributes = new Attributes<AccordionItemAttributes>();
     public static Attributes<AutocompleteAttributes> autocompleteAttributes = new Attributes<AutocompleteAttributes>();
     public static Attributes<CollapsibleSubTableTogglerAttributes> collapsibleSubTableTogglerAttributes = new Attributes<CollapsibleSubTableTogglerAttributes>();

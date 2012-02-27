@@ -21,12 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.ajaxAttributes;
 import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
 import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
 import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
-
-import static org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory.optionLabel;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
@@ -43,7 +42,6 @@ import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page /faces/components/a4jAjax/hSelectManyCheckbox.xhtml
@@ -67,7 +65,7 @@ public class TestHSelectManyCheckbox extends AbstractAjocadoTest {
         guardXhr(selenium).click(input);
 
         String outputValue = waitGui.failWith("Page was not updated").waitForChangeAndReturn("[Ferrari, Lexus]",
-                retrieveText.locator(output1));
+            retrieveText.locator(output1));
 
         assertEquals(outputValue, "[Audi, Ferrari, Lexus]", "Wrong output1");
         assertEquals(selenium.getText(output2), "[Audi, Ferrari, Lexus]", "Wrong output2");
@@ -76,28 +74,22 @@ public class TestHSelectManyCheckbox extends AbstractAjocadoTest {
     @Test
     public void testBypassUpdates() {
         String reqTime = selenium.getText(time);
-
-        selenium.select(pjq("select[name$=listenerInput]"), optionLabel("doubleStringListener"));
-        selenium.waitForPageToLoad();
-        selenium.click(pjq("input[type=radio][name$=bypassUpdatesInput][value=true]"));
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
+        ajaxAttributes.set(AjaxAttributes.bypassUpdates, true);
 
         guardXhr(selenium).click(input);
         waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
 
         assertEquals(selenium.getText(output1), "[Ferrari, Lexus]", "Output should not change");
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
-                PhaseId.RENDER_RESPONSE);
+            PhaseId.RENDER_RESPONSE);
         phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, "listener invoked");
     }
 
     @Test
     public void testData() {
-        selenium.type(pjq("input[type=text][id$=dataInput]"), "RichFaces 4 data");
-        selenium.waitForPageToLoad();
-
-        selenium.type(pjq("input[type=text][id$=oncompleteInput]"), "data = event.data");
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.data, "RichFaces 4 data");
+        ajaxAttributes.set(AjaxAttributes.oncomplete, "data = event.data");
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).click(input);
@@ -109,16 +101,14 @@ public class TestHSelectManyCheckbox extends AbstractAjocadoTest {
 
     @Test
     public void testDisabled() {
-        selenium.click(pjq("input[type=radio][name$=disabledInput][value=true]"));
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.disabled, true);
 
         guardNoRequest(selenium).click(input);
     }
 
     @Test
     public void testExecute() {
-        selenium.type(pjq("input[type=text][id$=executeInput]"), "input executeChecker");
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.execute, "input executeChecker");
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).click(input);
@@ -137,18 +127,15 @@ public class TestHSelectManyCheckbox extends AbstractAjocadoTest {
     @Test
     public void testImmediate() {
         String reqTime = selenium.getText(time);
-
-        selenium.select(pjq("select[name$=listenerInput]"), optionLabel("doubleStringListener"));
-        selenium.waitForPageToLoad();
-        selenium.click(pjq("input[type=radio][name$=immediateInput][value=true]"));
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
+        ajaxAttributes.set(AjaxAttributes.immediate, true);
 
         guardXhr(selenium).click(input);
         waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
 
         assertEquals(selenium.getText(output1), "[Audi, Ferrari, Lexus]", "Output should change");
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
-                PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
+            PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
         phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "listener invoked");
     }
 
@@ -156,26 +143,22 @@ public class TestHSelectManyCheckbox extends AbstractAjocadoTest {
     public void testImmediateBypassUpdates() {
         String reqTime = selenium.getText(time);
 
-        selenium.select(pjq("select[name$=listenerInput]"), optionLabel("doubleStringListener"));
-        selenium.waitForPageToLoad();
-        selenium.click(pjq("input[type=radio][name$=bypassUpdatesInput][value=true]"));
-        selenium.waitForPageToLoad();
-        selenium.click(pjq("input[type=radio][name$=immediateInput][value=true]"));
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
+        ajaxAttributes.set(AjaxAttributes.bypassUpdates, true);
+        ajaxAttributes.set(AjaxAttributes.immediate, true);
 
         guardXhr(selenium).click(input);
         waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
 
         assertEquals(selenium.getText(output1), "[Ferrari, Lexus]", "Output should not change");
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
-                PhaseId.RENDER_RESPONSE);
+            PhaseId.RENDER_RESPONSE);
         phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "listener invoked");
     }
 
     @Test
     public void testLimitRender() {
-        selenium.click(pjq("input[type=radio][name$=limitRenderInput][value=true]"));
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.limitRender, true);
 
         String reqTime = selenium.getText(time);
 
@@ -187,14 +170,10 @@ public class TestHSelectManyCheckbox extends AbstractAjocadoTest {
 
     @Test
     public void testEvents() {
-        selenium.type(pjq("input[type=text][id$=onbeforesubmitInput]"), "metamerEvents += \"beforesubmit \"");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=onbeginInput]"), "metamerEvents += \"begin \"");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=onbeforedomupdateInput]"), "metamerEvents += \"beforedomupdate \"");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=oncompleteInput]"), "metamerEvents += \"complete \"");
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.onbeforesubmit, "metamerEvents += \"beforesubmit \"");
+        ajaxAttributes.set(AjaxAttributes.onbegin, "metamerEvents += \"begin \"");
+        ajaxAttributes.set(AjaxAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
+        ajaxAttributes.set(AjaxAttributes.oncomplete, "metamerEvents += \"complete \"");
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
 
@@ -212,12 +191,10 @@ public class TestHSelectManyCheckbox extends AbstractAjocadoTest {
 
     @Test
     public void testRender() {
-        selenium.type(pjq("input[type=text][id$=renderInput]"), "output1");
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.render, "output1");
 
         guardXhr(selenium).click(input);
-        String outputValue = waitGui.failWith("Page was not updated").waitForChangeAndReturn("",
-                retrieveText.locator(output1));
+        String outputValue = waitGui.failWith("Page was not updated").waitForChangeAndReturn("", retrieveText.locator(output1));
 
         assertEquals(outputValue, "[Audi, Ferrari, Lexus]", "Wrong output1");
         assertEquals(selenium.getText(output2), "[Ferrari, Lexus]", "Wrong output2");
@@ -225,8 +202,7 @@ public class TestHSelectManyCheckbox extends AbstractAjocadoTest {
 
     @Test
     public void testStatus() {
-        selenium.type(pjq("input[type=text][id$=statusInput]"), "statusChecker");
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.status, "statusChecker");
 
         String statusCheckerTime = selenium.getText(statusChecker);
         guardXhr(selenium).click(input);
