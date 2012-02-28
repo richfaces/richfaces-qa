@@ -31,7 +31,6 @@ import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.dataTab
 
 import static org.testng.Assert.assertEquals;
 
-
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22687 $

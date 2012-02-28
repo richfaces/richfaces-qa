@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jJSFunction;
 
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.jsFunctionAttributes;
 import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
 import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
 import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
@@ -44,7 +45,6 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page /faces/components/a4jJSFunction/simple.xhtml
@@ -75,7 +75,7 @@ public class TestJSFunctionSimple extends AbstractAjocadoTest {
         guardXhr(selenium).click(link);
 
         String newTime1Value = waitGui.failWith("Page was not updated").waitForChangeAndReturn(time1Value,
-                retrieveText.locator(time1));
+            retrieveText.locator(time1));
         String newTime2Value = selenium.getText(time2);
         String newYearValue = selenium.getText(year);
         String newAjaxRenderedTimeValue = selenium.getText(ajaxRenderedTime);
@@ -88,21 +88,20 @@ public class TestJSFunctionSimple extends AbstractAjocadoTest {
 
     @Test
     public void testAction() {
-        selenium.click(pjq("input[name$=actionInput][value=increaseYearAction]"));
-        selenium.waitForPageToLoad();
+        jsFunctionAttributes.set(JSFunctionAttributes.action, "increaseYearAction");
 
         int yearValue = Integer.parseInt(selenium.getText(year));
         String time1Value = selenium.getText(time1);
 
         guardXhr(selenium).click(link);
         String newTime1Value = waitGui.failWith("Page was not updated").waitForChangeAndReturn(time1Value,
-                retrieveText.locator(time1));
+            retrieveText.locator(time1));
         assertNotSame(time1Value, newTime1Value, "Time1 did not change");
         assertEquals(Integer.parseInt(selenium.getText(year)), yearValue + 1, "Action was not called");
 
         guardXhr(selenium).click(link);
-        newTime1Value = waitGui.failWith("Page was not updated").waitForChangeAndReturn(time1Value,
-                retrieveText.locator(time1));
+        newTime1Value = waitGui.failWith("Page was not updated")
+            .waitForChangeAndReturn(time1Value, retrieveText.locator(time1));
         assertNotSame(time1Value, newTime1Value, "Time1 did not change");
         assertEquals(Integer.parseInt(selenium.getText(year)), yearValue + 2, "Action was not called");
 
@@ -114,18 +113,17 @@ public class TestJSFunctionSimple extends AbstractAjocadoTest {
         int yearValue = Integer.parseInt(selenium.getText(year));
         String time1Value = selenium.getText(time1);
 
-        selenium.click(pjq("input[name$=actionListenerInput][value=increaseYearActionListener]"));
-        selenium.waitForPageToLoad();
+        jsFunctionAttributes.set(JSFunctionAttributes.actionListener, "increaseYearActionListener");
 
         guardXhr(selenium).click(link);
         String newTime1Value = waitGui.failWith("Page was not updated").waitForChangeAndReturn(time1Value,
-                retrieveText.locator(time1));
+            retrieveText.locator(time1));
         assertNotSame(time1Value, newTime1Value, "Time1 did not change");
         assertEquals(Integer.parseInt(selenium.getText(year)), yearValue + 1, "Action was not called");
 
         guardXhr(selenium).click(link);
-        newTime1Value = waitGui.failWith("Page was not updated").waitForChangeAndReturn(time1Value,
-                retrieveText.locator(time1));
+        newTime1Value = waitGui.failWith("Page was not updated")
+            .waitForChangeAndReturn(time1Value, retrieveText.locator(time1));
         assertNotSame(time1Value, newTime1Value, "Time1 did not change");
         assertEquals(Integer.parseInt(selenium.getText(year)), yearValue + 2, "Action was not called");
 
@@ -134,28 +132,22 @@ public class TestJSFunctionSimple extends AbstractAjocadoTest {
 
     @Test
     public void testBypassUpdates() {
-        selenium.click(pjq("input[name$=actionInput][value=decreaseYearAction]"));
-        selenium.waitForPageToLoad();
-
-        selenium.click(pjq("input[type=radio][name$=bypassUpdatesInput][value=true]"));
-        selenium.waitForPageToLoad();
+        jsFunctionAttributes.set(JSFunctionAttributes.action, "decreaseYearAction");
+        jsFunctionAttributes.set(JSFunctionAttributes.bypassUpdates, true);
 
         String time1Value = selenium.getText(time1);
         guardXhr(selenium).click(link);
         waitGui.failWith("Page was not updated").waitForChange(time1Value, retrieveText.locator(time1));
 
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
-                PhaseId.RENDER_RESPONSE);
+            PhaseId.RENDER_RESPONSE);
         phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, "action invoked");
     }
 
     @Test
     public void testData() {
-        selenium.type(pjq("input[type=text][id$=dataInput]"), "RichFaces 4");
-        selenium.waitForPageToLoad();
-
-        selenium.type(pjq("input[type=text][id$=oncompleteInput]"), "data = event.data");
-        selenium.waitForPageToLoad();
+        jsFunctionAttributes.set(JSFunctionAttributes.data, "RichFaces 4");
+        jsFunctionAttributes.set(JSFunctionAttributes.oncomplete, "data = event.data");
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).click(link);
@@ -167,8 +159,7 @@ public class TestJSFunctionSimple extends AbstractAjocadoTest {
 
     @Test
     public void testExecute() {
-        selenium.type(pjq("input[type=text][id$=executeInput]"), "input executeChecker");
-        selenium.waitForPageToLoad();
+        jsFunctionAttributes.set(JSFunctionAttributes.execute, "input executeChecker");
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).click(link);
@@ -186,11 +177,8 @@ public class TestJSFunctionSimple extends AbstractAjocadoTest {
 
     @Test
     public void testImmediate() {
-        selenium.click(pjq("input[name$=actionListenerInput][value=decreaseYearActionListener]"));
-        selenium.waitForPageToLoad();
-
-        selenium.click(pjq("input[name$=immediateInput][value=true]"));
-        selenium.waitForPageToLoad();
+        jsFunctionAttributes.set(JSFunctionAttributes.actionListener, "decreaseYearActionListener");
+        jsFunctionAttributes.set(JSFunctionAttributes.immediate, true);
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).click(link);
@@ -203,10 +191,7 @@ public class TestJSFunctionSimple extends AbstractAjocadoTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-10011")
     public void testLimitRender() {
-        // set limitRender=true
-        JQueryLocator limitRenderInput = pjq("input[type=radio][name$=limitRenderInput][value=true]");
-        selenium.click(limitRenderInput);
-        selenium.waitForPageToLoad();
+        jsFunctionAttributes.set(JSFunctionAttributes.limitRender, true);
 
         // get all values
         String time1Value = selenium.getText(time1);
@@ -218,7 +203,7 @@ public class TestJSFunctionSimple extends AbstractAjocadoTest {
         guardXhr(selenium).click(link);
 
         String newTime1Value = waitGui.failWith("Page was not updated").waitForChangeAndReturn(time1Value,
-                retrieveText.locator(time1));
+            retrieveText.locator(time1));
         String newTime2Value = selenium.getText(time2);
         String newYearValue = selenium.getText(year);
         String newAjaxRenderedTimeValue = selenium.getText(ajaxRenderedTime);
@@ -231,20 +216,16 @@ public class TestJSFunctionSimple extends AbstractAjocadoTest {
 
     @Test
     public void testName() {
-        selenium.type(pjq("input[id$=nameInput]"), "metamer");
-        selenium.waitForPageToLoad();
+        jsFunctionAttributes.set(JSFunctionAttributes.name, "metamer");
 
         testSimpleClick();
     }
 
     @Test
     public void testEvents() {
-        selenium.type(pjq("input[type=text][id$=onbeginInput]"), "metamerEvents += \"begin \"");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=onbeforedomupdateInput]"), "metamerEvents += \"beforedomupdate \"");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=oncompleteInput]"), "metamerEvents += \"complete \"");
-        selenium.waitForPageToLoad();
+        jsFunctionAttributes.set(JSFunctionAttributes.onbegin, "metamerEvents += \"begin \"");
+        jsFunctionAttributes.set(JSFunctionAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
+        jsFunctionAttributes.set(JSFunctionAttributes.oncomplete, "metamerEvents += \"complete \"");
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
         String time1Value = selenium.getText(time1);
@@ -261,8 +242,7 @@ public class TestJSFunctionSimple extends AbstractAjocadoTest {
 
     @Test
     public void testRender() {
-        selenium.type(pjq("input[type=text][id$=renderInput]"), "time1");
-        selenium.waitForPageToLoad();
+        jsFunctionAttributes.set(JSFunctionAttributes.render, "time1");
 
         // get all values
         String time1Value = selenium.getText(time1);
@@ -274,7 +254,7 @@ public class TestJSFunctionSimple extends AbstractAjocadoTest {
         guardXhr(selenium).click(link);
 
         String newTime1Value = waitGui.failWith("Page was not updated").waitForChangeAndReturn(time1Value,
-                retrieveText.locator(time1));
+            retrieveText.locator(time1));
         String newTime2Value = selenium.getText(time2);
         String newYearValue = selenium.getText(year);
         String newAjaxRenderedTimeValue = selenium.getText(ajaxRenderedTime);
@@ -287,8 +267,7 @@ public class TestJSFunctionSimple extends AbstractAjocadoTest {
 
     @Test
     public void testRendered() {
-        selenium.click(pjq("input[type=radio][name$=renderedInput][value=false]"));
-        selenium.waitForPageToLoad();
+        jsFunctionAttributes.set(JSFunctionAttributes.rendered, false);
 
         // get all values
         String time1Value = selenium.getText(time1);
@@ -312,8 +291,7 @@ public class TestJSFunctionSimple extends AbstractAjocadoTest {
 
     @Test
     public void testStatus() {
-        selenium.type(pjq("input[type=text][id$=statusInput]"), "statusChecker");
-        selenium.waitForPageToLoad();
+        jsFunctionAttributes.set(JSFunctionAttributes.status, "statusChecker");
 
         String statusCheckerTime = selenium.getText(statusChecker);
         guardXhr(selenium).click(link);

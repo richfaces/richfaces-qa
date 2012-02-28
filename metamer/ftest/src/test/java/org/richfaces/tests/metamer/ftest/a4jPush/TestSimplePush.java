@@ -70,7 +70,7 @@ public class TestSimplePush extends AbstractAjocadoTest {
             waitAjax.waitForChangeAndReturn(timestampRetreiver);
             String timestamp = timestampRetreiver.getValue();
             if (timestamp != null && timestamp.startsWith("[")) {
-                timestamp = timestamp.substring(1, timestamp.length()-1);
+                timestamp = timestamp.substring(1, timestamp.length() - 1);
             }
             times.add(timestamp);
         }
@@ -79,9 +79,9 @@ public class TestSimplePush extends AbstractAjocadoTest {
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy hh:mm:ss a");
         try {
             Date first = sdf.parse(times.get(0));
-            Date last = sdf.parse(times.get(times.size()-1));
+            Date last = sdf.parse(times.get(times.size() - 1));
             // Assert that last message is dated 5 * 5s (received 5 updates, with 5s interval)
-            Assert.assertEquals(first.getTime(), last.getTime() - 5*5*1000);
+            Assert.assertEquals(first.getTime(), last.getTime() - 5 * 5 * 1000);
         } catch (ParseException e) {
             Assert.fail("Get wrong date format");
         }

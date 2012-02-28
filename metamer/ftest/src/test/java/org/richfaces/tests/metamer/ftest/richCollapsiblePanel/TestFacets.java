@@ -26,7 +26,7 @@ import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
 import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
 import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.collapsiblePanelAttributes;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import static org.testng.Assert.assertEquals;
@@ -39,7 +39,6 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page /faces/components/richCollapsiblePanel/facets.xhtml
@@ -87,18 +86,14 @@ public class TestFacets extends AbstractAjocadoTest {
 
     @Test
     public void testSwitchTypeAjax() {
-        JQueryLocator selectOption = pjq("input[name$=switchTypeInput][value=ajax]");
-        selenium.click(selectOption);
-        selenium.waitForPageToLoad();
+        collapsiblePanelAttributes.set(CollapsiblePanelAttributes.switchType, "ajax");
 
         testSwitchTypeNull();
     }
 
     @Test
     public void testSwitchTypeClient() {
-        JQueryLocator selectOption = pjq("input[name$=switchTypeInput][value=client]");
-        selenium.click(selectOption);
-        selenium.waitForPageToLoad();
+        collapsiblePanelAttributes.set(CollapsiblePanelAttributes.switchType, "client");
 
         // click to collapse
         guardNoRequest(selenium).click(header);
@@ -112,9 +107,7 @@ public class TestFacets extends AbstractAjocadoTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-10368")
     public void testSwitchTypeServer() {
-        JQueryLocator selectOption = pjq("input[name$=switchTypeInput][value=server]");
-        selenium.click(selectOption);
-        selenium.waitForPageToLoad();
+        collapsiblePanelAttributes.set(CollapsiblePanelAttributes.switchType, "server");
 
         // click to collapse
         guardHttp(selenium).click(header);

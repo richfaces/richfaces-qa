@@ -27,8 +27,6 @@ import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
 import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
 
-import static org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory.optionLabel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
@@ -50,7 +48,7 @@ import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.commandButtonAttributes;
 
 /**
  * Test case for page /faces/components/a4jCommandButton/simple.xhtml
@@ -108,25 +106,21 @@ public class TestA4JCommandButton extends AbstractAjocadoTest {
 
     @Test
     public void testAction() {
-        selenium.click(pjq("input[name$=actionInput][value=doubleStringAction]"));
-        selenium.waitForPageToLoad();
+        commandButtonAttributes.set(CommandButtonAttributes.action, "doubleStringAction");
         selenium.typeKeys(input, "RichFaces 4");
         guardXhr(selenium).click(button);
         waitGui.until(textEquals.locator(output1).text("RichFaces 4"));
         String output = selenium.getText(output2);
-        assertEquals(output, "RichFaces 4RichFaces 4",
-                "output2 when 'RichFaces 4' in input and doubleStringAction selected");
+        assertEquals(output, "RichFaces 4RichFaces 4", "output2 when 'RichFaces 4' in input and doubleStringAction selected");
 
-        selenium.click(pjq("input[name$=actionInput][value=first6CharsAction]"));
-        selenium.waitForPageToLoad();
+        commandButtonAttributes.set(CommandButtonAttributes.action, "first6CharsAction");
         selenium.typeKeys(input, "RichFaces 4ň");
         guardXhr(selenium).click(button);
         waitGui.until(textEquals.locator(output1).text("RichFaces 4ň"));
         output = selenium.getText(output2);
         assertEquals(output, "RichFa", "output2 when 'RichFaces 4ň' in input and first6CharsAction selected");
 
-        selenium.click(pjq("input[name$=actionInput][value=toUpperCaseAction]"));
-        selenium.waitForPageToLoad();
+        commandButtonAttributes.set(CommandButtonAttributes.action, "toUpperCaseAction");
         selenium.typeKeys(input, "RichFaces 4ě");
         guardXhr(selenium).click(button);
         waitGui.until(textEquals.locator(output1).text("RichFaces 4ě"));
@@ -136,37 +130,32 @@ public class TestA4JCommandButton extends AbstractAjocadoTest {
 
     @Test
     public void testActionListener() {
-        selenium.click(pjq("input[name$=actionListenerInput][value=doubleStringActionListener]"));
-        selenium.waitForPageToLoad();
+        commandButtonAttributes.set(CommandButtonAttributes.actionListener, "doubleStringActionListener");
         selenium.typeKeys(input, "RichFaces 4");
         guardXhr(selenium).click(button);
         waitGui.until(textEquals.locator(output1).text("RichFaces 4"));
         String output = selenium.getText(output3);
         assertEquals(output, "RichFaces 4RichFaces 4",
-                "output2 when 'RichFaces 4' in input and doubleStringActionListener selected");
+            "output2 when 'RichFaces 4' in input and doubleStringActionListener selected");
 
-        selenium.click(pjq("input[name$=actionListenerInput][value=first6CharsActionListener]"));
-        selenium.waitForPageToLoad();
+        commandButtonAttributes.set(CommandButtonAttributes.actionListener, "first6CharsActionListener");
         selenium.typeKeys(input, "RichFaces 4ň");
         guardXhr(selenium).click(button);
         waitGui.until(textEquals.locator(output1).text("RichFaces 4ň"));
         output = selenium.getText(output3);
         assertEquals(output, "RichFa", "output2 when 'RichFaces 4ň' in input and first6CharsActionListener selected");
 
-        selenium.click(pjq("input[name$=actionListenerInput][value=toUpperCaseActionListener]"));
-        selenium.waitForPageToLoad();
+        commandButtonAttributes.set(CommandButtonAttributes.actionListener, "toUpperCaseActionListener");
         selenium.typeKeys(input, "RichFaces 4ě");
         guardXhr(selenium).click(button);
         waitGui.until(textEquals.locator(output1).text("RichFaces 4ě"));
         output = selenium.getText(output3);
-        assertEquals(output, "RICHFACES 4Ě",
-                "output2 when 'RichFaces 4ě' in input and toUpperCaseActionListener selected");
+        assertEquals(output, "RICHFACES 4Ě", "output2 when 'RichFaces 4ě' in input and toUpperCaseActionListener selected");
     }
 
     @Test
     public void testBypassUpdates() {
-        selenium.click(pjq("input[type=radio][name$=bypassUpdatesInput][value=true]"));
-        selenium.waitForPageToLoad();
+        commandButtonAttributes.set(CommandButtonAttributes.bypassUpdates, true);
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).click(button);
@@ -176,7 +165,7 @@ public class TestA4JCommandButton extends AbstractAjocadoTest {
         assertEquals(selenium.getText(output2), "", "Output 2 should not change");
         assertEquals(selenium.getText(output3), "", "Output 3 should not change");
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
-                PhaseId.RENDER_RESPONSE);
+            PhaseId.RENDER_RESPONSE);
 
         String listenerOutput = selenium.getText(jq("div#phasesPanel li:eq(3)"));
         assertEquals(listenerOutput, "* action listener invoked", "Action listener's output");
@@ -186,11 +175,8 @@ public class TestA4JCommandButton extends AbstractAjocadoTest {
 
     @Test
     public void testData() {
-        selenium.type(pjq("input[type=text][id$=dataInput]"), "RichFaces 4");
-        selenium.waitForPageToLoad();
-
-        selenium.type(pjq("input[type=text][id$=oncompleteInput]"), "data = event.data");
-        selenium.waitForPageToLoad();
+        commandButtonAttributes.set(CommandButtonAttributes.data, "RichFaces 4");
+        commandButtonAttributes.set(CommandButtonAttributes.oncomplete, "data = event.data");
 
         String reqTime = selenium.getText(time);
 
@@ -205,18 +191,14 @@ public class TestA4JCommandButton extends AbstractAjocadoTest {
     @Test
     public void testDisabled() {
         AttributeLocator<JQueryLocator> disabledAttribute = button.getAttribute(new Attribute("disabled"));
-
-        selenium.click(pjq("input[name$=disabledInput][value=true]"));
-        selenium.waitForPageToLoad();
-
+        commandButtonAttributes.set(CommandButtonAttributes.disabled, true);
         String isDisabled = selenium.getAttribute(disabledAttribute);
         assertEquals(isDisabled.toLowerCase(), "true", "The value of attribute disabled");
     }
 
     @Test
     public void testExecute() {
-        selenium.type(pjq("input[type=text][id$=executeInput]"), "input executeChecker");
-        selenium.waitForPageToLoad();
+        commandButtonAttributes.set(CommandButtonAttributes.execute, "input executeChecker");
 
         selenium.type(input, "RichFaces 4");
         guardXhr(selenium).click(button);
@@ -234,8 +216,7 @@ public class TestA4JCommandButton extends AbstractAjocadoTest {
 
     @Test
     public void testImmediate() {
-        selenium.click(pjq("input[type=radio][name$=immediateInput][value=true]"));
-        selenium.waitForPageToLoad();
+        commandButtonAttributes.set(CommandButtonAttributes.immediate, true);
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).click(button);
@@ -254,8 +235,7 @@ public class TestA4JCommandButton extends AbstractAjocadoTest {
 
     @Test
     public void testLimitRender() {
-        selenium.click(pjq("input[type=radio][name$=limitRenderInput][value=true]"));
-        selenium.waitForPageToLoad();
+        commandButtonAttributes.set(CommandButtonAttributes.limitRender, true);
 
         String timeValue = selenium.getText(time);
 
@@ -268,12 +248,9 @@ public class TestA4JCommandButton extends AbstractAjocadoTest {
 
     @Test
     public void testEvents() {
-        selenium.type(pjq("input[type=text][id$=onbeginInput]"), "metamerEvents += \"begin \"");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=onbeforedomupdateInput]"), "metamerEvents += \"beforedomupdate \"");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=oncompleteInput]"), "metamerEvents += \"complete \"");
-        selenium.waitForPageToLoad();
+        commandButtonAttributes.set(CommandButtonAttributes.onbegin, "metamerEvents += \"begin \"");
+        commandButtonAttributes.set(CommandButtonAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
+        commandButtonAttributes.set(CommandButtonAttributes.oncomplete, "metamerEvents += \"complete \"");
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
 
@@ -382,8 +359,7 @@ public class TestA4JCommandButton extends AbstractAjocadoTest {
 
     @Test
     public void testRendered() {
-        selenium.click(pjq("input[name$=renderedInput][value=false]"));
-        selenium.waitForPageToLoad();
+        commandButtonAttributes.set(CommandButtonAttributes.rendered, false);
         assertFalse(selenium.isElementPresent(button), "Button should not be displayed");
     }
 
@@ -407,33 +383,26 @@ public class TestA4JCommandButton extends AbstractAjocadoTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-10115")
     public void testType() {
         AttributeLocator attr = button.getAttribute(Attribute.TYPE);
-        JQueryLocator typeInput = pjq("select[id$=typeInput]");
 
-        selenium.select(typeInput, optionLabel("image"));
-        selenium.waitForPageToLoad();
+        commandButtonAttributes.set(CommandButtonAttributes.type, "image");
         assertEquals(selenium.getAttribute(attr), "image", "Button's type");
 
-        selenium.select(typeInput, optionLabel("reset"));
-        selenium.waitForPageToLoad();
+        commandButtonAttributes.set(CommandButtonAttributes.type, "reset");
         assertEquals(selenium.getAttribute(attr), "reset", "Button's type");
 
-        selenium.select(typeInput, optionLabel("submit"));
-        selenium.waitForPageToLoad();
+        commandButtonAttributes.set(CommandButtonAttributes.type, "submit");
         assertEquals(selenium.getAttribute(attr), "submit", "Button's type");
 
-        selenium.select(typeInput, optionLabel("button"));
-        selenium.waitForPageToLoad();
+        commandButtonAttributes.set(CommandButtonAttributes.type, "button");
         assertEquals(selenium.getAttribute(attr), "button", "Button's type");
 
-        selenium.select(typeInput, optionLabel("null"));
-        selenium.waitForPageToLoad();
+        commandButtonAttributes.set(CommandButtonAttributes.type, "null");
         assertEquals(selenium.getAttribute(attr), "submit", "Button's type");
     }
 
     @Test
     public void testValue() {
-        selenium.type(pjq("input[id$=valueInput]"), "new label");
-        selenium.waitForPageToLoad(TIMEOUT);
+        commandButtonAttributes.set(CommandButtonAttributes.value, "new label");
 
         AttributeLocator attribute = button.getAttribute(new Attribute("value"));
         assertEquals(selenium.getAttribute(attribute), "new label", "Value of the button did not change.");

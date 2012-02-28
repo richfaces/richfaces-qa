@@ -28,7 +28,7 @@ import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
 
 import static org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory.optionLabel;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.collapsiblePanelAttributes;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
@@ -53,7 +53,6 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page /faces/components/richCollapsiblePanel/simple.xhtml
@@ -98,22 +97,17 @@ public class TestRichCollapsiblePanel extends AbstractAjocadoTest {
     @IssueTracking("https://issues.jboss.org/browse/RF-10312")
     public void testExpanded() {
         verifyBeforeClick();
-
-        selenium.click(pjq("input[type=radio][name$=expandedInput][value=false]"));
-        selenium.waitForPageToLoad();
-
+        collapsiblePanelAttributes.set(CollapsiblePanelAttributes.expanded, false);
         verifyAfterClick();
     }
 
     @Test
     public void testHeader() {
-        selenium.type(pjq("input[type=text][id$=headerInput]"), "new header");
-        selenium.waitForPageToLoad();
+        collapsiblePanelAttributes.set(CollapsiblePanelAttributes.header, "new header");
 
         assertEquals(selenium.getText(headerExp), "new header", "Header of the panel did not change.");
 
-        selenium.type(pjq("input[type=text][id$=headerInput]"), "ľščťťžžôúňď ацущьмщфзщйцу");
-        selenium.waitForPageToLoad();
+        collapsiblePanelAttributes.set(CollapsiblePanelAttributes.header, "ľščťťžžôúňď ацущьмщфзщйцу");
 
         assertEquals(selenium.getText(headerExp), "ľščťťžžôúňď ацущьмщфзщйцу", "Header of the panel did not change.");
     }
@@ -126,8 +120,7 @@ public class TestRichCollapsiblePanel extends AbstractAjocadoTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10054")
     public void testImmediate() {
-        selenium.click(pjq("input[type=radio][name$=immediateInput][value=true]"));
-        selenium.waitForPageToLoad();
+        collapsiblePanelAttributes.set(CollapsiblePanelAttributes.immediate, true);
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).click(header);
@@ -149,8 +142,7 @@ public class TestRichCollapsiblePanel extends AbstractAjocadoTest {
         JQueryLocator image = leftIcon.getChild(jq("img:nth-child(1)"));
 
         // icon=null
-        assertTrue(selenium.belongsClass(icon, "rf-ico-chevron-up-hdr"),
-            "Div should have set class rf-ico-chevron-up-hdr.");
+        assertTrue(selenium.belongsClass(icon, "rf-ico-chevron-up-hdr"), "Div should have set class rf-ico-chevron-up-hdr.");
         assertTrue(selenium.getStyle(icon, CssProperty.BACKGROUND_IMAGE).contains("chevronUp.png"),
             "Icon should contain a chevron up.");
 
@@ -164,8 +156,7 @@ public class TestRichCollapsiblePanel extends AbstractAjocadoTest {
         JQueryLocator image = leftIcon.getChild(jq("img:nth-child(2)"));
 
         // icon=null
-        assertTrue(selenium.belongsClass(icon, "rf-ico-chevron-down-hdr"),
-            "Div should have set class rf-ico-chevron-down-hdr.");
+        assertTrue(selenium.belongsClass(icon, "rf-ico-chevron-down-hdr"), "Div should have set class rf-ico-chevron-down-hdr.");
         assertTrue(selenium.getStyle(icon, CssProperty.BACKGROUND_IMAGE).contains("chevronDown.png"),
             "Icon should contain a chevron down.");
 
@@ -174,10 +165,8 @@ public class TestRichCollapsiblePanel extends AbstractAjocadoTest {
 
     @Test
     public void testOnbeforeswitchOnswitch() {
-        selenium.type(pjq("input[type=text][id$=onbeforeswitchInput]"), "metamerEvents += \"beforeswitch \"");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=onswitchInput]"), "metamerEvents += \"switch \"");
-        selenium.waitForPageToLoad();
+        collapsiblePanelAttributes.set(CollapsiblePanelAttributes.onbeforeswitch, "metamerEvents += \"beforeswitch \"");
+        collapsiblePanelAttributes.set(CollapsiblePanelAttributes.onswitch, "metamerEvents += \"switch \"");
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
 
@@ -228,8 +217,7 @@ public class TestRichCollapsiblePanel extends AbstractAjocadoTest {
 
     @Test
     public void testRendered() {
-        selenium.click(pjq("input[type=radio][name$=renderedInput][value=false]"));
-        selenium.waitForPageToLoad();
+        collapsiblePanelAttributes.set(CollapsiblePanelAttributes.rendered, false);
 
         assertFalse(selenium.isElementPresent(panel), "Panel should not be rendered when rendered=false.");
     }
@@ -287,16 +275,14 @@ public class TestRichCollapsiblePanel extends AbstractAjocadoTest {
 
     @Test
     public void testSwitchTypeAjax() {
-        selenium.click(pjq("input[name$=switchTypeInput][value=ajax]"));
-        selenium.waitForPageToLoad();
+        collapsiblePanelAttributes.set(CollapsiblePanelAttributes.switchType, "ajax");
 
         testSwitchTypeNull();
     }
 
     @Test
     public void testSwitchTypeClient() {
-        selenium.click(pjq("input[name$=switchTypeInput][value=client]"));
-        selenium.waitForPageToLoad();
+        collapsiblePanelAttributes.set(CollapsiblePanelAttributes.switchType, "client");
 
         // click to collapse
         guardNoRequest(selenium).click(header);
@@ -310,8 +296,7 @@ public class TestRichCollapsiblePanel extends AbstractAjocadoTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-10368")
     public void testSwitchTypeServer() {
-        selenium.click(pjq("input[name$=switchTypeInput][value=server]"));
-        selenium.waitForPageToLoad();
+        collapsiblePanelAttributes.set(CollapsiblePanelAttributes.switchType, "server");
 
         // click to collapse
         guardHttp(selenium).click(header);
@@ -328,8 +313,8 @@ public class TestRichCollapsiblePanel extends AbstractAjocadoTest {
     }
 
     @Test
-    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat" })
+    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richList",
+            "a4jRepeat" })
     public void testToggleListener() {
         String reqTime = selenium.getText(time);
         guardXhr(selenium).click(header);
@@ -344,8 +329,8 @@ public class TestRichCollapsiblePanel extends AbstractAjocadoTest {
 
     @Test(groups = { "4.Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11568")
-    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat" })
+    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richList",
+            "a4jRepeat" })
     public void testToggleListenerInIterationComponents() {
         testToggleListener();
     }
@@ -398,36 +383,30 @@ public class TestRichCollapsiblePanel extends AbstractAjocadoTest {
 
         selenium.select(input, optionLabel("chevronDown"));
         selenium.waitForPageToLoad();
-        assertTrue(selenium.belongsClass(icon, "rf-ico-chevron-down-hdr"),
-            "Div should have set class rf-ico-chevron-down-hdr.");
+        assertTrue(selenium.belongsClass(icon, "rf-ico-chevron-down-hdr"), "Div should have set class rf-ico-chevron-down-hdr.");
         assertTrue(selenium.getStyle(icon, CssProperty.BACKGROUND_IMAGE).contains("chevronDown.png"),
             "Icon should contain a chevron down.");
 
         selenium.select(input, optionLabel("chevronUp"));
         selenium.waitForPageToLoad();
-        assertTrue(selenium.belongsClass(icon, "rf-ico-chevron-up-hdr"),
-            "Div should have set class rf-ico-chevron-up-hdr.");
+        assertTrue(selenium.belongsClass(icon, "rf-ico-chevron-up-hdr"), "Div should have set class rf-ico-chevron-up-hdr.");
         assertTrue(selenium.getStyle(icon, CssProperty.BACKGROUND_IMAGE).contains("chevronUp.png"),
             "Icon should contain a chevron up.");
 
         selenium.select(input, optionLabel("transparent"));
         selenium.waitForPageToLoad();
-        assertTrue(selenium.belongsClass(icon, "rf-ico-transparent-hdr"),
-            "Div should have set class rf-ico-transparent-hdr.");
-        assertTrue(selenium.getStyle(icon, CssProperty.BACKGROUND_IMAGE).equals("none"),
-            "Icon should not contain any image.");
+        assertTrue(selenium.belongsClass(icon, "rf-ico-transparent-hdr"), "Div should have set class rf-ico-transparent-hdr.");
+        assertTrue(selenium.getStyle(icon, CssProperty.BACKGROUND_IMAGE).equals("none"), "Icon should not contain any image.");
 
         selenium.select(input, optionLabel("disc"));
         selenium.waitForPageToLoad();
         assertTrue(selenium.belongsClass(icon, "rf-ico-disc-hdr"), "Div should have set class rf-ico-disc-hdr.");
-        assertTrue(selenium.getStyle(icon, CssProperty.BACKGROUND_IMAGE).contains("disc.png"),
-            "Icon should contain a disc.");
+        assertTrue(selenium.getStyle(icon, CssProperty.BACKGROUND_IMAGE).contains("disc.png"), "Icon should contain a disc.");
 
         selenium.select(input, optionLabel("grid"));
         selenium.waitForPageToLoad();
         assertTrue(selenium.belongsClass(icon, "rf-ico-grid-hdr"), "Div should have set class rf-ico-grid-hdr.");
-        assertTrue(selenium.getStyle(icon, CssProperty.BACKGROUND_IMAGE).contains("grid.png"),
-            "Icon should contain a grid.");
+        assertTrue(selenium.getStyle(icon, CssProperty.BACKGROUND_IMAGE).contains("grid.png"), "Icon should contain a grid.");
 
         selenium.select(input, optionLabel("triangle"));
         selenium.waitForPageToLoad();
@@ -444,8 +423,7 @@ public class TestRichCollapsiblePanel extends AbstractAjocadoTest {
 
         selenium.select(input, optionLabel("triangleUp"));
         selenium.waitForPageToLoad();
-        assertTrue(selenium.belongsClass(icon, "rf-ico-triangle-up-hdr"),
-            "Div should have set class rf-ico-triangle-up-hdr.");
+        assertTrue(selenium.belongsClass(icon, "rf-ico-triangle-up-hdr"), "Div should have set class rf-ico-triangle-up-hdr.");
         assertTrue(selenium.getStyle(icon, CssProperty.BACKGROUND_IMAGE).contains("triangleUp.png"),
             "Icon should contain a triangle up.");
 

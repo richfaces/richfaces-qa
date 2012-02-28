@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jMediaOutput;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.mediaOutputAttributes;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import static org.testng.Assert.assertEquals;
@@ -89,8 +89,7 @@ public class TestAttributes extends AbstractMediaOutputTest {
         AttributeLocator<?> attr = MEDIA_OUTPUT.getAttribute(new Attribute("ismap"));
         assertFalse(selenium.isAttributePresent(attr), "Attribute ismap should not be present.");
 
-        selenium.click(pjq("input[type=radio][name$=ismapInput][value=true]"));
-        selenium.waitForPageToLoad();
+        mediaOutputAttributes.set(MediaOutputAttributes.ismap, true);
 
         assertTrue(selenium.isAttributePresent(attr), "Attribute ismap should be present.");
         assertEquals(selenium.getAttribute(attr), "true", "Attribute dir");
@@ -163,10 +162,7 @@ public class TestAttributes extends AbstractMediaOutputTest {
 
     @Test
     public void testRendered() {
-        JQueryLocator input = pjq("input[type=radio][name$=renderedInput][value=false]");
-        selenium.click(input);
-        selenium.waitForPageToLoad();
-
+        mediaOutputAttributes.set(MediaOutputAttributes.rendered, false);
         assertFalse(selenium.isElementPresent(MEDIA_OUTPUT), "Image should not be rendered when rendered=false.");
     }
 

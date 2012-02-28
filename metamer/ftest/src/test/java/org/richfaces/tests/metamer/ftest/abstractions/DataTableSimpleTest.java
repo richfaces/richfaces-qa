@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions;
 
+import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.dataTableAttributes;
 
 import static org.testng.Assert.assertEquals;

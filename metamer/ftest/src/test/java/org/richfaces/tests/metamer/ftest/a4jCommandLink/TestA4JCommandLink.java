@@ -26,16 +26,13 @@ import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
 import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
 import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.commandLinkAttributes;
 import java.net.URL;
 
 import javax.faces.event.PhaseId;
@@ -46,7 +43,6 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page /faces/components/a4jCommandLink/simple.xhtml
@@ -104,24 +100,20 @@ public class TestA4JCommandLink extends AbstractAjocadoTest {
 
     @Test
     public void testAction() {
-        selenium.click(pjq("input[name$=actionInput][value=doubleStringAction]"));
-        selenium.waitForPageToLoad();
+        commandLinkAttributes.set(CommandLinkAttributes.action, "doubleStringAction");
         selenium.typeKeys(input, "RichFaces 4");
         guardXhr(selenium).click(link);
         waitGui.until(textEquals.locator(output1).text("RichFaces 4"));
         assertEquals(selenium.getText(output2), "RichFaces 4RichFaces 4",
             "output2 when 'RichFaces 4' in input and doubleStringAction selected");
 
-        selenium.click(pjq("input[name$=actionInput][value=first6CharsAction]"));
-        selenium.waitForPageToLoad();
+        commandLinkAttributes.set(CommandLinkAttributes.action, "first6CharsAction");
         selenium.typeKeys(input, "RichFaces 4ň");
         guardXhr(selenium).click(link);
         waitGui.until(textEquals.locator(output1).text("RichFaces 4ň"));
-        assertEquals(selenium.getText(output2), "RichFa",
-            "output2 when 'RichFaces 4ň' in input and first6CharsAction selected");
+        assertEquals(selenium.getText(output2), "RichFa", "output2 when 'RichFaces 4ň' in input and first6CharsAction selected");
 
-        selenium.click(pjq("input[name$=actionInput][value=toUpperCaseAction]"));
-        selenium.waitForPageToLoad();
+        commandLinkAttributes.set(CommandLinkAttributes.action, "toUpperCaseAction");
         selenium.typeKeys(input, "RichFaces 4ě");
         guardXhr(selenium).click(link);
         waitGui.until(textEquals.locator(output1).text("RichFaces 4ě"));
@@ -131,24 +123,21 @@ public class TestA4JCommandLink extends AbstractAjocadoTest {
 
     @Test
     public void testActionListener() {
-        selenium.click(pjq("input[name$=actionListenerInput][value=doubleStringActionListener]"));
-        selenium.waitForPageToLoad();
+        commandLinkAttributes.set(CommandLinkAttributes.actionListener, "doubleStringActionListener");
         selenium.typeKeys(input, "RichFaces 4");
         guardXhr(selenium).click(link);
         waitGui.until(textEquals.locator(output1).text("RichFaces 4"));
         assertEquals(selenium.getText(output3), "RichFaces 4RichFaces 4",
             "output3 when 'RichFaces 4' in input and doubleStringActionListener selected");
 
-        selenium.click(pjq("input[name$=actionListenerInput][value=first6CharsActionListener]"));
-        selenium.waitForPageToLoad();
+        commandLinkAttributes.set(CommandLinkAttributes.actionListener, "first6CharsActionListener");
         selenium.typeKeys(input, "RichFaces 4ň");
         guardXhr(selenium).click(link);
         waitGui.until(textEquals.locator(output1).text("RichFaces 4ň"));
         assertEquals(selenium.getText(output3), "RichFa",
             "output3 when 'RichFaces 4ň' in input and first6CharsActionListener selected");
 
-        selenium.click(pjq("input[name$=actionListenerInput][value=toUpperCaseActionListener]"));
-        selenium.waitForPageToLoad();
+        commandLinkAttributes.set(CommandLinkAttributes.actionListener, "toUpperCaseActionListener");
         selenium.typeKeys(input, "RichFaces 4ě");
         guardXhr(selenium).click(link);
         waitGui.until(textEquals.locator(output1).text("RichFaces 4ě"));
@@ -158,8 +147,7 @@ public class TestA4JCommandLink extends AbstractAjocadoTest {
 
     @Test
     public void testBypassUpdates() {
-        selenium.click(pjq("input[type=radio][name$=bypassUpdatesInput][value=true]"));
-        selenium.waitForPageToLoad();
+        commandLinkAttributes.set(CommandLinkAttributes.bypassUpdates, true);
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).click(link);
@@ -189,11 +177,8 @@ public class TestA4JCommandLink extends AbstractAjocadoTest {
 
     @Test
     public void testData() {
-        selenium.type(pjq("input[type=text][id$=dataInput]"), "RichFaces 4");
-        selenium.waitForPageToLoad();
-
-        selenium.type(pjq("input[type=text][id$=oncompleteInput]"), "data = event.data");
-        selenium.waitForPageToLoad();
+        commandLinkAttributes.set(CommandLinkAttributes.data, "RichFaces 4");
+        commandLinkAttributes.set(CommandLinkAttributes.oncomplete, "data = event.data");
 
         String reqTime = selenium.getText(time);
 
@@ -209,19 +194,15 @@ public class TestA4JCommandLink extends AbstractAjocadoTest {
     public void testDisabled() {
         JQueryLocator newLink = pjq("span[id$=a4jCommandLink]");
 
-        selenium.click(pjq("input[name$=disabledInput][value=true]"));
-        selenium.waitForPageToLoad();
+        commandLinkAttributes.set(CommandLinkAttributes.disabled, true);
 
-        assertFalse(selenium.isElementPresent(link), link.getRawLocator()
-            + " should not be on page when the link is disabled");
-        assertTrue(selenium.isElementPresent(newLink), newLink.getRawLocator()
-            + " should be on page when the link is disabled");
+        assertFalse(selenium.isElementPresent(link), link.getRawLocator() + " should not be on page when the link is disabled");
+        assertTrue(selenium.isElementPresent(newLink), newLink.getRawLocator() + " should be on page when the link is disabled");
     }
 
     @Test
     public void testExecute() {
-        selenium.type(pjq("input[type=text][id$=executeInput]"), "input executeChecker");
-        selenium.waitForPageToLoad();
+        commandLinkAttributes.set(CommandLinkAttributes.execute, "input executeChecker");
 
         selenium.type(input, "RichFaces 4");
         guardXhr(selenium).click(link);
@@ -244,8 +225,7 @@ public class TestA4JCommandLink extends AbstractAjocadoTest {
 
     @Test
     public void testImmediate() {
-        selenium.click(pjq("input[type=radio][name$=immediateInput][value=true]"));
-        selenium.waitForPageToLoad();
+        commandLinkAttributes.set(CommandLinkAttributes.immediate, true);
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).click(link);
@@ -264,8 +244,7 @@ public class TestA4JCommandLink extends AbstractAjocadoTest {
 
     @Test
     public void testLimitRender() {
-        selenium.click(pjq("input[type=radio][name$=limitRenderInput][value=true]"));
-        selenium.waitForPageToLoad();
+        commandLinkAttributes.set(CommandLinkAttributes.limitRender, true);
 
         String timeValue = selenium.getText(time);
 
@@ -278,12 +257,9 @@ public class TestA4JCommandLink extends AbstractAjocadoTest {
 
     @Test
     public void testEvents() {
-        selenium.type(pjq("input[type=text][id$=onbeginInput]"), "metamerEvents += \"begin \"");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=onbeforedomupdateInput]"), "metamerEvents += \"beforedomupdate \"");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=oncompleteInput]"), "metamerEvents += \"complete \"");
-        selenium.waitForPageToLoad();
+        commandLinkAttributes.set(CommandLinkAttributes.onbegin, "metamerEvents += \"begin \"");
+        commandLinkAttributes.set(CommandLinkAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
+        commandLinkAttributes.set(CommandLinkAttributes.oncomplete, "metamerEvents += \"complete \"");
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
 
@@ -396,8 +372,7 @@ public class TestA4JCommandLink extends AbstractAjocadoTest {
 
     @Test
     public void testRendered() {
-        selenium.click(pjq("input[name$=renderedInput][value=false]"));
-        selenium.waitForPageToLoad();
+        commandLinkAttributes.set(CommandLinkAttributes.rendered, false);
         assertFalse(selenium.isElementPresent(link), "Link should not be displayed");
     }
 
@@ -434,9 +409,7 @@ public class TestA4JCommandLink extends AbstractAjocadoTest {
 
     @Test
     public void testValue() {
-        selenium.type(pjq("input[id$=valueInput]"), "new label");
-        selenium.waitForPageToLoad();
-
+        commandLinkAttributes.set(CommandLinkAttributes.value, "new label");
         assertEquals(selenium.getText(link), "new label", "Value of the button did not change");
     }
 }

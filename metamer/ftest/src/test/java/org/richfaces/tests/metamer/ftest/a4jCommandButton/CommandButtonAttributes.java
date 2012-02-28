@@ -19,21 +19,46 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richComponentControl;
+package org.richfaces.tests.metamer.ftest.a4jCommandButton;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22739 $
  */
-public enum ComponentControlAttributes implements AttributeEnum {
+public enum CommandButtonAttributes implements AttributeEnum {
 
-    event,
-    onbeforeoperation,
-    operation,
-    selector,
-    target
+    action,
+    actionListener,
+    binding,
+    bypassUpdates,
+    data,
+    disabled,
+    execute,
+    id,
+    image,
+    immediate,
+    limitRender,
+    onbeforedomupdate,
+    onbegin,
+    onclick,
+    oncomplete,
+    ondblclick,
+    onkeydown,
+    onkeypress,
+    onkeyup,
+    onmousedown,
+    onmousemove,
+    onmouseout,
+    onmouseover,
+    onmouseup,
+    render,
+    rendered,
+    status,
+    style,
+    styleClass,
+    title,
+    type,
+    value
 
 }

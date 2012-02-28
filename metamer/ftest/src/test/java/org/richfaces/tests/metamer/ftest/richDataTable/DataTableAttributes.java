@@ -19,21 +19,50 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richComponentControl;
+package org.richfaces.tests.metamer.ftest.richDataTable;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22739 $
+ * @version $Revision: 22685 $
  */
-public enum ComponentControlAttributes implements AttributeEnum {
+public enum DataTableAttributes implements AttributeEnum {
 
-    event,
-    onbeforeoperation,
-    operation,
-    selector,
-    target
+    binding,
+    captionClass,
+    columnClasses,
+    filterVar,
+    first,
+    footerClass,
+    headerClass,
+    id,
+    iterationStatusVar,
+    keepSaved,
+    noDataLabel,
+    onrowclick,
+    onrowdblclick,
+    onrowkeydown,
+    onrowkeypress,
+    onrowkeyup,
+    onrowmousedown,
+    onrowmousemove,
+    onrowmouseout,
+    onrowmouseover,
+    onrowmouseup,
+    rendered,
+    rowClass,
+    rowClasses,
+    rowKeyConverter,
+    rowKeyVar,
+    rows,
+    sortMode,
+    sortPriority,
+    stateVar,
+    style,
+    styleClass,
+    value,
+    var
 
 }

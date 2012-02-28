@@ -58,14 +58,13 @@ public abstract class AbstractDataTableTest extends AbstractAjocadoTest {
     protected static final int COLUMN_NUMBER_OF_KIDS2 = 5;
 
     protected static final Integer[] COUNTS = new Integer[] { null, 1, 3, 11, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1,
-        ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1 };
+            ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1 };
 
     protected DataTable model;
     protected EmployeeTableModel employees = new EmployeeTableModel();
 
     protected DataScroller dataScroller1 = new AssertingDataScroller("outside-table", pjq("span.rf-ds[id$=scroller1]"));
-    protected DataScroller dataScroller2 = new AssertingDataScroller("inside-table-footer",
-        pjq("span.rf-ds[id$=scroller2]"));
+    protected DataScroller dataScroller2 = new AssertingDataScroller("inside-table-footer", pjq("span.rf-ds[id$=scroller2]"));
 
     JQueryLocator showDataLocator = pjq("input[id$=noDataCheckbox]");
 
