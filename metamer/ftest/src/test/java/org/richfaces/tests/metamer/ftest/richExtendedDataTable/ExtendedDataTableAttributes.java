@@ -18,30 +18,29 @@
  * along with this software; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
  * site: http://www.fsf.org.
- * *****************************************************************************
+ ******************************************************************************
  */
-package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
+package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22685 $
  */
-public enum CollapsibleSubTableAttributes implements AttributeEnum {
+public enum ExtendedDataTableAttributes implements AttributeEnum {
 
+    binding,
     columnClasses,
-    expandMode,
-    expanded,
     filterVar,
     first,
     footerClass,
+    frozenColumns,
     headerClass,
     id,
     iterationStatusVar,
     keepSaved,
     noDataLabel,
+    onbeforeselectionchange,
     onrowclick,
     onrowdblclick,
     onrowkeydown,
@@ -52,16 +51,20 @@ public enum CollapsibleSubTableAttributes implements AttributeEnum {
     onrowmouseout,
     onrowmouseover,
     onrowmouseup,
+    onselectionchange,
     rendered,
     rowClass,
     rowClasses,
     rowKeyConverter,
     rowKeyVar,
     rows,
+    selection,
+    selectionMode,
     sortMode,
     sortPriority,
     stateVar,
     style,
+    styleClass,
     value,
     var
 }

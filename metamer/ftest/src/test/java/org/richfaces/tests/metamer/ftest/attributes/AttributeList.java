@@ -38,6 +38,7 @@ import org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttribut
 import org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes;
 import org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes;
 import org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes;
+import org.richfaces.tests.metamer.ftest.richExtendedDataTable.ExtendedDataTableAttributes;
 import org.richfaces.tests.metamer.ftest.richGraphValidator.GraphValidatorAttributes;
 import org.richfaces.tests.metamer.ftest.richJQuery.RichJQueryAttributes;
 import org.richfaces.tests.metamer.ftest.richList.ListAttributes;
@@ -84,6 +85,7 @@ public class AttributeList {
     public static Attributes<DragSourceAttributes> dragSourceAttributes = new Attributes<DragSourceAttributes>();
     public static Attributes<DropTargetAttributes> dropTargetAttributes = new Attributes<DropTargetAttributes>();
     public static Attributes<EditorAttributes> editorAttributes = new Attributes<EditorAttributes>();
+    public static Attributes<ExtendedDataTableAttributes> extendedDataTableAttributes = new Attributes<ExtendedDataTableAttributes>();
     public static Attributes<GraphValidatorAttributes> graphValidatorAttributes = new Attributes<GraphValidatorAttributes>();
     public static Attributes<JSFunctionAttributes> jsFunctionAttributes = new Attributes<JSFunctionAttributes>();
     public static Attributes<LogAttributes> logAttributes = new Attributes<LogAttributes>();

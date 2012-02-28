@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.a4jRepeat;
+package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
@@ -35,7 +35,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestKeepSaved extends AbstractAjocadoTest {
+public class TestExtendedDataTableKeepSaved extends AbstractAjocadoTest {
 
     private final JQueryLocator inputFirst = pjq("input[type=text]:first");
     private final JQueryLocator submit = pjq("input[id$=submitButton]");
@@ -44,7 +44,7 @@ public class TestKeepSaved extends AbstractAjocadoTest {
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jRepeat/keepSaved.xhtml");
+        return buildUrl(contextPath, "faces/components/richExtendedDataTable/keepSaved.xhtml");
     }
 
     @Test
