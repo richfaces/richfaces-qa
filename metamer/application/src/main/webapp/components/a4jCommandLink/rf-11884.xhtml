@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<h:head></h:head> 
+<h:body>
+
+    First 2 images are within commandLink, last (star) is just simple image<br/>
+    This example simulate problem with border around image in IE7,8
+                
+    <h:panelGrid columns="4">        
+        <a4j:commandLink execute="@this" action="playAround">
+            <h:graphicImage library="images" name="male.png"/>
+        </a4j:commandLink>
+        <a4j:commandLink execute="@this" action="doSomething">
+            <h:graphicImage library="images" name="female.png"/>
+        </a4j:commandLink>
+        
+        <h:graphicImage library="images" name="star.png"/>
+        
+    </h:panelGrid>
+        
+</h:body> 
+</ui:composition>

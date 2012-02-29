@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions;
 
+import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.dataTableAttributes;
 
 import static org.testng.Assert.assertEquals;
@@ -44,7 +45,7 @@ public abstract class DataTableScrollerTest extends AbstractDataTableTest {
         testRowCount(dataScroller2);
     }
 
-    @Templates(exclude = {"a4jRepeat", "hDataTable", "richDataTable", "uiRepeat"})
+    @Templates(exclude = { "a4jRepeat", "hDataTable", "richDataTable", "uiRepeat" })
     public void testRowCountOutsideTable() {
         testRowCount(dataScroller1);
     }

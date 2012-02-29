@@ -26,7 +26,7 @@ import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
-import static org.richfaces.tests.metamer.ftest.abstractions.DataTableAttributes.rows;
+import static org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes.rows;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.dataTableAttributes;
 import static org.richfaces.tests.metamer.ftest.richExtendedDataTable.TestExtendedDataTableSelection.Modifier.CTRL;
 import static org.richfaces.tests.metamer.ftest.richExtendedDataTable.TestExtendedDataTableSelection.Modifier.SHIFT;
@@ -47,7 +47,7 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.utils.array.ArrayTransform;
 import org.jboss.arquillian.ajocado.waiting.retrievers.Retriever;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractDataTableTest;
-import org.richfaces.tests.metamer.ftest.abstractions.DataTableAttributes;
+import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.model.ExtendedDataTable;

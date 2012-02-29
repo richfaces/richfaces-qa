@@ -25,10 +25,13 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @version $Revision: 22739 $
  */
 public enum ComponentControlAttributes implements AttributeEnum {
 
+    event,
+    onbeforeoperation,
     operation,
     selector,
     target

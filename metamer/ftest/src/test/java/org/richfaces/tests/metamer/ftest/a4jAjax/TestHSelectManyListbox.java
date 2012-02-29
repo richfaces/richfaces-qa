@@ -28,7 +28,6 @@ import java.net.URL;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.testng.annotations.Test;
 
-
 /**
  * Test case for page /faces/components/a4jAjax/hSelectManyListbox.xhtml
  *

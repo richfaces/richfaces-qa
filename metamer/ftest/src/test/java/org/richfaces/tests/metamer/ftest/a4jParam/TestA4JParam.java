@@ -1,26 +1,28 @@
-/*******************************************************************************
- * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
+/**
+ * *****************************************************************************
+ * JBoss, Home of Professional Open Source Copyright 2010-2012, Red Hat, Inc.
+ * and individual contributors by the @authors tag. See the copyright.txt in the
+ * distribution for a full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
+ * This is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ * This software is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this software; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
+ * site: http://www.fsf.org.
+ ******************************************************************************
+ */
 package org.richfaces.tests.metamer.ftest.a4jParam;
 
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.paramAttributes;
 import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
 import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
 import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
@@ -36,7 +38,6 @@ import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page /faces/components/a4jParam/simple.xhtml
@@ -85,8 +86,7 @@ public class TestA4JParam extends AbstractAjocadoTest {
 
     @Test
     public void testName() {
-        selenium.type(pjq("input[id$=nameInput]"), "metamer");
-        selenium.waitForPageToLoad();
+        paramAttributes.set(ParamAttributes.name, "metamer");
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).click(button1);
@@ -100,9 +100,7 @@ public class TestA4JParam extends AbstractAjocadoTest {
 
     @Test
     public void testNoEscape() {
-        JQueryLocator renderedInput = pjq("input[type=radio][name$=noEscapeInput][value=false]");
-        selenium.click(renderedInput);
-        selenium.waitForPageToLoad();
+        paramAttributes.set(ParamAttributes.noEscape, false);
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).click(button1);
@@ -114,8 +112,7 @@ public class TestA4JParam extends AbstractAjocadoTest {
 
     @Test
     public void testValue() {
-        selenium.type(pjq("input[id$=valueInput]"), "4+5");
-        selenium.waitForPageToLoad();
+        paramAttributes.set(ParamAttributes.value, "4+5");
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).click(button1);

@@ -9,7 +9,8 @@
     software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the 
     FSF site: http://www.fsf.org. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -32,44 +33,12 @@
         <jvm.args.jacoco>-Djacoco.disabled=true</jvm.args.jacoco>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.jboss.arquillian</groupId>
-                <artifactId>arquillian-bom</artifactId>
-                <version>1.0.0.CR7</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
-        <dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-            <version>3.1</version>
-        </dependency>
         <dependency>
             <groupId>org.richfaces.tests</groupId>
             <artifactId>metamer</artifactId>
             <version>${project.version}</version>
             <classifier>classes</classifier>
-        </dependency>
-        <dependency>
-            <groupId>javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>3.12.1.GA</version>
-        </dependency>
-        <dependency>
-            <groupId>org.richfaces.ui</groupId>
-            <artifactId>richfaces-components-api</artifactId>
-            <version>${version.richfaces}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.richfaces.ui</groupId>
-            <artifactId>richfaces-components-ui</artifactId>
-            <version>${version.richfaces}</version>
         </dependency>
         <!-- Arquillian dependencies -->
         <dependency>
@@ -98,7 +67,6 @@
             <groupId>org.jboss.shrinkwrap.resolver</groupId>
             <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
             <scope>test</scope>
-            <version>1.0.0-beta-5</version>
         </dependency>
 
         <dependency>
@@ -129,13 +97,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
@@ -401,7 +362,8 @@
                                 </goals>
                                 <configuration>
                                     <tasks>
-                                        <unzip src="${project.build.directory}/metamer.war" dest="${project.build.directory}/metamer-war-unzipped" overwrite="true" />
+                                        <unzip src="${project.build.directory}/metamer.war" dest="${project.build.directory}/metamer-war-unzipped"
+                                            overwrite="true" />
                                     </tasks>
                                 </configuration>
                             </execution>

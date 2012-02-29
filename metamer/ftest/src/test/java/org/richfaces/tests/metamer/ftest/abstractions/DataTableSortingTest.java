@@ -26,7 +26,7 @@ import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
 import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-import static org.richfaces.tests.metamer.ftest.abstractions.DataTableAttributes.sortMode;
+import static org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes.sortMode;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.dataTableAttributes;
 
 import static org.testng.Assert.assertEquals;
@@ -249,8 +249,8 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
         int numberOfKids = employees.getNumberOfKids(rowIndex + 1);
 
         String message = format(
-            "model: {0}; row: {1}; employee: {2}; found: sex '{3}', name '{4}', title '{5}', numberOfKids '{6}'",
-            modelIndex, rowIndex, employee, sex, name, title, numberOfKids);
+            "model: {0}; row: {1}; employee: {2}; found: sex '{3}', name '{4}', title '{5}', numberOfKids '{6}'", modelIndex,
+            rowIndex, employee, sex, name, title, numberOfKids);
 
         assertEquals(sex, employee.getSex(), message);
         assertEquals(name, employee.getName(), message);

@@ -26,6 +26,7 @@
 
     <properties>
         <jetty.port>8080</jetty.port>
+        <version.hornetq>2.2.11.Final</version.hornetq>
     </properties>
 
     <dependencies>
@@ -71,14 +72,17 @@
         <dependency>
             <groupId>org.hornetq</groupId>
             <artifactId>hornetq-core</artifactId>
+            <version>${version.hornetq}</version>
         </dependency>
         <dependency>
             <groupId>org.hornetq</groupId>
             <artifactId>hornetq-jms</artifactId>
+            <version>${version.hornetq}</version>
         </dependency>
         <dependency>
             <groupId>org.hornetq</groupId>
             <artifactId>hornetq-logging</artifactId>
+            <version>${version.hornetq}</version>
         </dependency>
         <dependency>
             <groupId>org.atmosphere</groupId>
@@ -88,11 +92,13 @@
         <dependency>
             <groupId>org.jboss.netty</groupId>
             <artifactId>netty</artifactId>
+            <version>3.2.6.Final</version>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+            <version>1.6.1</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -120,6 +126,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
+            <version>4.2.0.Final</version>
         </dependency>
 
         <!-- JBoss AS7 management -->
@@ -134,6 +141,7 @@
         <dependency>
             <groupId>org.jboss.as</groupId>
             <artifactId>jboss-as-controller-client</artifactId>
+            <version>${version.jbossas7}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -150,13 +158,6 @@
         </resources>
 
         <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
@@ -451,7 +452,7 @@
                 <dependency>
                     <groupId>org.hibernate</groupId>
                     <artifactId>hibernate-validator</artifactId>
-                    <version>4.1.0.Final</version>
+                    <version>4.2.0.Final</version>
                     <scope>provided</scope>
                 </dependency>
             </dependencies>

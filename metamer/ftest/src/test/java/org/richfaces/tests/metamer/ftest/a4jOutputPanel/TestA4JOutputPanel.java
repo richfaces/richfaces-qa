@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jOutputPanel;
 
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.outputPanelAttributes;
 import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
 import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
 import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
@@ -57,7 +58,6 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.testng.annotations.Test;
 
-
 /**
  * Test case for page /faces/components/a4jOutputPanel/simple.xhtml
  *
@@ -66,9 +66,9 @@ import org.testng.annotations.Test;
  */
 public class TestA4JOutputPanel extends AbstractAjocadoTest {
 
-    Event[] events = new Event[]{CLICK, DBLCLICK, KEYDOWN, KEYPRESS, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEOUT,
-        MOUSEOVER, MOUSEUP};
-    String[] layouts = new String[]{"block", "inline"};
+    Event[] events = new Event[] { CLICK, DBLCLICK, KEYDOWN, KEYPRESS, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER,
+            MOUSEUP };
+    String[] layouts = new String[] { "block", "inline" };
     @Inject
     @Use(empty = true)
     Event event;
@@ -87,14 +87,12 @@ public class TestA4JOutputPanel extends AbstractAjocadoTest {
     }
 
     @Test
-    @Uses({
-        @Use(field = "event", value = "events"),
-        @Use(field = "layout", value = "layouts")})
+    @Uses({ @Use(field = "event", value = "events"), @Use(field = "layout", value = "layouts") })
     public void testEvent() {
         JQueryLocator element = null;
 
         if ("inline".equals(layout)) {
-            guardHttp(selenium).click(pjq("input[name$=layoutInput][value=inline]"));
+            outputPanelAttributes.set(OutputPanelAttributes.layout, "inline");
             element = outputSpan;
         } else {
             element = outputDiv;
@@ -116,10 +114,9 @@ public class TestA4JOutputPanel extends AbstractAjocadoTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-10555")
     public void testAjaxRendered() {
-        JQueryLocator ajaxRenderedInput = pjq("input[type=radio][name$=ajaxRenderedInput][value=false]");
         JQueryLocator reRenderAllImage = jq("div.header img[id$=reRenderAllImage]");
 
-        guardHttp(selenium).click(ajaxRenderedInput);
+        outputPanelAttributes.set(OutputPanelAttributes.ajaxRendered, false);
 
         selenium.click(increaseCounterButton);
         selenium.click(increaseCounterButton);
@@ -143,18 +140,14 @@ public class TestA4JOutputPanel extends AbstractAjocadoTest {
 
     @Test
     public void testLayout() {
-        JQueryLocator optionBlock = pjq("input[name$=layoutInput][value=block]");
-        JQueryLocator optionInline = pjq("input[name$=layoutInput][value=inline]");
-        JQueryLocator optionNone = pjq("input[name$=layoutInput][value=none]");
-
         assertTrue(selenium.isElementPresent(outputDiv), "Div should be rendered on the beginning.");
         assertFalse(selenium.isElementPresent(outputSpan), "Div should be rendered on the beginning.");
 
-        guardHttp(selenium).click(optionInline);
+        outputPanelAttributes.set(OutputPanelAttributes.layout, "inline");
         assertFalse(selenium.isElementPresent(outputDiv), "Span should be rendered when inline is set.");
         assertTrue(selenium.isElementPresent(outputSpan), "Span should be rendered when inline is set.");
 
-        guardHttp(selenium).click(optionBlock);
+        outputPanelAttributes.set(OutputPanelAttributes.layout, "block");
         assertTrue(selenium.isElementPresent(outputDiv), "Div should be rendered when block is set.");
         assertFalse(selenium.isElementPresent(outputSpan), "Div should be rendered when block is set.");
 
@@ -168,10 +161,7 @@ public class TestA4JOutputPanel extends AbstractAjocadoTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-11312")
     public void testRendered() {
-        JQueryLocator renderedInputFalse = pjq("input[type=radio][name$=renderedInput][value=false]");
-        JQueryLocator renderedInputTrue = pjq("input[type=radio][name$=renderedInput][value=true]");
-
-        guardHttp(selenium).click(renderedInputFalse);
+        outputPanelAttributes.set(OutputPanelAttributes.rendered, false);
         assertFalse(selenium.isElementPresent(outputDiv), "Panel should not be rendered.");
 
         String timeValue = selenium.getText(time);
@@ -181,7 +171,7 @@ public class TestA4JOutputPanel extends AbstractAjocadoTest {
         guardXhr(selenium).click(increaseCounterButton);
         waitGui.failWith("Page was not updated").waitForChange(timeValue, retrieveText.locator(time));
 
-        guardHttp(selenium).click(renderedInputTrue);
+        outputPanelAttributes.set(OutputPanelAttributes.rendered, true);
         assertTrue(selenium.isElementPresent(outputDiv), "Panel should be rendered.");
 
         String counter = selenium.getText(outputDiv);

@@ -40,7 +40,7 @@ import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
 import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
-import org.richfaces.tests.metamer.ftest.abstractions.DataTableAttributes;
+import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.attributes.Attributes;

@@ -45,17 +45,6 @@
         <context.path>richfaces-simpleapp-jee6</context.path>
     </properties>
 
-    <developers>
-        <developer>
-            <name>Lukas Fryc</name>
-            <email>lfryc@redhat.com</email>
-        </developer>
-        <developer>
-            <name>Jan Papousek</name>
-            <email>jpapouse@redhat.com</email>
-        </developer>
-    </developers>
-    
     <dependencies>
         <!-- Selenium -->
         <dependency>
@@ -78,7 +67,6 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.2.1</version>
         </dependency>           
 <!--         <dependency> -->
 <!--             <groupId>org.jboss.arquillian.extension</groupId> -->
@@ -322,13 +310,6 @@
             <id>deploy-and-test</id>
             <build>
                 <plugins>
-                    <plugin>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <configuration>
-                            <source>1.6</source>
-                            <target>1.6</target>
-                        </configuration>
-                    </plugin>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
