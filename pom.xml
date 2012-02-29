@@ -41,10 +41,10 @@
         <tomcat7Zip>path/to/your/tomcat/distribution/zip</tomcat7Zip>
 
         <!-- arquillian versions -->
-        <arquillian.tomcat.version>1.0.0.CR2</arquillian.tomcat.version>
+        <arquillian.tomcat.version>1.0.0.CR3</arquillian.tomcat.version>
         <arquillian.drone.version>1.0.0.CR3</arquillian.drone.version>
         <arquillian.ajocado-testng.version>1.0.0.CR2</arquillian.ajocado-testng.version>
-        <arquillian.jboss-as6.version>1.0.0.CR2</arquillian.jboss-as6.version>
+        <arquillian.jboss-as6.version>1.0.0.CR3</arquillian.jboss-as6.version>
 
         <version.selenium>2.19.0</version.selenium>
         <version.selenium.server>2.19.0</version.selenium.server>
