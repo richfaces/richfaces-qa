@@ -42,9 +42,9 @@ public class PropertyToolKitConfiguration implements ToolKitConfiguration {
     @Override
     public File getDirectory() {
         if (directory == null) {
-            String dirname = System.getProperty(prefix + "dir") == null ? System.getenv("ANDROID_SDK_DIRECTORY") : System.getProperty(prefix + "dir");
+            String dirname = System.getProperty(prefix + "home") == null ? System.getenv("ANDROID_SDK_DIRECTORY") : System.getProperty(prefix + "home");
             if (dirname == null) {
-                throw new IllegalStateException("The android SDK directory is not set. Looking for " + prefix + "dir property.");
+                throw new IllegalStateException("The android SDK directory is not set. Looking for " + prefix + "home property.");
             }
             directory = new File(dirname);
         }
