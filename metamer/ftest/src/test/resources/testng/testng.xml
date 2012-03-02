@@ -1,16 +1,16 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="seleniumTest">
+<suite name="All Components">
 
-    <test name="All Components">
-        <groups>
-            <run>
-                <exclude name="4.3" />
-                <exclude name="4.Future" />
-            </run>
-        </groups>
-
-        <packages>
-            <package name="org.richfaces.tests.metamer.ftest.*" />
-        </packages>
-    </test>
+    <suite-files>
+        <suite-file path="testng-core.xml"/>
+        <suite-file path="testng-dnd.xml"/>
+        <suite-file path="testng-input.xml"/>
+        <suite-file path="testng-misc.xml"/>
+        <suite-file path="testng-output.xml"/>
+        <suite-file path="testng-switchable.xml"/>
+        <suite-file path="testng-tables.xml"/>
+        <suite-file path="testng-treemodel.xml"/>
+        <suite-file path="testng-trees.xml"/>
+    </suite-files>
+    
 </suite>
