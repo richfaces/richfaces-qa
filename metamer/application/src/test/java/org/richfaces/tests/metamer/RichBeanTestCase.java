@@ -23,19 +23,19 @@ package org.richfaces.tests.metamer;
 
 import javax.faces.event.ValueChangeEvent;
 
-import org.junit.Test;
 import org.richfaces.tests.metamer.bean.RichBean;
+import org.testng.annotations.Test;
 
 /**
  * Tests for RichBean testing methods
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision$
  */
 public class RichBeanTestCase {
 
     /**
-     * Test method for {@link org.richfaces.tests.metamer.bean.RichBean#valueChangeListenerImproved(javax.faces.event.ValueChangeEvent)}.
+     * Test method for
+     * {@link org.richfaces.tests.metamer.bean.RichBean#valueChangeListenerImproved(javax.faces.event.ValueChangeEvent)}.
      */
     @Test
     public void testValueChangeListenerImproved() {

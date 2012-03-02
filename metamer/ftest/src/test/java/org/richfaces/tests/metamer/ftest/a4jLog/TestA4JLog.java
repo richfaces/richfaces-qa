@@ -21,10 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jLog;
 
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.logAttributes;
 import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
-
-import static org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory.optionLabel;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
@@ -40,7 +39,6 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
 import org.testng.annotations.Test;
 
-
 /**
  * Test case for page /faces/components/a4jLog/simple.xhtml
  *
@@ -54,8 +52,13 @@ public class TestA4JLog extends AbstractAjocadoTest {
      */
     public enum LogLevel {
 
-        DEBUG, NULL, INFO, WARN, ERROR;
+        DEBUG,
+        NULL,
+        INFO,
+        WARN,
+        ERROR;
     }
+
     private JQueryLocator input = pjq("input[id$=nameInput]");
     private JQueryLocator submitButton = pjq("input[id$=submitButton]");
     private JQueryLocator output = pjq("span[id$=out]");
@@ -110,11 +113,7 @@ public class TestA4JLog extends AbstractAjocadoTest {
 
     @Test
     public void testRendered() {
-        JQueryLocator renderedInput = pjq("input[type=radio][name$=renderedInput][value=false]");
-
-        selenium.click(renderedInput);
-        selenium.waitForPageToLoad(TIMEOUT);
-
+        logAttributes.set(LogAttributes.rendered, false);
         assertFalse(selenium.isElementPresent(log), "Log should not be displayed.");
     }
 
@@ -224,8 +223,7 @@ public class TestA4JLog extends AbstractAjocadoTest {
         JQueryLocator msgContent = logMsg.getChild(jq("span.rf-log-entry-msg"));
 
         if (filterLevel != LogLevel.DEBUG) {
-            selenium.select(pjq("select[name$=levelInput]"), optionLabel(filterLevel.toString().toLowerCase()));
-            selenium.waitForPageToLoad();
+            logAttributes.set(LogAttributes.level, filterLevel.toString().toLowerCase());
         }
 
         String selectedLevel = selenium.getSelectedLabel(levelSelect);
@@ -239,8 +237,7 @@ public class TestA4JLog extends AbstractAjocadoTest {
         selenium.click(logButton);
 
         int count = selenium.getCount(logMsg);
-        assertEquals(count, filterLevel.ordinal() <= logLevel.ordinal() ? 1 : 0,
-                "There should be only one message in log.");
+        assertEquals(count, filterLevel.ordinal() <= logLevel.ordinal() ? 1 : 0, "There should be only one message in log.");
 
         if (count == 0) {
             return;

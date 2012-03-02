@@ -21,12 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.ajaxAttributes;
 import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
 import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
 import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
-
-import static org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory.optionLabel;
 
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 
@@ -60,8 +59,7 @@ public abstract class AbstractTestTextInput extends AbstractAjocadoTest {
 
     public void testType(JQueryLocator input, String text) {
         typeToInput(input, text);
-        String outputValue = waitGui.failWith("Page was not updated").waitForChangeAndReturn("",
-            retrieveText.locator(output1));
+        String outputValue = waitGui.failWith("Page was not updated").waitForChangeAndReturn("", retrieveText.locator(output1));
 
         assertEquals(outputValue, text, "Wrong output1");
         assertEquals(selenium.getText(output2), text, "Wrong output2");
@@ -69,11 +67,8 @@ public abstract class AbstractTestTextInput extends AbstractAjocadoTest {
 
     public void testBypassUpdates(JQueryLocator input) {
         String reqTime = selenium.getText(time);
-
-        selenium.select(pjq("select[name$=listenerInput]"), optionLabel("doubleStringListener"));
-        selenium.waitForPageToLoad();
-        selenium.click(pjq("input[type=radio][name$=bypassUpdatesInput][value=true]"));
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
+        ajaxAttributes.set(AjaxAttributes.bypassUpdates, true);
 
         typeToInput(input, "RichFaces 4");
         waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
@@ -85,11 +80,8 @@ public abstract class AbstractTestTextInput extends AbstractAjocadoTest {
     }
 
     public void testData(JQueryLocator input) {
-        selenium.type(pjq("input[type=text][id$=dataInput]"), "RichFaces 4 data");
-        selenium.waitForPageToLoad();
-
-        selenium.type(pjq("input[type=text][id$=oncompleteInput]"), "data = event.data");
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.data, "RichFaces 4 data");
+        ajaxAttributes.set(AjaxAttributes.oncomplete, "data = event.data");
 
         String reqTime = selenium.getText(time);
 
@@ -102,15 +94,13 @@ public abstract class AbstractTestTextInput extends AbstractAjocadoTest {
     }
 
     public void testDisabled(JQueryLocator input) {
-        selenium.click(pjq("input[type=radio][name$=disabledInput][value=true]"));
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.disabled, true);
 
         guardNoRequest(selenium).type(input, "RichFaces 4");
     }
 
     public void testExecute(JQueryLocator input) {
-        selenium.type(pjq("input[type=text][id$=executeInput]"), "@this executeChecker");
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.execute, "@this executeChecker");
 
         String reqTime = selenium.getText(time);
         typeToInput(input, "RichFaces 4");
@@ -129,10 +119,8 @@ public abstract class AbstractTestTextInput extends AbstractAjocadoTest {
     public void testImmediate(JQueryLocator input) {
         String reqTime = selenium.getText(time);
 
-        selenium.select(pjq("select[name$=listenerInput]"), optionLabel("doubleStringListener"));
-        selenium.waitForPageToLoad();
-        selenium.click(pjq("input[type=radio][name$=immediateInput][value=true]"));
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
+        ajaxAttributes.set(AjaxAttributes.immediate, true);
 
         typeToInput(input, "RichFaces 4");
         waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
@@ -146,12 +134,9 @@ public abstract class AbstractTestTextInput extends AbstractAjocadoTest {
     public void testImmediateBypassUpdates(JQueryLocator input) {
         String reqTime = selenium.getText(time);
 
-        selenium.select(pjq("select[name$=listenerInput]"), optionLabel("doubleStringListener"));
-        selenium.waitForPageToLoad();
-        selenium.click(pjq("input[type=radio][name$=bypassUpdatesInput][value=true]"));
-        selenium.waitForPageToLoad();
-        selenium.click(pjq("input[type=radio][name$=immediateInput][value=true]"));
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
+        ajaxAttributes.set(AjaxAttributes.bypassUpdates, true);
+        ajaxAttributes.set(AjaxAttributes.immediate, true);
 
         typeToInput(input, "RichFaces 4");
         waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
@@ -163,8 +148,7 @@ public abstract class AbstractTestTextInput extends AbstractAjocadoTest {
     }
 
     public void testLimitRender(JQueryLocator input) {
-        selenium.click(pjq("input[type=radio][name$=limitRenderInput][value=true]"));
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.limitRender, true);
 
         String reqTime = selenium.getText(time);
 
@@ -175,14 +159,10 @@ public abstract class AbstractTestTextInput extends AbstractAjocadoTest {
     }
 
     public void testEvents(JQueryLocator input) {
-        selenium.type(pjq("input[type=text][id$=onbeforesubmitInput]"), "metamerEvents += \"beforesubmit \"");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=onbeginInput]"), "metamerEvents += \"begin \"");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=onbeforedomupdateInput]"), "metamerEvents += \"beforedomupdate \"");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=oncompleteInput]"), "metamerEvents += \"complete \"");
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.onbeforesubmit, "metamerEvents += \"beforesubmit \"");
+        ajaxAttributes.set(AjaxAttributes.onbegin, "metamerEvents += \"begin \"");
+        ajaxAttributes.set(AjaxAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
+        ajaxAttributes.set(AjaxAttributes.oncomplete, "metamerEvents += \"complete \"");
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
 
@@ -199,24 +179,20 @@ public abstract class AbstractTestTextInput extends AbstractAjocadoTest {
     }
 
     public void testRender(JQueryLocator input) {
-        selenium.type(pjq("input[type=text][id$=renderInput]"), "output1");
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.render, "output1");
 
         typeToInput(input, "RichFaces 4");
-        String outputValue = waitGui.failWith("Page was not updated").waitForChangeAndReturn("",
-            retrieveText.locator(output1));
+        String outputValue = waitGui.failWith("Page was not updated").waitForChangeAndReturn("", retrieveText.locator(output1));
 
         assertEquals(outputValue, "RichFaces 4", "Wrong output1");
         assertEquals(selenium.getText(output2), "", "Wrong output2");
     }
 
     public void testStatus(JQueryLocator input) {
-        selenium.type(pjq("input[type=text][id$=statusInput]"), "statusChecker");
-        selenium.waitForPageToLoad();
+        ajaxAttributes.set(AjaxAttributes.status, "statusChecker");
 
         String statusCheckerTime = selenium.getText(statusChecker);
         typeToInput(input, "RichFaces 4");
-        waitGui.failWith("Attribute status doesn't work").waitForChange(statusCheckerTime,
-            retrieveText.locator(statusChecker));
+        waitGui.failWith("Attribute status doesn't work").waitForChange(statusCheckerTime, retrieveText.locator(statusChecker));
     }
 }

@@ -21,34 +21,28 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jPush;
 
+import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
+import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
+import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+
 import java.net.URL;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
-import org.junit.internal.runners.statements.Fail;
 import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
-import org.richfaces.tests.metamer.ftest.AbstractMetamerTest;
-import org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 /**
- *  Test for simple push example faces/components/a4jPush/simple.xhtml
+ * Test for simple push example faces/components/a4jPush/simple.xhtml
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision$
  */
 public class TestSimplePush extends AbstractAjocadoTest {
 
@@ -76,7 +70,7 @@ public class TestSimplePush extends AbstractAjocadoTest {
             waitAjax.waitForChangeAndReturn(timestampRetreiver);
             String timestamp = timestampRetreiver.getValue();
             if (timestamp != null && timestamp.startsWith("[")) {
-                timestamp = timestamp.substring(1, timestamp.length()-1);
+                timestamp = timestamp.substring(1, timestamp.length() - 1);
             }
             times.add(timestamp);
         }
@@ -85,9 +79,9 @@ public class TestSimplePush extends AbstractAjocadoTest {
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy hh:mm:ss a");
         try {
             Date first = sdf.parse(times.get(0));
-            Date last = sdf.parse(times.get(times.size()-1));
+            Date last = sdf.parse(times.get(times.size() - 1));
             // Assert that last message is dated 5 * 5s (received 5 updates, with 5s interval)
-            Assert.assertEquals(first.getTime(), last.getTime() - 5*5*1000);
+            Assert.assertEquals(first.getTime(), last.getTime() - 5 * 5 * 1000);
         } catch (ParseException e) {
             Assert.fail("Get wrong date format");
         }

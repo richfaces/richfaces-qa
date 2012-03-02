@@ -19,21 +19,66 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.abstractions;
+package org.richfaces.tests.metamer.ftest.a4jMediaOutput;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22685 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public enum DataTableAttributes implements AttributeEnum {
+public enum MediaOutputAttributes implements AttributeEnum {
 
-    first,
-    noDataLabel,
+    accesskey,
+    align,
+    archive,
+    binding,
+    border,
+    cacheable,
+    charset,
+    classid,
+    codebase,
+    codetype,
+    converter,
+    coords,
+    createContent,
+    declare,
+    dir,
+    element,
+    expires,
+    fileName,
+    hreflang,
+    hspace,
+    id,
+    ismap,
+    lang,
+    lastModified,
+    mimeType,
+    onblur,
+    onclick,
+    ondblclick,
+    onfocus,
+    onkeydown,
+    onkeypress,
+    onkeyup,
+    onmousedown,
+    onmousemove,
+    onmouseout,
+    onmouseover,
+    onmouseup,
+    rel,
     rendered,
-    rows,
-    sortMode,
-    sortPriority,
+    rev,
+    shape,
+    standby,
+    style,
+    styleClass,
+    tabindex,
+    target,
+    title,
+    type,
+    uriAttribute,
+    usemap,
+    value,
+    vspace
 
 }

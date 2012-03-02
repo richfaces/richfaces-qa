@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -15,10 +16,17 @@
     <name>RichFaces Showcase Mobile Ftest</name>
 
     <properties>
-        <showcase.version>${version.richfaces}</showcase.version>
         <testng.listeners>org.jboss.arquillian.testng.container.TestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng.xml</testng.suite.xml>
         <arquillian.version>1.0.0.CR6</arquillian.version>
+        <arquillian.testng.version>1.0.0.CR6</arquillian.testng.version>
+        <arquillian.android.extension.version>1.0.0.Alpha1</arquillian.android.extension.version>
+        <android.serial>aaa</android.serial>
+        <android.sdk.home></android.sdk.home>
+        <selenium.version>2.9.0</selenium.version>
+        <android.apk.version>2.6.0</android.apk.version>
+        <android.apk.url>http://selenium.googlecode.com/files/android-server-${android.apk.version}.apk</android.apk.url>
+        <showcase.layout>mobile</showcase.layout>
     </properties>
 
     <developers>
@@ -33,24 +41,44 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>2.9.0</version>
+            <version>${selenium.version}</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-android-driver</artifactId>
-            <version>2.9.0</version>
+            <version>${selenium.version}</version>
         </dependency>
-        <!-- Arquillian -->
+        <!-- Support for WebDriver in Arquillian Drone -->
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-drone-impl</artifactId>
+            <version>${arquillian.drone.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-drone-webdriver</artifactId>
+            <version>${arquillian.drone.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Android extension -->
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-android-depchain</artifactId>
+            <version>${arquillian.android.extension.version}</version>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <!-- Arquillian TestNG support -->        
         <dependency>
             <groupId>org.jboss.arquillian.testng</groupId>
             <artifactId>arquillian-testng-container</artifactId>
-            <version>${arquillian.version}</version>
+            <version>${arquillian.testng.version}</version>
         </dependency>
         <!-- TestNG -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.2.1</version>
         </dependency>
     </dependencies>
 
@@ -81,6 +109,21 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <systemProperties>
+                        <android.sdk.home>${android.sdk.home}</android.sdk.home>
+                        <showcase.layout>${showcase.layout}</showcase.layout>
+                    </systemProperties>
+                    <systemPropertyVariables>
+                        <android.serial>${android.serial}</android.serial>
+                        <android.sdk.home>${android.sdk.home}</android.sdk.home>
+                        <showcase.layout>${showcase.layout}</showcase.layout>
+                        <android.apk.version>${android.apk.version}</android.apk.version>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>            
         </plugins>
     </build>
 </project>

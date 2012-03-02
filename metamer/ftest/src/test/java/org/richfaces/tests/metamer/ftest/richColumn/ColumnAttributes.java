@@ -25,15 +25,28 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @version $Revision: 22738 $
  */
 public enum ColumnAttributes implements AttributeEnum {
 
+    binding,
     breakRowBefore,
     colspan,
+    comparator,
+    filter,
+    filterExpression,
+    filterValue,
+    footerClass,
+    headerClass,
+    id,
     rendered,
     requestType,
     rowspan,
-    sortOrder
+    sortBy,
+    sortOrder,
+    style,
+    styleClass,
+    width
 
 }

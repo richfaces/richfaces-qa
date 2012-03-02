@@ -28,25 +28,20 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.regionAttributes;
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
 import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
-import org.richfaces.tests.metamer.ftest.attributes.Attributes;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22691 $
  */
 public class TestRegionSimple extends AbstractAjocadoTest {
-
-    Attributes<RegionAttributes> attributes = new Attributes<RegionAttributes>();
 
     JQueryLocator nameInput = pjq("input:text[id$=user2NameInput]");
     JQueryLocator emailInput = pjq("input:text[id$=user2EmailInput]");
@@ -86,7 +81,7 @@ public class TestRegionSimple extends AbstractAjocadoTest {
         assertTrue(selenium.isElementPresent(nameOutput));
         assertTrue(selenium.isElementPresent(emailOutput));
 
-        attributes.set(RegionAttributes.rendered, false);
+        regionAttributes.set(RegionAttributes.rendered, false);
 
         assertFalse(selenium.isElementPresent(nameInput));
         assertFalse(selenium.isElementPresent(emailInput));
@@ -94,7 +89,4 @@ public class TestRegionSimple extends AbstractAjocadoTest {
         assertTrue(selenium.isElementPresent(emailOutput));
     }
 
-    private enum RegionAttributes implements AttributeEnum {
-        rendered
-    }
 }

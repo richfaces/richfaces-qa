@@ -21,6 +21,7 @@
             <package name="org.richfaces.tests.metamer.ftest.a4jOutputPanel" />
             <package name="org.richfaces.tests.metamer.ftest.a4jParam" />
             <package name="org.richfaces.tests.metamer.ftest.a4jPoll" />
+            <package name="org.richfaces.tests.metamer.ftest.a4jPush" />
             <package name="org.richfaces.tests.metamer.ftest.a4jQueue" />
             <package name="org.richfaces.tests.metamer.ftest.a4jRegion" />
             <package name="org.richfaces.tests.metamer.ftest.a4jRepeat" />

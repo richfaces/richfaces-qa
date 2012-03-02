@@ -7,7 +7,7 @@
             <run>
                 <exclude name="4.2.1" />
                 <exclude name="4.3" />
-                <exclude name="4.Future"
+                <exclude name="4.Future" />
                 <exclude name="broken" />
                 <exclude name="reported-without-fix-version" />
             </run>
