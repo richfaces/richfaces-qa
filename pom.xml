@@ -46,8 +46,8 @@
         <arquillian.ajocado-testng.version>1.0.0.CR2</arquillian.ajocado-testng.version>
         <arquillian.jboss-as6.version>1.0.0.CR3</arquillian.jboss-as6.version>
 
-        <version.selenium>2.19.0</version.selenium>
-        <version.selenium.server>2.19.0</version.selenium.server>
+        <version.selenium>2.20.0</version.selenium>
+        <version.selenium.server>2.20.0</version.selenium.server>
 
         <version.jacoco.plugin>0.5.6.201201232323</version.jacoco.plugin>
 
@@ -297,7 +297,7 @@
             <dependency>
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
-                <version>6.4</version>
+                <version>6.1.1</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
@@ -578,6 +578,39 @@
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>jbossas-remote-7</arquillian.launch>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>jbossas-remote-7-1</id>
+            <properties>
+                <metamer.classifier>jee6</metamer.classifier>
+                <showcase.classifier>jbas7</showcase.classifier>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.spec</groupId>
+                    <artifactId>jboss-javaee-6.0</artifactId>
+                    <version>1.0.0.Final</version>
+                    <type>pom</type>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.jboss.as</groupId>
+                    <artifactId>jboss-as-arquillian-container-remote</artifactId>
+                    <version>${version.jbossas7-1}</version>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <arquillian.launch>jbossas-remote-7-1</arquillian.launch>
                             </systemProperties>
                         </configuration>
                     </plugin>
