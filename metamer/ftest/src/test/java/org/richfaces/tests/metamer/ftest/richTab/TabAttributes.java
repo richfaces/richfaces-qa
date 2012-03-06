@@ -18,56 +18,60 @@
  * along with this software; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
  * site: http://www.fsf.org.
- ******************************************************************************
+ * *****************************************************************************
  */
-package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
+package org.richfaces.tests.metamer.ftest.richTab;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22751 $
  */
-public enum PanelMenuItemAttributes implements AttributeEnum {
+public enum TabAttributes implements AttributeEnum {
 
     action,
     actionListener,
     binding,
     bypassUpdates,
+    contentClass,
     data,
+    dir,
     disabled,
-    disabledClass,
     execute,
+    header,
+    headerActiveClass,
+    headerClass,
+    headerDisabledClass,
+    headerInactiveClass,
+    headerStyle,
     id,
     immediate,
-    label,
-    leftDisabledIcon,
-    leftIcon,
-    leftIconClass,
+    lang,
     limitRender,
-    mode,
     name,
     onbeforedomupdate,
-    onbeforeselect,
     onbegin,
     onclick,
     oncomplete,
     ondblclick,
+    onenter,
+    onheaderclick,
+    onheaderdblclick,
+    onheadermousedown,
+    onheadermousemove,
+    onheadermouseup,
+    onleave,
     onmousedown,
     onmousemove,
     onmouseout,
     onmouseover,
     onmouseup,
-    onselect,
-    onunselect,
     render,
     rendered,
-    rightDisabledIcon,
-    rightIcon,
-    rightIconClass,
-    selectable,
     status,
     style,
-    styleClass
+    styleClass,
+    switchType,
+    title,
+    value
 }

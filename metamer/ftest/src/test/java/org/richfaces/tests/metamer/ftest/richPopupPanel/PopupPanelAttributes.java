@@ -18,56 +18,59 @@
  * along with this software; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
  * site: http://www.fsf.org.
- ******************************************************************************
+ * *****************************************************************************
  */
-package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
+package org.richfaces.tests.metamer.ftest.richPopupPanel;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22751 $
  */
-public enum PanelMenuItemAttributes implements AttributeEnum {
+public enum PopupPanelAttributes implements AttributeEnum {
 
-    action,
-    actionListener,
+    autosized,
     binding,
-    bypassUpdates,
-    data,
-    disabled,
-    disabledClass,
-    execute,
+    controlsClass,
+    domElementAttachment,
+    followByScroll,
+    header,
+    headerClass,
+    height,
     id,
-    immediate,
-    label,
-    leftDisabledIcon,
-    leftIcon,
-    leftIconClass,
-    limitRender,
-    mode,
-    name,
-    onbeforedomupdate,
-    onbeforeselect,
-    onbegin,
-    onclick,
-    oncomplete,
-    ondblclick,
-    onmousedown,
-    onmousemove,
-    onmouseout,
-    onmouseover,
-    onmouseup,
-    onselect,
-    onunselect,
-    render,
+    keepVisualState,
+    left,
+    maxHeight,
+    maxWidth,
+    minHeight,
+    minWidth,
+    modal,
+    moveable,
+    onbeforehide,
+    onbeforeshow,
+    onhide,
+    onmaskclick,
+    onmaskcontextmenu,
+    onmaskdblclick,
+    onmaskmousedown,
+    onmaskmousemove,
+    onmaskmouseout,
+    onmaskmouseover,
+    onmaskmouseup,
+    onmove,
+    onresize,
+    onshow,
+    overlapEmbedObjects,
     rendered,
-    rightDisabledIcon,
-    rightIcon,
-    rightIconClass,
-    selectable,
-    status,
+    resizeable,
+    shadowDepth,
+    shadowOpacity,
+    show,
     style,
-    styleClass
+    styleClass,
+    top,
+    trimOverlayedElements,
+    visualOptions,
+    width,
+    zindex
 }

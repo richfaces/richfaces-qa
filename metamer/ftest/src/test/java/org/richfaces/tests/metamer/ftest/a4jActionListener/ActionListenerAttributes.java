@@ -19,24 +19,17 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.a4jAttachQueue;
+package org.richfaces.tests.metamer.ftest.a4jActionListener;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22679 $
  */
-public enum AttachQueueAttributes implements AttributeEnum {
+public enum ActionListenerAttributes implements AttributeEnum {
 
+    FOR,
     binding,
-    id,
-    ignoreDupResponses,
-    name,
-    onrequestdequeue,
-    onrequestqueue,
-    rendered,
-    requestDelay,
-    requestGroupingId
+    listener,
+    type
 }

@@ -18,56 +18,43 @@
  * along with this software; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
  * site: http://www.fsf.org.
- ******************************************************************************
+ * *****************************************************************************
  */
-package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
+package org.richfaces.tests.metamer.ftest.richProgressBar;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22751 $
  */
-public enum PanelMenuItemAttributes implements AttributeEnum {
+public enum ProgressBarAttributes implements AttributeEnum {
 
-    action,
-    actionListener,
     binding,
-    bypassUpdates,
     data,
-    disabled,
-    disabledClass,
-    execute,
+    enabled,
+    finishClass,
     id,
-    immediate,
+    initialClass,
+    interval,
     label,
-    leftDisabledIcon,
-    leftIcon,
-    leftIconClass,
-    limitRender,
+    maxValue,
+    minValue,
     mode,
-    name,
     onbeforedomupdate,
-    onbeforeselect,
     onbegin,
     onclick,
     oncomplete,
     ondblclick,
+    onfinish,
     onmousedown,
     onmousemove,
     onmouseout,
     onmouseover,
     onmouseup,
-    onselect,
-    onunselect,
-    render,
+    progressClass,
+    remainingClass,
     rendered,
-    rightDisabledIcon,
-    rightIcon,
-    rightIconClass,
-    selectable,
-    status,
     style,
-    styleClass
+    styleClass,
+    value
 }

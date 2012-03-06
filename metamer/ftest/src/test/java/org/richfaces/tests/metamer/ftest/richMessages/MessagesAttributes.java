@@ -18,56 +18,48 @@
  * along with this software; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
  * site: http://www.fsf.org.
- ******************************************************************************
+ * *****************************************************************************
  */
-package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
+package org.richfaces.tests.metamer.ftest.richMessages;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22751 $
  */
-public enum PanelMenuItemAttributes implements AttributeEnum {
+public enum MessagesAttributes implements AttributeEnum {
 
-    action,
-    actionListener,
+    ajaxRendered,
+    attributes,
     binding,
-    bypassUpdates,
-    data,
-    disabled,
-    disabledClass,
-    execute,
+    childCount,
+    children,
+    dir,
+    escape,
+    facets,
+    family,
+    FOR,
+    globalOnly,
     id,
-    immediate,
-    label,
-    leftDisabledIcon,
-    leftIcon,
-    leftIconClass,
-    limitRender,
-    mode,
-    name,
-    onbeforedomupdate,
-    onbeforeselect,
-    onbegin,
+    keepTransient,
+    lang,
     onclick,
-    oncomplete,
     ondblclick,
+    onkeydown,
+    onkeypress,
+    onkeyup,
     onmousedown,
     onmousemove,
     onmouseout,
     onmouseover,
     onmouseup,
-    onselect,
-    onunselect,
-    render,
+    parent,
     rendered,
-    rightDisabledIcon,
-    rightIcon,
-    rightIconClass,
-    selectable,
-    status,
+    rendererType,
+    rendersChildren,
+    showDetail,
+    showSummary,
     style,
-    styleClass
+    styleClass,
+    title
 }
