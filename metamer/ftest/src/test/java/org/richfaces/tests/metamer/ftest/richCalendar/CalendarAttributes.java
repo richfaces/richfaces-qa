@@ -25,17 +25,23 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
  * rich:calendar component attributes
+ *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @version $Revision$
  */
 public enum CalendarAttributes implements AttributeEnum {
+
+    binding,
     boundaryDatesMode,
     buttonClass,
     buttonDisabledIcon,
     buttonIcon,
     buttonLabel,
+    converter,
     converterMessage,
     currentDate,
+    dataModel,
     datePattern,
     dayClassFunction,
     dayDisableFunction,
@@ -46,6 +52,7 @@ public enum CalendarAttributes implements AttributeEnum {
     enableManualInput,
     firstWeekDay,
     horizontalOffset,
+    id,
     immediate,
     inputClass,
     inputSize,
@@ -101,9 +108,12 @@ public enum CalendarAttributes implements AttributeEnum {
     style,
     styleClass,
     tabindex,
+    timeZone,
     todayControlMode,
+    validator,
     validatorMessage,
     value,
+    valueChangeListener,
     verticalOffset,
     weekDayLabels,
     weekDayLabelsShort,

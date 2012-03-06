@@ -25,17 +25,19 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
  * Rich Pick List component attributes
- *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- *
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @version $Revision$
  */
 public enum PickListAttributes implements AttributeEnum {
 
         addAllText,
         addText,
+        binding,
         columnClasses,
         columnVar,
+        converter,
+        converterMessage,
         defaultLabel,
         disabled,
         disabledClass,
@@ -113,5 +115,5 @@ public enum PickListAttributes implements AttributeEnum {
         validatorMessage,
         value,
         valueChangeListener,
-
+        var
 }

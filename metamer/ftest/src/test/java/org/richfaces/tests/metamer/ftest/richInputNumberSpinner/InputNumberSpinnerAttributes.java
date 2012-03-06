@@ -18,56 +18,69 @@
  * along with this software; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
  * site: http://www.fsf.org.
- ******************************************************************************
+ * *****************************************************************************
  */
-package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
+package org.richfaces.tests.metamer.ftest.richInputNumberSpinner;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22751 $
  */
-public enum PanelMenuItemAttributes implements AttributeEnum {
+public enum InputNumberSpinnerAttributes implements AttributeEnum {
 
-    action,
-    actionListener,
+    accesskey,
     binding,
-    bypassUpdates,
-    data,
+    converter,
+    converterMessage,
+    cycled,
+    dir,
     disabled,
-    disabledClass,
-    execute,
+    enableManualInput,
     id,
     immediate,
+    inputClass,
+    inputSize,
     label,
-    leftDisabledIcon,
-    leftIcon,
-    leftIconClass,
-    limitRender,
-    mode,
-    name,
-    onbeforedomupdate,
-    onbeforeselect,
-    onbegin,
+    lang,
+    maxValue,
+    minValue,
+    onblur,
+    onchange,
     onclick,
-    oncomplete,
     ondblclick,
+    ondownclick,
+    onfocus,
+    oninputclick,
+    oninputdblclick,
+    oninputkeydown,
+    oninputkeypress,
+    oninputkeyup,
+    oninputmousedown,
+    oninputmousemove,
+    oninputmouseout,
+    oninputmouseover,
+    oninputmouseup,
+    onkeydown,
+    onkeypress,
+    onkeyup,
     onmousedown,
     onmousemove,
     onmouseout,
     onmouseover,
     onmouseup,
     onselect,
-    onunselect,
-    render,
+    onupclick,
     rendered,
-    rightDisabledIcon,
-    rightIcon,
-    rightIconClass,
-    selectable,
-    status,
+    required,
+    requiredMessage,
+    step,
     style,
-    styleClass
+    styleClass,
+    tabindex,
+    title,
+    validator,
+    validatorMessage,
+    value,
+    valueChangeListener
 }

@@ -25,9 +25,7 @@ import static org.jboss.arquillian.ajocado.Ajocado.countEquals;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
 import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.messageAttributes;
-import static org.richfaces.tests.metamer.ftest.richMessage.MessageAttributes.FOR;
-import static org.richfaces.tests.metamer.ftest.richMessage.MessageAttributes.globalOnly;
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.messagesAttributes;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.richMessage.AbstractRichMessageTest;
@@ -72,7 +70,7 @@ public abstract class RichMessagesTest extends AbstractRichMessageTest {
     public void testFor() {
 
         // firstly reset to null
-        messageAttributes.setLower(FOR, "");
+        messagesAttributes.setLower(MessagesAttributes.FOR, "");
 
         // generate faces message by btn
         selenium.click(generateMsgsBtn);
@@ -81,7 +79,7 @@ public abstract class RichMessagesTest extends AbstractRichMessageTest {
         waitGui.until(countEquals.count(0).locator(getTestElemLocator().getChild(jq("span[id$=msgs1:form:simpleInput1]"))));
         waitGui.until(countEquals.count(0).locator(getTestElemLocator().getChild(jq("span[id$=msgs1:form:simpleInput2]"))));
 
-        messageAttributes.setLower(FOR, "simpleInput1");
+        messagesAttributes.setLower(MessagesAttributes.FOR, "simpleInput1");
         // generate faces messages by btn
         selenium.click(generateMsgsBtn);
         // only messages for simpleInput1 should appear:
@@ -91,7 +89,7 @@ public abstract class RichMessagesTest extends AbstractRichMessageTest {
         // one type warning
         waitModel.until(countEquals.count(1).locator(getWarnMsg()));
 
-        messageAttributes.setLower(FOR, "simpleInput2");
+        messagesAttributes.setLower(MessagesAttributes.FOR, "simpleInput2");
         // generate faces messages by btn
         selenium.click(generateMsgsBtn);
         // only 2 messages for simpleInput2
@@ -113,10 +111,10 @@ public abstract class RichMessagesTest extends AbstractRichMessageTest {
      */
     public void testGlobalOnly() {
         // firstly set for attribute to null
-        messageAttributes.setLower(FOR, "");
+        messagesAttributes.setLower(MessagesAttributes.FOR, "");
 
         // then set globalOnly attribute
-        messageAttributes.set(globalOnly, Boolean.FALSE);
+        messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.FALSE);
 
         selenium.click(generateMsgsBtn);
 
