@@ -27,15 +27,19 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * Component attributes for rich:contextMenu
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @version $Revision$
  */
 public enum ContextMenuAttributes implements AttributeEnum {
-    attachTo,
+
+    attached,
+    binding,
     dir,
     direction,
     disabled,
     hideDelay,
     horizontalOffset,
+    id,
     jointPoint,
     lang,
     mode,
@@ -60,6 +64,7 @@ public enum ContextMenuAttributes implements AttributeEnum {
     showEvent,
     style,
     styleClass,
+    target,
     title,
     verticalOffset
 }

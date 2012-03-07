@@ -18,56 +18,36 @@
  * along with this software; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
  * site: http://www.fsf.org.
- ******************************************************************************
+ * *****************************************************************************
  */
-package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
+package org.richfaces.tests.metamer.ftest.richToolbar;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22751 $
  */
-public enum PanelMenuItemAttributes implements AttributeEnum {
+public enum ToolbarAttributes implements AttributeEnum {
 
-    action,
-    actionListener,
     binding,
-    bypassUpdates,
-    data,
-    disabled,
-    disabledClass,
-    execute,
+    height,
     id,
-    immediate,
-    label,
-    leftDisabledIcon,
-    leftIcon,
-    leftIconClass,
-    limitRender,
-    mode,
-    name,
-    onbeforedomupdate,
-    onbeforeselect,
-    onbegin,
-    onclick,
-    oncomplete,
-    ondblclick,
-    onmousedown,
-    onmousemove,
-    onmouseout,
-    onmouseover,
-    onmouseup,
-    onselect,
-    onunselect,
-    render,
+    itemClass,
+    itemSeparator,
+    itemStyle,
+    onitemclick,
+    onitemdblclick,
+    onitemkeydown,
+    onitemkeypress,
+    onitemkeyup,
+    onitemmousedown,
+    onitemmousemove,
+    onitemmouseout,
+    onitemmouseover,
+    onitemmouseup,
     rendered,
-    rightDisabledIcon,
-    rightIcon,
-    rightIconClass,
-    selectable,
-    status,
     style,
-    styleClass
+    styleClass,
+    title,
+    width
 }

@@ -18,56 +18,69 @@
  * along with this software; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
  * site: http://www.fsf.org.
- ******************************************************************************
+ * *****************************************************************************
  */
-package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
+package org.richfaces.tests.metamer.ftest.richSelect;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22751 $
  */
-public enum PanelMenuItemAttributes implements AttributeEnum {
+public enum SelectAttributes implements AttributeEnum {
 
-    action,
-    actionListener,
     binding,
-    bypassUpdates,
-    data,
+    clientFilterFunction,
+    converter,
+    converterMessage,
+    defaultLabel,
     disabled,
-    disabledClass,
-    execute,
+    enableManualInput,
     id,
     immediate,
-    label,
-    leftDisabledIcon,
-    leftIcon,
-    leftIconClass,
-    limitRender,
-    mode,
-    name,
-    onbeforedomupdate,
-    onbeforeselect,
-    onbegin,
+    itemClass,
+    listClass,
+    listHeight,
+    listWidth,
+    maxListHeight,
+    minListHeight,
+    onblur,
+    onchange,
     onclick,
-    oncomplete,
     ondblclick,
+    onfocus,
+    onkeydown,
+    onkeypress,
+    onkeyup,
+    onlistclick,
+    onlistdblclick,
+    onlisthide,
+    onlistkeydown,
+    onlistkeypress,
+    onlistkeyup,
+    onlistmousedown,
+    onlistmousemove,
+    onlistmouseout,
+    onlistmouseover,
+    onlistmouseup,
+    onlistshow,
     onmousedown,
     onmousemove,
     onmouseout,
     onmouseover,
     onmouseup,
-    onselect,
-    onunselect,
-    render,
+    onselectitem,
     rendered,
-    rightDisabledIcon,
-    rightIcon,
-    rightIconClass,
-    selectable,
-    status,
+    required,
+    requiredMessage,
+    selectFirst,
+    selectItemClass,
+    showButton,
     style,
-    styleClass
+    styleClass,
+    title,
+    validator,
+    validatorMessage,
+    value,
+    valueChangeListener
 }

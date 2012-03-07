@@ -36,6 +36,8 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.dropDownMenuAttributes;
+
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.css.CssProperty;
@@ -112,8 +114,7 @@ public class TestRichDropDownMenu extends AbstractAjocadoTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-10305")
     public void testDisabled() {
-        selenium.click(pjq("input[type=radio][name$=disabledInput][value=true]"));
-        selenium.waitForPageToLoad();
+        dropDownMenuAttributes.set(DropDownMenuAttributes.disabled, Boolean.TRUE);
 
         assertTrue(selenium.belongsClass(fileMenu, "rf-ddm-dis"), "Menu should have class \"rf-ddm-dis\".");
         assertTrue(selenium.isElementPresent(icon), "Icon should be present on the page.");
@@ -124,8 +125,7 @@ public class TestRichDropDownMenu extends AbstractAjocadoTest {
 
     @Test
     public void testHideDelay() {
-        selenium.type(pjq("input[id$=hideDelayInput]"), "3000");
-        selenium.waitForPageToLoad();
+        dropDownMenuAttributes.set(DropDownMenuAttributes.hideDelay, 3000);
 
         selenium.mouseOver(fileMenuLabel);
         selenium.getEval(new JavaScript("window.jQuery('" + fileMenuLabel.getRawLocator() + "').mouseleave()"));
@@ -149,16 +149,14 @@ public class TestRichDropDownMenu extends AbstractAjocadoTest {
 
     @Test
     public void testModeNull() {
-        selenium.click(pjq("input[name$=modeInput][value=]"));
-        selenium.waitForPageToLoad();
+        dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "");
 
         testModeServer();
     }
 
     @Test
     public void testModeServer() {
-        selenium.click(pjq("input[name$=modeInput][value=server]"));
-        selenium.waitForPageToLoad();
+        dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "server");
 
         selenium.mouseOver(fileMenuLabel);
         guardHttp(selenium).click(menuItem41);
@@ -167,8 +165,7 @@ public class TestRichDropDownMenu extends AbstractAjocadoTest {
 
     @Test
     public void testModeClient() {
-        selenium.click(pjq("input[name$=modeInput][value=client]"));
-        selenium.waitForPageToLoad();
+        dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "client");
 
         selenium.mouseOver(fileMenuLabel);
         guardNoRequest(selenium).click(menuItem41);
@@ -186,8 +183,7 @@ public class TestRichDropDownMenu extends AbstractAjocadoTest {
 
     @Test
     public void testOngrouphide() {
-        selenium.type(pjq("input[id$=ongrouphideInput]"), "metamerEvents += \"grouphide \"");
-        selenium.waitForPageToLoad();
+        dropDownMenuAttributes.set(DropDownMenuAttributes.ongrouphide, "metamerEvents += \"grouphide \"");
 
         selenium.mouseOver(fileMenuLabel);
         selenium.getEval(new JavaScript("window.jQuery('" + group.getRawLocator() + "').mouseenter()"));
@@ -201,8 +197,7 @@ public class TestRichDropDownMenu extends AbstractAjocadoTest {
 
     @Test
     public void testOngroupshow() {
-        selenium.type(pjq("input[id$=ongroupshowInput]"), "metamerEvents += \"groupshow \"");
-        selenium.waitForPageToLoad();
+        dropDownMenuAttributes.set(DropDownMenuAttributes.ongroupshow, "metamerEvents += \"groupshow \"");
 
         selenium.mouseOver(fileMenuLabel);
         selenium.getEval(new JavaScript("window.jQuery('" + group.getRawLocator() + "').mouseenter()"));
@@ -214,8 +209,7 @@ public class TestRichDropDownMenu extends AbstractAjocadoTest {
 
     @Test
     public void testOnhide() {
-        selenium.type(pjq("input[id$=onhideInput]"), "metamerEvents += \"hide \"");
-        selenium.waitForPageToLoad();
+        dropDownMenuAttributes.set(DropDownMenuAttributes.onhide, "metamerEvents += \"hide \"");
 
         selenium.mouseOver(fileMenuLabel);
         selenium.getEval(new JavaScript("window.jQuery('" + fileMenuLabel.getRawLocator() + "').mouseleave()"));
@@ -270,8 +264,7 @@ public class TestRichDropDownMenu extends AbstractAjocadoTest {
 
     @Test
     public void testOnshow() {
-        selenium.type(pjq("input[id$=onshowInput]"), "metamerEvents += \"show \"");
-        selenium.waitForPageToLoad();
+        dropDownMenuAttributes.set(DropDownMenuAttributes.onshow, "metamerEvents += \"show \"");
 
         selenium.mouseOver(fileMenuLabel);
 
@@ -283,19 +276,16 @@ public class TestRichDropDownMenu extends AbstractAjocadoTest {
         final CssProperty minWidth = new CssProperty("min-width");
         assertEquals(selenium.getStyle(fileMenuList, minWidth), "250px", "Default width of menu");
 
-        selenium.type(pjq("input[id$=popupWidthInput]"), "150");
-        selenium.waitForPageToLoad();
+        dropDownMenuAttributes.set(DropDownMenuAttributes.popupWidth, 150);
         assertEquals(selenium.getStyle(fileMenuList, minWidth), "150px", "Width of menu");
 
-        selenium.type(pjq("input[id$=popupWidthInput]"), "423");
-        selenium.waitForPageToLoad();
+        dropDownMenuAttributes.set(DropDownMenuAttributes.popupWidth, 423);
         assertEquals(selenium.getStyle(fileMenuList, minWidth), "423px", "Width of menu");
     }
 
     @Test
     public void testRendered() {
-        selenium.click(pjq("input[type=radio][name$=renderedInput][value=false]"));
-        selenium.waitForPageToLoad();
+        dropDownMenuAttributes.set(DropDownMenuAttributes.rendered, Boolean.FALSE);
 
         assertFalse(selenium.isElementPresent(fileMenu), "Menu should not be rendered when rendered=false.");
         //assertTrue(selenium.isVisible(fileMenu), "Menu should be displayed when item 1 is not rendered.");
@@ -303,8 +293,7 @@ public class TestRichDropDownMenu extends AbstractAjocadoTest {
 
     @Test
     public void testShowDelay() {
-        selenium.type(pjq("input[id$=showDelayInput]"), "3000");
-        selenium.waitForPageToLoad();
+        dropDownMenuAttributes.set(DropDownMenuAttributes.showDelay, 3000);
 
         selenium.mouseOver(fileMenuLabel);
         assertFalse(selenium.isVisible(fileMenuList), "Menu should not be expanded.");
@@ -314,8 +303,7 @@ public class TestRichDropDownMenu extends AbstractAjocadoTest {
 
     @Test
     public void testShowEvent() {
-        selenium.type(pjq("input[id$=showEventInput]"), "click");
-        selenium.waitForPageToLoad();
+        dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "click");
 
         selenium.mouseOver(fileMenuLabel);
         assertFalse(selenium.isVisible(fileMenuList), "Menu should not be expanded.");

@@ -68,7 +68,6 @@
             <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.jboss.shrinkwrap.descriptors</groupId>
             <artifactId>shrinkwrap-descriptors-api</artifactId>
@@ -77,13 +76,11 @@
             <groupId>org.jboss.shrinkwrap.descriptors</groupId>
             <artifactId>shrinkwrap-descriptors-impl</artifactId>
         </dependency>
-        
-        <!-- For proper screenshot taking -->
+        <!-- TestNG listeners for better console output -->
         <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.6</version>
-            <scope>test</scope>
+            <groupId>org.richfaces.tests.testng</groupId>
+            <artifactId>testng-listeners</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <!-- see the https://community.jboss.org/wiki/WhatsTheCauseOfThisExceptionJavalangClassFormatErrorAbsentCode -->
         <dependency>

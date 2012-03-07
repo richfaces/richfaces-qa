@@ -112,10 +112,14 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <suiteXmlFiles>
+                        <suiteXmlFiles>${testng.suite.xml}</suiteXmlFiles>
+                    </suiteXmlFiles>                
                     <systemProperties>
                         <android.sdk.home>${android.sdk.home}</android.sdk.home>
                         <showcase.layout>${showcase.layout}</showcase.layout>
-                    </systemProperties>
+                    </systemProperties>                    
                     <systemPropertyVariables>
                         <android.serial>${android.serial}</android.serial>
                         <android.sdk.home>${android.sdk.home}</android.sdk.home>
