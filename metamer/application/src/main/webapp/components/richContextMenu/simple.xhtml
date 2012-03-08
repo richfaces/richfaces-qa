@@ -40,11 +40,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <h:panelGroup layout="block" style="width:500px; background-color: lightgreen; padding: 15px" id="panelClick">
-                    Righ click here for a contextMenu
+            <h:panelGroup layout="block" style="width:500px; background-color: lightgreen; padding: 15px" id="targetPanel1">
+                    Righ click here for a contextMenu (targetPanel1)
+            </h:panelGroup>
+            <h:panelGroup layout="block" style="width:500px; background-color: yellow; padding: 15px" id="targetPanel2">
+                    Righ click here for a contextMenu (targetPanel2)
             </h:panelGroup>
             <rich:contextMenu id="ctxMenu"
-                              attachTo="#{nestedComponentId}"
                               dir="#{richContextMenuBean.attributes['dir'].value}"
                               direction="#{richContextMenuBean.attributes['direction'].value}"
                               disabled="#{richContextMenuBean.attributes['disabled'].value}"
@@ -74,6 +76,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                               showEvent="#{richContextMenuBean.attributes['showEvent'].value}"
                               style="#{richContextMenuBean.attributes['style'].value}"
                               styleClass="#{richContextMenuBean.attributes['styleClass'].value}"
+                              target="#{richContextMenuBean.attributes['target'].value}"
                               title="#{richContextMenuBean.attributes['title'].value}"
                               verticalOffset="#{richContextMenuBean.attributes['verticalOffset'].value}"
                              >
