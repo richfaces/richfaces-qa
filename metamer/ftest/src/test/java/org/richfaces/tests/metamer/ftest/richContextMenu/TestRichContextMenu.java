@@ -27,6 +27,7 @@ import static org.jboss.arquillian.ajocado.Ajocado.elementVisible;
 import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
 import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
 import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
+import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
 import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
@@ -68,6 +69,7 @@ public class TestRichContextMenu extends AbstractAjocadoTest {
 
     // content display is triggered by action
     private JQueryLocator contextMenuContent = jq("div.rf-ctx-lst");
+    private JQueryLocator output = jq("span[id$=output]");
 
     @Override
     public URL getTestUrl() {
@@ -169,7 +171,6 @@ public class TestRichContextMenu extends AbstractAjocadoTest {
 
     @Test
     public void testMode() {
-
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, Event.CLICK);
         Point position = selenium.getElementPosition(targetPanel1);
 
@@ -177,15 +178,18 @@ public class TestRichContextMenu extends AbstractAjocadoTest {
         contextMenuAttributes.set(ContextMenuAttributes.mode, "ajax");
         selenium.clickAt(targetPanel1, position.substract(new Point(0, 70)));
         guardXhr(selenium).click(ctxMenuItemFormat.format("0"));
-
-        // client
-        contextMenuAttributes.set(ContextMenuAttributes.mode, "client");
-        guardNoRequest(selenium).clickAt(targetPanel1, position.substract(new Point(0, 70)));
+        assertEquals(selenium.getText(output), "Open", "Menu action was not performed.");
 
         // server
         contextMenuAttributes.set(ContextMenuAttributes.mode, "server");
-        guardHttp(selenium).clickAt(targetPanel1, position.substract(new Point(0, 70)));
+        selenium.clickAt(targetPanel1, position.substract(new Point(0, 70)));
+        guardHttp(selenium).click(ctxMenuItemFormat.format("8"));
+        assertEquals(selenium.getText(output), "Exit", "Menu action was not performed.");
 
+        // client
+        contextMenuAttributes.set(ContextMenuAttributes.mode, "client");
+        selenium.clickAt(targetPanel1, position.substract(new Point(0, 70)));
+        guardNoRequest(selenium).click(ctxMenuItemFormat.format("0"));
     }
 
     @Test
