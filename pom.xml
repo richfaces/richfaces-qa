@@ -548,6 +548,7 @@
                             </environmentVariables>
                         </configuration>
                     </plugin>
+                    <!-- workaround for RF-11983-->
                     <plugin>
                         <artifactId>maven-resources-plugin</artifactId>
                         <executions>
