@@ -29,10 +29,12 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
- *  Test rich:accordion keeping visual state (KVS) on page faces/components/richAccordion/simple.xhtml
+ * Test rich:accordion keeping visual state (KVS) on page faces/components/richAccordion/simple.xhtml
+ *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision$
  */
@@ -45,12 +47,13 @@ public class TestAccordionItemKVS extends AbstractAjocadoTest {
         return buildUrl(contextPath, "faces/components/richAccordionItem/simple.xhtml");
     }
 
-    @Test(groups = {"keepVisualStateTesting"})
+    @Test(groups = { "keepVisualStateTesting" })
     public void testRefreshFullPage() {
         reloadTester.testFullPageRefresh();
     }
 
-    @Test(groups = {"keepVisualStateTesting"})
+    @Test(groups = { "keepVisualStateTesting", "4.3" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-12035")
     public void testRenderAll() {
         reloadTester.testRerenderAll();
     }
@@ -68,7 +71,7 @@ public class TestAccordionItemKVS extends AbstractAjocadoTest {
 
         @Override
         public String[] getInputValues() {
-            return new String[] {"1", "2", "3"};
+            return new String[] { "1", "2", "3" };
         }
     }
 
