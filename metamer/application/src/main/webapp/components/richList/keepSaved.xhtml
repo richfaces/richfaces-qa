@@ -52,7 +52,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <rich:list id="richList" keepSaved="#{richListBean.attributes['keepSaved'].value}"
                        value="#{model.simple}" type="unordered">
 
-                <h:inputText id="input" value="#{maxBean.value}"/>
+                <h:inputText id="input" value="#{maxBean.value}" converter="javax.faces.Integer"/>
 
             </rich:list>
 
