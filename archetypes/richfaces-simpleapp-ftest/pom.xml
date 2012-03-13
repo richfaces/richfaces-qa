@@ -22,7 +22,7 @@
 
     <parent>
         <artifactId>richfaces-archetypes-ftest</artifactId>
-        <groupId>org.richfaces.tests.archetypes</groupId>
+        <groupId>org.richfaces.tests</groupId>
         <version>4.2.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
