@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richValidator;
 
+import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
 import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
 
@@ -361,7 +362,7 @@ public abstract class AbstractValidatorsTest extends AbstractAjocadoTest {
 
         // date input past
         selenium.type(inputFormat.format(ID.past), wrongValue.get(ID.past).toString());
-        selenium.click(a4jCommandBtn);
+        guardXhr(selenium).click(a4jCommandBtn);
 
         waitGui.until(textEquals.locator(msgFormat.format(ID.past)).text(messages.get(ID.past)));
     }
