@@ -51,13 +51,12 @@ public class RichContextMenuBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        log.info("ContextMenu attributes initialized.");
+        log.debug("ContextMenu attributes initialized.");
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIContextMenu.class, getClass());
         attributes.setAttribute("disabled", "false");
         attributes.setAttribute("rendered", "true");
         attributes.setAttribute("hideDelay", "600");
-
-        attributes.remove("attachTo");
+        attributes.setAttribute("target", "targetPanel1");
     }
 
     public String doNew() {

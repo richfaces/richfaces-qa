@@ -54,7 +54,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <a4j:repeat id="a4jRepeat" keepSaved="#{a4jRepeatBean.attributes['keepSaved'].value}"
                         value="#{model.simple}">
 
-                <h:inputText id="input" value="#{maxBean.value}"/>
+                <h:inputText id="input" value="#{maxBean.value}" converter="javax.faces.Integer"/>
 
             </a4j:repeat>
 

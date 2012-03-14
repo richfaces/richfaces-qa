@@ -59,7 +59,8 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
     public void onStart(ITestContext testContext) {
         try {
             FileUtils.forceMkdir(failuresOutputDir);
-            FileUtils.cleanDirectory(failuresOutputDir);
+            // FIXME it should clean directory only if it is the first test suite
+            // FileUtils.cleanDirectory(failuresOutputDir);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
