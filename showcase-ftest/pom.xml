@@ -43,6 +43,16 @@
             <artifactId>arquillian-drone-webdriver</artifactId>
             <version>${arquillian.drone.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${version.selenium}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-server</artifactId>
+            <version>${version.selenium.server}</version>
+        </dependency>
         <!-- TestNG listeners for better console output -->
         <dependency>
             <groupId>org.richfaces.tests.testng</groupId>
