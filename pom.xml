@@ -570,28 +570,6 @@
                             </environmentVariables>
                         </configuration>
                     </plugin>
-                    <!-- workaround for RF-11983-->
-                    <plugin>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>copy JBoss AS confifuration</id>
-                                <phase>process-test-classes</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <outputDirectory>${jboss7-1Home}/standalone/configuration</outputDirectory>
-                                    <overwrite>true</overwrite>
-                                    <resources>
-                                        <resource>
-                                            <directory>${basedir}/src/test/resources/jboss711Final</directory>
-                                        </resource>
-                                    </resources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
                 </plugins>
             </build>
         </profile>
