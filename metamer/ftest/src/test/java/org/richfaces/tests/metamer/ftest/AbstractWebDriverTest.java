@@ -24,20 +24,21 @@ package org.richfaces.tests.metamer.ftest;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
+
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
+import org.openqa.selenium.support.pagefactory.FieldDecorator;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.metamer.ftest.webdriver.IWEAvailabilityCondition;
+import org.richfaces.tests.metamer.ftest.webdriver.StaleReferenceAwareFieldDecorator;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 
@@ -46,8 +47,10 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     @Drone
     protected FirefoxDriver driver;
     private boolean first = true;
-    private final int WAIT_TIME = 5;//s
-    private final int LAST_CHECK_WAIT_TIME = 500;//ms
+    protected static final int WAIT_TIME = 5;//s
+    private static final int LAST_CHECK_WAIT_TIME = 500;//ms
+    private static final int NUMBER_OF_TRIES = 5;
+    private FieldDecorator fieldDecorator;
 
     /**
      * Opens the tested page. If templates is not empty nor null, it appends url
@@ -285,6 +288,13 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             }
         });
         return we;
+    }
+
+    protected void injectWebElementsToPage(Object page) {
+        if (fieldDecorator == null) {
+            fieldDecorator = new StaleReferenceAwareFieldDecorator(new DefaultElementLocatorFactory(driver), NUMBER_OF_TRIES);
+        }
+        PageFactory.initElements(fieldDecorator, page);
     }
 
     private class EnabledElementCondition implements IWEAvailabilityCondition {

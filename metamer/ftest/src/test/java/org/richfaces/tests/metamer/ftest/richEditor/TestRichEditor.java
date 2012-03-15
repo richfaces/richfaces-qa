@@ -3,18 +3,14 @@
  */
 package org.richfaces.tests.metamer.ftest.richEditor;
 
-import static java.text.MessageFormat.format;
 import static org.jboss.arquillian.ajocado.Ajocado.attributeEquals;
 import static org.jboss.arquillian.ajocado.Ajocado.elementPresent;
 import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
 import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
 import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.editorAttributes;
-import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.immediate;
 import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.lang;
 import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.readonly;
 import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.rendered;
@@ -24,9 +20,7 @@ import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.skin
 import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.styleClass;
 import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.title;
 import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.toolbar;
-import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.value;
 import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.width;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -58,8 +52,6 @@ public class TestRichEditor extends AbstractAjocadoTest {
     private JQueryLocator editor = pjq("span[id$=editor:inp]");
     private JQueryLocator editorTextArea = pjq("textarea[id$=editor:inp]");
     private JQueryLocator editorArea = jq("body");
-    private JQueryLocator phaseListenerFormat = jq("div#phasesPanel li:eq({0})");
-    //private FrameLocator frameLocator = new FrameLocator("jquery=iframe:eq(0)");
     private FrameIndexLocator frameLocator = new FrameIndexLocator(0);
     private JQueryLocator hSubmit = pjq("input[id$=hButton]");
     private JQueryLocator a4jSubmit = pjq("input[id$=a4jButton]");
@@ -92,13 +84,8 @@ public class TestRichEditor extends AbstractAjocadoTest {
         }
     }
 
-    private String text1 = "text1";
-    private String text2 = "text2";
-
     private String validationMsg1 = "Editor's value cannot be empty!";
     private String validationMsg2 = "Some text in editor is required!";
-
-    private String phaseListenerLogFormat = "*3 value changed: <p> {0}</p> -> <p> {1}</p>";
 
     @Override
     public URL getTestUrl() {
@@ -108,61 +95,6 @@ public class TestRichEditor extends AbstractAjocadoTest {
     @BeforeMethod
     public void beforeTestMethod() {
         waitModel.until(elementPresent.locator(editor));
-    }
-
-    /**
-     * Provide common steps needed to verify valueChangeListener.
-     * Accepts JQueryLocator for submit button - provide
-     * ability to verify JSF submit as well as Ajax submit.
-     * @param submitBtn
-     */
-    private void verifyValueChangeListener(JQueryLocator submitBtn){
-
-        typeTextToEditor(text1);
-        // and submit typed text
-        selenium.click(submitBtn);
-        waitModel.until(elementPresent.locator(editor));
-
-        typeTextToEditor(text2);
-        // and submit typed text
-        selenium.click(submitBtn);
-        waitModel.until(elementPresent.locator(phaseListenerFormat.format(3)));
-
-        String listenerText = selenium.getText(phaseListenerFormat.format(3));
-        assertEquals(listenerText, format(phaseListenerLogFormat, text1, text2),
-            "Value change listener was not invoked.");
-    }
-
-    /**
-     * Since editor component lives within iFrame element, additional steps are required
-     *
-     * This method selects appropriate iframe, do action, and return focus to PARENT frame
-     * @param text
-     */
-    private void typeTextToEditor(String text){
-        selenium.selectFrame(frameLocator);
-        selenium.fireEvent(editorArea, Event.FOCUS);
-        selenium.typeKeys(editorArea, text);
-
-        // focus back to main window - parent of iframe
-        selenium.selectFrame(FrameRelativeLocator.PARENT);
-    }
-
-    /**
-     * Method for retrieve text from editor.
-     * Editor lives within iFrame, so there are need some additional steps
-     * to reach element containing editor text
-     * @return
-     */
-    private String getEditorText(){
-        selenium.selectFrame(frameLocator);
-
-        String currentText = selenium.getText(editorArea);
-
-        // focus back to main window - parent of iframe
-        selenium.selectFrame(FrameRelativeLocator.PARENT);
-
-        return currentText;
     }
 
     /**
@@ -178,12 +110,6 @@ public class TestRichEditor extends AbstractAjocadoTest {
             "Seems that skin '" + skinName + "' didn't influence editor's @class attribute!");
     }
 
-    @Test
-    public void testValueChangeListener(){
-        verifyValueChangeListener(hSubmit);
-
-        verifyValueChangeListener(a4jSubmit);
-    }
 
     @Test
     public void testHeight() {
@@ -197,28 +123,6 @@ public class TestRichEditor extends AbstractAjocadoTest {
         String style = selenium.getStyle(
             editor.getDescendant(jq("table.cke_editor tr:eq(1) td")), CssProperty.HEIGHT);
         assertTrue(style != null && style.contains(height));
-    }
-
-    @Test
-    public void testImmediate() {
-        editorAttributes.set(immediate, Boolean.TRUE);
-
-        // set first value
-        typeTextToEditor(text1);
-        // and submit typed text
-        selenium.click(hSubmit);
-        waitModel.until(elementPresent.locator(phaseListenerFormat.format(2)));
-
-        // then set second value
-        typeTextToEditor(text2);
-        // and submit typed text
-        selenium.click(hSubmit);
-        waitModel.until(elementPresent.locator(phaseListenerFormat.format(2)));
-
-        // for immediate=true is valueChangeListener output as 3rd record
-        String listenerText = selenium.getText(phaseListenerFormat.format(2));
-        assertEquals(listenerText, format(phaseListenerLogFormat, text1, text2),
-            "Value change listener was not invoked or not in expected order");
     }
 
     @Test
@@ -377,23 +281,6 @@ public class TestRichEditor extends AbstractAjocadoTest {
         // since config facet has been introduced...
         editorAttributes.set(toolbar, "custom");
         assertEquals(selenium.getCount(editorToolbarGroup), 9);
-    }
-
-    @Test
-    public void testValue() {
-
-        // write some value in editor and submit by normal way
-        typeTextToEditor(text1);
-        selenium.click(hSubmit);
-
-        // then set value from outside, and check this value in editor
-        editorAttributes.set(value, text2);
-        selenium.selectFrame(frameLocator);
-        String found = selenium.getText(editorArea);
-        assertTrue(found!=null && found.contains(text2));
-
-        // focus back to main window - parent of iframe
-        selenium.selectFrame(FrameRelativeLocator.PARENT);
     }
 
     @Test
