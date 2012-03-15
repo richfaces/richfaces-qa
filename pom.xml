@@ -513,7 +513,8 @@
             </dependencies>
             <build>
                 <plugins>
-                    <plugin>
+                    <!-- does not needed right now for wfk testing -->
+                    <!-- <plugin>
                         <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
                             <execution>
@@ -536,7 +537,7 @@
                                 </configuration>
                             </execution>
                         </executions>
-                    </plugin>
+                    </plugin> -->
                      <!-- workaround for RF-11983-->
                     <plugin>
                         <artifactId>maven-resources-plugin</artifactId>
