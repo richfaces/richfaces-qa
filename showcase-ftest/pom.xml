@@ -4,13 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.richfaces.qa</groupId>
+        <groupId>org.richfaces.tests</groupId>
         <artifactId>richfaces-qa-parent</artifactId>
         <version>4.2.0.Final-redhat-1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-showcase-ftest</artifactId>
     <packaging>jar</packaging>
     <name>RichFaces Showcase Smoke Ftest</name>
@@ -55,7 +54,7 @@
         </dependency>
         <!-- TestNG listeners for better console output -->
         <dependency>
-            <groupId>org.richfaces.tests.testng</groupId>
+            <groupId>org.richfaces.tests</groupId>
             <artifactId>testng-listeners</artifactId>
             <version>${project.version}</version>
         </dependency>

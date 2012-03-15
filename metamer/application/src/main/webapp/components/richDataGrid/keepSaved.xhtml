@@ -53,7 +53,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                            value="#{model.simple}" columns="2">
 
                 <rich:column id="columnInput">
-                    <h:inputText id="input" value="#{maxBean.value}"/>
+                    <h:inputText id="input" value="#{maxBean.value}" converter="javax.faces.Integer"/>
                 </rich:column>
 
             </rich:dataGrid>

@@ -13,7 +13,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.richfaces.qa</groupId>
+    <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-qa-parent</artifactId>
     <version>4.2.0.Final-redhat-1</version>
     <packaging>pom</packaging>
@@ -32,7 +32,7 @@
         <!-- version of JBoss containers to use and download -->
         <version.jbossas6>6.0.0.Final</version.jbossas6>
         <version.jbossas7>7.0.2.Final</version.jbossas7>
-        <version.jbossas7-1>7.1.0.Final</version.jbossas7-1>
+        <version.jbossas7-1>7.1.1.Final</version.jbossas7-1>
 
         <!-- version of Tomcat containers to use-->
         <version.tomcat6>6.0.35</version.tomcat6>
@@ -46,8 +46,8 @@
         <arquillian.ajocado-testng.version>1.0.0.CR2</arquillian.ajocado-testng.version>
         <arquillian.jboss-as6.version>1.0.0.CR3</arquillian.jboss-as6.version>
 
-        <version.selenium>2.20.0</version.selenium>
-        <version.selenium.server>2.20.0</version.selenium.server>
+        <version.selenium>2.19.0</version.selenium>
+        <version.selenium.server>2.19.0</version.selenium.server>
 
         <version.jacoco.plugin>0.5.6.201201232323</version.jacoco.plugin>
 

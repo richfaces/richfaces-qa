@@ -78,7 +78,7 @@
         </dependency>
         <!-- TestNG listeners for better console output -->
         <dependency>
-            <groupId>org.richfaces.tests.testng</groupId>
+            <groupId>org.richfaces.tests</groupId>
             <artifactId>testng-listeners</artifactId>
             <version>${project.version}</version>
         </dependency>

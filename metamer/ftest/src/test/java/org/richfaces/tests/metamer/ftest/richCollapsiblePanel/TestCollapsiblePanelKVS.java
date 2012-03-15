@@ -32,10 +32,12 @@ import java.net.URL;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
- *  Test keeping visual state for page /faces/components/richCollapsiblePanel/simple.xhtml
+ * Test keeping visual state for page /faces/components/richCollapsiblePanel/simple.xhtml
+ *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision$
  */
@@ -48,12 +50,13 @@ public class TestCollapsiblePanelKVS extends AbstractAjocadoTest {
         return URLUtils.buildUrl(contextPath, "faces/components/richCollapsiblePanel/simple.xhtml");
     }
 
-    @Test(groups = {"keepVisualStateTesting"})
-    public void testRefreshFullPage(){
+    @Test(groups = { "keepVisualStateTesting" })
+    public void testRefreshFullPage() {
         reloadTester.testFullPageRefresh();
     }
 
-    @Test(groups = {"keepVisualStateTesting"})
+    @Test(groups = { "keepVisualStateTesting", "4.3" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-12035")
     public void testRenderAll() {
         reloadTester.testRerenderAll();
     }
@@ -69,7 +72,7 @@ public class TestCollapsiblePanelKVS extends AbstractAjocadoTest {
         public void doRequest(Boolean expanded) {
             String reqTime = selenium.getText(time);
             if (expanded) {
-                if (!isExpanded()){
+                if (!isExpanded()) {
                     guardXhr(selenium).click(header);
                     waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
                 }
@@ -92,13 +95,11 @@ public class TestCollapsiblePanelKVS extends AbstractAjocadoTest {
 
         @Override
         public Boolean[] getInputValues() {
-            return new Boolean[] {Boolean.TRUE, Boolean.FALSE};
+            return new Boolean[] { Boolean.TRUE, Boolean.FALSE };
         }
 
         private boolean isExpanded() {
-            return selenium.isVisible(headerExp) &&
-                    !selenium.isVisible(headerColps) &&
-                    selenium.isVisible(content);
+            return selenium.isVisible(headerExp) && !selenium.isVisible(headerColps) && selenium.isVisible(content);
         }
     }
 }
