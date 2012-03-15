@@ -170,7 +170,6 @@ public class TestRichCollapsiblePanel extends AbstractAjocadoTest {
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
 
-        String reqTime = selenium.getText(time);
         guardXhr(selenium).click(header);
 
         String[] events = selenium.getEval(new JavaScript("window.metamerEvents")).split(" ");

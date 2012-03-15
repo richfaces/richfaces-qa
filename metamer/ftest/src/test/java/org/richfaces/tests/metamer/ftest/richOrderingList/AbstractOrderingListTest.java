@@ -41,8 +41,6 @@ public abstract class AbstractOrderingListTest extends AbstractAjocadoTest {
 
     private OrderingList orderingList = new OrderingList();
 
-    private JQueryLocator requestTime = jq("span#requestTime");
-
     private JQueryLocator phaseListenerFormat = jq("div#phasesPanel li:eq({0})");
 
     private JQueryLocator submitButton = pjq("input[id$=submitButton]");

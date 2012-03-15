@@ -49,7 +49,6 @@ import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.checker.IconsChecker;
-import org.richfaces.tests.metamer.ftest.richAccordion.AccordionAttributes;
 import org.testng.annotations.Test;
 
 /**

@@ -133,7 +133,7 @@ public class TestRichMenuGroup extends AbstractAjocadoTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-9989")
     public void testIcon() {
-        AttributeLocator attr = icon.getAttribute(Attribute.SRC);
+        AttributeLocator<?> attr = icon.getAttribute(Attribute.SRC);
 
         selenium.select(pjq("select[id$=iconInput]"), optionLabel("star"));
         selenium.waitForPageToLoad();
@@ -155,7 +155,7 @@ public class TestRichMenuGroup extends AbstractAjocadoTest {
         selenium.click(pjq("input[type=radio][name$=disabledInput][value=true]"));
         selenium.waitForPageToLoad();
 
-        AttributeLocator attr = icon.getAttribute(Attribute.SRC);
+        AttributeLocator<?> attr = icon.getAttribute(Attribute.SRC);
 
         assertFalse(selenium.isElementPresent(icon), "Icon should not be present.");
         assertTrue(selenium.isElementPresent(emptyIcon), "Empty icon should be present.");

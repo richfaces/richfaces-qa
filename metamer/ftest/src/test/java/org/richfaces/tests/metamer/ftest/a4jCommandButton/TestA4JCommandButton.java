@@ -382,7 +382,7 @@ public class TestA4JCommandButton extends AbstractAjocadoTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10115")
     public void testType() {
-        AttributeLocator attr = button.getAttribute(Attribute.TYPE);
+        AttributeLocator<?> attr = button.getAttribute(Attribute.TYPE);
 
         commandButtonAttributes.set(CommandButtonAttributes.type, "image");
         assertEquals(selenium.getAttribute(attr), "image", "Button's type");
@@ -404,7 +404,7 @@ public class TestA4JCommandButton extends AbstractAjocadoTest {
     public void testValue() {
         commandButtonAttributes.set(CommandButtonAttributes.value, "new label");
 
-        AttributeLocator attribute = button.getAttribute(new Attribute("value"));
+        AttributeLocator<?> attribute = button.getAttribute(new Attribute("value"));
         assertEquals(selenium.getAttribute(attribute), "new label", "Value of the button did not change.");
     }
 }

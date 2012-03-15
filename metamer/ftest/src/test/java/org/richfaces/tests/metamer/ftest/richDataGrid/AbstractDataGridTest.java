@@ -81,7 +81,6 @@ public abstract class AbstractDataGridTest extends AbstractAjocadoTest {
     int page = 1;
     int lastPage = 1;
 
-    @SuppressWarnings("restriction")
     public AbstractDataGridTest() throws JAXBException {
         capitals = Model.unmarshallCapitals();
     }

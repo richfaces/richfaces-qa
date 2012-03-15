@@ -39,7 +39,7 @@ public abstract class AbstractMediaOutputTest extends AbstractAjocadoTest {
 
     protected static final JQueryLocator MEDIA_OUTPUT = pjq("*[id$=mediaOutput]");
 
-    protected String getTextContentByUrlAttribute(AttributeLocator urlAttribute) throws IOException {
+    protected String getTextContentByUrlAttribute(AttributeLocator<?> urlAttribute) throws IOException {
         URL url = buildUrl(contextPath, selenium.getAttribute(urlAttribute));
         BufferedReader input = null;
         StringBuilder foundContent = new StringBuilder();
