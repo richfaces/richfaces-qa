@@ -24,6 +24,8 @@ package org.richfaces.tests.metamer.ftest;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
@@ -32,6 +34,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
@@ -45,53 +48,52 @@ import org.testng.annotations.BeforeMethod;
 public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     @Drone
-    protected FirefoxDriver driver;
+    protected WebDriver driver;
     private boolean first = true;
-    protected static final int WAIT_TIME = 5;//s
-    private static final int LAST_CHECK_WAIT_TIME = 500;//ms
+    protected static final int WAIT_TIME = 5;// s
+    private static final int LAST_CHECK_WAIT_TIME = 500;// ms
     private static final int NUMBER_OF_TRIES = 5;
     private FieldDecorator fieldDecorator;
 
     /**
-     * Opens the tested page. If templates is not empty nor null, it appends url
-     * parameter with templates.
+     * Opens the tested page. If templates is not empty nor null, it appends url parameter with templates.
      *
-     * @param templates templates that will be used for test, e.g. "red_div"
+     * @param templates
+     *            templates that will be used for test, e.g. "red_div"
      */
     @BeforeMethod(alwaysRun = true)
     public void loadPage(Object[] templates) {
-//        addFirebug();
+        addFirebug();
         if (driver == null) {
             throw new SkipException("webDriver isn't initialized");
         }
         driver.get(buildUrl(getTestUrl() + "?templates=" + template.toString()).toExternalForm());
-//        webDriver.manage().timeouts().pageLoadTimeout(WAITTIME, TimeUnit.SECONDS);
+        // webDriver.manage().timeouts().pageLoadTimeout(WAITTIME, TimeUnit.SECONDS);
     }
 
-//    /**
-//     * Adds firebug to firefox.
-//     */
-//    public void addFirebug() {
-//        if (first) {
-//            if (driver instanceof FirefoxDriver) {
-//                File file = null;
-//                try {
-//                    file = new File(AbstractWebDriverTest.class.getResource("firebug-1.9.1.xpi").toURI());
-//                } catch (Exception ex) {
-//                    ex.printStackTrace();
-//                }
-//                FirefoxProfile firefoxProfile = new FirefoxProfile();
-//                try {
-//                    firefoxProfile.addExtension(file);
-//                    firefoxProfile.setPreference("extensions.firebug.currentVersion", "1.9.1"); // Avoid startup screen
-//                } catch (IOException ex) {
-//                    ex.printStackTrace();
-//                }
-//                driver = new FirefoxDriver(firefoxProfile);
-//                first = false;
-//            }
-//        }
-//    }
+    /**
+     * Adds firebug to firefox.
+     */
+    public void addFirebug() {
+
+        if (first && driver instanceof FirefoxDriver) {
+            File file = null;
+            try {
+                file = new File(AbstractWebDriverTest.class.getResource("firebug-1.9.1.xpi").toURI());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            FirefoxProfile firefoxProfile = new FirefoxProfile();
+            try {
+                firefoxProfile.addExtension(file);
+                firefoxProfile.setPreference("extensions.firebug.currentVersion", "1.9.1"); // Avoid startup screen
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            driver = new FirefoxDriver(firefoxProfile);
+            first = false;
+        }
+    }
 
     /**
      * Waiting.
@@ -109,7 +111,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     /**
      * Waits a little time and executes JavaScript script.
      *
-     * @param script whole command that will be executed
+     * @param script
+     *            whole command that will be executed
      * @param args
      * @return may return a value
      */
@@ -122,8 +125,10 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     /**
      * Types text to input component and then submits it.
      *
-     * @param cssSelector selector of component
-     * @param toSend text to be typed in input component
+     * @param cssSelector
+     *            selector of component
+     * @param toSend
+     *            text to be typed in input component
      */
     public void sendAndSubmit(String cssSelector, String toSend) {
         waitForEnabledWE(cssSelector).sendKeys(toSend);
@@ -131,10 +136,10 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Waits for list of WebElements by the specified selector. Expects 1
-     * element.
+     * Waits for list of WebElements by the specified selector. Expects 1 element.
      *
-     * @param by selenium locator of root element
+     * @param by
+     *            selenium locator of root element
      * @return TimeoutException if found nothing or list with found elements.
      */
     public List<WebElement> waitForWEList(final By by) {
@@ -142,11 +147,12 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Waits for list of WebElements by the specified selector. Expects 1
-     * WebElement.
+     * Waits for list of WebElements by the specified selector. Expects 1 WebElement.
      *
-     * @param by selenium locator of elements
-     * @param expectedSize expected list size
+     * @param by
+     *            selenium locator of elements
+     * @param expectedSize
+     *            expected list size
      * @return TimeoutException if found nothing or list with found elements.
      */
     public List<WebElement> waitForWEList(String cssSelector) {
@@ -154,11 +160,12 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Waits for list of WebElements by the specified selector and with
-     * specified expected size.
+     * Waits for list of WebElements by the specified selector and with specified expected size.
      *
-     * @param by selenium locator of elements
-     * @param expectedSize expected list size
+     * @param by
+     *            selenium locator of elements
+     * @param expectedSize
+     *            expected list size
      * @return TimeoutException if found nothing or list with found elements.
      */
     public List<WebElement> waitForWEList(final By by, final int expectedSize) {
@@ -166,11 +173,12 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Waits for list of WebElements by the specified selector, with specified
-     * expected size.
+     * Waits for list of WebElements by the specified selector, with specified expected size.
      *
-     * @param cssSelector cssSelector of elements
-     * @param expectedSize expected list size
+     * @param cssSelector
+     *            cssSelector of elements
+     * @param expectedSize
+     *            expected list size
      * @return expected list of webElements or null
      */
     public List<WebElement> waitForWEList(String cssSelector, final int expectedSize) {
@@ -178,12 +186,15 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Waits for list of WebElements by the specified selector, with specified
-     * expected size and for maximum number of seconds
+     * Waits for list of WebElements by the specified selector, with specified expected size and for maximum number of
+     * seconds
      *
-     * @param by selenium locator of elements
-     * @param seconds maximum amount of seconds that it will wait
-     * @param expectedSize expected list size
+     * @param by
+     *            selenium locator of elements
+     * @param seconds
+     *            maximum amount of seconds that it will wait
+     * @param expectedSize
+     *            expected list size
      * @return expected list of webElements or null
      */
     public List<WebElement> waitForWEList(final By by, int seconds, final int expectedSize) {
@@ -205,7 +216,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             public List<WebElement> apply(WebDriver d) {
                 List<WebElement> ll = d.findElements(by);
                 if (ll.size() == expectedSize) {
-                    if (expectedSize == 0) {//last check
+                    if (expectedSize == 0) {// last check
                         if (!lastCheckMade) {
                             ll = lastCheck(d);
                         }
@@ -225,12 +236,12 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Waits for WebElement with specific css selector which contains expected
-     * text.
+     * Waits for WebElement with specific css selector which contains expected text.
      *
-     * @param cssSelector css selector
-     * @param excpectedString expected text that will WebElement.getText()
-     * return
+     * @param cssSelector
+     *            css selector
+     * @param excpectedString
+     *            expected text that will WebElement.getText() return
      * @return
      */
     public WebElement waitForWEWithExpectedText(String cssSelector, String excpectedString) {
@@ -238,20 +249,22 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Waits for WebElement with specific css selector which is visible and
-     * enabled.
+     * Waits for WebElement with specific css selector which is visible and enabled.
      *
-     * @param cssSelector css selector
+     * @param cssSelector
+     *            css selector
      * @return
      */
     public WebElement waitForEnabledVisibleWE(String cssSelector) {
-        return waitForAvailableWE(By.cssSelector(cssSelector), WAIT_TIME, new VisibleElementCondition(), new EnabledElementCondition());
+        return waitForAvailableWE(By.cssSelector(cssSelector), WAIT_TIME, new VisibleElementCondition(),
+            new EnabledElementCondition());
     }
 
     /**
      * Waits for WebElement with specific css selector which is visible.
      *
-     * @param cssSelector css selector
+     * @param cssSelector
+     *            css selector
      * @return
      */
     public WebElement waitForVisibleWE(String cssSelector) {
@@ -261,7 +274,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     /**
      * Waits for WebElement with specific css selector which is enabled.
      *
-     * @param cssSelector css selector
+     * @param cssSelector
+     *            css selector
      * @return
      */
     public WebElement waitForEnabledWE(String cssSelector) {
@@ -292,7 +306,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     protected void injectWebElementsToPage(Object page) {
         if (fieldDecorator == null) {
-            fieldDecorator = new StaleReferenceAwareFieldDecorator(new DefaultElementLocatorFactory(driver), NUMBER_OF_TRIES);
+            fieldDecorator = new StaleReferenceAwareFieldDecorator(new DefaultElementLocatorFactory(driver),
+                NUMBER_OF_TRIES);
         }
         PageFactory.initElements(fieldDecorator, page);
     }

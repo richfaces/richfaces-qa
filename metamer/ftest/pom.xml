@@ -39,28 +39,25 @@
             <artifactId>metamer</artifactId>
             <version>${project.version}</version>
             <classifier>classes</classifier>
+            <scope>test</scope>
         </dependency>
         <!-- Arquillian dependencies -->
         <dependency>
             <groupId>org.jboss.arquillian.ajocado</groupId>
             <artifactId>arquillian-ajocado-testng</artifactId>
             <version>${arquillian.ajocado-testng.version}</version>
+            <scope>test</scope>
             <type>pom</type>
         </dependency>
         <dependency>
+            <groupId>org.jboss.arquillian.testng</groupId>
+            <artifactId>arquillian-testng-container</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-drone-webdriver</artifactId>
-            <version>${arquillian.drone.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${version.selenium}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-server</artifactId>
-            <version>${version.selenium.server}</version>
+            <artifactId>arquillian-drone-impl</artifactId>
+            <scope>test</scope>
         </dependency>
         <!-- Resolution of JAR libraries into WAR archive -->
         <dependency>
@@ -76,11 +73,39 @@
             <groupId>org.jboss.shrinkwrap.descriptors</groupId>
             <artifactId>shrinkwrap-descriptors-impl</artifactId>
         </dependency>
+        <!-- Support for Selenium in Arquillian Drone -->
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-drone-webdriver</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Selenium -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-support</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-server</artifactId>
+            <scope>test</scope>
+        </dependency>
         <!-- TestNG listeners for better console output -->
         <dependency>
             <groupId>org.richfaces.tests</groupId>
             <artifactId>testng-listeners</artifactId>
             <version>${project.version}</version>
+            <scope>test</scope>
         </dependency>
         <!-- see the https://community.jboss.org/wiki/WhatsTheCauseOfThisExceptionJavalangClassFormatErrorAbsentCode -->
         <dependency>
