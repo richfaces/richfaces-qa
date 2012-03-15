@@ -120,7 +120,7 @@ public abstract class AbstractValidatorsTest extends AbstractAjocadoTest {
         wrongValue.put(ID.regexp, "@@@");
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
-        long offset = 24 * 60 * 60 * 1000; // more than 24 hours to get correct past date
+        long offset = 3 * 24 * 60 * 60 * 1000; // more than 24 hours to get correct past date
         wrongValue.put(ID.past, sdf.format(new Date(System.currentTimeMillis() + offset)));
         wrongValue.put(ID.future, sdf.format(new Date(System.currentTimeMillis() - offset)));
 
