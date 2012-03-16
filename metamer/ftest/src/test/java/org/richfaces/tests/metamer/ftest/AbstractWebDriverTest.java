@@ -24,8 +24,6 @@ package org.richfaces.tests.metamer.ftest;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
@@ -33,8 +31,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
@@ -63,7 +59,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      */
     @BeforeMethod(alwaysRun = true)
     public void loadPage(Object[] templates) {
-        addFirebug();
+//        addFirebug();
         if (driver == null) {
             throw new SkipException("webDriver isn't initialized");
         }
@@ -74,26 +70,26 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     /**
      * Adds firebug to firefox.
      */
-    public void addFirebug() {
-
-        if (first && driver instanceof FirefoxDriver) {
-            File file = null;
-            try {
-                file = new File(AbstractWebDriverTest.class.getResource("firebug-1.9.1.xpi").toURI());
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            FirefoxProfile firefoxProfile = new FirefoxProfile();
-            try {
-                firefoxProfile.addExtension(file);
-                firefoxProfile.setPreference("extensions.firebug.currentVersion", "1.9.1"); // Avoid startup screen
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            driver = new FirefoxDriver(firefoxProfile);
-            first = false;
-        }
-    }
+//    public void addFirebug() {
+//
+//        if (first && driver instanceof FirefoxDriver) {
+//            File file = null;
+//            try {
+//                file = new File(AbstractWebDriverTest.class.getResource("firebug-1.9.1.xpi").toURI());
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//            }
+//            FirefoxProfile firefoxProfile = new FirefoxProfile();
+//            try {
+//                firefoxProfile.addExtension(file);
+//                firefoxProfile.setPreference("extensions.firebug.currentVersion", "1.9.1"); // Avoid startup screen
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+//            driver = new FirefoxDriver(firefoxProfile);
+//            first = false;
+//        }
+//    }
 
     /**
      * Waiting.
