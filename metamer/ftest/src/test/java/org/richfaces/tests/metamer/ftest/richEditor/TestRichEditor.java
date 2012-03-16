@@ -140,11 +140,6 @@ public class TestRichEditor extends AbstractAjocadoTest {
     }
 
     @Test
-    public void testOnDirty() {
-        testFireEvent(new Event("dirty"), editorTextArea);
-    }
-
-    @Test
     public void testOnChange() {
         testFireEvent(Event.CHANGE, editorTextArea);
     }

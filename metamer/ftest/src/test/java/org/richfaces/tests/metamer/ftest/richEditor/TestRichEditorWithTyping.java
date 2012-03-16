@@ -34,6 +34,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import static org.testng.Assert.assertEquals;
 
 import com.google.common.base.Predicate;
 
@@ -60,6 +61,15 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest {
     public void testImmediate() {
         driver.findElement(By.cssSelector("input[type=radio][id$='immediateInput:1']")).click();
         verifyValueChangeListener(page.hButton, page.valueChangeListenerAfterImmediate);
+    }
+
+    @Test
+    public void testOnDirty() {
+        sendAndSubmit("input[type=text][id$=ondirtyInput]", "metamerEvents += \"dirty \"");
+        executeJS("window.metamerEvents = \"\";");
+        typeTextToEditor("text1");
+        String event = ((String) executeJS("return window.metamerEvents")).trim();
+        assertEquals(event, "dirty", "Attribute ondirty doesn't work");
     }
 
     @Test
