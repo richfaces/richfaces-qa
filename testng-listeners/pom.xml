@@ -6,7 +6,8 @@
     General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this 
     software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the 
     FSF site: http://www.fsf.org. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -17,24 +18,31 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>testng-listeners</artifactId>    
+    <artifactId>testng-listeners</artifactId>
     <name>RichFaces TestNG Listeners</name>
 
     <dependencies>
-        <!-- Arquillian dependencies -->
+        <!-- Arquillian TestNG Container -->
         <dependency>
-            <groupId>org.jboss.arquillian.ajocado</groupId>
-            <artifactId>arquillian-ajocado-testng</artifactId>
-            <version>${arquillian.ajocado-testng.version}</version>
+            <groupId>org.jboss.arquillian.testng</groupId>
+            <artifactId>arquillian-testng-container</artifactId>
+        </dependency>
+        <!-- Graphene dependency chain - imports all other dependencies required -->
+        <dependency>
+            <groupId>org.jboss.arquillian.graphene</groupId>
+            <artifactId>arquillian-graphene</artifactId>
+            <version>${arquillian.graphene-testng.version}</version>
             <type>pom</type>
-            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
         </dependency>
         <!-- For proper screenshot taking -->
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.6</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 

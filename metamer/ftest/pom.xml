@@ -43,11 +43,11 @@
         </dependency>
         <!-- Arquillian dependencies -->
         <dependency>
-            <groupId>org.jboss.arquillian.ajocado</groupId>
-            <artifactId>arquillian-ajocado-testng</artifactId>
-            <version>${arquillian.ajocado-testng.version}</version>
-            <scope>test</scope>
+            <groupId>org.jboss.arquillian.graphene</groupId>
+            <artifactId>arquillian-graphene</artifactId>
+            <version>${arquillian.graphene-testng.version}</version>
             <type>pom</type>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.arquillian.testng</groupId>

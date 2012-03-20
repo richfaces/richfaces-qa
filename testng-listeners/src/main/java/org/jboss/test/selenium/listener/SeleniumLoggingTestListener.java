@@ -22,8 +22,8 @@
 package org.jboss.test.selenium.listener;
 
 import org.apache.commons.lang.StringUtils;
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.test.selenium.utils.testng.TestLoggingUtils;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
@@ -42,7 +42,7 @@ public class SeleniumLoggingTestListener extends TestListenerAdapter {
     /**
      * Proxy to local selenium instance
      */
-    private AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    private GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
     @Override
     public void onTestStart(ITestResult result) {

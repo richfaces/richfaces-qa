@@ -72,7 +72,7 @@
         <!-- <property name="dontTouchLogging">true</property> -->
     </extension>
 
-    <extension qualifier="ajocado">
+    <extension qualifier="graphene">
         <property name="browser">*firefox</property>
         <property name="contextRoot">http://localhost:8080/</property>
         <property name="seleniumTimeoutAjax">7000</property>

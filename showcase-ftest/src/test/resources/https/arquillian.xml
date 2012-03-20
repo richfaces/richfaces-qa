@@ -29,7 +29,7 @@
         <property name="trustStorePassword">abc123</property>
     </extension>
 
-    <extension qualifier="ajocado">
+    <extension qualifier="graphene">
         <property name="browser">*firefox</property>
         <property name="contextRoot">https://localhost:8443</property>
         <property name="seleniumTimeoutAjax">7000</property>
