@@ -30,15 +30,18 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.test.selenium.android.support.pagefactory.StaleReferenceAwareFieldDecorator;
+import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.android.AndroidDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -147,6 +150,26 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
 
     protected void initializePage(Object page) {
         PageFactory.initElements(getFieldDecorator(), page);
+    }
+
+    protected void sendKeysToInputCarefully(final WebElement input, final String text) {
+        input.click();
+        final String valueBefore = input.getAttribute("value") == null ? "" : input.getAttribute("value");
+        input.sendKeys(text);
+        if (getConfiguration().isVerbose()) {
+            System.out.println("The text <" + text + "> has been typed into the given input.");
+        }
+        new WebDriverWait(getWebDriver())
+            .failWith("The text can't be typed into the given input.")
+            .until(new ExpectedCondition<Boolean>() {
+                @Override
+                public Boolean apply(WebDriver driver) {
+                    if (getConfiguration().isVerbose()) {
+                        System.out.println("The text in the given input after typing is <" + input.getAttribute("value") + ">.");
+                    }
+                    return input.getAttribute("value").equals(valueBefore + text);
+                }
+            });
     }
 
     private FieldDecorator getFieldDecorator() {
