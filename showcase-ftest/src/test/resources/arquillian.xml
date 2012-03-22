@@ -66,6 +66,18 @@
         </configuration>
     </container>
 
+    <container qualifier="openshift">
+        <configuration>
+            <property name="namespace">${openshift.namespace}</property>
+            <property name="application">${openshift.application}</property>
+            <property name="sshUserName">${openshift.ssh.user}</property>
+            <property name="passphrase">${openshift.password}</property>
+            <property name="login">richfaces.qa.jenkins@gmail.com</property>
+            <property name="deploymentTimeoutInSeconds">240</property>
+            <property name="identityFile">${openshift.identity.file}</property>
+        </configuration>
+    </container>
+
     <extension qualifier="selenium-server">
         <property name="browserSessionReuse">true</property>
         <property name="port">8444</property>
@@ -74,7 +86,6 @@
 
     <extension qualifier="graphene">
         <property name="browser">*firefox</property>
-        <property name="contextRoot">http://localhost:8080/</property>
         <property name="seleniumTimeoutAjax">7000</property>
         <property name="seleniumMaximize">true</property>
         <property name="seleniumPort">8444</property>

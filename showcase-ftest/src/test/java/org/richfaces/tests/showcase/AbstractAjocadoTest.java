@@ -53,7 +53,7 @@ public abstract class AbstractAjocadoTest extends AbstractShowcaseTest {
 
         this.contextRoot = getContextRoot();
 
-        selenium.open(URLUtils.buildUrl(contextRoot, "/showcase/", addition));
+        selenium.open(URLUtils.buildUrl(contextRoot, addition));
     }
 
     /* ***********************************************************************************************************************
