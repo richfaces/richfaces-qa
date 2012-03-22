@@ -31,8 +31,8 @@ import static org.jboss.cheiron.halt.XHRState.SEND;
 import static org.jboss.cheiron.halt.XHRState.UNITIALIZED;
 
 import org.apache.commons.lang.Validate;
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 
 /**
@@ -41,7 +41,7 @@ import org.jboss.arquillian.ajocado.javascript.JavaScript;
  */
 public final class XHRHalter {
 
-    private static AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    private static GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
     private static final AbstractPageExtensions HALTER_EXTENSIONS = new AbstractPageExtensions() {
         {
@@ -49,15 +49,15 @@ public final class XHRHalter {
         }
 
         public JavaScript isExtensionInstalledScript() {
-            return js("Ajocado.getPage().XHRHalter != undefined");
+            return js("Graphene.getPage().XHRHalter != undefined");
         }
     };
 
-    private static JavaScript isHandleAvailable = js("Ajocado.getPage().XHRHalter.isHandleAvailable()");
-    private static JavaScript isWaitingForSend = js("Ajocado.getPage().XHRHalter.isWaitingForSend({0})");
-    private static JavaScript getHandle = js("Ajocado.getPage().XHRHalter.getHandle()");
-    private static JavaScript continueTo = js("Ajocado.getPage().XHRHalter.continueTo({0}, Ajocado.getPage().XHRHalter.STATE_{1})");
-    private static JavaScript setEnabled = js("Ajocado.getPage().XHRHalter.setEnabled({0})");
+    private static JavaScript isHandleAvailable = js("Graphene.getPage().XHRHalter.isHandleAvailable()");
+    private static JavaScript isWaitingForSend = js("Graphene.getPage().XHRHalter.isWaitingForSend({0})");
+    private static JavaScript getHandle = js("Graphene.getPage().XHRHalter.getHandle()");
+    private static JavaScript continueTo = js("Graphene.getPage().XHRHalter.continueTo({0}, Graphene.getPage().XHRHalter.STATE_{1})");
+    private static JavaScript setEnabled = js("Graphene.getPage().XHRHalter.setEnabled({0})");
 
     int handle;
 
