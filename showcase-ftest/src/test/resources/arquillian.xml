@@ -75,6 +75,7 @@
             <property name="login">richfaces.qa.jenkins@gmail.com</property>
             <property name="deploymentTimeoutInSeconds">240</property>
             <property name="identityFile">${openshift.identity.file}</property>
+            <property name="disableStrictHostChecking">true</property>
         </configuration>
     </container>
 
