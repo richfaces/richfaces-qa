@@ -82,6 +82,7 @@
         <module>showcase-webdriver-ftest</module>
         <module>testng-listeners</module>
         <!--<module>enterprise-maven-bootstrap</module> -->
+        <module>common</module>
     </modules>
 
     <build>
