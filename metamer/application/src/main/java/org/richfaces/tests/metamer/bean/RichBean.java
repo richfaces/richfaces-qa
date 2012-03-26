@@ -149,6 +149,7 @@ public class RichBean implements Serializable {
         richComponents.put("richHotKey", "Rich Hot Key");
         richComponents.put("richInplaceInput", "Rich Inplace Input");
         richComponents.put("richInplaceSelect", "Rich Inplace Select");
+        richComponents.put("richItemChangeListener", "Rich Item Change Listener");
         richComponents.put("richInputNumberSlider", "Rich Input Number Slider");
         richComponents.put("richInputNumberSpinner", "Rich Input Number Spinner");
         richComponents.put("richJQuery", "Rich jQuery");
