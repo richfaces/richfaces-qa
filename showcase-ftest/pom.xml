@@ -68,6 +68,13 @@
             <artifactId>testng-listeners</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- XHRHalter support -->
+        <dependency>
+            <groupId>org.richfaces.tests</groupId>
+            <artifactId>xhrhalter</artifactId>
+            <scope>test</scope>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
