@@ -29,14 +29,14 @@ import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
 
 import java.awt.event.KeyEvent;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestFunctions extends AbstractAjocadoTest {
+public class TestFunctions extends AbstractGrapheneTest {
 
     private JQueryLocator input = jq("input[type=text]");
     private JQueryLocator out = jq("span[id$=out]");

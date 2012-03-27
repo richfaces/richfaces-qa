@@ -30,13 +30,13 @@ import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
 import java.util.HashSet;
 import java.util.Set;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class AbstractCalendarTest extends AbstractAjocadoTest {
+public class AbstractCalendarTest extends AbstractGrapheneTest {
 
     /* ******************************************************************
      * Locators******************************************************************

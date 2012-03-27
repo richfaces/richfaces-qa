@@ -32,7 +32,7 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.request.RequestType;
 import org.jboss.test.selenium.GuardRequest;
 import org.richfaces.tests.metamer.bean.Model;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.model.AssertingDataScroller;
 import org.richfaces.tests.metamer.ftest.model.DataScroller;
 import org.richfaces.tests.metamer.model.Capital;
@@ -43,7 +43,7 @@ import org.richfaces.tests.metamer.model.Employee.Sex;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22688 $
  */
-public abstract class AbstractDataTableTest extends AbstractAjocadoTest {
+public abstract class AbstractDataTableTest extends AbstractGrapheneTest {
     protected static final List<Capital> CAPITALS = Model.unmarshallCapitals();
     protected static final List<Employee> EMPLOYEES = Model.unmarshallEmployees();
     protected static final int ELEMENTS_TOTAL = 50;

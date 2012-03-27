@@ -36,7 +36,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 /**
@@ -45,7 +45,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 20962 $
  */
-public class TestA4JParam extends AbstractAjocadoTest {
+public class TestA4JParam extends AbstractGrapheneTest {
 
     private JQueryLocator button1 = pjq("input[id$=button1]");
     private JQueryLocator button2 = pjq("input[id$=button2]");

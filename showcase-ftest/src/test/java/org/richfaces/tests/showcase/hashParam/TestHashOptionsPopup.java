@@ -29,7 +29,7 @@ import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
 import org.jboss.arquillian.ajocado.css.CssProperty;
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.richfaces.tests.showcase.JQueryScriptWindowObject;
 import org.testng.annotations.Test;
 
@@ -37,7 +37,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestHashOptionsPopup extends AbstractAjocadoTest {
+public class TestHashOptionsPopup extends AbstractGrapheneTest {
 
     /* **************************************************************************
      * Constants ***************************************************************** *********

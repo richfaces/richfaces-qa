@@ -36,7 +36,7 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 
 /**
  * Abstract test case for testing h:commandButton and h:commandLink with a4j:ajax.
@@ -44,7 +44,7 @@ import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22154 $
  */
-public abstract class AbstractTestCommand extends AbstractAjocadoTest {
+public abstract class AbstractTestCommand extends AbstractGrapheneTest {
 
     private JQueryLocator input = pjq("input[type=text][id$=input]");
     private JQueryLocator output1 = pjq("div[id$=output1]");

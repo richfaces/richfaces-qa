@@ -46,7 +46,7 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
@@ -58,7 +58,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 23036 $
  */
-public class TestRichTabPanel extends AbstractAjocadoTest {
+public class TestRichTabPanel extends AbstractGrapheneTest {
 
     private JQueryLocator panel = pjq("div[id$=tabPanel]");
     private JQueryLocator[] items = { pjq("div[id$=tab1]"), pjq("div[id$=tab2]"), pjq("div[id$=tab3]"),

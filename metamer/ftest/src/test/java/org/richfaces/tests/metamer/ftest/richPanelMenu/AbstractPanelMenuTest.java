@@ -30,7 +30,7 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttribute
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.model.PanelMenu;
 import org.testng.annotations.BeforeMethod;
 
@@ -38,7 +38,7 @@ import org.testng.annotations.BeforeMethod;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22749 $
  */
-public class AbstractPanelMenuTest extends AbstractAjocadoTest {
+public class AbstractPanelMenuTest extends AbstractGrapheneTest {
 
     PanelMenu menu = new PanelMenu(pjq("div.rf-pm[id$=panelMenu]"));
     PanelMenu.Item item3 = menu.getItemContains("Item 3");

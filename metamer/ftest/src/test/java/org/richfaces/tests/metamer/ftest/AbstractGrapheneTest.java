@@ -79,7 +79,7 @@ import org.testng.annotations.BeforeMethod;
  * @version $Revision: 22749 $
  */
 @RunAsClient
-public abstract class AbstractAjocadoTest extends AbstractMetamerTest {
+public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
 
     @Drone
     protected AjaxSelenium selenium;
@@ -447,7 +447,7 @@ public abstract class AbstractAjocadoTest extends AbstractMetamerTest {
             for (T inputValue : getInputValues()) {
                 doRequest(inputValue);
                 verifyResponse(inputValue);
-                AbstractAjocadoTest.this.rerenderAll();
+                AbstractGrapheneTest.this.rerenderAll();
                 verifyResponse(inputValue);
             }
         }
@@ -456,7 +456,7 @@ public abstract class AbstractAjocadoTest extends AbstractMetamerTest {
             for (T inputValue : getInputValues()) {
                 doRequest(inputValue);
                 verifyResponse(inputValue);
-                AbstractAjocadoTest.this.fullPageRefresh();
+                AbstractGrapheneTest.this.fullPageRefresh();
                 verifyResponse(inputValue);
             }
         }

@@ -31,7 +31,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.utils.URLUtils;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
@@ -41,7 +41,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision$
  */
-public class TestCollapsiblePanelKVS extends AbstractAjocadoTest {
+public class TestCollapsiblePanelKVS extends AbstractGrapheneTest {
 
     CollapsiblePanelReloadTester reloadTester = new CollapsiblePanelReloadTester();
 

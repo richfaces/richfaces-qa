@@ -29,7 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.attributes.Attributes;
 
 /**
@@ -37,7 +37,7 @@ import org.richfaces.tests.metamer.ftest.attributes.Attributes;
  *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public abstract class AbstractRichNotifyTest extends AbstractAjocadoTest {
+public abstract class AbstractRichNotifyTest extends AbstractGrapheneTest {
 
     /**
      * attributes for rich:notifyMessages tag

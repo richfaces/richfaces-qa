@@ -28,7 +28,7 @@ import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.testng.Assert.assertFalse;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 
 /**
  * Abstract test case for rich:toggleControl.
@@ -36,7 +36,7 @@ import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 21115 $
  */
-public abstract class AbstractTestToggleControl extends AbstractAjocadoTest {
+public abstract class AbstractTestToggleControl extends AbstractGrapheneTest {
 
     private JQueryLocator[] buttons1 = {pjq("input[id$=tc11]"), pjq("input[id$=tc12]"), pjq("input[id$=tc13]")};
     private JQueryLocator[] buttons2 = {pjq("input[id$=tc21]"), pjq("input[id$=tc22]"), pjq("input[id$=tc23]")};

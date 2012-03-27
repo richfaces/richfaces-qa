@@ -38,7 +38,7 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 
 /**
  * Abstract test case for testing h:selectManyMenu and h:selectManyListbox with a4j:ajax.
@@ -46,7 +46,7 @@ import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22054 $
  */
-public abstract class AbstractTestSelectMany extends AbstractAjocadoTest {
+public abstract class AbstractTestSelectMany extends AbstractGrapheneTest {
 
     private JQueryLocator output1 = pjq("span[id$=output1]");
     private JQueryLocator output2 = pjq("span[id$=output2]");

@@ -45,7 +45,7 @@ import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
@@ -56,7 +56,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @since 4.2.0.Final
  */
-public class TestRichContextMenu extends AbstractAjocadoTest {
+public class TestRichContextMenu extends AbstractGrapheneTest {
 
     private static final Logger log = LoggerFactory.getLogger(TestRichContextMenu.class);
 

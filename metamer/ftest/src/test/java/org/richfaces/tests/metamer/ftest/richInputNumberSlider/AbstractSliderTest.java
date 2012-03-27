@@ -37,7 +37,7 @@ import java.net.URL;
 import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 
@@ -47,7 +47,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22499 $
  */
-public abstract class AbstractSliderTest extends AbstractAjocadoTest {
+public abstract class AbstractSliderTest extends AbstractGrapheneTest {
 
     protected JQueryLocator slider = pjq("span[id$=slider]");
     protected JQueryLocator input = pjq("input.rf-insl-inp");

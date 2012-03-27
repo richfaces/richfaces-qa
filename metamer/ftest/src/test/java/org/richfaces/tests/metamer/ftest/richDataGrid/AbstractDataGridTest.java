@@ -38,7 +38,7 @@ import javax.xml.bind.JAXBException;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.richfaces.tests.metamer.bean.Model;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.model.DataGrid;
@@ -49,7 +49,7 @@ import org.testng.annotations.BeforeMethod;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22407 $
  */
-public abstract class AbstractDataGridTest extends AbstractAjocadoTest {
+public abstract class AbstractDataGridTest extends AbstractGrapheneTest {
 
     protected static final int ELEMENTS_TOTAL = 50;
 

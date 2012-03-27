@@ -73,7 +73,7 @@ import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
@@ -82,7 +82,7 @@ import org.testng.annotations.Test;
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  */
-public class TestPickList extends AbstractAjocadoTest {
+public class TestPickList extends AbstractGrapheneTest {
 
     private JQueryLocator phaseListenerFormat = jq("div#phasesPanel li:eq({0})");
 

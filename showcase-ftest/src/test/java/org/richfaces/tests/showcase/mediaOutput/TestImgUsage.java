@@ -37,14 +37,14 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory;
 import org.jboss.arquillian.ajocado.utils.URLUtils;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestImgUsage extends AbstractAjocadoTest {
+public class TestImgUsage extends AbstractGrapheneTest {
 
     /* *******************************************************************************************************
      * Locators ****************************************************************** *************************************

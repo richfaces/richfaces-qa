@@ -47,7 +47,7 @@ import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
@@ -58,7 +58,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22963 $
  */
-public class TestRichTab extends AbstractAjocadoTest {
+public class TestRichTab extends AbstractGrapheneTest {
 
     private static final JQueryLocator PHASE_FORMAT = jq("div#phasesPanel li:eq({0})");
     private static final String ACTION_LOG = "* action invoked";

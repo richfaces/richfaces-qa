@@ -34,14 +34,14 @@ import java.net.URL;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22691 $
  */
-public class TestRegionSimple extends AbstractAjocadoTest {
+public class TestRegionSimple extends AbstractGrapheneTest {
 
     JQueryLocator nameInput = pjq("input:text[id$=user2NameInput]");
     JQueryLocator emailInput = pjq("input:text[id$=user2EmailInput]");

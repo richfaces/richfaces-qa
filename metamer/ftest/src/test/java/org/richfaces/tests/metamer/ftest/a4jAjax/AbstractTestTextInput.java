@@ -37,7 +37,7 @@ import javax.faces.event.PhaseId;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 
 /**
  * Abstract test case for testing h:inputText, h:inputSecret and h:inputTextarea with a4j:ajax.
@@ -45,7 +45,7 @@ import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22054 $
  */
-public abstract class AbstractTestTextInput extends AbstractAjocadoTest {
+public abstract class AbstractTestTextInput extends AbstractGrapheneTest {
 
     private JQueryLocator output1 = pjq("div[id$=output1]");
     private JQueryLocator output2 = pjq("div[id$=output2]");

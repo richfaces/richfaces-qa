@@ -30,14 +30,14 @@ import java.util.Set;
 
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestToolBar extends AbstractAjocadoTest {
+public class TestToolBar extends AbstractGrapheneTest {
 
     /* **********************************************************************
      * Constants **********************************************************************

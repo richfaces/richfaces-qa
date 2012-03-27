@@ -40,7 +40,7 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 /**
@@ -49,7 +49,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22054 $
  */
-public class TestHSelectManyCheckbox extends AbstractAjocadoTest {
+public class TestHSelectManyCheckbox extends AbstractGrapheneTest {
 
     private JQueryLocator input = pjq("table[id$=selectManyCheckbox] input[value=Audi]");
     private JQueryLocator output1 = pjq("span[id$=output1]");

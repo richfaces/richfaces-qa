@@ -35,7 +35,7 @@ import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.jboss.arquillian.ajocado.locator.frame.FrameIndexLocator;
 import org.jboss.arquillian.ajocado.locator.frame.FrameRelativeLocator;
 import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -47,7 +47,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision$
  */
-public class TestRichEditor extends AbstractAjocadoTest {
+public class TestRichEditor extends AbstractGrapheneTest {
 
     private JQueryLocator editor = pjq("span[id$=editor:inp]");
     private JQueryLocator editorTextArea = pjq("textarea[id$=editor:inp]");

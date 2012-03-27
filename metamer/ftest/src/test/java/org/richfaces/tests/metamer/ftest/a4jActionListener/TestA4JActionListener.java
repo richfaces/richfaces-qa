@@ -33,7 +33,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
@@ -44,7 +44,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22470 $
  */
-public class TestA4JActionListener extends AbstractAjocadoTest {
+public class TestA4JActionListener extends AbstractGrapheneTest {
 
     private JQueryLocator invokeButtonType = pjq("input[id$=invokeByTypeButton]");
     private JQueryLocator invokeButtonBinding = pjq("input[id$=invokeByBindingButton]");

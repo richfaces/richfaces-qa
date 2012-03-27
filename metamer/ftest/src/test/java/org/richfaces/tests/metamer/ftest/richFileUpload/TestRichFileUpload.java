@@ -33,7 +33,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 /**
@@ -42,7 +42,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22733 $
  */
-public class TestRichFileUpload extends AbstractAjocadoTest {
+public class TestRichFileUpload extends AbstractGrapheneTest {
 
     private JQueryLocator fileUpload = pjq("div[id$=fileUpload]");
     private JQueryLocator input = pjq("input.rf-fu-inp:nth-child({0})");

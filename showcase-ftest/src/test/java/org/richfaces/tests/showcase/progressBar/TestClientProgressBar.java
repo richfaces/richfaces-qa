@@ -33,7 +33,7 @@ import java.util.List;
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.retrievers.AttributeRetriever;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 import org.jboss.arquillian.ajocado.waiting.WaitTimeoutException;
 
@@ -41,7 +41,7 @@ import org.jboss.arquillian.ajocado.waiting.WaitTimeoutException;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestClientProgressBar extends AbstractAjocadoTest {
+public class TestClientProgressBar extends AbstractGrapheneTest {
 
     /* **************************************************************************
      * Constants****************************************************************************

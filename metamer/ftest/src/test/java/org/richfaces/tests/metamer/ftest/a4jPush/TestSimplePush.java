@@ -36,7 +36,7 @@ import java.util.List;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -44,7 +44,7 @@ import org.testng.annotations.Test;
  * Test for simple push example faces/components/a4jPush/simple.xhtml
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  */
-public class TestSimplePush extends AbstractAjocadoTest {
+public class TestSimplePush extends AbstractGrapheneTest {
 
     protected JQueryLocator messagePanel = pjq("div[id$=messagePanel]");
     protected JQueryLocator timestamp = messagePanel.getDescendant(jq(" div > span.timestamp"));

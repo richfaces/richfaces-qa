@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.annotations.BeforeClass;
 
 /**
@@ -40,7 +40,7 @@ import org.testng.annotations.BeforeClass;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision: 22997 $
  */
-public abstract class AbstractValidatorsTest extends AbstractAjocadoTest {
+public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
 
     private enum ID {
         /** Boolean, true */

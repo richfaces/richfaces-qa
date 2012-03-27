@@ -48,7 +48,7 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
@@ -57,7 +57,7 @@ import org.testng.annotations.Test;
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  */
-public class TestRichSelect extends AbstractAjocadoTest {
+public class TestRichSelect extends AbstractGrapheneTest {
 
     private JQueryLocator select = pjq("div[id$=select]");
     private JQueryLocator input = pjq("input.rf-sel-inp[id$=selectInput]");

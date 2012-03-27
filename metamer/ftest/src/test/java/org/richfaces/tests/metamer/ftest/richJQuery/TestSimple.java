@@ -46,7 +46,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.cheiron.retriever.ColorRetriever;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 
@@ -54,7 +54,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22746 $
  */
-public class TestSimple extends AbstractAjocadoTest {
+public class TestSimple extends AbstractGrapheneTest {
 
     JQueryLocator button = jq("#jQueryTestButton");
     JQueryLocator rebind = jq("#rebindOneClickButton");

@@ -32,7 +32,7 @@ import static org.testng.Assert.assertFalse;
 
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.cheiron.halt.XHRHalter;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueModel;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueModel.Input;
 
@@ -40,7 +40,7 @@ import org.richfaces.tests.metamer.ftest.a4jQueue.QueueModel.Input;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public abstract class AbstractAttachQueueTest extends AbstractAjocadoTest {
+public abstract class AbstractAttachQueueTest extends AbstractGrapheneTest {
 
     protected static final Long GLOBAL_DELAY = 10000L;
     protected static final Long DELAY_A = 3000L;

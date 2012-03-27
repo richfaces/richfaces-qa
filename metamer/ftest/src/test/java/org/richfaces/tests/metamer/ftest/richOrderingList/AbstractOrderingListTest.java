@@ -28,7 +28,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.attributes.Attributes;
 import org.richfaces.tests.metamer.ftest.model.OrderingList;
 
@@ -37,7 +37,7 @@ import org.richfaces.tests.metamer.ftest.model.OrderingList;
  *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public abstract class AbstractOrderingListTest extends AbstractAjocadoTest {
+public abstract class AbstractOrderingListTest extends AbstractGrapheneTest {
 
     private OrderingList orderingList = new OrderingList();
 

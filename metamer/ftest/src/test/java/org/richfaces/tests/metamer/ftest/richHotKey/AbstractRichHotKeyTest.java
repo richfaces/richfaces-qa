@@ -35,13 +35,13 @@ import java.util.List;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.test.selenium.waiting.NegationCondition;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.attributes.Attributes;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public abstract class AbstractRichHotKeyTest extends AbstractAjocadoTest {
+public abstract class AbstractRichHotKeyTest extends AbstractGrapheneTest {
 
     protected static final String INPUT_1_LOCATOR = "input.first-input";
     protected static final String INPUT_2_LOCATOR = "input.second-input";

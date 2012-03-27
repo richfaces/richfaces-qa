@@ -26,13 +26,13 @@ import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public abstract class AbstractClientValidationTest extends AbstractAjocadoTest {
+public abstract class AbstractClientValidationTest extends AbstractGrapheneTest {
 
     /* *********************************************************************************************************************
      * Locators ******************************************************************

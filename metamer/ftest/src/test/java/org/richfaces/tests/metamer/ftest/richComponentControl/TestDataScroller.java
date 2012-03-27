@@ -25,7 +25,7 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.richDataScroller.PaginationTester;
@@ -37,7 +37,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22797 $
  */
-public class TestDataScroller extends AbstractAjocadoTest {
+public class TestDataScroller extends AbstractGrapheneTest {
 
     ComponentControlDataScroller dataScroller = new ComponentControlDataScroller();
 

@@ -28,7 +28,7 @@ import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.Indi
 
 import org.jboss.arquillian.ajocado.actions.Drag;
 import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState;
 import org.testng.annotations.BeforeMethod;
 
@@ -36,7 +36,7 @@ import org.testng.annotations.BeforeMethod;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 21352 $
  */
-public abstract class AbstractDragNDropTest extends AbstractAjocadoTest {
+public abstract class AbstractDragNDropTest extends AbstractGrapheneTest {
 
     protected Draggable drg1 = new Draggable("drg1", jq("[id$=draggable1]"));
     protected Draggable drg2 = new Draggable("drg2", jq("[id$=draggable2]"));

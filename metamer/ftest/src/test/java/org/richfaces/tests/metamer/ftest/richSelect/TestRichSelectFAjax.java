@@ -39,7 +39,7 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 
@@ -49,7 +49,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22493 $
  */
-public class TestRichSelectFAjax extends AbstractAjocadoTest {
+public class TestRichSelectFAjax extends AbstractGrapheneTest {
 
     private JQueryLocator input = pjq("input.rf-sel-inp[id$=selectInput]");
     private JQueryLocator popup = jq("div.rf-sel-lst-cord");

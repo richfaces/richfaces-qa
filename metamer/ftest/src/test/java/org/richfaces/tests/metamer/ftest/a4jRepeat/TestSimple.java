@@ -32,7 +32,7 @@ import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
@@ -44,7 +44,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22683 $
  */
-public class TestSimple extends AbstractAjocadoTest {
+public class TestSimple extends AbstractGrapheneTest {
 
     protected static final int ELEMENTS_TOTAL = 20;
 

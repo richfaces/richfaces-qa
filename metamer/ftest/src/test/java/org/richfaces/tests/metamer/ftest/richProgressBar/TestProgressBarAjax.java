@@ -45,7 +45,7 @@ import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 
@@ -55,7 +55,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22367 $
  */
-public class TestProgressBarAjax extends AbstractAjocadoTest {
+public class TestProgressBarAjax extends AbstractGrapheneTest {
 
     private JQueryLocator progressBar = pjq("div[id$=progressBar]");
     private JQueryLocator initialOutput = pjq("div.rf-pb-init > span");

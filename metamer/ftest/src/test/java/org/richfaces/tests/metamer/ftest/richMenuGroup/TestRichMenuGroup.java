@@ -40,7 +40,7 @@ import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 import org.richfaces.tests.metamer.ftest.richMenuItem.MenuItemAttributes;
@@ -51,7 +51,7 @@ import org.richfaces.tests.metamer.ftest.richMenuItem.MenuItemAttributes;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 23122 $
  */
-public class TestRichMenuGroup extends AbstractAjocadoTest {
+public class TestRichMenuGroup extends AbstractGrapheneTest {
 
     private JQueryLocator fileMenu = pjq("div[id$=menu1]");
     private JQueryLocator fileMenuLabel = pjq("div[id$=menu1_label]");
