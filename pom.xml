@@ -71,6 +71,7 @@
         <openshift.namespace>richfacesqa</openshift.namespace>
         <openshift.application>ftest</openshift.application>
         <openshift.ssh.user>dc5eed1b78e64b4db3be3c67b2d64cb7</openshift.ssh.user>
+        <openshift.identity.file></openshift.identity.file>
 
     </properties>
 
@@ -890,7 +891,7 @@
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>openshift</arquillian.launch>
-                                <openshift.identity.file>${basedir}/src/test/resources/ssh/openshift-express-id_rsa</openshift.identity.file>
+                                <openshift.identity.file>${openshift.identity.file}</openshift.identity.file>
                             </systemProperties>
                             <systemPropertyVariables>
                                 <openshift.password>${openshift.password}</openshift.password>
