@@ -5,8 +5,8 @@ How to run tests:
 
 The tests can be run from command line with this command, assuming that your current directory is the directory with showcase-ftests:
 
-**mvn clean verify -PnameOfTheProfile [-Dtest=nameOfTheTest] [-Dshowcase.classifier=classifier] [-Darquillian.launch=whichSettingsForContainer] [-Dtomcat6Zip=path/to/your/tomcat6/zip]
-[-Dtomcat7Zip=path/to/your/tomcat7/zip]**
+$mvn clean verify -PnameOfTheProfile [-Dtest=nameOfTheTest] [-Dshowcase.classifier=classifier] [-Darquillian.launch=whichSettingsForContainer] [-Dtomcat6Zip=path/to/your/tomcat6/zip]
+[-Dtomcat7Zip=path/to/your/tomcat7/zip]
 
 - `nameOfTheProfile` - for example jbossas-managed-6, all profiles can be found in pom.xml
 
