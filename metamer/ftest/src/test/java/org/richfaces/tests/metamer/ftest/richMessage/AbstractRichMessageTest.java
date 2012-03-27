@@ -21,12 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richMessage;
 
-import static org.jboss.arquillian.ajocado.Ajocado.attributeEquals;
-import static org.jboss.arquillian.ajocado.Ajocado.elementNotPresent;
-import static org.jboss.arquillian.ajocado.Ajocado.elementPresent;
-import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
-import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
+import static org.jboss.arquillian.ajocado.Graphene.attributeEquals;
+import static org.jboss.arquillian.ajocado.Graphene.elementNotPresent;
+import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
+import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.waitModel;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.basicAttributes;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.messageAttributes;

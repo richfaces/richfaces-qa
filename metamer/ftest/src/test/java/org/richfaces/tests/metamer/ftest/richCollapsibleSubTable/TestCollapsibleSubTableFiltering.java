@@ -22,7 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
 import static org.apache.commons.lang.StringUtils.isBlank;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 

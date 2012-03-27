@@ -21,11 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.functions;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
+import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
-import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
-import static org.jboss.arquillian.ajocado.Ajocado.elementPresent;
+import static org.jboss.arquillian.ajocado.Graphene.waitModel;
+import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
 
 import java.awt.event.KeyEvent;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;

@@ -21,10 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.progressBar;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveAttribute;
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveAttribute;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.testng.Assert.fail;
 
 import java.util.ArrayList;

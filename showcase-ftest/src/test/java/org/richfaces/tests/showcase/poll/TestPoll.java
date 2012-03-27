@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.poll;
 
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertFalse;
 

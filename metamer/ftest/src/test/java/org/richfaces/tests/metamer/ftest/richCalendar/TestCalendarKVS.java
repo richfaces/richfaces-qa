@@ -21,7 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.calendarAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;

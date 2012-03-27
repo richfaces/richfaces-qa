@@ -21,10 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richInplaceSelect;
 
-import static org.jboss.arquillian.ajocado.Ajocado.attributeEquals;
-import static org.jboss.arquillian.ajocado.Ajocado.attributePresent;
-import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.attributeEquals;
+import static org.jboss.arquillian.ajocado.Graphene.attributePresent;
+import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 
 import org.jboss.arquillian.ajocado.dom.Attribute;

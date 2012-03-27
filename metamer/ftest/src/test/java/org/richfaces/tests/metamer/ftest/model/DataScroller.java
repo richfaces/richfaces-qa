@@ -22,7 +22,7 @@
 
 package org.richfaces.tests.metamer.ftest.model;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.test.selenium.locator.reference.ReferencedLocator.ref;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 

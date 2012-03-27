@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dragDrop;
 
-import static org.jboss.arquillian.ajocado.Ajocado.elementNotPresent;
-import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
+import static org.jboss.arquillian.ajocado.Graphene.elementNotPresent;
+import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;

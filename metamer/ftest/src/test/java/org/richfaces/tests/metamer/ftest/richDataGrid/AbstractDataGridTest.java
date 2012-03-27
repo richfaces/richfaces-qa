@@ -24,7 +24,7 @@ package org.richfaces.tests.metamer.ftest.richDataGrid;
 import static java.lang.Math.ceil;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
+import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 
 import static org.testng.Assert.assertEquals;

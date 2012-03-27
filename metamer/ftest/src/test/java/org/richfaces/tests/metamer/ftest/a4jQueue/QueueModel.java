@@ -21,9 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jQueue;
 
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveAttribute;
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveAttribute;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
 
 import static org.jboss.arquillian.ajocado.dom.Event.KEYPRESS;
 

@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.jquery;
 
-import static org.jboss.arquillian.ajocado.Ajocado.styleEquals;
-import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
+import static org.jboss.arquillian.ajocado.Graphene.styleEquals;
+import static org.jboss.arquillian.ajocado.Graphene.waitModel;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
 

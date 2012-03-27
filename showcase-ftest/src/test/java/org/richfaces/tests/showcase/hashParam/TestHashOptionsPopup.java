@@ -23,8 +23,8 @@ package org.richfaces.tests.showcase.hashParam;
 
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
-import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
-import static org.jboss.arquillian.ajocado.Ajocado.elementPresent;
+import static org.jboss.arquillian.ajocado.Graphene.waitModel;
+import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
 
 import org.jboss.arquillian.ajocado.css.CssProperty;
 import org.jboss.arquillian.ajocado.dom.Attribute;

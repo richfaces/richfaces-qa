@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.poll;
 
-import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
+import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
 import static org.testng.Assert.assertTrue;
 
 import java.sql.Time;
