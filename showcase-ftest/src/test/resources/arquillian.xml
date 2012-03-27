@@ -92,7 +92,7 @@
 
     <extension qualifier="graphene">
         <property name="browser">*firefox</property>
-        <property name="seleniumTimeoutAjax">7000</property>
+        <property name="seleniumTimeoutAjax">20000</property>
         <property name="seleniumMaximize">true</property>
         <property name="seleniumPort">8444</property>
         <property name="seleniumHost">localhost</property>
