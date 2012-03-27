@@ -22,14 +22,13 @@
 package org.richfaces.tests.metamer.ftest;
 
 import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
-
 import static org.testng.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.jboss.arquillian.ajocado.framework.AjocadoConfigurationContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneConfigurationContext;
 
 
 
@@ -91,7 +90,7 @@ public abstract class DelayTester {
         long deviation = Math.abs(expectedDelay - actualDelay);
         long maxDelay = getMaximumSingleDeviation();
 
-        if (AjocadoConfigurationContext.getProxy().isSeleniumDebug()) {
+        if (GrapheneConfigurationContext.getProxy().isSeleniumDebug()) {
             System.out.println(format("deviation for preset delay {0}: {1} (delay {2})", expectedDelay, deviation, actualDelay));
         }
 
@@ -104,7 +103,7 @@ public abstract class DelayTester {
     private void checkDeviationMedian() {
         long maximumDeviationMedian = getMaximumDeviationMedian();
         long deviationMedian = getMedian(deviations);
-        if (AjocadoConfigurationContext.getProxy().isSeleniumDebug()) {
+        if (GrapheneConfigurationContext.getProxy().isSeleniumDebug()) {
             System.out.println("deviationMedian: " + deviationMedian);
         }
         assertTrue(

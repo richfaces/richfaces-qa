@@ -31,7 +31,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.ajocado.framework.AjocadoConfigurationContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneConfigurationContext;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
@@ -139,7 +139,7 @@ public class TestPollInterval extends AbstractGrapheneTest {
         long runTime = getClientTime() - startTime;
         long deviation = Math.abs(interval - runTime);
 
-        if (AjocadoConfigurationContext.getProxy().isSeleniumDebug()) {
+        if (GrapheneConfigurationContext.getProxy().isSeleniumDebug()) {
             System.out.println(format("deviation for interval {0}: {1}", interval, deviation));
         }
 
@@ -154,7 +154,7 @@ public class TestPollInterval extends AbstractGrapheneTest {
         long maximumAvgDeviation = Math.max(300, Math.min(interval / 3, 1000));
         long averageDeviation = deviationTotal / deviationCount;
 
-        if (AjocadoConfigurationContext.getProxy().isSeleniumDebug()) {
+        if (GrapheneConfigurationContext.getProxy().isSeleniumDebug()) {
             System.out.println("averageDeviation: " + averageDeviation);
         }
         assertTrue(
