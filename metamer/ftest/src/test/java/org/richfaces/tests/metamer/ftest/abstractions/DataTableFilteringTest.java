@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 
 import static org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory.optionValue;
 

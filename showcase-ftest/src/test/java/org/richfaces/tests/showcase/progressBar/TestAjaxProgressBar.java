@@ -21,11 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.progressBar;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.fail;
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,14 +33,14 @@ import java.util.List;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.WaitTimeoutException;
 import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestAjaxProgressBar extends AbstractAjocadoTest {
+public class TestAjaxProgressBar extends AbstractGrapheneTest {
 
     /* ***************************************************************************
      * Constants ***************************************************************** **********

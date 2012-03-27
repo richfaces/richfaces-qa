@@ -31,10 +31,10 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.ajocado.framework.AjocadoConfigurationContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneConfigurationContext;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
@@ -48,7 +48,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22681 $
  */
-public class TestPollInterval extends AbstractAjocadoTest {
+public class TestPollInterval extends AbstractGrapheneTest {
 
     private static final int ITERATION_COUNT = 5;
 
@@ -139,7 +139,7 @@ public class TestPollInterval extends AbstractAjocadoTest {
         long runTime = getClientTime() - startTime;
         long deviation = Math.abs(interval - runTime);
 
-        if (AjocadoConfigurationContext.getProxy().isSeleniumDebug()) {
+        if (GrapheneConfigurationContext.getProxy().isSeleniumDebug()) {
             System.out.println(format("deviation for interval {0}: {1}", interval, deviation));
         }
 
@@ -154,7 +154,7 @@ public class TestPollInterval extends AbstractAjocadoTest {
         long maximumAvgDeviation = Math.max(300, Math.min(interval / 3, 1000));
         long averageDeviation = deviationTotal / deviationCount;
 
-        if (AjocadoConfigurationContext.getProxy().isSeleniumDebug()) {
+        if (GrapheneConfigurationContext.getProxy().isSeleniumDebug()) {
             System.out.println("averageDeviation: " + averageDeviation);
         }
         assertTrue(

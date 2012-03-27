@@ -22,10 +22,10 @@
 package org.richfaces.tests.metamer.ftest.a4jJSFunction;
 
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.jsFunctionAttributes;
-import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
@@ -42,7 +42,7 @@ import javax.faces.event.PhaseId;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
@@ -52,7 +52,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 21420 $
  */
-public class TestJSFunctionSimple extends AbstractAjocadoTest {
+public class TestJSFunctionSimple extends AbstractGrapheneTest {
 
     private JQueryLocator link = pjq("a[id$=callFunctionLink]");
     private JQueryLocator time1 = pjq("span[id$=time1]");

@@ -26,14 +26,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.richfaces.tests.metamer.bean.Model;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.model.Autocomplete;
 import org.richfaces.tests.metamer.model.Capital;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public abstract class AbstractAutocompleteTest extends AbstractAjocadoTest {
+public abstract class AbstractAutocompleteTest extends AbstractGrapheneTest {
 
     Autocomplete autocomplete = new Autocomplete();
     List<Capital> capitals = Model.unmarshallCapitals();

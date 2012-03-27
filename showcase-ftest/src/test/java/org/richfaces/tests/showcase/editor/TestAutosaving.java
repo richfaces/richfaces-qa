@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.editor;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
@@ -29,14 +29,14 @@ import static org.testng.Assert.fail;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.frame.FrameIndexLocator;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestAutosaving extends AbstractAjocadoTest {
+public class TestAutosaving extends AbstractGrapheneTest {
 
     JQueryLocator outputFromEditor = jq(".rf-p-b");
     JQueryLocator editorArea = jq("body.rf-ed-b");

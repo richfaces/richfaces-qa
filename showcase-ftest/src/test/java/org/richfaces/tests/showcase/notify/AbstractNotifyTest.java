@@ -21,18 +21,18 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.notify;
 
-import static org.jboss.arquillian.ajocado.Ajocado.elementNotPresent;
-import static org.jboss.arquillian.ajocado.Ajocado.elementPresent;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.elementNotPresent;
+import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc and Juraj Huska</a>
  */
-public class AbstractNotifyTest extends AbstractAjocadoTest {
+public class AbstractNotifyTest extends AbstractGrapheneTest {
 
     /* *********************************************************************
      * Locators*********************************************************************

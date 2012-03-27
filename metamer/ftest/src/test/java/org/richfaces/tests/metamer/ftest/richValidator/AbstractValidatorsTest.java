@@ -21,8 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richValidator;
 
-import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.textEquals;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.annotations.BeforeClass;
 
 /**
@@ -39,7 +40,7 @@ import org.testng.annotations.BeforeClass;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision: 22997 $
  */
-public abstract class AbstractValidatorsTest extends AbstractAjocadoTest {
+public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
 
     private enum ID {
         /** Boolean, true */
@@ -119,7 +120,7 @@ public abstract class AbstractValidatorsTest extends AbstractAjocadoTest {
         wrongValue.put(ID.regexp, "@@@");
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
-        long offset = 24 * 60 * 60 * 1000; // more than 24 hours to get correct past date
+        long offset = 3 * 24 * 60 * 60 * 1000; // more than 24 hours to get correct past date
         wrongValue.put(ID.past, sdf.format(new Date(System.currentTimeMillis() + offset)));
         wrongValue.put(ID.future, sdf.format(new Date(System.currentTimeMillis() - offset)));
 
@@ -361,7 +362,7 @@ public abstract class AbstractValidatorsTest extends AbstractAjocadoTest {
 
         // date input past
         selenium.type(inputFormat.format(ID.past), wrongValue.get(ID.past).toString());
-        selenium.click(a4jCommandBtn);
+        guardXhr(selenium).click(a4jCommandBtn);
 
         waitGui.until(textEquals.locator(msgFormat.format(ID.past)).text(messages.get(ID.past)));
     }

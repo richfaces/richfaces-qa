@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.calendar;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
 import org.testng.annotations.Test;

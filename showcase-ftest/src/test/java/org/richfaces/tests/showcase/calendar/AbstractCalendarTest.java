@@ -24,19 +24,19 @@ package org.richfaces.tests.showcase.calendar;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
-import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
-import static org.jboss.arquillian.ajocado.Ajocado.elementPresent;
+import static org.jboss.arquillian.ajocado.Graphene.waitModel;
+import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
 
 import java.util.HashSet;
 import java.util.Set;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class AbstractCalendarTest extends AbstractAjocadoTest {
+public class AbstractCalendarTest extends AbstractGrapheneTest {
 
     /* ******************************************************************
      * Locators******************************************************************

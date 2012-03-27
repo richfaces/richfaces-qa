@@ -30,9 +30,9 @@ import javax.imageio.ImageIO;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.jboss.arquillian.ajocado.browser.BrowserType;
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
-import org.jboss.arquillian.ajocado.framework.AjocadoConfigurationContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneConfigurationContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.network.NetworkTrafficType;
 import org.jboss.test.selenium.utils.testng.TestInfo;
 import org.jboss.test.selenium.utils.testng.TestLoggingUtils;
@@ -53,13 +53,14 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
 
     protected File mavenProjectBuildDirectory = new File(System.getProperty("maven.project.build.directory", "./target/"));
     protected File failuresOutputDir = new File(mavenProjectBuildDirectory, "failures");
-    private AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    private GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
     @Override
     public void onStart(ITestContext testContext) {
         try {
             FileUtils.forceMkdir(failuresOutputDir);
-            FileUtils.cleanDirectory(failuresOutputDir);
+            // FIXME it should clean directory only if it is the first test suite
+            // FileUtils.cleanDirectory(failuresOutputDir);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -117,7 +118,7 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
             traffic = ExceptionUtils.getFullStackTrace(e);
         }
 
-        BrowserType browser = AjocadoConfigurationContext.getProxy().getBrowser().getType();
+        BrowserType browser = GrapheneConfigurationContext.getProxy().getBrowser().getType();
         BufferedImage screenshot = null;
 
         if (browser == BrowserType.FIREFOX) {

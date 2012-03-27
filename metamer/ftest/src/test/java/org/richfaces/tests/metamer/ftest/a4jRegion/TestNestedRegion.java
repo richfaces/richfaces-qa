@@ -30,7 +30,7 @@ import static org.testng.Assert.assertEquals;
 import java.net.URL;
 import java.util.EnumSet;
 
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.a4jRegion.NestedRegionModel.Component;
 import org.richfaces.tests.metamer.ftest.a4jRegion.NestedRegionModel.Execute;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
@@ -42,7 +42,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22614 $
  */
-public class TestNestedRegion extends AbstractAjocadoTest {
+public class TestNestedRegion extends AbstractGrapheneTest {
 
     NestedRegionModel model = new NestedRegionModel();
 

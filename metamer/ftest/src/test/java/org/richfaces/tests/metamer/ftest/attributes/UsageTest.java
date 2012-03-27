@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.attributes;
 
-import static org.jboss.arquillian.ajocado.Ajocado.elementNotVisible;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.elementNotVisible;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
@@ -36,12 +36,12 @@ import java.net.URL;
 import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.component.Positioning;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.richTooltip.TooltipModel;
 import org.testng.annotations.Test;
 
 
-public class UsageTest extends AbstractAjocadoTest {
+public class UsageTest extends AbstractGrapheneTest {
 
     JQueryLocator panel = pjq("div[id$=panel]");
     TooltipModel tooltip = new TooltipModel(jq(".rf-tt"), panel);

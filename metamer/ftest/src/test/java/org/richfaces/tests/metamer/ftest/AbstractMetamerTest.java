@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest;
 
-import static org.jboss.arquillian.ajocado.Ajocado.id;
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.id;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.javascript.JavaScript.js;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 

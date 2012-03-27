@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richDataScroller;
 
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
-import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.waitModel;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
@@ -39,7 +39,7 @@ import java.util.Arrays;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
@@ -54,7 +54,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 @Use(field = "scroller", value = { "scrollerOutsideTable", "scrollerInsideTable" })
-public class TestDataScrollerAttributes extends AbstractAjocadoTest {
+public class TestDataScrollerAttributes extends AbstractGrapheneTest {
 
     private final Attributes<DataScrollerAttributes> attributes = new Attributes<DataScrollerAttributes>(
         pjq("table[id$='attributes']"));

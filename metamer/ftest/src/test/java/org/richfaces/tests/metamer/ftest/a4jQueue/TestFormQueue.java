@@ -28,7 +28,7 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 
 import org.jboss.cheiron.halt.XHRHalter;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueModel.Input;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.attributes.Attributes;
@@ -41,7 +41,7 @@ import org.testng.annotations.Test;
  */
 // https://issues.jboss.org/browse/RF-9430
 @Templates("plain")
-public class TestFormQueue extends AbstractAjocadoTest {
+public class TestFormQueue extends AbstractGrapheneTest {
 
     static final Long GLOBAL_DELAY = 10000L;
     static final Long DELAY_A = 3000L;

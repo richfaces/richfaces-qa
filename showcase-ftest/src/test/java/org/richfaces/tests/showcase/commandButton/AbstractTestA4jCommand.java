@@ -23,14 +23,14 @@ package org.richfaces.tests.showcase.commandButton;
 
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class AbstractTestA4jCommand extends AbstractAjocadoTest {
+public class AbstractTestA4jCommand extends AbstractGrapheneTest {
 
     /* *********************************************************************
      * Locators*********************************************************************

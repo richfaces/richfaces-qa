@@ -23,7 +23,7 @@ package org.richfaces.tests.showcase.treeAdaptors;
 
 import static org.testng.Assert.assertTrue;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
+import static org.jboss.arquillian.ajocado.Graphene.waitModel;
 
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;

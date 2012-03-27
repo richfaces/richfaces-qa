@@ -10,7 +10,6 @@
         </groups>
 
         <packages>
-            <package name="org.richfaces.tests.metamer.ftest.hCommandButton" />
             <package name="org.richfaces.tests.metamer.ftest.richComponentControl" />
             <package name="org.richfaces.tests.metamer.ftest.richContextMenu" />
             <package name="org.richfaces.tests.metamer.ftest.richDropDownMenu" />

@@ -45,7 +45,8 @@ public class TestA4jPollSimple extends AbstractWebDriverTest<PollPage> {
 
     }
 
-    @Test
+    // https://issues.jboss.org/browse/RF-11871
+    @Test(groups = {"4.3"})
     public void testUpdates() {
         for (int i=0; i<2; i++) {
             String before = getPage().getDate().getText();

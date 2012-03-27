@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.contextMenu;
 
-import static org.jboss.arquillian.ajocado.Ajocado.elementVisible;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
@@ -30,13 +30,13 @@ import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class AbstractContextMenuTest extends AbstractAjocadoTest {
+public class AbstractContextMenuTest extends AbstractGrapheneTest {
 
     protected final int TOLERANCE = 2;
 

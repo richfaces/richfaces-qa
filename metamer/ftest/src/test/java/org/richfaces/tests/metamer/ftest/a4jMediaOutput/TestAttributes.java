@@ -20,9 +20,9 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jMediaOutput;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.mediaOutputAttributes;
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.mediaOutputAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -31,7 +31,6 @@ import java.net.URL;
 
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.testng.annotations.Test;
 

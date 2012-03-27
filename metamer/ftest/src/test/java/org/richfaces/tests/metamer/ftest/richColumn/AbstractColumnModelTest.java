@@ -24,7 +24,7 @@ package org.richfaces.tests.metamer.ftest.richColumn;
 import java.util.List;
 
 import org.richfaces.tests.metamer.bean.Model;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.model.Capital;
 import org.testng.annotations.BeforeMethod;
 
@@ -32,7 +32,7 @@ import org.testng.annotations.BeforeMethod;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22738 $
  */
-public abstract class AbstractColumnModelTest extends AbstractAjocadoTest {
+public abstract class AbstractColumnModelTest extends AbstractGrapheneTest {
 
     protected ColumnModel model = new ColumnModel("richDataTable", pjq("table.rf-dt[id$=richDataTable]"));
 

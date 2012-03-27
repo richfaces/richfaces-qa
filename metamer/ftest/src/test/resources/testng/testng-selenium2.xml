@@ -1,0 +1,18 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="seleniumTest">
+
+    <test name="selenium 2 tests">
+        <groups>
+            <run>
+                <exclude name="4.3" />
+                <exclude name="4.Future" />
+            </run>
+        </groups>
+
+        <classes>
+            <class name="org.richfaces.tests.metamer.ftest.richFileUpload.TestRichFileUploadSe2" />
+        </classes>
+    </test>
+
+</suite>
+

@@ -21,13 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest;
 
-import static org.jboss.arquillian.ajocado.Ajocado.alertPresent;
-import static org.jboss.arquillian.ajocado.Ajocado.elementPresent;
-import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.arquillian.ajocado.Ajocado.id;
-import static org.jboss.arquillian.ajocado.Ajocado.jq;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.alertPresent;
+import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
+import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.id;
+import static org.jboss.arquillian.ajocado.Graphene.jq;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 
 import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
@@ -79,7 +79,7 @@ import org.testng.annotations.BeforeMethod;
  * @version $Revision: 22749 $
  */
 @RunAsClient
-public abstract class AbstractAjocadoTest extends AbstractMetamerTest {
+public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
 
     @Drone
     protected AjaxSelenium selenium;
@@ -447,7 +447,7 @@ public abstract class AbstractAjocadoTest extends AbstractMetamerTest {
             for (T inputValue : getInputValues()) {
                 doRequest(inputValue);
                 verifyResponse(inputValue);
-                AbstractAjocadoTest.this.rerenderAll();
+                AbstractGrapheneTest.this.rerenderAll();
                 verifyResponse(inputValue);
             }
         }
@@ -456,7 +456,7 @@ public abstract class AbstractAjocadoTest extends AbstractMetamerTest {
             for (T inputValue : getInputValues()) {
                 doRequest(inputValue);
                 verifyResponse(inputValue);
-                AbstractAjocadoTest.this.fullPageRefresh();
+                AbstractGrapheneTest.this.fullPageRefresh();
                 verifyResponse(inputValue);
             }
         }

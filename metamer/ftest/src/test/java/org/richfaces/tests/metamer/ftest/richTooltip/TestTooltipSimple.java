@@ -24,10 +24,10 @@ package org.richfaces.tests.metamer.ftest.richTooltip;
 import static javax.faces.event.PhaseId.APPLY_REQUEST_VALUES;
 import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
-import static org.jboss.arquillian.ajocado.Ajocado.elementNotVisible;
-import static org.jboss.arquillian.ajocado.Ajocado.elementVisible;
-import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.elementNotVisible;
+import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
+import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 
 import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
@@ -66,7 +66,7 @@ import org.jboss.test.selenium.javascript.JQueryScript;
 import org.richfaces.TooltipLayout;
 import org.richfaces.TooltipMode;
 import org.richfaces.component.Positioning;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.DelayTester;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
@@ -80,7 +80,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22733 $
  */
-public class TestTooltipSimple extends AbstractAjocadoTest {
+public class TestTooltipSimple extends AbstractGrapheneTest {
 
     private static final int EVENT_OFFSET = 10;
     private static final int PRESET_OFFSET = 5;

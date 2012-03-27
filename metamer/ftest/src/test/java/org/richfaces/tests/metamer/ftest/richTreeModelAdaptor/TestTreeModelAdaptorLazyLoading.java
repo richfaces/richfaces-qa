@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.richTree.TreeModel;
 import org.richfaces.tests.metamer.ftest.richTree.TreeNodeModel;
 import org.testng.annotations.Test;
@@ -47,7 +47,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22753 $
  */
-public class TestTreeModelAdaptorLazyLoading extends AbstractAjocadoTest {
+public class TestTreeModelAdaptorLazyLoading extends AbstractGrapheneTest {
 
     protected TreeModel tree = new TreeModel(pjq("div.rf-tr[id$=richTree]"));
     protected TreeNodeModel treeNode;

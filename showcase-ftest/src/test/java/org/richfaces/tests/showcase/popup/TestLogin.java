@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.popup;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;

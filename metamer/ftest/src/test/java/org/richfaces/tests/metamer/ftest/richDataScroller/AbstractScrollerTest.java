@@ -30,7 +30,7 @@ import static org.testng.Assert.assertFalse;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.model.DataScroller;
@@ -43,7 +43,7 @@ import org.testng.annotations.BeforeMethod;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22740 $
  */
-public abstract class AbstractScrollerTest extends AbstractAjocadoTest {
+public abstract class AbstractScrollerTest extends AbstractGrapheneTest {
 
     @Inject
     @Use(ints = { 2, 3 })

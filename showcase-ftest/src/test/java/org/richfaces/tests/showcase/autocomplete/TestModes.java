@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.autocomplete;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -30,14 +30,14 @@ import static org.testng.Assert.assertTrue;
 import java.awt.event.KeyEvent;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestModes extends AbstractAjocadoTest {
+public class TestModes extends AbstractGrapheneTest {
 
     /* **************************************************************************************
      * Locators**************************************************************************************

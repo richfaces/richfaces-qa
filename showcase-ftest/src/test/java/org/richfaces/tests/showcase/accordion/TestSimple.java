@@ -23,7 +23,7 @@ package org.richfaces.tests.showcase.accordion;
 
 import static org.testng.Assert.assertFalse;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.showcase.panel.AbstractPanelTest;

@@ -39,7 +39,7 @@ import org.testng.annotations.BeforeMethod;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc and Juraj Huska</a>
  * @version $Revision$
  */
-public abstract class AbstractAjocadoTest extends AbstractShowcaseTest {
+public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
 
     @Drone
     protected AjaxSelenium selenium;
@@ -53,7 +53,7 @@ public abstract class AbstractAjocadoTest extends AbstractShowcaseTest {
 
         this.contextRoot = getContextRoot();
 
-        selenium.open(URLUtils.buildUrl(contextRoot, "/showcase/", addition));
+        selenium.open(URLUtils.buildUrl(contextRoot, addition));
     }
 
     /* ***********************************************************************************************************************

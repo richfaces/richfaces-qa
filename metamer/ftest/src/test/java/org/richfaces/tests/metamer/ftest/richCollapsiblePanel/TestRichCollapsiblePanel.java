@@ -21,11 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richCollapsiblePanel;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
-import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 
 import static org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory.optionLabel;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.collapsiblePanelAttributes;
@@ -48,7 +48,7 @@ import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
@@ -60,7 +60,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 23138 $
  */
-public class TestRichCollapsiblePanel extends AbstractAjocadoTest {
+public class TestRichCollapsiblePanel extends AbstractGrapheneTest {
 
     private JQueryLocator panel = pjq("div[id$=collapsiblePanel]");
     private JQueryLocator header = pjq("div[id$=collapsiblePanel:header]");
@@ -170,7 +170,6 @@ public class TestRichCollapsiblePanel extends AbstractAjocadoTest {
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
 
-        String reqTime = selenium.getText(time);
         guardXhr(selenium).click(header);
 
         String[] events = selenium.getEval(new JavaScript("window.metamerEvents")).split(" ");

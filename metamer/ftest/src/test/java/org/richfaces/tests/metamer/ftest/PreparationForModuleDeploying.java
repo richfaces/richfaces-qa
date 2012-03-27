@@ -49,7 +49,7 @@ import org.richfaces.tests.metamer.bean.a4j.A4JCommandLinkBean;
 import org.richfaces.tests.metamer.converter.TemplateNameConverter;
 import org.richfaces.tests.metamer.converter.TemplatesListConverter;
 
-public class PreparationForModuleDeploying extends AbstractAjocadoTest {
+public class PreparationForModuleDeploying extends AbstractGrapheneTest {
 
     /*
      * private final static String[] LIBRARIES = { "org.richfaces.cdk:annotations",

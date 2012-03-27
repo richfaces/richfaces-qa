@@ -21,14 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richMenuItem;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
-import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
-
+import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.menuItemAttributes;
 import static org.richfaces.tests.metamer.ftest.richMenuItem.MenuItemAttributes.bypassUpdates;
@@ -44,7 +42,6 @@ import static org.richfaces.tests.metamer.ftest.richMenuItem.MenuItemAttributes.
 import static org.richfaces.tests.metamer.ftest.richMenuItem.MenuItemAttributes.onbegin;
 import static org.richfaces.tests.metamer.ftest.richMenuItem.MenuItemAttributes.oncomplete;
 import static org.richfaces.tests.metamer.ftest.richMenuItem.MenuItemAttributes.rendered;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotSame;
@@ -60,9 +57,8 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page /faces/components/richMenuItem/simple.xhtml
@@ -70,7 +66,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22768 $
  */
-public class TestRichMenuItem extends AbstractAjocadoTest {
+public class TestRichMenuItem extends AbstractGrapheneTest {
 
     private JQueryLocator fileMenu = pjq("div[id$=menu1]");
     private JQueryLocator fileMenuLabel = pjq("div[id$=menu1_label]");
@@ -79,6 +75,7 @@ public class TestRichMenuItem extends AbstractAjocadoTest {
     private JQueryLocator label = menuItem1.getDescendant(jq("span.rf-ddm-itm-lbl"));
     private JQueryLocator menuItem2 = pjq("div[id$=menuItem2]");
     private JQueryLocator menuGroup3 = pjq("div[id$=menuGroup3]");
+    private JQueryLocator emptyIcon = jq("span.rf-ddm-emptyIcon");
 
     @Override
     public URL getTestUrl() {
@@ -183,8 +180,7 @@ public class TestRichMenuItem extends AbstractAjocadoTest {
 
         assertTrue(selenium.belongsClass(menuItem1, "rf-ddm-itm-dis"),
             "Menu item should have class \"rf-ddm-itm-dis\".");
-        assertTrue(selenium.isElementPresent(menuItem1.getDescendant(jq("div.rf-ddm-emptyIcon"))),
-            "Empty icon should be present.");
+        assertTrue(selenium.isElementPresent(menuItem1.getDescendant(emptyIcon)), "Empty icon should be present.");
         assertFalse(selenium.isElementPresent(image), "Icon should not be present.");
     }
 
@@ -224,7 +220,7 @@ public class TestRichMenuItem extends AbstractAjocadoTest {
         // selenium.select(pjq("select[id$=iconInput]"), optionLabel("null"));
         menuItemAttributes.set(icon, "null");
         assertFalse(selenium.isElementPresent(image), "Icon should not be present.");
-        assertTrue(selenium.isElementPresent(menuItem1.getDescendant(jq("div.rf-ddm-emptyIcon"))),
+        assertTrue(selenium.isElementPresent(menuItem1.getDescendant(emptyIcon)),
             "Empty icon should be present.");
     }
 
@@ -235,7 +231,7 @@ public class TestRichMenuItem extends AbstractAjocadoTest {
         AttributeLocator<?> attr = image.getAttribute(Attribute.SRC);
 
         assertFalse(selenium.isElementPresent(image), "Icon should not be present.");
-        assertTrue(selenium.isElementPresent(menuItem1.getDescendant(jq("div.rf-ddm-emptyIcon"))),
+        assertTrue(selenium.isElementPresent(menuItem1.getDescendant(emptyIcon)),
             "Empty icon should be present.");
 
         // selenium.select(pjq("select[id$=iconDisabledInput]"), optionLabel("star"));

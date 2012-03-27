@@ -21,9 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTreeNode;
 
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveAttribute;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
-import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveAttribute;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.waitModel;
 
 import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
@@ -71,7 +71,7 @@ import org.jboss.arquillian.ajocado.waiting.retrievers.AttributeRetriever;
 import org.jboss.cheiron.halt.XHRHalter;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
 import org.richfaces.component.SwitchType;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.attributes.Attributes;
@@ -86,7 +86,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 23059 $
  */
-public class TestTreeNodeSimple extends AbstractAjocadoTest {
+public class TestTreeNodeSimple extends AbstractGrapheneTest {
 
     private static final String SAMPLE_CLASS = "sample-class";
     private static final String JQ_SAMPLE_CLASS = ".sample-class";

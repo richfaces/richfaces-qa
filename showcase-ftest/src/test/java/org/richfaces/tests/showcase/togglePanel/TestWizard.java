@@ -21,12 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.togglePanel;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.fail;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 import com.thoughtworks.selenium.SeleniumException;
@@ -35,7 +35,7 @@ import com.thoughtworks.selenium.SeleniumException;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestWizard extends AbstractAjocadoTest {
+public class TestWizard extends AbstractGrapheneTest {
 
     /* ***********************************************************************************
      * Constants ***************************************************************** ******************

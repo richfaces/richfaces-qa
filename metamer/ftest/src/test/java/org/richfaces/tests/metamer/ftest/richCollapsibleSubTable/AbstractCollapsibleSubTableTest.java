@@ -30,7 +30,7 @@ import org.jboss.arquillian.ajocado.request.RequestType;
 import org.jboss.test.selenium.GuardRequest;
 import org.richfaces.ExpandMode;
 import org.richfaces.tests.metamer.bean.Model;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.attributes.Attributes;
@@ -47,7 +47,7 @@ import com.google.common.collect.Collections2;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22688 $
  */
-public abstract class AbstractCollapsibleSubTableTest extends AbstractAjocadoTest {
+public abstract class AbstractCollapsibleSubTableTest extends AbstractGrapheneTest {
 
     private static final List<Employee> EMPLOYEES = Model.unmarshallEmployees();
 

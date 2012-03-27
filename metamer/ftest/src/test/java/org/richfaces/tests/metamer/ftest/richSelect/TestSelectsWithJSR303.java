@@ -21,18 +21,18 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richSelect;
 
-import static org.jboss.arquillian.ajocado.Ajocado.attributeEquals;
-import static org.jboss.arquillian.ajocado.Ajocado.attributePresent;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.attributeEquals;
+import static org.jboss.arquillian.ajocado.Graphene.attributePresent;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.textEquals;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.test.selenium.waiting.TextContainsCondition;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 
 /**
  * Test for component with JSF-303 validators
@@ -40,7 +40,7 @@ import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision: 22638 $
  */
-public abstract class TestSelectsWithJSR303 extends AbstractAjocadoTest {
+public abstract class TestSelectsWithJSR303 extends AbstractGrapheneTest {
 
     private static final String WRONG_NOT_EMPTY = "";
     private static final String NOT_EMPTY_VALIDATION_MSG = "may not be empty";

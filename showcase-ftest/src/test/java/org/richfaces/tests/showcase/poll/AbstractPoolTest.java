@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.poll;
 
-import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
+import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
 import static org.testng.Assert.assertTrue;
 
 import java.sql.Time;
@@ -29,13 +29,13 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class AbstractPoolTest extends AbstractAjocadoTest {
+public class AbstractPoolTest extends AbstractGrapheneTest {
 
     /**
      * Initialize GregorianCalendar with time which is give from dateRetriever

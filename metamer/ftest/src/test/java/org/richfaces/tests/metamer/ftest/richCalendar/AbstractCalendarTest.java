@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -36,7 +36,7 @@ import java.util.Date;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 
 /**
  * Abstract test case for calendar.
@@ -44,7 +44,7 @@ import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 21691 $
  */
-public abstract class AbstractCalendarTest extends AbstractAjocadoTest {
+public abstract class AbstractCalendarTest extends AbstractGrapheneTest {
 
     public enum Month {
 

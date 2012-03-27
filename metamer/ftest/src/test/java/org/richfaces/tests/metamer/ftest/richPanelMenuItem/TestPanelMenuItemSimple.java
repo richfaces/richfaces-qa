@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 
-import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
@@ -52,7 +52,7 @@ import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.jboss.arquillian.ajocado.request.RequestType;
 import org.jboss.test.selenium.GuardRequest;
 import org.richfaces.PanelMenuMode;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.checker.IconsChecker;
 import org.richfaces.tests.metamer.ftest.model.PanelMenu;
@@ -64,7 +64,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22751 $
  */
-public class TestPanelMenuItemSimple extends AbstractAjocadoTest {
+public class TestPanelMenuItemSimple extends AbstractGrapheneTest {
 
     private static String sampleImage = "/resources/images/loading.gif";
     private static String chevronDown = "chevronDown";

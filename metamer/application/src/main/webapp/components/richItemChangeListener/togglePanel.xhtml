@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich" >
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2012, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+
+            <h:outputText id="time" value="#{phasesBean.date}">
+                <f:convertDateTime pattern="HH:mm:ss.SSS" />
+            </h:outputText>
+
+            <br/><br/>
+
+            <h:commandLink id="tcLink1" value="Item 1">
+                <rich:toggleControl targetPanel="richTogglePanel" targetItem="item1" />
+            </h:commandLink>
+            <h:outputText value=" | " />
+            <h:commandLink id="tcLink2" value="Item 2">
+                <rich:toggleControl targetPanel="richTogglePanel" targetItem="item2" />
+            </h:commandLink>
+            <h:outputText value=" | " />
+            <h:commandLink id="tcLink3" value="Item 3">
+                <rich:toggleControl targetPanel="richTogglePanel" targetItem="item3" />
+            </h:commandLink>
+
+            <br/>
+            <h:commandLink id="tcFirst" value="First Item">
+                <rich:toggleControl targetPanel="richTogglePanel" targetItem="@first" />
+            </h:commandLink>
+            <h:outputText value=" | " />
+            <h:commandLink id="tcPrev" value="Prev Item">
+                <rich:toggleControl targetPanel="richTogglePanel" targetItem="@prev" />
+            </h:commandLink>
+            <h:outputText value=" | " />
+            <h:commandLink id="tcNext" value="Next Item">
+                <rich:toggleControl targetPanel="richTogglePanel" targetItem="@next" />
+            </h:commandLink>
+            <h:outputText value=" | " />
+            <h:commandLink id="tcLast" value="Last Item">
+                <rich:toggleControl targetPanel="richTogglePanel" targetItem="@last" />
+            </h:commandLink>
+
+            <br/><br/>
+
+            <rich:togglePanel id="richTogglePanel"
+                              itemChangeListener="#{richBean.itemChangeListener}"
+                              >
+                <rich:togglePanelItem id="item1" name="item1">
+                    <p>content of panel 1</p>
+                </rich:togglePanelItem>
+                <rich:togglePanelItem id="item2" name="item2">
+                    <p>content of panel 2</p>
+                </rich:togglePanelItem>
+                <rich:togglePanelItem id="item3" name="item3">
+                    <p>content of panel 3</p>
+                </rich:togglePanelItem>
+                <rich:itemChangeListener type="org.richfaces.tests.metamer.bean.ItemChangeListenerBean"/>
+                <rich:itemChangeListener listener="#{itemChangeListenerBean.processItemChange}"/>
+            </rich:togglePanel>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+        </ui:define>
+
+    </ui:composition>
+</html>

@@ -26,13 +26,13 @@ import static org.testng.Assert.assertTrue;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class AbstractPanelTest extends AbstractAjocadoTest {
+public class AbstractPanelTest extends AbstractGrapheneTest {
 
     /* *********************************************************************************
      * Constants ***************************************************************** *****************
