@@ -32,13 +32,6 @@
     <description>Functional Test for richfaces-archetype-simpleapp</description>
 
     <properties>
-        <!-- arquillian versions -->
-        <arquillian.tomcat.version>1.0.0.CR2</arquillian.tomcat.version>
-        <arquillian.version>1.0.0.CR7</arquillian.version>
-        
-        <!-- version of Selenium -->
-        <selenium.version>2.9.0</selenium.version>
-        
         <!--  Other -->
         <application.target.directory>${basedir}/../apps/richfaces-simpleapp/target</application.target.directory>
         <context.root>http://localhost:8080</context.root>
@@ -50,36 +43,21 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>${selenium.version}</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-chrome-driver</artifactId>
-            <version>${selenium.version}</version>
         </dependency>
         <!-- Arquillian -->
         <dependency>
             <groupId>org.jboss.arquillian.testng</groupId>
             <artifactId>arquillian-testng-container</artifactId>
-            <version>${arquillian.version}</version>
         </dependency>
         <!-- TestNG -->  
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
         </dependency>           
-<!--         <dependency> -->
-<!--             <groupId>org.jboss.arquillian.extension</groupId> -->
-<!--             <artifactId>arquillian-drone-selenium</artifactId> -->
-<!--             <version>${arquillian.drone.version}</version> -->
-<!--             <scope>test</scope> -->
-<!--         </dependency>         -->
-<!--         <dependency> -->
-<!--             <groupId>org.jboss.arquillian.extension</groupId> -->
-<!--             <artifactId>arquillian-drone-webdriver</artifactId> -->
-<!--             <version>${arquillian.drone.version}</version> -->
-<!--             <scope>test</scope> -->
-<!--         </dependency> -->
     </dependencies>
 
     <build>
@@ -105,207 +83,6 @@
     </build>
 
     <profiles>
-        <profile>
-            <id>jbossas-managed-7</id>
-            <properties>
-                <container.groupId>org.jboss.as</container.groupId>
-                <container.artifactId>jboss-as-dist</container.artifactId>
-                <container.version>${version.jbossas7}</container.version>
-                <container.archive.type>zip</container.archive.type>
-                <container.home>${project.build.directory}/jboss-as-${container.version}</container.home>
-                <arquillian.launch>jbossas-managed-7</arquillian.launch>
-                <context.path>richfaces-simpleapp-jee6</context.path>
-                <application.war>${application.target.directory}/richfaces-simpleapp-jee6.war</application.war>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>org.jboss.as</groupId>
-                    <artifactId>jboss-as-arquillian-container-managed</artifactId>
-                    <version>${container.version}</version>
-                </dependency>
-            </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <environmentVariables>
-                                <HTTPStesting>true</HTTPStesting>
-                                <JBOSS_HOME>${container.home}</JBOSS_HOME>
-                            </environmentVariables>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>unpack</id>
-                                <phase>process-test-classes</phase>
-                                <goals>
-                                    <goal>unpack</goal>
-                                </goals>
-                                <configuration>
-                                    <artifactItems>
-                                        <artifactItem>
-                                            <groupId>${container.groupId}</groupId>
-                                            <artifactId>${container.artifactId}</artifactId>
-                                            <version>${container.version}</version>
-                                            <type>${container.archive.type}</type>
-                                            <overWrite>false</overWrite>
-                                            <outputDirectory>${project.build.directory}</outputDirectory>
-                                        </artifactItem>
-                                    </artifactItems>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>tomcat-managed-7</id>
-            <properties>
-                <container.version>${version.tomcat7}</container.version>
-                <container.archive.type>zip</container.archive.type>
-                <container.home>${project.build.directory}/apache-tomcat-${container.version}</container.home>
-                <arquillian.version>1.0.0.CR2</arquillian.version>
-                <arquillian.launch>tomcat-managed-7</arquillian.launch>
-                <context.path>richfaces-simpleapp</context.path>
-                <application.war>${application.target.directory}/richfaces-simpleapp.war</application.war>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>org.jboss.arquillian.container</groupId>
-                    <artifactId>arquillian-tomcat-managed-7</artifactId>
-                    <version>${arquillian.tomcat.version}</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>download tomcat 7</id>
-                                <phase>generate-test-resources</phase>
-                                <configuration>
-                                    <tasks>
-                                        <mkdir dir="${project.build.directory}/downloads" />
-                                        <get src="http://archive.apache.org/dist/tomcat/tomcat-7/v${container.version}/bin/apache-tomcat-${container.version}.${container.archive.type}" dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
-                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${container.version}.${container.archive.type}" dest="${project.build.directory}" overwrite="false" />
-                                    </tasks>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>copy-resources</id>
-                                <phase>process-resources</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <outputDirectory>${container.home}/conf</outputDirectory>
-                                    <overwrite>true</overwrite>
-                                    <resources>
-                                        <resource>
-                                            <directory>${basedir}/src/test/resources/tomcat7</directory>
-                                        </resource>
-                                    </resources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <environmentVariables>
-                                <CATALINA_HOME>${container.home}</CATALINA_HOME>
-                            </environmentVariables>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>tomcat-managed-6</id>
-            <properties>
-                <container.version>${version.tomcat6}</container.version>
-                <container.archive.type>zip</container.archive.type>
-                <container.home>${project.build.directory}/apache-tomcat-${container.version}</container.home>
-                <arquillian.version>1.0.0.CR2</arquillian.version>
-                <arquillian.launch>tomcat-managed-6</arquillian.launch>
-                <context.path>richfaces-simpleapp</context.path>
-                <application.war>${application.target.directory}/richfaces-simpleapp.war</application.war>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>org.jboss.arquillian.container</groupId>
-                    <artifactId>arquillian-tomcat-managed-6</artifactId>
-                    <version>${arquillian.tomcat.version}</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>download tomcat 6</id>
-                                <phase>generate-test-resources</phase>
-                                <configuration>
-                                    <tasks>
-                                        <mkdir dir="${project.build.directory}/downloads" />
-                                        <get src="http://archive.apache.org/dist/tomcat/tomcat-6/v${container.version}/bin/apache-tomcat-${container.version}.${container.archive.type}" dest="${project.build.directory}/downloads" verbose="true" skipexisting="true" />
-                                        <unzip src="${project.build.directory}/downloads/apache-tomcat-${container.version}.${container.archive.type}" dest="${project.build.directory}" overwrite="false" />
-                                    </tasks>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>copy-resources</id>
-                                <phase>process-resources</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <outputDirectory>${container.home}/conf</outputDirectory>
-                                    <overwrite>true</overwrite>
-                                    <resources>
-                                        <resource>
-                                            <directory>${basedir}/src/test/resources/tomcat7</directory>
-                                        </resource>
-                                    </resources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <environmentVariables>
-                                <CATALINA_HOME>${container.home}</CATALINA_HOME>
-                            </environmentVariables>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>  
         <profile>
             <id>deploy-and-test</id>
             <build>
