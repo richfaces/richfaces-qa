@@ -26,6 +26,7 @@
 
     <modules>
         <module>richfaces-simpleapp-ftest</module>
+        <module>richfaces-kitchensink-ftest</module>
     </modules>
 
 </project>
