@@ -88,8 +88,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <p>content of panel 3</p>
                 </rich:togglePanelItem>
                 <rich:itemChangeListener type="org.richfaces.tests.metamer.bean.ItemChangeListenerBean"/>
-                <rich:itemChangeListener listener="#{itemChangeListenerBean.processItemChange}"/>
+                <rich:itemChangeListener listener="#{itemChangeListenerBean2.processItemChange}"/>
             </rich:togglePanel>
+            <!-- TODO after issue RF-12089 is solved uncomment here
+            rich:itemChangeListener for="richTogglePanel" type="org.richfaces.tests.metamer.bean.ItemChangeListenerBean3"
+            -->
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

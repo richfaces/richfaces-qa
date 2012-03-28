@@ -18,26 +18,21 @@
  * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
  * site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.bean;
+package org.richfaces.tests.metamer.ftest.richItemChangeListener;
 
-import static org.richfaces.tests.metamer.bean.RichBean.logToPage;
-
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.event.AbortProcessingException;
-import org.richfaces.event.ItemChangeEvent;
-import org.richfaces.event.ItemChangeListener;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@ManagedBean
-@ViewScoped
-public class ItemChangeListenerBean implements ItemChangeListener {
+public class ICLTabPanelPage extends AbstractICLPage {
+
+    @FindBy(css = "td[id$='tab2:header:inactive']")
+    public WebElement panel;
 
     @Override
-    public void processItemChange(ItemChangeEvent event) throws AbortProcessingException {
-        logToPage("* itemChangeListenerBean item changed: " + (event.getOldItem() == null ? null : event.getOldItem().getId()) + " -> "
-                + (event.getNewItem() != null ? event.getNewItem().getId() : null));
+    public WebElement getInactivePanel() {
+        return panel;
     }
 }

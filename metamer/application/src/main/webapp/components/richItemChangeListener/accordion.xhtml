@@ -37,7 +37,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            
+
             <rich:accordion id="accordion"
                             itemChangeListener="#{richBean.itemChangeListener}"
                             >
@@ -58,8 +58,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     content of item 5
                 </rich:accordionItem>
                 <rich:itemChangeListener type="org.richfaces.tests.metamer.bean.ItemChangeListenerBean"/>
-                <rich:itemChangeListener listener="#{itemChangeListenerBean.processItemChange}"/>
+                <rich:itemChangeListener listener="#{itemChangeListenerBean2.processItemChange}"/>
             </rich:accordion>
+            <!-- TODO after issue RF-12089 is solved uncomment here
+                rich:itemChangeListener for="accordion" type="org.richfaces.tests.metamer.bean.ItemChangeListenerBean3"
+            -->
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

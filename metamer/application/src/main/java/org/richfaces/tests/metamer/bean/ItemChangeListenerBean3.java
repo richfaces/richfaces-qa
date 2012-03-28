@@ -33,11 +33,11 @@ import org.richfaces.event.ItemChangeListener;
  */
 @ManagedBean
 @ViewScoped
-public class ItemChangeListenerBean implements ItemChangeListener {
+public class ItemChangeListenerBean3 implements ItemChangeListener {
 
     @Override
     public void processItemChange(ItemChangeEvent event) throws AbortProcessingException {
-        logToPage("* itemChangeListenerBean item changed: " + (event.getOldItem() == null ? null : event.getOldItem().getId()) + " -> "
+        logToPage("* itemChangeListenerBean3 item changed: " + (event.getOldItem() == null ? null : event.getOldItem().getId()) + " -> "
                 + (event.getNewItem() != null ? event.getNewItem().getId() : null));
     }
 }

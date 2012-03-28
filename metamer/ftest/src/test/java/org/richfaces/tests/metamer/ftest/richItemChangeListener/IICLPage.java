@@ -18,26 +18,17 @@
  * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
  * site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.bean;
+package org.richfaces.tests.metamer.ftest.richItemChangeListener;
 
-import static org.richfaces.tests.metamer.bean.RichBean.logToPage;
-
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.event.AbortProcessingException;
-import org.richfaces.event.ItemChangeEvent;
-import org.richfaces.event.ItemChangeListener;
+import java.util.List;
+import org.openqa.selenium.WebElement;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@ManagedBean
-@ViewScoped
-public class ItemChangeListenerBean implements ItemChangeListener {
+interface IICLPage {
 
-    @Override
-    public void processItemChange(ItemChangeEvent event) throws AbortProcessingException {
-        logToPage("* itemChangeListenerBean item changed: " + (event.getOldItem() == null ? null : event.getOldItem().getId()) + " -> "
-                + (event.getNewItem() != null ? event.getNewItem().getId() : null));
-    }
+    WebElement getInactivePanel();
+
+    List<WebElement> getPhases();
 }

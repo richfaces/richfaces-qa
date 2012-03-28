@@ -58,8 +58,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     content of tab 5
                 </rich:tab>
                 <rich:itemChangeListener type="org.richfaces.tests.metamer.bean.ItemChangeListenerBean"/>
-                <rich:itemChangeListener listener="#{itemChangeListenerBean.processItemChange}"/>
+                <rich:itemChangeListener listener="#{itemChangeListenerBean2.processItemChange}"/>
             </rich:tabPanel>
+            <!-- TODO after issue RF-12089 is solved uncomment here
+            rich:itemChangeListener for="tabPanel" type="org.richfaces.tests.metamer.bean.ItemChangeListenerBean3"
+            -->
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

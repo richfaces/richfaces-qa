@@ -88,9 +88,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <rich:panelMenuItem id="item4" name="item4" label="Item 4" disabled="true" />
                 <rich:panelMenuItem id="item5" name="item5" label="Item 5" />
                 <rich:itemChangeListener type="org.richfaces.tests.metamer.bean.ItemChangeListenerBean"/>
-                <rich:itemChangeListener listener="#{itemChangeListenerBean.processItemChange}"/>
+                <rich:itemChangeListener listener="#{itemChangeListenerBean2.processItemChange}"/>
             </rich:panelMenu>
-
+            <!-- TODO after issue RF-12089 is solved uncomment here
+            rich:itemChangeListener for="panelMenu" type="org.richfaces.tests.metamer.bean.ItemChangeListenerBean3"
+            -->
             <br/><br/>
 
             <fieldset>
