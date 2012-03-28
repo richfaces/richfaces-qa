@@ -165,6 +165,7 @@ public class RichBean implements Serializable {
         richComponents.put("richPanelMenu", "Rich Panel Menu");
         richComponents.put("richPanelMenuGroup", "Rich Panel Menu Group");
         richComponents.put("richPanelMenuItem", "Rich Panel Menu Item");
+        richComponents.put("richPanelToggleListener", "Rich Panel Toggle Listener");
         richComponents.put("richPickList", "Rich Pick List");
         richComponents.put("richPopupPanel", "Rich Popup Panel");
         richComponents.put("richProgressBar", "Rich Progress Bar");
