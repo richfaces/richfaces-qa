@@ -273,8 +273,8 @@
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
-                    <arguments>-Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces -Dselenium.test.skip=true
-                        -Dselenium.server.skip=true</arguments>
+                    <preparationGoals>clean install -Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces -Dselenium.test.skip=true
+                        -Dselenium.server.skip=true</preparationGoals>
                 </configuration>
             </plugin>
         </plugins>
