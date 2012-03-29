@@ -214,7 +214,7 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
                     <preparationGoals>clean verify -Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces -DskipTests=true</preparationGoals>
-                    <goals>deploy -Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces -DskipTests=true</goals>
+                    <goals>clean deploy -Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces -DskipTests=true</goals>
                 </configuration>
             </plugin>
         </plugins>
