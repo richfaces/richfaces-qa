@@ -14,7 +14,7 @@
 
     <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-qa-parent</artifactId>
-    <version>4.2.1-SNAPSHOT</version>
+    <version>4.2.1.20120319-CR1-8</version>
     <packaging>pom</packaging>
 
     <name>RichFaces QA Parent</name>
