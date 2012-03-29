@@ -275,7 +275,7 @@
                 <configuration>
                     <!-- During release:perform, enable the "release" profile -->
                     <releaseProfiles>myfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces</releaseProfiles>
-                    <arguments>-DskipTests=true</arguments>
+                    <arguments>-DskipTests=true -Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces</arguments>
                 </configuration>
             </plugin>
         </plugins>
