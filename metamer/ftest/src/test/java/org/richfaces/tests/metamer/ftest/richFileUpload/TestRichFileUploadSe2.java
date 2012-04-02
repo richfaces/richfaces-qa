@@ -38,6 +38,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -55,7 +56,7 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
     private final String notAcceptableFile = "file1.x";
     private final String acceptableFile = "file1.txt";
     private final String bigFile = "bigFile.txt";
-    private final String[] filenames = {acceptableFile, "file2.txt", bigFile, notAcceptableFile};
+    private final String[] filenames = { acceptableFile, "file2.txt", bigFile, notAcceptableFile };
     private final String ap = "\"";
 
     @Override
@@ -98,6 +99,7 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(exclude = { "richExtendedDataTable", "richCollapsibleSubTable" })
     public void testSingleFileUpload() {
         sendFileToInput(filenames[0]);
 
@@ -112,7 +114,22 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
 
         List<WebElement> uploadedFiles = waitForWEList(uploadedFilesList);
         assertTrue(uploadedFiles.size() == 1, "No uploaded files.");
-        assertTrue(uploadedFiles.get(0).getText().equals(filenames[0]), "Uploaded file does not appear in uploadedList.");
+        assertTrue(uploadedFiles.get(0).getText().equals(filenames[0]),
+            "Uploaded file does not appear in uploadedList.");
+    }
+
+    @Test(groups = "4.Future")
+    @Templates("richExtendedDataTable")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12122")
+    public void testSingleFileUploadInEDT() {
+        testSingleFileUpload();
+    }
+
+    @Test(groups = "4.Future")
+    @Templates("richCollapsibleSubTable")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12122")
+    public void testSingleFileUploadInCST() {
+        testSingleFileUpload();
     }
 
     @Test
@@ -147,6 +164,7 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(exclude = { "richExtendedDataTable", "richCollapsibleSubTable" })
     public void testDoneLabel() {
         String doneLabel = "Done and done";
         sendAndSubmit("input[type=text][id$=doneLabelInput]", doneLabel);
@@ -155,6 +173,20 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
 
         String readDoneLabel = waitForWEWithExpectedText("span.rf-fu-itm-st", doneLabel).getText();
         assertEquals(readDoneLabel, doneLabel);
+    }
+
+    @Test(groups = "4.Future")
+    @Templates("richExtendedDataTable")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12122")
+    public void testDoneLabelInEDT() {
+        testDoneLabel();
+    }
+
+    @Test(groups = "4.Future")
+    @Templates("richCollapsibleSubTable")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12122")
+    public void testDoneLabelInCST() {
+        testDoneLabel();
     }
 
     @Test
@@ -232,6 +264,7 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(exclude = { "richExtendedDataTable", "richCollapsibleSubTable" })
     public void testExecute() {
         String cmd = "executeChecker";
         String expectedValue = "* executeChecker";
@@ -250,7 +283,22 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
         fail("Attribute execute does not work");
     }
 
+    @Test(groups = "4.Future")
+    @Templates("richExtendedDataTable")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12122")
+    public void testExecuteInEDT() {
+        testExecute();
+    }
+
+    @Test(groups = "4.Future")
+    @Templates("richCollapsibleSubTable")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12122")
+    public void testExecuteInCST() {
+        testExecute();
+    }
+
     @Test
+    @Templates(exclude = { "richExtendedDataTable", "richCollapsibleSubTable" })
     public void testLimitRender() {
         sendAndSubmit("input[type=text][id$=renderInput]", "renderChecker");
         waitForEnabledVisibleWE("input[type=radio][id*=limitRenderInput][value=true]").click();
@@ -265,6 +313,20 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
 
         assertEquals(statusCheckerTime, statusCheckerTime2);
         assertNotEquals(renderCheckerTime, renderCheckerTime2);
+    }
+
+    @Test(groups = "4.Future")
+    @Templates("richExtendedDataTable")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12122")
+    public void testLimitRenderInEDT() {
+        testLimitRender();
+    }
+
+    @Test(groups = "4.Future")
+    @Templates("richCollapsibleSubTable")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12122")
+    public void testLimitRenderInCST() {
+        testLimitRender();
     }
 
     @Test
@@ -299,7 +361,8 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
 
         waitForEnabledVisibleWE(uploadButton).click();
 
-        assertEquals(testData, waitForEnabledVisibleWE("span.rf-fu-itm-st").getText(), "Attribute sizeExceededLabel does not work.");
+        assertEquals(testData, waitForEnabledVisibleWE("span.rf-fu-itm-st").getText(),
+            "Attribute sizeExceededLabel does not work.");
     }
 
     /**
@@ -324,14 +387,14 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
 
         for (int i = 0; i < files.size(); i++) {
             waitForEnabledWE(fileInputField).sendKeys(files.get(i).getAbsolutePath());
-//            Other way:
-//
-//            List<WebElement> waitForWEList = waitForWEList(fileInputField2, i + 1);
-//            for (WebElement webElement : waitForWEList) {
-//                if (webElement.isEnabled() && !webElement.getAttribute("style").equals("display: none;")) {
-//                    webElement.sendKeys(files.get(i).getAbsolutePath());
-//                }
-//            }
+            //            Other way:
+            //
+            //            List<WebElement> waitForWEList = waitForWEList(fileInputField2, i + 1);
+            //            for (WebElement webElement : waitForWEList) {
+            //                if (webElement.isEnabled() && !webElement.getAttribute("style").equals("display: none;")) {
+            //                    webElement.sendKeys(files.get(i).getAbsolutePath());
+            //                }
+            //            }
         }
 
         List<WebElement> filesToUpload = waitForWEList(itemsToUpload, maxFilesQuantity);
@@ -347,7 +410,8 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
 
         assertTrue(uploadedFiles.size() == maxFilesQuantity, "Uploades more files than was maxFilesQuantity");
         for (int i = 0; i < maxFilesQuantity; i++) {
-            assertTrue(uploadedFiles.get(i).getText().equals(filenames[i]), "Uploaded file does not appear in uploadedList.");
+            assertTrue(uploadedFiles.get(i).getText().equals(filenames[i]),
+                "Uploaded file does not appear in uploadedList.");
         }
     }
 }
