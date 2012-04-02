@@ -194,11 +194,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                    >
                         #{node.content.label}
                     </rich:treeNode>
-                    <rich:treeToggleListener type="org.richfaces.tests.metamer.bean.TreeToggleListenerBean"/>
-                    <rich:treeToggleListener listener="#{treeToggleListenerBean2.processTreeToggle}"/>
                 </rich:tree>
-                <!--                 TODO after issue with @for attribute is solved (RF-12121) > uncoment
-                               rich:treeToggleListener for="richTree" type="org.richfaces.tests.metamer.bean.TreeToggleListenerBean3"-->
+                <rich:treeToggleListener for="richTree" type="org.richfaces.tests.metamer.bean.TreeToggleListenerBean"/>
             </p>
         </ui:define>
 
