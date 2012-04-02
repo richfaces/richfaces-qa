@@ -30,13 +30,13 @@ import org.openqa.selenium.support.FindBy;
  */
 public class EditorSimplePage {
 
-    @FindBy(id="form:a4jButton")
+    @FindBy(css="input[type=submit][id$=a4jButton]")
     public WebElement a4jButton;
     @FindBy(tagName="iframe")
     public WebElement editorFrame;
-    @FindBy(id="form:hButton")
+    @FindBy(css="input[type=submit][id$=hButton]")
     public WebElement hButton;
-    @FindBy(id="form:output")
+    @FindBy(css="span[id$=output]")
     public WebElement output;
     @FindBy(xpath="//div[@id='phasesPanel']//li[4]")
     public WebElement valueChangeListener;
