@@ -33,6 +33,7 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -51,8 +52,18 @@ public class TestCollapsiblePanelKVS extends AbstractGrapheneTest {
     }
 
     @Test(groups = { "keepVisualStateTesting" })
+    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
+        "richExtendedDataTable", "richList" })
     public void testRefreshFullPage() {
         reloadTester.testFullPageRefresh();
+    }
+
+    @Test(groups = { "keepVisualStateTesting", "4.Future" })
+    @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
+        "richExtendedDataTable", "richList" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-12131")
+    public void testRefreshFullPageInIterationComponents() {
+        testRefreshFullPage();
     }
 
     @Test(groups = { "keepVisualStateTesting", "4.3" })
