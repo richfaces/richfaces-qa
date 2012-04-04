@@ -54,13 +54,13 @@ public class TestPanelToggleListenerInCollapsiblePanel extends AbstractPanelTogg
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12105")
     @Test(groups = "4.Future")
-    public void testICLInsideComponentUsingListener() {
+    public void testPTLInsideComponentUsingListener() {
         super.testPTLInComponentWithListener(PTL_inComponent_usingListener_PhaseName);
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12106")
     @Test(groups = "4.Future")
-    public void testICLOutsideComponentUsingForAndType() {
+    public void testPTLOutsideComponentUsingForAndType() {
         super.testPTLAsForAttributeWithType(PTL_outsideComponent_usingType_PhaseName);
     }
 }
