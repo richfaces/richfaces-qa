@@ -38,6 +38,7 @@ import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.
 import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.converterMessage;
 import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.datePattern;
 import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.dayClassFunction;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.dayDisableFunction;
 import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.defaultTime;
 import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.disabled;
 import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.enableManualInput;
@@ -332,6 +333,30 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
         for (int i = 0; i < 42; i++) {
             assertFalse(selenium.belongsClass(cellDay.format(i), "yellowDay"), "Cell nr. " + i
                 + " should not be yellow.");
+        }
+    }
+
+    @Test
+    public void testDisableFunction() {
+        calendarAttributes.set(dayDisableFunction, "disableTuesdays");
+
+        selenium.click(input);
+
+        for (int i = 2; i < 42; i += 7) {
+            if (!selenium.belongsClass(cellDay.format(i), "rf-cal-c")) {
+                assertFalse(selenium.belongsClass(cellDay.format(i), "rf-cal-btn"), "Cell nr. " + i
+                    + " should not be enabled.");
+            }
+        }
+
+        calendarAttributes.reset(dayDisableFunction);
+        selenium.click(input);
+
+        for (int i = 2; i < 42; i += 7) {
+            if (!selenium.belongsClass(cellDay.format(i), "rf-cal-c")) {
+                assertTrue(selenium.belongsClass(cellDay.format(i), "rf-cal-btn"), "Cell nr. " + i
+                    + " should be enabled.");
+            }
         }
     }
 
