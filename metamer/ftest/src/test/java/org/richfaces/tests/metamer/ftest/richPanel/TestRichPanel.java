@@ -34,7 +34,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
@@ -46,7 +46,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22733 $
  */
-public class TestRichPanel extends AbstractAjocadoTest {
+public class TestRichPanel extends AbstractGrapheneTest {
 
     private JQueryLocator[] panels = {pjq("div[id$=panelWithHeader]"), pjq("div[id$=panelWithoutHeader]")};
     private JQueryLocator[] headers = {pjq("div[id$=panelWithHeader] div.rf-p-hdr"), pjq("div[id$=panelWithoutHeader] div.rf-p-hdr")};

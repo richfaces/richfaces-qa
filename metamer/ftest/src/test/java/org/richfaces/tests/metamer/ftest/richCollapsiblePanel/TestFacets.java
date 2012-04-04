@@ -21,11 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richCollapsiblePanel;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
-import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.collapsiblePanelAttributes;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
@@ -36,7 +36,7 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
@@ -46,7 +46,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 21412 $
  */
-public class TestFacets extends AbstractAjocadoTest {
+public class TestFacets extends AbstractGrapheneTest {
 
     private JQueryLocator panel = pjq("div[id$=collapsiblePanel]");
     private JQueryLocator header = pjq("div[id$=collapsiblePanel:header]");

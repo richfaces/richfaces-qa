@@ -30,7 +30,7 @@ import static org.testng.Assert.assertNotSame;
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
@@ -42,7 +42,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 23010 $
  */
-public class TestClientFunctions extends AbstractAjocadoTest {
+public class TestClientFunctions extends AbstractGrapheneTest {
 
     private JQueryLocator clientIdOutput = pjq("span[id$=clientIdOutput]");
     private JQueryLocator elementOutput = pjq("span[id$=elementOutput]");

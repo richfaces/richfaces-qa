@@ -21,12 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richMessage;
 
-import static org.jboss.arquillian.ajocado.Ajocado.attributeEquals;
-import static org.jboss.arquillian.ajocado.Ajocado.elementNotPresent;
-import static org.jboss.arquillian.ajocado.Ajocado.elementPresent;
-import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
-import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
+import static org.jboss.arquillian.ajocado.Graphene.attributeEquals;
+import static org.jboss.arquillian.ajocado.Graphene.elementNotPresent;
+import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
+import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.waitModel;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.basicAttributes;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.messageAttributes;
@@ -48,7 +48,7 @@ import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.jboss.arquillian.ajocado.locator.element.ExtendedLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 
 /**
@@ -57,7 +57,7 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision: 22748 $
  */
-public abstract class AbstractRichMessageTest extends AbstractAjocadoTest {
+public abstract class AbstractRichMessageTest extends AbstractGrapheneTest {
 
     // component's locators
     protected static JQueryLocator message4Input1 = pjq("span[id$=simpleInputMsg1]");

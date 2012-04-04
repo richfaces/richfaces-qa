@@ -21,14 +21,14 @@
  */
 package org.richfaces.tests.metamer.ftest.richAccordion;
 
-import static org.jboss.arquillian.ajocado.Ajocado.elementVisible;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
@@ -38,7 +38,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision$
  */
-public class TestAccordionKVS extends AbstractAjocadoTest {
+public class TestAccordionKVS extends AbstractGrapheneTest {
 
     AccordionReloadTester reloadTester = new AccordionReloadTester();
 

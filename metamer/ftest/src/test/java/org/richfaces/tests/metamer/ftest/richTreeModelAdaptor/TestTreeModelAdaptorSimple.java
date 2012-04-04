@@ -29,7 +29,7 @@ import static org.testng.Assert.fail;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.attributes.Attributes;
 import org.richfaces.tests.metamer.ftest.richTree.TreeModel;
@@ -41,7 +41,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22754 $
  */
-public class TestTreeModelAdaptorSimple extends AbstractAjocadoTest {
+public class TestTreeModelAdaptorSimple extends AbstractGrapheneTest {
 
     protected TreeModel tree = new TreeModel(pjq("div.rf-tr[id$=richTree]"));
     protected TreeNodeModel treeNode;

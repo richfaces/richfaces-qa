@@ -21,10 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.collapsiblePanel;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
 import static org.testng.Assert.fail;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 
 import org.richfaces.tests.showcase.panel.AbstractPanelTest;
 import org.testng.annotations.Test;

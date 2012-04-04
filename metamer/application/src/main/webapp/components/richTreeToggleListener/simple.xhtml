@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2012, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+        <ui:param name="componentId" value="richTree" />
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+                <f:event type="preRenderView" listener="#{richTreeBean.preRenderView}" />
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+            <h3><b>rich:tree</b></h3>
+
+            <p>
+                <rich:tree id="richTree"
+                           nodeType="#{node.type}"
+                           var="node"
+                           value="#{richTreeBean.richFacesTreeNodeRoot}"
+                           selection="#{richTreeBean.selection}"
+                           selectionChangeListener="#{richTreeListenerBean.processSelectionChange}"
+                           toggleListener="#{richTreeListenerBean.processToggle}"
+
+                           data="#{richTreeBean.attributes['data'].value}"
+                           dir="#{richTreeBean.attributes['dir'].value}"
+                           execute="#{richTreeBean.attributes['execute'].value}"
+                           handleClass="#{richTreeBean.attributes['handleClass'].value}"
+                           iconClass="#{richTreeBean.attributes['iconClass'].value}"
+                           iconCollapsed="#{richTreeBean.attributes['iconCollapsed'].value}"
+                           iconExpanded="#{richTreeBean.attributes['iconExpanded'].value}"
+                           iconLeaf="#{richTreeBean.attributes['iconLeaf'].value}"
+                           immediate="#{richTreeBean.attributes['immediate'].value}"
+                           keepSaved="#{richTreeBean.attributes['keepSaved'].value}"
+                           labelClass="#{richTreeBean.attributes['labelClass'].value}"
+                           lang="#{richTreeBean.attributes['lang'].value}"
+                           limitRender="#{richTreeBean.attributes['limitRender'].value}"
+                           nodeClass="#{richTreeBean.attributes['nodeClass'].value}"
+                           onbeforedomupdate="#{richTreeBean.attributes['onbeforedomupdate'].value}"
+                           onbeforenodetoggle="#{richTreeBean.attributes['onbeforenodetoggle'].value}"
+                           onbeforeselectionchange="#{richTreeBean.attributes['onbeforeselectionchange'].value}"
+                           onbegin="#{richTreeBean.attributes['onbegin'].value}"
+                           onclick="#{richTreeBean.attributes['onclick'].value}"
+                           oncomplete="#{richTreeBean.attributes['oncomplete'].value}"
+                           ondblclick="#{richTreeBean.attributes['ondblclick'].value}"
+                           onkeydown="#{richTreeBean.attributes['onkeydown'].value}"
+                           onkeypress="#{richTreeBean.attributes['onkeypress'].value}"
+                           onkeyup="#{richTreeBean.attributes['onkeyup'].value}"
+                           onmousedown="#{richTreeBean.attributes['onmousedown'].value}"
+                           onmousemove="#{richTreeBean.attributes['onmousemove'].value}"
+                           onmouseout="#{richTreeBean.attributes['onmouseout'].value}"
+                           onmouseover="#{richTreeBean.attributes['onmouseover'].value}"
+                           onmouseup="#{richTreeBean.attributes['onmouseup'].value}"
+                           onnodetoggle="#{richTreeBean.attributes['onnodetoggle'].value}"
+                           onselectionchange="#{richTreeBean.attributes['onselectionchange'].value}"
+                           render="#{richTreeBean.attributes['render'].value}"
+                           rendered="#{richTreeBean.attributes['rendered'].value}"
+                           selectionType="#{richTreeBean.attributes['selectionType'].value}"
+                           status="#{richTreeBean.attributes['status'].value}"
+                           style="#{richTreeBean.attributes['style'].value}"
+                           styleClass="#{richTreeBean.attributes['styleClass'].value}"
+                           title="#{richTreeBean.attributes['title'].value}"
+                           toggleNodeEvent="#{richTreeBean.attributes['toggleNodeEvent'].value}"
+                           toggleType="#{richTreeBean.attributes['toggleType'].value}"
+                           >
+
+                    <rich:treeNode type="country"
+                                   expanded="#{richTreeBean.expanded[node]}"
+
+                                   dir="#{richTreeNodeBean.attributes[0]['dir'].value}"
+                                   handleClass="#{richTreeNodeBean.attributes[0]['handleClass'].value}"
+                                   iconClass="#{richTreeNodeBean.attributes[0]['iconClass'].value}"
+                                   iconCollapsed="#{richTreeNodeBean.attributes[0]['iconCollapsed'].value}"
+                                   iconExpanded="#{richTreeNodeBean.attributes[0]['iconExpanded'].value}"
+                                   iconLeaf="#{richTreeNodeBean.attributes[0]['iconLeaf'].value}"
+                                   immediate="#{richTreeNodeBean.attributes[0]['immediate'].value}"
+                                   labelClass="#{richTreeNodeBean.attributes[0]['labelClass'].value}"
+                                   lang="#{richTreeNodeBean.attributes[0]['lang'].value}"
+                                   onbeforetoggle="#{richTreeNodeBean.attributes[0]['onbeforetoggle'].value}"
+                                   onclick="#{richTreeNodeBean.attributes[0]['onclick'].value}"
+                                   ondblclick="#{richTreeNodeBean.attributes[0]['ondblclick'].value}"
+                                   onkeydown="#{richTreeNodeBean.attributes[0]['onkeydown'].value}"
+                                   onkeypress="#{richTreeNodeBean.attributes[0]['onkeypress'].value}"
+                                   onkeyup="#{richTreeNodeBean.attributes[0]['onkeyup'].value}"
+                                   onmousedown="#{richTreeNodeBean.attributes[0]['onmousedown'].value}"
+                                   onmousemove="#{richTreeNodeBean.attributes[0]['onmousemove'].value}"
+                                   onmouseout="#{richTreeNodeBean.attributes[0]['onmouseout'].value}"
+                                   onmouseover="#{richTreeNodeBean.attributes[0]['onmouseover'].value}"
+                                   onmouseup="#{richTreeNodeBean.attributes[0]['onmouseup'].value}"
+                                   ontoggle="#{richTreeNodeBean.attributes[0]['ontoggle'].value}"
+                                   rendered="#{richTreeNodeBean.attributes[0]['rendered'].value}"
+                                   style="#{richTreeNodeBean.attributes[0]['style'].value}"
+                                   styleClass="#{richTreeNodeBean.attributes[0]['styleClass'].value}"
+                                   title="#{richTreeNodeBean.attributes[0]['title'].value}"
+                                   >
+                        <f:facet name="handleLoading">
+                            <h:graphicImage value="/resources/images/loading.gif" rendered="#{richTreeBean.testLoadingFacet}" />
+                        </f:facet>
+                        #{node.content.label}
+                    </rich:treeNode>
+
+                    <rich:treeNode type="company"
+                                   expanded="#{richTreeBean.expanded[node]}"
+
+                                   dir="#{richTreeNodeBean.attributes[1]['dir'].value}"
+                                   handleClass="#{richTreeNodeBean.attributes[1]['handleClass'].value}"
+                                   iconClass="#{richTreeNodeBean.attributes[1]['iconClass'].value}"
+                                   iconCollapsed="#{richTreeNodeBean.attributes[1]['iconCollapsed'].value}"
+                                   iconExpanded="#{richTreeNodeBean.attributes[1]['iconExpanded'].value}"
+                                   iconLeaf="#{richTreeNodeBean.attributes[1]['iconLeaf'].value}"
+                                   immediate="#{richTreeNodeBean.attributes[1]['immediate'].value}"
+                                   labelClass="#{richTreeNodeBean.attributes[1]['labelClass'].value}"
+                                   lang="#{richTreeNodeBean.attributes[1]['lang'].value}"
+                                   onbeforetoggle="#{richTreeNodeBean.attributes[1]['onbeforetoggle'].value}"
+                                   onclick="#{richTreeNodeBean.attributes[1]['onclick'].value}"
+                                   ondblclick="#{richTreeNodeBean.attributes[1]['ondblclick'].value}"
+                                   onkeydown="#{richTreeNodeBean.attributes[1]['onkeydown'].value}"
+                                   onkeypress="#{richTreeNodeBean.attributes[1]['onkeypress'].value}"
+                                   onkeyup="#{richTreeNodeBean.attributes[1]['onkeyup'].value}"
+                                   onmousedown="#{richTreeNodeBean.attributes[1]['onmousedown'].value}"
+                                   onmousemove="#{richTreeNodeBean.attributes[1]['onmousemove'].value}"
+                                   onmouseout="#{richTreeNodeBean.attributes[1]['onmouseout'].value}"
+                                   onmouseover="#{richTreeNodeBean.attributes[1]['onmouseover'].value}"
+                                   onmouseup="#{richTreeNodeBean.attributes[0]['onmouseup'].value}"
+                                   ontoggle="#{richTreeNodeBean.attributes[1]['ontoggle'].value}"
+                                   rendered="#{richTreeNodeBean.attributes[1]['rendered'].value}"
+                                   style="#{richTreeNodeBean.attributes[1]['style'].value}"
+                                   styleClass="#{richTreeNodeBean.attributes[1]['styleClass'].value}"
+                                   title="#{richTreeNodeBean.attributes[1]['title'].value}"
+                                   >
+                        <f:facet name="handleLoading">
+                            <h:graphicImage value="/resources/images/loading.gif" rendered="#{richTreeBean.testLoadingFacet}" />
+                        </f:facet>
+
+                        #{node.content.label}
+                    </rich:treeNode>
+
+                    <rich:treeNode type="cd"
+                                   expanded="#{richTreeBean.expanded[node]}"
+
+                                   dir="#{richTreeNodeBean.attributes[2]['dir'].value}"
+                                   handleClass="#{richTreeNodeBean.attributes[2]['handleClass'].value}"
+                                   iconClass="#{richTreeNodeBean.attributes[2]['iconClass'].value}"
+                                   iconCollapsed="#{richTreeNodeBean.attributes[2]['iconCollapsed'].value}"
+                                   iconExpanded="#{richTreeNodeBean.attributes[2]['iconExpanded'].value}"
+                                   iconLeaf="#{richTreeNodeBean.attributes[2]['iconLeaf'].value}"
+                                   immediate="#{richTreeNodeBean.attributes[2]['immediate'].value}"
+                                   labelClass="#{richTreeNodeBean.attributes[2]['labelClass'].value}"
+                                   lang="#{richTreeNodeBean.attributes[2]['lang'].value}"
+                                   onbeforetoggle="#{richTreeNodeBean.attributes[2]['onbeforetoggle'].value}"
+                                   onclick="#{richTreeNodeBean.attributes[2]['onclick'].value}"
+                                   ondblclick="#{richTreeNodeBean.attributes[2]['ondblclick'].value}"
+                                   onkeydown="#{richTreeNodeBean.attributes[2]['onkeydown'].value}"
+                                   onkeypress="#{richTreeNodeBean.attributes[2]['onkeypress'].value}"
+                                   onkeyup="#{richTreeNodeBean.attributes[2]['onkeyup'].value}"
+                                   onmousedown="#{richTreeNodeBean.attributes[2]['onmousedown'].value}"
+                                   onmousemove="#{richTreeNodeBean.attributes[2]['onmousemove'].value}"
+                                   onmouseout="#{richTreeNodeBean.attributes[2]['onmouseout'].value}"
+                                   onmouseover="#{richTreeNodeBean.attributes[2]['onmouseover'].value}"
+                                   onmouseup="#{richTreeNodeBean.attributes[0]['onmouseup'].value}"
+                                   ontoggle="#{richTreeNodeBean.attributes[2]['ontoggle'].value}"
+                                   rendered="#{richTreeNodeBean.attributes[2]['rendered'].value}"
+                                   style="#{richTreeNodeBean.attributes[2]['style'].value}"
+                                   styleClass="#{richTreeNodeBean.attributes[2]['styleClass'].value}"
+                                   title="#{richTreeNodeBean.attributes[2]['title'].value}"
+                                   >
+                        #{node.content.label}
+                    </rich:treeNode>
+                    <rich:treeToggleListener type="org.richfaces.tests.metamer.bean.TreeToggleListenerBean"/>
+                    <rich:treeToggleListener listener="#{treeToggleListenerBean2.processTreeToggle}"/>
+                </rich:tree>
+                <!--                 TODO after issue with @for attribute is solved (RF-12121) > uncoment
+                               rich:treeToggleListener for="richTree" type="org.richfaces.tests.metamer.bean.TreeToggleListenerBean3"-->
+            </p>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+        </ui:define>
+
+    </ui:composition>
+</html>

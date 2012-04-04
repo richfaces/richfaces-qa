@@ -21,16 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTree;
 
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.treeAttributes;
-
-import org.richfaces.component.SwitchType;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.jboss.arquillian.ajocado.framework.AjocadoConfigurationContext;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>

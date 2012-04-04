@@ -1,4 +1,4 @@
-Generting Tested Applications
+Generating Tested Applications
 ====================
 
 Firstly you need generate tested application. Go into `apps` folder:

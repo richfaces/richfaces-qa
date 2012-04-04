@@ -22,14 +22,6 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jRepeat;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-
-import java.net.URL;
-
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractKeepSavedTest;
 import org.testng.annotations.Test;
 

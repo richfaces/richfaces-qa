@@ -21,11 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jCommandLink;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.textEquals;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.testng.Assert.assertEquals;
@@ -40,7 +40,7 @@ import javax.faces.event.PhaseId;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
@@ -50,7 +50,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22733 $
  */
-public class TestA4JCommandLink extends AbstractAjocadoTest {
+public class TestA4JCommandLink extends AbstractGrapheneTest {
 
     private JQueryLocator input = pjq("input[id$=input]");
     private JQueryLocator link = pjq("a[id$=a4jCommandLink]");

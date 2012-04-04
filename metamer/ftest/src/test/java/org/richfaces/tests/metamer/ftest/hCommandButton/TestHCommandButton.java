@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.hCommandButton;
 
-import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.textEquals;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
@@ -34,7 +34,7 @@ import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
@@ -45,7 +45,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22797 $
  */
-public class TestHCommandButton extends AbstractAjocadoTest {
+public class TestHCommandButton extends AbstractGrapheneTest {
 
     private JQueryLocator input = pjq("input[id$=input]");
     private JQueryLocator button = pjq("input[id$=commandButton]");

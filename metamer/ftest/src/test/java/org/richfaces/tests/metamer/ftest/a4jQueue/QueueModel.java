@@ -21,21 +21,16 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jQueue;
 
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveAttribute;
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
-
-import static org.jboss.arquillian.ajocado.dom.Event.KEYPRESS;
-
-import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
-
+import static org.jboss.arquillian.ajocado.Graphene.retrieveAttribute;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
 import static org.jboss.arquillian.ajocado.dom.Attribute.TITLE;
-
+import static org.jboss.arquillian.ajocado.dom.Event.KEYPRESS;
+import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 import static org.jboss.cheiron.retriever.RetrieverAdapter.integerAdapter;
 import static org.jboss.cheiron.retriever.RetrieverAdapter.longAdapter;
 import static org.jboss.test.selenium.locator.reference.ReferencedLocator.ref;
 import static org.richfaces.tests.metamer.ftest.AbstractMetamerTest.pjq;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -43,9 +38,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
-import org.jboss.arquillian.ajocado.framework.AjocadoConfigurationContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneConfigurationContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
@@ -87,7 +82,7 @@ public class QueueModel {
     Retriever<Long> retrieveBeginTime = longAdapter(retrieveAttribute.attributeLocator(beginTime));
     Retriever<Long> retrieveCompleteTime = longAdapter(retrieveAttribute.attributeLocator(completeTime));
 
-    private AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    private GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
     private Boolean event2Present = null;
 
@@ -199,7 +194,7 @@ public class QueueModel {
     }
 
     public void checkDeviation(long deviation, long maxDeviation) {
-        if (AjocadoConfigurationContext.getProxy().isSeleniumDebug()) {
+        if (GrapheneConfigurationContext.getProxy().isSeleniumDebug()) {
             System.out.println(format("deviation: {0}", deviation));
         }
 
@@ -210,7 +205,7 @@ public class QueueModel {
     public void checkDeviationMedian(long requestDelay) {
         long maximumDeviationMedian = Math.max(25, Math.min(50, requestDelay / 4));
         long deviationMedian = getMedian(deviations);
-        if (AjocadoConfigurationContext.getProxy().isSeleniumDebug()) {
+        if (GrapheneConfigurationContext.getProxy().isSeleniumDebug()) {
             System.out.println("deviationMedian: " + deviationMedian);
         }
         assertTrue(

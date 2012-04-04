@@ -21,11 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.commandButton;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.testng.Assert.assertEquals;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
-import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
+import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
+import static org.jboss.arquillian.ajocado.Graphene.textEquals;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.testng.annotations.Test;

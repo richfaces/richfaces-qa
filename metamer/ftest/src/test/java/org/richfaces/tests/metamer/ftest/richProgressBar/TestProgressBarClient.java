@@ -21,9 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richProgressBar;
 
-import static org.jboss.arquillian.ajocado.Ajocado.elementVisible;
-import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
@@ -39,7 +39,7 @@ import java.util.List;
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 
@@ -49,7 +49,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 21055 $
  */
-public class TestProgressBarClient extends AbstractAjocadoTest {
+public class TestProgressBarClient extends AbstractGrapheneTest {
 
     private JQueryLocator progressBar = pjq("div[id$=progressBar]");
     private JQueryLocator initialOutput = pjq("div.rf-pb-init > span");

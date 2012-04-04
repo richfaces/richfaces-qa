@@ -38,7 +38,7 @@ import java.util.LinkedList;
 import javax.faces.event.PhaseId;
 
 import org.richfaces.PanelMenuMode;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.model.PanelMenu;
@@ -49,7 +49,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22751 $
  */
-public class TestPanelMenuItemMode extends AbstractAjocadoTest {
+public class TestPanelMenuItemMode extends AbstractGrapheneTest {
 
     PanelMenu menu = new PanelMenu(pjq("div.rf-pm[id$=panelMenu]"));
     PanelMenu.Item item = menu.getGroup(1).getItem(2);

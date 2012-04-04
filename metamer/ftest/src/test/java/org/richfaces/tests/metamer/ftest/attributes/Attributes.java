@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.attributes;
 
-import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
+import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
 
 import static org.jboss.arquillian.ajocado.dom.Attribute.VALUE;
 

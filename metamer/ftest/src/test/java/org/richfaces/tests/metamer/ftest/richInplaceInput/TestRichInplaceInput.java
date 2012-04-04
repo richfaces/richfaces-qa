@@ -22,11 +22,11 @@
  */
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.textEquals;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.disabledClass;
@@ -43,7 +43,7 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
@@ -55,7 +55,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22788 $
  */
-public class TestRichInplaceInput extends AbstractAjocadoTest {
+public class TestRichInplaceInput extends AbstractGrapheneTest {
 
     private JQueryLocator inplaceInput = pjq("span[id$=inplaceInput]");
     private JQueryLocator label = pjq("span.rf-ii-lbl");

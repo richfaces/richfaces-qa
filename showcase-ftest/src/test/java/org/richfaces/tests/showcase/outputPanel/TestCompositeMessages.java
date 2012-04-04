@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.outputPanel;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -30,7 +30,7 @@ import static org.testng.Assert.assertTrue;
 import org.jboss.arquillian.ajocado.ajaxaware.AjaxAwareInterceptor;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.utils.URLUtils;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -38,7 +38,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestCompositeMessages extends AbstractAjocadoTest {
+public class TestCompositeMessages extends AbstractGrapheneTest {
 
     /* *******************************************************************************************************
      * Locators ****************************************************************** *************************************

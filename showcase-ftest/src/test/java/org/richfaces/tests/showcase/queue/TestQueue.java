@@ -21,9 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.queue;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 
 import static org.jboss.arquillian.ajocado.dom.Event.KEYUP;
 
@@ -36,14 +36,14 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.WaitTimeoutException;
 import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
 import org.jboss.cheiron.halt.XHRHalter;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestQueue extends AbstractAjocadoTest {
+public class TestQueue extends AbstractGrapheneTest {
 
     /* *******************************************************************************************************
      * Locators ****************************************************************** *************************************

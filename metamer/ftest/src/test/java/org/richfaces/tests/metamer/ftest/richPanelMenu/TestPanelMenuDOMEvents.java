@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
-import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
+import static org.jboss.arquillian.ajocado.Graphene.waitModel;
 
 import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;

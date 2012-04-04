@@ -37,7 +37,7 @@ import java.util.Vector;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.request.RequestType;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -46,7 +46,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22407 $
  */
-public class TestMatrix extends AbstractAjocadoTest {
+public class TestMatrix extends AbstractGrapheneTest {
 
     Vector<Vector<Integer>> matrix;
     Coordinate coordinate;

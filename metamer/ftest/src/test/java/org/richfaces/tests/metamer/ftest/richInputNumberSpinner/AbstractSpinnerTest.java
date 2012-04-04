@@ -21,17 +21,17 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richInputNumberSpinner;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 
 import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 
@@ -41,7 +41,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22499 $
  */
-public abstract class AbstractSpinnerTest extends AbstractAjocadoTest {
+public abstract class AbstractSpinnerTest extends AbstractGrapheneTest {
 
     protected JQueryLocator spinner = pjq("span[id$=spinner]");
     protected JQueryLocator input = pjq("span[id$=spinner] input.rf-insp-inp");

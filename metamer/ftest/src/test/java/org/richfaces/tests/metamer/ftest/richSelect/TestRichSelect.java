@@ -21,13 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richSelect;
 
-import static org.jboss.arquillian.ajocado.Ajocado.elementVisible;
-import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
-import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
+import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.textEquals;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.waitModel;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
@@ -48,7 +48,7 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
@@ -57,7 +57,7 @@ import org.testng.annotations.Test;
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  */
-public class TestRichSelect extends AbstractAjocadoTest {
+public class TestRichSelect extends AbstractGrapheneTest {
 
     private JQueryLocator select = pjq("div[id$=select]");
     private JQueryLocator input = pjq("input.rf-sel-inp[id$=selectInput]");

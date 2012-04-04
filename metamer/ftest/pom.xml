@@ -9,8 +9,7 @@
     software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the 
     FSF site: http://www.fsf.org. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -39,28 +38,25 @@
             <artifactId>metamer</artifactId>
             <version>${project.version}</version>
             <classifier>classes</classifier>
+            <scope>test</scope>
         </dependency>
         <!-- Arquillian dependencies -->
         <dependency>
-            <groupId>org.jboss.arquillian.ajocado</groupId>
-            <artifactId>arquillian-ajocado-testng</artifactId>
-            <version>${arquillian.ajocado-testng.version}</version>
+            <groupId>org.jboss.arquillian.graphene</groupId>
+            <artifactId>arquillian-graphene</artifactId>
+            <version>${arquillian.graphene-testng.version}</version>
             <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.testng</groupId>
+            <artifactId>arquillian-testng-container</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-drone-webdriver</artifactId>
-            <version>${arquillian.drone.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${version.selenium}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-server</artifactId>
-            <version>${version.selenium.server}</version>
+            <artifactId>arquillian-drone-impl</artifactId>
+            <scope>test</scope>
         </dependency>
         <!-- Resolution of JAR libraries into WAR archive -->
         <dependency>
@@ -76,10 +72,51 @@
             <groupId>org.jboss.shrinkwrap.descriptors</groupId>
             <artifactId>shrinkwrap-descriptors-impl</artifactId>
         </dependency>
+        <!-- Support for Selenium in Arquillian Drone -->
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-drone-webdriver</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Selenium -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-support</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-server</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-codec</groupId>
+                    <artifactId>commons-codec</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!-- TestNG listeners for better console output -->
         <dependency>
             <groupId>org.richfaces.tests</groupId>
             <artifactId>testng-listeners</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- XHRHalter support -->
+        <dependency>
+            <groupId>org.richfaces.tests</groupId>
+            <artifactId>xhrhalter</artifactId>
+            <scope>test</scope>
             <version>${project.version}</version>
         </dependency>
         <!-- see the https://community.jboss.org/wiki/WhatsTheCauseOfThisExceptionJavalangClassFormatErrorAbsentCode -->
@@ -359,8 +396,7 @@
                                 </goals>
                                 <configuration>
                                     <tasks>
-                                        <unzip src="${project.build.directory}/metamer.war" dest="${project.build.directory}/metamer-war-unzipped"
-                                            overwrite="true" />
+                                        <unzip src="${project.build.directory}/metamer.war" dest="${project.build.directory}/metamer-war-unzipped" overwrite="true" />
                                     </tasks>
                                 </configuration>
                             </execution>

@@ -45,13 +45,13 @@ import java.util.List;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.richfaces.component.ListType;
 import org.richfaces.tests.metamer.bean.Model;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.model.Employee;
 import org.testng.annotations.BeforeMethod;
 
-public abstract class AbstractListTest extends AbstractAjocadoTest {
+public abstract class AbstractListTest extends AbstractGrapheneTest {
     protected static List<Employee> employees = Model.unmarshallEmployees();
     protected static final int ELEMENTS_TOTAL = employees.size();
     protected static final Event[] EVENTS = { CLICK, DBLCLICK, KEYDOWN, KEYPRESS, KEYUP, MOUSEDOWN, MOUSEMOVE,

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2012, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+
+            <rich:collapsiblePanel id="collapsiblePanel"
+                                   toggleListener="#{richCollapsiblePanelBean.toggleListener}"
+                                   >
+
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus a neque turpis, at cursus nunc.
+                Vestibulum et tincidunt metus. Suspendisse viverra aliquet nunc, non placerat justo commodo a. Pellentesque
+                non lacus ut mi consectetur blandit nec sed orci. Praesent tempus aliquet sapien vitae condimentum. Aenean
+                nec ligula egestas erat convallis pharetra. Donec venenatis nunc vitae justo posuere laoreet. Vestibulum
+                ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse quis convallis nulla.
+                Aenean lorem lorem, viverra eget elementum in, hendrerit sit amet felis. Curabitur venenatis lacus id diam
+                porttitor cursus. Suspendisse vulputate arcu at ante porttitor ullamcorper. Cras eleifend lacus eget justo
+                malesuada fermentum. Praesent pretium eleifend lacus, id dignissim lacus aliquam eu. Nulla imperdiet tempus
+                facilisis. Etiam nec aliquet quam. Duis fringilla ullamcorper libero, vel dictum quam feugiat a. Donec placerat
+                varius diam ullamcorper egestas. Donec molestie tellus a felis facilisis ac vestibulum risus rhoncus.
+                <rich:panelToggleListener listener="#{panelToggleListenerBean}"/>
+                <!-- TODO one of theese listeners should be deleted after issue fixed, which one is correct? -->
+                <rich:panelToggleListener listener="#{panelToggleListenerBean.processPanelToggle}"/>
+                <rich:panelToggleListener type="org.richfaces.tests.metamer.bean.PanelToggleListenerBean2"/>
+            </rich:collapsiblePanel>
+            <!-- TODO after issue with @for attribute is solved > uncoment        
+            rich:panelToggleListener for="collapsiblePanel" type="org.richfaces.tests.metamer.bean.PanelToggleListenerBean3"
+            -->
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+        </ui:define>
+
+    </ui:composition>
+</html>

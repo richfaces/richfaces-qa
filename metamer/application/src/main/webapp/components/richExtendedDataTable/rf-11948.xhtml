@@ -37,6 +37,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
     
         <ui:define name="component">
+            
+            <p>The column 'Capital' in the following table should be 500px wide.</p>
             <rich:extendedDataTable id="capitals" var="item" value="#{model.capitals}" rows="5">
                 <rich:column id="colCapital">
                     <f:facet name="header">
@@ -51,6 +53,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </script>
             
             <a href="#" onclick="#{rich:component('capitals')}.setColumnWidth('colCapital','800')">Set width to 800px</a>
+            
+            <p>The column 'Capital' in the following table should be 800px wide</p>
+            <rich:extendedDataTable id="capitals2" var="item" value="#{model.capitals}" rows="5" onready="#{rich:component('capitals2')}.setColumnWidth('colCapital2','800')">
+                <rich:column id="colCapital2">
+                    <f:facet name="header">
+                        Capital
+                    </f:facet>
+                    #{item.name}
+                </rich:column>
+            </rich:extendedDataTable>
         </ui:define>
     
     </ui:composition>

@@ -21,13 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richInplaceSelect;
 
-import static org.jboss.arquillian.ajocado.Ajocado.elementPresent;
-import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
-import static org.jboss.arquillian.ajocado.Ajocado.waitModel;
+import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.textEquals;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.waitModel;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
@@ -49,7 +49,7 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
@@ -61,7 +61,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 23054 $
  */
-public class TestRichInplaceSelect extends AbstractAjocadoTest {
+public class TestRichInplaceSelect extends AbstractGrapheneTest {
 
     private JQueryLocator select = pjq("span[id$=inplaceSelect]");
     private JQueryLocator label = pjq("span.rf-is-lbl");

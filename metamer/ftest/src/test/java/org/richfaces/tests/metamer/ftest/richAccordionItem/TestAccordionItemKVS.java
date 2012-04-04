@@ -21,15 +21,16 @@
  */
 package org.richfaces.tests.metamer.ftest.richAccordionItem;
 
-import static org.jboss.arquillian.ajocado.Ajocado.elementVisible;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -38,7 +39,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision$
  */
-public class TestAccordionItemKVS extends AbstractAjocadoTest {
+public class TestAccordionItemKVS extends AbstractGrapheneTest {
 
     AccordionReloadTester reloadTester = new AccordionReloadTester();
 
@@ -48,8 +49,18 @@ public class TestAccordionItemKVS extends AbstractAjocadoTest {
     }
 
     @Test(groups = { "keepVisualStateTesting" })
+    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
+        "richExtendedDataTable", "richList" })
     public void testRefreshFullPage() {
         reloadTester.testFullPageRefresh();
+    }
+
+    @Test(groups = { "keepVisualStateTesting", "4.Future" })
+    @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
+        "richExtendedDataTable", "richList" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-12131")
+    public void testRefreshFullPageInIterationComponents() {
+        testRefreshFullPage();
     }
 
     @Test(groups = { "keepVisualStateTesting", "4.3" })

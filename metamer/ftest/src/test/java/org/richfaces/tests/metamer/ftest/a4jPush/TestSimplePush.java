@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source.
- * Copyright 2010, Red Hat, Inc., and individual contributors
+ * Copyright 2010-2012, Red Hat, Inc., and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -21,8 +21,8 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jPush;
 
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
@@ -36,7 +36,7 @@ import java.util.List;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -44,7 +44,7 @@ import org.testng.annotations.Test;
  * Test for simple push example faces/components/a4jPush/simple.xhtml
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  */
-public class TestSimplePush extends AbstractAjocadoTest {
+public class TestSimplePush extends AbstractGrapheneTest {
 
     protected JQueryLocator messagePanel = pjq("div[id$=messagePanel]");
     protected JQueryLocator timestamp = messagePanel.getDescendant(jq(" div > span.timestamp"));

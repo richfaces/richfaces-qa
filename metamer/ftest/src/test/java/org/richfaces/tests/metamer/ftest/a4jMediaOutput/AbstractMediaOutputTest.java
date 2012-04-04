@@ -30,16 +30,16 @@ import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public abstract class AbstractMediaOutputTest extends AbstractAjocadoTest {
+public abstract class AbstractMediaOutputTest extends AbstractGrapheneTest {
 
     protected static final JQueryLocator MEDIA_OUTPUT = pjq("*[id$=mediaOutput]");
 
-    protected String getTextContentByUrlAttribute(AttributeLocator urlAttribute) throws IOException {
+    protected String getTextContentByUrlAttribute(AttributeLocator<?> urlAttribute) throws IOException {
         URL url = buildUrl(contextPath, selenium.getAttribute(urlAttribute));
         BufferedReader input = null;
         StringBuilder foundContent = new StringBuilder();

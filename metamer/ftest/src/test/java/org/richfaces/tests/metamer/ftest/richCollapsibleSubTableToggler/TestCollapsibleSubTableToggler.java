@@ -21,9 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler;
 
-import static org.jboss.arquillian.ajocado.Ajocado.elementNotVisible;
-import static org.jboss.arquillian.ajocado.Ajocado.elementVisible;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.elementNotVisible;
+import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 
 import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEDOWN;
@@ -49,7 +49,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.model.CollapsibleSubTable;
@@ -61,7 +61,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22737 $
  */
-public class TestCollapsibleSubTableToggler extends AbstractAjocadoTest {
+public class TestCollapsibleSubTableToggler extends AbstractGrapheneTest {
 
     private static final String IMAGE_URL = "/resources/images/star.png";
     private static final String LABEL = "Label";

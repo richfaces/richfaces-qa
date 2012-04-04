@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataGrid;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;

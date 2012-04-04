@@ -31,7 +31,7 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemA
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
@@ -45,7 +45,7 @@ import org.testng.annotations.Test;
  * @version $Revision: 22796 $
  */
 @RegressionTest("https://issues.jboss.org/browse/RF-10486")
-public class TestPanelMenuItemClientSideHandlers extends AbstractAjocadoTest {
+public class TestPanelMenuItemClientSideHandlers extends AbstractGrapheneTest {
 
     PanelMenu menu = new PanelMenu(pjq("div.rf-pm[id$=panelMenu]"));
     PanelMenu.Item item = menu.getGroup(1).getItem(2);

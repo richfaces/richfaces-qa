@@ -28,7 +28,7 @@ import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.queueAt
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueModel;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueModel.Input;
 import org.testng.annotations.Test;
@@ -38,7 +38,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22680 $
  */
-public class TestAttachQueueNamed extends AbstractAjocadoTest {
+public class TestAttachQueueNamed extends AbstractGrapheneTest {
 
     private static final Long DELAY = 5000L;
 

@@ -21,21 +21,21 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataScroller;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestDataScrollerAPI extends AbstractAjocadoTest {
+public class TestDataScrollerAPI extends AbstractGrapheneTest {
 
     /* **********************************************************************************************************************
      * Constants

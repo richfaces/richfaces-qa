@@ -24,14 +24,14 @@ package org.richfaces.tests.showcase.ajax;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory.optionLabel;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractAjocadoTest;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 /**
@@ -39,7 +39,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestSelectsUpdates extends AbstractAjocadoTest {
+public class TestSelectsUpdates extends AbstractGrapheneTest {
 
     /* *************************************************************************************
      * Locators*************************************************************************************

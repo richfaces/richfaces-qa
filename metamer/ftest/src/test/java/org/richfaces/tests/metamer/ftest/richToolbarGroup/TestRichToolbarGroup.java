@@ -39,7 +39,7 @@ import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
@@ -52,7 +52,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22733 $
  */
-public class TestRichToolbarGroup extends AbstractAjocadoTest {
+public class TestRichToolbarGroup extends AbstractGrapheneTest {
 
     private JQueryLocator toolbar = pjq("table[id$=toolbar]");
     private JQueryLocator separator = pjq("td.rf-tb-sep");

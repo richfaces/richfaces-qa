@@ -21,11 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jCommandButton;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.textEquals;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
@@ -44,7 +44,7 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
@@ -56,7 +56,7 @@ import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.command
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22733 $
  */
-public class TestA4JCommandButton extends AbstractAjocadoTest {
+public class TestA4JCommandButton extends AbstractGrapheneTest {
 
     private JQueryLocator input = pjq("input[id$=input]");
     private JQueryLocator button = pjq("input[id$=a4jCommandButton]");
@@ -382,7 +382,7 @@ public class TestA4JCommandButton extends AbstractAjocadoTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10115")
     public void testType() {
-        AttributeLocator attr = button.getAttribute(Attribute.TYPE);
+        AttributeLocator<?> attr = button.getAttribute(Attribute.TYPE);
 
         commandButtonAttributes.set(CommandButtonAttributes.type, "image");
         assertEquals(selenium.getAttribute(attr), "image", "Button's type");
@@ -404,7 +404,7 @@ public class TestA4JCommandButton extends AbstractAjocadoTest {
     public void testValue() {
         commandButtonAttributes.set(CommandButtonAttributes.value, "new label");
 
-        AttributeLocator attribute = button.getAttribute(new Attribute("value"));
+        AttributeLocator<?> attribute = button.getAttribute(new Attribute("value"));
         assertEquals(selenium.getAttribute(attribute), "new label", "Value of the button did not change.");
     }
 }

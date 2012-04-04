@@ -36,8 +36,7 @@ public class TestA4jCommandLinkSimple extends AbstractWebDriverTest<CommandLinkP
 
     @Test
     public void testTypeAndSend() {
-        getPage().getInput().click();
-        getPage().getInput().sendKeys("something");
+        sendKeysToInputCarefully(getPage().getInput(), "something");
 
         getPage().getLink().click();
 

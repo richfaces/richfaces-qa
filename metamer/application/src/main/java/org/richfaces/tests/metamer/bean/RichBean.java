@@ -149,6 +149,7 @@ public class RichBean implements Serializable {
         richComponents.put("richHotKey", "Rich Hot Key");
         richComponents.put("richInplaceInput", "Rich Inplace Input");
         richComponents.put("richInplaceSelect", "Rich Inplace Select");
+        richComponents.put("richItemChangeListener", "Rich Item Change Listener");
         richComponents.put("richInputNumberSlider", "Rich Input Number Slider");
         richComponents.put("richInputNumberSpinner", "Rich Input Number Spinner");
         richComponents.put("richJQuery", "Rich jQuery");
@@ -164,6 +165,7 @@ public class RichBean implements Serializable {
         richComponents.put("richPanelMenu", "Rich Panel Menu");
         richComponents.put("richPanelMenuGroup", "Rich Panel Menu Group");
         richComponents.put("richPanelMenuItem", "Rich Panel Menu Item");
+        richComponents.put("richPanelToggleListener", "Rich Panel Toggle Listener");
         richComponents.put("richPickList", "Rich Pick List");
         richComponents.put("richPopupPanel", "Rich Popup Panel");
         richComponents.put("richProgressBar", "Rich Progress Bar");
@@ -177,6 +179,7 @@ public class RichBean implements Serializable {
         richComponents.put("richToolbarGroup", "Rich Toolbar Group");
         richComponents.put("richTooltip", "Rich Tooltip");
         richComponents.put("richTree", "Rich Tree");
+        richComponents.put("richTreeToggleListener", "Rich Tree Toggle Listener");
         richComponents.put("richValidator", "Rich Validator");
     }
 

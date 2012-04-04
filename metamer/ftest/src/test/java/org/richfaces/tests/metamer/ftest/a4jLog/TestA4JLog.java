@@ -22,8 +22,8 @@
 package org.richfaces.tests.metamer.ftest.a4jLog;
 
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.logAttributes;
-import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.textEquals;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
@@ -36,7 +36,7 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 /**
@@ -45,7 +45,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22499 $
  */
-public class TestA4JLog extends AbstractAjocadoTest {
+public class TestA4JLog extends AbstractGrapheneTest {
 
     /**
      * Enumeration representing all possible levels for a4j:log.

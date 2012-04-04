@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jQueue;
 
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
@@ -36,7 +36,7 @@ import java.net.URL;
 
 import org.jboss.cheiron.halt.XHRHalter;
 import org.jboss.cheiron.halt.XHRState;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
@@ -51,7 +51,7 @@ import com.thoughtworks.selenium.SeleniumException;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 23037 $
  */
-public class TestGlobalQueue extends AbstractAjocadoTest {
+public class TestGlobalQueue extends AbstractGrapheneTest {
 
     QueueModel queue = new QueueModel();
     Attributes<QueueAttributes> attributes = new Attributes<QueueAttributes>();

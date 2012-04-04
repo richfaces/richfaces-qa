@@ -4,19 +4,19 @@
  */
 package org.richfaces.tests.metamer.ftest.abstractions;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
+import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import java.net.URL;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 
 /**
  *
  * @author jstefek
  */
-public class AbstractKeepSavedTest extends AbstractAjocadoTest {
+public class AbstractKeepSavedTest extends AbstractGrapheneTest {
 
     private static final JQueryLocator inputFirst = pjq("input[type=text]:first");
     private static final JQueryLocator submit = pjq("input[id$=submitButton]");

@@ -36,7 +36,7 @@ import java.util.List;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.bean.Model;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.model.Autocomplete;
@@ -52,7 +52,7 @@ import org.testng.annotations.Test;
  *
  * @version $Revision$
  */
-public class TestAutocompleteFormatting extends AbstractAjocadoTest {
+public class TestAutocompleteFormatting extends AbstractGrapheneTest {
 
     Autocomplete autocomplete = new Autocomplete();
     StringBuilder partialInput;

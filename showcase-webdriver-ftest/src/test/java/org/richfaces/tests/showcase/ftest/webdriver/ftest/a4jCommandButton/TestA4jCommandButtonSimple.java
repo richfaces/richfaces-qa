@@ -35,9 +35,8 @@ import org.testng.annotations.Test;
 public class TestA4jCommandButtonSimple extends AbstractWebDriverTest<CommandButtonPage> {
 
     @Test
-    public void testTypeAndSend() {
-        getPage().getInput().click();
-        getPage().getInput().sendKeys("something");
+    public void testTypeAndSend() throws InterruptedException {
+        sendKeysToInputCarefully(getPage().getInput(), "something");
 
         getPage().getButton().click();
 
@@ -47,6 +46,7 @@ public class TestA4jCommandButtonSimple extends AbstractWebDriverTest<CommandBut
         assertEquals(getPage().getOutput().getText(), "Hello something !", "After typing something into the input and clicking on the command button, the text should appear in the output area.");
     }
 
+    @Override
     protected CommandButtonPage createPage() {
         return new CommandButtonPage();
     }

@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -21,7 +20,7 @@
         <arquillian.testng.version>1.0.0.CR6</arquillian.testng.version>
         <arquillian.android.extension.version>1.0.0.Alpha1</arquillian.android.extension.version>
         <android.serial>aaa</android.serial>
-        <android.sdk.home></android.sdk.home>
+        <android.sdk.home />
         <selenium.version>2.9.0</selenium.version>
         <android.apk.version>2.6.0</android.apk.version>
         <android.apk.url>http://selenium.googlecode.com/files/android-server-${android.apk.version}.apk</android.apk.url>

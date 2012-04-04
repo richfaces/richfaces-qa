@@ -21,13 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jOutputPanel;
 
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.outputPanelAttributes;
-import static org.jboss.arquillian.ajocado.Ajocado.guardHttp;
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
-
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.textEquals;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.KEYDOWN;
@@ -38,11 +35,9 @@ import static org.jboss.arquillian.ajocado.dom.Event.MOUSEMOVE;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOUT;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOVER;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEUP;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.outputPanelAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -51,7 +46,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
@@ -64,7 +59,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22733 $
  */
-public class TestA4JOutputPanel extends AbstractAjocadoTest {
+public class TestA4JOutputPanel extends AbstractGrapheneTest {
 
     Event[] events = new Event[] { CLICK, DBLCLICK, KEYDOWN, KEYPRESS, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER,
             MOUSEUP };
@@ -78,8 +73,6 @@ public class TestA4JOutputPanel extends AbstractAjocadoTest {
     private JQueryLocator increaseCounterButton = pjq("input[id$=button]");
     private JQueryLocator outputDiv = pjq("div[id$=outputPanel]");
     private JQueryLocator outputSpan = pjq("span[id$=outputPanel]");
-    private JQueryLocator optionBlue = pjq("input[name$=styleClassInput][value=blue-background]");
-    private JQueryLocator optionGray = pjq("input[name$=styleClassInput][value=gray-background]");
 
     @Override
     public URL getTestUrl() {

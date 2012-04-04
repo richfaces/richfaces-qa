@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jStatus;
 
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.waitAjax;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
 
 import static org.testng.Assert.assertEquals;
 
@@ -30,14 +30,14 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
 import org.jboss.cheiron.halt.XHRHalter;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.annotations.BeforeMethod;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22684 $
  */
-public abstract class AbstracStatusTest extends AbstractAjocadoTest {
+public abstract class AbstracStatusTest extends AbstractGrapheneTest {
     JQueryLocator button1 = pjq("input[id$=button1]");
     JQueryLocator button2 = pjq("input[id$=button2]");
     JQueryLocator buttonError = pjq("input[id$=button3]");

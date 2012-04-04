@@ -21,9 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Ajocado.textEquals;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
+import static org.jboss.arquillian.ajocado.Graphene.textEquals;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
@@ -39,7 +39,7 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 
@@ -49,7 +49,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22636 $
  */
-public class TestRichInplaceInputFAjax extends AbstractAjocadoTest {
+public class TestRichInplaceInputFAjax extends AbstractGrapheneTest {
 
     private JQueryLocator inplaceInput = pjq("span[id$=inplaceInput]");
     private JQueryLocator label = pjq("span.rf-ii-lbl");

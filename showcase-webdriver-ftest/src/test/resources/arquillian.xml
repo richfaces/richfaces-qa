@@ -47,7 +47,6 @@ http://www.fsf.org. -->
         <property name="force">true</property>
         <property name="apiLevel">8</property>
         <property name="avdName">showcase-webdriver-ftest</property>
-        <property name="emulatorBootupTimeoutInSeconds">180000</property>
         <property name="emulatorBootupTimeoutInSeconds">180</property>
 <!--         <property name="emulatorOptions">-no-window</property> -->
     </extension>

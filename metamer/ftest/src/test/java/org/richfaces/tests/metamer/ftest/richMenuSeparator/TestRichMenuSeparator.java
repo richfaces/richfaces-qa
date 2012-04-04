@@ -28,7 +28,7 @@ import static org.testng.Assert.assertEquals;
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractAjocadoTest;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 
@@ -38,7 +38,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22407 $
  */
-public class TestRichMenuSeparator extends AbstractAjocadoTest {
+public class TestRichMenuSeparator extends AbstractGrapheneTest {
 
     private JQueryLocator separators = pjq("div.rf-ddm-sep");
 

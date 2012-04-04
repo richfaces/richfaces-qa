@@ -21,9 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richInputNumberSpinner;
 
-import static org.jboss.arquillian.ajocado.Ajocado.guardXhr;
-import static org.jboss.arquillian.ajocado.Ajocado.retrieveText;
-import static org.jboss.arquillian.ajocado.Ajocado.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
@@ -159,7 +159,7 @@ public class TestRichSpinner extends AbstractSpinnerTest {
         selenium.click(selectOption);
         selenium.waitForPageToLoad();
 
-        AttributeLocator disabledAttribute = input.getAttribute(new Attribute("disabled"));
+        AttributeLocator<?> disabledAttribute = input.getAttribute(new Attribute("disabled"));
         assertEquals(selenium.getAttribute(disabledAttribute), "true", "Input should be disabled.");
 
         assertFalse(selenium.isElementPresent(up), "Arrow up should be disabled.");
@@ -178,7 +178,7 @@ public class TestRichSpinner extends AbstractSpinnerTest {
         selenium.click(selectOption);
         selenium.waitForPageToLoad();
 
-        AttributeLocator readonlyAttribute = input.getAttribute(new Attribute("readonly"));
+        AttributeLocator<?> readonlyAttribute = input.getAttribute(new Attribute("readonly"));
         assertEquals(selenium.getAttribute(readonlyAttribute), "true", "Input should be read-only.");
 
         assertTrue(selenium.isElementPresent(up), "Arrow up should be displayed.");
@@ -212,7 +212,7 @@ public class TestRichSpinner extends AbstractSpinnerTest {
 
         selenium.type(selectOption, "3");
         selenium.waitForPageToLoad();
-        AttributeLocator sizeAttribute = input.getAttribute(new Attribute("size"));
+        AttributeLocator<?> sizeAttribute = input.getAttribute(new Attribute("size"));
         assertEquals(selenium.getAttribute(sizeAttribute), "3", "Input's size attribute.");
 
         selenium.type(selectOption, "40");
