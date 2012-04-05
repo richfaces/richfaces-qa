@@ -81,10 +81,14 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.faces.event.PhaseId;
+import javax.persistence.criteria.CriteriaBuilder.Case;
+
+import net.sourceforge.htmlunit.corejs.javascript.tools.debugger.Dim;
 
 import org.jboss.arquillian.ajocado.css.CssProperty;
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
+import org.jboss.arquillian.ajocado.geometry.Dimension;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
@@ -358,6 +362,64 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
                     + " should be enabled.");
             }
         }
+    }
+
+    @Test
+    public void testDirection() throws Exception {
+        String[] directions = {"auto", "bottomLeft", "bottomRight", "topLeft", "topRight"};
+
+        int inputX = selenium.getElementPosition(input).getX();
+        int inputY = selenium.getElementPosition(input).getY();
+        // System.out.println(" ### position of input: [" + inputX + ", " + inputY + "]");
+
+        Dimension inputDim = selenium.getElementDimension(input);
+        // System.out.println(" ### dimension input: height = " + inputDim.getHeight() + ", width = " + inputDim.getWidth());
+
+        selenium.click(input);
+        Dimension popupDim = selenium.getElementDimension(popup);
+        // System.out.println(" ### dimension popup: height = " + popupDim.getHeight() + ", width = " + popupDim.getWidth());
+
+        for (int i=0; i < directions.length; ++i) {
+            calendarAttributes.set(CalendarAttributes.direction, directions[i]);
+            selenium.click(input);
+
+            int x = selenium.getElementPosition(popup).getX();
+            int y = selenium.getElementPosition(popup).getY();
+
+            // System.out.println(" direction: " + directions[i]);
+            // System.out.println("   ### position: [" + x +  ", " + y + "]");
+
+            switch (i) {
+                case 0: // auto
+                    assertEquals(x, inputX);
+                    assertEquals(y, inputY + inputDim.getHeight() - 1);
+                    break;
+
+                case 1: // bottomLeft
+                    assertEquals(x, inputX - popupDim.getWidth() + 2);
+                    assertEquals(y, inputY + (inputDim.getHeight() - 1));
+                    break;
+
+                case 2: // bottomRight
+                    assertEquals(x, inputX);
+                    assertEquals(y, inputY + inputDim.getHeight() - 1);
+                    break;
+
+                case 3: // topLeft
+                    assertEquals(x, inputX - popupDim.getWidth() + 2);
+                    assertEquals(y, inputY - popupDim.getHeight() + inputDim.getHeight() + 1);
+                    break;
+
+                case 4: // topRight
+                    assertEquals(x, inputX);
+                    assertEquals(y, inputY - popupDim.getHeight() + inputDim.getHeight() + 1);
+                    break;
+
+                default:
+                    throw new Exception("Incorrectly handled switch!");
+            }
+        }
+
     }
 
     @Test
