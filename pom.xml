@@ -49,6 +49,7 @@
         <arquillian.graphene-testng.version>1.0.0.Final</arquillian.graphene-testng.version>
         <arquillian.jboss-as6.version>1.0.0.CR3</arquillian.jboss-as6.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
+        <shrinkwrap.descriptors.version>1.1.0-beta-1</shrinkwrap.descriptors.version>
 
         <version.selenium>2.19.0</version.selenium>
         <version.selenium.server>2.19.0</version.selenium.server>
@@ -337,7 +338,7 @@
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
-                <version>1.0.0.CR7</version>
+                <version>1.0.0.Final</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -347,6 +348,16 @@
                 <version>${arquillian.drone.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+                <artifactId>shrinkwrap-descriptors-api</artifactId>
+                <version>${shrinkwrap.descriptors.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+                <artifactId>shrinkwrap-descriptors-impl</artifactId>
+                <version>${shrinkwrap.descriptors.version}</version>
             </dependency>
             
             <!-- Selenium Server -->
