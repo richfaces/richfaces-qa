@@ -26,7 +26,7 @@
 
     <properties>
         <jetty.port>8080</jetty.port>
-        <version.hornetq>2.2.11.Final</version.hornetq>
+        <version.hornetq>2.2.13.Final</version.hornetq>
     </properties>
 
     <dependencies>
