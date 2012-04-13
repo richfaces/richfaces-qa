@@ -31,10 +31,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="links">
 
-            <metamer:testPageLink id="simple" outcome="simple" value="Simple">
-                Page that contains an <b>a4j:status</b> placed inside a form and input boxes for all its attributes.
+            <metamer:testPageLink id="facets" outcome="facets" value="Facets">
+                Page that contains an <b>a4j:status</b> placed inside a form and input boxes for all its attributes. Text showing process of request is using facets (component attributes for text messages won't work).
             </metamer:testPageLink>
 
+            <metamer:testPageLink id="withoutFacets" outcome="withoutFacets" value="WithoutFacets">
+                Page that contains an <b>a4j:status</b> placed inside a form and input boxes for all its attributes. Text showing process of request is using component attributes.
+            </metamer:testPageLink>            
+            
             <metamer:testPageLink id="viewUsage" outcome="viewUsage" value="Common Status for View">
                 Page that contains an <b>a4j:status</b> placed ouside of form so that it is common for whole view.
             </metamer:testPageLink>

@@ -42,7 +42,7 @@ public class TestFacets extends AbstracStatusTest {
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jStatus/simple.xhtml");
+        return buildUrl(contextPath, "faces/components/a4jStatus/facets.xhtml");
     }
 
     @Test
