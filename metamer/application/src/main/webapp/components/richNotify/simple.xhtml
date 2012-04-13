@@ -39,63 +39,61 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-        <a4j:outputPanel>
+            <a4j:outputPanel>
 
-            <rich:notifyStack id="exampleNotifyStack" direction="#{notifyBean.attributesNotifyStackFirst['direction'].value}"
-                              method="#{notifyBean.attributesNotifyStackFirst['method'].value}"
-                              position="#{notifyBean.attributesNotifyStackFirst['position'].value}"
-                              rendered="#{notifyBean.attributesNotifyStackFirst['rendered'].value}"
-                              styleClass="#{notifyBean.attributesNotifyStackFirst['styleClass'].value}" />
-            <rich:notify animationSpeed="#{notifyBean.attributesNotify['animationSpeed'].value}"
-                         appearAnimation="#{notifyBean.attributesNotify['appearAnimation'].value}"
-                         delay="#{notifyBean.attributesNotify['delay'].value}" detail="#{notifyBean.attributesNotify['detail'].value}"
-                         hideAnimation="#{notifyBean.attributesNotify['hideAnimation'].value}"
-                         nonblocking="#{notifyBean.attributesNotify['nonBlocking'].value}"
-                         nonblockingOpacity="#{notifyBean.attributesNotify['nonBlockingOpacity'].value}"
-                         onclick="#{notifyBean.attributesNotify['onclick'].value}"
-                         ondblclick="#{notifyBean.attributesNotify['ondblclick'].value}"
-                         onkeydown="#{notifyBean.attributesNotify['onkeydown'].value}"
-                         onkeypress="#{notifyBean.attributesNotify['onkeypress'].value}"
-                         onkeyup="#{notifyBean.attributesNotify['onkeyup'].value}"
-                         onmousedown="#{notifyBean.attributesNotify['onmousedown'].value}"
-                         onmousemove="#{notifyBean.attributesNotify['onmousemove'].value}"
-                         onmouseout="#{notifyBean.attributesNotify['onmouseout'].value}"
-                         onmouseover="#{notifyBean.attributesNotify['onmouseover'].value}"
-                         onmouseup="#{notifyBean.attributesNotify['onmouseup'].value}"
-                         rendered="#{notifyBean.attributesNotify['rendered'].value}"
-                         showCloseButton="#{notifyBean.attributesNotify['showCloseButton'].value}"
-                         showHistory="#{notifyBean.attributesNotify['showHistory'].value}"
-                         showShadow="#{notifyBean.attributesNotify['showShadow'].value}" stack="exampleNotifyStack"
-                         stayTime="#{notifyBean.attributesNotify['stayTime'].value}"
-                         sticky="#{notifyBean.attributesNotify['sticky'].value}"
-                         styleClass="#{notifyBean.attributesNotify['styleClass'].value}"
-                         summary="#{notifyBean.attributesNotify['summary'].value}" />
-            <rich:notifyMessages animationSpeed="#{notifyBean.attributesNotifyMessages['animationSpeed'].value}"
-                                 appearAnimation="#{notifyBean.attributesNotifyMessages['appearAnimation'].value}"
-                                 delay="#{notifyBean.attributesNotifyMessages['delay'].value}" execute="{@form}"
-                                 for="#{notifyBean.attributesNotifyMessages['for'].value}"
-                                 globalOnly="#{notifyBean.attributesNotifyMessages['delay'].value}"
-                                 hideAnimation="#{notifyBean.attributesNotifyMessages['hideAnimation'].value}"
-                                 keepTransient="#{notifyBean.attributesNotifyMessages['keepTransient'].value}"
-                                 interval="#{notifyBean.attributesNotifyMessages['interval'].value}"
-                                 nonblocking="#{notifyBean.attributesNotifyMessages['nonBlocking'].value}"
-                                 nonblockingOpacity="#{notifyBean.attributesNotifyMessages['nonBlockingOpacity'].value}"
-                                 rendered="#{notifyBean.attributesNotifyMessages['rendered'].value}"
-                                 showCloseButton="#{notifyBean.attributesNotifyMessages['showCloseButton'].value}"
-                                 showDetail="#{notifyBean.attributesNotifyMessages['showDetail'].value}"
-                                 showHistory="#{notifyBean.attributesNotifyMessages['showHistory'].value}"
-                                 showShadow="#{notifyBean.attributesNotifyMessages['showShadow'].value}"
-                                 showSummary="#{notifyBean.attributesNotifyMessages['showSummary'].value}" stack="exampleNotifyStack"
-                                 stayTime="#{notifyBean.attributesNotifyMessages['stayTime'].value}"
-                                 sticky="#{notifyBean.attributesNotifyMessages['sticky'].value}"
-                                 styleClass="#{notifyBean.attributesNotifyMessages['styleClass'].value}" />
-        </a4j:outputPanel>
-        <h:form>
-                <a4j:commandButton id="produceError" value="Produce Error" action="#{notifyBean.produceError}" execute="@form" />
-                <a4j:commandButton id="produceFatal" value="Produce Fatal" action="#{notifyBean.produceFatal}" execute="@form"/>
-                <a4j:commandButton id="produceInfo" value="Produce Info" action="#{notifyBean.produceInfo}" execute="@form"/>
-                <a4j:commandButton id="produceWarn" value="Produce Warn" action="#{notifyBean.produceWarn}" execute="@form"/>
-            </h:form>
+                <rich:notifyStack id="exampleNotifyStack" direction="#{notifyBean.attributesNotifyStackFirst['direction'].value}"
+                                  method="#{notifyBean.attributesNotifyStackFirst['method'].value}"
+                                  position="#{notifyBean.attributesNotifyStackFirst['position'].value}"
+                                  rendered="#{notifyBean.attributesNotifyStackFirst['rendered'].value}"
+                                  styleClass="#{notifyBean.attributesNotifyStackFirst['styleClass'].value}" />
+                <rich:notify animationSpeed="#{notifyBean.attributesNotify['animationSpeed'].value}"
+                             appearAnimation="#{notifyBean.attributesNotify['appearAnimation'].value}"
+                             delay="#{notifyBean.attributesNotify['delay'].value}" detail="#{notifyBean.attributesNotify['detail'].value}"
+                             hideAnimation="#{notifyBean.attributesNotify['hideAnimation'].value}"
+                             nonblocking="#{notifyBean.attributesNotify['nonBlocking'].value}"
+                             nonblockingOpacity="#{notifyBean.attributesNotify['nonBlockingOpacity'].value}"
+                             onclick="#{notifyBean.attributesNotify['onclick'].value}"
+                             ondblclick="#{notifyBean.attributesNotify['ondblclick'].value}"
+                             onkeydown="#{notifyBean.attributesNotify['onkeydown'].value}"
+                             onkeypress="#{notifyBean.attributesNotify['onkeypress'].value}"
+                             onkeyup="#{notifyBean.attributesNotify['onkeyup'].value}"
+                             onmousedown="#{notifyBean.attributesNotify['onmousedown'].value}"
+                             onmousemove="#{notifyBean.attributesNotify['onmousemove'].value}"
+                             onmouseout="#{notifyBean.attributesNotify['onmouseout'].value}"
+                             onmouseover="#{notifyBean.attributesNotify['onmouseover'].value}"
+                             onmouseup="#{notifyBean.attributesNotify['onmouseup'].value}"
+                             rendered="#{notifyBean.attributesNotify['rendered'].value}"
+                             showCloseButton="#{notifyBean.attributesNotify['showCloseButton'].value}"
+                             showHistory="#{notifyBean.attributesNotify['showHistory'].value}"
+                             showShadow="#{notifyBean.attributesNotify['showShadow'].value}" stack="exampleNotifyStack"
+                             stayTime="#{notifyBean.attributesNotify['stayTime'].value}"
+                             sticky="#{notifyBean.attributesNotify['sticky'].value}"
+                             styleClass="#{notifyBean.attributesNotify['styleClass'].value}"
+                             summary="#{notifyBean.attributesNotify['summary'].value}" />
+                <rich:notifyMessages animationSpeed="#{notifyBean.attributesNotifyMessages['animationSpeed'].value}"
+                                     appearAnimation="#{notifyBean.attributesNotifyMessages['appearAnimation'].value}"
+                                     delay="#{notifyBean.attributesNotifyMessages['delay'].value}" execute="{@form}"
+                                     for="#{notifyBean.attributesNotifyMessages['for'].value}"
+                                     globalOnly="#{notifyBean.attributesNotifyMessages['delay'].value}"
+                                     hideAnimation="#{notifyBean.attributesNotifyMessages['hideAnimation'].value}"
+                                     keepTransient="#{notifyBean.attributesNotifyMessages['keepTransient'].value}"
+                                     interval="#{notifyBean.attributesNotifyMessages['interval'].value}"
+                                     nonblocking="#{notifyBean.attributesNotifyMessages['nonBlocking'].value}"
+                                     nonblockingOpacity="#{notifyBean.attributesNotifyMessages['nonBlockingOpacity'].value}"
+                                     rendered="#{notifyBean.attributesNotifyMessages['rendered'].value}"
+                                     showCloseButton="#{notifyBean.attributesNotifyMessages['showCloseButton'].value}"
+                                     showDetail="#{notifyBean.attributesNotifyMessages['showDetail'].value}"
+                                     showHistory="#{notifyBean.attributesNotifyMessages['showHistory'].value}"
+                                     showShadow="#{notifyBean.attributesNotifyMessages['showShadow'].value}"
+                                     showSummary="#{notifyBean.attributesNotifyMessages['showSummary'].value}" stack="exampleNotifyStack"
+                                     stayTime="#{notifyBean.attributesNotifyMessages['stayTime'].value}"
+                                     sticky="#{notifyBean.attributesNotifyMessages['sticky'].value}"
+                                     styleClass="#{notifyBean.attributesNotifyMessages['styleClass'].value}" />
+            </a4j:outputPanel>
+            <a4j:commandButton id="produceError" value="Produce Error" action="#{notifyBean.produceError}" execute="@form" />
+            <a4j:commandButton id="produceFatal" value="Produce Fatal" action="#{notifyBean.produceFatal}" execute="@form"/>
+            <a4j:commandButton id="produceInfo" value="Produce Info" action="#{notifyBean.produceInfo}" execute="@form"/>
+            <a4j:commandButton id="produceWarn" value="Produce Warn" action="#{notifyBean.produceWarn}" execute="@form"/>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
