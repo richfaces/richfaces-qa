@@ -29,10 +29,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.richfaces.component.AbstractNotify;
-import org.richfaces.component.AbstractNotifyMessages;
-import org.richfaces.component.AbstractNotifyStack;
 import org.richfaces.component.NotifyAttributes;
+import org.richfaces.component.UINotify;
+import org.richfaces.component.UINotifyMessages;
+import org.richfaces.component.UINotifyStack;
 import org.richfaces.tests.metamer.Attributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,18 +63,36 @@ public class RichNotifyBean implements Serializable {
     public void init() {
         logger = LoggerFactory.getLogger(getClass());
         logger.debug("initializing bean " + getClass().getName());
-        attributesNotify = Attributes.getComponentAttributesFromClass(AbstractNotify.class, getClass());
-        attributesNotifyMessages = Attributes.getComponentAttributesFromClass(AbstractNotifyMessages.class, getClass());
-        attributesNotifyStackFirst = Attributes.getComponentAttributesFromClass(AbstractNotifyStack.class, getClass());
-        attributesNotifyStackSecond = Attributes.getComponentAttributesFromClass(AbstractNotifyStack.class, getClass());
+        attributesNotify = Attributes.getComponentAttributesFromFacesConfig(UINotify.class, getClass());
+        attributesNotifyMessages = Attributes.getComponentAttributesFromFacesConfig(UINotifyMessages.class, getClass());
+        attributesNotifyStackFirst = Attributes.getComponentAttributesFromFacesConfig(UINotifyStack.class, getClass());
+        attributesNotifyStackSecond = Attributes.getComponentAttributesFromFacesConfig(UINotifyStack.class, getClass());
         attributesBean = Attributes.getEmptyAttributes(getClass());
 
-        attributesNotify.putAll(getGeneralAttributes());
+        // FIXME these attributes should be in the list after fixing RF-12144
+        attributesNotify.setAttribute("showHistory", false);
+        attributesNotify.get("showHistory").setType(Boolean.class);
+
+        attributesNotify.setAttribute("delay", null);
         attributesNotify.setAttribute("detail", DEFAULT_DETAIL);
         attributesNotify.setAttribute("rendered", true);
+        attributesNotify.setAttribute("showCloseButton", true);
+        attributesNotify.setAttribute("stayTime", 100000);
         attributesNotify.setAttribute("summary", DEFAULT_SUMMARY);
+        attributesNotify.remove("stack");
 
-        attributesNotifyMessages.putAll(getGeneralAttributes());
+        // FIXME these attributes should be in the list after fixing RF-12144
+        attributesNotifyMessages.setAttribute("showHistory", false);
+        attributesNotifyMessages.get("showHistory").setType(Boolean.class);
+
+        attributesNotifyMessages.setAttribute("animationSpeed", 100);
+        attributesNotifyMessages.setAttribute("appearAnimation", "fade");
+        attributesNotifyMessages.setAttribute("hideAnimation", "show");
+        attributesNotifyMessages.setAttribute("showCloseButton", true);
+        attributesNotifyMessages.setAttribute("stayTime", 100000);
+        attributesNotifyMessages.remove("stack");
+
+        attributesNotifyMessages.setAttribute("delay", null);
         attributesNotifyMessages.setAttribute("interval", 800);
         attributesNotifyMessages.setAttribute("showSummary", true);
         attributesNotifyMessages.setAttribute("rendered", true);
