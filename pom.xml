@@ -8,7 +8,8 @@
     General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this 
     software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the 
     FSF site: http://www.fsf.org. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -54,6 +55,7 @@
 
         <version.selenium>2.21.0</version.selenium>
         <version.selenium.server>2.21.0</version.selenium.server>
+        <version.slf4j.jbossas6>1.6.1</version.slf4j.jbossas6>
 
         <version.jacoco.plugin>0.5.6.201201232323</version.jacoco.plugin>
 
@@ -215,7 +217,8 @@
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
-                    <preparationGoals>clean verify -Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces -DskipTests=true</preparationGoals>
+                    <preparationGoals>clean verify -Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces
+                        -DskipTests=true</preparationGoals>
                     <goals>clean deploy -Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces -DskipTests=true</goals>
                 </configuration>
             </plugin>
@@ -443,6 +446,11 @@
                     <version>${version.jbossas6}</version>
                     <type>pom</type>
                 </dependency>
+                <dependency>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                    <version>${version.slf4j.jbossas6}</version>
+                </dependency>
             </dependencies>
             <build>
                 <plugins>
@@ -481,6 +489,28 @@
                             </environmentVariables>
                         </configuration>
                     </plugin>
+                    <!-- workaround for RF-11983-->
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy HornetQ configuration</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${jboss6Home}/server/default/deploy/hornetq</outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/test/resources/jboss6</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -501,6 +531,11 @@
                     <artifactId>jboss-as-client</artifactId>
                     <version>${version.jbossas6}</version>
                     <type>pom</type>
+                </dependency>
+                <dependency>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                    <version>${version.slf4j.jbossas6}</version>
                 </dependency>
             </dependencies>
             <build>
@@ -537,6 +572,23 @@
                                         <resource>
                                             <directory>${basedir}/src/test/resources/https</directory>
                                             <filtering>true</filtering>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <!-- workaround for RF-11983-->
+                            <execution>
+                                <id>copy HornetQ configuration</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${jboss6Home}/server/default/deploy/hornetq</outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/test/resources/jboss6</directory>
                                         </resource>
                                     </resources>
                                 </configuration>
