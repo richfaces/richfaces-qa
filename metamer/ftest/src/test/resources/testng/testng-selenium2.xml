@@ -10,6 +10,7 @@
         </groups>
 
         <classes>
+            <class name="org.richfaces.tests.metamer.ftest.richEditor.TestRichEditorWithTyping" />
             <class name="org.richfaces.tests.metamer.ftest.richFileUpload.TestRichFileUploadSe2" />
         </classes>
     </test>
