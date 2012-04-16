@@ -44,6 +44,7 @@
         <tomcat7Zip>path/to/your/tomcat/distribution/zip</tomcat7Zip>
 
         <!-- arquillian versions -->
+        <arquillian.bom.version>1.0.0.Final</arquillian.bom.version>
         <arquillian.tomcat.version>1.0.0.CR3</arquillian.tomcat.version>
         <arquillian.drone.version>1.0.0.Final</arquillian.drone.version>
         <arquillian.graphene-testng.version>1.0.0.Final</arquillian.graphene-testng.version>
@@ -338,7 +339,7 @@
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
-                <version>1.0.0.Final</version>
+                <version>${arquillian.bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
