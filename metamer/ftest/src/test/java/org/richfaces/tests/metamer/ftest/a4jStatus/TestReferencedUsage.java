@@ -93,8 +93,9 @@ public class TestReferencedUsage extends AbstracStatusTest {
     }
 
     /**
-     * @Test TODO: selenium is causing 3 requests, but manually we triggers 2 requests (use Firebug to reproduce)
+     * TODO: Selenium is causing 3 requests, but manually we triggers 2 requests (use Firebug to reproduce)
      */
+    // @Test
     public void testClickFirstButtonThenSecondButtonThenAgainFirstButtonImmediately() {
         XHRHalter.enable();
         selenium.click(button1);

@@ -159,7 +159,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Factory method for creating instances of class Attributes. Attributes are loaded from class.
      *
-     * @param clazz
+     * @param interfaze
      *            general class object whose attributes will be stored
      * @param beanClass
      *            class object of a managed bean
@@ -218,7 +218,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Factory method for creating instances of class Attributes.
      *
-     * @param behaviorClass
+     * @param componentClass
      *            class object of a JSF behavior whose attributes will be stored
      * @param beanClass
      *            class object of a managed bean
@@ -327,16 +327,10 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         attributes.clear();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public boolean containsKey(String key) {
         return attributes.containsKey(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public boolean containsValue(String value) {
         return attributes.containsKey(value);
     }
@@ -348,9 +342,6 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         return attributes.entrySet();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Attribute get(String key) {
         return attributes.get(key);
     }

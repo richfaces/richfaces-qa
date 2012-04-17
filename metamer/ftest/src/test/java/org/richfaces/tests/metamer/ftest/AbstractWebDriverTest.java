@@ -59,7 +59,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      */
     @BeforeMethod(alwaysRun = true)
     public void loadPage(Object[] templates) {
-//        addFirebug();
+        //        addFirebug();
         if (driver == null) {
             throw new SkipException("webDriver isn't initialized");
         }
@@ -70,26 +70,26 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     /**
      * Adds firebug to firefox.
      */
-//    public void addFirebug() {
-//
-//        if (first && driver instanceof FirefoxDriver) {
-//            File file = null;
-//            try {
-//                file = new File(AbstractWebDriverTest.class.getResource("firebug-1.9.1.xpi").toURI());
-//            } catch (Exception ex) {
-//                ex.printStackTrace();
-//            }
-//            FirefoxProfile firefoxProfile = new FirefoxProfile();
-//            try {
-//                firefoxProfile.addExtension(file);
-//                firefoxProfile.setPreference("extensions.firebug.currentVersion", "1.9.1"); // Avoid startup screen
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
-//            driver = new FirefoxDriver(firefoxProfile);
-//            first = false;
-//        }
-//    }
+    //    public void addFirebug() {
+    //
+    //        if (first && driver instanceof FirefoxDriver) {
+    //            File file = null;
+    //            try {
+    //                file = new File(AbstractWebDriverTest.class.getResource("firebug-1.9.1.xpi").toURI());
+    //            } catch (Exception ex) {
+    //                ex.printStackTrace();
+    //            }
+    //            FirefoxProfile firefoxProfile = new FirefoxProfile();
+    //            try {
+    //                firefoxProfile.addExtension(file);
+    //                firefoxProfile.setPreference("extensions.firebug.currentVersion", "1.9.1"); // Avoid startup screen
+    //            } catch (IOException ex) {
+    //                ex.printStackTrace();
+    //            }
+    //            driver = new FirefoxDriver(firefoxProfile);
+    //            first = false;
+    //        }
+    //    }
 
     /**
      * Waiting.
@@ -145,10 +145,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     /**
      * Waits for list of WebElements by the specified selector. Expects 1 WebElement.
      *
-     * @param by
-     *            selenium locator of elements
-     * @param expectedSize
-     *            expected list size
+     * @param cssSelector
+     *            CSS selector
      * @return TimeoutException if found nothing or list with found elements.
      */
     public List<WebElement> waitForWEList(String cssSelector) {
@@ -238,7 +236,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      *            css selector
      * @param excpectedString
      *            expected text that will WebElement.getText() return
-     * @return
+     * @return WebElement with specific css selector which contains expected text
      */
     public WebElement waitForWEWithExpectedText(String cssSelector, String excpectedString) {
         return waitForAvailableWE(By.cssSelector(cssSelector), WAIT_TIME, new ExpectedStringCondition(excpectedString));
@@ -249,7 +247,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      *
      * @param cssSelector
      *            css selector
-     * @return
+     * @return visible and enabled web element with specified css selector
      */
     public WebElement waitForEnabledVisibleWE(String cssSelector) {
         return waitForAvailableWE(By.cssSelector(cssSelector), WAIT_TIME, new VisibleElementCondition(),
@@ -261,7 +259,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      *
      * @param cssSelector
      *            css selector
-     * @return
+     * @return WebElement with specific css selector which is visible
      */
     public WebElement waitForVisibleWE(String cssSelector) {
         return waitForAvailableWE(By.cssSelector(cssSelector), WAIT_TIME, new VisibleElementCondition());
@@ -272,7 +270,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      *
      * @param cssSelector
      *            css selector
-     * @return
+     * @return WebElement with specific css selector which is enabled
      */
     public WebElement waitForEnabledWE(String cssSelector) {
         return waitForAvailableWE(By.cssSelector(cssSelector), WAIT_TIME, new EnabledElementCondition());

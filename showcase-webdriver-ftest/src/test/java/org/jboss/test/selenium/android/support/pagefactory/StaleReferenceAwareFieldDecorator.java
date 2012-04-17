@@ -35,12 +35,14 @@ import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler;
 
 /**
- * Decorates {@link WebElement} to try to avoid throwing {@link StaleElementReferenceException}. When the exception is
- * thrown, the mechanism tries to locate element again.
+ * Decorates {@link org.openqa.selenium.WebElement} to try to avoid throwing
+ * {@link org.openqa.selenium.StaleElementReferenceException}. When the exception is thrown, the mechanism tries to
+ * locate element again.
  *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  *
- * @see http://www.brimllc.com/2011/01/extending-selenium-2-0-webdriver-to-support-ajax/
+ * @see <a href="http://www.brimllc.com/2011/01/extending-selenium-2-0-webdriver-to-support-ajax"> Extending Selenium
+ *      2.0 WebDriver to Support AJAX</a>
  */
 public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
 

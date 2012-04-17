@@ -31,7 +31,7 @@ public abstract class AbstractTest extends Arquillian {
     private TestConfiguration configuration;
 
     /**
-     * Creates a new instance of {@link AbstractShowcaseTest} with
+     * Creates a new instance of AbstractTest with
      * the given configuration
      *
      * @param configuration

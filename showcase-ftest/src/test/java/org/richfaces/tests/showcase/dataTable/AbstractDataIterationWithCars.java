@@ -200,7 +200,7 @@ public class AbstractDataIterationWithCars extends AbstractGrapheneTest {
      * @param row
      * @param startingIndexOfTd
      * @param endIndexOfTd
-     * @return
+     * @return car
      */
     public Car retrieveCarFromRow(JQueryLocator row, int startingIndexOfTd, int endIndexOfTd) {
 

@@ -30,7 +30,7 @@ import javax.validation.constraints.Size;
  * Helper bean for testing JSR-303.
  *
  * This bean doesn't extend the {@link org.richfaces.tests.metamer.validation.Validable}
- * because of the {@link https://issues.jboss.org/browse/RF-11710}.
+ * because of the <a href="https://issues.jboss.org/browse/RF-11710">RF-11710</a>.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>

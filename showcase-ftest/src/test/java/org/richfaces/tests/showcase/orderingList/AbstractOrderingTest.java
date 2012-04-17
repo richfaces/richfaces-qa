@@ -31,7 +31,6 @@ import org.richfaces.tests.showcase.AbstractGrapheneTest;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
- * @version $Revision$
  */
 public class AbstractOrderingTest extends AbstractGrapheneTest {
 
@@ -55,7 +54,6 @@ public class AbstractOrderingTest extends AbstractGrapheneTest {
      */
 
     /**
-     *
      * @param optionLocator
      *            this should be something that determines all options, there should be place for calling method format
      *            on that so it will be possible to add there e.g. :eq(1) or :last JQuery selector parameter
@@ -69,11 +67,10 @@ public class AbstractOrderingTest extends AbstractGrapheneTest {
     }
 
     /**
-     *
      * @param optionLocator
      *            this should be something that determines all options, there should be place for calling method format
      *            on that so it will be possible to add there e.g. :eq(1) or :last JQuery selector parameter
-     * @param firstButton
+     * @param lastButton
      */
     protected void checkLastButton(JQueryLocator optionLocator, JQueryLocator lastButton) {
 
@@ -87,7 +84,7 @@ public class AbstractOrderingTest extends AbstractGrapheneTest {
      * @param optionLocator
      *            this should be something that determines all options, there should be place for calling method format
      *            on that so it will be possible to add there e.g. :eq(1) or :last JQuery selector parameter
-     * @param firstButton
+     * @param upButton
      */
     protected void checkUpButton(JQueryLocator optionLocator, JQueryLocator upButton) {
 
@@ -101,7 +98,7 @@ public class AbstractOrderingTest extends AbstractGrapheneTest {
      * @param optionLocator
      *            this should be something that determines all options, there should be place for calling method format
      *            on that so it will be possible to add there e.g. :eq(1) or :last JQuery selector parameter
-     * @param firstButton
+     * @param downButton
      */
     protected void checkDownButton(JQueryLocator optionLocator, JQueryLocator downButton) {
 

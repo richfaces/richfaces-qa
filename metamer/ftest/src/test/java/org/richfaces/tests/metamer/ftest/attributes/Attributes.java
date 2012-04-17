@@ -124,7 +124,7 @@ public class Attributes<T extends AttributeEnum>  {
     /**
      * Retrieve current attribute value
      * @param attribute
-     * @return
+     * @return current attribute value
      */
     public String get(T attribute) {
         return getProperty(attribute.toString());

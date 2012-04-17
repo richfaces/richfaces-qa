@@ -194,10 +194,10 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
      * @param attribute
      *            name of the attribute that will be set (e.g. style, headerStyle, itemContentStyle)
      */
-    protected void testStyle(ElementLocator<?> element, BasicAttributes attr) {
+    protected void testStyle(ElementLocator<?> element, BasicAttributes attribute) {
         final String value = "background-color: yellow; font-size: 1.5em;";
 
-        basicAttributes.set(attr, value);
+        basicAttributes.set(attribute, value);
 
         AttributeLocator<?> styleAttr = element.getAttribute(Attribute.STYLE);
         assertTrue(selenium.getAttribute(styleAttr).contains(value), "Attribute style should contain \"" + value + "\"");
@@ -209,8 +209,6 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
      *
      * @param element
      *            locator of tested element
-     * @param attribute
-     *            name of the attribute that will be set (e.g. style, headerStyle, itemContentStyle)
      */
     protected void testStyle(ElementLocator<?> element) {
         testStyle(element, BasicAttributes.style);
@@ -241,8 +239,6 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
      *
      * @param element
      *            locator of tested element
-     * @param attribute
-     *            name of the attribute that will be set (e.g. styleClass, headerClass, itemContentClass)
      */
     protected void testStyleClass(ExtendedLocator<JQueryLocator> element) {
         testStyleClass(element, BasicAttributes.styleClass);

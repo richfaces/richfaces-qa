@@ -32,7 +32,6 @@ import org.jboss.arquillian.ajocado.request.RequestType;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision$
  */
 public final class RequestTypeModelGuard implements MethodHandler {
     private RequestGuardInterceptor guard;
@@ -71,7 +70,7 @@ public final class RequestTypeModelGuard implements MethodHandler {
     /**
      * Shortcut for registering a XMLHttpRequest on given selenium object.
      *
-     * @param selenium
+     * @param model
      *            where should be registered XMLHttpRequest guard
      * @return the selenium guarded to use XMLHttpRequest
      */
@@ -82,7 +81,7 @@ public final class RequestTypeModelGuard implements MethodHandler {
     /**
      * Shortcut for registering a regular HTTP request on given selenium object.
      *
-     * @param selenium
+     * @param model
      *            where should be registered regular HTTP request guard
      * @return the selenium guarded to use regular HTTP requests
      */
@@ -93,7 +92,7 @@ public final class RequestTypeModelGuard implements MethodHandler {
     /**
      * Shortcut for registering a guard for no request on given selenium object.
      *
-     * @param selenium
+     * @param model
      *            where should be registered no request guard
      * @return the selenium guarded to use no request during interaction
      */
@@ -104,7 +103,7 @@ public final class RequestTypeModelGuard implements MethodHandler {
     /**
      * Shortcut for registering guard waiting for interception of XHR type request
      *
-     * @param selenium
+     * @param model
      *            where should be the guard registered
      * @return the selenium waiting for interception of XHR type request
      */
@@ -115,7 +114,7 @@ public final class RequestTypeModelGuard implements MethodHandler {
     /**
      * Shortcut for registering guard waiting for interception of HTTP type request
      *
-     * @param selenium
+     * @param model
      *            selenium where should be the guard registered
      * @return the selenium waitinf for interception of HTTP type request
      */

@@ -979,8 +979,6 @@ public class TestPickList extends AbstractGrapheneTest {
     /**
      * Verify that item keep selected even moved from source to target, or back. If selected Alaska from sources, and
      * then added to target, it should remain selected in target list
-     *
-     * @return
      */
     @Test
     public void testKeepSelected() {

@@ -155,8 +155,8 @@ public abstract class AbstractRichMessageTest extends AbstractGrapheneTest {
      * There are 2 possible ways how to submit: by h:commandButton or by a4j:commandButton. Switch between them is done
      * by 'byAjax' param
      *
-     * @param Boolean
-     *            <b>byAjax</b> - use to choose submit button type used to submit form
+     * @param byAjax
+     *            use to choose submit button type used to submit form
      */
     public void generateValidationMessages(Boolean byAjax) {
         waitModel.until(elementPresent.locator(wrongValuesBtn));

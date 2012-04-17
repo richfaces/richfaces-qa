@@ -103,12 +103,12 @@ public class TestPollInterval extends AbstractGrapheneTest {
      * <p>
      * For 5 following poll events it checks that runtime visible from client (output from JavaScript's new
      * Date().getTime()) between the events haven't greater deviation from defined interval than defined
-     * {@link #MAX_DEVIATION}.
+     * MAX_DEVIATION.
      * </p>
      *
      * <p>
      * Test also computes average value of deviation and checks that the average value of all obtained particular
-     * deviations isn't greater than {@link #MAX_AVERAGE_DEVIATION}.
+     * deviations isn't greater than MAX_AVERAGE_DEVIATION.
      * </p>
      */
     public void testClient() {

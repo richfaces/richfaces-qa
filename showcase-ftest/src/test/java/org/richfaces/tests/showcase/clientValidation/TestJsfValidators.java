@@ -67,7 +67,6 @@ public class TestJsfValidators extends AbstractClientValidationTest {
 
     @Test
     public void testCorrectNameInput() {
-
         fillNameInputWithCorrectValues(nameInput, 3, 5, 8);
     }
 
@@ -79,7 +78,6 @@ public class TestJsfValidators extends AbstractClientValidationTest {
 
     @Test
     public void testCorrectAge() {
-
         fillAnyInput(ageInput, "18"); // bottom border
         guardNoRequest(selenium).fireEvent(ageInput, Event.BLUR);
         isThereErrorMessageAboutAge(false);
@@ -103,19 +101,16 @@ public class TestJsfValidators extends AbstractClientValidationTest {
      */
     @Test
     public void testIncorrectName() {
-
         fillNameInputWithIncorrectValues(nameInput, 3, 8, true);
     }
 
     @Test
     public void testIncorrectEmail() {
-
         fillEmailInputWithIncorrectValues(emailInput);
     }
 
     @Test
     public void testIncorrectAge() {
-
         fillAnyInput(ageInput, "character");
         guardNoRequest(selenium).fireEvent(ageInput, Event.BLUR);
         isThereErrorMessageAboutAge(true);
@@ -163,7 +158,6 @@ public class TestJsfValidators extends AbstractClientValidationTest {
      * @param shouldErrorMessagePresented
      */
     private void isThereErrorMessageAboutAgeSize(boolean shouldErrorMessagePresented) {
-
         isThereErrorMessage(errorMessageAboutRange, ERROR_MESSAGE_ABOUT_AGE_SIZE, shouldErrorMessagePresented);
     }
 
@@ -173,37 +167,33 @@ public class TestJsfValidators extends AbstractClientValidationTest {
      * @param shouldErrorMessagePresented
      */
     private void isThereErrorMessageAboutAge(boolean shouldErrorMessagePresented) {
-
         isThereErrorMessage(errorMessageAboutNumber, ERROR_MESSAGE_ABOUT_AGE, shouldErrorMessagePresented);
     }
 
     /**
      * Finds out whether particular error message is presented
      *
-     * @param shouldErrorMessagePresented
+     * @param shouldErrorMessagePresent
      */
     @Override
-    protected void isThereErrorMessageAboutEmail(boolean shouldErrorMessagePresented) {
-
-        isThereErrorMessage(errorMessageAboutEmail, ERROR_MESSAGE_ABOUT_EMAIL, shouldErrorMessagePresented);
+    protected void isThereErrorMessageAboutEmail(boolean shouldErrorMessagePresent) {
+        isThereErrorMessage(errorMessageAboutEmail, ERROR_MESSAGE_ABOUT_EMAIL, shouldErrorMessagePresent);
     }
 
     /**
      * Finds out whether particular error message is presented
      *
-     * @param shouldErrorMessagePresented
+     * @param shouldBeErrorMessagePresent
      */
     @Override
-    protected void isThereErrorMessageAboutSizeOfName(boolean shouldBeErrorMessagePresneted) {
-
-        isThereErrorMessage(errorMessageAboutRange, ERROR_MESSAGE_ABOUT_NAME, shouldBeErrorMessagePresneted);
+    protected void isThereErrorMessageAboutSizeOfName(boolean shouldBeErrorMessagePresent) {
+        isThereErrorMessage(errorMessageAboutRange, ERROR_MESSAGE_ABOUT_NAME, shouldBeErrorMessagePresent);
     }
 
     @Override
-    protected void isThereErrorMessageAboutValueRequeired(boolean shouldBeErrorMessagePresented) {
-
+    protected void isThereErrorMessageAboutValueRequeired(boolean shouldBeErrorMessagePresent) {
         isThereErrorMessage(errorMessageAboutValueRequired, ERROR_MESSAGE_ABOUT_VALUE_REQUIRED,
-            shouldBeErrorMessagePresented);
+            shouldBeErrorMessagePresent);
     }
 
 }

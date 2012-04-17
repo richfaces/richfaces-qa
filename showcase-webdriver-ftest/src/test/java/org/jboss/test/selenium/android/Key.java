@@ -22,7 +22,8 @@
 package org.jboss.test.selenium.android;
 
 /**
- * {@link http://thecodeartist.blogspot.com/2011/03/simulating-keyevents-on-android-device.html}
+ * <a href="http://thecodeartist.blogspot.com/2011/03/simulating-keyevents-on-android-device.html">
+ * Simulating Key Events on Android Device</a>
  *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
