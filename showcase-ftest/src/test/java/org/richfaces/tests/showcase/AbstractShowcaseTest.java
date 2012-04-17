@@ -62,8 +62,8 @@ public abstract class AbstractShowcaseTest extends Arquillian {
         String demoName = this.getClass().getPackage().getName();
         demoName = StringUtils.substringAfterLast(demoName, ".");
 
-        String addition = SimplifiedFormat.format("richfaces/component-sample.jsf?skin=blueSky&demo={0}&sample={1}",
-            demoName, sampleName);
+        String addition = SimplifiedFormat.format("richfaces/component-sample.jsf?skin=blueSky&demo={0}&sample={1}", demoName,
+            sampleName);
 
         return addition;
     }
@@ -74,7 +74,8 @@ public abstract class AbstractShowcaseTest extends Arquillian {
 
         if (isHTTPTesting != null && isHTTPTesting.equals("true")) {
             try {
-                return new URL("https://localhost:8443");
+                URL httpsUrl = new URL(contextRoot.toExternalForm().replace("http", "https").replace("8080", "8443"));
+                return httpsUrl;
             } catch (MalformedURLException e) {
                 // it is not malformed URL for sure
             }
