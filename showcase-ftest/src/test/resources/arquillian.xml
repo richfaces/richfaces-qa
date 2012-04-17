@@ -15,25 +15,74 @@
         <property name="deploymentExportPath">target/</property>
     </engine>
 
-    <container qualifier="jbossas-managed-6-https">
+    <container qualifier="jbossas-managed-6">
         <configuration>
             <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
         </configuration>
     </container>
 
-    <container qualifier="jbossas-managed-7-1-https" default="true">
+    <container qualifier="jbossas-managed-7">
         <configuration>
-            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -Djboss.home=/home/jhuska/workspace/richfaces/qa/showcase-ftest/target/jboss-as-7.1.1.Final</property>
+            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
+            <property name="serverConfig">standalone-preview.xml</property>
+            <property name="outputToConsole">false</property>
+        </configuration>
+        <protocol type="jmx-as7">
+            <property name="executionType">REMOTE</property>
+        </protocol>
+    </container>
+
+    <container qualifier="jbossas-managed-7-1">
+        <configuration>
+            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
             <property name="serverConfig">standalone-full.xml</property>
         </configuration>
     </container>
 
+    <container qualifier="jbossas-remote-7" default="true">
+        <protocol type="jmx-as7">
+            <property name="executionType">REMOTE</property>
+        </protocol>
+    </container>
+
+    <container qualifier="jbossas-remote-7-1">
+    </container>
+
+    <container qualifier="tomcat-managed-6">
+        <configuration>
+            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -Dcom.sun.management.jmxremote
+                -Dcom.sun.management.jmxremote.port=8089 -Djava.rmi.server.hostname=localhost</property>
+            <property name="user">tomcat</property>
+            <property name="pass">tomcat</property>
+        </configuration>
+    </container>
+
+    <container qualifier="tomcat-managed-7">
+        <configuration>
+            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -Dcom.sun.management.jmxremote
+                -Dcom.sun.management.jmxremote.port=8089 -Djava.rmi.server.hostname=localhost</property>
+            <property name="user">tomcat</property>
+            <property name="pass">tomcat</property>
+        </configuration>
+    </container>
+
+    <container qualifier="openshift">
+        <configuration>
+            <property name="namespace">${openshift.namespace}</property>
+            <property name="application">${openshift.application}</property>
+            <property name="sshUserName">${openshift.ssh.user}</property>
+            <property name="passphrase">${openshift.password}</property>
+            <property name="login">richfaces.qa.jenkins@gmail.com</property>
+            <property name="deploymentTimeoutInSeconds">240</property>
+            <property name="identityFile">${openshift.identity.file}</property>
+            <property name="disableStrictHostChecking">true</property>
+        </configuration>
+    </container>
+
     <extension qualifier="selenium-server">
-        <property name="port">8444</property>
         <property name="browserSessionReuse">true</property>
-        <property name="firefoxProfileTemplate">/home/jhuska/.mozilla/firefox/qd1kby3o.httpsFirefox11/</property>
-        <property name="trustStore">/home/jhuska/workspace/richfaces/qa/showcase-ftest/src/test/resources/https/containerConf/jboss71.keystore</property>
-        <property name="trustStorePassword">abc123</property>
+        <property name="port">8444</property>
+        <!-- <property name="dontTouchLogging">true</property> -->
     </extension>
 
     <extension qualifier="graphene">
