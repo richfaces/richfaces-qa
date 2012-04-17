@@ -15,9 +15,16 @@
         <property name="deploymentExportPath">target/</property>
     </engine>
 
-    <container qualifier="jbossas-managed-6-https" default="true">
+    <container qualifier="jbossas-managed-6-https">
         <configuration>
             <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
+        </configuration>
+    </container>
+
+    <container qualifier="jbossas-managed-7-1-https" default="true">
+        <configuration>
+            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -Djboss.home=${jboss7-1Home}</property>
+            <property name="serverConfig">standalone-full.xml</property>
         </configuration>
     </container>
 
@@ -31,7 +38,6 @@
 
     <extension qualifier="graphene">
         <property name="browser">*firefox</property>
-        <property name="contextRoot">https://localhost:8443</property>
         <property name="seleniumTimeoutAjax">7000</property>
         <property name="seleniumMaximize">true</property>
         <property name="seleniumPort">8444</property>
