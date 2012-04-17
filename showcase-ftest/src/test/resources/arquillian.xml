@@ -15,13 +15,13 @@
         <property name="deploymentExportPath">target/</property>
     </engine>
 
-    <container qualifier="jbossas-managed-6-https" default="true">
+    <container qualifier="jbossas-managed-6-https">
         <configuration>
             <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
         </configuration>
     </container>
 
-    <container qualifier="jbossas-managed-7-1-https">
+    <container qualifier="jbossas-managed-7-1-https" default="true">
         <configuration>
             <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -Djboss.home=/home/jhuska/workspace/richfaces/qa/showcase-ftest/target/jboss-as-7.1.1.Final</property>
             <property name="serverConfig">standalone-full.xml</property>
@@ -32,7 +32,7 @@
         <property name="port">8444</property>
         <property name="browserSessionReuse">true</property>
         <property name="firefoxProfileTemplate">/home/jhuska/.mozilla/firefox/qd1kby3o.httpsFirefox11/</property>
-       <!--<property name="trustStore">${trustStore}</property>-->
+        <property name="trustStore">/home/jhuska/workspace/richfaces/qa/showcase-ftest/src/test/resources/https/containerConf/jboss71.keystore</property>
         <property name="trustStorePassword">abc123</property>
     </extension>
 
