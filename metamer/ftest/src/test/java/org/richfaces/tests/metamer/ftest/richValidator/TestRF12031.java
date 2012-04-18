@@ -36,7 +36,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test demonstrating RF-12031
- * 
+ *
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
 public class TestRF12031 extends AbstractGrapheneTest {
