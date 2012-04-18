@@ -32,7 +32,7 @@ import java.util.Map;
 import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.ajocado.css.CssProperty;
 import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.jboss.arquillian.ajocado.locator.option.OptionLabelLocator;
@@ -46,7 +46,7 @@ public class IconsChecker {
 
     private String iconPrefix;
     private String iconSuffix;
-    private AjaxSelenium selenium;
+    private GrapheneSelenium selenium;
 
     /**
      * Create a new instance of icons checker
@@ -55,7 +55,7 @@ public class IconsChecker {
      * @param iconPrefix prefix used for icon elements
      * @param iconSuffix suffix used for icon elements
      */
-    public IconsChecker(AjaxSelenium selenium, String iconPrefix, String iconSuffix) {
+    public IconsChecker(GrapheneSelenium selenium, String iconPrefix, String iconSuffix) {
         Validate.notNull(iconPrefix);
         Validate.notNull(iconSuffix);
         Validate.notNull(selenium);
