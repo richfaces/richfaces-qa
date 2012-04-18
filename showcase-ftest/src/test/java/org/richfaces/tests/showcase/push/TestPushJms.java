@@ -32,14 +32,14 @@ import java.util.List;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
-import org.richfaces.tests.showcase.poll.AbstractPoolTest;
+import org.richfaces.tests.showcase.poll.AbstractPollTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestPushJms extends AbstractPoolTest {
+public class TestPushJms extends AbstractPollTest {
 
     /* ***************************************************************************************
      * Locators ****************************************************************** *********************

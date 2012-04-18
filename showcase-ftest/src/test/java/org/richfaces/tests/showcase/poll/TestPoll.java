@@ -37,7 +37,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestPoll extends AbstractPoolTest {
+public class TestPoll extends AbstractPollTest {
 
     /* *******************************************************************************************************
      * Locators ****************************************************************** *************************************

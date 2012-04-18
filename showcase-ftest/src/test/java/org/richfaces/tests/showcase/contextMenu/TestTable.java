@@ -62,7 +62,7 @@ public class TestTable extends AbstractContextMenuTest {
 
         for (Iterator<JQueryLocator> i = pricesTds.iterator(); i.hasNext();) {
             JQueryLocator priceTd = i.next();
-            selenium.click(priceTd);
+            selenium.clickAt(priceTd, new Point(3, 3));
 
             int priceFromTable = Integer.valueOf(selenium.getText(priceTd).trim());
             String venderAndModelFromTable = selenium.getText(selectedTr);
@@ -94,6 +94,6 @@ public class TestTable extends AbstractContextMenuTest {
     @Test
     public void testContextMenuRenderedAtCorrectPosition() {
 
-        checkContextMenuRenderedAtCorrectPosition( jq(pricesTds.getRawLocator() + ":eq(0)"), new Point(3,3), true );
+        checkContextMenuRenderedAtCorrectPosition(jq(pricesTds.getRawLocator() + ":eq(10)"), new Point(3, 3), true);
     }
 }

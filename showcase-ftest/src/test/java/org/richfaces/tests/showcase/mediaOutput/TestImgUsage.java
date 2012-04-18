@@ -95,7 +95,7 @@ public class TestImgUsage extends AbstractGrapheneTest {
     /**
      * STATE0 is the initial state and the colors are deined in the constants section
      */
-    @Test
+    @Test(groups={"failWithHttps"})
     public void testSTATE0() {
 
         testTheImage(RED_RGB_STATE0, DARK_BLUE_STATE0, GREEN_RGB_STATE0);
@@ -105,7 +105,7 @@ public class TestImgUsage extends AbstractGrapheneTest {
     /**
      * STATE1 is defined in the constants section
      */
-    @Test
+    @Test(groups={"failWithHttps"})
     public void testSTATE1() {
 
         selectColorsAndClickOnTheButton(INDEX_OF_GREEN, INDEX_OF_YELLOW, INDEX_OF_RED);
@@ -116,7 +116,7 @@ public class TestImgUsage extends AbstractGrapheneTest {
     /**
      * STATE2 is defined in the constants section
      */
-    @Test
+    @Test(groups={"failWithHttps"})
     public void testSTATE2() {
 
         selectColorsAndClickOnTheButton(INDEX_OF_BLUE, INDEX_OF_RED, INDEX_OF_DARK_BLUE);

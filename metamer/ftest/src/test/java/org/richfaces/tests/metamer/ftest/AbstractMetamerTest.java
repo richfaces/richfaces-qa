@@ -94,9 +94,8 @@ public abstract class AbstractMetamerTest extends Arquillian {
         pjq("span[id$=:attributes:panel]"));
 
     @Inject
-    @Templates({ "plain", "richAccordion", "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable",
-        "richDataGrid", "richList", "richCollapsiblePanel", "richPanel", "richTabPanel", "richTogglePanel",
-        "richPopupPanel", "a4jRegion", "a4jRepeat", "hDataTable", "hPanelGrid", "uiRepeat" })
+    @Templates({ "plain", "richAccordion", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richCollapsiblePanel", "richPanel", "richTabPanel", "richPopupPanel", "a4jRegion", "a4jRepeat", "uiRepeat" })
     protected TemplatesList template;
 
     /**
@@ -111,8 +110,9 @@ public abstract class AbstractMetamerTest extends Arquillian {
 
         WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/metamer.war"));
 
-        /* If value on system property "org.richfaces.resourceMapping.enabled" is set to true,
-         * modify context-params in web.xml. For more info see https://issues.jboss.org/browse/RFPL-1682
+        /*
+         * If value on system property "org.richfaces.resourceMapping.enabled" is set to true, modify context-params in
+         * web.xml. For more info see https://issues.jboss.org/browse/RFPL-1682
          */
         // Note that following code verify value of system property with given key
         if (Boolean.getBoolean(RESOURCE_MAPPING_ENABLED)) {
@@ -125,14 +125,13 @@ public abstract class AbstractMetamerTest extends Arquillian {
     }
 
     /*
-     * Update contex-param values in web.xml
-     * Call this function cause set org.richfaces.resourceMapping.enabled to true,
+     * Update contex-param values in web.xml Call this function cause set org.richfaces.resourceMapping.enabled to true,
      * and remain 2 context-params according to function params values
      */
     private static WebArchive updateArchiveWebXml(WebArchive defaultWar, Boolean compressedStages, Boolean packedStages) {
         // 1. load existing web.xml from metamer.war
-        WebAppDescriptor webXmlDefault = Descriptors.importAs(WebAppDescriptor.class)
-            .from(defaultWar.get(new BasicPath("WEB-INF/web.xml")).getAsset().openStream());
+        WebAppDescriptor webXmlDefault = Descriptors.importAs(WebAppDescriptor.class).from(
+            defaultWar.get(new BasicPath("WEB-INF/web.xml")).getAsset().openStream());
 
         // 2. modify web.xml according to requirements
         webXmlDefault.contextParam(RESOURCE_MAPPING_ENABLED, "true");

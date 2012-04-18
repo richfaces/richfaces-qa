@@ -1,99 +1,106 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich"
-    xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:a4j="http://richfaces.org/a4j">
 
-<!--
-JBoss, Home of Professional Open Source
-Copyright 2010-2012, Red Hat, Inc. and individual contributors
-by the @authors tag. See the copyright.txt in the distribution for a
-full listing of individual contributors.
-
-This is free software; you can redistribute it and/or modify it
-under the terms of the GNU Lesser General Public License as
-published by the Free Software Foundation; either version 2.1 of
-the License, or (at your option) any later version.
-
-This software is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with this software; if not, write to the Free
-Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    <!--
+    JBoss, Home of Professional Open Source
+    Copyright 2010-2012, Red Hat, Inc. and individual contributors
+    by the @authors tag. See the copyright.txt in the distribution for a
+    full listing of individual contributors.
+    
+    This is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as
+    published by the Free Software Foundation; either version 2.1 of
+    the License, or (at your option) any later version.
+    
+    This software is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    Lesser General Public License for more details.
+    
+    You should have received a copy of the GNU Lesser General Public
+    License along with this software; if not, write to the Free
+    Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+    02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-<ui:composition template="/templates/template.xhtml">
+    <ui:composition template="/templates/template.xhtml">
 
-    <ui:define name="view">
-        <f:metadata>
-            <f:viewParam name="templates" value="#{templateBean.templates}">
-                <f:converter converterId="templatesListConverter" />
-            </f:viewParam>
-        </f:metadata>
-    </ui:define>
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
 
-    <ui:define name="component">
+        <ui:define name="component">
 
-        <rich:notifyMessages animationSpeed="#{notifyBean.attributesNotifyMessages['animationSpeed'].value}"
-                             appearAnimation="#{notifyBean.attributesNotifyMessages['appearAnimation'].value}"
-                             delay="#{notifyBean.attributesNotifyMessages['delay'].value}" execute="{@form}" for="number"
-                             globalOnly="#{notifyBean.attributesNotifyMessages['delay'].value}"
-                             hideAnimation="#{notifyBean.attributesNotifyMessages['hideAnimation'].value}"
-                             keepTransient="#{notifyBean.attributesNotifyMessages['keepTransient'].value}"
-                             interval="#{notifyBean.attributesNotifyMessages['interval'].value}"
-                             nonblocking="#{notifyBean.attributesNotifyMessages['nonBlocking'].value}"
-                             nonblockingOpacity="#{notifyBean.attributesNotifyMessages['nonBlockingOpacity'].value}"
-                             rendered="#{notifyBean.attributesNotifyMessages['rendered'].value}"
-                             showCloseButton="#{notifyBean.attributesNotifyMessages['showCloseButton'].value}"
-                             showDetail="#{notifyBean.attributesNotifyMessages['showDetail'].value}"
-                             showHistory="#{notifyBean.attributesNotifyMessages['showHistory'].value}"
-                             showShadow="#{notifyBean.attributesNotifyMessages['showShadow'].value}"
-                             showSummary="#{notifyBean.attributesNotifyMessages['showSummary'].value}" stack="exampleNotifyStack"
-                             stayTime="#{notifyBean.attributesNotifyMessages['stayTime'].value}"
-                             sticky="#{notifyBean.attributesNotifyMessages['sticky'].value}"
-                             styleClass="#{notifyBean.attributesNotifyMessages['styleClass'].value}" />
+            <rich:notifyMessages animationSpeed="#{notifyBean.attributesNotifyMessages['animationSpeed'].value}"
+                                 appearAnimation="#{notifyBean.attributesNotifyMessages['appearAnimation'].value}"
+                                 delay="#{notifyBean.attributesNotifyMessages['delay'].value}" execute="{@form}" for="number"
+                                 globalOnly="#{notifyBean.attributesNotifyMessages['delay'].value}"
+                                 hideAnimation="#{notifyBean.attributesNotifyMessages['hideAnimation'].value}"
+                                 keepTransient="#{notifyBean.attributesNotifyMessages['keepTransient'].value}"
+                                 interval="#{notifyBean.attributesNotifyMessages['interval'].value}"
+                                 nonblocking="#{notifyBean.attributesNotifyMessages['nonBlocking'].value}"
+                                 nonblockingOpacity="#{notifyBean.attributesNotifyMessages['nonBlockingOpacity'].value}"
+                                 rendered="#{notifyBean.attributesNotifyMessages['rendered'].value}"
+                                 showCloseButton="#{notifyBean.attributesNotifyMessages['showCloseButton'].value}"
+                                 showDetail="#{notifyBean.attributesNotifyMessages['showDetail'].value}"
+                                 showHistory="#{notifyBean.attributesNotifyMessages['showHistory'].value}"
+                                 showShadow="#{notifyBean.attributesNotifyMessages['showShadow'].value}"
+                                 showSummary="#{notifyBean.attributesNotifyMessages['showSummary'].value}" stack="exampleNotifyStack"
+                                 stayTime="#{notifyBean.attributesNotifyMessages['stayTime'].value}"
+                                 sticky="#{notifyBean.attributesNotifyMessages['sticky'].value}"
+                                 styleClass="#{notifyBean.attributesNotifyMessages['styleClass'].value}" />
 
-        <rich:notify animationSpeed="#{notifyBean.attributesNotify['animationSpeed'].value}"
-                     appearAnimation="#{notifyBean.attributesNotify['appearAnimation'].value}"
-                     delay="#{notifyBean.attributesNotify['delay'].value}" detail="#{notifyBean.attributesNotify['detail'].value}"
-                     hideAnimation="#{notifyBean.attributesNotify['hideAnimation'].value}"
-                     nonblocking="#{notifyBean.attributesNotify['nonBlocking'].value}"
-                     nonblockingOpacity="#{notifyBean.attributesNotify['nonBlockingOpacity'].value}"
-                     rendered="#{notifyBean.attributesNotify['rendered'].value}"
-                     showCloseButton="#{notifyBean.attributesNotify['showCloseButton'].value}"
-                     showHistory="#{notifyBean.attributesNotify['showHistory'].value}"
-                     showShadow="#{notifyBean.attributesNotify['showShadow'].value}" stack="exampleNotifyStack"
-                     stayTime="#{notifyBean.attributesNotify['stayTime'].value}" sticky="#{notifyBean.attributesNotify['sticky'].value}"
-                     styleClass="#{notifyBean.attributesNotify['styleClass'].value}"
-                     summary=" #{notifyBean.attributesNotify['title'].value}" />
+            <rich:notify animationSpeed="#{notifyBean.attributesNotify['animationSpeed'].value}"
+                         appearAnimation="#{notifyBean.attributesNotify['appearAnimation'].value}"
+                         delay="#{notifyBean.attributesNotify['delay'].value}" detail="#{notifyBean.attributesNotify['detail'].value}"
+                         hideAnimation="#{notifyBean.attributesNotify['hideAnimation'].value}"
+                         nonblocking="#{notifyBean.attributesNotify['nonBlocking'].value}"
+                         nonblockingOpacity="#{notifyBean.attributesNotify['nonBlockingOpacity'].value}"
+                         onclick="#{notifyBean.attributesNotify['onclick'].value}"
+                         ondblclick="#{notifyBean.attributesNotify['ondblclick'].value}"
+                         onkeydown="#{notifyBean.attributesNotify['onkeydown'].value}"
+                         onkeypress="#{notifyBean.attributesNotify['onkeypress'].value}"
+                         onkeyup="#{notifyBean.attributesNotify['onkeyup'].value}"
+                         onmousedown="#{notifyBean.attributesNotify['onmousedown'].value}"
+                         onmousemove="#{notifyBean.attributesNotify['onmousemove'].value}"
+                         onmouseout="#{notifyBean.attributesNotify['onmouseout'].value}"
+                         onmouseover="#{notifyBean.attributesNotify['onmouseover'].value}"
+                         onmouseup="#{notifyBean.attributesNotify['onmouseup'].value}"
+                         rendered="#{notifyBean.attributesNotify['rendered'].value}"
+                         showCloseButton="#{notifyBean.attributesNotify['showCloseButton'].value}"
+                         showHistory="#{notifyBean.attributesNotify['showHistory'].value}"
+                         showShadow="#{notifyBean.attributesNotify['showShadow'].value}" stack="exampleNotifyStack"
+                         stayTime="#{notifyBean.attributesNotify['stayTime'].value}" sticky="#{notifyBean.attributesNotify['sticky'].value}"
+                         styleClass="#{notifyBean.attributesNotify['styleClass'].value}"
+                         summary=" #{notifyBean.attributesNotify['title'].value}" />
 
-        <rich:notifyStack id="exampleNotifyStack" direction="#{notifyBean.attributesNotifyStackFirst['direction'].value}"
-                          method="#{notifyBean.attributesNotifyStackFirst['method'].value}"
-                          position="#{notifyBean.attributesNotifyStackFirst['position'].value}"
-                          rendered="#{notifyBean.attributesNotifyStackFirst['rendered'].value}"
-                          styleClass="#{notifyBean.attributesNotifyStackFirst['styleClass'].value}" />
-        <h:form>
+            <rich:notifyStack id="exampleNotifyStack" direction="#{notifyBean.attributesNotifyStackFirst['direction'].value}"
+                              method="#{notifyBean.attributesNotifyStackFirst['method'].value}"
+                              position="#{notifyBean.attributesNotifyStackFirst['position'].value}"
+                              rendered="#{notifyBean.attributesNotifyStackFirst['rendered'].value}"
+                              styleClass="#{notifyBean.attributesNotifyStackFirst['styleClass'].value}" />
             <h:outputLabel for="number" value="Number (from 5 to 10)" />
             <h:inputText id="number" required="true">
                 <f:validateLongRange minimum="5" maximum="10" />
                 <a4j:ajax event="change" execute="@form" />
             </h:inputText>
+        </ui:define>
 
-        </h:form>
-    </ui:define>
-
-    <ui:define name="outOfTemplateAfter">
-        <h2>Attributes - Notify</h2>
-        <metamer:attributes value="#{notifyBean.attributesNotify}" id="attributesNotify" render="panel" />
-        <h2>Attributes - Notify Messages</h2>
-        <metamer:attributes value="#{notifyBean.attributesNotifyMessages}" id="attributesNotifyMessages" render="panel" />
-        <h2>Attributes - Notify Stack</h2>
-        <metamer:attributes value="#{notifyBean.attributesNotifyStackFirst}" id="attributesNotifyStack" render="panel" />
-    </ui:define>
-</ui:composition>
+        <ui:define name="outOfTemplateAfter">
+            <h2>Attributes - Notify</h2>
+            <metamer:attributes value="#{notifyBean.attributesNotify}" id="attributesNotify" render="panel" />
+            <h2>Attributes - Notify Messages</h2>
+            <metamer:attributes value="#{notifyBean.attributesNotifyMessages}" id="attributesNotifyMessages" render="panel" />
+            <h2>Attributes - Notify Stack</h2>
+            <metamer:attributes value="#{notifyBean.attributesNotifyStackFirst}" id="attributesNotifyStack" render="panel" />
+        </ui:define>
+    </ui:composition>
 
 </html>

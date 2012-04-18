@@ -36,8 +36,8 @@ public interface TestConfiguration {
     File getApplicationWar();
 
     /**
-     * Context path will be used to retrieve pages from right URL. Don't hesitate to use it in cases of building absolute
-     * URLs.
+     * Context path will be used to retrieve pages from right URL. Don't hesitate to use it in cases of building
+     * absolute URLs.
      *
      * @return context path
      */
@@ -51,7 +51,8 @@ public interface TestConfiguration {
     String getContextRoot();
 
     /**
-     * Returns number of tries which is used for {@link StaleReferenceAwareFieldDecorator}
+     * Returns number of tries which is used for
+     * {@link org.jboss.test.selenium.webdriver.pagefactory.StaleReferenceAwareFieldDecorator}
      *
      * @return number of tries
      */

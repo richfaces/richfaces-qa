@@ -43,23 +43,23 @@ public class TestTreeToggleListenerSimple extends AbstractTreeToggleListenerTest
     }
 
     @Test
-    public void testPTLAsAttribute() {
+    public void testTTLAsAttribute() {
         super.testTTLAsAttributeOfComponent(TTL_as_ComponentAttribute_PhaseName);
     }
 
     @Test
-    public void testPTLInsideComponentUsingType() {
+    public void testTTLInsideComponentUsingType() {
         super.testTTLInComponentWithListener(TTL_inComponent_usingType_PhaseName);
     }
 
     @Test
-    public void testICLInsideComponentUsingListener() {
+    public void testTTLInsideComponentUsingListener() {
         super.testTTLInComponentWithListener(TTL_inComponent_usingListener_PhaseName);
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12121")
     @Test(groups = "4.Future")
-    public void testICLOutsideComponentUsingForAndType() {
+    public void testTTLOutsideComponentUsingForAndType() {
         super.testTTLAsForAttributeWithType(TTL_outsideComponent_usingType_PhaseName);
     }
 }

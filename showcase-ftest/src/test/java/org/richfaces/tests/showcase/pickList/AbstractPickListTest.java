@@ -156,13 +156,6 @@ public class AbstractPickListTest extends AbstractOrderingTest {
         areThereSomeSelectedCities(whichTargetList, false);
     }
 
-    /**
-     *
-     * @param whichAddAllButton
-     * @param whichTargetList
-     * @param whichRemoveButton
-     * @param hotKey
-     */
     protected void checkRemoveButton(int whichAddAllButton, int whichRemoveButton, boolean... hotKey) {
 
         selenium.click(addAllButton.format(whichAddAllButton));

@@ -8,7 +8,8 @@
     General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this 
     software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the 
     FSF site: http://www.fsf.org. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -44,14 +45,17 @@
         <tomcat7Zip>path/to/your/tomcat/distribution/zip</tomcat7Zip>
 
         <!-- arquillian versions -->
+        <arquillian.bom.version>1.0.0.Final</arquillian.bom.version>
         <arquillian.tomcat.version>1.0.0.CR3</arquillian.tomcat.version>
-        <arquillian.drone.version>1.0.0.CR3</arquillian.drone.version>
-        <arquillian.graphene-testng.version>1.0.0.CR3</arquillian.graphene-testng.version>
+        <arquillian.drone.version>1.0.0.Final</arquillian.drone.version>
+        <arquillian.graphene-testng.version>1.0.0.Final</arquillian.graphene-testng.version>
         <arquillian.jboss-as6.version>1.0.0.CR3</arquillian.jboss-as6.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
+        <shrinkwrap.descriptors.version>1.1.0-beta-1</shrinkwrap.descriptors.version>
 
-        <version.selenium>2.19.0</version.selenium>
-        <version.selenium.server>2.19.0</version.selenium.server>
+        <version.selenium>2.21.0</version.selenium>
+        <version.selenium.server>2.21.0</version.selenium.server>
+        <version.slf4j.jbossas6>1.6.1</version.slf4j.jbossas6>
 
         <version.jacoco.plugin>0.5.6.201201232323</version.jacoco.plugin>
 
@@ -213,7 +217,8 @@
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
-                    <preparationGoals>clean verify -Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces -DskipTests=true</preparationGoals>
+                    <preparationGoals>clean verify -Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces
+                        -DskipTests=true</preparationGoals>
                     <goals>clean deploy -Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces -DskipTests=true</goals>
                 </configuration>
             </plugin>
@@ -337,7 +342,7 @@
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
-                <version>1.0.0.CR7</version>
+                <version>${arquillian.bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -347,6 +352,16 @@
                 <version>${arquillian.drone.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+                <artifactId>shrinkwrap-descriptors-api</artifactId>
+                <version>${shrinkwrap.descriptors.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+                <artifactId>shrinkwrap-descriptors-impl</artifactId>
+                <version>${shrinkwrap.descriptors.version}</version>
             </dependency>
             
             <!-- Selenium Server -->
@@ -431,6 +446,11 @@
                     <version>${version.jbossas6}</version>
                     <type>pom</type>
                 </dependency>
+                <dependency>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                    <version>${version.slf4j.jbossas6}</version>
+                </dependency>
             </dependencies>
             <build>
                 <plugins>
@@ -469,6 +489,28 @@
                             </environmentVariables>
                         </configuration>
                     </plugin>
+                    <!-- workaround for RF-11983-->
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy HornetQ configuration</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${jboss6Home}/server/default/deploy/hornetq</outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/test/resources/jboss6</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -490,6 +532,11 @@
                     <version>${version.jbossas6}</version>
                     <type>pom</type>
                 </dependency>
+                <dependency>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                    <version>${version.slf4j.jbossas6}</version>
+                </dependency>
             </dependencies>
             <build>
                 <plugins>
@@ -500,7 +547,7 @@
                                 <phase>generate-resources</phase>
                                 <configuration>
                                     <tasks>
-                                        <unzip src="${jbossHttpsZip}" dest="${project.build.directory}" />
+                                        <unzip src="${jboss6HttpsZip}" dest="${project.build.directory}" />
                                     </tasks>
                                 </configuration>
                                 <goals>
@@ -525,6 +572,23 @@
                                         <resource>
                                             <directory>${basedir}/src/test/resources/https</directory>
                                             <filtering>true</filtering>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <!-- workaround for RF-11983-->
+                            <execution>
+                                <id>copy HornetQ configuration</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${jboss6Home}/server/default/deploy/hornetq</outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/test/resources/jboss6</directory>
                                         </resource>
                                     </resources>
                                 </configuration>
@@ -678,6 +742,99 @@
             </build>
         </profile>
         <profile>
+            <id>jbossas-managed-7-1-https</id>
+            <properties>
+                <metamer.classifier>jee6</metamer.classifier>
+                <showcase.classifier>jbas71</showcase.classifier>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.as</groupId>
+                    <artifactId>jboss-as-arquillian-container-managed</artifactId>
+                    <version>${version.jbossas7-1}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>unpack</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.jboss.as</groupId>
+                                            <artifactId>jboss-as-dist</artifactId>
+                                            <version>${version.jbossas7-1}</version>
+                                            <type>zip</type>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${project.build.directory}</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-resources</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/src/test/resources</outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/test/resources/https/arquillianConf</directory>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy JBoss AS configuration</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${jboss7-1Home}/standalone/configuration</outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/test/resources/https/containerConf</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <arquillian.launch>jbossas-managed-7-1-https</arquillian.launch>
+                            </systemProperties>
+                            <environmentVariables>
+                                <HTTPStesting>true</HTTPStesting>
+                                <JBOSS_HOME>${jboss7-1Home}</JBOSS_HOME>
+                            </environmentVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>jbossas-remote-7</id>
             <properties>
                 <metamer.classifier>jee6</metamer.classifier>
@@ -714,7 +871,7 @@
             <id>jbossas-remote-7-1</id>
             <properties>
                 <metamer.classifier>jee6</metamer.classifier>
-                <showcase.classifier>jbas7</showcase.classifier>
+                <showcase.classifier>jbas71</showcase.classifier>
             </properties>
             <dependencies>
                 <dependency>

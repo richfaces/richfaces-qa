@@ -85,6 +85,7 @@ public class RichAutocompleteBean implements Serializable {
         ajaxAttributes.setAttribute("execute", "autocomplete");
 
         attributes.remove("var"); // this attr is supposed to be used with @fetchValue, and cannot be changed
+        attributes.remove("valueChangeListener"); // unnecessary attribute for client
 
         // since this bean is session scoped, valueX should be reset explicitly
         value1 = null;

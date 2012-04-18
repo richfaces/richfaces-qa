@@ -61,7 +61,7 @@ public abstract class AbstractClientValidationTest extends AbstractGrapheneTest 
     /**
      * Finds out whether there is error message about size of name, it is implemented in the subclass
      *
-     * @param isThereErrorMessageAboutEmail
+     * @param isThereErrorMessageAboutSizeOfName
      */
     protected abstract void isThereErrorMessageAboutSizeOfName(boolean isThereErrorMessageAboutSizeOfName);
 

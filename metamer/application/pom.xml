@@ -26,7 +26,7 @@
 
     <properties>
         <jetty.port>8080</jetty.port>
-        <version.hornetq>2.2.11.Final</version.hornetq>
+        <version.hornetq>2.2.13.Final</version.hornetq>
     </properties>
 
     <dependencies>
@@ -212,25 +212,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                        <configuration>
-                            <fileset>
-                                <directory>target/${project.build.finalName}/WEB-INF</directory>
-                                <includes>
-                                    <include>web.xml</include>
-                                </includes>
-                            </fileset>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>-->
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>maven-jetty-plugin</artifactId>

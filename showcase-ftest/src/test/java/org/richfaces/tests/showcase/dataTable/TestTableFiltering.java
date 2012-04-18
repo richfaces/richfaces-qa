@@ -43,8 +43,8 @@ import org.testng.annotations.Test;
 public class TestTableFiltering extends AbstractDataIterationWithCars {
 
     private JQueryLocator vendorSelect = jq("select");
-    private JQueryLocator mileageInput = jq("input[type=text]:first");
-    private JQueryLocator vinInput = jq("input[type=text]:last");
+    protected JQueryLocator mileageInput = jq("input[type=text]:first");
+    protected JQueryLocator vinInput = jq("input[type=text]:last");
     private JQueryLocator errorMessageLocator = jq("span[class=rf-msgs-sum]");
     private JQueryLocator tBody = jq("tbody[class=rf-dt-b]");
 
@@ -344,7 +344,7 @@ public class TestTableFiltering extends AbstractDataIterationWithCars {
     /**
      * erases all inputs
      */
-    private void eraseAllInputs() {
+    protected void eraseAllInputs() {
 
         eraseInput(mileageInput);
         guardXhr(selenium).fireEvent(mileageInput, Event.BLUR);

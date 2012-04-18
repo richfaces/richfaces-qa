@@ -62,7 +62,7 @@ public interface TestConfiguration {
 
     /**
      * Checks whether the tests are executed in verbose mode
-     * @return
+     * @return true if in verbose mode, false otherwise
      */
     boolean isVerbose();
 }

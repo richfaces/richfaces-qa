@@ -33,9 +33,8 @@ import org.richfaces.tests.showcase.AbstractGrapheneTest;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
- * @version $Revision$
  */
-public class AbstractPoolTest extends AbstractGrapheneTest {
+public class AbstractPollTest extends AbstractGrapheneTest {
 
     /**
      * Initialize GregorianCalendar with time which is give from dateRetriever
@@ -63,7 +62,7 @@ public class AbstractPoolTest extends AbstractGrapheneTest {
      *
      * @param calendarInitial
      *            the calendar with specific time which was before calendarAfterPool
-     * @param calendarAferPool
+     * @param calendarAfterServerAction
      *            the calendar with specific time which was after calendarInitial
      */
     public Integer computeDeviation(GregorianCalendar calendarInitial, GregorianCalendar calendarAfterServerAction) {

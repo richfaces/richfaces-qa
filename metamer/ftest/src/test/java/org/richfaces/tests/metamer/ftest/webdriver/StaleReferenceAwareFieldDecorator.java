@@ -37,16 +37,17 @@ import org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler;
 import org.openqa.selenium.support.pagefactory.internal.LocatingElementListHandler;
 
 /**
- * Decorates {@link WebElement} to try to avoid throwing {@link StaleElementReferenceException}.
- * When the exception is thrown, the mechanism tries to locate element again.
+ * Decorates {@link org.openqa.selenium.WebElement} to try to avoid throwing
+ * {@link org.openqa.selenium.StaleElementReferenceException}. When the exception is thrown, the mechanism tries to
+ * locate element again.
  *
  * Also decorates List of WebElements.
  *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  *
- * @see
- * http://www.brimllc.com/2011/01/extending-selenium-2-0-webdriver-to-support-ajax/
+ * @see <a href="http://www.brimllc.com/2011/01/extending-selenium-2-0-webdriver-to-support-ajax">Extending Selenium 2.0
+ *      WebDriver to Support AJAX</a>
  */
 public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
 
@@ -56,8 +57,10 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
     /**
      * Creates a new instance of the decorator
      *
-     * @param factory locator factory
-     * @param numberOfTries number of tries to locate element
+     * @param factory
+     *            locator factory
+     * @param numberOfTries
+     *            number of tries to locate element
      */
     public StaleReferenceAwareFieldDecorator(ElementLocatorFactory factory, int numberOfTries) {
         super(factory);
@@ -68,8 +71,8 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
     protected WebElement proxyForLocator(ClassLoader loader, ElementLocator locator) {
         InvocationHandler handler = new StaleReferenceAwareElementLocator(locator);
 
-        WebElement proxy = (WebElement) Proxy.newProxyInstance(loader, new Class[]{WebElement.class,
-                    WrapsElement.class}, handler);
+        WebElement proxy = (WebElement) Proxy.newProxyInstance(loader, new Class[] { WebElement.class,
+            WrapsElement.class }, handler);
         return proxy;
     }
 
@@ -79,7 +82,7 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
     @Override
     protected List<WebElement> proxyForListLocator(ClassLoader loader, ElementLocator locator) {
         InvocationHandler handler = new StaleReferenceAwareElementsLocator(locator);
-        List<WebElement> proxy = (List<WebElement>) Proxy.newProxyInstance(loader, new Class[]{List.class}, handler);
+        List<WebElement> proxy = (List<WebElement>) Proxy.newProxyInstance(loader, new Class[] { List.class }, handler);
         return proxy;
     }
 
@@ -107,7 +110,7 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
                 }
             }
             throw new RuntimeException("Cannot invoke " + method.getName() + " on element " + element
-                    + ". Cannot find it");
+                + ". Cannot find it");
         }
 
         private Object invokeMethod(Method method, WebElement element, Object[] objects) throws Throwable {
@@ -142,8 +145,7 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
         }
 
         /**
-         * Checks web element if it is ok. If it is not, then an exception is
-         * thrown.
+         * Checks web element if it is ok. If it is not, then an exception is thrown.
          */
         private void testElement(final WebElement we) throws StaleElementReferenceException {
             we.getLocation();
@@ -165,7 +167,7 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
                     }
                 }
                 throw new RuntimeException("Cannot invoke " + method.getName() + " on elements " + elements
-                        + ". Cannot find it");
+                    + ". Cannot find it");
             } else if (ITERATOR.equals(method.getName())) {//method iterator is invoked
                 for (int i = 0; i < numberOfTries; i++) {
                     try { //go through all elements and test them
@@ -180,7 +182,7 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
                     }
                 }
                 throw new RuntimeException("Cannot invoke " + method.getName() + " on elements " + elements
-                        + ". Cannot find it");
+                    + ". Cannot find it");
             }
             return method.invoke(elements, args);
         }

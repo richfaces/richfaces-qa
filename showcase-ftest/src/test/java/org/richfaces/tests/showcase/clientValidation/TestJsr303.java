@@ -30,7 +30,6 @@ import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
- * @version $Revision$
  */
 public class TestJsr303 extends AbstractClientValidationTest {
 
@@ -72,31 +71,26 @@ public class TestJsr303 extends AbstractClientValidationTest {
 
     @Test
     public void testNameInputCorrectValues() {
-
         fillNameInputWithCorrectValues(nameInput, 3, 7, 12);
     }
 
     @Test
     public void testNameInputIncorrectValues() {
-
         fillNameInputWithIncorrectValues(nameInput, 3, 12, false);
     }
 
     @Test
     public void testEmailInputCorrectValues() {
-
         fillEmailInputWithCorrectValues(emailInput);
     }
 
     @Test
     public void testEmailInputIncorrectValues() {
-
         fillEmailInputWithIncorrectValues(emailInput);
     }
 
     @Test
     public void testAgeInputCorrectValues() {
-
         fillAnyInput(ageInput, "18");
         guardNoRequest(selenium).fireEvent(ageInput, Event.BLUR);
         isThereErrorMessageAboutAgeNumber(false);
@@ -125,7 +119,6 @@ public class TestJsr303 extends AbstractClientValidationTest {
 
     @Test
     public void testAgeInputIncorrectValues() {
-
         fillAnyInput(ageInput, "x");
         guardNoRequest(selenium).fireEvent(ageInput, Event.BLUR);
         isThereErrorMessageAboutAgeNumber(true);
@@ -169,7 +162,6 @@ public class TestJsr303 extends AbstractClientValidationTest {
 
     @Test
     public void testIAgreeTheTermsCheckBoxCorrectValue() {
-
         checkTheCheckBoxAndCheckThereIsNoRequest();
 
         isThereErrorMessageAboutCheckBox(false);
@@ -183,7 +175,6 @@ public class TestJsr303 extends AbstractClientValidationTest {
 
     @Test
     public void testIAgreeTheTermsCheckBoxIncorrectValue() {
-
         uncheckTheCheckBoxAndCheckThereIsNoRequest();
 
         isThereErrorMessageAboutCheckBox(true);
@@ -204,11 +195,10 @@ public class TestJsr303 extends AbstractClientValidationTest {
     /**
      * Finds out whether particular error message is presented
      *
-     * @param shouldErrorMessagePresented
+     * @param shouldBeErrorMessagePresented
      */
     @Override
     protected void isThereErrorMessageAboutSizeOfName(boolean shouldBeErrorMessagePresented) {
-
         isThereErrorMessage(errorMessageAboutSizeOfName, ERROR_MESSAGE_ABOUT_SIZE_OF_NAME,
             shouldBeErrorMessagePresented);
     }
@@ -216,26 +206,23 @@ public class TestJsr303 extends AbstractClientValidationTest {
     /**
      * Finds out whether particular error message is presented
      *
-     * @param shouldErrorMessagePresented
+     * @param shouldBeErrorMessagePresented
      */
     @Override
     protected void isThereErrorMessageAboutEmail(boolean shouldBeErrorMessagePresented) {
-
         isThereErrorMessage(errorMessageAboutEmail, ERROR_MESSAGE_ABOUT_EMAIL, shouldBeErrorMessagePresented);
     }
 
     /**
      * Finds out whether particular error message is presented
      *
-     * @param shouldErrorMessagePresented
+     * @param shouldBeErrorMessagePresented
      */
     private void isThereErrorMessageAboutAgeNumber(boolean shouldBeErrorMessagePresented) {
-
         isThereErrorMessage(errorMessageAboutAgeNumber, ERROR_MESSAGE_ABOUT_AGE_NUMBER, shouldBeErrorMessagePresented);
     }
 
     private void isThereErrorMessageAboutAgeGreaterThan(boolean shouldBeErrorMessagePresented) {
-
         isThereErrorMessage(errorMessageAboutAgeMustBeGreaterThan, ERROR_MESSAGE_ABOUT_AGE_MUST_BE_GREATER_THAN,
             shouldBeErrorMessagePresented);
     }
@@ -243,10 +230,9 @@ public class TestJsr303 extends AbstractClientValidationTest {
     /**
      * Finds out whether particular error message is presented
      *
-     * @param shouldErrorMessagePresented
+     * @param shouldBeErrorMessagePresented
      */
     private void isThereErrorMessageAboutAgeLessThan(boolean shouldBeErrorMessagePresented) {
-
         isThereErrorMessage(errorMessageAboutAgeMustBeLessThan, ERROR_MESSAGE_ABOUT_AGE_MUST_BE_LESS_THAN,
             shouldBeErrorMessagePresented);
     }
@@ -254,10 +240,9 @@ public class TestJsr303 extends AbstractClientValidationTest {
     /**
      * Finds out whether particular error message is presented
      *
-     * @param shouldErrorMessagePresented
+     * @param shouldBeErrorMessagePresented
      */
     private void isThereErrorMessageAboutCheckBox(boolean shouldBeErrorMessagePresented) {
-
         isThereErrorMessage(errorMessageAboutIAgreeTheTerms, ERROR_MESSAGE_ABOUT_I_AGREE_THE_TERMS,
             shouldBeErrorMessagePresented);
     }
@@ -266,7 +251,6 @@ public class TestJsr303 extends AbstractClientValidationTest {
      * Checks the check box and waits for XHR request
      */
     private void checkTheCheckBoxAndCheckThereIsNoRequest() {
-
         selenium.check(iAgreeTheTermsCheckBox);
         guardNoRequest(selenium).fireEvent(iAgreeTheTermsCheckBox, Event.CHANGE);
         guardNoRequest(selenium).fireEvent(iAgreeTheTermsCheckBox, Event.CLICK);
@@ -276,7 +260,6 @@ public class TestJsr303 extends AbstractClientValidationTest {
      * Unchecks the check box and waits for XHR request
      */
     private void uncheckTheCheckBoxAndCheckThereIsNoRequest() {
-
         selenium.uncheck(iAgreeTheTermsCheckBox);
         guardNoRequest(selenium).fireEvent(iAgreeTheTermsCheckBox, Event.CHANGE);
         guardNoRequest(selenium).fireEvent(iAgreeTheTermsCheckBox, Event.CLICK);

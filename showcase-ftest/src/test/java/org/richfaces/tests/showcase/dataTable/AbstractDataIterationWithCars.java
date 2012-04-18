@@ -46,6 +46,17 @@ public class AbstractDataIterationWithCars extends AbstractGrapheneTest {
         public Car() {
         }
 
+        /**
+         * Creates car with @vendor and @model fields set. Other fields are
+         * null. Equals to new Car(vendor, model, null, null, null, null).
+         *
+         * @param vendor
+         * @param model
+         */
+        public Car(String vendor, String model) {
+            this(vendor, model, null, null, null, null);
+        }
+
         public Car(String vendor, String model, String price, String mileage, String vin, String stock) {
             this.vendor = vendor;
             this.model = model;
@@ -200,7 +211,7 @@ public class AbstractDataIterationWithCars extends AbstractGrapheneTest {
      * @param row
      * @param startingIndexOfTd
      * @param endIndexOfTd
-     * @return
+     * @return car
      */
     public Car retrieveCarFromRow(JQueryLocator row, int startingIndexOfTd, int endIndexOfTd) {
 
@@ -219,23 +230,23 @@ public class AbstractDataIterationWithCars extends AbstractGrapheneTest {
                 car.setVendor(selenium.getText(i.next()));
             }
 
-            if (j == (startingIndexOfTd + 1)) {
+            else if (j == (startingIndexOfTd + 1)) {
                 car.setModel(selenium.getText(i.next()));
             }
 
-            if (j == (startingIndexOfTd + 2)) {
+            else if (j == (startingIndexOfTd + 2)) {
                 car.setPrice(selenium.getText(i.next()));
             }
 
-            if (j == (startingIndexOfTd + 3)) {
+            else if (j == (startingIndexOfTd + 3)) {
                 car.setMileage(selenium.getText(i.next()));
             }
 
-            if (j == (startingIndexOfTd + 4)) {
+            else if (j == (startingIndexOfTd + 4)) {
                 car.setVin(selenium.getText(i.next()));
             }
 
-            if (j > endIndexOfTd) {
+            else if (j > endIndexOfTd) {
                 break;
             }
 
@@ -245,4 +256,8 @@ public class AbstractDataIterationWithCars extends AbstractGrapheneTest {
         return car;
     }
 
+    public Car parseSimplifiedCarFromListItem(JQueryLocator listItem) {
+        String[] partsOfContent = selenium.getText(listItem).split("-");
+        return new Car(partsOfContent[0].trim(), partsOfContent[1].trim());
+    }
 }

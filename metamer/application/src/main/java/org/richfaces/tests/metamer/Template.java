@@ -92,7 +92,7 @@ public enum Template {
 
     /**
      * Returns the prefix of component nested in this template
-     * @return
+     * @return prefix of component nested in this template
      */
     public String getNestedComponentPrefix() {
         return nestedComponentPrefix;
