@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richContextMenu;
 
 import static org.jboss.arquillian.ajocado.Graphene.attributeEquals;
-import static org.jboss.arquillian.ajocado.Graphene.elementNotVisible;
 import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
 import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
 import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
@@ -128,17 +127,6 @@ public class TestRichContextMenu extends AbstractGrapheneTest {
     }
 
     @Test
-    public void testHideDelay() {
-        contextMenuAttributes.set(ContextMenuAttributes.hideDelay, "500");
-        clickOnTarget(targetPanel1);
-        assertTrue(selenium.isVisible(contextMenuContent));
-        assertTrue(selenium.isVisible(contextMenuContent));
-
-        selenium.fireEvent(targetPanel1, Event.MOUSEUP);
-        waitModel.until(elementNotVisible.locator(contextMenuContent));
-    }
-
-    @Test
     public void testHorizontalOffset() {
 
         int offset = 11;
@@ -208,18 +196,6 @@ public class TestRichContextMenu extends AbstractGrapheneTest {
 
     // @Test
     public void testOngroupshow() {
-
-    }
-
-    @Test
-    public void testOnhide() {
-        contextMenuAttributes.set(ContextMenuAttributes.hideDelay, "20");
-        contextMenuAttributes.set(ContextMenuAttributes.onhide, "metamerEvents += \"hide\"");
-        clickOnTarget(targetPanel1);
-        clickOnTarget(targetPanel1);
-        // selenium.clickAt(menuElem, new Point(-10, -100));
-
-        waitGui.failWith("Attribute onhide does not work correctly").until(new EventFiredCondition(new Event("hide")));
 
     }
 
@@ -342,21 +318,6 @@ public class TestRichContextMenu extends AbstractGrapheneTest {
         String titleVal = "test title";
         contextMenuAttributes.set(ContextMenuAttributes.title, titleVal);
         assertEquals(selenium.getAttribute(contextMenu.getAttribute(Attribute.TITLE)), titleVal);
-    }
-
-    @Test
-    public void testVerticalOffset() {
-        int offset = 11;
-
-        clickOnTarget(targetPanel1);
-        int positionBefore = selenium.getElementPositionTop(contextMenuContent);
-
-        contextMenuAttributes.set(ContextMenuAttributes.verticalOffset, offset);
-        clickOnTarget(targetPanel1);
-
-        int positionAfter = selenium.getElementPositionTop(contextMenuContent);
-
-        assertEquals(positionAfter, positionBefore - offset);
     }
 
 }
