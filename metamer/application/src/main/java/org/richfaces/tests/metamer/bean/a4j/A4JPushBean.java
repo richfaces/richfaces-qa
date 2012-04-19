@@ -73,7 +73,7 @@ public class A4JPushBean implements Serializable {
 
         attributes = Attributes.getComponentAttributesFromClass(UIPush.class, getClass());
     }
-    
+
     /**
      * just new date instance (current date)
      * @return
@@ -94,7 +94,7 @@ public class A4JPushBean implements Serializable {
 
         System.out.println("push event");
     }
-    
+
     /**
      * Trigger to start push with another topic
      * @throws MessageException
