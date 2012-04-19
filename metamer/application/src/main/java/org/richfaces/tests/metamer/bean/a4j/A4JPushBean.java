@@ -73,6 +73,27 @@ public class A4JPushBean implements Serializable {
 
         attributes = Attributes.getComponentAttributesFromClass(UIPush.class, getClass());
     }
+    
+    /**
+     * just new date instance (current date)
+     * @return
+     */
+    public Date getDate() {
+        return new Date();
+    }
+
+    /**
+     * Trigger to start push topic
+     * @throws MessageException
+     */
+    public void push() throws MessageException {
+        TopicKey topicKey = new TopicKey("sampleAddress");
+        TopicsContext topicsContext = TopicsContext.lookup();
+
+        topicsContext.publish(topicKey, new Date().toString());
+
+        System.out.println("push event");
+    }
 
     /**
      * Getter for attributes.
