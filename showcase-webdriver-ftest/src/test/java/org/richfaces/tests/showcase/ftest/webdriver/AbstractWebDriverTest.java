@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.test.selenium.android.support.pagefactory.StaleReferenceAwareFieldDecorator;
+import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;

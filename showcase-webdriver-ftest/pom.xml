@@ -67,7 +67,7 @@
             <type>pom</type>
             <scope>test</scope>
         </dependency>
-        <!-- Arquillian TestNG support -->        
+        <!-- Arquillian TestNG support -->
         <dependency>
             <groupId>org.jboss.arquillian.testng</groupId>
             <artifactId>arquillian-testng-container</artifactId>
@@ -77,6 +77,13 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
+        </dependency>
+        <!-- Common -->
+        <dependency>
+            <groupId>org.richfaces.tests</groupId>
+            <artifactId>webdriver-utils</artifactId>
+            <scope>test</scope>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
@@ -113,11 +120,11 @@
                     <testFailureIgnore>true</testFailureIgnore>
                     <suiteXmlFiles>
                         <suiteXmlFiles>${testng.suite.xml}</suiteXmlFiles>
-                    </suiteXmlFiles>                
+                    </suiteXmlFiles>
                     <systemProperties>
                         <android.sdk.home>${android.sdk.home}</android.sdk.home>
                         <showcase.layout>${showcase.layout}</showcase.layout>
-                    </systemProperties>                    
+                    </systemProperties>
                     <systemPropertyVariables>
                         <android.serial>${android.serial}</android.serial>
                         <android.sdk.home>${android.sdk.home}</android.sdk.home>
@@ -125,7 +132,7 @@
                         <android.apk.version>${android.apk.version}</android.apk.version>
                     </systemPropertyVariables>
                 </configuration>
-            </plugin>            
+            </plugin>
         </plugins>
     </build>
 </project>
