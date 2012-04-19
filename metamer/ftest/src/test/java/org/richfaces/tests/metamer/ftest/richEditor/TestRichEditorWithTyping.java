@@ -67,7 +67,7 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest {
     public void testOnDirty() {
         sendAndSubmit("input[type=text][id$=ondirtyInput]", "metamerEvents += \"dirty \"");
         executeJS("window.metamerEvents = \"\";");
-        typeTextToEditor("text1");
+        typeTextToEditor("x");
         String event = ((String) executeJS("return window.metamerEvents")).trim();
         assertEquals(event, "dirty", "Attribute ondirty doesn't work");
     }
@@ -166,7 +166,7 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest {
             .until(new Predicate<WebDriver>() {
                 @Override
                 public boolean apply(WebDriver webDriver) {
-                    return listener.getText().contains(format(phaseListenerLogFormat, "text1", "text1text2"));
+                    return listener.getText().contains(format(phaseListenerLogFormat, "text1", "text1text2")) || listener.getText().contains(format(phaseListenerLogFormat, "text1", "text2text1"));
                 }
             });
     }
