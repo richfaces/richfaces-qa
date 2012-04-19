@@ -65,6 +65,8 @@ public class RichAutocompleteBean implements Serializable {
     private String value3;
     private String value4;
 
+    private String randomString;
+
     /**
      * Initializes the managed bean.
      */
@@ -155,6 +157,9 @@ public class RichAutocompleteBean implements Serializable {
                 result.add(capital);
             }
         }
+
+        randomString = String.valueOf(Math.random());
+
         return result;
     }
 
@@ -199,6 +204,14 @@ public class RichAutocompleteBean implements Serializable {
 
     public List<Capital> getCapitals() {
         return capitals;
+    }
+
+    public String getRandomString() {
+        return randomString;
+    }
+
+    public void setRandomString(String random) {
+        this.randomString = random;
     }
 
 }
