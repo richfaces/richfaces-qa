@@ -46,7 +46,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22684 $
  */
-public class TestSimple extends AbstracStatusTest {
+public class TestSimple extends AbstractStatusTest {
 
     JQueryLocator defaultStatus = jq("span[id$=a4jStatusPanel]");
     TextRetriever retrieveDefaultStatus = retrieveText.locator(defaultStatus);

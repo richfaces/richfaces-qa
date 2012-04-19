@@ -40,7 +40,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22407 $
  */
-public class TestReferencedUsage extends AbstracStatusTest {
+public class TestReferencedUsage extends AbstractStatusTest {
 
     JQueryLocator status1 = pjq("span[id$=status1]");
     JQueryLocator status2 = pjq("span[id$=status2]");

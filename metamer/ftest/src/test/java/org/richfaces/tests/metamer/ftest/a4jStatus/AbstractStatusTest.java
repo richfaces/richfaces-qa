@@ -37,7 +37,7 @@ import org.testng.annotations.BeforeMethod;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22684 $
  */
-public abstract class AbstracStatusTest extends AbstractGrapheneTest {
+public abstract class AbstractStatusTest extends AbstractGrapheneTest {
     JQueryLocator button1 = pjq("input[id$=button1]");
     JQueryLocator button2 = pjq("input[id$=button2]");
     JQueryLocator buttonError = pjq("input[id$=button3]");

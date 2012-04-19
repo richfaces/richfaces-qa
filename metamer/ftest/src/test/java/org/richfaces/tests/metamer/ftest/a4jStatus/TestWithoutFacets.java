@@ -46,7 +46,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestWithoutFacets extends AbstracStatusTest {
+public class TestWithoutFacets extends AbstractStatusTest {
 
     JQueryLocator defaultStatus = jq("span[id$=a4jStatusPanel]");
     TextRetriever retrieveDefaultStatus = retrieveText.locator(defaultStatus);

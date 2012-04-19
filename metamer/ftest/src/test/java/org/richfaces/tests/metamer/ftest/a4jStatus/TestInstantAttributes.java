@@ -52,7 +52,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22972 $
  */
-public class TestInstantAttributes extends AbstracStatusTest {
+public class TestInstantAttributes extends AbstractStatusTest {
 
     JavaScript alert = js("alert('{0}')");
 
