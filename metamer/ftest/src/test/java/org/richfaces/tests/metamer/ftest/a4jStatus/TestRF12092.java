@@ -21,17 +21,16 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jStatus;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.jboss.arquillian.ajocado.Graphene.jq;
-import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
-import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
-import static org.jboss.arquillian.ajocado.Graphene.elementNotVisible;
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.jboss.cheiron.halt.XHRHalter;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
@@ -40,9 +39,9 @@ import org.testng.annotations.Test;
  *
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class TestRF12092 extends AbstractGrapheneTest {
+public class TestRF12092 extends AbstractStatusTest {
 
-    private JQueryLocator statusMessageStart = jq(".rf-st-start");
+    private JQueryLocator statusMessageStart = jq("span[id$=a4jstatus]");
 
     @Override
     public URL getTestUrl() {
@@ -53,10 +52,14 @@ public class TestRF12092 extends AbstractGrapheneTest {
     @IssueTracking("https://issues.jboss.org/browse/RFPL-12092")
     public void testStatusIsClearedWhenRequestCompleted() {
 
-        waitAjax.timeout(7000).until(elementVisible.locator(statusMessageStart));
+        XHRHalter.enable();
+        XHRHalter halt = getCurrentXHRHalter();
 
-        waitModel.failWith(new RuntimeException("The status message never clears! Even when the request was finished!"))
-            .timeout(2000).until(elementNotVisible.locator(statusMessageStart));
+        String status = selenium.getText(statusMessageStart).trim();
+        assertEquals(status, "In progress", "The status was not rendered for the request!");
+        halt.complete();
+
+        assertFalse(selenium.isVisible(statusMessageStart));
     }
 
 }
