@@ -94,6 +94,19 @@ public class A4JPushBean implements Serializable {
 
         System.out.println("push event");
     }
+    
+    /**
+     * Trigger to start push with another topic
+     * @throws MessageException
+     */
+    public void push2() throws MessageException {
+        TopicKey topicKey = new TopicKey("sampleAddress2");
+        TopicsContext topicsContext = TopicsContext.lookup();
+
+        topicsContext.publish(topicKey, new Date().toString());
+
+        System.out.println("push event 2");
+    }
 
     /**
      * Getter for attributes.
