@@ -41,7 +41,7 @@ public class TestRichTogglePanelSimple extends AbstractWebDriverTest<SimplePage>
         assertFalse(getPage().isSecondTabFocused());
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testOpenSecondPanel() {
         getPage().openSecondPanel();
         assertTrue(getPage().isSecondTabFocused());

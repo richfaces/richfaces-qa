@@ -33,8 +33,7 @@ import org.testng.annotations.Test;
  */
 public class TestA4jPollSimple extends AbstractWebDriverTest<PollPage> {
 
-    // https://issues.jboss.org/browse/RF-11872
-    @Test(groups = {"4.2.1"})
+    @Test(groups = {"RF-11872"})
     public void testStop() throws InterruptedException {
         getPage().getButton().click();
         String before = getPage().getDate().getText();
@@ -45,8 +44,7 @@ public class TestA4jPollSimple extends AbstractWebDriverTest<PollPage> {
 
     }
 
-    // https://issues.jboss.org/browse/RF-11871
-    @Test(groups = {"4.3"})
+    @Test(groups = {"RF-11871"})
     public void testUpdates() {
         for (int i=0; i<2; i++) {
             String before = getPage().getDate().getText();

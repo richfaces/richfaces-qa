@@ -42,6 +42,7 @@ public class TestA4jAjaxSimple extends AbstractWebDriverTest<AjaxPage> {
             .until(TextEquals.getInstance().element(getPage().getOutput()).text("something"));
     }
 
+    @Override
     protected AjaxPage createPage() {
         return new AjaxPage();
     }

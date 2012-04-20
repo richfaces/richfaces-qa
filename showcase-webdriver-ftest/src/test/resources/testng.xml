@@ -2,17 +2,21 @@
 <suite name="seleniumTest">
 
     <test name="All Components">
-        
+
         <groups>
             <run>
-                <exclude name="4.2.1" />
-                <exclude name="4.3" />
-                <exclude name="4.Future" />
                 <exclude name="broken" />
-                <exclude name="reported-without-fix-version" />
+
+                <exclude name="RF-11479" />
+                <exclude name="RF-11573" />
+                <exclude name="RF-11872" />
+                <exclude name="RF-12146" />
+                <exclude name="RF-11773" />
+
+<!--                <include name="RF-11871" />-->
             </run>
         </groups>
-            
+
         <packages>
             <package name="org.richfaces.tests.showcase.ftest.webdriver.ftest.*" />
         </packages>

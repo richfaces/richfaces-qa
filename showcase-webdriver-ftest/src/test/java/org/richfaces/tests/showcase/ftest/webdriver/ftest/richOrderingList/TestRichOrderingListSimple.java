@@ -38,7 +38,7 @@ public class TestRichOrderingListSimple extends AbstractWebDriverTest<OrderingLi
         return new OrderingListPage(getWebDriver());
     }
 
-    @Test
+    @Test(groups = {"RF-11773"})
     public void testSelectionBottom() {
         getPage().select(getPage().getNumberOfItems() - 1);
         assertFalse(getPage().isBottomButtonEnabled());
@@ -47,7 +47,7 @@ public class TestRichOrderingListSimple extends AbstractWebDriverTest<OrderingLi
         assertTrue(getPage().isUpButtonEnabled());
     }
 
-    @Test
+    @Test(groups = {"RF-11773"})
     public void testSelectionMiddle() {
         getPage().select(2);
         assertTrue(getPage().isBottomButtonEnabled());
@@ -56,7 +56,7 @@ public class TestRichOrderingListSimple extends AbstractWebDriverTest<OrderingLi
         assertTrue(getPage().isUpButtonEnabled());
     }
 
-    @Test
+    @Test(groups = {"RF-11773"})
     public void testSelectionTop() {
         getPage().select(0);
         assertTrue(getPage().isBottomButtonEnabled());

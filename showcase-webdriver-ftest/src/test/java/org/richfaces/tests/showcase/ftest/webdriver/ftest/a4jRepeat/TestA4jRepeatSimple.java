@@ -46,14 +46,14 @@ public class TestA4jRepeatSimple extends AbstractWebDriverTest<SimplePage>{
         assertEquals(getPage().getLastState(), LAST_STATE_FIRST_PAGE, "The last state on doesn't match.");
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testSecondPage() {
         getPage().next();
         assertEquals(getPage().getFirstState(), FIRST_STATE_SECOND_PAGE, "The first state on doesn't match.");
         assertEquals(getPage().getLastState(), LAST_STATE_SECOND_PAGE, "The last state on doesn't match.");
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testThirdPage() {
         getPage().next();
         getPage().next();

@@ -32,7 +32,7 @@ import org.testng.annotations.Test;
  */
 public class TestA4jParamSimple extends AbstractWebDriverTest<ParamPage>{
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testSetName() {
         for(ParamPage.Name name : ParamPage.Name.getAll()) {
             getPage().setName(name);

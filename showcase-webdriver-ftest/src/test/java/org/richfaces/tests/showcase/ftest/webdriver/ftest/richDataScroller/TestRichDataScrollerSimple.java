@@ -46,7 +46,7 @@ public class TestRichDataScrollerSimple extends AbstractWebDriverTest<SimpleScro
         testFirstPage();
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testNextAndPreviousPage() {
         hackScrolling();
         // move to the second page
@@ -57,7 +57,7 @@ public class TestRichDataScrollerSimple extends AbstractWebDriverTest<SimpleScro
         testFirstPage();
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testNextPage() {
         hackScrolling();
         // move to the second page
@@ -81,7 +81,7 @@ public class TestRichDataScrollerSimple extends AbstractWebDriverTest<SimpleScro
         testLastCar(LAST_CAR_SECOND_PAGE);
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testLastAndFirstPage() {
         hackScrolling();
         // move to the last page
@@ -92,7 +92,7 @@ public class TestRichDataScrollerSimple extends AbstractWebDriverTest<SimpleScro
         testFirstPage();
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testLastPage() {
         hackScrolling();
         // HACK: because of the scrolling

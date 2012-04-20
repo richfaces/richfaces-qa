@@ -34,7 +34,7 @@ import org.testng.annotations.Test;
  */
 public class TestA4jCommandButtonSimple extends AbstractWebDriverTest<CommandButtonPage> {
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testTypeAndSend() throws InterruptedException {
         sendKeysToInputCarefully(getPage().getInput(), "something");
 

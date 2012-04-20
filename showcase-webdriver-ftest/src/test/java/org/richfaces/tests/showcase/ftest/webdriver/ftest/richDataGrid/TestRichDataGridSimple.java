@@ -46,14 +46,14 @@ public class TestRichDataGridSimple extends AbstractWebDriverTest<GridPage> {
         testLastCar(LAST_CAR_FIRST_PAGE);
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testSecondPage() {
         getPage().page(2);
         testFirstCar(FIRST_CAR_SECOND_PAGE);
         testLastCar(LAST_CAR_SECOND_PAGE);
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testThirdPage() {
         getPage().page(3);
         testFirstCar(FIRST_CAR_THIRD_PAGE);

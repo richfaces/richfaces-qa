@@ -31,27 +31,32 @@ import org.testng.annotations.Test;
  */
 public class TestRichMessagesSimple extends AbstractRichMessageTest<MessagesPage> {
 
-    @Test
+    @Test(groups = {"RF-12146"})
+    @Override
     public void testAddressWrongAndCorrect() {
         super.testAddressWrongAndCorrect();
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
+    @Override
     public void testAllWrongAndCorrect() {
         super.testAllWrongAndCorrect();
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
+    @Override
     public void testJobWrongAndCorrect() {
         super.testJobWrongAndCorrect();
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
+    @Override
     public void testNameWrongAndCorrect() {
         super.testNameWrongAndCorrect();
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
+    @Override
     public void testZipWrongAndCorrect() {
         super.testZipWrongAndCorrect();
     }

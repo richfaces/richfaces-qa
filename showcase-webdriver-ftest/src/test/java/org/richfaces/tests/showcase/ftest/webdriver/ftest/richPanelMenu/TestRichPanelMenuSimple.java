@@ -36,12 +36,12 @@ import org.testng.annotations.Test;
  */
 public class TestRichPanelMenuSimple extends AbstractAndroidTest<PanelMenuPage> {
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testExpandFirst() {
         getPage().getPanelMenu().toggleFirstLevelGroup(0);
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testExpandAndCollapseFirst() {
         getPage().getPanelMenu().toggleFirstLevelGroup(0);
         getPage().getPanelMenu().toggleFirstLevelGroup(0);
@@ -56,7 +56,7 @@ public class TestRichPanelMenuSimple extends AbstractAndroidTest<PanelMenuPage> 
         }
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testSelectFirstItemFromFristGroup() {
         getPage().getPanelMenu().toggleFirstLevelGroup(0);
         getPage().getPanelMenu().selectSecondLevelItem(0, 0);

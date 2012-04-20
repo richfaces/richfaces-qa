@@ -34,7 +34,7 @@ import org.testng.annotations.Test;
  */
 public class TestRichGraphValidator extends AbstractWebDriverTest<PasswordValidationPage> {
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testConfirmation() {
         getPage().getPassword().click();
         getPage().getPassword().sendKeys("12345");
@@ -55,7 +55,7 @@ public class TestRichGraphValidator extends AbstractWebDriverTest<PasswordValida
         assertTrue(getPage().getInfoMessageArea().getText().contains("Successfully changed!"));
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testLongPassword() {
         getPage().getPassword().click();
         getPage().getPassword().sendKeys("12344567890abcdef");
@@ -66,7 +66,7 @@ public class TestRichGraphValidator extends AbstractWebDriverTest<PasswordValida
         assertTrue(getPage().getValidatorMessageArea().getText().contains("between 5 and 15 characters"));
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testShortPassword() {
         getPage().getPassword().click();
         getPage().getPassword().sendKeys("1234");

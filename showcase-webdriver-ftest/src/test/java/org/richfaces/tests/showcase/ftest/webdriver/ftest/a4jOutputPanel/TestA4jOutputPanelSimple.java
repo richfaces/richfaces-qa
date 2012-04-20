@@ -40,8 +40,7 @@ public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<SimplePage>{
     private static final String CORRECT = "aaaaaaaaaa";
     private static final String WRONG = "aaaaaaaaaaa";
 
-    // https://issues.jboss.org/browse/RF-11573
-    @Test(groups = { "4.3" })
+    @Test(groups = { "RF-11573" })
     public void testFirstCorrectInput() {
         getPage().getFirstInput().click();
         getPage().getFirstInput().sendKeys(CORRECT);
@@ -54,7 +53,7 @@ public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<SimplePage>{
         assertEquals(getPage().getFirstOutput().getText(), "Approved Text: " + CORRECT, "The output text doesn't match.");
     }
 
-    @Test
+    @Test(groups = { "RF-11573" })
     public void testFirstWrongInput() {
         getPage().getFirstInput().click();
         getPage().getFirstInput().sendKeys(WRONG);
