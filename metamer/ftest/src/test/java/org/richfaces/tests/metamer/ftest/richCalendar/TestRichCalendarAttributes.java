@@ -81,9 +81,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.faces.event.PhaseId;
-import javax.persistence.criteria.CriteriaBuilder.Case;
-
-import net.sourceforge.htmlunit.corejs.javascript.tools.debugger.Dim;
 
 import org.jboss.arquillian.ajocado.css.CssProperty;
 import org.jboss.arquillian.ajocado.dom.Attribute;
@@ -386,33 +383,39 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
             int x = selenium.getElementPosition(popup).getX();
             int y = selenium.getElementPosition(popup).getY();
 
+            int x_offset = inputX - popupDim.getWidth() + 2;
+            int y_offset_down = inputY + (inputDim.getHeight() - 1);
+            int y_offset_up = inputY - popupDim.getHeight() + inputDim.getHeight() + 1;
+
             // System.out.println(" direction: " + directions[i]);
             // System.out.println("   ### position: [" + x +  ", " + y + "]");
 
             switch (i) {
-                case 0: // auto
-                    assertEquals(x, inputX);
-                    assertEquals(y, inputY + inputDim.getHeight() - 1);
+                case 0: // auto (direction depends on browser/screen resolution)
+                    assertTrue(x == inputX || x == x_offset,
+                        "Any expected value found. x = " + x + ", one of expected: " + x_offset);
+                    assertTrue( y == y_offset_down || y == y_offset_up,
+                        "Any expected value found. y = " + y + ", one of expected: " + y_offset_up);
                     break;
 
                 case 1: // bottomLeft
-                    assertEquals(x, inputX - popupDim.getWidth() + 2);
-                    assertEquals(y, inputY + (inputDim.getHeight() - 1));
+                    assertEquals(x, x_offset);
+                    assertEquals(y, y_offset_down);
                     break;
 
                 case 2: // bottomRight
                     assertEquals(x, inputX);
-                    assertEquals(y, inputY + inputDim.getHeight() - 1);
+                    assertEquals(y, y_offset_down);
                     break;
 
                 case 3: // topLeft
-                    assertEquals(x, inputX - popupDim.getWidth() + 2);
-                    assertEquals(y, inputY - popupDim.getHeight() + inputDim.getHeight() + 1);
+                    assertEquals(x, x_offset);
+                    assertEquals(y, y_offset_up);
                     break;
 
                 case 4: // topRight
                     assertEquals(x, inputX);
-                    assertEquals(y, inputY - popupDim.getHeight() + inputDim.getHeight() + 1);
+                    assertEquals(y, y_offset_up);
                     break;
 
                 default:
