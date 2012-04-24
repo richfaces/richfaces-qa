@@ -37,9 +37,9 @@ import org.openqa.selenium.support.pagefactory.FieldDecorator;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.metamer.ftest.webdriver.IWEAvailabilityCondition;
-import org.richfaces.tests.metamer.ftest.webdriver.StaleReferenceAwareFieldDecorator;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
+import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
 
 public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 

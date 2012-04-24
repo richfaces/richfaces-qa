@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver;
 
-import org.jboss.test.selenium.android.support.pagefactory.StaleReferenceAwareFieldDecorator;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocator;
 
 /**

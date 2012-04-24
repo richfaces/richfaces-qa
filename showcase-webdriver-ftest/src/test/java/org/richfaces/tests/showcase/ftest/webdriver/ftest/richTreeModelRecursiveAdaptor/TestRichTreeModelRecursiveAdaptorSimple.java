@@ -33,7 +33,7 @@ import org.testng.annotations.Test;
  */
 public class TestRichTreeModelRecursiveAdaptorSimple extends AbstractWebDriverTest<TreeModelRecursiveAdaptorPage> {
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testExpandFirstLevel() {
         getPage().expandFirstLevelFirstNode();
         assertTrue(getPage().countSecondLevelVisible() > 0,

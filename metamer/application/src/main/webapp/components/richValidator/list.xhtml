@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
-    <!--
+<!--
 JBoss, Home of Professional Open Source
 Copyright 2010-2012, Red Hat, Inc. and individual contributors
 by the @authors tag. See the copyright.txt in the distribution for a
@@ -25,30 +26,42 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="/templates/list.xhtml">
+<ui:composition template="/templates/list.xhtml">
 
-        <ui:define name="pageTitle">Rich Validator</ui:define>
+	<ui:define name="pageTitle">Rich Validator</ui:define>
 
-        <ui:define name="links">
+	<ui:define name="links">
 
-            <metamer:testPageLink id="csv" outcome="csv" value="Client Side Validation">
+		<metamer:testPageLink id="csv" outcome="csv"
+			value="Client Side Validation">
                 Simple page that contains <b>rich:validator</b> testing the support for JSR-303 and input boxes for all validator's attributes.
             </metamer:testPageLink>
 
-            <metamer:testPageLink id="jsr303" outcome="jsr303" value="JSR-303 Bean Validation">
+		<metamer:testPageLink id="jsr303" outcome="jsr303"
+			value="JSR-303 Bean Validation">
                 Page containing input with various JSR-303 validators.
             </metamer:testPageLink>
-            
-            <metamer:testPageLink id="wrapping" outcome="wrapping" value="Client side validation for many inputs wrapped by rich:validator">
+
+		<metamer:testPageLink id="wrapping" outcome="wrapping"
+			value="Client side validation for many inputs wrapped by rich:validator">
                 Simple page that contains many inputs within <b>rich:validator</b>
-            </metamer:testPageLink>
-            
-            <metamer:testPageLink id="single" outcome="single" value="Client side validation for only one input component wrapped by rich:validator">
+		</metamer:testPageLink>
+
+		<metamer:testPageLink id="single" outcome="single"
+			value="Client side validation for only one input component wrapped by rich:validator">
                 Simple page that contains simple inputs within <b>rich:validator</b>
+		</metamer:testPageLink>
+
+		<metamer:testPageLink id="RF-12031" outcome="RF-12031"
+			value="RF-12031">
+                Page demonstrating issue <a
+				href="https://issues.jboss.org/browse/RF-12031">RF-12031</a>. 
+                <br />Client side validation does not work when triggered on conditionally rendered input.
+                <br /><b>Automated in:</b> org.richfaces.tests.metamer.ftest.richValidator.TestRF12031.testCSVOnConditionallyRenderedInput
             </metamer:testPageLink>
 
-        </ui:define>
+	</ui:define>
 
-    </ui:composition>
+</ui:composition>
 
 </html>

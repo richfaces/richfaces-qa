@@ -34,7 +34,7 @@ import org.testng.annotations.Test;
  */
 public class TestA4jCommandLinkSimple extends AbstractWebDriverTest<CommandLinkPage> {
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testTypeAndSend() {
         sendKeysToInputCarefully(getPage().getInput(), "something");
 

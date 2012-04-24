@@ -34,6 +34,9 @@ http://www.fsf.org. -->
             <property name="executionType">REMOTE</property>
         </protocol>
     </container>    
+
+    <container qualifier="jbossas-remote-7-1">
+    </container>        
         
     <extension qualifier="webdriver">
         <property name="implementationClass">org.openqa.selenium.android.AndroidDriver</property>

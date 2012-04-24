@@ -45,8 +45,7 @@ public class TestA4jRegionSimple extends AbstractWebDriverTest<RegionPage> {
         assertEquals(getPage().getBrokenEmailInput().getText(), "", "After submitting the broken form, the output should stay empty.");
     }
 
-    // https://issues.jboss.org/browse/RF-11872
-    @Test(groups = {"4.3"})
+    @Test(groups = {"RF-11872"})
     public void testWorking() {
         getPage().getEmailInput().click();
         getPage().getEmailInput().sendKeys("email");

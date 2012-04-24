@@ -39,13 +39,13 @@ public class TestRichListSimple extends AbstractWebDriverTest<ListsPage>{
         testNumberOfItems();
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testSetDefinition() {
         getPage().setDefinition();
         testNumberOfItems();
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testSetUnordered() {
         getPage().setUnordered();
         testNumberOfItems();

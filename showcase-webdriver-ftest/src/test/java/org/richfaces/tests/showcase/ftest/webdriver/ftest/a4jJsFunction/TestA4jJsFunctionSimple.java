@@ -32,7 +32,7 @@ import org.testng.annotations.Test;
  */
 public class TestA4jJsFunctionSimple extends AbstractWebDriverTest<JsFunctionPage> {
 
-    @Test
+    @Test(groups = {"broken"})
     public void testClick() {
         for (String name : getPage().getNames().keySet()) {
             getPage().getNames().get(name).click();

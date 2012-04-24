@@ -20,7 +20,7 @@
  * site: http://www.fsf.org.
  * *****************************************************************************
  */
-package org.richfaces.tests.metamer.ftest.webdriver;
+package org.jboss.test.selenium.support.pagefactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -99,11 +99,11 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
 
             WebElement element = null;
             for (int i = 0; i < numberOfTries; i++) {
-                element = locator.findElement();
-                if ("getWrappedElement".equals(method.getName())) {
-                    return element;
-                }
                 try {
+                    element = locator.findElement();
+                    if ("getWrappedElement".equals(method.getName())) {
+                        return element;
+                    }
                     return invokeMethod(method, element, objects);
                 } catch (StaleElementReferenceException ignored) {
                     waitSomeTime();

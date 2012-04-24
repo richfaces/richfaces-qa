@@ -36,7 +36,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22690 $
  */
-public class TestFacets extends AbstracStatusTest {
+public class TestFacets extends AbstractStatusTest {
     JQueryLocator applyFacetsButton = pjq("input[id$=applyFacets]");
     JQueryLocator inputFormat = pjq("input[id$={0}Input]");
 

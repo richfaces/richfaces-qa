@@ -48,8 +48,7 @@ public class TestA4jLogSimple extends AbstractAndroidTest<LogPage> {
             .until(TextContains.getInstance().element(getPage().getLoggingArea()).text(""));
     }
 
-    // https://issues.jboss.org/browse/RF-11479
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "RF-11479" })
     public void testLogDebug() {
         Select select = new Select(getWebDriver(), getToolKit(), getPage().getSeveritySelect());
         select.selectByIndex(LogPage.Severity.DEBUG.getIndex());
@@ -62,8 +61,7 @@ public class TestA4jLogSimple extends AbstractAndroidTest<LogPage> {
             .until(TextContains.getInstance().element(getPage().getLoggingArea()).text("info"));
     }
 
-    // https://issues.jboss.org/browse/RF-11479
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "RF-11479" })
     public void testLogError() {
         Select select = new Select(getWebDriver(), getToolKit(), getPage().getSeveritySelect());
         select.selectByIndex(LogPage.Severity.ERROR.getIndex());
@@ -83,8 +81,7 @@ public class TestA4jLogSimple extends AbstractAndroidTest<LogPage> {
             .until(TextContains.getInstance().element(getPage().getLoggingArea()).text("info"));
     }
 
-    // https://issues.jboss.org/browse/RF-11479
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "RF-11479" })
     public void testLogWarn() {
         Select select = new Select(getWebDriver(), getToolKit(), getPage().getSeveritySelect());
         select.selectByIndex(LogPage.Severity.WARN.getIndex());
@@ -102,7 +99,7 @@ public class TestA4jLogSimple extends AbstractAndroidTest<LogPage> {
             .until(TextEquals.getInstance().element(getPage().getOutput()).text(""));
     }
 
-    @Test
+    @Test(groups = {"RF-12146"})
     public void testSubmitSomething() {
         getPage().getInput().click();
         getPage().getInput().sendKeys("something");

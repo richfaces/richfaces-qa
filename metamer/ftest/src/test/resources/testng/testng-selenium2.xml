@@ -12,6 +12,14 @@
         <classes>
             <class name="org.richfaces.tests.metamer.ftest.richEditor.TestRichEditorWithTyping" />
             <class name="org.richfaces.tests.metamer.ftest.richFileUpload.TestRichFileUploadSe2" />
+            <class name="org.richfaces.tests.metamer.ftest.richContextMenu.TestRichContextMenuWebDriver" />
+            <class name="org.richfaces.tests.metamer.ftest.richItemChangeListener.TestAccordionItemChangeListener" />
+            <class name="org.richfaces.tests.metamer.ftest.richItemChangeListener.TestPanelMenuItemChangeListener" />
+            <class name="org.richfaces.tests.metamer.ftest.richItemChangeListener.TestTabPanelItemChangeListener" />
+            <class name="org.richfaces.tests.metamer.ftest.richItemChangeListener.TestTogglePanelItemChangeListener" />
+            <class name="org.richfaces.tests.metamer.ftest.richPanelToggleListener.TestPanelToggleListenerInCollapsiblePanel" />
+            <class name="org.richfaces.tests.metamer.ftest.richTreeSelectionChangeListener.TestTreeSelectionChangeListenerSimple" />
+            <class name="org.richfaces.tests.metamer.ftest.richTreeToggleListener.TestTreeToggleListenerSimple" />
         </classes>
     </test>
 
