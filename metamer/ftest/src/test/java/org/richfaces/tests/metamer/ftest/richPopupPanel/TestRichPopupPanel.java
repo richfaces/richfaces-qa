@@ -23,13 +23,10 @@ package org.richfaces.tests.metamer.ftest.richPopupPanel;
 
 import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.controlsClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerClass;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -44,6 +41,7 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 
@@ -133,9 +131,8 @@ public class TestRichPopupPanel extends AbstractGrapheneTest {
         assertEquals(selenium.getElementPositionLeft(panelContainer), panelLeft + 200, "Panel's position after move to the right (200px).");
         assertEquals(selenium.getElementPositionLeft(shadow), shadowLeft + 200, "Shadow's position after move to the right (200px).");
 
-        // cannot test top position because of bug in Selenium
-//         assertEquals(selenium.getElementPositionTop(panelContainer), panelTop - 100, "Panel's position after move to the top (100px).");
-//         assertEquals(selenium.getElementPositionTop(shadow), shadowTop - 100, "Shadow's position after move to the top (100px).");
+        assertEquals(selenium.getElementPositionTop(panelContainer), panelTop - 100, "Panel's position after move to the top (100px).");
+        assertEquals(selenium.getElementPositionTop(shadow), shadowTop - 100, "Shadow's position after move to the top (100px).");
     }
 
     @Test
@@ -284,6 +281,9 @@ public class TestRichPopupPanel extends AbstractGrapheneTest {
 
         assertEquals(selenium.getElementPositionLeft(panelContainer), panelLeft, "Panel's position after move to the right (200px).");
         assertEquals(selenium.getElementPositionLeft(shadow), shadowLeft, "Shadow's position after move to the right (200px).");
+
+        assertEquals(selenium.getElementPositionTop(panelContainer), panelTop, "Panel's position after move to the top (100px).");
+        assertEquals(selenium.getElementPositionTop(shadow), shadowTop, "Shadow's position after move to the top (100px).");
     }
 
     @Test
@@ -431,7 +431,7 @@ public class TestRichPopupPanel extends AbstractGrapheneTest {
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-10504")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10504")
     public void testShadowDepth() {
         selenium.type(pjq("input[id$=shadowDepthInput]"), "15");
         selenium.waitForPageToLoad();
@@ -461,7 +461,7 @@ public class TestRichPopupPanel extends AbstractGrapheneTest {
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-10504")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10504")
     public void testShadowOpacity() {
         selenium.click(openButton);
         waitGui.failWith("Panel was not opened.").until(elementVisible.locator(panel));
@@ -476,13 +476,13 @@ public class TestRichPopupPanel extends AbstractGrapheneTest {
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-10245")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10245")
     public void testStyle() {
         testStyle(panelContainer);
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-10245")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10245")
     public void testStyleClass() {
         testStyleClass(panelContainer);
     }
