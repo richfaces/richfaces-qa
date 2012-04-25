@@ -23,8 +23,8 @@ fi
 
 unzip "$SCRIPT_DIR/forge-distribution-${FORGE_VERSION}.zip";
 
-if [ -d "~/.forge" ]; then
-    rm -rf "~/.forge";
+if [ -d ~/.forge ]; then
+    rm -rf ~/.forge;
 fi
 
 if [ -d "$SCRIPT_DIR/richfaces-forge-simpleapp" ]; then
@@ -36,5 +36,6 @@ echo "RichFaces version: ${RICHFACES_VERSION}"
 echo "--------------------------------------------------------------------------------";
 
 cd $SCRIPT_DIR;
+    $SCRIPT_DIR/forge-distribution-${FORGE_VERSION}/bin/forge -e "set DEFAULT_PLUGIN_REPO https://raw.github.com/forge/plugin-repository/master/repository.yaml; forge install-plugin richfaces";
     for I in {1..2}; do echo ""; done | $SCRIPT_DIR/forge-distribution-${FORGE_VERSION}/bin/forge -e "new-project --named richfaces-forge-simpleapp --topLevelPackage org.richfaces.tests --projectFolder richfaces-forge-simpleapp; richfaces setup; richfaces install-example-facelet; build;"
 cd $WORKING_DIR;
