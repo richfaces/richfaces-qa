@@ -84,6 +84,18 @@ public class RichNotifyBean implements Serializable {
         // FIXME these attributes should be in the list after fixing RF-12144
         attributesNotifyMessages.setAttribute("showHistory", false);
         attributesNotifyMessages.get("showHistory").setType(Boolean.class);
+        attributesNotifyMessages.setAttribute("onclick", null);
+        attributesNotifyMessages.setAttribute("ondblclick", null);
+        attributesNotifyMessages.setAttribute("onkeydown", null);
+        attributesNotifyMessages.setAttribute("onkeypress", null);
+        attributesNotifyMessages.setAttribute("onkeyup", null);
+        attributesNotifyMessages.setAttribute("onmousedown", null);
+        attributesNotifyMessages.setAttribute("onmousemove", null);
+        attributesNotifyMessages.setAttribute("onmouseout", null);
+        attributesNotifyMessages.setAttribute("onmouseover", null);
+        attributesNotifyMessages.setAttribute("onmouseup", null);
+        attributesNotifyMessages.setAttribute("style", null);
+        attributesNotifyMessages.setAttribute("title", null);
 
         attributesNotifyMessages.setAttribute("animationSpeed", 100);
         attributesNotifyMessages.setAttribute("appearAnimation", "fade");
