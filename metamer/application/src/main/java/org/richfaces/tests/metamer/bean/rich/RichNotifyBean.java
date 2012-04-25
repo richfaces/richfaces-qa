@@ -259,20 +259,4 @@ public class RichNotifyBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, text, detail));
         }
     }
-
-    /**
-     * It returns attributes shared by AbstractNotify and AbstractNotifyMessages (NotifyAttributes)
-     *
-     * @return map containing all attributes of tested component. Name of the component is key in the map.
-     */
-    private Attributes getGeneralAttributes() {
-        Attributes attributes = Attributes.getAttributesFromClass(NotifyAttributes.class, getClass());
-        attributes.setAttribute("animationSpeed", 100);
-        attributes.setAttribute("appearAnimation", "fade");
-        attributes.setAttribute("hideAnimation", "show");
-        attributes.setAttribute("showCloseButton", true);
-        attributes.setAttribute("stayTime", 100000);
-        attributes.remove("stack");
-        return attributes;
-    }
 }
