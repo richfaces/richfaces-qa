@@ -18,7 +18,7 @@ if [ -d "$SCRIPT_DIR/forge-distribution-${FORGE_VERSION}" ]; then
 fi;
 
 if [ ! -f "$SCRIPT_DIR/forge-distribution-${FORGE_VERSION}.zip" ]; then
-    wget "https://repository.jboss.org/nexus/service/local/artifact/maven/redirect?r=releases&g=org.jboss.forge&a=forge-distribution&v=${FORGE_VERSION}&e=zip" -O "$SCRIPT_DIR/forge-distribution-${FORGE_VERSION}.zip";
+    wget "https://repository.jboss.org/nexus/service/local/artifact/maven/redirect?r=releases&g=org.jboss.forge&a=forge-distribution&v=${FORGE_VERSION}&e=zip" -O "$SCRIPT_DIR/forge-distribution-${FORGE_VERSION}.zip" --no-check-certificate;
 fi
 
 unzip "$SCRIPT_DIR/forge-distribution-${FORGE_VERSION}.zip";
