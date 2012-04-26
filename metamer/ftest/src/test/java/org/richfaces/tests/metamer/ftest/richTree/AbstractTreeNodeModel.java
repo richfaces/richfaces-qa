@@ -25,8 +25,8 @@ import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
 import static org.jboss.test.selenium.locator.reference.ReferencedLocator.ref;
 
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.test.selenium.locator.reference.ReferencedLocator;
 import org.richfaces.tests.metamer.ftest.model.AbstractModel;
@@ -50,7 +50,7 @@ public class AbstractTreeNodeModel extends AbstractModel<JQueryLocator> {
     ReferencedLocator<JQueryLocator> nodesExpanded = ref(root, "> " + treeNodeExpanded.getRawLocator());
     ReferencedLocator<JQueryLocator> anyNodesSelected = ref(root, treeNodeSelected.getRawLocator());
 
-    private AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    private GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
     public AbstractTreeNodeModel(JQueryLocator root) {
         super(root);

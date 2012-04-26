@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTree;
 
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.model.AbstractModel;
 
@@ -32,7 +32,7 @@ import org.richfaces.tests.metamer.ftest.model.AbstractModel;
  */
 public class TreeNodeIcon extends AbstractModel<JQueryLocator> {
 
-AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
     String classIconLeaf = "rf-trn-ico-lf";
     String classIconExpanded = "rf-trn-ico-exp";
