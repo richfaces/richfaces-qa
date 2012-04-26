@@ -95,7 +95,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
 
     @Inject
     @Templates({ "plain", "richAccordion", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richCollapsiblePanel", "richPanel", "richTabPanel", "richPopupPanel", "a4jRegion", "a4jRepeat", "uiRepeat" })
+        "richCollapsiblePanel", "richTabPanel", "richPopupPanel", "a4jRegion", "a4jRepeat", "uiRepeat" })
     protected TemplatesList template;
 
     /**
