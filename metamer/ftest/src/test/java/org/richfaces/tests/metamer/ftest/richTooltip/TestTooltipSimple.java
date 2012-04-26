@@ -28,7 +28,6 @@ import static org.jboss.arquillian.ajocado.Graphene.elementNotVisible;
 import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
 import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEDOWN;
@@ -36,22 +35,9 @@ import static org.jboss.arquillian.ajocado.dom.Event.MOUSEMOVE;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOUT;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOVER;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEUP;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.tooltipAttributes;
-import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.data;
-import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.hideDelay;
-import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.hideEvent;
-import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.limitRender;
-import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.oncomplete;
-import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.render;
-import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.showDelay;
-import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.showEvent;
-import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.status;
-import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.zindex;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 
@@ -70,11 +56,11 @@ import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.DelayTester;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -91,7 +77,7 @@ public class TestTooltipSimple extends AbstractGrapheneTest {
     @Inject
     @Use(empty = true)
     Positioning direction;
-    Integer[] offsets = new Integer[]{0, PRESET_OFFSET, -PRESET_OFFSET};
+    Integer[] offsets = new Integer[] { 0, PRESET_OFFSET, -PRESET_OFFSET };
     @Inject
     @Use(ints = 0)
     Integer verticalOffset;
@@ -101,7 +87,7 @@ public class TestTooltipSimple extends AbstractGrapheneTest {
     @Inject
     @Use(empty = true)
     Event domEvent;
-    Event[] domEvents = {CLICK, DBLCLICK, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER, MOUSEUP};
+    Event[] domEvents = { CLICK, DBLCLICK, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER, MOUSEUP };
     @Inject
     @Use(empty = true)
     Boolean followMouse = true;
@@ -122,8 +108,8 @@ public class TestTooltipSimple extends AbstractGrapheneTest {
 
     @BeforeMethod
     public void setupAttributes() {
-        tooltipAttributes.set(showEvent, "mouseover");
-        tooltipAttributes.set(hideEvent, "mouseout");
+        tooltipAttributes.set(TooltipAttributes.showEvent, "mouseover");
+        tooltipAttributes.set(TooltipAttributes.hideEvent, "mouseout");
     }
 
     @Test
@@ -137,8 +123,8 @@ public class TestTooltipSimple extends AbstractGrapheneTest {
 
     @Test
     public void testData() {
-        tooltipAttributes.set(data, "RichFaces 4");
-        tooltipAttributes.set(oncomplete, "data = event.data");
+        tooltipAttributes.set(TooltipAttributes.data, "RichFaces 4");
+        tooltipAttributes.set(TooltipAttributes.oncomplete, "data = event.data");
         tooltipAttributes.set(TooltipAttributes.mode, TooltipMode.ajax);
 
         retrieveRequestTime.initializeValue();
@@ -165,10 +151,9 @@ public class TestTooltipSimple extends AbstractGrapheneTest {
     }
 
     @Test
-    @Uses({
-        @Use(field = "direction", enumeration = true),
-        @Use(field = "verticalOffset", value = "offsets"),
-        @Use(field = "horizontalOffset", value = "offsets")})
+    @Uses({ @Use(field = "direction", enumeration = true), @Use(field = "verticalOffset", value = "offsets"),
+        @Use(field = "horizontalOffset", value = "offsets") })
+    @Templates(value = { "plain", "richCollapsibleSubTable", "richExtendedDataTable", "richPopupPanel" })
     public void testPositioning() {
         tooltipAttributes.set(TooltipAttributes.direction, direction);
         tooltipAttributes.set(TooltipAttributes.horizontalOffset, horizontalOffset);
@@ -190,7 +175,7 @@ public class TestTooltipSimple extends AbstractGrapheneTest {
                     break;
                 case LEFT:
                     assertEquals(tooltipPosition.getX() + tooltipDimension.getWidth(), eventPosition.getX()
-                            - horizontalOffset);
+                        - horizontalOffset);
                     break;
                 default:
                     break;
@@ -204,7 +189,7 @@ public class TestTooltipSimple extends AbstractGrapheneTest {
                     break;
                 case TOP:
                     assertEquals(tooltipPosition.getY() + tooltipDimension.getHeight(), eventPosition.getY()
-                            - verticalOffset);
+                        - verticalOffset);
                     break;
                 default:
                     break;
@@ -213,7 +198,7 @@ public class TestTooltipSimple extends AbstractGrapheneTest {
     }
 
     @Test
-    @Use(field = "followMouse", booleans = {true, false})
+    @Use(field = "followMouse", booleans = { true, false })
     public void testFollowMouse() {
         tooltipAttributes.set(TooltipAttributes.followMouse, followMouse);
 
@@ -232,11 +217,11 @@ public class TestTooltipSimple extends AbstractGrapheneTest {
     }
 
     @Test
-    @Use(field = "presetDelay", ints = {0, 1000, 5000})
+    @Use(field = "presetDelay", ints = { 0, 1000, 5000 })
     public void testHideDelay() {
 
         tooltipAttributes.set(TooltipAttributes.mode, TooltipMode.ajax);
-        tooltipAttributes.set(hideDelay, presetDelay);
+        tooltipAttributes.set(TooltipAttributes.hideDelay, presetDelay);
 
         new DelayTester(presetDelay) {
 
@@ -253,7 +238,7 @@ public class TestTooltipSimple extends AbstractGrapheneTest {
 
     @Test
     public void testHideEvent() {
-        tooltipAttributes.set(hideEvent, "mouseup");
+        tooltipAttributes.set(TooltipAttributes.hideEvent, "mouseup");
 
         tooltip.recall();
 
@@ -281,8 +266,8 @@ public class TestTooltipSimple extends AbstractGrapheneTest {
 
     @Test
     public void testLimitRender() {
-        tooltipAttributes.set(limitRender, true);
-        tooltipAttributes.set(render, "@this renderChecker");
+        tooltipAttributes.set(TooltipAttributes.limitRender, true);
+        tooltipAttributes.set(TooltipAttributes.render, "@this renderChecker");
         tooltipAttributes.set(TooltipAttributes.mode, TooltipMode.ajax);
 
         retrieveRenderChecker.initializeValue();
@@ -327,12 +312,12 @@ public class TestTooltipSimple extends AbstractGrapheneTest {
     }
 
     @Test
-    @Use(field = "presetDelay", ints = {0, 1000, 5000})
+    @Use(field = "presetDelay", ints = { 0, 1000, 5000 })
     @RegressionTest("https://issues.jboss.org/browse/RF-10522")
     public void testShowDelay() {
 
         tooltipAttributes.set(TooltipAttributes.mode, TooltipMode.client);
-        tooltipAttributes.set(showDelay, presetDelay);
+        tooltipAttributes.set(TooltipAttributes.showDelay, presetDelay);
 
         new DelayTester(presetDelay) {
 
@@ -357,7 +342,7 @@ public class TestTooltipSimple extends AbstractGrapheneTest {
 
     @Test
     public void testStatus() {
-        tooltipAttributes.set(status, "statusChecker");
+        tooltipAttributes.set(TooltipAttributes.status, "statusChecker");
         tooltipAttributes.set(TooltipAttributes.mode, TooltipMode.ajax);
 
         retrieveStatusChecker.initializeValue();
@@ -382,7 +367,7 @@ public class TestTooltipSimple extends AbstractGrapheneTest {
 
     @Test
     public void testZindex() {
-        tooltipAttributes.set(zindex, 10);
+        tooltipAttributes.set(TooltipAttributes.zindex, 10);
 
         String zindex = selenium.getStyle(tooltip, CssProperty.Z_INDEX);
         assertEquals(zindex, "10");
@@ -393,10 +378,10 @@ public class TestTooltipSimple extends AbstractGrapheneTest {
         final Dimension panelDimension = selenium.getElementDimension(panel);
 
         eventPosition = new Point(panelPosition.getX() + panelDimension.getWidth() - EVENT_OFFSET, panelPosition.getY()
-                + panelDimension.getHeight() - EVENT_OFFSET);
+            + panelDimension.getHeight() - EVENT_OFFSET);
 
         tooltip.recall(panelDimension.getWidth() - EVENT_OFFSET + offsetX, panelDimension.getHeight() - EVENT_OFFSET
-                + offsetY);
+            + offsetY);
     }
 
     private HorizontalAlignment getHorizontalAlignment() {
