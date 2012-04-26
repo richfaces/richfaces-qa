@@ -1,19 +1,17 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="seleniumTest">
+<suite name="Extended Test Suite">
 
-    <test name="Tree Components">
+    <test name="Core Components">
         <groups>
             <run>
                 <exclude name="4.3" />
                 <exclude name="4.Future" />
-                <exclude name="extended" />
             </run>
         </groups>
 
         <packages>
-            <package name="org.richfaces.tests.metamer.ftest.richTreeModelAdaptor" />
+            <package name="org.richfaces.tests.metamer.ftest.*" />
         </packages>
     </test>
-
+    
 </suite>
-
