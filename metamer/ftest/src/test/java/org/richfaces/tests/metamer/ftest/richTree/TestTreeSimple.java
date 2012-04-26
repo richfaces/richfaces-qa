@@ -83,6 +83,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 23125 $
  */
+@Use(field = "sample", value = "swingTreeNode")
 public class TestTreeSimple extends AbstractTestTree {
 
     private static final String IMAGE_URL = "/resources/images/loading.gif";

@@ -38,6 +38,9 @@ public abstract class AbstractTestTree extends AbstractGrapheneTest {
     @Use(strings = { "simpleSwingTreeNode", "simpleRichFacesTreeNode", "simpleRichFacesTreeDataModel" })
     private String sample;
 
+    private final String swingTreeNode = "simpleSwingTreeNode";
+    private final String[] richFacesTreeNodes = { "simpleRichFacesTreeNode", "simpleRichFacesTreeDataModel" };
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richTree/" + sample + ".xhtml");

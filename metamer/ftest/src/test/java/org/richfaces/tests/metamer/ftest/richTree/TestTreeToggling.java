@@ -35,7 +35,6 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 23005 $
@@ -44,7 +43,7 @@ public class TestTreeToggling extends AbstractTestTree {
 
     private static final int TOP_LEVEL_NODES = 4;
 
-    protected int[][] paths = new int[][] {{1, 2, 1 }, {4, 4, 1 }};
+    protected int[][] paths = new int[][] { { 1, 2, 1 }, { 4, 4, 1 } };
 
     @Inject
     @Use(enumeration = true)
@@ -62,6 +61,7 @@ public class TestTreeToggling extends AbstractTestTree {
     }
 
     @Test
+    @Use(field = "sample", value = "swingTreeNode")
     public void testTopLevelNodesExpansion() {
         for (int i = 1; i <= TOP_LEVEL_NODES; i++) {
             treeNode = tree.getNode(i);
@@ -72,7 +72,14 @@ public class TestTreeToggling extends AbstractTestTree {
         }
     }
 
+    @Test(groups = "extended")
+    @Use(field = "sample", value = "richFacesTreeNodes")
+    public void testTopLevelNodesExpansion2() {
+        testTopLevelNodesExpansion();
+    }
+
     @Test
+    @Use(field = "sample", value = "swingTreeNode")
     public void testTopLevelNodesCollapsion() {
         testTopLevelNodesExpansion();
         for (int i = 1; i <= TOP_LEVEL_NODES; i++) {
@@ -84,7 +91,14 @@ public class TestTreeToggling extends AbstractTestTree {
         }
     }
 
+    @Test(groups = "extended")
+    @Use(field = "sample", value = "richFacesTreeNodes")
+    public void testTopLevelNodesCollapsion2() {
+        testTopLevelNodesCollapsion();
+    }
+
     @Test
+    @Use(field = "sample", value = "swingTreeNode")
     public void testDeepExpansion() {
         for (int[] path : paths) {
             int depth = path.length;
@@ -105,7 +119,14 @@ public class TestTreeToggling extends AbstractTestTree {
         }
     }
 
+    @Test(groups = "extended")
+    @Use(field = "sample", value = "richFacesTreeNodes")
+    public void testDeepExpansion2() {
+        testDeepExpansion();
+    }
+
     @Test
+    @Use(field = "sample", value = "swingTreeNode")
     public void testDeepCollapsion() {
         Deque<TreeNodeModel> stack = new LinkedList<TreeNodeModel>();
 
@@ -121,6 +142,12 @@ public class TestTreeToggling extends AbstractTestTree {
         while ((treeNode = stack.poll()) != null) {
             treeNode.expand();
         }
+    }
+
+    @Test(groups = "extended")
+    @Use(field = "sample", value = "richFacesTreeNodes")
+    public void testDeepCollapsion2() {
+        testDeepCollapsion();
     }
 
     public void assertNodeState(NodeState state) {
