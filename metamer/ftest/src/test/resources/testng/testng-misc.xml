@@ -18,6 +18,7 @@
             <package name="org.richfaces.tests.metamer.ftest.richGraphValidator" />
             <package name="org.richfaces.tests.metamer.ftest.richHashParam" />
             <package name="org.richfaces.tests.metamer.ftest.richHotKey" />
+            <package name="org.richfaces.tests.metamer.ftest.richItemChangeListener" />
             <package name="org.richfaces.tests.metamer.ftest.richJQuery" />
             <package name="org.richfaces.tests.metamer.ftest.richMenuGroup" />
             <package name="org.richfaces.tests.metamer.ftest.richMenuItem" />
@@ -25,7 +26,10 @@
             <package name="org.richfaces.tests.metamer.ftest.richMessage" />
             <package name="org.richfaces.tests.metamer.ftest.richMessages" />
             <package name="org.richfaces.tests.metamer.ftest.richNotify" />
+            <package name="org.richfaces.tests.metamer.ftest.richPanelToggleListener" />
             <package name="org.richfaces.tests.metamer.ftest.richToggleControl" />
+            <package name="org.richfaces.tests.metamer.ftest.richTreeSelectionChangeListener" />
+            <package name="org.richfaces.tests.metamer.ftest.richTreeToggleListener" />
             <package name="org.richfaces.tests.metamer.ftest.richValidator" />
         </packages>
     </test>
