@@ -1,58 +1,63 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
-<!--
-JBoss, Home of Professional Open Source
-Copyright 2010-2012, Red Hat, Inc. and individual contributors
-by the @authors tag. See the copyright.txt in the distribution for a
-full listing of individual contributors.
-
-This is free software; you can redistribute it and/or modify it
-under the terms of the GNU Lesser General Public License as
-published by the Free Software Foundation; either version 2.1 of
-the License, or (at your option) any later version.
-
-This software is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with this software; if not, write to the Free
-Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    <!--
+    JBoss, Home of Professional Open Source
+    Copyright 2010-2012, Red Hat, Inc. and individual contributors
+    by the @authors tag. See the copyright.txt in the distribution for a
+    full listing of individual contributors.
+    
+    This is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as
+    published by the Free Software Foundation; either version 2.1 of
+    the License, or (at your option) any later version.
+    
+    This software is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    Lesser General Public License for more details.
+    
+    You should have received a copy of the GNU Lesser General Public
+    License along with this software; if not, write to the Free
+    Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+    02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-<ui:composition template="/templates/list.xhtml">
+    <ui:composition template="/templates/list.xhtml">
 
-    <ui:define name="pageTitle">Rich Tooltip</ui:define>
+        <ui:define name="pageTitle">Rich Tooltip</ui:define>
 
-    <ui:define name="links">
+        <ui:define name="links">
 
-        <metamer:testPageLink id="simple" outcome="simple" value="Simple">
-            	The sample of <b>rich:tooltip</b> by default targeted to its parent (rich:panel). The tooltip text is defined in inner text of the <b>rich:tooltip</b> element. 
-        </metamer:testPageLink>
+            <metamer:testPageLink id="simple" outcome="simple" value="Simple">
+                The sample of <b>rich:tooltip</b> by default targeted to its parent (rich:panel). The tooltip text is defined in inner text of the <b>rich:tooltip</b> element. 
+            </metamer:testPageLink>
 
-        <metamer:testPageLink id="value" outcome="value" value="With Value Attribute">
+            <metamer:testPageLink id="value" outcome="value" value="With Value Attribute">
                 The sample of <b>rich:tooltip</b> by default targeted to its parent (rich:panel). The tooltip text is defined in value attribute of the <b>rich:tooltip</b> element. 
-        </metamer:testPageLink>
+            </metamer:testPageLink>
 
-        <metamer:testPageLink id="targetting" outcome="targetting" value="Targetting">
-            	The sample of <b>rich:tooltip</b> with ability to change target.
-        </metamer:testPageLink>
+            <metamer:testPageLink id="targetting" outcome="targetting" value="Targetting">
+                The sample of <b>rich:tooltip</b> with ability to change target.
+            </metamer:testPageLink>
 
-        <metamer:testPageLink id="rf10960" outcome="rf10960" value="RF-10960">
+            <metamer:testPageLink id="rf10960" outcome="rf10960" value="RF-10960">
                 Page demonstrating problems with tooltip in IE7.
-        </metamer:testPageLink>
-        
-        <metamer:testPageLink id="rf11783" outcome="rf11783" value="RF-11783">
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="rf11783" outcome="rf11783" value="RF-11783">
                 Page demonstrating problems with tooltip within button.
-        </metamer:testPageLink>
+            </metamer:testPageLink>
 
-    </ui:define>
+            <metamer:testPageLink id="rf-10971" outcome="rf-10971" value="RF-10971">
+                Page demonstrating issue <a href="https://issues.jboss.org/browse/RF-10971">RF-10971</a>.
+                Tooltip does not work when placed in EDT.
+            </metamer:testPageLink>
 
-</ui:composition>
+        </ui:define>
+
+    </ui:composition>
 
 </html>
