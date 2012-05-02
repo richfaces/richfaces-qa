@@ -21,11 +21,14 @@
 package org.richfaces.tests.metamer.ftest.richTreeToggleListener;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import org.openqa.selenium.WebDriver;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import java.util.List;
+import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.BeforeMethod;
 
@@ -75,14 +78,25 @@ public abstract class AbstractTreeToggleListenerTest extends AbstractWebDriverTe
         return false;
     }
 
-    private void testTTL(String expectedText, String failMessage) {
+    private void testTTL(final String expectedText, String failMessage) {
         //test expanding of node
         page.getExpandButton().click();
         //checks if phases contains the correct listener message
-        assertTrue(subTest(expectedText + expandedNodeString), failMessage);
+        new WebDriverWait(driver).failWith(failMessage).until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver f) {
+                return subTest(expectedText + expandedNodeString);
+            }
+        });
         //then test collapsing of node
         page.getCollapseButton().click();
         assertTrue(subTest(expectedText + collapsedNodeString), failMessage);
+        new WebDriverWait(driver).failWith(failMessage).until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver f) {
+                return subTest(expectedText + expandedNodeString);
+            }
+        });
     }
 
     private void testTTLWithoutAdditionalStateStrings(String expectedText, String failMessage) {

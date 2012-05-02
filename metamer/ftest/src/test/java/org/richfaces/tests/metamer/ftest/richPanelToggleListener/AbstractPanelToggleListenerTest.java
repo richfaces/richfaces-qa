@@ -21,11 +21,13 @@
 package org.richfaces.tests.metamer.ftest.richPanelToggleListener;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.testng.Assert.assertTrue;
+import org.openqa.selenium.WebDriver;
 
 import java.net.URL;
 import java.util.List;
+import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.BeforeMethod;
 
@@ -75,14 +77,24 @@ public abstract class AbstractPanelToggleListenerTest extends AbstractWebDriverT
         return false;
     }
 
-    private void testPTL(String expectedText, String failMessage) {
+    private void testPTL(final String expectedText, String failMessage) {
         //first test collapsing of panel
         page.getCollapseButton().click();
         //checks if phases contains the correct listener message
-        assertTrue(subTest(expectedText + collapsedPanelString), failMessage);
+        new WebDriverWait(driver).failWith(failMessage).until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver f) {
+                return subTest(expectedText + collapsedPanelString);
+            }
+        });
         //then test expanding of panel
         page.getExpandButton().click();
-        assertTrue(subTest(expectedText + expandedPanelString), failMessage);
+        new WebDriverWait(driver).failWith(failMessage).until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver f) {
+                return subTest(expectedText + expandedPanelString);
+            }
+        });
     }
 
     public void testPTLAsAttributeOfComponent(String expectedMSG) {
