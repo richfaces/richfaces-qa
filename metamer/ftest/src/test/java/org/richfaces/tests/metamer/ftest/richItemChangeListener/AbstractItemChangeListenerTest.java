@@ -21,11 +21,14 @@
 package org.richfaces.tests.metamer.ftest.richItemChangeListener;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import org.openqa.selenium.WebDriver;
 import static org.testng.Assert.fail;
 
 import java.net.URL;
 import java.util.List;
+import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.BeforeMethod;
 
@@ -56,15 +59,20 @@ public abstract class AbstractItemChangeListenerTest extends AbstractWebDriverTe
         return buildUrl(contextPath, "faces/components/richItemChangeListener/" + testedComponent + ".xhtml");
     }
 
-    private void testICL(String expectedText, String failMessage) {
+    private void testICL(final String expectedText, String failMessage) {
         page.getInactivePanel().click();
-        List<WebElement> list = page.getPhases();
-        for (WebElement webElement : list) {
-            if (webElement.getText().equals(expectedText)) {
-                return;//Text found
+        new WebDriverWait(driver).failWith(failMessage).until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver f) {
+                List<WebElement> list = page.getPhases();
+                for (WebElement webElement : list) {
+                    if (webElement.getText().equals(expectedText)) {
+                        return true;
+                    }
+                }
+                return false;
             }
-        }
-        fail(failMessage);
+        });
     }
 
     public void testICLAsAttributeOfComponent(String expectedMSG) {
