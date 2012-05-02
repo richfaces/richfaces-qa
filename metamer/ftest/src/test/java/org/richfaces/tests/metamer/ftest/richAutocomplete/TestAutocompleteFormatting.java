@@ -91,6 +91,7 @@ public class TestAutocompleteFormatting extends AbstractGrapheneTest {
     @Test
     public void testFormatting() {
         assertFalse(autocomplete.isCompletionVisible());
+        autocomplete.clearInputValue();
         typePrefix("ala");
         assertTrue(autocomplete.isCompletionVisible());
         confirm();
@@ -119,6 +120,7 @@ public class TestAutocompleteFormatting extends AbstractGrapheneTest {
 
         autocompleteAttributes.set(AutocompleteAttributes.layout, layout);
 
+        autocomplete.clearInputValue();
         autocomplete.typeKeys("Co");
         waitFor(2000);
 

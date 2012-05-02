@@ -35,6 +35,7 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -52,25 +53,18 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest {
     @Test
     @Templates(exclude = { "richPopupPanel" })
     public void testValueChangeListener() {
+        getAutocomplete().clearInputValue();
         getAutocomplete().typeKeys("something");
         getAutocomplete().confirmByKeys();
-        // valueChangeListener output as 4th record
+
         waitFor(2000);
-        waitGui.failWith(
-            "Expected <" + format(PHASE_LISTENER_LOG_FORMAT, "null", "something") + ">, found <"
-                + selenium.getText(PHASE_FORMAT.format(3)) + ">").until(
-            textEquals.locator(PHASE_FORMAT.format(3)).text(format(PHASE_LISTENER_LOG_FORMAT, "null", "something")));
 
         getAutocomplete().clearInputValue();
         getAutocomplete().typeKeys("something else");
         getAutocomplete().confirmByKeys();
         // valueChangeListener output as 4th record
         waitFor(2000);
-        waitGui.failWith(
-            "Expected <" + format(PHASE_LISTENER_LOG_FORMAT, "something", "something else") + ">, found <"
-                + selenium.getText(PHASE_FORMAT.format(3)) + ">").until(
-            textEquals.locator(PHASE_FORMAT.format(3)).text(
-                format(PHASE_LISTENER_LOG_FORMAT, "something", "something else")));
+        assertEquals(selenium.getText(PHASE_FORMAT.format(3)), format(PHASE_LISTENER_LOG_FORMAT, "something", "something else"));
     }
 
     @Test(groups = { "4.Future" })
