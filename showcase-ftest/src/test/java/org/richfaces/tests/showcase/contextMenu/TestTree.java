@@ -73,7 +73,7 @@ public class TestTree extends AbstractTreeTest {
             //do not know why
             for (int j = 0; j < 5; j++) {
                 guardXhr(selenium).clickAt(currentNode, new Point(2, 5));
-                
+
                 selenium.contextMenuAt(currentNode, new Point(2, 5));
 
                 waitGui.dontFail().timeout(1000).until(elementVisible.locator(contextMenu));
