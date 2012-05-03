@@ -51,7 +51,6 @@ public class TestSimplePush extends AbstractGrapheneTest {
 
     @Override
     public URL getTestUrl() {
-
         return buildUrl(contextPath, "faces/components/a4jPush/simple.xhtml");
     }
 
@@ -68,11 +67,11 @@ public class TestSimplePush extends AbstractGrapheneTest {
         List<String> times = new ArrayList<String>();
         for (int i = 0; i < 6; ++i) {
             waitAjax.waitForChangeAndReturn(timestampRetreiver);
-            String timestamp = timestampRetreiver.getValue();
-            if (timestamp != null && timestamp.startsWith("[")) {
-                timestamp = timestamp.substring(1, timestamp.length() - 1);
+            String timestampString = timestampRetreiver.getValue();
+            if (timestampString != null && timestampString.startsWith("[")) {
+                timestampString = timestampString.substring(1, timestampString.length() - 1);
             }
-            times.add(timestamp);
+            times.add(timestampString);
         }
         Collections.sort(times);
 

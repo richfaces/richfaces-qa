@@ -27,15 +27,13 @@ import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.togglePanelItemAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
@@ -89,8 +87,7 @@ public class TestRichTogglePanelItem extends AbstractGrapheneTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-10488")
     public void testName() {
-        selenium.type(pjq("input[type=text][id$=nameInput]"), "metamer");
-        selenium.waitForPageToLoad();
+        togglePanelItemAttributes.set(TogglePanelItemAttributes.name, "metamer");
 
         selenium.click(link3);
         waitGui.failWith("Item 3 was not displayed.").until(elementVisible.locator(item3));
@@ -112,8 +109,7 @@ public class TestRichTogglePanelItem extends AbstractGrapheneTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-9895 https://issues.jboss.org/browse/RF-10488")
     public void testOnenter() {
-        selenium.type(pjq("input[type=text][id$=onenterInput]"), "metamerEvents += \"enter \"");
-        selenium.waitForPageToLoad();
+        togglePanelItemAttributes.set(TogglePanelItemAttributes.onenter, "metamerEvents += \"enter \"");
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
         String time1Value = selenium.getText(time);
@@ -132,8 +128,7 @@ public class TestRichTogglePanelItem extends AbstractGrapheneTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-9895")
     public void testOnleave() {
-        selenium.type(pjq("input[type=text][id$=onleaveInput]"), "metamerEvents += \"leave \"");
-        selenium.waitForPageToLoad();
+        togglePanelItemAttributes.set(TogglePanelItemAttributes.onleave, "metamerEvents += \"leave \"");
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
         String time1Value = selenium.getText(time);
@@ -175,9 +170,7 @@ public class TestRichTogglePanelItem extends AbstractGrapheneTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-9894")
     public void testRendered() {
-        JQueryLocator input = pjq("input[type=radio][name$=renderedInput][value=false]");
-        selenium.click(input);
-        selenium.waitForPageToLoad();
+        togglePanelItemAttributes.set(TogglePanelItemAttributes.rendered, Boolean.FALSE);
 
         assertFalse(selenium.isElementPresent(item1), "Tab should not be rendered when rendered=false.");
         assertTrue(selenium.isVisible(item2), "Item 2 should be displayed when item 1 is not rendered.");
@@ -210,18 +203,13 @@ public class TestRichTogglePanelItem extends AbstractGrapheneTest {
 
     @Test
     public void testSwitchTypeAjax() {
-        JQueryLocator selectOption = pjq("input[name$=switchTypeInput][value=ajax]");
-        selenium.click(selectOption);
-        selenium.waitForPageToLoad();
-
+        togglePanelItemAttributes.set(TogglePanelItemAttributes.switchType, "ajax");
         testSwitchTypeNull();
     }
 
     @Test
     public void testSwitchTypeClient() {
-        JQueryLocator selectOption = pjq("input[name$=switchTypeInput][value=client]");
-        selenium.click(selectOption);
-        selenium.waitForPageToLoad();
+        togglePanelItemAttributes.set(TogglePanelItemAttributes.switchType, "client");
 
         guardXhr(selenium).click(link2);
         waitGui.failWith("Item 2 is not displayed.").until(elementVisible.locator(item2));
@@ -232,9 +220,7 @@ public class TestRichTogglePanelItem extends AbstractGrapheneTest {
 
     @Test
     public void testSwitchTypeServer() {
-        JQueryLocator selectOption = pjq("input[name$=switchTypeInput][value=server]");
-        selenium.click(selectOption);
-        selenium.waitForPageToLoad();
+        togglePanelItemAttributes.set(TogglePanelItemAttributes.switchType, "server");
 
         guardXhr(selenium).click(link2);
         waitGui.failWith("Item 2 is not displayed.").until(elementVisible.locator(item2));

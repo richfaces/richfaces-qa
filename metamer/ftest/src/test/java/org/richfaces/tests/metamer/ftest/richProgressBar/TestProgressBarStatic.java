@@ -22,18 +22,16 @@
 package org.richfaces.tests.metamer.ftest.richProgressBar;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.finishClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.initialClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.progressClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.remainingClass;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.progressBarAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
@@ -91,8 +89,7 @@ public class TestProgressBarStatic extends AbstractGrapheneTest {
 
     @Test
     public void testFinishFacet() {
-        selenium.type(pjq("input[id$=valueInput]"), "100");
-        selenium.waitForPageToLoad();
+        progressBarAttributes.set(ProgressBarAttributes.value, 100);
 
         assertTrue(selenium.isElementPresent(progressBar), "Progress bar is not present on the page.");
         assertTrue(selenium.isVisible(progressBar), "Progress bar should be visible on the page.");
@@ -134,8 +131,7 @@ public class TestProgressBarStatic extends AbstractGrapheneTest {
         String labelValue = selenium.getText(label);
         assertEquals(labelValue, "", "Label when not set.");
 
-        selenium.type(pjq("input[id$=labelInput]"), "metamer");
-        selenium.waitForPageToLoad();
+        progressBarAttributes.set(ProgressBarAttributes.label, "metamer");
         labelValue = selenium.getText(label);
         assertEquals(labelValue, "metamer", "Label when set to metamer.");
 
@@ -147,21 +143,15 @@ public class TestProgressBarStatic extends AbstractGrapheneTest {
 
     @Test
     public void testMaxValue() {
-        selenium.type(pjq("input[id$=maxValueInput]"), "1000");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[id$=valueInput]"), "100");
-        selenium.waitForPageToLoad();
-
+        progressBarAttributes.set(ProgressBarAttributes.maxValue, 1000);
+        progressBarAttributes.set(ProgressBarAttributes.value, 100);
         assertEquals(getProgress(), 10, "Progress when value=100 and maxValue=1000.");
     }
 
     @Test
     public void testMinValue() {
-        selenium.type(pjq("input[id$=minValueInput]"), "90");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[id$=valueInput]"), "95");
-        selenium.waitForPageToLoad();
-
+        progressBarAttributes.set(ProgressBarAttributes.minValue, 90);
+        progressBarAttributes.set(ProgressBarAttributes.value, 95);
         assertEquals(getProgress(), 50, "Progress when value=95 and minValue=90.");
     }
 
@@ -187,26 +177,21 @@ public class TestProgressBarStatic extends AbstractGrapheneTest {
 
     @Test
     public void testValue() {
-        selenium.type(pjq("input[id$=valueInput]"), "0");
-        selenium.waitForPageToLoad();
+        progressBarAttributes.set(ProgressBarAttributes.value, 0);
         assertEquals(getProgress(), 0, "Progress when value=0.");
 
-        selenium.type(pjq("input[id$=valueInput]"), "37");
-        selenium.waitForPageToLoad();
+        progressBarAttributes.set(ProgressBarAttributes.value, 37);
         assertEquals(getProgress(), 37, "Progress when value=37.");
 
-        selenium.type(pjq("input[id$=valueInput]"), "100");
-        selenium.waitForPageToLoad();
+        progressBarAttributes.set(ProgressBarAttributes.value, 100);
         assertEquals(getProgress(), 100, "Progress when value=100.");
 
-        selenium.type(pjq("input[id$=valueInput]"), "-345");
-        selenium.waitForPageToLoad();
+        progressBarAttributes.set(ProgressBarAttributes.value, -345);
         assertEquals(getProgress(), 0, "Progress when value=-345.");
         assertTrue(selenium.isVisible(initialOutput), "Initial output should be visible on the page.");
         assertFalse(selenium.isVisible(finishOutput), "Finish output should not be visible on the page.");
 
-        selenium.type(pjq("input[id$=valueInput]"), "456");
-        selenium.waitForPageToLoad();
+        progressBarAttributes.set(ProgressBarAttributes.value, 456);
         assertEquals(getProgress(), 100, "Progress when value=456.");
         assertFalse(selenium.isVisible(initialOutput), "Initial output should not be visible on the page.");
         assertTrue(selenium.isVisible(finishOutput), "Finish output should be visible on the page.");

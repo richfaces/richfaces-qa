@@ -27,17 +27,14 @@ import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.togglePanelAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-
 import javax.faces.event.PhaseId;
-
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
@@ -110,16 +107,13 @@ public class TestRichTogglePanel extends AbstractGrapheneTest {
 
     @Test
     public void testFirstLastPrevNextSwitchAjax() {
-        selenium.click(pjq("input[name$=switchTypeInput][value=ajax]"));
-        selenium.waitForPageToLoad();
-
+        togglePanelAttributes.set(TogglePanelAttributes.switchType, "ajax");
         testFirstLastPrevNextSwitchNull();
     }
 
     @Test
     public void testFirstLastPrevNextSwitchClient() {
-        selenium.click(pjq("input[name$=switchTypeInput][value=client]"));
-        selenium.waitForPageToLoad();
+       togglePanelAttributes.set(TogglePanelAttributes.switchType, "client");
 
         guardNoRequest(selenium).click(tcNext);
         waitGui.failWith("Next item (2) is not displayed.").until(elementVisible.locator(item2));
@@ -145,8 +139,7 @@ public class TestRichTogglePanel extends AbstractGrapheneTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10040")
     public void testFirstLastPrevNextSwitchServer() {
-        selenium.click(pjq("input[name$=switchTypeInput][value=server]"));
-        selenium.waitForPageToLoad();
+        togglePanelAttributes.set(TogglePanelAttributes.switchType, "server");
 
         guardHttp(selenium).click(tcNext);
         assertTrue(selenium.isVisible(item2), "Next item (2) should be visible.");
@@ -171,8 +164,7 @@ public class TestRichTogglePanel extends AbstractGrapheneTest {
 
     @Test
     public void testActiveItem() {
-        selenium.type(pjq("input[type=text][id$=activeItemInput]"), "item3");
-        selenium.waitForPageToLoad();
+        togglePanelAttributes.set(TogglePanelAttributes.activeItem, "item3");
 
         boolean displayed = selenium.isVisible(panel);
         assertTrue(displayed, "Toggle panel is not present on the page.");
@@ -189,9 +181,7 @@ public class TestRichTogglePanel extends AbstractGrapheneTest {
 
     @Test
     public void testCycledSwitching() {
-        selenium.click(pjq("input[type=radio][name$=cycledSwitchingInput][value=true]"));
-        selenium.waitForPageToLoad();
-
+        togglePanelAttributes.set(TogglePanelAttributes.cycledSwitching, Boolean.TRUE);
         guardXhr(selenium).click(tcPrev);
         waitGui.failWith("Previous item (3) is not displayed.").until(elementVisible.locator(item3));
         guardXhr(selenium).click(tcNext);
@@ -206,9 +196,7 @@ public class TestRichTogglePanel extends AbstractGrapheneTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10054")
     public void testImmediate() {
-        selenium.click(pjq("input[type=radio][name$=immediateInput][value=true]"));
-        selenium.waitForPageToLoad();
-
+        togglePanelAttributes.set(TogglePanelAttributes.immediate, Boolean.TRUE);
         selenium.click(tc3);
         waitGui.failWith("Item 3 is not displayed.").until(elementVisible.locator(item3));
 
@@ -231,9 +219,7 @@ public class TestRichTogglePanel extends AbstractGrapheneTest {
 
     @Test
     public void testOnbeforeitemchange() {
-        selenium.type(pjq("input[id$=onbeforeitemchangeInput]"), "metamerEvents += \"onbeforeitemchange \"");
-        selenium.waitForPageToLoad();
-
+        togglePanelAttributes.set(TogglePanelAttributes.onbeforeitemchange, "metamerEvents += \"onbeforeitemchange \"");
         guardXhr(selenium).click(tc2);
         waitGui.failWith("Item 2 is not displayed.").until(elementVisible.locator(item2));
 
@@ -242,10 +228,8 @@ public class TestRichTogglePanel extends AbstractGrapheneTest {
 
     @Test
     public void testItemchangeEvents() {
-        selenium.type(pjq("input[type=text][id$=onbeforeitemchangeInput]"), "metamerEvents += \"beforeitemchange \"");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=onitemchangeInput]"), "metamerEvents += \"itemchange \"");
-        selenium.waitForPageToLoad();
+        togglePanelAttributes.set(TogglePanelAttributes.onbeforeitemchange, "metamerEvents += \"beforeitemchange \"");
+        togglePanelAttributes.set(TogglePanelAttributes.onitemchange, "metamerEvents += \"itemchange \"");
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
         String time1Value = selenium.getText(time);
@@ -271,8 +255,7 @@ public class TestRichTogglePanel extends AbstractGrapheneTest {
 
     @Test
     public void testOnitemchange() {
-        selenium.type(pjq("input[id$=onitemchangeInput]"), "metamerEvents += \"onitemchange \"");
-        selenium.waitForPageToLoad(TIMEOUT);
+        togglePanelAttributes.set(TogglePanelAttributes.onitemchange, "metamerEvents += \"onitemchange \"");
 
         guardXhr(selenium).click(tc2);
         waitGui.failWith("Item 2 is not displayed.").until(elementVisible.locator(item2));
@@ -307,9 +290,7 @@ public class TestRichTogglePanel extends AbstractGrapheneTest {
 
     @Test
     public void testRendered() {
-        selenium.click(pjq("input[type=radio][name$=renderedInput][value=false]"));
-        selenium.waitForPageToLoad();
-
+        togglePanelAttributes.set(TogglePanelAttributes.rendered, Boolean.FALSE);
         assertFalse(selenium.isElementPresent(panel), "Toggle panel should not be rendered when rendered=false.");
     }
 
@@ -343,16 +324,13 @@ public class TestRichTogglePanel extends AbstractGrapheneTest {
 
     @Test
     public void testSwitchTypeAjax() {
-        selenium.click(pjq("input[name$=switchTypeInput][value=ajax]"));
-        selenium.waitForPageToLoad();
-
+        togglePanelAttributes.set(TogglePanelAttributes.switchType, "ajax");
         testSwitchTypeNull();
     }
 
     @Test
     public void testSwitchTypeClient() {
-        selenium.click(pjq("input[name$=switchTypeInput][value=client]"));
-        selenium.waitForPageToLoad();
+        togglePanelAttributes.set(TogglePanelAttributes.switchType, "client");
 
         guardNoRequest(selenium).click(tc3);
         waitGui.failWith("Item 3 is not displayed.").until(elementVisible.locator(item3));
@@ -373,8 +351,7 @@ public class TestRichTogglePanel extends AbstractGrapheneTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10040")
     public void testSwitchTypeServer() {
-        selenium.click(pjq("input[name$=switchTypeInput][value=server]"));
-        selenium.waitForPageToLoad();
+        togglePanelAttributes.set(TogglePanelAttributes.switchType, "server");
 
         guardHttp(selenium).click(tc3);
         assertTrue(selenium.isVisible(item3), "Item 3 should be visible.");

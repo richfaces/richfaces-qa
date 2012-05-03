@@ -1,43 +1,40 @@
-/*******************************************************************************
- * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
+/**
+ * *****************************************************************************
+ * JBoss, Home of Professional Open Source Copyright 2010-2012, Red Hat, Inc.
+ * and individual contributors by the @authors tag. See the copyright.txt in the
+ * distribution for a full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
+ * This is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ * This software is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this software; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
+ * site: http://www.fsf.org.
+ ******************************************************************************
+ */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes.rows;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.dataTableAttributes;
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.extendedDataTableAttributes;
 import static org.richfaces.tests.metamer.ftest.richExtendedDataTable.TestExtendedDataTableSelection.Modifier.CTRL;
 import static org.richfaces.tests.metamer.ftest.richExtendedDataTable.TestExtendedDataTableSelection.Modifier.SHIFT;
-
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.TreeSet;
-
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.IntRange;
@@ -47,14 +44,13 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.utils.array.ArrayTransform;
 import org.jboss.arquillian.ajocado.waiting.retrievers.Retriever;
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractDataTableTest;
-import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.model.ExtendedDataTable;
+import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -77,7 +73,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
     @BeforeMethod
     public void setupAttributes() {
-        dataTableAttributes.set(rows, 10);
+        extendedDataTableAttributes.set(ExtendedDataTableAttributes.rows, 10);
         selected = new TreeSet<Integer>();
     }
 
@@ -90,8 +86,8 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
-    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat" })
+    @Templates(exclude = {"richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat"})
     public void testMultiSelectionUsingControl() {
         Collection<Integer> forSelection = order(2, 5, 29, 16, 13, 21);
 
@@ -107,8 +103,8 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
     @Test(groups = "4.Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-10256")
-    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat" })
+    @Templates(value = {"richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat"})
     public void testMultiSelectionUsingControlIterationComponents() {
         testMultiSelectionUsingControl();
     }
@@ -125,8 +121,8 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
-    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat" })
+    @Templates(exclude = {"richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat"})
     public void testMultiSelectionUsingShiftBetweenPagesInReversedOrder() {
         IntRange range = new IntRange(12, 35);
 
@@ -139,8 +135,8 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
     @Test(groups = "4.Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-10256")
-    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat" })
+    @Templates(value = {"richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat"})
     public void testMultiSelectionUsingShiftBetweenPagesInReversedOrderIterationComponents() {
         testMultiSelectionUsingShiftBetweenPagesInReversedOrder();
     }
@@ -166,8 +162,8 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     @Test
-    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRegion", "a4jRepeat" })
+    @Templates(exclude = {"richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRegion", "a4jRepeat"})
     public void testMultiSelectionRemovingUsingCtrl() {
         IntRange range1 = new IntRange(2, 14);
 
@@ -187,8 +183,8 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
     @Test(groups = "4.Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-10256")
-    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRegion", "a4jRepeat" })
+    @Templates(value = {"richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRegion", "a4jRepeat"})
     public void testMultiSelectionRemovingUsingCtrlIterationComponents() {
         testMultiSelectionRemovingUsingCtrl();
     }
@@ -210,6 +206,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     private class SelectionModel {
+
         Retriever<String> retrieveCurrent = retrieveText.locator(pjq("span.currentSelection"));
         Retriever<String> retrievePrevious = retrieveText.locator(pjq("span.previousSelection"));
 
@@ -224,6 +221,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
         private Collection<Integer> getSelection(String selectionString) {
             String[] splitted = StringUtils.split(selectionString, "[], ");
             Integer[] transformed = new ArrayTransform<String, Integer>(Integer.class) {
+
                 @Override
                 public Integer transformation(String source) {
                     return Integer.valueOf(source);
@@ -262,9 +260,10 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     }
 
     enum Modifier {
-        CTRL, SHIFT;
 
-AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+        CTRL,
+        SHIFT;
+        AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
 
         public void up() {
             switch (this) {
@@ -292,5 +291,4 @@ AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
             }
         }
     }
-
 }

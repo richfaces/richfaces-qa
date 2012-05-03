@@ -73,11 +73,13 @@ import org.richfaces.tests.metamer.ftest.richToolbarGroup.ToolbarGroupAttributes
 import org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes;
 import org.richfaces.tests.metamer.ftest.richTree.TreeAttributes;
 import org.richfaces.tests.metamer.ftest.richTreeModelAdaptor.TreeModelAdapterAttributes;
+import org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes;
 import org.richfaces.tests.metamer.ftest.richValidator.ValidatorAttributes;
 
 public class AttributeList {
 
     public static Attributes<AccordionAttributes> accordionAttributes = new Attributes<AccordionAttributes>();
+    //unnecessary
     public static Attributes<ActionListenerAttributes> actionListenerAttributes = new Attributes<ActionListenerAttributes>();
     public static Attributes<AjaxAttributes> ajaxAttributes = new Attributes<AjaxAttributes>();
     public static Attributes<AccordionItemAttributes> accordionItemAttributes = new Attributes<AccordionItemAttributes>();
@@ -91,11 +93,13 @@ public class AttributeList {
     public static Attributes<CollapsiblePanelAttributes> collapsiblePanelAttributes = new Attributes<CollapsiblePanelAttributes>();
     public static Attributes<CollapsibleSubTableTogglerAttributes> collapsibleSubTableTogglerAttributes = new Attributes<CollapsibleSubTableTogglerAttributes>();
     public static Attributes<ColumnAttributes> columnAttributes = new Attributes<ColumnAttributes>();
+    //unnecessary
     public static Attributes<ColumnGroupAttributes> columnGroupAttributes = new Attributes<ColumnGroupAttributes>();
     public static Attributes<ContextMenuAttributes> contextMenuAttributes = new Attributes<ContextMenuAttributes>();
     public static Attributes<CommandButtonAttributes> commandButtonAttributes = new Attributes<CommandButtonAttributes>();
     public static Attributes<CommandLinkAttributes> commandLinkAttributes = new Attributes<CommandLinkAttributes>();
     public static Attributes<ComponentControlAttributes> componentControllAttributes = new Attributes<ComponentControlAttributes>();
+    //unnecessary
     public static Attributes<DataGridAttributes> dataGridAttributes = new Attributes<DataGridAttributes>();
     public static Attributes<DataTableAttributes> dataTableAttributes = new Attributes<DataTableAttributes>();
     public static Attributes<DataTableFacets> dataTableFacets = new Attributes<DataTableFacets>(RequestType.XHR); // for facets
@@ -110,6 +114,7 @@ public class AttributeList {
     public static Attributes<ExtendedDataTableAttributes> extendedDataTableAttributes = new Attributes<ExtendedDataTableAttributes>();
     public static Attributes<FileUploadAttributes> fileUploadAttributes = new Attributes<FileUploadAttributes>();
     public static Attributes<GraphValidatorAttributes> graphValidatorAttributes = new Attributes<GraphValidatorAttributes>();
+    //unnecessary
     public static Attributes<HashParamAttributes> hashParamAttributes = new Attributes<HashParamAttributes>();
     public static Attributes<InplaceInputAttributes> inplaceInputAttributes = new Attributes<InplaceInputAttributes>();
     public static Attributes<InplaceSelectAttributes> inplaceSelectAttributes = new Attributes<InplaceSelectAttributes>();
@@ -134,6 +139,7 @@ public class AttributeList {
     public static Attributes<PollAttributes> pollAttributes = new Attributes<PollAttributes>();
     public static Attributes<PopupPanelAttributes> popupPanelAttributes = new Attributes<PopupPanelAttributes>();
     public static Attributes<ProgressBarAttributes> progressBarAttributes = new Attributes<ProgressBarAttributes>();
+    //unnecessary
     public static Attributes<PushAttributes> pushAttributes = new Attributes<PushAttributes>();
     public static Attributes<QueueAttributes> queueAttributes = new Attributes<QueueAttributes>(
         pjq("table.attributes[id$=queueAttributes]"));
@@ -151,7 +157,10 @@ public class AttributeList {
     public static Attributes<ToolbarGroupAttributes> toolbarGroupAttributes = new Attributes<ToolbarGroupAttributes>();
     public static Attributes<TooltipAttributes> tooltipAttributes = new Attributes<TooltipAttributes>();
     public static Attributes<TreeAttributes> treeAttributes = new Attributes<TreeAttributes>(jq("span[id*=attributes]"));
+    //unnecessary
     public static Attributes<TreeModelAdapterAttributes> treeModelAdapterAttributes = new Attributes<TreeModelAdapterAttributes>();
+    //unnecessary
+    public static Attributes<TreeNodeAttributes> treeNodeAttributes = new Attributes<TreeNodeAttributes>();
     public static Attributes<ValidatorAttributes> validatorAttributes = new Attributes<ValidatorAttributes>();
 
 }

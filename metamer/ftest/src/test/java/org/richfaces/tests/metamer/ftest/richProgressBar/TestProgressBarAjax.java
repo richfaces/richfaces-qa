@@ -25,9 +25,8 @@ import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.progressBarAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -40,7 +39,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
@@ -121,11 +119,8 @@ public class TestProgressBarAjax extends AbstractGrapheneTest {
 
     @Test
     public void testData() {
-        selenium.type(pjq("input[type=text][id$=dataInput]"), "RichFaces 4");
-        selenium.waitForPageToLoad();
-
-        selenium.type(pjq("input[type=text][id$=oncompleteInput]"), "data = event.data");
-        selenium.waitForPageToLoad();
+        progressBarAttributes.set(ProgressBarAttributes.data, "RichFaces 4");
+        progressBarAttributes.set(ProgressBarAttributes.oncomplete, "data = event.data");
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).click(startButton);
@@ -139,20 +134,15 @@ public class TestProgressBarAjax extends AbstractGrapheneTest {
 
     @Test
     public void testInterval() throws ParseException {
-        selenium.type(pjq("input[type=text][id$=intervalInput]"), "1000");
-        selenium.waitForPageToLoad();
-
+        progressBarAttributes.set(ProgressBarAttributes.interval, 1000);
         testOneRunOfProgressBar(startButton, 1000);
     }
 
     @Test
     public void testEvents() {
-        selenium.type(pjq("input[type=text][id$=onbeginInput]"), "metamerEvents += \"begin \"");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=onbeforedomupdateInput]"), "metamerEvents += \"beforedomupdate \"");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=oncompleteInput]"), "metamerEvents += \"complete \"");
-        selenium.waitForPageToLoad();
+        progressBarAttributes.set(ProgressBarAttributes.onbegin, "metamerEvents += \"begin \"");
+        progressBarAttributes.set(ProgressBarAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
+        progressBarAttributes.set(ProgressBarAttributes.oncomplete, "metamerEvents += \"complete \"");
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
 
@@ -181,8 +171,7 @@ public class TestProgressBarAjax extends AbstractGrapheneTest {
 
     @Test
     public void testOnfinish() {
-        selenium.type(pjq("input[type=text][id$=onfinishInput]"), "metamerEvents += \"finish \"");
-        selenium.waitForPageToLoad();
+        progressBarAttributes.set(ProgressBarAttributes.onfinish, "metamerEvents += \"finish \"");
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
 
@@ -222,9 +211,7 @@ public class TestProgressBarAjax extends AbstractGrapheneTest {
 
     @Test
     public void testRendered() {
-        selenium.click(pjq("input[type=radio][name$=renderedInput][value=false]"));
-        selenium.waitForPageToLoad();
-
+        progressBarAttributes.set(ProgressBarAttributes.rendered, Boolean.FALSE);
         assertFalse(selenium.isElementPresent(progressBar), "Progress bar should not be rendered when rendered=false.");
     }
 
@@ -256,9 +243,7 @@ public class TestProgressBarAjax extends AbstractGrapheneTest {
         assertTrue(Math.abs(average - interval) < delta, "Average interval " + average + " is too far from set value (" + interval + ")");
         assertFalse(average < interval, "Average interval " + average + " cannot be smaller than set value (" + interval + ")");
 
-        int first = 0;
-        int second = -1;
-
+        int first, second;
         for (int i = 0; i < labelsList.size() - 1; i++) {
             first = Integer.parseInt(labelsList.get(i));
             second = Integer.parseInt(labelsList.get(i + 1));
