@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2011, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+            <a href="">RF-12185</a><br/>
+            <p>AJAX rendering is broken for h:commandLink:<br/>
+               Rendering of h:commandLink makes it to disappear from the page when done with a4j:commandLink or a4j:ajax.<br/>
+               Notes:<br/>
+               <ul>
+                  <li>rendering of h:commandButton works fine</li>
+                  <li>rendering with f:ajax works fine</li>
+               </ul>
+            </p>
+            
+            <hr/>
+            
+            <p>
+               Following links/inputs part shouldn't work (cause commandLink disappear):
+               <h:panelGrid columns="2">
+               
+                  <h:outputText value="h:commandLink: " />
+                  <h:commandLink id="link1" value="#{a4jAjaxBean.car} - Link 1" />
+                  
+                  <h:outputText value="a4j:commandLink: " />
+                  <a4j:commandLink render="link1, link2" value="render" />
+                  
+                  <h:outputText value="h:inputText with ajax: " />
+                  <h:inputText>
+                     <a4j:ajax event="keyup" render="link1, link2" />  
+                  </h:inputText>
+
+               </h:panelGrid>
+               <br/>
+               This part should work. (Workaround simulation):
+               <h:panelGrid columns="2">
+                     <h:outputText value="h:commandLink within a4j:outputPanel: " />
+                     <a4j:outputPanel id="out">
+                        <h:commandLink id="link2" value="#{a4jAjaxBean.car} - Link 2" />
+                     </a4j:outputPanel>
+               </h:panelGrid>               
+            </p>
+             
+        </ui:define>
+
+    </ui:composition>
+</html>
