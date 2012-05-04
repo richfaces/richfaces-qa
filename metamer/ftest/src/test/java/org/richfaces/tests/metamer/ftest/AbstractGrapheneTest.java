@@ -1,24 +1,25 @@
-/*******************************************************************************
- * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
+/**
+ * *****************************************************************************
+ * JBoss, Home of Professional Open Source Copyright 2010-2012, Red Hat, Inc.
+ * and individual contributors by the @authors tag. See the copyright.txt in the
+ * distribution for a full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
+ * This is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ * This software is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this software; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
+ * site: http://www.fsf.org.
+ * *****************************************************************************
+ */
 package org.richfaces.tests.metamer.ftest;
 
 import static org.jboss.arquillian.ajocado.Graphene.alertPresent;
@@ -68,6 +69,7 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.test.selenium.locator.reference.ReferencedLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
+import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -172,7 +174,7 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
         selenium.fireEvent(element, event);
 
         waitGui.failWith("Attribute on" + attributeName + " does not work correctly").until(
-            new EventFiredCondition(event));
+                new EventFiredCondition(event));
     }
 
     /**
@@ -244,6 +246,21 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
         testStyleClass(element, BasicAttributes.styleClass);
     }
 
+    /**
+     * Tests onrequest (e.g. onsubmit, onrequest...) events by using javascript
+     * functions. First fills Metamer's input for according component attribute
+     * with testing value, then does an action, which should end by throwing a
+     * testing event and then wait for the event if it was really launched
+     *
+     * @param eventAttribute event attribute (e.g. onsubmit, onrequest, onbeforedomupdate...)
+     * @param action action wich leads to launching an event
+     */
+    public void testRequestEvent(AttributeEnum eventAttribute, IEventLaunchAction action) {
+        testRequestEventBefore(eventAttribute);
+        action.launchAction();
+        testRequestEventAfter(eventAttribute);
+    }
+
     public void testRequestEventsBefore(String... events) {
         for (String event : events) {
             ReferencedLocator<JQueryLocator> input = ref(attributesRoot, "input[type=text][id$=on{0}Input]");
@@ -252,6 +269,14 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
             selenium.waitForPageToLoad();
         }
 
+        selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
+    }
+
+    public void testRequestEventBefore(AttributeEnum eventAttribute) {
+        ReferencedLocator<JQueryLocator> input = ref(attributesRoot, "input[type=text][id$={0}Input]");
+        input = input.format(eventAttribute.toString().trim());
+        selenium.type(input, format("metamerEvents += \"{0} \"", eventAttribute.toString()));
+        selenium.waitForPageToLoad();
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
     }
 
@@ -267,10 +292,16 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     public void testRequestEventsAfter(String... events) {
         String[] actualEvents = selenium.getEval(new JavaScript("window.metamerEvents")).split(" ");
         assertEquals(
-            actualEvents,
-            events,
-            format("The events ({0}) don't came in right order ({1})", Arrays.deepToString(actualEvents),
+                actualEvents,
+                events,
+                format("The events ({0}) don't came in right order ({1})", Arrays.deepToString(actualEvents),
                 Arrays.deepToString(events)));
+    }
+
+    public void testRequestEventAfter(AttributeEnum eventAttribute) {
+        waitGui.failWith("Attribute on" + eventAttribute
+                + " does not work correctly").until(new EventFiredCondition(
+                new Event(eventAttribute.toString())));
     }
 
     public void testRequestEventsAfterByAlert(String... events) {
@@ -285,9 +316,9 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
 
         String[] actualEvents = list.toArray(new String[list.size()]);
         assertEquals(
-            actualEvents,
-            events,
-            format("The events ({0}) don't came in right order ({1})", Arrays.deepToString(actualEvents),
+                actualEvents,
+                events,
+                format("The events ({0}) don't came in right order ({1})", Arrays.deepToString(actualEvents),
                 Arrays.deepToString(events)));
     }
 
@@ -388,7 +419,7 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
         selenium.waitForPageToLoad();
 
         assertTrue(selenium.getAttribute(attr).contains(value), "Attribute " + attribute + " should contain \"" + value
-            + "\".");
+                + "\".");
     }
 
     /**
@@ -458,4 +489,8 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
         }
     }
 
+    protected interface IEventLaunchAction {
+
+        void launchAction();
+    }
 }
