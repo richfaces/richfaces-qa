@@ -43,7 +43,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
         
-            <a4j:push address="xxx@pushTopicsContext" onerror="alert('Error: ' + event.rf.data)" 
+            <a4j:push address="xxx@pushTopicsContext" 
+                      onerror="#{a4jPushBean.attributes['onerror'].value}"
+                      onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}"
                       ondataavailable="updateMessage(#{rich:element('messagePanel')}, event.rf.data);" >
             </a4j:push>
 
@@ -63,7 +65,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
-            <ui:remove><metamer:attributes value="#{a4jPushBean.attributes}" id="attributes" /></ui:remove>
+            <metamer:attributes value="#{a4jPushBean.attributes}" id="attributes" />
         </ui:define>
 
     </ui:composition>
