@@ -83,6 +83,7 @@ public class AttributeList {
     public static Attributes<ActionListenerAttributes> actionListenerAttributes = new Attributes<ActionListenerAttributes>();
     public static Attributes<AjaxAttributes> ajaxAttributes = new Attributes<AjaxAttributes>();
     public static Attributes<AccordionItemAttributes> accordionItemAttributes = new Attributes<AccordionItemAttributes>();
+    public static Attributes<AttachQueueAttributes> attachQueueAttributes = new Attributes<AttachQueueAttributes>();
     public static Attributes<AttachQueueAttributes> attachQueueAttrs1 = new Attributes<AttachQueueAttributes>(
         pjq("table.attributes[id$=attributes1]"));
     public static Attributes<AttachQueueAttributes> attachQueueAttrs2 = new Attributes<AttachQueueAttributes>(

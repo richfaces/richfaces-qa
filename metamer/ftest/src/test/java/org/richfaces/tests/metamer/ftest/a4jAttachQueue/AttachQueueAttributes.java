@@ -30,13 +30,13 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  */
 public enum AttachQueueAttributes implements AttributeEnum {
 
-    binding,
-    id,
-    ignoreDupResponses,
-    name,
-    onrequestdequeue,
-    onrequestqueue,
-    rendered,
-    requestDelay,
-    requestGroupingId
+    binding, //not tested
+    id, //not tested
+    ignoreDupResponses, //tested
+    name, //tested
+    onrequestdequeue, //tested
+    onrequestqueue, //tested
+    rendered, //tested
+    requestDelay,//tested
+    requestGroupingId //tested
 }
