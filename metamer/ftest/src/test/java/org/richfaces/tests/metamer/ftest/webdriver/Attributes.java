@@ -27,9 +27,10 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
-import org.jboss.test.selenium.support.ui.ElementPresent;
+import org.jboss.test.selenium.support.ui.ElementDisplayed;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -173,13 +174,64 @@ public class Attributes<T extends AttributeEnum> {
      * Wait for rendering of footer (whole page rendered now?)
      */
     private void waitForFooter() {
+        /**
+         * FIXME : better would be waiting for whole page render as in
+         * waitForPageToLoad(), but obtaining of JSExecutor from proxy of
+         * webdriver isn't now possible, it throws ClassCastException
+         */
         for (int i = 0; i < 3; i++) {
             try {
-                new WebDriverWait(driver, 5).until(ElementPresent.getInstance().
-                        element(driver.findElement(By.cssSelector("div.footer"))));
+                new WebDriverWait(driver, 5).until(ElementDisplayed.getInstance().
+                        element(driver.findElement(By.cssSelector("span[id=browserVersion]"))));
+                waiting(500);
                 return;
             } catch (NoSuchElementException ignored) {
             }
         }
+    }
+
+    /**
+     * Waiting.
+     *
+     * @param milis
+     */
+    protected void waiting(int milis) {
+        try {
+            Thread.sleep(milis);
+        } catch (InterruptedException ignored) {
+        }
+    }
+
+    /**
+     * Wait for whole page rendered. Not functioning, throws classCastException
+     * during executeJS.
+     */
+    protected void waitForPageToLoad() {
+        for (int i = 0; i < 3; i++) {
+            try {
+                Object result = executeJS("return document['readyState'] ? 'complete' == document.readyState : true");
+                if (result instanceof Boolean) {
+                    Boolean b = (Boolean) result;
+                    if (b.equals(Boolean.TRUE)) {
+                        return;
+                    }
+                }
+                waiting(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Executes JavaScript script.
+     *
+     * @param script whole command that will be executed
+     * @param args
+     * @return may return a value
+     */
+    public Object executeJS(String script, Object... args) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        return js.executeScript(script, args);
     }
 }

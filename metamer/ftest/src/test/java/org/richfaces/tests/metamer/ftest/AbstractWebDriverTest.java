@@ -27,11 +27,7 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import java.util.concurrent.TimeUnit;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
-import org.jboss.test.selenium.support.ui.ElementPresent;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
@@ -44,7 +40,6 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     @Drone
     protected WebDriver driver;
     protected static final int WAIT_TIME = 5;// s
-    private static final int LAST_CHECK_WAIT_TIME = 500;// ms
     private static final int NUMBER_OF_TRIES = 5;
     private FieldDecorator fieldDecorator;
 
@@ -68,23 +63,21 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      *
      * @param milis
      */
-    private void waiting(int milis) {
+    protected void waiting(int milis) {
         try {
             Thread.sleep(milis);
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
+        } catch (InterruptedException ignored) {
         }
     }
 
     /**
-     * Waits a little time and executes JavaScript script.
+     * Executes JavaScript script.
      *
      * @param script whole command that will be executed
      * @param args
      * @return may return a value
      */
     public Object executeJS(String script, Object... args) {
-        waitForFooter();
         JavascriptExecutor js = (JavascriptExecutor) driver;
         return js.executeScript(script, args);
     }
@@ -98,15 +91,21 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Wait for rendering of footer (whole page rendered now?)
+     * Wait for whole page rendered
      */
-    protected void waitForFooter() {
-        for (int i = 0; i < 3; i++) {
+    protected void waitForPageToLoad() {
+        for (int i = 0; i < NUMBER_OF_TRIES; i++) {
             try {
-                new WebDriverWait(driver, 5).until(ElementPresent.getInstance().
-                        element(driver.findElement(By.cssSelector("div.footer"))));
-                return;
-            } catch (NoSuchElementException ignored) {
+                Object result = executeJS("return document['readyState'] ? 'complete' == document.readyState : true");
+                if (result instanceof Boolean) {
+                    Boolean b = (Boolean) result;
+                    if (b.equals(Boolean.TRUE)) {
+                        return;
+                    }
+                }
+                waiting(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
