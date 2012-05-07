@@ -83,6 +83,7 @@ public abstract class AbstractTreeToggleListenerTest extends AbstractWebDriverTe
         page.getExpandButton().click();
         //checks if phases contains the correct listener message
         new WebDriverWait(driver).failWith(failMessage).until(new ExpectedCondition<Boolean>() {
+
             @Override
             public Boolean apply(WebDriver f) {
                 return subTest(expectedText + expandedNodeString);
@@ -90,23 +91,35 @@ public abstract class AbstractTreeToggleListenerTest extends AbstractWebDriverTe
         });
         //then test collapsing of node
         page.getCollapseButton().click();
-        assertTrue(subTest(expectedText + collapsedNodeString), failMessage);
         new WebDriverWait(driver).failWith(failMessage).until(new ExpectedCondition<Boolean>() {
+
             @Override
             public Boolean apply(WebDriver f) {
-                return subTest(expectedText + expandedNodeString);
+                return subTest(expectedText + collapsedNodeString);
             }
         });
     }
 
-    private void testTTLWithoutAdditionalStateStrings(String expectedText, String failMessage) {
+    private void testTTLWithoutAdditionalStateStrings(final String expectedText, String failMessage) {
         //test expanding of node
         page.getExpandButton().click();
         //checks if phases contains the correct listener message
-        assertTrue(subTest(expectedText), failMessage);
+        new WebDriverWait(driver).failWith(failMessage).until(new ExpectedCondition<Boolean>() {
+
+            @Override
+            public Boolean apply(WebDriver f) {
+                return subTest(expectedText);
+            }
+        });
         //then test collapsing of node
         page.getCollapseButton().click();
-        assertTrue(subTest(expectedText), failMessage);
+        new WebDriverWait(driver).failWith(failMessage).until(new ExpectedCondition<Boolean>() {
+
+            @Override
+            public Boolean apply(WebDriver f) {
+                return subTest(expectedText);
+            }
+        });
     }
 
     public void testTTLAsAttributeOfComponent(String expectedMSG) {
