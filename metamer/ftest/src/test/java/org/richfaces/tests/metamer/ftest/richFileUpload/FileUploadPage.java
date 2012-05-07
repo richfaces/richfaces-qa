@@ -31,10 +31,8 @@ public class FileUploadPage {
 
     @FindBy(css = "span[id$=uploadedFilesPanel] li")
     List<WebElement> uploadedFilesList;
-    @FindBy(xpath= "//input[@type='file'][@class='rf-fu-inp'][last()]")
-    WebElement fileInputField;
     @FindBy(xpath= "//input[@type='file'][@class='rf-fu-inp']")
-    List<WebElement> fileInputFields;
+    WebElement fileInputField;
     @FindBy(css = "span.rf-fu-btn-upl")
     WebElement uploadButton;
     @FindBy(css = "span.rf-fu-btn-clr")
