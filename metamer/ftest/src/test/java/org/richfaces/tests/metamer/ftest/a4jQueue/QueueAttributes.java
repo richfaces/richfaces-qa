@@ -31,18 +31,18 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  */
 public enum QueueAttributes implements AttributeEnum {
 
-    binding,
-    id,
-    ignoreDupResponses,
-    name,
-    onbeforedomupdate,
-    oncomplete,
-    onerror,
-    onevent,
-    onrequestdequeue,
-    onrequestqueue,
-    onsubmit,
-    rendered,
-    requestDelay,
-    timeout
+    binding, //not tested
+    id, //not tested
+    ignoreDupResponses, //tested
+    name, //not tested
+    onbeforedomupdate, //do not work -> should be also added here? https://issues.jboss.org/browse/RF-11711
+    oncomplete, //not tested, to be deleted https://issues.jboss.org/browse/RF-11711
+    onerror, //do not work, -> should be also added here? https://issues.jboss.org/browse/RF-11711
+    onevent, //not tested, to be deleted https://issues.jboss.org/browse/RF-11711
+    onrequestdequeue, //tested
+    onrequestqueue, //tested
+    onsubmit, //not tested, to be deleted https://issues.jboss.org/browse/RF-11711
+    rendered, //tested
+    requestDelay, //tested
+    timeout //tested
 }
