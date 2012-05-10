@@ -24,11 +24,23 @@ package org.richfaces.tests.metamer.ftest;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
+import org.jboss.test.selenium.support.ui.ElementDisplayed;
+import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
@@ -40,6 +52,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     @Drone
     protected WebDriver driver;
     protected static final int WAIT_TIME = 5;// s
+    protected static final int MINOR_WAIT_TIME = 200;// ms
     private static final int NUMBER_OF_TRIES = 5;
     private FieldDecorator fieldDecorator;
 
@@ -59,11 +72,11 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Waiting.
+     * Waiting method. Waits number of milis defined by @milis
      *
      * @param milis
      */
-    protected void waiting(int milis) {
+    protected static void waiting(int milis) {
         try {
             Thread.sleep(milis);
         } catch (InterruptedException ignored) {
@@ -77,9 +90,31 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * @param args
      * @return may return a value
      */
-    public Object executeJS(String script, Object... args) {
+    protected Object executeJS(String script, Object... args) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         return js.executeScript(script, args);
+    }
+
+    /**
+     * Executes JavaScript script. Returns single and trimmed string. Tries to
+     * execute script few times with waiting for expected string defined by
+     * @expectedValue.
+     *
+     * @param script whole command that will be executed
+     * @param args
+     * @return single and trimmed string
+     */
+    protected String expectedReturnJS(String script, String expectedValue, Object... args) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String result = null;
+        for (int i = 0; i < NUMBER_OF_TRIES; i++) {
+            result = ((String) js.executeScript(script, args)).trim();
+            if (result.equals(expectedValue)) {
+                break;
+            }
+            waiting(MINOR_WAIT_TIME);
+        }
+        return result;
     }
 
     protected void injectWebElementsToPage(Object page) {
@@ -103,10 +138,138 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
                         return;
                     }
                 }
-                waiting(1000);
-            } catch (Exception e) {
-                e.printStackTrace();
+                waiting(MINOR_WAIT_TIME);
+            } catch (Exception ignored) {
             }
+        }
+    }
+
+    /**
+     * Tries to check and wait for correct size (@size) of list. Depends on list
+     * of WebElements decorated with StaleReferenceAwareFieldDecorator.
+     *
+     * @param list input list
+     * @param size expected size of list
+     * @return list with or without expected size
+     */
+    protected List<WebElement> guardListSize(List<WebElement> list, int size) {
+        boolean lastCheckWithModifications;
+        int checkedSize = list.size();
+        for (int i = 0; i < NUMBER_OF_TRIES; i++) {
+            if (checkedSize < list.size()) {
+                checkedSize = list.size();
+                lastCheckWithModifications = true;
+            } else {
+                lastCheckWithModifications = false;
+            }
+            if (checkedSize >= size && !lastCheckWithModifications) {
+                //last check
+                waiting(MINOR_WAIT_TIME);
+                list.size();
+                return list;
+            }
+            waiting(MINOR_WAIT_TIME);
+        }
+        return list;
+    }
+
+    protected enum WaitRequestType {
+
+        XHR,
+        HTTP;
+    }
+
+    /**
+     * Generates a waiting proxy, which will wait for page rendering after
+     * expected @waitRequestType which will be launched via communicating with
+     * @element.
+     *
+     * @param element WebElement which will launch a request (e.g. with methods
+     * click(), submit()...) after invoking it.
+     * @param waitRequestType type of expected request which will be launched
+     * @return waiting proxy for input element
+     */
+    protected WebElement waitRequest(WebElement element, WaitRequestType waitRequestType) {
+        switch (waitRequestType) {
+            case HTTP:
+                return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
+                        new Class[]{ WebElement.class }, new HTTPWaitHandler(element));
+            case XHR:
+                return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
+                        new Class[]{ WebElement.class }, new XHRWaitHandler(element));
+            default:
+                throw new UnsupportedOperationException();
+        }
+    }
+
+    /**
+     * Waits for page to full load after method is invoked.
+     */
+    private class HTTPWaitHandler implements InvocationHandler {
+
+        private final WebElement element;
+
+        public HTTPWaitHandler(WebElement element) {
+            this.element = element;
+        }
+
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            Object o = method.invoke(element, args);
+            waitForPageToLoad();
+            return o;
+        }
+    }
+
+    /**
+     * Waits for change of requestTime in Metamer.
+     */
+    private class XHRWaitHandler implements InvocationHandler {
+
+        private final WebElement element;
+        private Date time1;
+
+        public XHRWaitHandler(WebElement element) {
+            this.element = element;
+        }
+
+        private Date getDate() {
+            new WebDriverWait(driver).until(ElementDisplayed.getInstance().
+                    element(driver.findElement(By.cssSelector("span[id=requestTime]"))));
+            String time = driver.findElement(By.cssSelector("span[id=requestTime]")).getText();
+            DateFormat sdf = new SimpleDateFormat("hh:mm:ss.SSS");
+            Date d = null;
+            try {
+                d = sdf.parse(time);
+            } catch (ParseException ex) {
+            }
+            return d;
+        }
+
+        private void beforeAction() {
+            time1 = getDate();
+        }
+
+        private void afterAction() {
+            for (int i = 0; i < NUMBER_OF_TRIES; i++) {
+                try {
+                    if (getDate().equals(time1)) {
+                        waiting(MINOR_WAIT_TIME);
+                    } else {
+                        waitForPageToLoad();//unnecessary?
+                        return;
+                    }
+                } catch (Exception e) {
+                }
+            }
+        }
+
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            beforeAction();
+            Object o = method.invoke(element, args);
+            afterAction();
+            return o;
         }
     }
 }
