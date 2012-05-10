@@ -28,7 +28,6 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
@@ -126,7 +125,6 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
     /**
      * Test of attribute @disabled. Testing of client side validation on one input field.
      */
-    @Test(groups = {"4.3"})
     @IssueTracking(value = "https://issues.jboss.org/browse/RF-12154")
     public void testDisabled() {
         JQueryLocator integerMax10Field = pjq("input[type=text][id$=max]");
