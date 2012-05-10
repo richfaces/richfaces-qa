@@ -21,14 +21,11 @@
 package org.richfaces.tests.metamer.ftest.richTreeToggleListener;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import org.openqa.selenium.WebDriver;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import java.util.List;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.BeforeMethod;
 
@@ -69,7 +66,7 @@ public abstract class AbstractTreeToggleListenerTest extends AbstractWebDriverTe
      * @return true if text was found or false
      */
     private boolean subTest(String expectedText) {
-        List<WebElement> list = page.getPhases();
+        List<WebElement> list = guardListSize(page.getPhases(), 5);
         for (WebElement webElement : list) {
             if (webElement.getText().equals(expectedText)) {
                 return true;//Text found
@@ -80,46 +77,24 @@ public abstract class AbstractTreeToggleListenerTest extends AbstractWebDriverTe
 
     private void testTTL(final String expectedText, String failMessage) {
         //test expanding of node
-        page.getExpandButton().click();
+        waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
-        new WebDriverWait(driver).failWith(failMessage).until(new ExpectedCondition<Boolean>() {
-
-            @Override
-            public Boolean apply(WebDriver f) {
-                return subTest(expectedText + expandedNodeString);
-            }
-        });
+        assertTrue(subTest(expectedText + expandedNodeString), failMessage);
         //then test collapsing of node
-        page.getCollapseButton().click();
-        new WebDriverWait(driver).failWith(failMessage).until(new ExpectedCondition<Boolean>() {
-
-            @Override
-            public Boolean apply(WebDriver f) {
-                return subTest(expectedText + collapsedNodeString);
-            }
-        });
+        waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
+        //checks if phases contains the correct listener message
+        assertTrue(subTest(expectedText + collapsedNodeString), failMessage);
     }
 
     private void testTTLWithoutAdditionalStateStrings(final String expectedText, String failMessage) {
         //test expanding of node
-        page.getExpandButton().click();
+        waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
-        new WebDriverWait(driver).failWith(failMessage).until(new ExpectedCondition<Boolean>() {
-
-            @Override
-            public Boolean apply(WebDriver f) {
-                return subTest(expectedText);
-            }
-        });
+        assertTrue(subTest(expectedText));
         //then test collapsing of node
-        page.getCollapseButton().click();
-        new WebDriverWait(driver).failWith(failMessage).until(new ExpectedCondition<Boolean>() {
-
-            @Override
-            public Boolean apply(WebDriver f) {
-                return subTest(expectedText);
-            }
-        });
+        waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
+        //checks if phases contains the correct listener message
+        assertTrue(subTest(expectedText));
     }
 
     public void testTTLAsAttributeOfComponent(String expectedMSG) {

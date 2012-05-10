@@ -21,14 +21,11 @@
 package org.richfaces.tests.metamer.ftest.richItemChangeListener;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import org.openqa.selenium.WebDriver;
-import static org.testng.Assert.fail;
+import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import java.util.List;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.BeforeMethod;
 
@@ -59,20 +56,26 @@ public abstract class AbstractItemChangeListenerTest extends AbstractWebDriverTe
         return buildUrl(contextPath, "faces/components/richItemChangeListener/" + testedComponent + ".xhtml");
     }
 
-    private void testICL(final String expectedText, String failMessage) {
-        page.getInactivePanel().click();
-        new WebDriverWait(driver).failWith(failMessage).until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver f) {
-                List<WebElement> list = page.getPhases();
-                for (WebElement webElement : list) {
-                    if (webElement.getText().equals(expectedText)) {
-                        return true;
-                    }
-                }
-                return false;
+    /**
+     * Gets list of WebElements and check if some of them has same text as
+     * expected in attribute @expectedText.
+     *
+     * @param expectedText value of the text to be find
+     * @return true if text was found or false
+     */
+    private boolean subTest(String expectedText) {
+        List<WebElement> list = guardListSize(page.getPhases(), 5);
+        for (WebElement webElement : list) {
+            if (webElement.getText().equals(expectedText)) {
+                return true;//Text found
             }
-        });
+        }
+        return false;
+    }
+
+    private void testICL(final String expectedText, String failMessage) {
+        waitRequest(page.getInactivePanel(), WaitRequestType.XHR).click();
+        assertTrue(subTest(expectedText), failMessage);
     }
 
     public void testICLAsAttributeOfComponent(String expectedMSG) {

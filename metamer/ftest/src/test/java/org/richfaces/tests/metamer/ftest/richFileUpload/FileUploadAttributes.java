@@ -29,31 +29,31 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  */
 public enum FileUploadAttributes implements AttributeEnum {
 
-    acceptedTypes,
+    acceptedTypes,//tested in se2
     addLabel,
     binding,
     clearAllLabel,
     clearLabel,
-    data,
+    data,//tested in se2, not working "https://issues.jboss.org/browse/RF-12039"
     deleteLabel,
     dir,
     disabled,
-    doneLabel,
-    execute,
+    doneLabel,//tested in se2
+    execute,//tested in se2
     fileUploadListener,
     id,
     lang,
-    limitRender,
+    limitRender,//tested in se2
     listHeight,
-    maxFilesQuantity,
+    maxFilesQuantity,//tested in se2
     noDuplicate,
-    onbeforedomupdate,
-    onbegin,
+    onbeforedomupdate,//tested in se2 not working "https://issues.jboss.org/browse/RF-12037"
+    onbegin,//tested in se2 not working "https://issues.jboss.org/browse/RF-12037"
     onclear,
     onclick,
-    oncomplete,
+    oncomplete,//tested in se2 not working "https://issues.jboss.org/browse/RF-12037"
     ondblclick,
-    onfilesubmit,
+    onfilesubmit,//tested in se2
     onkeydown,
     onkeypress,
     onkeyup,
@@ -62,13 +62,13 @@ public enum FileUploadAttributes implements AttributeEnum {
     onmouseout,
     onmouseover,
     onmouseup,
-    ontyperejected,
-    onuploadcomplete,
+    ontyperejected,//tested in se2
+    onuploadcomplete,//tested in se2
     render,
     rendered,
     serverErrorLabel,
-    sizeExceededLabel,
-    status,
+    sizeExceededLabel,//tested in se2
+    status,//tested in se2
     style,
     styleClass,
     title,

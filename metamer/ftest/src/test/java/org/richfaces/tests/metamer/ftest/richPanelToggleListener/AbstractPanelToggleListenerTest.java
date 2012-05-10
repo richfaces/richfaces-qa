@@ -21,13 +21,11 @@
 package org.richfaces.tests.metamer.ftest.richPanelToggleListener;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import org.openqa.selenium.WebDriver;
+import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import java.util.List;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.BeforeMethod;
 
@@ -68,7 +66,7 @@ public abstract class AbstractPanelToggleListenerTest extends AbstractWebDriverT
      * @return true if text was found or false
      */
     private boolean subTest(String expectedText) {
-        List<WebElement> list = page.getPhases();
+        List<WebElement> list = guardListSize(page.getPhases(), 5);
         for (WebElement webElement : list) {
             if (webElement.getText().equals(expectedText)) {
                 return true;//Text found
@@ -79,22 +77,13 @@ public abstract class AbstractPanelToggleListenerTest extends AbstractWebDriverT
 
     private void testPTL(final String expectedText, String failMessage) {
         //first test collapsing of panel
-        page.getCollapseButton().click();
+        waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
-        new WebDriverWait(driver).failWith(failMessage).until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver f) {
-                return subTest(expectedText + collapsedPanelString);
-            }
-        });
+        assertTrue(subTest(expectedText + collapsedPanelString), failMessage);
         //then test expanding of panel
-        page.getExpandButton().click();
-        new WebDriverWait(driver).failWith(failMessage).until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver f) {
-                return subTest(expectedText + expandedPanelString);
-            }
-        });
+        waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
+        //checks if phases contains the correct listener message
+        assertTrue(subTest(expectedText + expandedPanelString), failMessage);
     }
 
     public void testPTLAsAttributeOfComponent(String expectedMSG) {
