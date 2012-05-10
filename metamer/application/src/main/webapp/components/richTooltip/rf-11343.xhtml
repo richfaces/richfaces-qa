@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="http://richfaces.org/a4j"
+   xmlns:rich="http://richfaces.org/rich" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+<!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2012, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+<ui:composition template="/templates/template.xhtml">
+   <ui:define name="view">
+      <f:metadata>
+         <f:viewParam name="templates" value="#{templateBean.templates}">
+            <f:converter converterId="templatesListConverter" />
+         </f:viewParam>
+      </f:metadata>
+   </ui:define>
+
+   <ui:define name="component">
+   
+      <p><h3>tooltip: does not work attached to parent input</h3>
+      This page demonstrate issue <a href="https://issues.jboss.org/browse/RF-11343">RF-11343</a>.
+      Tooltip doesn't work withing h:input. Issue reporter mentioned in description that after click on "rerender" labeled button tooltip should work,<br/>
+      but according to my investigation, it is not working (neither on FF11 nor Chromium).
+      
+      <br/><br/>
+      </p>
+   
+      <a4j:outputPanel id="pn">
+         <h:inputText>
+            <rich:tooltip>
+		        Hello world!
+		    </rich:tooltip>
+         </h:inputText>
+         <a4j:commandButton value="rerender" render="pn" />
+         <h:outputText value="Tooltip attached to parent input" />
+         <br/>
+         
+         <h:inputText id="input2" />
+         <rich:tooltip target="input2">
+            Hello world! (for input2)
+         </rich:tooltip>
+         
+         <h:outputText value="Workaround using @target on tooltip component" />
+         
+      </a4j:outputPanel>
+
+      <br />
+
+      <a4j:outputPanel id="pn2">
+         <h:inputText />
+         <rich:tooltip>Hello world!</rich:tooltip>         
+         <h:outputText value="Workaround using attach to parent, which shares the same physical area as the inputText" />
+      </a4j:outputPanel>
+
+   </ui:define>
+
+</ui:composition>
+</html>
