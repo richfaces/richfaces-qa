@@ -90,24 +90,17 @@ public class Attributes<T extends AttributeEnum> {
     }
 
     /**
-     * Retrieve current attribute value
+     * Sets attribute and checks if it was realy set (waits for page rerender).
      *
-     * @param attribute
-     * @return current attribute value
-     */
-    public String get(T attribute) {
-        return getProperty(attribute.toString());
-    }
-
-    /*
-     * protected void set(String propertyName, Object value) {
-     *
-     * }
+     * @param propertyName
+     * @param value
      */
     protected void setProperty(String propertyName, Object value) {
         String valueAsString = value.toString();
         String cssLocator;
         String xpathLocator = "//*[contains(@id, '" + propertyName + "Input')]";
+        new WebDriverWait(driver).until(ElementDisplayed.getInstance().
+                element(driver.findElement(By.xpath(xpathLocator))));
         WebElement foundElement = driver.findElement(By.xpath(xpathLocator));
         String tagName = foundElement.getTagName();
         if ("input".equals(tagName)) {//text
@@ -129,17 +122,7 @@ public class Attributes<T extends AttributeEnum> {
             List<WebElement> foundOptions = driver.findElements(By.cssSelector(cssLocator));
             applySelect(foundOptions, valueAsString);
         }
-        //wait until footer is displayed
-        waitForFooter();
-    }
-
-    protected String getProperty(String propertyName) {
-//        final ReferencedLocator<JQueryLocator> locator = propertyLocator.format(propertyName, "");
-//        if (selenium.getCount(locator) > 1) {
-//            return selenium.getAttribute(propertyLocator.format(propertyName, "[checked]").getAttribute(VALUE));
-//        }
-//        return selenium.getValue(locator);
-        throw new UnsupportedOperationException();
+        waitForPageRerenderAndCheckIfPropertySet(propertyName, value);
     }
 
     protected void applyText(String xpathLocator, String value) {
@@ -147,6 +130,7 @@ public class Attributes<T extends AttributeEnum> {
         waitForFooter();
         driver.findElement(By.xpath(xpathLocator)).sendKeys(value);
         driver.findElement(By.xpath(xpathLocator)).submit();
+        waitForFooter();
     }
 
     protected void applyCheckbox(List<WebElement> elements, String value) {
@@ -168,6 +152,81 @@ public class Attributes<T extends AttributeEnum> {
                 break;
             }
         }
+        waitForFooter();
+    }
+
+    /**
+     * Retrieve current attribute value
+     *
+     * @param attribute
+     * @return current attribute value
+     */
+    public String get(T attribute) {
+        return getProperty(attribute.toString());
+    }
+
+    /**
+     * Gets String representation of attribute value set in page.
+     *
+     * @param propertyName string name of attribute
+     * @return
+     */
+    protected String getProperty(String propertyName) {
+        String cssLocator;
+        String xpathLocator = "//*[contains(@id, '" + propertyName + "Input')]";
+        new WebDriverWait(driver).until(ElementDisplayed.getInstance().
+                element(driver.findElement(By.xpath(xpathLocator))));
+        WebElement foundElement = driver.findElement(By.xpath(xpathLocator));
+        String tagName = foundElement.getTagName();
+        if ("input".equals(tagName)) {//text
+            return foundElement.getAttribute("value");
+        } else if ("table".equals(tagName)) {//radio, ?checkboxes?
+            cssLocator = "input[id*=" + propertyName + "Input]";
+            List<WebElement> foundElements = driver.findElements(By.cssSelector(cssLocator));
+            if (foundElements.isEmpty()) {
+                throw new IllegalArgumentException("No inputs for this attribute found");
+            }
+            String inputType = foundElements.get(0).getAttribute("type");
+            if ("radio".equals(inputType)) {
+                return getValueFromSelection(foundElements);
+            } else if ("checkbox".equals(inputType)) { //not supported
+                throw new UnsupportedOperationException("Getting value from checkboxes is not implemented");
+            }
+        } else if ("select".equals(tagName)) {//select
+            cssLocator = "select[id$=" + propertyName + "Input] option";
+            List<WebElement> foundOptions = driver.findElements(By.cssSelector(cssLocator));
+            return getValueFromSelection(foundOptions);
+        }
+        throw new UnsupportedOperationException("Unknown property");
+    }
+
+    protected String getValueFromSelection(List<WebElement> list) {
+        for (WebElement webElement : list) {
+            if (webElement.isSelected()) {
+                return webElement.getAttribute("value");
+            }
+        }
+        throw new IllegalArgumentException("No selected choice for this attribute found.");
+    }
+
+    /**
+     * Wait for page to load after attribute was set and then ckecks if it
+     * really was set. If it was not set then IllegalStateException is thrown.
+     *
+     * @param propertyName string value of attribute
+     * @param value value that the attribute should have
+     */
+    private void waitForPageRerenderAndCheckIfPropertySet(String propertyName, Object value) {
+        waitForFooter();
+        String property;
+        for (int i = 0; i < 5; i++) {
+            property = getProperty(propertyName);
+            if (property.equals(value.toString())) {
+                return;
+            }
+            waiting(200);
+        }
+        throw new IllegalStateException("Property was not changed.");
     }
 
     /**
@@ -183,7 +242,6 @@ public class Attributes<T extends AttributeEnum> {
             try {
                 new WebDriverWait(driver, 5).until(ElementDisplayed.getInstance().
                         element(driver.findElement(By.cssSelector("span[id=browserVersion]"))));
-                waiting(500);
                 return;
             } catch (NoSuchElementException ignored) {
             }
@@ -203,8 +261,8 @@ public class Attributes<T extends AttributeEnum> {
     }
 
     /**
-     * Wait for whole page rendered. Not functioning, throws classCastException
-     * during executeJS.
+     * Wait for whole page rendered. Not functioning, FIXME: do not work not,
+     * throws ClassCastException during executeJS.
      */
     protected void waitForPageToLoad() {
         for (int i = 0; i < 3; i++) {
@@ -218,13 +276,13 @@ public class Attributes<T extends AttributeEnum> {
                 }
                 waiting(1000);
             } catch (Exception e) {
-                e.printStackTrace();
             }
         }
     }
 
     /**
-     * Executes JavaScript script.
+     * Executes JavaScript script. FIXME: do not work not, throws
+     * ClassCastException
      *
      * @param script whole command that will be executed
      * @param args
