@@ -56,9 +56,14 @@
                 Tooltip does not work when placed in EDT.
             </metamer:testPageLink>
             
-            <metamer:testPageLink id="RF-11343" outcome="RF-11343" value="rf-11343">
+            <metamer:testPageLink id="RF-11343" outcome="rf-11343" value="RF-11343">
                 Page demonstrating issue <a href="https://issues.jboss.org/browse/rf-11343">RF-11343</a>.
-                Tooltip does not within h:input
+                Tooltip does not work within h:input (attached to parent)
+            </metamer:testPageLink>
+            
+            <metamer:testPageLink id="rf-10839" outcome="rf-10839" value="RF-10839">
+                Page demonstrating issue <a href="https://issues.jboss.org/browse/rf-10839">RF-11343</a>.
+                Attachment using target not works if tooltip defined before the component to which it attaches.
             </metamer:testPageLink>
 
         </ui:define>
