@@ -15,7 +15,7 @@
 
     <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-qa-parent</artifactId>
-    <version>4.2.0.Final-redhat-1</version>
+    <version>4.2.1.Final-redhat-1</version>
     <packaging>pom</packaging>
 
     <name>RichFaces QA Parent</name>
@@ -30,7 +30,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <version.richfaces>4.2.0.Final-redhat-1</version.richfaces>
+        <version.richfaces>4.2.1.Final-redhat-1</version.richfaces>
         <richfaces.checkstyle.version>5</richfaces.checkstyle.version>
 
         <!-- version of JBoss containers to use and download -->
