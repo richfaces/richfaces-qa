@@ -23,7 +23,7 @@
     <parent>
         <artifactId>richfaces-archetypes-ftest</artifactId>
         <groupId>org.richfaces.tests</groupId>
-        <version>4.2.0.Final-redhat-1</version>
+        <version>4.2.1.Final-redhat-1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -53,11 +53,11 @@
             <groupId>org.jboss.arquillian.testng</groupId>
             <artifactId>arquillian-testng-container</artifactId>
         </dependency>
-        <!-- TestNG -->  
+        <!-- TestNG -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-        </dependency>           
+        </dependency>
     </dependencies>
 
     <build>
@@ -69,7 +69,7 @@
                     <systemProperties>
                         <webdriver.stale.tries>5</webdriver.stale.tries>
                         <context.root>${context.root}</context.root>
-                        <context.path>${context.path}</context.path>                        
+                        <context.path>${context.path}</context.path>
                     </systemProperties>
                 </configuration>
             </plugin>
@@ -124,8 +124,8 @@
                         </executions>
                     </plugin>
                 </plugins>
-            </build>        
-        </profile>            
+            </build>
+        </profile>
     </profiles>
 
 </project>
