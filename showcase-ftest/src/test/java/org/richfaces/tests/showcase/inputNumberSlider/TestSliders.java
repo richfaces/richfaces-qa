@@ -41,7 +41,7 @@ public class TestSliders extends AbstractGrapheneTest {
      */
 
     protected final int PADDING_WHEN_CLICK_ON_200 = 100;
-    protected final int PADDING_WHEN_CLICK_ON_30 = 14;
+    protected final int PADDING_WHEN_CLICK_ON_30 = 15;
 
     protected final int PADDING_WHEN_CLICK_ON_30_ANOTHER = 15;
 
