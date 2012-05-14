@@ -62,7 +62,7 @@ public class TestSimple extends AbstractContextMenuTest {
     @Test
     public void testContextMenuRenderedAtCorrectPosition() {
 
-        checkContextMenuRenderedAtCorrectPosition(picture, new Point(20, 20), false);
+        checkContextMenuRenderedAtCorrectPosition(picture, new Point(20, 20), false, contextMenu, TOLERANCE);
     }
 
     /* ********************************************************

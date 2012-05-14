@@ -41,26 +41,4 @@ public class AbstractContextMenuTest extends AbstractGrapheneTest {
     protected final int TOLERANCE = 2;
 
     protected JQueryLocator contextMenu = jq(".rf-ctx-lst");
-
-    protected void checkContextMenuRenderedAtCorrectPosition(JQueryLocator target, Point offset, boolean invokedByRightClick) {
-        if (invokedByRightClick) {
-            selenium.contextMenuAt(target, offset);
-        } else {
-            selenium.clickAt(target, offset);
-        }
-
-        waitGui.failWith(new RuntimeException("The context menu should be visible")).timeout(2000)
-            .until(elementVisible.locator(contextMenu));
-
-        Point actualContextMenuPosition = selenium.getElementPosition(contextMenu);
-        Point targetPosition = selenium.getElementPosition(target);
-        Point expectedContextMenuPosition = targetPosition.add(offset);
-
-        boolean isXInTolerance = (actualContextMenuPosition.getX() > expectedContextMenuPosition.getX() - TOLERANCE)
-            && (actualContextMenuPosition.getX() < expectedContextMenuPosition.getX() + TOLERANCE);
-        boolean isYInTolerance = (actualContextMenuPosition.getY() > expectedContextMenuPosition.getY() - TOLERANCE)
-            && (actualContextMenuPosition.getY() < expectedContextMenuPosition.getY() + TOLERANCE);
-        assertTrue(isXInTolerance, "The X coordinate is wrong!");
-        assertTrue(isYInTolerance, "The Y coordinate is wrong!");
-    }
 }

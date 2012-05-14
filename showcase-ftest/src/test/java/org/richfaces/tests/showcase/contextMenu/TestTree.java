@@ -62,25 +62,22 @@ public class TestTree extends AbstractTreeTest {
 
         collapseOrExpandAllNodes(nodeExpander);
 
+        int soFar = 0;
+        
         for (Iterator<JQueryLocator> i = node.iterator(); i.hasNext();) {
+            if(soFar > 20) {
+                break;
+            }
             JQueryLocator currentNode = i.next();
+            soFar++;
             String text = selenium.getText(currentNode);
             if (text.contains("-")) {
                 text = text.substring(0, text.indexOf('-'));
             }
 
-            //workaround for invoking context menu, sometimes it is managed to be invoked on the thrid time max,
-            //do not know why
-            for (int j = 0; j < 5; j++) {
-                guardXhr(selenium).clickAt(currentNode, new Point(2, 5));
-
-                selenium.contextMenuAt(currentNode, new Point(2, 5));
-
-                waitGui.dontFail().timeout(1000).until(elementVisible.locator(contextMenu));
-                if(selenium.isVisible(contextMenu)) {
-                    break;
-                }
-            }
+            // workaround for invoking context menu, sometimes it is managed to be invoked on the thrid time max,
+            // do not know why
+            tryToInvokeContextMenu(currentNode, new Point(2, 5), contextMenu);
 
             selenium.click(contextMenuItem);
 
@@ -99,21 +96,7 @@ public class TestTree extends AbstractTreeTest {
     public void testContextMenuPosition() {
         Point offset = new Point(2, 5);
         JQueryLocator target = jq(node.getRawLocator() + ":eq(0)");
-        guardXhr(selenium).clickAt(node, new Point(0, 0));
-        selenium.contextMenuAt(target, offset);
 
-        waitGui.failWith(new RuntimeException("The context menu should be visible")).timeout(2000)
-            .until(elementVisible.locator(contextMenu));
-
-        Point actualContextMenuPosition = selenium.getElementPosition(contextMenu);
-        Point targetPosition = selenium.getElementPosition(target);
-        Point expectedContextMenuPosition = targetPosition.add(offset);
-
-        boolean xInRange = (actualContextMenuPosition.getX() > (expectedContextMenuPosition.getX() - DEVIATION))
-            && (actualContextMenuPosition.getX() < (expectedContextMenuPosition.getX() + DEVIATION));
-        boolean yInRange = (actualContextMenuPosition.getY() > expectedContextMenuPosition.getY() - DEVIATION)
-            && (actualContextMenuPosition.getY() < expectedContextMenuPosition.getY() + DEVIATION);
-        assertTrue(xInRange, "X  coordination is out of the expected range!");
-        assertTrue(yInRange, "Y  coordination is out of the expected range!");
+        checkContextMenuRenderedAtCorrectPosition(target, offset, true, contextMenu, DEVIATION);
     }
 }

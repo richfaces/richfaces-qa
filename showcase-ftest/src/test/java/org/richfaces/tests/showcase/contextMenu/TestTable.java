@@ -60,14 +60,21 @@ public class TestTable extends AbstractContextMenuTest {
     @Test
     public void testViewBackingDataByContextMenu() {
 
+        int soFar = 0;
+        
         for (Iterator<JQueryLocator> i = pricesTds.iterator(); i.hasNext();) {
+            if(soFar > 20) {
+                break;
+            }
             JQueryLocator priceTd = i.next();
+            soFar++;
             selenium.clickAt(priceTd, new Point(3, 3));
 
             int priceFromTable = Integer.valueOf(selenium.getText(priceTd).trim());
             String venderAndModelFromTable = selenium.getText(selectedTr);
 
-            selenium.contextMenuAt(priceTd, new Point(3, 3));
+            tryToInvokeContextMenu(priceTd, new Point(3, 3), contextMenu);
+//            selenium.contextMenuAt(priceTd, new Point(3, 3));
             waitGui.failWith(new RuntimeException("The context menu should be visible")).timeout(2000)
                 .until(elementVisible.locator(contextMenu));
 
@@ -94,6 +101,7 @@ public class TestTable extends AbstractContextMenuTest {
     @Test
     public void testContextMenuRenderedAtCorrectPosition() {
 
-        checkContextMenuRenderedAtCorrectPosition(jq(pricesTds.getRawLocator() + ":eq(10)"), new Point(3, 3), true);
+        checkContextMenuRenderedAtCorrectPosition(jq(pricesTds.getRawLocator() + ":eq(10)"), new Point(3, 3), true,
+            contextMenu, TOLERANCE);
     }
 }
