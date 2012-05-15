@@ -96,9 +96,9 @@ public class Attributes<T extends AttributeEnum> {
      * @param value
      */
     protected void setProperty(String propertyName, Object value) {
-        String valueAsString = value.toString();
+        String valueAsString = (value == null ? "null" : value.toString());
         String cssLocator;
-        String xpathLocator = "//*[contains(@id, '" + propertyName + "Input')]";
+        String xpathLocator = "//*[contains(@id, ':" + propertyName + "Input')]";
         new WebDriverWait(driver).until(ElementDisplayed.getInstance().
                 element(driver.findElement(By.xpath(xpathLocator))));
         WebElement foundElement = driver.findElement(By.xpath(xpathLocator));
@@ -122,7 +122,7 @@ public class Attributes<T extends AttributeEnum> {
             List<WebElement> foundOptions = driver.findElements(By.cssSelector(cssLocator));
             applySelect(foundOptions, valueAsString);
         }
-        waitForPageRerenderAndCheckIfPropertySet(propertyName, value);
+        waitForPageRerenderAndCheckIfPropertySet(propertyName, valueAsString);
     }
 
     protected void applyText(String xpathLocator, String value) {
@@ -173,7 +173,7 @@ public class Attributes<T extends AttributeEnum> {
      */
     protected String getProperty(String propertyName) {
         String cssLocator;
-        String xpathLocator = "//*[contains(@id, '" + propertyName + "Input')]";
+        String xpathLocator = "//*[contains(@id, ':" + propertyName + "Input')]";
         new WebDriverWait(driver).until(ElementDisplayed.getInstance().
                 element(driver.findElement(By.xpath(xpathLocator))));
         WebElement foundElement = driver.findElement(By.xpath(xpathLocator));
@@ -216,17 +216,17 @@ public class Attributes<T extends AttributeEnum> {
      * @param propertyName string value of attribute
      * @param value value that the attribute should have
      */
-    private void waitForPageRerenderAndCheckIfPropertySet(String propertyName, Object value) {
+    private void waitForPageRerenderAndCheckIfPropertySet(String propertyName, String value) {
         waitForFooter();
         String property;
         for (int i = 0; i < 5; i++) {
             property = getProperty(propertyName);
-            if (property.equals(value.toString())) {
+            if (property.equals(value)) {
                 return;
             }
             waiting(200);
         }
-        throw new IllegalStateException("Property was not changed.");
+        throw new IllegalStateException("Property " + propertyName + " was not changed.");
     }
 
     /**
