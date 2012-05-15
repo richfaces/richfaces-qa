@@ -23,6 +23,9 @@
 package org.richfaces.tests.metamer.ftest;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.basicAttributes;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -41,9 +44,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
+import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 
@@ -142,6 +148,50 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             } catch (Exception ignored) {
             }
         }
+    }
+
+    /**
+     * Testing of HTMLAttribute (e.g. type).
+     *
+     * E.g. testHTMLAttribute(page.link, mediaOutputAttributes,
+     * MediaOutputAttributes.type, "text/html");
+     *
+     * @param element WebElement which will be checked for containment of tested
+     * attribute
+     * @param attributes attributes instance which will be used for setting
+     * attribute
+     * @param testedAttribute attribute which will be tested
+     * @param value testing value of attribute
+     */
+    protected <T extends AttributeEnum> void testHTMLAttribute(WebElement element, Attributes<T> attributes, T testedAttribute, String value) {
+        attributes.set(testedAttribute, value);
+        assertEquals(element.getAttribute(testedAttribute.toString()), value, "Attribute " + testedAttribute.toString() + " does not work.");
+    }
+
+    /**
+     * Tests lang attribute of chosen component in Metamer. Page must contain an
+     * input for this component's attribute.
+     *
+     * @param element WebElement representing component.
+     */
+    protected void testAttributeLang(WebElement element) {
+        final String TESTVALUE = "cz";
+        String attLang;
+
+        // get attribute lang
+        attLang = (driver instanceof FirefoxDriver ? element.getAttribute("lang")
+                : element.getAttribute("xml:lang"));//FIXME not sure if "xml:lang" is necessary inspired from AbstractGrapheneTest
+        //lang should be empty/null
+        assertTrue("".equals(attLang) || "null".equals(attLang), "Attribute xml:lang should not be present.");
+
+        // set lang to TESTVALUE
+        basicAttributes.set(BasicAttributes.lang, TESTVALUE);
+
+        //get attribute lang of element
+        attLang = (driver instanceof FirefoxDriver ? element.getAttribute("lang")
+                : element.getAttribute("xml:lang"));//FIXME not sure if "xml:lang" is necessary inspired from AbstractGrapheneTest
+
+        assertEquals(attLang, TESTVALUE, "Attribute xml:lang should be present.");
     }
 
     /**
