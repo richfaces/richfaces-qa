@@ -61,7 +61,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </a4j:outputPanel>
             
             <a4j:outputPanel id="pushDisablementPanel">
-                <h:selectBooleanCheckbox value="#{pushDisabled}">
+                <h:selectBooleanCheckbox id="enablePush1" value="#{pushDisabled}">
                     <a4j:ajax render="pushPanel pushDisablementPanel" />
                 </h:selectBooleanCheckbox>
                 <h:outputText value="#{pushDisabled ? 'disabled' : 'enabled'}" />
