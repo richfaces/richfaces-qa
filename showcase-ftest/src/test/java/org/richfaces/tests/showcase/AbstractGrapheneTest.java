@@ -61,13 +61,13 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
     }
 
     /* ***********************************************************************************************************************
-     * ajocado specific methods ********************************* *****************************************
+     * ajocado specific methods **************************************************************************
      * **********************************************
      */
 
     /**
      * Wait for presention of given element for given timeout
-     * 
+     *
      * @param element the element which should be displayed
      * @param timeout the time for which the presention of element will be checked
      * @return true when elements is found in given timeout, false otherwise
@@ -89,27 +89,17 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
 
     /**
      * Erases the content of input
-     * 
+     *
      * @param input
      */
     public void eraseInput(JQueryLocator input) {
 
         selenium.type(input, "");
-
-        // the old way
-        /*
-         * selenium.focus(input);
-         * 
-         * selenium.keyDownNative(KeyEvent.VK_CONTROL); selenium.keyPressNative(KeyEvent.VK_A);
-         * selenium.keyUpNative(KeyEvent.VK_CONTROL);
-         * 
-         * selenium.keyPressNative(KeyEvent.VK_BACK_SPACE);
-         */
     }
 
     /**
      * Fills input with string
-     * 
+     *
      * @param input
      * @param value
      */
@@ -120,7 +110,7 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
 
     /**
      * Checks whether there is particular message and checks whether the message is correct
-     * 
+     *
      * @param errorMessageLocator
      * @param errorMessage
      * @param shouldErrorMessagePresented
@@ -137,7 +127,7 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
 
     /**
      * Checks whether there is particular message and checks whether the message is correct
-     * 
+     *
      * @param infoMessageLocator
      * @param infoMessage
      * @param shouldBeInfoMessagePresented
@@ -149,7 +139,7 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
 
     /**
      * Fills input with string of length defined via parameter, the string is always the same
-     * 
+     *
      * @param input
      * @param lengthOfString
      */
@@ -167,7 +157,7 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
 
     /**
      * test whether all rows in the table contains empty strings
-     * 
+     *
      * @return true if there is a row in the table with empty string, false otherwise
      */
     public boolean testWhetherTableContainsNonEmptyStrings(JQueryLocator table) {
@@ -230,7 +220,7 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
 
     /**
      * tests whether the rows tds contains some non empty strings
-     * 
+     *
      * @param row
      * @return true if contains empty strings, false otherwise
      */

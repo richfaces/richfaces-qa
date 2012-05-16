@@ -61,9 +61,9 @@ public class TestTable extends AbstractContextMenuTest {
     public void testViewBackingDataByContextMenu() {
 
         int soFar = 0;
-        
+
         for (Iterator<JQueryLocator> i = pricesTds.iterator(); i.hasNext();) {
-            if(soFar > 20) {
+            if(soFar > 15) {
                 break;
             }
             JQueryLocator priceTd = i.next();

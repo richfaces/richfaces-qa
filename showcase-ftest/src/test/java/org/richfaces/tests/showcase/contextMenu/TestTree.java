@@ -63,7 +63,7 @@ public class TestTree extends AbstractTreeTest {
         collapseOrExpandAllNodes(nodeExpander);
 
         int soFar = 0;
-        
+
         for (Iterator<JQueryLocator> i = node.iterator(); i.hasNext();) {
             if(soFar > 20) {
                 break;

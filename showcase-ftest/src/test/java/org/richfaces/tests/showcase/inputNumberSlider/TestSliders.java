@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.inputNumberSlider;
 
-import static org.testng.Assert.assertEquals;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.geometry.Point;
@@ -40,11 +40,10 @@ public class TestSliders extends AbstractGrapheneTest {
      * Constants*****************************************************************************************************
      */
 
+    protected final int DEVIATION = 1;
+
     protected final int PADDING_WHEN_CLICK_ON_200 = 100;
-    protected final int PADDING_WHEN_CLICK_ON_30 = 15;
-
-    protected final int PADDING_WHEN_CLICK_ON_30_ANOTHER = 15;
-
+    protected final int PADDING_WHEN_CLICK_ON_30 = 14;
     protected final int DEFAULT_PADDING_OF_DISABLED_SLIDER = 50;
 
     /* *******************************************************************************************************
@@ -78,8 +77,8 @@ public class TestSliders extends AbstractGrapheneTest {
 
         checkTheInputAccordingToPositionOfHandler(defalutInputOfNumberSlider, padding);
 
-        padding = clickOnSliderAndCheckThePadding(defaultBodyNumberSlider, defaultNumberSliderHandle,
-            PADDING_WHEN_CLICK_ON_30, 30);
+        padding = clickOnSliderAndCheckThePadding(defaultBodyNumberSlider, defaultNumberSliderHandle, PADDING_WHEN_CLICK_ON_30,
+            30);
 
         checkTheInputAccordingToPositionOfHandler(defalutInputOfNumberSlider, padding);
     }
@@ -90,8 +89,8 @@ public class TestSliders extends AbstractGrapheneTest {
         clickOnSliderAndCheckThePadding(minimalisticBodyNumberSlider, minimalisticNumberSliderHandle,
             PADDING_WHEN_CLICK_ON_200, 200);
 
-        clickOnSliderAndCheckThePadding(minimalisticBodyNumberSlider, minimalisticNumberSliderHandle,
-            PADDING_WHEN_CLICK_ON_30, 30);
+        clickOnSliderAndCheckThePadding(minimalisticBodyNumberSlider, minimalisticNumberSliderHandle, PADDING_WHEN_CLICK_ON_30,
+            30);
 
     }
 
@@ -103,8 +102,8 @@ public class TestSliders extends AbstractGrapheneTest {
 
         checkTheInputAccordingToPositionOfHandler(anotherInputOfNumberSlider, padding * 10);
 
-        padding = clickOnSliderAndCheckThePadding(anotherBodyNumberSlider, anotherNumberSliderHandle,
-            PADDING_WHEN_CLICK_ON_30_ANOTHER, 30);
+        padding = clickOnSliderAndCheckThePadding(anotherBodyNumberSlider, anotherNumberSliderHandle, PADDING_WHEN_CLICK_ON_30,
+            30);
 
         checkTheInputAccordingToPositionOfHandler(anotherInputOfNumberSlider, padding * 10);
     }
@@ -119,30 +118,43 @@ public class TestSliders extends AbstractGrapheneTest {
     }
 
     /* *********************************************************************************************************
-     * Help methods **************************************************************
-     * *******************************************
+     * Help methods ************************************************************** *******************************************
      */
+
+    /**
+     * Checks whether an number is in range of expected number according to allowed deviation.
+     *
+     * @param actual
+     * @param expected
+     * @param deviation
+     * @return
+     */
+    private boolean checkWhetherNumberIsInRange(int actual, int expected, int deviation) {
+
+        if ((actual < (expected - deviation)) || actual > (expected + deviation)) {
+            return false;
+        }
+
+        return true;
+    }
 
     /**
      * Clicks on the particular place on the slider and check the padding left style property
      *
-     * @param sliderBody
-     *            the body of The slider where selenium will click
-     * @param sliderHandler
-     *            the handler which padding left will be checked
-     * @param expectedPadding
-     *            the expected padding after click
-     * @param whereToClick
-     *            the pixel where to click on the body, it is on the X axis
+     * @param sliderBody the body of The slider where selenium will click
+     * @param sliderHandler the handler which padding left will be checked
+     * @param expectedPadding the expected padding after click
+     * @param whereToClick the pixel where to click on the body, it is on the X axis
      */
-    private int clickOnSliderAndCheckThePadding(JQueryLocator sliderBody, JQueryLocator sliderHandler,
-        int expectedPadding, int whereToClick) {
+    private int clickOnSliderAndCheckThePadding(JQueryLocator sliderBody, JQueryLocator sliderHandler, int expectedPadding,
+        int whereToClick) {
 
         selenium.mouseDownAt(sliderBody, new Point(whereToClick, 0));
 
         int paddingAfterClick = getPaddingLeftOfInputNumberSlider(sliderHandler);
 
-        assertEquals(paddingAfterClick, expectedPadding, "The padding now should be " + expectedPadding);
+        boolean result = checkWhetherNumberIsInRange(paddingAfterClick, expectedPadding, DEVIATION);
+        assertTrue(result, "The padding now should be " + expectedPadding);
 
         return paddingAfterClick;
     }
@@ -150,21 +162,20 @@ public class TestSliders extends AbstractGrapheneTest {
     /**
      * Checks the value in the input and compare it to the real position of handler
      *
-     * @param input
-     *            the input from which the value will be checked
-     * @param currentPaddingOfHandler
-     *            the current padding of the handler
+     * @param input the input from which the value will be checked
+     * @param currentPaddingOfHandler the current padding of the handler
      */
     private void checkTheInputAccordingToPositionOfHandler(JQueryLocator input, int currentPaddingOfHandler) {
 
-        assertEquals(Integer.valueOf(selenium.getValue(input)).intValue(), currentPaddingOfHandler,
-            "The value in input does not relflect the real value of position of handler!");
+        boolean result = checkWhetherNumberIsInRange(currentPaddingOfHandler, Integer.valueOf(selenium.getValue(input))
+            .intValue(), DEVIATION);
+        assertTrue(result, "The value in input does not relflect the real value of position of handler!");
 
     }
 
     /**
-     * Gets the padding left value, this can achieved via calling method getStyle(locator, cssProperty), but it returns
-     * padding in pixels.
+     * Gets the padding left value, this can achieved via calling method getStyle(locator, cssProperty), but it returns padding
+     * in pixels.
      */
     private int getPaddingLeftOfInputNumberSlider(JQueryLocator handler) {
 
