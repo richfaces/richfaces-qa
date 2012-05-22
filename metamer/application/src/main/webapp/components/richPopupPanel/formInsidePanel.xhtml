@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+    xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
 
-    <!--
+<!--
 JBoss, Home of Professional Open Source
 Copyright 2010-2012, Red Hat, Inc. and individual contributors
 by the @authors tag. See the copyright.txt in the distribution for a
@@ -26,61 +26,66 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="/templates/template.xhtml">
+<ui:composition template="/templates/template.xhtml">
 
-        <ui:define name="view">
-            <f:metadata>
-                <f:viewParam name="templates" value="#{templateBean.templates}">
-                    <f:converter converterId="templatesListConverter" />
-                </f:viewParam>
-            </f:metadata>
-        </ui:define>
+    <ui:define name="view">
+        <f:metadata>
+            <f:viewParam name="templates" value="#{templateBean.templates}">
+                <f:converter converterId="templatesListConverter" />
+            </f:viewParam>
+        </f:metadata>
+    </ui:define>
 
-        <ui:define name="component">
+    <ui:define name="component">
             domElementAttachment:
             <h:selectOneRadio id="attachmentInput" value="#{richPopupPanelBean.attributes['domElementAttachment'].value}">
-                <f:selectItem itemValue="" itemLabel="null"/>
-                <f:selectItem itemValue="body" itemLabel="body"/>
-                <f:selectItem itemValue="form" itemLabel="form"/>
-                <f:selectItem itemValue="parent" itemLabel="parent"/>
-                <a4j:ajax event="change" render="popupPanel"/>
-            </h:selectOneRadio>
+            <f:selectItem itemValue="" itemLabel="null" />
+            <f:selectItem itemValue="body" itemLabel="body" />
+            <f:selectItem itemValue="form" itemLabel="form" />
+            <f:selectItem itemValue="parent" itemLabel="parent" />
+            <a4j:ajax event="change" render="popupPanel" />
+        </h:selectOneRadio>
 
-            <br/><br/>
+        <br />
+        <br />
 
-            input1 <h:inputText id="input1" value="#{richPopupPanelBean.value1}"/>
+            input1 <h:inputText id="input1" value="#{richPopupPanelBean.value1}" tabindex="1" />
 
-            <br/><br/>
+        <br />
+        <br />
 
-            <h:commandButton id="openPanelButton" value="Call the popup">
-                <rich:componentControl target="popupPanel" operation="show" />
-            </h:commandButton>
+        <h:commandButton id="openPanelButton" value="Call the popup">
+            <rich:componentControl target="popupPanel" operation="show" />
+        </h:commandButton>
 
-            <rich:popupPanel id="popupPanel"  header="header"
-                             domElementAttachment="#{richPopupPanelBean.attributes['domElementAttachment'].value}">
-                <f:facet name="controls">
-                    <h:outputLink value="#" onclick="#{rich:component('popupPanel')}.hide(); return false;">X</h:outputLink>
-                </f:facet>
+        <rich:popupPanel id="popupPanel" header="header"
+            domElementAttachment="#{richPopupPanelBean.attributes['domElementAttachment'].value}">
+            <f:facet name="controls">
+                <h:outputLink value="#" onclick="#{rich:component('popupPanel')}.hide(); return false;">X</h:outputLink>
+            </f:facet>
 
-                <h:panelGrid id="inputs" columns="2">
-                    input2 <h:inputText id="input2" value="#{richPopupPanelBean.value2}"/>
-                    input3 <h:inputText id="input3" value="#{richPopupPanelBean.value3}"/>
-                </h:panelGrid>
-
-                <a4j:commandButton action="#{richPopupPanelBean.save}" value="Save"
-                                   render="output1 output2 output3" execute="input1 input2 input3"/>
-            </rich:popupPanel>
-
-            <h:panelGrid id="outputs" columns="2">
-                output1 <h:outputText id="output1" value="#{richPopupPanelBean.value1}"/>
-                output2 <h:outputText id="output2" value="#{richPopupPanelBean.value2}"/>
-                output3 <h:outputText id="output3" value="#{richPopupPanelBean.value3}"/>
+            <h:panelGrid id="inputs" columns="2">
+                    input2 <h:inputText id="input2" value="#{richPopupPanelBean.value2}" tabindex="2" />
+                    input3 <h:inputText id="input3" value="#{richPopupPanelBean.value3}" tabindex="3" />
+                    input4 <rich:calendar id="input4" tabindex="4" />
+                    input5 <rich:inputNumberSlider id="input5" tabindex="5" />
+                    input6 <rich:inputNumberSpinner id="input6" tabindex="6" />
             </h:panelGrid>
 
-        </ui:define>
+            <a4j:commandButton action="#{richPopupPanelBean.save}" value="Save" render="output1 output2 output3"
+                execute="input1 input2 input3" />
+        </rich:popupPanel>
 
-        <ui:define name="outOfTemplateAfter">
-        </ui:define>
+        <h:panelGrid id="outputs" columns="2">
+                output1 <h:outputText id="output1" value="#{richPopupPanelBean.value1}" />
+                output2 <h:outputText id="output2" value="#{richPopupPanelBean.value2}" />
+                output3 <h:outputText id="output3" value="#{richPopupPanelBean.value3}" />
+        </h:panelGrid>
 
-    </ui:composition>
+    </ui:define>
+
+    <ui:define name="outOfTemplateAfter">
+    </ui:define>
+
+</ui:composition>
 </html>
