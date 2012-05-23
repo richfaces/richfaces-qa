@@ -376,7 +376,7 @@ public class RichBean implements Serializable {
         logToPage("* action invoked");
         return null;
     }
-    
+
     /**
      * An action that does nothing but has delay
      *
@@ -384,13 +384,13 @@ public class RichBean implements Serializable {
      */
     public String dummyActionWithDelay() {
         logToPage("* action invoked [start]");
-        
+
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             logToPage(" *** Error while dummy action handler sleeps.");
         }
-        
+
         logToPage("* action invoked [end]");
         return null;
     }
