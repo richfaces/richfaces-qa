@@ -37,6 +37,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -108,8 +110,41 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
      */
     @Test
     @Use(field = "numberOfColumns", ints = { 1, 3 })
+    @Templates(exclude={"richExtendedDataTable"})
     //TODO https://issues.jboss.org/browse/RF-12236 , when numberOfColumns=4
     public void testScrollerForNotFrozenColumns() {
+        //check if default scroller is present and get its location
+        Boolean present = ElementPresent.getInstance().element(page.defaultScroller).apply(driver);
+        assertTrue(present, "Default scroller is not in the page.");
+        location = page.defaultScroller.getLocation();
+        extendedDataTableAttributes.set(ExtendedDataTableAttributes.frozenColumns, numberOfColumns);
+        //test
+        _testScrollerForNotFrozenColumns();
+
+        //change page
+        page.nextPage.click();
+        new WebDriverWait(driver, 5).until(ElementDisplayed.getInstance().element(page.secondPageSpan));
+        //test
+        _testScrollerForNotFrozenColumns();
+
+        //change page
+        page.nextPage.click();
+        new WebDriverWait(driver, 5).until(ElementDisplayed.getInstance().element(page.thirdPageSpan));
+        //test
+        _testScrollerForNotFrozenColumns();
+    }
+
+    /**
+     * Tests if scroller for not frozen columns is moved to another position and
+     * if the default one is removed. Checks if scroller is still there after
+     * switching to another data page.
+     */
+    @Test(groups = { "4.Future" })
+    @Use(field = "numberOfColumns", ints = { 1, 3 })
+    @Templates(value="richExtendedDataTable")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12278")
+    //TODO https://issues.jboss.org/browse/RF-12236 , when numberOfColumns=4
+    public void testScrollerForNotFrozenColumnsInRichExtendedDataTable() {
         //check if default scroller is present and get its location
         Boolean present = ElementPresent.getInstance().element(page.defaultScroller).apply(driver);
         assertTrue(present, "Default scroller is not in the page.");
