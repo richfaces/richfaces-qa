@@ -22,20 +22,15 @@
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import static java.text.MessageFormat.format;
-import static org.jboss.arquillian.ajocado.Graphene.textEquals;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
+import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
-
-import static org.testng.Assert.assertEquals;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
