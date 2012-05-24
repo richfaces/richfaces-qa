@@ -30,6 +30,7 @@ import javax.faces.bean.ManagedBean;
 
 import org.richfaces.model.CalendarDataModel;
 import org.richfaces.model.CalendarDataModelItem;
+import org.richfaces.tests.metamer.bean.rich.RichCalendarBean;
 
 /**
  * Managed bean with calendar's model.
@@ -55,8 +56,8 @@ public class CalendarModel implements CalendarDataModel {
 
     public CalendarDataModelItem[] getData(Date[] dateArray) {
         CalendarDataModelItem[] modelItems = new CalendarModelItem[dateArray.length];
-        Calendar current = GregorianCalendar.getInstance();
-        Calendar today = GregorianCalendar.getInstance();
+        Calendar current = GregorianCalendar.getInstance(RichCalendarBean.TIME_ZONE);
+        Calendar today = GregorianCalendar.getInstance(RichCalendarBean.TIME_ZONE);
         today.setTime(new Date());
         for (int i = 0; i < dateArray.length; i++) {
             current.setTime(dateArray[i]);
