@@ -29,6 +29,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.awt.event.KeyEvent;
 
+import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.Test;
@@ -61,9 +62,10 @@ public class TestModes extends AbstractGrapheneTest {
         assertFalse(selenium.isElementPresent(selection),
             "The selection should not be visible, since there is only one char!");
 
-        key = 'r';
+        String keys = "ar";
         selenium.focus(minCharInput);
-        guardXhr(selenium).keyPress(minCharInput, key);
+        selenium.type(minCharInput, keys);
+        guardXhr(selenium).fireEvent(minCharInput, Event.KEYPRESS);
 
         assertTrue(selenium.isVisible(selection), "The selection should be visible, since there are two chars!");
 

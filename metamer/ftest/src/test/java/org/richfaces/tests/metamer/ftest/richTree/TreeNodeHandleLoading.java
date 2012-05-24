@@ -24,8 +24,8 @@ package org.richfaces.tests.metamer.ftest.richTree;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 
 import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.richfaces.tests.metamer.ftest.model.AbstractModel;
@@ -36,7 +36,7 @@ import org.richfaces.tests.metamer.ftest.model.AbstractModel;
  */
 public class TreeNodeHandleLoading extends AbstractModel<JQueryLocator> {
 
-AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
     public TreeNodeHandleLoading(JQueryLocator root) {
         super(root);

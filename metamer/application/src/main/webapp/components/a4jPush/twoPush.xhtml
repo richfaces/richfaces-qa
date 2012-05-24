@@ -51,17 +51,17 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </p>
             
             <!--  PUSH 1 -->
-            <a4j:commandButton value="Push 1!" action="#{a4jPushBean.push}" />
-            
-            
+            <a4j:commandButton id="performPushEvent1" value="Push 1!" action="#{a4jPushBean.push}" />
             <a4j:outputPanel id="pushPanel">
-                <a4j:push id="push" rendered="#{not pushDisabled}" address="sampleAddress"  ondataavailable="$('*[id$=outputDate]').text(event.rf.data)" onsubscribed="alert('subscribed')" />
+                <a4j:push id="push" 
+                          rendered="#{not pushDisabled}" 
+                          address="sampleAddress"
+                          ondataavailable="$('*[id$=outputDate]').text(event.rf.data)"
+                          onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}" />
             </a4j:outputPanel>
             
-            
-            
             <a4j:outputPanel id="pushDisablementPanel">
-                <h:selectBooleanCheckbox value="#{pushDisabled}">
+                <h:selectBooleanCheckbox id="enablePush1" value="#{pushDisabled}">
                     <a4j:ajax render="pushPanel pushDisablementPanel" />
                 </h:selectBooleanCheckbox>
                 <h:outputText value="#{pushDisabled ? 'disabled' : 'enabled'}" />
@@ -76,9 +76,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br />
             
             <!--  PUSH 2 -->
-            <a4j:commandButton value="Push 2!" action="#{a4jPushBean.push2}" />
-            
-            <a4j:push id="push2" address="sampleAddress2"  ondataavailable="$('*[id$=outputDate2]').text(event.rf.data)" onsubscribed="alert('subscribed2')" />
+            <a4j:commandButton id="performPushEvent2" value="Push 2!" action="#{a4jPushBean.push2}" />
+            <a4j:push id="push2" 
+                      address="sampleAddress2"
+                      ondataavailable="$('*[id$=outputDate2]').text(event.rf.data)"
+                      onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}" />
             
             <br />
             
@@ -86,6 +88,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 #{a4jPushBean.date}
             </a4j:outputPanel>
             
+            <br/>
+            
+        </ui:define>
+        
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{a4jPushBean.attributes}" id="attributes" />
         </ui:define>
 
     </ui:composition>

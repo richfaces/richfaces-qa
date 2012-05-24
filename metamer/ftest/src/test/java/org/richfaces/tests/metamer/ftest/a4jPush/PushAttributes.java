@@ -34,6 +34,7 @@ public enum PushAttributes implements AttributeEnum {
     id,
     ondataavailable,
     onerror,
+    onsubscribed,
     rendered
 
 }

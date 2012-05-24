@@ -24,19 +24,15 @@ package org.richfaces.tests.metamer.ftest.richInputNumberSpinner;
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.inputClass;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.inputNumberSpinnerAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-
 import javax.faces.event.PhaseId;
-
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
@@ -131,9 +127,7 @@ public class TestRichSpinner extends AbstractSpinnerTest {
 
     @Test
     public void testCycled() {
-        JQueryLocator selectOption = pjq("input[type=radio][name$=cycledInput][value=true]");
-        selenium.click(selectOption);
-        selenium.waitForPageToLoad();
+        inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.cycled, Boolean.TRUE);
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).type(input, "10");
@@ -155,9 +149,7 @@ public class TestRichSpinner extends AbstractSpinnerTest {
 
     @Test
     public void testDisabled() {
-        JQueryLocator selectOption = pjq("input[type=radio][name$=disabledInput][value=true]");
-        selenium.click(selectOption);
-        selenium.waitForPageToLoad();
+        inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.disabled, Boolean.TRUE);
 
         AttributeLocator<?> disabledAttribute = input.getAttribute(new Attribute("disabled"));
         assertEquals(selenium.getAttribute(disabledAttribute), "true", "Input should be disabled.");
@@ -174,10 +166,7 @@ public class TestRichSpinner extends AbstractSpinnerTest {
 
     @Test
     public void testEnableManualInput() {
-        JQueryLocator selectOption = pjq("input[type=radio][name$=enableManualInputInput][value=false]");
-        selenium.click(selectOption);
-        selenium.waitForPageToLoad();
-
+        inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.enableManualInput, Boolean.FALSE);
         AttributeLocator<?> readonlyAttribute = input.getAttribute(new Attribute("readonly"));
         assertEquals(selenium.getAttribute(readonlyAttribute), "true", "Input should be read-only.");
 
@@ -187,9 +176,7 @@ public class TestRichSpinner extends AbstractSpinnerTest {
 
     @Test
     public void testImmediate() {
-        JQueryLocator immediateInput = pjq("input[type=radio][name$=immediateInput][value=true]");
-        selenium.click(immediateInput);
-        selenium.waitForPageToLoad();
+        inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.immediate, Boolean.TRUE);
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).type(input, "4");
@@ -208,23 +195,17 @@ public class TestRichSpinner extends AbstractSpinnerTest {
 
     @Test
     public void testInputSize() {
-        JQueryLocator selectOption = pjq("input[type=text][id$=inputSizeInput]");
-
-        selenium.type(selectOption, "3");
-        selenium.waitForPageToLoad();
+        inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.inputSize, 3);
         AttributeLocator<?> sizeAttribute = input.getAttribute(new Attribute("size"));
         assertEquals(selenium.getAttribute(sizeAttribute), "3", "Input's size attribute.");
 
-        selenium.type(selectOption, "40");
-        selenium.waitForPageToLoad();
+        inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.inputSize, 40);
         assertEquals(selenium.getAttribute(sizeAttribute), "40", "Input's size attribute.");
     }
 
     @Test
     public void testMaxValueType() {
-        JQueryLocator selectOption = pjq("input[type=text][id$=maxValueInput]");
-        selenium.type(selectOption, "13");
-        selenium.waitForPageToLoad();
+        inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.maxValue,13);
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).type(input, "11");
@@ -240,9 +221,7 @@ public class TestRichSpinner extends AbstractSpinnerTest {
 
     @Test
     public void testMaxValueClick() {
-        JQueryLocator selectOption = pjq("input[type=text][id$=maxValueInput]");
-        selenium.type(selectOption, "13");
-        selenium.waitForPageToLoad();
+        inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.maxValue, 13);
 
         clickArrow(up, 9);
         assertEquals(selenium.getText(output), "11", "Output was not updated.");
@@ -253,9 +232,7 @@ public class TestRichSpinner extends AbstractSpinnerTest {
 
     @Test
     public void testMinValueType() {
-        JQueryLocator selectOption = pjq("input[type=text][id$=minValueInput]");
-        selenium.type(selectOption, "-13");
-        selenium.waitForPageToLoad();
+        inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.minValue, -13);
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).type(input, "-11");
@@ -271,9 +248,7 @@ public class TestRichSpinner extends AbstractSpinnerTest {
 
     @Test
     public void testMinValueClick() {
-        JQueryLocator selectOption = pjq("input[type=text][id$=minValueInput]");
-        selenium.type(selectOption, "-13");
-        selenium.waitForPageToLoad();
+        inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.minValue, -13);
 
         clickArrow(down, 13);
         assertEquals(selenium.getText(output), "-11", "Output was not updated.");
@@ -289,8 +264,7 @@ public class TestRichSpinner extends AbstractSpinnerTest {
 
     @Test
     public void testOnchangeType() {
-        selenium.type(pjq("input[id$=onchangeInput]"), "metamerEvents += \"change \"");
-        selenium.waitForPageToLoad(TIMEOUT);
+        inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.onchange, "metamerEvents += \"change \"");
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
 
@@ -306,8 +280,7 @@ public class TestRichSpinner extends AbstractSpinnerTest {
 
     @Test
     public void testOnchangeClick() {
-        selenium.type(pjq("input[id$=onchangeInput]"), "metamerEvents += \"change \"");
-        selenium.waitForPageToLoad(TIMEOUT);
+        inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.onchange, "metamerEvents += \"change \"");
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
 
@@ -451,16 +424,14 @@ public class TestRichSpinner extends AbstractSpinnerTest {
 
     @Test
     public void testRendered() {
-        selenium.click(pjq("input[type=radio][name$=renderedInput][value=false]"));
-        selenium.waitForPageToLoad();
+        inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.rendered, Boolean.FALSE);
 
         assertFalse(selenium.isElementPresent(spinner), "Spinner should not be rendered when rendered=false.");
     }
 
     @Test
     public void testStep() {
-        selenium.type(pjq("input[id$=stepInput]"), "7");
-        selenium.waitForPageToLoad();
+        inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.step, 7);
 
         clickArrow(up, 1);
         assertEquals(selenium.getText(output), "9", "Wrong output");
@@ -506,17 +477,14 @@ public class TestRichSpinner extends AbstractSpinnerTest {
     @Test
     @Use(field = "number", value = "correctNumbers")
     public void testValueCorrect() {
-        selenium.type(pjq("input[id$=valueInput]"), number);
-        selenium.waitForPageToLoad();
-
+        inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.value, number);
         assertEquals(selenium.getText(output), number, "Output was not updated.");
     }
 
     @Test
     @Use(field = "number", value = "smallNumbers")
     public void testValueSmall() {
-        selenium.type(pjq("input[id$=valueInput]"), number);
-        selenium.waitForPageToLoad();
+        inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.value, number);
 
         assertEquals(selenium.getText(output), number, "Output was not updated.");
         assertEquals(getInputValue(), "-10", "Input was not updated.");
@@ -525,8 +493,7 @@ public class TestRichSpinner extends AbstractSpinnerTest {
     @Test
     @Use(field = "number", value = "bigNumbers")
     public void testValueBig() {
-        selenium.type(pjq("input[id$=valueInput]"), number);
-        selenium.waitForPageToLoad();
+        inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.value, number);
 
         assertEquals(selenium.getText(output), number, "Output was not updated.");
         assertEquals(getInputValue(), "10", "Input was not updated.");

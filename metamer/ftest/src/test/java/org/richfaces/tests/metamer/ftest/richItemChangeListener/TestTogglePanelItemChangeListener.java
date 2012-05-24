@@ -21,6 +21,7 @@
 package org.richfaces.tests.metamer.ftest.richItemChangeListener;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -43,12 +44,70 @@ public class TestTogglePanelItemChangeListener extends AbstractItemChangeListene
     }
 
     @Test
+    @Templates(exclude={"richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "a4jRepeat"})
     public void testICLAsAttribute() {
         super.testICLAsAttributeOfComponent(ICL_as_ComponentAttribute_PhaseName);
     }
 
+    @IssueTracking("https://issues.jboss.org/browse/RF-12173")
+    @Test(groups={ "4.Future" })
+    @Templates(value="richCollapsibleSubTable")
+    public void testICLAsAttributeInRichCollapsibleSubTable() {
+        super.testICLAsAttributeOfComponent(ICL_as_ComponentAttribute_PhaseName);
+    }
+
+    @IssueTracking("https://issues.jboss.org/browse/RF-12173")
+    @Test(groups={ "4.Future" })
+    @Templates(value="richExtendedDataTable")
+    public void testICLAsAttributeInRichExtendedDataTable() {
+        super.testICLAsAttributeOfComponent(ICL_as_ComponentAttribute_PhaseName);
+    }
+
+    @IssueTracking("https://issues.jboss.org/browse/RF-12173")
+    @Test(groups={ "4.Future" })
+    @Templates(value="richDataGrid")
+    public void testICLAsAttributeInRichDataGrid() {
+        super.testICLAsAttributeOfComponent(ICL_as_ComponentAttribute_PhaseName);
+    }
+
+    @IssueTracking("https://issues.jboss.org/browse/RF-12173")
+    @Test(groups={ "4.Future" })
+    @Templates(value="a4jRepeat")
+    public void testICLAsAttributeInA4jRepeat() {
+        super.testICLAsAttributeOfComponent(ICL_as_ComponentAttribute_PhaseName);
+    }
+
     @Test
+    @Templates(exclude={"richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "a4jRepeat"})
     public void testICLInsideComponentUsingType() {
+        super.testICLInComponentWithType(ICL_inComponent_usingType_PhaseName);
+    }
+
+    @IssueTracking("https://issues.jboss.org/browse/RF-12173")
+    @Test(groups={ "4.Future" })
+    @Templates(value="richCollapsibleSubTable")
+    public void testICLInsideComponentUsingTypeInRichCollapsibleSubTable() {
+        super.testICLInComponentWithType(ICL_inComponent_usingType_PhaseName);
+    }
+
+    @IssueTracking("https://issues.jboss.org/browse/RF-12173")
+    @Test(groups={ "4.Future" })
+    @Templates(value="richExtendedDataTable")
+    public void testICLInsideComponentUsingTypeInRichExtendedDataTable() {
+        super.testICLInComponentWithType(ICL_inComponent_usingType_PhaseName);
+    }
+
+    @IssueTracking("https://issues.jboss.org/browse/RF-12173")
+    @Test(groups={ "4.Future" })
+    @Templates(value="richDataGrid")
+    public void testICLInsideComponentUsingTypeInRichDataGrid() {
+        super.testICLInComponentWithType(ICL_inComponent_usingType_PhaseName);
+    }
+
+    @IssueTracking("https://issues.jboss.org/browse/RF-12173")
+    @Test(groups={ "4.Future" })
+    @Templates(value="a4jRepeat")
+    public void testICLInsideComponentUsingTypeInA4jRepeat() {
         super.testICLInComponentWithType(ICL_inComponent_usingType_PhaseName);
     }
 

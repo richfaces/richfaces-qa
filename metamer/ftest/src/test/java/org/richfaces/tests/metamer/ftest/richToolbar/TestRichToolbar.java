@@ -21,19 +21,15 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richToolbar;
 
-import static org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory.optionLabel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemStyle;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.toolbarAttributes;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
@@ -90,9 +86,7 @@ public class TestRichToolbar extends AbstractGrapheneTest {
         assertTrue(selenium.isAttributePresent(attr), "Attribute style should be present.");
         assertTrue(selenium.getAttribute(attr).contains("height: 28px"), "Height in attribute style should be 28px");
 
-        selenium.type(pjq("input[id$=heightInput]"), "50px");
-        selenium.waitForPageToLoad();
-
+        toolbarAttributes.set(ToolbarAttributes.height, "50px");
         assertTrue(selenium.getAttribute(attr).contains("height: 50px"), "Attribute style should have height 50px.");
     }
 
@@ -105,9 +99,7 @@ public class TestRichToolbar extends AbstractGrapheneTest {
     @Test
     @Use(field = "itemSeparator", value = "separators")
     public void testItemSeparatorCorrect() {
-        selenium.select(pjq("select[id$=itemSeparatorInput]"), optionLabel(itemSeparator));
-        selenium.waitForPageToLoad();
-
+        toolbarAttributes.set(ToolbarAttributes.itemSeparator, itemSeparator);
         JQueryLocator separatorDiv = separator.getDescendant(jq("div.rf-tb-sep-" + itemSeparator));
 
         assertTrue(selenium.isElementPresent(separator), "Item separator should be present on the page.");
@@ -116,22 +108,16 @@ public class TestRichToolbar extends AbstractGrapheneTest {
 
     @Test
     public void testItemSeparatorNone() {
-        JQueryLocator input = pjq("select[id$=itemSeparatorInput]");
-        selenium.select(input, optionLabel("none"));
-        selenium.waitForPageToLoad();
-
+        toolbarAttributes.set(ToolbarAttributes.itemSeparator, "none");
         assertFalse(selenium.isElementPresent(separator), "Item separator should not be present on the page.");
 
-        selenium.select(input, optionLabel("null"));
-        selenium.waitForPageToLoad();
-
+        toolbarAttributes.set(ToolbarAttributes.itemSeparator, "null");
         assertFalse(selenium.isElementPresent(separator), "Item separator should not be present on the page.");
     }
 
     @Test
     public void testItemSeparatorCustom() {
-        selenium.select(pjq("select[id$=itemSeparatorInput]"), optionLabel("star"));
-        selenium.waitForPageToLoad();
+        toolbarAttributes.set(ToolbarAttributes.itemSeparator, "star");
 
         JQueryLocator separatorImg = separator.getDescendant(jq("> img"));
         AttributeLocator<?> attr = separatorImg.getAttribute(Attribute.SRC);
@@ -145,8 +131,7 @@ public class TestRichToolbar extends AbstractGrapheneTest {
 
     @Test
     public void testItemSeparatorNonExisting() {
-        selenium.select(pjq("select[id$=itemSeparatorInput]"), optionLabel("non-existing"));
-        selenium.waitForPageToLoad();
+        toolbarAttributes.set(ToolbarAttributes.itemSeparator, "non-existing");
 
         JQueryLocator separatorImg = separator.getDescendant(jq("> img"));
         AttributeLocator<?> attr = separatorImg.getAttribute(Attribute.SRC);
@@ -226,9 +211,7 @@ public class TestRichToolbar extends AbstractGrapheneTest {
 
     @Test
     public void testRendered() {
-        selenium.click(pjq("input[type=radio][name$=renderedInput][value=false]"));
-        selenium.waitForPageToLoad();
-
+        toolbarAttributes.set(ToolbarAttributes.rendered, Boolean.FALSE);
         assertFalse(selenium.isElementPresent(toolbar), "Toolbar should not be rendered when rendered=false.");
         //assertTrue(selenium.isVisible(toolbar), "Toolbar should be displayed when item 1 is not rendered.");
     }
@@ -250,9 +233,7 @@ public class TestRichToolbar extends AbstractGrapheneTest {
         assertTrue(selenium.getAttribute(attr).contains("width: 100%"),
             "Attribute style should have 100% width when it is not set.");
 
-        selenium.type(pjq("input[id$=widthInput]"), "500px");
-        selenium.waitForPageToLoad();
-
+        toolbarAttributes.set(ToolbarAttributes.width, "500px");
         assertTrue(selenium.getAttribute(attr).contains("width: 500px"), "Attribute style should have width 500px.");
     }
 }

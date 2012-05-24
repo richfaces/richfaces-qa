@@ -66,7 +66,7 @@ public abstract class AbstractPanelToggleListenerTest extends AbstractWebDriverT
      * @return true if text was found or false
      */
     private boolean subTest(String expectedText) {
-        List<WebElement> list = page.getPhases();
+        List<WebElement> list = guardListSize(page.getPhases(), 5);
         for (WebElement webElement : list) {
             if (webElement.getText().equals(expectedText)) {
                 return true;//Text found
@@ -75,13 +75,14 @@ public abstract class AbstractPanelToggleListenerTest extends AbstractWebDriverT
         return false;
     }
 
-    private void testPTL(String expectedText, String failMessage) {
+    private void testPTL(final String expectedText, String failMessage) {
         //first test collapsing of panel
-        page.getCollapseButton().click();
+        waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText + collapsedPanelString), failMessage);
         //then test expanding of panel
-        page.getExpandButton().click();
+        waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
+        //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText + expandedPanelString), failMessage);
     }
 

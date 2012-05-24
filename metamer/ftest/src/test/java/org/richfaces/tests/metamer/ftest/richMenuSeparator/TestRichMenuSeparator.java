@@ -22,11 +22,10 @@
 package org.richfaces.tests.metamer.ftest.richMenuSeparator;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.menuSeparatorAttributes;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
-
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.annotations.Test;
@@ -52,13 +51,11 @@ public class TestRichMenuSeparator extends AbstractGrapheneTest {
         int count = selenium.getCount(separators);
         assertEquals(count, 2, "There should be two separators on the page - after 'Open Recent' and after 'Close'.");
 
-        selenium.click(pjq("input[type=radio][name$=renderedInput][value=false]"));
-        selenium.waitForPageToLoad();
+        menuSeparatorAttributes.set(MenuSeparatorAttributes.rendered, Boolean.FALSE);
         count = selenium.getCount(separators);
         assertEquals(count, 1, "There should be only one separator on the page - after 'Close'.");
 
-        selenium.click(pjq("input[type=radio][name$=renderedInput][value=true]"));
-        selenium.waitForPageToLoad();
+        menuSeparatorAttributes.set(MenuSeparatorAttributes.rendered, Boolean.TRUE);
         count = selenium.getCount(separators);
         assertEquals(count, 2, "There should be two separators on the page - after 'Open Recent' and after 'Close'.");
     }

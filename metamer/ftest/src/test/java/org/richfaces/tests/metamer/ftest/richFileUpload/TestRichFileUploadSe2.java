@@ -23,22 +23,28 @@
 package org.richfaces.tests.metamer.ftest.richFileUpload;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.fileUploadAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
+import org.jboss.test.selenium.support.ui.ElementDisplayed;
+import org.jboss.test.selenium.support.ui.ElementNotDisplayed;
+import org.jboss.test.selenium.support.ui.ElementPresent;
+import org.jboss.test.selenium.support.ui.TextEquals;
+import org.jboss.test.selenium.support.ui.TextNotEquals;
+import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -46,42 +52,34 @@ import org.testng.annotations.Test;
  */
 public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
 
-    private final String uploadedFilesList = "span[id$=uploadedFilesPanel] li";
-    private final String fileInputField = "input[type=file].rf-fu-inp:last-child";
-    private final String fileInputField2 = "input[type=file].rf-fu-inp";
-    private final String uploadButton = "span.rf-fu-btn-upl";
-    private final String clearAllButton = "span.rf-fu-btn-clr";
-    private final String itemsToUpload = "div.rf-fu-itm .rf-fu-itm-lbl";
-    private final String itemClear = "div.rf-fu-itm .rf-fu-itm-rgh a";
-    private final String notAcceptableFile = "file1.x";
-    private final String acceptableFile = "file1.txt";
-    private final String bigFile = "bigFile.txt";
-    private final String[] filenames = { acceptableFile, "file2.txt", bigFile, notAcceptableFile };
-    private final String ap = "\"";
+    private static final String notAcceptableFile = "file1.x";
+    private static final String acceptableFile = "file1.txt";
+    private static final String bigFile = "bigFile.txt";
+    private static final String[] filenames = { acceptableFile, "file2.txt", bigFile, notAcceptableFile };
+    private static final String ap = "\"";
+    private FileUploadPage page = new FileUploadPage();
+    private int filesToUploadCount;
+    private int filesUploadedCount;
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richFileUpload/simple.xhtml");
     }
 
-    private boolean isElementPresent(String css) {
-        try {
-            driver.findElement(By.cssSelector(css));
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    @BeforeMethod
+    public void pageLoad() {
+        injectWebElementsToPage(page);
+        filesToUploadCount = 0;
+        filesUploadedCount = 0;
     }
 
-    private boolean isElementVisible(String css) {
-        try {
-            return driver.findElement(By.cssSelector(css)).isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    private void sendFileToInput(String filename) {
+    /**
+     * Sends file to fileupload input field and waits for page update.
+     *
+     * @param filename
+     * @param willBeAccepted
+     */
+    private void sendFileToInput(String filename, boolean willBeAccepted) {
         File file = null;
         try {
             file = new File(TestRichFileUploadSe2.class.getResource(filename).toURI());
@@ -90,32 +88,88 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
         assertTrue(file != null, "File does not exist.");
         assertTrue(file.exists(), "File does not exist.");
 
-        waitForEnabledWE(fileInputField).sendKeys(file.getAbsolutePath());
+        page.fileInputField.sendKeys(file.getAbsolutePath());
+        if (willBeAccepted) {
+            this.filesToUploadCount++;
+        }
+        waitUntilFilesToUploadListShow(filesToUploadCount);
     }
 
-    private void sendFile(String filename) {
-        sendFileToInput(filename);
-        waitForEnabledVisibleWE(uploadButton).click();
+    /**
+     * Sends file to fileupload input field and waits for page update. Then
+     * clicks on submit button to upload files and waits for page update.
+     *
+     * @param filename
+     * @param willBeAccepted
+     * @param willBeUploaded
+     */
+    private void sendFile(String filename, boolean willBeAccepted, boolean willBeUploaded) {
+        sendFileToInput(filename, willBeAccepted);
+        waitRequest(page.uploadButton, WaitRequestType.HTTP).click();
+        if (willBeUploaded) {
+            this.filesUploadedCount++;
+        }
+        waitUntilUploadedFilesListShow(filesUploadedCount);
+    }
+
+    /**
+     * Waits until page renders elements for all expected uploaded files in uploaded files
+     * list.
+     *
+     * @param expectedNumberOfFiles
+     */
+    private void waitUntilUploadedFilesListShow(int expectedNumberOfFiles) {
+        waitForPageToLoad();
+        if (expectedNumberOfFiles == 0) {
+        } else {
+            for (int i = 1; i <= expectedNumberOfFiles; i++) {
+                new WebDriverWait(driver).failWith("Expected number of files was not added to uploaded files list.").
+                        until(ElementDisplayed.getInstance().
+                        element(driver.findElement(
+                        By.xpath("//div[@class='rf-fu-itm'][" + i + "]"
+                        + "//span[@class='rf-fu-itm-st']"))));
+            }
+        }
+    }
+
+    /**
+     * Waits until page renders elements for all expected files to be uploaded in list of
+     * files to be uploaded
+     *
+     * @param expectedNumberOfFiles
+     */
+    private void waitUntilFilesToUploadListShow(int expectedNumberOfFiles) {
+        if (expectedNumberOfFiles == 0) {
+        } else {
+            for (int i = 1; i <= expectedNumberOfFiles; i++) {
+                new WebDriverWait(driver).failWith("Expected number of files was not added to upload list.").
+                        until(ElementDisplayed.getInstance().
+                        element(driver.findElement(
+                        By.xpath("//div[@class='rf-fu-itm'][" + i + "]"))));
+            }
+        }
     }
 
     @Test
     @Templates(exclude = { "richExtendedDataTable", "richCollapsibleSubTable" })
     public void testSingleFileUpload() {
-        sendFileToInput(filenames[0]);
+        sendFileToInput(filenames[0], true);
 
-        List<WebElement> fileToUpload = waitForWEList(itemsToUpload);
-        assertTrue(fileToUpload.size() == 1, "File not loaded");
-        assertTrue(fileToUpload.get(0).getText().equals(filenames[0]), "Label with filename does not appear.");
-        assertTrue(isElementPresent(itemClear), "Clear button does not appear.");
-        assertTrue(isElementVisible(uploadButton), "Upload button should be on the page.");
-        assertTrue(isElementVisible(clearAllButton), "Clear all button should be on the page.");
+        List<WebElement> filesToUpload = guardListSize(page.itemsToUpload, 1);
 
-        waitForEnabledVisibleWE(uploadButton).click();
+        assertTrue(filesToUpload.size() == 1, "File not loaded");
+        assertTrue(filesToUpload.get(0).getText().equals(filenames[0]), "Label with filename does not appear.");
+        assertTrue(ElementPresent.getInstance().element(page.itemClear).apply(driver), "Clear button does not appear.");
+        assertTrue(ElementPresent.getInstance().element(page.uploadButton).apply(driver), "Upload button should be on the page.");
+        assertTrue(ElementPresent.getInstance().element(page.clearAllButton).apply(driver), "Clear all button should be on the page.");
 
-        List<WebElement> uploadedFiles = waitForWEList(uploadedFilesList);
-        assertTrue(uploadedFiles.size() == 1, "No uploaded files.");
+        waitRequest(page.uploadButton, WaitRequestType.HTTP).click();
+
+        waitUntilUploadedFilesListShow(1);
+        List<WebElement> uploadedFiles = guardListSize(page.uploadedFilesList, 1);
+        assertTrue(uploadedFiles.size() == 1, "List of uploaded files should contain one file.");
         assertTrue(uploadedFiles.get(0).getText().equals(filenames[0]),
-            "Uploaded file does not appear in uploadedList.");
+                "Uploaded file does not appear in uploadedList.");
     }
 
     @Test(groups = "4.Future")
@@ -135,16 +189,16 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
     @Test
     public void testAcceptedTypes() {
         String acceptable = "txt";
-        sendAndSubmit("input[type=text][id*=acceptedTypesInput]", acceptable);
+        fileUploadAttributes.set(FileUploadAttributes.acceptedTypes, acceptable);
 
-        sendFileToInput(notAcceptableFile);
+        sendFileToInput(notAcceptableFile, false);
 
-        List<WebElement> filesToUpload = waitForWEList(itemsToUpload, 0);
+        List<WebElement> filesToUpload = guardListSize(page.itemsToUpload, 0);
         assertTrue(filesToUpload.isEmpty(), "AcceptedType does not work.");
 
-        sendFile(acceptableFile);
+        sendFile(acceptableFile, true, true);
 
-        filesToUpload = waitForWEList(itemsToUpload, 0);
+        filesToUpload = guardListSize(page.itemsToUpload, 1);
         assertFalse(filesToUpload.isEmpty(), "AcceptedType does not work.");
     }
 
@@ -152,14 +206,14 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
     @Test(groups = "4.Future")
     public void testData() {
         String testData = "Richfaces 4";
-        sendAndSubmit("input[type=text][id$=dataInput]", testData);
-        sendAndSubmit("input[type=text][id$=oncompleteInput]", "data = event.data");
+        fileUploadAttributes.set(FileUploadAttributes.data, testData);
+        fileUploadAttributes.set(FileUploadAttributes.oncomplete, "data = event.data");
 
         executeJS("window.data = \"\";");
 
-        sendFile(filenames[0]);
+        sendFile(filenames[0], true, true);
 
-        String data = (String) executeJS("return window.data");
+        String data = expectedReturnJS("return window.data", testData);
         assertEquals(data, testData);
     }
 
@@ -167,12 +221,13 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
     @Templates(exclude = { "richExtendedDataTable", "richCollapsibleSubTable" })
     public void testDoneLabel() {
         String doneLabel = "Done and done";
-        sendAndSubmit("input[type=text][id$=doneLabelInput]", doneLabel);
+        fileUploadAttributes.set(FileUploadAttributes.doneLabel, doneLabel);
 
-        sendFile(filenames[0]);
+        sendFile(filenames[0], true, true);
 
-        String readDoneLabel = waitForWEWithExpectedText("span.rf-fu-itm-st", doneLabel).getText();
-        assertEquals(readDoneLabel, doneLabel);
+        new WebDriverWait(driver, 10).failWith("DoneLabel does not work.").
+                until(TextEquals.getInstance().element(page.uploadStatusLabel).
+                text(doneLabel));
     }
 
     @Test(groups = "4.Future")
@@ -191,42 +246,42 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
 
     @Test
     public void testOnFileSubmit() {
-        sendAndSubmit("input[type=text][id$=onfilesubmitInput]", "metamerEvents += \"filesubmit \"");
+        String test = "filesubmit";
+        fileUploadAttributes.set(FileUploadAttributes.onfilesubmit, "metamerEvents += \"" + test + " \"");
 
         executeJS("window.metamerEvents = \"\";");
 
-        sendFile(filenames[0]);
+        sendFile(filenames[0], true, true);
 
-        String event = (String) executeJS("return window.metamerEvents");
-        event = event.trim();
+        String event = expectedReturnJS("return window.metamerEvents", test);
 
-        assertEquals(event, "filesubmit", "Attribute onfilesubmit doesn't work");
+        assertEquals(event, test, "Attribute onfilesubmit doesn't work");
     }
 
     @Test
     public void testOnUploadcomplete() {
-        sendAndSubmit("input[type=text][id$=onuploadcompleteInput]", "metamerEvents += \"uploadcomplete \"");
+        String test = "uploadcomplete";
+        fileUploadAttributes.set(FileUploadAttributes.onuploadcomplete, "metamerEvents += \"" + test + " \"");
 
         executeJS("window.metamerEvents = \"\";");
 
-        sendFile(filenames[0]);
+        sendFile(filenames[0], true, true);
 
-        String event = (String) executeJS("return window.metamerEvents");
-        event = event.trim();
+        String event = expectedReturnJS("return window.metamerEvents", test);
 
-        assertEquals(event, "uploadcomplete", "Attribute onuploadcomplete doesn't work");
+        assertEquals(event, test, "Attribute onuploadcomplete doesn't work.");
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12037")
     @Test(groups = "4.Future")
     public void testEvents() {
-        sendAndSubmit("input[type=text][id$=onbeforedomupdateInput]", "metamerEvents += \"beforedomupdate \"");
-        sendAndSubmit("input[type=text][id$=onbeginInput]", "metamerEvents += \"begin \"");
-        sendAndSubmit("input[type=text][id$=oncompleteInput]", "metamerEvents += \"complete \"");
+        fileUploadAttributes.set(FileUploadAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
+        fileUploadAttributes.set(FileUploadAttributes.onbegin, "metamerEvents += \"begin \"");
+        fileUploadAttributes.set(FileUploadAttributes.oncomplete, "metamerEvents += \"complete \"");
 
         executeJS("window.metamerEvents = \"\";");
 
-        sendFile(filenames[0]);
+        sendFile(filenames[0], true, true);
 
         String event = (String) executeJS("return window.metamerEvents");
         String[] events = event.split(" ");
@@ -244,22 +299,14 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
         String acceptable = "txt";
         String cmd = varName + " = " + ap + testData + ap;
 
-        sendAndSubmit("input[type=text][id$=ontyperejectedInput]", cmd);
-        sendAndSubmit("input[type=text][id*=acceptedTypesInput]", acceptable);
-
-        File file = null;
-        try {
-            file = new File(TestRichFileUploadSe2.class.getResource(notAcceptableFile).toURI());
-        } catch (URISyntaxException ex) {
-        }
-        assertTrue(file != null, "File does not exist.");
-        assertTrue(file.exists(), "File does not exist.");
+        fileUploadAttributes.set(FileUploadAttributes.ontyperejected, cmd);
+        fileUploadAttributes.set(FileUploadAttributes.acceptedTypes, acceptable);
 
         executeJS(varName + " = " + ap + ap);
 
-        waitForEnabledWE(fileInputField).sendKeys(file.getAbsolutePath());
+        sendFileToInput(notAcceptableFile, false);
 
-        String data = (String) executeJS("return window." + varName);
+        String data = expectedReturnJS("return window." + varName, testData);
         assertEquals(data, testData);
     }
 
@@ -267,20 +314,19 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
     @Templates(exclude = { "richExtendedDataTable", "richCollapsibleSubTable" })
     public void testExecute() {
         String cmd = "executeChecker";
-        String expectedValue = "* executeChecker";
-        String phasesLocator = "ul.phases-list li";
-        sendAndSubmit("input[type=text][id$=executeInput]", cmd);
+        final String expectedValue = "* executeChecker";
 
-        sendFile(filenames[0]);
+        fileUploadAttributes.set(FileUploadAttributes.execute, cmd);
 
-        List<WebElement> phases = waitForWEList(phasesLocator, 8);// 8 = number of expected phases
-        for (WebElement webElement : phases) {
-            String value = webElement.getText();
-            if (value.equals(expectedValue)) {
+        sendFile(filenames[0], true, true);
+
+        List<WebElement> list = guardListSize(page.phases, 5);
+        for (WebElement webElement : list) {
+            if (webElement.getText().equals(expectedValue)) {
                 return;
             }
         }
-        fail("Attribute execute does not work");
+        fail();
     }
 
     @Test(groups = "4.Future")
@@ -300,19 +346,20 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
     @Test
     @Templates(exclude = { "richExtendedDataTable", "richCollapsibleSubTable" })
     public void testLimitRender() {
-        sendAndSubmit("input[type=text][id$=renderInput]", "renderChecker");
-        waitForEnabledVisibleWE("input[type=radio][id*=limitRenderInput][value=true]").click();
+        fileUploadAttributes.set(FileUploadAttributes.render, "renderChecker");
+        fileUploadAttributes.set(FileUploadAttributes.limitRender, Boolean.TRUE);
 
-        String statusCheckerTime = waitForEnabledVisibleWE("span[id$=statusCheckerOutput]").getText();
-        String renderCheckerTime = waitForEnabledVisibleWE("span[id$=renderChecker]").getText();
+        String statusCheckerTime = page.statusCheckerOutput.getText();
+        String renderCheckerTime = page.renderCheckerOutput.getText();
 
-        sendFile(filenames[0]);
+        sendFile(filenames[0], true, true);
 
-        String statusCheckerTime2 = waitForEnabledVisibleWE("span[id$=statusCheckerOutput]").getText();
-        String renderCheckerTime2 = waitForEnabledVisibleWE("span[id$=renderChecker]").getText();
+        new WebDriverWait(driver, 10).failWith("Render checker time did not change.").
+                until(TextNotEquals.getInstance().element(page.renderCheckerOutput).
+                text(renderCheckerTime));
 
+        String statusCheckerTime2 = page.statusCheckerOutput.getText();
         assertEquals(statusCheckerTime, statusCheckerTime2);
-        assertNotEquals(renderCheckerTime, renderCheckerTime2);
     }
 
     @Test(groups = "4.Future")
@@ -331,15 +378,14 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
 
     @Test
     public void testStatus() {
-        String statusCheckerLocator = "span[id$=statusCheckerOutput]";
         String cmd = ap + "statusChecker" + ap;
-        sendAndSubmit("input[type=text][id$=statusInput]", cmd);
+        fileUploadAttributes.set(FileUploadAttributes.status, cmd);
 
-        String statusCheckerTime1 = waitForEnabledVisibleWE(statusCheckerLocator).getText();
+        String statusCheckerTime1 = page.statusCheckerOutput.getText();
 
-        sendFile(filenames[0]);
+        sendFile(filenames[0], true, true);
 
-        String statusCheckerTime2 = waitForEnabledVisibleWE(statusCheckerLocator).getText();
+        String statusCheckerTime2 = page.statusCheckerOutput.getText();
 
         assertEquals(statusCheckerTime1, statusCheckerTime2);
     }
@@ -347,71 +393,39 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
     @Test
     public void testSizeExceededLabel() {
         String testData = "size exceeded";
-        sendAndSubmit("input[type=text][id$=sizeExceededLabelInput]", testData);
+        fileUploadAttributes.set(FileUploadAttributes.sizeExceededLabel, testData);
 
-        File file = null;
-        try {
-            file = new File(TestRichFileUploadSe2.class.getResource(bigFile).toURI());
-        } catch (URISyntaxException ex) {
-        }
-        assertTrue(file != null, "File does not exist.");
-        assertTrue(file.exists(), "File does not exist.");
+        sendFile(bigFile, true, false);
 
-        waitForEnabledWE(fileInputField).sendKeys(file.getAbsolutePath());
-
-        waitForEnabledVisibleWE(uploadButton).click();
-
-        assertEquals(testData, waitForEnabledVisibleWE("span.rf-fu-itm-st").getText(),
-            "Attribute sizeExceededLabel does not work.");
+        assertEquals(testData, page.uploadStatusLabel.getText(),
+                "Attribute sizeExceededLabel does not work.");
     }
 
-    /**
-     * Test disabled due to selenium problems
-     */
-    @Test(enabled = false)
-    public void testMultiFileUploadWithMaxFilesQuantity() {
-        final int maxFilesQuantity = 2;
-        final int testedFilesCount = filenames.length;
-        assertTrue(testedFilesCount > maxFilesQuantity);
+    @Test
+    public void testMaxFilesQuantity() {
+        final int maxFilesQuantity = 1;
+        fileUploadAttributes.set(FileUploadAttributes.maxFilesQuantity, maxFilesQuantity);
 
-        sendAndSubmit("input[type=text][id$=maxFilesQuantityInput]", String.valueOf(maxFilesQuantity));
+        sendFileToInput(filenames[0], true);
 
-        List<File> files = new ArrayList<File>();
-        try {
-            for (String fs : filenames) {
-                files.add(new File(TestRichFileUploadSe2.class.getResource(fs).toURI()));
-            }
-        } catch (URISyntaxException ex) {
-        }
-        assertTrue(files.size() == filenames.length, "Some file(s) does not exist.");
+        new WebDriverWait(driver, 2).failWith("File input field should not be there.").
+                until(ElementNotDisplayed.getInstance().element(driver.findElement(By.cssSelector("span.rf-fu-btn-add"))));
 
-        for (int i = 0; i < files.size(); i++) {
-            waitForEnabledWE(fileInputField).sendKeys(files.get(i).getAbsolutePath());
-            //            Other way:
-            //
-            //            List<WebElement> waitForWEList = waitForWEList(fileInputField2, i + 1);
-            //            for (WebElement webElement : waitForWEList) {
-            //                if (webElement.isEnabled() && !webElement.getAttribute("style").equals("display: none;")) {
-            //                    webElement.sendKeys(files.get(i).getAbsolutePath());
-            //                }
-            //            }
-        }
-
-        List<WebElement> filesToUpload = waitForWEList(itemsToUpload, maxFilesQuantity);
-        assertTrue(filesToUpload.size() == maxFilesQuantity, "MaxFilesQuantity is not working");
+        List<WebElement> filesToUpload = guardListSize(page.itemsToUpload, 1);
+        assertTrue(filesToUpload.size() == maxFilesQuantity, "Files to upload list contains less/more files than there should be. List: " + filesToUpload + " .");
         for (int i = 0; i < maxFilesQuantity; i++) {
             String x = filesToUpload.get(i).getText();
-            assertTrue(x.equals(filenames[i]), "Uploaded file does not appear in uploadedList.");
+            assertTrue(x.equals(filenames[i]), "Added file " + filenames[i] + " does not appear in files to upload list.");
         }
 
-        waitForEnabledWE(uploadButton).click();
+        waitRequest(page.uploadButton, WaitRequestType.HTTP).click();
 
-        List<WebElement> uploadedFiles = waitForWEList(uploadedFilesList, maxFilesQuantity);
-
-        assertTrue(uploadedFiles.size() == maxFilesQuantity, "Uploades more files than was maxFilesQuantity");
+        waitUntilUploadedFilesListShow(maxFilesQuantity);
+        List<WebElement> uploadedFiles = guardListSize(page.uploadedFilesList, maxFilesQuantity);
+        assertTrue(uploadedFiles.size() == maxFilesQuantity, "Uploaded files list contains more/less files than there should be. List: " + uploadedFiles + " .");
         for (int i = 0; i < maxFilesQuantity; i++) {
             assertTrue(uploadedFiles.get(i).getText().equals(filenames[i]),
-                "Uploaded file does not appear in uploadedList.");
+                    "Uploaded file " + filenames[i] + " does not appear in uploadedList.");
         }
     }
 }

@@ -23,325 +23,303 @@
 package org.richfaces.tests.metamer.ftest;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.basicAttributes;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-
+import java.util.concurrent.TimeUnit;
 import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
+import org.jboss.test.selenium.support.ui.ElementDisplayed;
+import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.richfaces.tests.metamer.ftest.webdriver.IWEAvailabilityCondition;
+import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
-import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
 
 public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     @Drone
     protected WebDriver driver;
-    private boolean first = true;
     protected static final int WAIT_TIME = 5;// s
-    private static final int LAST_CHECK_WAIT_TIME = 500;// ms
+    protected static final int MINOR_WAIT_TIME = 200;// ms
     private static final int NUMBER_OF_TRIES = 5;
     private FieldDecorator fieldDecorator;
 
     /**
-     * Opens the tested page. If templates is not empty nor null, it appends url parameter with templates.
+     * Opens the tested page. If templates is not empty nor null, it appends url
+     * parameter with templates.
      *
-     * @param templates
-     *            templates that will be used for test, e.g. "red_div"
+     * @param templates templates that will be used for test, e.g. "red_div"
      */
     @BeforeMethod(alwaysRun = true)
     public void loadPage(Object[] templates) {
-        //        addFirebug();
         if (driver == null) {
             throw new SkipException("webDriver isn't initialized");
         }
         driver.get(buildUrl(getTestUrl() + "?templates=" + template.toString()).toExternalForm());
-        // webDriver.manage().timeouts().pageLoadTimeout(WAITTIME, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(WAIT_TIME, TimeUnit.SECONDS);
     }
 
     /**
-     * Adds firebug to firefox.
-     */
-    //    public void addFirebug() {
-    //
-    //        if (first && driver instanceof FirefoxDriver) {
-    //            File file = null;
-    //            try {
-    //                file = new File(AbstractWebDriverTest.class.getResource("firebug-1.9.1.xpi").toURI());
-    //            } catch (Exception ex) {
-    //                ex.printStackTrace();
-    //            }
-    //            FirefoxProfile firefoxProfile = new FirefoxProfile();
-    //            try {
-    //                firefoxProfile.addExtension(file);
-    //                firefoxProfile.setPreference("extensions.firebug.currentVersion", "1.9.1"); // Avoid startup screen
-    //            } catch (IOException ex) {
-    //                ex.printStackTrace();
-    //            }
-    //            driver = new FirefoxDriver(firefoxProfile);
-    //            first = false;
-    //        }
-    //    }
-
-    /**
-     * Waiting.
+     * Waiting method. Waits number of milis defined by @milis
      *
      * @param milis
      */
-    private void waiting(int milis) {
+    protected static void waiting(int milis) {
         try {
             Thread.sleep(milis);
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
+        } catch (InterruptedException ignored) {
         }
     }
 
     /**
-     * Waits a little time and executes JavaScript script.
+     * Executes JavaScript script.
      *
-     * @param script
-     *            whole command that will be executed
+     * @param script whole command that will be executed
      * @param args
      * @return may return a value
      */
-    public Object executeJS(String script, Object... args) {
-        waiting(LAST_CHECK_WAIT_TIME);
+    protected Object executeJS(String script, Object... args) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         return js.executeScript(script, args);
     }
 
     /**
-     * Types text to input component and then submits it.
+     * Executes JavaScript script. Returns single and trimmed string. Tries to
+     * execute script few times with waiting for expected string defined by
+     * @expectedValue.
      *
-     * @param cssSelector
-     *            selector of component
-     * @param toSend
-     *            text to be typed in input component
+     * @param script whole command that will be executed
+     * @param args
+     * @return single and trimmed string
      */
-    public void sendAndSubmit(String cssSelector, String toSend) {
-        waitForEnabledWE(cssSelector).sendKeys(toSend);
-        waitForEnabledWE(cssSelector).submit();
-    }
-
-    /**
-     * Waits for list of WebElements by the specified selector. Expects 1 element.
-     *
-     * @param by
-     *            selenium locator of root element
-     * @return TimeoutException if found nothing or list with found elements.
-     */
-    public List<WebElement> waitForWEList(final By by) {
-        return waitForWEList(by, WAIT_TIME, 1);
-    }
-
-    /**
-     * Waits for list of WebElements by the specified selector. Expects 1 WebElement.
-     *
-     * @param cssSelector
-     *            CSS selector
-     * @return TimeoutException if found nothing or list with found elements.
-     */
-    public List<WebElement> waitForWEList(String cssSelector) {
-        return waitForWEList(By.cssSelector(cssSelector), WAIT_TIME, 1);
-    }
-
-    /**
-     * Waits for list of WebElements by the specified selector and with specified expected size.
-     *
-     * @param by
-     *            selenium locator of elements
-     * @param expectedSize
-     *            expected list size
-     * @return TimeoutException if found nothing or list with found elements.
-     */
-    public List<WebElement> waitForWEList(final By by, final int expectedSize) {
-        return waitForWEList(by, WAIT_TIME, expectedSize);
-    }
-
-    /**
-     * Waits for list of WebElements by the specified selector, with specified expected size.
-     *
-     * @param cssSelector
-     *            cssSelector of elements
-     * @param expectedSize
-     *            expected list size
-     * @return expected list of webElements or null
-     */
-    public List<WebElement> waitForWEList(String cssSelector, final int expectedSize) {
-        return waitForWEList(By.cssSelector(cssSelector), WAIT_TIME, expectedSize);
-    }
-
-    /**
-     * Waits for list of WebElements by the specified selector, with specified expected size and for maximum number of
-     * seconds
-     *
-     * @param by
-     *            selenium locator of elements
-     * @param seconds
-     *            maximum amount of seconds that it will wait
-     * @param expectedSize
-     *            expected list size
-     * @return expected list of webElements or null
-     */
-    public List<WebElement> waitForWEList(final By by, int seconds, final int expectedSize) {
-        List<WebElement> list = (new WebDriverWait(driver, seconds)).until(new ExpectedCondition<List<WebElement>>() {
-
-            private boolean lastCheckMade = false;
-
-            private List<WebElement> lastCheck(WebDriver d) {
-                try {
-                    Thread.sleep(LAST_CHECK_WAIT_TIME);
-                } catch (InterruptedException ex) {
-                }
-                lastCheckMade = true;
-                return apply(d);
-
+    protected String expectedReturnJS(String script, String expectedValue, Object... args) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String result = null;
+        for (int i = 0; i < NUMBER_OF_TRIES; i++) {
+            result = ((String) js.executeScript(script, args)).trim();
+            if (result.equals(expectedValue)) {
+                break;
             }
-
-            @Override
-            public List<WebElement> apply(WebDriver d) {
-                List<WebElement> ll = d.findElements(by);
-                if (ll.size() == expectedSize) {
-                    if (expectedSize == 0) {// last check
-                        if (!lastCheckMade) {
-                            ll = lastCheck(d);
-                        }
-                    }
-                    return ll;
-                } else if (ll.isEmpty()) {
-                    return null;
-                } else if (ll.size() < expectedSize) {
-                    if (!lastCheckMade) {
-                        ll = lastCheck(d);
-                    }
-                }
-                return ll;
-            }
-        });
-        return list;
-    }
-
-    /**
-     * Waits for WebElement with specific css selector which contains expected text.
-     *
-     * @param cssSelector
-     *            css selector
-     * @param excpectedString
-     *            expected text that will WebElement.getText() return
-     * @return WebElement with specific css selector which contains expected text
-     */
-    public WebElement waitForWEWithExpectedText(String cssSelector, String excpectedString) {
-        return waitForAvailableWE(By.cssSelector(cssSelector), WAIT_TIME, new ExpectedStringCondition(excpectedString));
-    }
-
-    /**
-     * Waits for WebElement with specific css selector which is visible and enabled.
-     *
-     * @param cssSelector
-     *            css selector
-     * @return visible and enabled web element with specified css selector
-     */
-    public WebElement waitForEnabledVisibleWE(String cssSelector) {
-        return waitForAvailableWE(By.cssSelector(cssSelector), WAIT_TIME, new VisibleElementCondition(),
-            new EnabledElementCondition());
-    }
-
-    /**
-     * Waits for WebElement with specific css selector which is visible.
-     *
-     * @param cssSelector
-     *            css selector
-     * @return WebElement with specific css selector which is visible
-     */
-    public WebElement waitForVisibleWE(String cssSelector) {
-        return waitForAvailableWE(By.cssSelector(cssSelector), WAIT_TIME, new VisibleElementCondition());
-    }
-
-    /**
-     * Waits for WebElement with specific css selector which is enabled.
-     *
-     * @param cssSelector
-     *            css selector
-     * @return WebElement with specific css selector which is enabled
-     */
-    public WebElement waitForEnabledWE(String cssSelector) {
-        return waitForAvailableWE(By.cssSelector(cssSelector), WAIT_TIME, new EnabledElementCondition());
-    }
-
-    public WebElement waitForAvailableWE(final By by, final IWEAvailabilityCondition... condition) {
-        return waitForAvailableWE(by, WAIT_TIME, condition);
-    }
-
-    public WebElement waitForAvailableWE(final By by, int seconds, final IWEAvailabilityCondition... condition) {
-
-        WebElement we = (new WebDriverWait(driver, seconds)).until(new ExpectedCondition<WebElement>() {
-
-            @Override
-            public WebElement apply(WebDriver d) {
-                WebElement element = d.findElement(by);
-                for (IWEAvailabilityCondition iAvailableElementCondition : condition) {
-                    if (!iAvailableElementCondition.isValid(element)) {
-                        return null;
-                    }
-                }
-                return element;
-            }
-        });
-        return we;
+            waiting(MINOR_WAIT_TIME);
+        }
+        return result;
     }
 
     protected void injectWebElementsToPage(Object page) {
         if (fieldDecorator == null) {
             fieldDecorator = new StaleReferenceAwareFieldDecorator(new DefaultElementLocatorFactory(driver),
-                NUMBER_OF_TRIES);
+                    NUMBER_OF_TRIES);
         }
         PageFactory.initElements(fieldDecorator, page);
     }
 
-    private class EnabledElementCondition implements IWEAvailabilityCondition {
-
-        @Override
-        public boolean isValid(WebElement we) {
-            if (we.isEnabled()) {
-                return true;
+    /**
+     * Wait for whole page rendered
+     */
+    protected void waitForPageToLoad() {
+        for (int i = 0; i < NUMBER_OF_TRIES; i++) {
+            try {
+                Object result = executeJS("return document['readyState'] ? 'complete' == document.readyState : true");
+                if (result instanceof Boolean) {
+                    Boolean b = (Boolean) result;
+                    if (b.equals(Boolean.TRUE)) {
+                        return;
+                    }
+                }
+                waiting(MINOR_WAIT_TIME);
+            } catch (Exception ignored) {
             }
-            return false;
         }
     }
 
-    private class ExpectedStringCondition implements IWEAvailabilityCondition {
+    /**
+     * Testing of HTMLAttribute (e.g. type).
+     *
+     * E.g. testHTMLAttribute(page.link, mediaOutputAttributes,
+     * MediaOutputAttributes.type, "text/html");
+     *
+     * @param element WebElement which will be checked for containment of tested
+     * attribute
+     * @param attributes attributes instance which will be used for setting
+     * attribute
+     * @param testedAttribute attribute which will be tested
+     * @param value testing value of attribute
+     */
+    protected <T extends AttributeEnum> void testHTMLAttribute(WebElement element, Attributes<T> attributes, T testedAttribute, String value) {
+        attributes.set(testedAttribute, value);
+        assertEquals(element.getAttribute(testedAttribute.toString()), value, "Attribute " + testedAttribute.toString() + " does not work.");
+    }
 
-        private final String expected;
+    /**
+     * Tests lang attribute of chosen component in Metamer. Page must contain an
+     * input for this component's attribute.
+     *
+     * @param element WebElement representing component.
+     */
+    protected void testAttributeLang(WebElement element) {
+        final String TESTVALUE = "cz";
+        String attLang;
 
-        public ExpectedStringCondition(String expected) {
-            this.expected = expected;
-        }
+        // get attribute lang
+        attLang = (driver instanceof FirefoxDriver ? element.getAttribute("lang")
+                : element.getAttribute("xml:lang"));//FIXME not sure if "xml:lang" is necessary inspired from AbstractGrapheneTest
+        //lang should be empty/null
+        assertTrue("".equals(attLang) || "null".equals(attLang), "Attribute xml:lang should not be present.");
 
-        @Override
-        public boolean isValid(WebElement we) {
-            if (we.getText() != null && we.getText().equals(expected)) {
-                return true;
+        // set lang to TESTVALUE
+        basicAttributes.set(BasicAttributes.lang, TESTVALUE);
+
+        //get attribute lang of element
+        attLang = (driver instanceof FirefoxDriver ? element.getAttribute("lang")
+                : element.getAttribute("xml:lang"));//FIXME not sure if "xml:lang" is necessary inspired from AbstractGrapheneTest
+
+        assertEquals(attLang, TESTVALUE, "Attribute xml:lang should be present.");
+    }
+
+    /**
+     * Tries to check and wait for correct size (@size) of list. Depends on list
+     * of WebElements decorated with StaleReferenceAwareFieldDecorator.
+     *
+     * @param list input list
+     * @param size expected size of list
+     * @return list with or without expected size
+     */
+    protected List<WebElement> guardListSize(List<WebElement> list, int size) {
+        boolean lastCheckWithModifications;
+        int checkedSize = list.size();
+        for (int i = 0; i < NUMBER_OF_TRIES; i++) {
+            if (checkedSize < list.size()) {
+                checkedSize = list.size();
+                lastCheckWithModifications = true;
+            } else {
+                lastCheckWithModifications = false;
             }
-            return false;
+            if (checkedSize >= size && !lastCheckWithModifications) {
+                //last check
+                waiting(MINOR_WAIT_TIME);
+                list.size();
+                return list;
+            }
+            waiting(MINOR_WAIT_TIME);
+        }
+        return list;
+    }
+
+    protected enum WaitRequestType {
+
+        XHR,
+        HTTP;
+    }
+
+    /**
+     * Generates a waiting proxy, which will wait for page rendering after
+     * expected @waitRequestType which will be launched via communicating with
+     * @element.
+     *
+     * @param element WebElement which will launch a request (e.g. with methods
+     * click(), submit()...) after invoking it.
+     * @param waitRequestType type of expected request which will be launched
+     * @return waiting proxy for input element
+     */
+    protected WebElement waitRequest(WebElement element, WaitRequestType waitRequestType) {
+        switch (waitRequestType) {
+            case HTTP:
+                return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
+                        new Class[]{ WebElement.class }, new HTTPWaitHandler(element));
+            case XHR:
+                return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
+                        new Class[]{ WebElement.class }, new XHRWaitHandler(element));
+            default:
+                throw new UnsupportedOperationException();
         }
     }
 
-    private class VisibleElementCondition implements IWEAvailabilityCondition {
+    /**
+     * Waits for page to full load after method is invoked.
+     */
+    private class HTTPWaitHandler implements InvocationHandler {
+
+        private final WebElement element;
+
+        public HTTPWaitHandler(WebElement element) {
+            this.element = element;
+        }
 
         @Override
-        public boolean isValid(WebElement we) {
-            if (we.isDisplayed()) {
-                return true;
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            Object o = method.invoke(element, args);
+            waitForPageToLoad();
+            return o;
+        }
+    }
+
+    /**
+     * Waits for change of requestTime in Metamer.
+     */
+    private class XHRWaitHandler implements InvocationHandler {
+
+        private final WebElement element;
+        private Date time1;
+
+        public XHRWaitHandler(WebElement element) {
+            this.element = element;
+        }
+
+        private Date getDate() {
+            new WebDriverWait(driver).until(ElementDisplayed.getInstance().
+                    element(driver.findElement(By.cssSelector("span[id=requestTime]"))));
+            String time = driver.findElement(By.cssSelector("span[id=requestTime]")).getText();
+            DateFormat sdf = new SimpleDateFormat("hh:mm:ss.SSS");
+            Date d = null;
+            try {
+                d = sdf.parse(time);
+            } catch (ParseException ex) {
             }
-            return false;
+            return d;
+        }
+
+        private void beforeAction() {
+            time1 = getDate();
+        }
+
+        private void afterAction() {
+            for (int i = 0; i < NUMBER_OF_TRIES; i++) {
+                try {
+                    if (getDate().equals(time1)) {
+                        waiting(MINOR_WAIT_TIME);
+                    } else {
+                        waitForPageToLoad();//unnecessary?
+                        return;
+                    }
+                } catch (Exception e) {
+                }
+            }
+        }
+
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            beforeAction();
+            Object o = method.invoke(element, args);
+            afterAction();
+            return o;
         }
     }
 }

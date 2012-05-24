@@ -66,7 +66,7 @@ public abstract class AbstractTreeToggleListenerTest extends AbstractWebDriverTe
      * @return true if text was found or false
      */
     private boolean subTest(String expectedText) {
-        List<WebElement> list = page.getPhases();
+        List<WebElement> list = guardListSize(page.getPhases(), 5);
         for (WebElement webElement : list) {
             if (webElement.getText().equals(expectedText)) {
                 return true;//Text found
@@ -75,24 +75,26 @@ public abstract class AbstractTreeToggleListenerTest extends AbstractWebDriverTe
         return false;
     }
 
-    private void testTTL(String expectedText, String failMessage) {
+    private void testTTL(final String expectedText, String failMessage) {
         //test expanding of node
-        page.getExpandButton().click();
+        waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText + expandedNodeString), failMessage);
         //then test collapsing of node
-        page.getCollapseButton().click();
+        waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
+        //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText + collapsedNodeString), failMessage);
     }
 
-    private void testTTLWithoutAdditionalStateStrings(String expectedText, String failMessage) {
+    private void testTTLWithoutAdditionalStateStrings(final String expectedText, String failMessage) {
         //test expanding of node
-        page.getExpandButton().click();
+        waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
-        assertTrue(subTest(expectedText), failMessage);
+        assertTrue(subTest(expectedText));
         //then test collapsing of node
-        page.getCollapseButton().click();
-        assertTrue(subTest(expectedText), failMessage);
+        waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
+        //checks if phases contains the correct listener message
+        assertTrue(subTest(expectedText));
     }
 
     public void testTTLAsAttributeOfComponent(String expectedMSG) {

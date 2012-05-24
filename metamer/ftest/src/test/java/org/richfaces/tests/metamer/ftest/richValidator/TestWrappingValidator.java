@@ -21,13 +21,17 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richValidator;
 
+import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.validatorAttributes;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-
+import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
-
 
 /**
  * Selenium tests for page faces/components/richValidator/wrapping.xhtml
@@ -117,6 +121,30 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
     @Test
     public void testStringSize() {
         verifyStringSize();
+    }
+
+    /**
+     * Test of attribute @disabled. Testing of client side validation on one input field.
+     */
+    @Test
+    @RegressionTest(value = "https://issues.jboss.org/browse/RF-12154")
+    public void testDisabled() {
+        JQueryLocator integerMax10Field = pjq("input[type=text][id$=max]");
+        JQueryLocator errorMsgLocator = pjq("span[id$=max] > span[class=rf-msg-dtl]");
+        String invalidValue = "11";
+        //set disabled to false
+        validatorAttributes.set(ValidatorAttributes.disabled, Boolean.FALSE);
+        //put in an invalid value
+        guardNoRequest(selenium).type(integerMax10Field, invalidValue);
+        //check error message from validator
+        assertTrue(selenium.isElementPresent(errorMsgLocator), "No error message from validator.");
+
+        //set disabled to true
+        validatorAttributes.set(ValidatorAttributes.disabled, Boolean.TRUE);
+        //put in an invalid value
+        guardNoRequest(selenium).type(integerMax10Field, invalidValue);
+        //check error message from validator
+        assertFalse(selenium.isElementPresent(errorMsgLocator), "No error message should be here. Validator is disabled and still works.");
     }
 
     @Test(groups = { "4.Future" })

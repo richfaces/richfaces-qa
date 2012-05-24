@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- JBoss, Home of Professional Open Source Copyright 2010-2012, Red Hat, Inc. and individual contributors by the @authors tag. 
-    See the copyright.txt in the distribution for a full listing of individual contributors. This is free software; you can redistribute 
-    it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either 
-    version 2.1 of the License, or (at your option) any later version. This software is distributed in the hope that it will be useful, 
-    but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser 
-    General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this 
-    software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the 
+<!-- JBoss, Home of Professional Open Source Copyright 2010-2012, Red Hat, Inc. and individual contributors by the @authors tag.
+    See the copyright.txt in the distribution for a full listing of individual contributors. This is free software; you can redistribute
+    it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version. This software is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser
+    General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this
+    software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the
     FSF site: http://www.fsf.org. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -49,6 +48,7 @@
         <arquillian.tomcat.version>1.0.0.CR3</arquillian.tomcat.version>
         <arquillian.drone.version>1.0.0.Final</arquillian.drone.version>
         <arquillian.graphene-testng.version>1.0.0.Final</arquillian.graphene-testng.version>
+        <arquillian.graphene-webdriver.version>2.0.0-SNAPSHOT</arquillian.graphene-webdriver.version>
         <arquillian.jboss-as6.version>1.0.0.CR3</arquillian.jboss-as6.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
         <shrinkwrap.descriptors.version>1.1.0-beta-1</shrinkwrap.descriptors.version>
@@ -73,7 +73,7 @@
         <openshift.password />
         <openshift.namespace>richfacesqa</openshift.namespace>
         <openshift.application>ftest</openshift.application>
-        <openshift.ssh.user>dc5eed1b78e64b4db3be3c67b2d64cb7</openshift.ssh.user>
+        <openshift.ssh.user>54abf287bcf646319d0b1c8d35f15546</openshift.ssh.user>
         <openshift.identity.file />
 
     </properties>
@@ -217,8 +217,7 @@
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
-                    <preparationGoals>clean verify -Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces
-                        -DskipTests=true</preparationGoals>
+                    <preparationGoals>clean verify -Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces -DskipTests=true</preparationGoals>
                     <goals>clean deploy -Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces -DskipTests=true</goals>
                 </configuration>
             </plugin>
@@ -370,13 +369,13 @@
                 <artifactId>shrinkwrap-descriptors-impl</artifactId>
                 <version>${shrinkwrap.descriptors.version}</version>
             </dependency>
-            
+
             <!-- Selenium Server -->
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-server</artifactId>
                 <version>${version.selenium.server}</version>
-            </dependency> 
+            </dependency>
 
             <!-- Selenium dependecies -->
             <dependency>
@@ -430,6 +429,12 @@
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-remote-driver</artifactId>
                 <version>${version.selenium}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.graphene</groupId>
+                <artifactId>graphene-webdriver</artifactId>
+                <version>${arquillian.graphene-webdriver.version}</version>
+                <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>

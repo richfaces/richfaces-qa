@@ -1,40 +1,37 @@
-/*******************************************************************************
- * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
+/**
+ * *****************************************************************************
+ * JBoss, Home of Professional Open Source Copyright 2010-2012, Red Hat, Inc.
+ * and individual contributors by the @authors tag. See the copyright.txt in the
+ * distribution for a full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
+ * This is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ * This software is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this software; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
+ * site: http://www.fsf.org.
+ ******************************************************************************
+ */
 package org.richfaces.tests.metamer.ftest.richToolbarGroup;
 
-import static org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory.optionLabel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemStyle;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.toolbarGroupAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
@@ -44,7 +41,6 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page /faces/components/richToolbarGroup/simple.xhtml
@@ -56,11 +52,11 @@ public class TestRichToolbarGroup extends AbstractGrapheneTest {
 
     private JQueryLocator toolbar = pjq("table[id$=toolbar]");
     private JQueryLocator separator = pjq("td.rf-tb-sep");
-    private JQueryLocator[] items = {pjq("td[id$=createDocument_itm]"), pjq("td[id$=createFolder_itm]"),
-        pjq("td[id$=copy_itm]"), pjq("td[id$=save_itm]"), pjq("td[id$=saveAs_itm]"), pjq("td[id$=saveAll_itm]")};
+    private JQueryLocator[] items = { pjq("td[id$=createDocument_itm]"), pjq("td[id$=createFolder_itm]"),
+        pjq("td[id$=copy_itm]"), pjq("td[id$=save_itm]"), pjq("td[id$=saveAs_itm]"), pjq("td[id$=saveAll_itm]") };
     private JQueryLocator input = pjq("td[id$=input_itm]");
     private JQueryLocator button = pjq("td[id$=button_itm]");
-    private String[] separators = {"disc", "grid", "line", "square"};
+    private String[] separators = { "disc", "grid", "line", "square" };
     @Inject
     @Use(empty = true)
     private JQueryLocator item;
@@ -101,9 +97,7 @@ public class TestRichToolbarGroup extends AbstractGrapheneTest {
     @Test
     @Use(field = "itemSeparator", value = "separators")
     public void testItemSeparatorCorrect() {
-        selenium.select(pjq("select[id$=itemSeparatorInput]"), optionLabel(itemSeparator));
-        selenium.waitForPageToLoad();
-
+        toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, itemSeparator);
         JQueryLocator separatorDiv = separator.getDescendant(jq("div.rf-tb-sep-" + itemSeparator));
 
         assertTrue(selenium.isElementPresent(separator), "Item separator should be present on the page.");
@@ -114,21 +108,16 @@ public class TestRichToolbarGroup extends AbstractGrapheneTest {
 
     @Test
     public void testItemSeparatorNone() {
-        selenium.select(pjq("select[id$=itemSeparatorInput]"), optionLabel("none"));
-        selenium.waitForPageToLoad();
-
+        toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "none");
         assertFalse(selenium.isElementPresent(separator), "No item separator should be present on the page.");
 
-        selenium.select(pjq("select[id$=itemSeparatorInput]"), optionLabel("null"));
-        selenium.waitForPageToLoad();
-
+        toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "null");
         assertFalse(selenium.isElementPresent(separator), "No item separator should be present on the page.");
     }
 
     @Test
     public void testItemSeparatorCustom() {
-        selenium.select(pjq("select[id$=itemSeparatorInput]"), optionLabel("star"));
-        selenium.waitForPageToLoad();
+        toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "star");
 
         JQueryLocator separatorImg = separator.getDescendant(jq("> img"));
         AttributeLocator attr = separatorImg.getAttribute(Attribute.SRC);
@@ -144,9 +133,7 @@ public class TestRichToolbarGroup extends AbstractGrapheneTest {
 
     @Test
     public void testItemSeparatorNonExisting() {
-        JQueryLocator input = pjq("select[id$=itemSeparatorInput]");
-        selenium.select(input, optionLabel("non-existing"));
-        selenium.waitForPageToLoad();
+        toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "non-existing");
 
         JQueryLocator separatorImg = separator.getDescendant(jq("> img"));
         AttributeLocator attr = separatorImg.getAttribute(Attribute.SRC);
@@ -175,14 +162,12 @@ public class TestRichToolbarGroup extends AbstractGrapheneTest {
         assertFalse(selenium.isElementPresent(emptyCellBefore), "Toolbar group should  be located on the left.");
         assertTrue(selenium.isElementPresent(emptyCellAfter), "Toolbar group should  be located on the left.");
 
-        selenium.type(pjq("input[id$=locationInput]"), "right");
-        selenium.waitForPageToLoad();
+        toolbarGroupAttributes.set(ToolbarGroupAttributes.location, "right");
 
         assertTrue(selenium.isElementPresent(emptyCellBefore), "Toolbar group should  be located on the right.");
         assertFalse(selenium.isElementPresent(emptyCellAfter), "Toolbar group should  be located on the right.");
 
-        selenium.type(pjq("input[id$=locationInput]"), "wrong");
-        selenium.waitForPageToLoad();
+        toolbarGroupAttributes.set(ToolbarGroupAttributes.location, "wrong");
 
         assertFalse(selenium.isElementPresent(emptyCellBefore), "Toolbar group should  be located on the left.");
         assertTrue(selenium.isElementPresent(emptyCellAfter), "Toolbar group should  be located on the left.");
@@ -250,8 +235,7 @@ public class TestRichToolbarGroup extends AbstractGrapheneTest {
 
     @Test
     public void testRendered() {
-        selenium.click(pjq("input[type=radio][name$=renderedInput][value=false]"));
-        selenium.waitForPageToLoad();
+        toolbarGroupAttributes.set(ToolbarGroupAttributes.rendered, Boolean.FALSE);
 
         assertTrue(selenium.isElementPresent(toolbar), "Toolbar should be present on the page.");
         assertTrue(selenium.isVisible(toolbar), "Toolbar should be visible.");

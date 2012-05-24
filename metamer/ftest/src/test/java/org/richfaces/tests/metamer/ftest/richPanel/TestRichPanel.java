@@ -22,16 +22,14 @@
 package org.richfaces.tests.metamer.ftest.richPanel;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.bodyClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerClass;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.panelAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
@@ -89,8 +87,7 @@ public class TestRichPanel extends AbstractGrapheneTest {
 
     @Test
     public void testHeader() {
-        selenium.type(pjq("input[type=text][id$=headerInput]"), "new header");
-        selenium.waitForPageToLoad();
+        panelAttributes.set(PanelAttributes.header, "new header");
 
         assertEquals(selenium.getText(headers[0]), "header of panel", "Header of the first panel should not change (facet defined).");
         assertEquals(selenium.getText(headers[1]), "new header", "Header of the second panel.");
@@ -163,8 +160,7 @@ public class TestRichPanel extends AbstractGrapheneTest {
 
     @Test
     public void testRendered() {
-        selenium.click(pjq("input[type=radio][name$=renderedInput][value=false]"));
-        selenium.waitForPageToLoad();
+        panelAttributes.set(PanelAttributes.rendered, Boolean.FALSE);
 
         assertFalse(selenium.isElementPresent(panels[0]), "First panel should not be rendered when rendered=false.");
         assertFalse(selenium.isElementPresent(panels[0]), "Second panel should not be rendered when rendered=false.");

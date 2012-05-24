@@ -66,7 +66,7 @@ public abstract class AbstractTreeSelectionChangeListenerTest extends AbstractWe
      * @return true if text was found or false
      */
     private boolean subTest(String expectedText) {
-        List<WebElement> list = page.getPhases();
+        List<WebElement> list = guardListSize(page.getPhases(), 5);
         for (WebElement webElement : list) {
             if (webElement.getText().equals(expectedText)) {
                 return true;//Text found
@@ -77,22 +77,22 @@ public abstract class AbstractTreeSelectionChangeListenerTest extends AbstractWe
 
     private void testTSCL(String expectedText, String failMessage) {
         //selects a first node
-        page.getItem(1).click();
+        waitRequest(page.getItem(1), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText + nullToFirst), failMessage);
         //then selectis a second node
-        page.getItem(2).click();
+        waitRequest(page.getItem(2), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText + firstToSecond), failMessage);
     }
 
     private void testTSCLWithoutAdditionalStrings(String expectedText, String failMessage) {
         //selects a first node
-        page.getItem(1).click();
+        waitRequest(page.getItem(1), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText), failMessage);
         //then test selecting a second node
-        page.getItem(2).click();
+        waitRequest(page.getItem(2), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText), failMessage);
     }

@@ -976,7 +976,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
         testHtmlAttribute(input, "tabindex", "99");
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "4.3" })
     @IssueTracking("https://issues.jboss.org/browse/RF-10980")
     @Templates(value = "richPopupPanel")
     public void testTabindexInputInPopupPanel() {

@@ -30,23 +30,19 @@ import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.textEquals;
 import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.tabAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
-import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
@@ -139,9 +135,7 @@ public class TestRichTab extends AbstractGrapheneTest {
 
     @Test
     public void testContentClass() {
-        selenium.type(pjq("input[id$=contentClassInput]"), "metamer-ftest-class");
-        selenium.waitForPageToLoad();
-
+        tabAttributes.set(TabAttributes.contentClass,"metamer-ftest-class" );
         assertTrue(selenium.belongsClass(itemContents[0], "metamer-ftest-class"), "contentClass does not work");
     }
 
@@ -153,8 +147,7 @@ public class TestRichTab extends AbstractGrapheneTest {
     @Test
     public void testDisabled() {
         // disable the first tab
-        selenium.click(pjq("input[type=radio][name$=disabledInput][value=true]"));
-        selenium.waitForPageToLoad();
+        tabAttributes.set(TabAttributes.disabled,Boolean.TRUE );
 
         boolean displayed = selenium.isVisible(activeHeaders[0]);
         assertFalse(displayed, "Header of tab1 should not be active.");
@@ -167,8 +160,7 @@ public class TestRichTab extends AbstractGrapheneTest {
         assertEquals(text, "tab1 header");
 
         // enable the first tab
-        selenium.click(pjq("input[type=radio][name$=disabledInput][value=false]"));
-        selenium.waitForPageToLoad();
+        tabAttributes.set(TabAttributes.disabled,Boolean.FALSE );
 
         displayed = selenium.isVisible(activeHeaders[0]);
         assertTrue(displayed, "Header of tab1 should not be active.");
@@ -183,22 +175,17 @@ public class TestRichTab extends AbstractGrapheneTest {
 
     @Test
     public void testHeader() {
-        selenium.type(pjq("input[type=text][id$=headerInput]"), "new header");
-        selenium.waitForPageToLoad();
-
+        tabAttributes.set(TabAttributes.header,"new header" );
         assertEquals(selenium.getText(activeHeaders[0]), "new header", "Header of the first tab did not change.");
 
-        selenium.type(pjq("input[type=text][id$=headerInput]"), "ľščťťžžôúňď ацущьмщфзщйцу");
-        selenium.waitForPageToLoad();
-
+        tabAttributes.set(TabAttributes.header,"ľščťťžžôúňď ацущьмщфзщйцу" );
         assertEquals(selenium.getText(activeHeaders[0]), "ľščťťžžôúňď ацущьмщфзщйцу",
             "Header of the first tab did not change.");
     }
 
     @Test
     public void testHeaderActiveClass() {
-        selenium.type(pjq("input[id$=headerActiveClassInput]"), "metamer-ftest-class");
-        selenium.waitForPageToLoad();
+        tabAttributes.set(TabAttributes.headerActiveClass,"metamer-ftest-class" );
 
         assertTrue(selenium.belongsClass(activeHeaders[0], "metamer-ftest-class"), "headerActiveClass does not work");
         assertFalse(selenium.belongsClass(inactiveHeaders[0], "metamer-ftest-class"), "headerActiveClass does not work");
@@ -212,8 +199,7 @@ public class TestRichTab extends AbstractGrapheneTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-11549")
     public void testHeaderClass() {
-        selenium.type(pjq("input[id$=headerClassInput]"), "metamer-ftest-class");
-        selenium.waitForPageToLoad();
+        tabAttributes.set(TabAttributes.headerClass,"metamer-ftest-class" );
 
         assertTrue(selenium.belongsClass(activeHeaders[0], "metamer-ftest-class"), "tabHeaderClass does not work");
         assertTrue(selenium.belongsClass(inactiveHeaders[0], "metamer-ftest-class"), "tabHeaderClass does not work");
@@ -226,8 +212,7 @@ public class TestRichTab extends AbstractGrapheneTest {
 
     @Test
     public void testHeaderDisabledClass() {
-        selenium.type(pjq("input[id$=headerDisabledClassInput]"), "metamer-ftest-class");
-        selenium.waitForPageToLoad();
+        tabAttributes.set(TabAttributes.headerDisabledClass,"metamer-ftest-class" );
 
         assertFalse(selenium.belongsClass(activeHeaders[0], "metamer-ftest-class"), "headerDisabledClass does not work");
         assertFalse(selenium.belongsClass(inactiveHeaders[0], "metamer-ftest-class"),
@@ -244,8 +229,7 @@ public class TestRichTab extends AbstractGrapheneTest {
 
     @Test
     public void testHeaderInactiveClass() {
-        selenium.type(pjq("input[id$=headerInactiveClassInput]"), "metamer-ftest-class");
-        selenium.waitForPageToLoad();
+        tabAttributes.set(TabAttributes.headerInactiveClass,"metamer-ftest-class" );
 
         assertFalse(selenium.belongsClass(activeHeaders[0], "metamer-ftest-class"), "headerInactiveClass does not work");
         assertTrue(selenium.belongsClass(inactiveHeaders[0], "metamer-ftest-class"),
@@ -262,12 +246,8 @@ public class TestRichTab extends AbstractGrapheneTest {
 
     @Test
     public void testHeaderStyle() {
-        ElementLocator<?> styleInput = pjq("input[id$=headerStyleInput]");
         final String value = "background-color: yellow; font-size: 1.5em;";
-
-        selenium.type(styleInput, value);
-        selenium.waitForPageToLoad();
-
+        tabAttributes.set(TabAttributes.headerStyle, value );
         AttributeLocator<?> styleAttr = activeHeaders[0].getAttribute(Attribute.STYLE);
         assertTrue(selenium.getAttribute(styleAttr).contains(value), "Attribute style should contain \"" + value + "\"");
     }
@@ -280,8 +260,7 @@ public class TestRichTab extends AbstractGrapheneTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-10488")
     public void testName() {
-        selenium.type(pjq("input[type=text][id$=nameInput]"), "metamer");
-        selenium.waitForPageToLoad();
+        tabAttributes.set(TabAttributes.name,"metamer" );
 
         selenium.click(pjq("input[id$=lastTabButton]"));
         waitGui.failWith("Item 3 was not displayed.").until(elementPresent.locator(jq(itemContents[4].getRawLocator() + ":visible")));
@@ -303,9 +282,7 @@ public class TestRichTab extends AbstractGrapheneTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-9537 https://issues.jboss.org/browse/RF-10488")
     public void testOnenter() {
-        selenium.type(pjq("input[type=text][id$=onenterInput]"), "metamerEvents += \"enter \"");
-        selenium.waitForPageToLoad();
-
+        tabAttributes.set(TabAttributes.onenter,"metamerEvents += \"enter \"" );
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
         String time1Value = selenium.getText(time);
 
@@ -347,8 +324,7 @@ public class TestRichTab extends AbstractGrapheneTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-9537")
     public void testOnleave() {
-        selenium.type(pjq("input[type=text][id$=onleaveInput]"), "metamerEvents += \"leave \"");
-        selenium.waitForPageToLoad();
+        tabAttributes.set(TabAttributes.onleave,"metamerEvents += \"leave \"" );
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
         String time1Value = selenium.getText(time);
@@ -388,10 +364,7 @@ public class TestRichTab extends AbstractGrapheneTest {
 
     @Test
     public void testRendered() {
-        JQueryLocator input = pjq("input[type=radio][name$=renderedInput][value=false]");
-        selenium.click(input);
-        selenium.waitForPageToLoad();
-
+        tabAttributes.set(TabAttributes.rendered,Boolean.FALSE );
         assertFalse(selenium.isElementPresent(activeHeaders[0]), "Tab should not be rendered when rendered=false.");
         assertFalse(selenium.isElementPresent(inactiveHeaders[0]), "Tab should not be rendered when rendered=false.");
         assertFalse(selenium.isElementPresent(disabledHeaders[0]), "Tab should not be rendered when rendered=false.");
@@ -420,18 +393,13 @@ public class TestRichTab extends AbstractGrapheneTest {
 
     @Test
     public void testSwitchTypeAjax() {
-        JQueryLocator selectOption = pjq("input[name$=switchTypeInput][value=ajax]");
-        selenium.click(selectOption);
-        selenium.waitForPageToLoad();
-
+        tabAttributes.set(TabAttributes.switchType,"ajax" );
         testSwitchTypeNull();
     }
 
     @Test
     public void testSwitchTypeClient() {
-        JQueryLocator selectOption = pjq("input[name$=switchTypeInput][value=client]");
-        selenium.click(selectOption);
-        selenium.waitForPageToLoad();
+        tabAttributes.set(TabAttributes.switchType,"client" );
 
         guardXhr(selenium).click(inactiveHeaders[1]);
         waitGui.failWith("Tab 2 is not displayed.").until(elementVisible.locator(itemContents[1]));
@@ -442,9 +410,7 @@ public class TestRichTab extends AbstractGrapheneTest {
 
     @Test
     public void testSwitchTypeServer() {
-        JQueryLocator selectOption = pjq("input[name$=switchTypeInput][value=server]");
-        selenium.click(selectOption);
-        selenium.waitForPageToLoad();
+        tabAttributes.set(TabAttributes.switchType,"server" );
 
         guardXhr(selenium).click(inactiveHeaders[1]);
         waitGui.failWith("Tab 2 is not displayed.").until(elementVisible.locator(itemContents[1]));

@@ -69,24 +69,28 @@ public class TestTreeModelAdaptorToggling extends TestTreeToggling {
     }
 
     @Test
+    @Use(field = "sample", empty = true)
     @Override
     public void testTopLevelNodesExpansion() {
         super.testTopLevelNodesExpansion();
     }
 
     @Test
+    @Use(field = "sample", empty = true)
     @Override
     public void testTopLevelNodesCollapsion() {
         super.testTopLevelNodesCollapsion();
     }
 
     @Test
+    @Use(field = "sample", empty = true)
     @Override
     public void testDeepExpansion() {
         super.testDeepExpansion();
     }
 
     @Test
+    @Use(field = "sample", empty = true)
     @Override
     public void testDeepCollapsion() {
         super.testDeepCollapsion();

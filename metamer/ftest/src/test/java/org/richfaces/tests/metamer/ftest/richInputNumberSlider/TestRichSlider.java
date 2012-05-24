@@ -1,41 +1,38 @@
-/*******************************************************************************
- * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
+/**
+ * *****************************************************************************
+ * JBoss, Home of Professional Open Source Copyright 2010-2012, Red Hat, Inc.
+ * and individual contributors by the @authors tag. See the copyright.txt in the
+ * distribution for a full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
+ * This is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ * This software is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this software; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
+ * site: http://www.fsf.org.
+ * *****************************************************************************
+ */
 package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
-import static org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory.optionLabel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.decreaseClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.handleClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.increaseClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.inputClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.tooltipClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.trackClass;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.inputNumberSliderAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -49,9 +46,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
 import javax.faces.event.PhaseId;
-
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.geometry.Point;
@@ -63,7 +58,6 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page /faces/components/richInputNumberSlider/simple.xhtml
@@ -125,22 +119,22 @@ public class TestRichSlider extends AbstractSliderTest {
     }
 
     @Test
-    @Templates(exclude = { "richPopupPanel", "richAccordion" })
+    @Templates(exclude = {"richPopupPanel", "richAccordion"})
     @Override
     public void testClick() {
         super.testClick();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = {"4.Future"})
     @IssueTracking("https://issues.jboss.org/browse/RF-11314")
-    @Templates(value = { "richPopupPanel" })
+    @Templates(value = {"richPopupPanel"})
     public void testClickInPopupPanel() {
         super.testClick();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = {"4.Future"})
     @IssueTracking("https://issues.jboss.org/browse/RF-11314")
-    @Templates(value = { "richAccordion" })
+    @Templates(value = {"richAccordion"})
     public void testClickInAccordion() {
         super.testClick();
     }
@@ -159,34 +153,30 @@ public class TestRichSlider extends AbstractSliderTest {
     }
 
     @Test
-    @Templates(exclude = { "richPopupPanel" })
+    @Templates(exclude = {"richPopupPanel"})
     public void testAccesskey() {
         testHtmlAttribute(input, "accesskey", "x");
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = {"4.Future"})
     @IssueTracking("https://issues.jboss.org/browse/RF-11315")
-    @Templates(value = { "richPopupPanel" })
+    @Templates(value = {"richPopupPanel"})
     public void testAccesskeyInPopupPanel() {
         testHtmlAttribute(input, "accesskey", "x");
     }
 
     @Test
     public void testDecreaseClass() {
-        selenium.click(pjq("input[type=radio][name$=showArrowsInput][value=true]"));
-        selenium.waitForPageToLoad();
-
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
         testStyleClass(left, decreaseClass);
     }
 
     @Test
     public void testDecreaseSelectedClass() {
-        selenium.click(pjq("input[type=radio][name$=showArrowsInput][value=true]"));
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
 
         final String value = "metamer-ftest-class";
-        selenium.type(pjq("input[id$=decreaseSelectedClassInput]"), value);
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.decreaseSelectedClass, value);
 
         selenium.mouseDown(left);
         assertTrue(selenium.belongsClass(left, value), "decreaseSelectedClass does not work");
@@ -194,12 +184,10 @@ public class TestRichSlider extends AbstractSliderTest {
     }
 
     @Test
-    @Use(field = "delay", ints = { 800, 1250, 3700 })
+    @Use(field = "delay", ints = {800, 1250, 3700})
     public void testDelay() {
-        selenium.type(pjq("input[type=text][id$=delayInput]"), delay.toString());
-        selenium.waitForPageToLoad();
-        selenium.click(pjq("input[type=radio][name$=showArrowsInput][value=true]"));
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, delay);
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
 
         try {
             verifyDelay(left, delay);
@@ -216,9 +204,7 @@ public class TestRichSlider extends AbstractSliderTest {
 
     @Test
     public void testDisabled() {
-        JQueryLocator selectOption = pjq("input[type=radio][name$=disabledInput][value=true]");
-        selenium.click(selectOption);
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.disabled, Boolean.TRUE);
 
         AttributeLocator<?> disabledAttribute = input.getAttribute(new Attribute("disabled"));
         assertEquals(selenium.getAttribute(disabledAttribute), "true", "Input should be disabled.");
@@ -231,11 +217,9 @@ public class TestRichSlider extends AbstractSliderTest {
     }
 
     @Test
-    @Templates(exclude = { "richPopupPanel", "richAccordion" })
+    @Templates(exclude = {"richPopupPanel", "richAccordion"})
     public void testEnableManualInput() {
-        JQueryLocator selectOption = pjq("input[type=radio][name$=enableManualInputInput][value=false]");
-        selenium.click(selectOption);
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.enableManualInput, Boolean.FALSE);
 
         AttributeLocator<?> readonlyAttribute = input.getAttribute(new Attribute("readonly"));
         assertEquals(selenium.getAttribute(readonlyAttribute), "true", "Input should be read-only.");
@@ -243,14 +227,14 @@ public class TestRichSlider extends AbstractSliderTest {
         testClick();
     }
 
-    @Test(groups = { "4.Future" })
-    @Templates(value = { "richPopupPanel" })
+    @Test(groups = {"4.Future"})
+    @Templates(value = {"richPopupPanel"})
     public void testEnableManualInputInPopupPanel() {
         testEnableManualInput();
     }
 
-    @Test(groups = { "4.Future" })
-    @Templates(value = { "richAccordion" })
+    @Test(groups = {"4.Future"})
+    @Templates(value = {"richAccordion"})
     public void testEnableManualInputInAccordion() {
         testEnableManualInput();
     }
@@ -263,8 +247,7 @@ public class TestRichSlider extends AbstractSliderTest {
     @Test
     public void testHandleSelectedClass() {
         final String value = "metamer-ftest-class";
-        selenium.type(pjq("input[id$=handleSelectedClassInput]"), value);
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.handleSelectedClass, value);
 
         selenium.mouseDown(handle);
         assertTrue(selenium.belongsClass(handle, value), "handleSelectedClass does not work");
@@ -272,15 +255,14 @@ public class TestRichSlider extends AbstractSliderTest {
 
     @Test
     public void testImmediate() {
-        selenium.click(pjq("input[type=radio][name$=immediateInput][value=true]"));
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.immediate, Boolean.TRUE);
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).type(input, "-10");
         waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
 
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
-            PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
+                PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
         // Remove first 2 preceding chars from correct message (used to remove usual '* ' token)
         phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: 2 -> -10");
 
@@ -289,20 +271,17 @@ public class TestRichSlider extends AbstractSliderTest {
 
     @Test
     public void testIncreaseClass() {
-        selenium.click(pjq("input[type=radio][name$=showArrowsInput][value=true]"));
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
 
         testStyleClass(right, increaseClass);
     }
 
     @Test
     public void testIncreaseSelectedClass() {
-        selenium.click(pjq("input[type=radio][name$=showArrowsInput][value=true]"));
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
 
         final String value = "metamer-ftest-class";
-        selenium.type(pjq("input[id$=increaseSelectedClassInput]"), value);
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.increaseSelectedClass, value);
 
         selenium.mouseDown(right);
         assertTrue(selenium.belongsClass(right, value), "increaseSelectedClass does not work");
@@ -316,37 +295,32 @@ public class TestRichSlider extends AbstractSliderTest {
     @Test
     public void testInputPosition() {
         JQueryLocator br = pjq("span[id$=slider] br");
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.inputPosition, "bottom");
 
-        selenium.select(pjq("select[id$=inputPositionInput]"), optionLabel("bottom"));
-        selenium.waitForPageToLoad();
         int inputPosition = selenium.getElementPositionTop(input);
         int trackPosition = selenium.getElementPositionTop(track);
         assertTrue(trackPosition < inputPosition, "Track should be above input on the page.");
         assertTrue(selenium.isElementPresent(br), "Track and input should not be on the same line.");
 
-        selenium.select(pjq("select[id$=inputPositionInput]"), optionLabel("top"));
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.inputPosition, "top");
         inputPosition = selenium.getElementPositionTop(input);
         trackPosition = selenium.getElementPositionTop(track);
         assertTrue(trackPosition > inputPosition, "Track should be below input on the page.");
         assertTrue(selenium.isElementPresent(br), "Track and input should not be on the same line.");
 
-        selenium.select(pjq("select[id$=inputPositionInput]"), optionLabel("right"));
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.inputPosition, "right");
         inputPosition = selenium.getElementPositionLeft(input);
         trackPosition = selenium.getElementPositionLeft(track);
         assertTrue(trackPosition < inputPosition, "Track should be on the left of input on the page.");
         assertFalse(selenium.isElementPresent(br), "Track and input should be on the same line.");
 
-        selenium.select(pjq("select[id$=inputPositionInput]"), optionLabel("left"));
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.inputPosition, "left");
         inputPosition = selenium.getElementPositionLeft(input);
         trackPosition = selenium.getElementPositionLeft(track);
         assertTrue(trackPosition > inputPosition, "Track should be on the right of input on the page.");
         assertFalse(selenium.isElementPresent(br), "Track and input should be on the same line.");
 
-        selenium.select(pjq("select[id$=inputPositionInput]"), optionLabel("null"));
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.inputPosition, "null");
         inputPosition = selenium.getElementPositionLeft(input);
         trackPosition = selenium.getElementPositionLeft(track);
         assertTrue(trackPosition < inputPosition, "Track should be on the left of input on the page.");
@@ -355,15 +329,12 @@ public class TestRichSlider extends AbstractSliderTest {
 
     @Test
     public void testInputSize() {
-        JQueryLocator selectOption = pjq("input[type=text][id$=inputSizeInput]");
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.inputSize, 2);
 
-        selenium.type(selectOption, "2");
-        selenium.waitForPageToLoad();
         AttributeLocator<?> sizeAttribute = input.getAttribute(new Attribute("size"));
         assertEquals(selenium.getAttribute(sizeAttribute), "2", "Input's size attribute.");
 
-        selenium.type(selectOption, "40");
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.inputSize, 40);
         assertEquals(selenium.getAttribute(sizeAttribute), "40", "Input's size attribute.");
     }
 
@@ -374,9 +345,7 @@ public class TestRichSlider extends AbstractSliderTest {
 
     @Test
     public void testMaxValueType() {
-        JQueryLocator selectOption = pjq("input[type=text][id$=maxValueInput]");
-        selenium.type(selectOption, "13");
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.maxValue, 13);
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).type(input, "11");
@@ -390,10 +359,9 @@ public class TestRichSlider extends AbstractSliderTest {
     }
 
     @Test
-    @Templates(exclude = { "richPopupPanel", "richAccordion" })
+    @Templates(exclude = {"richPopupPanel", "richAccordion"})
     public void testMaxValueClick() {
-        selenium.type(pjq("input[type=text][id$=maxValueInput]"), "20");
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.maxValue, 20);
 
         String reqTime = selenium.getText(time);
         reqTime = selenium.getText(time);
@@ -402,7 +370,7 @@ public class TestRichSlider extends AbstractSliderTest {
         assertEquals(selenium.getText(output), "17", "Output was not updated.");
         int margin = selenium.getElementPositionLeft(handle) - selenium.getElementPositionLeft(track);
         assertTrue(margin >= 167 && margin <= 173, "Left margin of handle should be between 167 and 173 (was " + margin
-            + ").");
+                + ").");
 
         reqTime = selenium.getText(time);
         guardXhr(selenium).mouseDownAt(track, new Point(195, 0));
@@ -410,17 +378,17 @@ public class TestRichSlider extends AbstractSliderTest {
         assertEquals(selenium.getText(output), "20", "Output was not updated.");
         margin = selenium.getElementPositionLeft(handle) - selenium.getElementPositionLeft(track);
         assertTrue(margin >= 192 && margin <= 198, "Left margin of handle should be between 192 and 198 (was " + margin
-            + ").");
+                + ").");
     }
 
-    @Test(groups = { "4.Future" })
-    @Templates(value = { "richAccordion" })
+    @Test(groups = {"4.Future"})
+    @Templates(value = {"richAccordion"})
     public void testMaxValueClickInAccordion() {
         testMaxValueClick();
     }
 
-    @Test(groups = { "4.Future" })
-    @Templates(value = { "richPopupPanel" })
+    @Test(groups = {"4.Future"})
+    @Templates(value = {"richPopupPanel"})
     public void testMaxValueClickInPopupPanel() {
         testMaxValueClick();
     }
@@ -428,23 +396,19 @@ public class TestRichSlider extends AbstractSliderTest {
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-9860")
     public void testMaxlength() {
-        selenium.type(pjq("input[type=text][id$=maxlengthInput]"), "5");
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.maxlength, 5);
 
         AttributeLocator<?> attr = input.getAttribute(Attribute.MAXLENGTH);
         assertEquals(selenium.getAttribute(attr), "5", "Attribute maxlength of input.");
 
-        selenium.type(pjq("input[type=text][id$=maxlengthInput]"), "");
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.maxlength, "");
 
         assertFalse(selenium.isAttributePresent(attr), "Attribute maxlength should not be present.");
     }
 
     @Test
     public void testMinValueType() {
-        JQueryLocator selectOption = pjq("input[type=text][id$=minValueInput]");
-        selenium.type(selectOption, "-13");
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.minValue, -13);
 
         String reqTime = selenium.getText(time);
         guardXhr(selenium).type(input, "-11");
@@ -458,19 +422,17 @@ public class TestRichSlider extends AbstractSliderTest {
     }
 
     @Test
-    @Templates(exclude = { "richPopupPanel", "richAccordion" })
+    @Templates(exclude = {"richPopupPanel", "richAccordion"})
     public void testMinValueClick() {
-        selenium.type(pjq("input[type=text][id$=minValueInput]"), "-20");
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.minValue, -20);
 
         String reqTime = selenium.getText(time);
-        reqTime = selenium.getText(time);
         guardXhr(selenium).mouseDownAt(track, new Point(28, 0));
         waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
         assertEquals(selenium.getText(output), "-16", "Output was not updated.");
         int margin = selenium.getElementPositionLeft(handle) - selenium.getElementPositionLeft(track);
         assertTrue(margin >= 25 && margin <= 31, "Left margin of handle should be between 25 and 31 (was " + margin
-            + ").");
+                + ").");
 
         reqTime = selenium.getText(time);
         guardXhr(selenium).mouseDownAt(track, new Point(0, 0));
@@ -480,19 +442,19 @@ public class TestRichSlider extends AbstractSliderTest {
         assertTrue(margin <= 3, "Left margin of handle should be between 0 and 3 (was " + margin + ").");
     }
 
-    @Test(groups = { "4.Future" })
-    @Templates(value = { "richAccordion" })
+    @Test(groups = {"4.Future"})
+    @Templates(value = {"richAccordion"})
     public void testMinValueClickInAccordion() {
         testMinValueClick();
     }
 
-    @Test(groups = { "4.Future" })
-    @Templates(value = { "richPopupPanel" })
+    @Test(groups = {"4.Future"})
+    @Templates(value = {"richPopupPanel"})
     public void testMinValueClickInPopupPanel() {
         testMinValueClick();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = {"4.Future"})
     @IssueTracking("https://issues.jboss.org/browse/RF-10829")
     public void testOnblur() {
         testFireEvent(Event.BLUR, slider);
@@ -501,8 +463,7 @@ public class TestRichSlider extends AbstractSliderTest {
     @Test
     public void testOnchangeType() {
         String value = "metamerEvents += \"change \"";
-        selenium.type(pjq("input[id$=onchangeInput]"), value);
-        selenium.waitForPageToLoad(TIMEOUT);
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.onchange, value);
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
 
@@ -517,14 +478,12 @@ public class TestRichSlider extends AbstractSliderTest {
     }
 
     @Test
-    @Templates(exclude = { "richPopupPanel" })
+    @Templates(exclude = {"richPopupPanel"})
     public void testOnchangeClick() {
-        selenium.click(pjq("input[type=radio][name$=showArrowsInput][value=true]"));
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
 
         String value = "metamerEvents += \"change \"";
-        selenium.type(pjq("input[id$=onchangeInput]"), value);
-        selenium.waitForPageToLoad(TIMEOUT);
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.onchange, value);
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
 
@@ -541,8 +500,8 @@ public class TestRichSlider extends AbstractSliderTest {
         assertEquals(events.length, 3, "Three events should be fired.");
     }
 
-    @Test(groups = { "4.Future" })
-    @Templates(value = { "richPopupPanel" })
+    @Test(groups = {"4.Future"})
+    @Templates(value = {"richPopupPanel"})
     public void testOnchangeClickInPopupPanel() {
         testOnchangeClick();
     }
@@ -557,7 +516,7 @@ public class TestRichSlider extends AbstractSliderTest {
         testFireEvent(Event.DBLCLICK, slider);
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = {"4.Future"})
     @IssueTracking("https://issues.jboss.org/browse/RF-10829")
     public void testOnfocus() {
         testFireEvent(Event.FOCUS, slider);
@@ -603,7 +562,7 @@ public class TestRichSlider extends AbstractSliderTest {
         testFireEvent(Event.MOUSEUP, slider);
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = {"4.Future"})
     @IssueTracking("https://issues.jboss.org/browse/RF-10829")
     public void testOnselect() {
         testFireEvent(Event.SELECT, slider);
@@ -611,16 +570,14 @@ public class TestRichSlider extends AbstractSliderTest {
 
     @Test
     public void testRendered() {
-        selenium.click(pjq("input[type=radio][name$=renderedInput][value=false]"));
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.rendered, Boolean.FALSE);
 
         assertFalse(selenium.isElementPresent(slider), "Slider should not be rendered when rendered=false.");
     }
 
     @Test
     public void testShowArrows() {
-        selenium.click(pjq("input[type=radio][name$=showArrowsInput][value=true]"));
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
 
         assertTrue(selenium.isElementPresent(left), "Left arrow should be present on the page.");
         assertTrue(selenium.isVisible(left), "Left arrow should be visible.");
@@ -630,8 +587,7 @@ public class TestRichSlider extends AbstractSliderTest {
 
     @Test
     public void testShowBoundaryValues() {
-        selenium.click(pjq("input[type=radio][name$=showBoundaryValuesInput][value=false]"));
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.showBoundaryValues, Boolean.FALSE);
 
         assertFalse(selenium.isElementPresent(minBoundary), "Boundary values should not be present on the page.");
         assertFalse(selenium.isElementPresent(maxBoundary), "Boundary values should not be present on the page.");
@@ -639,8 +595,7 @@ public class TestRichSlider extends AbstractSliderTest {
 
     @Test
     public void testShowInput() {
-        selenium.click(pjq("input[type=radio][name$=showInputInput][value=false]"));
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.showInput, Boolean.FALSE);
 
         if (selenium.isElementPresent(input)) {
             assertFalse(selenium.isVisible(input), "Input should not be visible on the page.");
@@ -648,10 +603,9 @@ public class TestRichSlider extends AbstractSliderTest {
     }
 
     @Test
-    @Templates(exclude = { "richPopupPanel", "richAccordion" })
+    @Templates(exclude = {"richPopupPanel", "richAccordion"})
     public void testShowTooltip() {
-        selenium.click(pjq("input[type=radio][name$=showTooltipInput][value=true]"));
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.showTooltip, Boolean.TRUE);
 
         assertTrue(selenium.isElementPresent(tooltip), "Tooltip should be present on the page.");
         assertFalse(selenium.isVisible(tooltip), "Tooltip should not be visible.");
@@ -664,28 +618,25 @@ public class TestRichSlider extends AbstractSliderTest {
         assertFalse(selenium.isVisible(tooltip), "Tooltip should not be visible.");
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = {"4.Future"})
     @IssueTracking("https://issues.jboss.org/browse/RF-11314")
-    @Templates(value = { "richAccordion" })
+    @Templates(value = {"richAccordion"})
     public void testShowTooltipInAccordion() {
         testShowTooltip();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = {"4.Future"})
     @IssueTracking("https://issues.jboss.org/browse/RF-11314")
-    @Templates(value = { "richPopupPanel" })
+    @Templates(value = {"richPopupPanel"})
     public void testShowTooltipInPopupPanel() {
         testShowTooltip();
     }
 
     @Test
     public void testStep() {
-        selenium.click(pjq("input[type=radio][name$=showArrowsInput][value=true]"));
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[type=text][id$=delayInput]"), "100");
-        selenium.waitForPageToLoad();
-        selenium.type(pjq("input[id$=stepInput]"), "7");
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, 100);
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.step, 7);
 
         clickArrow(right, 1);
         assertEquals(selenium.getText(output), "9", "Wrong output");
@@ -717,10 +668,9 @@ public class TestRichSlider extends AbstractSliderTest {
     }
 
     @Test
-    @Templates(exclude = { "richPopupPanel" })
+    @Templates(exclude = {"richPopupPanel"})
     public void testTabindex() {
-        selenium.type(pjq("input[id$=tabindexInput]"), "55");
-        selenium.waitForPageToLoad(TIMEOUT);
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.tabindex, 55);
 
         AttributeLocator<?> attr = track.getAttribute(new Attribute("tabindex"));
         assertTrue(selenium.isAttributePresent(attr), "Attribute tabindex of track is not present.");
@@ -731,17 +681,16 @@ public class TestRichSlider extends AbstractSliderTest {
         assertEquals(selenium.getAttribute(attr), "55", "Attribute tabindex of input.");
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = {"4.Future"})
     @IssueTracking("https://issues.jboss.org/browse/RF-10980")
-    @Templates(value = { "richPopupPanel" })
+    @Templates(value = {"richPopupPanel"})
     public void testTabindexInPopupPanel() {
         testTabindex();
     }
 
     @Test
     public void testTooltipClass() {
-        selenium.click(pjq("input[type=radio][name$=showTooltipInput][value=true]"));
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.showTooltip, Boolean.TRUE);
 
         testStyleClass(tooltip, tooltipClass);
     }
@@ -754,8 +703,7 @@ public class TestRichSlider extends AbstractSliderTest {
     @Test
     @Use(field = "number", value = "correctNumbers")
     public void testValueCorrect() {
-        selenium.type(pjq("input[id$=valueInput]"), number);
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.value, number);
 
         assertEquals(selenium.getText(output), number, "Output was not updated.");
         assertEquals(selenium.getValue(input), number, "Input was not updated.");
@@ -764,8 +712,7 @@ public class TestRichSlider extends AbstractSliderTest {
     @Test
     @Use(field = "number", value = "smallNumbers")
     public void testValueSmall() {
-        selenium.type(pjq("input[id$=valueInput]"), number);
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.value, number);
 
         assertEquals(selenium.getText(output), number, "Output was not updated.");
         assertEquals(selenium.getValue(input), "-10", "Input was not updated.");
@@ -774,8 +721,7 @@ public class TestRichSlider extends AbstractSliderTest {
     @Test
     @Use(field = "number", value = "bigNumbers")
     public void testValueBig() {
-        selenium.type(pjq("input[id$=valueInput]"), number);
-        selenium.waitForPageToLoad();
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.value, number);
 
         assertEquals(selenium.getText(output), number, "Output was not updated.");
         assertEquals(selenium.getValue(input), "10", "Input was not updated.");
@@ -784,10 +730,8 @@ public class TestRichSlider extends AbstractSliderTest {
     /**
      * Clicks on slider's arrow.
      *
-     * @param arrow
-     *            slider's left or right arrow locator
-     * @param clicks
-     *            how many times should it be clicked
+     * @param arrow slider's left or right arrow locator
+     * @param clicks how many times should it be clicked
      */
     private void clickArrow(ElementLocator<?> arrow, int clicks) {
         String reqTime = null;
@@ -795,7 +739,7 @@ public class TestRichSlider extends AbstractSliderTest {
         for (int i = 0; i < clicks; i++) {
             reqTime = selenium.getText(time);
             guardXhr(selenium).runScript(
-                new JavaScript("jQuery(\"" + arrow.getRawLocator() + "\").mousedown().mouseup()"));
+                    new JavaScript("jQuery(\"" + arrow.getRawLocator() + "\").mousedown().mouseup()"));
 
             waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
         }
@@ -804,10 +748,8 @@ public class TestRichSlider extends AbstractSliderTest {
     /**
      * Clicks on slider's arrow and verifies delay.
      *
-     * @param arrow
-     *            slider's left or right arrow locator
-     * @param delay
-     *            awaited delay between ajax requests
+     * @param arrow slider's left or right arrow locator
+     * @param delay awaited delay between ajax requests
      */
     private void verifyDelay(JQueryLocator arrow, int delay) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss.SSS");
@@ -833,7 +775,7 @@ public class TestRichSlider extends AbstractSliderTest {
         delta = (long) (delay * 0.5);
         long average = countAverage(timesArray);
         assertTrue(Math.abs(average - delay) < delta, "Average delay " + average + " is too far from set value ("
-            + delay + ")");
+                + delay + ")");
     }
 
     private long countAverage(Date[] times) {

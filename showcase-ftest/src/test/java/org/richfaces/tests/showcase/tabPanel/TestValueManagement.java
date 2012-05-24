@@ -22,6 +22,7 @@
 package org.richfaces.tests.showcase.tabPanel;
 
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
 
@@ -59,6 +60,9 @@ public class TestValueManagement extends AbstractGrapheneTest {
     @Test
     public void testExternalControlsForSwitchingThePanel() {
         guardXhr(selenium).click(firstTabButton);
+
+        // workaround because browser needs warm up
+        waitGui.waitForTimeout();
 
         guardXhr(selenium).click(nextTabButton);
 

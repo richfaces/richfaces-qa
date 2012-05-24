@@ -24,10 +24,7 @@ package org.richfaces.tests.showcase.contextMenu;
 import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.util.Iterator;
@@ -42,6 +39,8 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestTree extends AbstractTreeTest {
+
+    private final int DEVIATION = 5;
 
     /* *****************************************
      * Locators*****************************************
@@ -63,23 +62,27 @@ public class TestTree extends AbstractTreeTest {
 
         collapseOrExpandAllNodes(nodeExpander);
 
+        int soFar = 0;
+
         for (Iterator<JQueryLocator> i = node.iterator(); i.hasNext();) {
+            if(soFar > 20) {
+                break;
+            }
             JQueryLocator currentNode = i.next();
+            soFar++;
             String text = selenium.getText(currentNode);
             if (text.contains("-")) {
                 text = text.substring(0, text.indexOf('-'));
             }
 
-            guardXhr(selenium).clickAt(currentNode, new Point(0, 0));
-            selenium.contextMenuAt(currentNode, new Point(2, 5));
-
-            waitGui.failWith(new RuntimeException("The context menu should be visible, when right clicking on node"))
-                .timeout(3000).until(elementVisible.locator(contextMenu));
+            // workaround for invoking context menu, sometimes it is managed to be invoked on the thrid time max,
+            // do not know why
+            tryToInvokeContextMenu(currentNode, new Point(2, 5), contextMenu);
 
             selenium.click(contextMenuItem);
 
             waitGui.failWith(new RuntimeException("The popup should be visible when triggering it from context menu!"))
-                .timeout(3000).until(elementVisible.locator(popupContent));
+                .timeout(2000).until(elementVisible.locator(popupContent));
 
             String actualText = selenium.getText(popupContent);
             assertTrue(actualText.contains(text),
@@ -91,19 +94,9 @@ public class TestTree extends AbstractTreeTest {
 
     @Test
     public void testContextMenuPosition() {
-        Point offset = new Point(2,5);
+        Point offset = new Point(2, 5);
         JQueryLocator target = jq(node.getRawLocator() + ":eq(0)");
-        guardXhr(selenium).clickAt(node, new Point(0, 0));
-        selenium.contextMenuAt( target , offset );
 
-        waitGui.failWith(new RuntimeException("The context menu should be visible")).timeout(2000)
-            .until(elementVisible.locator(contextMenu));
-
-        Point actualContextMenuPosition = selenium.getElementPosition(contextMenu);
-        Point targetPosition = selenium.getElementPosition(target);
-        Point expectedContextMenuPosition = targetPosition.add(offset);
-
-        assertEquals(actualContextMenuPosition.getX(), expectedContextMenuPosition.getX());
-        assertEquals(actualContextMenuPosition.getY(), expectedContextMenuPosition.getY());
+        checkContextMenuRenderedAtCorrectPosition(target, offset, true, contextMenu, DEVIATION);
     }
 }

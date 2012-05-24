@@ -21,6 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase;
 
+import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -29,6 +32,7 @@ import java.util.Iterator;
 
 import org.jboss.arquillian.ajocado.ajaxaware.AjaxAwareInterceptor;
 import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
+import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -57,17 +61,15 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
     }
 
     /* ***********************************************************************************************************************
-     * ajocado specific methods ********************************* *****************************************
+     * ajocado specific methods **************************************************************************
      * **********************************************
      */
 
     /**
      * Wait for presention of given element for given timeout
      *
-     * @param element
-     *            the element which should be displayed
-     * @param timeout
-     *            the time for which the presention of element will be checked
+     * @param element the element which should be displayed
+     * @param timeout the time for which the presention of element will be checked
      * @return true when elements is found in given timeout, false otherwise
      */
     public boolean waitForElementPresent(JQueryLocator element, long timeout) {
@@ -93,16 +95,6 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
     public void eraseInput(JQueryLocator input) {
 
         selenium.type(input, "");
-
-        // the old way
-        /*
-         * selenium.focus(input);
-         *
-         * selenium.keyDownNative(KeyEvent.VK_CONTROL); selenium.keyPressNative(KeyEvent.VK_A);
-         * selenium.keyUpNative(KeyEvent.VK_CONTROL);
-         *
-         * selenium.keyPressNative(KeyEvent.VK_BACK_SPACE);
-         */
     }
 
     /**
@@ -123,12 +115,10 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
      * @param errorMessage
      * @param shouldErrorMessagePresented
      */
-    public void isThereErrorMessage(JQueryLocator errorMessageLocator, String errorMessage,
-        boolean shouldErrorMessagePresented) {
+    public void isThereErrorMessage(JQueryLocator errorMessageLocator, String errorMessage, boolean shouldErrorMessagePresented) {
 
         if (shouldErrorMessagePresented) {
-            assertTrue(selenium.getText(errorMessageLocator).contains(errorMessage), errorMessage
-                + " /// should be presented!");
+            assertTrue(selenium.getText(errorMessageLocator).contains(errorMessage), errorMessage + " /// should be presented!");
         } else {
             assertFalse(selenium.isElementPresent(errorMessageLocator), errorMessage + " /// should not be presented!");
 
@@ -142,8 +132,7 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
      * @param infoMessage
      * @param shouldBeInfoMessagePresented
      */
-    public void isThereInfoMessage(JQueryLocator infoMessageLocator, String infoMessage,
-        boolean shouldBeInfoMessagePresented) {
+    public void isThereInfoMessage(JQueryLocator infoMessageLocator, String infoMessage, boolean shouldBeInfoMessagePresented) {
 
         isThereErrorMessage(infoMessageLocator, infoMessage, shouldBeInfoMessagePresented);
     }
@@ -188,6 +177,41 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
 
         return false;
 
+    }
+
+    protected void checkContextMenuRenderedAtCorrectPosition(JQueryLocator target, Point offset, boolean invokedByRightClick,
+        JQueryLocator contextMenu, final int TOLERANCE) {
+        if (invokedByRightClick) {
+            selenium.contextMenuAt(target, offset);
+        } else {
+            selenium.clickAt(target, offset);
+        }
+
+        waitGui.failWith(new RuntimeException("The context menu should be visible")).timeout(2000)
+            .until(elementVisible.locator(contextMenu));
+
+        Point actualContextMenuPosition = selenium.getElementPosition(contextMenu);
+        Point targetPosition = selenium.getElementPosition(target);
+        Point expectedContextMenuPosition = targetPosition.add(offset);
+
+        boolean isXInTolerance = (actualContextMenuPosition.getX() > expectedContextMenuPosition.getX() - TOLERANCE)
+            && (actualContextMenuPosition.getX() < expectedContextMenuPosition.getX() + TOLERANCE);
+        boolean isYInTolerance = (actualContextMenuPosition.getY() > expectedContextMenuPosition.getY() - TOLERANCE)
+            && (actualContextMenuPosition.getY() < expectedContextMenuPosition.getY() + TOLERANCE);
+        assertTrue(isXInTolerance, "The X coordinate is wrong!");
+        assertTrue(isYInTolerance, "The Y coordinate is wrong!");
+    }
+
+    protected void tryToInvokeContextMenu(JQueryLocator node, Point point, JQueryLocator contextMenu) {
+        for (int i = 0; i < 5; i++) {
+            selenium.clickAt(node, point);
+            selenium.contextMenuAt(node, point);
+
+            waitGui.dontFail().timeout(1000).until(elementVisible.locator(contextMenu));
+            if (selenium.isVisible(contextMenu)) {
+                break;
+            }
+        }
     }
 
     /* ***************************************************************************************************

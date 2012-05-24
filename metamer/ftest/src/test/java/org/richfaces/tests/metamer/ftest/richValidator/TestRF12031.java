@@ -50,7 +50,7 @@ public class TestRF12031 extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richValidator/RF-12031.xhtml");
     }
 
-    @Test
+    @Test(groups = { "4.3" })
     @IssueTracking(value = "https://issues.jboss.org/browse/RF-12031")
     public void testCSVOnConditionallyRenderedInput() {
         selenium.click(toggleButton);

@@ -84,6 +84,18 @@ public class RichNotifyBean implements Serializable {
         // FIXME these attributes should be in the list after fixing RF-12144
         attributesNotifyMessages.setAttribute("showHistory", false);
         attributesNotifyMessages.get("showHistory").setType(Boolean.class);
+        attributesNotifyMessages.setAttribute("onclick", null);
+        attributesNotifyMessages.setAttribute("ondblclick", null);
+        attributesNotifyMessages.setAttribute("onkeydown", null);
+        attributesNotifyMessages.setAttribute("onkeypress", null);
+        attributesNotifyMessages.setAttribute("onkeyup", null);
+        attributesNotifyMessages.setAttribute("onmousedown", null);
+        attributesNotifyMessages.setAttribute("onmousemove", null);
+        attributesNotifyMessages.setAttribute("onmouseout", null);
+        attributesNotifyMessages.setAttribute("onmouseover", null);
+        attributesNotifyMessages.setAttribute("onmouseup", null);
+        attributesNotifyMessages.setAttribute("style", null);
+        attributesNotifyMessages.setAttribute("title", null);
 
         attributesNotifyMessages.setAttribute("animationSpeed", 100);
         attributesNotifyMessages.setAttribute("appearAnimation", "fade");
@@ -246,21 +258,5 @@ public class RichNotifyBean implements Serializable {
         for(int i=0; i<messageCount; i++) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, text, detail));
         }
-    }
-
-    /**
-     * It returns attributes shared by AbstractNotify and AbstractNotifyMessages (NotifyAttributes)
-     *
-     * @return map containing all attributes of tested component. Name of the component is key in the map.
-     */
-    private Attributes getGeneralAttributes() {
-        Attributes attributes = Attributes.getAttributesFromClass(NotifyAttributes.class, getClass());
-        attributes.setAttribute("animationSpeed", 100);
-        attributes.setAttribute("appearAnimation", "fade");
-        attributes.setAttribute("hideAnimation", "show");
-        attributes.setAttribute("showCloseButton", true);
-        attributes.setAttribute("stayTime", 100000);
-        attributes.remove("stack");
-        return attributes;
     }
 }

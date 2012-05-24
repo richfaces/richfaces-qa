@@ -1,24 +1,25 @@
-/*******************************************************************************
- * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
+/**
+ * *****************************************************************************
+ * JBoss, Home of Professional Open Source Copyright 2010-2012, Red Hat, Inc.
+ * and individual contributors by the @authors tag. See the copyright.txt in the
+ * distribution for a full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
+ * This is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ * This software is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this software; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
+ * site: http://www.fsf.org.
+ * *****************************************************************************
+ */
 package org.richfaces.tests.metamer.ftest.richSelect;
 
 import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
@@ -28,20 +29,16 @@ import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.textEquals;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.listClass;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.selectAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-
 import javax.faces.event.PhaseId;
-
 import org.jboss.arquillian.ajocado.css.CssProperty;
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
@@ -59,6 +56,8 @@ import org.testng.annotations.Test;
  */
 public class TestRichSelect extends AbstractGrapheneTest {
 
+    private static final String TESTSIZE = "300px";
+    private static final int ARROWDOWN = java.awt.event.KeyEvent.VK_DOWN;
     private JQueryLocator select = pjq("div[id$=select]");
     private JQueryLocator input = pjq("input.rf-sel-inp[id$=selectInput]");
     private AttributeLocator<?> inputValue = input.getAttribute(Attribute.VALUE);
@@ -108,7 +107,7 @@ public class TestRichSelect extends AbstractGrapheneTest {
     public void testSelectWithKeyboard() {
         guardNoRequest(selenium).focus(input);
         guardNoRequest(selenium).click(input);
-        guardNoRequest(selenium).keyPressNative(40); // arrow down
+        guardNoRequest(selenium).keyPressNative(ARROWDOWN);
         assertTrue(selenium.isVisible(popup), "Popup should be displayed.");
 
         for (int i = 0; i < 50; i++) {
@@ -121,7 +120,7 @@ public class TestRichSelect extends AbstractGrapheneTest {
         }
 
         for (int i = 0; i < 11; i++) {
-            selenium.keyPressNative(40); // arrow down
+            selenium.keyPressNative(ARROWDOWN);
         }
         // FIXME
         // guardNoRequest(selenium).keyDown(options.format(10), "\\13"); // enter
@@ -149,7 +148,7 @@ public class TestRichSelect extends AbstractGrapheneTest {
         }
 
         for (int i = 0; i < 3; i++) {
-            selenium.keyPressNative(40); // arrow down
+            selenium.keyPressNative(ARROWDOWN);
         }
 
         assertTrue(selenium.belongsClass(options.format(2), "rf-sel-sel"));
@@ -157,12 +156,10 @@ public class TestRichSelect extends AbstractGrapheneTest {
 
     @Test
     public void testDefaultLabel() {
-        selenium.type(pjq("input[type=text][id$=defaultLabelInput]"), "new label");
-        selenium.waitForPageToLoad();
+        selectAttributes.set(SelectAttributes.defaultLabel, "new label");
         assertEquals(selenium.getAttribute(inputValue), "new label", "Default label should change");
 
-        selenium.type(pjq("input[type=text][id$=defaultLabelInput]"), "");
-        selenium.waitForPageToLoad();
+        selectAttributes.set(SelectAttributes.defaultLabel, "");
 
         assertTrue(selenium.isElementPresent(select), "Inplace select is not on the page.");
         assertTrue(selenium.isElementPresent(input), "Input should be present on the page.");
@@ -174,11 +171,8 @@ public class TestRichSelect extends AbstractGrapheneTest {
 
     @Test
     public void testDisabled() {
-        selenium.click(pjq("input[type=radio][name$=disabledInput][value=true]"));
-        selenium.waitForPageToLoad();
-
-        selenium.type(pjq("input[type=text][id$=valueInput]"), "Hawaii");
-        selenium.waitForPageToLoad();
+        selectAttributes.set(SelectAttributes.disabled, Boolean.TRUE);
+        selectAttributes.set(SelectAttributes.value, "Hawaii");
 
         assertTrue(selenium.isElementPresent(select), "Inplace input is not on the page.");
         assertTrue(selenium.isElementPresent(button), "Button should be present on the page.");
@@ -194,8 +188,7 @@ public class TestRichSelect extends AbstractGrapheneTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-9855")
     public void testEnableManualInput() {
-        selenium.click(pjq("input[type=radio][name$=enableManualInputInput][value=false]"));
-        selenium.waitForPageToLoad();
+        selectAttributes.set(SelectAttributes.enableManualInput, Boolean.FALSE);
 
         AttributeLocator<?> readonlyAttr = input.getAttribute(new Attribute("readonly"));
         assertEquals(selenium.getAttribute(readonlyAttr), "true", "Input should be read-only");
@@ -213,8 +206,7 @@ public class TestRichSelect extends AbstractGrapheneTest {
 
     @Test
     public void testImmediate() {
-        selenium.click(pjq("input[type=radio][name$=immediateInput][value=true]"));
-        selenium.waitForPageToLoad();
+        selectAttributes.set(SelectAttributes.immediate, Boolean.TRUE);
 
         String reqTime = selenium.getText(time);
         selenium.mouseDown(button);
@@ -224,19 +216,17 @@ public class TestRichSelect extends AbstractGrapheneTest {
         waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
 
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
-            PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
+                PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
         phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: -> Hawaii");
     }
 
     @Test
     public void testItemClass() {
         final String value = "metamer-ftest-class";
-        selenium.type(pjq("input[type=text][id$=itemClassInput]"), value);
-        selenium.waitForPageToLoad();
-
+        selectAttributes.set(SelectAttributes.itemClass, value);
         for (int i = 0; i < 50; i++) {
             assertTrue(selenium.belongsClass(options.format(i), value),
-                "Select option " + selenium.getText(options.format(i)) + " does not contain class " + value);
+                    "Select option " + selenium.getText(options.format(i)) + " does not contain class " + value);
         }
     }
 
@@ -249,14 +239,12 @@ public class TestRichSelect extends AbstractGrapheneTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-9737")
     public void testListHeight() {
-        selenium.type(pjq("input[type=text][id$=listHeightInput]"), "300px");
-        selenium.waitForPageToLoad();
+        selectAttributes.set(SelectAttributes.listHeight, TESTSIZE);
 
         String height = selenium.getStyle(jq("div.rf-sel-lst-scrl"), CssProperty.HEIGHT);
-        assertEquals(height, "300px", "Height of list did not change");
+        assertEquals(height, TESTSIZE, "Height of list did not change");
 
-        selenium.type(pjq("input[type=text][id$=listHeightInput]"), "");
-        selenium.waitForPageToLoad();
+        selectAttributes.set(SelectAttributes.listHeight, "");
 
         selenium.mouseDown(button);
         selenium.mouseUp(button);
@@ -268,16 +256,12 @@ public class TestRichSelect extends AbstractGrapheneTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-9737")
     public void testListWidth() {
-        selenium.type(pjq("input[type=text][id$=listWidthInput]"), "300px");
-        selenium.waitForPageToLoad();
-
+        selectAttributes.set(SelectAttributes.listWidth, TESTSIZE);
         selenium.mouseUp(button);
         String width = selenium.getStyle(jq("div.rf-sel-lst-scrl"), CssProperty.WIDTH);
-        assertEquals(width, "300px", "Width of list did not change");
+        assertEquals(width, TESTSIZE, "Width of list did not change");
 
-        selenium.type(pjq("input[type=text][id$=listWidthInput]"), "");
-        selenium.waitForPageToLoad();
-
+        selectAttributes.set(SelectAttributes.listWidth, "");
         selenium.mouseUp(button);
         width = selenium.getStyle(jq("div.rf-sel-lst-scrl"), CssProperty.WIDTH);
         assertEquals(width, "200px", "Width of list did not change");
@@ -285,15 +269,12 @@ public class TestRichSelect extends AbstractGrapheneTest {
 
     @Test
     public void testMaxListHeight() {
-        selenium.type(pjq("input[type=text][id$=maxListHeightInput]"), "300px");
-        selenium.waitForPageToLoad();
+        selectAttributes.set(SelectAttributes.maxListHeight, TESTSIZE);
 
         String height = selenium.getStyle(jq("div.rf-sel-lst-scrl"), new CssProperty("max-height"));
-        assertEquals(height, "300px", "Height of list did not change");
+        assertEquals(height, TESTSIZE, "Height of list did not change");
 
-        selenium.type(pjq("input[type=text][id$=maxListHeightInput]"), "");
-        selenium.waitForPageToLoad();
-
+        selectAttributes.set(SelectAttributes.maxListHeight, "");
         selenium.mouseDown(button);
         selenium.mouseUp(button);
         assertTrue(selenium.isVisible(popup), "Popup should be displayed.");
@@ -303,15 +284,11 @@ public class TestRichSelect extends AbstractGrapheneTest {
 
     @Test
     public void testMinListHeight() {
-        selenium.type(pjq("input[type=text][id$=minListHeightInput]"), "300px");
-        selenium.waitForPageToLoad();
-
+        selectAttributes.set(SelectAttributes.minListHeight, TESTSIZE);
         String height = selenium.getStyle(jq("div.rf-sel-lst-scrl"), new CssProperty("min-height"));
-        assertEquals(height, "300px", "Height of list did not change");
+        assertEquals(height, TESTSIZE, "Height of list did not change");
 
-        selenium.type(pjq("input[type=text][id$=minListHeightInput]"), "");
-        selenium.waitForPageToLoad();
-
+        selectAttributes.set(SelectAttributes.minListHeight, "");
         selenium.mouseDown(button);
         selenium.mouseUp(button);
         assertTrue(selenium.isVisible(popup), "Popup should be displayed.");
@@ -326,8 +303,7 @@ public class TestRichSelect extends AbstractGrapheneTest {
 
     @Test
     public void testOnchange() {
-        selenium.type(pjq("input[type=text][id$=onchangeInput]"), "metamerEvents += \"change \"");
-        selenium.waitForPageToLoad();
+        selectAttributes.set(SelectAttributes.onchange, "metamerEvents += \"change \"");
 
         selenium.click(button);
         selenium.click(options.format(10));
@@ -443,29 +419,23 @@ public class TestRichSelect extends AbstractGrapheneTest {
 
     @Test
     public void testOnselectitem() {
-        selenium.type(pjq("input[type=text][id$=onselectitemInput]"), "metamerEvents += \"selectitem \"");
-        selenium.waitForPageToLoad();
-
+        selectAttributes.set(SelectAttributes.onselectitem, "metamerEvents += \"selectitem \"");
         selenium.click(button);
         selenium.click(options.format(10));
-
         waitGui.failWith("Attribute onchange does not work correctly").until(
-            new EventFiredCondition(new Event("selectitem")));
+                new EventFiredCondition(new Event("selectitem")));
     }
 
     @Test
     public void testRendered() {
-        selenium.click(pjq("input[type=radio][name$=renderedInput][value=false]"));
-        selenium.waitForPageToLoad();
-
+        selectAttributes.set(SelectAttributes.rendered, Boolean.FALSE);
         assertFalse(selenium.isElementPresent(select), "Component should not be rendered when rendered=false.");
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11320")
     public void testSelectFirst() {
-        selenium.click(pjq("input[type=radio][name$=selectFirstInput][value=true]"));
-        selenium.waitForPageToLoad();
+        selectAttributes.set(SelectAttributes.selectFirst, Boolean.TRUE);
 
         selenium.focus(input);
         selenium.typeKeys(input, "a");
@@ -486,28 +456,24 @@ public class TestRichSelect extends AbstractGrapheneTest {
 
     @Test
     public void testSelectItemClass() {
-        selenium.type(pjq("input[type=text][id$=selectItemClassInput]"), "metamer-ftest-class");
-        selenium.waitForPageToLoad();
-
+        selectAttributes.set(SelectAttributes.selectItemClass, "metamer-ftest-class");
         selenium.focus(input);
         selenium.click(input);
-        selenium.keyPressNative(40); // arrow down
-        selenium.keyPressNative(40); // arrow down
+        selenium.keyPressNative(ARROWDOWN);
+        selenium.keyPressNative(ARROWDOWN);
         waitModel.withDelay(true).failWith("Popup did not show").until(elementVisible.locator(popup));
 
         assertTrue(selenium.belongsClass(options.format(0), "metamer-ftest-class"),
-            "Selected item does not contain defined class.");
+                "Selected item does not contain defined class.");
         for (int i = 1; i < 50; i++) {
             assertFalse(selenium.belongsClass(options.format(i), "metamer-ftest-class"), "Not selected item " + i
-                + " should not contain defined class.");
+                    + " should not contain defined class.");
         }
     }
 
     @Test
     public void testShowButton() {
-        selenium.click(pjq("input[type=radio][name$=showButtonInput][value=false]"));
-        selenium.waitForPageToLoad();
-
+        selectAttributes.set(SelectAttributes.showButton, Boolean.FALSE);
         selenium.click(select);
         if (selenium.isElementPresent(button)) {
             assertFalse(selenium.isVisible(button), "Button should not be visible.");
@@ -515,7 +481,7 @@ public class TestRichSelect extends AbstractGrapheneTest {
 
         selenium.focus(input);
         selenium.click(input);
-        selenium.keyPressNative(40); // arrow down
+        selenium.keyPressNative(ARROWDOWN);
         assertTrue(selenium.isVisible(popup), "Popup should be displayed.");
 
         for (int i = 0; i < 50; i++) {
@@ -529,7 +495,7 @@ public class TestRichSelect extends AbstractGrapheneTest {
 
         // FIXME
         // for (int i = 0; i < 11; i++) {
-        // selenium.keyPressNative(40); // arrow down
+        // selenium.keyPressNative(ARROWDOWN);
         // }
         // selenium.keyDown(input, "\\13"); // enter
         // guardXhr(selenium).fireEvent(input, Event.BLUR);
@@ -541,9 +507,7 @@ public class TestRichSelect extends AbstractGrapheneTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-9663")
     public void testShowButtonClick() {
-        selenium.click(pjq("input[type=radio][name$=showButtonInput][value=false]"));
-        selenium.waitForPageToLoad();
-
+        selectAttributes.set(SelectAttributes.showButton, Boolean.FALSE);
         if (selenium.isElementPresent(button)) {
             assertFalse(selenium.isVisible(button), "Button should not be visible.");
         }
@@ -570,9 +534,7 @@ public class TestRichSelect extends AbstractGrapheneTest {
 
     @Test
     public void testValue() {
-        selenium.type(pjq("input[type=text][id$=valueInput]"), "North Carolina");
-        selenium.waitForPageToLoad();
-
+        selectAttributes.set(SelectAttributes.value, "North Carolina");
         assertEquals(selenium.getValue(input), "North Carolina", "Input should contain selected value.");
     }
 }

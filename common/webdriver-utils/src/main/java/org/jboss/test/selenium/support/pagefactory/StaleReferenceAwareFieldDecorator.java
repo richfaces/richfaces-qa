@@ -26,6 +26,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
@@ -38,16 +39,17 @@ import org.openqa.selenium.support.pagefactory.internal.LocatingElementListHandl
 
 /**
  * Decorates {@link org.openqa.selenium.WebElement} to try to avoid throwing
- * {@link org.openqa.selenium.StaleElementReferenceException}. When the exception is thrown, the mechanism tries to
- * locate element again.
+ * {@link org.openqa.selenium.StaleElementReferenceException}. When the
+ * exception is thrown, the mechanism tries to locate element again.
  *
  * Also decorates List of WebElements.
  *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  *
- * @see <a href="http://www.brimllc.com/2011/01/extending-selenium-2-0-webdriver-to-support-ajax">Extending Selenium 2.0
- *      WebDriver to Support AJAX</a>
+ * @see <a
+ * href="http://www.brimllc.com/2011/01/extending-selenium-2-0-webdriver-to-support-ajax">Extending
+ * Selenium 2.0 WebDriver to Support AJAX</a>
  */
 public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
 
@@ -57,10 +59,8 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
     /**
      * Creates a new instance of the decorator
      *
-     * @param factory
-     *            locator factory
-     * @param numberOfTries
-     *            number of tries to locate element
+     * @param factory locator factory
+     * @param numberOfTries number of tries to locate element
      */
     public StaleReferenceAwareFieldDecorator(ElementLocatorFactory factory, int numberOfTries) {
         super(factory);
@@ -70,19 +70,15 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
     @Override
     protected WebElement proxyForLocator(ClassLoader loader, ElementLocator locator) {
         InvocationHandler handler = new StaleReferenceAwareElementLocator(locator);
-
-        WebElement proxy = (WebElement) Proxy.newProxyInstance(loader, new Class[] { WebElement.class,
-            WrapsElement.class }, handler);
+        WebElement proxy = (WebElement) Proxy.newProxyInstance(loader, new Class[]{ WebElement.class,
+                    WrapsElement.class }, handler);
         return proxy;
     }
 
-    /**
-     * Works only for List methods get and iterator.
-     */
     @Override
     protected List<WebElement> proxyForListLocator(ClassLoader loader, ElementLocator locator) {
-        InvocationHandler handler = new StaleReferenceAwareElementsLocator(locator);
-        List<WebElement> proxy = (List<WebElement>) Proxy.newProxyInstance(loader, new Class[] { List.class }, handler);
+        InvocationHandler handler = new StaleReferenceAwareElementsLocator(locator, loader);
+        List<WebElement> proxy = (List<WebElement>) Proxy.newProxyInstance(loader, new Class[]{ List.class }, handler);
         return proxy;
     }
 
@@ -95,6 +91,7 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
             this.locator = locator;
         }
 
+        @Override
         public Object invoke(Object object, Method method, Object[] objects) throws Throwable {
 
             WebElement element = null;
@@ -110,7 +107,7 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
                 }
             }
             throw new RuntimeException("Cannot invoke " + method.getName() + " on element " + element
-                + ". Cannot find it");
+                    + ". Cannot find it");
         }
 
         private Object invokeMethod(Method method, WebElement element, Object[] objects) throws Throwable {
@@ -136,55 +133,47 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
     private class StaleReferenceAwareElementsLocator extends LocatingElementListHandler {
 
         private final ElementLocator locator;
-        private final String GET = "get";
-        private final String ITERATOR = "iterator";
+        private final ClassLoader loader;
 
-        public StaleReferenceAwareElementsLocator(ElementLocator locator) {
+        public StaleReferenceAwareElementsLocator(ElementLocator locator, ClassLoader loader) {
             super(locator);
             this.locator = locator;
-        }
-
-        /**
-         * Checks web element if it is ok. If it is not, then an exception is thrown.
-         */
-        private void testElement(final WebElement we) throws StaleElementReferenceException {
-            we.getLocation();
-            we.getText();
+            this.loader = loader;
         }
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             List<WebElement> elements = locator.findElements();
-            if (GET.equals(method.getName())) {//method get is invoked
-                for (int i = 0; i < numberOfTries; i++) {
-                    try {//try to test the chosen element
-                        testElement(elements.get((Integer) args[0]));
-                        return method.invoke(elements, args);//element is ok and returned
-                    } catch (StaleElementReferenceException ignored) {
-                        //element not found, wait some time and try it again
-                        waitSomeTime();
-                        elements = locator.findElements();
-                    }
-                }
-                throw new RuntimeException("Cannot invoke " + method.getName() + " on elements " + elements
-                    + ". Cannot find it");
-            } else if (ITERATOR.equals(method.getName())) {//method iterator is invoked
-                for (int i = 0; i < numberOfTries; i++) {
-                    try { //go through all elements and test them
-                        for (WebElement webElement : elements) {
-                            testElement(webElement);
-                        }
-                        return method.invoke(elements, args);//all elements should be ok
-                    } catch (StaleElementReferenceException ignored) {
-                        //some element not found, wait some time and try it again
-                        waitSomeTime();
-                        elements = locator.findElements();
-                    }
-                }
-                throw new RuntimeException("Cannot invoke " + method.getName() + " on elements " + elements
-                    + ". Cannot find it");
+            InvocationHandler handler;
+            List<WebElement> wrappedResult = new ArrayList<WebElement>();
+            for (int i = 0; i < elements.size(); i++) {
+                handler = new WrapperForListWebElement(elements.get(i));
+                wrappedResult.add((WebElement) Proxy.newProxyInstance(loader, new Class[]{ WebElement.class,
+                            WrapsElement.class }, handler));
             }
-            return method.invoke(elements, args);
+            return method.invoke(wrappedResult, args);
+        }
+    }
+
+    private class WrapperForListWebElement implements InvocationHandler {
+
+        private final WebElement element;
+
+        public WrapperForListWebElement(WebElement element) {
+            this.element = element;
+        }
+
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            for (int i = 0; i < numberOfTries; i++) {
+                try {
+                    return method.invoke(element, args);
+                } catch (StaleElementReferenceException ignored) {
+                    waitSomeTime();
+                }
+            }
+            throw new RuntimeException("Cannot invoke " + method.getName() + " on element " + element
+                    + ". Cannot find it");
         }
     }
 }

@@ -38,7 +38,6 @@ import org.richfaces.tests.metamer.ftest.richTree.AbstractTestTreeSelection;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 23132 $
@@ -60,6 +59,7 @@ public class TestTreeModelAdaptorSelection extends AbstractTestTreeSelection {
     @Use(booleans = { true, false })
     private boolean recursiveLeafChildrenNullable;
 
+    @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richTree/treeAdaptors.xhtml");
     }
@@ -78,14 +78,14 @@ public class TestTreeModelAdaptorSelection extends AbstractTestTreeSelection {
     }
 
     @Test
-    @Use(field = "paths", empty = true)
+    @Uses({ @Use(field = "paths", empty = true), @Use(field = "sample", empty = true) })
     @Override
     public void testTopLevelSelection() {
         super.testTopLevelSelection();
     }
 
     @Test
-    @Use(field = "paths", value = "paths*")
+    @Uses({@Use(field = "paths", value = "paths*"), @Use(field = "sample", empty = true) })
     @Override
     public void testSubNodesSelection() {
         super.testSubNodesSelection();
@@ -93,6 +93,7 @@ public class TestTreeModelAdaptorSelection extends AbstractTestTreeSelection {
 
     @Test
     @Uses({ @Use(field = "paths", value = "paths*"),
+        @Use(field = "sample", empty = true),
         @Use(field = "selectionType", value = "eventEnabledSelectionTypes") })
     @Override
     public void testSubNodesSelectionEvents() {

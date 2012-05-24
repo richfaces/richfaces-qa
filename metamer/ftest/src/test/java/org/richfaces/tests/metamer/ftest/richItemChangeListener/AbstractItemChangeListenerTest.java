@@ -21,7 +21,7 @@
 package org.richfaces.tests.metamer.ftest.richItemChangeListener;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.testng.Assert.fail;
+import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import java.util.List;
@@ -56,15 +56,26 @@ public abstract class AbstractItemChangeListenerTest extends AbstractWebDriverTe
         return buildUrl(contextPath, "faces/components/richItemChangeListener/" + testedComponent + ".xhtml");
     }
 
-    private void testICL(String expectedText, String failMessage) {
-        page.getInactivePanel().click();
-        List<WebElement> list = page.getPhases();
+    /**
+     * Gets list of WebElements and check if some of them has same text as
+     * expected in attribute @expectedText.
+     *
+     * @param expectedText value of the text to be find
+     * @return true if text was found or false
+     */
+    private boolean subTest(String expectedText) {
+        List<WebElement> list = guardListSize(page.getPhases(), 5);
         for (WebElement webElement : list) {
             if (webElement.getText().equals(expectedText)) {
-                return;//Text found
+                return true;//Text found
             }
         }
-        fail(failMessage);
+        return false;
+    }
+
+    private void testICL(final String expectedText, String failMessage) {
+        waitRequest(page.getInactivePanel(), WaitRequestType.XHR).click();
+        assertTrue(subTest(expectedText), failMessage);
     }
 
     public void testICLAsAttributeOfComponent(String expectedMSG) {

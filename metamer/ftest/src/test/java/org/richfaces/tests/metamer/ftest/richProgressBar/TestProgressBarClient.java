@@ -24,9 +24,8 @@ package org.richfaces.tests.metamer.ftest.richProgressBar;
 import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
 import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.progressBarAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -35,7 +34,6 @@ import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
@@ -120,8 +118,7 @@ public class TestProgressBarClient extends AbstractGrapheneTest {
 
     @Test
     public void testOnfinish() {
-        selenium.type(pjq("input[type=text][id$=onfinishInput]"), "metamerEvents += \"finish \"");
-        selenium.waitForPageToLoad();
+        progressBarAttributes.set(ProgressBarAttributes.onfinish, "metamerEvents += \"finish \"");
 
         selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
 
@@ -145,8 +142,7 @@ public class TestProgressBarClient extends AbstractGrapheneTest {
             progressList.add(getProgress());
         }
 
-        int first = 0;
-        int second = -1;
+        int first,second;
 
         for (int i = 0; i < progressList.size() - 1; i++) {
             first = progressList.get(i);

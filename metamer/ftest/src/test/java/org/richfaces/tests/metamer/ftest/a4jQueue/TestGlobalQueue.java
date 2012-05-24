@@ -1,39 +1,38 @@
-/*******************************************************************************
- * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
+/**
+ * *****************************************************************************
+ * JBoss, Home of Professional Open Source Copyright 2010-2012, Red Hat, Inc.
+ * and individual contributors by the @authors tag. See the copyright.txt in the
+ * distribution for a full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
+ * This is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ * This software is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this software; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
+ * site: http://www.fsf.org.
+ * *****************************************************************************
+ */
 package org.richfaces.tests.metamer.ftest.a4jQueue;
 
 import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes.ignoreDupResponses;
 import static org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes.rendered;
 import static org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes.timeout;
-
 import static org.testng.Assert.assertEquals;
 
+import com.thoughtworks.selenium.SeleniumException;
 import java.net.URL;
-
+import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.cheiron.halt.XHRHalter;
 import org.jboss.cheiron.halt.XHRState;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
@@ -44,18 +43,14 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.attributes.Attributes;
 import org.testng.annotations.Test;
 
-import com.thoughtworks.selenium.SeleniumException;
-
-
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 23037 $
- */
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+*/
 public class TestGlobalQueue extends AbstractGrapheneTest {
 
     QueueModel queue = new QueueModel();
     Attributes<QueueAttributes> attributes = new Attributes<QueueAttributes>();
-
     @Inject
     @Use(empty = false)
     Integer requestDelay;
@@ -66,7 +61,8 @@ public class TestGlobalQueue extends AbstractGrapheneTest {
     }
 
     /**
-     * Tests delay between time last event occurs and time when event triggers request (begin).
+     * Tests delay between time last event occurs and time when event triggers
+     * request (begin).
      */
     @Test
     @Use(field = "requestDelay", ints = { 4000, 900, 80 })
@@ -84,7 +80,8 @@ public class TestGlobalQueue extends AbstractGrapheneTest {
     }
 
     /**
-     * Events from one source should be stacked as occurs, while last event isn't delayed by configured requestDelay.
+     * Events from one source should be stacked as occurs, while last event
+     * isn't delayed by configured requestDelay.
      */
     @Test
     public void testMultipleRequestsWithDelay() {
@@ -112,13 +109,11 @@ public class TestGlobalQueue extends AbstractGrapheneTest {
     }
 
     /**
-     * <p>
-     * When no requestDelay (0) is set, events should fire request immediately.
-     * </p>
+     * <p> When no requestDelay (0) is set, events should fire request
+     * immediately. </p>
      *
-     * <p>
-     * However, when one event is waiting in queue for processing of previous request, events should be stacked.
-     * </p>
+     * <p> However, when one event is waiting in queue for processing of
+     * previous request, events should be stacked. </p>
      */
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RFPL-1194")
@@ -241,5 +236,48 @@ public class TestGlobalQueue extends AbstractGrapheneTest {
         handle.complete();
         waitGui.dontFail().waitForChange("", retrieveText.locator(queue.repeatedText));
         assertEquals(queue.getRepeatedText(), "d");
+    }
+
+    @Test(groups = "4.Future")
+    public void testOnbeforeDOMUpdate() {
+        testRequestEvent(QueueAttributes.onbeforedomupdate,
+                new ClickButtonEventLaunchingAction("input[id$=actionButton]"));
+    }
+
+    @Test(groups = "4.Future")
+    public void testOnError() {
+        testRequestEvent(QueueAttributes.onerror,
+                new ClickButtonEventLaunchingAction("input[id$=errorButton]"));
+    }
+
+    @Test
+    public void testOnRequestDequeue() {
+        testRequestEvent(QueueAttributes.onrequestdequeue,
+                new ClickButtonEventLaunchingAction("input[id$=actionButton]"));
+    }
+
+    @Test
+    public void testOnRequestQueue() {
+        testRequestEvent(QueueAttributes.onrequestqueue,
+                new ClickButtonEventLaunchingAction("input[id$=actionButton]"));
+    }
+
+    private class ClickButtonEventLaunchingAction implements IEventLaunchAction {
+
+        private final JQueryLocator locator;
+
+        public ClickButtonEventLaunchingAction(JQueryLocator locator) {
+            this.locator = locator;
+        }
+
+        public ClickButtonEventLaunchingAction(String locator) {
+            this.locator = pjq(locator);
+        }
+
+        @Override
+        public void launchAction() {
+            //this should lead to throw an event
+            selenium.click(locator);
+        }
     }
 }

@@ -59,7 +59,7 @@ public class RichCalendarBean implements Serializable {
     private static Logger logger;
     private Attributes attributes;
     private Date date = new Date();
-    private TimeZone timeZone = TimeZone.getTimeZone("UTC");
+    public static final TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");
     private Date date1;
     private Date date2;
     private Date date3;
@@ -112,11 +112,7 @@ public class RichCalendarBean implements Serializable {
     }
 
     public TimeZone getTimeZone() {
-        return timeZone;
-    }
-
-    public void setTimeZone(TimeZone timeZone) {
-        this.timeZone = timeZone;
+        return TIME_ZONE;
     }
 
     @Past
@@ -155,7 +151,7 @@ public class RichCalendarBean implements Serializable {
      */
     public void valueChangeListener(ValueChangeEvent event) {
         SimpleDateFormat sdf = new SimpleDateFormat(attributes.get("datePattern").getValue().toString());
-        sdf.setTimeZone(timeZone);
+        sdf.setTimeZone(TIME_ZONE);
 
         String oldDate = "null";
         String newDate = "null";
