@@ -67,7 +67,7 @@ public class TestSimple extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/a4jRepeat/simple.xhtml");
     }
 
-    @BeforeMethod(alwaysRun = true)
+    @BeforeMethod(alwaysRun = true, dependsOnMethods={"loadPage"})
     public void prepareAttributes() {
         model = new SimpleModel();
 
