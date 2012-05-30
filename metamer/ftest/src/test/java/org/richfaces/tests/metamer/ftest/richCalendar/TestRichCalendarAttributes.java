@@ -380,42 +380,42 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
             calendarAttributes.set(CalendarAttributes.direction, directions[i]);
             selenium.click(input);
 
-            int x = selenium.getElementPosition(popup).getX();
-            int y = selenium.getElementPosition(popup).getY();
+            int popupX = selenium.getElementPosition(popup).getX();
+            int popupY = selenium.getElementPosition(popup).getY();
 
-            int x_offset = inputX - popupDim.getWidth() + 2;
-            int y_offset_down = inputY + (inputDim.getHeight() - 1);
-            int y_offset_up = inputY - popupDim.getHeight() + inputDim.getHeight() + 1;
+            int offsetX = inputX - popupDim.getWidth() + 2;
+            int offsetDownY = inputY + (inputDim.getHeight() - 1);
+            int offsetUpY = inputY - popupDim.getHeight() + inputDim.getHeight() + 1;
 
             // System.out.println(" direction: " + directions[i]);
             // System.out.println("   ### position: [" + x +  ", " + y + "]");
 
             switch (i) {
                 case 0: // auto (direction depends on browser/screen resolution)
-                    assertTrue(x == inputX || x == x_offset,
-                        "Any expected value found. x = " + x + ", one of expected: " + x_offset);
-                    assertTrue( y == y_offset_down || y == y_offset_up,
-                        "Any expected value found. y = " + y + ", one of expected: " + y_offset_up);
+                    assertTrue(tolerantEquals(popupX, inputX, 1) || tolerantEquals(popupX, offsetX, 1),
+                        "Any expected value found. x = " + popupX + ", one of expected: " + offsetX + ", " + inputX);
+                    assertTrue(tolerantEquals(popupY, offsetDownY, 1) || tolerantEquals(popupY, offsetUpY, 1),
+                        "Any expected value found. y = " + popupY + ", one of expected: " + offsetUpY + ", " + offsetDownY);
                     break;
 
                 case 1: // bottomLeft
-                    assertEquals(x, x_offset);
-                    assertEquals(y, y_offset_down);
+                    tolerantAssertEquals(popupX, offsetX, 1);
+                    tolerantAssertEquals(popupY, offsetDownY, 1);
                     break;
 
                 case 2: // bottomRight
-                    assertEquals(x, inputX);
-                    assertEquals(y, y_offset_down);
+                    tolerantAssertEquals(popupX, inputX, 1);
+                    tolerantAssertEquals(popupY, offsetDownY, 1);
                     break;
 
                 case 3: // topLeft
-                    assertEquals(x, x_offset);
-                    assertEquals(y, y_offset_up);
+                    tolerantAssertEquals(popupX, offsetX, 1);
+                    tolerantAssertEquals(popupY, offsetUpY, 1);
                     break;
 
                 case 4: // topRight
-                    assertEquals(x, inputX);
-                    assertEquals(y, y_offset_up);
+                    tolerantAssertEquals(popupX, inputX, 1);
+                    tolerantAssertEquals(popupY, offsetUpY, 1);
                     break;
 
                 default:
@@ -1055,5 +1055,13 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
             assertFalse(selenium.belongsClass(cellDay.format(i), "rf-cal-sel"), "Cell nr. " + i
                 + " should not be selected.");
         }
+    }
+
+    private static boolean tolerantEquals(int x, int y, int tolerance) {
+        return Math.abs(x - y) <= tolerance;
+    }
+
+    private static void tolerantAssertEquals(int actual, int expected, int tolerance) {
+        assertTrue(tolerantEquals(actual, expected, tolerance), "Expected <" + expected + ">, found <" + actual + ">. Tolerance is set to <" + tolerance + ">.");
     }
 }
