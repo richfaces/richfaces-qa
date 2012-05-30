@@ -21,13 +21,21 @@
  */
 package org.richfaces.tests.metamer.ftest.richContextMenu;
 
+import org.jboss.test.selenium.support.ui.ElementDisplayed;
+import org.jboss.test.selenium.support.ui.ElementNotDisplayed;
+import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.DriverType;
 
 /**
- * Page object rich:contextMenu component at faces/components/richContextMenu/simple.xhtml
+ * Page object rich:contextMenu component at
+ * faces/components/richContextMenu/simple.xhtml
  *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @since 4.2.1.Final
  */
 public class ContextMenuSimplePage {
@@ -39,4 +47,27 @@ public class ContextMenuSimplePage {
     @FindBy(css = "div.rf-ctx-lst")
     public WebElement contextMenuContent;
 
+    public void clickOnFirstPanel(DriverType type) {
+        if (type == DriverType.InternetExplorer) {
+            targetPanel1.sendKeys(Keys.CONTROL);
+        }
+        targetPanel1.click();
+    }
+
+    public void clickOnSecondPanel(DriverType type) {
+        if (type == DriverType.InternetExplorer) {
+            targetPanel2.sendKeys(Keys.CONTROL);
+        }
+        targetPanel2.click();
+    }
+
+    public void checkIfContextMenuDisplayed(WebDriver driver) {
+        new WebDriverWait(driver, 5).failWith("Context menu did not show.").until(
+                ElementDisplayed.getInstance().element(contextMenuContent));
+    }
+
+    public void checkIfContextMenuNotDisplayed(WebDriver driver) {
+        new WebDriverWait(driver, 5).failWith("Context menu should not be showed.").until(
+                ElementNotDisplayed.getInstance().element(contextMenuContent));
+    }
 }

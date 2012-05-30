@@ -28,10 +28,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-import org.jboss.test.selenium.support.ui.ElementDisplayed;
-import org.jboss.test.selenium.support.ui.ElementNotDisplayed;
 import org.openqa.selenium.Point;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -41,6 +38,7 @@ import org.testng.annotations.Test;
  * faces/components/richContextMenu/simple.xhtml
  *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @since 4.2.1.Final
  */
 public class TestRichContextMenuWebDriver extends AbstractWebDriverTest {
@@ -52,13 +50,13 @@ public class TestRichContextMenuWebDriver extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richContextMenu/simple.xhtml");
     }
 
-    @BeforeMethod(dependsOnMethods = {"loadPage"})
+    @BeforeMethod(dependsOnMethods = { "loadPage" })
     public void initPageObject() {
         page = new ContextMenuSimplePage();
         injectWebElementsToPage(page);
     }
 
-    @BeforeMethod(dependsOnMethods = {"initPageObject"})
+    @BeforeMethod(dependsOnMethods = { "initPageObject" })
     public void updateShowAction() {
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, "click");
     }
@@ -66,52 +64,50 @@ public class TestRichContextMenuWebDriver extends AbstractWebDriverTest {
     @Test
     public void testHideDelay() throws InterruptedException {
         // set hideDelay
-        contextMenuAttributes.set(ContextMenuAttributes.hideDelay, 500);
-        // perform the test
-        page.targetPanel1.click();
+        contextMenuAttributes.set(ContextMenuAttributes.hideDelay, 1000);
+        // show context menu
+        page.clickOnFirstPanel(driverType);
         // check whether the context menu is displayed
-        new WebDriverWait(driver, WAIT_TIME).until(
-                ElementDisplayed.getInstance().element(page.contextMenuContent));
-        // lose focus
-        page.targetPanel2.click();
+        page.checkIfContextMenuDisplayed(driver);
+        //lose focus  >>> menu will disappear after delay
+        page.clickOnSecondPanel(driverType);
         assertTrue(page.contextMenuContent.isDisplayed());
-        Thread.sleep(600);
+        //wait until menu hides
+        Thread.sleep(1100);
         assertFalse(page.contextMenuContent.isDisplayed());
     }
 
     @Test
     public void testOnhide() {
+        final String VALUE = "hide";
         // set onhide
-        contextMenuAttributes.set(ContextMenuAttributes.onhide, "metamerEvents += \"hide\"");
-        page.targetPanel1.click();
+        contextMenuAttributes.set(ContextMenuAttributes.onhide, "metamerEvents += \"" + VALUE + "\"");
+        // show context menu
+        page.clickOnFirstPanel(driverType);
         // check whether the context menu is displayed
-        new WebDriverWait(driver, WAIT_TIME).until(
-                ElementDisplayed.getInstance().element(page.contextMenuContent));
-        page.targetPanel2.click();
+        page.checkIfContextMenuDisplayed(driver);
+        //lose focus >>> menu will disappear
+        page.clickOnSecondPanel(driverType);
         // check whether the context menu isn't displayed
-        new WebDriverWait(driver, WAIT_TIME).until(
-                ElementNotDisplayed.getInstance().element(page.contextMenuContent));
-        String event = ((String) executeJS("return window.metamerEvents")).trim();
-        assertEquals(event, "hide");
+        page.checkIfContextMenuNotDisplayed(driver);
+        assertEquals(expectedReturnJS("return window.metamerEvents", VALUE), VALUE);
     }
 
     @Test
     public void testVerticalOffset() {
         int offset = 11;
         // show context menu
-        page.targetPanel1.click();
+        page.clickOnFirstPanel(driverType);
         // check whether the context menu is displayed
-        new WebDriverWait(driver, WAIT_TIME).until(
-                ElementDisplayed.getInstance().element(page.contextMenuContent));
+        page.checkIfContextMenuDisplayed(driver);
         // get position before offset is set
         Point before = page.contextMenuContent.getLocation();
         // set verticalOffset
         contextMenuAttributes.set(ContextMenuAttributes.verticalOffset, offset);
         // show context menu
-        page.targetPanel1.click();
+        page.clickOnFirstPanel(driverType);
         // check whether the context menu is displayed
-        new WebDriverWait(driver, WAIT_TIME).until(
-                ElementDisplayed.getInstance().element(page.contextMenuContent));
+        page.checkIfContextMenuDisplayed(driver);
         // get position after offset is set
         Point after = page.contextMenuContent.getLocation();
         // check offset

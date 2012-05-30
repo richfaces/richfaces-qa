@@ -49,7 +49,7 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest {
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richEditor/simple.xhtml");
+        return buildUrl(contextPath, "faces/components/richEditor/anotherSimple.xhtml");
     }
 
     @BeforeMethod
@@ -66,10 +66,11 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest {
 
     @Test
     public void testOnDirty() {
-        editorAttributes.set(EditorAttributes.ondirty, "metamerEvents += \"dirty \"");
+        String testedValue = "dirty";
+        editorAttributes.set(EditorAttributes.ondirty, "metamerEvents += \"" + testedValue + " \"");
         executeJS("window.metamerEvents = \"\";");
         typeTextToEditor("x");
-        String event = ((String) executeJS("return window.metamerEvents")).trim();
+        String event = expectedReturnJS("return window.metamerEvents", testedValue);
         assertEquals(event, "dirty", "Attribute ondirty doesn't work");
     }
 

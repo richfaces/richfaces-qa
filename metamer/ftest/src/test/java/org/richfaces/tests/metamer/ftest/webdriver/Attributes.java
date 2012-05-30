@@ -31,7 +31,6 @@ import org.jboss.test.selenium.support.ui.ElementDisplayed;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
@@ -220,11 +219,15 @@ public class Attributes<T extends AttributeEnum> {
         waitForFooter();
         String property;
         for (int i = 0; i < 5; i++) {
-            property = getProperty(propertyName);
-            if (property.equals(value)) {
-                return;
+            try {
+                property = getProperty(propertyName);
+                if (property.equals(value)) {
+                    return;
+                }
+                waiting(200);
+            } catch (Exception ignored) {
+                waiting(200);
             }
-            waiting(200);
         }
         throw new IllegalStateException("Property " + propertyName + " was not changed.");
     }
@@ -238,12 +241,13 @@ public class Attributes<T extends AttributeEnum> {
          * waitForPageToLoad(), but obtaining of JSExecutor from proxy of
          * webdriver isn't now possible, it throws ClassCastException
          */
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 5; i++) {
             try {
                 new WebDriverWait(driver, 5).until(ElementDisplayed.getInstance().
                         element(driver.findElement(By.cssSelector("span[id=browserVersion]"))));
                 return;
-            } catch (NoSuchElementException ignored) {
+            } catch (Exception ignored) {
+                waiting(200);
             }
         }
     }
@@ -265,7 +269,7 @@ public class Attributes<T extends AttributeEnum> {
      * throws ClassCastException during executeJS.
      */
     protected void waitForPageToLoad() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 5; i++) {
             try {
                 Object result = executeJS("return document['readyState'] ? 'complete' == document.readyState : true");
                 if (result instanceof Boolean) {
@@ -274,7 +278,7 @@ public class Attributes<T extends AttributeEnum> {
                         return;
                     }
                 }
-                waiting(1000);
+                waiting(200);
             } catch (Exception e) {
             }
         }
