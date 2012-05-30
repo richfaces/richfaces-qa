@@ -19,17 +19,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.a4jStatus;
+package org.richfaces.tests.metamer.ftest.richTab;
 
-import static org.jboss.arquillian.ajocado.Graphene.jq;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.arquillian.ajocado.Graphene.jq;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
 
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.cheiron.halt.XHRHalter;
+import org.richfaces.tests.metamer.ftest.a4jStatus.AbstractStatusTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
@@ -38,27 +37,24 @@ import org.testng.annotations.Test;
  *
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class TestRF12092 extends AbstractStatusTest {
+public class TestRF12108 extends AbstractStatusTest {
 
-    private JQueryLocator statusMessageStart = jq("span[id$=a4jstatus]");
+    private JQueryLocator inputNotHandledCorrectly = jq("input[id*='notHandled']");
+    private JQueryLocator outputGenerated = jq("span[id*='out']");
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jStatus/RF-12092.xhtml");
+        return buildUrl(contextPath, "faces/components/richTabPanel/rf-12108.xhtml");
     }
 
-    @Test(groups="4.3")
-    @IssueTracking("https://issues.jboss.org/browse/RFPL-12092")
+    @Test(groups = "4.3")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12108")
     public void testStatusIsClearedWhenRequestCompleted() {
 
-        XHRHalter.enable();
-        XHRHalter halt = getCurrentXHRHalter();
+        String expectedOutput = "Should be rendered aside as well!";
+        selenium.type(inputNotHandledCorrectly, expectedOutput);
 
-        String status = selenium.getText(statusMessageStart).trim();
-        assertEquals(status, "In progress", "The status was not rendered for the request!");
-        halt.complete();
-
-        assertFalse(selenium.isVisible(statusMessageStart));
+        String actualOutput = selenium.getText(outputGenerated);
+        assertEquals(actualOutput, expectedOutput, "The AJAX update is corrupted, when triggered from the second tab!");
     }
-
 }
