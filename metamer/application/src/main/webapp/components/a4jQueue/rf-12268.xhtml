@@ -54,51 +54,42 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
            <h2>4.1.0.final javascript error : element is null, ajax queue operation</h2>
            <p>Steps to reproduce from JIRA:
                <ol>                  
-                  <li>1. click button send first ajax request to server, don't response it.</li>
-                  <li>2. click the button in your render area, the button will disappear when the response arrived.</li>
-                  <li>3. the first response arrived.</li>
+                  <li>click button send first ajax request to server, don't response it.</li>
+                  <li>click the button in your render area, the button will disappear when the response arrived. <i>(Conditionally rendered)</i></li>
+                  <li>the first response arrived.</li>
                </ol>
            </p>
         
            <h:form id="form">
                 <h:panelGrid columns="2">
-                    <h:outputText value="Type here:" />
-                    <h:inputText id="input1" value="#{a4jQueueBean.text}" onkeypress="add(#{rich:element('events1')}); #{rich:element('timeWatcher:grid')}.event(); "
-                                 disabled="#{not (facesContext.maximumSeverity==null)}">
-                        <a4j:ajax event="keypress" onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); " render="outtext" oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference(); "
-                                  onbeforedomupdate="add(#{rich:element('updates')});"/>
-                    </h:inputText> 
 
-                    <!-- this kind of action button is not necessary for issue simulation -->
-                    <!-- h:outputText value="JSF commandButton:" />
-                    <h:commandButton id="actionButton1" value="Action 1" action="#{richBean.dummyAction}"
-                                     onclick="add(#{rich:element('events1')}); #{rich:element('timeWatcher:grid')}.event();">
-                        <a4j:ajax onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); "
-                                  oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference(); "
-                                  onbeforedomupdate="add(#{rich:element('updates')});" />
-                    </h:commandButton-->
-                    
-                    <h:outputText value="Ajax commandButton:" />
-                    <a4j:commandButton id="ajaxAction1" value="Ajax Action with delay:" action="#{richBean.dummyActionWithDelay}"
+                    <h:outputText id="label1" value="First Ajax commandButton:" />
+                    <a4j:commandButton id="ajaxAction1" 
+                                       value="Ajax Action with delay:"
+                                       action="#{richBean.dummyActionWithDelay}"
+                                       render="actionArea2"
                                        onclick="add(#{rich:element('events1')}); #{rich:element('timeWatcher:grid')}.event();"
                                        onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); "
                                        oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference(); "
                                        onbeforedomupdate="add(#{rich:element('updates')});"
                     />
                     
-                    <h:outputText value="Ajax commandButton:" />
-                    <a4j:commandButton id="ajaxAction2" value="Ajax Action 2:" action="#{richBean.dummyAction}"
+                    <h:outputText value="Second Ajax commandButton: (conditionally rendered)" />
+                    <a4j:outputPanel id="actionArea2">
+                       <a4j:commandButton id="ajaxAction2"
+                                       value="Ajax Action Conditionally rendered"
+                                       action="#{richBean.dummyAction}"
+                                       rendered="#{!richBean.dummyBooleanResp}"
                                        onclick="add(#{rich:element('events1')}); #{rich:element('timeWatcher:grid')}.event();"
-                                   	   onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); "
+                                       onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); "
                                        oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference(); "
                                        onbeforedomupdate="add(#{rich:element('updates')});"
-                    />
+                       />
+                    </a4j:outputPanel>
                     
-                    <!-- h:outputText value="Click here (with error):" />
-                    <a4j:commandButton id="errorButton" value="Action" action="#{richBean.causeError}"/-->
+                    <h:column >&nbsp;</h:column>
+                    <h:column >&nbsp;</h:column>
 
-                    <h:outputText value="Repeated text:" />
-                    <h:outputText value="#{a4jQueueBean.text}" id="outtext" style="font-weight:bold;" />
                     <h:outputText value="Events count:" />
                     <h:outputText value="0" id="events1" />
                     <h:outputText value="Requests count:" />
