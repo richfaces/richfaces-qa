@@ -7,10 +7,12 @@
             <run>
                 <include name="RF-11479" />
                 <include name="RF-11573" />
-                <include name="RF-11872" />
-                <include name="RF-12146" />
-                <include name="RF-11773" />
+                <include name="RF-11871" />
                 <include name="arquillian" />
+
+<!--                <include name="RF-12146" />-->
+<!--                <include name="RF-11773" />-->
+<!--<include name="RF-11872" />-->
             </run>
         </groups>
 

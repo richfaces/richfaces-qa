@@ -9,11 +9,10 @@
 
                 <exclude name="RF-11479" />
                 <exclude name="RF-11573" />
-                <exclude name="RF-11872" />
-                <exclude name="RF-12146" />
-                <exclude name="RF-11773" />
-
-<!--                <include name="RF-11871" />-->
+                <exclude name="RF-11871" />
+<!--                <exclude name="RF-11872" />-->
+<!--                <exclude name="RF-12146" />-->
+<!--                <exclude name="RF-11773" />-->
             </run>
         </groups>
 
