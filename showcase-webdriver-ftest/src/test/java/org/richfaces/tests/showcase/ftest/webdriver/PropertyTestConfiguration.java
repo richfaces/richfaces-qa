@@ -44,7 +44,7 @@ public class PropertyTestConfiguration implements TestConfiguration {
 
     @Override
     public int getWebDriverTimeout() {
-        return Integer.parseInt(System.getProperty("webdriver.timout", DEFAULT_WEBDRIVER_TIMEOUT));
+        return Integer.parseInt(System.getProperty("webdriver.timeout", DEFAULT_WEBDRIVER_TIMEOUT));
     }
 
     @Override
