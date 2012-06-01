@@ -70,7 +70,6 @@ public class RichBean implements Serializable {
     private Map<String, String> richComponents;
     private Map<String, String> otherComponents;
     private String container;
-    
     private boolean dummyBooleanResp;
 
     public enum Skinning {
