@@ -55,7 +55,7 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
     private static final String notAcceptableFile = "file1.x";
     private static final String acceptableFile = "file1.txt";
     private static final String bigFile = "bigFile.txt";
-    private static final String[] filenames = { acceptableFile, "file2.txt", bigFile, notAcceptableFile };
+    private static final String[] filenames = { acceptableFile, "file2.txt", notAcceptableFile, bigFile };
     private static final String ap = "\"";
     private FileUploadPage page = new FileUploadPage();
     private int filesToUploadCount;
@@ -88,6 +88,7 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
         assertTrue(file != null, "File does not exist.");
         assertTrue(file.exists(), "File does not exist.");
 
+        //send file to input field
         page.fileInputField.sendKeys(file.getAbsolutePath());
         if (willBeAccepted) {
             this.filesToUploadCount++;
@@ -113,8 +114,8 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
     }
 
     /**
-     * Waits until page renders elements for all expected uploaded files in uploaded files
-     * list.
+     * Waits until page renders elements for all expected uploaded files in
+     * uploaded files list.
      *
      * @param expectedNumberOfFiles
      */
@@ -133,8 +134,8 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
     }
 
     /**
-     * Waits until page renders elements for all expected files to be uploaded in list of
-     * files to be uploaded
+     * Waits until page renders elements for all expected files to be uploaded
+     * in list of files to be uploaded
      *
      * @param expectedNumberOfFiles
      */
@@ -408,8 +409,8 @@ public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
 
         sendFileToInput(filenames[0], true);
 
-        new WebDriverWait(driver, 2).failWith("File input field should not be there.").
-                until(ElementNotDisplayed.getInstance().element(driver.findElement(By.cssSelector("span.rf-fu-btn-add"))));
+        new WebDriverWait(driver, 2).failWith("Add File button should not be in page.").
+                until(ElementNotDisplayed.getInstance().element(page.addButton));
 
         List<WebElement> filesToUpload = guardListSize(page.itemsToUpload, 1);
         assertTrue(filesToUpload.size() == maxFilesQuantity, "Files to upload list contains less/more files than there should be. List: " + filesToUpload + " .");

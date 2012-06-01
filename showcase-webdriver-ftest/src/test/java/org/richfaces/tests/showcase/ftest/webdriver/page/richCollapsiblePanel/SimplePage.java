@@ -119,7 +119,6 @@ public class SimplePage extends AbstractWebDriverPage {
     }
 
     private void openAjaxPanel(WebElement panel, WebElement tab) {
-        tab.click();// if it is here only once the panel won't open
         tab.click();
         new WebDriverWait(getWebDriver()).failWith("The panel can't be opened.").until(ElementDisplayed.getInstance().element(panel));
     }

@@ -35,6 +35,8 @@ public class FileUploadPage {
     WebElement fileInputField;
     @FindBy(css = "span.rf-fu-btn-upl")
     WebElement uploadButton;
+    @FindBy(css = "span.rf-fu-btn-add")
+    WebElement addButton;
     @FindBy(css = "span.rf-fu-btn-clr")
     WebElement clearAllButton;
     @FindBy(css = "div.rf-fu-itm .rf-fu-itm-lbl")

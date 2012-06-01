@@ -35,7 +35,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
 import org.jboss.test.selenium.support.ui.ElementDisplayed;
@@ -44,7 +43,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.android.AndroidDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.iphone.IPhoneDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
@@ -61,6 +65,32 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     protected static final int MINOR_WAIT_TIME = 200;// ms
     private static final int NUMBER_OF_TRIES = 5;
     private FieldDecorator fieldDecorator;
+    protected DriverType driverType;
+
+    public enum DriverType {
+
+        FireFox(FirefoxDriver.class),
+        InternetExplorer(InternetExplorerDriver.class),
+        Chrome(ChromeDriver.class),
+        HTMLUnit(HtmlUnitDriver.class),
+//        Opera(OperaDriver.class),
+        IPhone(IPhoneDriver.class),
+        Android(AndroidDriver.class);
+        private final Class clazz;
+
+        private DriverType(Class clazz) {
+            this.clazz = clazz;
+        }
+
+        public static DriverType getCurrentType(WebDriver wd) {
+            for (DriverType type : values()) {
+                if (type.clazz.isInstance(wd)) {
+                    return type;
+                }
+            }
+            throw new IllegalArgumentException("Unknown Driver");
+        }
+    }
 
     /**
      * Opens the tested page. If templates is not empty nor null, it appends url
@@ -74,7 +104,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             throw new SkipException("webDriver isn't initialized");
         }
         driver.get(buildUrl(getTestUrl() + "?templates=" + template.toString()).toExternalForm());
-        driver.manage().timeouts().pageLoadTimeout(WAIT_TIME, TimeUnit.SECONDS);
+        driverType = DriverType.getCurrentType(driver);
     }
 
     /**

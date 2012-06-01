@@ -40,12 +40,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <h:panelGroup layout="block" style="width:500px; background-color: lightgreen; padding: 15px" id="targetPanel1">
+            <!-- panels must be placed next to each other for testing in chromeDriver. (It cannot click behind showed context menu) -->
+            <h:panelGrid columns="2">
+                <h:panelGroup layout="block" style="width:400px; background-color: lightgreen; padding: 15px" id="targetPanel1">
                     Righ click here for a contextMenu (targetPanel1)
-            </h:panelGroup>
-            <h:panelGroup layout="block" style="width:500px; background-color: yellow; padding: 15px" id="targetPanel2">
+                </h:panelGroup>
+                <h:panelGroup layout="block" style="width:400px; background-color: yellow; padding: 15px" id="targetPanel2">
                     Righ click here for a contextMenu (targetPanel2)
-            </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGrid>
             <rich:contextMenu id="ctxMenu"
                               dir="#{richContextMenuBean.attributes['dir'].value}"
                               direction="#{richContextMenuBean.attributes['direction'].value}"
@@ -79,45 +82,45 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                               target="#{richContextMenuBean.attributes['target'].value}"
                               title="#{richContextMenuBean.attributes['title'].value}"
                               verticalOffset="#{richContextMenuBean.attributes['verticalOffset'].value}"
-                             >
+                              >
                 <rich:menuItem id="menuItem2" label="Open" action="#{richContextMenuBean.doOpen}" icon="/resources/images/icons/open.gif" />
 
-                    <rich:menuGroup id="menuGroup3" label="Open Recent..." disabled="true">
-                        <rich:menuItem id="menuItem31"  label="Save" action="#{richContextMenuBean.doSave}" icon="/resources/images/icons/save.gif" />
-                        <rich:menuItem id="menuItem32" label="Save All" action="#{richContextMenuBean.doSaveAll}">
-                            <f:facet name="icon">
-                                <h:graphicImage library="images/icons" name="save_all.gif" />
-                            </f:facet>
-                        </rich:menuItem>
-                    </rich:menuGroup>
+                <rich:menuGroup id="menuGroup3" label="Open Recent..." disabled="true">
+                    <rich:menuItem id="menuItem31"  label="Save" action="#{richContextMenuBean.doSave}" icon="/resources/images/icons/save.gif" />
+                    <rich:menuItem id="menuItem32" label="Save All" action="#{richContextMenuBean.doSaveAll}">
+                        <f:facet name="icon">
+                            <h:graphicImage library="images/icons" name="save_all.gif" />
+                        </f:facet>
+                    </rich:menuItem>
+                </rich:menuGroup>
 
-                    <rich:menuSeparator id="menuSeparator11" />
+                <rich:menuSeparator id="menuSeparator11" />
 
-                    <rich:menuGroup id="menuGroup4" label="Save As...">
-                        <rich:menuItem id="menuItem41" label="Save" action="#{richContextMenuBean.doSave}" icon="/resources/images/icons/save.gif" />
-                        <rich:menuItem id="menuItem42" label="Save All" action="#{richContextMenuBean.doSaveAll}" >
-                            <f:facet name="icon">
-                                <h:graphicImage library="images/icons" name="save_all.gif" />
-                            </f:facet>
-                        </rich:menuItem>
-                        <rich:menuItem id="menuItem43" label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
-                    </rich:menuGroup>
+                <rich:menuGroup id="menuGroup4" label="Save As...">
+                    <rich:menuItem id="menuItem41" label="Save" action="#{richContextMenuBean.doSave}" icon="/resources/images/icons/save.gif" />
+                    <rich:menuItem id="menuItem42" label="Save All" action="#{richContextMenuBean.doSaveAll}" >
+                        <f:facet name="icon">
+                            <h:graphicImage library="images/icons" name="save_all.gif" />
+                        </f:facet>
+                    </rich:menuItem>
+                    <rich:menuItem id="menuItem43" label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
+                </rich:menuGroup>
 
-                    <rich:menuItem id="menuItem5" label="Print" disabled="true"/>
+                <rich:menuItem id="menuItem5" label="Print" disabled="true"/>
 
-                    <rich:menuItem id="menuItem6" label="Close" action="#{richContextMenuBean.doClose}" />
+                <rich:menuItem id="menuItem6" label="Close" action="#{richContextMenuBean.doClose}" />
 
-                    <rich:menuSeparator id="menuSeparator12" />
+                <rich:menuSeparator id="menuSeparator12" />
 
-                    <rich:menuItem id="menuItem7" label="Exit" action="#{richContextMenuBean.doExit}" />
+                <rich:menuItem id="menuItem7" label="Exit" action="#{richContextMenuBean.doExit}" />
             </rich:contextMenu>
-            
+
             <br/>
             <a4j:outputPanel ajaxRendered="true">
                 Current Selection: 
                 <h:outputText id="output" style="font-weight:bold" value="#{richContextMenuBean.current}"></h:outputText>
             </a4j:outputPanel>
-            
+
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

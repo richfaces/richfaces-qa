@@ -5,14 +5,14 @@
 
         <groups>
             <run>
-                <exclude name="broken" />
+                <include name="RF-11479" />
+                <include name="RF-11573" />
+                <include name="RF-11871" />
+                <include name="arquillian" />
 
-                <exclude name="RF-11479" />
-                <exclude name="RF-11573" />
-                <exclude name="RF-11871" />
-<!--                <exclude name="RF-11872" />-->
-<!--                <exclude name="RF-12146" />-->
-<!--                <exclude name="RF-11773" />-->
+<!--                <include name="RF-12146" />-->
+<!--                <include name="RF-11773" />-->
+<!--<include name="RF-11872" />-->
             </run>
         </groups>
 
