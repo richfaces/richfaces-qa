@@ -43,6 +43,7 @@ import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.
 import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.disabled;
 import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.enableManualInput;
 import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.firstWeekDay;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.horizontalOffset;
 import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.immediate;
 import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.inputSize;
 import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.locale;
@@ -67,6 +68,7 @@ import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.
 import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.showInput;
 import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.showWeekDaysBar;
 import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.showWeeksBar;
+import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.verticalOffset;
 import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.zindex;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -363,11 +365,20 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testDirection() throws Exception {
+        verifyPositions(0, 0);
+    }
+
+    private void verifyPositions(int horizontalOffset, int verticalOffset) throws Exception {
+
         String[] directions = {"auto", "bottomLeft", "bottomRight", "topLeft", "topRight"};
 
         int inputX = selenium.getElementPosition(input).getX();
         int inputY = selenium.getElementPosition(input).getY();
-        // System.out.println(" ### position of input: [" + inputX + ", " + inputY + "]");
+
+        int baseX = inputX + horizontalOffset;
+        int baseY = inputY + verticalOffset;
+
+        // System.out.println(" ### position of input: [" + baseX + ", " + baseY + "]");
 
         Dimension inputDim = selenium.getElementDimension(input);
         // System.out.println(" ### dimension input: height = " + inputDim.getHeight() + ", width = " + inputDim.getWidth());
@@ -383,17 +394,19 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
             int popupX = selenium.getElementPosition(popup).getX();
             int popupY = selenium.getElementPosition(popup).getY();
 
-            int offsetX = inputX - popupDim.getWidth() + 2;
-            int offsetDownY = inputY + (inputDim.getHeight() - 1);
-            int offsetUpY = inputY - popupDim.getHeight() + inputDim.getHeight() + 1;
+            // horizontal offset from @horizontalOffset
+            int offsetX = inputX - popupDim.getWidth() + 2 - horizontalOffset;
+            int offsetDownY = baseY + (inputDim.getHeight() - 1);
+            // vertical offset from @verticalOffset
+            int offsetUpY = inputY - popupDim.getHeight() + inputDim.getHeight() + 1 - verticalOffset;
 
             // System.out.println(" direction: " + directions[i]);
-            // System.out.println("   ### position: [" + x +  ", " + y + "]");
+            // System.out.println("   ### position: [" + offsetX +  ", " + offsetDownY + "/" + offsetUpY + "]");
 
             switch (i) {
                 case 0: // auto (direction depends on browser/screen resolution)
-                    assertTrue(tolerantEquals(popupX, inputX, 1) || tolerantEquals(popupX, offsetX, 1),
-                        "Any expected value found. x = " + popupX + ", one of expected: " + offsetX + ", " + inputX);
+                    assertTrue(tolerantEquals(popupX, baseX, 1) || tolerantEquals(popupX, offsetX, 1),
+                        "Any expected value found. x = " + popupX + ", one of expected: " + offsetX + ", " + baseX);
                     assertTrue(tolerantEquals(popupY, offsetDownY, 1) || tolerantEquals(popupY, offsetUpY, 1),
                         "Any expected value found. y = " + popupY + ", one of expected: " + offsetUpY + ", " + offsetDownY);
                     break;
@@ -404,7 +417,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
                     break;
 
                 case 2: // bottomRight
-                    tolerantAssertEquals(popupX, inputX, 1);
+                    tolerantAssertEquals(popupX, baseX, 1);
                     tolerantAssertEquals(popupY, offsetDownY, 1);
                     break;
 
@@ -414,7 +427,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
                     break;
 
                 case 4: // topRight
-                    tolerantAssertEquals(popupX, inputX, 1);
+                    tolerantAssertEquals(popupX, baseX, 1);
                     tolerantAssertEquals(popupY, offsetUpY, 1);
                     break;
 
@@ -422,7 +435,6 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
                     throw new Exception("Incorrectly handled switch!");
             }
         }
-
     }
 
     @Test
@@ -491,6 +503,17 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
         // String label = selenium.getText(weekDayLabel.format(i));
         // assertEquals(label, labels[i], "Week day label " + i);
         // }
+    }
+
+    @Test
+    public void testHorizontalOffset() throws Exception {
+        int horizontalOffsetVal = 13;
+        calendarAttributes.set(horizontalOffset, horizontalOffsetVal);
+        verifyPositions(horizontalOffsetVal, 0);
+
+        horizontalOffsetVal = 12;
+        calendarAttributes.set(CalendarAttributes.horizontalOffset, horizontalOffsetVal);
+        verifyPositions(horizontalOffsetVal, 0);
     }
 
     @Test(groups = { "4.Future" })
@@ -1001,6 +1024,14 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
         assertEquals(selectedDate1, selectedDate2, "Output and calendar's input should be the same.");
         phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> " + selectedDate1);
+    }
+
+    @Test
+    public void testVerticalOffset() throws Exception {
+        int verticalOffsetVal = 13;
+        calendarAttributes.set(verticalOffset, verticalOffsetVal);
+
+        verifyPositions(0, verticalOffsetVal);
     }
 
     @Test
