@@ -63,9 +63,10 @@ public class TestTable extends AbstractContextMenuTest {
         int soFar = 0;
 
         for (Iterator<JQueryLocator> i = pricesTds.iterator(); i.hasNext();) {
-            if(soFar > 15) {
+            if (soFar > 10) {
                 break;
             }
+
             JQueryLocator priceTd = i.next();
             soFar++;
             selenium.clickAt(priceTd, new Point(3, 3));
@@ -74,9 +75,11 @@ public class TestTable extends AbstractContextMenuTest {
             String venderAndModelFromTable = selenium.getText(selectedTr);
 
             tryToInvokeContextMenu(priceTd, new Point(3, 3), contextMenu);
-//            selenium.contextMenuAt(priceTd, new Point(3, 3));
-            waitGui.failWith(new RuntimeException("The context menu should be visible")).timeout(2000)
-                .until(elementVisible.locator(contextMenu));
+
+            waitGui
+                .failWith(
+                    new RuntimeException("The invocation of context menu on line " + soFar + " did not render context menu!"))
+                .timeout(2000).until(elementVisible.locator(contextMenu));
 
             selenium.click(contextMenuItem);
 

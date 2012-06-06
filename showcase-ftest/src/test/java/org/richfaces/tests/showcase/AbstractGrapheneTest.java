@@ -182,7 +182,7 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
     protected void checkContextMenuRenderedAtCorrectPosition(JQueryLocator target, Point offset, boolean invokedByRightClick,
         JQueryLocator contextMenu, final int TOLERANCE) {
         if (invokedByRightClick) {
-            selenium.contextMenuAt(target, offset);
+            tryToInvokeContextMenu(target, offset, contextMenu);
         } else {
             selenium.clickAt(target, offset);
         }
@@ -203,7 +203,7 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
     }
 
     protected void tryToInvokeContextMenu(JQueryLocator node, Point point, JQueryLocator contextMenu) {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 7; i++) {
             selenium.clickAt(node, point);
             selenium.contextMenuAt(node, point);
 
