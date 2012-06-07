@@ -35,6 +35,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
 	<ui:define name="component">
 
+		<rich:panel header="Steps to reproduce">
+			1. use dataScroller to switch table-pages. you can see, that this works. <br />
+			2. collaps collapsiblePanel <br />
+			3. if collapsiblePanel is collapsed, the dataScroller doesn't react anymore. <br />
+			4. if you use switchType='client' everything works correct<br />
+		</rich:panel>
 		<rich:collapsiblePanel header="collapsPanel" id="collapsPanel"
 			expanded="true" switchType="ajax">
 			<h:inputText id="test"/>
