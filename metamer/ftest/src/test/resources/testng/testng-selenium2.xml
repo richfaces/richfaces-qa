@@ -14,7 +14,8 @@
             <class name="org.richfaces.tests.metamer.ftest.a4jMediaOutput.TestElementAWebDriver" />
             <class name="org.richfaces.tests.metamer.ftest.richEditor.TestRichEditorWithTyping" />
             <class name="org.richfaces.tests.metamer.ftest.richExtendedDataTable.TestEDTFrozenColumns" />
-            <class name="org.richfaces.tests.metamer.ftest.richFileUpload.TestRichFileUploadSe2" />
+            <class name="org.richfaces.tests.metamer.ftest.richFileUpload.TestRichFileUploadWebDriver" />
+            <class name="org.richfaces.tests.metamer.ftest.richFileUpload.TestRichFileUploadProgressFacet" />
             <class name="org.richfaces.tests.metamer.ftest.richContextMenu.TestRichContextMenuWebDriver" />
             <class name="org.richfaces.tests.metamer.ftest.richItemChangeListener.TestAccordionItemChangeListener" />
             <class name="org.richfaces.tests.metamer.ftest.richItemChangeListener.TestPanelMenuItemChangeListener" />
