@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+<!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2012, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+<ui:composition template="/templates/template.xhtml">
+
+
+	<ui:define name="component">
+
+		<rich:panel header="Steps to reproduce">
+			1. use dataScroller to switch table-pages. you can see, that this works. <br />
+			2. collaps collapsiblePanel <br />
+			3. if collapsiblePanel is collapsed, the dataScroller doesn't react anymore. <br />
+			4. if you use switchType='client' everything works correct<br />
+		</rich:panel>
+		<rich:collapsiblePanel header="collapsPanel" id="collapsPanel"
+			expanded="true" switchType="ajax">
+			<h:inputText id="test"/>
+			<rich:message id="testMessage" for="test" />
+		</rich:collapsiblePanel>
+
+		<rich:dataTable id="tableA" var="item" value="#{model.capitals}"
+			rows="5" style="width:350px;">
+			<f:facet name="header">
+				<h:outputText value="HeaderA" />
+			</f:facet>
+			<rich:column id="colA">
+				<f:facet name="header">
+				ColA
+		        </f:facet>
+			#{item.name}
+		</rich:column>
+			<f:facet name="footer">
+				<rich:dataScroller for="tableA" id="ds" />
+			</f:facet>
+		</rich:dataTable>
+
+	</ui:define>
+
+</ui:composition>
+</html>
