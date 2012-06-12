@@ -29,126 +29,26 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-import java.io.File;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
-import org.jboss.test.selenium.support.ui.ElementDisplayed;
 import org.jboss.test.selenium.support.ui.ElementNotDisplayed;
 import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.jboss.test.selenium.support.ui.TextEquals;
 import org.jboss.test.selenium.support.ui.TextNotEquals;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichFileUploadSe2 extends AbstractWebDriverTest {
-
-    private static final String notAcceptableFile = "file1.x";
-    private static final String acceptableFile = "file1.txt";
-    private static final String bigFile = "bigFile.txt";
-    private static final String[] filenames = { acceptableFile, "file2.txt", notAcceptableFile, bigFile };
-    private static final String ap = "\"";
-    private FileUploadPage page = new FileUploadPage();
-    private int filesToUploadCount;
-    private int filesUploadedCount;
+public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest {
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richFileUpload/simple.xhtml");
-    }
-
-    @BeforeMethod
-    public void pageLoad() {
-        injectWebElementsToPage(page);
-        filesToUploadCount = 0;
-        filesUploadedCount = 0;
-    }
-
-    /**
-     * Sends file to fileupload input field and waits for page update.
-     *
-     * @param filename
-     * @param willBeAccepted
-     */
-    private void sendFileToInput(String filename, boolean willBeAccepted) {
-        File file = null;
-        try {
-            file = new File(TestRichFileUploadSe2.class.getResource(filename).toURI());
-        } catch (URISyntaxException ex) {
-        }
-        assertTrue(file != null, "File does not exist.");
-        assertTrue(file.exists(), "File does not exist.");
-
-        //send file to input field
-        page.fileInputField.sendKeys(file.getAbsolutePath());
-        if (willBeAccepted) {
-            this.filesToUploadCount++;
-        }
-        waitUntilFilesToUploadListShow(filesToUploadCount);
-    }
-
-    /**
-     * Sends file to fileupload input field and waits for page update. Then
-     * clicks on submit button to upload files and waits for page update.
-     *
-     * @param filename
-     * @param willBeAccepted
-     * @param willBeUploaded
-     */
-    private void sendFile(String filename, boolean willBeAccepted, boolean willBeUploaded) {
-        sendFileToInput(filename, willBeAccepted);
-        waitRequest(page.uploadButton, WaitRequestType.HTTP).click();
-        if (willBeUploaded) {
-            this.filesUploadedCount++;
-        }
-        waitUntilUploadedFilesListShow(filesUploadedCount);
-    }
-
-    /**
-     * Waits until page renders elements for all expected uploaded files in
-     * uploaded files list.
-     *
-     * @param expectedNumberOfFiles
-     */
-    private void waitUntilUploadedFilesListShow(int expectedNumberOfFiles) {
-        waitForPageToLoad();
-        if (expectedNumberOfFiles == 0) {
-        } else {
-            for (int i = 1; i <= expectedNumberOfFiles; i++) {
-                new WebDriverWait(driver).failWith("Expected number of files was not added to uploaded files list.").
-                        until(ElementDisplayed.getInstance().
-                        element(driver.findElement(
-                        By.xpath("//div[@class='rf-fu-itm'][" + i + "]"
-                        + "//span[@class='rf-fu-itm-st']"))));
-            }
-        }
-    }
-
-    /**
-     * Waits until page renders elements for all expected files to be uploaded
-     * in list of files to be uploaded
-     *
-     * @param expectedNumberOfFiles
-     */
-    private void waitUntilFilesToUploadListShow(int expectedNumberOfFiles) {
-        if (expectedNumberOfFiles == 0) {
-        } else {
-            for (int i = 1; i <= expectedNumberOfFiles; i++) {
-                new WebDriverWait(driver).failWith("Expected number of files was not added to upload list.").
-                        until(ElementDisplayed.getInstance().
-                        element(driver.findElement(
-                        By.xpath("//div[@class='rf-fu-itm'][" + i + "]"))));
-            }
-        }
     }
 
     @Test
