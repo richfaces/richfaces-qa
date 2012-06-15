@@ -53,7 +53,7 @@ public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<SimplePage>{
         assertEquals(getPage().getFirstOutput().getText(), "Approved Text: " + CORRECT, "The output text doesn't match.");
     }
 
-    @Test(groups = { "RF-11573" })
+    @Test//(groups = { "RF-11573" })
     public void testFirstWrongInput() {
         getPage().getFirstInput().click();
         getPage().getFirstInput().sendKeys(WRONG);
