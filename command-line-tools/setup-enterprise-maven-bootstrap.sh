@@ -46,6 +46,8 @@ rm -rf $SCRIPT_DIR/../enterprise-maven-bootstrap/jboss*repository
 cd $SCRIPT_DIR/../enterprise-maven-bootstrap;
 EAP_ARCHIVE=`basename $1`;
 WFK_ARCHIVE=`basename $2`;
+EAP_DIRECTORY=`basename $EAP_ARCHIVE .zip`;
+WFK_DIRECTORY=`basename $WFK_ARCHIVE .zip`;
 if [ ! -f $EAP_ARCHIVE ]; then
     wget $1 --no-check-certificate;
 fi
@@ -59,5 +61,5 @@ unzip $WFK_ARCHIVE;
 #rm -rf *.zip;
 
 # Package the maven bootstrap
-mvn clean package;
+mvn clean package -Deap6.enterprise.repository.zip=$SCRIPT_DIR/../enterprise-maven-bootstrap/$EAP_ARCHIVE -Dwfk2.enterprise.repository.zip=$SCRIPT_DIR/../enterprise-maven-bootstrap/$WFK_ARCHIVE -Deap6.enterprise.repository.dir=$SCRIPT_DIR/../enterprise-maven-bootstrap/$EAP_DIRECTORY -Dwfk2.enterprise.repository.dir=$SCRIPT_DIR/../enterprise-maven-bootstrap/$WFK_DIRECTORY
 cd $SCRIPT_DIR/..;
