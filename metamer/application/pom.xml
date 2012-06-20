@@ -9,7 +9,8 @@
     software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the 
     FSF site: http://www.fsf.org. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -150,20 +151,16 @@
     <build>
         <finalName>metamer</finalName>
 
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
+                    <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                    <filters>
+                        <filter>src/main/filters/default.properties</filter>
+                    </filters>
                     <attachClasses>true</attachClasses>
                     <attachSources>true</attachSources>
-                    <useCache>true</useCache>
                     <archive>
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
@@ -180,34 +177,6 @@
                     <execution>
                         <id>default-war</id>
                         <phase>none</phase>
-                    </execution>
-                    <execution>
-                        <id>exploded-war</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>exploded</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.google.code.maven-replacer-plugin</groupId>
-                <artifactId>maven-replacer-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>replace</goal>
-                        </goals>
-                        <configuration>
-                            <file>target/${project.build.finalName}/WEB-INF/web.xml</file>
-                            <regex>true</regex>
-                            <regexFlags>
-                                <regexFlag>MULTILINE</regexFlag>
-                            </regexFlags>
-                            <token>&lt;param-name&gt;org.jboss.jbossfaces.WAR_BUNDLES_JSF_IMPL&lt;/param-name&gt;\s*&lt;param-value&gt;false&lt;/param-value&gt;</token>
-                            <value>&lt;param-name&gt;org.jboss.jbossfaces.WAR_BUNDLES_JSF_IMPL&lt;/param-name&gt;&lt;param-value&gt;true&lt;/param-value&gt;</value>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -292,11 +261,14 @@
                         <executions>
                             <execution>
                                 <id>jee6-bundled-mojarra</id>
-                                <phase>integration-test</phase>
+                                <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
+                                    <filters>
+                                        <filter>src/main/filters/bundles-jsf.properties</filter>
+                                    </filters>
                                     <classifier>jee6-bundled-mojarra</classifier>
                                     <packagingExcludes>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</packagingExcludes>
                                 </configuration>
@@ -315,27 +287,37 @@
                         <executions>
                             <execution>
                                 <id>jee6-bundled-myfaces</id>
-                                <phase>integration-test</phase>
+                                <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
+                                    <filters>
+                                        <filter>src/main/filters/bundles-jsf.properties</filter>
+                                    </filters>
                                     <classifier>jee6-bundled-myfaces</classifier>
-                                    <packagingExcludes>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</packagingExcludes>
+                                    <packagingExcludes>WEB-INF/web.xml,WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</packagingExcludes>
                                 </configuration>
                             </execution>
                         </executions>
                     </plugin>
                 </plugins>
             </build>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.myfaces.core</groupId>
+                    <artifactId>myfaces-api</artifactId>
+                    <scope>compile</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.myfaces.core</groupId>
+                    <artifactId>myfaces-impl</artifactId>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>war-mojarra</id>
-            <activation>
-                <property>
-                    <name>!jsf_profile</name>
-                </property>
-            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -343,7 +325,7 @@
                         <executions>
                             <execution>
                                 <id>mojarra</id>
-                                <phase>integration-test</phase>
+                                <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
                                 </goals>
@@ -359,12 +341,6 @@
         </profile>
         <profile>
             <id>war-myfaces</id>
-            <activation>
-                <property>
-                    <name>jsf_profile</name>
-                    <value>myfaces</value>
-                </property>
-            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -372,19 +348,31 @@
                         <executions>
                             <execution>
                                 <id>myfaces</id>
-                                <phase>integration-test</phase>
+                                <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
                                     <classifier>myfaces</classifier>
-                                    <packagingExcludes>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/jsp-api*</packagingExcludes>
+                                    <packagingExcludes>WEB-INF/web.xml,WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/jsp-api*</packagingExcludes>
                                 </configuration>
                             </execution>
                         </executions>
                     </plugin>
                 </plugins>
             </build>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.myfaces.core</groupId>
+                    <artifactId>myfaces-api</artifactId>
+                    <scope>compile</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.myfaces.core</groupId>
+                    <artifactId>myfaces-impl</artifactId>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>myfaces-development</id>
@@ -399,7 +387,6 @@
                     <artifactId>jsf-impl</artifactId>
                     <scope>provided</scope>
                 </dependency>
-
                 <dependency>
                     <groupId>org.apache.myfaces.core</groupId>
                     <artifactId>myfaces-api</artifactId>
@@ -437,6 +424,80 @@
                     <scope>provided</scope>
                 </dependency>
             </dependencies>
+        </profile>
+        <profile>
+            <id>release</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.myfaces.core</groupId>
+                    <artifactId>myfaces-api</artifactId>
+                    <scope>compile</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.myfaces.core</groupId>
+                    <artifactId>myfaces-impl</artifactId>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>mojarra</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>war</goal>
+                                </goals>
+                                <configuration>
+                                    <classifier>mojarra</classifier>
+                                    <packagingExcludes>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/jsp-api*</packagingExcludes>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>myfaces</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>war</goal>
+                                </goals>
+                                <configuration>
+                                    <classifier>myfaces</classifier>
+                                    <packagingExcludes>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/jsp-api*</packagingExcludes>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>jee6-bundled-mojarra</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>war</goal>
+                                </goals>
+                                <configuration>
+                                    <filters>
+                                        <filter>src/main/filters/bundles-jsf.properties</filter>
+                                    </filters>
+                                    <classifier>jee6-bundled-mojarra</classifier>
+                                    <packagingExcludes>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</packagingExcludes>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>jee6-bundled-myfaces</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>war</goal>
+                                </goals>
+                                <configuration>
+                                    <filters>
+                                        <filter>src/main/filters/bundles-jsf.properties</filter>
+                                    </filters>
+                                    <classifier>jee6-bundled-myfaces</classifier>
+                                    <packagingExcludes>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</packagingExcludes>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 </project>
