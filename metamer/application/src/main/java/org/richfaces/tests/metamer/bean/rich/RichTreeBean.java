@@ -35,16 +35,15 @@ import java.util.TreeSet;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ComponentSystemEvent;
 
-import org.richfaces.model.SwingTreeNodeDataModelImpl;
-import org.richfaces.model.TreeDataModel;
-
 import org.richfaces.component.UITree;
 import org.richfaces.event.DropEvent;
+import org.richfaces.model.SwingTreeNodeDataModelImpl;
+import org.richfaces.model.TreeDataModel;
 import org.richfaces.tests.metamer.Attributes;
-import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.bean.RichBean;
 import org.richfaces.tests.metamer.model.CompactDisc;
 import org.richfaces.tests.metamer.model.Company;
@@ -75,8 +74,8 @@ public class RichTreeBean implements Serializable {
     private List<SwingTreeNode<Labeled>> swingTreeNodeRoot;
     private Collection<? extends Serializable> selection;
 
-    // FIXME: @ManagedProperty(value = "#{model}")
-    // private Model model;
+    @ManagedProperty("#{model.compactDiscs}")
+    private List<CompactDiscXmlDescriptor> compactDiscs;
     private Map<State, Set<Company>> companiesCache;
     private Map<Company, Set<CompactDisc>> cdCache;
 
@@ -117,7 +116,7 @@ public class RichTreeBean implements Serializable {
         // build cache
         companiesCache = new TreeMap<State, Set<Company>>(labeledComparator);
         cdCache = new HashMap<Company, Set<CompactDisc>>();
-        for (CompactDiscXmlDescriptor descriptor : Model.unmarshallCompactDiscs()) {
+        for (CompactDiscXmlDescriptor descriptor : compactDiscs) {
             createCompactDisc(descriptor);
         }
     }
@@ -130,6 +129,13 @@ public class RichTreeBean implements Serializable {
         this.attributes = attributes;
     }
 
+    public List<CompactDiscXmlDescriptor> getCompactDiscs() {
+        return compactDiscs;
+    }
+
+    public void setCompactDiscs(List<CompactDiscXmlDescriptor> compactDiscs) {
+        this.compactDiscs = compactDiscs;
+    }
 
     public void processDragging(DropEvent dropEvent) {
         RichBean.logToPage("* dropListener");

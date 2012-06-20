@@ -27,16 +27,16 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import org.hibernate.validator.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.richfaces.component.UISelect;
 import org.richfaces.tests.metamer.Attributes;
-import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.bean.RichBean;
 import org.richfaces.tests.metamer.model.Capital;
 import org.slf4j.Logger;
@@ -55,8 +55,7 @@ public class RichSelectBean implements Serializable {
     private static final long serialVersionUID = -1L;
     private static Logger logger;
     private Attributes attributes;
-//    temporary fix because of a bug in MyFaces
-//    @ManagedProperty(value = "#{model.capitals}")
+    @ManagedProperty("#{model.capitals}")
     private List<Capital> capitals;
     private List<SelectItem> capitalsOptions = null;
     private List<SelectItem> validationOptions = null;
@@ -75,9 +74,7 @@ public class RichSelectBean implements Serializable {
 
         capitalsOptions = new ArrayList<SelectItem>();
         validationOptions = new ArrayList<SelectItem>();
-//        temporary fix because of a bug in MyFaces
-//        for (Capital capital : capitals) {
-        for (Capital capital : Model.unmarshallCapitals()) {
+        for (Capital capital : capitals) {
             capitalsOptions.add(new SelectItem(capital.getState(), capital.getState()));
             validationOptions.add(new SelectItem(capital.getState(), capital.getState()));
         }

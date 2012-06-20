@@ -56,7 +56,7 @@ public class RichAutocompleteBean implements Serializable {
     private static Logger logger;
     private Attributes attributes;
     private Attributes ajaxAttributes;
-    @ManagedProperty(value = "#{model.capitals}")
+    @ManagedProperty("#{model.capitals}")
     private List<Capital> capitals;
 
     // properties for jsr303 validations
