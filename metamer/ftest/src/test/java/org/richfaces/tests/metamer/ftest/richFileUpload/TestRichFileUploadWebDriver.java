@@ -298,6 +298,8 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
 
         sendFile(bigFile, true, false);
 
+        new WebDriverWait(driver, 2).failWith("Status is not present.").until(ElementPresent.getInstance().element(page.uploadStatusLabel));
+
         assertEquals(testData, page.uploadStatusLabel.getText(),
                 "Attribute sizeExceededLabel does not work.");
     }

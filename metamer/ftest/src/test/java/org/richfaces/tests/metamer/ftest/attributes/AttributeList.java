@@ -5,6 +5,7 @@ import static org.richfaces.tests.metamer.ftest.AbstractMetamerTest.pjq;
 
 import org.jboss.arquillian.ajocado.request.RequestType;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.MetamerAttributes;
 import org.richfaces.tests.metamer.ftest.a4jActionListener.ActionListenerAttributes;
 import org.richfaces.tests.metamer.ftest.a4jAjax.AjaxAttributes;
 import org.richfaces.tests.metamer.ftest.a4jAttachQueue.AttachQueueAttributes;
@@ -21,7 +22,6 @@ import org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes;
 import org.richfaces.tests.metamer.ftest.a4jRegion.RegionAttributes;
 import org.richfaces.tests.metamer.ftest.a4jRepeat.RepeatAttributes;
 import org.richfaces.tests.metamer.ftest.a4jStatus.StatusAttributes;
-import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets;
 import org.richfaces.tests.metamer.ftest.richAccordion.AccordionAttributes;
 import org.richfaces.tests.metamer.ftest.richAccordionItem.AccordionItemAttributes;
@@ -35,6 +35,7 @@ import org.richfaces.tests.metamer.ftest.richComponentControl.ComponentControlAt
 import org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuAttributes;
 import org.richfaces.tests.metamer.ftest.richDataGrid.DataGridAttributes;
 import org.richfaces.tests.metamer.ftest.richDataScroller.DataScrollerAttributes;
+import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes;
 import org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes;
 import org.richfaces.tests.metamer.ftest.richDropDownMenu.DropDownMenuAttributes;
@@ -130,6 +131,7 @@ public class AttributeList {
     public static Attributes<MenuSeparatorAttributes> menuSeparatorAttributes = new Attributes<MenuSeparatorAttributes>();
     public static Attributes<MessageAttributes> messageAttributes = new Attributes<MessageAttributes>();
     public static Attributes<MessagesAttributes> messagesAttributes = new Attributes<MessagesAttributes>();
+    public static Attributes<MetamerAttributes> metamerAttributes = new Attributes<MetamerAttributes>(jq("form[id$=displayControlsForm]"));
     public static Attributes<OutputPanelAttributes> outputPanelAttributes = new Attributes<OutputPanelAttributes>();
     public static Attributes<PanelAttributes> panelAttributes = new Attributes<PanelAttributes>();
     public static Attributes<PanelMenuAttributes> panelMenuAttributes = new Attributes<PanelMenuAttributes>();

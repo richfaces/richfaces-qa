@@ -372,63 +372,61 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
         String[] directions = {"auto", "bottomLeft", "bottomRight", "topLeft", "topRight"};
 
+        // get input position
         int inputX = selenium.getElementPosition(input).getX();
         int inputY = selenium.getElementPosition(input).getY();
 
-        int baseX = inputX + horizontalOffset;
-        int baseY = inputY + verticalOffset;
-
-        // System.out.println(" ### position of input: [" + baseX + ", " + baseY + "]");
-
+        // get input size
         Dimension inputDim = selenium.getElementDimension(input);
-        // System.out.println(" ### dimension input: height = " + inputDim.getHeight() + ", width = " + inputDim.getWidth());
 
+        // get popup size
         selenium.click(input);
         Dimension popupDim = selenium.getElementDimension(popup);
-        // System.out.println(" ### dimension popup: height = " + popupDim.getHeight() + ", width = " + popupDim.getWidth());
 
+        // test all directions
         for (int i=0; i < directions.length; ++i) {
+            // set direction
             calendarAttributes.set(CalendarAttributes.direction, directions[i]);
+            // show popup
             selenium.click(input);
 
+            // get popup position
             int popupX = selenium.getElementPosition(popup).getX();
             int popupY = selenium.getElementPosition(popup).getY();
 
             // horizontal offset from @horizontalOffset
-            int offsetX = inputX - popupDim.getWidth() + 2 - horizontalOffset;
-            int offsetDownY = baseY + (inputDim.getHeight() - 1);
+            int offsetXOnTheLeft = inputX - popupDim.getWidth() + 2 - horizontalOffset;
+            int offsetXOnTheRight = inputX + horizontalOffset;
             // vertical offset from @verticalOffset
-            int offsetUpY = inputY - popupDim.getHeight() + inputDim.getHeight() + 1 - verticalOffset;
-
-            // System.out.println(" direction: " + directions[i]);
-            // System.out.println("   ### position: [" + offsetX +  ", " + offsetDownY + "/" + offsetUpY + "]");
+            int offsetYOnTheBottom = inputY + (inputDim.getHeight() - 1) + verticalOffset;
+            int offsetYOnTheTop = inputY - popupDim.getHeight() + inputDim.getHeight() - verticalOffset;
 
             switch (i) {
                 case 0: // auto (direction depends on browser/screen resolution)
-                    assertTrue(tolerantEquals(popupX, baseX, 1) || tolerantEquals(popupX, offsetX, 1),
-                        "Any expected value found. x = " + popupX + ", one of expected: " + offsetX + ", " + baseX);
-                    assertTrue(tolerantEquals(popupY, offsetDownY, 1) || tolerantEquals(popupY, offsetUpY, 1),
-                        "Any expected value found. y = " + popupY + ", one of expected: " + offsetUpY + ", " + offsetDownY);
+                    assertTrue(tolerantEquals(popupX, offsetXOnTheLeft, 1) || tolerantEquals(popupX, offsetXOnTheRight, 1),
+                        "Any expected value found. x = " + popupX + ", expected one of : " + offsetXOnTheLeft + ", " + offsetXOnTheRight + "; @direction is set to <" + directions[i] + ">.");
+                    assertTrue(tolerantEquals(popupY, offsetYOnTheBottom, 1) || tolerantEquals(popupY, offsetYOnTheTop, 1),
+                        "Any expected value found. y = " + popupY + ", expected one of: " + offsetYOnTheBottom + ", " + offsetYOnTheTop + "; @direction is set to <" + directions[i] + ">.");
                     break;
 
                 case 1: // bottomLeft
-                    tolerantAssertEquals(popupX, offsetX, 1);
-                    tolerantAssertEquals(popupY, offsetDownY, 1);
+                    tolerantAssertEquals(popupX, offsetXOnTheLeft, 1, "Horizontal position doesn't match, expected <" + popupX + ">, found <" + offsetXOnTheLeft + ">. Tolerance is set to <" + 1 + ">; @direction is set to <" + directions[i] + ">.");
+                    tolerantAssertEquals(popupY, offsetYOnTheBottom, 1, "Vertical position doesn't match, expected <" + popupY + ">, found <" + offsetYOnTheBottom + ">. Tolerance is set to <" + 1 + ">; @direction is set to <" + directions[i] + ">");
                     break;
 
                 case 2: // bottomRight
-                    tolerantAssertEquals(popupX, baseX, 1);
-                    tolerantAssertEquals(popupY, offsetDownY, 1);
+                    tolerantAssertEquals(popupX, offsetXOnTheRight, 1, "Horizontal position doesn't match, expected <" + popupX + ">, found <" + offsetXOnTheRight + ">. Tolerance is set to <" + 1 + ">; @direction is set to <" + directions[i] + ">.");
+                    tolerantAssertEquals(popupY, offsetYOnTheBottom, 1, "Vertical position doesn't match, expected <" + popupY + ">, found <" + offsetYOnTheBottom + ">. Tolerance is set to <" + 1 + ">; @direction is set to <" + directions[i] + ">.");
                     break;
 
                 case 3: // topLeft
-                    tolerantAssertEquals(popupX, offsetX, 1);
-                    tolerantAssertEquals(popupY, offsetUpY, 1);
+                    tolerantAssertEquals(popupX, offsetXOnTheLeft, 1, "Horizontal position doesn't match, expected <" + popupX + ">, found <" + offsetXOnTheLeft + ">. Tolerance is set to <" + 1 + ">; @direction is set to <" + directions[i] + ">.");
+                    tolerantAssertEquals(popupY, offsetYOnTheTop, 1, "Vertical position doesn't match, expected <" + popupY + ">, found <" + offsetYOnTheTop + ">. Tolerance is set to <" + 1 + ">; @direction is set to <" + directions[i] + ">.");
                     break;
 
                 case 4: // topRight
-                    tolerantAssertEquals(popupX, baseX, 1);
-                    tolerantAssertEquals(popupY, offsetUpY, 1);
+                    tolerantAssertEquals(popupX, offsetXOnTheRight, 1,"Horizontal position doesn't match, expected <" + popupX + ">, found <" + offsetXOnTheRight + ">. Tolerance is set to <" + 1 + ">; @direction is set to <" + directions[i] + ">.");
+                    tolerantAssertEquals(popupY, offsetYOnTheTop, 1, "Vertical position doesn't match, expected <" + popupY + ">, found <" + offsetYOnTheTop + ">. Tolerance is set to <" + 1 + ">; @direction is set to <" + directions[i] + ">.");
                     break;
 
                 default:
@@ -1093,6 +1091,10 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
     }
 
     private static void tolerantAssertEquals(int actual, int expected, int tolerance) {
-        assertTrue(tolerantEquals(actual, expected, tolerance), "Expected <" + expected + ">, found <" + actual + ">. Tolerance is set to <" + tolerance + ">.");
+        tolerantAssertEquals(actual, expected, tolerance, "Expected <" + expected + ">, found <" + actual + ">. Tolerance is set to <" + tolerance + ">.");
+    }
+
+    private static void tolerantAssertEquals(int actual, int expected, int tolerance, String message) {
+        assertTrue(tolerantEquals(actual, expected, tolerance), message);
     }
 }
