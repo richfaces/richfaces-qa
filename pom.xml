@@ -53,8 +53,8 @@
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
         <shrinkwrap.descriptors.version>1.1.0-beta-1</shrinkwrap.descriptors.version>
 
-        <version.selenium>2.23.1</version.selenium>
-        <version.selenium.server>2.23.1</version.selenium.server>
+        <version.selenium>2.24.1</version.selenium>
+        <version.selenium.server>2.24.1</version.selenium.server>
         <version.slf4j.jbossas6>1.6.1</version.slf4j.jbossas6>
 
         <version.jacoco.plugin>0.5.6.201201232323</version.jacoco.plugin>
@@ -104,7 +104,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-release-plugin</artifactId>
-                    <version>2.2.2</version>
+                    <version>2.3.1</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-antrun-plugin</artifactId>
@@ -217,8 +217,8 @@
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
-                    <preparationGoals>clean verify -Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces -DskipTests=true</preparationGoals>
-                    <goals>clean deploy -Pmyfaces,war-myfaces,war-jee6-bundled-mojarra,war-jee6-bundled-myfaces -DskipTests=true</goals>
+                    <preparationGoals>clean verify -Prelease -DskipTests=true</preparationGoals>
+                    <goals>clean deploy -Prelease -DskipTests=true</goals>
                 </configuration>
             </plugin>
         </plugins>

@@ -27,11 +27,11 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.richfaces.component.UICollapsibleSubTableToggleControl;
 import org.richfaces.tests.metamer.Attributes;
-import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.model.Employee;
 import org.richfaces.tests.metamer.model.Employee.Sex;
 import org.slf4j.Logger;
@@ -50,8 +50,8 @@ public class RichCollapsibleSubTableTogglerBean implements Serializable {
     private static final long serialVersionUID = -1L;
     private static Logger logger;
     private Attributes attributes;
-    // FIXME: @ManagedProperty(value = "#{model.employees}")
-    private List<Employee> employees = Model.unmarshallEmployees();
+    @ManagedProperty("#{model.employees}")
+    private List<Employee> employees;
     private List<List<Employee>> lists;
     // true = model, false = empty table
     private boolean state;

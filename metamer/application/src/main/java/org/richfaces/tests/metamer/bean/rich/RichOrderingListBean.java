@@ -34,7 +34,6 @@ import javax.faces.convert.Converter;
 
 import org.richfaces.component.UIOrderingList;
 import org.richfaces.tests.metamer.Attributes;
-import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.model.Capital;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,11 +49,11 @@ public class RichOrderingListBean implements Serializable {
 
     private static final long serialVersionUID = 5868941019675985273L;
     private static Logger logger;
-    //FIXME: @ManagedProperty(value="#{model.capitals}")
+    @ManagedProperty("#{model.capitals}")
     private List<Capital> capitals;
     private Attributes attributes;
     private Collection<String> hiddenAttributes = new ArrayList<String>();
-    @ManagedProperty(value="#{capitalConverter}")
+    @ManagedProperty("#{capitalConverter}")
     private Converter converter;
 
     @PostConstruct
@@ -74,18 +73,13 @@ public class RichOrderingListBean implements Serializable {
         attributes.setAttribute("upText", "Up");
         attributes.setAttribute("upTopText", "First");
 
-        String[] attrsToHide = new String[] {
-            "itemLabel", "itemValue", "value", "var",
+        String[] attrsToHide = new String[] { "itemLabel", "itemValue", "value", "var",
             // TODO has to be tested in another way
-            "converter", "converterMessage", "validator", "validatorMessage", "valueChangeListener"
-        };
+            "converter", "converterMessage", "validator", "validatorMessage", "valueChangeListener" };
         for (String attribute : attrsToHide) {
             hiddenAttributes.add(attribute);
             attributes.remove(attribute);
         }
-
-        // FIXME
-        capitals = Model.unmarshallCapitals();
     }
 
     public Attributes getAttributes() {
