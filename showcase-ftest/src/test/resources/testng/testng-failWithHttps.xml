@@ -9,7 +9,7 @@
             </run>
         </groups>
 
-        <packages>a
+        <packages>
             <package name="org.richfaces.tests.showcase.*" />
         </packages>
     </test>
