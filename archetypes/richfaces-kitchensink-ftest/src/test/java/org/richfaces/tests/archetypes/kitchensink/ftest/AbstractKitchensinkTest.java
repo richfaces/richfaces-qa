@@ -11,8 +11,11 @@ import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.android.AndroidDriver;
 import org.testng.annotations.BeforeMethod;
+
+import com.thoughtworks.selenium.DefaultSelenium;
 
 public class AbstractKitchensinkTest extends Arquillian {
 
@@ -21,6 +24,8 @@ public class AbstractKitchensinkTest extends Arquillian {
 
     @Drone
     protected WebDriver webDriver;
+
+    protected DefaultSelenium webDriverBackedSelenium;
 
     @Deployment(testable = false)
     public static WebArchive createTestArchive() {
@@ -31,18 +36,24 @@ public class AbstractKitchensinkTest extends Arquillian {
         return war;
     }
 
-    @BeforeMethod
+    @BeforeMethod(groups = "arquillian")
     public void loadPage() throws MalformedURLException {
 
         webDriver.get(getDeployedURL().toString());
+
+        webDriverBackedSelenium = new WebDriverBackedSelenium(webDriver, getDeployedURL().toExternalForm());
     }
 
-    protected URL getDeployedURL() throws MalformedURLException {
+    protected URL getDeployedURL() {
         if (!(webDriver instanceof AndroidDriver)) {
             return contextRoot;
         } else {
             String host = System.getProperty("host");
-            return new URL(contextRoot.toString().replace(contextRoot.getHost(), host));
+            try {
+                return new URL(contextRoot.toString().replace(contextRoot.getHost(), host));
+            } catch (MalformedURLException e) {
+                throw new RuntimeException("You are attempting to load malformed URL");
+            }
         }
     }
 }
