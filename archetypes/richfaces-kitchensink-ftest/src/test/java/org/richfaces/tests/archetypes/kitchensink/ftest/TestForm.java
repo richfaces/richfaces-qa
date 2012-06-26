@@ -1,48 +1,71 @@
+/*******************************************************************************
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *******************************************************************************/
 package org.richfaces.tests.archetypes.kitchensink.ftest;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.arquillian.testng.Arquillian;
+import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
+import org.openqa.selenium.support.pagefactory.FieldDecorator;
+import org.richfaces.tests.archetypes.kitchensink.ftest.annotations.SecondWindow;
 import org.richfaces.tests.archetypes.kitchensink.ftest.page.MembersTable;
 import org.richfaces.tests.archetypes.kitchensink.ftest.page.RegisterForm;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+/**
+ * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @version $Revision$
+ */
 public class TestForm extends AbstractKitchensinkTest {
 
-    private RegisterForm registerForm;
-    private MembersTable membersTable;
-    
+    private RegisterForm registerForm = new RegisterForm();
+    private MembersTable membersTable = new MembersTable();
+
     private final String ERROR_MSG_CSV = "The number of error messages after client side validation is wrong!";
 
     @BeforeMethod(groups = "arquillian")
     public void initialiseWebElements() {
-        registerForm = PageFactory.initElements(webDriver, RegisterForm.class);
-        membersTable = PageFactory.initElements(webDriver, MembersTable.class);
+        FieldDecorator fd = new StaleReferenceAwareFieldDecorator(new DefaultElementLocatorFactory(webDriver), 2);
+        PageFactory.initElements(fd, registerForm);
+        PageFactory.initElements(fd, membersTable);
     }
 
     @Test
     public void testAddCorrectMember() {
-
         String nameSet = registerForm.setCorrectName();
         registerForm.setCorrectPhone();
         registerForm.setCorrectEmail();
 
+        final int numberOfRowsBefore = membersTable.getNumberOfRows();
+        
         registerForm.getRegisterButton().click();
 
-        final int numberOfRowsBefore = membersTable.getNumberOfRows();
-        (new WebDriverWait(webDriver, 4)).until(new ExpectedCondition<Boolean>() {
-
-            public Boolean apply(WebDriver d) {
-
-                int numberOfRowsAfter = membersTable.getNumberOfRows();
-                return (numberOfRowsBefore < numberOfRowsAfter);
-            }
-        });
+        membersTable.waitUntilNumberOfRowsChanged(4, webDriver, numberOfRowsBefore);
 
         String table = membersTable.getTable().getText();
         assertTrue(table.contains(nameSet), "The new member was not added correctly!");
@@ -50,7 +73,6 @@ public class TestForm extends AbstractKitchensinkTest {
 
     @Test(groups = "4.Future")
     public void testAddMemberCSVNamePatternViolation() {
-
         // workaround to be sure that the event was fired
         webDriverBackedSelenium.type(registerForm.getEMAIL_LOC(), "blah");
         webDriverBackedSelenium.fireEvent(registerForm.getEMAIL_LOC(), "click");
@@ -58,32 +80,27 @@ public class TestForm extends AbstractKitchensinkTest {
         webDriverBackedSelenium.type(registerForm.getNAME_LOC(), "122345");
         webDriverBackedSelenium.fireEvent(registerForm.getNAME_LOC(), "click");
 
-        registerForm.setIncorrectNamePatternViolation();
-        registerForm.setIncorrectEmailPatternViolation();
-
         assertEquals(registerForm.getErrorMessages().size(), 2, ERROR_MSG_CSV);
     }
 
     @Test
     public void testAddMemberCSVEmailPatternViolation() {
-
+        final int numberOfErrorMessagesBefore = registerForm.getErrorMessages().size();
+        
         // workaround to be sure that the event was fired
         webDriverBackedSelenium.type(registerForm.getEMAIL_LOC(), "blah");
         webDriverBackedSelenium.fireEvent(registerForm.getEMAIL_LOC(), "click");
-
-        registerForm.setIncorrectEmailPatternViolation();
-
+        
+        registerForm.waitForErrorMessages(3, webDriver, numberOfErrorMessagesBefore);
+        
         assertEquals(registerForm.getErrorMessages().size(), 1, ERROR_MSG_CSV);
     }
 
     @Test
     public void testAddMemberCSVPhonePatternViolation() {
-
         // workaround to be sure that the event was fired
         webDriverBackedSelenium.type(registerForm.getPHONE_LOC(), "blah");
         webDriverBackedSelenium.fireEvent(registerForm.getPHONE_LOC(), "click");
-
-        registerForm.setCorrectPhone();
 
         assertEquals(registerForm.getErrorMessages().size(), 1, ERROR_MSG_CSV);
     }
@@ -94,9 +111,43 @@ public class TestForm extends AbstractKitchensinkTest {
         registerForm.setIncorrectPhonePatternViolation();
         registerForm.setIncorrectNameTooShort();
 
+        final int numberOfErrorMessagesBefore = registerForm.getErrorMessages().size();
         registerForm.getRegisterButton().click();
+
+        registerForm.waitForErrorMessages(3, webDriver, numberOfErrorMessagesBefore);
 
         assertEquals(registerForm.getErrorMessages().size(), 3,
             "The number of error messages after server side validation is wrong.");
+    }
+
+    @Test(dataProvider = Arquillian.ARQUILLIAN_DATA_PROVIDER)
+    public void testPushFunctionality(@Drone @SecondWindow WebDriver secondWindow) {
+        FieldDecorator fd = new StaleReferenceAwareFieldDecorator(new DefaultElementLocatorFactory(webDriver), 3);
+        MembersTable membersTable2 = new MembersTable();
+        PageFactory.initElements(secondWindow, membersTable2);
+
+        secondWindow.get(getDeployedURL().toExternalForm());
+
+        registerNewMemberAndCheckPush("juraj@gmaul.for", membersTable2);
+        registerNewMemberAndCheckPush("michal@lala.ru", membersTable2);
+        registerNewMemberAndCheckPush("miroslav@de.du", membersTable2);
+        registerNewMemberAndCheckPush("robino@ba.sk", membersTable2);
+    }
+
+    private void registerNewMemberAndCheckPush(String email, MembersTable membersTable2) {
+        registerForm.setCorrectName();
+        registerForm.setEmail(email);
+        registerForm.setCorrectPhone();
+
+        final int numberOfRowsBefore = membersTable.getNumberOfRows();
+        
+        registerForm.getRegisterButton().click();
+
+        membersTable.waitUntilNumberOfRowsChanged(4, webDriver, numberOfRowsBefore);
+
+        assertTrue(membersTable.getTable().getText().contains(email),
+            "The table from first window should contain the added member!");
+        assertTrue(membersTable2.getTable().getText().contains(email),
+            "The table from second window should contain the added member!");
     }
 }

@@ -1,10 +1,38 @@
+/*******************************************************************************
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *******************************************************************************/
 package org.richfaces.tests.archetypes.kitchensink.ftest.page;
 
 import java.util.List;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+/**
+ * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @version $Revision$
+ */
 public class RegisterForm {
 
     private final String NAME_LOC = "//input[contains(@id,'name')]";
@@ -12,7 +40,7 @@ public class RegisterForm {
     private final String PHONE_LOC = "//input[contains(@id,'phoneNumber')]";
     private final String REGISTER_BUTTON_LOC = "//input[@type='submit']";
     private final String ERROR_MSGS_LOC = "rf-msg-err";
-    
+
     @FindBy(xpath = NAME_LOC)
     private WebElement nameInput;
 
@@ -35,13 +63,33 @@ public class RegisterForm {
     private String INCORRECT_NAME_PATTERN = "1234";
     private String INCORRECT_EMAIL_PATTERN = "wrong";
     private String INCORRECT_PHONE_PATTERN = "wrong";
-    
+
     private String INCORRECT_NAME_TOO_SHORT = "";
+
+    public void waitForErrorMessages(int timeoutInSec, WebDriver webDriver, final int numberOfErrorMessagesBefore) {
+        
+        (new WebDriverWait(webDriver, timeoutInSec)).until(new ExpectedCondition<Boolean>() {
+
+            public Boolean apply(WebDriver d) {
+
+                int numberOfErrorsAfter = getErrorMessages().size();
+                return (numberOfErrorMessagesBefore < numberOfErrorsAfter);
+            }
+        });
+    }
+
+    public void setEmail(String email) {
+        emailInput.sendKeys(email);
+    }
+
+    public void setName(String name) {
+        nameInput.sendKeys(name);
+    }
 
     public void setIncorrectNameTooShort() {
         nameInput.sendKeys(INCORRECT_NAME_TOO_SHORT);
     }
-    
+
     public String setCorrectName() {
         nameInput.sendKeys(CORRECT_NAME);
         return CORRECT_NAME;
@@ -107,7 +155,7 @@ public class RegisterForm {
     public void setNameInput(WebElement nameInput) {
         this.nameInput = nameInput;
     }
-    
+
     public String getNAME_LOC() {
         return NAME_LOC;
     }
