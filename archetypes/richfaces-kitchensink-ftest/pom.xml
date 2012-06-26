@@ -31,12 +31,10 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>${selenium.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-android-driver</artifactId>
-			<version>${selenium.version}</version>
 		</dependency>
 		<!-- Support for WebDriver in Arquillian Drone -->
 		<dependency>
@@ -73,6 +71,12 @@
 		<dependency>
 			<groupId>org.richfaces.tests</groupId>
 			<artifactId>testng-listeners</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- WebDriver Utils -->
+		<dependency>
+			<groupId>org.richfaces.tests</groupId>
+			<artifactId>webdriver-utils</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
