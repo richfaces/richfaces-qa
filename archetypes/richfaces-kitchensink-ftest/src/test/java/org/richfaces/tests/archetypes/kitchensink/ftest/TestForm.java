@@ -27,11 +27,14 @@ import static org.testng.Assert.assertTrue;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
 import org.richfaces.tests.archetypes.kitchensink.ftest.annotations.SecondWindow;
+import org.richfaces.tests.archetypes.kitchensink.ftest.page.MemberDetails;
 import org.richfaces.tests.archetypes.kitchensink.ftest.page.MembersTable;
 import org.richfaces.tests.archetypes.kitchensink.ftest.page.RegisterForm;
 import org.testng.annotations.BeforeMethod;
@@ -45,6 +48,7 @@ public class TestForm extends AbstractKitchensinkTest {
 
     private RegisterForm registerForm = new RegisterForm();
     private MembersTable membersTable = new MembersTable();
+    private MemberDetails memberDetails = new MemberDetails();
 
     private final String ERROR_MSG_CSV = "The number of error messages after client side validation is wrong!";
 
@@ -53,6 +57,7 @@ public class TestForm extends AbstractKitchensinkTest {
         FieldDecorator fd = new StaleReferenceAwareFieldDecorator(new DefaultElementLocatorFactory(webDriver), 2);
         PageFactory.initElements(fd, registerForm);
         PageFactory.initElements(fd, membersTable);
+        PageFactory.initElements(fd, memberDetails);
     }
 
     @Test
@@ -62,7 +67,7 @@ public class TestForm extends AbstractKitchensinkTest {
         registerForm.setCorrectEmail();
 
         final int numberOfRowsBefore = membersTable.getNumberOfRows();
-        
+
         registerForm.getRegisterButton().click();
 
         membersTable.waitUntilNumberOfRowsChanged(4, webDriver, numberOfRowsBefore);
@@ -86,13 +91,13 @@ public class TestForm extends AbstractKitchensinkTest {
     @Test
     public void testAddMemberCSVEmailPatternViolation() {
         final int numberOfErrorMessagesBefore = registerForm.getErrorMessages().size();
-        
+
         // workaround to be sure that the event was fired
         webDriverBackedSelenium.type(registerForm.getEMAIL_LOC(), "blah");
         webDriverBackedSelenium.fireEvent(registerForm.getEMAIL_LOC(), "click");
-        
+
         registerForm.waitForErrorMessages(3, webDriver, numberOfErrorMessagesBefore);
-        
+
         assertEquals(registerForm.getErrorMessages().size(), 1, ERROR_MSG_CSV);
     }
 
@@ -134,20 +139,59 @@ public class TestForm extends AbstractKitchensinkTest {
         registerNewMemberAndCheckPush("robino@ba.sk", membersTable2);
     }
 
+    @Test
+    public void testViewRowsData() {
+        registerNewMember("foo@gmaul.for");
+        registerNewMember("bar@lala.ru");
+        registerNewMember("other@de.du");
+        registerNewMember("absolutelydifferent@ba.sk");
+
+        for (WebElement row : membersTable.getTableRows()) {
+            String emailFromTable = row.findElement(By.xpath("./td[4]")).getText();
+
+            row.findElement(By.xpath("./td/a")).click();
+            memberDetails.waitMemberDetailsAreAvailableOnDesktop(2, webDriver);
+
+            String emailFromPopup = memberDetails.getEmailOnDesktop().getAttribute("value");
+
+            assertEquals(emailFromPopup, emailFromTable, "The email of the member is different in table than in popup!");
+            memberDetails.getBackToFormDesktop().click();
+        }
+    }
+
+    @Test
+    public void testRestAPI() {
+        registerNewMember("diff@de.du");
+        registerNewMember("definitelydifferent@ba.sk");
+
+        WebElement fstRow = membersTable.getTableRow();
+        String mailFromFstRow = fstRow.findElement(By.xpath("./td[4]")).getText();
+
+        fstRow.findElement(By.xpath("./td[6]/a")).click();
+
+        String jsonData = webDriver.findElement(By.xpath("//pre")).getText();
+        assertTrue(jsonData.contains(mailFromFstRow),
+            "The REST api should provide json data with all details about member from first row!");
+    }
+
     private void registerNewMemberAndCheckPush(String email, MembersTable membersTable2) {
-        registerForm.setCorrectName();
-        registerForm.setEmail(email);
-        registerForm.setCorrectPhone();
-
-        final int numberOfRowsBefore = membersTable.getNumberOfRows();
-        
-        registerForm.getRegisterButton().click();
-
-        membersTable.waitUntilNumberOfRowsChanged(4, webDriver, numberOfRowsBefore);
+        registerNewMember(email);
 
         assertTrue(membersTable.getTable().getText().contains(email),
             "The table from first window should contain the added member!");
         assertTrue(membersTable2.getTable().getText().contains(email),
             "The table from second window should contain the added member!");
+    }
+
+    private void registerNewMember(String email) {
+        registerForm.setCorrectName();
+        registerForm.setEmail(email);
+        registerForm.setCorrectPhone();
+
+        final int numberOfRowsBefore = membersTable.getNumberOfRows();
+
+        registerForm.getRegisterButton().click();
+
+        membersTable.waitUntilNumberOfRowsChanged(4, webDriver, numberOfRowsBefore);
     }
 }

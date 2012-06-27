@@ -1,5 +1,7 @@
 package org.richfaces.tests.archetypes.kitchensink.ftest.page;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,6 +16,17 @@ public class MembersTable {
     
     @FindBy(xpath = "//*[@class='rf-dt-b']/tr")
     private WebElement tableRow;
+    
+    @FindBy(xpath = "//*[@class='rf-dt-b']/tr")
+    private List<WebElement> tableRows;
+    
+    public List<WebElement> getTableRows() {
+        return tableRows;
+    }
+
+    public void setTableRows(List<WebElement> tableRows) {
+        this.tableRows = tableRows;
+    }
 
     public WebElement getTable() {
         return table;
