@@ -31,16 +31,15 @@
     </extension>
 
     <extension qualifier="android">
-<!--         <property name="skip">true</property> -->
         <property name="home">${android.sdk.home}</property>
-        <property name="serialId">${android.serial}</property>
-        <property name="verbose">true</property>
+        <property name="serialId">emulator-5554</property>
+        <property name="verbose">false</property>
         <property name="force">true</property>
         <property name="apiLevel">8</property>
-        <property name="avdName">showcase-webdriver-ftest</property>
+        <property name="avdName">kitchensink-webdriver-ftest</property>
         <property name="emulatorBootupTimeoutInSeconds">180</property>
         <property name="skip">${androidSkip}</property>
-<!--         <property name="emulatorOptions">-no-window</property> -->
+        <property name="webdriverPortHost">14444</property>
     </extension>
 
     <extension qualifier="android-drone">
