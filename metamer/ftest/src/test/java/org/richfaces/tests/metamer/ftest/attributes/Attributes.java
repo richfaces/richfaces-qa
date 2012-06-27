@@ -36,8 +36,8 @@ import org.jboss.arquillian.ajocado.command.CommandInterceptor;
 import org.jboss.arquillian.ajocado.command.CommandInterceptorException;
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.LocatorFactory;
@@ -55,7 +55,7 @@ import com.thoughtworks.selenium.SeleniumException;
 
 public class Attributes<T extends AttributeEnum>  {
 
-    protected AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    protected GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
     LocatorReference<ExtendedLocator<JQueryLocator>> root =
         new LocatorReference<ExtendedLocator<JQueryLocator>>(pjq(""));
     ReferencedLocator<JQueryLocator> propertyLocator = referenceInferred(root, ":input[id*={0}Input]{1}");

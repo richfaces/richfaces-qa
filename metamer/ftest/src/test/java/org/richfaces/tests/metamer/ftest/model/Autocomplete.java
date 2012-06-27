@@ -31,8 +31,8 @@ import static org.richfaces.tests.metamer.ftest.AbstractMetamerTest.pjq;
 import java.awt.event.KeyEvent;
 
 import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.javascript.KeyCode;
@@ -49,7 +49,7 @@ public class Autocomplete implements Model {
     //private static final String KEY_UP = "38";
     //private static final String KEY_DOWN = "40";
 
-AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
     JQueryLocator input = pjq("input.rf-au-inp[id$=autocompleteInput]");
 

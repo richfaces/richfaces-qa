@@ -25,8 +25,8 @@ import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
 import static org.jboss.test.selenium.locator.reference.ReferencedLocator.ref;
 
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.test.selenium.locator.reference.ReferencedLocator;
 import org.richfaces.component.ListType;
@@ -43,7 +43,7 @@ public class ListModel extends AbstractModel<JQueryLocator> {
 
     ReferencedLocator<JQueryLocator> rows = ref(root, "li");
 
-    private AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    private GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
     public ListModel(JQueryLocator root) {
         super(root);

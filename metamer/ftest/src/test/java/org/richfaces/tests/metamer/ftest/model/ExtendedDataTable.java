@@ -25,8 +25,8 @@ import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
 import static org.jboss.test.selenium.locator.reference.ReferencedLocator.ref;
 
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.test.selenium.locator.reference.ReferencedLocator;
 import org.richfaces.tests.metamer.ftest.abstractions.DataTable;
@@ -40,7 +40,7 @@ import org.richfaces.tests.metamer.ftest.richColumn.ColumnModel;
  */
 public class ExtendedDataTable extends AbstractModel<JQueryLocator> implements DataTable {
 
-    AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
     ReferencedLocator<JQueryLocator> tbody = ref(root, "> div.rf-edt-b > div > table > tbody > tr > td > div.rf-edt-cnt > table > tbody");
     ReferencedLocator<JQueryLocator> firstColumnRows = ref(tbody, "> tr > td:nth-child(1) > div.rf-edt-c > div.rf-edt-c-cnt");

@@ -21,8 +21,8 @@
  */
 package org.jboss.test.selenium;
 
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.jboss.arquillian.ajocado.utils.PrimitiveUtils;
@@ -36,7 +36,7 @@ import org.jboss.arquillian.ajocado.waiting.conversion.Convertor;
  *            type of parameter
  */
 public abstract class SeleniumGetter<P> {
-    protected AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    protected GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
     protected P parameter;
 
     public SeleniumGetter(P parameter) {

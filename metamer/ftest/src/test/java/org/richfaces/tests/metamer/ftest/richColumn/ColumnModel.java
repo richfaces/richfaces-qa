@@ -30,8 +30,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.test.selenium.locator.reference.ReferencedLocator;
 import org.richfaces.tests.metamer.ftest.model.AbstractModel;
@@ -43,7 +43,7 @@ import org.richfaces.tests.metamer.model.Capital;
  */
 public class ColumnModel extends AbstractModel<JQueryLocator> {
 
-    AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
     private ReferencedLocator<JQueryLocator> tableHeader = ref(root, "> thead.rf-dt-thd");
     private ReferencedLocator<JQueryLocator> tableBody = ref(root, "> tbody.rf-dt-b");

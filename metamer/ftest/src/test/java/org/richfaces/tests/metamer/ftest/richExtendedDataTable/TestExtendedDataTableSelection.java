@@ -38,8 +38,8 @@ import java.util.TreeSet;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.IntRange;
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.utils.array.ArrayTransform;
 import org.jboss.arquillian.ajocado.waiting.retrievers.Retriever;
@@ -263,7 +263,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
         CTRL,
         SHIFT;
-        AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+        GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
         public void up() {
             switch (this) {

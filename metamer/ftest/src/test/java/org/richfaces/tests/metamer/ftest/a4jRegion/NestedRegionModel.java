@@ -31,8 +31,8 @@ import static org.testng.Assert.assertTrue;
 
 import org.apache.commons.lang.WordUtils;
 import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.jboss.arquillian.ajocado.locator.option.OptionLocator;
@@ -44,7 +44,7 @@ import org.jboss.arquillian.ajocado.request.RequestType;
  */
 public class NestedRegionModel {
 
-    private static AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    private static GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
     private static ThreadLocal<Integer> sequence = new ThreadLocal<Integer>() {
         protected Integer initialValue() {

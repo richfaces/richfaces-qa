@@ -29,8 +29,8 @@ import static org.jboss.arquillian.ajocado.dom.Attribute.SRC;
 import static org.jboss.test.selenium.locator.reference.ReferencedLocator.ref;
 
 import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
@@ -43,7 +43,7 @@ import org.richfaces.PanelMenuMode;
 
 public class PanelMenu extends AbstractModel<JQueryLocator> implements Model {
 
-    AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
     PanelMenuMode groupMode;
     PanelMenuMode itemMode;

@@ -29,8 +29,8 @@ import java.awt.Color;
 
 import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.ajocado.css.CssProperty;
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.jboss.arquillian.ajocado.utils.ColorUtils;
@@ -45,7 +45,7 @@ import org.jboss.arquillian.ajocado.waiting.retrievers.Retriever;
  */
 public class ColorRetriever extends AbstractRetriever<Color> implements Retriever<Color> {
 
-    private AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    private GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
     private ElementLocator<?> elementLocator;
 

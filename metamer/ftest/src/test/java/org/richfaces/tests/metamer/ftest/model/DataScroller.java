@@ -29,8 +29,8 @@ import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.testng.Assert.fail;
 
 import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.test.selenium.locator.reference.ReferencedLocator;
 
@@ -45,7 +45,7 @@ public class DataScroller extends AbstractModel<JQueryLocator> {
 
     protected static final String CLASS_DISABLED = "rf-ds-dis";
 
-    protected AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    protected GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
     ReferencedLocator<JQueryLocator> numberedPages = ref(root, "> .rf-ds-nmb-btn");
     ReferencedLocator<JQueryLocator> specificNumberedPage = ref(root, "> .rf-ds-nmb-btn:textEquals('{0}')");

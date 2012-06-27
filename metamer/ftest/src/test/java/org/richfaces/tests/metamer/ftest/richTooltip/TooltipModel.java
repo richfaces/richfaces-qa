@@ -26,8 +26,8 @@ import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
 
 import static org.jboss.arquillian.ajocado.guard.RequestGuardFactory.guard;
 
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.request.RequestType;
@@ -42,7 +42,7 @@ import org.richfaces.tests.metamer.ftest.model.AbstractModel;
  */
 public class TooltipModel extends AbstractModel<JQueryLocator> {
 
-    private AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    private GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
 
     private TooltipMode mode = TooltipMode.client;
     private JQueryLocator target;

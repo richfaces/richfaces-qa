@@ -27,8 +27,8 @@ import static org.jboss.arquillian.ajocado.utils.PrimitiveUtils.asFloat;
 import static org.jboss.arquillian.ajocado.utils.PrimitiveUtils.asInteger;
 import static org.jboss.arquillian.ajocado.utils.PrimitiveUtils.asLong;
 
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.waiting.conversion.Convertor;
 
@@ -40,7 +40,7 @@ import org.jboss.arquillian.ajocado.waiting.conversion.Convertor;
  */
 public final class JavaScriptEvaluator {
 
-    private static final AjaxSelenium SELENIUM = AjaxSeleniumContext.getProxy();
+    private static final GrapheneSelenium SELENIUM = GrapheneSeleniumContext.getProxy();
 
     private JavaScriptEvaluator() {
     }

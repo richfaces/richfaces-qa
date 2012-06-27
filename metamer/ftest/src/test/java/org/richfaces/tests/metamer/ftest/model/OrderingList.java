@@ -25,8 +25,8 @@ import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.AbstractMetamerTest.pjq;
 
 import org.apache.commons.lang.Validate;
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.test.selenium.RequestTypeModelGuard.Model;
 
@@ -50,13 +50,13 @@ public class OrderingList implements Model {
     private final JQueryLocator scrollableArea = pjq("div.rf-ord-lst-scrl");
     private int numberOfItems = -1;
     private int numberOfColumns = -1;
-    private final AjaxSelenium selenium;
+    private final GrapheneSelenium selenium;
 
     public OrderingList() {
-        this(AjaxSeleniumContext.getProxy());
+        this(GrapheneSeleniumContext.getProxy());
     }
 
-    public OrderingList(AjaxSelenium selenium) {
+    public OrderingList(GrapheneSelenium selenium) {
         Validate.notNull(selenium);
         this.selenium = selenium;
     }

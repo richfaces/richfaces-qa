@@ -35,8 +35,8 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.richfaces.component.SortOrder;
 import org.richfaces.model.SortMode;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
@@ -143,7 +143,7 @@ public class TestCollapsibleSubTableSorting extends AbstractCollapsibleSubTableT
     public enum Column {
         NAME, TITLE, BIRTHDAY;
 
-AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+        GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
         SortOrder sortOrder = SortOrder.unsorted;
 
         public static void resetAll() {

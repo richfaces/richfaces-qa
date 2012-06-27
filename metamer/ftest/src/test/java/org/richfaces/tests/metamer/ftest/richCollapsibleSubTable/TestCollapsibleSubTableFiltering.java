@@ -34,8 +34,8 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.model.DataTable;
 import org.richfaces.tests.metamer.model.Employee;
@@ -111,7 +111,7 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
     public enum Column {
         NAME, TITLE, BIRTHDAY;
 
-AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+        GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
         String filter = "";
 
         public static void resetAll() {

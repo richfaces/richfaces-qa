@@ -36,8 +36,8 @@ import javax.faces.event.PhaseId;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
-import org.jboss.arquillian.ajocado.framework.AjaxSeleniumContext;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
 import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
@@ -50,7 +50,7 @@ import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
  */
 public class PhaseInfo {
 
-    private AjaxSelenium selenium = AjaxSeleniumContext.getProxy();
+    private GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
     private TextRetriever retrieveRequestTime = TextRetriever.getInstance().locator(jq("span[id$=requestTime]"));
     private JQueryLocator phasesItems = jq("div#phasesPanel li");
     private Map<PhaseId, Set<String>> map = new LinkedHashMap<PhaseId, Set<String>>();
