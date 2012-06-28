@@ -33,6 +33,7 @@ import java.net.URL;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.validation.MinBean;
 import org.testng.annotations.Test;
 
 
@@ -67,7 +68,7 @@ public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
         selenium.type(input, "1");
         guardNoRequest(selenium).click(a4jSubmitBtn);
 
-        waitGui.until(textEquals.locator(msg).text("must be greater than or equal to 2"));
+        waitGui.until(textEquals.locator(msg).text(messages.get(ID.min)));
     }
 
     /**
@@ -84,7 +85,7 @@ public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
         // no request (HTTP neither XHR) should be sent if validation fails
         guardNoRequest(selenium).fireEvent(input, Event.BLUR);
 
-        waitModel.until(textEquals.locator(msg).text("must be greater than or equal to 2"));
+        waitModel.until(textEquals.locator(msg).text(messages.get(ID.min)));
     }
 
 }

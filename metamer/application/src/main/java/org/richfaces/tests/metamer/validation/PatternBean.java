@@ -33,11 +33,13 @@ import javax.validation.constraints.Pattern;
 @ManagedBean
 public class PatternBean extends Validable<String> {
 
+    public static final String VALIDATION_MSG = "must match \"[a-z].*\"";
+
     public PatternBean() {
         value = "richFaces 4";
     }
 
-    @Pattern(regexp = "[a-z].*")
+    @Pattern(regexp = "[a-z].*", message = VALIDATION_MSG)
     @Override
     public String getValue() {
         return value;

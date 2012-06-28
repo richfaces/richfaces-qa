@@ -32,6 +32,7 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.test.selenium.waiting.TextContainsCondition;
+import org.richfaces.tests.metamer.bean.rich.RichInputNumberSliderBean;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
@@ -62,9 +63,9 @@ public class TestRichSliderWithJSR303 extends AbstractGrapheneTest {
     public static final String CORRECT_CUSTOM_VAL = "5";
 
     /** validation message for input validated to min value */
-    public static final String MSG_MIN = "must be greater than or equal to 2";
+    public static final String MSG_MIN = RichInputNumberSliderBean.MSG_MIN;
     /** validation message for input validated to max value */
-    public static final String MSG_MAX = "must be less than or equal to 2";
+    public static final String MSG_MAX = RichInputNumberSliderBean.MSG_MAX;
     /** validation message for input validated to custom value */
     public static final String MSG_CUSTOM = "must be a positive number";
 

@@ -33,11 +33,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 @ManagedBean
 public class NotEmptyBean extends Validable<String> {
 
+    public static final String VALIDATION_MSG = "may not be empty";
+
     public NotEmptyBean() {
         value = "RichFaces 4";
     }
 
-    @NotEmpty
+    @NotEmpty(message = VALIDATION_MSG)
     @Override
     public String getValue() {
         return value;

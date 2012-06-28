@@ -33,11 +33,13 @@ import javax.validation.constraints.Size;
 @ManagedBean
 public class StringSizeBean extends Validable<String> {
 
+    public static final String VALIDATION_MSG = "size must be between 2 and 4";
+
     public StringSizeBean() {
         value = "JSF";
     }
 
-    @Size(min = 2, max = 4)
+    @Size(min = 2, max = 4, message = VALIDATION_MSG)
     @Override
     public String getValue() {
         return value;

@@ -33,11 +33,13 @@ import javax.validation.constraints.AssertFalse;
 @ManagedBean
 public class AssertFalseBean extends Validable<Boolean> {
 
+    public static final String VALIDATION_MSG = "must be false";
+
     public AssertFalseBean() {
         value = false;
     }
 
-    @AssertFalse
+    @AssertFalse(message = VALIDATION_MSG)
     @Override
     public Boolean getValue() {
         return value;

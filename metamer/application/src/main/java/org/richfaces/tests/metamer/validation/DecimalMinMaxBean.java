@@ -35,12 +35,14 @@ import javax.validation.constraints.DecimalMin;
 @ManagedBean
 public class DecimalMinMaxBean extends Validable<BigDecimal> {
 
+    public static final String VALIDATION_MSG = "must be less than or equal to 9.688";
+
     public DecimalMinMaxBean() {
         value = new BigDecimal(3);
     }
 
     @DecimalMin("2.5")
-    @DecimalMax("9.688")
+    @DecimalMax(value = "9.688", message = VALIDATION_MSG)
     @Override
     public BigDecimal getValue() {
         return value;

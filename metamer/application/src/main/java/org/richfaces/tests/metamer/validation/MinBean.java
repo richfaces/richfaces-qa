@@ -33,11 +33,13 @@ import javax.validation.constraints.Min;
 @ManagedBean
 public class MinBean extends Validable<Integer> {
 
+    public static final String VALIDATION_MSG = "must be greater than or equal to 2";
+
     public MinBean() {
         value = 4;
     }
 
-    @Min(2)
+    @Min(value = 2, message = VALIDATION_MSG)
     @Override
     public Integer getValue() {
         return value;

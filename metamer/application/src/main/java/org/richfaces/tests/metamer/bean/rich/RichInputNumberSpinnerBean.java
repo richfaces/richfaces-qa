@@ -45,6 +45,10 @@ import org.slf4j.LoggerFactory;
 @ViewScoped
 public class RichInputNumberSpinnerBean implements Serializable {
 
+//  validation message for input validated to min value
+    public static final String MSG_MIN = "must be greater than or equal to 2";
+//  validation message for input validated to max value
+    public static final String MSG_MAX = "must be less than or equal to 2";
     private static final long serialVersionUID = -1L;
     private static Logger logger;
     private Attributes attributes;
@@ -100,7 +104,7 @@ public class RichInputNumberSpinnerBean implements Serializable {
         this.attributes = attributes;
     }
 
-    @Min(2)
+    @Min(value = 2, message = MSG_MIN)
     public int getValue1() {
         return value1;
     }
@@ -109,7 +113,7 @@ public class RichInputNumberSpinnerBean implements Serializable {
         this.value1 = value1;
     }
 
-    @Max(2)
+    @Max(value = 2, message = MSG_MAX)
     public int getValue2() {
         return value2;
     }

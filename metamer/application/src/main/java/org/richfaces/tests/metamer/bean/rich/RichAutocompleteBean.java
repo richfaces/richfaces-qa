@@ -167,7 +167,7 @@ public class RichAutocompleteBean implements Serializable {
         this.capitals = capitals;
     }
 
-    @NotEmpty
+    @NotEmpty(message = RichInplaceInputBean.NOT_EMPTY_VALIDATION_MSG)
     public String getValue1() {
         return value1;
     }
@@ -176,7 +176,7 @@ public class RichAutocompleteBean implements Serializable {
         this.value1 = value1;
     }
 
-    @Pattern(regexp = "[a-z].*")
+    @Pattern(regexp = "[a-z].*", message = RichInplaceInputBean.REGEXP_VALIDATION_MSG)
     public String getValue2() {
         return value2;
     }
@@ -185,7 +185,7 @@ public class RichAutocompleteBean implements Serializable {
         this.value2 = value2;
     }
 
-    @Size(min = 3, max = 6)
+    @Size(min = 3, max = 6, message = RichInplaceInputBean.STRING_SIZE_VALIDATION_MSG)
     public String getValue3() {
         return value3;
     }

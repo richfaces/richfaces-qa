@@ -28,6 +28,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 import org.richfaces.component.UIInplaceInput;
@@ -44,6 +45,10 @@ import org.slf4j.LoggerFactory;
 @ManagedBean(name = "richInplaceInputBean")
 @ViewScoped
 public class RichInplaceInputBean implements Serializable {
+
+    public static final String NOT_EMPTY_VALIDATION_MSG = "may not be empty";
+    public static final String REGEXP_VALIDATION_MSG = "must match \"[a-z].*\"";
+    public static final String STRING_SIZE_VALIDATION_MSG = "size must be between 3 and 6";
 
     private static final long serialVersionUID = -1L;
     private static Logger logger;
@@ -89,7 +94,7 @@ public class RichInplaceInputBean implements Serializable {
         this.attributes = attributes;
     }
 
-    @NotEmpty
+    @NotEmpty(message = NOT_EMPTY_VALIDATION_MSG)
     public String getValue1() {
         return value1;
     }
@@ -98,7 +103,7 @@ public class RichInplaceInputBean implements Serializable {
         this.value1 = value1;
     }
 
-    @Pattern(regexp = "[a-z].*")
+    @Pattern(regexp = "[a-z].*", message = REGEXP_VALIDATION_MSG)
     public String getValue2() {
         return value2;
     }
@@ -107,7 +112,7 @@ public class RichInplaceInputBean implements Serializable {
         this.value2 = value2;
     }
 
-    @Size(min = 3, max = 6)
+    @Size(min = 3, max = 6, message = STRING_SIZE_VALIDATION_MSG)
     public String getValue3() {
         return value3;
     }

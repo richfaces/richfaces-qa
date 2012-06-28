@@ -40,6 +40,7 @@ import javax.validation.constraints.Size;
 @ManagedBean
 public class SizeBean {
 
+    public static final String VALIDATION_MSG = "size must be between 2 and 4";
     private List<String> value;
 
     public SizeBean() {
@@ -48,7 +49,7 @@ public class SizeBean {
         value.add("B");
     }
 
-    @Size(min = 2, max = 4)
+    @Size(min = 2, max = 4, message = VALIDATION_MSG)
     public List<String> getValue() {
         return value;
     }

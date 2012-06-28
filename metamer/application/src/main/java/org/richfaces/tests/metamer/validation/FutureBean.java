@@ -35,11 +35,13 @@ import javax.validation.constraints.Future;
 @ManagedBean
 public class FutureBean extends Validable<Date> {
 
+    public static final String VALIDATION_MSG = "must be in the future";
+
     public FutureBean() {
         value = new Date(System.currentTimeMillis() + 4 * 24 * 3600 * 1000);
     }
 
-    @Future
+    @Future(message = VALIDATION_MSG)
     @Override
     public Date getValue() {
         return value;

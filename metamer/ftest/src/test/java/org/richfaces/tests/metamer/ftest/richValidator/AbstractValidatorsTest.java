@@ -30,6 +30,20 @@ import java.util.EnumMap;
 import java.util.Map;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.richfaces.tests.metamer.validation.AssertFalseBean;
+import org.richfaces.tests.metamer.validation.AssertTrueBean;
+import org.richfaces.tests.metamer.validation.DecimalMinMaxBean;
+import org.richfaces.tests.metamer.validation.DigitsBean;
+import org.richfaces.tests.metamer.validation.FutureBean;
+import org.richfaces.tests.metamer.validation.MaxBean;
+import org.richfaces.tests.metamer.validation.MinBean;
+import org.richfaces.tests.metamer.validation.MinMaxBean;
+import org.richfaces.tests.metamer.validation.NotEmptyBean;
+import org.richfaces.tests.metamer.validation.NotNullBean;
+import org.richfaces.tests.metamer.validation.PastBean;
+import org.richfaces.tests.metamer.validation.PatternBean;
+import org.richfaces.tests.metamer.validation.SizeBean;
+import org.richfaces.tests.metamer.validation.StringSizeBean;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
@@ -108,7 +122,7 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
          */
         size
     }
-    private Map<ID, String> messages = new EnumMap<AbstractValidatorsTest.ID, String>(AbstractValidatorsTest.ID.class);
+    protected Map<ID, String> messages = new EnumMap<AbstractValidatorsTest.ID, String>(AbstractValidatorsTest.ID.class);
     private Map<ID, Object> wrongValue = new EnumMap<AbstractValidatorsTest.ID, Object>(AbstractValidatorsTest.ID.class);
     private JQueryLocator inputFormat = pjq("input[id$=:{0}]");
     private JQueryLocator setWrongBtn = pjq("input[id$=setWrongValuesButton]");
@@ -123,22 +137,22 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
 
     @BeforeClass
     public void init() {
-        messages.put(ID.assertTrue, "must be true");
-        messages.put(ID.assertFalse, "must be false");
-        messages.put(ID.decimalMinMax, "must be less than or equal to 9.688");
-        messages.put(ID.digits, "numeric value out of bounds (<3 digits>.<4 digits> expected)");
-        messages.put(ID.max, "must be less than or equal to 10");
-        messages.put(ID.min, "must be greater than or equal to 2");
-        messages.put(ID.minMax, "must be greater than or equal to 2");
-        messages.put(ID.notEmpty, "may not be empty");
-        messages.put(ID.notNull, "may not be null");
-        messages.put(ID.pattern, "must match \"[a-z].*\"");
+        messages.put(ID.assertTrue, AssertTrueBean.VALIDATION_MSG);
+        messages.put(ID.assertFalse, AssertFalseBean.VALIDATION_MSG);
+        messages.put(ID.decimalMinMax, DecimalMinMaxBean.VALIDATION_MSG);
+        messages.put(ID.digits, DigitsBean.VALIDATION_MSG);
+        messages.put(ID.max, MaxBean.VALIDATION_MSG);
+        messages.put(ID.min, MinBean.VALIDATION_MSG);
+        messages.put(ID.minMax, MinMaxBean.VALIDATION_MSG);
+        messages.put(ID.notEmpty, NotEmptyBean.VALIDATION_MSG);
+        messages.put(ID.notNull,NotNullBean.VALIDATION_MSG);
+        messages.put(ID.pattern, PatternBean.VALIDATION_MSG);
         messages.put(ID.custom, "string is not \"RichFaces\"");
         messages.put(ID.regexp, "Regex pattern of '\\d{3}' not matched");
-        messages.put(ID.past, "must be in the past");
-        messages.put(ID.future, "must be in the future");
-        messages.put(ID.stringSize, "size must be between 2 and 4");
-        messages.put(ID.size, "size must be between 2 and 4"); // RF-11035
+        messages.put(ID.past, PastBean.VALIDATION_MSG);
+        messages.put(ID.future, FutureBean.VALIDATION_MSG);
+        messages.put(ID.stringSize, StringSizeBean.VALIDATION_MSG);
+        messages.put(ID.size, SizeBean.VALIDATION_MSG); // RF-11035
 
         wrongValue.put(ID.assertTrue, Boolean.FALSE);
         wrongValue.put(ID.assertFalse, Boolean.TRUE);

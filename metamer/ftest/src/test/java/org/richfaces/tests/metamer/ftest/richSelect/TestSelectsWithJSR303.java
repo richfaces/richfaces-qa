@@ -32,6 +32,7 @@ import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.test.selenium.waiting.TextContainsCondition;
+import org.richfaces.tests.metamer.bean.rich.RichSelectBean;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 
 /**
@@ -43,17 +44,16 @@ import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 public abstract class TestSelectsWithJSR303 extends AbstractGrapheneTest {
 
     private static final String WRONG_NOT_EMPTY = "";
-    private static final String NOT_EMPTY_VALIDATION_MSG = "may not be empty";
+    private static final String NOT_EMPTY_VALIDATION_MSG = RichSelectBean.NOT_EMPTY_VALIDATION_MSG;
     private static final String CORRECT_NOT_EMPTY = "Alaska";
 
     private static final String WRONG_REG_EXP = "Alaska";
     private static final String CORRECT_REG_EXP = "richfaces";
-    private static final String REGEXP_VALIDATION_MSG = "must match \"[a-z].*\"";
-
+    private static final String REGEXP_VALIDATION_MSG = RichSelectBean.REGEXP_VALIDATION_MSG;
 
     private static final String WRONG_STRING_SIZE = "richfaces";
     private static final String CORRECT_STRING_SIZE = "Alaska";
-    private static final String STRING_SIZE_VALIDATION_MSG = "size must be between 3 and 6";
+    private static final String STRING_SIZE_VALIDATION_MSG = RichSelectBean.STRING_SIZE_VALIDATION_MSG;
 
     private static final String WRONG_CUSTOM_STRING = "richfaces";
     private static final String CORRECT_CUSTOM_STRING = "RichFaces";

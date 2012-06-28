@@ -27,6 +27,7 @@ import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.richfaces.tests.metamer.bean.rich.RichInplaceInputBean;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 
 /**
@@ -37,17 +38,16 @@ import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
  */
 public abstract class TestComponentWithJSR303 extends AbstractGrapheneTest {
 
-    private static final String NOT_EMPTY_VALIDATION_MSG = "may not be empty";
+    private static final String NOT_EMPTY_VALIDATION_MSG = RichInplaceInputBean.NOT_EMPTY_VALIDATION_MSG;
     private static final String CORRECT_NOT_EMPTY = "xyz";
 
     private static final String WRONG_REG_EXP = "1a^";
     private static final String CORRECT_REG_EXP = "a2^E";
-    private static final String REGEXP_VALIDATION_MSG = "must match \"[a-z].*\"";
-
+    private static final String REGEXP_VALIDATION_MSG = RichInplaceInputBean.REGEXP_VALIDATION_MSG;
 
     private static final String WRONG_STRING_SIZE = "x";
     private static final String CORRECT_STRING_SIZE = "abc3";
-    private static final String STRING_SIZE_VALIDATION_MSG = "size must be between 3 and 6";
+    private static final String STRING_SIZE_VALIDATION_MSG = RichInplaceInputBean.STRING_SIZE_VALIDATION_MSG;
 
     private static final String WRONG_CUSTOM_STRING = "rich faces";
     private static final String CORRECT_CUSTOM_STRING = "RichFaces";
