@@ -87,7 +87,6 @@ public class RichOrderingListBean implements Serializable {
     }
 
     public List<Capital> getCapitals() {
-        logger.info("size of returned capitals is <" + capitals.size() + ">");
         return capitals;
     }
 
@@ -104,7 +103,6 @@ public class RichOrderingListBean implements Serializable {
     }
 
     public void setCapitals(List<Capital> capitals) {
-        logger.info("size of set capitals is <" + capitals.size() + ">");
         this.capitals = capitals;
     }
 
