@@ -155,7 +155,14 @@
 
     <build>
         <finalName>metamer</finalName>
-
+        
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
