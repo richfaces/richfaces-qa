@@ -155,14 +155,14 @@
 
     <build>
         <finalName>metamer</finalName>
-        
+
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
-        
+
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
@@ -171,8 +171,6 @@
                     <filters>
                         <filter>${basedir}/src/main/filters/default.properties</filter>
                     </filters>
-                    <attachClasses>true</attachClasses>
-                    <attachSources>true</attachSources>
                     <archive>
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
@@ -205,15 +203,6 @@
                     </connectors>
                 </configuration>
             </plugin>
-            <plugin>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>package</phase>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
@@ -232,6 +221,8 @@
                         <configuration>
                             <classifier>jee6</classifier>
                             <packagingExcludes>${jee6.excluded.libraries}</packagingExcludes>
+                            <attachClasses>true</attachClasses>
+                            <attachSources>true</attachSources>
                         </configuration>
                         <executions>
                             <execution>
@@ -447,6 +438,8 @@
                                 <configuration>
                                     <classifier>mojarra</classifier>
                                     <packagingExcludes>${mojarra.excluded.libraries}</packagingExcludes>
+                                    <attachClasses>false</attachClasses>
+                                    <attachSources>false</attachSources>
                                 </configuration>
                             </execution>
                             <execution>
@@ -458,6 +451,8 @@
                                 <configuration>
                                     <classifier>myfaces</classifier>
                                     <packagingExcludes>${myfaces.excluded.libraries}</packagingExcludes>
+                                    <attachClasses>false</attachClasses>
+                                    <attachSources>false</attachSources>
                                 </configuration>
                             </execution>
                             <execution>
@@ -472,6 +467,8 @@
                                     </filters>
                                     <classifier>jee6-bundled-mojarra</classifier>
                                     <packagingExcludes>${jee6-mojarra.excluded.libraries}</packagingExcludes>
+                                    <attachClasses>false</attachClasses>
+                                    <attachSources>false</attachSources>
                                 </configuration>
                             </execution>
                             <execution>
@@ -486,7 +483,21 @@
                                     </filters>
                                     <classifier>jee6-bundled-myfaces</classifier>
                                     <packagingExcludes>${jee6-myfaces.excluded.libraries}</packagingExcludes>
+                                    <attachClasses>false</attachClasses>
+                                    <attachSources>false</attachSources>
                                 </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
                             </execution>
                         </executions>
                     </plugin>
