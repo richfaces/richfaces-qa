@@ -28,6 +28,11 @@
     <properties>
         <jetty.port>8080</jetty.port>
         <version.hornetq>2.2.13.Final</version.hornetq>
+        <jee6.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</jee6.excluded.libraries>
+        <jee6-mojarra.excluded.libraries>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</jee6-mojarra.excluded.libraries>
+        <jee6-myfaces.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</jee6-myfaces.excluded.libraries>
+        <mojarra.excluded.libraries>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/jsp-api*</mojarra.excluded.libraries>
+        <myfaces.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/jsp-api*</myfaces.excluded.libraries>
     </properties>
 
     <dependencies>
@@ -237,7 +242,7 @@
                         <artifactId>maven-war-plugin</artifactId>
                         <configuration>
                             <classifier>jee6</classifier>
-                            <packagingExcludes>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</packagingExcludes>
+                            <packagingExcludes>${jee6.excluded.libraries}</packagingExcludes>
                         </configuration>
                         <executions>
                             <execution>
@@ -270,7 +275,7 @@
                                         <filter>${basedir}/src/main/filters/bundles-jsf.properties</filter>
                                     </filters>
                                     <classifier>jee6-bundled-mojarra</classifier>
-                                    <packagingExcludes>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</packagingExcludes>
+                                    <packagingExcludes>${jee6-mojarra.excluded.libraries}</packagingExcludes>
                                 </configuration>
                             </execution>
                         </executions>
@@ -296,7 +301,7 @@
                                         <filter>${basedir}/src/main/filters/bundles-jsf.properties</filter>
                                     </filters>
                                     <classifier>jee6-bundled-myfaces</classifier>
-                                    <packagingExcludes>WEB-INF/web.xml,WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</packagingExcludes>
+                                    <packagingExcludes>${jee6-myfaces.excluded.libraries}</packagingExcludes>
                                 </configuration>
                             </execution>
                         </executions>
@@ -331,7 +336,7 @@
                                 </goals>
                                 <configuration>
                                     <classifier>mojarra</classifier>
-                                    <packagingExcludes>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/jsp-api*</packagingExcludes>
+                                    <packagingExcludes>${mojarra.excluded.libraries}</packagingExcludes>
                                 </configuration>
                             </execution>
                         </executions>
@@ -354,7 +359,7 @@
                                 </goals>
                                 <configuration>
                                     <classifier>myfaces</classifier>
-                                    <packagingExcludes>WEB-INF/web.xml,WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/jsp-api*</packagingExcludes>
+                                    <packagingExcludes>${myfaces.excluded.libraries}</packagingExcludes>
                                 </configuration>
                             </execution>
                         </executions>
@@ -452,7 +457,7 @@
                                 </goals>
                                 <configuration>
                                     <classifier>mojarra</classifier>
-                                    <packagingExcludes>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/jsp-api*</packagingExcludes>
+                                    <packagingExcludes>${mojarra.excluded.libraries}</packagingExcludes>
                                 </configuration>
                             </execution>
                             <execution>
@@ -463,7 +468,7 @@
                                 </goals>
                                 <configuration>
                                     <classifier>myfaces</classifier>
-                                    <packagingExcludes>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/jsp-api*</packagingExcludes>
+                                    <packagingExcludes>${myfaces.excluded.libraries}</packagingExcludes>
                                 </configuration>
                             </execution>
                             <execution>
@@ -477,7 +482,7 @@
                                         <filter>${basedir}/src/main/filters/bundles-jsf.properties</filter>
                                     </filters>
                                     <classifier>jee6-bundled-mojarra</classifier>
-                                    <packagingExcludes>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</packagingExcludes>
+                                    <packagingExcludes>${jee6-mojarra.excluded.libraries}</packagingExcludes>
                                 </configuration>
                             </execution>
                             <execution>
@@ -491,7 +496,7 @@
                                         <filter>${basedir}/src/main/filters/bundles-jsf.properties</filter>
                                     </filters>
                                     <classifier>jee6-bundled-myfaces</classifier>
-                                    <packagingExcludes>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</packagingExcludes>
+                                    <packagingExcludes>${jee6-myfaces.excluded.libraries}</packagingExcludes>
                                 </configuration>
                             </execution>
                         </executions>
