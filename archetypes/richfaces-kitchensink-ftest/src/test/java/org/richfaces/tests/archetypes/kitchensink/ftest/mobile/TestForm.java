@@ -21,6 +21,8 @@ public class TestForm extends AbstractKitchensinkTest {
     private MemberDetails memberDetails = new MemberDetails();
     private MenuPage menuPage = new MenuPage();
     
+    private final int PAGE_TRANSITION_WAIT = 3;
+    
     @BeforeMethod(groups = "arquillian")
     public void initialiseWebElements() {
         FieldDecorator fd = new StaleReferenceAwareFieldDecorator(new DefaultElementLocatorFactory(webDriver), 2);
@@ -33,26 +35,23 @@ public class TestForm extends AbstractKitchensinkTest {
     @Test
     public void testAddCorrectMember() {
         menuPage.getAddMember().click();
-        implicitWait(3);
-        
-        //workaround for delay when first typing into input
-        registerForm.getNameInput().sendKeys("foo");
+        waitFor(PAGE_TRANSITION_WAIT);
 
+        //set twice as workaround for first time filling in input
         String nameSet = registerForm.setCorrectName();
+        registerForm.setCorrectName();
         registerForm.setCorrectEmail();
         registerForm.setCorrectPhone();
 
-        final int numberOfRowsBefore = membersTable.getNumberOfRows();
-
         registerForm.getRegisterButton().click();
 
-        membersTable.waitUntilNumberOfRowsChanged(4, webDriver, numberOfRowsBefore);
-
+        waitFor(PAGE_TRANSITION_WAIT);
+        
         String table = membersTable.getTable().getText();
         assertTrue(table.contains(nameSet), "The new member was not added correctly!");
     }
     
-    private void implicitWait(int howLong) {
+    private void waitFor(int howLong) {
         
         long timeout = System.currentTimeMillis() + (howLong * 1000);
         
