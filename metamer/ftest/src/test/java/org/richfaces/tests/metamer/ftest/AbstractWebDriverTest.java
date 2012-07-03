@@ -132,21 +132,26 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Executes JavaScript script. Returns single and trimmed string. Tries to
-     * execute script few times with waiting for expected string defined by
-     * @expectedValue.
+     * Tries to execute JavaScript script for few times with some wait time
+     * between tries and expecting a predicted result. Method waits for expected
+     * string defined in @expectedValue. Returns single trimmed String with
+     * expected value or what it found or null.
      *
-     * @param script whole command that will be executed
+     * @param expectedValue expected return value of javaScript
+     * @param script whole JavaScript that will be executed
      * @param args
-     * @return single and trimmed string
+     * @return single and trimmed string or null
      */
     protected String expectedReturnJS(String script, String expectedValue, Object... args) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         String result = null;
         for (int i = 0; i < NUMBER_OF_TRIES; i++) {
-            result = ((String) js.executeScript(script, args)).trim();
-            if (result.equals(expectedValue)) {
-                break;
+            Object executeScript = js.executeScript(script, args);
+            if (executeScript != null) {
+                result = ((String) js.executeScript(script, args)).trim();
+                if (result.equals(expectedValue)) {
+                    break;
+                }
             }
             waiting(MINOR_WAIT_TIME);
         }
