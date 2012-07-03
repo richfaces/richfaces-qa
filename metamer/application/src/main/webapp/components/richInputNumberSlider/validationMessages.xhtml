@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2012, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but inAtt ANY WARRANTY; inAtt even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along inBean this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/validationMessagesTemplate.xhtml">
+
+        <ui:define name="js">
+            <script type="text/javascript">
+                function setCorrectValues() {
+                    $('[name$=jsr-303-inBean]').val('5').change();
+                    $('[name$=jsr-303-inAtt]').val('5').change();
+                    $('[name$=jsr-303-inBundle]').val('5').change();
+                    $('[name$=csv-inBean]').val('5').change();
+                    $('[name$=csv-inAtt]').val('5').change();
+                    $('[name$=csv-inBundle]').val('5').change();
+                    $('[name$=jsf-inBundle]').val('5').change();
+                    $('[name$=jsf-inAtt]').val('5').change();
+                }
+
+                function setWrongValues() {
+                    $('[name$=jsr-303-inBean]').val('10').change();
+                    $('[name$=jsr-303-inAtt]').val('10').change();
+                    $('[name$=jsr-303-inBundle]').val('10').change();
+                    $('[name$=csv-inBean]').val('10').change();
+                    $('[name$=csv-inAtt]').val('10').change();
+                    $('[name$=csv-inBundle]').val('10').change();
+                    $('[name$=jsf-inBundle]').val('10').change();
+                    $('[name$=jsf-inAtt]').val('10').change();
+                }
+            </script>
+        </ui:define>
+
+        <ui:define name="jsr-303-inBean">
+            <rich:inputNumberSlider id="jsr-303-inBean" value="#{validationMessagesBean.valueWithMessagesJSR}" converter="#{validationMessagesBean.converter}"/>
+        </ui:define>      
+
+        <ui:define name="jsr-303-inAtt">
+            <rich:inputNumberSlider id="jsr-303-inAtt" value="#{validationMessagesBean.valueWithoutMessagesJSR}" 
+                                    validatorMessage="Custom validator error message from attribute of component."
+                                    converter="#{validationMessagesBean.converter}"/>
+        </ui:define> 
+
+        <ui:define name="jsr-303-inBundle">
+            <rich:inputNumberSlider id="jsr-303-inBundle" value="#{validationMessagesBean.valueWithoutMessages2JSR}" converter="#{validationMessagesBean.converter}"/>
+        </ui:define>  
+
+        <ui:define name="csv-inBean">
+            <rich:inputNumberSlider id="csv-inBean" value="#{validationMessagesBean.valueWithMessagesCSV}" converter="#{validationMessagesBean.converter}"/>
+        </ui:define>  
+
+        <ui:define name="csv-inAtt">
+            <rich:inputNumberSlider id="csv-inAtt" value="#{validationMessagesBean.valueWithoutMessagesCSV}" 
+                                    validatorMessage="Custom validator error message from attribute of component."
+                                    converter="#{validationMessagesBean.converter}"/>
+        </ui:define>  
+
+        <ui:define name="csv-inBundle">
+            <rich:inputNumberSlider id="csv-inBundle" value="#{validationMessagesBean.valueWithoutMessages2CSV}" converter="#{validationMessagesBean.converter}"/>
+        </ui:define>  
+
+        <ui:define name="jsf-inAtt">
+            <rich:inputNumberSlider id="jsf-inAtt" value="#{validationMessagesBean.valueJSF}" 
+                                    validatorMessage="Custom validator error message from attribute of component."
+                                    converter="#{validationMessagesBean.converter}">
+                <f:validateDoubleRange minimum="2" maximum="9"/>
+            </rich:inputNumberSlider>
+        </ui:define>  
+
+        <ui:define name="jsf-inBundle">    
+            <rich:inputNumberSlider id="jsf-inBundle" value="#{validationMessagesBean.value2JSF}" converter="#{validationMessagesBean.converter}">
+                <f:validateDoubleRange  minimum="2" maximum="9" />
+            </rich:inputNumberSlider>    
+        </ui:define>   
+    </ui:composition>
+</html>

@@ -21,11 +21,15 @@
             <system-event-listener-class>org.richfaces.demo.push.TopicsContextMessageProducerInitializer</system-event-listener-class>
             <system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
         </system-event-listener>
-    </application>
 
+        <message-bundle>CustomErrorMessages</message-bundle>
+        <message-bundle>DefaultErrorMessages</message-bundle>
+        
+    </application>
+    
     <lifecycle>
         <phase-listener>org.richfaces.tests.metamer.RichPhaseListener</phase-listener>
         <phase-listener>org.richfaces.tests.metamer.ResponseDelayListener</phase-listener>
     </lifecycle>
-    
+
 </faces-config>

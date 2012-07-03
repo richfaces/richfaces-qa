@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2012, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but inAtt ANY WARRANTY; inAtt even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along inBean this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/validationMessagesTemplate.xhtml">
+
+        <ui:define name="js">
+            <h:inputHidden id="past" value="#{validationMessagesBean.pastDate}">
+                <f:convertDateTime pattern="MMM d, yyyy"/>
+            </h:inputHidden>
+            <h:inputHidden id="future" value="#{validationMessagesBean.futureDate}">
+                <f:convertDateTime pattern="MMM d, yyyy"/>
+            </h:inputHidden>
+            <script type="text/javascript">
+                var future=$('[id$=future]').val();
+                var past=$('[id$=past]').val();
+                function setCorrectValues() {
+                    $('[id$=jsr-303-inBeanInputDate]').val(past).blur();
+                    $('[id$=jsr-303-inAttInputDate]').val(past).blur();
+                    $('[id$=jsr-303-inBundleInputDate]').val(past).blur();
+                    $('[id$=csv-inBeanInputDate]').val(past).blur();
+                    $('[id$=csv-inAttInputDate]').val(past).blur();
+                    $('[id$=csv-inBundleInputDate]').val(past).blur();
+                    $('[id$=jsf-inAttInputDate]').val(past).blur();
+                }
+
+                function setWrongValues() {
+                    $('[id$=jsr-303-inBeanInputDate]').val(future).blur();
+                    $('[id$=jsr-303-inAttInputDate]').val(future).blur();
+                    $('[id$=jsr-303-inBundleInputDate]').val(future).blur();
+                    $('[id$=csv-inBeanInputDate]').val(future).blur();
+                    $('[id$=csv-inAttInputDate]').val(future).blur();
+                    $('[id$=csv-inBundleInputDate]').val(future).blur();
+                    $('[id$=jsf-inAttInputDate]').val(future).blur();
+                }
+            </script>
+        </ui:define>
+
+        <ui:define name="jsr-303-inBean">
+            <rich:calendar id="jsr-303-inBean" value="#{validationMessagesBean.dateWithMessagesJSR}">
+                <f:convertDateTime pattern="MMM d, yyyy"/>
+            </rich:calendar>
+        </ui:define>      
+
+        <ui:define name="jsr-303-inAtt">
+            <rich:calendar id="jsr-303-inAtt" value="#{validationMessagesBean.dateWithoutMessagesJSR}" 
+                           validatorMessage="Custom validator error message from attribute of component."
+                           >
+                <f:convertDateTime pattern="MMM d, yyyy"/>
+            </rich:calendar>
+        </ui:define> 
+
+        <ui:define name="jsr-303-inBundle">
+            <rich:calendar id="jsr-303-inBundle" value="#{validationMessagesBean.dateWithoutMessages2JSR}" >
+                <f:convertDateTime pattern="MMM d, yyyy"/>
+            </rich:calendar>
+        </ui:define>  
+
+        <ui:define name="csv-inBean">
+            <rich:calendar id="csv-inBean" value="#{validationMessagesBean.dateWithMessagesCSV}" >
+                <f:convertDateTime pattern="MMM d, yyyy"/>
+            </rich:calendar>
+        </ui:define>  
+
+        <ui:define name="csv-inAtt">
+            <rich:calendar id="csv-inAtt" value="#{validationMessagesBean.dateWithoutMessagesCSV}" 
+                           validatorMessage="Custom validator error message from attribute of component.">
+                <f:convertDateTime pattern="MMM d, yyyy"/>
+            </rich:calendar>
+        </ui:define>  
+
+        <ui:define name="csv-inBundle">
+            <rich:calendar id="csv-inBundle" value="#{validationMessagesBean.dateWithoutMessages2CSV}">
+                <f:convertDateTime pattern="MMM d, yyyy"/>
+            </rich:calendar>
+        </ui:define>  
+
+        <ui:define name="jsf-inAtt">
+            <!-- validator can be set by f:validator but it needs a record in faces-config.xml -->
+            <rich:calendar validator="#{validationMessagesBean.validate}" id="jsf-inAtt" value="#{validationMessagesBean.dateJSF}" 
+                           validatorMessage="Custom validator error message from attribute of component.">
+                <f:convertDateTime pattern="MMM d, yyyy"/>
+            </rich:calendar>
+        </ui:define>  
+
+        <ui:define name="jsf-inBundle">
+            <h:outputText value="No need for this, because we are using own validator with own message."/>
+        </ui:define>   
+        <ui:debug/>
+    </ui:composition>
+</html>

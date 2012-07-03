@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2012, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but inAtt ANY WARRANTY; inAtt even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along inBean this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+            
+            <h:outputText id="currRB" value="Current message resource bundle: #{validationMessagesBean.printCurrentResourceBundle()}."/>
+            <br/>
+            Activate own message bundle (JSF validation only):
+            <br/>
+            <a4j:commandButton id="activateButton" value="activate" action="#{validationMessagesBean.activate}" render="currRB"/>
+            <a4j:commandButton id="deactivateButton" value="deactivate" action="#{validationMessagesBean.deactivate}" render="currRB"/>
+
+            <br/><br/>
+            Submit buttons:<br/>
+            <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
+            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
+            <br/><br/>
+            <ui:insert name="js">
+                <script type="text/javascript">
+                    function setCorrectValues() {
+                        $('[name$=jsr-303-inBean]').click().val('5').blur();
+                        $('[name$=jsr-303-inAtt]').click().val('5').blur();
+                        $('[name$=jsr-303-inBundle]').click().val('5').blur();
+                        $('[name$=csv-inBean]').click().val('5').blur();
+                        $('[name$=csv-inAtt]').click().val('5').blur();
+                        $('[name$=csv-inBundle]').click().val('5').blur();
+                        $('[name$=jsf-inBundle]').click().val('5').blur();
+                        $('[name$=jsf-inAtt]').click().val('5').blur();
+                    }
+
+                    function setWrongValues() {
+                        $('[name$=jsr-303-inBean]').click().val('10').blur();
+                        $('[name$=jsr-303-inAtt]').click().val('10').blur();
+                        $('[name$=jsr-303-inBundle]').click().val('10').blur();
+                        $('[name$=csv-inBean]').click().val('10').blur();
+                        $('[name$=csv-inAtt]').click().val('10').blur();
+                        $('[name$=csv-inBundle]').click().val('10').blur();
+                        $('[name$=jsf-inBundle]').click().val('10').blur();
+                        $('[name$=jsf-inAtt]').click().val('10').blur();
+                    }
+                </script>
+            </ui:insert>
+            <script type="text/javascript">
+                function command(button){
+                    document.valuesSettingState="started";
+                    if(button=="wrong"){
+                        setWrongValues();
+                    }else{
+                        setCorrectValues(); 
+                    }
+                    document.valuesSettingState="finished";
+                }
+                if(window.onload == null){
+                    window.onload = function(){
+                        document.valuesSettingState="";
+                    } 
+                }else{
+                    window.onload += function(){
+                        document.valuesSettingState="";
+                    }
+                }
+
+            </script>
+
+            Values setting:
+            <br/>
+            <input id="setCorrectValuesButton" type="button" value="set correct values" onclick="command('correct')"/>
+            <input id="setWrongValuesButton" type="button" value="set wrong values" onclick="command('wrong')"/>
+            <br/><br/>
+
+            <h:outputText value="All inputs expects: #{validationMessagesBean.description}" />
+
+            <br/><br/>
+            JSR-303: 
+            <h:panelGrid columns="3">
+
+                <h:outputLabel for="jsr-303-inBean" value="Validation messages set in bean:" />
+                <ui:insert name="jsr-303-inBean"/>
+                <rich:message id="jsr-303-inBean-msg" for="jsr-303-inBean" />
+
+
+                <h:outputLabel for="jsr-303-inAtt" value="Validation message set in attribute:" />
+                <ui:insert name="jsr-303-inAtt"/>
+                <rich:message id="jsr-303-inAtt-msg" for="jsr-303-inAtt" />
+
+
+                <h:outputLabel for="jsr-303-inBundle" value="Validation message set in bundle:" />
+                <ui:insert name="jsr-303-inBundle"/>
+                <rich:message id="jsr-303-inBundle-msg" for="jsr-303-inBundle" />
+            </h:panelGrid>
+
+            <br/><br/>
+            CSV: 
+            <h:panelGrid columns="3">
+                <rich:validator>
+                    <h:outputLabel for="csv-inBean"  value="Validation messages set in bean:" />
+                    <ui:insert name="csv-inBean"/>
+                    <rich:message id="csv-inBean-msg" for="csv-inBean" />
+
+
+                    <h:outputLabel for="csv-inAtt" value="Validation message set in attribute:" />
+                    <ui:insert name="csv-inAtt"/>
+                    <rich:message id="csv-inAtt-msg" for="csv-inAtt" />
+
+
+                    <h:outputLabel for="csv-inBundle" value="Validation messages set in bundle:" />
+                    <ui:insert name="csv-inBundle"/>
+                    <rich:message id="csv-inBundle-msg" for="csv-inBundle" />
+                </rich:validator>
+            </h:panelGrid>
+
+            <br/><br/>
+            JSF validation: 
+            <h:panelGrid columns="3">
+                <h:outputLabel for="jsf-inAtt" value="Validation message set in attribute:" />
+                <ui:insert name="jsf-inAtt"/>
+                <rich:message id="jsf-inAtt-msg" for="jsf-inAtt" />
+
+
+                <h:outputLabel for="jsf-inBundle" value="Validation messages set in bundle:" />
+                <ui:insert name="jsf-inBundle"/>    
+                <rich:message id="jsf-inBundle-msg" for="jsf-inBundle" />
+            </h:panelGrid>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+        </ui:define>
+
+    </ui:composition>
+</html>
