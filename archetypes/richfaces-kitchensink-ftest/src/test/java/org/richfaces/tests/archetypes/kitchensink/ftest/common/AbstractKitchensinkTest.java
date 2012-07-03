@@ -44,6 +44,17 @@ import com.thoughtworks.selenium.DefaultSelenium;
  */
 public class AbstractKitchensinkTest extends Arquillian {
 
+    protected final String ERROR_MSG_CSV = "The number of error messages after client side validation is wrong!";
+    protected final String CSV_EMAIL = "not a well-formed email address";
+    protected final String CSV_PHONE = "size must be between 10 and 12";
+    protected final String SSV_NOT_EMPTY = "may not be empty";
+    protected final String CSV_NOT_NULL = "may not be null";
+    protected final String SSV_NAME_SIZE = "size must be between 1 and 25";
+    protected final String SSV_PHONE_SIZE = "numeric value out of bounds (<12 digits>.<0 digits> expected)";
+    protected final String SSV_NAME_PATTERN = "must contain only letters and spaces";
+    
+    protected final int WAIT_FOR_ERR_MSG_RENDER = 3;
+
     @ArquillianResource
     protected URL contextRoot;
 

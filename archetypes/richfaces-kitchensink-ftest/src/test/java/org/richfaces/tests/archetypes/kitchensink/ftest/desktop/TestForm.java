@@ -51,8 +51,6 @@ public class TestForm extends AbstractKitchensinkTest {
     private MembersTable membersTable = new MembersTable();
     private MemberDetails memberDetails = new MemberDetails();
 
-    private final String ERROR_MSG_CSV = "The number of error messages after client side validation is wrong!";
-
     @BeforeMethod(groups = "arquillian")
     public void initialiseWebElements() {
         FieldDecorator fd = new StaleReferenceAwareFieldDecorator(new DefaultElementLocatorFactory(webDriver), 2);
@@ -69,7 +67,7 @@ public class TestForm extends AbstractKitchensinkTest {
 
         final int numberOfRowsBefore = membersTable.getNumberOfRows();
 
-        registerForm.getRegisterButton().click();
+        registerForm.clickOnRegisterButton();
 
         membersTable.waitUntilNumberOfRowsChanged(4, webDriver, numberOfRowsBefore);
 
@@ -94,7 +92,7 @@ public class TestForm extends AbstractKitchensinkTest {
         webDriverBackedSelenium.type(registerForm.getEMAIL_LOC(), "blah");
         webDriverBackedSelenium.fireEvent(registerForm.getEMAIL_LOC(), "click");
 
-        registerForm.waitForErrorMessages(3, webDriver, numberOfErrorMessagesBefore);
+        registerForm.waitForErrorMessages(WAIT_FOR_ERR_MSG_RENDER, webDriver, numberOfErrorMessagesBefore);
 
         assertEquals(registerForm.getErrorMessages().size(), 1, ERROR_MSG_CSV);
     }
@@ -115,9 +113,9 @@ public class TestForm extends AbstractKitchensinkTest {
         registerForm.setIncorrectNameTooShort();
 
         final int numberOfErrorMessagesBefore = registerForm.getErrorMessages().size();
-        registerForm.getRegisterButton().click();
+        registerForm.clickOnRegisterButton();
 
-        registerForm.waitForErrorMessages(3, webDriver, numberOfErrorMessagesBefore);
+        registerForm.waitForErrorMessages(WAIT_FOR_ERR_MSG_RENDER, webDriver, numberOfErrorMessagesBefore);
 
         assertEquals(registerForm.getErrorMessages().size(), 3,
             "The number of error messages after server side validation is wrong.");

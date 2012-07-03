@@ -21,8 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.archetypes.kitchensink.ftest.common.page;
 
+import static org.testng.Assert.assertTrue;
+
 import java.util.List;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -65,9 +68,36 @@ public class RegisterForm {
     private String INCORRECT_PHONE_PATTERN = "wrong";
 
     private String INCORRECT_NAME_TOO_SHORT = "";
+ 
+    public void clickOnRegisterButton() {
+        registerButton.click();
+    }
+    
+    public void switchOffAutocompleteOnInputs(WebDriver webDriver) {
+        JavascriptExecutor js = (JavascriptExecutor) webDriver;
+        js.executeScript("document.getElementsByName('mobileForm:memberForm:name')[0].setAttribute('autocomplete','off');");
+        js.executeScript("document.getElementsByName('mobileForm:memberForm:email')[0].setAttribute('autocomplete','off');");
+        js.executeScript("document.getElementsByName('mobileForm:memberForm:phoneNumber')[0].setAttribute('autocomplete','off');");
+    }
+    
+    public void isErrorMessageRendered(String... ERR_MSG) {
+        List<WebElement> errorMsgs = getErrorMessages();
+        boolean flag = false;
+        
+        for(String i : ERR_MSG) {
+            flag = false;
+            
+            for(WebElement j : errorMsgs) {
+                if(i.equals(j.getText())) {
+                    flag = true;
+                }
+            }
+            assertTrue(flag, "Error message: (" + i + ") was not rendered!");
+        }
+    }
 
     public void waitForErrorMessages(int timeoutInSec, WebDriver webDriver, final int numberOfErrorMessagesBefore) {
-        
+
         (new WebDriverWait(webDriver, timeoutInSec)).until(new ExpectedCondition<Boolean>() {
 
             public Boolean apply(WebDriver d) {
