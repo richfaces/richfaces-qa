@@ -8,18 +8,30 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Factory;
 
 public class MembersTable {
 
     @FindBy(xpath = "//*[@class='rf-dt-b']")
     private WebElement table;
-    
+
     @FindBy(xpath = "//*[@class='rf-dt-b']/tr")
     private WebElement tableRow;
-    
+
     @FindBy(xpath = "//*[@class='rf-dt-b']/tr")
     private List<WebElement> tableRows;
-    
+
+    @FindBy(xpath = "//*[@class='rf-dt-ftr-c']/a")
+    private WebElement urlAllMembersRestData;
+
+    public WebElement getUrlAllMembersRestData() {
+        return urlAllMembersRestData;
+    }
+
+    public void setUrlAllMembersRestData(WebElement urlAllMembersRestData) {
+        this.urlAllMembersRestData = urlAllMembersRestData;
+    }
+
     public List<WebElement> getTableRows() {
         return tableRows;
     }

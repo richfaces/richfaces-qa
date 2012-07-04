@@ -5,16 +5,13 @@ import org.openqa.selenium.support.FindBy;
 
 public class MenuPage {
 
-    @FindBy(xpath = "//*[contains(.,'Application Menu')]")
-    private WebElement applicationMenu;
-
-    @FindBy(xpath = "//*[contains(.,'Add Member')]")
+    @FindBy(xpath = "(//*[@class='rf-pm-itm-lbl'])[1]")
     private WebElement addMember;
 
-    @FindBy(xpath = "//*[contains(.,'List Members')]")
+    @FindBy(xpath = "(//*[@class='rf-pm-itm-lbl'])[2]")
     private WebElement listMembers;
 
-    public static final int PAGE_TRANSITION_WAIT = 3;
+    public static final int PAGE_TRANSITION_WAIT = 2;
     
     public void gotoAddMemberPage() {
         addMember.click();
@@ -25,15 +22,7 @@ public class MenuPage {
         listMembers.click();
         waitFor(PAGE_TRANSITION_WAIT);
     }
-
-    public WebElement getApplicationMenu() {
-        return applicationMenu;
-    }
-
-    public void setApplicationMenu(WebElement applicationMenuCollapsiblePanel) {
-        this.applicationMenu = applicationMenuCollapsiblePanel;
-    }
-
+    
     public WebElement getAddMember() {
         return addMember;
     }

@@ -16,6 +16,9 @@ public class MemberDetails {
     
     @FindBy(xpath="//*[@class='rf-pp-hdr-cntrls ']/a")
     private WebElement backToFormDesktop;
+    
+    @FindBy(id="back-button")
+    private WebElement backToMenuMobile;
 
     public void waitMemberDetailsAreAvailableOnDesktop(int timeoutInSeconds, WebDriver webDriver) {
         (new WebDriverWait(webDriver, timeoutInSeconds)).until(new ExpectedCondition<Boolean>() {
@@ -26,6 +29,14 @@ public class MemberDetails {
         });
     }
     
+    public WebElement getBackToMenuMobile() {
+        return backToMenuMobile;
+    }
+
+    public void setBackToMenuMobile(WebElement backToMenuMobile) {
+        this.backToMenuMobile = backToMenuMobile;
+    }
+
     public WebElement getBackToFormDesktop() {
         return backToFormDesktop;
     }

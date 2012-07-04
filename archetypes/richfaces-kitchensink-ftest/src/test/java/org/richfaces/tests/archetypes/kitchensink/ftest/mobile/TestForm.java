@@ -25,6 +25,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
@@ -59,11 +60,13 @@ public class TestForm extends AbstractKitchensinkTest {
     @Test
     public void testAddCorrectMember() {
         menuPage.gotoAddMemberPage();
-        registerForm.switchOffAutocompleteOnInputs(webDriver);
-        
+        // registerForm.switchOffAutocompleteOnInputs(webDriver);
+
         // set twice as workaround for first time filling in input
         String nameSet = registerForm.setCorrectName();
-        registerForm.setCorrectName();
+        if (registerForm.getNameInput().getAttribute("value").isEmpty()) {
+            registerForm.setCorrectName();
+        }
         registerForm.setCorrectEmail();
         registerForm.setCorrectPhone();
 
@@ -77,8 +80,8 @@ public class TestForm extends AbstractKitchensinkTest {
     @Test
     public void testCSVEmailPattern() {
         menuPage.gotoAddMemberPage();
-        registerForm.switchOffAutocompleteOnInputs(webDriver);
-        
+        // registerForm.switchOffAutocompleteOnInputs(webDriver);
+
         final int numberOfErrorMessagesBefore = registerForm.getErrorMessages().size();
 
         registerForm.setIncorrectEmailPatternViolation();
@@ -87,14 +90,14 @@ public class TestForm extends AbstractKitchensinkTest {
         registerForm.waitForErrorMessages(3, webDriver, numberOfErrorMessagesBefore);
         assertEquals(registerForm.getErrorMessages().size(), 1, ERROR_MSG_CSV);
 
-        registerForm.isErrorMessageRendered(CSV_EMAIL);
+        registerForm.areAllErrorMessagesRendered(CSV_EMAIL);
     }
 
     @Test(groups = "4.Future")
     public void testCSVNamePattern() {
         menuPage.gotoAddMemberPage();
-        registerForm.switchOffAutocompleteOnInputs(webDriver);
-        
+        // registerForm.switchOffAutocompleteOnInputs(webDriver);
+
         final int numberOfErrorMessagesBefore = registerForm.getErrorMessages().size();
 
         registerForm.setIncorrectNamePatternViolation();
@@ -107,8 +110,8 @@ public class TestForm extends AbstractKitchensinkTest {
     @Test
     public void testCSVPhonePattern() {
         menuPage.gotoAddMemberPage();
-        registerForm.switchOffAutocompleteOnInputs(webDriver);
-        
+        // registerForm.switchOffAutocompleteOnInputs(webDriver);
+
         final int numberOfErrorMessagesBefore = registerForm.getErrorMessages().size();
 
         registerForm.setIncorrectPhonePatternViolation();
@@ -117,43 +120,68 @@ public class TestForm extends AbstractKitchensinkTest {
         registerForm.waitForErrorMessages(WAIT_FOR_ERR_MSG_RENDER, webDriver, numberOfErrorMessagesBefore);
         assertEquals(registerForm.getErrorMessages().size(), 1, ERROR_MSG_CSV);
 
-        registerForm.isErrorMessageRendered(CSV_PHONE);
+        registerForm.areAllErrorMessagesRendered(CSV_PHONE);
     }
 
     @Test
     public void testSSVInputsEmpty() {
         menuPage.gotoAddMemberPage();
-        registerForm.switchOffAutocompleteOnInputs(webDriver);
-        
+        // registerForm.switchOffAutocompleteOnInputs(webDriver);
+
         final int numberOfErrorMessagesBefore = registerForm.getErrorMessages().size();
         registerForm.clickOnRegisterButton();
 
         registerForm.waitForErrorMessages(WAIT_FOR_ERR_MSG_RENDER, webDriver, numberOfErrorMessagesBefore);
         assertEquals(registerForm.getErrorMessages().size(), 3, ERROR_MSG_CSV);
     }
-    
+
     @Test
     public void testSSVWrongInputs() {
         menuPage.gotoAddMemberPage();
-        registerForm.switchOffAutocompleteOnInputs(webDriver);
-        
+        // registerForm.switchOffAutocompleteOnInputs(webDriver);
+
         final int numberOfErrorMessagesBefore = registerForm.getErrorMessages().size();
-        
+
         registerForm.setIncorrectNameTooShort();
         registerForm.setIncorrectEmailPatternViolation();
         registerForm.setIncorrectPhonePatternViolation();
-        
+
         registerForm.clickOnRegisterButton();
-        
+
         registerForm.waitForErrorMessages(WAIT_FOR_ERR_MSG_RENDER, webDriver, numberOfErrorMessagesBefore);
         assertEquals(registerForm.getErrorMessages().size(), 3, ERROR_MSG_CSV);
 
-        registerForm.isErrorMessageRendered(SSV_NAME_SIZE, SSV_PHONE_SIZE, CSV_EMAIL);
+        registerForm.areAllErrorMessagesRendered(SSV_NAME_SIZE, CSV_EMAIL);
+        registerForm.isAnyErrorMessageRendered(CSV_PHONE, SSV_PHONE_SIZE);
     }
-    
-//    @Test
-//    public void testViewMemberDetails() {
-//        
-//    }
 
+    @Test
+    public void testViewMemberDetails() {
+        menuPage.gotoAddMemberPage();
+
+        registerForm.setCorrectName();
+        registerForm.setEmail("wonderland@provider.org");
+        registerForm.setCorrectPhone();
+
+        registerForm.clickOnRegisterButton();
+        menuPage.waitFor(MenuPage.PAGE_TRANSITION_WAIT);
+
+        int numberOfRows = membersTable.getNumberOfRows();
+        for (int i = 1; i <= numberOfRows; i++) {
+
+            String expectedEmail = membersTable.getTable().findElement(By.xpath("(//*[@class='rf-dt-b']/tr)[" + i + "]/td[4]"))
+                .getText();
+
+            membersTable.getTable().findElement(By.xpath("(//*[@class='rf-dt-b']/tr)[" + i + "]/td/a")).click();
+            menuPage.waitFor(MenuPage.PAGE_TRANSITION_WAIT);
+
+            String actualEmail = memberDetails.getEmailOnMobile().getText().trim();
+            assertEquals(actualEmail, expectedEmail, "Email from the table is not equal to email from the user details!");
+
+            if (i == numberOfRows)
+                break;
+            memberDetails.getBackToMenuMobile().click();
+            menuPage.gotoListMembersPage();
+        }
+    }
 }

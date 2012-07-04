@@ -68,32 +68,47 @@ public class RegisterForm {
     private String INCORRECT_PHONE_PATTERN = "wrong";
 
     private String INCORRECT_NAME_TOO_SHORT = "";
- 
+
     public void clickOnRegisterButton() {
         registerButton.click();
     }
-    
+
     public void switchOffAutocompleteOnInputs(WebDriver webDriver) {
         JavascriptExecutor js = (JavascriptExecutor) webDriver;
         js.executeScript("document.getElementsByName('mobileForm:memberForm:name')[0].setAttribute('autocomplete','off');");
         js.executeScript("document.getElementsByName('mobileForm:memberForm:email')[0].setAttribute('autocomplete','off');");
         js.executeScript("document.getElementsByName('mobileForm:memberForm:phoneNumber')[0].setAttribute('autocomplete','off');");
     }
-    
-    public void isErrorMessageRendered(String... ERR_MSG) {
-        List<WebElement> errorMsgs = getErrorMessages();
+
+    public void areAllErrorMessagesRendered(String... errMsgs) {
+        List<WebElement> errorMsgsElements = getErrorMessages();
         boolean flag = false;
-        
-        for(String i : ERR_MSG) {
+
+        for (String i : errMsgs) {
             flag = false;
-            
-            for(WebElement j : errorMsgs) {
-                if(i.equals(j.getText())) {
+
+            for (WebElement j : errorMsgsElements) {
+                if (i.equals(j.getText())) {
                     flag = true;
                 }
             }
             assertTrue(flag, "Error message: (" + i + ") was not rendered!");
         }
+    }
+
+    public void isAnyErrorMessageRendered(String... errMsgs) {
+        List<WebElement> errorMsgsElements = getErrorMessages();
+        boolean flag = false;
+
+        for (String i : errMsgs) {
+
+            for (WebElement j : errorMsgsElements) {
+                if (i.equals(j.getText().trim())) {
+                    flag = true;
+                }
+            }
+        }
+        assertTrue(flag, "None of messages: (" + errMsgs.toString() + ") were rendered!");
     }
 
     public void waitForErrorMessages(int timeoutInSec, WebDriver webDriver, final int numberOfErrorMessagesBefore) {
