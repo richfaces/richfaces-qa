@@ -43,8 +43,8 @@ import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 public abstract class TestSelectsWithJSR303 extends AbstractGrapheneTest {
 
     private static final String WRONG_NOT_EMPTY = "";
-    private static final String NOT_EMPTY_VALIDATION_MSG = "may not be empty";
-    private static final String CORRECT_NOT_EMPTY = RichInplaceSelectBean.NOT_EMPTY_VALIDATION_MSG;
+    private static final String NOT_EMPTY_VALIDATION_MSG = RichInplaceSelectBean.NOT_EMPTY_VALIDATION_MSG;
+    private static final String CORRECT_NOT_EMPTY = "Alaska";
 
     private static final String WRONG_REG_EXP = "Alaska";
     private static final String CORRECT_REG_EXP = "richfaces";
