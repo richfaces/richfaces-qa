@@ -121,7 +121,7 @@ public class Attributes<T extends AttributeEnum> {
             List<WebElement> foundOptions = driver.findElements(By.cssSelector(cssLocator));
             applySelect(foundOptions, valueAsString);
         }
-        waitForPageRerenderAndCheckIfPropertySet(propertyName, valueAsString);
+        waitForPageRerenderAndCheckIfPropertyWasSet(propertyName, valueAsString);
     }
 
     protected void applyText(String xpathLocator, String value) {
@@ -146,9 +146,16 @@ public class Attributes<T extends AttributeEnum> {
 
     private void applyOnSelectionInputs(List<WebElement> elements, String value) {
         for (WebElement webElement : elements) {
-            if (webElement.getAttribute("value").equals(value)) {
+            String attributeValue = webElement.getAttribute("value");
+            if (attributeValue.equalsIgnoreCase(value)) {
                 webElement.click();
                 break;
+            }
+            if (value.equals("null")) {
+                if (attributeValue.equals("") || attributeValue.equalsIgnoreCase("null")) {
+                    webElement.click();
+                    break;
+                }
             }
         }
         waitForFooter();
@@ -215,7 +222,7 @@ public class Attributes<T extends AttributeEnum> {
      * @param propertyName string value of attribute
      * @param value value that the attribute should have
      */
-    private void waitForPageRerenderAndCheckIfPropertySet(String propertyName, String value) {
+    private void waitForPageRerenderAndCheckIfPropertyWasSet(String propertyName, String value) {
         waitForFooter();
         String property;
         for (int i = 0; i < 5; i++) {
@@ -223,6 +230,11 @@ public class Attributes<T extends AttributeEnum> {
                 property = getProperty(propertyName);
                 if (property.equals(value)) {
                     return;
+                }
+                if (value.equals("null")) {
+                    if (property.equals("") || property.equalsIgnoreCase("null")) {
+                        return;
+                    }
                 }
                 waiting(200);
             } catch (Exception ignored) {
