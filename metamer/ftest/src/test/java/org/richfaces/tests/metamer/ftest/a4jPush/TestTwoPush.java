@@ -67,10 +67,14 @@ public class TestTwoPush extends AbstractWebDriverTest {
         assertEquals(event, "onsubscribed onsubscribed", "Attribute onsubscribed doesn't work");
 
         page.pushEnabledChckBox.click();
+        // give some time to JS to execute click and then do it again
+        waiting(1000);
         page.pushEnabledChckBox.click();
+        waiting(1000);
         // second onsubscribed event receive after manual re-attach by checkbox
         event = ((String) executeJS("return window.metamerEvents")).trim();
-        assertEquals(event, "onsubscribed onsubscribed", "Attribute onsubscribed doesn't work");
+        // not there should be 3rd event invoked on re-attach to topic
+        assertEquals(event, "onsubscribed onsubscribed onsubscribed", "Attribute onsubscribed doesn't work");
     }
 
     /**
