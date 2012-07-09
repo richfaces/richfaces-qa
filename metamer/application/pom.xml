@@ -33,6 +33,9 @@
         <jee6-myfaces.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</jee6-myfaces.excluded.libraries>
         <mojarra.excluded.libraries>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/jsp-api*</mojarra.excluded.libraries>
         <myfaces.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/jsp-api*</myfaces.excluded.libraries>
+        <dependency.scope>compile</dependency.scope>
+        <version.cdi-api>1.0-SP4</version.cdi-api>
+        <version.weld>1.1.5.Final</version.weld>
     </properties>
 
     <dependencies>
@@ -101,10 +104,13 @@
             <version>3.2.6.Final</version>
         </dependency>
 
+        <!-- change brought by adding CDI dependencies -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.6.1</version>
+            <!-- API and Impl bundled in weld-servlet -->
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -149,6 +155,27 @@
             <artifactId>jboss-as-controller-client</artifactId>
             <version>${version.jbossas7}</version>
             <scope>provided</scope>
+        </dependency>
+        
+        <!-- Dependencies for CDI -->
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <scope>${dependency.scope}</scope>
+            <version>${version.cdi-api}</version>
+        
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet</artifactId>
+            <scope>${dependency.scope}</scope>
+            <version>${version.weld}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.weld</groupId>
+                    <artifactId>weld-build-config</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>

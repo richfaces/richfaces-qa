@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2012, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+        
+           <div>Simulate issue <a href="">RF-11585</a>
+              <p><b>Description:</b> When using a controller with @ConversationScoped (CDI scope), the following exception arises: GRAVE: org.jboss.weld.context.ContextNotActiveException: WELD-001303 No active contexts for scope type javax.enterprise.context.ConversationScoped</p>
+              <p><i>Note: Reporter's env is GlassFish.</i></p>
+              <p>Tried to simulate on JBoss AS 7.1.1.Final - with different error message:</p>
+              <ol>
+               <li>upload an image file</li>
+               <li>in area labeled "Uploaded Files Info" should uploaded image appears</li>
+               <li>instead of file thumbnail an error appears in log. Something like: <br/>
+                  <code>Servlet.service() for servlet Faces Servlet threw exception: java.lang.NullPointerException
+      at com.sun.faces.mgbean.BeanManager$ScopeManager$ViewScopeHandler.getFromScope(BeanManager.java:563) [jsf-impl-2.1.7-jbossorg-2.jar:]
+      at com.sun.faces.mgbean.BeanManager$ScopeManager.getFromScope(BeanManager.java:477) [jsf-impl-2.1.7-jbossorg-2.jar:]
+      at com.sun.faces.mgbean.BeanManager.getBeanFromScope(BeanManager.java:240) [jsf-impl-2.1.7-jbossorg-2.jar:]</code>
+               </li>            
+              </ol>
+              
+              <p>Upload Files Info uses data from @ConversationScoped RichFileUploadBeanCScoped, using the same code as in ShowCase demo, just with different scope</p>
+           </div>
+        
+           <h:panelGrid columns="2" columnClasses="top,top">
+               <rich:fileUpload fileUploadListener="#{richFileUploadBeanCScoped.listener}" id="upload" acceptedTypes="jpg, gif, png, bmp"
+                   ontyperejected="alert('Only JPG, GIF, PNG and BMP files are accepted');" maxFilesQuantity="5">
+                   <a4j:ajax event="uploadcomplete" execute="@none" render="info" />
+               </rich:fileUpload>
+               <h:panelGroup id="info" layout="block">
+                   <rich:panel bodyClass="info">
+                       <f:facet name="header">
+                           <h:outputText value="Uploaded Files Info" />
+                       </f:facet>
+                       <h:outputText value="No files currently uploaded" rendered="#{richFileUploadBeanCScoped.size==0}" />
+                       <rich:dataGrid columns="1" value="#{richFileUploadBeanCScoped.items}" var="file" rowKeyVar="row">
+                           <rich:panel bodyClass="rich-laguna-panel-no-header">
+                               <h:panelGrid columns="2">
+                                   <a4j:mediaOutput element="img" mimeType="image/jpeg" createContent="#{richFileUploadBeanCScoped.paint}"
+                                       value="#{row}" style="width:100px; height:100px;" cacheable="false">
+                                       <f:param value="#{richFileUploadBeanCScoped.timeStamp}" name="time" />
+                                   </a4j:mediaOutput>
+                                   <h:panelGrid columns="2">
+                                       <h:outputText value="File Name:" />
+                                       <h:outputText value="#{file.name}" />
+                                   </h:panelGrid>
+                               </h:panelGrid>
+                           </rich:panel>
+                       </rich:dataGrid>
+                   </rich:panel>
+                   <br />
+                   <a4j:commandButton action="#{richFileUploadBeanCScoped.clearUploadData}" render="info, upload" value="Clear Uploaded Data"
+                       rendered="#{richFileUploadBeanCScoped.size>0}" />
+               </h:panelGroup>
+           </h:panelGrid>
+        </ui:define>
+
+    </ui:composition>
+</html>

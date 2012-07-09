@@ -51,6 +51,10 @@
         <param-name>org.richfaces.skin</param-name>
         <param-value>#{richBean.skin}</param-value>
     </context-param>
+    
+    <listener> 
+      <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class> 
+    </listener>
 
     <filter>
         <filter-name>Test Identity Filter</filter-name>

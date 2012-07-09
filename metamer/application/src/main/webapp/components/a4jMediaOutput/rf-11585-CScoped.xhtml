@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2012, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="head"/>
+
+        <ui:define name="component">
+        
+            <div>Simulate issue <a href="">RF-11585</a>
+              <p><b>Description:</b> When using a controller with @ConversationScoped (CDI scope), the following exception arises: GRAVE: org.jboss.weld.context.ContextNotActiveException: WELD-001303 No active contexts for scope type javax.enterprise.context.ConversationScoped</p>
+              <p><i>Note: Reporter's env is GlassFish.</i></p>
+              <p>Tried to simulate on JBoss AS 7.1.1.Final</p>
+              <p>An PNG image is served by <b><i>@ConversationScoped</i></b> bean, and it should cause error and no image displayed</p>
+            </div>
+        
+            <a4j:mediaOutput id="mediaOutput"
+                             accesskey="#{a4jMediaOutputBeanConversationScoped.attributes['accesskey'].value}"
+                             align="#{a4jMediaOutputBeanConversationScoped.attributes['align'].value}"
+                             archive="#{a4jMediaOutputBeanConversationScoped.attributes['archive'].value}"
+                             border="#{a4jMediaOutputBeanConversationScoped.attributes['border'].value}"
+                             cacheable="#{a4jMediaOutputBeanConversationScoped.attributes['cacheable'].value}"
+                             charset="#{a4jMediaOutputBeanConversationScoped.attributes['charset'].value}"
+                             classid="#{a4jMediaOutputBeanConversationScoped.attributes['classid'].value}"
+                             codebase="#{a4jMediaOutputBeanConversationScoped.attributes['codebase'].value}"
+                             codetype="#{a4jMediaOutputBeanConversationScoped.attributes['codetype'].value}"
+                             converter="#{a4jMediaOutputBeanConversationScoped.attributes['converter'].value}"
+                             coords="#{a4jMediaOutputBeanConversationScoped.attributes['coords'].value}"
+                             createContent="#{a4jMediaOutputBeanConversationScoped.createContentImagePng}"
+                             declare="#{a4jMediaOutputBeanConversationScoped.attributes['declare'].value}"
+                             dir="#{a4jMediaOutputBeanConversationScoped.attributes['dir'].value}"
+                             element="img"
+                             expires="#{a4jMediaOutputBeanConversationScoped.attributes['expires'].value}"
+                             hreflang="#{a4jMediaOutputBeanConversationScoped.attributes['hreflang'].value}"
+                             hspace="#{a4jMediaOutputBeanConversationScoped.attributes['hspace'].value}"
+                             ismap="#{a4jMediaOutputBeanConversationScoped.attributes['ismap'].value}"
+                             lang="#{a4jMediaOutputBeanConversationScoped.attributes['lang'].value}"
+                             lastModified="#{a4jMediaOutputBeanConversationScoped.attributes['lastModified'].value}"
+                             mimeType="image/png"
+                             onblur="#{a4jMediaOutputBeanConversationScoped.attributes['onblur'].value}"
+                             onclick="#{a4jMediaOutputBeanConversationScoped.attributes['onclick'].value}"
+                             ondblclick="#{a4jMediaOutputBeanConversationScoped.attributes['ondblclick'].value}"
+                             onfocus="#{a4jMediaOutputBeanConversationScoped.attributes['onfocus'].value}"
+                             onkeydown="#{a4jMediaOutputBeanConversationScoped.attributes['onkeydown'].value}"
+                             onkeypress="#{a4jMediaOutputBeanConversationScoped.attributes['onkeypress'].value}"
+                             onkeyup="#{a4jMediaOutputBeanConversationScoped.attributes['onkeyup'].value}"
+                             onmousedown="#{a4jMediaOutputBeanConversationScoped.attributes['onmousedown'].value}"
+                             onmousemove="#{a4jMediaOutputBeanConversationScoped.attributes['onmousemove'].value}"
+                             onmouseout="#{a4jMediaOutputBeanConversationScoped.attributes['onmouseout'].value}"
+                             onmouseover="#{a4jMediaOutputBeanConversationScoped.attributes['onmouseover'].value}"
+                             onmouseup="#{a4jMediaOutputBeanConversationScoped.attributes['onmouseup'].value}"
+                             rel="#{a4jMediaOutputBeanConversationScoped.attributes['rel'].value}"
+                             rendered="#{a4jMediaOutputBeanConversationScoped.attributes['rendered'].value}"
+                             rev="#{a4jMediaOutputBeanConversationScoped.attributes['rev'].value}"
+                             session="#{a4jMediaOutputBeanConversationScoped.attributes['session'].value}"
+                             shape="#{a4jMediaOutputBeanConversationScoped.attributes['shape'].value}"
+                             standby="#{a4jMediaOutputBeanConversationScoped.attributes['standby'].value}"
+                             style="#{a4jMediaOutputBeanConversationScoped.attributes['style'].value}"
+                             styleClass="#{a4jMediaOutputBeanConversationScoped.attributes['styleClass'].value}"
+                             tabindex="#{a4jMediaOutputBeanConversationScoped.attributes['tabindex'].value}"
+                             target="#{a4jMediaOutputBeanConversationScoped.attributes['target'].value}"
+                             title="#{a4jMediaOutputBeanConversationScoped.attributes['title'].value}"
+                             type="#{a4jMediaOutputBeanConversationScoped.attributes['type'].value}"
+                             uriAttribute="src"
+                             value="#{mediaData}"
+                             
+                             />
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{a4jMediaOutputBeanConversationScoped.attributes}" id="attributes" render="panel"/>
+        </ui:define>
+
+    </ui:composition>
+</html>

@@ -54,6 +54,17 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <metamer:testPageLink id="textPlain" outcome="textPlain" value="Text Plain">
                 Simple page that contains <b>a4j:mediaOutput</b> (object, text/plain) and input boxes for all its attributes.
             </metamer:testPageLink>
+            
+            <metamer:testPageLink id="rf-11585-CScoped" outcome="rf-11585-CScoped" value="rf-11585 with ConversationScoped Bean">
+                Simple page that contains <b>a4j:mediaOutput</b> (image/png) served by @ConversationScoped bean
+                to simulate <a href="https://issues.jboss.org/browse/RF-11585">RF-11585</a>
+            </metamer:testPageLink>
+            
+            <metamer:testPageLink id="rf-11585-VScoped" outcome="rf-11585-VScoped" value="rf-11585 with ViewScoped Bean">
+                Simple page that contains <b>a4j:mediaOutput</b> (image/png) served by @ViewScoped bean
+                to simulate <a href="https://issues.jboss.org/browse/RF-11585">RF-11585</a>
+            </metamer:testPageLink>
+            
 
             <ui:remove>
                 <metamer:testPageLink id="audioMpeg" outcome="audioMpeg" value="Audio Mpeg">
