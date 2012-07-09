@@ -10,7 +10,7 @@
     FSF site: http://www.fsf.org. -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -239,31 +239,6 @@
             </build>
         </profile>
         <profile>
-            <id>war-glassfish</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-war-plugin</artifactId>
-                        <configuration>
-                            <classifier>glassfish</classifier>
-                            <packagingExcludes>${glassfish.excluded.libraries}</packagingExcludes>
-                            <attachClasses>true</attachClasses>
-                            <attachSources>true</attachSources>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>glassfish-war</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>war</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <id>war-jee6-bundled-mojarra</id>
             <build>
                 <plugins>
@@ -384,6 +359,29 @@
                     <scope>runtime</scope>
                 </dependency>
             </dependencies>
+        </profile>
+        <profile>
+            <id>war-glassfish</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>glassfish</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>war</goal>
+                                </goals>
+                                <configuration>
+                                    <classifier>glassfish</classifier>
+                                    <packagingExcludes>${glassfish.excluded.libraries}</packagingExcludes>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <profile>
             <id>myfaces-development</id>
@@ -509,6 +507,19 @@
                                     </filters>
                                     <classifier>jee6-bundled-myfaces</classifier>
                                     <packagingExcludes>${jee6-myfaces.excluded.libraries}</packagingExcludes>
+                                    <attachClasses>false</attachClasses>
+                                    <attachSources>false</attachSources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>glassfish</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>war</goal>
+                                </goals>
+                                <configuration>
+                                    <classifier>glassfish</classifier>
+                                    <packagingExcludes>${glassfish.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
                                     <attachSources>false</attachSources>
                                 </configuration>
