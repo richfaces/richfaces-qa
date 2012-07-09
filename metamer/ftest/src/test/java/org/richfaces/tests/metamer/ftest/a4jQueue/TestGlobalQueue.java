@@ -46,7 +46,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
-*/
+ */
 public class TestGlobalQueue extends AbstractGrapheneTest {
 
     QueueModel queue = new QueueModel();
@@ -239,12 +239,14 @@ public class TestGlobalQueue extends AbstractGrapheneTest {
     }
 
     @Test(groups = "4.Future")
+    @IssueTracking(value = { "https://issues.jboss.org/browse/RF-11805", "https://issues.jboss.org/browse/RF-11711" })
     public void testOnbeforeDOMUpdate() {
         testRequestEvent(QueueAttributes.onbeforedomupdate,
                 new ClickButtonEventLaunchingAction("input[id$=actionButton]"));
     }
 
     @Test(groups = "4.Future")
+    @IssueTracking(value = { "https://issues.jboss.org/browse/RF-11805", "https://issues.jboss.org/browse/RF-11711" })
     public void testOnError() {
         testRequestEvent(QueueAttributes.onerror,
                 new ClickButtonEventLaunchingAction("input[id$=errorButton]"));
