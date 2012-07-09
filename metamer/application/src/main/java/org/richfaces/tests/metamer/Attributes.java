@@ -1,24 +1,25 @@
-/*******************************************************************************
- * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
+/**
+ * *****************************************************************************
+ * JBoss, Home of Professional Open Source Copyright 2010-2012, Red Hat, Inc.
+ * and individual contributors by the @authors tag. See the copyright.txt in the
+ * distribution for a full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
+ * This is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ * This software is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this software; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
+ * site: http://www.fsf.org.
+ ******************************************************************************
+ */
 package org.richfaces.tests.metamer;
 
 import java.beans.IntrospectionException;
@@ -83,8 +84,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Constructor for empty Attributes.
      *
-     * @param beanClass
-     *            class object of a managed bean
+     * @param beanClass class object of a managed bean
      */
     private Attributes(Class<?> beanClass) {
         this.beanClass = beanClass;
@@ -94,10 +94,9 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Constructor for class Attributes.
      *
-     * @param componentClass
-     *            class object of a JSF component whose attributes will be stored
-     * @param beanClass
-     *            class object of a managed bean
+     * @param componentClass class object of a JSF component whose attributes
+     * will be stored
+     * @param beanClass class object of a managed bean
      */
     private Attributes(Class<?> componentClass, Class<?> beanClass, boolean loadFromClass) {
         this.beanClass = beanClass;
@@ -133,10 +132,9 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Constructor for empty class Attributes.
      *
-     * @param componentClass
-     *            class object of a JSF component whose attributes will be stored
-     * @param beanClass
-     *            class object of a managed bean
+     * @param componentClass class object of a JSF component whose attributes
+     * will be stored
+     * @param beanClass class object of a managed bean
      */
     private Attributes(Class<?> componentClass, Class<?> beanClass) {
         logger.debug("creating attributes map for " + componentClass);
@@ -145,71 +143,69 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     }
 
     /**
-     * Factory method for creating instances of class Attributes. Attributes are loaded from faces-config.xml.
+     *  Factory method for creating instances of class Attributes. Attributes are
+     * loaded from faces-config.xml.
      *
-     * @param clazz
-     *            class object of a JSF component whose attributes will be stored
-     * @param beanClass
-     *            class object of a managed bean
+     *  @param clazz class object of a JSF component whose attributes will be
+     * stored
+     *  @param beanClass class object of a managed bean
      */
     public static Attributes getComponentAttributesFromFacesConfig(Class<? extends UIComponent> clazz, Class<?> beanClass) {
         return new Attributes(clazz, beanClass, false);
     }
 
     /**
-     * Factory method for creating instances of class Attributes. Attributes are loaded from class.
+     * Factory method for creating instances of class Attributes. Attributes are
+     * loaded from class.
      *
-     * @param interfaze
-     *            general class object whose attributes will be stored
-     * @param beanClass
-     *            class object of a managed bean
+     * @param interfaze general class object whose attributes will be stored
+     * @param beanClass class object of a managed bean
      */
     public static Attributes getAttributesFromClass(Class<?> interfaze, Class<?> beanClass) {
         return new Attributes(interfaze, beanClass, true);
     }
 
     /**
-     * Factory method for creating instances of class Attributes. Attributes are loaded from class.
+     * Factory method for creating instances of class Attributes. Attributes are
+     * loaded from class.
      *
-     * @param clazz
-     *            class object of a JSF component whose attributes will be stored
-     * @param beanClass
-     *            class object of a managed bean
+     * @param clazz class object of a JSF component whose attributes will be
+     * stored
+     * @param beanClass class object of a managed bean
      */
     public static Attributes getComponentAttributesFromClass(Class<? extends UIComponent> clazz, Class<?> beanClass) {
         return new Attributes(clazz, beanClass, true);
     }
 
     /**
-     * Factory method for creating instances of class Attributes. Attributes are loaded from faces-config.xml.
+     * Factory method for creating instances of class Attributes. Attributes are
+     * loaded from faces-config.xml.
      *
-     * @param clazz
-     *            class object of a JSF behavior whose attributes will be stored
-     * @param beanClass
-     *            class object of a managed bean
+     * @param clazz class object of a JSF behavior whose attributes will be
+     * stored
+     * @param beanClass class object of a managed bean
      */
     public static Attributes getBehaviorAttributesFromFacesConfig(Class<? extends BehaviorBase> clazz, Class<?> beanClass) {
         return new Attributes(clazz, beanClass, false);
     }
 
     /**
-     * Factory method for creating instances of class Attributes. Attributes are loaded from class.
+     *  Factory method for creating instances of class Attributes. Attributes are
+     * loaded from class.
      *
-     * @param clazz
-     *            class object of a JSF behavior whose attributes will be stored
-     * @param beanClass
-     *            class object of a managed bean
+     *  @param clazz class object of a JSF behavior whose attributes will be
+     * stored
+     *  @param beanClass class object of a managed bean
      */
     public static Attributes getBehaviorAttributesFromClass(Class<? extends BehaviorBase> clazz, Class<?> beanClass) {
         return new Attributes(clazz, beanClass, true);
     }
 
     /**
-     * Factory method for creating empty instance of class Attributes.
-     * Needs to be filled with attributes explicitly.
+     * Factory method for creating empty instance of class Attributes. Needs to
+     * be filled with attributes explicitly.
      *
-     * @param beanClass
-     *            class object of a managed bean
+     * @param beanClass class object of a managed bean
      */
     public static Attributes getEmptyAttributes(Class<?> beanClass) {
         return new Attributes(beanClass);
@@ -218,10 +214,9 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Factory method for creating instances of class Attributes.
      *
-     * @param componentClass
-     *            class object of a JSF behavior whose attributes will be stored
-     * @param beanClass
-     *            class object of a managed bean
+     * @param componentClass class object of a JSF behavior whose attributes
+     * will be stored
+     * @param beanClass class object of a managed bean
      */
     public static Attributes getFaceletsComponentAttributes(String componentClass, Class<?> beanClass) {
         Class<?> faceletsClass = null;
@@ -272,7 +267,8 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Loads select options used on the page for selecting attribute value.
      *
-     * @return map where key is attribute's name and value is list of select items usable to select attribute value
+     * @return map where key is attribute's name and value is list of select
+     * items usable to select attribute value
      */
     private void loadSelectOptions() {
         ResourceBundle rb = null;
@@ -398,7 +394,8 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * Getter for exclude set.
      *
-     * @return set containing all attributes of a JSF component that cannot/shouldn't be set on page.
+     * @return set containing all attributes of a JSF component that
+     * cannot/shouldn't be set on page.
      */
     private Set<String> getExcludeSet() {
         Set<String> set = new HashSet<String>();
@@ -436,11 +433,12 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     }
 
     /**
-     * Determines whether given object represents an EL expression, e.g. #{bean.property}.
+     * Determines whether given object represents an EL expression, e.g.
+     * #{bean.property}.
      *
-     * @param value
-     *            value of a property of tested JSF component
-     * @return true if object is a string representing an expression, e.g. #{bean.property}, false otherwise
+     * @param value value of a property of tested JSF component
+     * @return true if object is a string representing an expression, e.g.
+     * #{bean.property}, false otherwise
      */
     private boolean isStringEL(Object value) {
         if (!(value instanceof String)) {
@@ -457,7 +455,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
      */
     public String action() {
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
-        MethodExpression method = null;
+        MethodExpression method;
 
         if (attributes.get("action") == null) {
             return null;
@@ -465,7 +463,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
         String outcome = (String) attributes.get("action").getValue();
 
-        if (outcome == null) {
+        if (outcome.equalsIgnoreCase("null") || outcome.equals("") || outcome.equals(" ")) {
             return null;
         }
 
@@ -493,12 +491,12 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     /**
      * An action listener for tested JSF component. Can be modified dynamically.
      *
-     * @param event
-     *            event representing the activation of a user interface component
+     * @param event event representing the activation of a user interface
+     * component
      */
     public void actionListener(ActionEvent event) {
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
-        MethodExpression method = null;
+        MethodExpression method;
 
         if (attributes.get("actionListener") == null) {
             return;
@@ -506,7 +504,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
         String listener = (String) attributes.get("actionListener").getValue();
 
-        if (listener == null) {
+        if (listener.equalsIgnoreCase("null") || listener.equals("") || listener.equals(" ")) {
             return;
         }
 
@@ -516,24 +514,24 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         if (!hasSelectOptions("actionListener") && isStringEL(listener)) {
             method =
                     getExpressionFactory().createMethodExpression(elContext, listener, void.class,
-                    new Class[]{ActionEvent.class});
-            method.invoke(elContext, new Object[]{event});
+                    new Class[]{ ActionEvent.class });
+            method.invoke(elContext, new Object[]{ event });
         }
 
         // if select options for "actionListener" are defined in property file
         if (hasSelectOptions("actionListener")) {
             method =
                     getExpressionFactory().createMethodExpression(elContext, getMethodEL(listener), void.class,
-                    new Class[]{ActionEvent.class});
-            method.invoke(elContext, new Object[]{event});
+                    new Class[]{ ActionEvent.class });
+            method.invoke(elContext, new Object[]{ event });
         }
     }
 
     /**
      * An action listener for tested JSF component. Can be modified dynamically.
      *
-     * @param event
-     *            event representing the activation of a user interface component
+     * @param event event representing the activation of a user interface
+     * component
      */
     public void listener(AjaxBehaviorEvent event) {
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
@@ -555,24 +553,25 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         if (!hasSelectOptions("listener") && isStringEL(listener)) {
             method =
                     getExpressionFactory().createMethodExpression(elContext, listener, void.class,
-                    new Class[]{AjaxBehaviorEvent.class});
-            method.invoke(elContext, new Object[]{event});
+                    new Class[]{ AjaxBehaviorEvent.class });
+            method.invoke(elContext, new Object[]{ event });
         }
 
         // if select options for "listener" are defined in property file
         if (hasSelectOptions("listener")) {
             method = getExpressionFactory().createMethodExpression(elContext, getMethodEL(listener), void.class,
-                    new Class[]{AjaxBehaviorEvent.class});
-            method.invoke(elContext, new Object[]{event});
+                    new Class[]{ AjaxBehaviorEvent.class });
+            method.invoke(elContext, new Object[]{ event });
         }
     }
 
     /**
-     * Method used for creating EL expressions for methods.
+     *  Method used for creating EL expressions for methods.
      *
-     * @param methodName
-     *            name of the action or action listener, e.g. toUpperCaseAction
-     * @return string containing an expression for an action or action listener, e.g. #{bean.toUpperCaseAction}
+     *  @param methodName name of the action or action listener, e.g.
+     * toUpperCaseAction
+     *  @return string containing an expression for an action or action listener,
+     * e.g. #{bean.toUpperCaseAction}
      */
     private String getMethodEL(String methodName) {
         // get name of the managed bean
@@ -593,10 +592,10 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
     }
 
     /**
-     * Decides if there are any select options for given attribute. If true, radio buttons should be rendered on a page.
+     * Decides if there are any select options for given attribute. If true,
+     * radio buttons should be rendered on a page.
      *
-     * @param attributeName
-     *            name of a component attribute
+     * @param attributeName name of a component attribute
      * @return true if select options were defined, false otherwise
      */
     public boolean hasSelectOptions(String attributeName) {
