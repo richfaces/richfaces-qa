@@ -16,12 +16,8 @@
     <properties>
         <testng.listeners>org.jboss.arquillian.testng.container.TestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng.xml</testng.suite.xml>
-        <arquillian.version>1.0.0.CR6</arquillian.version>
-        <arquillian.testng.version>1.0.0.CR6</arquillian.testng.version>
-        <arquillian.android.extension.version>1.0.0.Alpha1</arquillian.android.extension.version>
         <android.serial>aaa</android.serial>
         <android.sdk.home />
-        <selenium.version>2.9.0</selenium.version>
         <android.apk.version>2.6.0</android.apk.version>
         <android.apk.url>http://selenium.googlecode.com/files/android-server-${android.apk.version}.apk</android.apk.url>
         <showcase.layout>mobile</showcase.layout>
@@ -39,39 +35,32 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>${selenium.version}</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-android-driver</artifactId>
-            <version>${selenium.version}</version>
         </dependency>
         <!-- Support for WebDriver in Arquillian Drone -->
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
             <artifactId>arquillian-drone-impl</artifactId>
-            <version>${arquillian.drone.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
             <artifactId>arquillian-drone-webdriver</artifactId>
-            <version>${arquillian.drone.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- Android extension -->
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
             <artifactId>arquillian-android-depchain</artifactId>
-            <version>${arquillian.android.extension.version}</version>
             <type>pom</type>
-            <scope>test</scope>
         </dependency>
         <!-- Arquillian TestNG support -->
         <dependency>
             <groupId>org.jboss.arquillian.testng</groupId>
             <artifactId>arquillian-testng-container</artifactId>
-            <version>${arquillian.testng.version}</version>
         </dependency>
         <!-- TestNG -->
         <dependency>

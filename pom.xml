@@ -36,10 +36,10 @@
         <version.jbossas6>6.0.0.Final</version.jbossas6>
         <version.jbossas7>7.0.2.Final</version.jbossas7>
         <version.jbossas7-1>7.1.1.Final</version.jbossas7-1>
-        
+
         <!-- version of Glassfish containers to use to download       -->
         <version.glassfish3-1>3.1.2</version.glassfish3-1>
-        
+
         <!-- version of Tomcat containers to use-->
         <version.tomcat6>6.0.35</version.tomcat6>
         <version.tomcat7>7.0.26</version.tomcat7>
@@ -54,6 +54,7 @@
         <arquillian.graphene-webdriver.version>2.0.0.Alpha1</arquillian.graphene-webdriver.version>
         <arquillian.jboss-as6.version>1.0.0.CR3</arquillian.jboss-as6.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
+        <arquillian.android.version>1.0.0.Alpha1</arquillian.android.version>
         <shrinkwrap.descriptors.version>1.1.0-beta-1</shrinkwrap.descriptors.version>
 
         <version.selenium>2.24.1</version.selenium>
@@ -64,7 +65,7 @@
 
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->
         <glassfish3-1home>${project.build.directory}/glassfish3</glassfish3-1home>
-        
+
         <tomcat6.home>${project.build.directory}/apache-tomcat-${version.tomcat6}</tomcat6.home>
         <tomcat7.home>${project.build.directory}/apache-tomcat-${version.tomcat7}</tomcat7.home>
 
@@ -356,6 +357,13 @@
                 <version>${arquillian.drone.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-android-depchain</artifactId>
+                <version>${arquillian.android.version}</version>
+                <type>pom</type>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.jboss.shrinkwrap.descriptors</groupId>

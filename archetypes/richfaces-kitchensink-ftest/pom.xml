@@ -15,7 +15,6 @@
 	<properties>
 		<application.target.directory>${basedir}/../apps/richfaces-kitchensink/target</application.target.directory>
 		<application.war>${application.target.directory}/richfaces-kitchensink.war</application.war>
-		<arquillian.android.extension.version>1.0.0.Alpha1</arquillian.android.extension.version>
 
 		<!-- which tests should be run and which not -->
 		<testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
@@ -46,9 +45,7 @@
 		<dependency>
 			<groupId>org.jboss.arquillian.extension</groupId>
 			<artifactId>arquillian-android-depchain</artifactId>
-			<version>${arquillian.android.extension.version}</version>
 			<type>pom</type>
-			<scope>test</scope>
 		</dependency>
 		<!-- Arquillian TestNG support -->
 		<dependency>
@@ -95,7 +92,7 @@
 							<!-- Variables accessible from JAVA code by System.getProperty -->
 							<systemProperties>
 								<application.war>${application.war}</application.war>
-								<!-- ip the address of your computer when you want to test on real 
+								<!-- ip the address of your computer when you want to test on real
 									device, on emulator the 10.0.2.2 -->
 								<host>10.0.2.2</host>
 							</systemProperties>
