@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.internal.WrapsElement;
 import org.openqa.selenium.support.pagefactory.DefaultFieldDecorator;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
@@ -71,7 +72,7 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
     protected WebElement proxyForLocator(ClassLoader loader, ElementLocator locator) {
         InvocationHandler handler = new StaleReferenceAwareElementLocator(locator);
         WebElement proxy = (WebElement) Proxy.newProxyInstance(loader, new Class[]{ WebElement.class,
-                    WrapsElement.class }, handler);
+                    WrapsElement.class, Locatable.class }, handler);
         return proxy;
     }
 
@@ -149,7 +150,7 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
             for (int i = 0; i < elements.size(); i++) {
                 handler = new WrapperForListWebElement(elements.get(i));
                 wrappedResult.add((WebElement) Proxy.newProxyInstance(loader, new Class[]{ WebElement.class,
-                            WrapsElement.class }, handler));
+                            WrapsElement.class, Locatable.class }, handler));
             }
             return method.invoke(wrappedResult, args);
         }
