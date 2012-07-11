@@ -54,6 +54,7 @@ public class AbstractKitchensinkTest extends Arquillian {
     protected final String SSV_NAME_PATTERN = "must contain only letters and spaces";
     
     protected final int WAIT_FOR_ERR_MSG_RENDER = 3;
+    protected final String ANDORID_LOOPBACK = "10.0.2.2";
 
     @ArquillianResource
     protected URL contextRoot;
@@ -75,7 +76,7 @@ public class AbstractKitchensinkTest extends Arquillian {
     @BeforeMethod(groups = "arquillian")
     public void loadPage() throws MalformedURLException {
 
-        webDriver.get(getDeployedURL().toString());
+        webDriver.get(getDeployedURL().toExternalForm());
 
         webDriverBackedSelenium = new WebDriverBackedSelenium(webDriver, getDeployedURL().toExternalForm());
     }

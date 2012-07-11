@@ -26,6 +26,7 @@ import static org.testng.Assert.assertTrue;
 
 import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
 import org.openqa.selenium.By;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
@@ -47,6 +48,9 @@ public class TestForm extends AbstractKitchensinkTest {
     private MembersTable membersTable = new MembersTable();
     private MemberDetails memberDetails = new MemberDetails();
     private MenuPage menuPage = new MenuPage();
+
+    private final String DESKTOP_MOBILE_NEW_MEMEBER = "/mobile/index.jsf#new";
+    private final String DESKTOP_MOBILE_LIST_MEMBERS = "/mobile/index.jsf#list";
 
     @BeforeMethod(groups = "arquillian")
     public void initialiseWebElements() {
@@ -183,5 +187,65 @@ public class TestForm extends AbstractKitchensinkTest {
             memberDetails.getBackToMenuMobile().click();
             menuPage.gotoListMembersPage();
         }
+    }
+
+    @Test
+    public void testPushFromDesktopToMobile() {
+        FirefoxDriver firefoxDriver = new FirefoxDriver();
+        String url = getDeployedURL().toExternalForm().replace(ANDORID_LOOPBACK, "localhost")
+            .concat(DESKTOP_MOBILE_NEW_MEMEBER);
+
+        // opening mobile version of kitchensink on desktop browser as it is not possible to open two browsers on mobile device
+        // or open two emulators
+        firefoxDriver.get(url);
+
+        FieldDecorator fd = new StaleReferenceAwareFieldDecorator(new DefaultElementLocatorFactory(firefoxDriver), 2);
+        RegisterForm registerFormDesktop = new RegisterForm();
+        PageFactory.initElements(fd, registerFormDesktop);
+
+        menuPage.gotoListMembersPage();
+
+        registerFormDesktop.setCorrectName();
+        String emailToSet = "pushtomobile@ff.sf";
+        registerFormDesktop.setEmail(emailToSet);
+        registerFormDesktop.setCorrectPhone();
+        registerFormDesktop.clickOnRegisterButton();
+        menuPage.waitFor(MenuPage.PAGE_TRANSITION_WAIT);
+
+        String tableText = membersTable.getTable().getText();
+        assertTrue(tableText.contains(emailToSet),
+            "Registration of new member desktop mobile version was not pushed to the mobile device!");
+
+        firefoxDriver.close();
+    }
+
+    @Test
+    public void testPushFromMobileToDesktop() {
+        FirefoxDriver firefoxDriver = new FirefoxDriver();
+        String url = getDeployedURL().toExternalForm().replace(ANDORID_LOOPBACK, "localhost")
+            .concat(DESKTOP_MOBILE_LIST_MEMBERS);
+
+        // opening mobile version of kitchensink on desktop browser as it is not possible to open two browsers on mobile device
+        // or open two emulators
+        firefoxDriver.get(url);
+
+        FieldDecorator fd = new StaleReferenceAwareFieldDecorator(new DefaultElementLocatorFactory(firefoxDriver), 2);
+        MembersTable membersTableDesktop = new MembersTable();
+        PageFactory.initElements(fd, membersTableDesktop);
+
+        menuPage.gotoAddMemberPage();
+
+        registerForm.setCorrectName();
+        String emailToSet = "pushfromdesktop@pushik.cz";
+        registerForm.setEmail(emailToSet);
+        registerForm.setCorrectPhone();
+        registerForm.clickOnRegisterButton();
+        menuPage.waitFor(MenuPage.PAGE_TRANSITION_WAIT);
+
+        String tableText = membersTableDesktop.getTable().getText();
+        assertTrue(tableText.contains(emailToSet),
+            "Registration of new member on mobile device was not pushed to the desktop mobile version!");
+        
+        firefoxDriver.close();
     }
 }
