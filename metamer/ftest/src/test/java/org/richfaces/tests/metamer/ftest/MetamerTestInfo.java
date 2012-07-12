@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -37,6 +38,7 @@ import org.testng.ITestResult;
 
 /**
  * @author <a href="mailto:ppitonak@redhat.com">Lukas Fryc</a>
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @version $Revision: 21424 $
  */
 
@@ -83,6 +85,18 @@ public final class MetamerTestInfo {
         String className = TestInfo.getClassName(result);
         String methodName = TestInfo.getMethodName(result);
 
+        return getFilename(packageName, className, methodName);
+    }
+
+    public static String getAssociatedFilename(Method method) {
+        String packageName = TestInfo.getContainingPackageName(method);
+        String className = TestInfo.getClassName(method);
+        String methodName = TestInfo.getMethodName(method);
+
+        return getFilename(packageName, className, methodName);
+    }
+
+    private static String getFilename(String packageName, String className, String methodName) {
         String testInfo = getConfigurationInfo();
         testInfo = StringUtils.replaceChars(testInfo, "\\/*?\"<>|", "");
         testInfo = StringUtils.replaceChars(testInfo, "\r\n \t", "_");
