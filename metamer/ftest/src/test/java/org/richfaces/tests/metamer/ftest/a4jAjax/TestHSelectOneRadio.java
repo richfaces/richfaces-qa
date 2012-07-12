@@ -60,7 +60,7 @@ public class TestHSelectOneRadio extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/a4jAjax/hSelectOneRadio.xhtml");
     }
 
-    @Test
+    @Test(groups = { "screenshot" })
     public void testSimpleClick() {
         guardXhr(selenium).click(input);
 
