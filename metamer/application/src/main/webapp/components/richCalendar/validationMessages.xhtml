@@ -99,7 +99,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>  
 
         <ui:define name="jsf-inAtt">
-            <!-- validator can be set by f:validator but it needs a record in faces-config.xml -->
+            <ui:remove>
+                <!-- validator can be set by f:validator but it needs a record in faces-config.xml -->
+            </ui:remove>
             <rich:calendar validator="#{validationMessagesBean.validate}" id="jsf-inAtt" value="#{validationMessagesBean.dateJSF}" 
                            validatorMessage="Custom validator error message from attribute of component.">
                 <f:convertDateTime pattern="MMM d, yyyy"/>
@@ -107,8 +109,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>  
 
         <ui:define name="jsf-inBundle">
-            <h:outputText value="No need for this, because we are using own validator with own message."/>
+            <h:outputText id="jsf-inBundle" value="No need for this, because we are using own validator with own message."/>
         </ui:define>   
-        <ui:debug/>
     </ui:composition>
 </html>
