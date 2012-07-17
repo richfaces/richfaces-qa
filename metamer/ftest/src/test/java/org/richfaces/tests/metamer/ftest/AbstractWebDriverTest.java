@@ -1,24 +1,23 @@
 /**
- * *****************************************************************************
- * JBoss, Home of Professional Open Source Copyright 2010-2012, Red Hat, Inc.
- * and individual contributors by the @authors tag. See the copyright.txt in the
- * distribution for a full listing of individual contributors.
+ * JBoss, Home of Professional Open Source
+ * Copyright 2012, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * This software is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this software; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
- * site: http://www.fsf.org.
- * *****************************************************************************
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.richfaces.tests.metamer.ftest;
 
@@ -53,6 +52,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.iphone.IPhoneDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
@@ -309,13 +309,33 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * attribute
      * @param testedAttribute attribute which will be tested
      */
-    protected <T extends AttributeEnum> void testFireEvent(WebElement element, Attributes<T> attributes, T testedAttribute) {
+    protected <T extends AttributeEnum> void testFireEventWithJS(WebElement element, Attributes<T> attributes, T testedAttribute) {
         attributes.set(testedAttribute, "metamerEvents += \"" + testedAttribute.toString() + " \"");
         executeJS("window.metamerEvents = \"\";");
         Event e = new Event(testedAttribute.toString().substring(2));//remove prefix "on"
         fireEvent(element, e);
         String returnedString = expectedReturnJS("return window.metamerEvents", testedAttribute.toString());
         assertEquals(returnedString, testedAttribute.toString(), "Event " + e + " does not work.");
+    }
+
+    /**
+     * A helper method for testing events. It sets "metamerEvents +=
+     * "@testedAttribute" to the input field and fires the event using Actions.
+     * Then it checks if the event was fired.
+     *
+     * @param attributes attributes instance which will be used for setting
+     * attribute
+     * @param testedAttribute attribute which will be tested
+     * @param eventFiringAction selenium action which leads to launch the
+     * tested
+     * event,
+     */
+    protected <T extends AttributeEnum> void testFireEvent(Attributes<T> attributes, T testedAttribute, Action eventFiringAction) {
+        attributes.set(testedAttribute, "metamerEvents += \"" + testedAttribute.toString() + " \"");
+        executeJS("window.metamerEvents = \"\";");
+        eventFiringAction.perform();
+        String returnedString = expectedReturnJS("return window.metamerEvents", testedAttribute.toString());
+        assertEquals(returnedString, testedAttribute.toString(), "Event " + testedAttribute.toString() + " does not work.");
     }
 
     /**
@@ -418,29 +438,6 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             waiting(MINOR_WAIT_TIME);
         }
         return list;
-    }
-
-    /**
-     * Tests onrequest (e.g. onsubmit, onrequest...) events by using javascript
-     * functions. First fills Metamer's input for according component attribute
-     * with testing value, then does an action, which should end by throwing a
-     * testing event and then wait for the event if it was really launched
-     *
-     * @param eventAttribute event attribute (e.g. onsubmit, onrequest,
-     * onbeforedomupdate...)
-     * @param action action wich leads to launching an event
-     */
-    protected <T extends AttributeEnum> void testRequestEvent(Attributes<T> attributes, T testedAttribute, IEventLaunchAction action) {
-        if (action == null) {
-            throw new IllegalArgumentException("No action specified");
-        }
-        attributes.set(testedAttribute, "metamerEvents += \"" + testedAttribute.toString() + " \"");
-        executeJS("window.metamerEvents = \"\";");
-
-        action.launchAction();
-
-        String returnedString = expectedReturnJS("return window.metamerEvents", testedAttribute.toString());
-        assertEquals(returnedString, testedAttribute.toString(), "Request event does not work.");
     }
 
     protected enum WaitRequestType {
@@ -768,10 +765,5 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             }
             return true;
         }
-    }
-
-    protected interface IEventLaunchAction {
-
-        void launchAction();
     }
 }
