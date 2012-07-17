@@ -1,8 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" 
       xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:composite="http://java.sun.com/jsf/composite" xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
     <h:body>
         <composite:interface>
@@ -26,62 +25,47 @@
                 <h:panelGrid id="#{cc.attrs.id}" columns="#{cc.attrs.columns * 2}" styleClass="attributes"
                              columnClasses="attributes-first-column, attributes-second-column, attributes-first-column, attributes-second-column">
                     <c:forEach items="#{cc.attrs.value}" var="entry">
-                        <c:if test="#{not fn:contains(cc.attrs.exclude, entry.key)}">
-                            <h:panelGroup layout="block">
-                                <h:outputLabel id="#{entry.key}Label" value="#{entry.key}" style="margin-right: 5px;" for="#{entry.key}Input"/>
-                                <h:graphicImage value="/resources/images/help.png" title="#{entry.value.help}" alt="help for attribute #{entry.key}"
-                                                rendered="#{entry.value.help != null}" style="vertical-align: middle; height: 18px;" 
-                                                styleClass="attribute-help" >
-                                </h:graphicImage>
-                            </h:panelGroup>
-
-                            <c:choose>
-                                <c:when test="#{entry.value.bool}">
-                                    <h:selectOneRadio id="#{entry.key}Input" value="#{entry.value.value}" onchange="#{cc.attrs.type == 'server' ? 'submit()' : 'submitAjax()'}">
-                                        <f:selectItem itemValue="null" itemLabel="null"/>
-                                        <f:selectItem itemValue="true" itemLabel="true"/>
-                                        <f:selectItem itemValue="false" itemLabel="false"/>
-                                    </h:selectOneRadio>
-                                </c:when>
-
-                                <c:when test="#{entry.value.selectOptions != null}">
-                                    <c:choose>
-                                        <c:when test="#{fn:length(entry.value.selectOptions) > 4}">
-                                            <h:selectOneMenu id="#{entry.key}Input" value="#{entry.value.value}"
-                                                             onchange="#{cc.attrs.type == 'server' ? 'submit()' : 'submitAjax()'}"
-                                                             style="width: 100%">
-                                                <f:selectItems value="#{entry.value.selectOptions}" noSelectionValue="null" />
-                                            </h:selectOneMenu>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <h:selectOneRadio id="#{entry.key}Input" value="#{entry.value.value}"
-                                                              onchange="#{cc.attrs.type == 'server' ? 'submit()' : 'submitAjax()'}"
-                                                              layout="pageDirection">
-                                                <c:forEach items="#{entry.value.selectOptions}" var="option"   >
-                                                    <!-- This don't work with when-otherwise            -->
-                                                    <c:if test="#{option.value == '' || option.value == ' ' || option.value == null || option.value == 'null' }">
-                                                        <f:selectItem itemLabel="null" itemValue="null"/>
-                                                    </c:if>
-                                                    <c:if test="#{!(option.value == '' || option.value == ' ' || option.value == null || option.value == 'null')}">
-                                                        <f:selectItem value="#{option}"/>
-                                                    </c:if>
-                                                </c:forEach>
-
-                                                <ui:remove>
-                                                    <!-- this causes a bug with setting null action and actionListener,
-                                                         when the chosen 'null' value is not checked after rerender.
-                                                    -->
-                                                    <f:selectItems value="#{entry.value.selectOptions}" />
-                                                </ui:remove>
-                                            </h:selectOneRadio>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:when>
-
-                                <c:otherwise>
-                                    <h:inputText id="#{entry.key}Input" value="#{entry.value.value}" style="width: 200px;" onchange="#{cc.attrs.type == 'server' ? 'submit()' : 'submitAjax()'}" />
-                                </c:otherwise>
-                            </c:choose>
+                    	<c:if test="#{not fn:contains(cc.attrs.exclude, entry.key)}">
+	                        <h:panelGroup layout="block">
+	                            <h:outputLabel id="#{entry.key}Label" value="#{entry.key}" style="margin-right: 5px;" for="#{entry.key}Input"/>
+                                    <h:graphicImage value="/resources/images/help.png" title="#{entry.value.help}" alt="help for attribute #{entry.key}"
+	                                            rendered="#{entry.value.help != null}" height="18px;"
+	                                            style="vertical-align: middle;" styleClass="attribute-help" >
+	                            </h:graphicImage>
+	                        </h:panelGroup>
+	
+	                        <c:choose>
+	                            <c:when test="#{entry.value.bool}">
+	                                <h:selectOneRadio id="#{entry.key}Input" value="#{entry.value.value}" onchange="#{cc.attrs.type == 'server' ? 'submit()' : 'submitAjax()'}">
+	                                    <f:selectItem itemValue="null" itemLabel="null"/>
+	                                    <f:selectItem itemValue="true" itemLabel="true"/>
+	                                    <f:selectItem itemValue="false" itemLabel="false"/>
+	                                </h:selectOneRadio>
+	                            </c:when>
+	
+	                            <c:when test="#{entry.value.selectOptions != null}">
+	                                <c:choose>
+	                                    <c:when test="#{fn:length(entry.value.selectOptions) > 4}">
+	                                        <h:selectOneMenu id="#{entry.key}Input" value="#{entry.value.value}"
+	                                                         onchange="#{cc.attrs.type == 'server' ? 'submit()' : 'submitAjax()'}"
+	                                                         style="width: 100%">
+	                                            <f:selectItems value="#{entry.value.selectOptions}" noSelectionValue="null" />
+	                                        </h:selectOneMenu>
+	                                    </c:when>
+	                                    <c:otherwise>
+	                                        <h:selectOneRadio id="#{entry.key}Input" value="#{entry.value.value}"
+	                                                          onchange="#{cc.attrs.type == 'server' ? 'submit()' : 'submitAjax()'}"
+	                                                          layout="pageDirection">
+	                                            <f:selectItems value="#{entry.value.selectOptions}" />
+	                                        </h:selectOneRadio>
+	                                    </c:otherwise>
+	                                </c:choose>
+	                            </c:when>
+	
+	                            <c:otherwise>
+	                                <h:inputText id="#{entry.key}Input" value="#{entry.value.value}" style="width: 200px;" onchange="#{cc.attrs.type == 'server' ? 'submit()' : 'submitAjax()'}" />
+	                            </c:otherwise>
+	                        </c:choose>
                         </c:if>
 
                     </c:forEach>
