@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="seleniumTest">
 
-    <test name="All Components">
+    <test name="All Components to Be Fixed in 4.3" preserve-order="false">
         <groups>
             <run>
                 <include name="arquillian" />

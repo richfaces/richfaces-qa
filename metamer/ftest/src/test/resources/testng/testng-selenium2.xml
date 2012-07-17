@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="seleniumTest">
 
-    <test name="selenium 2 tests">
+    <test name="All Selenium 2 Tests" preserve-order="false">
         <groups>
             <run>
                 <exclude name="4.3" />
