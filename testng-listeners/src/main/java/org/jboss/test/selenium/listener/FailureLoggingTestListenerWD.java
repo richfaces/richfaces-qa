@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2009-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -21,39 +21,37 @@
  *******************************************************************************/
 package org.jboss.test.selenium.listener;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.jboss.arquillian.ajocado.browser.BrowserType;
-import org.jboss.arquillian.ajocado.framework.GrapheneConfigurationContext;
-import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
-import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
-import org.jboss.arquillian.ajocado.network.NetworkTrafficType;
+import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.test.selenium.utils.testng.TestInfo;
 import org.jboss.test.selenium.utils.testng.TestLoggingUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
-
-import com.thoughtworks.selenium.SeleniumException;
 
 /**
  * Test listener which provides the methods injected in lifecycle of test case to catch the additional information in
  * context of test failure.
  *
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision$
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
+ * @since 4.3.0.M1
  */
-public class FailureLoggingTestListener extends TestListenerAdapter {
+public class FailureLoggingTestListenerWD extends TestListenerAdapter {
 
-    protected File mavenProjectBuildDirectory = new File(System.getProperty("maven.project.build.directory", "./target/"));
+    protected File mavenProjectBuildDirectory = new File(System.getProperty("maven.project.build.directory",
+        "./target/"));
     protected File failuresOutputDir = new File(mavenProjectBuildDirectory, "failures");
-    private GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
+    protected WebDriver driver = GrapheneContext.getProxy();
+    protected TakesScreenshot screenshotDriver = GrapheneContext.getProxyForInterfaces(TakesScreenshot.class);
 
     @Override
     public void onStart(ITestContext testContext) {
@@ -77,7 +75,7 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
     }
 
     protected void onFailure(ITestResult result) {
-        if (!selenium.isStarted()) {
+        if (driver == null) {
             return;
         }
 
@@ -89,47 +87,25 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
         }
 
         String filenameIdentification = getFilenameIdentification(result);
-        // String seleniumLogIdentification = getSeleniumLogIdentification(result);
 
-        // File seleniumLogFile = new File(mavenProjectBuildDirectory, "selenium/selenium-server.log");
-        // List<String> methodLog = new ArrayList<String>();
+        // TODO traffic can be captured using BrowserMob Proxy
+        // String traffic;
         // try {
-        // @SuppressWarnings("unchecked")
-        // List<String> seleniumLog = FileUtils.readLines(seleniumLogFile);
-        //
-        // boolean started = false;
-        // for (String line : seleniumLog) {
-        // if (line.contains(seleniumLogIdentification)) {
-        // started = true;
-        // methodLog = new ArrayList<String>();
-        // }
-        // if (started) {
-        // methodLog.add(line);
-        // }
-        // }
-        // } catch (IOException e) {
-        // throw new RuntimeException(e);
+        // traffic = selenium.captureNetworkTraffic(NetworkTrafficType.PLAIN).getTraffic();
+        // } catch (SeleniumException e) {
+        // traffic = ExceptionUtils.getFullStackTrace(e);
         // }
 
-        String traffic;
-        try {
-            traffic = selenium.captureNetworkTraffic(NetworkTrafficType.PLAIN).getTraffic();
-        } catch (SeleniumException e) {
-            traffic = ExceptionUtils.getFullStackTrace(e);
+        File screenshot = null;
+        if (!HtmlUnitDriver.class.isInstance(driver)) {
+            screenshot = screenshotDriver.getScreenshotAs(OutputType.FILE);
         }
 
-        BrowserType browser = GrapheneConfigurationContext.getProxy().getBrowser().getType();
-        BufferedImage screenshot = null;
-
-        if (browser == BrowserType.FIREFOX) {
-            screenshot = selenium.captureEntirePageScreenshot();
-        }
-
-        String htmlSource = selenium.getHtmlSource();
+        String htmlSource = driver.getPageSource();
 
         File stacktraceOutputFile = new File(failuresOutputDir, filenameIdentification + "/stacktrace.txt");
         File imageOutputFile = new File(failuresOutputDir, filenameIdentification + "/screenshot.png");
-        File trafficOutputFile = new File(failuresOutputDir, filenameIdentification + "/network-traffic.txt");
+        // File trafficOutputFile = new File(failuresOutputDir, filenameIdentification + "/network-traffic.txt");
         // File logOutputFile = new File(failuresOutputDir, filenameIdentification + "/selenium-log.txt");
         File htmlSourceOutputFile = new File(failuresOutputDir, filenameIdentification + "/html-source.html");
 
@@ -138,10 +114,11 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
             FileUtils.forceMkdir(directory);
 
             FileUtils.writeStringToFile(stacktraceOutputFile, stacktrace);
-            if (browser == BrowserType.FIREFOX) {
-                ImageIO.write(screenshot, "PNG", imageOutputFile);
+            if (!HtmlUnitDriver.class.isInstance(driver)) {
+                FileUtils.copyFile(screenshot, imageOutputFile);
             }
-            FileUtils.writeStringToFile(trafficOutputFile, traffic);
+
+            // FileUtils.writeStringToFile(trafficOutputFile, traffic);
             // FileUtils.writeLines(logOutputFile, methodLog);
             FileUtils.writeStringToFile(htmlSourceOutputFile, htmlSource);
         } catch (IOException e) {

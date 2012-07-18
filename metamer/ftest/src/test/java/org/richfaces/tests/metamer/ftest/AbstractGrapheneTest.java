@@ -46,12 +46,10 @@ import static org.testng.Assert.assertTrue;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.LocaleUtils;
 import org.jboss.arquillian.ajocado.browser.BrowserType;
 import org.jboss.arquillian.ajocado.dom.Attribute;
@@ -69,15 +67,12 @@ import org.jboss.test.selenium.ScreenshotInterceptor;
 import org.jboss.test.selenium.locator.reference.ReferencedLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
-import org.testng.ITestContext;
 import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
-
-import com.google.common.collect.Lists;
 
 /**
  * Abstract test case used as a basis for majority of test cases.
@@ -86,6 +81,7 @@ import com.google.common.collect.Lists;
  * @version $Revision: 22749 $
  */
 @RunAsClient
+@Listeners(MetamerFailureLoggingTestListener.class)
 public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
 
     @Drone

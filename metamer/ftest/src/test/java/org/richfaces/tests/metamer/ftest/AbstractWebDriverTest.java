@@ -1,6 +1,6 @@
 /**
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -61,7 +61,9 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 
+@Listeners(MetamerFailureLoggingTestListenerWD.class)
 public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     @Drone
@@ -81,9 +83,9 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 //        Opera(OperaDriver.class),
         IPhone(IPhoneDriver.class),
         Android(AndroidDriver.class);
-        private final Class clazz;
+        private final Class<?> clazz;
 
-        private DriverType(Class clazz) {
+        private DriverType(Class<?> clazz) {
             this.clazz = clazz;
         }
 
