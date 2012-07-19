@@ -57,8 +57,8 @@
         <arquillian.android.version>1.0.0.Alpha1</arquillian.android.version>
         <shrinkwrap.descriptors.version>1.1.0-beta-1</shrinkwrap.descriptors.version>
 
-        <version.selenium>2.24.1</version.selenium>
-        <version.selenium.server>2.24.1</version.selenium.server>
+        <version.selenium>2.25.0</version.selenium>
+        <version.selenium.server>2.25.0</version.selenium.server>
         <version.slf4j.jbossas6>1.6.1</version.slf4j.jbossas6>
 
         <version.jacoco.plugin>0.5.6.201201232323</version.jacoco.plugin>
