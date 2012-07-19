@@ -50,8 +50,7 @@ public class FailureLoggingTestListenerWD extends TestListenerAdapter {
     protected File mavenProjectBuildDirectory = new File(System.getProperty("maven.project.build.directory",
         "./target/"));
     protected File failuresOutputDir = new File(mavenProjectBuildDirectory, "failures");
-    protected WebDriver driver = GrapheneContext.getProxy();
-    protected TakesScreenshot screenshotDriver = GrapheneContext.getProxyForInterfaces(TakesScreenshot.class);
+    protected WebDriver driver = GrapheneContext.getProxyForInterfaces(TakesScreenshot.class);
 
     @Override
     public void onStart(ITestContext testContext) {
@@ -98,7 +97,7 @@ public class FailureLoggingTestListenerWD extends TestListenerAdapter {
 
         File screenshot = null;
         if (!HtmlUnitDriver.class.isInstance(driver)) {
-            screenshot = screenshotDriver.getScreenshotAs(OutputType.FILE);
+            screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         }
 
         String htmlSource = driver.getPageSource();

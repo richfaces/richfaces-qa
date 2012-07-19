@@ -1,6 +1,6 @@
 /**
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -36,7 +36,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
 public class Attributes<T extends AttributeEnum> {
 
-    protected WebDriver driver = GrapheneContext.getProxyForInterfaces(WebDriver.class, JavascriptExecutor.class);
+    protected WebDriver driver = GrapheneContext.getProxy();
     private static final String NULLSTRING = "null";
     private static final String[] NULLSTRINGOPTIONS = {"null", "", " "};
     private static final int WAITTIME = 200;
