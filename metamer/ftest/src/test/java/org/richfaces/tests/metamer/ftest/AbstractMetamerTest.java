@@ -130,7 +130,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
      */
     private static WebArchive updateArchiveWebXml(WebArchive defaultWar, Boolean compressedStages, Boolean packedStages) {
         // 1. load existing web.xml from metamer.war
-        WebAppDescriptor webXmlDefault = Descriptors.importAs(WebAppDescriptor.class).from(
+        WebAppDescriptor webXmlDefault = Descriptors.importAs(WebAppDescriptor.class).fromStream(
             defaultWar.get(new BasicPath("WEB-INF/web.xml")).getAsset().openStream());
 
         // 2. modify web.xml according to requirements

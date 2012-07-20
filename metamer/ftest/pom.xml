@@ -27,7 +27,7 @@
 
         <templates>plain</templates>
 
-        <testng.listeners>org.richfaces.tests.metamer.ftest.MatrixConfigurator,org.richfaces.tests.metamer.ftest.MetamerSeleniumLoggingTestListener,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener</testng.listeners>
+        <testng.listeners>org.richfaces.tests.metamer.ftest.MatrixConfigurator,org.richfaces.tests.metamer.ftest.MetamerSeleniumLoggingTestListener,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
 
         <jvm.args.jacoco>-Djacoco.disabled=true</jvm.args.jacoco>

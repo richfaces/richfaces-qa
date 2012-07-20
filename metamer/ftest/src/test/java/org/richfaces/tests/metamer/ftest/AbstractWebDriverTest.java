@@ -63,7 +63,6 @@ import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 
-@Listeners(MetamerFailureLoggingTestListenerWD.class)
 public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     @Drone

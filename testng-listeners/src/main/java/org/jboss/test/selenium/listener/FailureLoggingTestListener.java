@@ -34,8 +34,13 @@ import org.jboss.arquillian.ajocado.framework.GrapheneConfigurationContext;
 import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
 import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.network.NetworkTrafficType;
+import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.test.selenium.utils.testng.TestInfo;
 import org.jboss.test.selenium.utils.testng.TestLoggingUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
@@ -46,14 +51,17 @@ import com.thoughtworks.selenium.SeleniumException;
  * Test listener which provides the methods injected in lifecycle of test case to catch the additional information in
  * context of test failure.
  *
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @authot <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @version $Revision$
  */
 public class FailureLoggingTestListener extends TestListenerAdapter {
 
-    protected File mavenProjectBuildDirectory = new File(System.getProperty("maven.project.build.directory", "./target/"));
+    protected File mavenProjectBuildDirectory = new File(System.getProperty("maven.project.build.directory",
+        "./target/"));
     protected File failuresOutputDir = new File(mavenProjectBuildDirectory, "failures");
-    private GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
+    protected GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
+    protected WebDriver driver = GrapheneContext.getProxyForInterfaces(TakesScreenshot.class);
 
     @Override
     public void onStart(ITestContext testContext) {
@@ -76,7 +84,17 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
         onFailure(result);
     }
 
-    protected void onFailure(ITestResult result) {
+    /**
+     * Override this method if you need to distinguish between Selenium 1 and Selenium 2/WebDriver API. By default,
+     * Selenium 1 API is used.
+     *
+     * @param result
+     */
+    public void onFailure(ITestResult result) {
+        onFailureForSelenium1(result);
+    }
+
+    public void onFailureForSelenium1(ITestResult result) {
         if (!selenium.isStarted()) {
             return;
         }
@@ -89,27 +107,6 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
         }
 
         String filenameIdentification = getFilenameIdentification(result);
-        // String seleniumLogIdentification = getSeleniumLogIdentification(result);
-
-        // File seleniumLogFile = new File(mavenProjectBuildDirectory, "selenium/selenium-server.log");
-        // List<String> methodLog = new ArrayList<String>();
-        // try {
-        // @SuppressWarnings("unchecked")
-        // List<String> seleniumLog = FileUtils.readLines(seleniumLogFile);
-        //
-        // boolean started = false;
-        // for (String line : seleniumLog) {
-        // if (line.contains(seleniumLogIdentification)) {
-        // started = true;
-        // methodLog = new ArrayList<String>();
-        // }
-        // if (started) {
-        // methodLog.add(line);
-        // }
-        // }
-        // } catch (IOException e) {
-        // throw new RuntimeException(e);
-        // }
 
         String traffic;
         try {
@@ -142,6 +139,59 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
                 ImageIO.write(screenshot, "PNG", imageOutputFile);
             }
             FileUtils.writeStringToFile(trafficOutputFile, traffic);
+            // FileUtils.writeLines(logOutputFile, methodLog);
+            FileUtils.writeStringToFile(htmlSourceOutputFile, htmlSource);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void onFailureForSelenium2(ITestResult result) {
+        if (driver == null) {
+            return;
+        }
+
+        Throwable throwable = result.getThrowable();
+        String stacktrace = null;
+
+        if (throwable != null) {
+            stacktrace = ExceptionUtils.getStackTrace(throwable);
+        }
+
+        String filenameIdentification = getFilenameIdentification(result);
+
+        // TODO traffic can be captured using BrowserMob Proxy
+        // String traffic;
+        // try {
+        // traffic = selenium.captureNetworkTraffic(NetworkTrafficType.PLAIN).getTraffic();
+        // } catch (SeleniumException e) {
+        // traffic = ExceptionUtils.getFullStackTrace(e);
+        // }
+
+        File screenshot = null;
+        // TODO is this correct?
+        if (!HtmlUnitDriver.class.isInstance(driver)) {
+            screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        }
+
+        String htmlSource = driver.getPageSource();
+
+        File stacktraceOutputFile = new File(failuresOutputDir, filenameIdentification + "/stacktrace.txt");
+        File imageOutputFile = new File(failuresOutputDir, filenameIdentification + "/screenshot.png");
+        // File trafficOutputFile = new File(failuresOutputDir, filenameIdentification + "/network-traffic.txt");
+        // File logOutputFile = new File(failuresOutputDir, filenameIdentification + "/selenium-log.txt");
+        File htmlSourceOutputFile = new File(failuresOutputDir, filenameIdentification + "/html-source.html");
+
+        try {
+            File directory = imageOutputFile.getParentFile();
+            FileUtils.forceMkdir(directory);
+
+            FileUtils.writeStringToFile(stacktraceOutputFile, stacktrace);
+            if (!HtmlUnitDriver.class.isInstance(driver)) {
+                FileUtils.copyFile(screenshot, imageOutputFile);
+            }
+
+            // FileUtils.writeStringToFile(trafficOutputFile, traffic);
             // FileUtils.writeLines(logOutputFile, methodLog);
             FileUtils.writeStringToFile(htmlSourceOutputFile, htmlSource);
         } catch (IOException e) {

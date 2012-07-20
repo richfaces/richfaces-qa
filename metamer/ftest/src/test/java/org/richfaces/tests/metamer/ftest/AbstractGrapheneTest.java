@@ -61,7 +61,6 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.jboss.arquillian.ajocado.locator.element.ExtendedLocator;
-import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.test.selenium.ScreenshotInterceptor;
 import org.jboss.test.selenium.locator.reference.ReferencedLocator;
@@ -80,8 +79,6 @@ import org.testng.annotations.Parameters;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22749 $
  */
-@RunAsClient
-@Listeners(MetamerFailureLoggingTestListener.class)
 public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
 
     @Drone
