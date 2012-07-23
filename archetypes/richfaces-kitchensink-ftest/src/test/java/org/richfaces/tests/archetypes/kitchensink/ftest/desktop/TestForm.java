@@ -53,7 +53,7 @@ public class TestForm extends AbstractKitchensinkTest {
 
     @BeforeMethod(groups = "arquillian")
     public void initialiseWebElements() {
-         FieldDecorator fd = new StaleReferenceAwareFieldDecorator(new DefaultElementLocatorFactory(webDriver), 2);
+        FieldDecorator fd = new StaleReferenceAwareFieldDecorator(new DefaultElementLocatorFactory(webDriver), 2);
         PageFactory.initElements(fd, registerForm);
         PageFactory.initElements(fd, membersTable);
         PageFactory.initElements(fd, memberDetails);
