@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-
 package org.richfaces.tests.metamer.bean;
 
 import java.io.Serializable;
@@ -31,13 +30,16 @@ import javax.faces.bean.SessionScoped;
 /**
  * Session-scoped managed bean storing user's roles.
  *
- * @author Nick Belaevski, <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
+ * @author Nick Belaevski
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @version $Revision: 21194 $
  */
 @ManagedBean(name = "userBean")
 @SessionScoped
 public class UserBean implements Serializable {
 
+    private static final long serialVersionUID = -2195858488735486326L;
+    
     private String rolename;
 
     public String getRolename() {

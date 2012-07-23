@@ -44,6 +44,7 @@ import javax.validation.constraints.Past;
 @ViewScoped
 public class ValidationMessagesBean implements Serializable {
 
+    private static final long serialVersionUID = -8259550540482799013L;
     private final long pastTime = System.currentTimeMillis() - 4 * 24 * 3600 * 1000;
     private final long futureTime = System.currentTimeMillis() + 4 * 24 * 3600 * 1000;
     private Date pastDate = new Date(pastTime);

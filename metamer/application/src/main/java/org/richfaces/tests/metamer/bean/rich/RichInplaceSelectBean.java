@@ -33,11 +33,10 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import org.hibernate.validator.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.richfaces.component.UIInplaceSelect;
 import org.richfaces.tests.metamer.Attributes;
-import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.bean.RichBean;
 import org.richfaces.tests.metamer.model.Capital;
 import org.slf4j.Logger;
