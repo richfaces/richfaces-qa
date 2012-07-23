@@ -21,14 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.contextMenu;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
-import static org.testng.Assert.assertTrue;
-
-import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.showcase.AbstractGrapheneTest;
 

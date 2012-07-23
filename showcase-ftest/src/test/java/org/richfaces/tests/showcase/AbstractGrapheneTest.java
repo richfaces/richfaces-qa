@@ -22,7 +22,6 @@
 package org.richfaces.tests.showcase;
 
 import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertFalse;
@@ -31,11 +30,10 @@ import static org.testng.Assert.assertTrue;
 import java.util.Iterator;
 
 import org.jboss.arquillian.ajocado.ajaxaware.AjaxAwareInterceptor;
-import org.jboss.arquillian.ajocado.framework.AjaxSelenium;
+import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
 import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.utils.URLUtils;
-import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.testng.annotations.BeforeMethod;
 
@@ -46,7 +44,7 @@ import org.testng.annotations.BeforeMethod;
 public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
 
     @Drone
-    protected AjaxSelenium selenium;
+    protected GrapheneSelenium selenium;
 
     @BeforeMethod(groups = { "arquillian" })
     public void loadPage() {

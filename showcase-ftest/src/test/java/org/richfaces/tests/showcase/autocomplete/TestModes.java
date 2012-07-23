@@ -56,7 +56,6 @@ public class TestModes extends AbstractGrapheneTest {
     @Test
     public void testMinCharInput() {
 
-        char key = 'a';
         selenium.keyPress(minCharInput, 'a');
 
         assertFalse(selenium.isElementPresent(selection),

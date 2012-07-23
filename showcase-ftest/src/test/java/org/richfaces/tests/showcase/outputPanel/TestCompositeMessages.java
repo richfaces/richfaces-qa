@@ -27,11 +27,8 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.ajocado.ajaxaware.AjaxAwareInterceptor;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.richfaces.tests.showcase.AbstractGrapheneTest;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
