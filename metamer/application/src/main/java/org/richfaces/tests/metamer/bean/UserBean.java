@@ -39,7 +39,7 @@ import javax.faces.bean.SessionScoped;
 public class UserBean implements Serializable {
 
     private static final long serialVersionUID = -2195858488735486326L;
-    
+
     private String rolename;
 
     public String getRolename() {
