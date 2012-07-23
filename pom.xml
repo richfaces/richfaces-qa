@@ -14,7 +14,7 @@
 
     <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-qa-parent</artifactId>
-    <version>4.2.2-SNAPSHOT</version>
+    <version>4.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>RichFaces QA Parent</name>
@@ -29,7 +29,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <version.richfaces>4.2.2.Final</version.richfaces>
+        <version.richfaces>4.3.0-SNAPSHOT</version.richfaces>
         <richfaces.checkstyle.version>5</richfaces.checkstyle.version>
 
         <!-- version of JBoss containers to use and download -->
@@ -74,7 +74,7 @@
         <jboss6Home>${project.build.directory}/jboss-${version.jbossas6}</jboss6Home>
 
         <showcase.classifier>jbas7</showcase.classifier>
-        <metamer.classifier>jee6</metamer.classifier>
+        <metamer.classifier>jbas71</metamer.classifier>
 
         <openshift.password />
         <openshift.namespace>richfacesqa</openshift.namespace>
@@ -449,7 +449,7 @@
         <profile>
             <id>glassfish-managed-3-1</id>
             <properties>
-                <metamer.classifier>glassfish</metamer.classifier>
+                <metamer.classifier>glassfish31</metamer.classifier>
             </properties>
             <dependencies>
                 <dependency>
@@ -500,7 +500,7 @@
         <profile>
             <id>jbossas-managed-6</id>
             <properties>
-                <metamer.classifier>jee6</metamer.classifier>
+                <metamer.classifier>jbas71</metamer.classifier>
                 <showcase.classifier>jee6</showcase.classifier>
             </properties>
             <dependencies>
@@ -591,7 +591,7 @@
         <profile>
             <id>jbossas-managed-6-https</id>
             <properties>
-                <metamer.classifier>jee6</metamer.classifier>
+                <metamer.classifier>jbas71</metamer.classifier>
                 <showcase.classifier>jee6</showcase.classifier>
             </properties>
             <dependencies>
@@ -687,7 +687,7 @@
         <profile>
             <id>jbossas-managed-7</id>
             <properties>
-                <metamer.classifier>jee6</metamer.classifier>
+                <metamer.classifier>jbas71</metamer.classifier>
                 <showcase.classifier>jbas7</showcase.classifier>
             </properties>
             <dependencies>
@@ -741,7 +741,7 @@
         <profile>
             <id>jbossas-managed-7-1</id>
             <properties>
-                <metamer.classifier>jee6</metamer.classifier>
+                <metamer.classifier>jbas71</metamer.classifier>
                 <showcase.classifier>jbas71</showcase.classifier>
             </properties>
             <dependencies>
@@ -817,7 +817,7 @@
         <profile>
             <id>jbossas-managed-7-1-https</id>
             <properties>
-                <metamer.classifier>jee6</metamer.classifier>
+                <metamer.classifier>jbas71</metamer.classifier>
                 <showcase.classifier>jbas71</showcase.classifier>
             </properties>
             <dependencies>
@@ -910,7 +910,7 @@
         <profile>
             <id>jbossas-remote-7</id>
             <properties>
-                <metamer.classifier>jee6</metamer.classifier>
+                <metamer.classifier>jbas71</metamer.classifier>
                 <showcase.classifier>jbas7</showcase.classifier>
             </properties>
             <dependencies>
@@ -943,7 +943,7 @@
         <profile>
             <id>jbossas-remote-7-1</id>
             <properties>
-                <metamer.classifier>jee6</metamer.classifier>
+                <metamer.classifier>jbas71</metamer.classifier>
                 <showcase.classifier>jbas71</showcase.classifier>
             </properties>
             <dependencies>
@@ -976,7 +976,7 @@
         <profile>
             <id>tomcat-managed-6</id>
             <properties>
-                <metamer.classifier>mojarra</metamer.classifier>
+                <metamer.classifier>tomcat7-mojarra</metamer.classifier>
                 <showcase.classifier>tomcat6</showcase.classifier>
             </properties>
             <dependencies>
@@ -1043,7 +1043,7 @@
         <profile>
             <id>tomcat-managed-7</id>
             <properties>
-                <metamer.classifier>mojarra</metamer.classifier>
+                <metamer.classifier>tomcat7-mojarra</metamer.classifier>
                 <showcase.classifier>tomcat6</showcase.classifier>
             </properties>
             <dependencies>
@@ -1110,7 +1110,7 @@
         <profile>
             <id>openshift-express</id>
             <properties>
-                <metamer.classifier>jee6</metamer.classifier>
+                <metamer.classifier>jbas71</metamer.classifier>
                 <showcase.classifier>openshift</showcase.classifier>
             </properties>
             <dependencies>

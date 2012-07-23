@@ -17,7 +17,7 @@
     <parent>
         <groupId>org.richfaces.tests</groupId>
         <artifactId>metamer-root</artifactId>
-        <version>4.2.2-SNAPSHOT</version>
+        <version>4.3.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -28,12 +28,12 @@
     <properties>
         <jetty.port>8080</jetty.port>
         <version.hornetq>2.2.13.Final</version.hornetq>
-        <glassfish.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*</glassfish.excluded.libraries>
-        <jee6.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</jee6.excluded.libraries>
-        <jee6-mojarra.excluded.libraries>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</jee6-mojarra.excluded.libraries>
-        <jee6-myfaces.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</jee6-myfaces.excluded.libraries>
-        <mojarra.excluded.libraries>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/jsp-api*</mojarra.excluded.libraries>
-        <myfaces.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/jsp-api*</myfaces.excluded.libraries>
+        <glassfish31.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*</glassfish31.excluded.libraries>
+        <jbas71.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</jbas71.excluded.libraries>
+        <jbas6-mojarra.excluded.libraries>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</jbas6-mojarra.excluded.libraries>
+        <jbas6-myfaces.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</jbas6-myfaces.excluded.libraries>
+        <tomcat7-mojarra.excluded.libraries>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/jsp-api*</tomcat7-mojarra.excluded.libraries>
+        <tomcat7-myfaces.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/jsp-api*</tomcat7-myfaces.excluded.libraries>
     </properties>
 
     <dependencies>
@@ -74,7 +74,7 @@
 
         <dependency>
             <groupId>javax.jms</groupId>
-            <artifactId>jms</artifactId>
+            <artifactId>jms-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hornetq</groupId>
@@ -184,7 +184,7 @@
                     </archive>
                 </configuration>
                 <executions>
-                    <!-- disable default war execution (use jee6 profile instead) -->
+                    <!-- disable default war execution (use jbas71 profile instead) -->
                     <execution>
                         <id>default-war</id>
                         <phase>none</phase>
@@ -220,8 +220,8 @@
                     <plugin>
                         <artifactId>maven-war-plugin</artifactId>
                         <configuration>
-                            <classifier>jee6</classifier>
-                            <packagingExcludes>${jee6.excluded.libraries}</packagingExcludes>
+                            <classifier>jbas71</classifier>
+                            <packagingExcludes>${jbas71.excluded.libraries}</packagingExcludes>
                             <attachClasses>true</attachClasses>
                             <attachSources>true</attachSources>
                         </configuration>
@@ -239,14 +239,14 @@
             </build>
         </profile>
         <profile>
-            <id>war-jee6-bundled-mojarra</id>
+            <id>war-jbas6-bundled-mojarra</id>
             <build>
                 <plugins>
                     <plugin>
                         <artifactId>maven-war-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>jee6-bundled-mojarra</id>
+                                <id>jbas6-bundled-mojarra</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
@@ -255,8 +255,8 @@
                                     <filters>
                                         <filter>${basedir}/src/main/filters/bundles-jsf.properties</filter>
                                     </filters>
-                                    <classifier>jee6-bundled-mojarra</classifier>
-                                    <packagingExcludes>${jee6-mojarra.excluded.libraries}</packagingExcludes>
+                                    <classifier>jbas6-bundled-mojarra</classifier>
+                                    <packagingExcludes>${jbas6-mojarra.excluded.libraries}</packagingExcludes>
                                 </configuration>
                             </execution>
                         </executions>
@@ -265,14 +265,14 @@
             </build>
         </profile>
         <profile>
-            <id>war-jee6-bundled-myfaces</id>
+            <id>war-jbas6-bundled-myfaces</id>
             <build>
                 <plugins>
                     <plugin>
                         <artifactId>maven-war-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>jee6-bundled-myfaces</id>
+                                <id>jbas6-bundled-myfaces</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
@@ -281,8 +281,8 @@
                                     <filters>
                                         <filter>${basedir}/src/main/filters/bundles-jsf.properties</filter>
                                     </filters>
-                                    <classifier>jee6-bundled-myfaces</classifier>
-                                    <packagingExcludes>${jee6-myfaces.excluded.libraries}</packagingExcludes>
+                                    <classifier>jbas6-bundled-myfaces</classifier>
+                                    <packagingExcludes>${jbas6-myfaces.excluded.libraries}</packagingExcludes>
                                 </configuration>
                             </execution>
                         </executions>
@@ -303,21 +303,21 @@
             </dependencies>
         </profile>
         <profile>
-            <id>war-mojarra</id>
+            <id>war-tomcat7-mojarra</id>
             <build>
                 <plugins>
                     <plugin>
                         <artifactId>maven-war-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>mojarra</id>
+                                <id>tomcat7-mojarra</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
-                                    <classifier>mojarra</classifier>
-                                    <packagingExcludes>${mojarra.excluded.libraries}</packagingExcludes>
+                                    <classifier>tomcat7-mojarra</classifier>
+                                    <packagingExcludes>${tomcat7-mojarra.excluded.libraries}</packagingExcludes>
                                 </configuration>
                             </execution>
                         </executions>
@@ -326,21 +326,21 @@
             </build>
         </profile>
         <profile>
-            <id>war-myfaces</id>
+            <id>war-tomcat7-myfaces</id>
             <build>
                 <plugins>
                     <plugin>
                         <artifactId>maven-war-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>myfaces</id>
+                                <id>tomcat7-myfaces</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
-                                    <classifier>myfaces</classifier>
-                                    <packagingExcludes>${myfaces.excluded.libraries}</packagingExcludes>
+                                    <classifier>tomcat7-myfaces</classifier>
+                                    <packagingExcludes>${tomcat7-myfaces.excluded.libraries}</packagingExcludes>
                                 </configuration>
                             </execution>
                         </executions>
@@ -361,21 +361,21 @@
             </dependencies>
         </profile>
         <profile>
-            <id>war-glassfish</id>
+            <id>war-glassfish31</id>
             <build>
                 <plugins>
                     <plugin>
                         <artifactId>maven-war-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>glassfish</id>
+                                <id>glassfish31</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
-                                    <classifier>glassfish</classifier>
-                                    <packagingExcludes>${glassfish.excluded.libraries}</packagingExcludes>
+                                    <classifier>glassfish31</classifier>
+                                    <packagingExcludes>${glassfish31.excluded.libraries}</packagingExcludes>
                                 </configuration>
                             </execution>
                         </executions>
@@ -454,33 +454,33 @@
                         <artifactId>maven-war-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>mojarra</id>
+                                <id>tomcat7-mojarra</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
-                                    <classifier>mojarra</classifier>
-                                    <packagingExcludes>${mojarra.excluded.libraries}</packagingExcludes>
+                                    <classifier>tomcat7-mojarra</classifier>
+                                    <packagingExcludes>${tomcat7-mojarra.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
                                     <attachSources>false</attachSources>
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>myfaces</id>
+                                <id>tomcat7-myfaces</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
-                                    <classifier>myfaces</classifier>
-                                    <packagingExcludes>${myfaces.excluded.libraries}</packagingExcludes>
+                                    <classifier>tomcat7-myfaces</classifier>
+                                    <packagingExcludes>${tomcat7-myfaces.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
                                     <attachSources>false</attachSources>
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>jee6-bundled-mojarra</id>
+                                <id>jbas6-bundled-mojarra</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
@@ -489,14 +489,14 @@
                                     <filters>
                                         <filter>${basedir}/src/main/filters/bundles-jsf.properties</filter>
                                     </filters>
-                                    <classifier>jee6-bundled-mojarra</classifier>
-                                    <packagingExcludes>${jee6-mojarra.excluded.libraries}</packagingExcludes>
+                                    <classifier>jbas6-bundled-mojarra</classifier>
+                                    <packagingExcludes>${jba6-mojarra.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
                                     <attachSources>false</attachSources>
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>jee6-bundled-myfaces</id>
+                                <id>jbas6-bundled-myfaces</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
@@ -505,21 +505,21 @@
                                     <filters>
                                         <filter>${basedir}/src/main/filters/bundles-jsf.properties</filter>
                                     </filters>
-                                    <classifier>jee6-bundled-myfaces</classifier>
-                                    <packagingExcludes>${jee6-myfaces.excluded.libraries}</packagingExcludes>
+                                    <classifier>jbas6-bundled-myfaces</classifier>
+                                    <packagingExcludes>${jbas6-myfaces.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
                                     <attachSources>false</attachSources>
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>glassfish</id>
+                                <id>glassfish31</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
-                                    <classifier>glassfish</classifier>
-                                    <packagingExcludes>${glassfish.excluded.libraries}</packagingExcludes>
+                                    <classifier>glassfish31</classifier>
+                                    <packagingExcludes>${glassfish31.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
                                     <attachSources>false</attachSources>
                                 </configuration>
