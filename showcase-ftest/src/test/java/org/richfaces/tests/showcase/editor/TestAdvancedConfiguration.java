@@ -92,7 +92,7 @@ public class TestAdvancedConfiguration extends AbstractGrapheneTest {
         assertEquals(titleOfNewPageButton, NEW_PAGE_DE, "The language was not changed to german!");
     }
 
-    @Test(groups = { "4.Future" })
+    @Test
     public void testUserFocusAutomaticallyOnEditor() {
 
         fail("implement me correctly!");

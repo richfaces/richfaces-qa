@@ -79,7 +79,7 @@ public class TestAutosaving extends AbstractGrapheneTest {
         }
     }
 
-    @Test(groups = { "4.Future" })
+    @Test
     public void testAutoSaving() {
 
         fail("Implement me correctly");

@@ -33,7 +33,6 @@ import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
- * @version $Revision$
  */
 public class TestCompositeMessages extends AbstractGrapheneTest {
 
@@ -93,7 +92,7 @@ public class TestCompositeMessages extends AbstractGrapheneTest {
 
     }
 
-    @Test(groups = { "4.Future" })
+    @Test
     public void testUserNameFilledIncorrectlyMoreThan12() {
 
         prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_TOO_LONG, LENGTH_OF_ADDRESS_CORRECT_MIDDLE_VALUE);
@@ -109,7 +108,7 @@ public class TestCompositeMessages extends AbstractGrapheneTest {
         isUserSuccessfullyAddedPresent(false);
     }
 
-    @Test(groups = { "4.Future" })
+    @Test
     public void testUserNameFilledIncorrectlyLessThan3MoreThan0() {
 
         prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_LESS_THAN_MINIMAL,
@@ -158,7 +157,7 @@ public class TestCompositeMessages extends AbstractGrapheneTest {
         isUserSuccessfullyAddedPresent(false);
     }
 
-    @Test(groups = { "4.Future" })
+    @Test
     public void testAddressFilledIncorrectlyLengthMoreThan100() {
 
         prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_CORRECT_MIDDLE_VALUE, LENGTH_OF_ADDRESS_WRONG_TOO_LONG);
@@ -174,7 +173,7 @@ public class TestCompositeMessages extends AbstractGrapheneTest {
         isUserSuccessfullyAddedPresent(false);
     }
 
-    @Test(groups = { "4.Future" })
+    @Test
     public void testNameIncorrectlyMoreThan12AddressIncorrectlyLength0() {
 
         prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_TOO_LONG, LENGTH_OF_ADDRESS_WRONG_EMPTY);
@@ -192,7 +191,7 @@ public class TestCompositeMessages extends AbstractGrapheneTest {
         isUserSuccessfullyAddedPresent(false);
     }
 
-    @Test(groups = { "4.Future" })
+    @Test
     public void testNameIncorrectlyMoreThan12AddressIncorrectlyMoreThan100() {
 
         prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_TOO_LONG, LENGTH_OF_ADDRESS_WRONG_TOO_LONG);
@@ -210,7 +209,7 @@ public class TestCompositeMessages extends AbstractGrapheneTest {
         isUserSuccessfullyAddedPresent(false);
     }
 
-    @Test(groups = { "4.Future" })
+    @Test
     public void testNameIncorrectlyLessThan3MoreThan0AddressIncorrectlyLength0() {
 
         prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_LESS_THAN_MINIMAL, LENGTH_OF_ADDRESS_WRONG_EMPTY);
@@ -228,7 +227,7 @@ public class TestCompositeMessages extends AbstractGrapheneTest {
         isUserSuccessfullyAddedPresent(false);
     }
 
-    @Test(groups = { "4.Future" })
+    @Test
     public void testNameIncorrectlyLessThan3MoreThan0AddressIncorrectlyMoreThan100() {
 
         prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_LESS_THAN_MINIMAL, LENGTH_OF_ADDRESS_WRONG_TOO_LONG);
@@ -264,7 +263,7 @@ public class TestCompositeMessages extends AbstractGrapheneTest {
         isUserSuccessfullyAddedPresent(false);
     }
 
-    @Test(groups = { "4.Future" })
+    @Test
     public void testNameIncorrectlyLength0AddressIncorrectlyMoreThan100() {
 
         prepareStringBuildersClickOnTheButton(LENGTH_OF_USER_NAME_WRONG_EMPTY, LENGTH_OF_ADDRESS_WRONG_TOO_LONG);
@@ -289,7 +288,7 @@ public class TestCompositeMessages extends AbstractGrapheneTest {
     /**
      * Fills in correct name and correct address and check error messages, lengths are for checking various length values and
      * they should be asssigned correctly
-     *
+     * 
      * @param lengthOfUserName A numember which is bigger than 2 and less than 13
      * @param lengthOfAddress A number which is bigger than 0 and less than 101
      */
@@ -306,7 +305,7 @@ public class TestCompositeMessages extends AbstractGrapheneTest {
 
     /**
      * Fill in the user name and address according to the params and ten clicks on the button
-     *
+     * 
      * @param lengthOfUserName length of username which will be filled in
      * @param lengthOfAddress length of address which will be filled in
      */
@@ -333,7 +332,7 @@ public class TestCompositeMessages extends AbstractGrapheneTest {
 
     /**
      * Find out whether the specific message is present according to the params
-     *
+     * 
      * @param shouldBeElementPresent
      */
     private void isUserSuccessfullyAddedPresent(boolean shouldBeElementPresent) {
