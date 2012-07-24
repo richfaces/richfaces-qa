@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2012, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+        
+        <ui:define name="head" >
+          <h:outputStylesheet library="css" name="richDragAndDrop.css" />
+          
+          <style type="text/css">
+            #testDND {
+                position: absolute;
+                top: 400px;
+                left: 400px;
+                width:300px;
+                height: 300px;
+                overflow: scroll;
+            }
+            #testDNDDiv {
+                position: absolute;
+            }
+          </style>
+        </ui:define>
+
+        <ui:define name="component">
+            <ul>
+                <li><a href="https://issues.jboss.org/browse/RF-12256">RF-12256: DragAndDrop + position: absolute results in broken positioning</a></li>
+            </ul>
+            
+            <rich:dragIndicator id="ind" />
+            
+            <div  id="testDNDDiv">
+                <table id="testDND">
+                    <tr>
+                        <td><a4j:outputPanel id="draggable1" layout="block" styleClass="metamer-draggable">
+                                <h:outputText value="#dragValue1" />
+                                <rich:dragSource type="drg1" dragValue="#{richDragSourceBean.dragValues[0]}" />
+                            </a4j:outputPanel></td>
+                        <td><a4j:outputPanel id="draggable2" layout="block" styleClass="metamer-draggable">
+                                <h:outputText value="#dragValue2" />
+                                <rich:dragSource type="drg2" dragIndicator="ind" dragValue="#{richDragSourceBean.dragValues[1]}" />
+                            </a4j:outputPanel></td>
+                        <td><a4j:outputPanel id="draggable3" layout="block" styleClass="metamer-draggable">
+                                <h:outputText value="#dragValue3" />
+                                <rich:dragSource type="drg3" dragIndicator="ind" dragValue="#{richDragSourceBean.dragValues[2]}" />
+                            </a4j:outputPanel></td>                     
+                    </tr>
+                </table>
+            </div>
+
+            <a4j:outputPanel id="droppable1" layout="block" styleClass="metamer-droppable" style="float: left">
+                <rich:dropTarget
+                    id="richDropTarget1"
+                    dropValue="#{richDropTargetBean.dropValue}"
+                    dropListener="#{richDropListenerBean.processDragging}"
+                    acceptedTypes="drg1, drg2"
+                    render="droppable1 droppable2"
+                    />
+
+                <h:outputText value="Accepts: drg1, drg2" />
+                <br />
+
+                <h:outputText id="dropNumber1" value="Drops: #{richDropTargetBean.dropValue.number}" />
+                <br />
+
+                <h:dataTable id="droppedValues1" var="droppedValue" value="#{richDropTargetBean.droppedEntries1}">
+                    <h:column>
+                        <f:facet name="header">
+						Dragged
+                        </f:facet>
+                        <h:outputText value="##{droppedValue.value.number}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+						Dropped
+                        </f:facet>
+                        <h:outputText value="#{droppedValue.key.number}" />
+                    </h:column>
+
+                </h:dataTable>
+            </a4j:outputPanel>
+
+            <a4j:outputPanel id="droppable2" layout="block" styleClass="metamer-droppable">
+                <rich:dropTarget
+                    id="richDropTarget2"
+                    dropValue="#{richDropTargetBean.dropValue}"
+                    dropListener="#{richDropListenerBean.processDragging}"
+                    acceptedTypes="drg2, drg3"
+                    render="droppable1 droppable2"
+                    />
+
+                <h:outputText value="Accepts: drg2, drg3" />
+                <br />
+
+                <h:outputText id="dropNumber2" value="Drops: #{richDropTargetBean.dropValue.number}" />
+                <br />
+
+                <h:dataTable id="droppedValues2" var="droppedValue" value="#{richDropTargetBean.droppedEntries2}">
+                    <h:column>
+                        <f:facet name="header">
+						Dragged
+                        </f:facet>
+                        <h:outputText value="##{droppedValue.value.number}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+						Dropped
+                        </f:facet>
+                        <h:outputText value="#{droppedValue.key.number}" />
+                    </h:column>
+
+                </h:dataTable>
+            </a4j:outputPanel>
+            
+        </ui:define>
+
+    </ui:composition>
+</html>
