@@ -47,9 +47,9 @@
         <tomcat7Zip>path/to/your/tomcat/distribution/zip</tomcat7Zip>
 
         <!-- arquillian versions -->
-        <arquillian.bom.version>1.0.1.Final</arquillian.bom.version>
+        <arquillian.bom.version>1.0.2.Final</arquillian.bom.version>
         <arquillian.tomcat.version>1.0.0.CR3</arquillian.tomcat.version>
-        <arquillian.drone.version>1.0.0.Final</arquillian.drone.version>
+        <arquillian.drone.version>1.1.0.CR2</arquillian.drone.version>
         <arquillian.graphene-testng.version>1.0.0.Final</arquillian.graphene-testng.version>
         <arquillian.graphene-webdriver.version>2.0.0-SNAPSHOT</arquillian.graphene-webdriver.version>
         <arquillian.jboss-as6.version>1.0.0.CR3</arquillian.jboss-as6.version>
@@ -59,6 +59,7 @@
 
         <version.selenium>2.25.0</version.selenium>
         <version.selenium.server>2.25.0</version.selenium.server>
+        <version.opera.driver>0.15</version.opera.driver>
         <version.slf4j.jbossas6>1.6.1</version.slf4j.jbossas6>
 
         <version.jacoco.plugin>0.5.6.201201232323</version.jacoco.plugin>
@@ -441,6 +442,11 @@
                 <artifactId>graphene-webdriver</artifactId>
                 <version>${arquillian.graphene-webdriver.version}</version>
                 <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>com.opera</groupId>
+                <artifactId>operadriver</artifactId>
+                <version>${version.opera.driver}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
