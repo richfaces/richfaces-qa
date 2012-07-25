@@ -24,7 +24,7 @@ http://www.fsf.org. -->
             <property name="executionType">REMOTE</property>
         </protocol>
     </container>
-    
+
     <container qualifier="jbossas-managed-7-1">
         <configuration>
             <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
@@ -33,11 +33,11 @@ http://www.fsf.org. -->
         <protocol type="jmx-as7">
             <property name="executionType">REMOTE</property>
         </protocol>
-    </container>    
+    </container>
 
     <container qualifier="jbossas-remote-7-1">
-    </container>        
-        
+    </container>
+
     <extension qualifier="webdriver">
         <property name="implementationClass">org.openqa.selenium.android.AndroidDriver</property>
         <property name="remoteAddress">http://localhost:14444/wd/hub</property>
@@ -48,14 +48,14 @@ http://www.fsf.org. -->
         <property name="serialId">${android.serial}</property>
         <property name="verbose">true</property>
         <property name="force">true</property>
-        <property name="apiLevel">8</property>
+        <property name="apiLevel">16</property>
         <property name="avdName">showcase-webdriver-ftest</property>
         <property name="emulatorBootupTimeoutInSeconds">180</property>
 <!--         <property name="emulatorOptions">-no-window</property> -->
     </extension>
-    
+
     <extension qualifier="android-drone">
         <property name="androidServerApk">src/test/resources/android-server-${android.apk.version}.apk</property>
         <property name="verbose">false</property>
-    </extension> 
+    </extension>
 </arquillian>
