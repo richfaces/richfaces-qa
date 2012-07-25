@@ -18,7 +18,7 @@
         <testng.suite.xml>src/test/resources/testng.xml</testng.suite.xml>
         <android.serial>aaa</android.serial>
         <android.sdk.home />
-        <android.apk.version>2.6.0</android.apk.version>
+        <android.apk.version>2.21.0</android.apk.version>
         <android.apk.url>http://selenium.googlecode.com/files/android-server-${android.apk.version}.apk</android.apk.url>
         <showcase.layout>mobile</showcase.layout>
     </properties>
