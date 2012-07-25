@@ -64,23 +64,28 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <li><a href="https://issues.jboss.org/browse/RF-12256">RF-12256: DragAndDrop + position: absolute results in broken positioning</a></li>
             </ul>
             
-            <rich:dragIndicator id="ind" />
+            <rich:dragIndicator id="indicator" />
+            <rich:dragIndicator id="indicator2" acceptClass="acceptClass" rejectClass="rejectClass" draggingClass="draggingClass" />
+            <p>Use @indicator=indicator2 to switch to usage of second defined indicator with custom styling</p>
             
             <div  id="testDNDDiv">
                 <table id="testDND">
                     <tr>
                         <td><a4j:outputPanel id="draggable1" layout="block" styleClass="metamer-draggable">
                                 <h:outputText value="#dragValue1" />
-                                <rich:dragSource type="drg1" dragValue="#{richDragSourceBean.dragValues[0]}" />
+                                <rich:dragSource type="#{richDragSourceBean.attributes['type'].value}" 
+                                                 dragValue="#{richDragSourceBean.dragValues[0]}"
+                                                 dragIndicator="#{richDragSourceBean.attributes['dragIndicator'].value}"
+                                                 rendered="#{richDragSourceBean.attributes['rendered'].value}" />
                             </a4j:outputPanel></td>
                         <td><a4j:outputPanel id="draggable2" layout="block" styleClass="metamer-draggable">
                                 <h:outputText value="#dragValue2" />
-                                <rich:dragSource type="drg2" dragIndicator="ind" dragValue="#{richDragSourceBean.dragValues[1]}" />
+                                <rich:dragSource type="drg2" dragIndicator="indicator" dragValue="#{richDragSourceBean.dragValues[1]}" />
                             </a4j:outputPanel></td>
                         <td><a4j:outputPanel id="draggable3" layout="block" styleClass="metamer-draggable">
                                 <h:outputText value="#dragValue3" />
-                                <rich:dragSource type="drg3" dragIndicator="ind" dragValue="#{richDragSourceBean.dragValues[2]}" />
-                            </a4j:outputPanel></td>                     
+                                <rich:dragSource type="drg3" dragIndicator="indicator" dragValue="#{richDragSourceBean.dragValues[2]}" />
+                            </a4j:outputPanel></td>
                     </tr>
                 </table>
             </div>
@@ -149,6 +154,28 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </h:dataTable>
             </a4j:outputPanel>
             
+        </ui:define>
+        
+        <ui:define name="outOfTemplateAfter">
+            <a4j:outputPanel ajaxRendered="true">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Drop Event:" rendered="#{not empty richDropListenerBean.dropEvent}" />
+                    <h:panelGroup rendered="#{not empty richDropListenerBean.dropEvent}">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="clientId:" />
+                            <h:outputText value="#{richDropListenerBean.dropEvent.component.clientId}" />
+
+                            <h:outputLabel value="Drag Value:" />
+                            <h:outputText value="#{richDropListenerBean.dropEvent.dragValue}" />
+
+                            <h:outputLabel value="Drop Value:" />
+                            <h:outputText value="#{richDropListenerBean.dropEvent.dropValue}" />
+                        </h:panelGrid>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </a4j:outputPanel>
+            
+            <metamer:attributes value="#{richDragSourceBean.attributes}" id="attributes" />
         </ui:define>
 
     </ui:composition>
