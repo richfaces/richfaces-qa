@@ -58,4 +58,10 @@ http://www.fsf.org. -->
         <property name="androidServerApk">src/test/resources/android-server-${android.apk.version}.apk</property>
         <property name="verbose">false</property>
     </extension>
+
+<!--    this is because of the dependency on testng-listener containing graphene
+    and drone, which automatically starts selenium server-->
+    <extension qualifier="selenium-server">
+        <property name="skip">true</property>
+    </extension>
 </arquillian>
