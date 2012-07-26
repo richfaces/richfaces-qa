@@ -39,7 +39,7 @@ http://www.fsf.org. -->
     </container>
 
     <extension qualifier="webdriver">
-        <property name="implementationClass">org.openqa.selenium.android.AndroidDriver</property>
+        <property name="browserCapabilities">android</property>
         <property name="remoteAddress">http://localhost:14444/wd/hub</property>
     </extension>
 
