@@ -50,6 +50,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22789 $
  */
+@Test(groups = "4.3")
+@IssueTracking("https://issues.jboss.org/browse/RF-12365")
 public class TestRichSpinner extends AbstractSpinnerTest {
 
     @Override

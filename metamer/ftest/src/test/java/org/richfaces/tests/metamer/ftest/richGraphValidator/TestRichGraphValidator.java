@@ -41,6 +41,7 @@ import java.util.Date;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.option.OptionValueLocator;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 
@@ -50,6 +51,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision: 22622 $
  */
+@Test(groups = "4.3")
+@IssueTracking("https://issues.jboss.org/browse/RF-12365")
 public class TestRichGraphValidator extends AbstractGrapheneTest {
 
     private static final String SMILE = ":-)";
