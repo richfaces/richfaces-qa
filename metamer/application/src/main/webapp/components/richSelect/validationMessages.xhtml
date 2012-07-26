@@ -27,27 +27,57 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     <ui:composition template="/templates/validationMessagesTemplate.xhtml">
         <ui:define name="js">
             <script type="text/javascript">
-               function setCorrectValues() {
-                        $('[name$=jsr-303-inBean]').val('5').blur();
-                        $('[name$=jsr-303-inAtt]').val('5').blur();
-                        $('[name$=jsr-303-inBundle]').val('5').blur();
-                        $('[name$=csv-inBean]').val('5').blur();
-                        $('[name$=csv-inAtt]').val('5').blur();
-                        $('[name$=csv-inBundle]').val('5').blur();
-                        $('[name$=jsf-inBundle]').val('5').blur();
-                        $('[name$=jsf-inAtt]').val('5').blur();
-                    }
+                function setCorrectValues() {
+                    $('[id$=jsr-303-inBeanselValue]').val('5');
+                    $('[id$=jsr-303-inBeanInput]').val('5').blur();
+                    
+                    $('[id$=jsr-303-inAttselValue]').val('5');
+                    $('[name$=jsr-303-inAttInput]').val('5').blur();
+                    
+                    $('[id$=jsr-303-inBundleselValue]').val('5');
+                    $('[id$=jsr-303-inBundleInput]').val('5').blur();
 
-                    function setWrongValues() {
-                        $('[name$=jsr-303-inBean]').val('10').blur();
-                        $('[name$=jsr-303-inAtt]').val('10').blur();
-                        $('[name$=jsr-303-inBundle]').val('10').blur();
-                        $('[name$=csv-inBean]').val('10').blur();
-                        $('[name$=csv-inAtt]').val('10').blur();
-                        $('[name$=csv-inBundle]').val('10').blur();
-                        $('[name$=jsf-inBundle]').val('10').blur();
-                        $('[name$=jsf-inAtt]').val('10').blur();
-                    }
+                    $('[id$=csv-inBeanselValue]').val('5');
+                    $('[id$=csv-inBeanInput]').val('5').blur();
+
+                    $('[id$=csv-inAttselValue]').val('5');
+                    $('[id$=csv-inAttInput]').val('5').blur();
+
+                    $('[id$=csv-inBundleselValue]').val('5');
+                    $('[id$=csv-inBundleInput]').val('5').blur();
+
+                    $('[id$=jsf-inBundleselValue]').val('5');
+                    $('[id$=jsf-inBundleInput]').val('5').blur();
+           
+                    $('[id$=jsf-inAttselValue]').val('5');
+                    $('[id$=jsf-inAttInput]').val('5').blur();
+                }
+
+                function setWrongValues() {
+                    $('[id$=jsr-303-inBeanselValue]').val('10');
+                    $('[id$=jsr-303-inBeanInput]').val('10').blur();
+                    
+                    $('[id$=jsr-303-inAttselValue]').val('10');
+                    $('[name$=jsr-303-inAttInput]').val('10').blur();
+                    
+                    $('[id$=jsr-303-inBundleselValue]').val('10');
+                    $('[id$=jsr-303-inBundleInput]').val('10').blur();
+
+                    $('[id$=csv-inBeanselValue]').val('10');
+                    $('[id$=csv-inBeanInput]').val('10').blur();
+
+                    $('[id$=csv-inAttselValue]').val('10');
+                    $('[id$=csv-inAttInput]').val('10').blur();
+
+                    $('[id$=csv-inBundleselValue]').val('10');
+                    $('[id$=csv-inBundleInput]').val('10').blur();
+
+                    $('[id$=jsf-inBundleselValue]').val('10');
+                    $('[id$=jsf-inBundleInput]').val('10').blur();
+           
+                    $('[id$=jsf-inAttselValue]').val('10');
+                    $('[id$=jsf-inAttInput]').val('10').blur();
+                }
             </script>
         </ui:define>
 
