@@ -66,18 +66,18 @@ public class AbstractTestMessage extends AbstractGrapheneTest {
     protected final String ADDRESS_ERROR__VALUE_REQUIRED = "Address: Validation Error: Value is required.";
     protected final String ZIP_ERROR__VALUE_REQUIRED = "Zip: Validation Error: Value is required.";
 
-    protected final String NAME_ERROR_LESS_THAN_MINIMUM = "Name: Validation Error: Value is less than allowable minimum of '"
+    protected final String NAME_ERROR_LESS_THAN_MINIMUM = "Name: Validation Error: Length is less than allowable minimum of '"
         + MINIMUM_OF_NAME + "'";
-    protected final String JOB_ERROR_LESS_THAN_MINIMUM = "Job: Validation Error: Value is less than allowable minimum of '"
+    protected final String JOB_ERROR_LESS_THAN_MINIMUM = "Job: Validation Error: Length is less than allowable minimum of '"
         + MINIMUM_OF_JOB + "'";
-    protected final String ADDRESS_ERROR_LESS_THAN_MINIMUM = "Address: Validation Error: Value is less than allowable minimum of '"
+    protected final String ADDRESS_ERROR_LESS_THAN_MINIMUM = "Address: Validation Error: Length is less than allowable minimum of '"
         + MINIMUM_OF_ADDRESS + "'";
-    protected final String ZIP_ERROR_LESS_THAN_MINIMUM = "Zip: Validation Error: Value is less than allowable minimum of '"
+    protected final String ZIP_ERROR_LESS_THAN_MINIMUM = "Zip: Validation Error: Length is less than allowable minimum of '"
         + MINIMUM_OF_ZIP + "'";
 
-    protected final String JOB_ERROR_GREATER_THAN_MAXIMUM = "Job: Validation Error: Value is greater than allowable maximum of '"
+    protected final String JOB_ERROR_GREATER_THAN_MAXIMUM = "Job: Validation Error: Length is greater than allowable maximum of '"
         + MAXIMUM_OF_JOB + "'";
-    protected final String ZIP_ERROR_GREATER_THAN_MAXIMUM = "Zip: Validation Error: Value is greater than allowable maximum of '"
+    protected final String ZIP_ERROR_GREATER_THAN_MAXIMUM = "Zip: Validation Error: Length is greater than allowable maximum of '"
         + MAXIMUM_OF_ZIP + "'";
 
     /* ****************************************************************************************************************************

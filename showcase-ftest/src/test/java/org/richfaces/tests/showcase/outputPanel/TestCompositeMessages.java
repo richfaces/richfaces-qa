@@ -62,13 +62,13 @@ public class TestCompositeMessages extends AbstractGrapheneTest {
     private final int LENGTH_OF_ADDRESS_CORRECT_BOTTOM_BORDER_VALUE = 1;
     private final int LENGTH_OF_ADDRESS_CORRECT_UPPER_BORDER_VALUE = 100;
 
-    public static final String ERROR_MESSAGE_NAME_LENGTH_TOO_SHORT_BUT_NOT_EMPTY = "Name: Validation Error: Value is less than allowable minimum of '3'";
+    public static final String ERROR_MESSAGE_NAME_LENGTH_TOO_SHORT_BUT_NOT_EMPTY = "Name: Validation Error: Length is less than allowable minimum of '3'";
 
-    public static final String ERROR_MESSAGE_NAME_TOO_LONG = "Name: Validation Error: Value is greater than allowable maximum of '12'";
+    public static final String ERROR_MESSAGE_NAME_TOO_LONG = "Name: Validation Error: Length is greater than allowable maximum of '12'";
 
     public static final String ERROR_MESSAGE_NAME_EMPTY = "Name: Validation Error: Value is required.";
 
-    public static final String ERROR_MESSAGE_ADDRESS_TOO_LONG = "Address: Validation Error: Value is greater than allowable maximum of '100'";
+    public static final String ERROR_MESSAGE_ADDRESS_TOO_LONG = "Address: Validation Error: Length is greater than allowable maximum of '100'";
 
     public static final String ERROR_MESSAGE_ADDRESS_EMPTY = "Address: Validation Error: Value is required.";
 
@@ -288,7 +288,7 @@ public class TestCompositeMessages extends AbstractGrapheneTest {
     /**
      * Fills in correct name and correct address and check error messages, lengths are for checking various length values and
      * they should be asssigned correctly
-     * 
+     *
      * @param lengthOfUserName A numember which is bigger than 2 and less than 13
      * @param lengthOfAddress A number which is bigger than 0 and less than 101
      */
@@ -305,7 +305,7 @@ public class TestCompositeMessages extends AbstractGrapheneTest {
 
     /**
      * Fill in the user name and address according to the params and ten clicks on the button
-     * 
+     *
      * @param lengthOfUserName length of username which will be filled in
      * @param lengthOfAddress length of address which will be filled in
      */
@@ -332,7 +332,7 @@ public class TestCompositeMessages extends AbstractGrapheneTest {
 
     /**
      * Find out whether the specific message is present according to the params
-     * 
+     *
      * @param shouldBeElementPresent
      */
     private void isUserSuccessfullyAddedPresent(boolean shouldBeElementPresent) {
