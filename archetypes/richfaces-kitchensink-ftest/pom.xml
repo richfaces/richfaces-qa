@@ -20,26 +20,13 @@
 	</properties>
 
 	<dependencies>
-		<!-- Selenium -->
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-java</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-android-driver</artifactId>
-		</dependency>
 		<!-- Support for WebDriver in Arquillian Drone -->
 		<dependency>
-			<groupId>org.jboss.arquillian.extension</groupId>
-			<artifactId>arquillian-drone-impl</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.arquillian.extension</groupId>
-			<artifactId>arquillian-drone-webdriver</artifactId>
-			<scope>test</scope>
-		</dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-drone-webdriver-depchain</artifactId>
+            <scope>test</scope>
+            <type>pom</type>
+        </dependency>
 		<!-- Android extension -->
 		<dependency>
 			<groupId>org.jboss.arquillian.extension</groupId>
