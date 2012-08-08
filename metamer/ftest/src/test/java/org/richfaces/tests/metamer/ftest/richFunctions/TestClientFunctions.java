@@ -48,6 +48,7 @@ public class TestClientFunctions extends AbstractGrapheneTest {
     private JQueryLocator elementOutput = pjq("span[id$=elementOutput]");
     private JQueryLocator componentOutput = pjq("span[id$=componentOutput]");
     private JQueryLocator findComponentOutput = pjq("span[id$=findComponentOutput]");
+    private JQueryLocator jQuerySelectorOutput = pjq("span[id$=jQuerySelectorOutput]");
     private JQueryLocator roleNameInput = pjq("input[id$=roleName]");
     private JQueryLocator applyLink = pjq("a[id$=applyLink]");
     private JQueryLocator userInRoleAUOutput = pjq("span[id$=outputUserInRoleAU]");
@@ -75,6 +76,9 @@ public class TestClientFunctions extends AbstractGrapheneTest {
 
         output = selenium.getText(findComponentOutput);
         assertEquals(output, "abc", "Function findComponent() doesn't work.");
+
+        output = selenium.getText(jQuerySelectorOutput);
+        assertEquals(output, "#form\\:subview\\:input", "Function jQuerySelector() doesn't work.");
     }
 
     @Test(groups = { "4.Future" })
