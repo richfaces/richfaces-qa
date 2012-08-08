@@ -38,10 +38,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
     <ui:define name="component">
 
-        <rich:pickList id="pickList" 
+        <rich:pickList id="pickList"
                        addAllText="#{richPickListBean.attributes['addAllText'].value}"
                        addText="#{richPickListBean.attributes['addText'].value}"
                        columnClasses="#{richPickListBean.attributes['columnClasses'].value}"
+                       converter="capitalConverter"
                        disabled="#{richPickListBean.attributes['disabled'].value}"
                        disabledClass="#{richPickListBean.attributes['disabledClass'].value}"
                        downBottomText="#{richPickListBean.attributes['downBottomText'].value}"
@@ -57,7 +58,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                        maxListHeight="#{richPickListBean.attributes['maxListHeight'].value}"
                        minListHeight="#{richPickListBean.attributes['minListHeight'].value}"
                        onadditems="#{richPickListBean.attributes['onadditems'].value}"
-                       onblur="#{richPickListBean.attributes['onblur'].value}" 
+                       onblur="#{richPickListBean.attributes['onblur'].value}"
                        onchange="#{richPickListBean.attributes['onchange'].value}"
                        onclick="#{richPickListBean.attributes['onclick'].value}"
                        ondblclick="#{richPickListBean.attributes['ondblclick'].value}"
@@ -116,29 +117,29 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                        switchByDblClick="#{richPickListBean.attributes['switchByDblClick'].value}"
                        targetCaption="#{richPickListBean.attributes['targetCaption'].value}"
                        upText="#{richPickListBean.attributes['upText'].value}"
-                       upTopText="#{richPickListBean.attributes['upTopText'].value}" 
+                       upTopText="#{richPickListBean.attributes['upTopText'].value}"
                        validator="#{richPickListBean.validatePickListValue}"
                        validatorMessage="#{richPickListBean.attributes['validatorMessage'].value}"
                        value="#{richPickListBean.value}"
                        valueChangeListener="#{richBean.valueChangeListenerImproved}"
                        var="tmp">
-                       
+
                        <f:selectItems value="#{richPickListBean.capitals}" />
-                        
-                       <h:column id="columnFlag">            
+
+                       <h:column id="columnFlag">
                             <h:graphicImage name="#{tmp.stateFlag}" />
                        </h:column>
-                        
+
                        <h:column id="columnCapital">
                             <f:facet name="header">
-                                <h:outputText id="columnHeaderCapital" value="Capital Header" />                                
+                                <h:outputText id="columnHeaderCapital" value="Capital Header" />
                             </f:facet>
                             <h:outputText value="#{tmp.name}" />
                        </h:column>
-                           
+
                        <h:column id="columnState">
                             <f:facet name="header">
-                                <h:outputText id="columnHeaderState" value="State Header" />                                
+                                <h:outputText id="columnHeaderState" value="State Header" />
                             </f:facet>
                             <h:outputText value="#{tmp.state}" />
                        </h:column>
