@@ -56,8 +56,11 @@
 
     <container qualifier="tomcat-managed-6">
         <configuration>
-            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -Dcom.sun.management.jmxremote
-                -Dcom.sun.management.jmxremote.port=8089 -Djava.rmi.server.hostname=localhost ${jvm.args.jacoco}</property>
+            <property name="javaVmArguments">
+                -Djava.util.logging.config.file=${logging.props.dir}/tomcatLogging.properties 
+                -Xms1024m -Xmx1024m -XX:MaxPermSize=512m 
+                -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8089 -Djava.rmi.server.hostname=localhost ${jvm.args.jacoco}
+            </property>
             <property name="user">tomcat</property>
             <property name="pass">tomcat</property>
         </configuration>
@@ -65,8 +68,11 @@
 
     <container qualifier="tomcat-managed-7">
         <configuration>
-            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -Dcom.sun.management.jmxremote
-                -Dcom.sun.management.jmxremote.port=8089 -Djava.rmi.server.hostname=localhost ${jvm.args.jacoco}</property>
+            <property name="javaVmArguments">
+                -Djava.util.logging.config.file=${logging.props.dir}/tomcatLogging.properties 
+                -Xms1024m -Xmx1024m -XX:MaxPermSize=512m 
+                -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8089 -Djava.rmi.server.hostname=localhost ${jvm.args.jacoco}
+            </property>
             <property name="user">tomcat</property>
             <property name="pass">tomcat</property>
         </configuration>
