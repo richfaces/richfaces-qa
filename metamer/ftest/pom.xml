@@ -167,6 +167,8 @@
                     </properties>
                     <systemPropertyVariables>
                         <jvm.args.jacoco>${jvm.args.jacoco}</jvm.args.jacoco>
+                        <!--   for arquillian.xml   -->
+                        <logging.props.dir>${project.basedir}/src/test/resources</logging.props.dir>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
