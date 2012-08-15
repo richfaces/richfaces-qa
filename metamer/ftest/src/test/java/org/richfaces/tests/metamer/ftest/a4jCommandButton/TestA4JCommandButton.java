@@ -27,9 +27,6 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import javax.faces.event.PhaseId;
 import org.jboss.test.selenium.support.ui.ElementNotPresent;
 import org.jboss.test.selenium.support.ui.TextEquals;
@@ -42,15 +39,14 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.testng.annotations.BeforeMethod;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestA4JCommandButton extends AbstractWebDriverTest {
+public class TestA4JCommandButton extends AbstractWebDriverTest<TestA4JCommandButton.CommandButtonPage> {
 
-    private CommandButtonPage page = new CommandButtonPage();
     private static final String STRING_RF1 = "RichFaces 4";
     private static final String STRING_RF1_X2 = "RichFaces 4RichFaces 4";
     private static final String STRING_RF2 = "RichFa";//first 6 characters
@@ -66,11 +62,6 @@ public class TestA4JCommandButton extends AbstractWebDriverTest {
     @Inject
     @Use(empty = false)
     private String type;
-
-    @BeforeMethod
-    public void loadPage() {
-        injectWebElementsToPage(page);
-    }
 
     @Override
     public URL getTestUrl() {
@@ -174,9 +165,11 @@ public class TestA4JCommandButton extends AbstractWebDriverTest {
     @Test
     public void testLimitRender() {
         commandButtonAttributes.set(CommandButtonAttributes.limitRender, true);
-        String timeValue = page.getRequestTime();
+        commandButtonAttributes.set(CommandButtonAttributes.render, "output1 requestTime");
         page.typeToInputAndSubmitAndWaitUntilOutput1Changes(STRING_RF1);
-        assertEquals(page.getRequestTime(), timeValue, "Ajax-rendered a4j:outputPanel shouldn't change");
+        page.verifyOutput1Text(STRING_RF1);
+        page.verifyOutput2Text("");
+        page.verifyOutput3Text("");
     }
 
     @Test
@@ -305,7 +298,12 @@ public class TestA4JCommandButton extends AbstractWebDriverTest {
         page.assertButtonValue(STRING_RF1);
     }
 
-    private class CommandButtonPage {
+    @Override
+    protected CommandButtonPage createPage() {
+        return new CommandButtonPage();
+    }
+
+    protected class CommandButtonPage extends MetamerPage {
 
         @FindBy(css = "input[id$=input]")
         WebElement input;
@@ -317,10 +315,6 @@ public class TestA4JCommandButton extends AbstractWebDriverTest {
         WebElement output2;
         @FindBy(css = "span[id$=output3]")
         WebElement output3;
-        @FindBy(css = "span[id$=requestTime]")
-        WebElement requestTime;
-        @FindBy(css = "div#phasesPanel li")
-        List<WebElement> phases;
 
         public void typeToInputAndSubmitAndWaitUntilOutput1Changes(String s) {
             typeToInputAndSubmit(s);
@@ -338,8 +332,18 @@ public class TestA4JCommandButton extends AbstractWebDriverTest {
             submit();
         }
 
+        public void typeToInputAndSubmitWithoutRequest(String s) {
+            input.clear();
+            input.sendKeys(s);
+            submitWithoutRequest();
+        }
+
         public void submit() {
             waitRequest(button, WaitRequestType.XHR).click();
+        }
+
+        public void submitWithoutRequest() {
+            waitRequest(button, WaitRequestType.NONE).click();
         }
 
         public String getRequestTime() {
@@ -372,22 +376,6 @@ public class TestA4JCommandButton extends AbstractWebDriverTest {
 
         private void verifyOutputText(WebElement elem, String text) {
             assertEquals(elem.getText(), text);
-        }
-
-        public List<String> getPhases() {
-            List<String> result = new ArrayList<String>();
-            for (WebElement webElement : phases) {
-                result.add(webElement.getText());
-            }
-            return result;
-        }
-
-        public void assertPhasesDontContainSomeOf(PhaseId... phase) {
-            assertTrue(new PhasesWrapper(getPhases()).notContainsSomeOf(phase), "Phases contain some of " + Arrays.asList(phase));
-        }
-
-        public void assertPhasesContainAllOf(String... s) {
-            assertTrue(new PhasesWrapper(getPhases()).containsAllOf(s), "Phases don't contain some of " + Arrays.asList(s));
         }
 
         public void assertButtonNotPresent() {

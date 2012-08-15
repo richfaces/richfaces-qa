@@ -13,25 +13,21 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class TestTwoPush extends AbstractWebDriverTest {
-
-    private TwoPushPage page;
+public class TestTwoPush extends AbstractWebDriverTest<TwoPushPage> {
 
     TextNotEquals textNotEq = TextNotEquals.getInstance();
     TextEquals textEq = TextEquals.getInstance();
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/a4jPush/twoPush.xhtml");
+    protected TwoPushPage createPage() {
+        return new TwoPushPage();
     }
 
-    @BeforeMethod
-    public void loadPage() {
-        page = new TwoPushPage();
-        injectWebElementsToPage(page);
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/a4jPush/twoPush.xhtml");
     }
 
     @Test

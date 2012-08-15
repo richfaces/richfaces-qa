@@ -1,22 +1,23 @@
 /**
- * JBoss, Home of Professional Open Source Copyright 2012, Red Hat, Inc. and
- * individual contributors by the @authors tag. See the copyright.txt in the
- * distribution for a full listing of individual contributors.
+ * JBoss, Home of Professional Open Source
+ * Copyright 2012, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * This software is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this software; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
- * site: http://www.fsf.org.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.richfaces.tests.metamer.ftest.richItemChangeListener;
 
@@ -39,74 +40,74 @@ public class TestTogglePanelItemChangeListener extends AbstractItemChangeListene
     }
 
     @Override
-    public void loadPage() {
-        page = new ICLTogglePanelPage();
+    protected ICLPage createPage() {
+        return new ICLTogglePanelPage();
     }
 
     @Test
-    @Templates(exclude={"richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "a4jRepeat"})
+    @Templates(exclude = { "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "a4jRepeat" })
     public void testICLAsAttribute() {
         super.testICLAsAttributeOfComponent(ICL_as_ComponentAttribute_PhaseName);
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12173")
-    @Test(groups={ "4.Future" })
-    @Templates(value="richCollapsibleSubTable")
+    @Test(groups = { "4.Future" })
+    @Templates(value = "richCollapsibleSubTable")
     public void testICLAsAttributeInRichCollapsibleSubTable() {
         super.testICLAsAttributeOfComponent(ICL_as_ComponentAttribute_PhaseName);
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12173")
-    @Test(groups={ "4.Future" })
-    @Templates(value="richExtendedDataTable")
+    @Test(groups = { "4.Future" })
+    @Templates(value = "richExtendedDataTable")
     public void testICLAsAttributeInRichExtendedDataTable() {
         super.testICLAsAttributeOfComponent(ICL_as_ComponentAttribute_PhaseName);
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12173")
-    @Test(groups={ "4.Future" })
-    @Templates(value="richDataGrid")
+    @Test(groups = { "4.Future" })
+    @Templates(value = "richDataGrid")
     public void testICLAsAttributeInRichDataGrid() {
         super.testICLAsAttributeOfComponent(ICL_as_ComponentAttribute_PhaseName);
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12173")
-    @Test(groups={ "4.Future" })
-    @Templates(value="a4jRepeat")
+    @Test(groups = { "4.Future" })
+    @Templates(value = "a4jRepeat")
     public void testICLAsAttributeInA4jRepeat() {
         super.testICLAsAttributeOfComponent(ICL_as_ComponentAttribute_PhaseName);
     }
 
     @Test
-    @Templates(exclude={"richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "a4jRepeat"})
+    @Templates(exclude = { "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "a4jRepeat" })
     public void testICLInsideComponentUsingType() {
         super.testICLInComponentWithType(ICL_inComponent_usingType_PhaseName);
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12173")
-    @Test(groups={ "4.Future" })
-    @Templates(value="richCollapsibleSubTable")
+    @Test(groups = { "4.Future" })
+    @Templates(value = "richCollapsibleSubTable")
     public void testICLInsideComponentUsingTypeInRichCollapsibleSubTable() {
         super.testICLInComponentWithType(ICL_inComponent_usingType_PhaseName);
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12173")
-    @Test(groups={ "4.Future" })
-    @Templates(value="richExtendedDataTable")
+    @Test(groups = { "4.Future" })
+    @Templates(value = "richExtendedDataTable")
     public void testICLInsideComponentUsingTypeInRichExtendedDataTable() {
         super.testICLInComponentWithType(ICL_inComponent_usingType_PhaseName);
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12173")
-    @Test(groups={ "4.Future" })
-    @Templates(value="richDataGrid")
+    @Test(groups = { "4.Future" })
+    @Templates(value = "richDataGrid")
     public void testICLInsideComponentUsingTypeInRichDataGrid() {
         super.testICLInComponentWithType(ICL_inComponent_usingType_PhaseName);
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12173")
-    @Test(groups={ "4.Future" })
-    @Templates(value="a4jRepeat")
+    @Test(groups = { "4.Future" })
+    @Templates(value = "a4jRepeat")
     public void testICLInsideComponentUsingTypeInA4jRepeat() {
         super.testICLInComponentWithType(ICL_inComponent_usingType_PhaseName);
     }

@@ -41,6 +41,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 
 public class Attributes<T extends AttributeEnum> {
 
@@ -154,7 +155,7 @@ public class Attributes<T extends AttributeEnum> {
         for (WebElement element : tag.radioElements) {
             String val = element.getAttribute("value");
             if (value.equals(NULLSTRING)) {
-                if (new StringEqualsWrapper(val).similarToSomeOfThis(NULLSTRINGOPTIONS)) {
+                if (new StringEqualsWrapper(val).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
                     if (!element.isSelected()) {
                         waitGuard(element).click();
                     }
@@ -176,7 +177,7 @@ public class Attributes<T extends AttributeEnum> {
         if (value.equals(NULLSTRING)) {
             for (WebElement element : tag.selection.getOptions()) {
                 String val = element.getAttribute("value");
-                if (new StringEqualsWrapper(val).similarToSomeOfThis(NULLSTRINGOPTIONS)) {
+                if (new StringEqualsWrapper(val).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
                     if (!element.isSelected()) {
                         waitGuard(element).click();
                     }
@@ -231,7 +232,7 @@ public class Attributes<T extends AttributeEnum> {
         WebElement nullSelectionOption = null;
         for (WebElement webElement : tag.radioElements) {
             String value = webElement.getAttribute("value");
-            if (new StringEqualsWrapper(value).similarToSomeOfThis(NULLSTRINGOPTIONS)) {
+            if (new StringEqualsWrapper(value).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
                 nullSelectionOption = webElement;
             }
             if (webElement.isSelected()) {
@@ -252,7 +253,7 @@ public class Attributes<T extends AttributeEnum> {
         WebElement nullSelectionOption = null;
         for (WebElement webElement : tag.selection.getAllSelectedOptions()) {
             String value = webElement.getAttribute("value");
-            if (new StringEqualsWrapper(value).similarToSomeOfThis(NULLSTRINGOPTIONS)) {
+            if (new StringEqualsWrapper(value).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
                 nullSelectionOption = webElement;
             }
             if (webElement.isSelected()) {
@@ -284,7 +285,7 @@ public class Attributes<T extends AttributeEnum> {
                     return;
                 }
                 if (value.equals(NULLSTRING)) {
-                    if (new StringEqualsWrapper(property).similarToSomeOfThis(NULLSTRINGOPTIONS)) {
+                    if (new StringEqualsWrapper(property).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
                         return;
                     }
                 }
@@ -361,24 +362,6 @@ public class Attributes<T extends AttributeEnum> {
                 }
             }
             return unknown;
-        }
-    }
-
-    private class StringEqualsWrapper {
-
-        private final String string;
-
-        public StringEqualsWrapper(String string) {
-            this.string = string;
-        }
-
-        public boolean similarToSomeOfThis(String... others) {
-            for (String other : others) {
-                if (other.equalsIgnoreCase(this.string)) {
-                    return true;
-                }
-            }
-            return false;
         }
     }
 

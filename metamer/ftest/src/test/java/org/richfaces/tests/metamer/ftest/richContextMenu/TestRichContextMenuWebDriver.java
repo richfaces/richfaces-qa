@@ -1,8 +1,8 @@
-/*
- * JBoss, Home of Professional Open Source.
- * Copyright 2010-2012, Red Hat, Inc., and individual contributors
- * as indicated by the @author tags. See the copyright.txt file in the
- * distribution for a full listing of individual contributors.
+/**
+ * JBoss, Home of Professional Open Source
+ * Copyright 2012, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -41,22 +41,19 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @since 4.2.1.Final
  */
-public class TestRichContextMenuWebDriver extends AbstractWebDriverTest {
-
-    private ContextMenuSimplePage page;
+public class TestRichContextMenuWebDriver extends AbstractWebDriverTest<ContextMenuSimplePage> {
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richContextMenu/simple.xhtml");
     }
 
-    @BeforeMethod(dependsOnMethods = { "loadPage" })
-    public void initPageObject() {
-        page = new ContextMenuSimplePage();
-        injectWebElementsToPage(page);
+    @Override
+    protected ContextMenuSimplePage createPage() {
+        return new ContextMenuSimplePage();
     }
 
-    @BeforeMethod(dependsOnMethods = { "initPageObject" })
+    @BeforeMethod(alwaysRun = true)
     public void updateShowAction() {
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, "click");
     }

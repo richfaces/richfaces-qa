@@ -29,6 +29,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.DriverType;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**
  * Page object rich:contextMenu component at
@@ -38,7 +39,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.DriverType;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @since 4.2.1.Final
  */
-public class ContextMenuSimplePage {
+public class ContextMenuSimplePage extends MetamerPage{
 
     @FindBy(css = "div[id$=targetPanel1]")
     public WebElement targetPanel1;
