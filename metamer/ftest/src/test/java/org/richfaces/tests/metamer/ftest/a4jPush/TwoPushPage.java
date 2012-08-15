@@ -23,13 +23,14 @@ package org.richfaces.tests.metamer.ftest.a4jPush;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**
  *  WebDriver
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision$
  */
-public class TwoPushPage {
+public class TwoPushPage extends MetamerPage{
 
     @FindBy(css="input[id$=performPushEvent1]")
     public WebElement push1Btn;

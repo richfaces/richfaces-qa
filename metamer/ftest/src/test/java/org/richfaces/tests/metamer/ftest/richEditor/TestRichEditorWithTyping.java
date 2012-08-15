@@ -1,24 +1,23 @@
 /**
- * *****************************************************************************
- * JBoss, Home of Professional Open Source Copyright 2010-2012, Red Hat, Inc.
- * and individual contributors by the @authors tag. See the copyright.txt in the
- * distribution for a full listing of individual contributors.
+ * JBoss, Home of Professional Open Source
+ * Copyright 2012, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * This software is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this software; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
- * site: http://www.fsf.org.
- * *****************************************************************************
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.richfaces.tests.metamer.ftest.richEditor;
 
@@ -36,15 +35,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichEditorWithTyping extends AbstractWebDriverTest {
+public class TestRichEditorWithTyping extends AbstractWebDriverTest<EditorSimplePage> {
 
-    private EditorSimplePage page;
     private String phaseListenerLogFormat = "*3 value changed: <p> {0}</p> -> <p> {1}</p>";
 
     @Override
@@ -52,10 +49,9 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richEditor/anotherSimple.xhtml");
     }
 
-    @BeforeMethod
-    public void loadPage() {
-        page = new EditorSimplePage();
-        injectWebElementsToPage(page);
+    @Override
+    protected EditorSimplePage createPage() {
+        return new EditorSimplePage();
     }
 
     @Test

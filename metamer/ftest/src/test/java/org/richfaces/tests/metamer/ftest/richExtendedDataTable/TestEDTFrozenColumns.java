@@ -1,22 +1,23 @@
 /**
- * JBoss, Home of Professional Open Source Copyright 2012, Red Hat, Inc. and
- * individual contributors by the @authors tag. See the copyright.txt in the
- * distribution for a full listing of individual contributors.
+ * JBoss, Home of Professional Open Source
+ * Copyright 2012, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * This software is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this software; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
- * site: http://www.fsf.org.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
@@ -40,15 +41,14 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.testng.annotations.BeforeMethod;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestEDTFrozenColumns extends AbstractWebDriverTest {
+public class TestEDTFrozenColumns extends AbstractWebDriverTest<TestEDTFrozenColumns.FrozenColumnsPage> {
 
-    private FrozenColumnsPage page;
     @Inject
     @Use(empty = false)
     private Integer numberOfColumns;
@@ -59,10 +59,9 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richExtendedDataTable/frozenColumns.xhtml");
     }
 
-    @BeforeMethod
-    public void loadPage() {
-        page = new FrozenColumnsPage();
-        injectWebElementsToPage(page);
+    @Override
+    protected FrozenColumnsPage createPage() {
+        return new FrozenColumnsPage();
     }
 
     @Test
@@ -110,7 +109,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
      */
     @Test
     @Use(field = "numberOfColumns", ints = { 1, 3 })
-    @Templates(exclude={"richExtendedDataTable"})
+    @Templates(exclude = { "richExtendedDataTable" })
     //TODO https://issues.jboss.org/browse/RF-12236 , when numberOfColumns=4
     public void testScrollerForNotFrozenColumns() {
         //check if default scroller is present and get its location
@@ -141,7 +140,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
      */
     @Test(groups = { "4.Future" })
     @Use(field = "numberOfColumns", ints = { 1, 3 })
-    @Templates(value="richExtendedDataTable")
+    @Templates(value = "richExtendedDataTable")
     @IssueTracking("https://issues.jboss.org/browse/RF-12278")
     //TODO https://issues.jboss.org/browse/RF-12236 , when numberOfColumns=4
     public void testScrollerForNotFrozenColumnsInRichExtendedDataTable() {
@@ -177,7 +176,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
         assertNotEquals(location, page.movedScroller.getLocation(), "The position of scroller has not been changed.");
     }
 
-    private class FrozenColumnsPage {
+    protected class FrozenColumnsPage extends MetamerPage {
 
         @FindBy(xpath = "//td[@class='rf-edt-ftr-fzn']//div//table//tr//td")
         List<WebElement> frozenColumns;

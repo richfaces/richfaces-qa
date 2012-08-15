@@ -22,18 +22,13 @@
 package org.richfaces.tests.metamer.ftest.richItemChangeListener;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class ICLPanelMenuPage extends ICLPage {
+//ICL = ItemChangeListener
+public abstract class ICLPage extends MetamerPage {
 
-    @FindBy(css = "div[id$=item1] > table > tbody > tr > td[class=rf-pm-top-itm-lbl]")
-    public WebElement panel;
-
-    @Override
-    public WebElement getInactivePanel() {
-        return panel;
-    }
+    public abstract WebElement getInactivePanel();
 }

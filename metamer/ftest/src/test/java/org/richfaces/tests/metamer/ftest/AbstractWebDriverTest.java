@@ -27,24 +27,22 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
+import com.google.common.base.Predicate;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.faces.event.PhaseId;
+import java.util.concurrent.TimeUnit;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
-import org.jboss.test.selenium.support.ui.ElementDisplayed;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.android.AndroidDriver;
@@ -57,19 +55,23 @@ import org.openqa.selenium.iphone.IPhoneDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Listeners;
 
-public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
+public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends AbstractMetamerTest {
 
     @Drone
     protected WebDriver driver;
+    protected Page page;
     protected static final int WAIT_TIME = 5;// s
-    protected static final int MINOR_WAIT_TIME = 200;// ms
     private static final int NUMBER_OF_TRIES = 5;
+    protected static final int MINOR_WAIT_TIME = 50;// ms
+    protected static final int TRIES = 20;//for guardListSize and expectedReturnJS
     private FieldDecorator fieldDecorator;
     protected DriverType driverType;
 
@@ -113,6 +115,20 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         driverType = DriverType.getCurrentType(driver);
     }
 
+    @BeforeMethod(alwaysRun = true, dependsOnMethods = { "loadPage" })
+    public void initializePage() {
+        injectWebElementsToPage(getPage());
+    }
+
+    protected Page getPage() {
+        if (page == null) {
+            page = createPage();
+        }
+        return page;
+    }
+
+    protected abstract Page createPage();
+
     /**
      * Waiting method. Waits number of milis defined by @milis
      *
@@ -152,7 +168,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     protected String expectedReturnJS(String script, String expectedValue, Object... args) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         String result = null;
-        for (int i = 0; i < NUMBER_OF_TRIES; i++) {
+        for (int i = 0; i < TRIES; i++) {
             Object executeScript = js.executeScript(script, args);
             if (executeScript != null) {
                 result = ((String) js.executeScript(script, args)).trim();
@@ -171,25 +187,6 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
                     NUMBER_OF_TRIES);
         }
         PageFactory.initElements(fieldDecorator, page);
-    }
-
-    /**
-     * Wait for whole page rendered
-     */
-    protected void waitForPageToLoad() {
-        for (int i = 0; i < NUMBER_OF_TRIES; i++) {
-            try {
-                Object result = executeJS("return document['readyState'] ? 'complete' == document.readyState : true");
-                if (result instanceof Boolean) {
-                    Boolean b = (Boolean) result;
-                    if (b.equals(Boolean.TRUE)) {
-                        return;
-                    }
-                }
-                waiting(MINOR_WAIT_TIME);
-            } catch (Exception ignored) {
-            }
-        }
     }
 
     /**
@@ -423,7 +420,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     protected List<WebElement> guardListSize(List<WebElement> list, int size) {
         boolean lastCheckWithModifications;
         int checkedSize = list.size();
-        for (int i = 0; i < NUMBER_OF_TRIES; i++) {
+        for (int i = 0; i < TRIES; i++) {
             if (checkedSize < list.size()) {
                 checkedSize = list.size();
                 lastCheckWithModifications = true;
@@ -444,13 +441,16 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     protected enum WaitRequestType {
 
         XHR,
-        HTTP;
+        HTTP,
+        NONE;
     }
 
     /**
-     * Generates a waiting proxy, which will wait for page rendering after
-     * expected @waitRequestType which will be launched via communicating with
-     * @element.
+     * !All requests depends on Metamer`s requestTime!
+     * Temporary method before https://issues.jboss.org/browse/ARQGRA-67 is
+     * resolved. Generates a waiting proxy, which will wait for page rendering
+     * after expected @waitRequestType which will be launched via
+     * communicating with @element.
      *
      * @param element WebElement which will launch a request (e.g. with methods
      * click(), submit()...) after invoking it.
@@ -461,74 +461,77 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         switch (waitRequestType) {
             case HTTP:
                 return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
-                        new Class[]{ WebElement.class }, new HTTPWaitHandler(element));
+                        new Class[]{ WebElement.class }, new RequestTimeChangesHandler(element));
             case XHR:
                 return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
-                        new Class[]{ WebElement.class }, new XHRWaitHandler(element));
+                        new Class[]{ WebElement.class }, new RequestTimeChangesHandler(element));
+            case NONE:
+                return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
+                        new Class[]{ WebElement.class }, new RequestTimeNotChangesHandler(element, 2));
             default:
-                throw new UnsupportedOperationException();
-        }
-    }
-
-    /**
-     * Waits for page to full load after method is invoked.
-     */
-    private class HTTPWaitHandler implements InvocationHandler {
-
-        private final WebElement element;
-
-        public HTTPWaitHandler(WebElement element) {
-            this.element = element;
-        }
-
-        @Override
-        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            Object o = method.invoke(element, args);
-            waitForPageToLoad();
-            return o;
+                throw new UnsupportedOperationException("Not supported request: " + waitRequestType);
         }
     }
 
     /**
      * Waits for change of requestTime in Metamer.
      */
-    private class XHRWaitHandler implements InvocationHandler {
+    private class RequestTimeChangesHandler implements InvocationHandler {
 
-        private final WebElement element;
-        private Date time1;
+        protected final WebElement element;
+        protected String time1;
+        protected final By REQ_TIME = By.cssSelector("span[id='requestTime']");
 
-        public XHRWaitHandler(WebElement element) {
+        public RequestTimeChangesHandler(WebElement element) {
             this.element = element;
         }
 
-        private Date getDate() {
-            new WebDriverWait(driver).until(ElementDisplayed.getInstance().
-                    element(driver.findElement(By.cssSelector("span[id=requestTime]"))));
-            String time = driver.findElement(By.cssSelector("span[id=requestTime]")).getText();
-            DateFormat sdf = new SimpleDateFormat("hh:mm:ss.SSS");
-            Date d = null;
-            try {
-                d = sdf.parse(time);
-            } catch (ParseException ex) {
-            }
-            return d;
+        protected String getTime() {
+            WebElement el = waitUntilElementIsVisible(By.cssSelector("span[id='requestTime']"));
+            String time = el.getText();
+            return time;
         }
 
-        private void beforeAction() {
-            time1 = getDate();
+        protected void beforeAction() {
+            time1 = getTime();
         }
 
-        private void afterAction() {
-            for (int i = 0; i < NUMBER_OF_TRIES; i++) {
-                try {
-                    if (getDate().equals(time1)) {
-                        waiting(MINOR_WAIT_TIME);
-                    } else {
-                        waitForPageToLoad();//unnecessary?
-                        return;
-                    }
-                } catch (Exception e) {
+        protected void afterAction() {
+            new WDWait().until(new Predicate<WebDriver>() {
+
+                @Override
+                public boolean apply(WebDriver input) {
+                    return !input.findElement(REQ_TIME).getText().equals(time1);
                 }
+            });
+        }
+
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            beforeAction();
+            Object o = method.invoke(element, args);
+            afterAction();
+            return o;
+        }
+    }
+
+    /**
+     * Waits number of seconds and checks if requestTime was not changed,
+     */
+    private class RequestTimeNotChangesHandler extends RequestTimeChangesHandler {
+
+        private final int waitTime;
+
+        public RequestTimeNotChangesHandler(WebElement element, int waitTime) {
+            super(element);
+            this.waitTime = waitTime;
+        }
+
+        @Override
+        protected void afterAction() {
+            waiting(waitTime);
+            if (!getTime().equals(time1)) {
+                throw new RuntimeException("No request expected, but request time has changed.");
             }
         }
 
@@ -564,207 +567,42 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Wrapper for String for some 'equals' methods. Useful for using multiple
-     * equals in conditions.
+     * Wait for element to be visible.
+     *
+     * @param by locate by
+     * @return found element
      */
-    protected class StringEqualsWrapper {
-
-        private final String value;
-
-        public StringEqualsWrapper(String value) {
-            this.value = value;
-        }
-
-        /**
-         * For all values specified in attribute @values runs method 'equals'
-         * and returns true if some of @values is equal to the wrapped value.
-         *
-         * @param values values to be compared with the wrapped value
-         * @return true if some value is equal to the wrapped value.
-         */
-        public boolean equalsToSomeOfThis(String... values) {
-            if (values == null) {
-                throw new IllegalArgumentException("No Strings specified.");
-            }
-            for (String string : values) {
-                if (value.equals(string)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        /**
-         * For all values specified in attribute @values runs method 'equals'
-         * and returns true if some of @values is equal to the wrapped value.
-         *
-         * @param values values to be compared with the wrapped value
-         * @return true if some value is equal to the wrapped value.
-         */
-        public boolean equalsToSomeOfThis(List<String> values) {
-            if (values == null) {
-                throw new IllegalArgumentException("No Strings specified.");
-            }
-            for (String string : values) {
-                if (value.equals(string)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        /**
-         * Inverts the return of method equalsToSomeOfThis(). Checks all @values
-         * that they are not equal to the wrapped value.
-         *
-         * @param values values to be compared with the wrapped value
-         * @return false if some value is equal to the wrapped value.
-         */
-        public boolean notEqualsToSomeOfThis(String... values) {
-            return !equalsToSomeOfThis(values);
-        }
-
-        /**
-         * Inverts the return of method equalsToSomeOfThis(). Checks all @values
-         * that they are not equal to the wrapped value.
-         *
-         * @param values values to be compared with the wrapped value
-         * @return false if some value is equal to the wrapped value.
-         */
-        public boolean notEqualsToSomeOfThis(List<String> values) {
-            return !equalsToSomeOfThis(values);
-        }
-
-        /**
-         * Almost same as equalsToSomeOfThis(), but uses equalsIgnoreCase()
-         * rather than equals().
-         *
-         * @param values values to be compared with the wrapped value
-         * @return true if some value is equal(ignore case) to the wrapped value
-         */
-        public boolean isSimilarToSomeOfThis(String... values) {
-            if (values == null) {
-                throw new IllegalArgumentException("No Strings specified.");
-            }
-            for (String string : values) {
-                if (value.equalsIgnoreCase(string)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        /**
-         * Almost same as equalsToSomeOfThis(), but uses equalsIgnoreCase()
-         * rather than equals().
-         *
-         * @param values values to be compared with the wrapped value
-         * @return true if some value is equal(ignore case) to the wrapped value
-         */
-        public boolean isSimilarToSomeOfThis(List<String> values) {
-            if (values == null) {
-                throw new IllegalArgumentException("No Strings specified.");
-            }
-            for (String string : values) {
-                if (value.equalsIgnoreCase(string)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        /**
-         * Inverts the return of method isSimilarToSomeOfThis(). Checks all
-         * @values that they are not equal(ignore case) to the wrapped value.
-         *
-         * @param values values to be compared with the wrapped value
-         * @return false if some value is equal to the wrapped value.
-         */
-        public boolean isNotSimilarToSomeOfThis(String... values) {
-            return !isSimilarToSomeOfThis(values);
-        }
-
-        /**
-         * Inverts the return of method isSimilarToSomeOfThis(). Checks all
-         * @values that they are not equal(ignore case) to the wrapped value.
-         *
-         * @param values values to be compared with the wrapped value
-         * @return false if some value is equal to the wrapped value.
-         */
-        public boolean isNotSimilarToSomeOfThis(List<String> values) {
-            return !isSimilarToSomeOfThis(values);
-        }
+    protected WebElement waitUntilElementIsVisible(final By by) {
+        return new WDWait().until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
     /**
-     * Wrapper for Metamer's phases list.
+     * WebDriver wait which ignores StaleElementException and
+     * NoSuchElementException and is polling every 50 ms.
      */
-    protected class PhasesWrapper {
+    protected class WDWait extends WebDriverWait {
 
-        private final List<String> phases;
-
-        public PhasesWrapper(List<String> phases) {
-            this.phases = phases;
+        /**
+         * WebDriver wait which ignores StaleElementException and
+         * NoSuchElementException and polling every 50 ms with max wait time of
+         * 5 seconds
+         */
+        public WDWait() {
+            this(5);
         }
 
         /**
-         * Checks if the wrapped phases do not contain some of a PhaseIds (JSF
-         * phases).
+         * WebDriver wait which ignores StaleElementException and
+         * NoSuchElementException and polling every 50 ms with max wait time set
+         * in attribute
          *
-         * @param values PhasesIds that phases should not contain
-         * @return false if the wrapped phases contains some PhaseId value
+         * @param seconds max wait time
          */
-        public boolean notContainsSomeOf(PhaseId... values) {
-            if (values == null) {
-                throw new IllegalArgumentException("No Phases specified.");
-            }
-            String[] valuesAsString = new String[values.length];
-            for (int i = 0; i < values.length; i++) {
-                valuesAsString[i] = values[i].toString();
-            }
-            for (String value : valuesAsString) {
-                if (new StringEqualsWrapper(value).isSimilarToSomeOfThis(phases)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        /**
-         * Checks if the wrapped phases do not contain some of a given values.
-         *
-         * @param values given values, that the wrapped phases should not
-         * contain
-         * @return false if the wrapped phases contains some of given values
-         */
-        public boolean notContainsSomeOf(String... values) {
-            if (values == null) {
-                throw new IllegalArgumentException("No String specified.");
-            }
-            for (String value : values) {
-                if (new StringEqualsWrapper(value).isSimilarToSomeOfThis(phases)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        /**
-         * Checks if phases contains all of given values.
-         *
-         * @param values given values, that the wrapped phases should contain
-         * @return true if phases contain all of given values
-         */
-        public boolean containsAllOf(String... values) {
-            if (values == null) {
-                throw new IllegalArgumentException("No String specified.");
-            }
-            for (String value : values) {
-                if (!new StringEqualsWrapper(value).isSimilarToSomeOfThis(phases)) {
-                    return false;
-                }
-            }
-            return true;
+        public WDWait(int seconds) {
+            super(driver, seconds);
+            ignoring(NoSuchElementException.class);
+            ignoring(StaleElementReferenceException.class);
+            pollingEvery(50, TimeUnit.MILLISECONDS);
         }
     }
 }
