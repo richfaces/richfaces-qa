@@ -39,6 +39,7 @@ import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
@@ -50,8 +51,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22789 $
  */
-@Test(groups = "4.3")
-@IssueTracking("https://issues.jboss.org/browse/RF-12365")
+@RegressionTest("https://issues.jboss.org/browse/RF-12365")
 public class TestRichSpinner extends AbstractSpinnerTest {
 
     @Override

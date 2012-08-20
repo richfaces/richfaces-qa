@@ -24,9 +24,7 @@ package org.richfaces.tests.metamer.ftest.richGraphValidator;
 import static org.jboss.arquillian.ajocado.Graphene.elementNotPresent;
 import static org.jboss.arquillian.ajocado.Graphene.textEquals;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.graphValidatorAttributes;
 import static org.richfaces.tests.metamer.ftest.richGraphValidator.GraphValidatorAttributes.groups;
@@ -41,7 +39,6 @@ import java.util.Date;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.option.OptionValueLocator;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 
@@ -51,8 +48,6 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision: 22622 $
  */
-@Test(groups = "4.3")
-@IssueTracking("https://issues.jboss.org/browse/RF-12365")
 public class TestRichGraphValidator extends AbstractGrapheneTest {
 
     private static final String SMILE = ":-)";
