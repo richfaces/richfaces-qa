@@ -78,7 +78,7 @@ public class TestClientFunctions extends AbstractGrapheneTest {
         assertEquals(output, "abc", "Function findComponent() doesn't work.");
 
         output = selenium.getText(jQuerySelectorOutput);
-        assertEquals(output, "#form\\:subview\\:input", "Function jQuerySelector() doesn't work.");
+        assertEquals(output, "#form\\\\:subview\\\\:input", "Function jQuerySelector() doesn't work.");
     }
 
     @Test(groups = { "4.Future" })
