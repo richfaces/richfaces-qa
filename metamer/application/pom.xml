@@ -323,6 +323,9 @@
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
+                                    <filters>
+                                        <filter>${basedir}/src/main/filters/tomcat7.properties</filter>
+                                    </filters>
                                     <classifier>tomcat7-mojarra</classifier>
                                     <packagingExcludes>${tomcat7-mojarra.excluded.libraries}</packagingExcludes>
                                 </configuration>
@@ -346,6 +349,9 @@
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
+                                    <filters>
+                                        <filter>${basedir}/src/main/filters/tomcat7.properties</filter>
+                                    </filters>
                                     <classifier>tomcat7-myfaces</classifier>
                                     <packagingExcludes>${tomcat7-myfaces.excluded.libraries}</packagingExcludes>
                                 </configuration>
@@ -467,6 +473,9 @@
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
+                                    <filters>
+                                        <filter>${basedir}/src/main/filters/tomcat7.properties</filter>
+                                    </filters>
                                     <classifier>tomcat7-mojarra</classifier>
                                     <packagingExcludes>${tomcat7-mojarra.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
@@ -480,6 +489,9 @@
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
+                                    <filters>
+                                        <filter>${basedir}/src/main/filters/tomcat7.properties</filter>
+                                    </filters>
                                     <classifier>tomcat7-myfaces</classifier>
                                     <packagingExcludes>${tomcat7-myfaces.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
