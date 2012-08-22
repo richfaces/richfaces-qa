@@ -24,8 +24,8 @@ package org.richfaces.tests.metamer.bean.a4j;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.ConversationScoped;
+import javax.inject.Named;
 
 import org.richfaces.component.UIAjaxLog;
 import org.richfaces.tests.metamer.Attributes;
@@ -38,8 +38,8 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22460 $
  */
-@ManagedBean(name = "a4jLogBean")
-@ViewScoped
+@Named("a4jLogBean")
+@ConversationScoped
 public class A4JLogBean implements Serializable {
 
     private static final long serialVersionUID = -1L;
@@ -84,6 +84,7 @@ public class A4JLogBean implements Serializable {
 
     /**
      * Getter for name.
+     *
      * @return content of the input field on the page
      */
     public String getName() {
@@ -92,7 +93,9 @@ public class A4JLogBean implements Serializable {
 
     /**
      * Setter for name.
-     * @param name new content of the input field on the page
+     *
+     * @param name
+     *            new content of the input field on the page
      */
     public void setName(String name) {
         this.name = name;

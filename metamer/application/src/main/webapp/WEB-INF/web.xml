@@ -86,6 +86,10 @@
         <servlet-name>Resource Servlet</servlet-name>
         <url-pattern>/org.richfaces.resources/*</url-pattern>
     </servlet-mapping>
+    
+    <listener>
+        <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
+    </listener>
 
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
@@ -96,6 +100,11 @@
         <location>/faces/error/404.xhtml</location>
     </error-page>
 
-
+    
+    <resource-env-ref>
+       <resource-env-ref-name>BeanManager</resource-env-ref-name>
+       <resource-env-ref-type>javax.enterprise.inject.spi.BeanManager</resource-env-ref-type>
+    </resource-env-ref>
+    
 
 </web-app>
