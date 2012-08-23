@@ -33,7 +33,7 @@ import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc and Juraj Huska</a>
+ * @author <a href="mailto:jhuska@redhat.com">Lukas Fryc and Juraj Huska</a>
  */
 public class TestAdvancedConfiguration extends AbstractGrapheneTest {
 
@@ -92,7 +92,7 @@ public class TestAdvancedConfiguration extends AbstractGrapheneTest {
         assertEquals(titleOfNewPageButton, NEW_PAGE_DE, "The language was not changed to german!");
     }
 
-    @Test
+    @Test(groups = "4.Future")
     public void testUserFocusAutomaticallyOnEditor() {
 
         fail("implement me correctly!");

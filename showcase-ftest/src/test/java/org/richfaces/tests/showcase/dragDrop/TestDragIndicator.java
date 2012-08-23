@@ -29,7 +29,7 @@ import org.testng.annotations.Test;
  */
 public class TestDragIndicator extends AbstractDragAndDropTest {
 
-    @Test
+    @Test(groups = "4.Future")
     public void testDragAndDropAllSourcesToCorrectTargetAndTestIndicator() {
         dragAndDropAllSourcesToCorrectTarget(true);
     }

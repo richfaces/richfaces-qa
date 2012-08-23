@@ -79,6 +79,8 @@ public class AbstractTestMessage extends AbstractGrapheneTest {
         + MAXIMUM_OF_JOB + "'";
     protected final String ZIP_ERROR_GREATER_THAN_MAXIMUM = "Zip: Validation Error: Length is greater than allowable maximum of '"
         + MAXIMUM_OF_ZIP + "'";
+    protected final String JOB_ERROR_NOT_BETWEEN = "Job: Validation Error: Specified attribute is not between the expected values of 3 and 50.";
+    protected final String ZIP_ERROR_NOT_BETWEEN = "Zip: Validation Error: Specified attribute is not between the expected values of 4 and 9.";
 
     /* ****************************************************************************************************************************
      * Abstract tests ************************************************************

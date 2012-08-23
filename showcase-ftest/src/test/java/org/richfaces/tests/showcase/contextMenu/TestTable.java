@@ -41,6 +41,8 @@ import org.testng.annotations.Test;
  */
 public class TestTable extends AbstractContextMenuTest {
 
+    private final int NUMBER_OF_LINES_TO_TEST_ON = 10;
+    
     /* ***************************************************
      * Locators***************************************************
      */
@@ -63,7 +65,7 @@ public class TestTable extends AbstractContextMenuTest {
         int soFar = 0;
 
         for (Iterator<JQueryLocator> i = pricesTds.iterator(); i.hasNext();) {
-            if (soFar > 10) {
+            if (soFar > NUMBER_OF_LINES_TO_TEST_ON) {
                 break;
             }
 
@@ -78,7 +80,7 @@ public class TestTable extends AbstractContextMenuTest {
 
             waitGui
                 .failWith(
-                    new RuntimeException("The invocation of context menu on line " + soFar + " did not render context menu!"))
+                    new RuntimeException("The context menu on line " + soFar + " was not invoked correctly!"))
                 .timeout(2000).until(elementVisible.locator(contextMenu));
 
             selenium.click(contextMenuItem);

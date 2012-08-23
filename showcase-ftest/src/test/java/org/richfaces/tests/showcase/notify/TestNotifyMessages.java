@@ -92,16 +92,42 @@ public class TestNotifyMessages extends AbstractTestMessage {
             messages.add(notifyText);
         }
 
-        // checking that rich:message is there, and has correct value
+        // checking that rich:message is there, and has correct value, note that messages are different for some inputs when
+        // validation
+        // invoked by AJAX or CSV
         isThereErrorMessage(nameError, NAME_ERROR_LESS_THAN_MINIMUM, true);
-        isThereErrorMessage(jobError, JOB_ERROR_LESS_THAN_MINIMUM, true);
+
+        if (submitActivation) {
+            isThereErrorMessage(jobError, JOB_ERROR_LESS_THAN_MINIMUM, true);
+        } else {
+            isThereErrorMessage(jobError, JOB_ERROR_NOT_BETWEEN, true);
+        }
+
         isThereErrorMessage(addressError, ADDRESS_ERROR_LESS_THAN_MINIMUM, true);
-        isThereErrorMessage(zipError, ZIP_ERROR_LESS_THAN_MINIMUM, true);
+
+        if (submitActivation) {
+            isThereErrorMessage(zipError, ZIP_ERROR_LESS_THAN_MINIMUM, true);
+        } else {
+            isThereErrorMessage(zipError, ZIP_ERROR_NOT_BETWEEN, true);
+        }
 
         // checking the content of the rich:notify messages
         assertTrue(messages.contains(NAME_ERROR_LESS_THAN_MINIMUM), "The notify message for name is incorrect");
         assertTrue(messages.contains(ADDRESS_ERROR_LESS_THAN_MINIMUM), "The notify message for address is incorrect");
-        assertTrue(messages.contains(JOB_ERROR_LESS_THAN_MINIMUM), "The notify message for job is incorrect");
-        assertTrue(messages.contains(ZIP_ERROR_LESS_THAN_MINIMUM), "The notify message for zip is incorrect");
+
+        if (submitActivation) {
+            assertTrue(messages.contains(JOB_ERROR_LESS_THAN_MINIMUM),
+                "The notify message after blur event for job is incorrect");
+        } else {
+            assertTrue(messages.contains(JOB_ERROR_NOT_BETWEEN), "The notify message after submit button for job is incorrect");
+        }
+
+        if (submitActivation) {
+            assertTrue(messages.contains(ZIP_ERROR_LESS_THAN_MINIMUM),
+                "The notify message after submite button activation for zip is incorrect");
+        } else {
+            assertTrue(messages.contains(ZIP_ERROR_NOT_BETWEEN),
+                "The notify message after blur event activation for zip is incorrect");
+        }
     }
 }
