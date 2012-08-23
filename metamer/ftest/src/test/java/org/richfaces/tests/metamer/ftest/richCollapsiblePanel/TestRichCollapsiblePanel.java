@@ -94,7 +94,7 @@ public class TestRichCollapsiblePanel extends AbstractGrapheneTest {
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-10312")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10312")
     public void testExpanded() {
         verifyBeforeClick();
         collapsiblePanelAttributes.set(CollapsiblePanelAttributes.expanded, false);
@@ -293,7 +293,7 @@ public class TestRichCollapsiblePanel extends AbstractGrapheneTest {
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-10368")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10368")
     public void testSwitchTypeServer() {
         collapsiblePanelAttributes.set(CollapsiblePanelAttributes.switchType, "server");
 

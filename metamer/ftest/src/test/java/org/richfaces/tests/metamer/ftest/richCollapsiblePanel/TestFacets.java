@@ -38,6 +38,7 @@ import java.net.URL;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 /**
@@ -105,7 +106,7 @@ public class TestFacets extends AbstractGrapheneTest {
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-10368")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10368")
     public void testSwitchTypeServer() {
         collapsiblePanelAttributes.set(CollapsiblePanelAttributes.switchType, "server");
 
