@@ -51,22 +51,20 @@ public class TestCollapsiblePanelKVS extends AbstractGrapheneTest {
         return URLUtils.buildUrl(contextPath, "faces/components/richCollapsiblePanel/simple.xhtml");
     }
 
-    @Test(groups = { "keepVisualStateTesting" })
-    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
-        "richExtendedDataTable", "richList" })
+    @Test
+    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richExtendedDataTable" })
     public void testRefreshFullPage() {
         reloadTester.testFullPageRefresh();
     }
 
-    @Test(groups = { "keepVisualStateTesting", "4.Future" })
-    @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
-        "richExtendedDataTable", "richList" })
+    @Test(groups = { "4.3" })
+    @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richExtendedDataTable" })
     @IssueTracking("https://issues.jboss.org/browse/RF-12131")
     public void testRefreshFullPageInIterationComponents() {
         testRefreshFullPage();
     }
 
-    @Test(groups = { "keepVisualStateTesting", "4.3" })
+    @Test(groups = { "4.3" })
     @IssueTracking("https://issues.jboss.org/browse/RF-12035")
     public void testRenderAll() {
         reloadTester.testRerenderAll();
