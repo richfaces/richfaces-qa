@@ -42,7 +42,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.descriptor.api.Descriptors;
-import org.jboss.shrinkwrap.descriptor.api.spec.servlet.web.WebAppDescriptor;
+import org.jboss.shrinkwrap.descriptor.api.webapp30.WebAppDescriptor;
 import org.jboss.shrinkwrap.impl.base.path.BasicPath;
 import org.jboss.test.selenium.locator.reference.LocatorReference;
 import org.richfaces.tests.metamer.TemplatesList;
@@ -134,13 +134,13 @@ public abstract class AbstractMetamerTest extends Arquillian {
             defaultWar.get(new BasicPath("WEB-INF/web.xml")).getAsset().openStream());
 
         // 2. modify web.xml according to requirements
-        webXmlDefault.contextParam(RESOURCE_MAPPING_ENABLED, "true");
-        if (compressedStages != null && compressedStages) {
-            webXmlDefault.contextParam(RESOURCE_MAPPING_COMPRESSED_STAGES, "All");
-        }
-        if (packedStages != null && packedStages) {
-            webXmlDefault.contextParam(RESOURCE_MAPPING_PACKED_STAGES, "All");
-        }
+//        webXmlDefault.contextParam(RESOURCE_MAPPING_ENABLED, "true");
+//        if (compressedStages != null && compressedStages) {
+//            webXmlDefault.contextParam(RESOURCE_MAPPING_COMPRESSED_STAGES, "All");
+//        }
+//        if (packedStages != null && packedStages) {
+//            webXmlDefault.contextParam(RESOURCE_MAPPING_PACKED_STAGES, "All");
+//        }
 
         // 3. create second archive (war). Set here modified web.xml
         WebArchive modifiedWar = ShrinkWrap.create(WebArchive.class);
