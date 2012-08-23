@@ -36,6 +36,7 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
@@ -98,9 +99,9 @@ public class TestHCommandButton extends AbstractGrapheneTest {
         testHtmlAttribute(button, "accesskey", "b");
     }
 
-    @Test(groups = { "4.Future" })
+    @Test
     @Templates(value = { "richPopupPanel" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-11296")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11296")
     public void testAccesskeyInPopupPanel() {
         testHtmlAttribute(button, "accesskey", "b");
     }
