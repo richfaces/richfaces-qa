@@ -42,7 +42,7 @@ import org.testng.annotations.Test;
 public class TestTable extends AbstractContextMenuTest {
 
     private final int NUMBER_OF_LINES_TO_TEST_ON = 10;
-    
+
     /* ***************************************************
      * Locators***************************************************
      */
