@@ -44,13 +44,14 @@ public class RichContextMenuBean implements Serializable {
 
     /** Generated serial version UID */
     private static final long serialVersionUID = 1323565239250527128L;
-    private static Logger log = LoggerFactory.getLogger(RichContextMenuBean.class);
+    private static Logger log;
 
     private Attributes attributes;
     private String current;
 
     @PostConstruct
     public void init() {
+        log = LoggerFactory.getLogger(getClass());
         log.debug("ContextMenu attributes initialized.");
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIContextMenu.class, getClass());
         attributes.setAttribute("disabled", "false");
