@@ -8,7 +8,8 @@
     General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this
     software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the
     FSF site: http://www.fsf.org. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -45,6 +46,10 @@
         <version.tomcat7>7.0.29</version.tomcat7>
         <tomcat6Zip>path/to/your/tomcat/distribution/zip</tomcat6Zip>
         <tomcat7Zip>path/to/your/tomcat/distribution/zip</tomcat7Zip>
+        
+        <!-- TomEE versions -->
+        <tomee.version>1.1.0-SNAPSHOT</tomee.version>
+        <version.shrinkwrap.descriptor>2.0.0-alpha-3</version.shrinkwrap.descriptor>
 
         <!-- arquillian versions -->
         <arquillian.bom.version>1.0.2.Final</arquillian.bom.version>
@@ -56,6 +61,7 @@
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
         <arquillian.android.version>1.0.0.Alpha1</arquillian.android.version>
         <shrinkwrap.descriptors.version>1.1.0-beta-1</shrinkwrap.descriptors.version>
+<!--         <shrinkwrap.descriptors.javaee.version>2.0.0-alpha-3</shrinkwrap.descriptors.javaee.version> -->
 
         <version.selenium>2.25.0</version.selenium>
         <version.selenium.server>2.25.0</version.selenium.server>
@@ -335,6 +341,7 @@
         <connection>scm:git:git://github.com/richfaces/qa.git</connection>
         <developerConnection>scm:git:git@github.com:richfaces/qa.git</developerConnection>
         <url>https://github.com/richfaces/qa</url>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencyManagement>
@@ -375,6 +382,17 @@
                 <groupId>org.jboss.shrinkwrap.descriptors</groupId>
                 <artifactId>shrinkwrap-descriptors-impl</artifactId>
                 <version>${shrinkwrap.descriptors.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+                <artifactId>shrinkwrap-descriptors-impl-javaee</artifactId>
+                <version>${version.shrinkwrap.descriptor}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+                <artifactId>shrinkwrap-descriptors-api-base</artifactId>
+                <version>${version.shrinkwrap.descriptor}</version>
             </dependency>
 
             <!-- Selenium Server -->
@@ -452,6 +470,57 @@
     </dependencyManagement>
 
     <profiles>
+        <profile>
+            <id>tomee-remote</id>
+            <properties>
+                <metamer.classifier>tomee</metamer.classifier>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.openejb</groupId>
+                    <artifactId>arquillian-tomee-remote</artifactId>
+                    <version>${tomee.version}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>unpack</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.apache.openejb</groupId>
+                                            <artifactId>apache-tomee</artifactId>
+                                            <version>${tomee.version}</version>
+                                            <classifier>webprofile</classifier>
+                                            <type>zip</type>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${project.build.directory}</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <arquillian.launch>tomee-remote</arquillian.launch>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>glassfish-managed-3-1</id>
             <properties>
