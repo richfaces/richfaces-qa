@@ -38,9 +38,11 @@
         </protocol>
     </container>
 
-    <container qualifier="jbossas-managed-7-1">
+    <container qualifier="jbossas-managed-7-1" default="true">
         <configuration>
-            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m ${jvm.args.jacoco}</property>
+<!--             <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m ${jvm.args.jacoco}</property> -->
+            <property name="jbossHome">target/jboss-as-7.1.1.Final</property>
+            <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m</property>
             <property name="serverConfig">standalone-full.xml</property>
         </configuration>
     </container>
@@ -68,7 +70,7 @@
         </configuration>
     </container>
 
-    <container qualifier="tomee-remote" default="true">
+    <container qualifier="tomee-remote">
         <configuration>
             <property name="httpPort">8080</property>
             <property name="stopPort">9005</property>
