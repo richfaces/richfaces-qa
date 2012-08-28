@@ -70,7 +70,7 @@
         </configuration>
     </container>
 
-    <container qualifier="tomee-remote">
+    <container qualifier="tomee-remote-1">
         <configuration>
             <property name="httpPort">8080</property>
             <property name="stopPort">9005</property>

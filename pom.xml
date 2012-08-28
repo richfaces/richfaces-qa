@@ -48,7 +48,7 @@
         <tomcat7Zip>path/to/your/tomcat/distribution/zip</tomcat7Zip>
         
         <!-- TomEE versions -->
-        <tomee.version>1.1.0-SNAPSHOT</tomee.version>
+        <tomee1.version>1.1.0-SNAPSHOT</tomee1.version>
         <version.shrinkwrap.descriptor>2.0.0-alpha-3</version.shrinkwrap.descriptor>
 
         <!-- arquillian versions -->
@@ -471,15 +471,15 @@
 
     <profiles>
         <profile>
-            <id>tomee-remote</id>
+            <id>tomee-remote-1</id>
             <properties>
-                <metamer.classifier>tomee</metamer.classifier>
+                <metamer.classifier>tomee1</metamer.classifier>
             </properties>
             <dependencies>
                 <dependency>
                     <groupId>org.apache.openejb</groupId>
                     <artifactId>arquillian-tomee-remote</artifactId>
-                    <version>${tomee.version}</version>
+                    <version>${tomee1.version}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
@@ -499,7 +499,7 @@
                                         <artifactItem>
                                             <groupId>org.apache.openejb</groupId>
                                             <artifactId>apache-tomee</artifactId>
-                                            <version>${tomee.version}</version>
+                                            <version>${tomee1.version}</version>
                                             <classifier>webprofile</classifier>
                                             <type>zip</type>
                                             <overWrite>false</overWrite>
@@ -514,7 +514,7 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <systemProperties>
-                                <arquillian.launch>tomee-remote</arquillian.launch>
+                                <arquillian.launch>tomee-remote-1</arquillian.launch>
                             </systemProperties>
                         </configuration>
                     </plugin>
