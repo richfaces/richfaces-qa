@@ -28,6 +28,7 @@ import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 
 import java.io.File;
 import java.net.URL;
+import java.util.List;
 
 import org.jboss.arquillian.ajocado.locator.IdLocator;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
@@ -42,6 +43,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.descriptor.api.Descriptors;
+import org.jboss.shrinkwrap.descriptor.api.javaee6.ParamValueType;
 import org.jboss.shrinkwrap.descriptor.api.webapp30.WebAppDescriptor;
 import org.jboss.shrinkwrap.impl.base.path.BasicPath;
 import org.jboss.test.selenium.locator.reference.LocatorReference;
@@ -95,7 +97,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
 
     @Inject
     @Templates({ "plain", "richAccordion", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richCollapsiblePanel", "richTabPanel", "richPopupPanel", "a4jRegion", "a4jRepeat", "uiRepeat" })
+            "richCollapsiblePanel", "richTabPanel", "richPopupPanel", "a4jRegion", "a4jRepeat", "uiRepeat" })
     protected TemplatesList template;
 
     /**
@@ -111,11 +113,12 @@ public abstract class AbstractMetamerTest extends Arquillian {
         WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/metamer.war"));
 
         /*
-         * If value on system property "org.richfaces.resourceMapping.enabled" is set to true, modify context-params in
-         * web.xml. For more info see https://issues.jboss.org/browse/RFPL-1682
+         * If value on system property "org.richfaces.resourceMapping.enabled" is set to true, modify context-params in web.xml.
+         * For more info see https://issues.jboss.org/browse/RFPL-1682
          */
         // Note that following code verify value of system property with given key
         if (Boolean.getBoolean(RESOURCE_MAPPING_ENABLED)) {
+            System.out.println(RESOURCE_MAPPING_ENABLED + "=true");
             Boolean compressedStages = Boolean.getBoolean(RESOURCE_MAPPING_COMPRESSED_STAGES);
             Boolean packedStages = Boolean.getBoolean(RESOURCE_MAPPING_PACKED_STAGES);
             war = updateArchiveWebXml(war, compressedStages, packedStages);
@@ -125,22 +128,31 @@ public abstract class AbstractMetamerTest extends Arquillian {
     }
 
     /*
-     * Update contex-param values in web.xml Call this function cause set org.richfaces.resourceMapping.enabled to true,
-     * and remain 2 context-params according to function params values
+     * Update contex-param values in web.xml Call this function cause set org.richfaces.resourceMapping.enabled to true, and
+     * remain 2 context-params according to function params values
      */
     private static WebArchive updateArchiveWebXml(WebArchive defaultWar, Boolean compressedStages, Boolean packedStages) {
         // 1. load existing web.xml from metamer.war
         WebAppDescriptor webXmlDefault = Descriptors.importAs(WebAppDescriptor.class).fromStream(
             defaultWar.get(new BasicPath("WEB-INF/web.xml")).getAsset().openStream());
 
-        // 2. modify web.xml according to requirements
-//        webXmlDefault.contextParam(RESOURCE_MAPPING_ENABLED, "true");
-//        if (compressedStages != null && compressedStages) {
-//            webXmlDefault.contextParam(RESOURCE_MAPPING_COMPRESSED_STAGES, "All");
-//        }
-//        if (packedStages != null && packedStages) {
-//            webXmlDefault.contextParam(RESOURCE_MAPPING_PACKED_STAGES, "All");
-//        }
+        List<ParamValueType<WebAppDescriptor>> allContextParams = webXmlDefault.getAllContextParam();
+
+        // 2. Iterate over all context params and alter the particular ones
+        for (ParamValueType<WebAppDescriptor> param : allContextParams) {
+
+            String paramName = param.getParamName();
+
+            if (paramName.equals(RESOURCE_MAPPING_ENABLED)) {
+                param.paramValue("true");
+
+            } else if (paramName.equals(RESOURCE_MAPPING_COMPRESSED_STAGES)) {
+                param.paramValue("All");
+
+            } else if (paramName.equals(RESOURCE_MAPPING_PACKED_STAGES)) {
+                param.paramValue("All");
+            }
+        }
 
         // 3. create second archive (war). Set here modified web.xml
         WebArchive modifiedWar = ShrinkWrap.create(WebArchive.class);
@@ -156,11 +168,10 @@ public abstract class AbstractMetamerTest extends Arquillian {
 
     /**
      * Factory method for creating instances of class JQueryLocator which locates the element using <a
-     * href="http://api.jquery.com/category/selectors/">JQuery Selector</a> syntax. It adds "div.content " in front of
-     * each selector.
+     * href="http://api.jquery.com/category/selectors/">JQuery Selector</a> syntax. It adds "div.content " in front of each
+     * selector.
      *
-     * @param jquerySelector
-     *            the jQuery selector
+     * @param jquerySelector the jQuery selector
      * @return the jQuery locator
      * @see JQueryLocator
      */
@@ -168,42 +179,15 @@ public abstract class AbstractMetamerTest extends Arquillian {
 
         String escapedString = jq(jquerySelector).getRawLocator();
 
-        // if (jquerySelector.trim().length() > 0 && jquerySelector.contains("[")) {
-        // escapedString = escapeSelector(jquerySelector);
-        // }
-
         return new JQueryLocator("div.content " + escapedString);
     }
 
-    /*
-     * private static String escapeSelector(String jquerySelector) {
-     *
-     * // find the text between [] int indexOpen = jquerySelector.indexOf("["); String escapedString = null;
-     *
-     * if (indexOpen != -1) { int indexClose = jquerySelector.indexOf("]"); String onlyThisNeedToBeEscaped =
-     * jquerySelector.substring( indexOpen, indexClose + 1);
-     *
-     * char[] escapedChars = { ':' }; escapedString = StringUtils.escape(onlyThisNeedToBeEscaped, escapedChars, '\\');
-     *
-     * escapedString = jquerySelector.replace(onlyThisNeedToBeEscaped, escapedString);
-     *
-     * String checkFurther= escapedString.substring(escapedString.indexOf("]"));
-     *
-     * if( checkFurther.indexOf("[") != -1 ) {
-     *
-     * String furtherEscapedPart = escapeSelector(checkFurther); escapedString = escapedString.replace(checkFurther,
-     * furtherEscapedPart); } }
-     *
-     * return escapedString; }
-     */
-
     /**
-     * This method should be called in each test class from the method with annotation @Deployment, to ensure that
-     * deployed war will contain all environment specific files. In other words when war is deployed on Tomcat or other
-     * containers needs to have some specific files, the same apply for testing with different JSF implementations.
+     * This method should be called in each test class from the method with annotation @Deployment, to ensure that deployed war
+     * will contain all environment specific files. In other words when war is deployed on Tomcat or other containers needs to
+     * have some specific files, the same apply for testing with different JSF implementations.
      *
-     * @param war
-     *            to be altered
+     * @param war to be altered
      * @return war which is altered according to the test environment
      */
     protected static WebArchive alterWarAccordingToTestEnvironment(WebArchive war) {
@@ -221,8 +205,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
     /**
      * Alter the war according to the Tomcat specifics
      *
-     * @param war
-     *            to be altered
+     * @param war to be altered
      * @return war to be altered
      */
     private static WebArchive alterAccordingToTomcat(WebArchive war) {
