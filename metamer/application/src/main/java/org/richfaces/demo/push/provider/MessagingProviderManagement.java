@@ -27,25 +27,25 @@ package org.richfaces.demo.push.provider;
  * Is able to initialize, createTopic and finalize.
  *
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public interface MessagingProviderManagement {
+
+    String IP_ADDRESS = (System.getProperty("jboss.bind.address").isEmpty() ? "localhost" : System.getProperty("jboss.bind.address"));
+
     /**
      * Initializes messaging management, called at application startup.
      *
-     * @throws InitializationFailedException
-     *             when initialize of provider fails
+     * @throws InitializationFailedException when initialize of provider fails
      */
     void initializeProvider() throws InitializationFailedException;
 
     /**
      * Creates JMS topic using this provider
      *
-     * @param topicName
-     *            the name of the topic
-     * @param jndiName
-     *            the JNDI binding to use for given topic
-     * @throws Exception
-     *             when creating of topic fails
+     * @param topicName the name of the topic
+     * @param jndiName the JNDI binding to use for given topic
+     * @throws Exception when creating of topic fails
      */
     void createTopic(String topicName, String jndiName) throws Exception;
 
