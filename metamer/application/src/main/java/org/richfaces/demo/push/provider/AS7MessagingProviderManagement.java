@@ -27,7 +27,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.jboss.as.controller.client.ModelControllerClient;
 import org.jboss.dmr.ModelNode;
 
@@ -39,10 +38,11 @@ import org.jboss.dmr.ModelNode;
 public class AS7MessagingProviderManagement implements MessagingProviderManagement {
 
     private static final Logger LOGGER = Logger.getLogger(AS7MessagingProviderManagement.class.getName());
-
     private List<ModelControllerClient> clients = new LinkedList<ModelControllerClient>();
 
+    @Override
     public void initializeProvider() throws InitializationFailedException {
+
         try {
             // tries to connect - when creating topic, own client will be created (RF-11695)
             createClient().close();
@@ -54,9 +54,12 @@ public class AS7MessagingProviderManagement implements MessagingProviderManageme
     }
 
     private ModelControllerClient createClient() throws UnknownHostException {
-        return ModelControllerClient.Factory.create("127.0.0.1", 9999);
+        //jboss as 7 (fine with 7.1) will have problems with "localhost", bind it with jboss.bind.address=127.0.0.1
+        //must be this way to support ipv6
+        return ModelControllerClient.Factory.create(IP_ADDRESS, 9999);
     }
 
+    @Override
     public void finalizeProvider() {
         try {
             for (ModelControllerClient client : clients) {
@@ -67,6 +70,7 @@ public class AS7MessagingProviderManagement implements MessagingProviderManageme
         }
     }
 
+    @Override
     public void createTopic(String topicName, String jndiName) throws Exception {
 
         // create own client for each topic creation (RF-11695)
