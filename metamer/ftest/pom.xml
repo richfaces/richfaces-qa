@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- JBoss, Home of Professional Open Source Copyright 2010-2012, Red Hat, Inc. and individual contributors by the @authors tag.
-    See the copyright.txt in the distribution for a full listing of individual contributors. This is free software; you can redistribute
-    it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either
-    version 2.1 of the License, or (at your option) any later version. This software is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser
-    General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this
-    software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the
-    FSF site: http://www.fsf.org. -->
+See the copyright.txt in the distribution for a full listing of individual contributors. This is free software; you can redistribute
+it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version. This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser
+General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this
+software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the
+FSF site: http://www.fsf.org. -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -24,7 +24,16 @@
     <name>RichFaces Metamer Ftest</name>
 
     <properties>
-
+        <!-- arquillian properties -->
+        <!-- use IPv4 by default -->
+        <jvm.args.ip>-Djava.net.preferIPv4Stack=true -Djava.net.preferIPv6Addresses=false</jvm.args.ip>
+        <!-- jvm args for all containers without setting prefered IP -->
+        <arquillian.container.all.jvm.args>-Xms1024m -Xmx1024m -XX:MaxPermSize=512m ${jvm.args.jacoco}</arquillian.container.all.jvm.args>
+        <arquillian.container.all.jvm.args.withIP>${arquillian.container.all.jvm.args} ${jvm.args.ip}</arquillian.container.all.jvm.args.withIP>
+        <!-- following will be set as system properties -->
+        <arquillian.container.jbossas.7-1.node0>127.0.0.1</arquillian.container.jbossas.7-1.node0>
+        <arquillian.container.jbossas.7-1.jvm.args>${arquillian.container.all.jvm.args.withIP} -Djboss.bind.address=${arquillian.container.jbossas.7-1.node0} -Djboss.bind.address.management=${arquillian.container.jbossas.7-1.node0} -Djboss.bind.address.unsecure=${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.jvm.args>
+        
         <templates>plain</templates>
 
         <testng.listeners>org.richfaces.tests.metamer.ftest.MatrixConfigurator,org.richfaces.tests.metamer.ftest.MetamerSeleniumLoggingTestListener,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener</testng.listeners>
@@ -168,9 +177,8 @@
                     <suiteXmlFiles>
                         <suiteXmlFiles>${testng.suite.xml}</suiteXmlFiles>
                     </suiteXmlFiles>
-                    <!-- Logging configuration for Selenium , templates -->
-                    <argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties
-                        -Dtemplates='${templates}'</argLine>
+                    <!-- Logging configuration for Selenium , templates, ip -->
+                    <argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties -Dtemplates='${templates}' ${jvm.args.ip}</argLine>
                     <properties>
                         <property>
                             <name>listener</name>
@@ -178,8 +186,9 @@
                         </property>
                     </properties>
                     <systemPropertyVariables>
-                        <jvm.args.jacoco>${jvm.args.jacoco}</jvm.args.jacoco>
-                        <!--   for arquillian.xml   -->
+                        <arquillian.container.jbossas.7-1.node0>${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.node0>
+                        <arquillian.container.jbossas.7-1.jvm.args>${arquillian.container.jbossas.7-1.jvm.args}</arquillian.container.jbossas.7-1.jvm.args>
+                        <arquillian.container.all.jvm.args>${arquillian.container.all.jvm.args}</arquillian.container.all.jvm.args>
                         <logging.props.dir>${project.basedir}/src/test/resources</logging.props.dir>
                     </systemPropertyVariables>
                 </configuration>
@@ -329,7 +338,7 @@
                     <plugin>
                         <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
-                           <!-- Copy the ant tasks jar. Needed for ts.jacoco.report-ant . -->
+                            <!-- Copy the ant tasks jar. Needed for ts.jacoco.report-ant . -->
                             <execution>
                                 <id>jacoco-dependency-ant</id>
                                 <goals>
@@ -415,7 +424,7 @@
                             </execution>
                         </executions>
                     </plugin>
-                   <!-- Ant plugin. -->
+                    <!-- Ant plugin. -->
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
                         <executions>
@@ -534,6 +543,19 @@
             <id>screenshots</id>
             <properties>
                 <testng.suite.xml>src/test/resources/testng/testng-screenshots.xml</testng.suite.xml>
+            </properties>
+        </profile>
+        <profile>
+            <!-- only jbossas-managed-7-1 supported by now -->
+            <id>ipv6</id>
+            <activation>
+                <property>
+                    <name>ipv6</name>
+                </property>
+            </activation>
+            <properties>
+                <jvm.args.ip>-Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</jvm.args.ip>
+                <arquillian.container.jbossas.7-1.node0>[::1]</arquillian.container.jbossas.7-1.node0>
             </properties>
         </profile>
     </profiles>
