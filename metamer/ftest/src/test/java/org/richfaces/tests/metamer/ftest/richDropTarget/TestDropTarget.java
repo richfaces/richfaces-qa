@@ -234,5 +234,6 @@ public class TestDropTarget extends AbstractDragNDropTest {
         drag = new Drag(draggable, drop1);
         drag.setDragIndicator(indicator);
         enterAndVerify(drop1, state);
+        drag.drop();
     }
 }
