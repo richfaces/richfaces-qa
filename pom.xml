@@ -38,7 +38,7 @@
         <version.jbossas7>7.0.2.Final</version.jbossas7>
         <version.jbossas7-1>7.1.1.Final</version.jbossas7-1>
 
-        <!-- version of Glassfish containers to use to download       -->
+        <!-- version of Glassfish containers to use and download       -->
         <version.glassfish3-1>3.1.2</version.glassfish3-1>
 
         <!-- version of Tomcat containers to use-->
@@ -47,9 +47,8 @@
         <tomcat6Zip>path/to/your/tomcat/distribution/zip</tomcat6Zip>
         <tomcat7Zip>path/to/your/tomcat/distribution/zip</tomcat7Zip>
         
-        <!-- TomEE versions -->
-        <tomee1.version>1.1.0-SNAPSHOT</tomee1.version>
-        <version.shrinkwrap.descriptor>2.0.0-alpha-3</version.shrinkwrap.descriptor>
+        <!-- versions of TomEE containers to use and download -->
+        <version.tomee1-1>1.1.0-SNAPSHOT</version.tomee1-1>
 
         <!-- arquillian versions -->
         <arquillian.bom.version>1.0.2.Final</arquillian.bom.version>
@@ -61,6 +60,7 @@
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
         <arquillian.android.version>1.0.0.Alpha1</arquillian.android.version>
         <shrinkwrap.descriptors.version>1.1.0-beta-1</shrinkwrap.descriptors.version>
+        <version.shrinkwrap.descriptor>2.0.0-alpha-3</version.shrinkwrap.descriptor>
 <!--         <shrinkwrap.descriptors.javaee.version>2.0.0-alpha-3</shrinkwrap.descriptors.javaee.version> -->
 
         <version.selenium>2.25.0</version.selenium>
@@ -471,15 +471,15 @@
 
     <profiles>
         <profile>
-            <id>tomee-remote-1</id>
+            <id>tomee-remote-1-1</id>
             <properties>
-                <metamer.classifier>tomee1</metamer.classifier>
+                <metamer.classifier>tomee11</metamer.classifier>
             </properties>
             <dependencies>
                 <dependency>
                     <groupId>org.apache.openejb</groupId>
                     <artifactId>arquillian-tomee-remote</artifactId>
-                    <version>${tomee1.version}</version>
+                    <version>${version.tomee1-1}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
@@ -499,7 +499,7 @@
                                         <artifactItem>
                                             <groupId>org.apache.openejb</groupId>
                                             <artifactId>apache-tomee</artifactId>
-                                            <version>${tomee1.version}</version>
+                                            <version>${version.tomee1-1}</version>
                                             <classifier>webprofile</classifier>
                                             <type>zip</type>
                                             <overWrite>false</overWrite>
@@ -514,7 +514,7 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <systemProperties>
-                                <arquillian.launch>tomee-remote-1</arquillian.launch>
+                                <arquillian.launch>tomee-remote-1-1</arquillian.launch>
                             </systemProperties>
                         </configuration>
                     </plugin>
