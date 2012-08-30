@@ -32,7 +32,7 @@
         <jee6.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</jee6.excluded.libraries>
         <jee6-mojarra.excluded.libraries>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</jee6-mojarra.excluded.libraries>
         <jee6-myfaces.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*</jee6-myfaces.excluded.libraries>
-        <tomee1.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*</tomee1.excluded.libraries>
+        <tomee11.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*</tomee11.excluded.libraries>
         <mojarra.excluded.libraries>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/jsp-api*</mojarra.excluded.libraries>
         <myfaces.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/jsp-api*</myfaces.excluded.libraries>
     </properties>
@@ -240,21 +240,21 @@
             </build>
         </profile>
         <profile>
-            <id>war-tomee1</id>
+            <id>war-tomee11</id>
             <build>
                 <plugins>
                     <plugin>
                         <artifactId>maven-war-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>tomee1</id>
+                                <id>tomee11</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
-                                    <classifier>tomee1</classifier>
-                                    <packagingExcludes>${tomee1.excluded.libraries}</packagingExcludes>
+                                    <classifier>tomee11</classifier>
+                                    <packagingExcludes>${tomee11.excluded.libraries}</packagingExcludes>
                                 </configuration>
                             </execution>
                         </executions>
@@ -504,14 +504,14 @@
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>tomee1</id>
+                                <id>tomee11</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>war</goal>
                                 </goals>
                                 <configuration>
-                                    <classifier>tomee1</classifier>
-                                    <packagingExcludes>${tomee1.excluded.libraries}</packagingExcludes>
+                                    <classifier>tomee11</classifier>
+                                    <packagingExcludes>${tomee11.excluded.libraries}</packagingExcludes>
                                     <attachClasses>false</attachClasses>
                                     <attachSources>false</attachSources>
                                 </configuration>
