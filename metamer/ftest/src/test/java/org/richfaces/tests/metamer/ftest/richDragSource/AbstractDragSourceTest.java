@@ -45,7 +45,6 @@ public abstract class AbstractDragSourceTest extends AbstractDragNDropTest {
 
     public void testDefaultIndicator() {
         indicator = new Indicator("defaultIndicator", drg1.get(1));
-        System.out.println("***** indicator root: " + drg1.get(1));
         indicator.setDefaultIndicator(true);
         dragSourceAttributes.set(dragIndicator, "");
 
