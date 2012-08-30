@@ -21,34 +21,18 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richDragSource;
 
-import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.dragSourceAttributes;
-import static org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes.dragIndicator;
-import static org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes.rendered;
-import static org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes.type;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.actions.Drag;
-import org.jboss.arquillian.ajocado.request.RequestType;
-import org.richfaces.tests.metamer.ftest.richDragIndicator.AbstractDragNDropTest;
-import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator;
-import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22742 $
  */
-public class TestDragSource extends AbstractDragNDropTest {
+public class TestDragSource extends AbstractDragSourceTest {
 
     @Override
     public URL getTestUrl() {
@@ -56,55 +40,24 @@ public class TestDragSource extends AbstractDragNDropTest {
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12441")
     public void testDefaultIndicator() {
-        indicator = new Indicator("defaultIndicator", drg1.get(2));
-        indicator.setDefaultIndicator(true);
-        dragSourceAttributes.set(dragIndicator, "");
-
-        drag = new Drag(drg1, drop1);
-        drag.setDragIndicator(indicator);
-        drag.setNumberOfSteps(10);
-        testMovingOverDifferentStates();
+        super.testDefaultIndicator();
     }
 
     @Test
     public void testCustomIndicator() {
-        indicator = new Indicator("ind", jq("div.rf-ind[id$=indicator2]"));
-        dragSourceAttributes.set(dragIndicator, "indicator2");
-
-        drag = new Drag(drg1, drop1);
-        drag.setDragIndicator(indicator);
-        drag.setNumberOfSteps(20);
-        testMovingOverDifferentStates();
+        super.testCustomIndicator();
     }
 
     @Test
     public void testRendered() {
-        dragSourceAttributes.set(rendered, false);
-        selenium.getPageExtensions().install();
-        selenium.getRequestGuard().clearRequestDone();
-
-        drag = new Drag(drg1, drop1);
-        drag.setDragIndicator(indicator);
-        drag.start();
-        assertFalse(indicator.isVisible());
-        drag.enter();
-        assertFalse(indicator.isVisible());
-
-        drag.drop();
-
-        waitModel.timeout(5000).waitForTimeout();
-        assertEquals(selenium.getRequestGuard().getRequestDone(), RequestType.NONE);
+        super.testRendered();
     }
 
     @Test
     public void testType() {
-        dragSourceAttributes.set(type, "drg3");
-        drag = new Drag(drg1, drop2);
-        drag.setDragIndicator(indicator);
-        enterAndVerify(drop2, IndicatorState.ACCEPTING);
-        enterAndVerify(drg2, IndicatorState.DRAGGING);
-        enterAndVerify(drop1, IndicatorState.REJECTING);
+        super.testType();
     }
 
 }
