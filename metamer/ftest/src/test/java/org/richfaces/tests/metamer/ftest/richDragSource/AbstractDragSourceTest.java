@@ -44,7 +44,7 @@ import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorSt
 public abstract class AbstractDragSourceTest extends AbstractDragNDropTest {
 
     public void testDefaultIndicator() {
-        indicator = new Indicator("defaultIndicator", drg1.get(1));
+        indicator = new Indicator("defaultIndicator", jq("body > div.ui-draggable"));
         indicator.setDefaultIndicator(true);
         dragSourceAttributes.set(dragIndicator, "");
 
