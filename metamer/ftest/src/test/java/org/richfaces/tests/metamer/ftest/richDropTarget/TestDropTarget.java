@@ -91,14 +91,20 @@ public class TestDropTarget extends AbstractDragNDropTest {
         dropTargetAttributes.set(acceptedTypes, "drg2");
 
         testAcception(drg1, REJECTING);
+        drag.drop();
         testAcception(drg2, ACCEPTING);
+        drag.drop();
         testAcception(drg3, REJECTING);
+        drag.drop();
 
         dropTargetAttributes.set(acceptedTypes, "drg1, drg3");
 
         testAcception(drg1, ACCEPTING);
+        drag.drop();
         testAcception(drg2, REJECTING);
+        drag.drop();
         testAcception(drg3, ACCEPTING);
+        drag.drop();
     }
 
     @Test
@@ -234,6 +240,5 @@ public class TestDropTarget extends AbstractDragNDropTest {
         drag = new Drag(draggable, drop1);
         drag.setDragIndicator(indicator);
         enterAndVerify(drop1, state);
-        drag.drop();
     }
 }

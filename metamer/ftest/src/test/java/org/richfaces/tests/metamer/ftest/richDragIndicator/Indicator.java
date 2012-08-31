@@ -64,7 +64,11 @@ public class Indicator extends AbstractModel<JQueryLocator> {
     }
 
     public boolean isVisible() {
-        return selenium.isVisible(this);
+        if (selenium.isElementPresent(this)) {
+            return selenium.isVisible(this);
+        } else {
+            return false;
+        }
     }
 
     public boolean belongsClass(String className) {
