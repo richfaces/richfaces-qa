@@ -44,6 +44,7 @@ import org.richfaces.event.DropEvent;
 import org.richfaces.model.SwingTreeNodeDataModelImpl;
 import org.richfaces.model.TreeDataModel;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.LabeledComparator;
 import org.richfaces.tests.metamer.bean.RichBean;
 import org.richfaces.tests.metamer.model.CompactDisc;
 import org.richfaces.tests.metamer.model.Company;
@@ -84,12 +85,7 @@ public class RichTreeBean implements Serializable {
 
     private Map<TreeNodeWithContent<Labeled>, Boolean> expanded = new HashMap<TreeNodeWithContent<Labeled>, Boolean>();
 
-    private Comparator<Labeled> labeledComparator = new Comparator<Labeled>() {
-        @Override
-        public int compare(Labeled o1, Labeled o2) {
-            return o1.getLabel().compareTo(o2.getLabel());
-        }
-    };
+    private Comparator<Labeled> labeledComparator = new LabeledComparator();
 
     /**
      * Initializes the managed bean.
