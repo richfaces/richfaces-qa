@@ -26,15 +26,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <a4j:commandButton id="expandAll" value="Expand All" action="#{richTreeBean.expandAll}" render="#{nestedComponentId}" />
-    <a4j:commandButton id="collapseAll" value="Collapse All" action="#{richTreeBean.collapseAll}" render="#{nestedComponentId}" />
+    <a4j:commandButton id="expandAll" value="Expand All" action="#{richTreeBean.expandAll}" render="richTree" />
+    <a4j:commandButton id="collapseAll" value="Collapse All" action="#{richTreeBean.collapseAll}" render="richTree" />
 
     <a4j:outputPanel id="panel" ajaxRendered="true">
         <h:panelGrid columns="2">
 
             <h:outputLabel value="Test Loading Facet:" />
             <h:selectBooleanCheckbox id="loadingFacet" value="#{richTreeBean.testLoadingFacet}">
-                <a4j:ajax render="#{nestedComponentId}" />
+                <a4j:ajax render="richTree" />
             </h:selectBooleanCheckbox>
 
             <h:outputLabel value="Delayed Render (1sec):" />
