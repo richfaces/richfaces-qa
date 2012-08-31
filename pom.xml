@@ -46,7 +46,7 @@
         <version.tomcat7>7.0.29</version.tomcat7>
         <tomcat6Zip>path/to/your/tomcat/distribution/zip</tomcat6Zip>
         <tomcat7Zip>path/to/your/tomcat/distribution/zip</tomcat7Zip>
-        
+
         <!-- versions of TomEE containers to use and download -->
         <version.tomee1-1>1.1.0-SNAPSHOT</version.tomee1-1>
 
@@ -67,8 +67,6 @@
         <version.selenium.server>2.25.0</version.selenium.server>
         <version.opera.driver>0.17</version.opera.driver>
         <version.slf4j.jbossas6>1.6.1</version.slf4j.jbossas6>
-
-        <version.jacoco.plugin>0.5.7.201204190339</version.jacoco.plugin>
 
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->
         <glassfish3-1home>${project.build.directory}/glassfish3</glassfish3-1home>
@@ -185,11 +183,6 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>buildnumber-maven-plugin</artifactId>
                     <version>1.1</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${version.jacoco.plugin}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
