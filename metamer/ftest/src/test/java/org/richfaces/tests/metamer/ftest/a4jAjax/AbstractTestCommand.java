@@ -76,7 +76,7 @@ public abstract class AbstractTestCommand extends AbstractWebDriverTest<AjaxPage
         page.input.sendKeys("some input text");
         waitRequest(command, WaitRequestType.XHR).click();
 
-        String data = ((JavascriptExecutor) driver).executeScript("return window.data").toString();
+        String data = ((JavascriptExecutor) driver).executeScript("return data").toString();
         assertEquals(data, "RichFaces 4", "Data sent with ajax request");
     }
 
@@ -150,7 +150,7 @@ public abstract class AbstractTestCommand extends AbstractWebDriverTest<AjaxPage
         ajaxAttributes.set(AjaxAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
         ajaxAttributes.set(AjaxAttributes.oncomplete, "metamerEvents += \"complete \"");
 
-        ((JavascriptExecutor) driver).executeScript("window.metamerEvents = \"\"");
+        ((JavascriptExecutor) driver).executeScript("metamerEvents = \"\"");
 
         page.input.sendKeys("RichFaces 4");
         waitRequest(command, WaitRequestType.XHR).click();
