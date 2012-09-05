@@ -91,7 +91,6 @@ public abstract class AbstractMetamerTest extends Arquillian {
     protected TextRetriever retrieveRenderChecker = retrieveText.locator(jq("#renderChecker"));
     protected TextRetriever retrieveStatusChecker = retrieveText.locator(jq("#statusCheckerOutput"));
     protected TextRetriever retrieveJsFunctionChecker = retrieveText.locator(jsFunctionChecker);
-    protected PhaseInfo phaseInfo = new PhaseInfo();
     protected LocatorReference<JQueryLocator> attributesRoot = new LocatorReference<JQueryLocator>(
         pjq("span[id$=:attributes:panel]"));
 

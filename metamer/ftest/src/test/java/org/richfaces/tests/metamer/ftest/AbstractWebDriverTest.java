@@ -1,4 +1,4 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
@@ -27,7 +27,6 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-import com.google.common.base.Predicate;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -35,8 +34,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
@@ -63,6 +64,8 @@ import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 
+import com.google.common.base.Predicate;
+
 public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends AbstractMetamerTest {
 
     @Drone
@@ -74,6 +77,7 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
     protected static final int TRIES = 20;//for guardListSize and expectedReturnJS
     private FieldDecorator fieldDecorator;
     protected DriverType driverType;
+    protected PhaseInfoWD phaseInfo = new PhaseInfoWD();
 
     public enum DriverType {
 
@@ -410,6 +414,22 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
     }
 
     /**
+     * Do a full page refresh (regular HTTP request) by triggering a command with no action bound.
+     */
+    public void fullPageRefresh() {
+        Graphene.waitModel().until(Graphene.element(page.fullPageRefreshIcon).isPresent());
+        Graphene.guardHttp(page.fullPageRefreshIcon).click();
+    }
+
+    /**
+     * Rerender all content of the page (AJAX request) by trigerring a command with no action but render bound.
+     */
+    public void rerenderAll() {
+        Graphene.waitModel().until(Graphene.element(page.rerenderAllIcon).isPresent());
+        Graphene.guardXhr(page.rerenderAllIcon).click();
+    }
+
+    /**
      * Tries to check and wait for correct size (@size) of list. Depends on list
      * of WebElements decorated with StaleReferenceAwareFieldDecorator.
      *
@@ -604,5 +624,43 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
             ignoring(StaleElementReferenceException.class);
             pollingEvery(50, TimeUnit.MILLISECONDS);
         }
+    }
+
+    /**
+     * Abstract ReloadTester for testing componen't state after reloading the page
+     *
+     * @param <T>
+     *            the type of input values which will be set, sent and then verified
+     */
+    public abstract class ReloadTester<T> {
+
+        public abstract void doRequest(T inputValue);
+
+        public abstract void verifyResponse(T inputValue);
+
+        public abstract T[] getInputValues();
+
+        public void testRerenderAll() {
+            for (T inputValue : getInputValues()) {
+                doRequest(inputValue);
+                verifyResponse(inputValue);
+                AbstractWebDriverTest.this.rerenderAll();
+                verifyResponse(inputValue);
+            }
+        }
+
+        public void testFullPageRefresh() {
+            for (T inputValue : getInputValues()) {
+                doRequest(inputValue);
+                verifyResponse(inputValue);
+                AbstractWebDriverTest.this.fullPageRefresh();
+                verifyResponse(inputValue);
+            }
+        }
+    }
+
+    protected interface IEventLaunchAction {
+
+        void launchAction();
     }
 }
