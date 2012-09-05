@@ -26,6 +26,7 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.openqa.selenium.By;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
@@ -33,13 +34,11 @@ import org.testng.annotations.Test;
 /**
  * Test case for page /faces/components/a4jAjax/hCommandButton.xhtml
  *
- * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @version $Revision: 22865 $
  */
 @RegressionTest("https://issues.jboss.org/browse/RF-10482")
 public class TestHCommandButton extends AbstractTestCommand {
-
-    private JQueryLocator button = pjq("input[type=submit][id$=commandButton]");
 
     @Override
     public URL getTestUrl() {
@@ -48,74 +47,73 @@ public class TestHCommandButton extends AbstractTestCommand {
 
     @Test
     public void testSimpleClick() {
-        testClick(button, "RichFaces 4");
+        testClick(page.button, "RichFaces 4");
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9665")
-    // </editor-fold>
+    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
     public void testSimpleClickUnicode() {
-        testClick(button, "ľščťžýáíéúôň фывацукйешгщь");
+        testClick(page.button, "ľščťžýáíéúôň фывацукйешгщь");
     }
 
     @Test
     public void testBypassUpdates() {
-        testBypassUpdates(button);
+        testBypassUpdates(page.button);
     }
 
     @Test
     public void testData() {
-        testData(button);
+         testData(page.button);
     }
 
     @Test
     public void testDisabled() {
-        testDisabled(button);
+         testDisabled(page.button);
     }
 
     @Test
     public void testExecute() {
-        testExecute(button);
+         testExecute(page.button);
     }
 
     @Test
     public void testImmediate() {
-        testImmediate(button);
+         testImmediate(page.button);
     }
 
     @Test
     public void testImmediateBypassUpdates() {
-        testImmediateBypassUpdates(button);
+         testImmediateBypassUpdates(page.button);
     }
 
     @Test
     public void testLimitRender() {
-        testLimitRender(button);
+         testLimitRender(page.button);
     }
 
     @Test
     public void testEvents() {
-        testEvents(button);
+         testEvents(page.button);
     }
 
     @Test
     public void testRender() {
-        testRender(button);
+         testRender(page.button);
     }
 
     @Test
     public void testStatus() {
-        testStatus(button);
+         testStatus(page.button);
     }
 
     @Test
     public void testFullPageRefresh() {
-        testFullPageRefresh(button);
+         testFullPageRefresh(page.button);
     }
 
     @Test(groups = { "4.Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11341")
     public void testRerenderAll() {
-        testRerenderAll(button);
+         testRerenderAll(page.button);
     }
 }

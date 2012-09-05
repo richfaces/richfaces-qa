@@ -21,97 +21,83 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.ajaxAttributes;
-import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.ajaxAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.ajocado.javascript.JavaScript;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 
 /**
  * Abstract test case for testing h:commandButton and h:commandLink with a4j:ajax.
  *
- * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22154 $
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
+ * @since 4.3.0.M2
  */
-public abstract class AbstractTestCommand extends AbstractGrapheneTest {
-
-    private JQueryLocator input = pjq("input[type=text][id$=input]");
-    private JQueryLocator output1 = pjq("div[id$=output1]");
-    private JQueryLocator output2 = pjq("div[id$=output2]");
+public abstract class AbstractTestCommand extends AbstractWebDriverTest<AjaxPage> {
 
     private LocalReloadTester reloadTester = new LocalReloadTester();
 
-    public void testClick(JQueryLocator command, String text) {
-        selenium.type(input, text);
-        guardXhr(selenium).click(command);
-        String outputValue = waitGui.failWith("Page was not updated").waitForChangeAndReturn("", retrieveText.locator(output1));
-
-        assertEquals(outputValue, text, "Wrong output1");
-        assertEquals(selenium.getText(output2), text, "Wrong output2");
+    @Override
+    protected AjaxPage createPage() {
+        return new AjaxPage();
     }
 
-    public void testBypassUpdates(JQueryLocator command) {
-        String reqTime = selenium.getText(time);
-        ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
+    public void testClick(WebElement command, String text) {
+        page.input.sendKeys(text);
 
+        waitRequest(command, WaitRequestType.XHR).click();
+
+        assertEquals(page.output1.getText(), text, "Wrong output1");
+        assertEquals(page.output2.getText(), text, "Wrong output2");
+    }
+
+    public void testBypassUpdates(WebElement command) {
+        ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
         ajaxAttributes.set(AjaxAttributes.bypassUpdates, true);
 
-        selenium.type(input, "RichFaces 4");
-        guardXhr(selenium).click(command);
-        waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
+        page.input.sendKeys("RichFaces 4");
+        waitRequest(command, WaitRequestType.XHR).click();
 
-        assertEquals(selenium.getText(output1), "", "Output should not change");
+        assertEquals(page.output1.getText(), "", "Output should not change");
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
             PhaseId.RENDER_RESPONSE);
         phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, "listener invoked");
     }
 
-    public void testData(JQueryLocator command) {
+    public void testData(WebElement command) {
         ajaxAttributes.set(AjaxAttributes.data, "RichFaces 4");
-
         ajaxAttributes.set(AjaxAttributes.oncomplete, "data = event.data");
 
-        String reqTime = selenium.getText(time);
+        page.input.sendKeys("some input text");
+        waitRequest(command, WaitRequestType.XHR).click();
 
-        selenium.type(input, "some input text");
-        guardXhr(selenium).click(command);
-        waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
-
-        String data = selenium.getEval(new JavaScript("window.data"));
+        String data = ((JavascriptExecutor) driver).executeScript("return window.data").toString();
         assertEquals(data, "RichFaces 4", "Data sent with ajax request");
     }
 
-    public void testDisabled(JQueryLocator command) {
+    public void testDisabled(WebElement command) {
         ajaxAttributes.set(AjaxAttributes.disabled, true);
 
-        selenium.type(input, "RichFaces 4");
-        guardHttp(selenium).click(command);
+        page.input.sendKeys("RichFaces 4");
+        Graphene.guardHttp(command).click();
 
-        assertEquals(selenium.getText(output1), "RichFaces 4", "Output1 should not change");
-        assertEquals(selenium.getText(output2), "RichFaces 4", "Output2 should not change");
+        assertEquals(page.output1.getText(), "RichFaces 4", "Output1 did not change");
+        assertEquals(page.output2.getText(), "RichFaces 4", "Output2 did not change");
     }
 
-    public void testExecute(JQueryLocator command) {
-        ajaxAttributes.set(AjaxAttributes.execute, "input executeChecker");
+    public void testExecute(WebElement command) {
+        ajaxAttributes.set(AjaxAttributes.execute, "[input, executeChecker]");
 
-        selenium.type(input, "RichFaces 4");
-        guardXhr(selenium).click(command);
-        waitGui.failWith("Page was not updated").waitForChangeAndReturn("", retrieveText.locator(output1));
+        page.input.sendKeys("RichFaces 4");
+        waitRequest(command, WaitRequestType.XHR).click();
 
-        JQueryLocator logItems = jq("ul.phases-list li:eq({0})");
-        for (int i = 0; i < 6; i++) {
-            if ("* executeChecker".equals(selenium.getText(logItems.format(i)))) {
+        for (WebElement element : page.phases) {
+            if ("* executeChecker".equals(element.getText())) {
                 return;
             }
         }
@@ -119,63 +105,57 @@ public abstract class AbstractTestCommand extends AbstractGrapheneTest {
         fail("Attribute execute does not work");
     }
 
-    public void testImmediate(JQueryLocator command) {
-        String reqTime = selenium.getText(time);
+    public void testImmediate(WebElement command) {
         ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
         ajaxAttributes.set(AjaxAttributes.immediate, true);
 
-        selenium.type(input, "RichFaces 4");
-        guardXhr(selenium).click(command);
-        waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
+        page.input.sendKeys("RichFaces 4");
+        waitRequest(command, WaitRequestType.XHR).click();
 
-        assertEquals(selenium.getText(output1), "RichFaces 4", "Output should change");
+        assertEquals(page.output1.getText(), "RichFaces 4", "Output1 did not change");
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
             PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
         phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "listener invoked");
     }
 
-    public void testImmediateBypassUpdates(JQueryLocator command) {
-        String reqTime = selenium.getText(time);
-
+    public void testImmediateBypassUpdates(WebElement command) {
         ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
         ajaxAttributes.set(AjaxAttributes.bypassUpdates, true);
         ajaxAttributes.set(AjaxAttributes.immediate, true);
 
-        selenium.type(input, "RichFaces 4");
-        guardXhr(selenium).click(command);
-        waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
+        page.input.sendKeys("RichFaces 4");
+        waitRequest(command, WaitRequestType.XHR).click();
 
-        assertEquals(selenium.getText(output1), "", "Output should not change");
+        assertEquals(page.output1.getText(), "", "Output 1 should not change");
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
             PhaseId.RENDER_RESPONSE);
         phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "listener invoked");
     }
 
-    public void testLimitRender(JQueryLocator command) {
+    public void testLimitRender(WebElement command) {
         ajaxAttributes.set(AjaxAttributes.limitRender, true);
 
-        String reqTime = selenium.getText(time);
+        String reqTime = page.requestTime.getText();
+        page.input.sendKeys("RichFaces 4");
+        Graphene.guardXhr(command).click();
+        Graphene.waitModel().withMessage("Page was not updated")
+            .until(Graphene.element(page.output1).textEquals("RichFaces 4"));
 
-        selenium.type(input, "RichFaces 4");
-        guardXhr(selenium).click(command);
-        waitGui.failWith("Page was not updated").waitForChange("", retrieveText.locator(output1));
-
-        assertEquals(selenium.getText(time), reqTime, "Ajax-rendered a4j:outputPanel shouldn't change");
+        assertEquals(page.requestTime.getText(), reqTime, "Ajax-rendered a4j:outputPanel shouldn't change");
     }
 
-    public void testEvents(JQueryLocator command) {
+    public void testEvents(WebElement command) {
         ajaxAttributes.set(AjaxAttributes.onbeforesubmit, "metamerEvents += \"beforesubmit \"");
         ajaxAttributes.set(AjaxAttributes.onbegin, "metamerEvents += \"begin \"");
         ajaxAttributes.set(AjaxAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
         ajaxAttributes.set(AjaxAttributes.oncomplete, "metamerEvents += \"complete \"");
 
-        selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
+        ((JavascriptExecutor) driver).executeScript("window.metamerEvents = \"\"");
 
-        selenium.type(input, "RichFaces 4");
-        guardXhr(selenium).click(command);
-        waitGui.failWith("Page was not updated").waitForChange("", retrieveText.locator(output1));
+        page.input.sendKeys("RichFaces 4");
+        waitRequest(command, WaitRequestType.XHR).click();
 
-        String[] events = selenium.getEval(new JavaScript("window.metamerEvents")).split(" ");
+        String[] events = ((JavascriptExecutor) driver).executeScript("return metamerEvents").toString().split(" ");
 
         assertEquals(events.length, 4, "4 events should be fired.");
         assertEquals(events[0], "beforesubmit", "Attribute onbeforesubmit doesn't work");
@@ -184,48 +164,52 @@ public abstract class AbstractTestCommand extends AbstractGrapheneTest {
         assertEquals(events[3], "complete", "Attribute oncomplete doesn't work");
     }
 
-    public void testRender(JQueryLocator command) {
-        ajaxAttributes.set(AjaxAttributes.render, "output1");
+    public void testRender(WebElement command) {
+        ajaxAttributes.set(AjaxAttributes.render, "[output1]");
 
-        selenium.type(input, "RichFaces 4");
-        guardXhr(selenium).click(command);
-        String outputValue = waitGui.failWith("Page was not updated").waitForChangeAndReturn("", retrieveText.locator(output1));
+        page.input.sendKeys("RichFaces 4");
+        waitRequest(command, WaitRequestType.XHR).click();
 
-        assertEquals(outputValue, "RichFaces 4", "Wrong output1");
-        assertEquals(selenium.getText(output2), "", "Wrong output2");
+        assertEquals(page.output1.getText(), "RichFaces 4", "Output1 should change");
+        assertEquals(page.output2.getText(), "", "Output2 should not change");
     }
 
-    public void testStatus(JQueryLocator command) {
+    public void testStatus(WebElement command) {
         ajaxAttributes.set(AjaxAttributes.status, "statusChecker");
 
-        String statusCheckerTime = selenium.getText(statusChecker);
-        guardXhr(selenium).click(command);
-        waitGui.failWith("Attribute status doesn't work").waitForChange(statusCheckerTime, retrieveText.locator(statusChecker));
+        String statusCheckerTime = page.statusCheckerOutput.getText();
+        Graphene.guardXhr(command).click();
+        Graphene.waitModel().withMessage("Page was not updated")
+            .until(Graphene.element(page.statusCheckerOutput).not().textEquals(statusCheckerTime));
     }
 
-    public void testRerenderAll(JQueryLocator command) {
+    public void testRerenderAll(WebElement command) {
         reloadTester.command = command;
         reloadTester.testRerenderAll();
     }
 
-    public void testFullPageRefresh(JQueryLocator command) {
+    public void testFullPageRefresh(WebElement command) {
         reloadTester.command = command;
         reloadTester.testFullPageRefresh();
     }
 
     private class LocalReloadTester extends ReloadTester<String> {
-        JQueryLocator command;
+        WebElement command;
 
         @Override
         public void doRequest(String inputValue) {
-            selenium.type(input, inputValue);
-            guardXhr(selenium).click(command);
+            String reqTime = page.requestTime.getText();
+            page.input.clear();
+            page.input.sendKeys(inputValue);
+            Graphene.guardXhr(command).click();
+            Graphene.waitModel().withMessage("Page was not updated")
+                .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
         }
 
         @Override
         public void verifyResponse(String inputValue) {
-            assertEquals(selenium.getText(output1), inputValue, "Wrong output1");
-            assertEquals(selenium.getText(output2), inputValue, "Wrong output2");
+            assertEquals(page.output1.getText(), inputValue, "Wrong output1");
+            assertEquals(page.output2.getText(), inputValue, "Wrong output2");
         }
 
         @Override
