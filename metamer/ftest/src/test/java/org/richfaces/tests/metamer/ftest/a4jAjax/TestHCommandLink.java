@@ -25,21 +25,17 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/a4jAjax/hCommandLink.xhtml
  *
- * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @version $Revision: 22327 $
  */
 @RegressionTest("https://issues.jboss.org/browse/RF-10482")
 public class TestHCommandLink extends AbstractTestCommand {
-
-    private JQueryLocator link = pjq("a[id$=commandLink]");
 
     @Override
     public URL getTestUrl() {
@@ -48,62 +44,62 @@ public class TestHCommandLink extends AbstractTestCommand {
 
     @Test
     public void testSimpleClick() {
-        testClick(link, "RichFaces 4");
+        testClick(page.link, "RichFaces 4");
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9665")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
     public void testSimpleClickUnicode() {
-        testClick(link, "ľščťžýáíéúôň фывацукйешгщь");
+        testClick(page.link, "ľščťžýáíéúôň фывацукйешгщь");
     }
 
     @Test
     public void testBypassUpdates() {
-        testBypassUpdates(link);
+        testBypassUpdates(page.link);
     }
 
     @Test
     public void testData() {
-        testData(link);
+        testData(page.link);
     }
 
     @Test
     public void testDisabled() {
-        testDisabled(link);
+        testDisabled(page.link);
     }
 
     @Test
     public void testExecute() {
-        testExecute(link);
+        testExecute(page.link);
     }
 
     @Test
     public void testImmediate() {
-        testImmediate(link);
+        testImmediate(page.link);
     }
 
     @Test
     public void testImmediateBypassUpdates() {
-        testImmediateBypassUpdates(link);
+        testImmediateBypassUpdates(page.link);
     }
 
     @Test
     public void testLimitRender() {
-        testLimitRender(link);
+        testLimitRender(page.link);
     }
 
     @Test
     public void testEvents() {
-        testEvents(link);
+        testEvents(page.link);
     }
 
     @Test
     public void testRender() {
-        testRender(link);
+        testRender(page.link);
     }
 
     @Test
     public void testStatus() {
-        testStatus(link);
+        testStatus(page.link);
     }
 }

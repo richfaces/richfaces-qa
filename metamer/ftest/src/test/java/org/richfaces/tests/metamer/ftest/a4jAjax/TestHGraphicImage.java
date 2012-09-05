@@ -21,25 +21,22 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.ajaxAttributes;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.ajaxAttributes;
+
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.jboss.arquillian.graphene.Graphene;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/a4jAjax/hGraphicImage.xhtml
  *
- * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @version $Revision: 22054 $
  */
 public class TestHGraphicImage extends AbstractTestCommand {
-
-    private JQueryLocator button = pjq("img[id$=image]");
 
     @Override
     public URL getTestUrl() {
@@ -48,64 +45,64 @@ public class TestHGraphicImage extends AbstractTestCommand {
 
     @Test
     public void testSimpleClick() {
-        testClick(button, "RichFaces 4");
+        testClick(page.image, "RichFaces 4");
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9665")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
     public void testSimpleClickUnicode() {
-        testClick(button, "ľščťžýáíéúôň фывацукйешгщь");
+        testClick(page.image, "ľščťžýáíéúôň фывацукйешгщь");
     }
 
     @Test
     public void testBypassUpdates() {
-        testBypassUpdates(button);
+        testBypassUpdates(page.image);
     }
 
     @Test
     public void testData() {
-        testData(button);
+        testData(page.image);
     }
 
     @Test
     public void testDisabled() {
         ajaxAttributes.set(AjaxAttributes.disabled, true);
 
-        guardNoRequest(selenium).click(button);
+        Graphene.guardNoRequest(page.image).click();
     }
 
     @Test
     public void testExecute() {
-        testExecute(button);
+        testExecute(page.image);
     }
 
     @Test
     public void testImmediate() {
-        testImmediate(button);
+        testImmediate(page.image);
     }
 
     @Test
     public void testImmediateBypassUpdates() {
-        testImmediateBypassUpdates(button);
+        testImmediateBypassUpdates(page.image);
     }
 
     @Test
     public void testLimitRender() {
-        testLimitRender(button);
+        testLimitRender(page.image);
     }
 
     @Test
     public void testEvents() {
-        testEvents(button);
+        testEvents(page.image);
     }
 
     @Test
     public void testRender() {
-        testRender(button);
+        testRender(page.image);
     }
 
     @Test
     public void testStatus() {
-        testStatus(button);
+        testStatus(page.image);
     }
 }
