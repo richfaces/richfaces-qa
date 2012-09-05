@@ -21,12 +21,15 @@
  */
 package org.richfaces.tests.metamer.ftest.webdriver;
 
+import static org.jboss.arquillian.ajocado.Graphene.id;
 import static org.testng.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.faces.event.PhaseId;
+
+import org.jboss.arquillian.ajocado.locator.IdLocator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
@@ -44,6 +47,10 @@ public class MetamerPage {
     public WebElement statusCheckerOutput;
     @FindBy(css = "span[id$=renderChecker]")
     public WebElement renderCheckerOutput;
+    @FindBy(css = "[id$=fullPageRefreshImage]")
+    public WebElement fullPageRefreshIcon;
+    @FindBy(css = "[id$=reRenderAllImage]")
+    public WebElement rerenderAllIcon;
 
     public List<String> getPhases() {
         List<String> result = new ArrayList<String>();
