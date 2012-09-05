@@ -25,19 +25,15 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page /faces/components/a4jAjax/hSelectManyMenu.xhtml
  *
- * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 21287 $
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
+ * @since 4.3.0.M2
  */
 public class TestHSelectManyMenu extends AbstractTestSelectMany {
-
-    private JQueryLocator input = pjq("select[id$=selectManyMenu]");
 
     @Override
     public URL getTestUrl() {
@@ -46,56 +42,56 @@ public class TestHSelectManyMenu extends AbstractTestSelectMany {
 
     @Test
     public void testSimpleClick() {
-        testClick(input);
+        testClick(page.selectManyMenu);
     }
 
     @Test
     public void testBypassUpdates() {
-        testBypassUpdates(input);
+        testBypassUpdates(page.selectManyMenu);
     }
 
     @Test
     public void testData() {
-        testData(input);
+        testData(page.selectManyMenu);
     }
 
     @Test
     public void testDisabled() {
-        testDisabled(input);
+        testDisabled(page.selectManyMenu);
     }
 
     @Test
     public void testExecute() {
-        testExecute(input);
+        testExecute(page.selectManyMenu);
     }
 
     @Test
     public void testImmediate() {
-        testImmediate(input);
+        testImmediate(page.selectManyMenu);
     }
 
     @Test
     public void testImmediateBypassUpdates() {
-        testImmediateBypassUpdates(input);
+        testImmediateBypassUpdates(page.selectManyMenu);
     }
 
     @Test
     public void testLimitRender() {
-        testLimitRender(input);
+        testLimitRender(page.selectManyMenu);
     }
 
     @Test
     public void testEvents() {
-        testEvents(input);
+        testEvents(page.selectManyMenu);
     }
 
     @Test
     public void testRender() {
-        testRender(input);
+        testRender(page.selectManyMenu);
     }
 
     @Test
     public void testStatus() {
-        testStatus(input);
+        testStatus(page.selectManyMenu);
     }
 }

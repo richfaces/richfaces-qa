@@ -14,6 +14,8 @@
             <class name="org.richfaces.tests.metamer.ftest.a4jAjax.TestHCommandButton" />
             <class name="org.richfaces.tests.metamer.ftest.a4jAjax.TestHCommandLink" />
             <class name="org.richfaces.tests.metamer.ftest.a4jAjax.TestHGraphicImage" />
+            <class name="org.richfaces.tests.metamer.ftest.a4jAjax.TestHSelectManyListbox" />
+            <class name="org.richfaces.tests.metamer.ftest.a4jAjax.TestHSelectManyMenu" />
             <class name="org.richfaces.tests.metamer.ftest.a4jCommandButton.TestA4JCommandButton" />
             <class name="org.richfaces.tests.metamer.ftest.a4jMediaOutput.TestElementAWebDriver" />
             <class name="org.richfaces.tests.metamer.ftest.richAutocomplete.TestAutocompleteValidationMessages" />

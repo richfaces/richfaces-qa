@@ -25,18 +25,15 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/a4jAjax/hSelectManyListbox.xhtml
  *
- * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 21287 $
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
+ * @since 4.3.0.M2
  */
 public class TestHSelectManyListbox extends AbstractTestSelectMany {
-
-    private JQueryLocator input = pjq("select[id$=selectManyListbox]");
 
     @Override
     public URL getTestUrl() {
@@ -45,56 +42,56 @@ public class TestHSelectManyListbox extends AbstractTestSelectMany {
 
     @Test
     public void testSimpleClick() {
-        testClick(input);
+        testClick(page.selectManyListbox);
     }
 
     @Test
     public void testBypassUpdates() {
-        testBypassUpdates(input);
+        testBypassUpdates(page.selectManyListbox);
     }
 
     @Test
     public void testData() {
-        testData(input);
+        testData(page.selectManyListbox);
     }
 
     @Test
     public void testDisabled() {
-        testDisabled(input);
+        testDisabled(page.selectManyListbox);
     }
 
     @Test
     public void testExecute() {
-        testExecute(input);
+        testExecute(page.selectManyListbox);
     }
 
     @Test
     public void testImmediate() {
-        testImmediate(input);
+        testImmediate(page.selectManyListbox);
     }
 
     @Test
     public void testImmediateBypassUpdates() {
-        testImmediateBypassUpdates(input);
+        testImmediateBypassUpdates(page.selectManyListbox);
     }
 
     @Test
     public void testLimitRender() {
-        testLimitRender(input);
+        testLimitRender(page.selectManyListbox);
     }
 
     @Test
     public void testEvents() {
-        testEvents(input);
+        testEvents(page.selectManyListbox);
     }
 
     @Test
     public void testRender() {
-        testRender(input);
+        testRender(page.selectManyListbox);
     }
 
     @Test
     public void testStatus() {
-        testStatus(input);
+        testStatus(page.selectManyListbox);
     }
 }
