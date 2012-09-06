@@ -22,22 +22,22 @@
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.ajaxAttributes;
+import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page /faces/components/a4jAjax/hSelectOneListbox.xhtml
  *
- * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 21287 $
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
+ * @since 4.3.0.M2
  */
-public class TestHSelectOneListbox extends AbstractTestSelectOne {
-
-    private JQueryLocator input = pjq("select[id$=selectOneListbox]");
+public class TestHSelectOneListbox extends AbstractTestSelectMany {
 
     @Override
     public URL getTestUrl() {
@@ -46,56 +46,82 @@ public class TestHSelectOneListbox extends AbstractTestSelectOne {
 
     @Test
     public void testSimpleClick() {
-        testClick(input);
+        super.testClick();
     }
 
     @Test
     public void testBypassUpdates() {
-        testBypassUpdates(input);
+        super.testBypassUpdates();
     }
 
     @Test
     public void testData() {
-        testData(input);
+        super.testData();
     }
 
     @Test
     public void testDisabled() {
-        testDisabled(input);
+        ajaxAttributes.set(AjaxAttributes.disabled, true);
+        Graphene.guardNoRequest(new Select(page.selectOneListbox)).selectByValue("Audi");
     }
 
     @Test
     public void testExecute() {
-        testExecute(input);
+        super.testExecute();
     }
 
     @Test
     public void testImmediate() {
-        testImmediate(input);
+        super.testImmediate();
     }
 
     @Test
     public void testImmediateBypassUpdates() {
-        testImmediateBypassUpdates(input);
+        super.testImmediateBypassUpdates();
     }
 
     @Test
     public void testLimitRender() {
-        testLimitRender(input);
+        super.testLimitRender("Audi");
     }
 
     @Test
     public void testEvents() {
-        testEvents(input);
+        super.testEvents();
     }
 
     @Test
     public void testRender() {
-        testRender(input);
+        super.testRender();
     }
 
     @Test
     public void testStatus() {
-        testStatus(input);
+        super.testStatus();
+    }
+
+    @Override
+    public void performAction() {
+        Graphene.guardXhr(new Select(page.selectOneListbox)).selectByValue("Audi");
+    }
+
+    @Override
+    public void assertOutput1Changed() {
+        assertEquals(page.output1.getText(), "Audi", "Output1 should change");
+    }
+
+    @Override
+    public void assertOutput1NotChanged() {
+        assertEquals(page.output1.getText(), "Ferrari", "Output1 should not change");
+    }
+
+    @Override
+    public void assertOutput2Changed() {
+        assertEquals(page.output2.getText(), "Audi", "Output2 should change");
+    }
+
+    @Override
+    public void assertOutput2NotChanged() {
+        assertEquals(page.output2.getText(), "Ferrari", "Output2 should not change");
     }
 }

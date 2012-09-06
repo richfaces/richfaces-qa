@@ -41,8 +41,12 @@ public class AjaxPage extends MetamerPage {
     WebElement input;
     @FindBy(css = "select[id$=selectManyListbox]")
     WebElement selectManyListbox;
+    @FindBy(css = "select[id$=selectOneListbox]")
+    WebElement selectOneListbox;
     @FindBy(css = "select[id$=selectManyMenu]")
     WebElement selectManyMenu;
+    @FindBy(css = "select[id$=selectOneMenu]")
+    WebElement selectOneMenu;
     @FindBy(css = "[id$=output1]")
     WebElement output1;
     @FindBy(css = "[id$=output2]")
