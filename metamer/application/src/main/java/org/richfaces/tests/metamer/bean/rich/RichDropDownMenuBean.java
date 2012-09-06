@@ -26,8 +26,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 
@@ -128,6 +130,10 @@ public class RichDropDownMenuBean implements Serializable {
     public String doExit() {
         this.current = "Exit";
         return null;
+    }
+    
+    public void addMessage() {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Test message..."));
     }
 
     public List<SelectItemGroup> getDynamicMenuGroups() {
