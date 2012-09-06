@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.ajaxAttributes;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
@@ -39,7 +38,9 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M2
  */
-public abstract class AbstractTestSelectMany extends AbstractWebDriverTest<AjaxPage> {
+public abstract class AbstractAjaxTest extends AbstractWebDriverTest<AjaxPage> {
+
+    private LocalReloadTester reloadTester = new LocalReloadTester();
 
     @Override
     protected AjaxPage createPage() {
@@ -185,6 +186,39 @@ public abstract class AbstractTestSelectMany extends AbstractWebDriverTest<AjaxP
             .until(Graphene.element(page.statusCheckerOutput).not().textEquals(statusCheckerTime));
     }
 
+    public void testRerenderAll() {
+        reloadTester.testRerenderAll();
+    }
+
+    public void testFullPageRefresh() {
+        reloadTester.testFullPageRefresh();
+    }
+
+    private class LocalReloadTester extends ReloadTester<String> {
+
+        @Override
+        public void doRequest(String inputValue) {
+            String reqTime = page.requestTime.getText();
+            performAction(inputValue);
+            Graphene.waitModel().withMessage("Page was not updated")
+                .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
+        }
+
+        @Override
+        public void verifyResponse(String inputValue) {
+            assertEquals(page.output1.getText(), inputValue, "Wrong output1");
+            assertEquals(page.output2.getText(), inputValue, "Wrong output2");
+        }
+
+        @Override
+        public String[] getInputValues() {
+            return new String[] { "RichFaces 3", "RichFaces 4" };
+        }
+    };
+
+    public void performAction(String input) {
+        // intentionally empty
+    }
     public abstract void performAction();
     public abstract void assertOutput1Changed();
     public abstract void assertOutput1NotChanged();
