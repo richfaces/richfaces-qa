@@ -1,23 +1,23 @@
 /**
- * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
+ *  JBoss, Home of Professional Open Source
+ *  Copyright 2012, Red Hat, Inc. and individual contributors
+ *  by the @authors tag. See the copyright.txt in the distribution for a
+ *  full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
+ *  This is free software; you can redistribute it and/or modify it
+ *  under the terms of the GNU Lesser General Public License as
+ *  published by the Free Software Foundation; either version 2.1 of
+ *  the License, or (at your option) any later version.
  *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ *  This software is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *  Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this software; if not, write to the Free
+ *  Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ *  02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.richfaces.tests.metamer.ftest.a4jCommandButton;
 
@@ -43,7 +43,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ *  @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestA4JCommandButton extends AbstractWebDriverTest<TestA4JCommandButton.CommandButtonPage> {
 
@@ -56,9 +56,9 @@ public class TestA4JCommandButton extends AbstractWebDriverTest<TestA4JCommandBu
     private static final String STRING_UNICODE1 = "ľščťžýáíéňô";
     private static final String STRING_UNICODE2 = "ľščťžý";
     private static final String STRING_UNICODE3 = "ĽŠČŤŽÝÁÍÉŇÔ";
-    private static final String STRING_ACTIONLISTENER_MSG = "* action listener invoked";
-    private static final String STRING_ACTION_MSG = "* action invoked";
-    private static final String STRING_EXECUTE_CHECKER_MSG = "* executeChecker";
+    private static final String STRING_ACTIONLISTENER_MSG = "action listener invoked";
+    private static final String STRING_ACTION_MSG = "action invoked";
+    private static final String STRING_EXECUTE_CHECKER_MSG = "executeChecker";
     @Inject
     @Use(empty = false)
     private String type;
@@ -124,8 +124,9 @@ public class TestA4JCommandButton extends AbstractWebDriverTest<TestA4JCommandBu
         page.verifyOutput1Text("");
         page.verifyOutput2Text("");
         page.verifyOutput3Text("");
-        page.assertPhasesDontContainSomeOf(PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION);
-        page.assertPhasesContainAllOf(STRING_ACTIONLISTENER_MSG, STRING_ACTION_MSG);
+        phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS, PhaseId.RENDER_RESPONSE);
+        phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, STRING_ACTIONLISTENER_MSG);
+        phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, STRING_ACTION_MSG);
     }
 
     @Test
@@ -148,7 +149,7 @@ public class TestA4JCommandButton extends AbstractWebDriverTest<TestA4JCommandBu
     public void testExecute() {
         commandButtonAttributes.set(CommandButtonAttributes.execute, "input executeChecker");
         page.typeToInputAndSubmitAndWaitUntilOutput1Changes(STRING_RF1);
-        page.assertPhasesContainAllOf(STRING_EXECUTE_CHECKER_MSG);
+        phaseInfo.assertListener(PhaseId.UPDATE_MODEL_VALUES, STRING_EXECUTE_CHECKER_MSG);
     }
 
     @Test
@@ -158,8 +159,10 @@ public class TestA4JCommandButton extends AbstractWebDriverTest<TestA4JCommandBu
         page.verifyOutput1Text("");
         page.verifyOutput2Text("");
         page.verifyOutput3Text("");
-        page.assertPhasesDontContainSomeOf(PhaseId.PROCESS_VALIDATIONS, PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION);
-        page.assertPhasesContainAllOf(STRING_ACTIONLISTENER_MSG, STRING_ACTION_MSG);
+
+        phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
+        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, STRING_ACTIONLISTENER_MSG);
+        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, STRING_ACTION_MSG);
     }
 
     @Test
