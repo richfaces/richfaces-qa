@@ -22,11 +22,12 @@
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.ajaxAttributes;
+import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.openqa.selenium.By;
+import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
@@ -35,10 +36,10 @@ import org.testng.annotations.Test;
  * Test case for page /faces/components/a4jAjax/hCommandButton.xhtml
  *
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
- * @version $Revision: 22865 $
+ * @since 4.3.0.M2
  */
 @RegressionTest("https://issues.jboss.org/browse/RF-10482")
-public class TestHCommandButton extends AbstractTestCommand {
+public class TestHCommandButton extends AbstractAjaxTest {
 
     @Override
     public URL getTestUrl() {
@@ -47,73 +48,119 @@ public class TestHCommandButton extends AbstractTestCommand {
 
     @Test
     public void testSimpleClick() {
-        testClick(page.button, "RichFaces 4");
+        page.input.sendKeys("RichFaces 4");
+        waitRequest(page.button, WaitRequestType.XHR).click();
+
+        assertOutput1Changed();
+        assertOutput2Changed();
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-9665")
     public void testSimpleClickUnicode() {
-        testClick(page.button, "ľščťžýáíéúôň фывацукйешгщь");
+        page.input.sendKeys("ľščťžýáíéúôň фывацукйешгщь");
+        waitRequest(page.button, WaitRequestType.XHR).click();
+
+        assertEquals(page.output1.getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output2 should change");
+        assertEquals(page.output2.getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output2 should change");
     }
 
     @Test
     public void testBypassUpdates() {
-        testBypassUpdates(page.button);
+        super.testBypassUpdates();
     }
 
     @Test
     public void testData() {
-         testData(page.button);
+        super.testData();
     }
 
     @Test
     public void testDisabled() {
-         testDisabled(page.button);
+        ajaxAttributes.set(AjaxAttributes.disabled, true);
+
+        page.input.sendKeys("RichFaces 4");
+        Graphene.guardHttp(page.button).click();
+
+        assertOutput1Changed();
+        assertOutput2Changed();
     }
 
     @Test
     public void testExecute() {
-         testExecute(page.button);
+        super.testExecute();
     }
 
     @Test
     public void testImmediate() {
-         testImmediate(page.button);
+        super.testImmediate();
     }
 
     @Test
     public void testImmediateBypassUpdates() {
-         testImmediateBypassUpdates(page.button);
+        super.testImmediateBypassUpdates();
     }
 
     @Test
     public void testLimitRender() {
-         testLimitRender(page.button);
+        super.testLimitRender("RichFaces 4");
     }
 
     @Test
     public void testEvents() {
-         testEvents(page.button);
+        super.testEvents();
     }
 
     @Test
     public void testRender() {
-         testRender(page.button);
+        super.testRender();
     }
 
     @Test
     public void testStatus() {
-         testStatus(page.button);
+        super.testStatus();
     }
 
     @Test
     public void testFullPageRefresh() {
-         testFullPageRefresh(page.button);
+         super.testFullPageRefresh();
     }
 
     @Test(groups = { "4.Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11341")
     public void testRerenderAll() {
-         testRerenderAll(page.button);
+         super.testRerenderAll();
+    }
+
+    @Override
+    public void performAction() {
+        page.input.sendKeys("RichFaces 4");
+        Graphene.guardXhr(page.button).click();
+    }
+
+    public void performAction(String input) {
+        page.input.clear();
+        page.input.sendKeys(input);
+        Graphene.guardXhr(page.button).click();
+    }
+
+    @Override
+    public void assertOutput1Changed() {
+        assertEquals(page.output1.getText(), "RichFaces 4", "Output1 should change");
+    }
+
+    @Override
+    public void assertOutput1NotChanged() {
+        assertEquals(page.output1.getText(), "", "Output1 should not change");
+    }
+
+    @Override
+    public void assertOutput2Changed() {
+        assertEquals(page.output2.getText(), "RichFaces 4", "Output2 should change");
+    }
+
+    @Override
+    public void assertOutput2NotChanged() {
+        assertEquals(page.output2.getText(), "", "Output2 should not change");
     }
 }
