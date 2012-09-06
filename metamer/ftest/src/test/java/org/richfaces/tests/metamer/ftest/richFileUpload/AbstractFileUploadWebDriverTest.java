@@ -60,7 +60,7 @@ public abstract class AbstractFileUploadWebDriverTest extends AbstractWebDriverT
      * @param filename
      * @param willBeAccepted
      */
-    protected void sendFileToInput(String filename, boolean willBeAccepted) {
+    protected void sendFileToInputWithWaiting(String filename, boolean willBeAccepted) {
         File file = null;
         try {
             file = new File(AbstractFileUploadWebDriverTest.class.getResource(filename).toURI());
@@ -85,8 +85,8 @@ public abstract class AbstractFileUploadWebDriverTest extends AbstractWebDriverT
      * @param willBeAccepted
      * @param willBeUploaded
      */
-    protected void sendFile(String filename, boolean willBeAccepted, boolean willBeUploaded) {
-        sendFileToInput(filename, willBeAccepted);
+    protected void sendFileWithWaiting(String filename, boolean willBeAccepted, boolean willBeUploaded) {
+        sendFileToInputWithWaiting(filename, willBeAccepted);
         if (willBeUploaded) {
             waitRequest(page.uploadButton, AbstractWebDriverTest.WaitRequestType.HTTP).click();
         } else {
@@ -109,8 +109,8 @@ public abstract class AbstractFileUploadWebDriverTest extends AbstractWebDriverT
         } else {
             for (int i = 1; i <= expectedNumberOfFiles; i++) {
                 new WDWait().failWith("Expected number of files was not added to uploaded files list.").
-                        until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='rf-fu-itm'][" + i + "]"
-                        + "//span[@class='rf-fu-itm-st']")));
+                        until(ExpectedConditions.visibilityOfElementLocated(
+                        By.xpath("//span[contains(@id, 'uploadedFilesPanel')]//ul //li[" + i + "]")));
             }
         }
     }

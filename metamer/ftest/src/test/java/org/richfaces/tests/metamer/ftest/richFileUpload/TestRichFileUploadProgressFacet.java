@@ -51,7 +51,7 @@ public class TestRichFileUploadProgressFacet extends AbstractFileUploadWebDriver
         fileUploadAttributes.set(FileUploadAttributes.onfilesubmit, "window.stop()");
 
         //send file to server, the file will not be shown in uploaded files list, because we stop the rendering before it
-        sendFile(acceptableFile, true, false);
+        sendFileWithWaiting(acceptableFile, true, false);
 
         new WebDriverWait(driver, 5).failWith("Progress bar should be displayed.").until(ElementDisplayed.getInstance().element(page.customPB));
     }
@@ -59,7 +59,7 @@ public class TestRichFileUploadProgressFacet extends AbstractFileUploadWebDriver
     @Test
     public void testCustomProgressBarPresenceAfterFinishedUpload() {
         //send file to server
-        sendFile(acceptableFile, true, true);
+        sendFileWithWaiting(acceptableFile, true, true);
 
         new WebDriverWait(driver, 5).failWith("Done label should be on displayed after upload.").until(ElementDisplayed.getInstance().element(page.uploadStatusLabel));
         new WebDriverWait(driver, 5).failWith("Progress bar should not be displayed after upload is completed.").until(ElementNotDisplayed.getInstance().element(page.customPB));

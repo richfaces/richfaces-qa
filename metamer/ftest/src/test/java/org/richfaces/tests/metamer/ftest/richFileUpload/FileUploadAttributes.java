@@ -41,6 +41,7 @@ public enum FileUploadAttributes implements AttributeEnum {
     execute,//tested in se2
     fileUploadListener,
     id,
+    immediateUpload,//tested in se2
     lang,
     limitRender,//tested in se2
     listHeight,
@@ -52,6 +53,7 @@ public enum FileUploadAttributes implements AttributeEnum {
     onclick,
     oncomplete,//tested in se2 not working "https://issues.jboss.org/browse/RF-12037"
     ondblclick,
+    onfileselect,//tested in se2
     onfilesubmit,//tested in se2
     onkeydown,
     onkeypress,
