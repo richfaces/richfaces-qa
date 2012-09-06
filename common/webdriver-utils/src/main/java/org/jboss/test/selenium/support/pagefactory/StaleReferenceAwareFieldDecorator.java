@@ -1,24 +1,23 @@
 /**
- * *****************************************************************************
- * JBoss, Home of Professional Open Source Copyright 2010-2012, Red Hat, Inc.
- * and individual contributors by the @authors tag. See the copyright.txt in the
- * distribution for a full listing of individual contributors.
+ * JBoss, Home of Professional Open Source
+ * Copyright 2012, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * This software is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this software; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
- * site: http://www.fsf.org.
- * *****************************************************************************
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.jboss.test.selenium.support.pagefactory;
 
@@ -131,7 +130,7 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
         }
     }
 
-    private class StaleReferenceAwareElementsLocator extends LocatingElementListHandler {
+    protected class StaleReferenceAwareElementsLocator extends LocatingElementListHandler {
 
         private final ElementLocator locator;
         private final ClassLoader loader;
@@ -142,13 +141,19 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
             this.loader = loader;
         }
 
+        private List<WebElement> findListElementsAgain() {
+            return locator.findElements();
+        }
+
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            List<WebElement> elements = locator.findElements();
+            List<WebElement> elements = findListElementsAgain();
             InvocationHandler handler;
             List<WebElement> wrappedResult = new ArrayList<WebElement>();
+            //create proxy for each element
+            //list element will be located by its position in list
             for (int i = 0; i < elements.size(); i++) {
-                handler = new WrapperForListWebElement(elements.get(i));
+                handler = new WrapperForListWebElement(elements.get(i), i, this);
                 wrappedResult.add((WebElement) Proxy.newProxyInstance(loader, new Class[]{ WebElement.class,
                             WrapsElement.class, Locatable.class }, handler));
             }
@@ -158,23 +163,32 @@ public class StaleReferenceAwareFieldDecorator extends DefaultFieldDecorator {
 
     private class WrapperForListWebElement implements InvocationHandler {
 
-        private final WebElement element;
+        private WebElement element;
+        private final StaleReferenceAwareElementsLocator locator;
+        private final int positionInList;
 
-        public WrapperForListWebElement(WebElement element) {
+        public WrapperForListWebElement(WebElement element, int positionInList, StaleReferenceAwareElementsLocator locator) {
             this.element = element;
+            this.positionInList = positionInList;
+            this.locator = locator;
         }
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            List<WebElement> foundedList;
             for (int i = 0; i < numberOfTries; i++) {
                 try {
-                    return method.invoke(element, args);
+                    foundedList = locator.findListElementsAgain();
+                    if (foundedList.size() - 1 >= positionInList) {
+                        element = foundedList.get(positionInList);
+                        return method.invoke(element, args);
+                    }
                 } catch (StaleElementReferenceException ignored) {
                     waitSomeTime();
                 }
             }
-            throw new RuntimeException("Cannot invoke " + method.getName() + " on element " + element
-                    + ". Cannot find it");
+            throw new RuntimeException("Cannot invoke " + method.getName() + " on list element " + element
+                    + " at index [" + positionInList + "]. Cannot find it");
         }
     }
 }
