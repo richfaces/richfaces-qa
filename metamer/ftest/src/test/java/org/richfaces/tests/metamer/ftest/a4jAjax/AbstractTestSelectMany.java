@@ -31,7 +31,6 @@ import javax.faces.event.PhaseId;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 
 /**
@@ -47,37 +46,37 @@ public abstract class AbstractTestSelectMany extends AbstractWebDriverTest<AjaxP
         return new AjaxPage();
     }
 
-    public void testClick(WebElement input) {
+    public void testClick() {
         String reqTime = page.requestTime.getText();
-        Graphene.guardXhr(new Select(input)).selectByValue("Audi");
+        performAction();
         Graphene.waitModel().withMessage("Page was not updated")
             .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
 
-        assertEquals(page.output1.getText(), "[Audi, Ferrari, Lexus]", "Output1 should change");
-        assertEquals(page.output2.getText(), "[Audi, Ferrari, Lexus]", "Output2 should change");
+        assertOutput1Changed();
+        assertOutput2Changed();
     }
 
-    public void testBypassUpdates(WebElement input) {
+    public void testBypassUpdates() {
         ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
         ajaxAttributes.set(AjaxAttributes.bypassUpdates, true);
 
         String reqTime = page.requestTime.getText();
-        Graphene.guardXhr(new Select(input)).selectByValue("Audi");
+        performAction();
         Graphene.waitModel().withMessage("Page was not updated")
             .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
 
-        assertEquals(page.output1.getText(), "[Ferrari, Lexus]", "Output1 should not change");
+        assertOutput1NotChanged();
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
             PhaseId.RENDER_RESPONSE);
         phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, "listener invoked");
     }
 
-    public void testData(WebElement input) {
+    public void testData() {
         ajaxAttributes.set(AjaxAttributes.data, "RichFaces 4 data");
         ajaxAttributes.set(AjaxAttributes.oncomplete, "data = event.data");
 
         String reqTime = page.requestTime.getText();
-        Graphene.guardXhr(new Select(input)).selectByValue("Audi");
+        performAction();
         Graphene.waitModel().withMessage("Page was not updated")
             .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
 
@@ -85,17 +84,11 @@ public abstract class AbstractTestSelectMany extends AbstractWebDriverTest<AjaxP
         assertEquals(data, "RichFaces 4 data", "Data sent with ajax request");
     }
 
-    public void testDisabled(WebElement input) {
-        ajaxAttributes.set(AjaxAttributes.disabled, true);
-
-        Graphene.guardNoRequest(new Select(input)).selectByValue("Audi");
-    }
-
-    public void testExecute(WebElement input) {
+    public void testExecute() {
         ajaxAttributes.set(AjaxAttributes.execute, "[input, executeChecker]");
 
         String reqTime = page.requestTime.getText();
-        Graphene.guardXhr(new Select(input)).selectByValue("Audi");
+        performAction();
         Graphene.waitModel().withMessage("Page was not updated")
             .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
 
@@ -108,49 +101,49 @@ public abstract class AbstractTestSelectMany extends AbstractWebDriverTest<AjaxP
         fail("Attribute execute does not work");
     }
 
-    public void testImmediate(WebElement input) {
+    public void testImmediate() {
         ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
         ajaxAttributes.set(AjaxAttributes.immediate, true);
 
         String reqTime = page.requestTime.getText();
-        Graphene.guardXhr(new Select(input)).selectByValue("Audi");
+        performAction();
         Graphene.waitModel().withMessage("Page was not updated")
             .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
 
-        assertEquals(page.output1.getText(), "[Audi, Ferrari, Lexus]", "Output1 should change");
+        assertOutput1Changed();
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
             PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
         phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "listener invoked");
     }
 
-    public void testImmediateBypassUpdates(WebElement input) {
+    public void testImmediateBypassUpdates() {
         ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
         ajaxAttributes.set(AjaxAttributes.bypassUpdates, true);
         ajaxAttributes.set(AjaxAttributes.immediate, true);
 
         String reqTime = page.requestTime.getText();
-        Graphene.guardXhr(new Select(input)).selectByValue("Audi");
+        performAction();
         Graphene.waitModel().withMessage("Page was not updated")
             .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
 
-        assertEquals(page.output1.getText(), "[Ferrari, Lexus]", "Output1 should not change");
+        assertOutput1NotChanged();
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
             PhaseId.RENDER_RESPONSE);
         phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "listener invoked");
     }
 
-    public void testLimitRender(WebElement input) {
+    public void testLimitRender(String expectedOutput) {
         ajaxAttributes.set(AjaxAttributes.limitRender, true);
 
         String reqTime = page.requestTime.getText();
-        Graphene.guardXhr(new Select(input)).selectByValue("Audi");
+        performAction();
         Graphene.waitModel().withMessage("Page was not updated")
-            .until(Graphene.element(page.output1).textEquals("[Audi, Ferrari, Lexus]"));
+            .until(Graphene.element(page.output1).textEquals(expectedOutput));
 
         assertEquals(page.requestTime.getText(), reqTime, "Ajax-rendered a4j:outputPanel shouldn't change");
     }
 
-    public void testEvents(WebElement input) {
+    public void testEvents() {
         ajaxAttributes.set(AjaxAttributes.onbeforesubmit, "metamerEvents += \"beforesubmit \"");
         ajaxAttributes.set(AjaxAttributes.onbegin, "metamerEvents += \"begin \"");
         ajaxAttributes.set(AjaxAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
@@ -158,7 +151,7 @@ public abstract class AbstractTestSelectMany extends AbstractWebDriverTest<AjaxP
 
         ((JavascriptExecutor) driver).executeScript("metamerEvents = \"\"");
         String reqTime = page.requestTime.getText();
-        Graphene.guardXhr(new Select(input)).selectByValue("Audi");
+        performAction();
         Graphene.waitModel().withMessage("Page was not updated")
             .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
 
@@ -171,24 +164,30 @@ public abstract class AbstractTestSelectMany extends AbstractWebDriverTest<AjaxP
         assertEquals(events[3], "complete", "Attribute oncomplete doesn't work");
     }
 
-    public void testRender(WebElement input) {
+    public void testRender() {
         ajaxAttributes.set(AjaxAttributes.render, "[output1]");
 
         String reqTime = page.requestTime.getText();
-        Graphene.guardXhr(new Select(input)).selectByValue("Audi");
+        performAction();
         Graphene.waitModel().withMessage("Page was not updated")
             .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
 
-        assertEquals(page.output1.getText(), "[Audi, Ferrari, Lexus]", "Output1 should change");
-        assertEquals(page.output2.getText(), "[Ferrari, Lexus]", "Output2 should not change");
+        assertOutput1Changed();
+        assertOutput2NotChanged();
     }
 
-    public void testStatus(WebElement input) {
+    public void testStatus() {
         ajaxAttributes.set(AjaxAttributes.status, "statusChecker");
 
         String statusCheckerTime = page.statusCheckerOutput.getText();
-        Graphene.guardXhr(new Select(input)).selectByValue("Audi");
+        performAction();
         Graphene.waitModel().withMessage("Page was not updated")
             .until(Graphene.element(page.statusCheckerOutput).not().textEquals(statusCheckerTime));
     }
+
+    public abstract void performAction();
+    public abstract void assertOutput1Changed();
+    public abstract void assertOutput1NotChanged();
+    public abstract void assertOutput2Changed();
+    public abstract void assertOutput2NotChanged();
 }
