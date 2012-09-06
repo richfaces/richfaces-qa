@@ -22,9 +22,13 @@
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.ajaxAttributes;
+import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
 
 /**
@@ -42,56 +46,82 @@ public class TestHSelectManyMenu extends AbstractTestSelectMany {
 
     @Test
     public void testSimpleClick() {
-        testClick(page.selectManyMenu);
+        super.testClick();
     }
 
     @Test
     public void testBypassUpdates() {
-        testBypassUpdates(page.selectManyMenu);
+        super.testBypassUpdates();
     }
 
     @Test
     public void testData() {
-        testData(page.selectManyMenu);
+        super.testData();
     }
 
     @Test
     public void testDisabled() {
-        testDisabled(page.selectManyMenu);
+        ajaxAttributes.set(AjaxAttributes.disabled, true);
+        Graphene.guardNoRequest(new Select(page.selectManyMenu)).selectByValue("Audi");
     }
 
     @Test
     public void testExecute() {
-        testExecute(page.selectManyMenu);
+        super.testExecute();
     }
 
     @Test
     public void testImmediate() {
-        testImmediate(page.selectManyMenu);
+        super.testImmediate();
     }
 
     @Test
     public void testImmediateBypassUpdates() {
-        testImmediateBypassUpdates(page.selectManyMenu);
+        super.testImmediateBypassUpdates();
     }
 
     @Test
     public void testLimitRender() {
-        testLimitRender(page.selectManyMenu);
+        super.testLimitRender("[Audi, Ferrari, Lexus]");
     }
 
     @Test
     public void testEvents() {
-        testEvents(page.selectManyMenu);
+        super.testEvents();
     }
 
     @Test
     public void testRender() {
-        testRender(page.selectManyMenu);
+        super.testRender();
     }
 
     @Test
     public void testStatus() {
-        testStatus(page.selectManyMenu);
+        super.testStatus();
+    }
+
+    @Override
+    public void performAction() {
+        Graphene.guardXhr(new Select(page.selectManyMenu)).selectByValue("Audi");
+    }
+
+    @Override
+    public void assertOutput1Changed() {
+        assertEquals(page.output1.getText(), "[Audi, Ferrari, Lexus]", "Output1 should change");
+    }
+
+    @Override
+    public void assertOutput1NotChanged() {
+        assertEquals(page.output1.getText(), "[Ferrari, Lexus]", "Output1 should not change");
+    }
+
+    @Override
+    public void assertOutput2Changed() {
+        assertEquals(page.output2.getText(), "[Audi, Ferrari, Lexus]", "Output2 should change");
+    }
+
+    @Override
+    public void assertOutput2NotChanged() {
+        assertEquals(page.output2.getText(), "[Ferrari, Lexus]", "Output2 should not change");
     }
 }

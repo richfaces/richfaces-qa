@@ -22,9 +22,13 @@
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.ajaxAttributes;
+import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
 
 /**
@@ -42,56 +46,82 @@ public class TestHSelectManyListbox extends AbstractTestSelectMany {
 
     @Test
     public void testSimpleClick() {
-        testClick(page.selectManyListbox);
+        super.testClick();
     }
 
     @Test
     public void testBypassUpdates() {
-        testBypassUpdates(page.selectManyListbox);
+        super.testBypassUpdates();
     }
 
     @Test
     public void testData() {
-        testData(page.selectManyListbox);
+        super.testData();
     }
 
     @Test
     public void testDisabled() {
-        testDisabled(page.selectManyListbox);
+        ajaxAttributes.set(AjaxAttributes.disabled, true);
+        Graphene.guardNoRequest(new Select(page.selectManyListbox)).selectByValue("Audi");
     }
 
     @Test
     public void testExecute() {
-        testExecute(page.selectManyListbox);
+        super.testExecute();
     }
 
     @Test
     public void testImmediate() {
-        testImmediate(page.selectManyListbox);
+        super.testImmediate();
     }
 
     @Test
     public void testImmediateBypassUpdates() {
-        testImmediateBypassUpdates(page.selectManyListbox);
+        super.testImmediateBypassUpdates();
     }
 
     @Test
     public void testLimitRender() {
-        testLimitRender(page.selectManyListbox);
+        super.testLimitRender("[Audi, Ferrari, Lexus]");
     }
 
     @Test
     public void testEvents() {
-        testEvents(page.selectManyListbox);
+        super.testEvents();
     }
 
     @Test
     public void testRender() {
-        testRender(page.selectManyListbox);
+        super.testRender();
     }
 
     @Test
     public void testStatus() {
-        testStatus(page.selectManyListbox);
+        super.testStatus();
+    }
+
+    @Override
+    public void performAction() {
+        Graphene.guardXhr(new Select(page.selectManyListbox)).selectByValue("Audi");
+    }
+
+    @Override
+    public void assertOutput1Changed() {
+        assertEquals(page.output1.getText(), "[Audi, Ferrari, Lexus]", "Output1 should change");
+    }
+
+    @Override
+    public void assertOutput1NotChanged() {
+        assertEquals(page.output1.getText(), "[Ferrari, Lexus]", "Output1 should not change");
+    }
+
+    @Override
+    public void assertOutput2Changed() {
+        assertEquals(page.output2.getText(), "[Audi, Ferrari, Lexus]", "Output2 should change");
+    }
+
+    @Override
+    public void assertOutput2NotChanged() {
+        assertEquals(page.output2.getText(), "[Ferrari, Lexus]", "Output2 should not change");
     }
 }
