@@ -37,7 +37,7 @@ public class AjaxPage extends MetamerPage {
     WebElement link;
     @FindBy(css = "img[id$=image]")
     WebElement image;
-    @FindBy(css = "input[type=text][id$=input]")
+    @FindBy(css = "[id$=input]")
     WebElement input;
     @FindBy(css = "select[id$=selectManyListbox]")
     WebElement selectManyListbox;
