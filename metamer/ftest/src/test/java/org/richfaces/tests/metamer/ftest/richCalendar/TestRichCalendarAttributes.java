@@ -288,9 +288,9 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
         assertEquals(selenium.getText(message), "conversion error");
     }
 
-    @Test
+    // @Test
     public void testCurrentDate () {
-        // TODO JJamrich 2012-02-10
+        // Not sure what exactly is this attribute supposed to manage
     }
 
     @Test
