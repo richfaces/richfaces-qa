@@ -57,6 +57,26 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest<AjaxPage> {
         assertOutput2Changed();
     }
 
+    public void testType() {
+        String reqTime = page.requestTime.getText();
+        typeKeys("RichFaces 4");
+        Graphene.waitModel().withMessage("Page was not updated")
+            .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
+
+        assertOutput1Changed();
+        assertOutput2Changed();
+    }
+
+    public void testTypeUnicode() {
+        String reqTime = page.requestTime.getText();
+        typeKeys("ľščťžýáíéúôň фывацукйешгщь");
+        Graphene.waitModel().withMessage("Page was not updated")
+            .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
+
+        assertEquals(page.output1.getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output1 should change");
+        assertEquals(page.output2.getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output2 should change");
+    }
+
     public void testBypassUpdates() {
         ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
         ajaxAttributes.set(AjaxAttributes.bypassUpdates, true);
@@ -83,6 +103,15 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest<AjaxPage> {
 
         String data = ((JavascriptExecutor) driver).executeScript("return data").toString();
         assertEquals(data, "RichFaces 4 data", "Data sent with ajax request");
+    }
+
+    public void testDisabledForTextInputs() {
+        ajaxAttributes.set(AjaxAttributes.disabled, true);
+
+        typeKeys("RichFaces 4");
+
+        assertOutput1NotChanged();
+        assertOutput2NotChanged();
     }
 
     public void testExecute() {
@@ -165,6 +194,32 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest<AjaxPage> {
         assertEquals(events[3], "complete", "Attribute oncomplete doesn't work");
     }
 
+    public void testEventsForTextInputs() {
+        ajaxAttributes.set(AjaxAttributes.onbeforesubmit, "metamerEvents += \"beforesubmit \"");
+        ajaxAttributes.set(AjaxAttributes.onbegin, "metamerEvents += \"begin \"");
+        ajaxAttributes.set(AjaxAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
+        ajaxAttributes.set(AjaxAttributes.oncomplete, "metamerEvents += \"complete \"");
+
+        ((JavascriptExecutor) driver).executeScript("metamerEvents = \"\"");
+        final String text = "RichFaces";
+
+        for (int i = 1; i <= text.length(); i++) {
+            ((JavascriptExecutor) driver).executeScript("$(\"[id$=input]\").val('"
+                + text.substring(0, i) + "');");
+            ((JavascriptExecutor) driver).executeScript("$(\"[id$=input]\").trigger('keyup');");
+            Graphene.waitModel().withMessage("Page was not updated")
+                .until(Graphene.element(page.output1).textEquals(text.substring(0, i)));
+        }
+
+        String[] events = ((JavascriptExecutor) driver).executeScript("return metamerEvents").toString().split(" ");
+
+        assertEquals(events.length, 36, "36 events should be fired.");
+        assertEquals(events[0], "beforesubmit", "Attribute onbeforesubmit doesn't work");
+        assertEquals(events[1], "begin", "Attribute onbegin doesn't work");
+        assertEquals(events[2], "beforedomupdate", "Attribute onbeforedomupdate doesn't work");
+        assertEquals(events[3], "complete", "Attribute oncomplete doesn't work");
+    }
+
     public void testRender() {
         ajaxAttributes.set(AjaxAttributes.render, "[output1]");
 
@@ -216,12 +271,25 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest<AjaxPage> {
         }
     };
 
-    public void performAction(String input) {
-        // intentionally empty
+    protected void typeKeys(String text) {
+        for (int i = 1; i <= text.length(); i++) {
+            ((JavascriptExecutor) driver).executeScript("$(\"[id$=input]\").val('"
+                + text.substring(0, i) + "');");
+            ((JavascriptExecutor) driver).executeScript("$(\"[id$=input]\").trigger('keyup');");
+        }
     }
+
+    public void performAction(String input) {
+        // intentionally empty, used in custom reload testers
+    }
+
     public abstract void performAction();
+
     public abstract void assertOutput1Changed();
+
     public abstract void assertOutput1NotChanged();
+
     public abstract void assertOutput2Changed();
+
     public abstract void assertOutput2NotChanged();
 }

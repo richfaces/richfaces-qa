@@ -22,23 +22,20 @@
 package org.richfaces.tests.metamer.ftest.a4jAjax;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page /faces/components/a4jAjax/hInputText.xhtml
  *
- * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 21287 $
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
+ * @since 4.3.0.M2
  */
-public class TestHInputText extends AbstractTestTextInput {
-
-    private JQueryLocator input = pjq("input[type=text][id$=input]");
+public class TestHInputText extends AbstractAjaxTest {
 
     @Override
     public URL getTestUrl() {
@@ -47,62 +44,88 @@ public class TestHInputText extends AbstractTestTextInput {
 
     @Test
     public void testSimpleType() {
-        testType(input, "RichFaces 4");
+        super.testType();
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9665")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
     public void testSimpleTypeUnicode() {
-        testType(input, "ľščťžýáíéúôň фывацукйешгщь");
+        super.testTypeUnicode();
     }
 
     @Test
     public void testBypassUpdates() {
-        testBypassUpdates(input);
+        super.testBypassUpdates();
     }
 
     @Test
     public void testData() {
-        testData(input);
+        super.testData();
     }
 
     @Test
     public void testDisabled() {
-        testDisabled(input);
+        super.testDisabledForTextInputs();
     }
 
     @Test
     public void testExecute() {
-        testExecute(input);
+        super.testExecute();
     }
 
     @Test
     public void testImmediate() {
-        testImmediate(input);
+        super.testImmediate();
     }
 
     @Test
     public void testImmediateBypassUpdates() {
-        testImmediateBypassUpdates(input);
+        super.testImmediateBypassUpdates();
     }
 
     @Test
     public void testLimitRender() {
-        testLimitRender(input);
+        super.testLimitRender("RichFaces 4");
     }
 
     @Test
     public void testEvents() {
-        testEvents(input);
+        super.testEventsForTextInputs();
     }
 
     @Test
     public void testRender() {
-        testRender(input);
+        super.testRender();
     }
 
     @Test
     public void testStatus() {
-        testStatus(input);
+        super.testStatus();
+    }
+
+    @Override
+    public void performAction() {
+        final String text = "RichFaces 4";
+        typeKeys(text);
+    }
+
+    @Override
+    public void assertOutput1Changed() {
+        assertEquals(page.output1.getText(), "RichFaces 4", "Output1 should change");
+    }
+
+    @Override
+    public void assertOutput1NotChanged() {
+        assertEquals(page.output1.getText(), "", "Output1 should not change");
+    }
+
+    @Override
+    public void assertOutput2Changed() {
+        assertEquals(page.output2.getText(), "RichFaces 4", "Output2 should change");
+    }
+
+    @Override
+    public void assertOutput2NotChanged() {
+        assertEquals(page.output2.getText(), "", "Output2 should not change");
     }
 }
