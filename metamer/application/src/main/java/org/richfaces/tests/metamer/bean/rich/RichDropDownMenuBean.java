@@ -131,7 +131,7 @@ public class RichDropDownMenuBean implements Serializable {
         this.current = "Exit";
         return null;
     }
-    
+
     public void addMessage() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Test message..."));
     }
