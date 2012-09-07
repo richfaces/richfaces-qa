@@ -21,20 +21,20 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richPanelMenu;
 
+import org.jboss.arquillian.graphene.Graphene;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 
-import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.richfaces.tests.showcase.ftest.webdriver.AbstractAndroidTest;
+import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.richPanelMenu.PanelMenuPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichPanelMenuSimple extends AbstractAndroidTest<PanelMenuPage> {
+public class TestRichPanelMenuSimple extends AbstractWebDriverTest<PanelMenuPage> {
 
     @Test(groups = {"RF-12146"})
     public void testExpandFirst() {
@@ -60,7 +60,7 @@ public class TestRichPanelMenuSimple extends AbstractAndroidTest<PanelMenuPage> 
     public void testSelectFirstItemFromFristGroup() {
         getPage().getPanelMenu().toggleFirstLevelGroup(0);
         getPage().getPanelMenu().selectSecondLevelItem(0, 0);
-        new WebDriverWait(getWebDriver()).failWith("The current selection doesn't match.").until(
+        Graphene.waitAjax().withMessage("The current selection doesn't match.").until(
             new ExpectedCondition<Boolean>() {
                 @Override
                 public Boolean apply(WebDriver arg0) {
@@ -71,7 +71,7 @@ public class TestRichPanelMenuSimple extends AbstractAndroidTest<PanelMenuPage> 
 
     @Override
     protected PanelMenuPage createPage() {
-        return new PanelMenuPage(getWebDriver(), getToolKit());
+        return new PanelMenuPage(getWebDriver());
     }
 
 }

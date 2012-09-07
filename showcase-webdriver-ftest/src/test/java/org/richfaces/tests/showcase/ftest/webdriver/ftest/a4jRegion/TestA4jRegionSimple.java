@@ -21,10 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jRegion;
 
+import org.jboss.arquillian.graphene.Graphene;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.test.selenium.support.ui.TextEquals;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.a4jRegion.RegionPage;
 import org.testng.annotations.Test;
@@ -52,12 +51,12 @@ public class TestA4jRegionSimple extends AbstractWebDriverTest<RegionPage> {
         getPage().getNameInput().click();
         getPage().getNameInput().sendKeys("name");
         getPage().getSubmit().click();
-        new WebDriverWait(getWebDriver())
-            .failWith("After submitting the broken form, the output should contain the correct values")
-            .until(TextEquals.getInstance().element(getPage().getNameOutput()).text("name"));
-        new WebDriverWait(getWebDriver())
-        .failWith("After submitting the broken form, the output should contain the correct values")
-        .until(TextEquals.getInstance().element(getPage().getEmailOutput()).text("email"));
+        Graphene.waitAjax()
+            .withMessage("After submitting the broken form, the output should contain the correct values")
+            .until(Graphene.element(getPage().getNameOutput()).textEquals("name"));
+        Graphene.waitAjax()
+        .withMessage("After submitting the broken form, the output should contain the correct values")
+        .until(Graphene.element(getPage().getEmailOutput()).textEquals("email"));
     }
 
     @Override

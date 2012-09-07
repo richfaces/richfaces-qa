@@ -25,12 +25,12 @@ import org.jboss.test.selenium.android.ToolKit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractAndroidPage;
+import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractWebDriverPage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class SpinnersPage extends AbstractAndroidPage {
+public class SpinnersPage extends AbstractWebDriverPage {
 
     private static final String FIRST_SPINNER_LOCATOR = "//*[@class='example-cnt']//span[@class='rf-insp '][1]";
     private static final String SECOND_SPINNER_LOCATOR = "//*[@class='example-cnt']//span[@class='rf-insp '][2]";
@@ -51,8 +51,8 @@ public class SpinnersPage extends AbstractAndroidPage {
     private WebElement secondSpinnerDownArrowElement;
     private Spinner secondSpinner;
 
-    public SpinnersPage(WebDriver webDriver, ToolKit toolKit) {
-        super(webDriver, toolKit);
+    public SpinnersPage(WebDriver webDriver) {
+        super(webDriver);
     }
 
     @Override
@@ -67,14 +67,14 @@ public class SpinnersPage extends AbstractAndroidPage {
 
     public Spinner getFirstSpinner() {
         if (firstSpinner == null) {
-            firstSpinner = new Spinner(getWebDriver(), getToolKit(), firstSpinnerInputElement, firstSpinnerDownArrowElement, firstSpinnerUpArrowElement, 1);
+            firstSpinner = new Spinner(getWebDriver(), firstSpinnerInputElement, firstSpinnerDownArrowElement, firstSpinnerUpArrowElement, 1);
         }
         return firstSpinner;
     }
 
     public Spinner getSecondSpinner() {
         if (secondSpinner == null) {
-            secondSpinner = new Spinner(getWebDriver(), getToolKit(), secondSpinnerInputElement, secondSpinnerDownArrowElement, secondSpinnerUpArrowElement, 10);
+            secondSpinner = new Spinner(getWebDriver(), secondSpinnerInputElement, secondSpinnerDownArrowElement, secondSpinnerUpArrowElement, 10);
         }
         return secondSpinner;
     }

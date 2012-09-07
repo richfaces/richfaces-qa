@@ -21,16 +21,15 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.page.richPanelMenu;
 
-import org.jboss.test.selenium.android.ToolKit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractAndroidPage;
+import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractWebDriverPage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class PanelMenuPage extends AbstractAndroidPage {
+public class PanelMenuPage extends AbstractWebDriverPage {
 
     @FindBy(xpath = "//*[@class='example-cnt']//div[@class='rf-pm']")
     private WebElement panelMenuElement;
@@ -38,8 +37,8 @@ public class PanelMenuPage extends AbstractAndroidPage {
     @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'current')]")
     private WebElement selectionElement;
 
-    public PanelMenuPage(WebDriver webDriver, ToolKit toolKit) {
-        super(webDriver, toolKit);
+    public PanelMenuPage(WebDriver webDriver) {
+        super(webDriver);
     }
 
     @Override
@@ -58,7 +57,7 @@ public class PanelMenuPage extends AbstractAndroidPage {
 
     public PanelMenu getPanelMenu() {
         if (panelMenu == null) {
-            panelMenu = new PanelMenu(getWebDriver(), getToolKit(), panelMenuElement);
+            panelMenu = new PanelMenu(getWebDriver(), panelMenuElement);
         }
         return panelMenu;
     }

@@ -21,9 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jPoll;
 
-import org.jboss.test.selenium.support.ui.TextEquals;
-import org.jboss.test.selenium.support.ui.TextNotEquals;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.a4jPoll.PollPage;
 import org.testng.annotations.Test;
@@ -38,9 +37,9 @@ public class TestA4jPollSimple extends AbstractWebDriverTest<PollPage> {
         getPage().getButton().click();
         String before = getPage().getDate().getText();
         Thread.sleep(1500);
-        new WebDriverWait(getWebDriver())
-            .failWith("After clicking on the stop button, there should be not updates.")
-            .until(TextEquals.getInstance().element(getPage().getDate()).text(before));
+        Graphene.waitAjax()
+            .withMessage("After clicking on the stop button, there should be not updates.")
+            .until(Graphene.element(getPage().getDate()).textEquals(before));
 
     }
 
@@ -49,8 +48,8 @@ public class TestA4jPollSimple extends AbstractWebDriverTest<PollPage> {
         for (int i=0; i<2; i++) {
             String before = getPage().getDate().getText();
             new WebDriverWait(getWebDriver(), 2)
-                .failWith("The updating doesn't work correctly.")
-                .until(TextNotEquals.getInstance().element(getPage().getDate()).text(before));
+                .withMessage("The updating doesn't work correctly.")
+                .until(Graphene.element(getPage().getDate()).not().textEquals(before));
         }
     }
 

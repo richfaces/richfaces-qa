@@ -21,8 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jAjax;
 
-import org.jboss.test.selenium.support.ui.TextEquals;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.a4jAjax.AjaxPage;
 import org.testng.annotations.Test;
@@ -37,9 +36,10 @@ public class TestA4jAjaxSimple extends AbstractWebDriverTest<AjaxPage> {
         getPage().getInput().click();
         getPage().getInput().sendKeys("something");
 
-        new WebDriverWait(getWebDriver())
-            .failWith("After typing something into the input, the text should appear in the output area.")
-            .until(TextEquals.getInstance().element(getPage().getOutput()).text("something"));
+        Graphene.waitAjax()
+                .withMessage("After typing something into the input, the text should appear in the output area.")
+                .until(Graphene.element(getPage().getOutput()).textEquals("something"));
+
     }
 
     @Override

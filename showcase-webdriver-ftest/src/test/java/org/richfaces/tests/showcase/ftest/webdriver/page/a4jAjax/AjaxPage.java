@@ -31,7 +31,7 @@ import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
  */
 public class AjaxPage implements ShowcasePage {
 
-    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='text']")
+    @FindBy(css = ".example-cnt input[type='text']")
     private WebElement input;
 
     @FindBy(xpath = "//*[@class='example-cnt']//span")

@@ -21,9 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.page.richPanelMenu;
 
-import org.jboss.test.selenium.android.ToolKit;
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.test.selenium.android.support.ui.AbstractComponent;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -36,8 +35,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
  */
 public class PanelMenu extends AbstractComponent{
 
-    public PanelMenu(WebDriver webDriver, ToolKit toolKit, WebElement webElement) {
-        super(webDriver, toolKit, webElement);
+    public PanelMenu(WebDriver webDriver, WebElement webElement) {
+        super(webDriver, webElement);
     }
 
     public int getNumberOfFirstLevelGroups() {
@@ -73,16 +72,16 @@ public class PanelMenu extends AbstractComponent{
                 }
             };
         }
-        new WebDriverWait(getWebDriver())
-            .failWith("The group <" + index + "> in panel menu can't be " + (expanded ? "collapsed" : "expanded") + ".")
+        Graphene.waitAjax()
+            .withMessage("The group <" + index + "> in panel menu can't be " + (expanded ? "collapsed" : "expanded") + ".")
             .until(condition);
     }
 
     public void selectSecondLevelItem(int groupIndex, int itemIndex) {
         final String itemLocator = "div[@class='rf-pm-top-gr'][" + (groupIndex+1) + "]//div[contains(@class, 'rf-pm-itm')][" + (itemIndex+1) + "]";
         getWebElement().findElement(By.xpath(itemLocator + "//td[@class='rf-pm-itm-lbl']")).click();
-        new WebDriverWait(getWebDriver())
-            .failWith("The option <" + groupIndex + "><" + itemIndex +"> can't be selected.")
+        Graphene.waitAjax()
+            .withMessage("The option <" + groupIndex + "><" + itemIndex +"> can't be selected.")
             .until(new ExpectedCondition<Boolean>() {
                 @Override
                 public Boolean apply(WebDriver webDriver) {

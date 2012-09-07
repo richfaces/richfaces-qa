@@ -24,14 +24,14 @@ package org.richfaces.tests.showcase.ftest.webdriver.ftest.richInplaceSelect;
 import static org.testng.Assert.assertFalse;
 
 import org.jboss.test.selenium.android.ToolKitException;
-import org.richfaces.tests.showcase.ftest.webdriver.AbstractAndroidTest;
+import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.richInplaceSelect.InplaceSelectPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichInplaceSelectSimple extends AbstractAndroidTest<InplaceSelectPage>{
+public class TestRichInplaceSelectSimple extends AbstractWebDriverTest<InplaceSelectPage>{
 
     @Test
     public void testInit() {
@@ -51,7 +51,7 @@ public class TestRichInplaceSelectSimple extends AbstractAndroidTest<InplaceSele
 
     @Override
     protected InplaceSelectPage createPage() {
-        return new InplaceSelectPage(getWebDriver(), getToolKit());
+        return new InplaceSelectPage(getWebDriver());
     }
 
 }

@@ -21,16 +21,15 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.page.richSelect;
 
-import org.jboss.test.selenium.android.ToolKit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractAndroidPage;
+import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractWebDriverPage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class SelectPage extends AbstractAndroidPage {
+public class SelectPage extends AbstractWebDriverPage {
 
     private static final String FIRST_SELECT_LOCATOR = "//*[@class='example-cnt']//div[@class='rf-p '][1]//div[@class='rf-sel']";
     private static final String SECOND_SELECT_LOCATOR = "//*[@class='example-cnt']//div[@class='rf-p '][2]//div[@class='rf-sel']";
@@ -50,8 +49,8 @@ public class SelectPage extends AbstractAndroidPage {
     @FindBy(xpath = "//body/div[@class='rf-sel-lst-cord']")
     private WebElement popup;
 
-    public SelectPage(WebDriver webDriver, ToolKit toolKit) {
-        super(webDriver, toolKit);
+    public SelectPage(WebDriver webDriver) {
+        super(webDriver);
     }
 
     @Override
@@ -66,14 +65,14 @@ public class SelectPage extends AbstractAndroidPage {
 
     public Select getFirstSelect() {
         if (firstSelect == null) {
-            firstSelect = new Select(getWebDriver(), getToolKit(), firstSelectInput, popup, firstSelectArrow);
+            firstSelect = new Select(getWebDriver(), firstSelectInput, popup, firstSelectArrow);
         }
         return firstSelect;
     }
 
     public Select getSecondSelect() {
         if (secondSelect == null) {
-            secondSelect = new Select(getWebDriver(), getToolKit(), secondSelectInput, popup, secondSelectArrow);
+            secondSelect = new Select(getWebDriver(), secondSelectInput, popup, secondSelectArrow);
         }
         return secondSelect;
     }

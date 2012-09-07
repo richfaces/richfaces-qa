@@ -22,9 +22,7 @@
 package org.richfaces.tests.showcase.ftest.webdriver.page.richCollapsibleSubTable;
 
 import org.apache.commons.lang.Validate;
-import org.jboss.test.selenium.support.ui.ElementDisplayed;
-import org.jboss.test.selenium.support.ui.ElementNotDisplayed;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -99,13 +97,13 @@ public class SubTableToggleControlPage implements ShowcasePage {
         boolean contentDisplayed = content.isDisplayed();
         toggler.click();
         if (contentDisplayed) {
-            new WebDriverWait(webDriver)
-                .failWith("After clicking on the toggler, the content subtable shouldn't be displayed.")
-                .until(ElementNotDisplayed.getInstance().element(content));
+            Graphene.waitAjax()
+                .withMessage("After clicking on the toggler, the content subtable shouldn't be displayed.")
+                .until(Graphene.element(content).not().isVisible());
         } else {
-            new WebDriverWait(webDriver)
-                .failWith("After clicking on the toggler, the content subtable should be displayed.")
-                .until(ElementDisplayed.getInstance().element(content));
+            Graphene.waitAjax()
+                .withMessage("After clicking on the toggler, the content subtable should be displayed.")
+                .until(Graphene.element(content).isVisible());
         }
 
 

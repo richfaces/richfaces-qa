@@ -21,8 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jJsFunction;
 
-import org.jboss.test.selenium.support.ui.TextEquals;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.a4jJsFunction.JsFunctionPage;
 import org.testng.annotations.Test;
@@ -36,9 +35,9 @@ public class TestA4jJsFunctionSimple extends AbstractWebDriverTest<JsFunctionPag
     public void testClick() {
         for (String name : getPage().getNames().keySet()) {
             getPage().getNames().get(name).click();
-            new WebDriverWait(getWebDriver())
-                .failWith("After clicking on the name <" + name + ">, the name should appear in the output area.")
-                .until(TextEquals.getInstance().element(getPage().getOutput()).text(name));
+            Graphene.waitAjax()
+                    .withMessage("After clicking on the name <" + name + ">, the name should appear in the output area.")
+                    .until(Graphene.element(getPage().getOutput()).textEquals(name));
         }
     }
 

@@ -21,12 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.page.richOrderingList;
 
-import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractWebDriverPage;
 
 /**
@@ -83,14 +82,9 @@ public class OrderingListPage extends AbstractWebDriverPage {
     public void select(int index) {
         final WebElement toSelect = getItemElement(index);
         toSelect.click();
-        new WebDriverWait(getWebDriver())
-            .failWith("The requested item hasn't been selected.")
-            .until(new ExpectedCondition<Boolean>() {
-                @Override
-                public Boolean apply(WebDriver arg0) {
-                    return toSelect.getAttribute("class").contains("rf-ord-sel");
-                }
-            });
+        Graphene.waitAjax()
+            .withMessage("The requested item hasn't been selected.")
+            .until(Graphene.attribute(toSelect, "class").valueContains("rf-ord-sel"));
     }
 
     private WebElement getItemElement(int index) {

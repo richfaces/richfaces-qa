@@ -21,13 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jOutputPanel;
 
+import org.jboss.arquillian.graphene.Graphene;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.test.selenium.support.ui.ElementNotPresent;
-import org.jboss.test.selenium.support.ui.ElementPresent;
-import org.jboss.test.selenium.support.ui.TextContains;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.a4jOutputPanel.SimplePage;
 import org.testng.annotations.Test;
@@ -44,12 +41,12 @@ public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<SimplePage>{
     public void testFirstCorrectInput() {
         getPage().getFirstInput().click();
         getPage().getFirstInput().sendKeys(CORRECT);
-        assertTrue(ElementNotPresent.getInstance().element(getPage().getFirstOutput()).apply(getWebDriver()), "After typing a correct value into the first input field no output text should be present.");
-        assertTrue(ElementNotPresent.getInstance().element(getPage().getFirstError()).apply(getWebDriver()), "After typing a correct value into the first input field no error message text should be present.");
+        assertTrue(Graphene.element(getPage().getFirstOutput()).not().isPresent().apply(getWebDriver()), "After typing a correct value into the first input field no output text should be present.");
+        assertTrue(Graphene.element(getPage().getFirstError()).not().isPresent().apply(getWebDriver()), "After typing a correct value into the first input field no error message text should be present.");
         getPage().getFirstInput().submit();
-        new WebDriverWait(getWebDriver())
-            .failWith("After typing a correct value and into the first input field and submitting  the output text should be present.")
-            .until(ElementPresent.getInstance().element(getPage().getFirstOutput()));
+        Graphene.waitAjax()
+            .withMessage("After typing a correct value and into the first input field and submitting  the output text should be present.")
+            .until(Graphene.element(getPage().getFirstOutput()).isPresent());
         assertEquals(getPage().getFirstOutput().getText(), "Approved Text: " + CORRECT, "The output text doesn't match.");
     }
 
@@ -57,37 +54,38 @@ public class TestA4jOutputPanelSimple extends AbstractWebDriverTest<SimplePage>{
     public void testFirstWrongInput() {
         getPage().getFirstInput().click();
         getPage().getFirstInput().sendKeys(WRONG);
-        assertTrue(ElementNotPresent.getInstance().element(getPage().getFirstOutput()).apply(getWebDriver()), "After typing a wrong value into the first input field no output text should be present.");
-        assertTrue(ElementNotPresent.getInstance().element(getPage().getFirstError()).apply(getWebDriver()), "After typing a wrong value into the first input field no error message should be present.");
+        assertTrue(Graphene.element(getPage().getFirstOutput()).not().isPresent().apply(getWebDriver()), "After typing a wrong value into the first input field no output text should be present.");
+        assertTrue(Graphene.element(getPage().getFirstError()).not().isPresent().apply(getWebDriver()), "After typing a wrong value into the first input field no error message should be present.");
         getPage().getFirstInput().submit();
-        new WebDriverWait(getWebDriver())
-            .failWith("After typing a wrong value and into the first input field and submitting the error message should be present.")
-            .until(ElementPresent.getInstance().element(getPage().getFirstError()));
-        assertTrue(ElementNotPresent.getInstance().element(getPage().getFirstOutput()).apply(getWebDriver()), "After typing a wrong value into the first input field and submitting no output text should be present.");
+        Graphene.waitAjax()
+            .withMessage("After typing a wrong value and into the first input field and submitting the error message should be present.")
+            .until(Graphene.element(getPage().getFirstError()).isPresent());
+        assertTrue(Graphene.element(getPage().getFirstOutput()).not().isPresent().apply(getWebDriver()), "After typing a wrong value into the first input field and submitting no output text should be present.");
     }
 
     @Test
     public void testSecondCorrectInput() {
         getPage().getSecondInput().click();
         getPage().getSecondInput().sendKeys(CORRECT);
-        new WebDriverWait(getWebDriver())
-            .failWith("After typing a correct value into the second input field, the output text should be present.")
-            .until(ElementPresent.getInstance().element(getPage().getSecondOutput()));
+        Graphene.waitAjax()
+            .withMessage("After typing a correct value into the second input field, the output text should be present.")
+            .until(Graphene.element(getPage().getSecondOutput()).isPresent());
         assertEquals(getPage().getSecondOutput().getText(), "Approved Text: " + CORRECT, "The output text doesn't match.");
-        assertTrue(ElementNotPresent.getInstance().element(getPage().getSecondError()).apply(getWebDriver()), "After typing a wrong value into the second input field no error message should be present.");
+        assertTrue(Graphene.element(getPage().getSecondError()).not().isPresent().apply(getWebDriver()), "After typing a wrong value into the second input field no error message should be present.");
     }
 
     @Test
-    public void testSecondWrongInput() {
+    public void testSecondWrongInput() throws InterruptedException {
         getPage().getSecondInput().click();
         getPage().getSecondInput().sendKeys(WRONG);
-        new WebDriverWait(getWebDriver())
-            .failWith("After typing a wrong value into the second input field, an error message should be present.")
-            .until(ElementPresent.getInstance().element(getPage().getSecondError()));
+        Graphene.waitAjax()
+            .withMessage("After typing a wrong value into the second input field, an error message should be present.")
+            .until(Graphene.element(getPage().getSecondOutput()).isPresent());
+        Thread.sleep(1000);
         assertTrue(
-            ElementNotPresent.getInstance().element(getPage().getSecondOutput()).apply(getWebDriver())
+            Graphene.element(getPage().getSecondOutput()).not().isPresent().apply(getWebDriver())
             ||
-            !TextContains.getInstance().element(getPage().getSecondOutput()).text("Approved Text").apply(getWebDriver()),
+            Graphene.element(getPage().getSecondOutput()).not().textContains("Approved Text").apply(getWebDriver()),
             "After typing a wrong value into the second input field no output text should be present.");
     }
 

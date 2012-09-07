@@ -21,8 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jParam;
 
-import org.jboss.test.selenium.support.ui.TextEquals;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.a4jParam.ParamPage;
 import org.testng.annotations.Test;
@@ -36,9 +35,9 @@ public class TestA4jParamSimple extends AbstractWebDriverTest<ParamPage>{
     public void testSetName() {
         for(ParamPage.Name name : ParamPage.Name.getAll()) {
             getPage().setName(name);
-            new WebDriverWait(getWebDriver())
-                .failWith("After selecting name, the output should contain the name.")
-                .until(TextEquals.getInstance().element(getPage().getOutput()).text("Selected Name:" + name));
+            Graphene.waitAjax()
+                .withMessage("After selecting name, the output should contain the name.")
+                .until(Graphene.element(getPage().getOutput()).textEquals("Selected Name:" + name));
         }
     }
 

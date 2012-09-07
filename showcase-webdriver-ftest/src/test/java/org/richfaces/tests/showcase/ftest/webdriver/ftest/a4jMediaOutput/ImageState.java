@@ -57,25 +57,31 @@ public enum ImageState {
     }
 
     public enum Color {
-        LEFT_BLUE(ImgUsagePage.INDEX_BLUE, -15993869),
-        LEFT_GREEN(ImgUsagePage.INDEX_GREEN, -15991296),
-        LEFT_RED(ImgUsagePage.INDEX_RED, -851957),
-        RIGHT_DARK_BLUE(ImgUsagePage.INDEX_DARK_BLUE, -16449286),
-        RIGHT_RED(ImgUsagePage.INDEX_RED, -391931),
-        RIGHT_YELLOW(ImgUsagePage.INDEX_YELLOW, -327936),
-        TEXT_DARK_BLUE(ImgUsagePage.INDEX_DARK_BLUE, -16776962),
-        TEXT_GREEN(ImgUsagePage.INDEX_GREEN, -16712192),
-        TEXT_RED(ImgUsagePage.INDEX_RED, -131072);
+        LEFT_BLUE(ImgUsagePage.INDEX_BLUE, -15993869, "Blue"),
+        LEFT_GREEN(ImgUsagePage.INDEX_GREEN, -15991296, "Green"),
+        LEFT_RED(ImgUsagePage.INDEX_RED, -851957, "Red"),
+        RIGHT_DARK_BLUE(ImgUsagePage.INDEX_DARK_BLUE, -16449286, "Dark Blue"),
+        RIGHT_RED(ImgUsagePage.INDEX_RED, -391931, "Red"),
+        RIGHT_YELLOW(ImgUsagePage.INDEX_YELLOW, -327936, "Yellow"),
+        TEXT_DARK_BLUE(ImgUsagePage.INDEX_DARK_BLUE, -16776962, "Dark Blue"),
+        TEXT_GREEN(ImgUsagePage.INDEX_GREEN, -16712192, "Green"),
+        TEXT_RED(ImgUsagePage.INDEX_RED, -131072, "Red");
 
         private int index;
         private long value;
+        private String name;
 
-        private Color(int index, long value) {
+        private Color(int index, long value, String name) {
             this.index = index;
             this.value = value;
+            this.name = name;
         }
         public int getIndex() {
             return index;
+        }
+
+        public String getName() {
+            return name;
         }
         public long getValue() {
             return value;
