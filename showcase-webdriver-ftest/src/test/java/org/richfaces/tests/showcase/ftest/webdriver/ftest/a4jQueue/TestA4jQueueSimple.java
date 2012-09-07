@@ -21,10 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jQueue;
 
+import org.jboss.arquillian.graphene.Graphene;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.test.selenium.support.ui.TextEquals;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.a4jQueue.QueuePage;
 import org.testng.annotations.Test;
@@ -45,8 +44,8 @@ public class TestA4jQueueSimple extends AbstractWebDriverTest<QueuePage>{
             inputAll.append(input);
             getPage().getInput().click();
             getPage().getInput().sendKeys(input.toString());
-            new WebDriverWait(getWebDriver())
-                .until(TextEquals.getInstance().element(getPage().getOutput()).text(inputAll.toString()));
+            Graphene.waitAjax()
+                .until(Graphene.element(getPage().getOutput()).textEquals(inputAll.toString()));
             assertEquals(getPage().getEvents().getText(), String.valueOf(inputAll.toString().length()));
             assertEquals(getPage().getUpdates().getText(), String.valueOf(n));
             assertEquals(getPage().getRequests().getText(), String.valueOf(n));

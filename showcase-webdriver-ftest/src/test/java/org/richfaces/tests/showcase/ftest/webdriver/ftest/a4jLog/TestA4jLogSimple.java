@@ -21,82 +21,80 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jLog;
 
-import org.jboss.test.selenium.android.support.ui.Select;
-import org.jboss.test.selenium.support.ui.TextContains;
-import org.jboss.test.selenium.support.ui.TextEquals;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
-import org.richfaces.tests.showcase.ftest.webdriver.AbstractAndroidTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.support.ui.Select;
+import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.a4jLog.LogPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jLogSimple extends AbstractAndroidTest<LogPage> {
+public class TestA4jLogSimple extends AbstractWebDriverTest<LogPage> {
 
     @Test
     public void testLogAndClear() {
-        Select select = new Select(getWebDriver(), getToolKit(), getPage().getSeveritySelect());
+        Select select = new Select(getPage().getSeveritySelect());
         select.selectByIndex(LogPage.Severity.INFO.getIndex());
         getPage().getSubmit().click();
-        new WebDriverWait(getWebDriver())
-            .failWith("After setting severity to <info> and submitting, the logging area should contain a message with severity <info>.")
-            .until(TextContains.getInstance().element(getPage().getLoggingArea()).text("info"));
+        Graphene.waitAjax()
+            .withMessage("After setting severity to <info> and submitting, the logging area should contain a message with severity <info>.")
+            .until(Graphene.element(getPage().getLoggingArea()).textContains("info"));
         getPage().getClear().click();
-        new WebDriverWait(getWebDriver())
-            .failWith("After setting severity to <info>, submitting and clicking on the clear button, the logging area should be empty.")
-            .until(TextContains.getInstance().element(getPage().getLoggingArea()).text(""));
+        Graphene.waitAjax()
+            .withMessage("After setting severity to <info>, submitting and clicking on the clear button, the logging area should be empty.")
+            .until(Graphene.element(getPage().getLoggingArea()).textEquals(""));
     }
 
     @Test(groups = { "RF-11479" })
     public void testLogDebug() {
-        Select select = new Select(getWebDriver(), getToolKit(), getPage().getSeveritySelect());
+        Select select = new Select(getPage().getSeveritySelect());
         select.selectByIndex(LogPage.Severity.DEBUG.getIndex());
         getPage().getSubmit().click();
-        new WebDriverWait(getWebDriver())
-            .failWith("After setting severity to <debug> and submitting, the logging area should contain a message with severity <debug>.")
-            .until(TextContains.getInstance().element(getPage().getLoggingArea()).text("debug"));
-        new WebDriverWait(getWebDriver())
-            .failWith("After setting severity to <debug> and submitting, the logging area should contain a message with severity <info>.")
-            .until(TextContains.getInstance().element(getPage().getLoggingArea()).text("info"));
+        Graphene.waitAjax()
+            .withMessage("After setting severity to <debug> and submitting, the logging area should contain a message with severity <debug>.")
+            .until(Graphene.element(getPage().getLoggingArea()).textContains("debug"));
+        Graphene.waitAjax()
+            .withMessage("After setting severity to <debug> and submitting, the logging area should contain a message with severity <info>.")
+            .until(Graphene.element(getPage().getLoggingArea()).textContains("info"));
     }
 
     @Test(groups = { "RF-11479" })
     public void testLogError() {
-        Select select = new Select(getWebDriver(), getToolKit(), getPage().getSeveritySelect());
+        Select select = new Select(getPage().getSeveritySelect());
         select.selectByIndex(LogPage.Severity.ERROR.getIndex());
         getPage().getSubmit().click();
-        new WebDriverWait(getWebDriver())
-            .failWith("After setting severity to <error> and submitting, the logging area should contain no message.")
-            .until(TextContains.getInstance().element(getPage().getLoggingArea()).text(""));
+        Graphene.waitAjax()
+            .withMessage("After setting severity to <error> and submitting, the logging area should contain no message.")
+            .until(Graphene.element(getPage().getLoggingArea()).textEquals(""));
     }
 
     @Test
     public void testLogInfo() {
-        Select select = new Select(getWebDriver(), getToolKit(), getPage().getSeveritySelect());
+        Select select = new Select(getPage().getSeveritySelect());
         select.selectByIndex(LogPage.Severity.INFO.getIndex());
         getPage().getSubmit().click();
-        new WebDriverWait(getWebDriver())
-            .failWith("After setting severity to <info> and submitting, the logging area should contain a message with severity <info>.")
-            .until(TextContains.getInstance().element(getPage().getLoggingArea()).text("info"));
+        Graphene.waitAjax()
+            .withMessage("After setting severity to <info> and submitting, the logging area should contain a message with severity <info>.")
+            .until(Graphene.element(getPage().getLoggingArea()).textContains("info"));
     }
 
     @Test(groups = { "RF-11479" })
     public void testLogWarn() {
-        Select select = new Select(getWebDriver(), getToolKit(), getPage().getSeveritySelect());
+        Select select = new Select(getPage().getSeveritySelect());
         select.selectByIndex(LogPage.Severity.WARN.getIndex());
         getPage().getSubmit().click();
-        new WebDriverWait(getWebDriver())
-            .failWith("After setting severity to <warn> and submitting, the logging area should contain no message.")
-            .until(TextContains.getInstance().element(getPage().getLoggingArea()).text(""));
+        Graphene.waitAjax()
+            .withMessage("After setting severity to <warn> and submitting, the logging area should contain no message.")
+            .until(Graphene.element(getPage().getLoggingArea()).textEquals(""));
     }
 
     @Test
     public void testSubmitEmpty() {
         getPage().getSubmit().click();
-        new WebDriverWait(getWebDriver())
-            .failWith("After submitting empty input, the output should contain nothing.")
-            .until(TextEquals.getInstance().element(getPage().getOutput()).text(""));
+        Graphene.waitAjax()
+            .withMessage("After submitting empty input, the output should contain nothing.")
+            .until(Graphene.element(getPage().getOutput()).textEquals(""));
     }
 
     @Test(groups = {"RF-12146"})
@@ -104,9 +102,9 @@ public class TestA4jLogSimple extends AbstractAndroidTest<LogPage> {
         getPage().getInput().click();
         getPage().getInput().sendKeys("something");
         getPage().getSubmit().click();
-        new WebDriverWait(getWebDriver())
-            .failWith("After submitting the input, the content of the output should match.")
-            .until(TextEquals.getInstance().element(getPage().getOutput()).text("Hello something!"));
+        Graphene.waitAjax()
+            .withMessage("After submitting the input, the content of the output should match.")
+            .until(Graphene.element(getPage().getOutput()).textEquals("Hello something!"));
     }
 
     @Override

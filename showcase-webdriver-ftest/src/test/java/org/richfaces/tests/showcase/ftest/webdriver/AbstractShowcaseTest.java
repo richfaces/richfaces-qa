@@ -119,7 +119,7 @@ public abstract class AbstractShowcaseTest extends Arquillian {
      */
     protected String getTestUrl() {
         if (getConfiguration().isMobile()) {
-            return "#" + getDemoName() + ":" + getSampleName();
+            return "mobile/#" + getDemoName() + ":" + getSampleName();
         } else {
             return "richfaces/component-sample.jsf?skin=" + getSkinName() + "&demo=" + getDemoName() + "&sample=" + getSampleName();
         }

@@ -21,8 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jPush;
 
-import org.jboss.test.selenium.support.ui.TextNotEquals;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.a4jPush.PushPage;
 import org.testng.annotations.Test;
@@ -36,9 +35,9 @@ public class TestA4jPushSimple extends AbstractWebDriverTest<PushPage>{
     public void testDateUpdates() {
         for(int i=0; i<2; i++) {
             String before = getPage().getDate().getText();
-            new WebDriverWait(getWebDriver())
-                .failWith("The updating doesn't work correctly. Iteration <" + i + ">.")
-                .until(TextNotEquals.getInstance().element(getPage().getDate()).text(before));
+            Graphene.waitAjax()
+                .withMessage("The updating doesn't work correctly. Iteration <" + i + ">.")
+                .until(Graphene.element(getPage().getDate()).not().textEquals(before));
         }
     }
 

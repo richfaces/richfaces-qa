@@ -21,16 +21,15 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.page.richInplaceSelect;
 
-import org.jboss.test.selenium.android.ToolKit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractAndroidPage;
+import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractWebDriverPage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class InplaceSelectPage extends AbstractAndroidPage{
+public class InplaceSelectPage extends AbstractWebDriverPage {
 
     private static final String SELECT_LOCATOR = "//*[@class='example-cnt']//span[contains(@class, 'rf-is')]";
 
@@ -43,8 +42,8 @@ public class InplaceSelectPage extends AbstractAndroidPage{
 
     private Select select;
 
-    public InplaceSelectPage(WebDriver webDriver, ToolKit toolKit) {
-        super(webDriver, toolKit);
+    public InplaceSelectPage(WebDriver webDriver) {
+        super(webDriver);
     }
 
     @Override
@@ -58,7 +57,7 @@ public class InplaceSelectPage extends AbstractAndroidPage{
 
     public Select getSelect() {
         if (select == null) {
-            select = new Select(getWebDriver(), getToolKit(), label, popup, openPopupArea);
+            select = new Select(getWebDriver(), label, popup, openPopupArea);
         }
         return select;
     }

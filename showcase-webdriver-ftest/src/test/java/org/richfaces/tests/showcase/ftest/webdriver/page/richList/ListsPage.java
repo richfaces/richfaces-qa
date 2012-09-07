@@ -22,8 +22,7 @@
 package org.richfaces.tests.showcase.ftest.webdriver.page.richList;
 
 import org.apache.commons.lang.Validate;
-import org.jboss.test.selenium.support.ui.ElementPresent;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -111,9 +110,9 @@ public class ListsPage implements ShowcasePage {
     }
 
     private void waitUntilListPresent(WebElement list) {
-        new WebDriverWait(webDriver)
-            .failWith("Unable to change the list type.")
-            .until(ElementPresent.getInstance().element(list));
+        Graphene.waitAjax()
+            .withMessage("Unable to change the list type.")
+            .until(Graphene.element(list).isPresent());
     }
 
 }

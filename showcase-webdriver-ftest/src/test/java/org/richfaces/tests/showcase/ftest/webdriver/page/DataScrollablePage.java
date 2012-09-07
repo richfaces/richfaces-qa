@@ -22,9 +22,7 @@
 package org.richfaces.tests.showcase.ftest.webdriver.page;
 
 import org.apache.commons.lang.Validate;
-import org.jboss.test.selenium.support.ui.ElementPresent;
-import org.jboss.test.selenium.support.ui.TextNotEquals;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -93,19 +91,19 @@ public class DataScrollablePage {
     }
 
     public boolean isFirstPageButtonDisabled() {
-        return ElementPresent.getInstance().element(firstPageButtonDis).apply(webDriver);
+        return Graphene.element(firstPageButtonDis).isPresent().apply(webDriver);
     }
 
     public boolean isLastPageButtonDisabled() {
-        return ElementPresent.getInstance().element(lastPageButtonDis).apply(webDriver);
+        return Graphene.element(lastPageButtonDis).isPresent().apply(webDriver);
     }
 
     public boolean isNextButtonDisabled() {
-        return ElementPresent.getInstance().element(nextButtonDis).apply(webDriver);
+        return Graphene.element(nextButtonDis).isPresent().apply(webDriver);
     }
 
     public boolean isNextFastButtonDisabled() {
-        return ElementPresent.getInstance().element(fastNextButtonDis).apply(webDriver);
+        return Graphene.element(fastNextButtonDis).isPresent().apply(webDriver);
     }
 
     public boolean isPageNumberPresent(int pageNumber) {
@@ -118,11 +116,11 @@ public class DataScrollablePage {
     }
 
     public boolean isPreviousButtonDisabled() {
-        return ElementPresent.getInstance().element(previousButtonDis).apply(webDriver);
+        return Graphene.element(previousButtonDis).isPresent().apply(webDriver);
     }
 
     public boolean isPreviousFastButtonDisabled() {
-        return ElementPresent.getInstance().element(fastPreviousButtonDis).apply(webDriver);
+        return Graphene.element(fastPreviousButtonDis).isPresent().apply(webDriver);
     }
 
     public void last() {
@@ -158,9 +156,9 @@ public class DataScrollablePage {
     private void clickAndWaitForPageChanged(WebElement button) {
         String currentPage = buttonWithNumberOfCurrentPage.getText();
         button.click();
-        new WebDriverWait(webDriver)
-            .failWith("After clicking on control button of data scroller, page doesn't change.")
-            .until(TextNotEquals.getInstance().element(buttonWithNumberOfCurrentPage).text(currentPage));
+        Graphene.waitAjax()
+            .withMessage("After clicking on control button of data scroller, page doesn't change.")
+            .until(Graphene.element(buttonWithNumberOfCurrentPage).not().textEquals(currentPage));
     }
 
     protected WebDriver getWebDriver() {

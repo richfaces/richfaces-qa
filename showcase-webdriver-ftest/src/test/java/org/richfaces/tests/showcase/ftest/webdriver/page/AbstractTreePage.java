@@ -24,8 +24,7 @@ package org.richfaces.tests.showcase.ftest.webdriver.page;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
-import org.jboss.test.selenium.support.ui.ElementPresent;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
@@ -121,8 +120,8 @@ public abstract class AbstractTreePage implements ShowcasePage {
             jsExecutor.executeScript("window.moveTo(" + location.getX() + ", " + location.getY() + ")");
         }
         toToggle.click();
-        new WebDriverWait(webDriver)
-            .failWith("Unable to toggle the given element.")
-            .until(ElementPresent.getInstance().element(toToggle));
+        Graphene.waitAjax()
+            .withMessage("Unable to toggle the given element.")
+            .until(Graphene.element(toToggle).isPresent());
     }
 }

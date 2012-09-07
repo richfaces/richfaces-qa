@@ -21,9 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.page.richTogglePanel;
 
-import org.jboss.test.selenium.support.ui.ElementDisplayed;
-import org.jboss.test.selenium.support.ui.ElementPresent;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -84,7 +82,7 @@ public class SimplePage extends AbstractWebDriverPage {
     }
 
     private boolean isPanelOpened(WebElement panel) {
-        return ElementPresent.getInstance().element(panel).apply(getWebDriver());
+        return Graphene.element(panel).isPresent().apply(getWebDriver());
     }
 
     private boolean isTabFocused(WebElement tab) {
@@ -98,8 +96,8 @@ public class SimplePage extends AbstractWebDriverPage {
 
     private void openPanel(WebElement panel, WebElement tab) {
         tab.click();
-        new WebDriverWait(getWebDriver())
-            .failWith("The panel can't be opened.")
-            .until(ElementDisplayed.getInstance().element(panel));
+        Graphene.waitAjax()
+            .withMessage("The panel can't be opened.")
+            .until(Graphene.element(panel).isVisible());
     }
 }

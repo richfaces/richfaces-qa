@@ -22,12 +22,9 @@
 package org.richfaces.tests.showcase.ftest.webdriver.page.richInputNumberSpinner;
 
 import org.apache.commons.lang.Validate;
-import org.jboss.test.selenium.android.Key;
-import org.jboss.test.selenium.android.ToolKit;
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.test.selenium.android.ToolKitException;
 import org.jboss.test.selenium.android.support.ui.AbstractComponent;
-import org.jboss.test.selenium.support.ui.TextEquals;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -42,8 +39,8 @@ public class Spinner extends AbstractComponent {
     private int step;
     private WebElement upArrow;
 
-    public Spinner(WebDriver webDriver, ToolKit toolKit, WebElement input, WebElement downArrow, WebElement upArrow, int step) {
-        super(webDriver, toolKit, input);
+    public Spinner(WebDriver webDriver, WebElement input, WebElement downArrow, WebElement upArrow, int step) {
+        super(webDriver, input);
         Validate.notNull(downArrow);
         Validate.notNull(upArrow);
         this.input = input;
@@ -55,8 +52,8 @@ public class Spinner extends AbstractComponent {
     public void decrease() {
         final int before = getNumber();
         getDownArrow().click();
-        new WebDriverWait(getWebDriver())
-            .failWith("The number can't be decreased. Expected <" + (before - step) + ">, found <" + getNumber() + ">.")
+        Graphene.waitAjax()
+            .withMessage("The number can't be decreased. Expected <" + (before - step) + ">, found <" + getNumber() + ">.")
             .until(new ExpectedCondition<Boolean>() {
                 @Override
                 public Boolean apply(WebDriver arg0) {
@@ -72,8 +69,8 @@ public class Spinner extends AbstractComponent {
     public void increase() {
         final int before = getNumber();
         getUpArrow().click();
-        new WebDriverWait(getWebDriver())
-            .failWith("The number can't be increased. Expected <" + (before + step) + ">, found <" + getNumber() + ">.")
+        Graphene.waitAjax()
+            .withMessage("The number can't be increased. Expected <" + (before + step) + ">, found <" + getNumber() + ">.")
             .until(new ExpectedCondition<Boolean>() {
                 @Override
                 public Boolean apply(WebDriver arg0) {
@@ -86,10 +83,10 @@ public class Spinner extends AbstractComponent {
         getInput().click();
         getInput().clear();
         // HACK:
-        getToolKit().sendKey(Key.DELETE);
-        new WebDriverWait(getWebDriver())
-            .failWith("The input can't be cleared.")
-            .until(TextEquals.getInstance().element(getInput()).text(""));
+//        getToolKit().sendKey(Key.DELETE);
+        Graphene.waitAjax()
+            .withMessage("The input can't be cleared.")
+            .until(Graphene.element(getInput()).textEquals(""));
         getInput().sendKeys(String.valueOf(number));
     }
 

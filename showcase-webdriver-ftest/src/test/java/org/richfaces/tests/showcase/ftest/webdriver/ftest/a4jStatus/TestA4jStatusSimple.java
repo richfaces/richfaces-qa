@@ -21,10 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jStatus;
 
+import org.jboss.arquillian.graphene.Graphene;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.test.selenium.support.ui.ElementPresent;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.a4jStatus.ViewUsagePage;
 import org.testng.annotations.Test;
@@ -41,12 +40,12 @@ public class TestA4jStatusSimple extends AbstractWebDriverTest<ViewUsagePage>{
         getPage().getAddressInput().click();
         getPage().getAddressInput().sendKeys("something");
         getPage().getUserSubmit().click();
-        new WebDriverWait(getWebDriver())
-            .failWith("After submitting the username and the address, the request image should be present.")
-            .until(ElementPresent.getInstance().element(getPage().getRequestImage()));
-        new WebDriverWait(getWebDriver())
-            .failWith("After submitting the username and the address, the output text should be present.")
-            .until(ElementPresent.getInstance().element(getPage().getUserOutput()));
+        Graphene.waitAjax()
+            .withMessage("After submitting the username and the address, the request image should be present.")
+            .until(Graphene.element(getPage().getRequestImage()).isPresent());
+        Graphene.waitAjax()
+            .withMessage("After submitting the username and the address, the output text should be present.")
+            .until(Graphene.element(getPage().getUserOutput()).isPresent());
         assertEquals(getPage().getUserOutput().getText(), "User stored successfully");
     }
 
@@ -54,9 +53,9 @@ public class TestA4jStatusSimple extends AbstractWebDriverTest<ViewUsagePage>{
     public void testTypeAddress() {
         getPage().getAddressInput().click();
         getPage().getAddressInput().sendKeys("something");
-        new WebDriverWait(getWebDriver())
-            .failWith("After typing the address, the request image should be present.")
-            .until(ElementPresent.getInstance().element(getPage().getRequestImage()));
+        Graphene.waitAjax()
+            .withMessage("After typing the address, the request image should be present.")
+            .until(Graphene.element(getPage().getRequestImage()).isPresent());
     }
 
 
@@ -64,9 +63,9 @@ public class TestA4jStatusSimple extends AbstractWebDriverTest<ViewUsagePage>{
     public void testTypeUsername() {
         getPage().getUsernameInput().click();
         getPage().getUsernameInput().sendKeys("something");
-        new WebDriverWait(getWebDriver())
-            .failWith("After typing the username, the request image should be present.")
-            .until(ElementPresent.getInstance().element(getPage().getRequestImage()));
+        Graphene.waitAjax()
+            .withMessage("After typing the username, the request image should be present.")
+            .until(Graphene.element(getPage().getRequestImage()).isPresent());
     }
 
     @Override

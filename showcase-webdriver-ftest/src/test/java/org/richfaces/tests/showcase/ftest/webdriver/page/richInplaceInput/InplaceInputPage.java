@@ -21,9 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.page.richInplaceInput;
 
-import org.jboss.test.selenium.support.ui.ElementNotPresent;
-import org.jboss.test.selenium.support.ui.ElementPresent;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -70,15 +68,15 @@ public class InplaceInputPage extends AbstractWebDriverPage {
     }
 
     public void waitUntilFocused(WebElement input) {
-        new WebDriverWait(getWebDriver())
-            .failWith("The input should be focused.)")
-            .until(ElementPresent.getInstance().element(input));
+        Graphene.waitAjax()
+            .withMessage("The input should be focused.)")
+            .until(Graphene.element(input).isPresent());
     }
 
     public void waitUntilNotFocused(WebElement input) {
-        new WebDriverWait(getWebDriver())
-            .failWith("The input shouldn't be focused.)")
-            .until(ElementNotPresent.getInstance().element(input));
+        Graphene.waitAjax()
+            .withMessage("The input shouldn't be focused.)")
+            .until(Graphene.element(input).not().isPresent());
     }
 
     private boolean isFocused(WebElement input) {

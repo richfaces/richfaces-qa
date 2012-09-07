@@ -21,11 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest;
 
+import org.jboss.arquillian.graphene.Graphene;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.test.selenium.support.ui.ElementNotPresent;
-import org.jboss.test.selenium.support.ui.ElementPresent;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractRichMessagePage;
@@ -36,15 +34,15 @@ import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractRichMessagePage
 public abstract class AbstractRichMessageTest<Page extends AbstractRichMessagePage> extends AbstractWebDriverTest<Page> {
 
     protected void checkErrorNotPresent(WebElement errorArea) {
-        new WebDriverWait(getWebDriver())
-            .failWith("Error message should disappear.")
-            .until(ElementNotPresent.getInstance().element(errorArea));
+        Graphene.waitAjax()
+                .withMessage("Error message should disappear.")
+                .until(Graphene.element(errorArea).not().isPresent());
     }
 
     protected void checkErrorPresent(WebElement errorArea) {
-        new WebDriverWait(getWebDriver())
-            .failWith("Error message should appear.")
-            .until(ElementPresent.getInstance().element(errorArea));
+        Graphene.waitAjax()
+                .withMessage("Error message should appear.")
+                .until(Graphene.element(errorArea).isPresent());
         assertTrue(errorArea.getText().contains("Validation Error"));
     }
 

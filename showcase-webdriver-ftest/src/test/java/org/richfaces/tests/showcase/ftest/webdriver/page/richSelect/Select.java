@@ -22,10 +22,8 @@
 package org.richfaces.tests.showcase.ftest.webdriver.page.richSelect;
 
 import org.apache.commons.lang.Validate;
-import org.jboss.test.selenium.android.ToolKit;
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.test.selenium.android.support.ui.AbstractComponent;
-import org.jboss.test.selenium.support.ui.ElementPresent;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -41,8 +39,8 @@ public class Select extends AbstractComponent {
     private WebElement input;
     private WebElement popup;
 
-    public Select(WebDriver webDriver, ToolKit toolKit, WebElement input, WebElement popup, WebElement arrow) {
-        super(webDriver, toolKit, input);
+    public Select(WebDriver webDriver, WebElement input, WebElement popup, WebElement arrow) {
+        super(webDriver, input);
         Validate.notNull(popup);
         Validate.notNull(arrow);
         this.input = input;
@@ -80,8 +78,8 @@ public class Select extends AbstractComponent {
         WebElement option = getPopup().findElement(By.xpath("div[@class='rf-sel-shdw']//div[@class='rf-sel-opt'][" + (index + 1) + "]"));
         final String expectedValue = option.getText();
         option.click();
-        new WebDriverWait(getWebDriver())
-            .failWith("The option <" + index + "> can't be selected.")
+        Graphene.waitAjax()
+            .withMessage("The option <" + index + "> can't be selected.")
             .until(new ExpectedCondition<Boolean>() {
                 @Override
                 public Boolean apply(WebDriver arg0) {
@@ -110,9 +108,9 @@ public class Select extends AbstractComponent {
 
 
     private void waitUntilPopupPresent() {
-        new WebDriverWait(getWebDriver())
-            .failWith("The popup isn't present.")
-            .until(ElementPresent.getInstance().element(getPopup()));
+        Graphene.waitAjax()
+            .withMessage("The popup isn't present.")
+            .until(Graphene.element(getPopup()).isPresent());
     }
 
 }
