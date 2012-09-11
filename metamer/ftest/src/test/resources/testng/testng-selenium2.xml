@@ -13,6 +13,7 @@
         <classes>
             <class name="org.richfaces.tests.metamer.ftest.a4jCommandButton.TestA4JCommandButton" />
             <class name="org.richfaces.tests.metamer.ftest.a4jMediaOutput.TestElementAWebDriver" />
+            <class name="org.richfaces.tests.metamer.ftest.richAccordion.TestRichAccordionWebDriver" />
             <class name="org.richfaces.tests.metamer.ftest.richAutocomplete.TestAutocompleteValidationMessages" />
             <class name="org.richfaces.tests.metamer.ftest.richCalendar.TestRichCalendarValidationMessages" />
             <class name="org.richfaces.tests.metamer.ftest.richEditor.TestRichEditorWithTyping" />

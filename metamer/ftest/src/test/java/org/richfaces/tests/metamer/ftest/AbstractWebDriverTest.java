@@ -214,7 +214,7 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
             if (new StringEqualsWrapper(valueOnPage).notEqualsToSomeOfThis(null, "", "null")) {
                 fail("Attribute " + testedAttribute.toString() + " does not work properly,");
             }
-        } else if (new StringEqualsWrapper(valueOnPage).isNotSimilarToSomeOfThis(value)) {//Attribute has not been set correctly
+        } else if (!valueOnPage.contains(value)) {//Attribute has not been set correctly
             fail("Attribute " + testedAttribute.toString() + " does not work properly,");
         }
     }
@@ -574,6 +574,14 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
         private static final Map<String, String> mapping = new HashMap<String, String>();
 
         static {//put here any mappings
+            mapping.put(BasicAttributes.itemActiveHeaderClass.toString(), "class");
+            mapping.put(BasicAttributes.itemClass.toString(), "class");
+            mapping.put(BasicAttributes.itemContentClass.toString(), "class");
+            mapping.put(BasicAttributes.itemDisabledClass.toString(), "class");
+            mapping.put(BasicAttributes.itemDisabledHeaderClass.toString(), "class");
+            mapping.put(BasicAttributes.itemHeaderClass.toString(), "class");
+            mapping.put(BasicAttributes.itemInactiveHeaderClass.toString(), "class");
+            mapping.put(BasicAttributes.itemStyle.toString(), "style");
             mapping.put(BasicAttributes.styleClass.toString(), "class");
         }
 
