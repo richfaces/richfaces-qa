@@ -21,12 +21,12 @@
  */
 package org.richfaces.tests.metamer.ftest.webdriver;
 
-import com.google.common.base.Predicate;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
@@ -34,6 +34,7 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -42,6 +43,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
+
+import com.google.common.base.Predicate;
 
 public class Attributes<T extends AttributeEnum> {
 
@@ -110,13 +113,13 @@ public class Attributes<T extends AttributeEnum> {
     protected void setProperty(String propertyName, Object value) {
         String valueAsString = (value == null ? NULLSTRING : value.toString());
         //locator for all types of input elements
-        String xpathLocator = "//*[contains(@id, ':" + propertyName + "Input')]";
-        WebElement foundElement = waitUntilElementIsVisible(By.xpath(xpathLocator));
+        String cssSelector = "[id*=" + propertyName + "Input]";
+        WebElement foundElement = waitUntilElementIsVisible(By.cssSelector(cssSelector));
         //handle the property by the tagname of the input element
         Tag tag = Tag.getTag(foundElement);
         switch (tag) {
             case input:
-                applyText(xpathLocator, valueAsString);
+                applyText(propertyName, valueAsString);
                 break;
             case checkbox:
                 throw new UnsupportedOperationException("Checkboxes are not supported");
@@ -135,17 +138,18 @@ public class Attributes<T extends AttributeEnum> {
     /**
      * Sets text property. Cleans input field, if there is something.
      *
-     * @param xpathLocator locator of input text field
+     * @param propertyName name of the property that should change
      * @param value value to be set
      */
-    private void applyText(String xpathLocator, String value) {
-        String text = driver.findElement(By.xpath(xpathLocator)).getAttribute("value");
+    private void applyText(String propertyName, String value) {
+        By cssSelector = By.cssSelector("[id$=" + propertyName + "Input]");
+        String text = driver.findElement(cssSelector).getAttribute("value");
         if (!value.equals(text)) {
             if (!text.isEmpty()) {
-                waitGuard(driver.findElement(By.xpath(xpathLocator))).clear();
+                ((JavascriptExecutor) driver).executeScript("$('input[id$=" + propertyName + "Input]').val('')");
             }
-            waitUntilElementIsVisible(By.xpath(xpathLocator)).sendKeys(value);
-            waitGuard(driver.findElement(By.xpath(xpathLocator))).submit();
+            waitUntilElementIsVisible(cssSelector).sendKeys(value);
+            waitGuard(driver.findElement(cssSelector)).submit();
         }
     }
 
