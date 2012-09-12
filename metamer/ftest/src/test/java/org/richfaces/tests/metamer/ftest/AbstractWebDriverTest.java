@@ -313,10 +313,10 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
      */
     protected <T extends AttributeEnum> void testFireEventWithJS(WebElement element, Attributes<T> attributes, T testedAttribute) {
         attributes.set(testedAttribute, "metamerEvents += \"" + testedAttribute.toString() + " \"");
-        executeJS("window.metamerEvents = \"\";");
+        executeJS("metamerEvents = \"\";");
         Event e = new Event(testedAttribute.toString().substring(2));//remove prefix "on"
         fireEvent(element, e);
-        String returnedString = expectedReturnJS("return window.metamerEvents", testedAttribute.toString());
+        String returnedString = expectedReturnJS("return metamerEvents", testedAttribute.toString());
         assertEquals(returnedString, testedAttribute.toString(), "Event " + e + " does not work.");
     }
 
@@ -334,9 +334,9 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
      */
     protected <T extends AttributeEnum> void testFireEvent(Attributes<T> attributes, T testedAttribute, Action eventFiringAction) {
         attributes.set(testedAttribute, "metamerEvents += \"" + testedAttribute.toString() + " \"");
-        executeJS("window.metamerEvents = \"\";");
+        executeJS("metamerEvents = \"\";");
         eventFiringAction.perform();
-        String returnedString = expectedReturnJS("return window.metamerEvents", testedAttribute.toString());
+        String returnedString = expectedReturnJS("return metamerEvents", testedAttribute.toString());
         assertEquals(returnedString, testedAttribute.toString(), "Event " + testedAttribute.toString() + " does not work.");
     }
 
