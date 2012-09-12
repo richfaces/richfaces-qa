@@ -73,40 +73,6 @@ public class TestRichAccordion extends AbstractGrapheneTest {
     }
 
     @Test
-    public void testHeight() {
-        AttributeLocator<?> attribute = accordion.getAttribute(new Attribute("style"));
-
-        // height = null
-        assertFalse(selenium.isAttributePresent(attribute), "Attribute style should not be present.");
-
-        // height = 300px
-        accordionAttributes.set(AccordionAttributes.height, "300px");
-
-        assertTrue(selenium.isAttributePresent(attribute), "Attribute style should be present.");
-        String value = selenium.getStyle(accordion, CssProperty.HEIGHT);
-        assertEquals(value, "300px", "Attribute width");
-    }
-
-    @Test
-    public void testImmediate() {
-        accordionAttributes.set(AccordionAttributes.immediate, true);
-
-        selenium.click(itemHeaders[2]);
-        waitGui.failWith("Item 3 is not displayed.").until(elementVisible.locator(itemContents[2]));
-
-        phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
-        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "item changed: item1 -> item3");
-    }
-
-    @Test
-    public void testItemChangeListener() {
-        selenium.click(itemHeaders[2]);
-        waitGui.failWith("Item 3 is not displayed.").until(elementVisible.locator(itemContents[2]));
-
-        phaseInfo.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: item1 -> item3");
-    }
-
-    @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10352")
     public void testItemActiveLeftIcon() {
         JQueryLocator icon = leftIcon.format(1).getDescendant(jq("div.rf-ac-itm-ico-act"));
@@ -203,16 +169,6 @@ public class TestRichAccordion extends AbstractGrapheneTest {
     }
 
     @Test
-    public void testOnclick() {
-        testFireEvent(Event.CLICK, accordion);
-    }
-
-    @Test
-    public void testOndblclick() {
-        testFireEvent(Event.DBLCLICK, accordion);
-    }
-
-    @Test
     public void testOnitemchange() {
         accordionAttributes.set(AccordionAttributes.onitemchange, "metamerEvents += \"onitemchange \"");
 
@@ -224,82 +180,8 @@ public class TestRichAccordion extends AbstractGrapheneTest {
     }
 
     @Test
-    public void testOnmousedown() {
-        testFireEvent(Event.MOUSEDOWN, accordion);
-    }
-
-    @Test
-    public void testOnmousemove() {
-        testFireEvent(Event.MOUSEMOVE, accordion);
-    }
-
-    @Test
     public void testOnmouseout() {
         testFireEvent(Event.MOUSEOUT, accordion);
-    }
-
-    @Test
-    public void testOnmouseover() {
-        testFireEvent(Event.MOUSEOVER, accordion);
-    }
-
-    @Test
-    public void testOnmouseup() {
-        testFireEvent(Event.MOUSEUP, accordion);
-    }
-
-    @Test
-    public void testSwitchTypeNull() {
-        for (int i = 2; i >= 0; i--) {
-            final int index = i;
-            guardXhr(selenium).click(itemHeaders[index]);
-            waitGui.failWith("Item " + index + " is not displayed.").until(elementVisible.locator(itemContents[index]));
-        }
-    }
-
-    @Test
-    public void testSwitchTypeAjax() {
-        accordionAttributes.set(AccordionAttributes.switchType, "ajax");
-
-        testSwitchTypeNull();
-    }
-
-    @Test
-    public void testSwitchTypeClient() {
-        accordionAttributes.set(AccordionAttributes.switchType, "client");
-
-        for (int i = 2; i >= 0; i--) {
-            final int index = i;
-            guardNoRequest(selenium).click(itemHeaders[index]);
-            waitGui.failWith("Item " + index + " is not displayed.").until(elementVisible.locator(itemContents[index]));
-        }
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-10040")
-    public void testSwitchTypeServer() {
-        accordionAttributes.set(AccordionAttributes.switchType, "server");
-
-        for (int i = 2; i >= 0; i--) {
-            final int index = i;
-            guardHttp(selenium).click(itemHeaders[index]);
-            waitGui.failWith("Item " + index + " is not displayed.").until(elementVisible.locator(itemContents[index]));
-        }
-    }
-
-    @Test
-    public void testWidth() {
-        AttributeLocator<?> attribute = accordion.getAttribute(new Attribute("style"));
-
-        // width = null
-        assertFalse(selenium.isAttributePresent(attribute), "Attribute style should not be present.");
-
-        // width = 50%
-        accordionAttributes.set(AccordionAttributes.width, "356px");
-
-        assertTrue(selenium.isAttributePresent(attribute), "Attribute style should be present.");
-        String value = selenium.getStyle(accordion, CssProperty.WIDTH);
-        assertEquals(value, "356px", "Attribute width");
     }
 
     private void verifyStandardIcons(JQueryLocator input, JQueryLocator icon, JQueryLocator image, String classSuffix) {

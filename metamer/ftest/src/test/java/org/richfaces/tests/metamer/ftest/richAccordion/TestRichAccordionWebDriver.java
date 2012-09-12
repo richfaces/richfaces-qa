@@ -30,10 +30,16 @@ import static org.testng.Assert.fail;
 
 import java.net.URL;
 
+import javax.faces.event.PhaseId;
+
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 /**
@@ -130,8 +136,39 @@ public class TestRichAccordionWebDriver extends AbstractWebDriverTest<AccordionP
     }
 
     @Test
+    public void testHeight() {
+        // height = null
+        assertEquals(page.accordion.getAttribute("style"), "", "Attribute style should not be present.");
+
+        // height = 300px
+        accordionAttributes.set(AccordionAttributes.height, "300px");
+        assertEquals(page.accordion.getCssValue("height"), "300px", "Attribute height");
+    }
+
+    @Test
+    public void testImmediate() {
+        accordionAttributes.set(AccordionAttributes.immediate, true);
+
+        page.headers.get(2).click();
+        Graphene.waitModel().withMessage("Item 3 is not displayed.")
+            .until(Graphene.element(page.itemContents.get(2)).isVisible());
+
+        phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
+        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "item changed: item1 -> item3");
+    }
+
+    @Test
     public void testItemActiveHeaderClass() {
         testStyleClass(page.activeHeaders.get(0), BasicAttributes.itemActiveHeaderClass);
+    }
+
+    @Test
+    public void testItemChangeListener() {
+        page.headers.get(2).click();
+        Graphene.waitModel().withMessage("Item 3 is not displayed.")
+            .until(Graphene.element(page.itemContents.get(2)).isVisible());
+
+        phaseInfo.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: item1 -> item3");
     }
 
     @Test
@@ -160,6 +197,42 @@ public class TestRichAccordionWebDriver extends AbstractWebDriverTest<AccordionP
     }
 
     @Test
+    public void testOnclick() {
+        Action action = new Actions(driver).click(page.accordion).build();
+        testFireEvent(accordionAttributes, AccordionAttributes.onclick, action);
+    }
+
+    @Test
+    public void testOndblclick() {
+        Action action = new Actions(driver).doubleClick(page.accordion).build();
+        testFireEvent(accordionAttributes, AccordionAttributes.ondblclick, action);
+    }
+
+    @Test
+    public void testOnmousedown() {
+        Action action = new Actions(driver).clickAndHold(page.accordion).build();
+        testFireEvent(accordionAttributes, AccordionAttributes.onmousedown, action);
+    }
+
+    @Test
+    public void testOnmousemove() {
+        Action action = new Actions(driver).moveToElement(page.accordion).build();
+        testFireEvent(accordionAttributes, AccordionAttributes.onmousemove, action);
+    }
+
+    @Test
+    public void testOnmouseover() {
+        Action action = new Actions(driver).moveToElement(page.accordion).build();
+        testFireEvent(accordionAttributes, AccordionAttributes.onmouseover, action);
+    }
+
+    @Test
+    public void testOnmouseup() {
+        Action action = new Actions(driver).click(page.accordion).build();
+        testFireEvent(accordionAttributes, AccordionAttributes.onmouseup, action);
+    }
+
+    @Test
     public void testRendered() {
         accordionAttributes.set(AccordionAttributes.rendered, false);
 
@@ -182,7 +255,59 @@ public class TestRichAccordionWebDriver extends AbstractWebDriverTest<AccordionP
     }
 
     @Test
+    public void testSwitchTypeNull() {
+        for (int i = 2; i >= 0; i--) {
+            final int index = i;
+            Graphene.guardXhr(page.headers.get(index)).click();
+            Graphene.waitGui().withMessage("Item " + index + " is not displayed.")
+                .until(Graphene.element(page.itemContents.get(index)).isVisible());
+        }
+    }
+
+    @Test
+    public void testSwitchTypeAjax() {
+        accordionAttributes.set(AccordionAttributes.switchType, "ajax");
+
+        testSwitchTypeNull();
+    }
+
+    @Test
+    public void testSwitchTypeClient() {
+        accordionAttributes.set(AccordionAttributes.switchType, "client");
+
+        for (int i = 2; i >= 0; i--) {
+            final int index = i;
+            Graphene.guardNoRequest(page.headers.get(index)).click();
+            Graphene.waitGui().withMessage("Item " + index + " is not displayed.")
+                .until(Graphene.element(page.itemContents.get(index)).isVisible());
+        }
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-10040")
+    public void testSwitchTypeServer() {
+        accordionAttributes.set(AccordionAttributes.switchType, "server");
+
+        for (int i = 2; i >= 0; i--) {
+            final int index = i;
+            Graphene.guardHttp(page.headers.get(index)).click();
+            Graphene.waitGui().withMessage("Item " + index + " is not displayed.")
+                .until(Graphene.element(page.itemContents.get(index)).isVisible());
+        }
+    }
+
+    @Test
     public void testTitle() {
         testTitle(page.accordion);
+    }
+
+    @Test
+    public void testWidth() {
+        // width = null
+        assertEquals(page.accordion.getAttribute("style"), "", "Attribute style should not be present.");
+
+        // width = 356px
+        accordionAttributes.set(AccordionAttributes.width, "356px");
+        assertEquals(page.accordion.getCssValue("width"), "356px", "Attribute width");
     }
 }
