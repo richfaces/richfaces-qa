@@ -21,41 +21,43 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jActionListener;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.WebDriver;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
+import com.google.common.base.Predicate;
 
 /**
  * Test case for page /faces/components/a4jActionListener/all.xhtml
  *
- * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22470 $
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
+ * @since 4.3.0.M2
  */
-public class TestA4JActionListener extends AbstractGrapheneTest {
-
-    private JQueryLocator invokeButtonType = pjq("input[id$=invokeByTypeButton]");
-    private JQueryLocator invokeButtonBinding = pjq("input[id$=invokeByBindingButton]");
-    private JQueryLocator invokeButtonMethod = pjq("input[id$=invokeMethodButton]");
-    private JQueryLocator invokeButtonCC = pjq("input[id$=invokeFromCCButton:button]");
-    private JQueryLocator message = pjq("ul[id$=messages] li");
+public class TestA4JActionListener extends AbstractWebDriverTest<ActionListenerPage> {
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jActionListener/all.xhtml");
     }
+
+    @Override
+    protected ActionListenerPage createPage() {
+        return new ActionListenerPage();
+    }
+
+    Predicate<WebDriver> messageIsVisible = new Predicate<WebDriver>() {
+        @Override
+        public boolean apply(WebDriver arg0) {
+            return !page.messages.isEmpty();
+        }
+    };
 
     @Test
     public void testInvokeListenerByType() {
@@ -63,72 +65,60 @@ public class TestA4JActionListener extends AbstractGrapheneTest {
         final String msg = "Implementation of ActionListener created and called: "
             + "org.richfaces.tests.metamer.bean.a4j.A4JActionListenerBean$ActionListenerImpl";
 
-        selenium.click(invokeButtonType);
-        waitGui.until(elementPresent.locator(message));
-        final String output1 = selenium.getText(message);
+        Graphene.guardXhr(page.invokeButtonType).click();
+        Graphene.waitGui().until(messageIsVisible);
 
+        assertEquals(page.messages.size(), 1, "Only one message should be displayed on the page.");
+        final String output1 = page.messages.get(0).getText();
         assertEquals(output1.replaceAll(hashCodeRegExp, ""), msg, "Message after first invocation of listener by type.");
-
-        int count = selenium.getCount(message);
-        assertEquals(count, 1, "Only one message should be displayed on the page.");
 
         // do the same once again
 
-        selenium.click(invokeButtonType);
+        Graphene.guardXhr(page.invokeButtonType).click();
+        Graphene.waitGui().until(Graphene.element(page.messages.get(0)).not().textEquals(output1));
 
-        waitModel.failWith("New object of class ActionListenerImpl should be instantiated.").until(
-            new SeleniumCondition() {
-
-                public boolean isTrue() {
-                    return !output1.equals(selenium.getText(message));
-                }
-            });
-
-        count = selenium.getCount(message);
-        assertEquals(count, 1, "Only one message should be displayed on the page.");
-
+        assertEquals(page.messages.size(), 1, "Only one message should be displayed on the page.");
+        final String output2 = page.messages.get(0).getText();
+        assertEquals(output2.replaceAll(hashCodeRegExp, ""), msg, "Message after first invocation of listener by type.");
     }
 
     @Test
     public void testInvokeListenerByBinding() {
         final String msg = "Bound listener called";
 
-        selenium.click(invokeButtonBinding);
-        waitGui.until(elementPresent.locator(message));
-        String output = selenium.getText(message);
+        Graphene.guardXhr(page.invokeButtonBinding).click();
+        Graphene.waitGui().until(messageIsVisible);
 
+        assertEquals(page.messages.size(), 1, "Only one message should be displayed on the page.");
+
+        String output = page.messages.get(0).getText();
         assertEquals(output, msg, "Message after first invocation of listener by binding.");
-
-        int count = selenium.getCount(message);
-        assertEquals(count, 1, "Only one message should be displayed on the page.");
     }
 
     @Test
     public void testInvokeListenerMethod() {
         final String msg = "Method expression listener called";
 
-        selenium.click(invokeButtonMethod);
-        waitGui.until(elementPresent.locator(message));
-        String output = selenium.getText(message);
+        Graphene.guardXhr(page.invokeButtonMethod).click();
+        Graphene.waitGui().until(messageIsVisible);
 
+        assertEquals(page.messages.size(), 1, "Only one message should be displayed on the page.");
+
+        String output = page.messages.get(0).getText();
         assertEquals(output, msg, "Message after first invocation of listener method.");
-
-        int count = selenium.getCount(message);
-        assertEquals(count, 1, "Only one message should be displayed on the page.");
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-10585")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10585")
     public void testInvokeListenerMethodCC() {
         final String msg = "Method expression listener called from composite component";
 
-        selenium.click(invokeButtonCC);
-        waitGui.until(elementPresent.locator(message));
-        String output = selenium.getText(message);
+        Graphene.guardXhr(page.invokeButtonCC).click();
+        Graphene.waitGui().until(messageIsVisible);
 
+        assertEquals(page.messages.size(), 1, "Only one message should be displayed on the page.");
+
+        String output = page.messages.get(0).getText();
         assertEquals(output, msg, "Message after first invocation of listener method from composite component.");
-
-        int count = selenium.getCount(message);
-        assertEquals(count, 1, "Only one message should be displayed on the page.");
     }
 }

@@ -36,6 +36,7 @@
         </classes>
         
         <packages>
+            <package name="org.richfaces.tests.metamer.ftest.a4jActionListener"/>
             <package name="org.richfaces.tests.metamer.ftest.a4jAjax"/>
         </packages>
         
