@@ -48,17 +48,17 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <h:panelGrid columns="1">
                 <h:commandButton id="invokeByTypeButton" value="Invoke listener by type">
                     <a4j:actionListener type="org.richfaces.tests.metamer.bean.a4j.A4JActionListenerBean$ActionListenerImpl" />
-                    <f:ajax render="messages" />
+                    <a4j:ajax render="messages" />
                 </h:commandButton>
 
                 <h:commandButton id="invokeByBindingButton" value="Invoke listener by binding">
                     <a4j:actionListener binding="#{a4jActionListenerBean.actionListener}" />
-                    <f:ajax render="messages" />
+                    <a4j:ajax render="messages" />
                 </h:commandButton>
 
                 <h:commandButton id="invokeMethodButton" value="Invoke listener method">
                     <a4j:actionListener listener="#{a4jActionListenerBean.handleActionMethod}" />
-                    <f:ajax render="messages" />
+                    <a4j:ajax render="messages" />
                 </h:commandButton>
 
                 <demo:actionComposite id="invokeFromCCButton" render="messages" value="Invoke listener method in composite component">
