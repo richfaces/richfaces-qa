@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2012, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+<ui:composition template="/templates/template.xhtml">
+	<ui:param name="componentId" value="richDataTable" />
+
+	<ui:define name="component">
+
+		<h:outputText
+			value="switch between the tabs and see whether there is an error thrown as described at: " />
+		<a href="https://issues.jboss.org/browse/RF-12291">here</a>
+		<rich:tabPanel>
+
+			<rich:tab header="Non paginated data table">
+				<rich:dataTable id="richDataTable2"
+					value="#{richDataTableBean.state ? model.capitals : null}"
+					var="record" rows="1000">
+
+					<f:facet name="noData">
+						<h:outputText value="There is no data." style="color: red;" />
+					</f:facet>
+
+					<f:facet name="caption">
+						<h:outputText id="captionFacet" value="Caption Facet" />
+					</f:facet>
+
+					<f:facet name="header">
+						<h:outputText value="Header Facet" />
+					</f:facet>
+
+					<rich:column id="columnState" sortBy="#{record.state}">
+						<f:facet name="header">
+							<h:outputText id="columnHeaderState" value="State" />
+						</f:facet>
+
+						<h:outputText value="#{record.state}" />
+						<f:facet name="footer">
+							<h:outputText id="columnFooterState" value="State" />
+						</f:facet>
+					</rich:column>
+
+					<rich:column id="columnCapital" sortBy="#{record.name}">
+						<f:facet name="header">
+							<h:outputText id="columnHeaderCapital" value="Capital" />
+						</f:facet>
+
+						<h:outputText value="#{record.name}" />
+						<f:facet name="footer">
+							<h:outputText id="columnFooterCapital" value="Capital" />
+						</f:facet>
+					</rich:column>
+				</rich:dataTable>
+			</rich:tab>
+
+			<rich:tab header="paginated data table">
+				<rich:dataTable id="richDataTable1"
+					value="#{richDataTableBean.state ? model.capitals : null}"
+					var="record" rows="5">
+
+					<f:facet name="noData">
+						<h:outputText value="There is no data." style="color: red;" />
+					</f:facet>
+
+					<f:facet name="caption">
+						<h:outputText id="captionFacet" value="Caption Facet" />
+					</f:facet>
+
+					<f:facet name="header">
+						<h:outputText value="Header Facet" />
+					</f:facet>
+
+					<rich:column id="columnState" sortBy="#{record.state}">
+						<f:facet name="header">
+							<h:outputText id="columnHeaderState" value="State" />
+						</f:facet>
+
+						<h:outputText value="#{record.state}" />
+						<f:facet name="footer">
+							<h:outputText id="columnFooterState" value="State" />
+						</f:facet>
+					</rich:column>
+
+					<rich:column id="columnCapital" sortBy="#{record.name}">
+						<f:facet name="header">
+							<h:outputText id="columnHeaderCapital" value="Capital" />
+						</f:facet>
+
+						<h:outputText value="#{record.name}" />
+						<f:facet name="footer">
+							<h:outputText id="columnFooterCapital" value="Capital" />
+						</f:facet>
+					</rich:column>
+
+					<f:facet name="footer">
+						<rich:dataScroller id="scroller2" for="richDataTable1"
+							page="#{richDataTableBean.page}" maxPages="7"
+							render="richDataTable scroller1" />
+					</f:facet>
+
+				</rich:dataTable>
+			</rich:tab>
+
+
+		</rich:tabPanel>
+	</ui:define>
+
+</ui:composition>
+</html>
