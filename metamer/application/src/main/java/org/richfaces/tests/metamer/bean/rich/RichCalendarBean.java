@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
 public class RichCalendarBean implements Serializable {
 
     private static final long serialVersionUID = -1L;
-    private static Logger logger;
+    private static final Logger logger = LoggerFactory.getLogger(RichCalendarBean.class);
     private Attributes attributes;
     private Date date = new Date();
     public static final TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");
@@ -69,7 +69,6 @@ public class RichCalendarBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        logger = LoggerFactory.getLogger(getClass());
         logger.debug("initializing bean " + getClass().getName());
 
         attributes = Attributes.getComponentAttributesFromFacesConfig(UICalendar.class, getClass());
@@ -184,7 +183,7 @@ public class RichCalendarBean implements Serializable {
         int componentYear = cal.get(Calendar.YEAR);
 
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Date too far in the past.",
-            "Select a date from year 1991 or newer.");
+                "Select a date from year 1991 or newer.");
 
         if (componentYear < 1991) {
             FacesContext.getCurrentInstance().addMessage("form:calendar", message);
