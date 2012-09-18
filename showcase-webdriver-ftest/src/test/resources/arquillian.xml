@@ -40,7 +40,7 @@ http://www.fsf.org. -->
 
     <extension qualifier="webdriver">
         <property name="browserCapabilities">${browser.capabilities}</property>
-        <property name="remoteAddress">http://localhost:14444/wd/hub</property>
+        <property name="remoteAddress">${remote.address}</property>
         <property name="javascriptEnabled">true</property>
     </extension>
 
