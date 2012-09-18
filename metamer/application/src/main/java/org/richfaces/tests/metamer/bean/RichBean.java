@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
 public class RichBean implements Serializable {
 
     private static final long serialVersionUID = 5590865106686406193L;
-    private Logger logger;
+    private static final Logger logger = LoggerFactory.getLogger(RichBean.class);
     private String skin;
     private List<SelectItem> skinningList;
     private Skinning skinning;
@@ -79,7 +79,6 @@ public class RichBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        logger = LoggerFactory.getLogger(RichBean.class);
         logger.debug("initializing bean " + getClass().getName());
         createSkinList();
         createComponentsMap();
