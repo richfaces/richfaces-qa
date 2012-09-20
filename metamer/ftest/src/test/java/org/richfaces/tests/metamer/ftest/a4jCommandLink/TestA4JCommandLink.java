@@ -21,238 +21,192 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jCommandLink;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
-import static org.jboss.arquillian.ajocado.Graphene.textEquals;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.commandLinkAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.commandLinkAttributes;
+
 import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.javascript.JavaScript;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.test.selenium.support.ui.ElementPresent;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.interactions.Action;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.a4jCommandButton.CommandButtonLinkPage;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/a4jCommandLink/simple.xhtml
  *
- * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22733 $
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
+ * @since 4.3.0.M2
  */
-public class TestA4JCommandLink extends AbstractGrapheneTest {
-
-    private JQueryLocator input = pjq("input[id$=input]");
-    private JQueryLocator link = pjq("a[id$=a4jCommandLink]");
-    private JQueryLocator output1 = pjq("span[id$=output1]");
-    private JQueryLocator output2 = pjq("span[id$=output2]");
-    private JQueryLocator output3 = pjq("span[id$=output3]");
+public class TestA4JCommandLink extends AbstractWebDriverTest<CommandButtonLinkPage> {
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jCommandLink/simple.xhtml");
     }
 
+    @Override
+    protected CommandButtonLinkPage createPage() {
+        return new CommandButtonLinkPage();
+    }
+
     @Test(groups = "client-side-perf")
     public void testSimpleClick() {
-        guardNoRequest(selenium).typeKeys(input, "RichFaces 4");
-        guardXhr(selenium).click(link);
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+        page.submitByLink();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
 
-        waitGui.until(textEquals.locator(output1).text("RichFaces 4"));
-
-        String output = selenium.getText(output1);
-        assertEquals(output, "RichFaces 4", "output1 when 'RichFaces 4' in input");
-
-        output = selenium.getText(output2);
-        assertEquals(output, "RichFa", "output2 when 'RichFaces 4' in input");
-
-        output = selenium.getText(output3);
-        assertEquals(output, "RICHFACES 4", "output3 when 'RichFaces 4' in input");
+        page.verifyOutput1Text();
+        page.verifyOutput2Text();
+        page.verifyOutput3Text();
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9665")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
     public void testSimpleClickUnicode() {
-        guardNoRequest(selenium).typeKeys(input, "ľščťžýáíéňô");
-        guardXhr(selenium).click(link);
+        page.typeToInput(CommandButtonLinkPage.STRING_UNICODE1);
+        page.submitByLink();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_UNICODE1);
 
-        waitGui.until(textEquals.locator(output1).text("ľščťžýáíéňô"));
-
-        String output = selenium.getText(output1);
-        assertEquals(output, "ľščťžýáíéňô", "output1 when 'ľščťžýáíéňô' in input");
-
-        output = selenium.getText(output2);
-        assertEquals(output, "ľščťžý", "output2 when 'ľščťžýáíéňô' in input");
-
-        output = selenium.getText(output3);
-        assertEquals(output, "ĽŠČŤŽÝÁÍÉŇÔ", "output3 when 'ľščťžýáíéňô' in input");
+        page.verifyOutput1Text(CommandButtonLinkPage.STRING_UNICODE1);
+        page.verifyOutput2Text(CommandButtonLinkPage.STRING_UNICODE2);
+        page.verifyOutput3Text(CommandButtonLinkPage.STRING_UNICODE3);
     }
 
     @Test
     public void testAction() {
         commandLinkAttributes.set(CommandLinkAttributes.action, "doubleStringAction");
-        selenium.typeKeys(input, "RichFaces 4");
-        guardXhr(selenium).click(link);
-        waitGui.until(textEquals.locator(output1).text("RichFaces 4"));
-        assertEquals(selenium.getText(output2), "RichFaces 4RichFaces 4",
-            "output2 when 'RichFaces 4' in input and doubleStringAction selected");
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+        page.submitByLink();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
+        page.verifyOutput2Text(CommandButtonLinkPage.STRING_RF1_X2);
 
         commandLinkAttributes.set(CommandLinkAttributes.action, "first6CharsAction");
-        selenium.typeKeys(input, "RichFaces 4ň");
-        guardXhr(selenium).click(link);
-        waitGui.until(textEquals.locator(output1).text("RichFaces 4ň"));
-        assertEquals(selenium.getText(output2), "RichFa", "output2 when 'RichFaces 4ň' in input and first6CharsAction selected");
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1 + "ě");
+        page.submitByLink();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1 + "ě");
+        page.verifyOutput2Text(CommandButtonLinkPage.STRING_RF2);
 
         commandLinkAttributes.set(CommandLinkAttributes.action, "toUpperCaseAction");
-        selenium.typeKeys(input, "RichFaces 4ě");
-        guardXhr(selenium).click(link);
-        waitGui.until(textEquals.locator(output1).text("RichFaces 4ě"));
-        assertEquals(selenium.getText(output2), "RICHFACES 4Ě",
-            "output2 when 'RichFaces 4ě' in input and toUpperCaseAction selected");
+        page.typeToInput(CommandButtonLinkPage.STRING_RF_UNICODE);
+        page.submitByLink();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF_UNICODE);
+        page.verifyOutput2Text(CommandButtonLinkPage.STRING_RF_UNICODE_UPPERCASE);
     }
 
     @Test
     public void testActionListener() {
         commandLinkAttributes.set(CommandLinkAttributes.actionListener, "doubleStringActionListener");
-        selenium.typeKeys(input, "RichFaces 4");
-        guardXhr(selenium).click(link);
-        waitGui.until(textEquals.locator(output1).text("RichFaces 4"));
-        assertEquals(selenium.getText(output3), "RichFaces 4RichFaces 4",
-            "output3 when 'RichFaces 4' in input and doubleStringActionListener selected");
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+        page.submitByLink();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
+        page.verifyOutput3Text(CommandButtonLinkPage.STRING_RF1_X2);
 
         commandLinkAttributes.set(CommandLinkAttributes.actionListener, "first6CharsActionListener");
-        selenium.typeKeys(input, "RichFaces 4ň");
-        guardXhr(selenium).click(link);
-        waitGui.until(textEquals.locator(output1).text("RichFaces 4ň"));
-        assertEquals(selenium.getText(output3), "RichFa",
-            "output3 when 'RichFaces 4ň' in input and first6CharsActionListener selected");
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1 + "ě");
+        page.submitByLink();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1 + "ě");
+        page.verifyOutput3Text(CommandButtonLinkPage.STRING_RF2);
 
         commandLinkAttributes.set(CommandLinkAttributes.actionListener, "toUpperCaseActionListener");
-        selenium.typeKeys(input, "RichFaces 4ě");
-        guardXhr(selenium).click(link);
-        waitGui.until(textEquals.locator(output1).text("RichFaces 4ě"));
-        assertEquals(selenium.getText(output3), "RICHFACES 4Ě",
-            "output3 when 'RichFaces 4ě' in input and toUpperCaseActionListener selected");
+        page.typeToInput(CommandButtonLinkPage.STRING_RF_UNICODE);
+        page.submitByLink();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF_UNICODE);
+        page.verifyOutput3Text(CommandButtonLinkPage.STRING_RF_UNICODE_UPPERCASE);
     }
 
     @Test
     public void testBypassUpdates() {
         commandLinkAttributes.set(CommandLinkAttributes.bypassUpdates, true);
-
-        String reqTime = selenium.getText(time);
-        guardXhr(selenium).click(link);
-        waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
-
-        assertEquals(selenium.getText(output1), "", "Output 1 should not change");
-        assertEquals(selenium.getText(output2), "", "Output 2 should not change");
-        assertEquals(selenium.getText(output3), "", "Output 3 should not change");
-        phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
-            PhaseId.RENDER_RESPONSE);
-
-        String listenerOutput = selenium.getText(jq("div#phasesPanel li:eq(3)"));
-        assertEquals(listenerOutput, "* action listener invoked", "Action listener's output");
-        listenerOutput = selenium.getText(jq("div#phasesPanel li:eq(4)"));
-        assertEquals(listenerOutput, "* action invoked", "Action's output");
+        Graphene.guardXhr(page.link).click();
+        page.verifyOutput1Text("");
+        page.verifyOutput2Text("");
+        page.verifyOutput3Text("");
+        phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS, PhaseId.RENDER_RESPONSE);
+        phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, CommandButtonLinkPage.STRING_ACTIONLISTENER_MSG);
+        phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, CommandButtonLinkPage.STRING_ACTION_MSG);
     }
 
     @Test
     public void testCharset() {
-        testHtmlAttribute(link, "charset", "utf-8");
+        testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.charset, "utf-8");
     }
 
     @Test
     public void testCoords() {
-        testHtmlAttribute(link, "coords", "circle: 150, 60, 60");
+        testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.coords, "circle: 150, 60, 60");
     }
 
     @Test
     public void testData() {
-        commandLinkAttributes.set(CommandLinkAttributes.data, "RichFaces 4");
+        commandLinkAttributes.set(CommandLinkAttributes.data, CommandButtonLinkPage.STRING_RF1);
         commandLinkAttributes.set(CommandLinkAttributes.oncomplete, "data = event.data");
-
-        String reqTime = selenium.getText(time);
-
-        selenium.type(input, "some input text");
-        guardXhr(selenium).click(link);
-        waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
-
-        String data = selenium.getEval(new JavaScript("window.data"));
-        assertEquals(data, "RichFaces 4", "Data sent with ajax request");
+        //Does not matter what we type here
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+        page.submitByLink();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
+        String data = expectedReturnJS("return window.data", CommandButtonLinkPage.STRING_RF1);
+        assertEquals(data, CommandButtonLinkPage.STRING_RF1);
     }
 
     @Test
     public void testDisabled() {
-        JQueryLocator newLink = pjq("span[id$=a4jCommandLink]");
-
         commandLinkAttributes.set(CommandLinkAttributes.disabled, true);
 
-        assertFalse(selenium.isElementPresent(link), link.getRawLocator() + " should not be on page when the link is disabled");
-        assertTrue(selenium.isElementPresent(newLink), newLink.getRawLocator() + " should be on page when the link is disabled");
+        assertTrue(page.disabledLink.isDisplayed(), "Link should be disabled.");
+        assertFalse(ElementPresent.getInstance().element(page.link).apply(driver), "Link should not be on page.");
     }
 
     @Test
     public void testExecute() {
         commandLinkAttributes.set(CommandLinkAttributes.execute, "input executeChecker");
-
-        selenium.type(input, "RichFaces 4");
-        guardXhr(selenium).click(link);
-        waitGui.failWith("Page was not updated").waitForChangeAndReturn("", retrieveText.locator(output1));
-
-        JQueryLocator logItems = jq("ul.phases-list li:eq({0})");
-        for (int i = 0; i < 6; i++) {
-            if ("* executeChecker".equals(selenium.getText(logItems.format(i)))) {
-                return;
-            }
-        }
-
-        fail("Attribute execute does not work");
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+        page.submitByLink();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
+        phaseInfo.assertListener(PhaseId.UPDATE_MODEL_VALUES, CommandButtonLinkPage.STRING_EXECUTE_CHECKER_MSG);
     }
 
     @Test
     public void testHreflang() {
-        testHtmlAttribute(link, "hreflang", "sk");
+        testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.hreflang, "sk");
     }
 
     @Test
     public void testImmediate() {
         commandLinkAttributes.set(CommandLinkAttributes.immediate, true);
 
-        String reqTime = selenium.getText(time);
-        guardXhr(selenium).click(link);
-        waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
+        String reqTime = page.requestTime.getText();
+        page.submitByLink();
+        Graphene.waitModel().withMessage("Page was not updated")
+            .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
 
-        assertEquals(selenium.getText(output1), "", "Output 1 should not change");
-        assertEquals(selenium.getText(output2), "", "Output 2 should not change");
-        assertEquals(selenium.getText(output3), "", "Output 3 should not change");
+        page.verifyOutput1Text("");
+        page.verifyOutput2Text("");
+        page.verifyOutput3Text("");
+
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
-
-        String listenerOutput = selenium.getText(jq("div#phasesPanel li:eq(2)"));
-        assertEquals(listenerOutput, "* action listener invoked", "Action listener's output");
-        listenerOutput = selenium.getText(jq("div#phasesPanel li:eq(3)"));
-        assertEquals(listenerOutput, "* action invoked", "Action's output");
+        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, CommandButtonLinkPage.STRING_ACTIONLISTENER_MSG);
+        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, CommandButtonLinkPage.STRING_ACTION_MSG);
     }
 
     @Test
     public void testLimitRender() {
         commandLinkAttributes.set(CommandLinkAttributes.limitRender, true);
-
-        String timeValue = selenium.getText(time);
-
-        selenium.type(input, "RichFaces 4");
-        guardXhr(selenium).click(link);
-        waitGui.failWith("Page was not updated").waitForChange("", retrieveText.locator(output1));
-
-        assertEquals(selenium.getText(time), timeValue, "Ajax-rendered a4j:outputPanel shouldn't change");
+        commandLinkAttributes.set(CommandLinkAttributes.render, "output1 requestTime");
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+        page.submitByLink();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
+        page.verifyOutput1Text(CommandButtonLinkPage.STRING_RF1);
+        page.verifyOutput2Text("");
+        page.verifyOutput3Text("");
     }
 
     @Test
@@ -261,13 +215,13 @@ public class TestA4JCommandLink extends AbstractGrapheneTest {
         commandLinkAttributes.set(CommandLinkAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
         commandLinkAttributes.set(CommandLinkAttributes.oncomplete, "metamerEvents += \"complete \"");
 
-        selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
+        ((JavascriptExecutor) driver).executeScript("metamerEvents = \"\"");
+        String reqTime = page.requestTime.getText();
+        page.submitByLink();
+        Graphene.waitModel().withMessage("Page was not updated")
+            .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
 
-        selenium.type(input, "RichFaces 4");
-        guardXhr(selenium).click(link);
-        waitGui.failWith("Page was not updated").waitForChange("", retrieveText.locator(output1));
-
-        String[] events = selenium.getEval(new JavaScript("window.metamerEvents")).split(" ");
+        String[] events = ((JavascriptExecutor) driver).executeScript("return metamerEvents").toString().split(" ");
 
         assertEquals(events.length, 3, "3 events should be fired.");
         assertEquals(events[0], "begin", "Attribute onbegin doesn't work");
@@ -276,140 +230,157 @@ public class TestA4JCommandLink extends AbstractGrapheneTest {
     }
 
     @Test
+    public void testOnbegin() {
+        testFireEvent(commandLinkAttributes, CommandLinkAttributes.onbegin, new Action() {
+            @Override
+            public void perform() {
+                page.submitByLink();
+            }
+        });
+    }
+
+    @Test
+    public void testOnbeforedomupdate() {
+        testFireEvent(commandLinkAttributes, CommandLinkAttributes.onbeforedomupdate, new Action() {
+            @Override
+            public void perform() {
+                page.submitByLink();
+            }
+        });
+    }
+
+    @Test
+    public void testOncomplete() {
+        testFireEvent(commandLinkAttributes, CommandLinkAttributes.oncomplete, new Action() {
+            @Override
+            public void perform() {
+                page.submitByLink();
+            }
+        });
+    }
+
+    @Test
     public void testOnclick() {
-        testFireEvent(Event.CLICK, link);
+        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onclick);
     }
 
     @Test
     public void testOndblclick() {
-        testFireEvent(Event.DBLCLICK, link);
+        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.ondblclick);
     }
 
     @Test
     public void testOnkeydown() {
-        testFireEvent(Event.KEYDOWN, link);
+        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onkeydown);
     }
 
     @Test
     public void testOnkeypress() {
-        testFireEvent(Event.KEYPRESS, link);
+        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onkeypress);
     }
 
     @Test
     public void testOneyup() {
-        testFireEvent(Event.KEYUP, link);
+        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onkeyup);
     }
 
     @Test
     public void testOnmousedown() {
-        testFireEvent(Event.MOUSEDOWN, link);
+        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onmousedown);
     }
 
     @Test
     public void testOnmousemove() {
-        testFireEvent(Event.MOUSEMOVE, link);
+        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onmousemove);
     }
 
     @Test
     public void testOnmouseout() {
-        testFireEvent(Event.MOUSEOUT, link);
+        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onmouseout);
     }
 
     @Test
     public void testOnmouseover() {
-        testFireEvent(Event.MOUSEOVER, link);
+        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onmouseover);
     }
 
     @Test
     public void testOnmouseup() {
-        testFireEvent(Event.MOUSEUP, link);
+        testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onmouseup);
     }
-
     @Test
     public void testRel() {
-        testHtmlAttribute(link, "rel", "metamer");
+        testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.rel, "metamer");
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-10555")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10555")
     public void testRender() {
-        JQueryLocator renderInput = pjq("input[name$=renderInput]");
+        commandLinkAttributes.set(CommandLinkAttributes.action, "doubleStringAction");
+        commandLinkAttributes.set(CommandLinkAttributes.actionListener, "doubleStringActionListener");
 
-        selenium.type(renderInput, "output1");
-        selenium.waitForPageToLoad();
+        commandLinkAttributes.set(CommandLinkAttributes.render, "output1");
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+        page.submitByLink();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
+        page.verifyOutput1Text(CommandButtonLinkPage.STRING_RF1);
+        page.verifyOutput2Text("");
+        page.verifyOutput3Text("");
 
-        selenium.typeKeys(input, "aaa");
-        guardXhr(selenium).click(link);
+        page.typeToInput("");
+        page.submitByLink();
+        page.waitUntilOutput1Changes("");
 
-        waitGui.until(textEquals.locator(output1).text("aaa"));
-
-        String output = selenium.getText(output1);
-        assertEquals(output, "aaa", "output1 when 'aaa' in input and 'output1' set to be rerendered");
-
-        output = selenium.getText(output2);
-        assertEquals(output, "", "output2 when 'aaa' in input and 'output1' set to be rerendered");
-
-        output = selenium.getText(output3);
-        assertEquals(output, "", "output3 when 'aaa' in input and 'output1' set to be rerendered");
-
-        selenium.type(renderInput, "output2 output3");
-        selenium.waitForPageToLoad();
-
-        selenium.typeKeys(input, "bbb");
-        guardXhr(selenium).click(link);
-
-        waitGui.until(textEquals.locator(output2).text("bbb"));
-
-        output = selenium.getText(output1);
-        assertEquals(output, "aaa", "output1 when 'bbb' in input and 'output2 output3' set to be rerendered");
-
-        output = selenium.getText(output2);
-        assertEquals(output, "bbb", "output2 when 'bbb' in input and 'output2 output3' set to be rerendered");
-
-        output = selenium.getText(output3);
-        assertEquals(output, "BBB", "output3 when 'bbb' in input and 'output2 output3' set to be rerendered");
+        commandLinkAttributes.set(CommandLinkAttributes.render, "output2 output3");
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+        page.submitByLink();
+        page.waitUntilOutput2ChangesToText(CommandButtonLinkPage.STRING_RF1_X2);
+        page.verifyOutput1Text("");
+        page.verifyOutput2Text(CommandButtonLinkPage.STRING_RF1_X2);
+        page.verifyOutput3Text(CommandButtonLinkPage.STRING_RF1_X2);
     }
 
     @Test
     public void testRendered() {
         commandLinkAttributes.set(CommandLinkAttributes.rendered, false);
-        assertFalse(selenium.isElementPresent(link), "Link should not be displayed");
+
+        assertFalse(ElementPresent.getInstance().element(page.link).apply(driver), "Link should not be on page.");
     }
 
     @Test
     public void testRev() {
-        testHtmlAttribute(link, "rev", "metamer");
+        testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.rev, "metamer");
     }
 
     @Test
     public void testShape() {
-        testHtmlAttribute(link, "shape", "default");
+        testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.shape, "default");
     }
 
     @Test
     public void testStyle() {
-        testStyle(link);
+        testStyle(page.link);
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9307")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9307")
     public void testStyleClass() {
-        testStyleClass(link);
+        testStyleClass(page.link);
     }
 
     @Test
     public void testTitle() {
-        testTitle(link);
+        testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.title, "metamer");
     }
 
     @Test
     public void testType() {
-        testHtmlAttribute(link, "type", "metamer");
+        testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.type, "default");
     }
 
     @Test
     public void testValue() {
         commandLinkAttributes.set(CommandLinkAttributes.value, "new label");
-        assertEquals(selenium.getText(link), "new label", "Value of the button did not change");
+        assertEquals(page.link.getText(), "new label", "Value of the button did not change");
     }
 }

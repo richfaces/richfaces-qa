@@ -1,11 +1,9 @@
 package org.richfaces.tests.metamer.ftest.a4jCommandButton;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
-import org.jboss.test.selenium.support.ui.ElementNotPresent;
 import org.jboss.test.selenium.support.ui.TextEquals;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebDriver;
@@ -19,7 +17,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
  * @since 4.3.0.M2
  *
  */
-public class CommandButtonPage extends MetamerPage {
+public class CommandButtonLinkPage extends MetamerPage {
 
     public static final String STRING_RF1 = "RichFaces 4";
     public static final String STRING_RF1_X2 = "RichFaces 4RichFaces 4";
@@ -38,6 +36,10 @@ public class CommandButtonPage extends MetamerPage {
     public WebElement input;
     @FindBy(css = "input[id$=a4jCommandButton]")
     public WebElement button;
+    @FindBy(css = "a[id$=a4jCommandLink]")
+    public WebElement link;
+    @FindBy(css = "span[id$=a4jCommandLink]")
+    public WebElement disabledLink;
     @FindBy(css = "span[id$=output1]")
     public WebElement output1;
     @FindBy(css = "span[id$=output2]")
@@ -46,20 +48,25 @@ public class CommandButtonPage extends MetamerPage {
     public WebElement output3;
     private WebDriver driver = GrapheneContext.getProxy();
 
-    public void typeToInputAndSubmitAndWaitUntilOutput1Changes(String s) {
-        typeToInputAndSubmit(s);
-        new WebDriverWait(driver).until(TextEquals.getInstance().element(output1).text(s));
-    }
-
-    public void typeToInputAndSubmitAndWaitUntilOutput2ChangesToText(String testValue, String expectedText) {
-        typeToInputAndSubmit(testValue);
-        new WebDriverWait(driver, 5).until(TextEquals.getInstance().element(output2).text(expectedText));
-    }
-
-    public void typeToInputAndSubmit(String s) {
+    public void typeToInput(String s) {
         input.clear();
         input.sendKeys(s);
+    }
+
+    public void submitByButton() {
         Graphene.guardXhr(button).click();
+    }
+
+    public void submitByLink() {
+        Graphene.guardXhr(link).click();
+    }
+
+    public void waitUntilOutput1Changes(String expectedText) {
+        new WebDriverWait(driver).until(TextEquals.getInstance().element(output1).text(expectedText));
+    }
+
+    public void waitUntilOutput2ChangesToText(String expectedText) {
+        new WebDriverWait(driver, 5).until(TextEquals.getInstance().element(output2).text(expectedText));
     }
 
     public void typeToInputAndSubmitWithoutRequest(String s) {
@@ -98,13 +105,5 @@ public class CommandButtonPage extends MetamerPage {
 
     private void verifyOutputText(WebElement elem, String text) {
         assertEquals(elem.getText(), text);
-    }
-
-    public void assertButtonNotPresent() {
-        assertTrue(ElementNotPresent.getInstance().element(button).apply(driver), "Button should not be on page.");
-    }
-
-    public void assertButtonValue(String value) {
-        assertEquals(button.getAttribute("value"), value, "Button's value did not change");
     }
 }

@@ -23,6 +23,7 @@ package org.richfaces.tests.metamer.ftest.a4jCommandButton;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.commandButtonAttributes;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.commandLinkAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -31,8 +32,11 @@ import java.net.URL;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.test.selenium.support.ui.ElementNotPresent;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.a4jCommandLink.CommandLinkAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
@@ -44,7 +48,7 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M1
  */
-public class TestA4JCommandButton extends AbstractWebDriverTest<CommandButtonPage> {
+public class TestA4JCommandButton extends AbstractWebDriverTest<CommandButtonLinkPage> {
 
     @Inject
     @Use(empty = false)
@@ -55,9 +59,16 @@ public class TestA4JCommandButton extends AbstractWebDriverTest<CommandButtonPag
         return buildUrl(contextPath, "faces/components/a4jCommandButton/simple.xhtml");
     }
 
+    @Override
+    protected CommandButtonLinkPage createPage() {
+        return new CommandButtonLinkPage();
+    }
+
     @Test(groups = "client-side-perf")
     public void testSimpleClick() {
-        page.typeToInputAndSubmitAndWaitUntilOutput1Changes(CommandButtonPage.STRING_RF1);
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+        page.submitByButton();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
 
         page.verifyOutput1Text();
         page.verifyOutput2Text();
@@ -65,43 +76,57 @@ public class TestA4JCommandButton extends AbstractWebDriverTest<CommandButtonPag
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9665")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9665")
     public void testSimpleClickUnicode() {
-        page.typeToInputAndSubmitAndWaitUntilOutput1Changes(CommandButtonPage.STRING_UNICODE1);
+        page.typeToInput(CommandButtonLinkPage.STRING_UNICODE1);
+        page.submitByButton();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_UNICODE1);
 
-        page.verifyOutput1Text(CommandButtonPage.STRING_UNICODE1);
-        page.verifyOutput2Text(CommandButtonPage.STRING_UNICODE2);
-        page.verifyOutput3Text(CommandButtonPage.STRING_UNICODE3);
+        page.verifyOutput1Text(CommandButtonLinkPage.STRING_UNICODE1);
+        page.verifyOutput2Text(CommandButtonLinkPage.STRING_UNICODE2);
+        page.verifyOutput3Text(CommandButtonLinkPage.STRING_UNICODE3);
     }
 
     @Test
     public void testAction() {
         commandButtonAttributes.set(CommandButtonAttributes.action, "doubleStringAction");
-        page.typeToInputAndSubmitAndWaitUntilOutput1Changes(CommandButtonPage.STRING_RF1);
-        page.verifyOutput2Text(CommandButtonPage.STRING_RF1_X2);
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+        page.submitByButton();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
+        page.verifyOutput2Text(CommandButtonLinkPage.STRING_RF1_X2);
 
         commandButtonAttributes.set(CommandButtonAttributes.action, "first6CharsAction");
-        page.typeToInputAndSubmitAndWaitUntilOutput1Changes(CommandButtonPage.STRING_RF1 + "ě");
-        page.verifyOutput2Text(CommandButtonPage.STRING_RF2);
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1 + "ě");
+        page.submitByButton();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1 + "ě");
+        page.verifyOutput2Text(CommandButtonLinkPage.STRING_RF2);
 
         commandButtonAttributes.set(CommandButtonAttributes.action, "toUpperCaseAction");
-        page.typeToInputAndSubmitAndWaitUntilOutput1Changes(CommandButtonPage.STRING_RF_UNICODE);
-        page.verifyOutput2Text(CommandButtonPage.STRING_RF_UNICODE_UPPERCASE);
+        page.typeToInput(CommandButtonLinkPage.STRING_RF_UNICODE);
+        page.submitByButton();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF_UNICODE);
+        page.verifyOutput2Text(CommandButtonLinkPage.STRING_RF_UNICODE_UPPERCASE);
     }
 
     @Test
     public void testActionListener() {
         commandButtonAttributes.set(CommandButtonAttributes.actionListener, "doubleStringActionListener");
-        page.typeToInputAndSubmitAndWaitUntilOutput1Changes(CommandButtonPage.STRING_RF1);
-        page.verifyOutput3Text(CommandButtonPage.STRING_RF1_X2);
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+        page.submitByButton();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
+        page.verifyOutput3Text(CommandButtonLinkPage.STRING_RF1_X2);
 
         commandButtonAttributes.set(CommandButtonAttributes.actionListener, "first6CharsActionListener");
-        page.typeToInputAndSubmitAndWaitUntilOutput1Changes(CommandButtonPage.STRING_RF1 + "ě");
-        page.verifyOutput3Text(CommandButtonPage.STRING_RF2);
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1 + "ě");
+        page.submitByButton();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1 + "ě");
+        page.verifyOutput3Text(CommandButtonLinkPage.STRING_RF2);
 
         commandButtonAttributes.set(CommandButtonAttributes.actionListener, "toUpperCaseActionListener");
-        page.typeToInputAndSubmitAndWaitUntilOutput1Changes(CommandButtonPage.STRING_RF_UNICODE);
-        page.verifyOutput3Text(CommandButtonPage.STRING_RF_UNICODE_UPPERCASE);
+        page.typeToInput(CommandButtonLinkPage.STRING_RF_UNICODE);
+        page.submitByButton();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF_UNICODE);
+        page.verifyOutput3Text(CommandButtonLinkPage.STRING_RF_UNICODE_UPPERCASE);
     }
 
     @Test
@@ -112,18 +137,20 @@ public class TestA4JCommandButton extends AbstractWebDriverTest<CommandButtonPag
         page.verifyOutput2Text("");
         page.verifyOutput3Text("");
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS, PhaseId.RENDER_RESPONSE);
-        phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, CommandButtonPage.STRING_ACTIONLISTENER_MSG);
-        phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, CommandButtonPage.STRING_ACTION_MSG);
+        phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, CommandButtonLinkPage.STRING_ACTIONLISTENER_MSG);
+        phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, CommandButtonLinkPage.STRING_ACTION_MSG);
     }
 
     @Test
     public void testData() {
-        commandButtonAttributes.set(CommandButtonAttributes.data, CommandButtonPage.STRING_RF1);
+        commandButtonAttributes.set(CommandButtonAttributes.data, CommandButtonLinkPage.STRING_RF1);
         commandButtonAttributes.set(CommandButtonAttributes.oncomplete, "data = event.data");
         //Does not matter what we type here
-        page.typeToInputAndSubmitAndWaitUntilOutput1Changes(CommandButtonPage.STRING_RF1);
-        String data = expectedReturnJS("return window.data", CommandButtonPage.STRING_RF1);
-        assertEquals(data, CommandButtonPage.STRING_RF1);
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+        page.submitByButton();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
+        String data = expectedReturnJS("return window.data", CommandButtonLinkPage.STRING_RF1);
+        assertEquals(data, CommandButtonLinkPage.STRING_RF1);
     }
 
     @Test
@@ -135,8 +162,10 @@ public class TestA4JCommandButton extends AbstractWebDriverTest<CommandButtonPag
     @Test
     public void testExecute() {
         commandButtonAttributes.set(CommandButtonAttributes.execute, "input executeChecker");
-        page.typeToInputAndSubmitAndWaitUntilOutput1Changes(CommandButtonPage.STRING_RF1);
-        phaseInfo.assertListener(PhaseId.UPDATE_MODEL_VALUES, CommandButtonPage.STRING_EXECUTE_CHECKER_MSG);
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+        page.submitByButton();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
+        phaseInfo.assertListener(PhaseId.UPDATE_MODEL_VALUES, CommandButtonLinkPage.STRING_EXECUTE_CHECKER_MSG);
     }
 
     @Test
@@ -148,22 +177,44 @@ public class TestA4JCommandButton extends AbstractWebDriverTest<CommandButtonPag
         page.verifyOutput3Text("");
 
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
-        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, CommandButtonPage.STRING_ACTIONLISTENER_MSG);
-        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, CommandButtonPage.STRING_ACTION_MSG);
+        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, CommandButtonLinkPage.STRING_ACTIONLISTENER_MSG);
+        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, CommandButtonLinkPage.STRING_ACTION_MSG);
     }
 
     @Test
     public void testLimitRender() {
         commandButtonAttributes.set(CommandButtonAttributes.limitRender, true);
         commandButtonAttributes.set(CommandButtonAttributes.render, "output1 requestTime");
-        page.typeToInputAndSubmitAndWaitUntilOutput1Changes(CommandButtonPage.STRING_RF1);
-        page.verifyOutput1Text(CommandButtonPage.STRING_RF1);
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+        page.submitByButton();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
+        page.verifyOutput1Text(CommandButtonLinkPage.STRING_RF1);
         page.verifyOutput2Text("");
         page.verifyOutput3Text("");
     }
 
     @Test
-    public void testOnBegin() {
+    public void testEvents() {
+        commandLinkAttributes.set(CommandLinkAttributes.onbegin, "metamerEvents += \"begin \"");
+        commandLinkAttributes.set(CommandLinkAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
+        commandLinkAttributes.set(CommandLinkAttributes.oncomplete, "metamerEvents += \"complete \"");
+
+        ((JavascriptExecutor) driver).executeScript("metamerEvents = \"\"");
+        String reqTime = page.requestTime.getText();
+        Graphene.guardXhr(page.button).click();
+        Graphene.waitModel().withMessage("Page was not updated")
+            .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
+
+        String[] events = ((JavascriptExecutor) driver).executeScript("return metamerEvents").toString().split(" ");
+
+        assertEquals(events.length, 3, "3 events should be fired.");
+        assertEquals(events[0], "begin", "Attribute onbegin doesn't work");
+        assertEquals(events[1], "beforedomupdate", "Attribute onbeforedomupdate doesn't work");
+        assertEquals(events[2], "complete", "Attribute oncomplete doesn't work");
+    }
+
+    @Test
+    public void testOnbegin() {
         testFireEvent(commandButtonAttributes, CommandButtonAttributes.onbegin, new Action() {
             @Override
             public void perform() {
@@ -173,7 +224,7 @@ public class TestA4JCommandButton extends AbstractWebDriverTest<CommandButtonPag
     }
 
     @Test
-    public void testOnBeforeDOMUpdate() {
+    public void testOnbeforedomupdate() {
         testFireEvent(commandButtonAttributes, CommandButtonAttributes.onbeforedomupdate, new Action() {
             @Override
             public void perform() {
@@ -183,7 +234,7 @@ public class TestA4JCommandButton extends AbstractWebDriverTest<CommandButtonPag
     }
 
     @Test
-    public void testOnComplete() {
+    public void testOncomplete() {
         testFireEvent(commandButtonAttributes, CommandButtonAttributes.oncomplete, new Action() {
             @Override
             public void perform() {
@@ -243,30 +294,36 @@ public class TestA4JCommandButton extends AbstractWebDriverTest<CommandButtonPag
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-10555")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10555")
     public void testRender() {
         commandButtonAttributes.set(CommandButtonAttributes.action, "doubleStringAction");
         commandButtonAttributes.set(CommandButtonAttributes.actionListener, "doubleStringActionListener");
 
         commandButtonAttributes.set(CommandButtonAttributes.render, "output1");
-        page.typeToInputAndSubmitAndWaitUntilOutput1Changes(CommandButtonPage.STRING_RF1);
-        page.verifyOutput1Text(CommandButtonPage.STRING_RF1);
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+        page.submitByButton();
+        page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
+        page.verifyOutput1Text(CommandButtonLinkPage.STRING_RF1);
         page.verifyOutput2Text("");
         page.verifyOutput3Text("");
 
-        page.typeToInputAndSubmitAndWaitUntilOutput1Changes("");
+        page.typeToInput("");
+        page.submitByButton();
+        page.waitUntilOutput1Changes("");
 
         commandButtonAttributes.set(CommandButtonAttributes.render, "output2 output3");
-        page.typeToInputAndSubmitAndWaitUntilOutput2ChangesToText(CommandButtonPage.STRING_RF1, CommandButtonPage.STRING_RF1_X2);
+        page.typeToInput(CommandButtonLinkPage.STRING_RF1);
+        page.submitByButton();
+        page.waitUntilOutput2ChangesToText(CommandButtonLinkPage.STRING_RF1_X2);
         page.verifyOutput1Text("");
-        page.verifyOutput2Text(CommandButtonPage.STRING_RF1_X2);
-        page.verifyOutput3Text(CommandButtonPage.STRING_RF1_X2);
+        page.verifyOutput2Text(CommandButtonLinkPage.STRING_RF1_X2);
+        page.verifyOutput3Text(CommandButtonLinkPage.STRING_RF1_X2);
     }
 
     @Test
     public void testRendered() {
         commandButtonAttributes.set(CommandButtonAttributes.rendered, false);
-        page.assertButtonNotPresent();
+        assertTrue(ElementNotPresent.getInstance().element(page.button).apply(driver), "Button should not be on page.");
     }
 
     @Test
@@ -299,13 +356,7 @@ public class TestA4JCommandButton extends AbstractWebDriverTest<CommandButtonPag
 
     @Test
     public void testValue() {
-        commandButtonAttributes.set(CommandButtonAttributes.value, CommandButtonPage.STRING_RF1);
-        page.assertButtonValue(CommandButtonPage.STRING_RF1);
+        commandButtonAttributes.set(CommandButtonAttributes.value, CommandButtonLinkPage.STRING_RF1);
+        assertEquals(page.button.getAttribute("value"), CommandButtonLinkPage.STRING_RF1, "Button's value did not change");
     }
-
-    @Override
-    protected CommandButtonPage createPage() {
-        return new CommandButtonPage();
-    }
-
 }
