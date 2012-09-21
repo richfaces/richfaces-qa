@@ -36,102 +36,22 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
 	<ui:define name="component">
 
-		<h:outputText
+		<rich:panel><h:outputText
 			value="switch between the tabs and see whether there is an error thrown as described at: " />
-		<a href="https://issues.jboss.org/browse/RF-12291">here</a>
-		<rich:tabPanel>
+		<a href="https://issues.jboss.org/browse/RF-12291">here</a></rich:panel>
+		
+		<rich:tabPanel switchType="ajax" immediate="true">
 
 			<rich:tab header="Non paginated data table">
-				<rich:dataTable id="richDataTable2"
-					value="#{richDataTableBean.state ? model.capitals : null}"
-					var="record" rows="1000">
-
-					<f:facet name="noData">
-						<h:outputText value="There is no data." style="color: red;" />
-					</f:facet>
-
-					<f:facet name="caption">
-						<h:outputText id="captionFacet" value="Caption Facet" />
-					</f:facet>
-
-					<f:facet name="header">
-						<h:outputText value="Header Facet" />
-					</f:facet>
-
-					<rich:column id="columnState" sortBy="#{record.state}">
-						<f:facet name="header">
-							<h:outputText id="columnHeaderState" value="State" />
-						</f:facet>
-
-						<h:outputText value="#{record.state}" />
-						<f:facet name="footer">
-							<h:outputText id="columnFooterState" value="State" />
-						</f:facet>
-					</rich:column>
-
-					<rich:column id="columnCapital" sortBy="#{record.name}">
-						<f:facet name="header">
-							<h:outputText id="columnHeaderCapital" value="Capital" />
-						</f:facet>
-
-						<h:outputText value="#{record.name}" />
-						<f:facet name="footer">
-							<h:outputText id="columnFooterCapital" value="Capital" />
-						</f:facet>
-					</rich:column>
-				</rich:dataTable>
+				<ui:include src="firstInclude.xhtml" />
 			</rich:tab>
 
 			<rich:tab header="paginated data table">
-				<rich:dataTable id="richDataTable1"
-					value="#{richDataTableBean.state ? model.capitals : null}"
-					var="record" rows="5">
-
-					<f:facet name="noData">
-						<h:outputText value="There is no data." style="color: red;" />
-					</f:facet>
-
-					<f:facet name="caption">
-						<h:outputText id="captionFacet" value="Caption Facet" />
-					</f:facet>
-
-					<f:facet name="header">
-						<h:outputText value="Header Facet" />
-					</f:facet>
-
-					<rich:column id="columnState" sortBy="#{record.state}">
-						<f:facet name="header">
-							<h:outputText id="columnHeaderState" value="State" />
-						</f:facet>
-
-						<h:outputText value="#{record.state}" />
-						<f:facet name="footer">
-							<h:outputText id="columnFooterState" value="State" />
-						</f:facet>
-					</rich:column>
-
-					<rich:column id="columnCapital" sortBy="#{record.name}">
-						<f:facet name="header">
-							<h:outputText id="columnHeaderCapital" value="Capital" />
-						</f:facet>
-
-						<h:outputText value="#{record.name}" />
-						<f:facet name="footer">
-							<h:outputText id="columnFooterCapital" value="Capital" />
-						</f:facet>
-					</rich:column>
-
-					<f:facet name="footer">
-						<rich:dataScroller id="scroller2" for="richDataTable1"
-							page="#{richDataTableBean.page}" maxPages="7"
-							render="richDataTable scroller1" />
-					</f:facet>
-
-				</rich:dataTable>
+				<ui:include src="secondInclude.xhtml" />
 			</rich:tab>
-
-
+			
 		</rich:tabPanel>
+		
 	</ui:define>
 
 </ui:composition>
