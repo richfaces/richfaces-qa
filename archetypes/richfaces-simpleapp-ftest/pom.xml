@@ -23,7 +23,7 @@
     <parent>
         <artifactId>richfaces-archetypes-ftest</artifactId>
         <groupId>org.richfaces.tests</groupId>
-        <version>4.2.2-SNAPSHOT</version>
+        <version>4.2.3.Final-redhat-1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
