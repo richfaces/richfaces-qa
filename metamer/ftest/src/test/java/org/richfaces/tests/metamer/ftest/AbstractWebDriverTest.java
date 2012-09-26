@@ -85,7 +85,7 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
         InternetExplorer(InternetExplorerDriver.class),
         Chrome(ChromeDriver.class),
         HTMLUnit(HtmlUnitDriver.class),
-//        Opera(OperaDriver.class),
+        //        Opera(OperaDriver.class),
         IPhone(IPhoneDriver.class),
         Android(AndroidDriver.class);
         private final Class<?> clazz;
@@ -354,6 +354,28 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
     }
 
     /**
+     * Helper method for testing label's text changing. First it sets "RichFaces 4"
+     * to the <code>testedAttribute</code> input, then fires <code>labelChangeAction</code>(if some),
+     * then waits for the presence of <code>element</code>
+     * and finally checks if the label (<code>getText()</code> method) of <code>element</code>
+     * was changed as expected.
+     * @param element element which <code>getText()</code> method will be used for checking of label text
+     * @param attributes attributes instance which will be used for setting
+     * attribute
+     * @param testedAttribute attribute which will be tested
+     * @param labelChangeAction action which will change the label (if no action needed use <code>null</code> or empty Action)
+     */
+    protected <T extends AttributeEnum> void testLabelChanges(WebElement element, Attributes<T> attributes, T testedAttribute, Action labelChangeAction) {
+        String rf = "RichFaces 4";
+        attributes.set(testedAttribute, rf);
+        if (labelChangeAction != null) {
+            labelChangeAction.perform();
+        }
+        Graphene.waitModel().until(Graphene.element(element).isPresent());
+        assertTrue(Graphene.element(element).textEquals(rf).apply(driver), testedAttribute + " does not work, label has not changed.");
+    }
+
+    /**
      * A helper method for testing attribute "style" or similar. It sets
      * "background-color: yellow; font-size: 1.5em;" to the input field and
      * checks that it was changed on the page.
@@ -518,7 +540,6 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
 
         protected void afterAction() {
             new WDWait().until(new Predicate<WebDriver>() {
-
                 @Override
                 public boolean apply(WebDriver input) {
                     return !input.findElement(REQ_TIME).getText().equals(time1);
