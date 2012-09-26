@@ -1,6 +1,6 @@
-/*******************************************************************************
+/**
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,62 +18,55 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.ftest.richMessage;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
-
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page /faces/components/richMessage/jsr303.xhtml
  *
- * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision: 22505 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichMessageJSR303 extends RichMessageTest {
+public class TestRichMessageJSR303WD extends AbstractRichMessageWDTest {
 
-    /* (non-Javadoc)
-     * @see org.richfaces.tests.metamer.ftest.AbstractMetamerTest#getTestUrl()
-     */
+    @Use(empty = false)
+    protected boolean ajax;
+
+    @Override
+    WebElement getTestedElementRoot() {
+        return page.messageForInput1;
+    }
+
+    @Override
+    WebElement getTestedElementSummary() {
+        return page.messageForInput1Summary;
+    }
+
+    @Override
+    WebElement getTestedElementDetail() {
+        return page.messageForInput1Detail;
+    }
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richMessage/jsr303.xhtml");
     }
 
-    @Override
-    public JQueryLocator getTestElemLocator() {
-        return mainMessage;
-    }
-
-    @Override
-    public JQueryLocator getSummaryElemLocator() {
-        return summary;
-    }
-
-    @Override
-    public JQueryLocator getDetailElemLocator() {
-        return detail;
-    }
-
-    // list of called test methods
     @Test
     public void testFor() {
-        super.testFor();
+        super.testFor(page.messageForInputX);
     }
 
     @Test
-    public void testAjaxRendered() {
-        super.testAjaxRendered();
-    }
-
-    @Test
+    @Use(field = "ajax", booleans = { true, false })
     public void testRendered() {
-        super.testRendered();
+        super.testRendered(ajax);
     }
 
     @Test
