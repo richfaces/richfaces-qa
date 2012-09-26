@@ -12,6 +12,7 @@
 
         <classes>
             <class name="org.richfaces.tests.metamer.ftest.a4jMediaOutput.TestElementAWebDriver" />
+            <class name="org.richfaces.tests.metamer.ftest.a4jPush.TestTwoPush" />
             <class name="org.richfaces.tests.metamer.ftest.richAccordion.TestRichAccordionWebDriver" />
             <class name="org.richfaces.tests.metamer.ftest.richAutocomplete.TestAutocompleteValidationMessages" />
             <class name="org.richfaces.tests.metamer.ftest.richCalendar.TestRichCalendarValidationMessages" />
