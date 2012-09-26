@@ -28,33 +28,33 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  */
 public enum FileUploadAttributes implements AttributeEnum {
 
-    acceptedTypes,//tested in se2
+    acceptedTypes,
     addLabel,
-    binding,
+    binding,//no testing
     clearAllLabel,
     clearLabel,
-    data,//tested in se2, not working "https://issues.jboss.org/browse/RF-12039"
+    data,
     deleteLabel,
     dir,
     disabled,
-    doneLabel,//tested in se2
-    execute,//tested in se2
-    fileUploadListener,
-    id,
-    immediateUpload,//tested in se2
+    doneLabel,
+    execute,
+    fileUploadListener,//no testing
+    id,//no testing
+    immediateUpload,
     lang,
-    limitRender,//tested in se2
+    limitRender,
     listHeight,
-    maxFilesQuantity,//tested in se2
+    maxFilesQuantity,
     noDuplicate,
-    onbeforedomupdate,//tested in se2 not working "https://issues.jboss.org/browse/RF-12037"
-    onbegin,//tested in se2 not working "https://issues.jboss.org/browse/RF-12037"
+    onbeforedomupdate,
+    onbegin,
     onclear,
     onclick,
-    oncomplete,//tested in se2 not working "https://issues.jboss.org/browse/RF-12037"
+    oncomplete,
     ondblclick,
-    onfileselect,//tested in se2
-    onfilesubmit,//tested in se2
+    onfileselect,
+    onfilesubmit,
     onkeydown,
     onkeypress,
     onkeyup,
@@ -63,13 +63,13 @@ public enum FileUploadAttributes implements AttributeEnum {
     onmouseout,
     onmouseover,
     onmouseup,
-    ontyperejected,//tested in se2
-    onuploadcomplete,//tested in se2
-    render,
+    ontyperejected,
+    onuploadcomplete,
+    render,//no testing
     rendered,
-    serverErrorLabel,
-    sizeExceededLabel,//tested in se2
-    status,//tested in se2
+    serverErrorLabel,//not tested
+    sizeExceededLabel,
+    status,
     style,
     styleClass,
     title,
