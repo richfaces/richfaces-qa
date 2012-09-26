@@ -23,13 +23,11 @@ package org.richfaces.tests.metamer.ftest.richFileUpload;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.fileUploadAttributes;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-import org.jboss.test.selenium.support.ui.ElementDisplayed;
-import org.jboss.test.selenium.support.ui.ElementNotDisplayed;
-import org.jboss.test.selenium.support.ui.ElementPresent;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.jboss.arquillian.graphene.Graphene;
 import org.testng.annotations.Test;
 
 /**
@@ -44,24 +42,24 @@ public class TestRichFileUploadProgressFacet extends AbstractFileUploadWebDriver
 
     @Test
     public void testCustomProgressBarPresenceBeforeFinishedUpload() {
-        assertTrue(ElementPresent.getInstance().element(page.customPB).apply(driver), "No custom progress bar is present on page.");
-        assertTrue(ElementNotDisplayed.getInstance().element(page.customPB).apply(driver), "Custom progress bar should not be displayed now.");
+        assertTrue(Graphene.element(page.customPB).isPresent().apply(driver), "No custom progress bar is present on page.");
+        assertFalse(Graphene.element(page.customPB).isVisible().apply(driver), "Custom progress bar should not be displayed now.");
 
         //stop page refreshing/rendering after file is sent
         fileUploadAttributes.set(FileUploadAttributes.onfilesubmit, "window.stop()");
 
         //send file to server, the file will not be shown in uploaded files list, because we stop the rendering before it
-        sendFile(acceptableFile, true, false);
+        sendFileWithWaiting(acceptableFile, true, false);
 
-        new WebDriverWait(driver, 5).failWith("Progress bar should be displayed.").until(ElementDisplayed.getInstance().element(page.customPB));
+        assertTrue(Graphene.waitGui().until(Graphene.element(page.customPB).isVisible()).booleanValue(), "Custom progress bar should be displayed now.");
     }
 
     @Test
     public void testCustomProgressBarPresenceAfterFinishedUpload() {
         //send file to server
-        sendFile(acceptableFile, true, true);
+        sendFileWithWaiting(acceptableFile, true, true);
 
-        new WebDriverWait(driver, 5).failWith("Done label should be on displayed after upload.").until(ElementDisplayed.getInstance().element(page.uploadStatusLabel));
-        new WebDriverWait(driver, 5).failWith("Progress bar should not be displayed after upload is completed.").until(ElementNotDisplayed.getInstance().element(page.customPB));
+        assertTrue(Graphene.waitGui().until(Graphene.element(page.uploadStatusLabel).isVisible()).booleanValue(), "Done label should be displayed after upload.");
+        assertTrue(Graphene.waitGui().until(Graphene.element(page.customPB).not().isVisible()).booleanValue(), "Progress bar should not be displayed after upload is completed.");
     }
 }

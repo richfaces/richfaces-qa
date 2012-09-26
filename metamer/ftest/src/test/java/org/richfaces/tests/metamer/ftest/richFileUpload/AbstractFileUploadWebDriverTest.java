@@ -25,8 +25,8 @@ import static org.testng.Assert.assertTrue;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.BeforeMethod;
 
@@ -38,7 +38,7 @@ public abstract class AbstractFileUploadWebDriverTest extends AbstractWebDriverT
     protected static final String notAcceptableFile = "file1.x";
     protected static final String acceptableFile = "file1.txt";
     protected static final String bigFile = "bigFile.txt";
-    protected static final String[] filenames = { acceptableFile, "file2.txt", notAcceptableFile, bigFile };
+    protected static final String[] filenames = { acceptableFile, "file2.txt" };
     protected static final String ap = "\"";
     protected int filesToUploadCount;
     protected int filesUploadedCount;
@@ -60,7 +60,7 @@ public abstract class AbstractFileUploadWebDriverTest extends AbstractWebDriverT
      * @param filename
      * @param willBeAccepted
      */
-    protected void sendFileToInput(String filename, boolean willBeAccepted) {
+    protected void sendFileToInputWithWaiting(String filename, boolean willBeAccepted) {
         File file = null;
         try {
             file = new File(AbstractFileUploadWebDriverTest.class.getResource(filename).toURI());
@@ -69,7 +69,8 @@ public abstract class AbstractFileUploadWebDriverTest extends AbstractWebDriverT
         assertTrue(file != null, "File does not exist.");
         assertTrue(file.exists(), "File does not exist.");
 
-        //send file to input field
+        // send file to input field
+        Graphene.waitGui().until(Graphene.element(page.fileInputField).isPresent());
         page.fileInputField.sendKeys(file.getAbsolutePath());
         if (willBeAccepted) {
             this.filesToUploadCount++;
@@ -78,19 +79,19 @@ public abstract class AbstractFileUploadWebDriverTest extends AbstractWebDriverT
     }
 
     /**
-     * Sends file to fileupload input field and waits for page update. Then
-     * clicks on submit button to upload files and waits for page update.
+     * Sends file to fileupload input field and waits for page update. Then clicks on submit button to upload files and
+     * waits for page update.
      *
      * @param filename
      * @param willBeAccepted
      * @param willBeUploaded
      */
-    protected void sendFile(String filename, boolean willBeAccepted, boolean willBeUploaded) {
-        sendFileToInput(filename, willBeAccepted);
+    protected void sendFileWithWaiting(String filename, boolean willBeAccepted, boolean willBeUploaded) {
+        sendFileToInputWithWaiting(filename, willBeAccepted);
         if (willBeUploaded) {
-            waitRequest(page.uploadButton, AbstractWebDriverTest.WaitRequestType.HTTP).click();
+            waitRequest(Graphene.guardXhr(page.uploadButton), WaitRequestType.XHR).click();
         } else {
-            waitRequest(page.uploadButton, AbstractWebDriverTest.WaitRequestType.NONE).click();
+            waitRequest(Graphene.guardXhr(page.uploadButton), WaitRequestType.NONE).click();
         }
         if (willBeUploaded) {
             this.filesUploadedCount++;
@@ -99,34 +100,33 @@ public abstract class AbstractFileUploadWebDriverTest extends AbstractWebDriverT
     }
 
     /**
-     * Waits until page renders elements for all expected uploaded files in
-     * uploaded files list.
+     * Waits until page renders elements for all expected uploaded files in uploaded files list.
      *
      * @param expectedNumberOfFiles
      */
     protected void waitUntilUploadedFilesListShow(int expectedNumberOfFiles) {
         if (expectedNumberOfFiles == 0) {
         } else {
+            By by;
             for (int i = 1; i <= expectedNumberOfFiles; i++) {
-                new WDWait().failWith("Expected number of files was not added to uploaded files list.").
-                        until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='rf-fu-itm'][" + i + "]"
-                        + "//span[@class='rf-fu-itm-st']")));
+                by = By.xpath("//span[contains(@id, 'uploadedFilesPanel')]//ul //li[" + i + "]");
+                Graphene.waitGui().until(Graphene.element(by).isVisible());
             }
         }
     }
 
     /**
-     * Waits until page renders elements for all expected files to be uploaded
-     * in list of files to be uploaded
+     * Waits until page renders elements for all expected files to be uploaded in list of files to be uploaded
      *
      * @param expectedNumberOfFiles
      */
     protected void waitUntilFilesToUploadListShow(int expectedNumberOfFiles) {
         if (expectedNumberOfFiles == 0) {
         } else {
+            By by;
             for (int i = 1; i <= expectedNumberOfFiles; i++) {
-                new WDWait().failWith("Expected number of files was not added to upload list.").
-                        until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='rf-fu-itm'][" + i + "]")));
+                by = By.xpath("//div[@class='rf-fu-itm'][" + i + "]");
+                Graphene.waitAjax().until(Graphene.element(by).isVisible());
             }
         }
     }
