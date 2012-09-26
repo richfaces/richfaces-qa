@@ -19,8 +19,6 @@
             <class name="org.richfaces.tests.metamer.ftest.richContextMenu.TestRichContextMenuWebDriver" />
             <class name="org.richfaces.tests.metamer.ftest.richEditor.TestRichEditorWithTyping" />
             <class name="org.richfaces.tests.metamer.ftest.richExtendedDataTable.TestEDTFrozenColumns" />
-            <class name="org.richfaces.tests.metamer.ftest.richFileUpload.TestRichFileUploadWebDriver" />
-            <class name="org.richfaces.tests.metamer.ftest.richFileUpload.TestRichFileUploadProgressFacet" />
             <class name="org.richfaces.tests.metamer.ftest.richInplaceInput.TestRichInplaceInputValidationMessages" />
             <class name="org.richfaces.tests.metamer.ftest.richInplaceSelect.TestRichInplaceSelectValidationMessages" />
             <class name="org.richfaces.tests.metamer.ftest.richInputNumberSlider.TestRichSliderValidationMessages" />
@@ -38,6 +36,7 @@
             <package name="org.richfaces.tests.metamer.ftest.richPanelToggleListener"/>
             <package name="org.richfaces.tests.metamer.ftest.richTreeSelectionChangeListener"/>
             <package name="org.richfaces.tests.metamer.ftest.richTreeToggleListener"/>
+            <package name="org.richfaces.tests.metamer.ftest.richFileUpload"/>
         </packages>
         
     </test>
