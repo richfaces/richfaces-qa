@@ -37,6 +37,7 @@ import org.jboss.arquillian.ajocado.locator.frame.FrameRelativeLocator;
 import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -126,7 +127,7 @@ public class TestRichEditor extends AbstractGrapheneTest {
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-11394")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11394")
     public void testLang() {
         String langVal = "xyz";
         editorAttributes.set(lang, langVal);
@@ -155,7 +156,7 @@ public class TestRichEditor extends AbstractGrapheneTest {
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RFPL-1658")
+    @RegressionTest("https://issues.jboss.org/browse/RFPL-1658")
     public void testReadonly() {
 
         editorAttributes.set(readonly, Boolean.TRUE);
