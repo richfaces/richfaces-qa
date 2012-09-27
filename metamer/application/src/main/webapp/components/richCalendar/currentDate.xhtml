@@ -36,53 +36,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </f:metadata>
         </ui:define>
 
-        <ui:define name="head">
-            <style type="text/css">
-                .yellowDay {
-                    background: yellow !important;
-                }
-
-                .aquaDay {
-                    background: aqua !important;
-                }
-
-            </style>
-
-            <script type="text/javascript">
-                function yellowTuesdays(day) {
-                    if (day.date.getDay() == 2) {
-                        return 'yellowDay';
-                    }
-                    return false;
-                }
-
-                function aquaWeekends(day) {
-                    if (day.isWeekend) {
-                        return 'aquaDay';
-                    }
-                    return false;
-                }
-
-                function disableTuesdays(day) {
-                    if (day.date.getDay() == 2) {
-                        return false;
-                    }
-                    return true;
-                }
-
-                function disableWeekends(day) {
-                    if (day.isWeekend) {
-                        return false;
-                    }
-                    return true;
-                }
-
-                testedComponentId = "#{rich:clientId('calendar')}";
-            </script>
-        </ui:define>
-
         <ui:define name="component">
             <div style="padding: 250px">
+
                 <rich:calendar id="calendar"
                                boundaryDatesMode="#{richCalendarBean.attributes['boundaryDatesMode'].value}"
                                buttonClass="#{richCalendarBean.attributes['buttonClass'].value}"
@@ -90,6 +46,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                buttonIcon="#{richCalendarBean.attributes['buttonIcon'].value}"
                                buttonLabel="#{richCalendarBean.attributes['buttonLabel'].value}"
                                converterMessage="#{richCalendarBean.attributes['converterMessage'].value}"
+                               currentDate="#{richCalendarBean.currentDate}"
                                datePattern="#{richCalendarBean.attributes['datePattern'].value}"
                                dayClassFunction="#{richCalendarBean.attributes['dayClassFunction'].value}"
                                dayDisableFunction="#{richCalendarBean.attributes['dayDisableFunction'].value}"
@@ -142,6 +99,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                popupStyle="#{richCalendarBean.attributes['popupStyle'].value}"
                                preloadDateRangeBegin="#{richCalendarBean.attributes['preloadDateRangeBegin'].value}"
                                preloadDateRangeEnd="#{richCalendarBean.attributes['preloadDateRangeEnd'].value}"
+                               readonly="#{richCalendarBean.attributes['readonly'].value}"
                                rendered="#{richCalendarBean.attributes['rendered'].value}"
                                required="#{richCalendarBean.attributes['required'].value}"
                                requiredMessage="#{richCalendarBean.attributes['requiredMessage'].value}"
@@ -181,11 +139,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
                                        timeZone="#{richCalendarBean.timeZone}"/>
                 </h:outputText>
-            </a4j:outputPanel>
-        </ui:define>
 
-        <ui:define name="outOfTemplateAfter">
-            <metamer:attributes value="#{richCalendarBean.attributes}" id="attributes" componentName="richCalendar" />
+                <br/>
+                <br/>
+
+                <h:outputText value="Current date: "/> 
+                <rich:inplaceInput id="currentDateInput" value="#{richCalendarBean.currentDate}">
+                    <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
+                                       timeZone="#{richCalendarBean.timeZone}"/>
+                </rich:inplaceInput>
+            </a4j:outputPanel>
         </ui:define>
 
     </ui:composition>

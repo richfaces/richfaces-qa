@@ -63,6 +63,8 @@ public class RichCalendarBean implements Serializable {
     private Date date1;
     private Date date2;
     private Date date3;
+    private Date currentDate;
+    private Date value;
 
     /**
      * Initializes the managed bean.
@@ -88,10 +90,12 @@ public class RichCalendarBean implements Serializable {
 
         // TODO has to be tested in another way
         attributes.remove("converter");
+        attributes.remove("currentDate");
         attributes.remove("dataModel");
         attributes.remove("validator");
         attributes.remove("valueChangeListener");
         attributes.remove("timeZone");
+        attributes.remove("value");
     }
 
     public Attributes getAttributes() {
@@ -100,6 +104,14 @@ public class RichCalendarBean implements Serializable {
 
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
+    }
+
+    public Date getValue() {
+        return value;
+    }
+
+    public void setValue(Date value) {
+        this.value = value;
     }
 
     public Date getDate() {
@@ -112,6 +124,14 @@ public class RichCalendarBean implements Serializable {
 
     public TimeZone getTimeZone() {
         return TIME_ZONE;
+    }
+
+    public Date getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(Date currentDate) {
+        this.currentDate = currentDate;
     }
 
     @Past
