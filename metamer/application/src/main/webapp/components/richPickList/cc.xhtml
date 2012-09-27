@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+    xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
 
-    <!--
+<!--
 JBoss, Home of Professional Open Source
 Copyright 2010-2012, Red Hat, Inc. and individual contributors
 by the @authors tag. See the copyright.txt in the distribution for a
@@ -25,26 +26,24 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="/templates/list.xhtml">
+<ui:composition template="/templates/template.xhtml">
 
-        <ui:define name="pageTitle">Rich Pick List</ui:define>
+    <ui:define name="view">
+        <f:metadata>
+            <f:viewParam name="templates" value="#{templateBean.templates}">
+                <f:converter converterId="templatesListConverter" />
+            </f:viewParam>
+        </f:metadata>
+    </ui:define>
 
-        <ui:define name="links">
+    <ui:define name="component">
 
-            <metamer:testPageLink id="simple" outcome="simple" value="Simple">
-                Simple page containing rich:pickList and input boxes for all its attributes.
-            </metamer:testPageLink>
-            
-            <metamer:testPageLink id="columnLayout" outcome="columnLayout" value="Column Layout">
-                Simple page containing rich:pickList with formatted items within source and target list
-            </metamer:testPageLink>
-            
-            <metamer:testPageLink id="cc" outcome="cc" value="Composite Component">
-                Page containing rich:pickList inside a composite component
-            </metamer:testPageLink>
-            
-        </ui:define>
+        <p>In RichFaces 4.2.2.Final selecting a state and clicking on button caused this exception:
+            "javax.faces.FacesException: ModelType (class java.lang.Object) must be either an Array, or a Collection".</p>
 
-    </ui:composition>
+        <metamer:pickList value="#{richPickListBean.value}" />
 
+    </ui:define>
+
+</ui:composition>
 </html>
