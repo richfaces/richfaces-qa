@@ -169,9 +169,14 @@ public final class VersionBean {
     }
 
     public String getBrowserVersion() {
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
-            .getRequest();
-        return request.getHeader("user-agent");
+        Object request = FacesContext.getCurrentInstance().getExternalContext().getRequest();
+
+        if (request instanceof HttpServletRequest) {
+            // small hack to get it working correctly in portal env
+            return ((HttpServletRequest)request).getHeader("user-agent");
+        }
+
+        return "Unknown";
     }
 
     public ProjectStage getProjectStage() {
