@@ -55,7 +55,7 @@
         <arquillian.tomcat.version>1.0.0.CR3</arquillian.tomcat.version>
         <arquillian.drone.version>1.1.0.CR3</arquillian.drone.version>
         <arquillian.graphene-testng.version>2.0.0-SNAPSHOT</arquillian.graphene-testng.version>
-        <arquillian.graphene-webdriver.version>2.0.0-SNAPSHOT</arquillian.graphene-webdriver.version>
+        <arquillian.graphene-webdriver.version>2.0.0.Alpha3-SNAPSHOT</arquillian.graphene-webdriver.version>
         <arquillian.jboss-as6.version>1.0.0.CR3</arquillian.jboss-as6.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
         <arquillian.android.version>1.0.0.Alpha1</arquillian.android.version>
