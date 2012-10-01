@@ -113,7 +113,7 @@ public class Attributes<T extends AttributeEnum> {
     protected void setProperty(String propertyName, Object value) {
         String valueAsString = (value == null ? NULLSTRING : value.toString());
         //locator for all types of input elements
-        String cssSelector = "[id*=" + propertyName + "Input]";
+        String cssSelector = "[id$=':" + propertyName + "Input']";
         WebElement foundElement = waitUntilElementIsVisible(By.cssSelector(cssSelector));
         //handle the property by the tagname of the input element
         Tag tag = Tag.getTag(foundElement);
@@ -142,11 +142,11 @@ public class Attributes<T extends AttributeEnum> {
      * @param value value to be set
      */
     private void applyText(String propertyName, String value) {
-        By cssSelector = By.cssSelector("[id$=" + propertyName + "Input]");
+        By cssSelector = By.cssSelector("[id$=':" + propertyName + "Input']");
         String text = driver.findElement(cssSelector).getAttribute("value");
         if (!value.equals(text)) {
             if (!text.isEmpty()) {
-                ((JavascriptExecutor) driver).executeScript("$('input[id$=" + propertyName + "Input]').val('')");
+                ((JavascriptExecutor) driver).executeScript("$(\"input[id$=':" + propertyName + "Input']\").val('')");
             }
             waitUntilElementIsVisible(cssSelector).sendKeys(value);
             waitGuard(driver.findElement(cssSelector)).submit();
