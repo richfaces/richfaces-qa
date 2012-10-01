@@ -87,6 +87,7 @@
         <openshift.ssh.user>54abf287bcf646319d0b1c8d35f15546</openshift.ssh.user>
         <openshift.identity.file />
 
+        <jodatime.version>2.0</jodatime.version>
     </properties>
 
     <modules>
@@ -96,6 +97,7 @@
         <module>showcase-webdriver-ftest</module>
         <module>testng-listeners</module>
         <module>common</module>
+        <module>page-fragments</module>
     </modules>
 
     <build>
@@ -458,6 +460,28 @@
                 <groupId>com.opera</groupId>
                 <artifactId>operadriver</artifactId>
                 <version>${version.opera.driver}</version>
+            </dependency>
+            
+            <!-- Page Fragments dependencies -->
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${jodatime.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.graphene</groupId>
+                <artifactId>graphene-webdriver-spi</artifactId>
+                <version>${arquillian.graphene-webdriver.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.graphene</groupId>
+                <artifactId>graphene-component-api</artifactId>
+                <version>${arquillian.graphene-webdriver.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.graphene</groupId>
+                <artifactId>graphene-webdriver-impl</artifactId>
+                <version>${arquillian.graphene-webdriver.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

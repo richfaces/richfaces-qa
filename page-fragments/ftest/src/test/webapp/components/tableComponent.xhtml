@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<body>
+	<ui:composition template="/templates/template.xhtml">
+
+		<ui:define name="title">Data Table Component Ftest</ui:define>
+
+		<ui:define name="body">
+			<h:form>
+				<rich:dataTable id="tableRoot" value="#{personBean.persons}"
+					var="person">
+					<f:facet name="header">
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="First name" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Surname" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Age" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Address" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Phone" />
+							</rich:column>
+						</rich:columnGroup>
+					</f:facet>
+					<rich:column>
+						<h:outputText value="#{person.firstName}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{person.surnameName}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{person.age}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{person.address}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{person.phone}" />
+					</rich:column>
+				</rich:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>
