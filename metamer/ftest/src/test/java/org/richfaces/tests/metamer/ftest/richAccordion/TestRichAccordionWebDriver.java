@@ -96,8 +96,7 @@ public class TestRichAccordionWebDriver extends AbstractWebDriverTest<AccordionP
             assertTrue(page.headers.get(i).isDisplayed(), "Item" + (i + 1) + "'s header should be visible.");
         }
 
-        assertTrue(page.itemContents.get(0).isDisplayed(), "Content of item1 should be visible.");
-        for (int i = 1; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             assertFalse(page.itemContents.get(i).isDisplayed(), "Item" + (i + 1) + "'s content should not be visible.");
         }
     }
