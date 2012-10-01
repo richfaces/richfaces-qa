@@ -31,19 +31,29 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
  */
 public class FileUploadPage extends MetamerPage {
 
+    @FindBy(css = "div[id$=fileUpload]")
+    WebElement fileUploadDiv;
     @FindBy(css = "span[id$=uploadedFilesPanel] li")
     List<WebElement> uploadedFilesList;
-    @FindBy(xpath = "//input[@type='file'][@class='rf-fu-inp']")
+    @FindBy(xpath = "//input[@type='file'][@class='rf-fu-inp'][last()]")
     WebElement fileInputField;
     @FindBy(css = "span.rf-fu-btn-upl")
     WebElement uploadButton;
     @FindBy(css = "span.rf-fu-btn-add")
     WebElement addButton;
+    @FindBy(css = "span.rf-fu-btn-add-dis")
+    WebElement addButtonDisabled;
     @FindBy(css = "span.rf-fu-btn-clr")
     WebElement clearAllButton;
+    @FindBy(css = "a.rf-fu-itm-lnk")
+    WebElement firstItemToUploadDeleteLink;
+    @FindBy(css = "a.rf-fu-itm-lnk")
+    WebElement firstAfterUploadClearLink;
     @FindBy(css = "div.rf-fu-itm .rf-fu-itm-lbl")
     List<WebElement> itemsToUpload;
-    @FindBy(css = "div.rf-fu-itm .rf-fu-itm-rgh a")
+    @FindBy(css = "div.rf-fu-lst")
+    WebElement itemsToUploadDiv;
+    @FindBy(css = "div.rf-fu-lst")
     WebElement itemClear;
     @FindBy(css = "span.rf-fu-itm-st")
     WebElement uploadStatusLabel;

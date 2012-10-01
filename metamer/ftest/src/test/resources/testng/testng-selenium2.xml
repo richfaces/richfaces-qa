@@ -11,33 +11,32 @@
         </groups>
 
         <classes>
-            <class name="org.richfaces.tests.metamer.ftest.a4jCommandButton.TestA4JCommandButton" />
             <class name="org.richfaces.tests.metamer.ftest.a4jMediaOutput.TestElementAWebDriver" />
+            <class name="org.richfaces.tests.metamer.ftest.a4jPush.TestTwoPush" />
             <class name="org.richfaces.tests.metamer.ftest.richAccordion.TestRichAccordionWebDriver" />
             <class name="org.richfaces.tests.metamer.ftest.richAutocomplete.TestAutocompleteValidationMessages" />
             <class name="org.richfaces.tests.metamer.ftest.richCalendar.TestRichCalendarValidationMessages" />
+            <class name="org.richfaces.tests.metamer.ftest.richContextMenu.TestRichContextMenuWebDriver" />
             <class name="org.richfaces.tests.metamer.ftest.richEditor.TestRichEditorWithTyping" />
             <class name="org.richfaces.tests.metamer.ftest.richExtendedDataTable.TestEDTFrozenColumns" />
-            <class name="org.richfaces.tests.metamer.ftest.richFileUpload.TestRichFileUploadWebDriver" />
-            <class name="org.richfaces.tests.metamer.ftest.richFileUpload.TestRichFileUploadProgressFacet" />
-            <class name="org.richfaces.tests.metamer.ftest.richContextMenu.TestRichContextMenuWebDriver" />
             <class name="org.richfaces.tests.metamer.ftest.richInplaceInput.TestRichInplaceInputValidationMessages" />
             <class name="org.richfaces.tests.metamer.ftest.richInplaceSelect.TestRichInplaceSelectValidationMessages" />
             <class name="org.richfaces.tests.metamer.ftest.richInputNumberSlider.TestRichSliderValidationMessages" />
             <class name="org.richfaces.tests.metamer.ftest.richInputNumberSpinner.TestRichSpinnerValidationMessages" />
-            <class name="org.richfaces.tests.metamer.ftest.richItemChangeListener.TestAccordionItemChangeListener" />
-            <class name="org.richfaces.tests.metamer.ftest.richItemChangeListener.TestPanelMenuItemChangeListener" />
-            <class name="org.richfaces.tests.metamer.ftest.richItemChangeListener.TestTabPanelItemChangeListener" />
-            <class name="org.richfaces.tests.metamer.ftest.richItemChangeListener.TestTogglePanelItemChangeListener" />
-            <class name="org.richfaces.tests.metamer.ftest.richPanelToggleListener.TestPanelToggleListenerInCollapsiblePanel" />
             <class name="org.richfaces.tests.metamer.ftest.richSelect.TestRichSelectValidationMessages" />
-            <class name="org.richfaces.tests.metamer.ftest.richTreeSelectionChangeListener.TestTreeSelectionChangeListenerSimple" />
-            <class name="org.richfaces.tests.metamer.ftest.richTreeToggleListener.TestTreeToggleListenerSimple" />
         </classes>
         
         <packages>
             <package name="org.richfaces.tests.metamer.ftest.a4jActionListener"/>
             <package name="org.richfaces.tests.metamer.ftest.a4jAjax"/>
+            <package name="org.richfaces.tests.metamer.ftest.a4jCommandButton"/>
+            <package name="org.richfaces.tests.metamer.ftest.a4jCommandLink"/>
+            <package name="org.richfaces.tests.metamer.ftest.a4jLog"/>
+            <package name="org.richfaces.tests.metamer.ftest.richItemChangeListener"/>
+            <package name="org.richfaces.tests.metamer.ftest.richPanelToggleListener"/>
+            <package name="org.richfaces.tests.metamer.ftest.richTreeSelectionChangeListener"/>
+            <package name="org.richfaces.tests.metamer.ftest.richTreeToggleListener"/>
+            <package name="org.richfaces.tests.metamer.ftest.richFileUpload"/>
         </packages>
         
     </test>

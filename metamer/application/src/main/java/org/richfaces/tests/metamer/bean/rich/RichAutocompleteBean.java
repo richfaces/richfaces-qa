@@ -36,6 +36,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.richfaces.component.UIAutocomplete;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.bean.RichBean;
 import org.richfaces.tests.metamer.model.Capital;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -212,6 +213,14 @@ public class RichAutocompleteBean implements Serializable {
 
     public void setRandomString(String random) {
         this.randomString = random;
+    }
+
+    public void onblurListener1() {
+        RichBean.logToPage("* on blur listener 1");
+    }
+
+    public void onblurListener2() {
+        RichBean.logToPage("* on blur listener 2");
     }
 
 }

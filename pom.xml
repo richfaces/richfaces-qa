@@ -39,7 +39,7 @@
         <version.jbossas7-1>7.1.1.Final</version.jbossas7-1>
 
         <!-- version of Glassfish containers to use and download       -->
-        <version.glassfish3-1>3.1.2</version.glassfish3-1>
+        <version.glassfish3-1>3.1.2.2</version.glassfish3-1>
 
         <!-- version of Tomcat containers to use-->
         <version.tomcat6>6.0.35</version.tomcat6>

@@ -32,13 +32,16 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+
 import javax.faces.event.PhaseId;
+
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
@@ -47,7 +50,7 @@ import org.testng.annotations.Test;
 /**
  * Test case for page /faces/components/richInputNumberSpinner/simple.xhtml
  *
- * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @version $Revision: 22789 $
  */
 public class TestRichSpinner extends AbstractSpinnerTest {
@@ -463,14 +466,8 @@ public class TestRichSpinner extends AbstractSpinnerTest {
     }
 
     @Test
-    @Templates(exclude = { "richPopupPanel" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-10980")
     public void testTabindex() {
-        testHtmlAttribute(input, "tabindex", "57");
-    }
-
-    @Test(groups = { "4.Future" })
-    @Templates(value = { "richPopupPanel" })
-    public void testTabindexInPopupPanel() {
         testHtmlAttribute(input, "tabindex", "57");
     }
 
