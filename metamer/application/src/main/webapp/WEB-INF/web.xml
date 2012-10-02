@@ -51,6 +51,14 @@
         <param-name>org.richfaces.skin</param-name>
         <param-value>#{richBean.skin}</param-value>
     </context-param>
+    <context-param>
+        <param-name>javax.faces.FACELETS_RESOURCE_RESOLVER</param-name>
+        <param-value>org.richfaces.tests.metamer.bean.issues.rf12291.ClasspathResourceResolver</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param>
 
     <filter>
         <filter-name>Test Identity Filter</filter-name>

@@ -1,0 +1,60 @@
+.rich-extdt-maindiv {
+	height: auto !important;
+}
+
+.rich-extdt-maindiv,.extdt-innerdiv {
+	position: relative !important;
+}
+
+.extdt-outerdiv {
+	height: auto !important;
+	overflow-x: scroll !important;
+	overflow-y: visible !important;
+}
+
+.extdt-content {
+	height: auto !important;
+}
+
+.rf-dt {
+	height: auto !important;
+}
+
+.rf-tab-lbl {
+	font-size: 11px !important;
+	font-weight: bold !important;
+}
+
+.rf-au-fnt {
+	font-size: 11px;
+	font-family: Arial, Verdana, sans-serif;
+	text-align: left;
+}
+
+.rf-au-lst-scrl {
+	width: 300px !important;
+	overflow-x: scroll !important;
+	overflow-y: visible !important;
+}
+
+.rf-au-tbl {
+	white-space: nowrap !important;
+	text-align: left !important;
+}
+
+.autoWidth {
+	width: auto !important;
+}
+
+.rf-msgs-wrn {
+	color:#00008B;
+	padding-left: 10px;	
+}
+
+.rf-sel-opt {
+	padding: 2px;
+	white-space: nowrap;
+	cursor: default;
+	list-style-type: none;
+	text-align:left;
+}

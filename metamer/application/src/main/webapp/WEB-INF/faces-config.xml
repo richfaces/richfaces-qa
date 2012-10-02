@@ -27,6 +27,12 @@
         
     </application>
     
+    <factory>
+        <exception-handler-factory>
+            org.richfaces.tests.metamer.bean.issues.rf12291.CustomExceptionHandlerFactory
+        </exception-handler-factory>
+    </factory>
+    
     <lifecycle>
         <phase-listener>org.richfaces.tests.metamer.RichPhaseListener</phase-listener>
         <phase-listener>org.richfaces.tests.metamer.ResponseDelayListener</phase-listener>
