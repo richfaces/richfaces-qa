@@ -6,18 +6,16 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:a4j="http://richfaces.org/a4j">
-
-	<rich:dataTable id="richDataTable2"
-		value="#{nonPaginatedDataTable.capitals}"
-		var="record">
-
-		<rich:column id="columnState">
+	
+	<rich:dataTable value="#{sessionScope.myBean.tableData}" var="value">
+	
+		<rich:column>
 			<f:facet name="header">
-				<h:outputText id="columnHeaderState" value="State" />
+				<h:outputText value="Some Values"/>
 			</f:facet>
-			<h:outputText value="#{record.state}" />
+			<h:outputText value="#{value}" />
 		</rich:column>
-
+		
 	</rich:dataTable>
-
+	
 </ui:composition>

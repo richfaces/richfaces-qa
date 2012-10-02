@@ -32,26 +32,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     -->
 
 <ui:composition template="/templates/template.xhtml">
-	<ui:param name="componentId" value="richDataTable" />
-
 	<ui:define name="component">
 
-		<rich:panel><h:outputText
-			value="switch between the tabs and see whether there is an error thrown as described at: " />
-		<a href="https://issues.jboss.org/browse/RF-12291">here</a></rich:panel>
-		
-		<rich:tabPanel switchType="ajax" immediate="true">
+		<h:commandLink id="testCmdLnkId" action="#{testAction.startAction}"
+			value="Go To Tab Panel" />
 
-			<rich:tab header="Non paginated data table">
-				<ui:include src="firstInclude.xhtml" />
-			</rich:tab>
-
-			<rich:tab header="paginated data table">
-				<ui:include src="secondInclude.xhtml" />
-			</rich:tab>
-			
-		</rich:tabPanel>
-		
 	</ui:define>
 
 </ui:composition>
