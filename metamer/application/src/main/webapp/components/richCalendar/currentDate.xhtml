@@ -134,7 +134,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/><br/>
 
             <a4j:outputPanel id="outputPanel" ajaxRendered="true">
-                output:
+                Output:
                 <h:outputText id="output" value="#{richCalendarBean.value}">
                     <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
                                        timeZone="#{richCalendarBean.timeZone}"/>
@@ -143,11 +143,18 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <br/>
                 <br/>
 
-                <h:outputText value="Current date: "/> 
-                <rich:inplaceInput id="currentDateInput" value="#{richCalendarBean.currentDate}">
+                Current date:  
+                <h:inputText id="currentDateInput" value="#{richCalendarBean.currentDate}">
                     <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
                                        timeZone="#{richCalendarBean.timeZone}"/>
-                </rich:inplaceInput>
+                </h:inputText>
+
+                <br/>
+                <br/>
+
+                Date pattern:
+                <h:inputText id="datePatternInput" value="#{richCalendarBean.attributes['datePattern'].value}"/>
+
             </a4j:outputPanel>
         </ui:define>
 
