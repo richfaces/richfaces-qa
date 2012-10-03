@@ -27,12 +27,12 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
+import com.google.common.base.Predicate;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.ajocado.dom.Event;
@@ -63,8 +63,6 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
-
-import com.google.common.base.Predicate;
 
 public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends AbstractMetamerTest {
 
@@ -305,8 +303,7 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
      * for attributes consistent with DOM events (e.g. (on)click,
      * (on)change...).
      *
-     * @param element WebElement which will be checked for containment of tested
-     * attribute
+     * @param element WebElement on which will be the event triggered
      * @param attributes attributes instance which will be used for setting
      * attribute
      * @param testedAttribute attribute which will be tested
@@ -318,6 +315,26 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
         fireEvent(element, e);
         String returnedString = expectedReturnJS("return metamerEvents", testedAttribute.toString());
         assertEquals(returnedString, testedAttribute.toString(), "Event " + e + " does not work.");
+    }
+
+    /**
+     * A helper method for testing JavaScripts events. It sets "metamerEvents +=
+     * "testedAttribute" to the input field and fires the event @event using jQuery.
+     * Then it checks if the event was fired.
+     *
+     * @see testFireEventWithJS(WebElement element, Attributes<T> attributes, T testedAttribute)
+     * @param element WebElement on which will be the event triggered
+     * @param event event wich will be triggered
+     * @param attributes attributes instance which will be used for setting
+     * attribute
+     * @param testedAttribute attribute which will be tested
+     */
+    protected <T extends AttributeEnum> void testFireEventWithJS(WebElement element, Event event, Attributes<T> attributes, T testedAttribute) {
+        attributes.set(testedAttribute, "metamerEvents += \"" + testedAttribute.toString() + " \"");
+        executeJS("metamerEvents = \"\";");
+        fireEvent(element, event);
+        String returnedString = expectedReturnJS("return metamerEvents", testedAttribute.toString());
+        assertEquals(returnedString, testedAttribute.toString(), "Event " + event + " does not work.");
     }
 
     /**
@@ -489,7 +506,7 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
 
     /**
      * !All requests depends on Metamer`s requestTime!
-     * Temporary method before https://issues.jboss.org/browse/ARQGRA-67 is
+     * Temporary method before https://issues.jboss.org/browse/ARQGRA-200 is
      * resolved. Generates a waiting proxy, which will wait for page rendering
      * after expected @waitRequestType which will be launched via
      * communicating with @element.
@@ -502,17 +519,34 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
     protected WebElement waitRequest(WebElement element, WaitRequestType waitRequestType) {
         switch (waitRequestType) {
             case HTTP:
-                return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
-                        new Class[]{ WebElement.class }, new RequestTimeChangesHandler(element));
+                return requestTimeChangesWaiting(Graphene.guardHttp(element));
             case XHR:
-                return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
-                        new Class[]{ WebElement.class }, new RequestTimeChangesHandler(element));
+                return requestTimeChangesWaiting(Graphene.guardXhr(element));
             case NONE:
-                return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
-                        new Class[]{ WebElement.class }, new RequestTimeNotChangesHandler(element, 2));
+                return requestTimeNotChangesWaiting(Graphene.guardNoRequest(element));
             default:
                 throw new UnsupportedOperationException("Not supported request: " + waitRequestType);
         }
+    }
+
+    /**
+     * Method for guarding that Metamer's requestTime changes.
+     * @param element element which action should resolve in Metamer's requestTime change
+     * @return guarded element
+     */
+    protected WebElement requestTimeChangesWaiting(WebElement element) {
+        return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
+                new Class[]{ WebElement.class }, new RequestTimeChangesHandler(element));
+    }
+
+    /**
+     * Method for guarding that Metamer's requestTime not changes. Waits for 2 seconds.
+     * @param element element which action should not resolve in Metamer's requestTime change
+     * @return guarded element
+     */
+    protected WebElement requestTimeNotChangesWaiting(WebElement element) {
+        return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
+                new Class[]{ WebElement.class }, new RequestTimeNotChangesHandler(element, 2));
     }
 
     /**
@@ -587,31 +621,27 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
 
     /**
      * Decoder for Attributes. Converts given Attribute to String. If Attribute
-     * is contained in inner mapping, then this value is used instead of
-     * returning toString() method on attribute
+     * ends with 'class' or 'style', then it returns the correct one, when the attribute does not
+     * end with none of those, then it returns toString() method of attribute
      */
     private static class Attribute2StringDecoder {
 
-        private static final Map<String, String> mapping = new HashMap<String, String>();
-
-        static {//put here any mappings
-            mapping.put(BasicAttributes.itemActiveHeaderClass.toString(), "class");
-            mapping.put(BasicAttributes.itemClass.toString(), "class");
-            mapping.put(BasicAttributes.itemContentClass.toString(), "class");
-            mapping.put(BasicAttributes.itemDisabledClass.toString(), "class");
-            mapping.put(BasicAttributes.itemDisabledHeaderClass.toString(), "class");
-            mapping.put(BasicAttributes.itemHeaderClass.toString(), "class");
-            mapping.put(BasicAttributes.itemInactiveHeaderClass.toString(), "class");
-            mapping.put(BasicAttributes.itemStyle.toString(), "style");
-            mapping.put(BasicAttributes.styleClass.toString(), "class");
-        }
+        private static final String CLASS = "class";
+        private static final String STYLE = "style";
+        private static final int LENGTH_OF_STYLE_OR_CLASS_STRING = 5;
 
         public static <T extends AttributeEnum> String decodeAttribute(T testedAttribute) {
-            String key = testedAttribute.toString();
-            if (mapping.containsKey(key)) {
-                return mapping.get(key);
+            String testedAtt = testedAttribute.toString();
+            if (testedAtt.length() > 6) {
+                //get the ending
+                String substring = testedAtt.substring(testedAtt.length() - LENGTH_OF_STYLE_OR_CLASS_STRING);
+                if (substring.equalsIgnoreCase(CLASS)) {
+                    return CLASS;
+                } else if (substring.equalsIgnoreCase(STYLE)) {
+                    return STYLE;
+                }
             }
-            return key;
+            return testedAtt;
         }
     }
 
