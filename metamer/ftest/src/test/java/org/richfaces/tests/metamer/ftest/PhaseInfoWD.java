@@ -108,6 +108,22 @@ public class PhaseInfoWD {
         }
     }
 
+    /**
+     * Asserts that phases contains phases: RESTORE_VIEW, APPLY_REQUEST_VALUES, RENDER_RESPONSE
+     */
+    public void assertImmediatePhasesCycle() {
+        initialize();
+        assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
+    }
+
+    /**
+     * Asserts that phases contains phases: RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, RENDER_RESPONSE
+     */
+    public void assertBypassUpdatesPhasesCycle() {
+        initialize();
+        assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS, PhaseId.RENDER_RESPONSE);
+    }
+
     public SeleniumCondition getListenerCondition(final PhaseId phaseId, final String message) {
         return new SeleniumCondition() {
             @Override
