@@ -288,11 +288,6 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
         assertEquals(selenium.getText(message), "conversion error");
     }
 
-    // @Test
-    public void testCurrentDate () {
-        // Not sure what exactly is this attribute supposed to manage
-    }
-
     @Test
     public void testDatePattern() {
         calendarAttributes.set(datePattern, "hh:mm:ss a MMMM d, yyyy");
