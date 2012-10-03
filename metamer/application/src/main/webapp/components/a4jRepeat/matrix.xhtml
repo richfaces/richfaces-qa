@@ -57,15 +57,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                             </h:inputText>
                                             &nbsp;
                                             <h:commandLink id="clearLink" action="#{cell.clearValueAction}" value="C">
-                                                <a4j:ajax render="valueInput #{rich:clientId('a4jRepeatRows')}:a4jRepeatColumns:#{cellStatus.index}:valueInput #{rich:clientId('outputRows')}:#{rowStatus.index}:outputColumns:#{cellStatus.index}:output" />
+                                                <a4j:ajax render="valueInput #{rich:clientId('outputRows')}:#{rowStatus.index}:outputColumns:#{cellStatus.index}:output" />
                                             </h:commandLink>
                                             <h:outputText value=" / " />
                                             <h:commandLink id="increaseLink" action="#{cell.increaseValueAction}" value="+">
-                                                <a4j:ajax render="valueInput #{rich:clientId('a4jRepeatRows')}:a4jRepeatColumns:#{cellStatus.index}:valueInput #{rich:clientId('outputRows')}:#{rowStatus.index}:outputColumns:#{cellStatus.index}:output" />
+                                                <a4j:ajax render="valueInput #{rich:clientId('outputRows')}:#{rowStatus.index}:outputColumns:#{cellStatus.index}:output" />
                                             </h:commandLink>
                                             <h:outputText value=" / " />
                                             <h:commandLink id="decreaseLink" action="#{cell.decreaseValueAction}" value="-">
-                                                <a4j:ajax render="valueInput #{rich:clientId('a4jRepeatRows')}:a4jRepeatColumns:#{cellStatus.index}:valueInput #{rich:clientId('outputRows')}:#{rowStatus.index}:outputColumns:#{cellStatus.index}:output" />
+                                                <a4j:ajax render="valueInput #{rich:clientId('outputRows')}:#{rowStatus.index}:outputColumns:#{cellStatus.index}:output" />
                                             </h:commandLink>
                                         </h:panelGroup></td>
                                 </a4j:repeat>
