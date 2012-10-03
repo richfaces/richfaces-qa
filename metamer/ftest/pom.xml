@@ -10,7 +10,7 @@ software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, F
 FSF site: http://www.fsf.org. -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -73,14 +73,14 @@ FSF site: http://www.fsf.org. -->
             <scope>test</scope>
             <version>2.0.0-alpha-1</version>
         </dependency>
-<!--         <dependency> -->
-<!--             <groupId>org.jboss.shrinkwrap.descriptors</groupId> -->
-<!--             <artifactId>shrinkwrap-descriptors-api</artifactId> -->
-<!--         </dependency> -->
-<!--         <dependency> -->
-<!--             <groupId>org.jboss.shrinkwrap.descriptors</groupId> -->
-<!--             <artifactId>shrinkwrap-descriptors-impl</artifactId> -->
-<!--         </dependency> -->
+        <!--         <dependency> -->
+        <!--             <groupId>org.jboss.shrinkwrap.descriptors</groupId> -->
+        <!--             <artifactId>shrinkwrap-descriptors-api</artifactId> -->
+        <!--         </dependency> -->
+        <!--         <dependency> -->
+        <!--             <groupId>org.jboss.shrinkwrap.descriptors</groupId> -->
+        <!--             <artifactId>shrinkwrap-descriptors-impl</artifactId> -->
+        <!--         </dependency> -->
 
         <dependency>
             <groupId>org.jboss.shrinkwrap.descriptors</groupId>
@@ -163,6 +163,14 @@ FSF site: http://www.fsf.org. -->
             <version>3.0.0.Final</version>
             <type>pom</type>
             <scope>provided</scope>
+        </dependency>
+        
+        <!-- for better dates manipulation -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <scope>test</scope>
+            <type>jar</type>
         </dependency>
     </dependencies>
 
