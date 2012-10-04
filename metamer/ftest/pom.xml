@@ -66,6 +66,17 @@ FSF site: http://www.fsf.org. -->
             <artifactId>arquillian-drone-impl</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.graphene</groupId>
+            <artifactId>graphene-component-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.richfaces.tests</groupId>
+            <artifactId>page-fragments-impl</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
         <!-- Resolution of JAR libraries into WAR archive -->
         <dependency>
             <groupId>org.jboss.shrinkwrap.resolver</groupId>
@@ -164,7 +175,7 @@ FSF site: http://www.fsf.org. -->
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
-        
+
         <!-- for better dates manipulation -->
         <dependency>
             <groupId>joda-time</groupId>
