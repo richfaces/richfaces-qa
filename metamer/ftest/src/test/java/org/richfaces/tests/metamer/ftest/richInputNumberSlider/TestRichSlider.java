@@ -57,7 +57,6 @@ import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
 
@@ -121,23 +120,9 @@ public class TestRichSlider extends AbstractSliderTest {
     }
 
     @Test
-    @Templates(exclude = {"richPopupPanel", "richAccordion"})
+    @RegressionTest("https://issues.jboss.org/browse/RF-11314")
     @Override
     public void testClick() {
-        super.testClick();
-    }
-
-    @Test(groups = {"4.Future"})
-    @IssueTracking("https://issues.jboss.org/browse/RF-11314")
-    @Templates(value = {"richPopupPanel"})
-    public void testClickInPopupPanel() {
-        super.testClick();
-    }
-
-    @Test(groups = {"4.Future"})
-    @IssueTracking("https://issues.jboss.org/browse/RF-11314")
-    @Templates(value = {"richAccordion"})
-    public void testClickInAccordion() {
         super.testClick();
     }
 
@@ -155,15 +140,8 @@ public class TestRichSlider extends AbstractSliderTest {
     }
 
     @Test
-    @Templates(exclude = {"richPopupPanel"})
+    @RegressionTest("https://issues.jboss.org/browse/RF-11315")
     public void testAccesskey() {
-        testHtmlAttribute(input, "accesskey", "x");
-    }
-
-    @Test(groups = {"4.Future"})
-    @IssueTracking("https://issues.jboss.org/browse/RF-11315")
-    @Templates(value = {"richPopupPanel"})
-    public void testAccesskeyInPopupPanel() {
         testHtmlAttribute(input, "accesskey", "x");
     }
 
@@ -219,7 +197,6 @@ public class TestRichSlider extends AbstractSliderTest {
     }
 
     @Test
-    @Templates(exclude = {"richPopupPanel", "richAccordion"})
     public void testEnableManualInput() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.enableManualInput, Boolean.FALSE);
 
@@ -227,18 +204,6 @@ public class TestRichSlider extends AbstractSliderTest {
         assertEquals(selenium.getAttribute(readonlyAttribute), "true", "Input should be read-only.");
 
         testClick();
-    }
-
-    @Test(groups = {"4.Future"})
-    @Templates(value = {"richPopupPanel"})
-    public void testEnableManualInputInPopupPanel() {
-        testEnableManualInput();
-    }
-
-    @Test(groups = {"4.Future"})
-    @Templates(value = {"richAccordion"})
-    public void testEnableManualInputInAccordion() {
-        testEnableManualInput();
     }
 
     @Test
@@ -361,7 +326,6 @@ public class TestRichSlider extends AbstractSliderTest {
     }
 
     @Test
-    @Templates(exclude = {"richPopupPanel", "richAccordion"})
     public void testMaxValueClick() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.maxValue, 20);
 
@@ -383,20 +347,8 @@ public class TestRichSlider extends AbstractSliderTest {
                 + ").");
     }
 
-    @Test(groups = {"4.Future"})
-    @Templates(value = {"richAccordion"})
-    public void testMaxValueClickInAccordion() {
-        testMaxValueClick();
-    }
-
-    @Test(groups = {"4.Future"})
-    @Templates(value = {"richPopupPanel"})
-    public void testMaxValueClickInPopupPanel() {
-        testMaxValueClick();
-    }
-
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9860")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9860")
     public void testMaxlength() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.maxlength, 5);
 
@@ -424,7 +376,6 @@ public class TestRichSlider extends AbstractSliderTest {
     }
 
     @Test
-    @Templates(exclude = {"richPopupPanel", "richAccordion"})
     public void testMinValueClick() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.minValue, -20);
 
@@ -442,18 +393,6 @@ public class TestRichSlider extends AbstractSliderTest {
         assertEquals(selenium.getText(output), "-20", "Output was not updated.");
         margin = selenium.getElementPositionLeft(handle) - selenium.getElementPositionLeft(track);
         assertTrue(margin <= 3, "Left margin of handle should be between 0 and 3 (was " + margin + ").");
-    }
-
-    @Test(groups = {"4.Future"})
-    @Templates(value = {"richAccordion"})
-    public void testMinValueClickInAccordion() {
-        testMinValueClick();
-    }
-
-    @Test(groups = {"4.Future"})
-    @Templates(value = {"richPopupPanel"})
-    public void testMinValueClickInPopupPanel() {
-        testMinValueClick();
     }
 
     @Test(groups = {"4.Future"})
@@ -480,7 +419,6 @@ public class TestRichSlider extends AbstractSliderTest {
     }
 
     @Test
-    @Templates(exclude = {"richPopupPanel"})
     public void testOnchangeClick() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
 
@@ -500,12 +438,6 @@ public class TestRichSlider extends AbstractSliderTest {
         assertEquals(events[1], "change", "Attribute onchange doesn't work.");
         assertEquals(events[1], "change", "Attribute onchange doesn't work.");
         assertEquals(events.length, 3, "Three events should be fired.");
-    }
-
-    @Test(groups = {"4.Future"})
-    @Templates(value = {"richPopupPanel"})
-    public void testOnchangeClickInPopupPanel() {
-        testOnchangeClick();
     }
 
     @Test
@@ -605,7 +537,7 @@ public class TestRichSlider extends AbstractSliderTest {
     }
 
     @Test
-    @Templates(exclude = {"richPopupPanel", "richAccordion"})
+    @RegressionTest("https://issues.jboss.org/browse/RF-11314")
     public void testShowTooltip() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showTooltip, Boolean.TRUE);
 
@@ -618,20 +550,6 @@ public class TestRichSlider extends AbstractSliderTest {
 
         selenium.mouseUpAt(track, new Point(0, 0));
         assertFalse(selenium.isVisible(tooltip), "Tooltip should not be visible.");
-    }
-
-    @Test(groups = {"4.Future"})
-    @IssueTracking("https://issues.jboss.org/browse/RF-11314")
-    @Templates(value = {"richAccordion"})
-    public void testShowTooltipInAccordion() {
-        testShowTooltip();
-    }
-
-    @Test(groups = {"4.Future"})
-    @IssueTracking("https://issues.jboss.org/browse/RF-11314")
-    @Templates(value = {"richPopupPanel"})
-    public void testShowTooltipInPopupPanel() {
-        testShowTooltip();
     }
 
     @Test
