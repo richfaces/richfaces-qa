@@ -511,8 +511,8 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
         verifyPositions(horizontalOffsetVal, 0);
     }
 
-    @Test(groups = { "4.Future" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-10821")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-10821")
     public void testImmediate() {
         calendarAttributes.set(immediate, Boolean.TRUE);
 
