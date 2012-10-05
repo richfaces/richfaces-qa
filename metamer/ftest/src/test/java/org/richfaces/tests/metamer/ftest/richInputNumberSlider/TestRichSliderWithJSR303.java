@@ -35,6 +35,7 @@ import org.jboss.test.selenium.waiting.TextContainsCondition;
 import org.richfaces.tests.metamer.bean.rich.RichInputNumberSliderBean;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -185,18 +186,8 @@ public class TestRichSliderWithJSR303 extends AbstractGrapheneTest {
     }
 
     @Test
-    @Templates(exclude = { "richPopupPanel" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-11314")
     public void testSlideToNegative() {
-        setAllCorrect();
-
-        selenium.mouseDownAt(sliderFormat.format(ID.CUSTOM.val()), new Point(POSITION.LESS_THAN_ZERO.val(), 0));
-        waitGui.until(TextContainsCondition.getInstance().locator(msgFormat.format(ID.CUSTOM.val())).text(MSG_CUSTOM));
-    }
-
-    @Test(groups = { "4.Future" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-11314")
-    @Templates(value = { "richPopupPanel" })
-    public void testSlideToNegativeInPopupPanel() {
         setAllCorrect();
 
         selenium.mouseDownAt(sliderFormat.format(ID.CUSTOM.val()), new Point(POSITION.LESS_THAN_ZERO.val(), 0));

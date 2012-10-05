@@ -25,8 +25,7 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
 
@@ -34,7 +33,7 @@ import org.testng.annotations.Test;
 /**
  * Test case for page /faces/components/richInputNumberSlider/fAjax.xhtml
  *
- * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @version $Revision: 23011 $
  */
 public class TestRichSliderFAjax extends AbstractSliderTest {
@@ -91,16 +90,10 @@ public class TestRichSliderFAjax extends AbstractSliderTest {
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11314")
     @Override
-    @Templates(exclude = { "richAccordion", "richPopupPanel" })
     public void testClick() {
         super.testClick();
     }
 
-    @Test(groups = { "4.Future" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-11314")
-    @Templates(value = { "richAccordion", "richPopupPanel" })
-    public void testClickInAccordionPopupPanel() {
-        super.testClick();
-    }
 }
