@@ -40,9 +40,7 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
 
@@ -117,15 +115,8 @@ public class TestRichSpinner extends AbstractSpinnerTest {
     }
 
     @Test
-    @Templates(exclude = { "richPopupPanel" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-11315")
     public void testAccesskey() {
-        testHtmlAttribute(input, "accesskey", "x");
-    }
-
-    @Test(groups = { "4.Future" })
-    @Templates(value = { "richPopupPanel" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-11315")
-    public void testAccesskeyInPopupPanel() {
         testHtmlAttribute(input, "accesskey", "x");
     }
 
@@ -315,7 +306,7 @@ public class TestRichSpinner extends AbstractSpinnerTest {
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-10581")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10581")
     public void testOndownclick() {
         testFireEvent(Event.CLICK, down, "downclick");
     }
@@ -331,7 +322,7 @@ public class TestRichSpinner extends AbstractSpinnerTest {
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9568")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9568")
     public void testOninputdblclick() {
         testFireEvent(Event.DBLCLICK, input, "inputdblclick");
     }
