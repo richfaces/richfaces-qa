@@ -30,14 +30,15 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import java.util.List;
+
 import javax.faces.event.PhaseId;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -62,7 +63,7 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
     }
 
     @Test
-    @Templates(exclude = { "richExtendedDataTable", "richCollapsibleSubTable" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-12122")
     public void testSingleFileUpload() {
         sendFileToInputWithWaiting(filenames[0], true);
 
@@ -82,20 +83,6 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
         assertTrue(uploadedFiles.size() == 1, "List of uploaded files should contain one file.");
         assertTrue(Graphene.element(uploadedFiles.get(0)).textEquals(filenames[0]).apply(driver),
                 "Uploaded file does not appear in uploadedList.");
-    }
-
-    @Test(groups = "4.Future")
-    @Templates("richExtendedDataTable")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12122")
-    public void testSingleFileUploadInEDT() {
-        testSingleFileUpload();
-    }
-
-    @Test(groups = "4.Future")
-    @Templates("richCollapsibleSubTable")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12122")
-    public void testSingleFileUploadInCST() {
-        testSingleFileUpload();
     }
 
     @Test
