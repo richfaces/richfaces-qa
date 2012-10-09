@@ -27,7 +27,6 @@ import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
@@ -77,8 +76,15 @@ public class TestRichMessagesJSR303 extends RichMessagesTest {
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11415")
+    @Templates(exclude = { "richAccordion", "richCollapsiblePanel" })
     public void testGlobalOnly() {
+        super.testGlobalOnly();
+    }
+
+    @Test(groups = { "4.Future" })
+    @Templates(value = { "richAccordion", "richCollapsiblePanel" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-11415")
+    public void testGlobalOnlyInAccordionCollapsiblePanel() {
         super.testGlobalOnly();
     }
 

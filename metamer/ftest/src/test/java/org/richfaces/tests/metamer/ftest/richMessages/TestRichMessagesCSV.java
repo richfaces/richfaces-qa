@@ -30,7 +30,6 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
-
 /**
  * Test case for page /faces/components/richMessages/csv.xhtml
  *
@@ -75,9 +74,16 @@ public class TestRichMessagesCSV extends RichMessagesTest {
         super.testFor();
     }
 
-    @Test(groups = { "4.Future" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-11415")
+    @Test
+    @Templates(exclude = { "richAccordion", "richCollapsiblePanel" })
     public void testGlobalOnly() {
+        super.testGlobalOnly();
+    }
+
+    @Test(groups = { "4.Future" })
+    @Templates(value = { "richAccordion", "richCollapsiblePanel" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-11415")
+    public void testGlobalOnlyInAccordionCollapsiblePanel() {
         super.testGlobalOnly();
     }
 
