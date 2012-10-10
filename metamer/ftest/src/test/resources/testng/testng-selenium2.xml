@@ -32,11 +32,12 @@
             <package name="org.richfaces.tests.metamer.ftest.a4jCommandButton"/>
             <package name="org.richfaces.tests.metamer.ftest.a4jCommandLink"/>
             <package name="org.richfaces.tests.metamer.ftest.a4jLog"/>
+            <package name="org.richfaces.tests.metamer.ftest.richFileUpload"/>
             <package name="org.richfaces.tests.metamer.ftest.richItemChangeListener"/>
+            <package name="org.richfaces.tests.metamer.ftest.richMessage"/>
             <package name="org.richfaces.tests.metamer.ftest.richPanelToggleListener"/>
             <package name="org.richfaces.tests.metamer.ftest.richTreeSelectionChangeListener"/>
             <package name="org.richfaces.tests.metamer.ftest.richTreeToggleListener"/>
-            <package name="org.richfaces.tests.metamer.ftest.richFileUpload"/>
         </packages>
         
     </test>
