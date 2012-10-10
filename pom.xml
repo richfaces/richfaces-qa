@@ -48,12 +48,13 @@
 
         <!-- versions of TomEE containers to use and download -->
         <version.tomee1-1>1.1.0-SNAPSHOT</version.tomee1-1>
+        <version.tomee1-5>1.5.0</version.tomee1-5>
 
         <!-- arquillian versions -->
         <arquillian.bom.version>1.0.2.Final</arquillian.bom.version>
         <arquillian.tomcat.version>1.0.0.CR3</arquillian.tomcat.version>
         <arquillian.drone.version>1.1.0.CR3</arquillian.drone.version>
-        <arquillian.graphene-testng.version>2.0.0-SNAPSHOT</arquillian.graphene-testng.version>
+        <arquillian.graphene-testng.version>2.0.0.Alpha3-SNAPSHOT</arquillian.graphene-testng.version>
         <arquillian.graphene-webdriver.version>2.0.0.Alpha3-SNAPSHOT</arquillian.graphene-webdriver.version>
         <arquillian.jboss-as6.version>1.0.0.CR3</arquillian.jboss-as6.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
@@ -516,6 +517,57 @@
                                             <groupId>org.apache.openejb</groupId>
                                             <artifactId>apache-tomee</artifactId>
                                             <version>${version.tomee1-1}</version>
+                                            <classifier>webprofile</classifier>
+                                            <type>zip</type>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${project.build.directory}</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <arquillian.launch>tomee-remote-1-1</arquillian.launch>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>tomee-remote-1-5</id>
+            <properties>
+                <metamer.classifier>tomee11</metamer.classifier>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.openejb</groupId>
+                    <artifactId>arquillian-tomee-remote</artifactId>
+                    <version>${version.tomee1-5}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>unpack</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.apache.openejb</groupId>
+                                            <artifactId>apache-tomee</artifactId>
+                                            <version>${version.tomee1-5}</version>
                                             <classifier>webprofile</classifier>
                                             <type>zip</type>
                                             <overWrite>false</overWrite>
