@@ -24,64 +24,27 @@ package org.richfaces.tests.metamer.ftest.richMessage;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
-import org.openqa.selenium.WebElement;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.jboss.arquillian.graphene.Graphene;
 import org.testng.annotations.Test;
 
 /**
- * Test case for page /faces/components/richMessage/csv.xhtml
- *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichMessageCSVWD extends AbstractRichMessageWDTest {
-
-    @Use(empty = false)
-    protected boolean ajax;
+public class TestRichMessageJSR303 extends AbstractRichMessageWDTest {
 
     @Override
-    WebElement getTestedElementRoot() {
-        return page.messageForInput1;
-    }
-
-    @Override
-    WebElement getTestedElementSummary() {
-        return page.messageForInput1Summary;
-    }
-
-    @Override
-    WebElement getTestedElementDetail() {
-        return page.messageForInput1Detail;
+    protected void waitingForValidationMessages() {
+        waitRequest(Graphene.guardXhr(page.a4jCommandButton), WaitRequestType.XHR).click();
     }
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richMessage/csv.xhtml");
+        return buildUrl(contextPath, "faces/components/richMessage/jsr303.xhtml");
     }
 
     @Test
-    public void testFor() {
-        super.testFor(page.messageForInputX);
-    }
-
-    @Test
-    @Use(field = "ajax", booleans = { true, false })
-    public void testRendered() {
-        super.testRendered(ajax);
-    }
-
-    @Test
-    public void testShowSummary() {
-        super.testShowSummary();
-    }
-
-    @Test
-    public void testShowDetail() {
-        super.testShowDetail();
-    }
-
-    @Test
-    public void testTitle() {
-        super.testTitle();
+    public void testAjaxRendered() {
+        super.testAjaxRendered();
     }
 
     @Test
@@ -90,18 +53,23 @@ public class TestRichMessageCSVWD extends AbstractRichMessageWDTest {
     }
 
     @Test
+    public void testEscape() {
+        super.testEscape();
+    }
+
+    @Test
+    public void testFor() {
+        super.testFor();
+    }
+
+    @Test
     public void testLang() {
         super.testLang();
     }
 
     @Test
-    public void testStyle() {
-        super.testStyle();
-    }
-
-    @Test
-    public void testStyleClass() {
-        super.testStyleClass();
+    public void testNoShowDetailNoShowSummary() {
+        super.testNoShowDetailNoShowSummary();
     }
 
     @Test
@@ -130,6 +98,7 @@ public class TestRichMessageCSVWD extends AbstractRichMessageWDTest {
     }
 
     @Test
+    @Override
     public void testOnMouseDown() {
         super.testOnMouseDown();
     }
@@ -145,6 +114,7 @@ public class TestRichMessageCSVWD extends AbstractRichMessageWDTest {
     }
 
     @Test
+    @Override
     public void testOnMouseOver() {
         super.testOnMouseOver();
     }
@@ -152,5 +122,35 @@ public class TestRichMessageCSVWD extends AbstractRichMessageWDTest {
     @Test
     public void testOnMouseUp() {
         super.testOnMouseUp();
+    }
+
+    @Test
+    public void testRendered() {
+        super.testRendered();
+    }
+
+    @Test
+    public void testShowDetail() {
+        super.testShowDetail();
+    }
+
+    @Test
+    public void testShowSummary() {
+        super.testShowSummary();
+    }
+
+    @Test
+    public void testStyle() {
+        super.testStyle();
+    }
+
+    @Test
+    public void testStyleClass() {
+        super.testStyleClass();
+    }
+
+    @Test
+    public void testTitle() {
+        super.testTitle();
     }
 }
