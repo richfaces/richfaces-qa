@@ -29,7 +29,7 @@
         <jetty.port>8080</jetty.port>
         <version.hornetq>2.2.13.Final</version.hornetq>
         <glassfish31.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*</glassfish31.excluded.libraries>
-        <jbas71.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*,WEB-INF/lib/jboss-jsf-api*</jbas71.excluded.libraries>
+        <jbas71.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*</jbas71.excluded.libraries>
         <jbas6-mojarra.excluded.libraries>WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*</jbas6-mojarra.excluded.libraries>
         <jbas6-myfaces.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*</jbas6-myfaces.excluded.libraries>
         <tomee11.excluded.libraries>WEB-INF/lib/javax.faces-*,WEB-INF/lib/jsf-api-*,WEB-INF/lib/jsf-impl-*,WEB-INF/lib/validation-api-*,WEB-INF/lib/hibernate-validator-*,WEB-INF/lib/jsp-api*,WEB-INF/lib/slf4j*,WEB-INF/lib/log4j*,WEB-INF/lib/cdi-api*,WEB-INF/lib/jboss-interceptors-api_1.1_spec*,WEB-INF/lib/jsr250-api*,WEB-INF/lib/javax.inject*,WEB-INF/lib/weld-servlet*,WEB-INF/lib/myfaces-api-*,WEB-INF/lib/myfaces-impl-*</tomee11.excluded.libraries>
@@ -50,6 +50,12 @@
         <dependency>
             <groupId>org.richfaces.cdk</groupId>
             <artifactId>annotations</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.spec.javax.faces</groupId>
+                    <artifactId>jboss-jsf-api_2.1_spec</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
