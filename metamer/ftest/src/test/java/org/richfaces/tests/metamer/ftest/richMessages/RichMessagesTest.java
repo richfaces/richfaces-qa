@@ -28,7 +28,6 @@ import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.messagesAttributes;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.richMessage.AbstractRichMessageTest;
 
 /**
  * Abstract class with list of tests appropriate for rich:messages component
@@ -36,7 +35,7 @@ import org.richfaces.tests.metamer.ftest.richMessage.AbstractRichMessageTest;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision: 22748 $
  */
-public abstract class RichMessagesTest extends AbstractRichMessageTest {
+public abstract class RichMessagesTest extends AbstractRichMessagesTest {
 
     // locator for main rich:message component (tested element)
     protected static JQueryLocator mainMsg1 = pjq("span[id$=msgs1]");
