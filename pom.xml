@@ -42,7 +42,7 @@
 
         <!-- version of Tomcat containers to use-->
         <version.tomcat6>6.0.35</version.tomcat6>
-        <version.tomcat7>7.0.30</version.tomcat7>
+        <version.tomcat7>7.0.32</version.tomcat7>
         <tomcat6Zip>path/to/your/tomcat/distribution/zip</tomcat6Zip>
         <tomcat7Zip>path/to/your/tomcat/distribution/zip</tomcat7Zip>
 
