@@ -21,47 +21,19 @@
  */
 package org.richfaces.tests.metamer.ftest.richMessage;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**
- * Component attributes for rich:message
- *
- * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22748 $
  */
-public enum MessageAttributes implements AttributeEnum {
+public class RF12030Page extends MetamerPage {
 
-    ajaxRendered,
-    attributes,
-    binding,//no testing
-    childCount,//no testing
-    children,//no testing
-    dir,
-    escape,
-    facets,//no testing
-    family,//no testing
-    FOR,
-    id,
-    keepTransient,//no testing
-    lang,
-    onclick,
-    ondblclick,
-    onkeydown,
-    onkeypress,
-    onkeyup,
-    onmousedown,
-    onmousemove,
-    onmouseout,
-    onmouseover,
-    onmouseup,
-    parent,//no testing
-    rendered,
-    rendererType,//no testing
-    rendersChildren,//no testing
-    showDetail,
-    showSummary,
-    style,
-    styleClass,
-    title
+    @FindBy(css = "tr.rf-dt-r.rf-dt-fst-r > td")
+    WebElement firstTableRow;
+    @FindBy(css = "table.rf-cp-gr")
+    WebElement collapsePanel;
+    @FindBy(css = "a.rf-ds-btn.rf-ds-btn-next")
+    WebElement nextButton;
 }

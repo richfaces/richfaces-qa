@@ -63,6 +63,7 @@ public class RichMessageBean implements Serializable {
         // property has been initialized
         attributes.setAttribute("for", "simpleInput1");
         attributes.setAttribute("rendered", true);
+        attributes.setAttribute("escape", true);
         attributes.setAttribute("showSummary", true);
         attributes.setAttribute("ajaxRendered", true); // make sense for a4j:commandButton submit
 

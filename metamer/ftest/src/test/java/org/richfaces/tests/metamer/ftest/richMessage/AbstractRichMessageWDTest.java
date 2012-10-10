@@ -22,11 +22,14 @@
 package org.richfaces.tests.metamer.ftest.richMessage;
 
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.messageAttributes;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.page.fragments.impl.message.MessageComponentImpl;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -34,6 +37,13 @@ import org.testng.annotations.BeforeMethod;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public abstract class AbstractRichMessageWDTest extends AbstractWebDriverTest<MessagePage> {
+
+    @FindBy(css = "span[id$=simpleInputMsg]")
+    MessageComponentImpl messageComponentForInputX;
+    @FindBy(css = "span[id$=simpleInputMsg1]")
+    MessageComponentImpl messageComponentFoInput1;
+    @FindBy(css = "span[id$=simpleInputMsg2]")
+    MessageComponentImpl messageComponentForInput2;
 
     @Override
     protected MessagePage createPage() {
@@ -43,102 +53,78 @@ public abstract class AbstractRichMessageWDTest extends AbstractWebDriverTest<Me
     @BeforeMethod(alwaysRun = true)
     public void generateMessages() {
         executeJS("window.valuesSettingState=''");
-        generateValidationMessagesWithWait(true);
+        generateValidationMessagesWithWait();
     }
 
-    abstract WebElement getTestedElementRoot();
-
-    abstract WebElement getTestedElementDetail();
-
-    abstract WebElement getTestedElementSummary();
+    protected abstract void waitingForValidationMessages();
     // ==================== test methods ====================
 
-    /**
-     * Attribute 'for' change behavior: only messages bound to element with
-     * id specified in 'for' should be displayed
-     */
-    public void testFor(WebElement testedElementRoot) {
-        // firstly, remove value from attribute for and generate message
-        messageAttributes.setLower(MessageAttributes.FOR, "");
+    public void testAjaxRendered() {
+        assertTrue(messageComponentFoInput1.isVisible());
+        assertTrue(messageComponentForInput2.isVisible());
+        assertTrue(messageComponentForInputX.isVisible());
 
-        generateValidationMessagesWithWait(true);
-        assertTrue(Graphene.waitAjax().until(Graphene.element(testedElementRoot).not().isVisible()).booleanValue());
+        messageAttributes.set(MessageAttributes.ajaxRendered, Boolean.FALSE);
+        generateValidationMessagesWithWait();
 
-        // now set for attribute back to "simpleInput2"
-        messageAttributes.setLower(MessageAttributes.FOR, "simpleInput2");
+        assertFalse(messageComponentFoInput1.isVisible());
+        assertFalse(messageComponentForInput2.isVisible());
+        assertFalse(messageComponentForInputX.isVisible());
 
-        generateValidationMessagesWithWait(true);
-        assertTrue(Graphene.waitAjax().until(Graphene.element(testedElementRoot).isVisible()).booleanValue());
-    }
-
-    public void testRendered(boolean byAjax) {
-        messageAttributes.set(MessageAttributes.rendered, Boolean.TRUE);
-        generateValidationMessagesWithWait(byAjax);
-
-        assertTrue(Graphene.waitModel().until(Graphene.element(
-                getTestedElementRoot()).isVisible()).booleanValue());
-
-        messageAttributes.set(MessageAttributes.rendered, Boolean.FALSE);
-        generateValidationMessagesWithWait(byAjax);
-
-        assertTrue(Graphene.waitModel().until(Graphene.element(
-                getTestedElementRoot()).not().isVisible()).booleanValue());
-    }
-
-    public void testShowSummary() {
-        messageAttributes.set(MessageAttributes.showSummary, Boolean.TRUE);
-        generateValidationMessagesWithWait(true);
-
-        assertTrue(Graphene.waitModel().until(Graphene.element(
-                getTestedElementRoot()).isVisible()).booleanValue());
-        assertTrue(Graphene.waitModel().until(Graphene.element(
-                getTestedElementSummary()).isVisible()).booleanValue());
-
-        messageAttributes.set(MessageAttributes.showSummary, Boolean.FALSE);
-        generateValidationMessagesWithWait(true);
-
-        assertTrue(Graphene.waitModel().until(Graphene.element(
-                getTestedElementRoot()).not().isVisible()).booleanValue());
-        assertTrue(Graphene.waitModel().until(Graphene.element(
-                getTestedElementSummary()).not().isVisible()).booleanValue());
-    }
-
-    public void testShowDetail() {
-        messageAttributes.set(MessageAttributes.showDetail, Boolean.TRUE);
-        generateValidationMessagesWithWait(true);
-
-        assertTrue(Graphene.waitModel().until(Graphene.element(
-                getTestedElementRoot()).isVisible()).booleanValue());
-        assertTrue(Graphene.waitModel().until(Graphene.element(
-                getTestedElementDetail()).isVisible()).booleanValue());
-
-        messageAttributes.set(MessageAttributes.showDetail, Boolean.FALSE);
-        generateValidationMessagesWithWait(true);
-
-        assertTrue(Graphene.waitModel().until(Graphene.element(
-                getTestedElementRoot()).isVisible()).booleanValue());
-        assertTrue(Graphene.waitModel().until(Graphene.element(
-                getTestedElementDetail()).not().isVisible()).booleanValue());
-    }
-
-    public void testTitle() {
-        super.testTitle(getTestedElementRoot());
+        //submit with h:commandbutton
+        waitRequest(page.hCommandButton, WaitRequestType.HTTP).click();
+        assertTrue(messageComponentFoInput1.isVisible());
+        assertTrue(messageComponentForInput2.isVisible());
+        assertTrue(messageComponentForInputX.isVisible());
     }
 
     public void testDir() {
         super.testDir(getTestedElementRoot());
     }
 
+    public void testEscape() {
+        String newSpanString = "<span id='newSpan'>newSpan</span>";
+        page.simpleInput1.clear();
+        page.simpleInput1.sendKeys(newSpanString);
+        waitRequest(page.a4jCommandButton, WaitRequestType.XHR).click();
+        assertTrue(Graphene.waitGui().until(Graphene.element(page.newSpan).not().isVisible()).booleanValue());
+
+        messageAttributes.set(MessageAttributes.escape, Boolean.FALSE);
+        page.simpleInput1.clear();
+        page.simpleInput1.sendKeys(newSpanString);
+        waitRequest(page.a4jCommandButton, WaitRequestType.XHR).click();
+        assertTrue(Graphene.waitGui().until(Graphene.element(page.newSpan).isVisible()).booleanValue());
+    }
+
+    public void testFor() {
+        // firstly, remove value from attribute for and generate message
+        messageAttributes.setLower(MessageAttributes.FOR, "");
+        generateValidationMessages();
+        waitRequest(Graphene.guardXhr(page.a4jCommandButton), WaitRequestType.XHR).click();
+
+        assertFalse(messageComponentForInputX.isVisible());
+
+        // now set for attribute back to "simpleInput2"
+        messageAttributes.setLower(MessageAttributes.FOR, "simpleInput2");
+        generateValidationMessagesWithWait();
+
+        assertTrue(messageComponentForInputX.isVisible());
+    }
+
     public void testLang() {
         testAttributeLang(getTestedElementRoot());
     }
 
-    public void testStyle() {
-        super.testStyle(getTestedElementRoot());
-    }
+    public void testNoShowDetailNoShowSummary() {
+        messageAttributes.set(MessageAttributes.showSummary, Boolean.FALSE);
+        messageAttributes.set(MessageAttributes.showDetail, Boolean.FALSE);
 
-    public void testStyleClass() {
-        super.testStyleClass(getTestedElementRoot());
+        generateValidationMessages();
+        waitRequest(Graphene.guardXhr(page.a4jCommandButton), WaitRequestType.XHR).click();
+
+        assertFalse(messageComponentFoInput1.isVisible());
+        assertFalse(messageComponentForInput2.isVisible());
+        assertFalse(messageComponentForInputX.isVisible());
     }
 
     public void testOnClick() {
@@ -181,23 +167,86 @@ public abstract class AbstractRichMessageWDTest extends AbstractWebDriverTest<Me
         testFireEventWithJS(getTestedElementRoot(), messageAttributes, MessageAttributes.onmouseup);
     }
 
-    protected void setCorrectValues() {
-        page.correctValuesButton.click();
-        waitForValuesSetting();
+    public void testRendered() {
+        messageAttributes.set(MessageAttributes.rendered, Boolean.TRUE);
+        generateValidationMessagesWithWait();
+
+        assertTrue(messageComponentFoInput1.isVisible());
+        assertTrue(messageComponentForInput2.isVisible());
+        assertTrue(messageComponentForInputX.isVisible());
+
+        messageAttributes.set(MessageAttributes.rendered, Boolean.FALSE);
+        generateValidationMessages();
+        waitRequest(Graphene.guardXhr(page.a4jCommandButton), WaitRequestType.XHR).click();
+
+        assertFalse(messageComponentFoInput1.isVisible());
+        assertFalse(messageComponentForInput2.isVisible());
+        assertFalse(messageComponentForInputX.isVisible());
     }
 
-    protected void setWrongValues() {
+    public void testShowDetail() {
+        messageAttributes.set(MessageAttributes.showSummary, Boolean.TRUE);
+        messageAttributes.set(MessageAttributes.showDetail, Boolean.TRUE);
+        generateValidationMessagesWithWait();
+
+        assertTrue(messageComponentFoInput1.isDetailVisible());
+        assertTrue(messageComponentForInput2.isDetailVisible());
+        assertTrue(messageComponentForInputX.isDetailVisible());
+
+        messageAttributes.set(MessageAttributes.showDetail, Boolean.FALSE);
+        generateValidationMessagesWithWait();
+
+        assertFalse(messageComponentFoInput1.isDetailVisible());
+        assertFalse(messageComponentForInput2.isDetailVisible());
+        assertFalse(messageComponentForInputX.isDetailVisible());
+    }
+
+    public void testShowSummary() {
+        messageAttributes.set(MessageAttributes.showDetail, Boolean.TRUE);
+        messageAttributes.set(MessageAttributes.showSummary, Boolean.TRUE);
+        generateValidationMessagesWithWait();
+
+        assertTrue(messageComponentFoInput1.isSummaryVisible());
+        assertTrue(messageComponentForInput2.isSummaryVisible());
+        assertTrue(messageComponentForInputX.isSummaryVisible());
+
+        messageAttributes.set(MessageAttributes.showSummary, Boolean.FALSE);
+        generateValidationMessagesWithWait();
+
+        assertFalse(messageComponentFoInput1.isSummaryVisible());
+        assertFalse(messageComponentForInput2.isSummaryVisible());
+        assertFalse(messageComponentForInputX.isSummaryVisible());
+    }
+
+    public void testStyle() {
+        super.testStyle(getTestedElementRoot());
+    }
+
+    public void testStyleClass() {
+        super.testStyleClass(getTestedElementRoot());
+    }
+
+    public void testTitle() {
+        super.testTitle(getTestedElementRoot());
+    }
+
+    private WebElement getTestedElementRoot() {
+        return messageComponentFoInput1.getRoot();
+    }
+
+    private void generateValidationMessages() {
         page.wrongValuesButton.click();
         waitForValuesSetting();
     }
 
-    protected void generateValidationMessagesWithWait(boolean byAjax) {
-        setWrongValues();
-        if (byAjax) {
-            waitRequest(Graphene.guardXhr(page.a4jCommandButton), WaitRequestType.XHR).click();
-        } else {
-            waitRequest(Graphene.guardHttp(page.hCommandButton), WaitRequestType.HTTP).click();
-        }
+    private void generateValidationMessagesWithWait() {
+        generateValidationMessages();
+        waitingForValidationMessages();
+    }
+
+    protected void setCorrectValues() {
+        page.correctValuesButton.click();
+        waitForValuesSetting();
     }
 
     private void waitForValuesSetting() {
