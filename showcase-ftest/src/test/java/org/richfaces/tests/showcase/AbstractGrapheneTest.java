@@ -21,15 +21,19 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase;
 
+import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
 import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.waitModel;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import java.net.URL;
 import java.util.Iterator;
 
 import org.jboss.arquillian.ajocado.ajaxaware.AjaxAwareInterceptor;
+import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
 import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
 import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
@@ -51,11 +55,17 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
 
         selenium.getCommandInterceptionProxy().registerInterceptor(new AjaxAwareInterceptor());
 
-        String addition = getAdditionToContextRoot();
+        // String addition = getAdditionToContextRoot();
 
         this.contextRoot = getContextRoot();
 
-        selenium.open(URLUtils.buildUrl(contextRoot, addition));
+        URL url = URLUtils.buildUrl("http://localhost:8080", "portal/classic/showcase");
+        selenium.open(url);
+
+        System.out.println(" ### Opening component example page: " + getDemoName());
+        JQueryLocator menuItemLoc = jq(SimplifiedFormat.format("a.rf-pm-itm-lbl:contains({0})", getDemoName()));
+        waitModel.until(elementPresent.locator(menuItemLoc));
+        selenium.click(menuItemLoc);
     }
 
     /* ***********************************************************************************************************************

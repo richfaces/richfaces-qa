@@ -98,7 +98,7 @@
                                     <groupId>org.richfaces.examples</groupId>
                                     <artifactId>richfaces-showcase</artifactId>
                                     <version>${version.richfaces}</version>
-                                    <classifier>${showcase.classifier}</classifier>
+                                    <!-- classifier>${showcase.classifier}</classifier--> <!-- this is not cool solution. Have to move this plugin def into profile or add classifier for showcase-portlet as well -->
                                     <type>war</type>
                                     <destFileName>showcase.war</destFileName>
                                 </artifactItem>
@@ -146,6 +146,77 @@
                 </plugins>
             </build>
         </profile>
+        
+        <profile>
+            <id>jbossportal-remote-71</id>
+            <properties>
+                <metamer.classifier>jbas71</metamer.classifier>
+                <showcase.classifier>jbas71</showcase.classifier>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.spec</groupId>
+                    <artifactId>jboss-javaee-6.0</artifactId>
+                    <version>1.0.0.Final</version>
+                    <type>pom</type>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.jboss.as</groupId>
+                    <artifactId>jboss-as-arquillian-container-remote</artifactId>
+                    <version>${version.jbossas7-1}</version>
+                </dependency>
+                
+                <!-- dependency for showcase-portlet -->
+                <dependency>
+                    <groupId>org.jboss.portletbridge.examples</groupId>
+                    <artifactId>richfaces-showcase-portlet</artifactId>
+                    <version>3.1.0.Final-SNAPSHOT</version>
+                    <type>war</type>
+                </dependency>
+                
+            </dependencies>
+            <build>
+                <plugins>                
+                    <plugin>
+                         <artifactId>maven-dependency-plugin</artifactId>
+                         <executions>
+                             <execution>
+                                 <id>copy-installed</id>
+                                 <phase>validate</phase>
+                                 <goals>
+                                     <goal>copy</goal>
+                                 </goals>
+                                 <configuration>
+                                     <artifactItems>
+                                         <artifactItem>
+                                             <groupId>org.jboss.portletbridge.examples</groupId>
+                                             <artifactId>richfaces-showcase-portlet</artifactId>
+                                             <version>3.1.0.Final-SNAPSHOT</version>
+                                             <type>war</type>
+                                             <destFileName>showcase-portlet.war</destFileName>
+                                         </artifactItem>
+                                     </artifactItems>
+                                     <outputDirectory>target</outputDirectory>
+                                     <overWriteIfNewer>false</overWriteIfNewer>
+                                 </configuration>
+                             </execution>
+                         </executions>
+                     </plugin>
+                
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <arquillian.launch>jbossas-remote-7-1</arquillian.launch>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        
+        </profile>
+        
     </profiles>
 
 </project>

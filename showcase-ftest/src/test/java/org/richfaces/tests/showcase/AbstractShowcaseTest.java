@@ -46,7 +46,7 @@ public abstract class AbstractShowcaseTest extends Arquillian {
     @Deployment(testable = false)
     public static WebArchive createTestArchive() {
 
-        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/showcase.war"));
+        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/showcase-portlet.war"));
         return war;
     }
 
@@ -65,6 +65,13 @@ public abstract class AbstractShowcaseTest extends Arquillian {
             sampleName);
 
         return addition;
+    }
+
+    protected String getDemoName() {
+
+        // demo name - takes last part of package name
+        String demoName = this.getClass().getPackage().getName();
+        return StringUtils.substringAfterLast(demoName, ".");
     }
 
     protected URL getContextRoot() {
