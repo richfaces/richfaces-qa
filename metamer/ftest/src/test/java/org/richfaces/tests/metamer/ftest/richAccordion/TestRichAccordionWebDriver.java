@@ -29,6 +29,7 @@ import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import javax.faces.event.PhaseId;
 
@@ -254,16 +255,19 @@ public class TestRichAccordionWebDriver extends AbstractWebDriverTest<AccordionP
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12532")
     public void testSwitchTypeNull() {
         for (int i = 2; i >= 0; i--) {
-            final int index = i;
-            Graphene.guardXhr(page.headers.get(index)).click();
-            Graphene.waitGui().withMessage("Item " + index + " is not displayed.")
-                .until(Graphene.element(page.itemContents.get(index)).isVisible());
+            String reqTime = page.requestTime.getText();
+            Graphene.guardXhr(page.headers.get(i)).click();
+            Graphene.waitModel().withMessage("Page was not updated")
+                .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
+            assertTrue(page.itemContents.get(i).isDisplayed(), "Item " + i + " is not displayed");
         }
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12532")
     public void testSwitchTypeAjax() {
         accordionAttributes.set(AccordionAttributes.switchType, "ajax");
 
@@ -271,27 +275,26 @@ public class TestRichAccordionWebDriver extends AbstractWebDriverTest<AccordionP
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12532")
     public void testSwitchTypeClient() {
         accordionAttributes.set(AccordionAttributes.switchType, "client");
 
         for (int i = 2; i >= 0; i--) {
-            final int index = i;
-            Graphene.guardNoRequest(page.headers.get(index)).click();
-            Graphene.waitGui().withMessage("Item " + index + " is not displayed.")
-                .until(Graphene.element(page.itemContents.get(index)).isVisible());
+            Graphene.guardNoRequest(page.headers.get(i)).click();
+            Graphene.waitGui().withMessage("Item " + i + " is not displayed.")
+                .until(Graphene.element(page.itemContents.get(i)).isVisible());
         }
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-10040")
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-10040", "https://issues.jboss.org/browse/RF-12532" })
     public void testSwitchTypeServer() {
         accordionAttributes.set(AccordionAttributes.switchType, "server");
 
         for (int i = 2; i >= 0; i--) {
-            final int index = i;
-            Graphene.guardHttp(page.headers.get(index)).click();
-            Graphene.waitGui().withMessage("Item " + index + " is not displayed.")
-                .until(Graphene.element(page.itemContents.get(index)).isVisible());
+            Graphene.guardHttp(page.headers.get(i)).click();
+            Graphene.waitGui().withTimeout(2, TimeUnit.SECONDS).withMessage("Item " + i + " is not displayed.")
+                .until(Graphene.element(page.itemContents.get(i)).isVisible());
         }
     }
 

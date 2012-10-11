@@ -36,21 +36,21 @@ public class AccordionPage extends MetamerPage {
     @FindBy(css = "div[id$=accordion]")
     WebElement accordion;
 
-    @FindBy(css = "div.rf-ac-itm-hdr[id$=header]")
+    @FindBy(css = "div[id$=accordion] div.rf-ac-itm-hdr[id$=header]")
     List<WebElement> headers;
-    @FindBy(css = "div.rf-ac-itm-lbl-act")
+    @FindBy(css = "div[id$=accordion] div.rf-ac-itm-lbl-act")
     List<WebElement> activeHeaders;
-    @FindBy(css = "div.rf-ac-itm-lbl-dis")
+    @FindBy(css = "div[id$=accordion] div.rf-ac-itm-lbl-dis")
     List<WebElement> disabledHeaders;
-    @FindBy(css = "div.rf-ac-itm-lbl-inact")
+    @FindBy(css = "div[id$=accordion] div.rf-ac-itm-lbl-inact")
     List<WebElement> inactiveHeaders;
 
-    @FindBy(css = "div.rf-ac-itm-cnt")
+    @FindBy(css = "div[id$=accordion] div.rf-ac-itm-cnt")
     List<WebElement> itemContents;
 
-    @FindBy(css = "div.rf-ac-itm td.rf-ac-itm-ico")
+    @FindBy(css = "div[id$=accordion] div.rf-ac-itm td.rf-ac-itm-ico")
     List<WebElement> leftIcons;
-    @FindBy(css = "div.rf-ac-itm td.rf-ac-itm-exp-ico")
+    @FindBy(css = "div[id$=accordion] div.rf-ac-itm td.rf-ac-itm-exp-ico")
     List<WebElement> rightIcons;
 
 }
