@@ -229,7 +229,7 @@ FSF site: http://www.fsf.org. -->
                                     <groupId>org.richfaces.tests</groupId>
                                     <artifactId>metamer</artifactId>
                                     <version>${project.version}</version>
-                                    <classifier>${metamer.classifier}</classifier>
+                                    <!-- classifier>${metamer.classifier}</classifier-->
                                     <type>war</type>
                                     <destFileName>metamer.war</destFileName>
                                 </artifactItem>
@@ -263,5 +263,76 @@ FSF site: http://www.fsf.org. -->
                 <arquillian.container.jbossas.7-1.node0>[::1]</arquillian.container.jbossas.7-1.node0>
             </properties>
         </profile>
+        
+        <profile>
+            <id>jbossportal-remote-71</id>
+            <properties>
+                <metamer.classifier>jbas71</metamer.classifier>
+                <showcase.classifier>jbas71</showcase.classifier>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.spec</groupId>
+                    <artifactId>jboss-javaee-6.0</artifactId>
+                    <version>1.0.0.Final</version>
+                    <type>pom</type>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.jboss.as</groupId>
+                    <artifactId>jboss-as-arquillian-container-remote</artifactId>
+                    <version>${version.jbossas7-1}</version>
+                </dependency>
+                
+                <!-- dependency for showcase-portlet -->
+                <dependency>
+                    <groupId>org.richfaces.tests</groupId>
+                    <artifactId>metamer-portlet</artifactId>
+                    <version>4.3.0-SNAPSHOT</version>
+                    <type>war</type>
+                </dependency>
+                
+            </dependencies>
+            <build>
+                <plugins>                
+                    <plugin>
+                         <artifactId>maven-dependency-plugin</artifactId>
+                         <executions>
+                             <execution>
+                                 <id>copy-installed</id>
+                                 <phase>validate</phase>
+                                 <goals>
+                                     <goal>copy</goal>
+                                 </goals>
+                                 <configuration>
+                                     <artifactItems>
+                                         <artifactItem>
+                                             <groupId>org.richfaces.tests</groupId>
+                                             <artifactId>metamer-portlet</artifactId>
+                                             <version>4.3.0-SNAPSHOT</version>
+                                             <type>war</type>
+                                             <destFileName>metamer-portlet.war</destFileName>
+                                         </artifactItem>
+                                     </artifactItems>
+                                     <outputDirectory>target</outputDirectory>
+                                     <overWriteIfNewer>false</overWriteIfNewer>
+                                 </configuration>
+                             </execution>
+                         </executions>
+                     </plugin>
+                
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <arquillian.launch>jbossas-remote-7-1</arquillian.launch>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        
+        </profile>
+        
     </profiles>
 </project>

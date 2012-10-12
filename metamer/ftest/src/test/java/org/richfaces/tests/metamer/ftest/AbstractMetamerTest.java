@@ -48,6 +48,7 @@ import org.jboss.shrinkwrap.descriptor.api.webapp30.WebAppDescriptor;
 import org.jboss.shrinkwrap.impl.base.path.BasicPath;
 import org.jboss.test.selenium.locator.reference.LocatorReference;
 import org.richfaces.tests.metamer.TemplatesList;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest.MetamerNavigation;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 
@@ -106,10 +107,12 @@ public abstract class AbstractMetamerTest extends Arquillian {
      */
     public abstract URL getTestUrl();
 
+    // public abstract MetamerNavigation getPath2ComponentExample();
+
     @Deployment(testable = false)
     public static WebArchive createTestArchive() {
 
-        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/metamer.war"));
+        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/metamer-portlet.war"));
 
         /*
          * If value on system property "org.richfaces.resourceMapping.enabled" is set to true, modify context-params in web.xml.
