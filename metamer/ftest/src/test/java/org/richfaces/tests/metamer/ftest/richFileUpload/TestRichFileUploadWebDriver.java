@@ -38,7 +38,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 /**
@@ -66,7 +66,7 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
     }
 
     @Test
-    @Templates(exclude = { "richExtendedDataTable", "richCollapsibleSubTable" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-12122")
     public void testSingleFileUpload() {
         sendFileToInputWithWaiting(filenames[0], true);
 
@@ -88,20 +88,6 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
         assertTrue(uploadedFiles.size() == 1, "List of uploaded files should contain one file.");
         assertTrue(Graphene.element(uploadedFiles.get(0)).textEquals(filenames[0]).apply(driver),
             "Uploaded file does not appear in uploadedList.");
-    }
-
-    @Test(groups = "4.Future")
-    @Templates("richExtendedDataTable")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12122")
-    public void testSingleFileUploadInEDT() {
-        testSingleFileUpload();
-    }
-
-    @Test(groups = "4.Future")
-    @Templates("richCollapsibleSubTable")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12122")
-    public void testSingleFileUploadInCST() {
-        testSingleFileUpload();
     }
 
     @Test
@@ -173,7 +159,7 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
     }
 
     @Test
-    @Templates(exclude = { "richExtendedDataTable", "richCollapsibleSubTable" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-12122")
     public void testDoneLabel() {
         String doneLabel = "Done and done";
         fileUploadAttributes.set(FileUploadAttributes.doneLabel, doneLabel);
@@ -183,41 +169,13 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
         Graphene.waitAjax().until(Graphene.element(page.uploadStatusLabel).textEquals(doneLabel));
     }
 
-    @Test(groups = "4.Future")
-    @Templates("richExtendedDataTable")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12122")
-    public void testDoneLabelInEDT() {
-        testDoneLabel();
-    }
-
-    @Test(groups = "4.Future")
-    @Templates("richCollapsibleSubTable")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12122")
-    public void testDoneLabelInCST() {
-        testDoneLabel();
-    }
-
     @Test
-    @Templates(exclude = { "richExtendedDataTable", "richCollapsibleSubTable" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-12122")
     public void testExecute() {
         String cmd = "executeChecker";
         fileUploadAttributes.set(FileUploadAttributes.execute, cmd);
         succesfulFileUploadAction.perform();
         phaseInfo.assertListener(PhaseId.UPDATE_MODEL_VALUES, "executeChecker");
-    }
-
-    @Test(groups = "4.Future")
-    @Templates("richExtendedDataTable")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12122")
-    public void testExecuteInEDT() {
-        testExecute();
-    }
-
-    @Test(groups = "4.Future")
-    @Templates("richCollapsibleSubTable")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12122")
-    public void testExecuteInCST() {
-        testExecute();
     }
 
     @Test
@@ -226,7 +184,7 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
     }
 
     @Test
-    @Templates(exclude = { "richExtendedDataTable", "richCollapsibleSubTable" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-12122")
     public void testLimitRender() {
         // sendFile depends on requestTime and uploadedFilesPanel
         fileUploadAttributes.set(FileUploadAttributes.render, "statusCheckerOutput, requestTime, uploadedFilesPanel");
@@ -241,20 +199,6 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
         String renderCheckerTime2 = page.renderCheckerOutput.getText();
         assertNotEquals(statusCheckerTime, statusCheckerTime2, "status checker time did not change as expected");
         assertEquals(renderCheckerTime, renderCheckerTime2, "render checker time changed as not expected");
-    }
-
-    @Test(groups = "4.Future")
-    @Templates("richExtendedDataTable")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12122")
-    public void testLimitRenderInEDT() {
-        testLimitRender();
-    }
-
-    @Test(groups = "4.Future")
-    @Templates("richCollapsibleSubTable")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12122")
-    public void testLimitRenderInCST() {
-        testLimitRender();
     }
 
     @Test

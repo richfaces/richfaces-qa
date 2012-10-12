@@ -23,6 +23,7 @@ package org.richfaces.tests.metamer.ftest.a4jActionListener;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 
 import java.net.URL;
 
@@ -74,9 +75,12 @@ public class TestA4JActionListener extends AbstractWebDriverTest<ActionListenerP
 
         // do the same once again
 
+        String reqTime = page.requestTime.getText();
         Graphene.guardXhr(page.invokeButtonType).click();
-        Graphene.waitGui().until(Graphene.element(page.messages.get(0)).not().textEquals(output1));
+        Graphene.waitModel().withMessage("Page was not updated")
+            .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
 
+        assertFalse(page.messages.get(0).getText().equals(output1), "Message should change");
         assertEquals(page.messages.size(), 1, "Only one message should be displayed on the page.");
         final String output2 = page.messages.get(0).getText();
         assertEquals(output2.replaceAll(hashCodeRegExp, ""), msg, "Message after first invocation of listener by type.");

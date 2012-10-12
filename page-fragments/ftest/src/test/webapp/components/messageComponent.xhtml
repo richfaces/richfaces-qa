@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <body>
+        <ui:composition template="/templates/template.xhtml">
+
+            <ui:define name="title">Message Component Ftest</ui:define>
+
+            <ui:define name="body">
+                <h:form>
+                    <a4j:outputPanel ajaxRendered="true">
+                        <rich:message id="msgDetail" showDetail="true" showSummary="false" for="input"/>
+                        <br/>
+                        <rich:message id="msgSummary" showDetail="false" showSummary="true"  for="input"/>
+                        <br/>
+                        <rich:message id="msgComplete"  showDetail="true" showSummary="true"  for="input"/>
+                        <br/>
+                        <h:inputText id="input" value="#{valueBean.value}">
+                            <f:validateLength minimum="5"/>
+                        </h:inputText>
+                        <a4j:commandButton id="submit" value="submit" />
+                    </a4j:outputPanel>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

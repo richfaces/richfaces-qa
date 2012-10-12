@@ -113,7 +113,7 @@ public class Attributes<T extends AttributeEnum> {
     protected void setProperty(String propertyName, Object value) {
         String valueAsString = (value == null ? NULLSTRING : value.toString());
         //locator for all types of input elements
-        String cssSelector = "[id*=" + propertyName + "Input]";
+        String cssSelector = "[id$=':" + propertyName + "Input']";
         WebElement foundElement = waitUntilElementIsVisible(By.cssSelector(cssSelector));
         //handle the property by the tagname of the input element
         Tag tag = Tag.getTag(foundElement);
@@ -142,37 +142,43 @@ public class Attributes<T extends AttributeEnum> {
      * @param value value to be set
      */
     private void applyText(String propertyName, String value) {
-        By cssSelector = By.cssSelector("[id$=" + propertyName + "Input]");
+        By cssSelector = By.cssSelector("[id$=':" + propertyName + "Input']");
         String text = driver.findElement(cssSelector).getAttribute("value");
         if (!value.equals(text)) {
             if (!text.isEmpty()) {
-                ((JavascriptExecutor) driver).executeScript("$('input[id$=" + propertyName + "Input]').val('')");
+                ((JavascriptExecutor) driver).executeScript("$(\"input[id$=':" + propertyName + "Input']\").val('')");
             }
             waitUntilElementIsVisible(cssSelector).sendKeys(value);
             waitGuard(driver.findElement(cssSelector)).submit();
         }
     }
 
-    private void applyRadio(Tag tag, String value) {
+    private void applyRadio(Tag tag, String valueToBeSet) {
         Validate.notEmpty(tag.radioElements, "No options from which can be selected.");
 
         for (WebElement element : tag.radioElements) {
-            String val = element.getAttribute("value");
-            if (value.equals(NULLSTRING)) {
-                if (new StringEqualsWrapper(val).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
+            String attributeValue = element.getAttribute("value");
+            if (valueToBeSet.equals(NULLSTRING)) {
+                if (new StringEqualsWrapper(attributeValue).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
                     if (!element.isSelected()) {
                         waitGuard(element).click();
                     }
                     return;
                 }
-            } else if (value.equals(val)) {
+            } else if (valueToBeSet.equals(attributeValue)) {
+                if (!element.isSelected()) {
+                    waitGuard(element).click();
+                }
+                return;
+            } else if (attributeValue.contains(valueToBeSet)) {
+                //for image selection radios, which value contains a source url of the image
                 if (!element.isSelected()) {
                     waitGuard(element).click();
                 }
                 return;
             }
         }
-        throw new IllegalArgumentException("No property with value " + value + " was found");
+        throw new IllegalArgumentException("No property with value " + valueToBeSet + " was found");
     }
 
     private void applySelect(Tag tag, String value) {
@@ -285,13 +291,12 @@ public class Attributes<T extends AttributeEnum> {
         for (int i = 0; i < NUMBEROFTRIES; i++) {
             try {
                 property = getProperty(propertyName);
-                if (property.equals(value)) {
-                    return;
-                }
                 if (value.equals(NULLSTRING)) {
                     if (new StringEqualsWrapper(property).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
                         return;
                     }
+                } else if (property.contains(value)) {
+                    return;
                 }
                 waiting(WAITTIME);
             } catch (Exception ignored) {
@@ -394,7 +399,6 @@ public class Attributes<T extends AttributeEnum> {
 
         private void afterAction() {
             new WDWait().until(new Predicate<WebDriver>() {
-
                 @Override
                 public boolean apply(WebDriver input) {
                     return !input.findElement(REQ_TIME).getText().equals(time1);

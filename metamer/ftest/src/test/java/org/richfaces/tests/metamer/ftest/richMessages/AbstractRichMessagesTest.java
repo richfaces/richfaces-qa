@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richMessage;
+package org.richfaces.tests.metamer.ftest.richMessages;
 
 import static org.jboss.arquillian.ajocado.Graphene.attributeEquals;
 import static org.jboss.arquillian.ajocado.Graphene.elementNotPresent;
@@ -50,6 +50,7 @@ import org.jboss.arquillian.ajocado.locator.element.ExtendedLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.richMessage.MessageAttributes;
 
 /**
  * Common test case for rich:message component
@@ -57,7 +58,7 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision: 22748 $
  */
-public abstract class AbstractRichMessageTest extends AbstractGrapheneTest {
+public abstract class AbstractRichMessagesTest extends AbstractGrapheneTest {
 
     // component's locators
     protected static JQueryLocator message4Input1 = pjq("span[id$=simpleInputMsg1]");

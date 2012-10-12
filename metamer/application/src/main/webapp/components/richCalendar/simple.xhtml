@@ -90,7 +90,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                buttonIcon="#{richCalendarBean.attributes['buttonIcon'].value}"
                                buttonLabel="#{richCalendarBean.attributes['buttonLabel'].value}"
                                converterMessage="#{richCalendarBean.attributes['converterMessage'].value}"
-                               currentDate="#{richCalendarBean.attributes['currentDate'].value}"
                                datePattern="#{richCalendarBean.attributes['datePattern'].value}"
                                dayClassFunction="#{richCalendarBean.attributes['dayClassFunction'].value}"
                                dayDisableFunction="#{richCalendarBean.attributes['dayDisableFunction'].value}"
@@ -160,16 +159,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                todayControlMode="#{richCalendarBean.attributes['todayControlMode'].value}"
                                validator="#{richCalendarBean.validateDate}"
                                validatorMessage="#{richCalendarBean.attributes['validatorMessage'].value}"
-                               value="#{richCalendarBean.attributes['value'].value}"
+                               value="#{richCalendarBean.value}"
                                valueChangeListener="#{richCalendarBean.valueChangeListener}"
                                verticalOffset="#{richCalendarBean.attributes['verticalOffset'].value}"
                                weekDayLabels="#{richCalendarBean.attributes['weekDayLabels'].value}"
                                weekDayLabelsShort="#{richCalendarBean.attributes['weekDayLabelsShort'].value}"
-                               zindex="#{richCalendarBean.attributes['zindex'].value}"
-                               >
-                    <a4j:ajax event="change" render="output, phasesPanel" />
+                               zindex="#{richCalendarBean.attributes['zindex'].value}">
+                    <a4j:ajax event="change" render="outputPanel, phasesPanel" />
                 </rich:calendar>
-                <rich:message id="msg" for="calendar" showDetail="true" showSummary="true"/>
+                <rich:message id="msg" for="calendar"/>
             </div>
 
             <br/><br/>
@@ -177,16 +175,17 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
             <br/><br/>
 
-            output:
-            <h:outputText id="output" value="#{richCalendarBean.attributes['value'].value}">
-                <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
-                                   timeZone="#{richCalendarBean.timeZone}"/>
-            </h:outputText>
-
+            <a4j:outputPanel id="outputPanel" ajaxRendered="true">
+                output:
+                <h:outputText id="output" value="#{richCalendarBean.value}">
+                    <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
+                                       timeZone="#{richCalendarBean.timeZone}"/>
+                </h:outputText>
+            </a4j:outputPanel>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
-            <metamer:attributes value="#{richCalendarBean.attributes}" id="attributes" />
+            <metamer:attributes value="#{richCalendarBean.attributes}" id="attributes" componentName="richCalendar" />
         </ui:define>
 
     </ui:composition>

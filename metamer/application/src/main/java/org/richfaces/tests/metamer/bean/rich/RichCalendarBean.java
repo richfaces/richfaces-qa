@@ -56,20 +56,21 @@ import org.slf4j.LoggerFactory;
 public class RichCalendarBean implements Serializable {
 
     private static final long serialVersionUID = -1L;
-    private static Logger logger;
+    private static final Logger logger = LoggerFactory.getLogger(RichCalendarBean.class);
     private Attributes attributes;
     private Date date = new Date();
     public static final TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");
     private Date date1;
     private Date date2;
     private Date date3;
+    private Date currentDate;
+    private Date value;
 
     /**
      * Initializes the managed bean.
      */
     @PostConstruct
     public void init() {
-        logger = LoggerFactory.getLogger(getClass());
         logger.debug("initializing bean " + getClass().getName());
 
         attributes = Attributes.getComponentAttributesFromFacesConfig(UICalendar.class, getClass());
@@ -89,10 +90,12 @@ public class RichCalendarBean implements Serializable {
 
         // TODO has to be tested in another way
         attributes.remove("converter");
+        attributes.remove("currentDate");
         attributes.remove("dataModel");
         attributes.remove("validator");
         attributes.remove("valueChangeListener");
         attributes.remove("timeZone");
+        attributes.remove("value");
     }
 
     public Attributes getAttributes() {
@@ -101,6 +104,14 @@ public class RichCalendarBean implements Serializable {
 
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
+    }
+
+    public Date getValue() {
+        return value;
+    }
+
+    public void setValue(Date value) {
+        this.value = value;
     }
 
     public Date getDate() {
@@ -113,6 +124,14 @@ public class RichCalendarBean implements Serializable {
 
     public TimeZone getTimeZone() {
         return TIME_ZONE;
+    }
+
+    public Date getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(Date currentDate) {
+        this.currentDate = currentDate;
     }
 
     @Past
@@ -184,7 +203,7 @@ public class RichCalendarBean implements Serializable {
         int componentYear = cal.get(Calendar.YEAR);
 
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Date too far in the past.",
-            "Select a date from year 1991 or newer.");
+                "Select a date from year 1991 or newer.");
 
         if (componentYear < 1991) {
             FacesContext.getCurrentInstance().addMessage("form:calendar", message);

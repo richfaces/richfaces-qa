@@ -30,26 +30,6 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
  */
 public class MessagePage extends MetamerPage {
 
-    @FindBy(css = "span[id$=simpleInputMsg]")
-    WebElement messageForInputX;
-    @FindBy(css = "span[id$=simpleInputMsg] > span > span.rf-msg-sum")
-    WebElement messageForInputXSummary;
-    @FindBy(css = "span[id$=simpleInputMsg] > span > span.rf-msg-det")
-    WebElement messageForInputXDetail;
-    @FindBy(css = "span[id$=simpleInputMsg1]")
-    WebElement messageForInput1;
-    @FindBy(css = "span[id$=simpleInputMsg1] > span > span.rf-msg-sum")
-    WebElement messageForInput1Summary;
-    @FindBy(css = "span[id$=simpleInputMsg1] > span > span.rf-msg-det")
-    WebElement messageForInput1Detail;
-    @FindBy(css = "span[id$=simpleInputMsg2]")
-    WebElement messageForInput2;
-    @FindBy(css = "span[id$=simpleInputMsg2] > span > span")
-    WebElement messageForInput2Summary;
-    @FindBy(css = "span[id$=simpleInputMsg2] > span > span.rf-msg-det")
-    WebElement messageForInput2Detail;
-    @FindBy(css = "span[id$=msgs]")
-    WebElement messages;
     // controls
     @FindBy(css = "input[type=button][id$=setWrongValuesButton]")
     WebElement wrongValuesButton;
@@ -59,4 +39,10 @@ public class MessagePage extends MetamerPage {
     WebElement hCommandButton;
     @FindBy(css = "input[id$=a4jButton]")
     WebElement a4jCommandButton;
+    @FindBy(css = "input[id$=simpleInput1]")
+    WebElement simpleInput1;
+    @FindBy(css = "input[id$=simpleInput2]")
+    WebElement simpleInput2;
+    @FindBy(css = "span[id$=newSpan]")
+    WebElement newSpan;
 }
