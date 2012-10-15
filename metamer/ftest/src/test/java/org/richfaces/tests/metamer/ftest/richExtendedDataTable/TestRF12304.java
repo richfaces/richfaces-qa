@@ -32,7 +32,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision: 22407 $
  */
 public class TestRF12304 extends AbstractWebDriverTest<RF12304Page> {
