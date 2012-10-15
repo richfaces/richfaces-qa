@@ -18,6 +18,8 @@
         <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
         <!-- testng listeners for better console output -->
         <testng.listeners>org.jboss.test.selenium.listener.ConsoleStatusTestListener,org.jboss.test.selenium.listener.FailureLoggingTestListener,org.jboss.test.selenium.listener.SeleniumLoggingTestListener</testng.listeners>
+        <version.showcase-portlet>3.1.0.Beta2</version.showcase-portlet><!-- for testing purpose use released version available in 
+            https://repository.jboss.org/nexus/content/groups/public/ repo -->
     </properties>
 
     <dependencies>
@@ -171,7 +173,7 @@
                 <dependency>
                     <groupId>org.jboss.portletbridge.examples</groupId>
                     <artifactId>richfaces-showcase-portlet</artifactId>
-                    <version>3.1.0.Final-SNAPSHOT</version>
+                    <version>${version.showcase-portlet}</version>
                     <type>war</type>
                 </dependency>
                 
@@ -192,7 +194,7 @@
                                          <artifactItem>
                                              <groupId>org.jboss.portletbridge.examples</groupId>
                                              <artifactId>richfaces-showcase-portlet</artifactId>
-                                             <version>3.1.0.Final-SNAPSHOT</version>
+                                             <version>${version.showcase-portlet}</version>
                                              <type>war</type>
                                              <destFileName>showcase-portlet.war</destFileName>
                                          </artifactItem>
