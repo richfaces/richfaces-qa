@@ -16,14 +16,11 @@
 			Try to select on both tables. The issue is that only selecion on the first one works. The selection on second one table is corrupted.
 		</rich:panel>
 
-		<rich:panel header="#{msg.auftragDetails_title_adressensuche}"
-			style="width: 100%; border: 0px solid; margin-top: 0px; vertical-align: top; height: 60em;">
-
-			<h:panelGrid width="20em" style="height:15em">
+			<h:panelGrid width="20%" style="height:15em">
 				<rich:extendedDataTable value="#{model.capitals}" var="record"
 					selection="#{richExtendedDataTableBean.attributes['selection'].value}"
 					frozenColumns="3" style="height:200px; width:400px;"
-					headerClass="wtlTitle defaultBorder" selectionMode="single" id="firstTable">
+					selectionMode="single" id="firstTable">
 
 					<f:facet name="header">
 						<h:panelGrid columns="2">
@@ -64,8 +61,6 @@
 					</rich:column>
 				</rich:extendedDataTable>
 			</h:panelGrid>
-
-		</rich:panel>
 
 	</h:form>
 </h:body>
