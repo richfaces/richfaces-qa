@@ -29,8 +29,6 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
-<<<<<<< HEAD
 import java.util.Arrays;
 import java.util.List;
 import org.jboss.arquillian.graphene.Graphene;
@@ -41,6 +39,12 @@ import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.Calenda
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.DayPicker;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.CalendarPopup;
 import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
+
+import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -223,15 +227,17 @@ public class TestRichCalendarBasic extends AbstractCalendarTest<MetamerPage> {
         final String page = "div.links a:contains({0})";
 
         // selenium.open(buildUrl(getTestUrl() + "?templates=" + template.toString()));
-        selenium.open(buildUrl("http://localhost:8080/portal/classic/metamer"));
+
+        selenium.open(buildUrl(format("{0}://{1}:{2}/{3}",
+            contextPath.getProtocol(), contextPath.getHost(), contextPath.getPort(), "portal/classic/metamer")));
         selenium.waitForPageToLoad(TIMEOUT);
 
-        selenium.click(jq(SimplifiedFormat.format(group, "Rich")));
+        selenium.click(jq(format(group, "Rich")));
 
-        selenium.click(jq(SimplifiedFormat.format(component, "Rich Calendar")));
+        selenium.click(jq(format(component, "Rich Calendar")));
         selenium.waitForPageToLoad(TIMEOUT);
 
-        selenium.click(jq(SimplifiedFormat.format(page, "Simple")));
+        selenium.click(jq(format(page, "Simple")));
         selenium.waitForPageToLoad(TIMEOUT);
     }
 }
