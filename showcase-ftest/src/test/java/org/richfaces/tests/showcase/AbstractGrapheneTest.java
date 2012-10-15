@@ -25,19 +25,18 @@ import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
 import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.Graphene.waitModel;
+import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
 import java.util.Iterator;
 
 import org.jboss.arquillian.ajocado.ajaxaware.AjaxAwareInterceptor;
-import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
 import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
 import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.testng.annotations.BeforeMethod;
 
@@ -59,11 +58,11 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
 
         this.contextRoot = getContextRoot();
 
-        URL url = URLUtils.buildUrl("http://localhost:8080", "portal/classic/showcase");
-        selenium.open(url);
+        selenium.open(buildUrl(format("{0}://{1}:{2}/{3}",
+            contextRoot.getProtocol(), contextRoot.getHost(), contextRoot.getPort(), "portal/classic/showcase")));
+        selenium.waitForPageToLoad();
 
-        System.out.println(" ### Opening component example page: " + getDemoName());
-        JQueryLocator menuItemLoc = jq(SimplifiedFormat.format("a.rf-pm-itm-lbl:contains({0})", getDemoName()));
+        JQueryLocator menuItemLoc = jq(format("a.rf-pm-itm-lbl:contains({0})", getDemoName()));
         waitModel.until(elementPresent.locator(menuItemLoc));
         selenium.click(menuItemLoc);
     }
