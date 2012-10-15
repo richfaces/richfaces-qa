@@ -1,37 +1,19 @@
-/*******************************************************************************
- * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
-import static org.jboss.arquillian.ajocado.Graphene.textEquals;
-import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
-
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.testng.Assert.assertEquals;
-
 import java.net.URL;
-
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.page.fragments.impl.autocomplete.AutocompleteComponentImpl;
+import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
+import static org.testng.Assert.assertEquals;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 
 /**
  * Test for keeping visual state (KVS) for autocomplete on page:
@@ -40,17 +22,34 @@ import org.testng.annotations.Test;
  *  There were some problems with
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision$
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAutocompleteKVS extends AbstractAutocompleteTest {
+public class TestAutocompleteKVS extends AbstractAutocompleteTest<SimplePage> {
 
-    AutocompleteReloadTester reloadTester = new AutocompleteReloadTester();
+    @FindBy(id="form:autocomplete")
+    private AutocompleteComponentImpl<String> autocomplete;
+
+    private AutocompleteReloadTester reloadTester = new AutocompleteReloadTester();
+
+    @Override
+    protected SimplePage createPage() {
+        return new SimplePage();
+    }
+
+    @BeforeMethod
+    public void setParser() {
+        autocomplete.setSuggestionParser(new TextSuggestionParser());
+    }
+
+    @BeforeMethod
+    public void prepareAutocomplete() {
+        autocomplete.clear(ClearType.BACK_SPACE);
+    }
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richAutocomplete/autocomplete.xhtml");
     }
-
 
     @Test(groups = {"keepVisualStateTesting"})
     public void testRefreshFullPage() {
@@ -62,19 +61,16 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest {
         reloadTester.testRerenderAll();
     }
 
-    private class AutocompleteReloadTester extends ReloadTester<String> {
+    private class AutocompleteReloadTester extends AbstractWebDriverTest<SimplePage>.ReloadTester<String> {
 
         @Override
         public void doRequest(String inputValue) {
-            // autocomplete.clearInputValue();
-            getAutocomplete().type(inputValue);
-            waitAjax.until(textEquals.locator(pjq("span[id$=:output]")).text(inputValue));
+            autocomplete.type(inputValue);
         }
 
         @Override
         public void verifyResponse(String inputValue) {
-            String found = getAutocomplete().getInputText();
-            assertEquals(found, inputValue);
+            assertEquals(autocomplete.getInputValue(), inputValue);
         }
 
         @Override

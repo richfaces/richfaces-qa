@@ -176,9 +176,8 @@ public class AutocompleteComponentImpl<T> implements AutocompleteComponent<T> {
         inputToWrite.sendKeys(value);
         try {
             waitForSuggestionsAvailable(Graphene.waitGui());
-        } catch (TimeoutException ex) {
-            // no suggestions available
-
+        } catch (TimeoutException e) {
+            LOGGER.log(Level.WARNING, "Suggestions aren't visible after typing into the input field.", e);
         }
     }
 

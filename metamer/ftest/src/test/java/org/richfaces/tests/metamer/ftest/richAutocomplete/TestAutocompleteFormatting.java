@@ -1,63 +1,33 @@
-/*******************************************************************************
- * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.jboss.test.selenium.RequestTypeModelGuard.guardXhr;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.autocompleteAttributes;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-
 import java.net.URL;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.bean.Model;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.openqa.selenium.support.FindBy;
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.ftest.model.Autocomplete;
-import org.richfaces.tests.metamer.model.Capital;
 import org.testng.annotations.BeforeMethod;
+import org.richfaces.tests.page.fragments.impl.autocomplete.AutocompleteComponentImpl;
+import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocompleteAttributes;
 import org.testng.annotations.Test;
-
-
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 /**
- * Test for example with formatted suggestions on page faces/components/richAutocomplete/autocomplete.xhtml
- *
- * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- *
- * @version $Revision$
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAutocompleteFormatting extends AbstractGrapheneTest {
+public class TestAutocompleteFormatting extends AbstractAutocompleteTest<SimplePage>{
 
-    Autocomplete autocomplete = new Autocomplete();
-    StringBuilder partialInput;
-
-    List<Capital> capitals = Model.unmarshallCapitals();
+    @FindBy(id="form:autocomplete")
+    private AutocompleteComponentImpl<String> autocomplete;
 
     @Inject
     @Use(booleans = { true, false })
@@ -67,22 +37,38 @@ public class TestAutocompleteFormatting extends AbstractGrapheneTest {
     @Use(booleans = { true, false })
     Boolean selectFirst;
 
+    @Inject
+    @Use(strings= {"div", "list", "table"})
+    String layout;
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richAutocomplete/fetchValueAttr.xhtml");
     }
 
     @BeforeMethod
+    public void setParser() {
+        autocomplete.setSuggestionParser(new TextSuggestionParser());
+    }
+
+    @BeforeMethod
     public void prepareProperties() {
         autocompleteAttributes.set(AutocompleteAttributes.autofill, autofill);
         autocompleteAttributes.set(AutocompleteAttributes.selectFirst, selectFirst);
+        autocompleteAttributes.set(AutocompleteAttributes.layout, layout);
         if (autofill == null) {
             autofill = false;
         }
         if (selectFirst == null) {
             selectFirst = false;
         }
-        autocomplete.clearInputValue();
+        autocomplete.clear(ClearType.BACK_SPACE);
+    }
+
+
+    @Override
+    protected SimplePage createPage() {
+        return new SimplePage();
     }
 
     /**
@@ -90,124 +76,50 @@ public class TestAutocompleteFormatting extends AbstractGrapheneTest {
      */
     @Test
     public void testFormatting() {
-        assertFalse(autocomplete.isCompletionVisible());
-        autocomplete.clearInputValue();
-        typePrefix("ala");
-        assertTrue(autocomplete.isCompletionVisible());
-        confirm();
-        assertFalse(autocomplete.isCompletionVisible());
-        assertTrue(autocomplete.getInputText().toLowerCase().startsWith(getExpectedStateForPrefix().toLowerCase()));
+        assertFalse(autocomplete.areSuggestionsAvailable());
+        autocomplete.clear(ClearType.BACK_SPACE);
+        autocomplete.type("ala");
+        assertTrue(autocomplete.areSuggestionsAvailable());
+        autocomplete.autocomplete();
+        Graphene.waitGui().until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver driver) {
+                return !autocomplete.areSuggestionsAvailable();
+            }
+        });
+        String expected = getExpectedStateForPrefix("ala", selectFirst).toLowerCase();
+        String found = autocomplete.getInputValue().toLowerCase();
+        assertTrue(found.startsWith(expected), "The input value should start with '"+expected+"', but '" + found + "' found.");
     }
 
     @Test
     public void testLayout() {
-
-        JQueryLocator suggestionsGridDiv = new JQueryLocator("div.rf-au-lst-scrl > div[id$=autocompleteItems] > div:contains({0})");
-        JQueryLocator suggestionsList = new JQueryLocator("div.rf-au-lst-scrl > ul[id$=autocompleteItems] > li:contains({0})");
-        JQueryLocator suggestionsTable = new JQueryLocator("div.rf-au-lst-scrl > table[id$=autocompleteItems] tr>td:contains({0})");
-
-        verifyLayout("div", suggestionsGridDiv);
-
-//        verifyLayout("grid", suggestionsGridDiv);
-
-        verifyLayout("list", suggestionsList);
-
-        verifyLayout("table", suggestionsTable);
-
+        autocomplete.type("Co");
+        assertTrue(Graphene.element(getSuggestion("Colorado")).isPresent().apply(driver));
+        assertTrue(Graphene.element(getSuggestion("[Denver]")).isPresent().apply(driver));
+        assertTrue(Graphene.element(getSuggestion("Connecticut")).isPresent().apply(driver));
+        assertTrue(Graphene.element(getSuggestion("[Hartford]")).isPresent().apply(driver));
     }
 
-    private void verifyLayout(String layout, JQueryLocator suggestionLocatorFormat) {
-
-        autocompleteAttributes.set(AutocompleteAttributes.layout, layout);
-
-        autocomplete.clearInputValue();
-        autocomplete.typeKeys("Co");
-        waitFor(2000);
-
-        assertTrue(selenium.isElementPresent(suggestionLocatorFormat.format("Colorado")));
-        assertTrue(selenium.isElementPresent(suggestionLocatorFormat.format("[Denver]")));
-
-        assertTrue(selenium.isElementPresent(suggestionLocatorFormat.format("Connecticut")));
-        assertTrue(selenium.isElementPresent(suggestionLocatorFormat.format("[Hartford]")));
-    }
-
-    public void typePrefix(String wholeInput) {
-        partialInput = new StringBuilder(autocomplete.getInputText());
-
-        for (int i = 0; i < wholeInput.length(); i++) {
-            String chr = String.valueOf(wholeInput.charAt(i));
-
-            guardXhr(autocomplete).typeKeys(chr);
-            partialInput.append(chr);
-
-            assertEquals(autocomplete.getInputText(), getExpectedStateForPrefix());
-            assertEquals(autocomplete.getSelectedOptionIndex(), getExpectedSelectedOptionIndex());
+    private By getSuggestion(String value) {
+        switch(getLayout()) {
+            case DIV:
+                return By.xpath("//div[@id='form:autocompleteItems']/div[contains(text(), '" + value + "')]");
+            case LIST:
+                return By.xpath("//ul[@id='form:autocompleteItems']/li[contains(text(), '" + value + "')]");
+            case TABLE:
+                return By.xpath("//table[@id='form:autocompleteItems']/tbody/tr/td[contains(text(), '" + value + "')]");
+            default:
+                throw new UnsupportedOperationException();
         }
     }
 
-    public String getExpectedStateForPrefix() {
-        if (selectFirst && autofill && partialInput.length() > 0) {
-            return getStatesByPrefix(partialInput.toString()).get(0).toLowerCase();
-        }
-
-        return partialInput.toString();
+    private Layout getLayout() {
+        return Layout.valueOf(layout.toUpperCase());
     }
 
-    public String getExpectedCompletionForPrefix() {
-        if (selectFirst && autofill && partialInput.length() > 0) {
-            return getCompletionByPrefix(partialInput.toString()).get(0).toLowerCase();
-        }
-
-        return partialInput.toString();
+    private static enum Layout {
+        DIV, LIST, TABLE;
     }
 
-    public List<String> getStatesByPrefix(String prefix) {
-        List<String> states = new LinkedList<String>();
-
-        for (Capital cap : capitals) {
-            if (cap.getState().toLowerCase().startsWith(prefix)) {
-                states.add(cap.getState());
-            }
-        }
-
-        return states;
-    }
-
-    public List<String> getCompletionByPrefix(String prefix) {
-        List<String> states = new LinkedList<String>();
-
-        for (Capital cap : capitals) {
-            if (cap.getState().toLowerCase().startsWith(prefix)) {
-                states.add(cap.getState() + " [" + cap.getName() + "]");
-            }
-        }
-
-        return states;
-    }
-
-    public int getExpectedSelectedOptionIndex() {
-        return (selectFirst && partialInput.length() > 0) ? 0 : -1;
-    }
-
-    public void confirm() {
-        autocomplete.confirmByKeys();
-        autocomplete.waitForCompletionVisible();
-    }
-
-    public Boolean getAutofill() {
-        return autofill;
-    }
-
-    public void setAutofill(Boolean autofill) {
-        this.autofill = autofill;
-    }
-
-    public Boolean getSelectFirst() {
-        return selectFirst;
-    }
-
-    public void setSelectFirst(Boolean selectFirst) {
-        this.selectFirst = selectFirst;
-    }
 }
-

@@ -24,7 +24,7 @@ import org.richfaces.tests.metamer.ftest.abstractions.AbstractValidationMessages
 import org.testng.annotations.Test;
 
 /**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestAutocompleteValidationMessages extends AbstractValidationMessagesTest {
 

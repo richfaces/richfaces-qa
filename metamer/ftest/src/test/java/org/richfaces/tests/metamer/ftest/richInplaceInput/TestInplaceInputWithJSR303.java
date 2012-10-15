@@ -63,13 +63,9 @@ public class TestInplaceInputWithJSR303 extends TestComponentWithJSR303 {
     }
 
     @Test
-    public void testAllInputsWrong() {
-        verifyAllInputsWrong();
+    public void testAllInputs() {
+        verifyAllInputs();
     }
 
-    @Test
-    public void testAllInputsCorrect() {
-        verifyAllInputsCorrect();
-    }
 
 }
