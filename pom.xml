@@ -1093,6 +1093,58 @@
             </build>
         </profile>
         <profile>
+            <id>jbosseap-managed-6</id>
+            <properties>
+                <metamer.classifier>jee6</metamer.classifier>
+                <showcase.classifier>jbas71</showcase.classifier>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.as</groupId>
+                    <artifactId>jboss-as-arquillian-container-managed</artifactId>
+                    <version>${version.jbossas7-1}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <arquillian.launch>jbossas-managed-7-1</arquillian.launch>
+                            </systemProperties>
+                            <environmentVariables>
+                                <JBOSS_HOME>${jboss7-1Home}</JBOSS_HOME>
+                            </environmentVariables>
+                        </configuration>
+                    </plugin>
+                    <!-- workaround for RF-11983-->
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy JBoss AS configuration</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${jboss7-1Home}/standalone/configuration</outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/test/resources/jbossEAP6</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>tomcat-managed-6</id>
             <properties>
                 <metamer.classifier>mojarra</metamer.classifier>
