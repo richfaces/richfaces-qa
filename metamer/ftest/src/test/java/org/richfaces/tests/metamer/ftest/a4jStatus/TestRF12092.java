@@ -47,6 +47,11 @@ public class TestRF12092 extends AbstractStatusTest {
         return buildUrl(contextPath, "faces/components/a4jStatus/RF-12092.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Status", "RF-12092");
+    }
+
     @Test(groups="4.3")
     @IssueTracking("https://issues.jboss.org/browse/RFPL-12092")
     public void testStatusIsClearedWhenRequestCompleted() {

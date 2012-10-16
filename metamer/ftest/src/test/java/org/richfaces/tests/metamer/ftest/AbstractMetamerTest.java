@@ -48,6 +48,7 @@ import org.jboss.shrinkwrap.descriptor.api.webapp30.WebAppDescriptor;
 import org.jboss.shrinkwrap.impl.base.path.BasicPath;
 import org.jboss.test.selenium.locator.reference.LocatorReference;
 import org.richfaces.tests.metamer.TemplatesList;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest.MetamerNavigation;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 
@@ -99,6 +100,12 @@ public abstract class AbstractMetamerTest extends Arquillian {
             "richCollapsiblePanel", "richTabPanel", "richPopupPanel", "a4jRegion", "a4jRepeat", "uiRepeat" })
     protected TemplatesList template;
 
+    protected final String group = "span.rf-tab-lbl:contains({0})";
+    protected final String component = "li.rf-ulst-itm a:contains({0})";
+    protected final String page = "div.links a:contains({0})";
+
+    protected static final Boolean runInPortalEnv = Boolean.getBoolean("runInPortalEnv");
+
     /**
      * Returns the url to test page to be opened by Selenium
      *
@@ -106,12 +113,16 @@ public abstract class AbstractMetamerTest extends Arquillian {
      */
     public abstract URL getTestUrl();
 
-    // public abstract MetamerNavigation getPath2ComponentExample();
-
     @Deployment(testable = false)
     public static WebArchive createTestArchive() {
 
-        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/metamer-portlet.war"));
+        File warFile2deploy;
+        if (runInPortalEnv) {
+            warFile2deploy = new File("target/metamer-portlet.war");
+        } else {
+            warFile2deploy = new File("target/metamer.war");
+        }
+        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, warFile2deploy);
 
         /*
          * If value on system property "org.richfaces.resourceMapping.enabled" is set to true, modify context-params in web.xml.

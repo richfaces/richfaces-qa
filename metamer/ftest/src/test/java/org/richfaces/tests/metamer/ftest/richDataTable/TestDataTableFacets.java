@@ -42,6 +42,11 @@ public class TestDataTableFacets extends DataTableFacetsTest {
         return buildUrl(contextPath, "faces/components/richDataTable/facets.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Data Table", "Facets");
+    }
+
     @BeforeClass
     public void setupModel() {
         model = new DataTable(pjq("table.rf-dt[id$=richDataTable]"));

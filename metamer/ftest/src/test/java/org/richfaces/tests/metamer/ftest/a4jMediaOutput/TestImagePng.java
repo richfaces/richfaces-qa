@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.a4jMediaOutput;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
@@ -49,6 +48,11 @@ public class TestImagePng extends AbstractMediaOutputTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jMediaOutput/imagePng.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Media Output", "Image Png");
     }
 
     @Test

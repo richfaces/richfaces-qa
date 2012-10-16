@@ -53,8 +53,19 @@ public class TestRichCalendarKVS extends AbstractCalendarTest<MetamerPage> {
         return URLUtils.buildUrl(contextPath, "faces/components/richCalendar/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Calendar", "Simple");
+    }
+
     private void submitWithA4jSubmitBtn() {
         MetamerPage.waitRequest(a4jbutton, WaitRequestType.XHR).click();
+    }
+
+    @IssueTracking("https://issues.jboss.org/browse/RF-12300")
+    @Test(groups = {"keepVisualStateTesting", "4.Future"})
+    public void testRenderAll() {
+        reloadTesterInput.testRerenderAll();
     }
 
     @Test(groups = { "keepVisualStateTesting" })

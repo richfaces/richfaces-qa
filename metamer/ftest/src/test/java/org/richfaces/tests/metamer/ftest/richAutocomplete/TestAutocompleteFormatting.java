@@ -22,7 +22,8 @@
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocompleteAttributes;
+import static org.jboss.test.selenium.RequestTypeModelGuard.guardXhr;
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.autocompleteAttributes;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -63,6 +64,11 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest<SimpleP
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richAutocomplete/fetchValueAttr.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Autocomplete", "Formatted suggestions");
     }
 
     @BeforeMethod

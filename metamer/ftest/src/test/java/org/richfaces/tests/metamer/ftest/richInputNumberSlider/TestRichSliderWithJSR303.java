@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
 import static org.jboss.arquillian.ajocado.Graphene.textEquals;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
@@ -139,6 +138,11 @@ public class TestRichSliderWithJSR303 extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richInputNumberSlider/jsr303.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Input Number Slider", "JSR-303 Bean Validation");
     }
 
     @Test

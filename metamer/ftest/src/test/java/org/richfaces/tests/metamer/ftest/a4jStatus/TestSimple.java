@@ -23,13 +23,10 @@ package org.richfaces.tests.metamer.ftest.a4jStatus;
 
 import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.a4jStatus.StatusAttributes.rendered;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.statusAttributes;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -54,6 +51,11 @@ public class TestSimple extends AbstractStatusTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jStatus/facets.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Status", "Facets");
     }
 
     @Test

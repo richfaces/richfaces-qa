@@ -26,11 +26,8 @@ import static org.jboss.arquillian.ajocado.Graphene.countEquals;
 import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-
 import static org.jboss.arquillian.ajocado.javascript.JavaScript.js;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.jQueryAttributes;
 import static org.richfaces.tests.metamer.ftest.richJQuery.RichJQueryAttributes.attachType;
@@ -38,7 +35,6 @@ import static org.richfaces.tests.metamer.ftest.richJQuery.RichJQueryAttributes.
 import static org.richfaces.tests.metamer.ftest.richJQuery.RichJQueryAttributes.query;
 import static org.richfaces.tests.metamer.ftest.richJQuery.RichJQueryAttributes.selector;
 import static org.richfaces.tests.metamer.ftest.richJQuery.RichJQueryAttributes.timing;
-
 import static org.testng.Assert.assertEquals;
 
 import java.awt.Color;
@@ -66,6 +62,11 @@ public class TestSimple extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richJQuery/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich jQuery", "Simple");
     }
 
     @Test

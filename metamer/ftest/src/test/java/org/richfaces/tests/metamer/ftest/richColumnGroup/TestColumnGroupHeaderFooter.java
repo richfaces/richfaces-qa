@@ -21,13 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richColumnGroup;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.arquillian.ajocado.dom.Attribute.ROWSPAN;
-
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.columnAttributes;
 import static org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes.rendered;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -46,6 +43,11 @@ public class TestColumnGroupHeaderFooter extends AbstractColumnModelTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richColumnGroup/headerFooter.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Column Group", "Header and Footer");
     }
 
     @Test

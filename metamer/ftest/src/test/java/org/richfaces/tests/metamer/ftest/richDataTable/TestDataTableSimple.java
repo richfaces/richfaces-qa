@@ -43,6 +43,11 @@ public class TestDataTableSimple extends DataTableSimpleTest {
         return buildUrl(contextPath, "faces/components/richDataTable/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Data Table", "Simple");
+    }
+
     @BeforeClass
     public void setupModel() {
         model = new DataTable(pjq("table.rf-dt[id$=richDataTable]"));

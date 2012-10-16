@@ -80,6 +80,11 @@ public class TestA4JOutputPanel extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/a4jOutputPanel/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Output Panel", "Simple");
+    }
+
     @Test
     @Uses({ @Use(field = "event", value = "events"), @Use(field = "layout", value = "layouts") })
     public void testEvent() {

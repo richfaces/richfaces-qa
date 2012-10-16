@@ -28,6 +28,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
@@ -45,6 +46,11 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richValidator/wrapping.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Validator", "Client side validation for many inputs wrapped by rich:validator");
     }
 
     @Test

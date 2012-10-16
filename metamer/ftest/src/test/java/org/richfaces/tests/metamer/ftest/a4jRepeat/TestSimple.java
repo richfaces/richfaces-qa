@@ -23,11 +23,8 @@ package org.richfaces.tests.metamer.ftest.a4jRepeat;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.repeatAttributes;
-
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -65,6 +62,11 @@ public class TestSimple extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jRepeat/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Repeat", "Simple");
     }
 
     @BeforeMethod(alwaysRun = true, dependsOnMethods={"loadPage"})

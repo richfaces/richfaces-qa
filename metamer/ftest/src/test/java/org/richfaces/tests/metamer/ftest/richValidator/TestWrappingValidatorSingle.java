@@ -25,7 +25,6 @@ import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
 import static org.jboss.arquillian.ajocado.Graphene.textEquals;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
@@ -33,7 +32,6 @@ import java.net.URL;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.validation.MinBean;
 import org.testng.annotations.Test;
 
 
@@ -57,6 +55,11 @@ public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richValidator/single.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Validator", "Client side validation for only one input component wrapped by rich:validator");
     }
 
     @Test(groups = { "4.Future" })

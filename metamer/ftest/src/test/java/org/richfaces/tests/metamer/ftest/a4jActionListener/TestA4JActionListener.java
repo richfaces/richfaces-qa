@@ -120,4 +120,5 @@ public class TestA4JActionListener extends AbstractWebDriverTest<ActionListenerP
         String output = page.messages.get(0).getText();
         assertEquals(output, msg, "Message after first invocation of listener method from composite component.");
     }
+
 }

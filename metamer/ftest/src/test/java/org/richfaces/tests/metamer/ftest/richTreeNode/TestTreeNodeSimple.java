@@ -24,7 +24,7 @@ package org.richfaces.tests.metamer.ftest.richTreeNode;
 import static org.jboss.arquillian.ajocado.Graphene.retrieveAttribute;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-
+import static org.jboss.arquillian.ajocado.dom.Attribute.SRC;
 import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.KEYDOWN;
@@ -35,11 +35,7 @@ import static org.jboss.arquillian.ajocado.dom.Event.MOUSEMOVE;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOUT;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOVER;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEUP;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.jboss.arquillian.ajocado.dom.Attribute.SRC;
-
 import static org.jboss.test.selenium.JQuerySelectors.append;
 import static org.jboss.test.selenium.JQuerySelectors.not;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
@@ -53,7 +49,6 @@ import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.
 import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.lang;
 import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.onbeforetoggle;
 import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.rendered;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -126,6 +121,11 @@ public class TestTreeNodeSimple extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richTree/simpleSwingTreeNode.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Tree", "Simple - Swing Tree Node");
     }
 
     @Test

@@ -42,6 +42,11 @@ public class TestRichSpinnerFAjax extends AbstractSpinnerTest {
         return buildUrl(contextPath, "faces/components/richInputNumberSpinner/fAjax.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Input Number Spinner", "f:ajax");
+    }
+
     @Test
     @Use(field = "number", value = "correctNumbers")
     @Override

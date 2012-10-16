@@ -22,10 +22,8 @@
 package org.richfaces.tests.metamer.ftest.richList;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.rowClass;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.listAttributes;
-
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -43,6 +41,11 @@ public class TestSimple extends AbstractListTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richList/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich List", "Simple");
     }
 
     @Test

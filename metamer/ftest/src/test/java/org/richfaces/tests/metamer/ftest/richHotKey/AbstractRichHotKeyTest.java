@@ -24,9 +24,7 @@ package org.richfaces.tests.metamer.ftest.richHotKey;
 import static org.jboss.arquillian.ajocado.Graphene.countEquals;
 import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
@@ -59,6 +57,11 @@ public abstract class AbstractRichHotKeyTest extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richHotKey/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Hot Key", "Simple");
     }
 
     protected void checkEvent(String text, int number) {

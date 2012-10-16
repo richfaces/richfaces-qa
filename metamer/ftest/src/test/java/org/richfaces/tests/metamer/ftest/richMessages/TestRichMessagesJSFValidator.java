@@ -25,7 +25,6 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
@@ -40,6 +39,11 @@ public class TestRichMessagesJSFValidator extends AbstractRichMessagesTest<Messa
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richMessages/jsfValidator.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Messages", "Simple JSF Validation");
     }
 
     @Test

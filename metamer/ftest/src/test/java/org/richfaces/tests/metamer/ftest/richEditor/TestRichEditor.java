@@ -110,6 +110,11 @@ public class TestRichEditor extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richEditor/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Editor", "Simple");
+    }
+
     @BeforeMethod
     public void beforeTestMethod() {
         waitModel.until(elementPresent.locator(editor));

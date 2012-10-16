@@ -24,15 +24,11 @@ package org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler;
 import static org.jboss.arquillian.ajocado.Graphene.elementNotVisible;
 import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
+import static org.jboss.arquillian.ajocado.dom.Attribute.SRC;
 import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEDOWN;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEUP;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.jboss.arquillian.ajocado.dom.Attribute.SRC;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.collapsibleSubTableTogglerAttributes;
 import static org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler.CollapsibleSubTableTogglerAttributes.collapsedIcon;
@@ -40,7 +36,6 @@ import static org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler.C
 import static org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler.CollapsibleSubTableTogglerAttributes.expandedIcon;
 import static org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler.CollapsibleSubTableTogglerAttributes.expandedLabel;
 import static org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler.CollapsibleSubTableTogglerAttributes.rendered;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -80,6 +75,11 @@ public class TestCollapsibleSubTableToggler extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richCollapsibleSubTableToggler/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Collapsible Sub Table Toggler", "Simple");
     }
 
     @Test

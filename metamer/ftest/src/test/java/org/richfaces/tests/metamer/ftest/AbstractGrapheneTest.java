@@ -53,7 +53,6 @@ import org.apache.commons.lang.LocaleUtils;
 import org.jboss.arquillian.ajocado.browser.BrowserType;
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
 import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
 import org.jboss.arquillian.ajocado.framework.SystemPropertiesConfiguration;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
@@ -85,10 +84,6 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     protected ScreenshotInterceptor screenshotInterceptor = new ScreenshotInterceptor();
     protected PhaseInfo phaseInfo = new PhaseInfo();
 
-    final String group = "span.rf-tab-lbl:contains({0})";
-    final String component = "li.rf-ulst-itm a:contains({0})";
-    final String page = "div.links a:contains({0})";
-
     /**
      * Opens the tested page. If templates is not empty nor null, it appends url parameter with templates.
      *
@@ -101,22 +96,17 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
             throw new SkipException("selenium isn't initialized");
         }
 
-        // selenium.open(buildUrl(getTestUrl() + "?templates=" + template.toString()));
-        selenium.open(buildUrl("http://localhost:8080/portal/classic/metamer"));
-        selenium.waitForPageToLoad(TIMEOUT);
-        /*
-        MetamerNavigation navigation = getPath2ComponentExample();
-
-        selenium.click(jq(SimplifiedFormat.format(group, navigation.getGroup())));
-        selenium.waitForPageToLoad(TIMEOUT);
-
-        selenium.click(jq(SimplifiedFormat.format(component, navigation.getComponent())));
-        selenium.waitForPageToLoad(TIMEOUT);
-
-        selenium.click(jq(SimplifiedFormat.format(page, navigation.getPage())));
-        selenium.waitForPageToLoad(TIMEOUT);
-        */
+        if (runInPortalEnv) {
+            selenium.open(buildUrl(format("{0}://{1}:{2}/{3}",
+                contextPath.getProtocol(), contextPath.getHost(), contextPath.getPort(), "portal/classic/metamer")));
+            openComponentExamplePageInPortal(getComponentExampleNavigation());
+        } else {
+            selenium.open(buildUrl(getTestUrl() + "?templates=" + template.toString()));
+            selenium.waitForPageToLoad(TIMEOUT);
+        }
     }
+
+    public abstract MetamerNavigation getComponentExampleNavigation();
 
     @Parameters("takeScreenshots")
     @BeforeMethod(alwaysRun = true, dependsOnMethods = { "loadPage" })
@@ -481,6 +471,22 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     }
 
     /**
+     * Opens component example page in portal environment.
+     * Since metamer app deloyed to AS is accessible by URL,
+     * in portal it is better to use click to main menu
+     */
+    protected void openComponentExamplePageInPortal(MetamerNavigation navigation) {
+
+        selenium.click(jq(format(group, navigation.getGroup())));
+
+        selenium.click(jq(format(component, navigation.getComponent())));
+        selenium.waitForPageToLoad(TIMEOUT);
+
+        selenium.click(jq(format(page, navigation.getPage())));
+        selenium.waitForPageToLoad(TIMEOUT);
+    }
+
+    /**
      * Abstract ReloadTester for testing
      *
      * @param <T>
@@ -518,21 +524,15 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
         void launchAction();
     }
 
-    /**
-     * Metamer structure for component examples is like:
-     *  <li>group (such as "A4J" or "Rich")</li>
-     *  <li>component (such as "Rich Calendar") </li>
-     *  <li>page (such as "Simple" or "RF-11111")</li>
-     *
-     * @author jjamrich
-     *
-     */
     public class MetamerNavigation {
-        private String group;
-        private String component;
-        private String page;
+        /** "A4J", "Rich", "Other" */
+        final String group;
+        /** Such as "Rich Calendar" */
+        final String component;
+        /** Such as "Simple" or "RF-12345" */
+        final String page;
 
-        public MetamerNavigation(String group, String component, String page){
+        public MetamerNavigation(String group, String component, String page) {
             this.group = group;
             this.component = component;
             this.page = page;
@@ -550,5 +550,4 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
             return page;
         }
     }
-
 }

@@ -23,9 +23,7 @@ package org.richfaces.tests.metamer.ftest.attributes;
 
 import static org.jboss.arquillian.ajocado.Graphene.elementNotVisible;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.tooltipAttributes;
 import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.direction;
@@ -64,5 +62,10 @@ public class UsageTest extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richTooltip/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Tooltip", "Simple");
     }
 }

@@ -164,6 +164,11 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
         return buildUrl(contextPath, "faces/components/richCalendar/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Calendar", "Simple");
+    }
+
     @BeforeMethod
     public void initDateFormatter() {
         this.dateTimeFormatter = DateTimeFormat.forPattern(calendarAttributes.get(CalendarAttributes.datePattern));

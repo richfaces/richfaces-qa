@@ -43,6 +43,11 @@ public class TestRichMessagesCSV extends AbstractRichMessagesTest<MessagesPage> 
         return buildUrl(contextPath, "faces/components/richMessages/csv.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Messages", "Client Side Validation");
+    }
+
     /**
      * This test is not needed = the validation is performed on client side
      */

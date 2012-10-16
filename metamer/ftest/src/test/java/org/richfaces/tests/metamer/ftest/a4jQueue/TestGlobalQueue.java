@@ -30,8 +30,8 @@ import static org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes.rendere
 import static org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes.timeout;
 import static org.testng.Assert.assertEquals;
 
-import com.thoughtworks.selenium.SeleniumException;
 import java.net.URL;
+
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.cheiron.halt.XHRHalter;
 import org.jboss.cheiron.halt.XHRState;
@@ -42,6 +42,8 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.attributes.Attributes;
 import org.testng.annotations.Test;
+
+import com.thoughtworks.selenium.SeleniumException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -58,6 +60,11 @@ public class TestGlobalQueue extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jQueue/globalQueue.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Queue", "Global Queue");
     }
 
     /**

@@ -51,6 +51,11 @@ public class TestCollapsiblePanelKVS extends AbstractGrapheneTest {
         return URLUtils.buildUrl(contextPath, "faces/components/richCollapsiblePanel/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Collapsible Panel", "Simple");
+    }
+
     @Test
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richExtendedDataTable" })
     public void testRefreshFullPage() {

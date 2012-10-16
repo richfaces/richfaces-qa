@@ -26,6 +26,7 @@ import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.menuSep
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
+
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.testng.annotations.Test;
@@ -44,6 +45,11 @@ public class TestRichMenuSeparator extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richMenuSeparator/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Menu Separator", "Simple");
     }
 
     @Test

@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richNotify;
 
 import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
@@ -46,6 +45,11 @@ public class TestRichNotifyValidation extends AbstractRichNotifyTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richNotify/validation.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Notify", "Validation");
     }
 
     @Test

@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.a4jAttachQueue;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes.requestDelay;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.queueAttributes;
 
@@ -47,6 +46,11 @@ public class TestAttachQueueNamed extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jAttachQueue/namedQueue.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Attach Queue", "Named Queue");
     }
 
     /**

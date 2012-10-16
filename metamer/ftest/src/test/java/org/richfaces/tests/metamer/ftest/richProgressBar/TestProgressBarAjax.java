@@ -45,6 +45,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+
 import org.testng.annotations.Test;
 
 /**
@@ -58,6 +59,11 @@ public class TestProgressBarAjax extends AbstractWebDriverTest<ProgressBarPage> 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richProgressBar/ajaxMode.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Progress Bar", "Ajax Mode");
     }
 
     @Test

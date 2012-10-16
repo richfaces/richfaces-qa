@@ -22,9 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richDataScroller;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.dataScrollerAttributes;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 
@@ -79,6 +77,11 @@ public abstract class AbstractScrollerTest extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richDataScroller/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Data Scroller", "Simple");
     }
 
     @BeforeMethod

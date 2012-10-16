@@ -28,9 +28,7 @@ import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
 import static org.jboss.arquillian.ajocado.Graphene.textEquals;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.pickListAttributes;
 import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.addAllText;
@@ -60,7 +58,6 @@ import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.
 import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.upText;
 import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.upTopText;
 import static org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes.validatorMessage;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -136,6 +133,11 @@ public class TestPickList extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richPickList/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Pick List", "Simple");
     }
 
     private void addItem(int id) {

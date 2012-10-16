@@ -23,12 +23,11 @@ package org.richfaces.tests.metamer.ftest.a4jRegion;
 
 import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.regionAttributes;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.regionAttributes;
+
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.dom.Event;
@@ -55,6 +54,11 @@ public class TestRegionSimple extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jRegion/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Region", "Simple");
     }
 
     @Test

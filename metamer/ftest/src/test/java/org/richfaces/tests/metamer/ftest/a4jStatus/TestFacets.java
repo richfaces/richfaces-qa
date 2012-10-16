@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.a4jStatus;
 
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
@@ -43,6 +42,11 @@ public class TestFacets extends AbstractStatusTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jStatus/facets.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Status", "Facets");
     }
 
     @Test

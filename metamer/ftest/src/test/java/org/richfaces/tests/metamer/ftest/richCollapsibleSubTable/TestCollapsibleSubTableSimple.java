@@ -21,10 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.arquillian.ajocado.guard.RequestGuardFactory.guard;
-
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.jboss.test.selenium.JQuerySelectors.append;
 import static org.jboss.test.selenium.JQuerySelectors.not;
 import static org.richfaces.tests.metamer.ftest.richCollapsibleSubTable.CollapsibleSubTableAttributes.columnClasses;
@@ -33,7 +31,6 @@ import static org.richfaces.tests.metamer.ftest.richCollapsibleSubTable.Collapsi
 import static org.richfaces.tests.metamer.ftest.richCollapsibleSubTable.CollapsibleSubTableAttributes.rowClass;
 import static org.richfaces.tests.metamer.ftest.richCollapsibleSubTable.CollapsibleSubTableAttributes.rowClasses;
 import static org.richfaces.tests.metamer.ftest.richCollapsibleSubTable.CollapsibleSubTableAttributes.rows;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -59,6 +56,11 @@ public class TestCollapsibleSubTableSimple extends AbstractCollapsibleSubTableTe
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Collapsible Sub Table", "Simple");
     }
 
     @Test

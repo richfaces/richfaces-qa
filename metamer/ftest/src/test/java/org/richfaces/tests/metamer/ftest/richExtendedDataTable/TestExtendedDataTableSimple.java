@@ -43,6 +43,11 @@ public class TestExtendedDataTableSimple extends DataTableSimpleTest {
         return buildUrl(contextPath, "faces/components/richExtendedDataTable/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Extended Data Table", "Simple");
+    }
+
     @BeforeClass
     public void setupModel() {
         model = new ExtendedDataTable(pjq("div.rf-edt[id$=richEDT]"));

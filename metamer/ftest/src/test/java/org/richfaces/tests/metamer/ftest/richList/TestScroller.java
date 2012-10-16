@@ -61,6 +61,11 @@ public class TestScroller extends AbstractListTest {
         return buildUrl(contextPath, "faces/components/richList/scroller.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich List", "Data Scroller");
+    }
+
     @BeforeMethod
     public void prepareComponent() {
         paginationTester.setDataScroller(dataScroller);

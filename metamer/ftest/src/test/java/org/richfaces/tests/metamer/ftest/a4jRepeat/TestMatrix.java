@@ -22,13 +22,9 @@
 package org.richfaces.tests.metamer.ftest.a4jRepeat;
 
 import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
-
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.arquillian.ajocado.guard.RequestGuardFactory.guard;
-
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -61,6 +57,11 @@ public class TestMatrix extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jRepeat/matrix.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Repeat", "Matrix");
     }
 
     @BeforeMethod

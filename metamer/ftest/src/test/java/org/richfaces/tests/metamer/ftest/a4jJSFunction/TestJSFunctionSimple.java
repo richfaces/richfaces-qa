@@ -21,16 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jJSFunction;
 
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.jsFunctionAttributes;
 import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.jsFunctionAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotSame;
 import static org.testng.Assert.fail;
@@ -63,6 +60,11 @@ public class TestJSFunctionSimple extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jJSFunction/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Functions", "All");
     }
 
     @Test

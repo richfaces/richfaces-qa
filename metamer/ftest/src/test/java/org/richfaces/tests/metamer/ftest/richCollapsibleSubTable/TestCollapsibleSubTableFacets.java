@@ -22,14 +22,11 @@
 package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
 import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.footer;
 import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.header;
 import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.noData;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.dataTableFacets;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -55,6 +52,11 @@ public class TestCollapsibleSubTableFacets extends AbstractCollapsibleSubTableTe
     public URL getTestUrl() {
 
         return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/facets.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Collapsible Sub Table", "Facets");
     }
 
     @Test

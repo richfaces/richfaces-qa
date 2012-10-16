@@ -42,6 +42,11 @@ public class TestExtendedDataTableScroller extends DataTableScrollerTest {
         return buildUrl(contextPath, "faces/components/richExtendedDataTable/scroller.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Extended Data Table", "Data Scroller");
+    }
+
     @BeforeClass
     public void setupModel() {
         model = new ExtendedDataTable(pjq("div.rf-edt[id$=richEDT]"));

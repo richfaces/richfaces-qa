@@ -65,6 +65,11 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest<SimplePage> {
         return buildUrl(contextPath, "faces/components/richAutocomplete/autocomplete.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Autocomplete", "Simple");
+    }
+
     @Test(groups = {"keepVisualStateTesting"})
     public void testRefreshFullPage() {
         reloadTester.testFullPageRefresh();

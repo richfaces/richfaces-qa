@@ -45,6 +45,11 @@ public class TestRichTCTogglePanel extends AbstractTestToggleControl {
         return buildUrl(contextPath, "faces/components/richToggleControl/togglePanel.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Toggle Control", "Toggle Panel");
+    }
+
     @Test
     public void testSwitchFirstPanel() {
         testSwitchFirstPanel(items1);

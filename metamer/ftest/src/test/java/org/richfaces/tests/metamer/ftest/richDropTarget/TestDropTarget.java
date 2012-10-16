@@ -31,9 +31,7 @@ import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
 import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
 import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.dropTargetAttributes;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState.ACCEPTING;
@@ -48,7 +46,6 @@ import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttribu
 import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.oncomplete;
 import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.render;
 import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.rendered;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -84,6 +81,11 @@ public class TestDropTarget extends AbstractDragNDropTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richDropTarget/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Drop Target", "Simple");
     }
 
     @Test

@@ -43,6 +43,11 @@ public class TestRichSliderFAjax extends AbstractSliderTest {
         return buildUrl(contextPath, "faces/components/richInputNumberSlider/fAjax.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Input Number Slider", "f:ajax");
+    }
+
     @Test
     @Use(field = "number", value = "correctNumbers")
     @Override

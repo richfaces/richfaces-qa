@@ -35,6 +35,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.TreeSet;
+
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.IntRange;
@@ -64,6 +65,11 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richExtendedDataTable/selection.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Extended Data Table", "Selection");
     }
 
     @BeforeClass

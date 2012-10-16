@@ -21,8 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -59,6 +60,10 @@ public class TestRichCalendarModel extends AbstractCalendarTest<MetamerPage> {
     }
 
     @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Calendar", "Data Model");
+    }
+
     @Test(groups = { "4.0.0.Final" })
     @RegressionTest("https://issues.jboss.org/browse/RFPL-1222")
     public void testApplyButton() {

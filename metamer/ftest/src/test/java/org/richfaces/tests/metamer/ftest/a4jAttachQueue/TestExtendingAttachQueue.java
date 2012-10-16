@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.a4jAttachQueue;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.attachQueueAttrs1;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.attachQueueAttrs2;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.queueAttributes;
@@ -43,6 +42,11 @@ public class TestExtendingAttachQueue extends AbstractAttachQueueTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jAttachQueue/extending.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Attach Queue", "Extending");
     }
 
     @BeforeMethod

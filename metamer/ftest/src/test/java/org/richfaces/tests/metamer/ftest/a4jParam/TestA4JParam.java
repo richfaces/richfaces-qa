@@ -22,14 +22,12 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jParam;
 
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.paramAttributes;
 import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.paramAttributes;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -56,6 +54,11 @@ public class TestA4JParam extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jParam/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Action Parameter", "Simple");
     }
 
     @Test

@@ -22,9 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richColumn;
 
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -55,6 +53,11 @@ public class TestColumnFiltering extends AbstractColumnModelTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richColumn/filtering.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Column", "Filtering");
     }
 
     @Test

@@ -26,6 +26,7 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest.MetamerNavigation;
 import org.testng.annotations.Test;
 
 
@@ -43,6 +44,11 @@ public class TestRichTCTabPanel extends AbstractTestToggleControl {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richToggleControl/tabPanel.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Toggle Control", "Tab Panel");
     }
 
     @Test

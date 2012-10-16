@@ -23,11 +23,8 @@ package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
 import static org.apache.commons.lang.StringUtils.isBlank;
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -56,6 +53,11 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/filtering.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Collapsible Sub Table", "Table Filtering");
     }
 
     @BeforeMethod

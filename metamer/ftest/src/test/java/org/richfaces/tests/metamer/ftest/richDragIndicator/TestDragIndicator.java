@@ -22,15 +22,12 @@
 package org.richfaces.tests.metamer.ftest.richDragIndicator;
 
 import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.dragIndicatorAttributes;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes.acceptClass;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes.draggingClass;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes.rejectClass;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.DragIndicatorAttributes.rendered;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 
@@ -56,6 +53,11 @@ public class TestDragIndicator extends AbstractDragNDropTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richDragIndicator/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Drag Indicator", "Simple");
     }
 
     @BeforeMethod

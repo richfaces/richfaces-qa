@@ -75,6 +75,11 @@ public class TestRichInplaceSelect extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richInplaceSelect/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Inplace Select", "Simple");
+    }
+
     @Test
     public void testInit() {
         assertTrue(selenium.isElementPresent(select), "Inplace select is not on the page.");

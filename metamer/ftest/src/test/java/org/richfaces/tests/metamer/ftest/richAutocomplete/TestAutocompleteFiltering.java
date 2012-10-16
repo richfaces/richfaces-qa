@@ -22,7 +22,9 @@
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocompleteAttributes;
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.autocompleteAttributes;
+import static org.richfaces.tests.metamer.ftest.richAutocomplete.AutocompleteAttributes.clientFilterFunction;
+import static org.richfaces.tests.metamer.ftest.richAutocomplete.AutocompleteAttributes.mode;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
@@ -52,6 +54,11 @@ public class TestAutocompleteFiltering extends AbstractAutocompleteTest<SimplePa
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richAutocomplete/filtering.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Autocomplete", "Filtering");
     }
 
     @BeforeMethod

@@ -41,6 +41,11 @@ public class TestRichCalendarFAjax extends AbstractCalendarTest<MetamerPage> {
         return buildUrl(contextPath, "faces/components/richCalendar/fAjax.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Calendar", "f:ajax");
+    }
+
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10536")
     public void testApplyButton() {

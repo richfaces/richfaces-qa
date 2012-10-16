@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTab;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.jboss.arquillian.ajocado.Graphene.jq;
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -45,6 +45,11 @@ public class TestRF12108 extends AbstractStatusTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richTabPanel/rf-12108.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Tab", "RF-12108");
     }
 
     @Test(groups = "4.3")

@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.ftest.richMenuGroup;
 import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
 import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory.optionLabel;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.menuGroupAttributes;
@@ -43,7 +42,6 @@ import org.jboss.test.selenium.waiting.EventFiredCondition;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
-import org.richfaces.tests.metamer.ftest.richMenuItem.MenuItemAttributes;
 
 /**
  * Test case for page /faces/components/richMenuGroup/simple.xhtml
@@ -66,6 +64,11 @@ public class TestRichMenuGroup extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richMenuGroup/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Menu Group", "Simple");
     }
 
     @Test

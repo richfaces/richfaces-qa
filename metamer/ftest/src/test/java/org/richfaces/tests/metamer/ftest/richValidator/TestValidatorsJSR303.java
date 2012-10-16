@@ -42,6 +42,11 @@ public class TestValidatorsJSR303 extends AbstractValidatorsTest {
         return buildUrl(contextPath, "faces/components/richValidator/jsr303.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Validator", "JSR-303 Bean Validation");
+    }
+
     @Test
     public void testAllWrong() {
         verifyAllWrongWithAjaxSubmit();

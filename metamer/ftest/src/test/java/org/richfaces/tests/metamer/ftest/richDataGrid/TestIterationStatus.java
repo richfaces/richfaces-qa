@@ -22,9 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richDataGrid;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -46,6 +44,11 @@ public class TestIterationStatus extends AbstractDataGridTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richDataGrid/iterationStatus.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Data Grid", "Iteration Status");
     }
 
     @Test

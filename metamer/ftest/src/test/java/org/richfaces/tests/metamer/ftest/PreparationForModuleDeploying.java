@@ -128,4 +128,10 @@ public class PreparationForModuleDeploying extends AbstractGrapheneTest {
         // TODO Auto-generated method stub
         return null;
     }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

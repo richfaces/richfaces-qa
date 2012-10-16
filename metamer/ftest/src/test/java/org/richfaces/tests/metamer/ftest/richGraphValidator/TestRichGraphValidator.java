@@ -85,6 +85,11 @@ public class TestRichGraphValidator extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richGraphValidator/all.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Graph Validator", "Rich components within graphValidator");
+    }
+
     @Test
     public void testGroups() {
         for (int i = 0; i < GROUPS.length; ++i) {

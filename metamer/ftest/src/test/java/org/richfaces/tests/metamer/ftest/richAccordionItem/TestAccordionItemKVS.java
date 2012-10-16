@@ -48,6 +48,11 @@ public class TestAccordionItemKVS extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richAccordionItem/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Accordion Item", "Simple");
+    }
+
     @Test(groups = { "keepVisualStateTesting" })
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
         "richExtendedDataTable", "richList" })

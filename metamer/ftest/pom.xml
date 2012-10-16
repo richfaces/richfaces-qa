@@ -326,6 +326,7 @@ FSF site: http://www.fsf.org. -->
                         <configuration>
                             <systemProperties>
                                 <arquillian.launch>jbossas-remote-7-1</arquillian.launch>
+                                <runInPortalEnv>true</runInPortalEnv>
                             </systemProperties>
                         </configuration>
                     </plugin>

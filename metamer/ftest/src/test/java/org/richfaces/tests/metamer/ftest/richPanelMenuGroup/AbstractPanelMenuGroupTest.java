@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.PanelMenuMode.ajax;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.panelMenuGroupAttributes;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.mode;
@@ -48,6 +47,11 @@ public abstract class AbstractPanelMenuGroupTest extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richPanelMenuGroup/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Panel Menu Group", "Simple");
     }
 
     @BeforeMethod

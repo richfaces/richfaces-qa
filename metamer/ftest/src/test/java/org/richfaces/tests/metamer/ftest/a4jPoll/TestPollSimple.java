@@ -31,9 +31,7 @@ import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
 import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.bypassUpdates;
 import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.data;
 import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.enabled;
@@ -45,7 +43,6 @@ import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.oncomplet
 import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.render;
 import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.rendered;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.pollAttributes;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -76,6 +73,11 @@ public class TestPollSimple extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jPoll/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Poll", "Simple");
     }
 
     @BeforeMethod

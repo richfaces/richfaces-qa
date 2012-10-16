@@ -22,9 +22,7 @@
 package org.richfaces.tests.metamer.ftest.a4jRegion;
 
 import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -62,6 +60,11 @@ public class TestNestedRegion extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jRegion/nested.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Region", "Nested regions");
     }
 
     @Test

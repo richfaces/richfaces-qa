@@ -43,6 +43,11 @@ public class TestInplaceInputWithJSR303 extends TestComponentWithJSR303<JSR303Pa
         return buildUrl(contextPath, "faces/components/richInplaceInput/jsr303.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Inplace Input", "JSR-303 Bean Validation");
+    }
+
     @Test
     public void testNotEmpty() {
         verifyNotEmpty();

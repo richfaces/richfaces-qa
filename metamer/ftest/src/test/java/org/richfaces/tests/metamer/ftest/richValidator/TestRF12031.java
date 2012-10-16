@@ -50,6 +50,11 @@ public class TestRF12031 extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richValidator/RF-12031.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Validator", "");
+    }
+
     @Test(groups = { "4.3" })
     @IssueTracking(value = "https://issues.jboss.org/browse/RF-12031")
     public void testCSVOnConditionallyRenderedInput() {

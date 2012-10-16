@@ -69,6 +69,11 @@ public class TestFormQueue extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/a4jQueue/formQueue.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Queue", "Form Queue");
+    }
+
     /**
      * <p>
      * Tests request delays for one form queue.

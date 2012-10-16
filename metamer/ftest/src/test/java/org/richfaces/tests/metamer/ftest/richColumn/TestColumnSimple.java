@@ -21,17 +21,14 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richColumn;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.arquillian.ajocado.dom.Attribute.COLSPAN;
 import static org.jboss.arquillian.ajocado.dom.Attribute.ROWSPAN;
-
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.columnAttributes;
 import static org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes.breakRowBefore;
 import static org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes.colspan;
 import static org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes.rendered;
 import static org.richfaces.tests.metamer.ftest.richColumn.ColumnAttributes.rowspan;
-
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -50,6 +47,11 @@ public class TestColumnSimple extends AbstractColumnModelTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richColumn/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Column", "Simple");
     }
 
     @BeforeMethod

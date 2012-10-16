@@ -23,9 +23,7 @@ package org.richfaces.tests.metamer.ftest.richTooltip;
 
 import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.tooltipAttributes;
 import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.hideEvent;
@@ -63,6 +61,11 @@ public class TestTooltipTarget extends AbstractGrapheneTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richTooltip/targetting.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Tooltip", "Targetting");
     }
 
     @BeforeMethod

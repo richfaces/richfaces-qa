@@ -47,7 +47,12 @@ public class TestAccordionKVS extends AbstractWebDriverTest<AccordionPage> {
         return buildUrl(contextPath, "faces/components/richAccordion/simple.xhtml");
     }
 
-    @Test(groups = {"keepVisualStateTesting"})
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Accordion", "Simple");
+    }
+
+    @Test(groups = { "keepVisualStateTesting" })
     public void testRefreshFullPage() {
         reloadTester.testFullPageRefresh();
     }
