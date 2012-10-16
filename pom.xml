@@ -1134,7 +1134,7 @@
                                     <overwrite>true</overwrite>
                                     <resources>
                                         <resource>
-                                            <directory>${basedir}/src/test/resources/jbossEAP6</directory>
+                                            <directory>${basedir}/src/test/resources/jbossEAP60</directory>
                                         </resource>
                                     </resources>
                                 </configuration>
