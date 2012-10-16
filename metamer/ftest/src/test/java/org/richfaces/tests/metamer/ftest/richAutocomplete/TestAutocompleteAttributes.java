@@ -22,6 +22,8 @@
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
+
 import static java.text.MessageFormat.format;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import org.jboss.arquillian.graphene.Graphene;
@@ -42,7 +44,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest<SimpleP
 
     private static final String PHASE_LISTENER_LOG_FORMAT = "*1 value changed: {0} -> {1}";
 
-    @FindBy(id="form:autocomplete")
+    @FindBy(css="span[id$=autocomplete]")
     private AutocompleteComponentImpl<String> autocomplete;
 
     @Override
@@ -72,7 +74,7 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest<SimpleP
         autocomplete.type("something");
         getPage().blur();
 
-        Graphene.waitAjax().until(Graphene.element(getPage().getOutput()).textEquals("something"));
+        Graphene.waitAjax().withTimeout(4, TimeUnit.SECONDS).until(Graphene.element(getPage().getOutput()).textEquals("something"));
 
         autocomplete.clear(ClearType.BACK_SPACE);
         autocomplete.type("something else");
