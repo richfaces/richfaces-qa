@@ -24,23 +24,18 @@ package org.richfaces.tests.metamer.ftest.richAutocomplete;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.richfaces.tests.metamer.bean.Model;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
-import org.richfaces.tests.metamer.ftest.model.Autocomplete;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.model.Capital;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public abstract class AbstractAutocompleteTest extends AbstractGrapheneTest {
+public abstract class AbstractAutocompleteTest<Page extends MetamerPage> extends AbstractWebDriverTest<Page> {
 
-    Autocomplete autocomplete = new Autocomplete();
-    List<Capital> capitals = Model.unmarshallCapitals();
+    private List<Capital> capitals = Model.unmarshallCapitals();
 
-    protected Autocomplete getAutocomplete() {
-        return autocomplete;
-    }
 
     protected List<Capital> getCapitals() {
         return Collections.unmodifiableList(capitals);
@@ -56,6 +51,14 @@ public abstract class AbstractAutocompleteTest extends AbstractGrapheneTest {
         }
 
         return states;
+    }
+
+    public String getExpectedStateForPrefix(String prefix, boolean selectFirst) {
+        if (selectFirst && prefix.length() > 0) {
+            return getStatesByPrefix(prefix).get(0);
+        }
+
+        return prefix;
     }
 
 }

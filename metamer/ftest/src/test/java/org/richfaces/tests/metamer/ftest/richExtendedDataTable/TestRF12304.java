@@ -19,53 +19,45 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richInplaceInput;
+package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.richAutocomplete.TestComponentWithJSR303;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
-
 /**
- * Test for page faces/components/richInplaceInput/jsr303.xhtml
- *
- * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision: 22534 $
+ * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @version $Revision: 22407 $
  */
-public class TestInplaceInputWithJSR303 extends TestComponentWithJSR303 {
+public class TestRF12304 extends AbstractWebDriverTest<RF12304Page> {
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richInplaceInput/jsr303.xhtml");
+        return buildUrl(contextPath, "faces/components/richExtendedDataTable/rf-12304.xhtml");
     }
 
-    @Test
-    public void testNotEmpty() {
-        verifyNotEmpty();
+    @Test(groups = "4.Future")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12304")
+    @Templates(value = { "plain" })
+    public void testMultiSelectionUsingControlIterationComponents() {
+        // selecting from first table should work
+        getPage().getThirdRowFirstTable().click();
+        assertTrue(page.isSelected(page.getThirdRowFirstTable()), "The row from first table should be selected!");
+
+        // this is the bug part
+        getPage().getThirdRowSecondTable().click();
+        assertTrue(page.isSelected(page.getThirdRowSecondTable()), "The row from second table should be selected!");
     }
 
-    @Test
-    public void testRegExpPattern() {
-        verifyRegExpPattern();
+    @Override
+    protected RF12304Page createPage() {
+        return new RF12304Page();
     }
-
-    @Test
-    public void testStringSize() {
-        verifyStringSize();
-    }
-
-    @Test
-    public void testCustomString() {
-        verifyCustomString();
-    }
-
-    @Test
-    public void testAllInputs() {
-        verifyAllInputs();
-    }
-
 
 }

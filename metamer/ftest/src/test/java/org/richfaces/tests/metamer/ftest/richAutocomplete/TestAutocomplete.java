@@ -22,29 +22,38 @@
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import java.net.URL;
+import java.util.List;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.jboss.arquillian.graphene.component.object.api.autocomplete.Suggestion;
+import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocompleteAttributes;
+import org.richfaces.tests.metamer.model.Capital;
 import org.richfaces.tests.page.fragments.impl.autocomplete.AutocompleteComponentImpl;
+import org.richfaces.tests.page.fragments.impl.autocomplete.SuggestionImpl;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAutocompleteFormatting extends AbstractAutocompleteTest<SimplePage>{
+public class TestAutocomplete extends AbstractAutocompleteTest<SimplePage> {
 
     @FindBy(id="form:autocomplete")
-    private AutocompleteComponentImpl<String> autocomplete;
+    protected AutocompleteComponentImpl<String> autocomplete;
+
+    @Inject
+    @Use(strings= { "mouse", "keys" })
+    private String scrollingType;
 
     @Inject
     @Use(booleans = { true, false })
@@ -54,13 +63,11 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest<SimpleP
     @Use(booleans = { true, false })
     Boolean selectFirst;
 
-    @Inject
-    @Use(strings= {"div", "list", "table"})
-    String layout;
+    List<Capital> capitals = Model.unmarshallCapitals();
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richAutocomplete/fetchValueAttr.xhtml");
+        return buildUrl(contextPath, "faces/components/richAutocomplete/autocomplete.xhtml");
     }
 
     @BeforeMethod
@@ -72,7 +79,6 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest<SimpleP
     public void prepareProperties() {
         autocompleteAttributes.set(AutocompleteAttributes.autofill, autofill);
         autocompleteAttributes.set(AutocompleteAttributes.selectFirst, selectFirst);
-        autocompleteAttributes.set(AutocompleteAttributes.layout, layout);
         if (autofill == null) {
             autofill = false;
         }
@@ -82,61 +88,43 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest<SimpleP
         autocomplete.clear(ClearType.BACK_SPACE);
     }
 
+    @Test
+    @IssueTracking("https://issues.jboss.org/browse/RF-11323")
+    public void testTypingPrefixAndThenConfirm() throws InterruptedException {
+        assertFalse(autocomplete.areSuggestionsAvailable());
+        autocomplete.type("ala");
+        assertTrue(autocomplete.areSuggestionsAvailable());
+        autocomplete.autocomplete();
+        assertFalse(autocomplete.areSuggestionsAvailable());
+        assertEquals(autocomplete.getInputValue().toLowerCase(), getExpectedStateForPrefix("ala", selectFirst).toLowerCase());
+    }
+
+    @Test
+    @IssueTracking("https://issues.jboss.org/browse/RF-11323")
+    public void testTypingPrefixAndThenDeleteAll() {
+        assertFalse(autocomplete.areSuggestionsAvailable());
+        autocomplete.type("ala");
+        assertTrue(autocomplete.areSuggestionsAvailable());
+        autocomplete.clear(ClearType.BACK_SPACE);
+        assertFalse(autocomplete.areSuggestionsAvailable());
+        autocomplete.type("ala");
+        assertTrue(autocomplete.areSuggestionsAvailable());
+    }
+
+    @Test
+    public void testSimpleSelection() throws InterruptedException {
+        // this item is 2nd if type filter "ala", so it ensure that it was not picked first item
+       Suggestion<String> expected = new SuggestionImpl<String>("Alaska");
+       autocomplete.type("ala");
+       autocomplete.autocompleteWithSuggestion(expected, getScrollingType());
+       assertEquals(autocomplete.getInputValue(), expected.getValue());
+    }
 
     @Override
     protected SimplePage createPage() {
         return new SimplePage();
     }
-
-    /**
-     * This should test combination of @var and @fetchValue attributes of autocomplete
-     */
-    @Test
-    public void testFormatting() {
-        assertFalse(autocomplete.areSuggestionsAvailable());
-        autocomplete.clear(ClearType.BACK_SPACE);
-        autocomplete.type("ala");
-        assertTrue(autocomplete.areSuggestionsAvailable());
-        autocomplete.autocomplete();
-        Graphene.waitGui().until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver driver) {
-                return !autocomplete.areSuggestionsAvailable();
-            }
-        });
-        String expected = getExpectedStateForPrefix("ala", selectFirst).toLowerCase();
-        String found = autocomplete.getInputValue().toLowerCase();
-        assertTrue(found.startsWith(expected), "The input value should start with '"+expected+"', but '" + found + "' found.");
+    protected ScrollingType getScrollingType() {
+        return ScrollingType.valueOf("BY_" + scrollingType.toUpperCase());
     }
-
-    @Test
-    public void testLayout() {
-        autocomplete.type("Co");
-        assertTrue(Graphene.element(getSuggestion("Colorado")).isPresent().apply(driver));
-        assertTrue(Graphene.element(getSuggestion("[Denver]")).isPresent().apply(driver));
-        assertTrue(Graphene.element(getSuggestion("Connecticut")).isPresent().apply(driver));
-        assertTrue(Graphene.element(getSuggestion("[Hartford]")).isPresent().apply(driver));
-    }
-
-    private By getSuggestion(String value) {
-        switch(getLayout()) {
-            case DIV:
-                return By.xpath("//div[@id='form:autocompleteItems']/div[contains(text(), '" + value + "')]");
-            case LIST:
-                return By.xpath("//ul[@id='form:autocompleteItems']/li[contains(text(), '" + value + "')]");
-            case TABLE:
-                return By.xpath("//table[@id='form:autocompleteItems']/tbody/tr/td[contains(text(), '" + value + "')]");
-            default:
-                throw new UnsupportedOperationException();
-        }
-    }
-
-    private Layout getLayout() {
-        return Layout.valueOf(layout.toUpperCase());
-    }
-
-    private static enum Layout {
-        DIV, LIST, TABLE;
-    }
-
 }

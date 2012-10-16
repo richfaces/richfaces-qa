@@ -19,53 +19,28 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richInplaceInput;
+package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import java.net.URL;
-
-import org.richfaces.tests.metamer.ftest.richAutocomplete.TestComponentWithJSR303;
-import org.testng.annotations.Test;
-
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**
- * Test for page faces/components/richInplaceInput/jsr303.xhtml
- *
- * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision: 22534 $
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestInplaceInputWithJSR303 extends TestComponentWithJSR303 {
+public class SimplePage extends MetamerPage {
 
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richInplaceInput/jsr303.xhtml");
+    @FindBy(id="form:output")
+    private WebElement output;
+    @FindBy(id="locale")
+    private WebElement locale;
+
+    public void blur() {
+        locale.click();
     }
 
-    @Test
-    public void testNotEmpty() {
-        verifyNotEmpty();
+    public WebElement getOutput() {
+        return output;
     }
-
-    @Test
-    public void testRegExpPattern() {
-        verifyRegExpPattern();
-    }
-
-    @Test
-    public void testStringSize() {
-        verifyStringSize();
-    }
-
-    @Test
-    public void testCustomString() {
-        verifyCustomString();
-    }
-
-    @Test
-    public void testAllInputs() {
-        verifyAllInputs();
-    }
-
 
 }

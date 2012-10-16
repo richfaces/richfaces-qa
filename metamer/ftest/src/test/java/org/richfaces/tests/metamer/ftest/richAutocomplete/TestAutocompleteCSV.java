@@ -21,20 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import java.net.URL;
-
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import org.testng.annotations.Test;
 
 /**
- * Test for page faces/components/richAutocomplete/jsr303.xhtml
- *
- * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision$
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-@IssueTracking("https://issues.jboss.org/browse/RF-11395")
 public class TestAutocompleteCSV extends TestComponentWithJSR303 {
 
     @Override
@@ -64,12 +57,7 @@ public class TestAutocompleteCSV extends TestComponentWithJSR303 {
 
     @Test
     public void testAllInputsWrong() {
-        verifyAllInputsWrong();
-    }
-
-    @Test
-    public void testAllInputsCorrect() {
-        verifyAllInputsCorrect();
+        verifyAllInputs();
     }
 
 }

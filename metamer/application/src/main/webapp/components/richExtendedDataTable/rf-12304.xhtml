@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+<h:head>
+	<title>Issue verification</title>
+</h:head>
+<h:body>
+
+	<h:form id="myForm" prependId="false">
+
+		<rich:panel>
+			Try to select on both tables. The issue is that only selecion on the first one works. The selection on second one table is corrupted.
+		</rich:panel>
+
+			<h:panelGrid width="20%" style="height:15em">
+				<rich:extendedDataTable value="#{model.capitals}" var="record"
+					selection="#{richExtendedDataTableBean.attributes['selection'].value}"
+					frozenColumns="3" style="height:200px; width:400px;"
+					selectionMode="single" id="firstTable">
+
+					<f:facet name="header">
+						<h:panelGrid columns="2">
+							<h:outputText value="Here the selection works as expected" />
+							<h:commandLink
+								id="sel_fav_del_ab_onDeleteSelectedFavoritAbsender">
+							</h:commandLink>
+						</h:panelGrid>
+					</f:facet>
+					<rich:column>
+						<h:outputText value="#{record.name}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{record.timeZone}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="Random value" />
+					</rich:column>
+				</rich:extendedDataTable>
+
+				<rich:extendedDataTable value="#{model.employees}" var="employee"
+					selection="#{richExtendedDataTableBean.attributes['selection'].value}"
+					frozenColumns="3" style="height:200px; width:400px;"
+					selectionMode="single" id="secondTable">
+					<f:facet name="header">
+						<h:panelGrid columns="2">
+							<h:outputText value="Here the selection does not work" />
+						</h:panelGrid>
+					</f:facet>
+					<rich:column>
+						<h:outputText value="#{employee.name}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{employee.title}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{employee.numberOfKids}" />
+					</rich:column>
+				</rich:extendedDataTable>
+			</h:panelGrid>
+
+	</h:form>
+</h:body>
+</html>
