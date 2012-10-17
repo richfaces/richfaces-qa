@@ -14,7 +14,6 @@
             <class name="org.richfaces.tests.metamer.ftest.a4jMediaOutput.TestElementAWebDriver" />
             <class name="org.richfaces.tests.metamer.ftest.a4jPush.TestTwoPush" />
             <class name="org.richfaces.tests.metamer.ftest.richAccordion.TestRichAccordionWebDriver" />
-            <class name="org.richfaces.tests.metamer.ftest.richAutocomplete.TestAutocompleteValidationMessages" />
             <class name="org.richfaces.tests.metamer.ftest.richCalendar.TestRichCalendarValidationMessages" />
             <class name="org.richfaces.tests.metamer.ftest.richContextMenu.TestRichContextMenuWebDriver" />
             <class name="org.richfaces.tests.metamer.ftest.richEditor.TestRichEditorWithTyping" />
@@ -32,6 +31,7 @@
             <package name="org.richfaces.tests.metamer.ftest.a4jCommandButton"/>
             <package name="org.richfaces.tests.metamer.ftest.a4jCommandLink"/>
             <package name="org.richfaces.tests.metamer.ftest.a4jLog"/>
+            <package name="org.richfaces.tests.metamer.ftest.richAutocomplete"/>
             <package name="org.richfaces.tests.metamer.ftest.richFileUpload"/>
             <package name="org.richfaces.tests.metamer.ftest.richItemChangeListener"/>
             <package name="org.richfaces.tests.metamer.ftest.richMessage"/>
