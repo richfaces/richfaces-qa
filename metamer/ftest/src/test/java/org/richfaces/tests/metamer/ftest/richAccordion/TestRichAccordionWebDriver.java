@@ -149,10 +149,7 @@ public class TestRichAccordionWebDriver extends AbstractWebDriverTest<AccordionP
     public void testImmediate() {
         accordionAttributes.set(AccordionAttributes.immediate, true);
 
-        String reqTime = page.requestTime.getText();
-        page.headers.get(2).click();
-        Graphene.waitModel().withMessage("Page was not updated")
-            .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
+        requestTimeChangesWaiting(page.headers.get(2)).click();
         Graphene.waitModel().withMessage("Item 3 is not displayed.")
             .until(Graphene.element(page.itemContents.get(2)).isVisible());
 
@@ -167,10 +164,7 @@ public class TestRichAccordionWebDriver extends AbstractWebDriverTest<AccordionP
 
     @Test
     public void testItemChangeListener() {
-        String reqTime = page.requestTime.getText();
-        page.headers.get(2).click();
-        Graphene.waitModel().withMessage("Page was not updated")
-            .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
+        requestTimeChangesWaiting(page.headers.get(2)).click();
         Graphene.waitModel().withMessage("Item 3 is not displayed.")
             .until(Graphene.element(page.itemContents.get(2)).isVisible());
 
@@ -264,10 +258,7 @@ public class TestRichAccordionWebDriver extends AbstractWebDriverTest<AccordionP
     @RegressionTest("https://issues.jboss.org/browse/RF-12532")
     public void testSwitchTypeNull() {
         for (int i = 2; i >= 0; i--) {
-            String reqTime = page.requestTime.getText();
-            Graphene.guardXhr(page.headers.get(i)).click();
-            Graphene.waitModel().withMessage("Page was not updated")
-                .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
+            waitRequest(page.headers.get(i), WaitRequestType.XHR).click();
             assertTrue(page.itemContents.get(i).isDisplayed(), "Item " + i + " is not displayed");
         }
     }
