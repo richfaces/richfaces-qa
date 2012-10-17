@@ -167,7 +167,10 @@ public class TestRichAccordionWebDriver extends AbstractWebDriverTest<AccordionP
 
     @Test
     public void testItemChangeListener() {
+        String reqTime = page.requestTime.getText();
         page.headers.get(2).click();
+        Graphene.waitModel().withMessage("Page was not updated")
+            .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
         Graphene.waitModel().withMessage("Item 3 is not displayed.")
             .until(Graphene.element(page.itemContents.get(2)).isVisible());
 
