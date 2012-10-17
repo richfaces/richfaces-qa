@@ -150,7 +150,10 @@ public class TestRichAccordionWebDriver extends AbstractWebDriverTest<AccordionP
     public void testImmediate() {
         accordionAttributes.set(AccordionAttributes.immediate, true);
 
+        String reqTime = page.requestTime.getText();
         page.headers.get(2).click();
+        Graphene.waitModel().withMessage("Page was not updated")
+            .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
         Graphene.waitModel().withMessage("Item 3 is not displayed.")
             .until(Graphene.element(page.itemContents.get(2)).isVisible());
 
