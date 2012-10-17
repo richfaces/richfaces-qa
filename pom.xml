@@ -29,7 +29,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <version.richfaces>4.2.3.CR1</version.richfaces>
+        <version.richfaces>4.2.3.Final</version.richfaces>
         <richfaces.checkstyle.version>5</richfaces.checkstyle.version>
 
         <!-- version of JBoss containers to use and download -->
@@ -461,7 +461,7 @@
                 <artifactId>operadriver</artifactId>
                 <version>${version.opera.driver}</version>
             </dependency>
-            
+
             <!-- Page Fragments dependencies -->
             <dependency>
                 <groupId>joda-time</groupId>
