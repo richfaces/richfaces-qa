@@ -48,7 +48,7 @@ import org.testng.annotations.Test;
  */
 public class TestAutocomplete extends AbstractAutocompleteTest<SimplePage> {
 
-    @FindBy(id="form:autocomplete")
+    @FindBy(css="span.rf-au")
     protected AutocompleteComponentImpl<String> autocomplete;
 
     @Inject
