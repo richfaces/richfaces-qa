@@ -50,13 +50,13 @@ public class JSR303Page extends MetamerPage {
     private static final String CORRECT_CUSTOM_STRING = "RichFaces";
     private static final String CUSTOM_STRING_VALIDATION_MSG = "string is not \"RichFaces\"";
 
-    @FindBy(css="input.rf-au-inp[id$=input1Input]")
+    @FindBy(css="input[id$=input1Input]")
     private WebElement notEmptyInput;
-    @FindBy(css="input.rf-au-inp[id$=input2Input]")
+    @FindBy(css="input[id$=input2Input]")
     private WebElement regExpPatternInput;
-    @FindBy(css="input.rf-au-inp[id$=input3Input]")
+    @FindBy(css="input[id$=input3Input]")
     private WebElement stringSizeInput;
-    @FindBy(css="input.rf-au-inp[id$=input4Input]")
+    @FindBy(css="input[id$=input4Input]")
     private WebElement customStringInput;
 
     @FindBy(css="input[id$=hButton]")
