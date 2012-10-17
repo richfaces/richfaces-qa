@@ -25,14 +25,14 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 
 /**
  * Test case for basic functionality of calendar on page faces/components/richCalendar/fAjax.xhtml.
  *
- * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @version $Revision: 22493 $
  */
 public class TestRichCalendarFAjax extends AbstractCalendarTest {
@@ -67,7 +67,7 @@ public class TestRichCalendarFAjax extends AbstractCalendarTest {
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-10536")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10536")
     @Override
     public void testApplyButton() {
         super.testApplyButton();
