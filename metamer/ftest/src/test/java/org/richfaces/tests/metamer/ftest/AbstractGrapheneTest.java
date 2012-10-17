@@ -28,6 +28,7 @@ import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.Graphene.id;
 import static org.jboss.arquillian.ajocado.Graphene.jq;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
+import static org.jboss.arquillian.ajocado.Graphene.waitModel;
 import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEDOWN;
@@ -44,6 +45,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -96,14 +98,18 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
             throw new SkipException("selenium isn't initialized");
         }
 
+        URL url;
         if (runInPortalEnv) {
-            selenium.open(buildUrl(format("{0}://{1}:{2}/{3}",
-                contextPath.getProtocol(), contextPath.getHost(), contextPath.getPort(), "portal/classic/metamer")));
+            url = buildUrl(format("{0}://{1}:{2}/{3}",
+                contextPath.getProtocol(), contextPath.getHost(), contextPath.getPort(), "portal/classic/metamer"));
+            selenium.open(url);
             openComponentExamplePageInPortal(getComponentExampleNavigation());
         } else {
-            selenium.open(buildUrl(getTestUrl() + "?templates=" + template.toString()));
+            url = buildUrl(getTestUrl() + "?templates=" + template.toString());
+            selenium.open(url);
             selenium.waitForPageToLoad(TIMEOUT);
         }
+        System.out.println(" ### Opening following URL: " + url);
     }
 
     public abstract MetamerNavigation getComponentExampleNavigation();
@@ -477,12 +483,13 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
      */
     protected void openComponentExamplePageInPortal(MetamerNavigation navigation) {
 
-        selenium.click(jq(format(group, navigation.getGroup())));
+        waitModel.until(elementPresent.locator(navigation.getGroup()) );
+        selenium.click(navigation.getGroup());
 
-        selenium.click(jq(format(component, navigation.getComponent())));
+        selenium.click(navigation.getComponent());
         selenium.waitForPageToLoad(TIMEOUT);
 
-        selenium.click(jq(format(page, navigation.getPage())));
+        selenium.click(navigation.getPage());
         selenium.waitForPageToLoad(TIMEOUT);
     }
 
@@ -526,27 +533,27 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
 
     public class MetamerNavigation {
         /** "A4J", "Rich", "Other" */
-        final String group;
+        final ElementLocator<JQueryLocator> group;
         /** Such as "Rich Calendar" */
-        final String component;
+        final ElementLocator<JQueryLocator> component;
         /** Such as "Simple" or "RF-12345" */
-        final String page;
+        final ElementLocator<JQueryLocator> page;
 
         public MetamerNavigation(String group, String component, String page) {
-            this.group = group;
-            this.component = component;
-            this.page = page;
+            this.group = jq(format(metamerGroupMenuLoc, group));
+            this.component = jq(format(metamerComponentMenuLoc, component));
+            this.page = jq(format(metamerPageMenuLoc, page));
         }
 
-        public String getGroup() {
+        public ElementLocator<JQueryLocator> getGroup() {
             return group;
         }
 
-        public String getComponent() {
+        public ElementLocator<JQueryLocator> getComponent() {
             return component;
         }
 
-        public String getPage() {
+        public ElementLocator<JQueryLocator> getPage() {
             return page;
         }
     }

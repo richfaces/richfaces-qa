@@ -48,7 +48,6 @@ import org.jboss.shrinkwrap.descriptor.api.webapp30.WebAppDescriptor;
 import org.jboss.shrinkwrap.impl.base.path.BasicPath;
 import org.jboss.test.selenium.locator.reference.LocatorReference;
 import org.richfaces.tests.metamer.TemplatesList;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest.MetamerNavigation;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 
@@ -100,9 +99,9 @@ public abstract class AbstractMetamerTest extends Arquillian {
             "richCollapsiblePanel", "richTabPanel", "richPopupPanel", "a4jRegion", "a4jRepeat", "uiRepeat" })
     protected TemplatesList template;
 
-    protected final String group = "span.rf-tab-lbl:contains({0})";
-    protected final String component = "li.rf-ulst-itm a:contains({0})";
-    protected final String page = "div.links a:contains({0})";
+    protected final String metamerGroupMenuLoc = "span.rf-tab-lbl:contains({0})";
+    protected final String metamerComponentMenuLoc = "li.rf-ulst-itm a:contains({0})";
+    protected final String metamerPageMenuLoc = "div.links a:contains({0})";
 
     protected static final Boolean runInPortalEnv = Boolean.getBoolean("runInPortalEnv");
 
