@@ -46,6 +46,8 @@ import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 
 import com.thoughtworks.selenium.SeleniumException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Test listener which provides the methods injected in lifecycle of test case to catch the additional information in
@@ -57,11 +59,11 @@ import com.thoughtworks.selenium.SeleniumException;
  */
 public class FailureLoggingTestListener extends TestListenerAdapter {
 
+//    protected static final Logger LOGGER = Logger.getLogger(FailureLoggingTestListener.class.getName());
     protected File mavenProjectBuildDirectory = new File(System.getProperty("maven.project.build.directory",
         "./target/"));
     protected File failuresOutputDir = new File(mavenProjectBuildDirectory, "failures");
     protected GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
-    protected WebDriver driver = GrapheneContext.getProxyForInterfaces(TakesScreenshot.class);
 
     @Override
     public void onStart(ITestContext testContext) {
@@ -147,7 +149,9 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
     }
 
     public void onFailureForSelenium2(ITestResult result) {
-        if (driver == null) {
+        if (getWebDriver() == null) {
+            System.out.println("Can't take a screenshot and save HTML, because there is no driver available.");
+//            LOGGER.info("Can't take a screenshot and save HTML, because there is no driver available.");
             return;
         }
 
@@ -168,34 +172,36 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
         // traffic = ExceptionUtils.getFullStackTrace(e);
         // }
 
-        File screenshot = null;
-        // TODO is this correct?
-        if (!HtmlUnitDriver.class.isInstance(driver)) {
-            screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        }
-
-        String htmlSource = driver.getPageSource();
-
-        File stacktraceOutputFile = new File(failuresOutputDir, filenameIdentification + "/stacktrace.txt");
-        File imageOutputFile = new File(failuresOutputDir, filenameIdentification + "/screenshot.png");
-        // File trafficOutputFile = new File(failuresOutputDir, filenameIdentification + "/network-traffic.txt");
-        // File logOutputFile = new File(failuresOutputDir, filenameIdentification + "/selenium-log.txt");
-        File htmlSourceOutputFile = new File(failuresOutputDir, filenameIdentification + "/html-source.html");
-
         try {
+            File screenshot = null;
+            // TODO is this correct?
+            if (!HtmlUnitDriver.class.isInstance(getWebDriver())) {
+                screenshot = ((TakesScreenshot) getWebDriver()).getScreenshotAs(OutputType.FILE);
+            }
+
+            String htmlSource = getWebDriver().getPageSource();
+
+            File stacktraceOutputFile = new File(failuresOutputDir, filenameIdentification + "/stacktrace.txt");
+            File imageOutputFile = new File(failuresOutputDir, filenameIdentification + "/screenshot.png");
+            // File trafficOutputFile = new File(failuresOutputDir, filenameIdentification + "/network-traffic.txt");
+            // File logOutputFile = new File(failuresOutputDir, filenameIdentification + "/selenium-log.txt");
+            File htmlSourceOutputFile = new File(failuresOutputDir, filenameIdentification + "/html-source.html");
+
             File directory = imageOutputFile.getParentFile();
             FileUtils.forceMkdir(directory);
 
             FileUtils.writeStringToFile(stacktraceOutputFile, stacktrace);
-            if (!HtmlUnitDriver.class.isInstance(driver)) {
+            if (!HtmlUnitDriver.class.isInstance(getWebDriver())) {
                 FileUtils.copyFile(screenshot, imageOutputFile);
             }
 
             // FileUtils.writeStringToFile(trafficOutputFile, traffic);
             // FileUtils.writeLines(logOutputFile, methodLog);
             FileUtils.writeStringToFile(htmlSourceOutputFile, htmlSource);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch(Exception e) {
+            System.err.println("Can't take a screenshot/save HTML source: " + e.getMessage());
+            e.printStackTrace(System.err);
+//            LOGGER.log(Level.WARNING, "Can't take a screenshot/save HTML source.", e);
         }
     }
 
@@ -210,5 +216,13 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
 
     protected String getFilenameIdentification(ITestResult result) {
         return TestInfo.getClassMethodName(result);
+    }
+
+    protected WebDriver getWebDriver() {
+        if (GrapheneContext.isInitialized()) {
+            return GrapheneContext.getProxyForInterfaces(TakesScreenshot.class);
+        } else {
+            return null;
+        }
     }
 }
