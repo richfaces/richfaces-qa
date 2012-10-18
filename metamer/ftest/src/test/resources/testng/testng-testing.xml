@@ -10,9 +10,14 @@
             </run>
         </groups>
 
-        <packages>
+        <!-- packages>
             <package name="org.richfaces.tests.metamer.ftest.richCalendar" />
-        </packages>
+        </packages-->
+        
+        <classes>
+            <class name="org.richfaces.tests.metamer.ftest.richCalendar.TestRichCalendarBasic" />
+        </classes>
+
     </test>
 
 </suite>

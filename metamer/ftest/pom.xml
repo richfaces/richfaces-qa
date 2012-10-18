@@ -324,10 +324,10 @@ FSF site: http://www.fsf.org. -->
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <systemProperties>
+                            <systemPropertyVariables>
                                 <arquillian.launch>jbossas-remote-7-1</arquillian.launch>
                                 <runInPortalEnv>true</runInPortalEnv>
-                            </systemProperties>
+                            </systemPropertyVariables>
                         </configuration>
                     </plugin>
                 </plugins>
