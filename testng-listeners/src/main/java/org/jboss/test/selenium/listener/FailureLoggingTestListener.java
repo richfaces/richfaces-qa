@@ -48,6 +48,7 @@ import org.testng.TestListenerAdapter;
 import com.thoughtworks.selenium.SeleniumException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
 
 /**
  * Test listener which provides the methods injected in lifecycle of test case to catch the additional information in
@@ -174,8 +175,7 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
 
         try {
             File screenshot = null;
-            // TODO is this correct?
-            if (!HtmlUnitDriver.class.isInstance(getWebDriver())) {
+            if (((GrapheneProxyInstance) getWebDriver()).unwrap() instanceof TakesScreenshot) {
                 screenshot = ((TakesScreenshot) getWebDriver()).getScreenshotAs(OutputType.FILE);
             }
 
