@@ -89,9 +89,10 @@ public abstract class AbstractFileUploadWebDriverTest extends AbstractWebDriverT
     protected void sendFileWithWaiting(String filename, boolean willBeAccepted, boolean willBeUploaded) {
         sendFileToInputWithWaiting(filename, willBeAccepted);
         if (willBeUploaded) {
-            waitRequest(Graphene.guardXhr(page.uploadButton), WaitRequestType.XHR).click();
+            waitRequest(page.uploadButton, WaitRequestType.XHR).click();
         } else {
-            waitRequest(Graphene.guardXhr(page.uploadButton), WaitRequestType.NONE).click();
+            //Metamer's request time will not change, but XHR request will be send
+            Graphene.guardXhr(page.uploadButton).click();
         }
         if (willBeUploaded) {
             this.filesUploadedCount++;
