@@ -42,6 +42,7 @@ import javax.faces.event.PhaseId;
 import org.jboss.arquillian.ajocado.css.CssProperty;
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
+import org.jboss.arquillian.ajocado.javascript.KeyCode;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
@@ -135,9 +136,8 @@ public class TestRichSelect extends AbstractGrapheneTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-11320")
     public void testFiltering() {
         selenium.focus(input);
-        selenium.typeKeys(input, "a");
-        guardNoRequest(selenium).fireEvent(input, Event.KEYDOWN);
-        guardNoRequest(selenium).fireEvent(input, Event.KEYPRESS); // keydown works in Chrome and keypress in Firefox
+        selenium.keyPressNative(65); // a
+        waitGui.failWith("Popup should be displayed.").until(elementVisible.locator(popup));
 
         assertEquals(selenium.getCount(jq("div.rf-sel-opt")), 4, "Count of filtered options ('a')");
 
@@ -438,11 +438,9 @@ public class TestRichSelect extends AbstractGrapheneTest {
         selectAttributes.set(SelectAttributes.selectFirst, Boolean.TRUE);
 
         selenium.focus(input);
-        selenium.typeKeys(input, "a");
-        selenium.fireEvent(input, Event.KEYDOWN);
-        selenium.fireEvent(input, Event.KEYPRESS); // keydown works in Chrome and keypress in Firefox
+        selenium.keyPressNative(65); // a
+        waitGui.failWith("Popup should be displayed.").until(elementVisible.locator(popup));
 
-        waitFor(3000);
         assertEquals(selenium.getCount(jq("div.rf-sel-opt")), 4, "Count of filtered options ('a')");
 
         String[] selectOptions = { "Alabama", "Alaska", "Arizona", "Arkansas" };
