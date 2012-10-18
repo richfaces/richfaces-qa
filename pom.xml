@@ -53,7 +53,7 @@
 
         <!-- arquillian versions -->
         <arquillian.bom.version>1.0.2.Final</arquillian.bom.version>
-        <arquillian.tomcat.version>1.0.0.CR3</arquillian.tomcat.version>
+        <arquillian.tomcat.version>1.0.0.CR4</arquillian.tomcat.version>
         <arquillian.drone.version>1.1.0.CR3</arquillian.drone.version>
         <arquillian.graphene-testng.version>2.0.0.Alpha3-SNAPSHOT</arquillian.graphene-testng.version>
         <arquillian.graphene-webdriver.version>2.0.0.Alpha3-SNAPSHOT</arquillian.graphene-webdriver.version>
