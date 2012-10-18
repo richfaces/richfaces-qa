@@ -48,6 +48,10 @@ public class RichValidatorBean implements Serializable {
     private String stringValue = "RichFaces";
     private String regExp = "\\d{3}";
     private String regexpValue = "100";
+    private double doubleValue;
+    private long longValue;
+    private String requiredValue;
+    private String lengthValue;
 
     /**
      * Initializes the managed bean.
@@ -68,12 +72,44 @@ public class RichValidatorBean implements Serializable {
         this.attributes = attributes;
     }
 
+    public double getDoubleValue() {
+        return doubleValue;
+    }
+
+    public void setDoubleValue(double doubleValue) {
+        this.doubleValue = doubleValue;
+    }
+
+    public long getLongValue() {
+        return longValue;
+    }
+
+    public void setLongValue(long longValue) {
+        this.longValue = longValue;
+    }
+
     public String getStringValue() {
         return stringValue;
     }
 
     public void setStringValue(String stringValue) {
         this.stringValue = stringValue;
+    }
+
+    public String getRequiredValue() {
+        return requiredValue;
+    }
+
+    public void setRequiredValue(String requiredValue) {
+        this.requiredValue = requiredValue;
+    }
+
+    public String getLengthValue() {
+        return lengthValue;
+    }
+
+    public void setLengthValue(String lengthValue) {
+        this.lengthValue = lengthValue;
     }
 
     public String getRegexpValue() {

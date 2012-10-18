@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+    <!--
+    JBoss, Home of Professional Open Source
+    Copyright 2010-2012, Red Hat, Inc. and individual contributors
+    by the @authors tag. See the copyright.txt in the distribution for a
+    full listing of individual contributors.
+
+    This is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as
+    published by the Free Software Foundation; either version 2.1 of
+    the License, or (at your option) any later version.
+
+    This software is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this software; if not, write to the Free
+    Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+    02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="component">
+            <script type="text/javascript">
+                function setCorrectValues() {
+                    $('input[id$=doubleRange]').val('7.774');
+                    $('input[id$=longRange]').val('7');
+                    $('input[id$=length]').val('1234567');
+                    $('input[id$=regexp]').val('100');
+                    $('input[id$=required]').val('required');
+                    $('input[id$=custom]').val('RichFaces');
+                }
+
+                function setWrongValues1() {
+                    $('input[id$=doubleRange]').val('55.774');
+                    $('input[id$=longRange]').val('55');
+                    $('input[id$=length]').val('1');
+                    $('input[id$=regexp]').val('@@@');
+                    $('input[id$=required]').val('');
+                    $('input[id$=custom]').val(':-)');
+                }
+
+                function setWrongValues2() {
+                    $('input[id$=doubleRange]').val('Hello World!');
+                    $('input[id$=longRange]').val('Hello World!');
+                    $('input[id$=length]').val('');
+                    $('input[id$=regexp]').val('');
+                    $('input[id$=required]').val('');
+                    $('input[id$=custom]').val('');
+                }
+            </script>
+
+            <input id="setCorrectValuesButton" type="button" value="set correct values" onclick="setCorrectValues()"/>
+            <input id="setWrongValuesButton1" type="button" value="set wrong values (1)" onclick="setWrongValues1()"/>
+            <input id="setWrongValuesButton2" type="button" value="set wrong values (2)" onclick="setWrongValues2()"/>
+
+            <h:panelGrid columns="3">
+                <h:outputText value="Double Range (min 5, max 10)" />
+                <h:inputText id="doubleRange" validatorMessage="Custom message" value="#{richValidatorBean.doubleValue}">
+                    <f:validateDoubleRange minimum="5" maximum="10"/>
+                    <rich:validator />
+                </h:inputText>
+                <rich:message id="doubleRangeMessage" for="doubleRange"/>
+
+                <h:outputText value="Long Range (min 5, max 10)" />
+                <h:inputText id="longRange" validatorMessage="Custom message" value="#{richValidatorBean.longValue}">
+                    <f:validateLongRange minimum="5" maximum="10"/>
+                    <rich:validator />
+                </h:inputText>
+                <rich:message id="longRangeMessage" for="longRange"/>
+
+                <h:outputText value="String Length (min 5, max 10)" />
+                <h:inputText id="length" validatorMessage="Custom message" value="#{richValidatorBean.lengthValue}">
+                    <f:validateLength minimum="5" maximum="10"/>
+                    <rich:validator />
+                </h:inputText>
+                <rich:message id="lengthMessage" for="length"/>
+
+                <h:outputText value="Regular Expression (\d{3})"/>
+                <h:inputText id="regexp" validatorMessage="Custom message" value="#{richValidatorBean.regexpValue}">
+                    <f:validateRegex pattern="#{richValidatorBean.regExp}"/>
+                    <rich:validator />
+                </h:inputText>
+                <rich:message id="regexpMessage" for="regexp"/>
+
+                <h:outputText value="Required" />
+                <h:inputText id="required" validatorMessage="Custom message" value="#{richValidatorBean.requiredValue}">
+                    <f:validateRequired/>
+                    <rich:validator />
+                </h:inputText>
+                <rich:message id="requiredMessage" for="required"/>
+
+                <h:outputText value="Custom Validator (RichFaces)" />
+                <h:inputText id="custom" validatorMessage="Custom message" value="#{richValidatorBean.stringValue}">
+                    <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>
+                    <rich:validator />
+                </h:inputText>
+                <rich:message id="customMessage" for="custom"/>
+            </h:panelGrid>
+
+            <br/>
+
+            <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
+            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
+
+            <br/>
+            <rich:messages id="msgs"/>
+
+        </ui:define>
+    </ui:composition>
+</html>

@@ -52,10 +52,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 Simple page that contains simple inputs within <b>rich:validator</b>
 		</metamer:testPageLink>
 
+                <metamer:testPageLink id="customMessages" outcome="customMessages"
+                                      value="Client Side Validation With Custom Validator Messages">
+                    Page demonstrating issue <a href="https://issues.jboss.org/browse/RF-12511">RF-12511</a>.
+                    <br /><b>Automated in:</b> org.richfaces.tests.metamer.ftest.richValidator.TestCustomMessages
+                </metamer:testPageLink>
+
 		<metamer:testPageLink id="RF-12031" outcome="RF-12031"
 			value="RF-12031">
                 Page demonstrating issue <a
-				href="https://issues.jboss.org/browse/RF-12031">RF-12031</a>. 
+				href="https://issues.jboss.org/browse/RF-12031">RF-12031</a>.
                 <br />Client side validation does not work when triggered on conditionally rendered input.
                 <br /><b>Automated in:</b> org.richfaces.tests.metamer.ftest.richValidator.TestRF12031.testCSVOnConditionallyRenderedInput
             </metamer:testPageLink>
