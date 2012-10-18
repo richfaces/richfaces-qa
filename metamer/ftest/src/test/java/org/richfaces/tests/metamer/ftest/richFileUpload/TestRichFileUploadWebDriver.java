@@ -81,7 +81,7 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
         assertTrue(Graphene.waitModel().until(Graphene.element(page.clearAllButton).isPresent()).booleanValue(),
             "Clear all button should be on the page.");
 
-        waitRequest(Graphene.guardXhr(page.uploadButton), WaitRequestType.XHR).click();
+        waitRequest(page.uploadButton, WaitRequestType.XHR).click();
 
         waitUntilUploadedFilesListShow(1);
         List<WebElement> uploadedFiles = guardListSize(page.uploadedFilesList, 1);
@@ -227,7 +227,7 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
                 + " does not appear in files to upload list.");
         }
 
-        waitRequest(Graphene.guardXhr(page.uploadButton), WaitRequestType.XHR).click();
+        waitRequest(page.uploadButton, WaitRequestType.XHR).click();
 
         List<WebElement> uploadedFiles = guardListSize(page.uploadedFilesList, maxFilesQuantity);
         assertTrue(uploadedFiles.size() == maxFilesQuantity,
