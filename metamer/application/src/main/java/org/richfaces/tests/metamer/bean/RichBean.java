@@ -72,7 +72,7 @@ public class RichBean implements Serializable {
     private String container;
     private boolean dummyBooleanResp;
     private String activeTabOnIndex = "a4j";
-    
+
     public enum Skinning {
 
         NONE, SKINNING, SKINNING_CLASSES
