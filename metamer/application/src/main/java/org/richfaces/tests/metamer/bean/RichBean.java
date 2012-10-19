@@ -71,7 +71,8 @@ public class RichBean implements Serializable {
     private Map<String, String> otherComponents;
     private String container;
     private boolean dummyBooleanResp;
-
+    private String activeTabOnIndex = "a4j";
+    
     public enum Skinning {
 
         NONE, SKINNING, SKINNING_CLASSES
@@ -321,6 +322,14 @@ public class RichBean implements Serializable {
 
     public void setReTests(boolean reTests) {
         this.reTests = reTests;
+    }
+
+    public String getActiveTabOnIndex() {
+        return activeTabOnIndex;
+    }
+
+    public void setActiveTabOnIndex(String activeTabOnIndex) {
+        this.activeTabOnIndex = activeTabOnIndex;
     }
 
     public String getTestsPage() {
