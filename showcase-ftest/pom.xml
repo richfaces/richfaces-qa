@@ -100,9 +100,9 @@
                                     <groupId>org.richfaces.examples</groupId>
                                     <artifactId>richfaces-showcase</artifactId>
                                     <version>${version.richfaces}</version>
-                                    <!-- classifier>${showcase.classifier}</classifier--> <!-- this is not cool solution. Have to move this plugin def into profile or add classifier for showcase-portlet as well -->
+                                    <classifier>${showcase.classifier}</classifier>
                                     <type>war</type>
-                                    <destFileName>showcase.war</destFileName>
+                                    <destFileName>showcase.war</destFileName>                                    
                                 </artifactItem>
                             </artifactItems>
                             <outputDirectory>target</outputDirectory>
@@ -184,7 +184,7 @@
                          <artifactId>maven-dependency-plugin</artifactId>
                          <executions>
                              <execution>
-                                 <id>copy-installed</id>
+                                 <id>copy-showcase-portlet</id>
                                  <phase>validate</phase>
                                  <goals>
                                      <goal>copy</goal>
