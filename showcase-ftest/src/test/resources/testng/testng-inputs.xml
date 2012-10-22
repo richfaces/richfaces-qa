@@ -1,0 +1,21 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="seleniumTest">
+
+    <test name="All Components">
+        <groups>
+            <run>
+                <exclude name="4.Future" />
+            </run>
+        </groups>
+
+        <packages>
+            <package name="org.richfaces.tests.showcase.autocomplete.*" />
+            <package name="org.richfaces.tests.showcase.calendar.*" />
+            <package name="org.richfaces.tests.showcase.editor.*" />
+            <package name="org.richfaces.tests.showcase.inputNumberSlider.*" />
+            <package name="org.richfaces.tests.showcase.inputNumberSpinner.*" />
+            <package name="org.richfaces.tests.showcase.inplaceInput.*" />
+            <package name="org.richfaces.tests.showcase.fileUpload.*" />
+        </packages>
+    </test>
+</suite>

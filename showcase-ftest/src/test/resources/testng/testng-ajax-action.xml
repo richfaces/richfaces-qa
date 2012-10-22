@@ -1,0 +1,20 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="seleniumTest">
+
+    <test name="All Components">
+        <groups>
+            <run>
+                <exclude name="4.Future" />
+            </run>
+        </groups>
+
+        <packages>
+            <package name="org.richfaces.tests.showcase.ajax.*" />
+            <package name="org.richfaces.tests.showcase.commandButton.*" />
+            <package name="org.richfaces.tests.showcase.commandLink*" />
+            <package name="org.richfaces.tests.showcase.functions.*" />
+            <package name="org.richfaces.tests.showcase.poll.*" />
+            <package name="org.richfaces.tests.showcase.param.*" />
+        </packages>
+    </test>
+</suite>

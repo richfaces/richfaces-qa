@@ -1,0 +1,22 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="seleniumTest">
+
+    <test name="All Components">
+        <groups>
+            <run>
+                <exclude name="4.Future" />
+            </run>
+        </groups>
+
+        <packages>
+            <package name="org.richfaces.tests.showcase.panel.*" />
+            <package name="org.richfaces.tests.showcase.togglePanel.*" />
+            <package name="org.richfaces.tests.showcase.tabPanel.*" />
+            <package name="org.richfaces.tests.showcase.collapsiblePanel.*" />
+            <package name="org.richfaces.tests.showcase.accordion.*" />
+            <package name="org.richfaces.tests.showcase.popup.*" />
+            <package name="org.richfaces.tests.showcase.progressBar.*" />
+            <package name="org.richfaces.tests.showcase.tooltip.*" />
+        </packages>
+    </test>
+</suite>
