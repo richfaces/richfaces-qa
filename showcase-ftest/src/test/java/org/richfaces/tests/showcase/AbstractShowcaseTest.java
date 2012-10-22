@@ -43,10 +43,18 @@ public abstract class AbstractShowcaseTest extends Arquillian {
     @ArquillianResource
     protected URL contextRoot;
 
+    protected static final Boolean runInPortalEnv = Boolean.getBoolean("runInPortalEnv");
+
     @Deployment(testable = false)
     public static WebArchive createTestArchive() {
 
-        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/showcase-portlet.war"));
+        File warFile2deploy;
+        if (runInPortalEnv) {
+            warFile2deploy = new File("target/showcase-portlet.war");
+        } else {
+            warFile2deploy = new File("target/showcase.war");
+        }
+        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, warFile2deploy);
         return war;
     }
 

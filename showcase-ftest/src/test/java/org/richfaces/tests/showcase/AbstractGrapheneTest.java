@@ -54,17 +54,21 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
 
         selenium.getCommandInterceptionProxy().registerInterceptor(new AjaxAwareInterceptor());
 
-        // String addition = getAdditionToContextRoot();
+        String addition = getAdditionToContextRoot();
 
         this.contextRoot = getContextRoot();
 
-        selenium.open(buildUrl(format("{0}://{1}:{2}/{3}",
-            contextRoot.getProtocol(), contextRoot.getHost(), contextRoot.getPort(), "portal/classic/showcase")));
-        selenium.waitForPageToLoad();
+        if (runInPortalEnv) {
+            selenium.open(buildUrl(format("{0}://{1}:{2}/{3}",
+                contextRoot.getProtocol(), contextRoot.getHost(), contextRoot.getPort(), "portal/classic/showcase")));
+            selenium.waitForPageToLoad();
 
-        JQueryLocator menuItemLoc = jq(format("a.rf-pm-itm-lbl:contains({0})", getDemoName()));
-        waitModel.until(elementPresent.locator(menuItemLoc));
-        selenium.click(menuItemLoc);
+            JQueryLocator menuItemLoc = jq(format("a.rf-pm-itm-lbl:contains({0})", getDemoName()));
+            waitModel.until(elementPresent.locator(menuItemLoc));
+            selenium.click(menuItemLoc);
+        } else {
+            selenium.open(buildUrl(contextRoot, addition));
+        }
     }
 
     /* ***********************************************************************************************************************

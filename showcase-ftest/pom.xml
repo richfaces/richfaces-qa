@@ -209,9 +209,10 @@
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <systemProperties>
+                            <systemPropertyVariables>
                                 <arquillian.launch>jbossas-remote-7-1</arquillian.launch>
-                            </systemProperties>
+                                <runInPortalEnv>true</runInPortalEnv>
+                            </systemPropertyVariables>
                         </configuration>
                     </plugin>
                 </plugins>
