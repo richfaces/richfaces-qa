@@ -229,7 +229,7 @@ FSF site: http://www.fsf.org. -->
                                     <groupId>org.richfaces.tests</groupId>
                                     <artifactId>metamer</artifactId>
                                     <version>${project.version}</version>
-                                    <!-- classifier>${metamer.classifier}</classifier-->
+                                    <classifier>${metamer.classifier}</classifier>
                                     <type>war</type>
                                     <destFileName>metamer.war</destFileName>
                                 </artifactItem>
@@ -299,7 +299,7 @@ FSF site: http://www.fsf.org. -->
                          <artifactId>maven-dependency-plugin</artifactId>
                          <executions>
                              <execution>
-                                 <id>copy-installed</id>
+                                 <id>copy-metamer-portlet</id>
                                  <phase>validate</phase>
                                  <goals>
                                      <goal>copy</goal>
