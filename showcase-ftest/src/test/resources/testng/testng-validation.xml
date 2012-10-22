@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="seleniumTest">
+
+    <test name="All Components">
+        <groups>
+            <run>
+                <exclude name="4.Future" />
+            </run>
+        </groups>
+
+        <packages>
+            <package name="org.richfaces.tests.showcase.clientValidation.*" />
+            <package name="org.richfaces.tests.showcase.graphValidator.*" />
+            <package name="org.richfaces.tests.showcase.message.*" />
+            <package name="org.richfaces.tests.showcase.messages.*" />
+            <package name="org.richfaces.tests.showcase.notify.*" />
+        </packages>
+    </test>
+</suite>
