@@ -59,7 +59,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                dataModel="#{calendarModel}"
                                mode="ajax"
                                timeZone="#{richCalendarBean.timeZone}"
-                               value="#{richCalendarBean.attributes['value'].value}" >
+                               validator="#{richCalendarBean.validateDate}"
+                               value="#{richCalendarBean.value}" >
                     <a4j:ajax event="change" render="output, phasesPanel" limitRender="#{true}"/>
                 </rich:calendar>
             </div>
@@ -67,7 +68,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/><br/>
 
             output:
-            <h:outputText id="output" value="#{richCalendarBean.attributes['value'].value}">
+            <h:outputText id="output" value="#{richCalendarBean.value}">
                 <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
                                    timeZone="#{richCalendarBean.timeZone}"/>
             </h:outputText>
