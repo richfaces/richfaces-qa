@@ -25,35 +25,45 @@ package org.richfaces.tests.page.fragments.impl.accordion;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class AccordionItemImpl implements AccordionItem {
 
+    public static final String ACTIVE_HEADER_CLASS = "rf-ac-itm-lbl-act";
+    public static final String DISABLED_HEADER_CLASS = "rf-ac-itm-lbl-dis";
+    public static final String INACTIVE_HEADER_CLASS = "rf-ac-itm-lbl-inact";
+    public static final String CONTENT_CLASS = "rf-ac-itm-cnt";
+    public static final String TO_ACTIVATE_CLASS = "rf-ac-itm-hdr";
+
     @Root
     private WebElement root;
 
-    @FindBy(className = "rf-ac-itm-lbl-act")
-    private WebElement activeHeader;
-    @FindBy(className = "rf-ac-itm-lbl-dis")
-    private WebElement disabledHeader;
-    @FindBy(className = "rf-ac-itm-lbl-inact")
-    private WebElement inactiveHeader;
-    @FindBy(className = "rf-ac-itm-cnt")
-    private WebElement content;
-    @FindBy(className="rf-ac-itm-hdr")
-    private WebElement toActivate;
+//    @FindBy(className = "rf-ac-itm-lbl-act")
+//    private WebElement activeHeader;
+//    @FindBy(className = "rf-ac-itm-lbl-dis")
+//    private WebElement disabledHeader;
+//    @FindBy(className = "rf-ac-itm-lbl-inact")
+//    private WebElement inactiveHeader;
+//    @FindBy(className = "rf-ac-itm-cnt")
+//    private WebElement content;
+//    @FindBy(className="rf-ac-itm-hdr")
+//    private WebElement toActivate;
+
+    private String id;
 
     @Override
     public void activate() {
+        getId(); // HACK because of https://issues.jboss.org/browse/ARQGRA-216
         if (isActive()) {
             return;
         } else {
-            toActivate.click();
-            Graphene.waitAjax().until(Graphene.element(getActiveHeaderElement()).isVisible());
+            getToActivateElement().click();
+            Graphene.waitAjax().until(getIsActiveCondition());
         }
     }
 
@@ -79,27 +89,55 @@ public class AccordionItemImpl implements AccordionItem {
 
     @Override
     public boolean isActive() {
-        return Graphene.element(getActiveHeaderElement()).isVisible().apply(GrapheneContext.getProxy());
+        return getIsActiveCondition().apply(GrapheneContext.getProxy());
     }
 
     @Override
     public boolean isEnabled() {
-        return Graphene.element(getActiveHeaderElement()).not().isPresent().apply(GrapheneContext.getProxy());
+        return getIsEnabledCondition().apply(GrapheneContext.getProxy());
+    }
+
+    protected final ExpectedCondition<Boolean> getIsActiveCondition() {
+        return Graphene.element(By.cssSelector("*[id='" + getId() + "'] ." + ACTIVE_HEADER_CLASS)).isVisible();
+    }
+
+    protected final ExpectedCondition<Boolean> getIsEnabledCondition() {
+        return Graphene.element(By.cssSelector("*[id='" + getId() + "'] ." + DISABLED_HEADER_CLASS)).not().isPresent();
     }
 
     protected final WebElement getActiveHeaderElement() {
-        return activeHeader;
+        // HACK because of https://issues.jboss.org/browse/ARQGRA-216
+        return GrapheneContext.getProxy().findElement(By.cssSelector("*[id='" + getId() + "'] ." + ACTIVE_HEADER_CLASS));
+        //return activeHeader;
     }
 
     protected final WebElement getDisabledHeaderElement() {
-        return disabledHeader;
+        // HACK because of https://issues.jboss.org/browse/ARQGRA-216
+        return GrapheneContext.getProxy().findElement(By.cssSelector("*[id='" + getId() + "'] ." + DISABLED_HEADER_CLASS));
+        //return disabledHeader;
     }
 
     protected final WebElement getInactiveHeaderElement() {
-        return inactiveHeader;
+        // HACK because of https://issues.jboss.org/browse/ARQGRA-216
+        return GrapheneContext.getProxy().findElement(By.cssSelector("*[id='" + getId() + "'] ." + INACTIVE_HEADER_CLASS));
+        //return inactiveHeader;
     }
 
     protected final WebElement getContentElement() {
-        return content;
+        return GrapheneContext.getProxy().findElement(By.cssSelector("*[id='" + getId() + "'] ." + CONTENT_CLASS));
+        //return content;
+    }
+
+    protected final WebElement getToActivateElement() {
+        return GrapheneContext.getProxy().findElement(By.cssSelector("*[id='" + getId() + "'] ." + TO_ACTIVATE_CLASS));
+        //return toActivate;
+    }
+
+    private String getId() {
+        // HACK because of https://issues.jboss.org/browse/ARQGRA-216
+        if (id == null) {
+            id = root.getAttribute("id");
+        }
+        return id;
     }
 }
