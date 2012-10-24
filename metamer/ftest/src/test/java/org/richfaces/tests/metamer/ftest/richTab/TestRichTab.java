@@ -64,14 +64,14 @@ public class TestRichTab extends AbstractGrapheneTest {
     private JQueryLocator[] itemContents = { pjq("div[id$=tab1] > div.rf-tab-cnt"),
         pjq("div[id$=tab2] > div.rf-tab-cnt"), pjq("div[id$=tab3] > div.rf-tab-cnt"),
         pjq("div[id$=tab4] > div.rf-tab-cnt"), pjq("div[id$=tab5] > div.rf-tab-cnt") };
-    private JQueryLocator[] activeHeaders = { pjq("td[id$=tab1:header:active]"), pjq("td[id$=tab2:header:active]"),
-        pjq("td[id$=tab3:header:active]"), pjq("td[id$=tab4:header:active]"), pjq("td[id$=tab5:header:active]") };
-    private JQueryLocator[] inactiveHeaders = { pjq("td[id$=tab1:header:inactive]"),
-        pjq("td[id$=tab2:header:inactive]"), pjq("td[id$=tab3:header:inactive]"), pjq("td[id$=tab4:header:inactive]"),
-        pjq("td[id$=tab5:header:inactive]") };
-    private JQueryLocator[] disabledHeaders = { pjq("td[id$=tab1:header:disabled]"),
-        pjq("td[id$=tab2:header:disabled]"), pjq("td[id$=tab3:header:disabled]"), pjq("td[id$=tab4:header:disabled]"),
-        pjq("td[id$=tab5:header:disabled]") };
+    private JQueryLocator[] activeHeaders = { pjq("td[id$='tab1:header:active']"), pjq("td[id$='tab2:header:active']"),
+        pjq("td[id$='tab3:header:active']"), pjq("td[id$='tab4:header:active']"), pjq("td[id$='tab5:header:active']") };
+    private JQueryLocator[] inactiveHeaders = { pjq("td[id$='tab1:header:inactive']"),
+        pjq("td[id$='tab2:header:inactive']"), pjq("td[id$='tab3:header:inactive']"), pjq("td[id$='tab4:header:inactive']"),
+        pjq("td[id$='tab5:header:inactive']") };
+    private JQueryLocator[] disabledHeaders = { pjq("td[id$='tab1:header:disabled']"),
+        pjq("td[id$='tab2:header:disabled']"), pjq("td[id$='tab3:header:disabled']"), pjq("td[id$='tab4:header:disabled']"),
+        pjq("td[id$='tab5:header:disabled']") };
     private JQueryLocator tab1 = pjq("div[id$=tab1]");
 
     @Override
@@ -163,13 +163,13 @@ public class TestRichTab extends AbstractGrapheneTest {
         tabAttributes.set(TabAttributes.disabled,Boolean.FALSE );
 
         displayed = selenium.isVisible(activeHeaders[0]);
-        assertTrue(displayed, "Header of tab1 should not be active.");
+        assertFalse(displayed, "Header of tab1 should not be active.");
         displayed = selenium.isVisible(inactiveHeaders[0]);
-        assertFalse(displayed, "Header of tab1 should not be inactive.");
+        assertTrue(displayed, "Header of tab1 should be inactive.");
         displayed = selenium.isVisible(disabledHeaders[0]);
-        assertFalse(displayed, "Header of tab1 should be disabled.");
+        assertFalse(displayed, "Header of tab1 should not be disabled.");
 
-        text = selenium.getText(activeHeaders[0]);
+        text = selenium.getText(inactiveHeaders[0]);
         assertEquals(text, "tab1 header");
     }
 
