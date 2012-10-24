@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.PanelMenuMode.ajax;
 import static org.richfaces.PanelMenuMode.client;
 import static org.richfaces.PanelMenuMode.server;
@@ -38,7 +37,6 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.model.PanelMenu;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -81,7 +79,8 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractGrapheneTest {
         super.testRequestEventsAfter(clientEvents);
     }
 
-    @Test
+    @Test(groups = "4.3")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12549")
     public void testClientSideEventsOrderAjax() {
         panelMenuItemAttributes.set(mode, ajax);
         menu.setItemMode(ajax);
