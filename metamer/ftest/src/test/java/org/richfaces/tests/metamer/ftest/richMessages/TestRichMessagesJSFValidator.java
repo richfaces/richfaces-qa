@@ -82,9 +82,9 @@ public class TestRichMessagesJSFValidator extends RichMessagesTest {
         super.testGlobalOnly();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test
     @Templates(value = { "richAccordion", "richCollapsiblePanel" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-11415")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11415")
     public void testGlobalOnlyInAccordionCollapsiblePanel() {
         super.testGlobalOnly();
     }
