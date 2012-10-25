@@ -83,6 +83,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest<AjaxPage> {
 
         String reqTime = page.requestTime.getText();
         performAction();
+        waiting(500);
         Graphene.waitModel().withMessage("Page was not updated")
             .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
 
@@ -225,6 +226,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest<AjaxPage> {
 
         String reqTime = page.requestTime.getText();
         performAction();
+        waiting(500);
         Graphene.waitModel().withMessage("Page was not updated")
             .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
 
