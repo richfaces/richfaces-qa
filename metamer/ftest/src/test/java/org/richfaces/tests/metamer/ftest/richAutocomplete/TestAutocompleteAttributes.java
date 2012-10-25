@@ -68,7 +68,6 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest<SimpleP
     }
 
     @Test
-    @Templates(exclude = { "richPopupPanel" })
     public void testValueChangeListener() {
         autocomplete.clear(ClearType.BACK_SPACE);
         autocomplete.type("something");
@@ -84,9 +83,4 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest<SimpleP
         assertEquals(getPage().getPhases().get(3), format(PHASE_LISTENER_LOG_FORMAT, "something", "something else"));
     }
 
-    @Test(groups = { "4.Future" })
-    @Templates(value = { "richPopupPanel" })
-    public void testValueChangeListenerInPopupPanel() {
-        testValueChangeListener();
-    }
 }
