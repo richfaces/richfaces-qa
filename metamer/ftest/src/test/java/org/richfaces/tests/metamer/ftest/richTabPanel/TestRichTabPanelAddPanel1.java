@@ -38,6 +38,7 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 
@@ -161,8 +162,8 @@ public class TestRichTabPanelAddPanel1 extends AbstractGrapheneTest {
      * Test plan: 1. click on 'create tab' btn 3 time and verify that new tabs appeared 2. verify that switch between
      * newly created tabs still works as in previous tabs (staticaly created) 3. verify a4j ajax btn to create new tabs
      */
-    @Test(groups = { "4.Future" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-11081")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11081")
     public void testSwitchTypeNull() {
 
         verifyCreateTab(hCreateTabBtn);
@@ -175,8 +176,8 @@ public class TestRichTabPanelAddPanel1 extends AbstractGrapheneTest {
         }
     }
 
-    @Test(groups = { "4.Future" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-11081")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11081")
     public void testSwitchTypeAjax() {
 
         verifyCreateTab(hCreateTabBtn);
