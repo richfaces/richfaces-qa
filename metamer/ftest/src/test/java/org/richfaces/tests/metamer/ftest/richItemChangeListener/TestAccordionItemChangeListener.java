@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richItemChangeListener;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -44,12 +45,28 @@ public class TestAccordionItemChangeListener extends AbstractItemChangeListenerT
     }
 
     @Test
+    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid" })
     public void testICLAsAttribute() {
         super.testICLAsAttributeOfComponent(ICL_as_ComponentAttribute_PhaseName);
     }
 
+    @Test(groups = "4.Future")
+    @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-12173")
+    public void testICLAsAttributeInIterationComponents() {
+        super.testICLAsAttributeOfComponent(ICL_as_ComponentAttribute_PhaseName);
+    }
+
     @Test
+    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid" })
     public void testICLInsideComponentUsingType() {
+        super.testICLInComponentWithType(ICL_inComponent_usingType_PhaseName);
+    }
+
+    @Test(groups = "4.Future")
+    @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-12173")
+    public void testICLInsideComponentUsingTypeInIterationComponents() {
         super.testICLInComponentWithType(ICL_inComponent_usingType_PhaseName);
     }
 
