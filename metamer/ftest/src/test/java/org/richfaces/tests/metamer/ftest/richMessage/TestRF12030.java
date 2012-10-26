@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.richMessage;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
@@ -37,6 +38,11 @@ public class TestRF12030 extends AbstractWebDriverTest<RF12030Page> {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richMessage/RF-12030.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Message", "RF-12030");
     }
 
     @Test(groups = "4.3")

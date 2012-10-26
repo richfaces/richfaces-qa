@@ -48,6 +48,11 @@ public class TestA4JActionListener extends AbstractWebDriverTest<ActionListenerP
         return buildUrl(contextPath, "faces/components/a4jActionListener/all.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Action Listener", "All");
+    }
+
     Predicate<WebDriver> messageIsVisible = new Predicate<WebDriver>() {
         @Override
         public boolean apply(WebDriver arg0) {

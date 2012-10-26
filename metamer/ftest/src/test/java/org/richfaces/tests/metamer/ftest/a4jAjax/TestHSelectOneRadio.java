@@ -43,6 +43,11 @@ public class TestHSelectOneRadio extends AbstractAjaxTest<AjaxPage> {
         return buildUrl(contextPath, "faces/components/a4jAjax/hSelectOneRadio.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Ajax", "Select One Radio");
+    }
+
     @Test(groups = { "screenshot" })
     public void testSimpleClick() {
         super.testClick();

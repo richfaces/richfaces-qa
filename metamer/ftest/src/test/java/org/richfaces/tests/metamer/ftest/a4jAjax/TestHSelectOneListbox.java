@@ -44,6 +44,11 @@ public class TestHSelectOneListbox extends AbstractAjaxTest<AjaxPage> {
         return buildUrl(contextPath, "faces/components/a4jAjax/hSelectOneListbox.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Ajax", "Select One Listbox");
+    }
+
     @Test
     public void testSimpleClick() {
         super.testClick();

@@ -55,6 +55,11 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
         return buildUrl(contextPath, "faces/components/richFileUpload/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich File Upload", "Simple");
+    }
+
     @Test
     public void testInit() {
         assertTrue(Graphene.element(page.fileUploadDiv).isPresent().apply(driver), "File upload is not on the page.");

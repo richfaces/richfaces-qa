@@ -483,13 +483,13 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
      */
     protected void openComponentExamplePageInPortal(MetamerNavigation navigation) {
 
-        waitModel.until(elementPresent.locator(navigation.getGroup()) );
-        selenium.click(navigation.getGroup());
+        // waitModel.until(elementPresent.locator(navigation.getGroup()) );
+        // selenium.click(navigation.getGroup());
 
-        selenium.click(navigation.getComponent());
+        selenium.click(navigation.getComponentLocator());
         selenium.waitForPageToLoad(TIMEOUT);
 
-        selenium.click(navigation.getPage());
+        selenium.click(navigation.getPageLocator());
         selenium.waitForPageToLoad(TIMEOUT);
     }
 
@@ -531,30 +531,4 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
         void launchAction();
     }
 
-    public class MetamerNavigation {
-        /** "A4J", "Rich", "Other" */
-        final ElementLocator<JQueryLocator> group;
-        /** Such as "Rich Calendar" */
-        final ElementLocator<JQueryLocator> component;
-        /** Such as "Simple" or "RF-12345" */
-        final ElementLocator<JQueryLocator> page;
-
-        public MetamerNavigation(String group, String component, String page) {
-            this.group = jq(format(metamerGroupMenuLoc, group));
-            this.component = jq(format(metamerComponentMenuLoc, component));
-            this.page = jq(format(metamerPageMenuLoc, page));
-        }
-
-        public ElementLocator<JQueryLocator> getGroup() {
-            return group;
-        }
-
-        public ElementLocator<JQueryLocator> getComponent() {
-            return component;
-        }
-
-        public ElementLocator<JQueryLocator> getPage() {
-            return page;
-        }
-    }
 }

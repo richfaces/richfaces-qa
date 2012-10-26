@@ -45,6 +45,11 @@ public class TestRichMessageJSFValidator extends AbstractRichMessageTest<Message
         return buildUrl(contextPath, "faces/components/richMessage/jsfValidator.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Message", "Simple JSF Validation");
+    }
+
     @Test
     public void testAjaxRendered() {
         super.testAjaxRendered();

@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.richMessage;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -42,6 +43,11 @@ public class TestRichMessageJSR303 extends AbstractRichMessageTest<MessagePage> 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richMessage/jsr303.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Message", "JSR-303 Bean Validation");
     }
 
     @Test

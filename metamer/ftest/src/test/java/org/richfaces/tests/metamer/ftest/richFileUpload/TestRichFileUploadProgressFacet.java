@@ -27,6 +27,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.testng.annotations.Test;
 
@@ -38,6 +39,11 @@ public class TestRichFileUploadProgressFacet extends AbstractFileUploadWebDriver
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richFileUpload/progressFacet.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich FileUpload", "Progress Facet");
     }
 
     @Test

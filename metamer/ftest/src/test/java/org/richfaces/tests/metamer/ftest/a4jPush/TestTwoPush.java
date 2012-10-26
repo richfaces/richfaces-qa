@@ -43,6 +43,11 @@ public class TestTwoPush extends AbstractWebDriverTest<TwoPushPage> {
         return buildUrl(contextPath, "faces/components/a4jPush/twoPush.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Push", "Two push component on page");
+    }
+
     @Test
     public void testSimplePushEventReceive() {
         verifyPushUpdateReceive(3L);

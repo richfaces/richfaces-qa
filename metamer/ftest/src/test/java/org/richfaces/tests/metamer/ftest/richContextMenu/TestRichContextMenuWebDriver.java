@@ -28,6 +28,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+
 import org.openqa.selenium.Point;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.BeforeMethod;
@@ -46,6 +47,11 @@ public class TestRichContextMenuWebDriver extends AbstractWebDriverTest<ContextM
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richContextMenu/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Context Menu", "Simple");
     }
 
     @BeforeMethod(alwaysRun = true)

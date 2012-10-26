@@ -46,6 +46,11 @@ public class TestHGraphicImage extends AbstractAjaxTest<AjaxPage> {
         return buildUrl(contextPath, "faces/components/a4jAjax/hGraphicImage.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Ajax", "Graphic Image");
+    }
+
     @Test
     public void testSimpleClick() {
         page.input.sendKeys("RichFaces 4");

@@ -59,6 +59,11 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest<TestEDTFrozenCol
         return buildUrl(contextPath, "faces/components/richExtendedDataTable/frozenColumns.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Extended Data Table", "Frozen columns");
+    }
+
     @Test
     public void testInit() {
         Boolean notPresent = ElementNotPresent.getInstance().element(page.frozenColumnsTd).apply(driver);

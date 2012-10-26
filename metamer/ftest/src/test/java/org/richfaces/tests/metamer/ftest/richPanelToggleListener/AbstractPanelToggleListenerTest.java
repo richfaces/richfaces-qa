@@ -25,6 +25,7 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -46,6 +47,11 @@ public abstract class AbstractPanelToggleListenerTest<P extends PTLCollapsiblePa
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richPanelToggleListener/" + testedComponent + ".xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Panel Toggle Listener", testedComponent);
     }
 
     /**

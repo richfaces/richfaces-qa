@@ -68,6 +68,11 @@ public class TestRichInplaceInputAttributes extends AbstractWebDriverTest<Metame
         return buildUrl(contextPath, "faces/components/richInplaceInput/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Inplace Input", "Simple");
+    }
+
     @Test
     public void testActiveClass() {
         String testedClass = "metamer-ftest-class";

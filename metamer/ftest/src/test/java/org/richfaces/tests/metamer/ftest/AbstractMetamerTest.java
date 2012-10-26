@@ -22,9 +22,10 @@
 package org.richfaces.tests.metamer.ftest;
 
 import static org.jboss.arquillian.ajocado.Graphene.id;
+import static org.jboss.arquillian.ajocado.Graphene.jq;
 import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 import static org.jboss.arquillian.ajocado.javascript.JavaScript.js;
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 
 import java.io.File;
 import java.net.URL;
@@ -223,5 +224,44 @@ public abstract class AbstractMetamerTest extends Arquillian {
 
         // TODO
         return war;
+    }
+
+    public class MetamerNavigation {
+        /** "A4J", "Rich", "Other" */
+        final String group;
+        /** Such as "Rich Calendar" */
+        final String component;
+        /** Such as "Simple" or "RF-12345" */
+        final String page;
+
+        public MetamerNavigation(String group, String component, String page) {
+            this.group = group;
+            this.component = component;
+            this.page = page;
+        }
+
+        public String getGroup() {
+            return group;
+        }
+
+        public JQueryLocator getGroupLocator() {
+            return jq(format(metamerGroupMenuLoc, group));
+        }
+
+        public String getComponent() {
+            return component;
+        }
+
+        public JQueryLocator getComponentLocator() {
+            return jq(format(metamerComponentMenuLoc, component));
+        }
+
+        public String getPage() {
+            return page;
+        }
+
+        public JQueryLocator getPageLocator() {
+            return jq(format(metamerPageMenuLoc, page));
+        }
     }
 }

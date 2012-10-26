@@ -54,6 +54,11 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
         return buildUrl(contextPath, "faces/components/richAccordion/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Accordion", "Simple");
+    }
+
     @Test
     public void testInit() {
         assertTrue(page.isAccordionVisible(), "Accordion is not present on the page.");

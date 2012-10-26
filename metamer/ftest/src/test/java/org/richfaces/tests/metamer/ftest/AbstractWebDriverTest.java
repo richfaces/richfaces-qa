@@ -21,12 +21,15 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest;
 
+import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.basicAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
 import java.util.List;
 
 import org.jboss.arquillian.ajocado.dom.Event;
@@ -53,7 +56,9 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.testng.SkipException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import com.google.common.base.Predicate;
 
 public abstract class AbstractWebDriverTest<P extends MetamerPage> extends AbstractMetamerTest {
 
@@ -104,9 +109,26 @@ public abstract class AbstractWebDriverTest<P extends MetamerPage> extends Abstr
         if (driver == null) {
             throw new SkipException("webDriver isn't initialized");
         }
-        driver.get(buildUrl(getTestUrl() + "?templates=" + template.toString()).toExternalForm());
+        if (runInPortalEnv) {
+            driver.get(format("{0}://{1}:{2}/{3}",
+                contextPath.getProtocol(), contextPath.getHost(), contextPath.getPort(), "portal/classic/metamer"));
+            openComponentExamplePageInPortal(getComponentExampleNavigation());
+        } else {
+            driver.get(buildUrl(getTestUrl() + "?templates=" + template.toString()).toExternalForm());
+        }
         driverType = DriverType.getCurrentType(driver);
     }
+
+    @AfterMethod
+    public void return2DefaultPage() {
+        if (runInPortalEnv) {
+            // open Metamer home page after test execution
+            // Open portal page (loadPage) just show Metamer portlet in his last state
+            driver.findElement(By.cssSelector("a[id$=goHomeLink]")).click();
+        }
+    }
+
+    public abstract MetamerNavigation getComponentExampleNavigation();
 
 //    @BeforeMethod(alwaysRun = true, dependsOnMethods = { "loadPage" })
 //    public void initializePage() {
