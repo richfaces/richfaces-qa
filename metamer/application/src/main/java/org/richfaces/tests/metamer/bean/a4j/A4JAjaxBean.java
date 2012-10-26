@@ -32,10 +32,8 @@ import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.model.SelectItem;
 
 import org.ajax4jsf.component.behavior.AjaxBehavior;
-import org.richfaces.tests.metamer.Attribute;
 import org.richfaces.tests.metamer.Attributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +41,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Managed bean for a4j:ajax.
  *
- * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @version $Revision: 22769 $
  */
 @ManagedBean(name = "a4jAjaxBean")
@@ -91,17 +89,6 @@ public class A4JAjaxBean implements Serializable {
 
         attributes.setAttribute("render", "output1, output2");
         attributes.setAttribute("execute", "@form");
-
-        // FIXME not found attribute
-        Attribute listenerAttr = new Attribute("listener");
-        List<SelectItem> selectOptions = new ArrayList<SelectItem>();
-        selectOptions.add(new SelectItem("doubleStringListener", "doubleStringListener"));
-        selectOptions.add(new SelectItem("first6CharsListener", "first6CharsListener"));
-        selectOptions.add(new SelectItem("toUpperCaseListener", "toUpperCaseListener"));
-        selectOptions.add(new SelectItem("causeErrorListener", "causeErrorListener"));
-        selectOptions.add(new SelectItem(null, "null"));
-        listenerAttr.setSelectOptions(selectOptions);
-        attributes.put(listenerAttr.getName(), listenerAttr);
 
         cars = new ArrayList<String>();
         cars.add("Ferrari");
