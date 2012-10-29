@@ -21,11 +21,13 @@
  */
 package org.richfaces.tests.metamer.ftest.richAccordion;
 
-import java.util.List;
-
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.page.fragments.impl.accordion.Accordion;
+import org.richfaces.tests.page.fragments.impl.accordion.AccordionImpl;
 
 /**
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
@@ -34,23 +36,18 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 public class AccordionPage extends MetamerPage {
 
     @FindBy(css = "div[id$=accordion]")
-    WebElement accordion;
+    private AccordionImpl accordion;
 
-    @FindBy(css = "div[id$=accordion] div.rf-ac-itm-hdr[id$=header]")
-    List<WebElement> headers;
-    @FindBy(css = "div[id$=accordion] div.rf-ac-itm-lbl-act")
-    List<WebElement> activeHeaders;
-    @FindBy(css = "div[id$=accordion] div.rf-ac-itm-lbl-dis")
-    List<WebElement> disabledHeaders;
-    @FindBy(css = "div[id$=accordion] div.rf-ac-itm-lbl-inact")
-    List<WebElement> inactiveHeaders;
+    public Accordion getAccordion() {
+        return accordion;
+    }
 
-    @FindBy(css = "div[id$=accordion] div.rf-ac-itm-cnt")
-    List<WebElement> itemContents;
+    public WebElement getAccordionRootElement() {
+        return accordion.getRootElement();
+    }
 
-    @FindBy(css = "div[id$=accordion] div.rf-ac-itm td.rf-ac-itm-ico")
-    List<WebElement> leftIcons;
-    @FindBy(css = "div[id$=accordion] div.rf-ac-itm td.rf-ac-itm-exp-ico")
-    List<WebElement> rightIcons;
+    public boolean isAccordionVisible() {
+        return Graphene.element(accordion.getRootElement()).isPresent().apply(GrapheneContext.getProxy()) && accordion.getRootElement().isDisplayed();
+    }
 
 }
