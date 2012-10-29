@@ -47,17 +47,17 @@ public class TestRF12304 extends AbstractWebDriverTest<RF12304Page> {
     @Templates(value = { "plain" })
     public void testMultiSelectionUsingControlIterationComponents() {
         // selecting from first table should work
-        getPage().getThirdRowFirstTable().click();
+        page.getThirdRowFirstTable().click();
         assertTrue(page.isSelected(page.getThirdRowFirstTable()), "The row from first table should be selected!");
 
         // this is the bug part
-        getPage().getThirdRowSecondTable().click();
+        page.getThirdRowSecondTable().click();
         assertTrue(page.isSelected(page.getThirdRowSecondTable()), "The row from second table should be selected!");
     }
 
-    @Override
-    protected RF12304Page createPage() {
-        return new RF12304Page();
-    }
+//    @Override
+//    protected RF12304Page createPage() {
+//        return new RF12304Page();
+//    }
 
 }

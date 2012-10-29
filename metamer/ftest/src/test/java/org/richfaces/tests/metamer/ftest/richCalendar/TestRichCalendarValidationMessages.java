@@ -23,12 +23,13 @@ package org.richfaces.tests.metamer.ftest.richCalendar;
 import static org.testng.Assert.assertEquals;
 
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractValidationMessagesTest;
+import org.richfaces.tests.metamer.ftest.abstractions.ValidationPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichCalendarValidationMessages extends AbstractValidationMessagesTest {
+public class TestRichCalendarValidationMessages extends AbstractValidationMessagesTest<ValidationPage> {
 
     public TestRichCalendarValidationMessages() {
         super("richCalendar");

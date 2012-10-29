@@ -35,7 +35,7 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M2
  */
-public class TestHInputSecret extends AbstractAjaxTest {
+public class TestHInputSecret extends AbstractAjaxTest<AjaxPage> {
 
     @Override
     public URL getTestUrl() {

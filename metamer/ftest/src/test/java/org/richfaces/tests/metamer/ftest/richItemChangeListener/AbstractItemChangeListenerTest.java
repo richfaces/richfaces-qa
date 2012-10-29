@@ -30,7 +30,8 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractItemChangeListenerTest extends AbstractWebDriverTest<ICLPage> {
+// FIXME AbstractItemChangeListenerTest should not be generic (Graphene bug)
+public abstract class AbstractItemChangeListenerTest<P extends ICLPage> extends AbstractWebDriverTest<P> {
 
     private final String testedComponent;
 

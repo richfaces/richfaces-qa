@@ -30,7 +30,8 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractTreeToggleListenerTest extends AbstractWebDriverTest<TTLPage> {
+// FIXME AbstractTreeToggleListenerTest should not be generic (bug in Graphene)
+public abstract class AbstractTreeToggleListenerTest<P extends TTLPage> extends AbstractWebDriverTest<P> {
 
     private final String collapsedNodeString = " collapsed";
     private final String expandedNodeString = " expanded";
@@ -38,11 +39,6 @@ public abstract class AbstractTreeToggleListenerTest extends AbstractWebDriverTe
 
     public AbstractTreeToggleListenerTest(String testedComponent) {
         this.testedComponent = testedComponent;
-    }
-
-    @Override
-    protected TTLPage createPage() {
-        return new TTLPage();
     }
 
     @Override

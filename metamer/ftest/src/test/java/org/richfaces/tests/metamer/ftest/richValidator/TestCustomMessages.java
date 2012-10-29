@@ -39,14 +39,14 @@ public class TestCustomMessages extends AbstractWebDriverTest<CustomMessagesPage
     @Use(strings={"hButton", "a4jButton"})
     private String button;
 
-    @Override
-    protected CustomMessagesPage createPage() {
-        return new CustomMessagesPage();
-    }
+//    @Override
+//    protected CustomMessagesPage createPage() {
+//        return new CustomMessagesPage();
+//    }
 
     @Test
     public void testMessages1() {
-        getPage().setAllWrong1();
+        page.setAllWrong1();
         submit();
         verifyMessages();
     }
@@ -54,7 +54,7 @@ public class TestCustomMessages extends AbstractWebDriverTest<CustomMessagesPage
     @Test(groups = { "4.Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-12511")
     public void testMessages2() {
-        getPage().setAllWrong2();
+        page.setAllWrong2();
         submit();
         verifyMessages();
     }
@@ -66,19 +66,19 @@ public class TestCustomMessages extends AbstractWebDriverTest<CustomMessagesPage
 
     public void submit() {
         if (button.equals("hButton")) {
-            getPage().submitByHButton();
+            page.submitByHButton();
         } else {
-            getPage().submitByA4jButton();
+            page.submitByA4jButton();
         }
     }
 
     protected void verifyMessages() {
-        assertEquals(getPage().getCustomMessageText(), CustomMessagesPage.CUSTOM_MESSAGE_TEXT, "Custom message for custom validator doesn't match.");
-        assertEquals(getPage().getDoubleRangeMessageText(), CustomMessagesPage.CUSTOM_MESSAGE_TEXT, "Custom message for 'double range' validator doesn't match.");
-        assertEquals(getPage().getLengthMessageText(), CustomMessagesPage.CUSTOM_MESSAGE_TEXT, "Custom message for 'length' validator doesn't match.");
-        assertEquals(getPage().getLongRangeMessageText(), CustomMessagesPage.CUSTOM_MESSAGE_TEXT, "Custom message for 'long range' validator doesn't match.");
-        assertEquals(getPage().getRegexpMessageText(), CustomMessagesPage.CUSTOM_MESSAGE_TEXT, "Custom message for 'regexp' validator doesn't match.");
-        assertEquals(getPage().getRequiredMessageText(), CustomMessagesPage.CUSTOM_MESSAGE_TEXT, "Custom message for 'required' validator doesn't match.");
+        assertEquals(page.getCustomMessageText(), CustomMessagesPage.CUSTOM_MESSAGE_TEXT, "Custom message for custom validator doesn't match.");
+        assertEquals(page.getDoubleRangeMessageText(), CustomMessagesPage.CUSTOM_MESSAGE_TEXT, "Custom message for 'double range' validator doesn't match.");
+        assertEquals(page.getLengthMessageText(), CustomMessagesPage.CUSTOM_MESSAGE_TEXT, "Custom message for 'length' validator doesn't match.");
+        assertEquals(page.getLongRangeMessageText(), CustomMessagesPage.CUSTOM_MESSAGE_TEXT, "Custom message for 'long range' validator doesn't match.");
+        assertEquals(page.getRegexpMessageText(), CustomMessagesPage.CUSTOM_MESSAGE_TEXT, "Custom message for 'regexp' validator doesn't match.");
+        assertEquals(page.getRequiredMessageText(), CustomMessagesPage.CUSTOM_MESSAGE_TEXT, "Custom message for 'required' validator doesn't match.");
     }
 
 }

@@ -21,14 +21,16 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
-import java.net.URL;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+
+import java.net.URL;
+
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAutocompleteCSV extends TestComponentWithJSR303 {
+public class TestAutocompleteCSV extends TestComponentWithJSR303<JSR303Page> {
 
     @Override
     public URL getTestUrl() {

@@ -30,7 +30,8 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractPanelToggleListenerTest extends AbstractWebDriverTest<PTLCollapsiblePanelPage> {
+// FIXME AbstractPanelToggleListenerTest should not be generic (bug in Graphene)
+public abstract class AbstractPanelToggleListenerTest<P extends PTLCollapsiblePanelPage> extends AbstractWebDriverTest<P> {
 
     private final String collapsedPanelString = " collapsed";
     private final String expandedPanelString = " expanded";
@@ -38,11 +39,6 @@ public abstract class AbstractPanelToggleListenerTest extends AbstractWebDriverT
 
     public AbstractPanelToggleListenerTest(String testedComponent) {
         this.testedComponent = testedComponent;
-    }
-
-    @Override
-    protected PTLCollapsiblePanelPage createPage() {
-        return new PTLCollapsiblePanelPage();
     }
 
     @Override

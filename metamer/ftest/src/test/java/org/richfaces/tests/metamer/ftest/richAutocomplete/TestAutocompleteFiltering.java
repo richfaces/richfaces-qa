@@ -21,19 +21,21 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocompleteAttributes;
+import static org.testng.Assert.assertTrue;
+
 import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.Suggestion;
 import org.openqa.selenium.support.FindBy;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocompleteAttributes;
 import org.richfaces.tests.page.fragments.impl.autocomplete.AutocompleteComponentImpl;
 import org.richfaces.tests.page.fragments.impl.autocomplete.SuggestionImpl;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
 import org.testng.Assert;
-import static org.testng.Assert.assertTrue;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -55,11 +57,6 @@ public class TestAutocompleteFiltering extends AbstractAutocompleteTest<SimplePa
     @BeforeMethod
     public void setParser() {
         autocomplete.setSuggestionParser(new TextSuggestionParser());
-    }
-
-    @Override
-    protected SimplePage createPage() {
-        return new SimplePage();
     }
 
     @Test

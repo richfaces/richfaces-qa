@@ -33,7 +33,7 @@ import org.testng.annotations.BeforeMethod;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractFileUploadWebDriverTest extends AbstractWebDriverTest<FileUploadPage> {
+public abstract class AbstractFileUploadWebDriverTest<P extends FileUploadPage> extends AbstractWebDriverTest<P> {
 
     protected static final String notAcceptableFile = "file1.x";
     protected static final String acceptableFile = "file1.txt";
@@ -47,11 +47,6 @@ public abstract class AbstractFileUploadWebDriverTest extends AbstractWebDriverT
     public void resetCounters() {
         filesToUploadCount = 0;
         filesUploadedCount = 0;
-    }
-
-    @Override
-    protected FileUploadPage createPage() {
-        return new FileUploadPage();
     }
 
     /**

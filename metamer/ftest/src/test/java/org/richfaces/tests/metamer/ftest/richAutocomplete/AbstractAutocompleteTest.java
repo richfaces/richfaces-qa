@@ -32,7 +32,8 @@ import org.richfaces.tests.metamer.model.Capital;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public abstract class AbstractAutocompleteTest<Page extends MetamerPage> extends AbstractWebDriverTest<Page> {
+// FIXME AbstractAutocompleteTest should not be generic
+public abstract class AbstractAutocompleteTest<P extends MetamerPage> extends AbstractWebDriverTest<P> {
 
     private List<Capital> capitals = Model.unmarshallCapitals();
 

@@ -21,9 +21,15 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocompleteAttributes;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
 import java.net.URL;
 import java.util.List;
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.Suggestion;
 import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
@@ -32,14 +38,10 @@ import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocompleteAttributes;
 import org.richfaces.tests.metamer.model.Capital;
 import org.richfaces.tests.page.fragments.impl.autocomplete.AutocompleteComponentImpl;
 import org.richfaces.tests.page.fragments.impl.autocomplete.SuggestionImpl;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -120,10 +122,6 @@ public class TestAutocomplete extends AbstractAutocompleteTest<SimplePage> {
        assertEquals(autocomplete.getInputValue(), expected.getValue());
     }
 
-    @Override
-    protected SimplePage createPage() {
-        return new SimplePage();
-    }
     protected ScrollingType getScrollingType() {
         return ScrollingType.valueOf("BY_" + scrollingType.toUpperCase());
     }
