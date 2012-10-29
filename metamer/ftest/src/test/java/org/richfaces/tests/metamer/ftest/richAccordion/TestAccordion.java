@@ -21,11 +21,17 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richAccordion;
 
-import java.net.URL;
-import javax.faces.event.PhaseId;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.accordionAttributes;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
+import java.net.URL;
+
+import javax.faces.event.PhaseId;
+
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -33,13 +39,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.accordionAttributes;
 import org.richfaces.tests.page.fragments.impl.accordion.AccordionItem;
 import org.richfaces.tests.page.fragments.impl.accordion.AccordionItemImpl;
 import org.testng.Assert;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
 import org.testng.annotations.Test;
 
 /**
