@@ -42,11 +42,6 @@ import org.testng.annotations.Test;
  */
 public class TestRichAccordion extends AbstractGrapheneTest {
 
-    private JQueryLocator accordion = pjq("div[id$=accordion]");
-    private JQueryLocator[] itemHeaders = { pjq("div[id$=item1:header]"), pjq("div[id$=item2:header]"),
-            pjq("div[id$=item3:header]"), pjq("div[id$=item4:header]"), pjq("div[id$=item5:header]") };
-    private JQueryLocator[] itemContents = { pjq("div[id$=item1:content]"), pjq("div[id$=item2:content]"),
-            pjq("div[id$=item3:content]"), pjq("div[id$=item4:content]"), pjq("div[id$=item5:content]") };
     private JQueryLocator leftIcon = pjq("div[id$=item{0}] td.rf-ac-itm-ico");
     private JQueryLocator rightIcon = pjq("div[id$=item{0}] td.rf-ac-itm-exp-ico");
 
