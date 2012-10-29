@@ -155,6 +155,7 @@ public class TestFormQueue extends AbstractGrapheneTest {
      */
     @Test
     public void testTimingTwoQueuesFourEvents() {
+        waitFor(1000); // FIXME workaround for Jenkins
         attributesQueueA.set(QueueAttributes.requestDelay, DELAY_A);
         waitFor(1000); // FIXME workaround for Jenkins
         attributesQueueB.set(QueueAttributes.requestDelay, DELAY_B);
