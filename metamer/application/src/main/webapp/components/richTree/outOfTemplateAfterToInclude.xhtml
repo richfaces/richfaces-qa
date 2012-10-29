@@ -26,8 +26,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <a4j:commandButton id="expandAll" value="Expand All" action="#{richTreeBean.expandAll}" render="richTree" />
-    <a4j:commandButton id="collapseAll" value="Collapse All" action="#{richTreeBean.collapseAll}" render="richTree" />
+    <a4j:commandButton id="expandAll" value="Expand All" action="#{richTreeBean.expandAll}" render="#{nestedComponentId}" />
+    <a4j:commandButton id="collapseAll" value="Collapse All" action="#{richTreeBean.collapseAll}" render="#{nestedComponentId}" />
 
     <a4j:outputPanel id="panel" ajaxRendered="true">
         <h:panelGrid columns="2">
