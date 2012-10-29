@@ -58,6 +58,10 @@ public class AccordionImpl implements Accordion {
         return items.get(index);
     }
 
+    public WebElement getRootElement() {
+        return root;
+    }
+
     @Override
     public Iterator<AccordionItem> iterator() {
         final Iterator<AccordionItemImpl> iterator = items.iterator();

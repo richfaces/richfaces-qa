@@ -35,4 +35,6 @@ public interface AccordionItem {
     boolean isActive();
 
     boolean isEnabled();
+
+    boolean isInactive();
 }
