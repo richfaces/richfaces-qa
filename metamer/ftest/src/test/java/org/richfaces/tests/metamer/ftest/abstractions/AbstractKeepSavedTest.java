@@ -38,7 +38,13 @@ public class AbstractKeepSavedTest extends AbstractGrapheneTest {
 
     @Override
     public MetamerNavigation getComponentExampleNavigation() {
-        return new MetamerNavigation("Rich", "Rich " + componentSpecifier, "Keep Saved");
+         String[] componentNameParts = componentSpecifier.substring(4).split("(?<!^)(?=[A-Z])");
+         StringBuffer sb = new StringBuffer();
+         for (int i = 0; i < componentNameParts.length; ++i) {
+             sb.append(" ").append(componentNameParts[i]);
+             System.out.println(" ### componentNameParts[" + i + "] " + componentNameParts[i]);
+         }
+         return new MetamerNavigation("Rich", "Rich" + sb.toString(), "Keep Saved");
     }
 
     public String getComponentSpecifier() {
