@@ -53,11 +53,6 @@ public class TestA4JCommandLink extends AbstractWebDriverTest<CommandButtonLinkP
         return buildUrl(contextPath, "faces/components/a4jCommandLink/simple.xhtml");
     }
 
-    @Override
-    protected CommandButtonLinkPage createPage() {
-        return new CommandButtonLinkPage();
-    }
-
     @Test(groups = "client-side-perf")
     public void testSimpleClick() {
         page.typeToInput(CommandButtonLinkPage.STRING_RF1);

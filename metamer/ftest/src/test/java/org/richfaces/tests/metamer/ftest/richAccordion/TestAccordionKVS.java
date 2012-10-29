@@ -41,14 +41,7 @@ import org.testng.annotations.Test;
  */
 public class TestAccordionKVS extends AbstractWebDriverTest<AccordionPage> {
 
-    @Page
-    private AccordionPage page;
     AccordionReloadTester reloadTester = new AccordionReloadTester();
-
-    @Override
-    protected AccordionPage createPage() {
-        return page;
-    }
 
     @Override
     public URL getTestUrl() {
@@ -70,7 +63,7 @@ public class TestAccordionKVS extends AbstractWebDriverTest<AccordionPage> {
 
         @Override
         public void doRequest(Integer accordionIndex) {
-            getPage().getAccordion().getItem(accordionIndex).activate();
+            page.getAccordion().getItem(accordionIndex).activate();
         }
 
         @Override
@@ -80,7 +73,7 @@ public class TestAccordionKVS extends AbstractWebDriverTest<AccordionPage> {
                     .until(new BooleanConditionWrapper(new ExpectedCondition<Boolean>() {
                         @Override
                         public Boolean apply(WebDriver input) {
-                            return getPage().getAccordion().getItem(accordionIndex).isActive();
+                            return page.getAccordion().getItem(accordionIndex).isActive();
                         }
                     }, NoSuchElementException.class, StaleElementReferenceException.class));
         }

@@ -38,6 +38,7 @@ import java.util.concurrent.TimeUnit;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
 import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
@@ -64,11 +65,12 @@ import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 
-public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends AbstractMetamerTest {
+public abstract class AbstractWebDriverTest<P extends MetamerPage> extends AbstractMetamerTest {
 
     @Drone
     protected WebDriver driver;
-    protected Page page;
+    @Page
+    protected P page;
     protected static final int WAIT_TIME = 5;// s
     private static final int NUMBER_OF_TRIES = 5;
     protected static final int MINOR_WAIT_TIME = 50;// ms
@@ -117,19 +119,10 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
         driverType = DriverType.getCurrentType(driver);
     }
 
-    @BeforeMethod(alwaysRun = true, dependsOnMethods = { "loadPage" })
-    public void initializePage() {
-        injectWebElementsToPage(getPage());
-    }
-
-    protected Page getPage() {
-        if (page == null) {
-            page = createPage();
-        }
-        return page;
-    }
-
-    protected abstract Page createPage();
+//    @BeforeMethod(alwaysRun = true, dependsOnMethods = { "loadPage" })
+//    public void initializePage() {
+//        injectWebElementsToPage(page);
+//    }
 
     /**
      * Waiting method. Waits number of milis defined by @milis
@@ -497,8 +490,7 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
         return list;
     }
 
-    protected enum WaitRequestType {
-
+    public enum WaitRequestType {
         XHR,
         HTTP,
         NONE;
@@ -552,7 +544,7 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
     /**
      * Waits for change of requestTime in Metamer.
      */
-    private class RequestTimeChangesHandler implements InvocationHandler {
+    public class RequestTimeChangesHandler implements InvocationHandler {
 
         protected final WebElement element;
         protected String time1;
@@ -593,7 +585,7 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
     /**
      * Waits number of seconds and checks if requestTime was not changed,
      */
-    private class RequestTimeNotChangesHandler extends RequestTimeChangesHandler {
+    public class RequestTimeNotChangesHandler extends RequestTimeChangesHandler {
 
         private final int waitTime;
 
@@ -624,7 +616,7 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
      * ends with 'class' or 'style', then it returns the correct one, when the attribute does not
      * end with none of those, then it returns toString() method of attribute
      */
-    private static class Attribute2StringDecoder {
+    public static class Attribute2StringDecoder {
 
         private static final String CLASS = "class";
         private static final String STYLE = "style";
@@ -659,7 +651,7 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
      * WebDriver wait which ignores StaleElementException and
      * NoSuchElementException and is polling every 50 ms.
      */
-    protected class WDWait extends WebDriverWait {
+    public class WDWait extends WebDriverWait {
 
         /**
          * WebDriver wait which ignores StaleElementException and

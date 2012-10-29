@@ -31,116 +31,112 @@ import static org.testng.Assert.assertFalse;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public abstract class TestComponentWithJSR303 extends AbstractWebDriverTest<JSR303Page> {
+//FIXME TestComponentWithJSR303 shoud not be generic (Graphene bug)
+public abstract class TestComponentWithJSR303<P extends JSR303Page> extends AbstractWebDriverTest<P> {
 
     @Inject
     @Use(strings={"hCommandButton", "a4jCommandButton"})
     String button;
 
-    @Override
-    protected JSR303Page createPage() {
-        return new JSR303Page();
-    }
-
     protected void verifyNotEmpty() {
-        getPage().setAllCorrectly(false);
-        getPage().setNotEmptyInputWrongly(false);
+        page.setAllCorrectly(false);
+        page.setNotEmptyInputWrongly(false);
         submit();
-        getPage().waitForNotEmptyInputMessage(getWait());
+        page.waitForNotEmptyInputMessage(getWait());
 
-        assertFalse(getPage().isCustomStringInputMessageVisible());
-        assertFalse(getPage().isRegExpPatternInputMessageVisible());
-        assertFalse(getPage().isStringSizeInputMessageVisible());
+        assertFalse(page.isCustomStringInputMessageVisible());
+        assertFalse(page.isRegExpPatternInputMessageVisible());
+        assertFalse(page.isStringSizeInputMessageVisible());
 
-        getPage().setNotEmptyInputCorrectly(false);
+        page.setNotEmptyInputCorrectly(false);
         submit();
-        getPage().waitForNotEmptyInputWithoutMessage(getWait());
+        page.waitForNotEmptyInputWithoutMessage(getWait());
 
-        assertFalse(getPage().isCustomStringInputMessageVisible());
-        assertFalse(getPage().isRegExpPatternInputMessageVisible());
-        assertFalse(getPage().isStringSizeInputMessageVisible());
+        assertFalse(page.isCustomStringInputMessageVisible());
+        assertFalse(page.isRegExpPatternInputMessageVisible());
+        assertFalse(page.isStringSizeInputMessageVisible());
     }
 
     protected void verifyRegExpPattern() {
-        getPage().setAllCorrectly(false);
-        getPage().setRegExpPatternInputWrongly(false);
+        page.setAllCorrectly(false);
+        page.setRegExpPatternInputWrongly(false);
         submit();
-        getPage().waitForRegExpPatternInputMessage(getWait());
+        page.waitForRegExpPatternInputMessage(getWait());
 
-        assertFalse(getPage().isCustomStringInputMessageVisible());
-        assertFalse(getPage().isNotEmptyInputMessageVisible());
-        assertFalse(getPage().isStringSizeInputMessageVisible());
+        assertFalse(page.isCustomStringInputMessageVisible());
+        assertFalse(page.isNotEmptyInputMessageVisible());
+        assertFalse(page.isStringSizeInputMessageVisible());
 
-        getPage().setRegExpPatternInputCorrectly(false);
+        page.setRegExpPatternInputCorrectly(false);
         submit();
-        getPage().waitForRegExpPatternInputWithoutMessage(getWait());
+        page.waitForRegExpPatternInputWithoutMessage(getWait());
 
-        assertFalse(getPage().isCustomStringInputMessageVisible());
-        assertFalse(getPage().isNotEmptyInputMessageVisible());
-        assertFalse(getPage().isStringSizeInputMessageVisible());
+        assertFalse(page.isCustomStringInputMessageVisible());
+        assertFalse(page.isNotEmptyInputMessageVisible());
+        assertFalse(page.isStringSizeInputMessageVisible());
     }
 
     protected void verifyStringSize() {
-        getPage().setAllCorrectly(false);
-        getPage().setStringSizeInputWrongly(false);
+        page.setAllCorrectly(false);
+        page.setStringSizeInputWrongly(false);
         submit();
-        getPage().waitForStringSizeInputMessage(getWait());
+        page.waitForStringSizeInputMessage(getWait());
 
-        assertFalse(getPage().isCustomStringInputMessageVisible());
-        assertFalse(getPage().isNotEmptyInputMessageVisible());
-        assertFalse(getPage().isRegExpPatternInputMessageVisible());
+        assertFalse(page.isCustomStringInputMessageVisible());
+        assertFalse(page.isNotEmptyInputMessageVisible());
+        assertFalse(page.isRegExpPatternInputMessageVisible());
 
-        getPage().setStringSizeInputCorrectly(false);
+        page.setStringSizeInputCorrectly(false);
         submit();
-        getPage().waitForStringSizeInputWithoutMessage(getWait());
+        page.waitForStringSizeInputWithoutMessage(getWait());
 
-        assertFalse(getPage().isCustomStringInputMessageVisible());
-        assertFalse(getPage().isNotEmptyInputMessageVisible());
-        assertFalse(getPage().isRegExpPatternInputMessageVisible());
+        assertFalse(page.isCustomStringInputMessageVisible());
+        assertFalse(page.isNotEmptyInputMessageVisible());
+        assertFalse(page.isRegExpPatternInputMessageVisible());
     }
 
     protected void verifyCustomString() {
-        getPage().setAllCorrectly(false);
-        getPage().setCustomStringInputWrongly(false);
+        page.setAllCorrectly(false);
+        page.setCustomStringInputWrongly(false);
         submit();
-        getPage().waitForCustomStringInputMessage(getWait());
+        page.waitForCustomStringInputMessage(getWait());
 
-        assertFalse(getPage().isNotEmptyInputMessageVisible());
-        assertFalse(getPage().isRegExpPatternInputMessageVisible());
-        assertFalse(getPage().isStringSizeInputMessageVisible());
+        assertFalse(page.isNotEmptyInputMessageVisible());
+        assertFalse(page.isRegExpPatternInputMessageVisible());
+        assertFalse(page.isStringSizeInputMessageVisible());
 
-        getPage().setCustomStringInputCorrectly(false);
+        page.setCustomStringInputCorrectly(false);
         submit();
-        getPage().waitForCustomStringInputWithoutMessage(getWait());
+        page.waitForCustomStringInputWithoutMessage(getWait());
 
-        assertFalse(getPage().isNotEmptyInputMessageVisible());
-        assertFalse(getPage().isRegExpPatternInputMessageVisible());
-        assertFalse(getPage().isStringSizeInputMessageVisible());
+        assertFalse(page.isNotEmptyInputMessageVisible());
+        assertFalse(page.isRegExpPatternInputMessageVisible());
+        assertFalse(page.isStringSizeInputMessageVisible());
     }
 
     protected void verifyAllInputs() {
-        getPage().setAllWrongly(false);
+        page.setAllWrongly(false);
         submit();
 
-        getPage().waitForCustomStringInputMessage(getWait());
-        getPage().waitForNotEmptyInputMessage(getWait());
-        getPage().waitForRegExpPatternInputMessage(getWait());
-        getPage().waitForStringSizeInputMessage(getWait());
+        page.waitForCustomStringInputMessage(getWait());
+        page.waitForNotEmptyInputMessage(getWait());
+        page.waitForRegExpPatternInputMessage(getWait());
+        page.waitForStringSizeInputMessage(getWait());
 
-        getPage().setAllCorrectly(true);
+        page.setAllCorrectly(true);
         submit();
 
-        getPage().waitForCustomStringInputWithoutMessage(getWait());
-        getPage().waitForNotEmptyInputWithoutMessage(getWait());
-        getPage().waitForRegExpPatternInputWithoutMessage(getWait());
-        getPage().waitForStringSizeInputWithoutMessage(getWait());
+        page.waitForCustomStringInputWithoutMessage(getWait());
+        page.waitForNotEmptyInputWithoutMessage(getWait());
+        page.waitForRegExpPatternInputWithoutMessage(getWait());
+        page.waitForStringSizeInputWithoutMessage(getWait());
     }
 
     protected final void submit() {
         if (button.equals("hCommandButton")) {
-            getPage().getHCommandButton().click();
+            page.getHCommandButton().click();
         } else {
-            getPage().getA4jCommandButton().click();
+            page.getA4jCommandButton().click();
         }
     }
 

@@ -47,14 +47,6 @@ import org.testng.annotations.Test;
  */
 public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
 
-    @Page
-    private AccordionPage page;
-
-    @Override
-    protected AccordionPage createPage() {
-        return page;
-    }
-
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richAccordion/simple.xhtml");
@@ -62,11 +54,11 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
 
     @Test
     public void testInit() {
-        assertTrue(getPage().isAccordionVisible(), "Accordion is not present on the page.");
-        assertEquals(getPage().getAccordion().size(), 5, "number of visible headers");
-        assertTrue(getPage().getAccordion().getItem(0).isActive(), "The first accordion item should be active.");
-        for (int i = 1; i < getPage().getAccordion().size(); i++) {
-            assertTrue(getPage().getAccordion().getItem(i).isInactive(), "Item" + (i + 1) + " shouldn't be active.");
+        assertTrue(page.isAccordionVisible(), "Accordion is not present on the page.");
+        assertEquals(page.getAccordion().size(), 5, "number of visible headers");
+        assertTrue(page.getAccordion().getItem(0).isActive(), "The first accordion item should be active.");
+        for (int i = 1; i < page.getAccordion().size(); i++) {
+            assertTrue(page.getAccordion().getItem(i).isInactive(), "Item" + (i + 1) + " shouldn't be active.");
         }
     }
 
@@ -74,22 +66,22 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
     public void testActiveItem() {
         accordionAttributes.set(AccordionAttributes.activeItem, "item5");
 
-        assertTrue(getPage().isAccordionVisible(), "Accordion is not present on the page.");
-        for (AccordionItem item: getPage().getAccordion()) {
+        assertTrue(page.isAccordionVisible(), "Accordion is not present on the page.");
+        for (AccordionItem item: page.getAccordion()) {
             assertTrue(item.isActive() || item.isInactive() || !item.isEnabled(), "Item" + item.getHeader() + "'s header should be visible.");
         }
 
-        assertTrue(getPage().getAccordion().getItem(4).isActive(), "Content of item5 should be visible.");
+        assertTrue(page.getAccordion().getItem(4).isActive(), "Content of item5 should be visible.");
         for (int i = 0; i < 4; i++) {
-            assertTrue(getPage().getAccordion().getItem(i).isInactive(), "Item" + (i + 1) + " shouldn't be active.");
+            assertTrue(page.getAccordion().getItem(i).isInactive(), "Item" + (i + 1) + " shouldn't be active.");
         }
 
         accordionAttributes.set(AccordionAttributes.activeItem, "item4");
-        for (AccordionItem item: getPage().getAccordion()) {
+        for (AccordionItem item: page.getAccordion()) {
             assertTrue(item.isActive() || item.isInactive() || !item.isEnabled(), "Item" + item.getHeader() + "'s header should be visible.");
         }
 
-        for (AccordionItem item: getPage().getAccordion()) {
+        for (AccordionItem item: page.getAccordion()) {
             assertTrue(item.isInactive(), "Item" + item.getHeader() + " shouldn't be active.");
         }
     }
@@ -124,12 +116,12 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
 
     @Test
     public void testDir() {
-        testDir(getPage().getAccordionRootElement());
+        testDir(page.getAccordionRootElement());
     }
 
     @Test
     public void testHeight() {
-        WebElement accordionRoot = getPage().getAccordionRootElement();
+        WebElement accordionRoot = page.getAccordionRootElement();
         // height = null
         assertEquals(accordionRoot.getAttribute("style"), "", "Attribute style should not be present.");
 
@@ -142,7 +134,7 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
     public void testImmediate() {
         accordionAttributes.set(AccordionAttributes.immediate, true);
 
-        getPage().getAccordion().getItem(2).activate();
+        page.getAccordion().getItem(2).activate();
 
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
         phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "item changed: item1 -> item3");
@@ -150,25 +142,25 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
 
     @Test
     public void testItemActiveHeaderClass() {
-        testStyleClass(((AccordionItemImpl) getPage().getAccordion().getActiveItem()).getHeaderElement(), BasicAttributes.itemActiveHeaderClass);
+        testStyleClass(((AccordionItemImpl) page.getAccordion().getActiveItem()).getHeaderElement(), BasicAttributes.itemActiveHeaderClass);
     }
 
     @Test
     public void testItemChangeListener() {
-        getPage().getAccordion().getItem(2).activate();
+        page.getAccordion().getItem(2).activate();
         phaseInfo.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: item1 -> item3");
     }
 
     @Test
     public void testItemContentClass() {
-        for (AccordionItem item: getPage().getAccordion()) {
+        for (AccordionItem item: page.getAccordion()) {
             testStyleClass(((AccordionItemImpl) item).getContentElement(), BasicAttributes.itemContentClass);
         }
     }
 
     @Test
     public void testItemDisabledHeaderClass() {
-        for (AccordionItem item: getPage().getAccordion()) {
+        for (AccordionItem item: page.getAccordion()) {
             if (!item.isEnabled()) {
                 testStyleClass(((AccordionItemImpl) item).getHeaderElement(), BasicAttributes.itemDisabledHeaderClass);
             }
@@ -177,7 +169,7 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
 
     @Test
     public void testItemHeaderClass() {
-        for (AccordionItem item: getPage().getAccordion()) {
+        for (AccordionItem item: page.getAccordion()) {
             testStyleClass(((AccordionItemImpl) item).getToActivateElement(), BasicAttributes.itemHeaderClass);
         }
     }
@@ -188,7 +180,7 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
         accordionAttributes.set(AccordionAttributes.onitemchange, "metamerEvents += \"itemchange \"");
 
         executeJS("metamerEvents = \"\";");
-        Graphene.guardXhr(getPage().getAccordion().getItem(2)).activate();
+        Graphene.guardXhr(page.getAccordion().getItem(2)).activate();
         String[] events = ((String) executeJS("return metamerEvents;")).split(" ");
 
         assertEquals(events[0], "beforeitemchange", "Attribute onbeforeitemchange doesn't work");
@@ -197,7 +189,7 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
 
     @Test
     public void testItemInactiveHeaderClass() {
-        for (AccordionItem item: getPage().getAccordion()) {
+        for (AccordionItem item: page.getAccordion()) {
             if (item.isInactive() && item.isEnabled()) {
                 testStyleClass(((AccordionItemImpl) item).getHeaderElement(), BasicAttributes.itemInactiveHeaderClass);
             }
@@ -206,7 +198,7 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
 
     @Test
     public void testLang() {
-        testHTMLAttribute(getPage().getAccordionRootElement(), accordionAttributes, AccordionAttributes.lang, "sk");
+        testHTMLAttribute(page.getAccordionRootElement(), accordionAttributes, AccordionAttributes.lang, "sk");
     }
 
     @Test
@@ -214,7 +206,7 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
         Action action = new Action() {
             @Override
             public void perform() {
-                getPage().getAccordion().getItem(1).activate();
+                page.getAccordion().getItem(1).activate();
             }
         };
         testFireEvent(accordionAttributes, AccordionAttributes.onbeforeitemchange, action);
@@ -222,13 +214,13 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
 
     @Test
     public void testOnclick() {
-        Action action = new Actions(driver).click(getPage().getAccordionRootElement()).build();
+        Action action = new Actions(driver).click(page.getAccordionRootElement()).build();
         testFireEvent(accordionAttributes, AccordionAttributes.onclick, action);
     }
 
     @Test
     public void testOndblclick() {
-        Action action = new Actions(driver).doubleClick(getPage().getAccordionRootElement()).build();
+        Action action = new Actions(driver).doubleClick(page.getAccordionRootElement()).build();
         testFireEvent(accordionAttributes, AccordionAttributes.ondblclick, action);
     }
 
@@ -237,7 +229,7 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
         Action action = new Action() {
             @Override
             public void perform() {
-                getPage().getAccordion().getItem(1).activate();
+                page.getAccordion().getItem(1).activate();
             }
         };
         testFireEvent(accordionAttributes, AccordionAttributes.onitemchange, action);
@@ -245,42 +237,42 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
 
     @Test
     public void testOnmousedown() {
-        Action action = new Actions(driver).clickAndHold(getPage().getAccordionRootElement()).build();
+        Action action = new Actions(driver).clickAndHold(page.getAccordionRootElement()).build();
         testFireEvent(accordionAttributes, AccordionAttributes.onmousedown, action);
     }
 
     @Test
     public void testOnmousemove() {
-        Action action = new Actions(driver).moveToElement(getPage().getAccordionRootElement()).build();
+        Action action = new Actions(driver).moveToElement(page.getAccordionRootElement()).build();
         testFireEvent(accordionAttributes, AccordionAttributes.onmousemove, action);
     }
 
     @Test
     public void testOnmouseout() {
-        testFireEventWithJS(getPage().getAccordionRootElement(), accordionAttributes, AccordionAttributes.onmouseout);
+        testFireEventWithJS(page.getAccordionRootElement(), accordionAttributes, AccordionAttributes.onmouseout);
     }
 
     @Test
     public void testOnmouseover() {
-        Action action = new Actions(driver).moveToElement(getPage().getAccordionRootElement()).build();
+        Action action = new Actions(driver).moveToElement(page.getAccordionRootElement()).build();
         testFireEvent(accordionAttributes, AccordionAttributes.onmouseover, action);
     }
 
     @Test
     public void testOnmouseup() {
-        Action action = new Actions(driver).click(getPage().getAccordionRootElement()).build();
+        Action action = new Actions(driver).click(page.getAccordionRootElement()).build();
         testFireEvent(accordionAttributes, AccordionAttributes.onmouseup, action);
     }
 
     @Test
     public void testRendered() {
         accordionAttributes.set(AccordionAttributes.rendered, false);
-        assertFalse(getPage().isAccordionVisible());
+        assertFalse(page.isAccordionVisible());
     }
 
     @Test
     public void testSimple() {
-        for (AccordionItem item: getPage().getAccordion()) {
+        for (AccordionItem item: page.getAccordion()) {
             if (item.isEnabled()) {
                 item.activate();
                 Assert.assertTrue(item.isActive());
@@ -290,19 +282,19 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
 
     @Test
     public void testStyle() {
-        testStyle(getPage().getAccordionRootElement());
+        testStyle(page.getAccordionRootElement());
     }
 
     @Test
     public void testStyleClass() {
-        testStyleClass(getPage().getAccordionRootElement());
+        testStyleClass(page.getAccordionRootElement());
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12532")
     public void testSwitchTypeNull() {
         for (int i = 2; i >= 0; i--) {
-            Graphene.guardXhr(getPage().getAccordion().getItem(i)).activate();
+            Graphene.guardXhr(page.getAccordion().getItem(i)).activate();
         }
     }
 
@@ -318,7 +310,7 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
     public void testSwitchTypeClient() {
         accordionAttributes.set(AccordionAttributes.switchType, "client");
         for (int i = 2; i >= 0; i--) {
-            Graphene.guardNoRequest(getPage().getAccordion().getItem(i)).activate();
+            Graphene.guardNoRequest(page.getAccordion().getItem(i)).activate();
         }
     }
 
@@ -327,7 +319,7 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
     public void testSwitchTypeServer() {
         accordionAttributes.set(AccordionAttributes.switchType, "server");
         for (int i = 2; i >= 0; i--) {
-            Graphene.guardHttp(getPage().getAccordion().getItem(i)).activate();
+            Graphene.guardHttp(page.getAccordion().getItem(i)).activate();
         }
     }
 

@@ -21,12 +21,13 @@
 package org.richfaces.tests.metamer.ftest.richInputNumberSpinner;
 
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractValidationMessagesTest;
+import org.richfaces.tests.metamer.ftest.abstractions.ValidationPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichSpinnerValidationMessages extends AbstractValidationMessagesTest {
+public class TestRichSpinnerValidationMessages extends AbstractValidationMessagesTest<ValidationPage> {
 
     public TestRichSpinnerValidationMessages() {
         super("richInputNumberSpinner");

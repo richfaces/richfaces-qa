@@ -48,11 +48,6 @@ public class TestRichContextMenuWebDriver extends AbstractWebDriverTest<ContextM
         return buildUrl(contextPath, "faces/components/richContextMenu/simple.xhtml");
     }
 
-    @Override
-    protected ContextMenuSimplePage createPage() {
-        return new ContextMenuSimplePage();
-    }
-
     @BeforeMethod(alwaysRun = true)
     public void updateShowAction() {
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, "click");

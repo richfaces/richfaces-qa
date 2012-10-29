@@ -27,7 +27,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestPanelMenuItemChangeListener extends AbstractItemChangeListenerTest {
+public class TestPanelMenuItemChangeListener extends AbstractItemChangeListenerTest<ICLPanelMenuPage> {
 
     private final String ICL_as_ComponentAttribute_PhaseName = "* item changed: null -> item1";
     private final String ICL_inComponent_usingType_PhaseName = "* itemChangeListenerBean item changed: null -> item1";
@@ -36,11 +36,6 @@ public class TestPanelMenuItemChangeListener extends AbstractItemChangeListenerT
 
     public TestPanelMenuItemChangeListener() {
         super("panelMenu");
-    }
-
-    @Override
-    protected ICLPage createPage() {
-        return new ICLPanelMenuPage();
     }
 
     @Test

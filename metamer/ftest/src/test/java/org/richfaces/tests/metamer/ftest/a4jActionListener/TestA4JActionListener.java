@@ -48,11 +48,6 @@ public class TestA4JActionListener extends AbstractWebDriverTest<ActionListenerP
         return buildUrl(contextPath, "faces/components/a4jActionListener/all.xhtml");
     }
 
-    @Override
-    protected ActionListenerPage createPage() {
-        return new ActionListenerPage();
-    }
-
     Predicate<WebDriver> messageIsVisible = new Predicate<WebDriver>() {
         @Override
         public boolean apply(WebDriver arg0) {

@@ -21,8 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
-import java.net.URL;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocompleteAttributes;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
+import java.net.URL;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
 import org.openqa.selenium.By;
@@ -31,11 +36,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocompleteAttributes;
 import org.richfaces.tests.page.fragments.impl.autocomplete.AutocompleteComponentImpl;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 /**
@@ -80,12 +82,6 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest<SimpleP
             selectFirst = false;
         }
         autocomplete.clear(ClearType.BACK_SPACE);
-    }
-
-
-    @Override
-    protected SimplePage createPage() {
-        return new SimplePage();
     }
 
     /**

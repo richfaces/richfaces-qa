@@ -30,7 +30,8 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractTreeSelectionChangeListenerTest extends AbstractWebDriverTest<TSCLPage> {
+// FIXME AbstractTreeSelectionChangeListenerTest should not be generic (bug in Graphene)
+public abstract class AbstractTreeSelectionChangeListenerTest<P extends TSCLPage> extends AbstractWebDriverTest<P> {
 
     private final String nullToFirst = " []->[org.richfaces.model.SequenceRowKey[1]]";
     private final String firstToSecond = " [org.richfaces.model.SequenceRowKey[1]]->[org.richfaces.model.SequenceRowKey[2]]";
@@ -38,11 +39,6 @@ public abstract class AbstractTreeSelectionChangeListenerTest extends AbstractWe
 
     public AbstractTreeSelectionChangeListenerTest(String testedComponent) {
         this.testedComponent = testedComponent;
-    }
-
-    @Override
-    protected TSCLPage createPage() {
-        return new TSCLPage();
     }
 
     @Override

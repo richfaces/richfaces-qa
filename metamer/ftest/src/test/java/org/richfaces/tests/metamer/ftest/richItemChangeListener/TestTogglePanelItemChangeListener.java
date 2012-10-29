@@ -28,7 +28,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestTogglePanelItemChangeListener extends AbstractItemChangeListenerTest {
+public class TestTogglePanelItemChangeListener extends AbstractItemChangeListenerTest<ICLTogglePanelPage> {
 
     private final String ICL_as_ComponentAttribute_PhaseName = "* item changed: item1 -> item2";
     private final String ICL_inComponent_usingType_PhaseName = "* itemChangeListenerBean item changed: item1 -> item2";
@@ -37,11 +37,6 @@ public class TestTogglePanelItemChangeListener extends AbstractItemChangeListene
 
     public TestTogglePanelItemChangeListener() {
         super("togglePanel");
-    }
-
-    @Override
-    protected ICLPage createPage() {
-        return new ICLTogglePanelPage();
     }
 
     @Test

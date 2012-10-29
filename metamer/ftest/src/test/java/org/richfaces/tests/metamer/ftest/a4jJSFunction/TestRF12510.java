@@ -86,9 +86,4 @@ public class TestRF12510 extends AbstractWebDriverTest<TestRF12510.RF12510Page> 
             this.jsFunctionTrigger = jsFunctionTrigger;
         }
     }
-
-    @Override
-    protected RF12510Page createPage() {
-        return new RF12510Page();
-    }
 }

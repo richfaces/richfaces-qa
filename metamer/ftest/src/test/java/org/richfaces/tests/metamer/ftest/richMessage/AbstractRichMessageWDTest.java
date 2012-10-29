@@ -36,7 +36,8 @@ import org.testng.annotations.BeforeMethod;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractRichMessageWDTest extends AbstractWebDriverTest<MessagePage> {
+// FIXME AbstractRichMessageWDTest should not be generic (bug in Graphene)
+public abstract class AbstractRichMessageWDTest<P extends MessagePage> extends AbstractWebDriverTest<P> {
 
     @FindBy(css = "span[id$=simpleInputMsg]")
     MessageComponentImpl messageComponentForInputX;
@@ -44,11 +45,6 @@ public abstract class AbstractRichMessageWDTest extends AbstractWebDriverTest<Me
     MessageComponentImpl messageComponentFoInput1;
     @FindBy(css = "span[id$=simpleInputMsg2]")
     MessageComponentImpl messageComponentForInput2;
-
-    @Override
-    protected MessagePage createPage() {
-        return new MessagePage();
-    }
 
     @BeforeMethod(alwaysRun = true)
     public void generateMessages() {

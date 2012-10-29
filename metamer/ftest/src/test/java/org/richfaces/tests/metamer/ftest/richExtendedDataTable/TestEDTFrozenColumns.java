@@ -59,11 +59,6 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest<TestEDTFrozenCol
         return buildUrl(contextPath, "faces/components/richExtendedDataTable/frozenColumns.xhtml");
     }
 
-    @Override
-    protected FrozenColumnsPage createPage() {
-        return new FrozenColumnsPage();
-    }
-
     @Test
     public void testInit() {
         Boolean notPresent = ElementNotPresent.getInstance().element(page.frozenColumnsTd).apply(driver);
@@ -176,7 +171,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest<TestEDTFrozenCol
         assertNotEquals(location, page.movedScroller.getLocation(), "The position of scroller has not been changed.");
     }
 
-    protected class FrozenColumnsPage extends MetamerPage {
+    public class FrozenColumnsPage extends MetamerPage {
 
         @FindBy(xpath = "//td[@class='rf-edt-ftr-fzn']//div//table//tr//td")
         List<WebElement> frozenColumns;

@@ -27,7 +27,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestAccordionItemChangeListener extends AbstractItemChangeListenerTest {
+public class TestAccordionItemChangeListener extends AbstractItemChangeListenerTest<ICLAccordionPage> {
 
     private final String ICL_as_ComponentAttribute_PhaseName = "* item changed: null -> item2";
     private final String ICL_inComponent_usingType_PhaseName = "* itemChangeListenerBean item changed: null -> item2";
@@ -36,11 +36,6 @@ public class TestAccordionItemChangeListener extends AbstractItemChangeListenerT
 
     public TestAccordionItemChangeListener() {
         super("accordion");
-    }
-
-    @Override
-    protected ICLPage createPage() {
-        return new ICLAccordionPage();
     }
 
     @Test

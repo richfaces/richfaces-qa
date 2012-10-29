@@ -38,14 +38,10 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M2
  */
-public abstract class AbstractAjaxTest extends AbstractWebDriverTest<AjaxPage> {
+// FIXME AbstractAjaxPage should not be generic
+public abstract class AbstractAjaxTest<P extends AjaxPage> extends AbstractWebDriverTest<P> {
 
     private LocalReloadTester reloadTester = new LocalReloadTester();
-
-    @Override
-    protected AjaxPage createPage() {
-        return new AjaxPage();
-    }
 
     public void testClick() {
         String reqTime = page.requestTime.getText();

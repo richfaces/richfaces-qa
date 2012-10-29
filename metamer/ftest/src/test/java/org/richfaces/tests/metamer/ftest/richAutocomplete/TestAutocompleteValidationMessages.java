@@ -21,12 +21,13 @@
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractValidationMessagesTest;
+import org.richfaces.tests.metamer.ftest.abstractions.ValidationPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAutocompleteValidationMessages extends AbstractValidationMessagesTest {
+public class TestAutocompleteValidationMessages extends AbstractValidationMessagesTest<ValidationPage> {
 
     public TestAutocompleteValidationMessages() {
         super("richAutocomplete");
