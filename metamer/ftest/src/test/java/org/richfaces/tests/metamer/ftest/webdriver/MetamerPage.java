@@ -45,7 +45,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 
 import com.google.common.base.Predicate;
@@ -74,7 +73,7 @@ public class MetamerPage {
 
     protected ElementPresent elementPresent = ElementPresent.getInstance();
     protected WebDriver driver = GrapheneContext.getProxy();
-    
+
     public List<String> getPhases() {
         List<String> result = new ArrayList<String>();
         for (WebElement webElement : phases) {
@@ -173,7 +172,7 @@ public class MetamerPage {
             return true;
         }
     }
-    
+
     /**
      * !All requests depends on Metamer`s requestTime!
      * Temporary method before https://issues.jboss.org/browse/ARQGRA-200 is
@@ -186,7 +185,7 @@ public class MetamerPage {
      * @param waitRequestType type of expected request which will be launched
      * @return waiting proxy for input element
      */
-    protected WebElement waitRequest(WebElement element, WaitRequestType waitRequestType) {
+    public WebElement waitRequest(WebElement element, WaitRequestType waitRequestType) {
         switch (waitRequestType) {
             case HTTP:
                 return requestTimeChangesWaiting(Graphene.guardHttp(element));
@@ -204,7 +203,7 @@ public class MetamerPage {
      * @param element element which action should resolve in Metamer's requestTime change
      * @return guarded element
      */
-    protected WebElement requestTimeChangesWaiting(WebElement element) {
+    public WebElement requestTimeChangesWaiting(WebElement element) {
         return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
                 new Class[]{ WebElement.class }, new RequestTimeChangesHandler(element));
     }
@@ -214,7 +213,7 @@ public class MetamerPage {
      * @param element element which action should not resolve in Metamer's requestTime change
      * @return guarded element
      */
-    protected WebElement requestTimeNotChangesWaiting(WebElement element) {
+    public WebElement requestTimeNotChangesWaiting(WebElement element) {
         return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
                 new Class[]{ WebElement.class }, new RequestTimeNotChangesHandler(element, 2));
     }
@@ -367,4 +366,11 @@ public class MetamerPage {
     protected WebElement waitUntilElementIsVisible(final By by) {
         return new WDWait().until(ExpectedConditions.visibilityOfElementLocated(by));
     }
+
+    public enum WaitRequestType {
+        XHR,
+        HTTP,
+        NONE;
+    }
+
 }

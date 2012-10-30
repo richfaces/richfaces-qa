@@ -39,6 +39,7 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -74,14 +75,11 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
 
         assertTrue(filesToUpload.size() == 1, "File not loaded");
         assertTrue(filesToUpload.get(0).getText().equals(filenames[0]), "Label with filename does not appear.");
-        assertTrue(Graphene.waitModel().until(Graphene.element(page.itemClear).isPresent()).booleanValue(),
-            "Clear button does not appear.");
-        assertTrue(Graphene.waitModel().until(Graphene.element(page.uploadButton).isPresent()).booleanValue(),
-            "Upload button should be on the page.");
-        assertTrue(Graphene.waitModel().until(Graphene.element(page.clearAllButton).isPresent()).booleanValue(),
-            "Clear all button should be on the page.");
+        assertTrue(Graphene.waitModel().until(Graphene.element(page.itemClear).isPresent()).booleanValue(), "Clear button does not appear.");
+        assertTrue(Graphene.waitModel().until(Graphene.element(page.uploadButton).isPresent()).booleanValue(), "Upload button should be on the page.");
+        assertTrue(Graphene.waitModel().until(Graphene.element(page.clearAllButton).isPresent()).booleanValue(), "Clear all button should be on the page.");
 
-        waitRequest(page.uploadButton, WaitRequestType.XHR).click();
+        page.waitRequest(page.uploadButton, WaitRequestType.XHR).click();
 
         waitUntilUploadedFilesListShow(1);
         List<WebElement> uploadedFiles = guardListSize(page.uploadedFilesList, 1);
@@ -227,7 +225,7 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
                 + " does not appear in files to upload list.");
         }
 
-        waitRequest(page.uploadButton, WaitRequestType.XHR).click();
+        page.waitRequest(page.uploadButton, WaitRequestType.XHR).click();
 
         List<WebElement> uploadedFiles = guardListSize(page.uploadedFilesList, maxFilesQuantity);
         assertTrue(uploadedFiles.size() == maxFilesQuantity,

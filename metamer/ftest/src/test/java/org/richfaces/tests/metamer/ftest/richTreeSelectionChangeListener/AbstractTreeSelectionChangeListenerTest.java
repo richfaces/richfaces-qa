@@ -26,6 +26,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -59,22 +60,22 @@ public abstract class AbstractTreeSelectionChangeListenerTest<P extends TSCLPage
 
     private void testTSCL(String expectedText, String failMessage) {
         //selects a first node
-        waitRequest(page.getItem(1), WaitRequestType.XHR).click();
+        page.waitRequest(page.getItem(1), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText + nullToFirst), failMessage);
         //then selectis a second node
-        waitRequest(page.getItem(2), WaitRequestType.XHR).click();
+        page.waitRequest(page.getItem(2), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText + firstToSecond), failMessage);
     }
 
     private void testTSCLWithoutAdditionalStrings(String expectedText, String failMessage) {
         //selects a first node
-        waitRequest(page.getItem(1), WaitRequestType.XHR).click();
+        page.waitRequest(page.getItem(1), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText), failMessage);
         //then test selecting a second node
-        waitRequest(page.getItem(2), WaitRequestType.XHR).click();
+        page.waitRequest(page.getItem(2), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText), failMessage);
     }
