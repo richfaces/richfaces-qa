@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.abstractions;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**

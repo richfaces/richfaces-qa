@@ -39,6 +39,7 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -75,8 +76,7 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
         assertTrue(Graphene.waitModel().until(Graphene.element(page.uploadButton).isPresent()).booleanValue(), "Upload button should be on the page.");
         assertTrue(Graphene.waitModel().until(Graphene.element(page.clearAllButton).isPresent()).booleanValue(), "Clear all button should be on the page.");
 
-
-        waitRequest(page.uploadButton, WaitRequestType.XHR).click();
+        page.waitRequest(page.uploadButton, WaitRequestType.XHR).click();
 
         waitUntilUploadedFilesListShow(1);
         List<WebElement> uploadedFiles = guardListSize(page.uploadedFilesList, 1);
@@ -224,7 +224,7 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
             assertTrue(x.equals(filenames[i]), "Added file " + filenames[i] + " does not appear in files to upload list.");
         }
 
-        waitRequest(page.uploadButton, WaitRequestType.XHR).click();
+        page.waitRequest(page.uploadButton, WaitRequestType.XHR).click();
 
         List<WebElement> uploadedFiles = guardListSize(page.uploadedFilesList, maxFilesQuantity);
         assertTrue(uploadedFiles.size() == maxFilesQuantity, "Uploaded files list contains more/less files than there should be. List: " + uploadedFiles + " .");

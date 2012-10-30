@@ -26,6 +26,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -56,7 +57,7 @@ public abstract class AbstractItemChangeListenerTest<P extends ICLPage> extends 
     }
 
     private void testICL(final String expectedText, String failMessage) {
-        waitRequest(page.getInactivePanel(), WaitRequestType.XHR).click();
+        page.waitRequest(page.getInactivePanel(), WaitRequestType.XHR).click();
         assertTrue(subTest(expectedText), failMessage);
     }
 

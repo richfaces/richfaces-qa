@@ -26,6 +26,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -59,22 +60,22 @@ public abstract class AbstractTreeToggleListenerTest<P extends TTLPage> extends 
 
     private void testTTL(final String expectedText, String failMessage) {
         //test expanding of node
-        waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
+        page.waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText + expandedNodeString), failMessage);
         //then test collapsing of node
-        waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
+        page.waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText + collapsedNodeString), failMessage);
     }
 
     private void testTTLWithoutAdditionalStateStrings(final String expectedText, String failMessage) {
         //test expanding of node
-        waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
+        page.waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText));
         //then test collapsing of node
-        waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
+        page.waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText));
     }

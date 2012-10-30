@@ -28,6 +28,7 @@ import java.net.URISyntaxException;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -84,7 +85,7 @@ public abstract class AbstractFileUploadWebDriverTest<P extends FileUploadPage> 
     protected void sendFileWithWaiting(String filename, boolean willBeAccepted, boolean willBeUploaded) {
         sendFileToInputWithWaiting(filename, willBeAccepted);
         if (willBeUploaded) {
-            waitRequest(page.uploadButton, WaitRequestType.XHR).click();
+            page.waitRequest(page.uploadButton, WaitRequestType.XHR).click();
         } else {
             //Metamer's request time will not change, but XHR request will be send
             Graphene.guardXhr(page.uploadButton).click();
