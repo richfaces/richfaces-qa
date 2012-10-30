@@ -60,7 +60,7 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
         assertEquals(page.getAccordion().size(), 5, "number of visible headers");
         assertTrue(page.getAccordion().getItem(0).isActive(), "The first accordion item should be active.");
         for (int i = 1; i < page.getAccordion().size(); i++) {
-            assertTrue(page.getAccordion().getItem(i).isInactive(), "Item" + (i + 1) + " shouldn't be active.");
+            assertTrue(page.getAccordion().getItem(i).isInactive(), "Item " + (i + 1) + " shouldn't be active.");
         }
     }
 
@@ -70,21 +70,22 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
 
         assertTrue(page.isAccordionVisible(), "Accordion is not present on the page.");
         for (AccordionItem item: page.getAccordion()) {
-            assertTrue(item.isActive() || item.isInactive() || !item.isEnabled(), "Item" + item.getHeader() + "'s header should be visible.");
+            assertTrue(item.isActive() || item.isInactive() || !item.isEnabled(), "Item " + item.getHeader() + "'s header should be visible.");
         }
 
         assertTrue(page.getAccordion().getItem(4).isActive(), "Content of item5 should be visible.");
         for (int i = 0; i < 4; i++) {
-            assertTrue(page.getAccordion().getItem(i).isInactive(), "Item" + (i + 1) + " shouldn't be active.");
+            assertTrue(page.getAccordion().getItem(i).isInactive(), "Item " + (i + 1) + " shouldn't be active.");
         }
 
         accordionAttributes.set(AccordionAttributes.activeItem, "item4");
         for (AccordionItem item: page.getAccordion()) {
-            assertTrue(item.isActive() || item.isInactive() || !item.isEnabled(), "Item" + item.getHeader() + "'s header should be visible.");
+            assertTrue(item.isActive() || item.isInactive() || !item.isEnabled(), "Item " + item.getHeader() + "'s header should be visible.");
         }
 
-        for (AccordionItem item: page.getAccordion()) {
-            assertTrue(item.isInactive(), "Item" + item.getHeader() + " shouldn't be active.");
+        assertTrue(page.getAccordion().getItem(0).isActive(), "Item 1 should be active.");
+        for (int i = 1; i < 4; i++) {
+            assertTrue(page.getAccordion().getItem(i).isInactive(), "Item " + (i + 1) + " shouldn't be active.");
         }
     }
 
