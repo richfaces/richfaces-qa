@@ -21,29 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-import java.util.concurrent.TimeUnit;
-
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.RequestTimeChangesHandler;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.WDWait;
-import org.jboss.test.selenium.support.ui.ElementPresent;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
-
-import com.google.common.base.Predicate;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -53,8 +34,6 @@ public class ValidationPage extends MetamerPage {
 
     public static final String JS_COMPLETED_STATE_STRING = "completed";
     public static final String JS_STATE_VARIABLE = "document.valuesSettingState";
-    protected static final int MINOR_WAIT_TIME = 50;// ms
-    protected static final int TRIES = 20;//for guardListSize and expectedReturnJS
 
     @FindBy(id = "setCorrectValuesButton")
     WebElement setCorrectValuesButton;
@@ -84,9 +63,6 @@ public class ValidationPage extends MetamerPage {
     WebElement activateButton;
     @FindBy(css = "input[id$=deactivateButton]")
     WebElement deactivateButton;
-
-    private ElementPresent elementPresent = ElementPresent.getInstance();
-    private WebDriver driver = GrapheneContext.getProxy();
 
     /**
      * @return text of validation message for component jsf-inAtt (component
@@ -185,199 +161,5 @@ public class ValidationPage extends MetamerPage {
     public void deactivateCustomMessages() {
         setCorrectValuesAndSubmitJSF();
         waitRequest(deactivateButton, WaitRequestType.XHR).click();
-    }
-
-    /**
-     * !All requests depends on Metamer`s requestTime!
-     * Temporary method before https://issues.jboss.org/browse/ARQGRA-200 is
-     * resolved. Generates a waiting proxy, which will wait for page rendering
-     * after expected @waitRequestType which will be launched via
-     * communicating with @element.
-     *
-     * @param element WebElement which will launch a request (e.g. with methods
-     * click(), submit()...) after invoking it.
-     * @param waitRequestType type of expected request which will be launched
-     * @return waiting proxy for input element
-     */
-    protected WebElement waitRequest(WebElement element, WaitRequestType waitRequestType) {
-        switch (waitRequestType) {
-            case HTTP:
-                return requestTimeChangesWaiting(Graphene.guardHttp(element));
-            case XHR:
-                return requestTimeChangesWaiting(Graphene.guardXhr(element));
-            case NONE:
-                return requestTimeNotChangesWaiting(Graphene.guardNoRequest(element));
-            default:
-                throw new UnsupportedOperationException("Not supported request: " + waitRequestType);
-        }
-    }
-
-    /**
-     * Method for guarding that Metamer's requestTime changes.
-     * @param element element which action should resolve in Metamer's requestTime change
-     * @return guarded element
-     */
-    protected WebElement requestTimeChangesWaiting(WebElement element) {
-        return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
-                new Class[]{ WebElement.class }, new RequestTimeChangesHandler(element));
-    }
-
-    /**
-     * Method for guarding that Metamer's requestTime not changes. Waits for 2 seconds.
-     * @param element element which action should not resolve in Metamer's requestTime change
-     * @return guarded element
-     */
-    protected WebElement requestTimeNotChangesWaiting(WebElement element) {
-        return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
-                new Class[]{ WebElement.class }, new RequestTimeNotChangesHandler(element, 2));
-    }
-
-    /**
-     * Waits for change of requestTime in Metamer.
-     */
-    public class RequestTimeChangesHandler implements InvocationHandler {
-
-        protected final WebElement element;
-        protected String time1;
-        protected final By REQ_TIME = By.cssSelector("span[id='requestTime']");
-
-        public RequestTimeChangesHandler(WebElement element) {
-            this.element = element;
-        }
-
-        protected String getTime() {
-            WebElement el = waitUntilElementIsVisible(By.cssSelector("span[id='requestTime']"));
-            String time = el.getText();
-            return time;
-        }
-
-        protected void beforeAction() {
-            time1 = getTime();
-        }
-
-        protected void afterAction() {
-            new WDWait().until(new Predicate<WebDriver>() {
-                @Override
-                public boolean apply(WebDriver input) {
-                    return !input.findElement(REQ_TIME).getText().equals(time1);
-                }
-            });
-        }
-
-        @Override
-        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            beforeAction();
-            Object o = method.invoke(element, args);
-            afterAction();
-            return o;
-        }
-    }
-
-    /**
-     * Waits number of seconds and checks if requestTime was not changed,
-     */
-    public class RequestTimeNotChangesHandler extends RequestTimeChangesHandler {
-
-        private final int waitTime;
-
-        public RequestTimeNotChangesHandler(WebElement element, int waitTime) {
-            super(element);
-            this.waitTime = waitTime;
-        }
-
-        @Override
-        protected void afterAction() {
-            waiting(waitTime);
-            if (!getTime().equals(time1)) {
-                throw new RuntimeException("No request expected, but request time has changed.");
-            }
-        }
-
-        @Override
-        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            beforeAction();
-            Object o = method.invoke(element, args);
-            afterAction();
-            return o;
-        }
-    }
-
-    /**
-     * Tries to execute JavaScript script for few times with some wait time
-     * between tries and expecting a predicted result. Method waits for expected
-     * string defined in @expectedValue. Returns single trimmed String with
-     * expected value or what it found or null.
-     *
-     * @param expectedValue expected return value of javaScript
-     * @param script whole JavaScript that will be executed
-     * @param args
-     * @return single and trimmed string or null
-     */
-    protected String expectedReturnJS(String script, String expectedValue, Object... args) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        String result = null;
-        for (int i = 0; i < TRIES; i++) {
-            Object executeScript = js.executeScript(script, args);
-            if (executeScript != null) {
-                result = ((String) js.executeScript(script, args)).trim();
-                if (result.equals(expectedValue)) {
-                    break;
-                }
-            }
-            waiting(MINOR_WAIT_TIME);
-        }
-        return result;
-    }
-
-    /**
-     * Waiting method. Waits number of milis defined by @milis
-     *
-     * @param milis
-     */
-    protected static void waiting(int milis) {
-        try {
-            Thread.sleep(milis);
-        } catch (InterruptedException ignored) {
-        }
-    }
-
-    /**
-     * WebDriver wait which ignores StaleElementException and
-     * NoSuchElementException and is polling every 50 ms.
-     */
-    public class WDWait extends WebDriverWait {
-
-        /**
-         * WebDriver wait which ignores StaleElementException and
-         * NoSuchElementException and polling every 50 ms with max wait time of
-         * 5 seconds
-         */
-        public WDWait() {
-            this(5);
-        }
-
-        /**
-         * WebDriver wait which ignores StaleElementException and
-         * NoSuchElementException and polling every 50 ms with max wait time set
-         * in attribute
-         *
-         * @param seconds max wait time
-         */
-        public WDWait(int seconds) {
-            super(driver, seconds);
-            ignoring(NoSuchElementException.class);
-            ignoring(StaleElementReferenceException.class);
-            pollingEvery(50, TimeUnit.MILLISECONDS);
-        }
-    }
-
-    /**
-     * Wait for element to be visible.
-     *
-     * @param by locate by
-     * @return found element
-     */
-    protected WebElement waitUntilElementIsVisible(final By by) {
-        return new WDWait().until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 }
