@@ -25,6 +25,7 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
+import org.richfaces.tests.metamer.ftest.richAutocomplete.JSR303Page;
 import org.richfaces.tests.metamer.ftest.richAutocomplete.TestComponentWithJSR303;
 import org.testng.annotations.Test;
 
@@ -35,7 +36,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision: 22534 $
  */
-public class TestInplaceInputWithJSR303 extends TestComponentWithJSR303 {
+public class TestInplaceInputWithJSR303 extends TestComponentWithJSR303<JSR303Page> {
 
     @Override
     public URL getTestUrl() {
