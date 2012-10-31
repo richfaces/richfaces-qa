@@ -16,7 +16,6 @@
             <class name="org.richfaces.tests.metamer.ftest.a4jPush.TestTwoPush" />
             <class name="org.richfaces.tests.metamer.ftest.richAccordion.TestAccordion" />
             <class name="org.richfaces.tests.metamer.ftest.richAccordion.TestAccordionKVS" />
-            <class name="org.richfaces.tests.metamer.ftest.richCalendar.TestRichCalendarValidationMessages" />
             <class name="org.richfaces.tests.metamer.ftest.richContextMenu.TestRichContextMenuWebDriver" />
             <class name="org.richfaces.tests.metamer.ftest.richEditor.TestRichEditorWithTyping" />
             <class name="org.richfaces.tests.metamer.ftest.richExtendedDataTable.TestEDTFrozenColumns" />
@@ -34,6 +33,7 @@
             <package name="org.richfaces.tests.metamer.ftest.a4jCommandLink"/>
             <package name="org.richfaces.tests.metamer.ftest.a4jLog"/>
             <package name="org.richfaces.tests.metamer.ftest.richAutocomplete"/>
+            <package name="org.richfaces.tests.metamer.ftest.richCalendar"/>
             <package name="org.richfaces.tests.metamer.ftest.richFileUpload"/>
             <package name="org.richfaces.tests.metamer.ftest.richItemChangeListener"/>
             <package name="org.richfaces.tests.metamer.ftest.richMessage"/>
