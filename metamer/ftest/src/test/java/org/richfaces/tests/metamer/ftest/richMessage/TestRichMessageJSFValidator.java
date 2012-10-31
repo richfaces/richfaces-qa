@@ -26,6 +26,7 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
@@ -36,7 +37,7 @@ public class TestRichMessageJSFValidator extends AbstractRichMessageWDTest<Messa
 
     @Override
     protected void waitingForValidationMessages() {
-        page.waitRequest(Graphene.guardXhr(page.a4jCommandButton), WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(Graphene.guardXhr(page.a4jCommandButton), WaitRequestType.XHR).click();
     }
 
     @Override
