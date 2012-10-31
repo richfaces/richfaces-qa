@@ -21,16 +21,21 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver;
 
+import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -44,6 +49,7 @@ import org.openqa.selenium.support.pagefactory.FieldDecorator;
 import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -55,6 +61,9 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
     private Page page;
     @Drone
     private WebDriver webDriver;
+
+    // Menu groups in left menu
+    Map<String, String> groups;
 
     /**
      * Creates a new instance of {@link AbstractWebDriverTest}
@@ -94,10 +103,26 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
      */
     @BeforeMethod(alwaysRun = true, dependsOnMethods = { "initializePage" })
     public void initializePageUrl() throws MalformedURLException {
-        if (getConfiguration().isVerbose()) {
-            System.out.println("opening " + getPath().toString());
+        if (runInPortalEnv) {
+            String url = format("{0}://{1}:{2}/{3}", getDeployedURL().getProtocol(), getDeployedURL().getHost(),
+                getDeployedURL().getPort(), "portal/classic/showcase");
+            if (getConfiguration().isVerbose()) {
+                System.out.println("opening " + url);
+            }
+            webDriver.get(url);
+            openComponentExamplePageInPortal();
+        } else {
+            if (getConfiguration().isVerbose()) {
+                System.out.println("opening " + getPath().toString());
+            }
+            webDriver.get(getPath().toString());
         }
-        webDriver.get(getPath().toString());
+    }
+
+    protected void openComponentExamplePageInPortal() {
+        // System.out.println(" DemoName: " + getDemoName() + "\n SampleName: " + getSampleName() + "\n Page: " + getPage());
+        webDriver.findElement(By.xpath(format("td[@class=rf-pm-top-gr-lbl][text()='{0}']", groups.get(getDemoName())))).click();
+        webDriver.findElement(By.partialLinkText(format("{0}", getDemoName()))).click();
     }
 
     @AfterMethod(alwaysRun = true)
@@ -168,6 +193,82 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
             fieldDecorator = new StaleReferenceAwareFieldDecorator(createLocatorFactory(), getConfiguration().getWebDriverElementTries());
         }
         return fieldDecorator;
+    }
+
+    @BeforeClass
+    private void initComponentMenuGroups() {
+        if (groups == null ) {
+            groups = new HashMap<String, String>();
+            groups.put("ajax", "Ajax Action");
+            groups.put("commandButton", "Ajax Action");
+            groups.put("commandLink", "Ajax Action");
+            groups.put("actionListener", "Ajax Action");
+            groups.put("jsFunction", "Ajax Action");
+            groups.put("poll", "Ajax Action");
+            groups.put("param", "Ajax Action");
+
+            groups.put("queue", "Ajax Queue");
+            groups.put("attachQueue", "Ajax Queue");
+
+            groups.put("outputPanel", "Ajax Output/Containers");
+            groups.put("status", "Ajax Output/Containers");
+            groups.put("region", "Ajax Output/Containers");
+            groups.put("mediaOutput", "Ajax Output/Containers");
+            groups.put("log", "Ajax Output/Containers");
+
+            groups.put("Client Side Validation", "Validation");
+            groups.put("graphValidator", "Validation");
+            groups.put("message", "Validation");
+            groups.put("messages", "Validation");
+            groups.put("notify", "Validation");
+
+            groups.put("repeat", "Data Iteration");
+            groups.put("dataTable", "Data Iteration");
+            groups.put("extendedDataTable", "Data Iteration");
+            groups.put("collapsibleSubTable", "Data Iteration");
+            groups.put("dataScroller", "Data Iteration");
+            groups.put("list", "Data Iteration");
+            groups.put("dataGrid", "Data Iteration");
+
+            groups.put("tree", "Trees");
+            groups.put("Tree Adaptors", "Trees");
+
+            groups.put("panel", "Output/Panels");
+            groups.put("togglePanel", "Output/Panels");
+            groups.put("tabPanel", "Output/Panels");
+            groups.put("collapsiblePanel", "Output/Panels");
+            groups.put("accordion", "Output/Panels");
+            groups.put("popupPanel", "Output/Panels");
+            groups.put("progressBar", "Output/Panels");
+            groups.put("tooltip", "Output/Panels");
+
+            groups.put("panelMenu", "Menus");
+            groups.put("toolbar", "Menus");
+            groups.put("contextMenu", "Menus");
+            groups.put("dropDownMenu", "Menus");
+
+            groups.put("autocomplete", "Inputs");
+            groups.put("calendar", "Inputs");
+            groups.put("editor", "Inputs");
+            groups.put("inputNumberSlider", "Inputs");
+            groups.put("inputNumberSpinner", "Inputs");
+            groups.put("InplaceInput", "Inputs");
+            groups.put("fileUpload", "Inputs");
+
+            groups.put("inplaceSelect", "Selects");
+            groups.put("select", "Selects");
+            groups.put("orderingList", "Selects");
+            groups.put("pickList", "Selects");
+
+            groups.put("Drag and Drop", "Drag and Drop");
+
+            groups.put("Standard elements skinning", "Miscellaneous");
+            groups.put("RichFaces functions", "Miscellaneous");
+            groups.put("componentControl", "Miscellaneous");
+            groups.put("hashParam", "Miscellaneous");
+            groups.put("hotKey", "Miscellaneous");
+            groups.put("jQuery", "Miscellaneous");
+        }
     }
 
     protected abstract Page createPage();

@@ -44,10 +44,17 @@ public abstract class AbstractShowcaseTest extends Arquillian {
     @ArquillianResource
     private URL deployedURL;
 
+    protected static final Boolean runInPortalEnv = Boolean.getBoolean("runInPortalEnv");
+
     @Deployment(testable = false)
     public static WebArchive createTestArchive() {
-        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class,
-            new File("target/showcase.war"));
+        File warFile2deploy;
+        if (runInPortalEnv) {
+            warFile2deploy = new File("target/showcase-portlet.war");
+        } else {
+            warFile2deploy = new File("target/showcase.war");
+        }
+        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, warFile2deploy);
         return war;
     }
 
@@ -138,5 +145,33 @@ public abstract class AbstractShowcaseTest extends Arquillian {
      * @return sample name
      */
     protected abstract String getSampleName();
+
+    // protected abstract MetamerNavigation getComponentExampleNavigation();
+
+    public class MetamerNavigation {
+        /** "A4J", "Rich", "Other" */
+        final String group;
+        /** Such as "Rich Calendar" */
+        final String component;
+        /** Such as "Simple" or "RF-12345" */
+        final String page;
+
+        public MetamerNavigation(String group, String component, String page) {
+            this.group = group;
+            this.component = component;
+            this.page = page;
+        }
+
+        public String getGroup() {
+            return group;
+        }
+        public String getComponent() {
+            return component;
+        }
+
+        public String getPage() {
+            return page;
+        }
+    }
 
 }
