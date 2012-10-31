@@ -1,6 +1,6 @@
-/*******************************************************************************
+/**
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,1080 +18,1102 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
-import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.BasicAttributes.buttonClass;
-import static org.richfaces.tests.metamer.ftest.BasicAttributes.inputClass;
-import static org.richfaces.tests.metamer.ftest.BasicAttributes.inputStyle;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.calendarAttributes;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.boundaryDatesMode;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.buttonDisabledIcon;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.buttonIcon;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.buttonLabel;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.converterMessage;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.datePattern;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.dayClassFunction;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.dayDisableFunction;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.defaultTime;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.disabled;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.enableManualInput;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.firstWeekDay;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.horizontalOffset;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.immediate;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.inputSize;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.locale;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.mode;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.monthLabels;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.monthLabelsShort;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.onbeforetimeselect;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.onchange;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.onclean;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.oncomplete;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.ondatemouseout;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.ondatemouseover;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.ondateselect;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.onhide;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.oninputchange;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.onshow;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.ontimeselect;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.rendered;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.showApplyButton;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.showFooter;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.showHeader;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.showInput;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.showWeekDaysBar;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.showWeeksBar;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.verticalOffset;
-import static org.richfaces.tests.metamer.ftest.richCalendar.CalendarAttributes.zindex;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.calendarAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
-
 import javax.faces.event.PhaseId;
-
-import org.jboss.arquillian.ajocado.css.CssProperty;
-import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.geometry.Dimension;
-import org.jboss.arquillian.ajocado.javascript.JavaScript;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
-import org.jboss.test.selenium.waiting.EventFiredCondition;
+import org.jboss.arquillian.graphene.Graphene;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.richfaces.tests.page.fragments.impl.Locations;
+import org.richfaces.tests.page.fragments.impl.calendar.common.FooterControls;
+import org.richfaces.tests.page.fragments.impl.calendar.common.HeaderControls;
+import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay;
+import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay.DayType;
+import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarWeek;
+import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.DayPicker;
+import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeEditor;
+import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeEditor.SetValueBy;
+import org.richfaces.tests.page.fragments.impl.calendar.popup.CalendarPopupComponent.OpenedBy;
+import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.PopupHeaderControls;
+import org.richfaces.tests.page.fragments.impl.message.MessageComponentImpl;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-
 /**
- * Test case for attributes of a calendar on page faces/components/richCalendar/simple.xhtml.
- *
- * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22786 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichCalendarAttributes extends AbstractCalendarTest {
+public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage> {
 
-    private final int OFFSET_TOLERANCE = 2;
+    private DateTimeFormatter dateTimeFormatter;
+    @Inject
+    @Use(empty = false)
+    private BoundaryDatesMode boundaryDatesMode;
+    @Inject
+    @Use(empty = false)
+    private Direction direction;
+    @Inject
+    @Use(empty = false)
+    private Mode mode;
+    @Inject
+    @Use(empty = false)
+    private TodayControlMode todayControlMode;
+    @Inject
+    @Use(empty = false)
+    private Boolean booleanValue;
+    @FindBy(css = "input[id$=a4jButton]")
+    private WebElement a4jbutton;
+    @FindBy(css = "span[id$=msg]")
+    private MessageComponentImpl message;
+    //
+    private final Action setTimeAction = new SetTimeAction();
+    private final Action setCurrentDateWithCalendarsTodayButtonAction = new SetCurrentDateWithCalendarsTodayButtonAction();
+    private final Action setTodayAndThenClickToNextMonthAction = new SetTodayAndThenClickToNextMonthAction();
+
+    private enum BoundaryDatesMode {
+
+        NULL("null"),
+        INACTIVE("inactive"),
+        SCROLL("scroll"),
+        SELECT("select");
+        private final String value;
+
+        private BoundaryDatesMode(String value) {
+            this.value = value;
+        }
+    }
+
+    private enum Direction {
+
+        AUTO("auto"),
+        TOPLEFT("topLeft"),
+        TOPRIGHT("topRight"),
+        BOTTOMLEFT("bottomLeft"),
+        BOTTOMRIGHT("bottomRight"),
+        NULL("null");
+        private final String value;
+
+        private Direction(String value) {
+            this.value = value;
+        }
+    }
+
+    private enum Mode {
+
+        AJAX("ajax"),
+        CLIENT("client"),
+        NULL("null");
+        private final String value;
+
+        private Mode(String value) {
+            this.value = value;
+        }
+    }
+
+    private enum TodayControlMode {
+
+        HIDDEN("hidden"),
+        NULL("null"),
+        SELECT("select"),
+        SCROLL("scroll");
+        private final String value;
+
+        private TodayControlMode(String value) {
+            this.value = value;
+        }
+    }
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richCalendar/simple.xhtml");
     }
 
-    @Test
-    public void testBoundaryDatesModeNull() {
-        selenium.click(input);
-
-        String month = selenium.getText(monthLabel);
-        guardNoRequest(selenium).click(cellWeekDay.format(6, 6));
-        String newMonth = selenium.getText(monthLabel);
-        assertEquals(newMonth, month, "Month should not change.");
-
-        // the most top-left column might be 1st day of month
-        while (selenium.getText(cellWeekDay.format(1, 1)).equals("1")) {
-            selenium.click(prevMonthButton);
-        }
-
-        month = selenium.getText(monthLabel);
-        guardNoRequest(selenium).click(cellWeekDay.format(1, 1));
-        newMonth = selenium.getText(monthLabel);
-        assertEquals(newMonth, month, "Month should not change.");
+    @BeforeMethod
+    public void initDateFormatter() {
+        this.dateTimeFormatter = DateTimeFormat.forPattern(calendarAttributes.get(CalendarAttributes.datePattern));
     }
 
     @Test
-    public void testBoundaryDatesModeInactive() {
-        calendarAttributes.set(boundaryDatesMode, "inactive");
+    @Use(field = "boundaryDatesMode", enumeration = true)
+    public void testBoundaryDatesMode() {
+        calendarAttributes.set(CalendarAttributes.boundaryDatesMode, boundaryDatesMode.value);
+        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
+        FooterControls proxiedFooterControls = calendar.openPopup().getProxiedFooterControls();
+        HeaderControls proxiedHeaderControls = calendar.openPopup().getProxiedHeaderControls();
+        DateTime yearAndMonth;
+        switch (boundaryDatesMode) {
+            case INACTIVE:
+            case NULL:
+                Graphene.guardNoRequest(proxiedDayPicker.getBoundaryDays().get(0)).select();
+                proxiedFooterControls.applyDate();
+                assertTrue(calendar.getInputValue().isEmpty());
+                break;
+            case SCROLL:
+                //scroll to last day of previous month
+                Graphene.guardNoRequest(proxiedDayPicker.getBoundaryDays().get(0)).select();
+                yearAndMonth = proxiedHeaderControls.getYearAndMonth();
+                assertEquals(yearAndMonth.getYear(), todayMidday.getYear());
+                assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.minusMonths(1).getMonthOfYear());
+                proxiedFooterControls.applyDate();
+                assertTrue(calendar.getInputValue().isEmpty());
+                break;
+            case SELECT:
+                //scroll and select last day of previous month
+                DateTime referenceDate = todayMidday.withDayOfMonth(1).minusDays(1);
+                Graphene.guardNoRequest(proxiedDayPicker.getBoundaryDays().get(0)).select();
+                yearAndMonth = proxiedHeaderControls.getYearAndMonth();
+                assertEquals(yearAndMonth.getYear(), referenceDate.getYear());
+                assertEquals(yearAndMonth.getMonthOfYear(), referenceDate.getMonthOfYear());
+                assertEquals(proxiedDayPicker.getSelectedDay().getDayNumber().intValue(), referenceDate.getDayOfMonth());
 
-        testBoundaryDatesModeNull();
-    }
-
-    @Test
-    public void testBoundaryDatesModeScroll() {
-        calendarAttributes.set(boundaryDatesMode, "scroll");
-        selenium.click(input);
-
-        String thisMonth = selenium.getText(monthLabel);
-        // November, 2010 -> November
-        thisMonth = thisMonth.substring(0, thisMonth.indexOf(","));
-        guardNoRequest(selenium).click(cellWeekDay.format(6, 6));
-        String newMonth = selenium.getText(monthLabel);
-        newMonth = newMonth.substring(0, newMonth.indexOf(","));
-        assertEquals(Month.valueOf(newMonth), Month.valueOf(thisMonth).next(), "Month did not change correctly.");
-
-        assertNoDateSelected();
-
-        // the most top-left column might be 1st day of month
-        while (selenium.getText(cellWeekDay.format(1, 1)).equals("1")) {
-            selenium.click(prevMonthButton);
+                Graphene.guardXhr(proxiedFooterControls).applyDate();
+                DateTime parsedDateTime = dateTimeFormatter.parseDateTime(calendar.getInputValue());
+                assertEquals(parsedDateTime.getYear(), referenceDate.getYear());
+                assertEquals(parsedDateTime.getMonthOfYear(), referenceDate.getMonthOfYear());
+                assertEquals(parsedDateTime.getDayOfMonth(), referenceDate.getDayOfMonth());
+                break;
         }
-
-        thisMonth = selenium.getText(monthLabel);
-        // November, 2010 -> November
-        thisMonth = thisMonth.substring(0, thisMonth.indexOf(","));
-        guardNoRequest(selenium).click(cellWeekDay.format(1, 1));
-        newMonth = selenium.getText(monthLabel);
-        newMonth = newMonth.substring(0, newMonth.indexOf(","));
-
-        assertEquals(Month.valueOf(newMonth), Month.valueOf(thisMonth).previous(), "Month did not change correctly.");
-
-        assertNoDateSelected();
-    }
-
-    @Test
-    public void testBoundaryDatesModeSelect() {
-        calendarAttributes.set(boundaryDatesMode, "select");
-        selenium.click(input);
-
-        String thisMonth = selenium.getText(monthLabel);
-        String selectedDate = selenium.getText(cellWeekDay.format(6, 6));
-        // November, 2010 -> November
-        thisMonth = thisMonth.substring(0, thisMonth.indexOf(","));
-        guardNoRequest(selenium).click(cellWeekDay.format(6, 6));
-        String newMonth = selenium.getText(monthLabel);
-        newMonth = newMonth.substring(0, newMonth.indexOf(","));
-        assertEquals(Month.valueOf(newMonth), Month.valueOf(thisMonth).next(), "Month did not change correctly.");
-
-        assertSelected(selectedDate);
-
-        // the most top-left column might be 1st day of month
-        while (selenium.getText(cellWeekDay.format(1, 1)).equals("1")) {
-            selenium.click(prevMonthButton);
-        }
-
-        thisMonth = selenium.getText(monthLabel);
-        selectedDate = selenium.getText(cellWeekDay.format(1, 1));
-        // November, 2010 -> November
-        thisMonth = thisMonth.substring(0, thisMonth.indexOf(","));
-        guardNoRequest(selenium).click(cellWeekDay.format(1, 1));
-        newMonth = selenium.getText(monthLabel);
-        newMonth = newMonth.substring(0, newMonth.indexOf(","));
-
-        assertEquals(Month.valueOf(newMonth), Month.valueOf(thisMonth).previous(), "Month did not change correctly.");
-
-        assertSelected(selectedDate);
     }
 
     @Test
     public void testButtonClass() {
-        testStyleClass(image, buttonClass);
+        testStyleClass(calendar.getPopupButton(), BasicAttributes.buttonClass);
     }
 
     @Test
     public void testButtonClassLabel() {
-        calendarAttributes.set(buttonLabel, "label");
-
-        testStyleClass(button, buttonClass);
+        calendarAttributes.set(CalendarAttributes.buttonLabel, "label");
+        testStyleClass(calendar.getPopupButton(), BasicAttributes.buttonClass);
     }
 
     @Test
     public void testButtonClassIcon() {
-        calendarAttributes.set(buttonIcon, "heart");
-
-        testStyleClass(image, buttonClass);
+        calendarAttributes.set(CalendarAttributes.buttonIcon, "heart");
+        testStyleClass(calendar.getPopupButton(), BasicAttributes.buttonClass);
     }
 
     @Test
     public void testButtonIcon() {
-        calendarAttributes.set(buttonIcon, "star");
-
-        AttributeLocator<JQueryLocator> attr = image.getAttribute(Attribute.SRC);
-        String src = selenium.getAttribute(attr);
+        calendarAttributes.set(CalendarAttributes.buttonIcon, "star");
+        String src = calendar.getPopupButton().getAttribute("src");
         assertTrue(src.contains("star.png"), "Calendar's icon was not updated.");
 
-        calendarAttributes.reset(buttonIcon);
-
-        src = selenium.getAttribute(attr);
+        calendarAttributes.set(CalendarAttributes.buttonIcon, "null");
+        src = calendar.getPopupButton().getAttribute("src");
         assertTrue(src.contains("calendarIcon.png"), "Calendar's icon was not updated.");
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10255")
     public void testButtonDisabledIcon() {
-        calendarAttributes.set(disabled, Boolean.TRUE);
+        calendarAttributes.set(CalendarAttributes.buttonDisabledIcon, "heart");
+        calendarAttributes.set(CalendarAttributes.disabled, Boolean.TRUE);
 
-        calendarAttributes.set(buttonDisabledIcon, "heart");
+        String src = calendar.getPopupButton().getAttribute("src");
+        assertTrue(src.endsWith("heart.png"), "Calendar's icon was not updated.");
 
-        AttributeLocator<JQueryLocator> attr = image.getAttribute(Attribute.SRC);
-        String src = selenium.getAttribute(attr);
-        assertTrue(src.contains("heart.png"), "Calendar's icon was not updated.");
+        calendarAttributes.set(CalendarAttributes.buttonDisabledIcon, "null");
 
-        calendarAttributes.reset(buttonDisabledIcon);
-
-        src = selenium.getAttribute(attr);
+        src = calendar.getPopupButton().getAttribute("src");
         assertTrue(src.contains("disabledCalendarIcon.png"), "Calendar's icon was not updated.");
     }
 
     @Test
     public void testButtonLabel() {
-        calendarAttributes.set(buttonLabel, "label");
+        calendarAttributes.set(CalendarAttributes.buttonLabel, "label");
 
-        assertTrue(selenium.isVisible(button), "Button should be displayed.");
-        assertEquals(selenium.getText(button), "label", "Label of the button.");
-        if (selenium.isElementPresent(image)) {
-            assertFalse(selenium.isVisible(image), "Image should not be displayed.");
-        }
+        assertTrue(Graphene.element(calendar.getPopupButton()).isVisible().apply(driver), "Button should be displayed.");
+        assertEquals(calendar.getPopupButton().getText(), "label", "Label of the button.");
+        assertNotEquals(calendar.getPopupButton().getTagName(), "img", "Image should not be displayed.");
 
-        calendarAttributes.set(buttonIcon, "star");
-
-        if (selenium.isElementPresent(image)) {
-            assertFalse(selenium.isVisible(image), "Image should not be displayed.");
-        }
+        calendarAttributes.set(CalendarAttributes.buttonIcon, "star");
+        assertNotEquals(calendar.getPopupButton().getTagName(), "img", "Image should not be displayed.");
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-11313")
+    @RegressionTest("https://issues.jboss.org/browse/RF-11313")
     public void testConverterMessage() {
-        JQueryLocator message = pjq("span[id$=msg] .rf-msg-det");
+        String errorMsg = "conversion error";
+        calendarAttributes.set(CalendarAttributes.enableManualInput, Boolean.TRUE);
+        calendarAttributes.set(CalendarAttributes.converterMessage, errorMsg);
 
-        calendarAttributes.set(enableManualInput, Boolean.TRUE);
-        calendarAttributes.set(converterMessage, "conversion error");
+        calendar.getInput().sendKeys("RF 4");
+        submitWithA4jSubmitBtn();
+        Graphene.waitAjax().until(message.isVisibleCondition());
 
-        selenium.type(input, "xxx");
-        guardXhr(selenium).click(pjq("input[id$=a4jButton]"));
-        waitGui.until(elementVisible.locator(message));
-
-        assertEquals(selenium.getText(message), "conversion error");
+        assertEquals(message.getDetail(), errorMsg);
     }
 
     @Test
     public void testDatePattern() {
-        calendarAttributes.set(datePattern, "hh:mm:ss a MMMM d, yyyy");
+        String pattern = "hh:mm:ss a MMMM d, yyyy";
+        calendarAttributes.set(CalendarAttributes.datePattern, pattern);
 
-        selenium.click(input);
-
-        selenium.click(cellDay.format(6));
-        String day = selenium.getText(cellDay.format(6));
-        String month = selenium.getText(monthLabel);
-
-        String selectedDate = null;
+        setCurrentDateWithCalendarsTodayButtonAction.perform();
+        String calendarInputText = calendar.getInputValue();
+        dateTimeFormatter = DateTimeFormat.forPattern(pattern);
+        DateTime dt = null;
         try {
-            Date date = new SimpleDateFormat("d MMMM, yyyy hh:mm a").parse(day + " " + month + " 12:00 PM");
-            selectedDate = new SimpleDateFormat("hh:mm:ss a MMMM d, yyyy").format(date);
-        } catch (ParseException ex) {
+            dt = dateTimeFormatter.parseDateTime(calendarInputText);
+        } catch (IllegalArgumentException ex) {
             fail(ex.getMessage());
         }
-
-        selenium.click(applyButton);
-        assertFalse(selenium.isVisible(popup), "Popup should not be displayed.");
-
-        String inputDate = selenium.getValue(input);
-        assertEquals(inputDate, selectedDate, "Input doesn't contain selected date.");
+        assertEquals(dt.getDayOfMonth(), todayMidday.getDayOfMonth());
+        assertEquals(dt.getMonthOfYear(), todayMidday.getMonthOfYear());
+        assertEquals(dt.getYear(), todayMidday.getYear());
     }
 
     @Test
     public void testDayClassFunction() {
-        calendarAttributes.set(dayClassFunction, "yellowTuesdays");
+        int tuesdayDay = 3;
+        calendarAttributes.set(CalendarAttributes.dayClassFunction, "yellowTuesdays");
+        //switch to next month to refresh classes
+        calendar.openPopup().getHeaderControls().nextMonth();
+        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
+        List<CalendarDay> tuesdays = proxiedDayPicker.getSpecificDays(tuesdayDay);
+        tuesdays.removeAll(proxiedDayPicker.getBoundaryDays());
 
-        selenium.click(input);
-
-        for (int i = 2; i < 42; i += 7) {
-            if (!selenium.belongsClass(cellDay.format(i), "rf-cal-boundary-day")) {
-                assertTrue(selenium.belongsClass(cellDay.format(i), "yellowDay"), "Cell nr. " + i
-                    + " should be yellow.");
-            }
+        for (CalendarDay tuesday : tuesdays) {
+            assertTrue(tuesday.containsStyleClass("yellowDay"), "All tuesdays should be yellow.");
         }
 
-        calendarAttributes.reset(dayClassFunction);
+        calendarAttributes.set(CalendarAttributes.dayClassFunction, "null");
 
-        selenium.click(input);
+        //TODO: the following 2 lines should be removed after arquillian can handle proxy for elements in list
+        tuesdays = proxiedDayPicker.getSpecificDays(tuesdayDay);
+        tuesdays.removeAll(proxiedDayPicker.getBoundaryDays());
 
-        for (int i = 0; i < 42; i++) {
-            assertFalse(selenium.belongsClass(cellDay.format(i), "yellowDay"), "Cell nr. " + i
-                + " should not be yellow.");
-        }
-    }
-
-    @Test
-    public void testDisableFunction() {
-        calendarAttributes.set(dayDisableFunction, "disableTuesdays");
-
-        selenium.click(input);
-
-        for (int i = 2; i < 42; i += 7) {
-            if (!selenium.belongsClass(cellDay.format(i), "rf-cal-c")) {
-                assertFalse(selenium.belongsClass(cellDay.format(i), "rf-cal-btn"), "Cell nr. " + i
-                    + " should not be enabled.");
-            }
-        }
-
-        calendarAttributes.reset(dayDisableFunction);
-        selenium.click(input);
-
-        for (int i = 2; i < 42; i += 7) {
-            if (!selenium.belongsClass(cellDay.format(i), "rf-cal-c")) {
-                assertTrue(selenium.belongsClass(cellDay.format(i), "rf-cal-btn"), "Cell nr. " + i
-                    + " should be enabled.");
-            }
+        for (CalendarDay tuesday : tuesdays) {
+            assertFalse(tuesday.containsStyleClass("yellowDay"), "All tuesdays should not be yellow.");
         }
     }
 
     @Test
-    public void testDirection() throws Exception {
-        verifyPositions(0, 0);
+    public void testDayDisableFunction() {
+        calendarAttributes.set(CalendarAttributes.dayDisableFunction, "disableTuesdays");
+        int tuesdayDay = 3;
+        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
+        List<CalendarDay> tuesdays = proxiedDayPicker.getSpecificDays(tuesdayDay);
+        tuesdays.removeAll(proxiedDayPicker.getBoundaryDays());
+        for (CalendarDay tuesday : tuesdays) {
+            assertFalse(tuesday.is(DayType.clickable), "All tuesdays should not be enabled.");
+        }
+
+        calendarAttributes.set(CalendarAttributes.dayDisableFunction, "null");
+        //TODO: the following 2 lines should be removed after arquillian can handle proxy for elements in list
+        tuesdays = proxiedDayPicker.getSpecificDays(tuesdayDay);
+        tuesdays.removeAll(proxiedDayPicker.getBoundaryDays());
+
+        for (CalendarDay tuesday : tuesdays) {
+            assertTrue(tuesday.is(DayType.clickable), "All tuesdays should be enabled.");
+        }
     }
 
-    private void verifyPositions(int horizontalOffset, int verticalOffset) throws Exception {
+    @Test
+    @Use(field = "direction", enumeration = true)
+    public void testDirection() {
+        int tolerance = 4;
+        calendarAttributes.set(CalendarAttributes.direction, direction.value);
+        calendarAttributes.set(CalendarAttributes.jointPoint, Direction.BOTTOMLEFT.value);
+        //scrolls page down
+        Point locationInput, locationPopup = null;
+        locationInput = calendar.getLocations().getBottomLeft();
+        Locations popupLocations = calendar.openPopup().getLocations();
 
-        String[] directions = {"auto", "bottomLeft", "bottomRight", "topLeft", "topRight"};
+        switch (direction) {
+            case TOPLEFT:
+                locationPopup = popupLocations.getBottomRight();
+                break;
+            case TOPRIGHT:
+                locationPopup = popupLocations.getBottomLeft();
+                break;
+            case BOTTOMLEFT:
+                locationPopup = popupLocations.getTopRight();
+                break;
+            case NULL:
+            case AUTO:// auto (direction depends on browser/screen resolution)
+            case BOTTOMRIGHT:
+                locationPopup = popupLocations.getTopLeft();
+                break;
 
-        // get input position
-        int inputX = selenium.getElementPosition(input).getX();
-        int inputY = selenium.getElementPosition(input).getY();
-
-        // get input size
-        Dimension inputDim = selenium.getElementDimension(input);
-
-        // get popup size
-        selenium.click(input);
-        Dimension popupDim = selenium.getElementDimension(popup);
-
-        // test all directions
-        for (int i=0; i < directions.length; ++i) {
-            // set direction
-            calendarAttributes.set(CalendarAttributes.direction, directions[i]);
-            // show popup
-            selenium.click(input);
-
-            // get popup position
-            int popupX = selenium.getElementPosition(popup).getX();
-            int popupY = selenium.getElementPosition(popup).getY();
-
-            // horizontal offset from @horizontalOffset
-            int offsetXOnTheLeft = inputX - popupDim.getWidth() + 2 - horizontalOffset;
-            int offsetXOnTheRight = inputX + horizontalOffset;
-            // vertical offset from @verticalOffset
-            int offsetYOnTheBottom = inputY + (inputDim.getHeight() - 1) + verticalOffset;
-            int offsetYOnTheTop = inputY - popupDim.getHeight() + inputDim.getHeight() - verticalOffset;
-
-            switch (i) {
-                case 0: // auto (direction depends on browser/screen resolution)
-                    assertTrue(tolerantEquals(popupX, offsetXOnTheLeft, OFFSET_TOLERANCE) || tolerantEquals(popupX, offsetXOnTheRight, OFFSET_TOLERANCE),
-                        "Any expected value found. x = " + popupX + ", expected one of : " + offsetXOnTheLeft + ", " + offsetXOnTheRight + "; @direction is set to <" + directions[i] + ">.");
-                    assertTrue(tolerantEquals(popupY, offsetYOnTheBottom, OFFSET_TOLERANCE) || tolerantEquals(popupY, offsetYOnTheTop, OFFSET_TOLERANCE),
-                        "Any expected value found. y = " + popupY + ", expected one of: " + offsetYOnTheBottom + ", " + offsetYOnTheTop + "; @direction is set to <" + directions[i] + ">.");
-                    break;
-
-                case 1: // bottomLeft
-                    tolerantAssertEquals(popupX, offsetXOnTheLeft, OFFSET_TOLERANCE, "Horizontal position doesn't match, expected <" + popupX + ">, found <" + offsetXOnTheLeft + ">. Tolerance is set to <" + OFFSET_TOLERANCE + ">; @direction is set to <" + directions[i] + ">.");
-                    tolerantAssertEquals(popupY, offsetYOnTheBottom, OFFSET_TOLERANCE, "Vertical position doesn't match, expected <" + popupY + ">, found <" + offsetYOnTheBottom + ">. Tolerance is set to <" + OFFSET_TOLERANCE + ">; @direction is set to <" + directions[i] + ">");
-                    break;
-
-                case 2: // bottomRight
-                    tolerantAssertEquals(popupX, offsetXOnTheRight, OFFSET_TOLERANCE, "Horizontal position doesn't match, expected <" + popupX + ">, found <" + offsetXOnTheRight + ">. Tolerance is set to <" + OFFSET_TOLERANCE + ">; @direction is set to <" + directions[i] + ">.");
-                    tolerantAssertEquals(popupY, offsetYOnTheBottom, OFFSET_TOLERANCE, "Vertical position doesn't match, expected <" + popupY + ">, found <" + offsetYOnTheBottom + ">. Tolerance is set to <" + OFFSET_TOLERANCE + ">; @direction is set to <" + directions[i] + ">.");
-                    break;
-
-                case 3: // topLeft
-                    tolerantAssertEquals(popupX, offsetXOnTheLeft, OFFSET_TOLERANCE, "Horizontal position doesn't match, expected <" + popupX + ">, found <" + offsetXOnTheLeft + ">. Tolerance is set to <" + OFFSET_TOLERANCE + ">; @direction is set to <" + directions[i] + ">.");
-                    tolerantAssertEquals(popupY, offsetYOnTheTop, OFFSET_TOLERANCE, "Vertical position doesn't match, expected <" + popupY + ">, found <" + offsetYOnTheTop + ">. Tolerance is set to <" + OFFSET_TOLERANCE + ">; @direction is set to <" + directions[i] + ">.");
-                    break;
-
-                case 4: // topRight
-                    tolerantAssertEquals(popupX, offsetXOnTheRight, OFFSET_TOLERANCE,"Horizontal position doesn't match, expected <" + popupX + ">, found <" + offsetXOnTheRight + ">. Tolerance is set to <" + OFFSET_TOLERANCE + ">; @direction is set to <" + directions[i] + ">.");
-                    tolerantAssertEquals(popupY, offsetYOnTheTop, OFFSET_TOLERANCE, "Vertical position doesn't match, expected <" + popupY + ">, found <" + offsetYOnTheTop + ">. Tolerance is set to <" + OFFSET_TOLERANCE + ">; @direction is set to <" + directions[i] + ">.");
-                    break;
-
-                default:
-                    throw new Exception("Incorrectly handled switch!");
-            }
         }
+        tolerantAssertLocations(locationPopup, locationInput, tolerance);
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RF-9837", "https://issues.jboss.org/browse/RF-10085" })
     public void testDefaultTime() {
-        calendarAttributes.set(defaultTime, "21:24");
+        final String time = "06:06";
+        calendarAttributes.set(CalendarAttributes.defaultTime, time);
+        setCurrentDateWithCalendarsTodayButtonAction.perform();
+        String text = calendar.openPopup().getFooterControls().getTimeEditorOpenerElement().getText();
+        assertTrue(text.equals(time), "Default time");
 
-        selenium.click(input);
-        selenium.click(cellWeekDay.format(3, 3));
-
-        boolean displayed = selenium.isVisible(timeButton);
-        assertTrue(displayed, "Time button should be visible.");
-        String buttonText = selenium.getText(timeButton);
-        assertEquals(buttonText, "21:24", "Default time");
+        //another check in time editor
+        TimeEditor timeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
+        DateTime setTime = timeEditor.getTime();
+        DateTime reference = todayMidday.withHourOfDay(6).withMinuteOfHour(6);
+        assertEquals(setTime.getHourOfDay(), reference.getHourOfDay());
+        assertEquals(setTime.getMinuteOfHour(), reference.getMinuteOfHour());
     }
 
     @Test
     public void testDisabled() {
-        calendarAttributes.set(disabled, Boolean.TRUE);
+        calendarAttributes.set(CalendarAttributes.disabled, Boolean.TRUE);
+        assertTrue(Graphene.attribute(calendar.getInput(), "disabled").valueEquals("true").apply(driver));
 
-        AttributeLocator<JQueryLocator> disabledAttr = input.getAttribute(new Attribute("disabled"));
-        assertTrue(selenium.isAttributePresent(disabledAttr), "Disabled attribute of input should be defined.");
-        assertEquals(selenium.getAttribute(disabledAttr), "true", "Input should be disabled.");
-
-        selenium.click(input);
-        assertFalse(selenium.isVisible(popup), "Popup should not be displayed.");
-
-        selenium.click(image);
-        assertFalse(selenium.isVisible(popup), "Popup should not be displayed.");
+        //Popup should not be displayed
+        int catched = 0;
+        try {
+            Graphene.guardNoRequest(calendar).openPopup(OpenedBy.inputClicking);
+        } catch (TimeoutException ex) {
+            catched++;
+        }
+        try {
+            Graphene.guardNoRequest(calendar).openPopup(OpenedBy.openButtonClicking);
+        } catch (TimeoutException ex) {
+            catched++;
+        }
+        assertTrue(catched == 2);
     }
 
     @Test
     public void testEnableManualInput() {
-        AttributeLocator<JQueryLocator> readonlyAttr = input.getAttribute(new Attribute("readonly"));
-        assertTrue(selenium.isAttributePresent(readonlyAttr), "Readonly attribute of input should be defined.");
-        assertEquals(selenium.getAttribute(readonlyAttr), "true", "Input should be read-only.");
+        assertTrue(Graphene.attribute(calendar.getInput(), "readonly").valueEquals("true").apply(driver));
 
-        calendarAttributes.set(enableManualInput, Boolean.TRUE);
-
-        assertFalse(selenium.isAttributePresent(readonlyAttr), "Readonly attribute of input should not be defined.");
+        calendarAttributes.set(CalendarAttributes.enableManualInput, Boolean.TRUE);
+        assertTrue(Graphene.attribute(calendar.getInput(), "readonly").not().isPresent().apply(driver), "Readonly attribute of input should not be defined.");
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9646")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9646")
     public void testFirstWeekDay() {
-        calendarAttributes.set(firstWeekDay, "6");
+        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
+        List<String> weekDays = Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
 
-        selenium.click(input);
+        assertEquals(proxiedDayPicker.getWeekDayShortNames(), weekDays);
 
-        String[] labels = { "", "Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri" };
+        // wrong input, nothing changes, RF-9646
+        calendarAttributes.set(CalendarAttributes.firstWeekDay, 7);
+        assertEquals(proxiedDayPicker.getWeekDayShortNames(), weekDays);
 
-        for (int i = 0; i < 8; i++) {
-            String label = selenium.getText(weekDayLabel.format(i));
-            assertEquals(label, labels[i], "Week day label " + i);
+        calendarAttributes.set(CalendarAttributes.firstWeekDay, 1);
+        Collections.rotate(weekDays, -1);
+        assertEquals(proxiedDayPicker.getWeekDayShortNames(), weekDays);
+    }
+
+    @Test
+    public void testHorizontalOffset() {
+        int tolerance = 3;
+        int horizontalOffset = 13;
+        Locations before = calendar.openPopup().getLocations();
+        calendarAttributes.set(CalendarAttributes.horizontalOffset, horizontalOffset);
+        Locations after = calendar.openPopup().getLocations();
+
+        Iterator<Point> itAfter = after.iterator();
+        Iterator<Point> itBefore = before.moveAllBy(horizontalOffset, 0).iterator();
+        while (itAfter.hasNext()) {
+            tolerantAssertLocations(itAfter.next(), itBefore.next(), tolerance);
         }
-
-        // wrong input - throws a server-side exception
-        // selenium.type(pjq("input[type=text][id$=firstWeekDayInput]"), "9");
-        // selenium.waitForPageToLoad();
-        //
-        // selenium.click(input);
-        //
-        // labels = new String[]{"", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-        //
-        // for (int i = 0; i < 8; i++) {
-        // String label = selenium.getText(weekDayLabel.format(i));
-        // assertEquals(label, labels[i], "Week day label " + i);
-        // }
     }
 
-    @Test
-    public void testHorizontalOffset() throws Exception {
-        int horizontalOffsetVal = 13;
-        calendarAttributes.set(horizontalOffset, horizontalOffsetVal);
-        verifyPositions(horizontalOffsetVal, 0);
-
-        horizontalOffsetVal = 12;
-        calendarAttributes.set(CalendarAttributes.horizontalOffset, horizontalOffsetVal);
-        verifyPositions(horizontalOffsetVal, 0);
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-10821")
+    @Test(groups = { "4.Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-10821")
     public void testImmediate() {
-        calendarAttributes.set(immediate, Boolean.TRUE);
-
-        selenium.click(input);
-
-        selenium.click(cellDay.format(6));
-        String day = selenium.getText(cellDay.format(6));
-        String month = selenium.getText(monthLabel);
-
-        String selectedDate = null;
-        try {
-            Date date = new SimpleDateFormat("d MMMM, yyyy hh:mm").parse(day + " " + month + " 12:00");
-            selectedDate = new SimpleDateFormat("MMM d, yyyy hh:mm").format(date);
-        } catch (ParseException ex) {
-            fail(ex.getMessage());
-        }
-
-        guardXhr(selenium).click(applyButton);
-        assertFalse(selenium.isVisible(popup), "Popup should not be displayed.");
-
-        String inputDate = selenium.getValue(input);
-        assertEquals(inputDate, selectedDate, "Input doesn't contain selected date.");
-        assertEquals(selenium.getText(output), selectedDate, "Input doesn't contain selected date.");
-
-        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: null -> " + selectedDate);
+        calendarAttributes.set(CalendarAttributes.immediate, Boolean.TRUE);
+        setCurrentDateWithCalendarsTodayButtonAction.perform();
+        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: null -> " + calendar.getInputValue());
+        phaseInfo.assertImmediatePhasesCycle();
     }
 
     @Test
     public void testInputClass() {
-        testStyleClass(input, inputClass);
+        testStyleClass(calendar.getInput(), BasicAttributes.inputClass);
     }
 
     @Test
     public void testInputSize() {
-        calendarAttributes.set(inputSize, "30");
-
-        AttributeLocator<JQueryLocator> sizeAttr = input.getAttribute(Attribute.SIZE);
-        assertTrue(selenium.isAttributePresent(sizeAttr), "Size attribute of input should be defined.");
-        assertEquals(selenium.getAttribute(sizeAttr), "30", "Input should be disabled.");
+        calendarAttributes.set(CalendarAttributes.inputSize, "30");
+        assertTrue(Graphene.attribute(calendar.getInput(), "size").valueEquals("30").apply(driver), "Size attribute of input should be defined.");
     }
 
     @Test
     public void testInputStyle() {
-        testStyle(input, inputStyle);
+        testStyle(calendar.getInput(), BasicAttributes.inputStyle);
+    }
+
+    @Test
+    @Use(field = "direction", enumeration = true)
+    public void testJointPoint() {
+        int tolerance = 4;
+        calendarAttributes.set(CalendarAttributes.jointPoint, direction.value);
+        Locations inputLocations = calendar.getLocations();
+        Point locationInput = null;
+        Point locationPopup = calendar.openPopup().getLocations().getTopLeft();
+        switch (direction) {
+            case NULL:
+            case AUTO:
+            // auto (direction depends on browser/screen resolution)
+            case BOTTOMLEFT:
+                locationInput = inputLocations.getBottomLeft();
+                break;
+            case BOTTOMRIGHT:
+                locationInput = inputLocations.getBottomRight();
+                break;
+            case TOPLEFT:
+                locationInput = inputLocations.getTopLeft();
+                break;
+            case TOPRIGHT:
+                locationInput = inputLocations.getTopRight();
+                break;
+        }
+        tolerantAssertLocations(locationInput, locationPopup, tolerance);
     }
 
     @Test
     public void testLocale() {
-        calendarAttributes.set(locale, "ru");
+        String locale = "ru";
+        calendarAttributes.set(CalendarAttributes.locale, locale);
+        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
+        List<String> weekDayShortNames = proxiedDayPicker.getWeekDayShortNames();
+        List<String> expectedShortNames = Arrays.asList("Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб");
+        assertEquals(weekDayShortNames, expectedShortNames);
 
-        selenium.click(input);
+        setCurrentDateWithCalendarsTodayButtonAction.perform();
+        DateTime parsedDateTime = dateTimeFormatter.withLocale(new Locale(locale)).parseDateTime(calendar.getInputValue());
 
-        String[] labels = { "", "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб" };
+        assertEquals(parsedDateTime.getDayOfMonth(), todayMidday.getDayOfMonth(), "Input doesn't contain selected date.");
+        assertEquals(parsedDateTime.getMonthOfYear(), todayMidday.getMonthOfYear(), "Input doesn't contain selected date.");
+        assertEquals(parsedDateTime.getYear(), todayMidday.getYear(), "Input doesn't contain selected date.");
+    }
 
-        for (int i = 0; i < 8; i++) {
-            String label = selenium.getText(weekDayLabel.format(i));
-            assertEquals(label, labels[i], "Week day label " + i);
+    @IssueTracking("https://issues.jboss.org/browse/RF-12552")
+    @Test(groups = "4.Future")
+    public void testMinDaysInFirstWeek() {
+        calendarAttributes.set(CalendarAttributes.minDaysInFirstWeek, 1);
+        //1.1.2011 starts with saturday => only 1 day in first weak
+        DateTime firstOf2011 = firstOfJanuary2012.withYear(2011);
+        calendar.setDateTime(firstOf2011);
+        CalendarWeek firstWeek = calendar.openPopup().getDayPicker().getWeek(1);
+        List<CalendarDay> days = firstWeek.getCalendarDays();
+        days.removeAll(calendar.openPopup().getDayPicker().getBoundaryDays());
+
+        assertTrue(days.size() >= 1, "The first week should contain at least 1 day");
+
+        calendarAttributes.set(CalendarAttributes.minDaysInFirstWeek, 2);
+        calendar.setDateTime(firstOf2011);
+        firstWeek = calendar.openPopup().getDayPicker().getWeek(1);
+        days = firstWeek.getCalendarDays();
+        days.removeAll(calendar.openPopup().getDayPicker().getBoundaryDays());
+
+        assertTrue(days.size() >= 2, "The first week should contain at least 2 days");
+    }
+
+    @Test
+    @Use(field = "mode", enumeration = true)
+    public void testMode() {
+        calendarAttributes.set(CalendarAttributes.mode, mode.value);
+        HeaderControls proxiedHeaderControls = calendar.openPopup().getProxiedHeaderControls();
+        switch (mode) {
+            case AJAX:
+                MetamerPage.waitRequest(proxiedHeaderControls, WaitRequestType.XHR).nextMonth();
+                MetamerPage.waitRequest(proxiedHeaderControls, WaitRequestType.XHR).nextYear();
+                MetamerPage.waitRequest(proxiedHeaderControls, WaitRequestType.XHR).previousMonth();
+                MetamerPage.waitRequest(proxiedHeaderControls, WaitRequestType.XHR).previousYear();
+                break;
+            case CLIENT:
+            case NULL:
+                MetamerPage.waitRequest(proxiedHeaderControls, WaitRequestType.NONE).nextMonth();
+                MetamerPage.waitRequest(proxiedHeaderControls, WaitRequestType.NONE).nextYear();
+                MetamerPage.waitRequest(proxiedHeaderControls, WaitRequestType.NONE).previousMonth();
+                MetamerPage.waitRequest(proxiedHeaderControls, WaitRequestType.NONE).previousYear();
+                break;
         }
-
-        selenium.click(cellDay.format(6));
-        String day = selenium.getText(cellDay.format(6));
-        String month = selenium.getText(monthLabel);
-
-        String selectedDate = null;
-        try {
-            Date date = new SimpleDateFormat("d MMMM, yyyy hh:mm", new Locale("ru"))
-                .parse(day + " " + month + " 12:00");
-            selectedDate = new SimpleDateFormat("MMM d, yyyy hh:mm", new Locale("ru")).format(date);
-        } catch (ParseException ex) {
-            fail(ex.getMessage());
-        }
-
-        selenium.click(applyButton);
-        String inputDate = selenium.getValue(input);
-        assertEquals(inputDate, selectedDate, "Input doesn't contain selected date.");
     }
 
     @Test
     public void testMonthLabels() {
-        String[] labels = { "január", "február", "marec", "apríl", "máj", "jún", "júl", "august", "september",
-            "október", "november", "december" };
-        String labelsString = "január,február,marec,apríl,máj,jún,   júl,august,september,október,november,december";
+        String labelsString = "január, február, marec, apríl, máj, jún, júl, august, september, október, november, december";
+        calendarAttributes.set(CalendarAttributes.monthLabels, labelsString);
 
-        calendarAttributes.set(monthLabels, labelsString);
+        //set date to first month
+        calendar.setDateTime(todayMidday.withMonthOfYear(1).withDayOfMonth(1));
 
-        int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
-        String month = null;
-
-        selenium.click(input);
-
+        List<String> expectedLabels = Arrays.asList(labelsString.split(", "));
+        HeaderControls proxiedHeaderControls = calendar.openPopup().getProxiedHeaderControls();
+        List<String> monthsLabels = new ArrayList<String>(12);
         for (int i = 0; i < 12; i++) {
-            month = selenium.getText(monthLabel);
-            month = month.substring(0, month.indexOf(","));
-            assertEquals(month, labels[(currentMonth + i) % 12], "Month label in calendar");
-            selenium.click(nextMonthButton);
+            String monthAndYear = proxiedHeaderControls.getYearAndMonthEditorOpenerElement().getText();
+            String month = monthAndYear.substring(0, monthAndYear.indexOf(","));
+            monthsLabels.add(month);
+            proxiedHeaderControls.nextMonth();
         }
+        assertEquals(monthsLabels, expectedLabels, "Month label in calendar");
     }
 
     @Test
     public void testMonthLabelsShort() {
-        String[] labels = { "jan", "feb", "mar", "apr", "máj", "jún", "júl", "aug", "sep", "okt", "nov", "dec" };
-        String labelsString = "jan,feb,mar,apr,máj,jún,   júl,aug,sep,okt,nov,dec";
+        String labelsString = "jan, feb, mar, apr, máj, jún, júl, aug, sep, okt, nov, dec";
+        calendarAttributes.set(CalendarAttributes.monthLabelsShort, labelsString);
 
-        calendarAttributes.set(monthLabelsShort, labelsString);
+        List<String> expectedLabels = Arrays.asList(labelsString.split(", "));
+        List<String> shortMonthsLabels = calendar.openPopup().getHeaderControls()
+                .openYearAndMonthEditor().getShortMonthsLabels();
 
-        selenium.click(input);
-        selenium.click(monthLabel);
-
-        for (int i = 0; i < 12; i++) {
-            assertEquals(selenium.getText(dateEditorMonths.format(i)), labels[i], "Short month label in calendar");
-        }
+        assertEquals(shortMonthsLabels, expectedLabels, "Month label in calendar");
     }
 
     @Test
-    public void testOnbeforetimeselectOntimeselect() {
-        calendarAttributes.set(onbeforetimeselect, "metamerEvents += \"beforetimeselect \"");
-        calendarAttributes.set(ontimeselect, "metamerEvents += \"timeselect \"");
+    public void testOnTimeSelect() {
+        testFireEvent(calendarAttributes, CalendarAttributes.ontimeselect,
+                setTimeAction);
+    }
 
-        selenium.click(input);
-        selenium.click(cellDay.format(18));
-        selenium.click(timeButton);
-        selenium.runScript(new JavaScript("jQuery(\"" + hoursInputUp.getRawLocator() + "\").mousedown().mouseup()"));
-        selenium.click(timeEditorOk);
-
-        String[] events = selenium.getEval(new JavaScript("window.metamerEvents")).split(" ");
-
-        assertEquals(events.length, 2, "2 events should be fired.");
-        assertEquals(events[0], "beforetimeselect", "Attribute onbeforetimeselect doesn't work");
-        assertEquals(events[1], "timeselect", "Attribute ontimeselect doesn't work");
+    @Test
+    public void testOnbeforetimeselect() {
+        testFireEvent(calendarAttributes, CalendarAttributes.onbeforetimeselect,
+                setTimeAction);
     }
 
     @Test
     public void testOnchange() {
-        calendarAttributes.set(onchange, "metamerEvents += \"change \"");
-
-        selenium.click(input);
-        selenium.click(cellDay.format(18));
-        selenium.click(applyButton);
-
-        waitGui.failWith("Attribute onchange does not work correctly").until(
-            new EventFiredCondition(new Event("change")));
+        testFireEvent(calendarAttributes, CalendarAttributes.onchange,
+                setCurrentDateWithCalendarsTodayButtonAction);
     }
 
     @Test
     public void testOnclean() {
-        calendarAttributes.set(onclean, "metamerEvents += \"clean \"");
-
-        selenium.click(input);
-        selenium.click(cellDay.format(18));
-        selenium.click(cleanButton);
-
-        waitGui.failWith("Attribute onclean does not work correctly")
-            .until(new EventFiredCondition(new Event("clean")));
+        testFireEvent(calendarAttributes, CalendarAttributes.onclean, new Action() {
+            @Override
+            public void perform() {
+                FooterControls proxiedFooterControls = calendar.openPopup()
+                        .getProxiedFooterControls();
+                proxiedFooterControls.todayDate();
+                Graphene.waitGui().until(Graphene.element(proxiedFooterControls
+                        .getCleanButtonElement()).isVisible());
+                proxiedFooterControls.cleanDate();
+            }
+        });
     }
 
     @Test
     public void testOncomplete() {
-        calendarAttributes.set(mode, "ajax");
+        calendarAttributes.set(CalendarAttributes.mode, "ajax");
+        testFireEvent(calendarAttributes, CalendarAttributes.oncomplete, new Action() {
+            @Override
+            public void perform() {
+                Graphene.guardXhr(calendar.openPopup().getHeaderControls()).nextMonth();
+            }
+        });
+    }
 
-        calendarAttributes.set(oncomplete, "metamerEvents += \"complete \"");
-
-        selenium.click(input);
-        guardXhr(selenium).click(nextMonthButton);
-        waitGui.failWith("Attribute oncomplete does not work correctly").until(
-            new EventFiredCondition(new Event("complete")));
+    @IssueTracking("https://issues.jboss.org/browse/RF-12505")
+    @Test(groups = "4.Future")
+    public void testOncurrentdateselect() {
+        testFireEvent(calendarAttributes, CalendarAttributes.oncurrentdateselect, setTodayAndThenClickToNextMonthAction);
     }
 
     @Test
     public void testOndatemouseout() {
-        calendarAttributes.set(ondatemouseout, "metamerEvents += \"datemouseout \"");
-
-        selenium.click(input);
-        selenium.fireEvent(cellDay.format(18), Event.MOUSEOUT);
-
-        waitGui.failWith("Attribute ondatemouseout does not work correctly").until(
-            new EventFiredCondition(new Event("datemouseout")));
+        testFireEvent(calendarAttributes, CalendarAttributes.ondatemouseout, new Action() {
+            @Override
+            public void perform() {
+                fireEvent(calendar.openPopup().getDayPicker().getTodayDay().getElement(), Event.MOUSEOUT);
+            }
+        });
     }
 
     @Test
     public void testOndatemouseover() {
-        calendarAttributes.set(ondatemouseover, "metamerEvents += \"datemouseover \"");
-
-        selenium.click(input);
-        selenium.fireEvent(cellDay.format(18), Event.MOUSEOVER);
-
-        waitGui.failWith("Attribute ondatemouseover does not work correctly").until(
-            new EventFiredCondition(new Event("datemouseover")));
+        testFireEvent(calendarAttributes, CalendarAttributes.ondatemouseover, new Action() {
+            @Override
+            public void perform() {
+                fireEvent(calendar.openPopup().getDayPicker().getTodayDay().getElement(), Event.MOUSEOVER);
+            }
+        });
     }
 
     @Test
     public void testOndateselect() {
-        calendarAttributes.set(ondateselect, "metamerEvents += \"dateselect \"");
-
-        selenium.click(input);
-        selenium.click(cellDay.format(18));
-
-        waitGui.failWith("Attribute ondateselect does not work correctly").until(
-            new EventFiredCondition(new Event("dateselect")));
+        testFireEvent(calendarAttributes, CalendarAttributes.ondateselect,
+                setCurrentDateWithCalendarsTodayButtonAction);
     }
 
     @Test
     public void testOnhide() {
-        calendarAttributes.set(onhide, "metamerEvents += \"hide \"");
-
-        selenium.click(input);
-        selenium.click(input);
-
-        waitGui.failWith("Attribute onhide does not work correctly").until(new EventFiredCondition(new Event("hide")));
+        testFireEvent(calendarAttributes, CalendarAttributes.onhide,
+                new Actions(driver).click(calendar.getInput()).click(calendar.getInput()).build());
     }
 
     @Test
     public void testOninputblur() {
-        testFireEvent(Event.BLUR, input, "inputblur");
+        //this throws the condition 2x
+        //testFireEventWithJS(calendar.getInput(), Event.BLUR, calendarAttributes, CalendarAttributes.oninputblur);
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputblur,
+                new Actions(driver).click(calendar.getInput()).click(page.requestTime).build());
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9602")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9602")
     public void testOninputchange() {
-        calendarAttributes.set(enableManualInput, Boolean.TRUE);
-
-        calendarAttributes.set(oninputchange, "metamerEvents += \"inputchange \"");
-
-        selenium.type(input, "Dec 23, 2010 19:27");
-
-        waitGui.failWith("Attribute oninputchange does not work correctly").until(
-            new EventFiredCondition(new Event("inputchange")));
+        calendarAttributes.set(CalendarAttributes.enableManualInput, Boolean.TRUE);
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputchange, new Action() {
+            @Override
+            public void perform() {
+                calendar.getInput().sendKeys("0");
+                submitWithA4jSubmitBtn();
+            }
+        });
     }
 
     @Test
     public void testOninputclick() {
-        testFireEvent(Event.CLICK, input, "inputclick");
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputclick,
+                new Actions(driver).click(calendar.getInput()).build());
     }
 
     @Test
     public void testOninputdblclick() {
-        testFireEvent(Event.DBLCLICK, input, "inputdblclick");
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputdblclick,
+                new Actions(driver).doubleClick(calendar.getInput()).build());
     }
 
     @Test
     public void testOninputfocus() {
-        testFireEvent(Event.FOCUS, input, "inputfocus");
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputfocus,
+                new Actions(driver).click(calendar.getInput()).build());
     }
 
     @Test
     public void testOninputkeydown() {
-        testFireEvent(Event.KEYDOWN, input, "inputkeydown");
+        testFireEventWithJS(calendar.getInput(), Event.KEYDOWN, calendarAttributes, CalendarAttributes.oninputkeydown);
     }
 
     @Test
     public void testOninputkeypress() {
-        testFireEvent(Event.KEYPRESS, input, "inputkeypress");
+        testFireEventWithJS(calendar.getInput(), Event.KEYPRESS, calendarAttributes, CalendarAttributes.oninputkeypress);
     }
 
     @Test
     public void testOninputkeyup() {
-        testFireEvent(Event.KEYUP, input, "inputkeyup");
+        testFireEventWithJS(calendar.getInput(), Event.KEYUP, calendarAttributes, CalendarAttributes.oninputkeyup);
     }
 
     @Test
     public void testOninputmousedown() {
-        testFireEvent(Event.MOUSEDOWN, input, "inputmousedown");
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputmousedown,
+                new Actions(driver).clickAndHold(calendar.getInput()).build());
     }
 
     @Test
     public void testOninputmousemove() {
-        testFireEvent(Event.MOUSEMOVE, input, "inputmousemove");
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputmousemove,
+                new Actions(driver).moveToElement(calendar.getInput()).build());
     }
 
     @Test
     public void testOninputmouseout() {
-        testFireEvent(Event.MOUSEOUT, input, "inputmouseout");
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseout,
+                new Actions(driver).click(calendar.getInput()).moveToElement(page.requestTime).build());
     }
 
     @Test
     public void testOninputmouseover() {
-        testFireEvent(Event.MOUSEOVER, input, "inputmouseover");
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseover,
+                new Actions(driver).moveToElement(calendar.getInput()).build());
     }
 
     @Test
     public void testOninputmouseup() {
-        testFireEvent(Event.MOUSEUP, input, "inputmouseup");
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseup,
+                new Actions(driver).click(calendar.getInput()).build());
     }
 
     @Test
     public void testOninputselect() {
-        testFireEvent(Event.SELECT, input, "inputselect");
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseup,
+                new Actions(driver).click(calendar.getInput()).build());
     }
 
     @Test
     public void testOnshow() {
-        calendarAttributes.set(onshow, "metamerEvents += \"show \"");
-
-        selenium.click(input);
-        selenium.click(input);
-
-        waitGui.failWith("Attribute onshow does not work correctly").until(new EventFiredCondition(new Event("show")));
+        testFireEvent(calendarAttributes, CalendarAttributes.onshow, new Action() {
+            @Override
+            public void perform() {
+                calendar.openPopup();
+            }
+        });
     }
 
     @Test
-    public void testPopup() {
-        calendarAttributes.set(CalendarAttributes.popup, Boolean.FALSE);
+    public void testDefaultLabel() {
+        String defaultLabel = "RichFaces 4";
+        calendarAttributes.set(CalendarAttributes.defaultLabel, defaultLabel);
+        assertEquals(calendar.getInputValue(), defaultLabel);
+    }
 
-        boolean displayed = selenium.isVisible(calendar);
-        assertTrue(displayed, "Calendar is not present on the page.");
+    @Test
+    public void testOnbeforecurrentdateselect() {
+        testFireEvent(calendarAttributes, CalendarAttributes.onbeforecurrentdateselect, setTodayAndThenClickToNextMonthAction);
+    }
 
-        if (selenium.isElementPresent(input)) {
-            displayed = selenium.isVisible(input);
-            assertFalse(displayed, "Calendar's input should not be visible.");
-        }
+    @Test
+    public void testOnbeforedateselect() {
+        testFireEvent(calendarAttributes, CalendarAttributes.onbeforedateselect, setCurrentDateWithCalendarsTodayButtonAction);
+    }
 
-        if (selenium.isElementPresent(image)) {
-            displayed = selenium.isVisible(image);
-            assertFalse(displayed, "Calendar's image should not be visible.");
-        }
+    @Test
+    public void testPopupClass() {
+        testHTMLAttribute(calendar.openPopup().getRoot(), calendarAttributes, CalendarAttributes.popupClass, "metamer-ftest-class");
+    }
 
-        displayed = selenium.isVisible(popup);
-        assertTrue(displayed, "Popup should be visible.");
-
-        displayed = selenium.isElementPresent(button);
-        assertFalse(displayed, "Calendar's button should not be visible.");
+    @Test
+    public void testPopupStyle() {
+        testHTMLAttribute(calendar.openPopup().getRoot(), calendarAttributes, CalendarAttributes.popupStyle, "background-color: yellow; font-size: 1.5em;");
     }
 
     @Test
     public void testRendered() {
-        calendarAttributes.set(rendered, Boolean.FALSE);
-
-        assertFalse(selenium.isElementPresent(calendar), "Panel should not be rendered when rendered=false.");
+        calendarAttributes.set(CalendarAttributes.rendered, Boolean.FALSE);
+        assertFalse(calendar.isVisible());
     }
 
     @Test
+    @Use(field = "booleanValue", booleans = { false, true })
+    public void testRequired() {
+        calendarAttributes.set(CalendarAttributes.required, booleanValue);
+        submitWithA4jSubmitBtn();
+        if (booleanValue) {
+            assertTrue(message.isVisible());
+            assertEquals(message.getDetail(), "value is required");
+        } else {
+            assertFalse(message.isVisible());
+        }
+    }
+
+    @Test
+    public void testRequiredMessage() {
+        String msg = "RichFaces 4";
+        calendarAttributes.set(CalendarAttributes.requiredMessage, msg);
+        calendarAttributes.set(CalendarAttributes.required, Boolean.TRUE);
+        submitWithA4jSubmitBtn();
+
+        assertTrue(message.isVisible());
+        assertEquals(message.getDetail(), msg);
+    }
+
+    @Test
+    @Use(field = "booleanValue", booleans = { false, true })
+    public void testResetTimeOnDateSelect() {
+        calendarAttributes.set(CalendarAttributes.resetTimeOnDateSelect, booleanValue);
+        int minutes = 33;
+
+        //set yesterday with some minutes
+        calendar.setDateTime(todayMidday.plusMinutes(minutes).minusDays(1));
+        //second time, but without minutes setting, to see if the minutes will reset
+        setCurrentDateWithCalendarsTodayButtonAction.perform();
+
+        int minutesAfterReseting = dateTimeFormatter.parseDateTime(calendar.getInputValue()).getMinuteOfHour();
+
+        if (booleanValue) {
+            assertEquals(minutesAfterReseting, 0);
+        } else {
+            assertEquals(minutesAfterReseting, minutes);
+        }
+    }
+
+    @Test
+    @Use(field = "booleanValue", booleans = { false, true })
     public void testShowApplyButton() {
-        calendarAttributes.set(showApplyButton, Boolean.FALSE);
-
-        selenium.click(input);
-        if (selenium.isElementPresent(applyButton)) {
-            assertFalse(selenium.isVisible(applyButton), "Apply button should not be displayed.");
+        calendarAttributes.set(CalendarAttributes.showApplyButton, booleanValue);
+        FooterControls proxiedFooterControls = calendar.openPopup().getProxiedFooterControls();
+        if (booleanValue) {
+            assertVisible(proxiedFooterControls.getTodayButtonElement());
+        } else {
+            assertNotVisible(proxiedFooterControls.getApplyButtonElement());
+            setCurrentDateWithCalendarsTodayButtonAction.perform();
+            DateTime inputTime = dateTimeFormatter.parseDateTime(calendar.getInputValue());
+            assertEquals(inputTime.getDayOfMonth(), todayMidday.getDayOfMonth());
+            assertEquals(inputTime.getMonthOfYear(), todayMidday.getMonthOfYear());
+            assertEquals(inputTime.getYear(), todayMidday.getYear());
         }
-
-        guardXhr(selenium).click(cellDay.format(6));
-        String day = selenium.getText(cellDay.format(6));
-        String month = selenium.getText(monthLabel);
-
-        String selectedDate = null;
-        try {
-            Date date = new SimpleDateFormat("d MMMM, yyyy hh:mm").parse(day + " " + month + " 12:00");
-            selectedDate = new SimpleDateFormat("MMM d, yyyy hh:mm").format(date);
-        } catch (ParseException ex) {
-            fail(ex.getMessage());
-        }
-
-        assertFalse(selenium.isVisible(popup), "Popup should not be displayed.");
-
-        String inputDate = selenium.getValue(input);
-        assertEquals(inputDate, selectedDate, "Input doesn't contain selected date.");
     }
 
     @Test
+    @Use(field = "booleanValue", booleans = { false, true })
     public void testShowFooter() {
-        calendarAttributes.set(showFooter, Boolean.FALSE);
+        setCurrentDateWithCalendarsTodayButtonAction.perform();
+        calendarAttributes.set(CalendarAttributes.showFooter, booleanValue);
+        FooterControls proxiedFooterControls = calendar.openPopup().getProxiedFooterControls();
+        if (booleanValue) {
+            assertListOfWebElementsVisible(Arrays.asList(
+                    proxiedFooterControls.getApplyButtonElement(),
+                    proxiedFooterControls.getCleanButtonElement(),
+                    proxiedFooterControls.getTimeEditorOpenerElement(),
+                    proxiedFooterControls.getTodayButtonElement()));
 
-        selenium.click(input);
-        boolean displayed = true;
-
-        if (selenium.isElementPresent(todayButton)) {
-            displayed = selenium.isVisible(todayButton);
-            assertFalse(displayed, "Today button should not be visible.");
-        }
-
-        if (selenium.isElementPresent(applyButton)) {
-            displayed = selenium.isVisible(applyButton);
-            assertFalse(displayed, "Apply button should not be visible.");
-        }
-
-        displayed = selenium.isElementPresent(cleanButton);
-        assertFalse(displayed, "Clean button should not be visible.");
-
-        displayed = selenium.isElementPresent(timeButton);
-        assertFalse(displayed, "Time button should not be visible.");
-
-        selenium.click(cellWeekDay.format(3, 3));
-
-        if (selenium.isElementPresent(cleanButton)) {
-            displayed = selenium.isVisible(cleanButton);
-            assertFalse(displayed, "Clean button should not be visible.");
-        }
-
-        if (selenium.isElementPresent(timeButton)) {
-            displayed = selenium.isVisible(timeButton);
-            assertFalse(displayed, "Time button should not be visible.");
+        } else {
+            assertListOfWebElementsNotVisible(Arrays.asList(
+                    proxiedFooterControls.getApplyButtonElement(),
+                    proxiedFooterControls.getCleanButtonElement(),
+                    proxiedFooterControls.getTimeEditorOpenerElement(),
+                    proxiedFooterControls.getTodayButtonElement()));
         }
     }
 
     @Test
+    @Use(field = "booleanValue", booleans = { false, true })
     public void testShowHeader() {
-        calendarAttributes.set(showHeader, Boolean.FALSE);
-
-        selenium.click(input);
-        boolean displayed = true;
-
-        if (selenium.isElementPresent(prevYearButton)) {
-            displayed = selenium.isVisible(prevYearButton);
-            assertFalse(displayed, "Previous year button should not be visible.");
-        }
-
-        if (selenium.isElementPresent(prevMonthButton)) {
-            displayed = selenium.isVisible(prevMonthButton);
-            assertFalse(displayed, "Previous month button should not be visible.");
-        }
-
-        if (selenium.isElementPresent(nextMonthButton)) {
-            displayed = selenium.isVisible(nextMonthButton);
-            assertFalse(displayed, "Next month button should not be visible.");
-        }
-
-        if (selenium.isElementPresent(nextYearButton)) {
-            displayed = selenium.isVisible(nextYearButton);
-            assertFalse(displayed, "Next year button should not be visible.");
-        }
-
-        if (selenium.isElementPresent(closeButton)) {
-            displayed = selenium.isVisible(closeButton);
-            assertFalse(displayed, "Close button should not be visible.");
-        }
-
-        if (selenium.isElementPresent(monthLabel)) {
-            displayed = selenium.isVisible(monthLabel);
-            assertFalse(displayed, "Month label should not be visible.");
+        calendarAttributes.set(CalendarAttributes.showHeader, booleanValue);
+        PopupHeaderControls proxiedHeaderControls = calendar.openPopup().getProxiedHeaderControls();
+        if (booleanValue) {
+            assertListOfWebElementsVisible(Arrays.asList(
+                    proxiedHeaderControls.getCloseButtonElement(),
+                    proxiedHeaderControls.getNextMonthElement(),
+                    proxiedHeaderControls.getNextYearElement(),
+                    proxiedHeaderControls.getPreviousMonthElement(),
+                    proxiedHeaderControls.getPreviousYearElement(),
+                    proxiedHeaderControls.getYearAndMonthEditorOpenerElement()));
+        } else {
+            assertListOfWebElementsNotVisible(Arrays.asList(
+                    proxiedHeaderControls.getCloseButtonElement(),
+                    proxiedHeaderControls.getNextMonthElement(),
+                    proxiedHeaderControls.getNextYearElement(),
+                    proxiedHeaderControls.getPreviousMonthElement(),
+                    proxiedHeaderControls.getPreviousYearElement(),
+                    proxiedHeaderControls.getYearAndMonthEditorOpenerElement()));
         }
     }
 
     @Test
+    @Use(field = "booleanValue", booleans = { false, true })
     public void testShowInput() {
-        calendarAttributes.set(showInput, Boolean.FALSE);
-
-        if (selenium.isElementPresent(input)) {
-            boolean displayed = selenium.isVisible(input);
-            assertFalse(displayed, "Input should not be visible.");
+        calendarAttributes.set(CalendarAttributes.showInput, booleanValue);
+        if (booleanValue) {
+            assertVisible(calendar.getInput());
+        } else {
+            assertNotVisible(calendar.getInput());
         }
     }
 
     @Test
+    @Use(field = "booleanValue", booleans = { false, true })
     public void testShowWeekDaysBar() {
-        calendarAttributes.set(showWeekDaysBar, Boolean.FALSE);
-
-        for (int i = 0; i < 8; i++) {
-            if (selenium.isElementPresent(weekDayLabel.format(i))) {
-                boolean displayed = selenium.isVisible(weekDayLabel.format(i));
-                assertFalse(displayed, "Bar with week days should not be visible.");
-            }
+        calendarAttributes.set(CalendarAttributes.showWeekDaysBar, booleanValue);
+        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
+        if (booleanValue) {
+            assertVisible(proxiedDayPicker.getWeekDaysBarElement());
+        } else {
+            assertNotVisible(proxiedDayPicker.getWeekDaysBarElement());
         }
     }
 
     @Test
+    @Use(field = "booleanValue", booleans = { false, true })
     public void testShowWeeksBar() {
-        calendarAttributes.set(showWeeksBar, Boolean.FALSE);
-
-        for (int i = 0; i < 6; i++) {
-            if (selenium.isElementPresent(week.format(i))) {
-                boolean displayed = selenium.isVisible(week.format(i));
-                assertFalse(displayed, "Bar with week numbers should not be visible.");
-            }
+        calendarAttributes.set(CalendarAttributes.showWeeksBar, booleanValue);
+        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
+        if (booleanValue) {
+            assertVisible(proxiedDayPicker.getWeek(1).getWeekNumberElement());
+        } else {
+            assertNotVisible(proxiedDayPicker.getWeek(1).getWeekNumberElement());
         }
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9655")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9655")
     public void testStyle() {
-        testStyle(calendar);
+        testStyle(calendar.getRoot());
     }
 
     @Test
     public void testStyleClass() {
-        testStyleClass(calendar);
+        testStyleClass(calendar.getRoot());
     }
 
     @Test
     @Templates(exclude = "richPopupPanel")
     public void testTabindexInput() {
-        testHtmlAttribute(input, "tabindex", "99");
+        testHTMLAttribute(calendar.getInput(), calendarAttributes, CalendarAttributes.tabindex, "101");
     }
 
     @Test(groups = { "4.3" })
     @IssueTracking("https://issues.jboss.org/browse/RF-10980")
     @Templates(value = "richPopupPanel")
     public void testTabindexInputInPopupPanel() {
-        testHtmlAttribute(input, "tabindex", "99");
+        testHTMLAttribute(calendar.getInput(), calendarAttributes, CalendarAttributes.tabindex, "101");
     }
 
     @Test
     public void testTabindexButton() {
-        testHtmlAttribute(image, "tabindex", "99");
+        testHTMLAttribute(calendar.getPopupButton(), calendarAttributes, CalendarAttributes.tabindex, "101");
+    }
+
+    @Test
+    @Use(field = "todayControlMode", enumeration = true)
+    public void testTodayControlMode() {
+        calendarAttributes.set(CalendarAttributes.todayControlMode, todayControlMode.value);
+        DateTime dt;
+        switch (todayControlMode) {
+            case HIDDEN:
+                assertNotVisible(calendar.openPopup().getFooterControls().getTodayButtonElement());
+                break;
+            case NULL:
+            case SELECT:
+                //set date to tomorrow
+                calendar.setDateTime(todayMidday.plusDays(1));
+                //set current date with calendar's 'Today' button,
+                //this will scroll and select todays day
+                calendar.openPopup().getFooterControls().todayDate();
+                assertNotNull(calendar.openPopup().getDayPicker().getSelectedDay());
+                assertEquals(calendar.openPopup().getDayPicker().getSelectedDay().getDayNumber(),
+                        calendar.openPopup().getDayPicker().getTodayDay().getDayNumber());
+                break;
+            case SCROLL:
+                calendar.setDateTime(todayMidday.plusMonths(1));
+                //set current date with calendar's 'Today' button,
+                //this will only scroll to today but will not select it
+                calendar.openPopup().getFooterControls().todayDate();
+                //no selected day should be in calendar
+                assertNull(calendar.openPopup().getDayPicker().getSelectedDay());
+                //month will change
+                assertEquals(calendar.openPopup().getHeaderControls().getYearAndMonth().getMonthOfYear(), todayMidday.getMonthOfYear());
+                break;
+        }
     }
 
     @Test
     public void testValueChangeListener() {
-        String time1Value = selenium.getText(time);
-        selenium.click(input);
-        selenium.click(cellDay.format(6));
-        guardXhr(selenium).click(applyButton);
-        waitGui.failWith("Page was not updated").waitForChange(time1Value, retrieveText.locator(time));
-
-        String selectedDate1 = selenium.getValue(input);
-        String selectedDate2 = selenium.getText(output);
-
-        assertEquals(selectedDate1, selectedDate2, "Output and calendar's input should be the same.");
-        phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> " + selectedDate1);
+        setCurrentDateWithCalendarsTodayButtonAction.perform();
+        phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> " + calendar.getInputValue());
     }
 
     @Test
-    public void testVerticalOffset() throws Exception {
-        int verticalOffsetVal = 13;
-        calendarAttributes.set(verticalOffset, verticalOffsetVal);
+    public void testVerticalOffset() {
+        int tolerance = 3;
+        int verticalOffset = 13;
+        Locations before = calendar.openPopup().getLocations();
+        calendarAttributes.set(CalendarAttributes.verticalOffset, verticalOffset);
+        Locations after = calendar.openPopup().getLocations();
 
-        verifyPositions(0, verticalOffsetVal);
+        Iterator<Point> itAfter = after.iterator();
+        Iterator<Point> itBefore = before.moveAllBy(0, verticalOffset).iterator();
+        while (itAfter.hasNext()) {
+            tolerantAssertLocations(itAfter.next(), itBefore.next(), tolerance);
+        }
+    }
+
+    @Test
+    public void testWeekDayLabelsShort() {
+        List<String> originalValues = Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
+        List<String> weekDayShortNames = calendar.openPopup().getDayPicker().getWeekDayShortNames();
+        assertEquals(weekDayShortNames, originalValues);
+
+        String expectedWeekDayShortNames = "ne, po, ut, st, ct, pa, so";
+        calendarAttributes.set(CalendarAttributes.weekDayLabelsShort, expectedWeekDayShortNames);
+        List<String> expectedList = Arrays.asList(expectedWeekDayShortNames.split(", "));
+        weekDayShortNames = calendar.openPopup().getDayPicker().getWeekDayShortNames();
+        assertEquals(weekDayShortNames, expectedList);
     }
 
     @Test
     public void testZindex() {
-        calendarAttributes.set(zindex, "30");
-
-        assertEquals(selenium.getStyle(popup, new CssProperty("z-index")), "30", "Z-index of the popup");
+        final String zindex = "30";
+        calendarAttributes.set(CalendarAttributes.zindex, zindex);
+        String contentZindex = calendar.openPopup().getRoot().getCssValue("z-index");
+        assertEquals(contentZindex, zindex, "Z-index of the popup");
     }
 
-    /**
-     * Checks that no date in the open month is selected.
-     */
-    private void assertNoDateSelected() {
-        for (int i = 0; i < 42; i++) {
-            assertFalse(selenium.belongsClass(cellDay.format(i), "rf-cal-sel"), "Cell nr. " + i
-                + " should not be selected.");
+    private void tolerantAssertLocations(Point location1, Point location2, int tolerance) {
+        assertTrue(_tolerantAssertLocations(location1, location2, tolerance));
+    }
+
+    private boolean _tolerantAssertLocations(Point location1, Point location2, int tolerance) {
+        return (Math.abs(location1.x - location2.x) <= tolerance && Math.abs(location1.y - location2.y) <= tolerance);
+    }
+
+    private void assertVisible(WebElement element) {
+        assertTrue(Graphene.element(element).isVisible().apply(driver));
+    }
+
+    private void assertNotVisible(WebElement element) {
+        assertTrue(Graphene.element(element).not().isVisible().apply(driver));
+    }
+
+    private void assertListOfWebElementsVisible(List<WebElement> list) {
+        for (WebElement webElement : list) {
+            assertVisible(webElement);
         }
     }
 
-    /**
-     * Checks that no date in the open month is selected except of one passed as argument.
-     *
-     * @param exceptOfDate
-     *            date that should be selected (e.g. "13")
-     */
-    private void assertSelected(String exceptOfDate) {
-        int lowerBoundary = 0;
-        int upperBoundary = 42;
-
-        if (Integer.parseInt(exceptOfDate) < 15) {
-            upperBoundary = 21;
-        } else {
-            lowerBoundary = 21;
-        }
-
-        // check 3 lines of cells that contain selected date
-        for (int i = lowerBoundary; i < upperBoundary; i++) {
-            if (exceptOfDate.equals(selenium.getText(cellDay.format(i)))) {
-                assertTrue(selenium.belongsClass(cellDay.format(i), "rf-cal-sel"), "Cell nr. " + i
-                    + " should not be selected.");
-            } else {
-                assertFalse(selenium.belongsClass(cellDay.format(i), "rf-cal-sel"), "Cell nr. " + i
-                    + " should not be selected.");
-            }
-        }
-
-        lowerBoundary = lowerBoundary == 0 ? 21 : 0;
-        upperBoundary = upperBoundary == 21 ? 42 : 21;
-
-        // check other 3 lines of cells
-        for (int i = lowerBoundary; i < upperBoundary; i++) {
-            assertFalse(selenium.belongsClass(cellDay.format(i), "rf-cal-sel"), "Cell nr. " + i
-                + " should not be selected.");
+    private void assertListOfWebElementsNotVisible(List<WebElement> list) {
+        for (WebElement webElement : list) {
+            assertNotVisible(webElement);
         }
     }
 
-    private static boolean tolerantEquals(int x, int y, int tolerance) {
-        return Math.abs(x - y) <= tolerance;
+    private void submitWithA4jSubmitBtn() {
+        MetamerPage.waitRequest(a4jbutton, WaitRequestType.XHR).click();
     }
 
-    private static void tolerantAssertEquals(int actual, int expected, int tolerance) {
-        tolerantAssertEquals(actual, expected, tolerance, "Expected <" + expected + ">, found <" + actual + ">. Tolerance is set to <" + tolerance + ">.");
+    private class SetTimeAction implements Action {
+
+        @Override
+        public void perform() {
+            calendar.openPopup().getFooterControls().todayDate();
+            calendar.openPopup().getFooterControls()
+                    .openTimeEditor().setTime(todayMidday.plusMinutes(5),
+                    SetValueBy.buttons).confirmTime();
+        }
     }
 
-    private static void tolerantAssertEquals(int actual, int expected, int tolerance, String message) {
-        assertTrue(tolerantEquals(actual, expected, tolerance), message);
+    private class SetCurrentDateWithCalendarsTodayButtonAction implements Action {
+
+        @Override
+        public void perform() {
+            MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
+        }
+    }
+
+    private class SetTodayAndThenClickToNextMonthAction implements Action {
+
+        @Override
+        public void perform() {
+            calendar.openPopup().getFooterControls().todayDate();
+            calendar.openPopup().getHeaderControls().nextMonth();
+        }
     }
 }
