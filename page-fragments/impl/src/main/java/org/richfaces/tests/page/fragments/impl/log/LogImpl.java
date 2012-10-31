@@ -1,0 +1,113 @@
+package org.richfaces.tests.page.fragments.impl.log;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.joda.time.DateTime;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+public class LogImpl implements Log {
+
+    @Root
+    private WebElement root;
+
+    @FindBy(css = ".rf-log-entry-lbl-debug")
+    private List<WebElement> debugEntryTimeStamps;
+
+    @FindBy(css = ".rf-log-entry-msg-debug")
+    private List<WebElement> debugEntryContent;
+
+    @FindBy(css = ".rf-log-entry-lbl-info")
+    private List<WebElement> infoEntryTimeStamps;
+
+    @FindBy(css = ".rf-log-entry-msg-info")
+    private List<WebElement> infoEntryContent;
+
+    @FindBy(css = ".rf-log-entry-lbl-warn")
+    private List<WebElement> warnEntryTimeStamps;
+
+    @FindBy(css = ".rf-log-entry-msg-info")
+    private List<WebElement> warnEntryContent;
+
+    @FindBy(css = ".rf-log-entry-lbl-error")
+    private List<WebElement> errorEntryTimeStamps;
+
+    @FindBy(css = ".rf-log-entry-msg-error")
+    private List<WebElement> errorEntryContent;
+
+    @FindBy(tagName = "button")
+    private WebElement clearButton;
+
+    @FindBy(tagName = "select")
+    private WebElement levelSelect;
+
+    @FindBy(tagName = "option")
+    private List<WebElement> levelSelectOptions;
+
+    @Override
+    public List<LogEntry> getAllLogEntries() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<LogEntry> getAllDebugEntries() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<LogEntry> getAllInfoEntries() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<LogEntry> getAllWarnEntries() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<LogEntry> getAllErrorEntries() {
+        List<LogEntry> errorEntries = new ArrayList<LogEntry>();
+
+        for (int i = 0; i < errorEntryTimeStamps.size(); i++) {
+            LogEntry logEntry = new LogEntry();
+
+            logEntry.setLevel(LogEntryLevel.ERROR);
+            logEntry.setTimeStamp(parseTimeStamp(errorEntryTimeStamps.get(i).getText()));
+            logEntry.setContent(errorEntryContent.get(i).getText());
+
+            errorEntries.add(logEntry);
+        }
+
+        return errorEntries;
+    }
+
+    private DateTime parseTimeStamp(String text) {
+        Date date = null;
+
+        String timeStamp = text.substring(text.indexOf('[') + 1, text.indexOf(']'));
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:m:s.S");
+        try {
+            date = formatter.parse(timeStamp);
+        } catch (ParseException e) {
+            throw new RuntimeException("Something went wrong with parsing of log entry timestamp!", e);
+        }
+
+        return new DateTime(date);
+    }
+
+    @Override
+    public void clear() {
+        clearButton.click();
+    }
+
+    @Override
+    public void changeLevel(LogEntryLevel lvl) {
+        throw new UnsupportedOperationException();
+    }
+
+}
