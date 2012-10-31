@@ -50,6 +50,7 @@ import org.openqa.selenium.support.pagefactory.FieldDecorator;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
@@ -438,16 +439,14 @@ public abstract class AbstractWebDriverTest<P extends MetamerPage> extends Abstr
      * Do a full page refresh (regular HTTP request) by triggering a command with no action bound.
      */
     public void fullPageRefresh() {
-        Graphene.waitModel().until(Graphene.element(page.fullPageRefreshIcon).isPresent());
-        Graphene.guardHttp(page.fullPageRefreshIcon).click();
+        MetamerPage.waitRequest(page.fullPageRefreshIcon, WaitRequestType.HTTP).click();
     }
 
     /**
      * Rerender all content of the page (AJAX request) by trigerring a command with no action but render bound.
      */
     public void rerenderAll() {
-        Graphene.waitModel().until(Graphene.element(page.rerenderAllIcon).isPresent());
-        Graphene.guardXhr(page.rerenderAllIcon).click();
+        MetamerPage.waitRequest(page.rerenderAllIcon, WaitRequestType.XHR).click();
     }
 
     /**
@@ -506,7 +505,7 @@ public abstract class AbstractWebDriverTest<P extends MetamerPage> extends Abstr
     }
 
     /**
-     * Abstract ReloadTester for testing componen't state after reloading the page
+     * Abstract ReloadTester for testing component's state after reloading the page
      *
      * @param <T>
      *            the type of input values which will be set, sent and then verified
