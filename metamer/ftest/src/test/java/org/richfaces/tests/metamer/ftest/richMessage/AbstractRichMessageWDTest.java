@@ -29,6 +29,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.message.MessageComponentImpl;
 import org.testng.annotations.BeforeMethod;
@@ -69,7 +70,7 @@ public abstract class AbstractRichMessageWDTest<P extends MessagePage> extends A
         assertFalse(messageComponentForInputX.isVisible());
 
         //submit with h:commandbutton
-        page.waitRequest(page.hCommandButton, WaitRequestType.HTTP).click();
+        MetamerPage.waitRequest(page.hCommandButton, WaitRequestType.HTTP).click();
         assertTrue(messageComponentFoInput1.isVisible());
         assertTrue(messageComponentForInput2.isVisible());
         assertTrue(messageComponentForInputX.isVisible());
@@ -83,13 +84,13 @@ public abstract class AbstractRichMessageWDTest<P extends MessagePage> extends A
         String newSpanString = "<span id='newSpan'>newSpan</span>";
         page.simpleInput1.clear();
         page.simpleInput1.sendKeys(newSpanString);
-        page.waitRequest(page.a4jCommandButton, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.a4jCommandButton, WaitRequestType.XHR).click();
         assertTrue(Graphene.waitGui().until(Graphene.element(page.newSpan).not().isVisible()).booleanValue());
 
         messageAttributes.set(MessageAttributes.escape, Boolean.FALSE);
         page.simpleInput1.clear();
         page.simpleInput1.sendKeys(newSpanString);
-        page.waitRequest(page.a4jCommandButton, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.a4jCommandButton, WaitRequestType.XHR).click();
         assertTrue(Graphene.waitGui().until(Graphene.element(page.newSpan).isVisible()).booleanValue());
     }
 
@@ -97,7 +98,7 @@ public abstract class AbstractRichMessageWDTest<P extends MessagePage> extends A
         // firstly, remove value from attribute for and generate message
         messageAttributes.setLower(MessageAttributes.FOR, "");
         generateValidationMessages();
-        page.waitRequest(Graphene.guardXhr(page.a4jCommandButton), WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(Graphene.guardXhr(page.a4jCommandButton), WaitRequestType.XHR).click();
 
         assertFalse(messageComponentForInputX.isVisible());
 
@@ -117,7 +118,7 @@ public abstract class AbstractRichMessageWDTest<P extends MessagePage> extends A
         messageAttributes.set(MessageAttributes.showDetail, Boolean.FALSE);
 
         generateValidationMessages();
-        page.waitRequest(Graphene.guardXhr(page.a4jCommandButton), WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(Graphene.guardXhr(page.a4jCommandButton), WaitRequestType.XHR).click();
 
         assertFalse(messageComponentFoInput1.isVisible());
         assertFalse(messageComponentForInput2.isVisible());
@@ -174,7 +175,7 @@ public abstract class AbstractRichMessageWDTest<P extends MessagePage> extends A
 
         messageAttributes.set(MessageAttributes.rendered, Boolean.FALSE);
         generateValidationMessages();
-        page.waitRequest(Graphene.guardXhr(page.a4jCommandButton), WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(Graphene.guardXhr(page.a4jCommandButton), WaitRequestType.XHR).click();
 
         assertFalse(messageComponentFoInput1.isVisible());
         assertFalse(messageComponentForInput2.isVisible());

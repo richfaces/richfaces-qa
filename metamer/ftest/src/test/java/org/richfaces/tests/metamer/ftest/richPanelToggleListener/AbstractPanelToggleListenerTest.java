@@ -26,6 +26,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 
 /**
@@ -60,11 +61,11 @@ public abstract class AbstractPanelToggleListenerTest<P extends PTLCollapsiblePa
 
     private void testPTL(final String expectedText, String failMessage) {
         //first test collapsing of panel
-        page.waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText + collapsedPanelString), failMessage);
         //then test expanding of panel
-        page.waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText + expandedPanelString), failMessage);
     }
