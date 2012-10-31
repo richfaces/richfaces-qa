@@ -523,7 +523,7 @@ public abstract class AbstractWebDriverTest<P extends MetamerPage> extends Abstr
             for (T inputValue : getInputValues()) {
                 doRequest(inputValue);
                 verifyResponse(inputValue);
-                AbstractWebDriverTest.this.rerenderAll();
+                rerenderAll();
                 verifyResponse(inputValue);
             }
         }
@@ -532,14 +532,9 @@ public abstract class AbstractWebDriverTest<P extends MetamerPage> extends Abstr
             for (T inputValue : getInputValues()) {
                 doRequest(inputValue);
                 verifyResponse(inputValue);
-                AbstractWebDriverTest.this.fullPageRefresh();
+                fullPageRefresh();
                 verifyResponse(inputValue);
             }
         }
-    }
-
-    protected interface IEventLaunchAction {
-
-        void launchAction();
     }
 }
