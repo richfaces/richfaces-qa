@@ -40,8 +40,6 @@ public class AbstractTest extends Arquillian {
             .addAsWebInfResource(new File(WEBAPP_SRC + "/WEB-INF/faces-config.xml"))
             .addAsWebResource(new File(WEBAPP_SRC + "/components/" + simpleNameOfTestClass + ".xhtml"),
                 ArchivePaths.create("components/" + simpleNameOfTestClass + ".xhtml"))
-            .addAsWebResource(new File(WEBAPP_SRC + "/resources/script/jquery-min.js"),
-                ArchivePaths.create("resources/script/jquery-min.js"))
             .addAsLibraries(
                 resolver.artifacts("org.richfaces.ui:richfaces-components-ui", "org.richfaces.core:richfaces-core-impl")
                     .resolveAsFiles());

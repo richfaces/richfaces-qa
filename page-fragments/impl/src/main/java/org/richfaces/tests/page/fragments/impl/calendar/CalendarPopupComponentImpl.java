@@ -41,6 +41,9 @@ public class CalendarPopupComponentImpl implements CalendarPopupComponent {
     @FindBy(css = "table[class=\"rf-cal-monthpicker-cnt\"] td:nth-of-type(3) > div")
     private WebElement previousDecade;
 
+    @FindBy(css = "td[class='rf-cal-tl']:nth-of-type(3)")
+    private WebElement nextMonthScroller;
+
     private final String YEAR_AND_MONTH_LOCATOR_CSS = "div[class=\"rf-cal-edtr-btn\"]";
     private final String DAY_LOCATOR_CLASS = "rf-cal-c";
 
@@ -507,6 +510,10 @@ public class CalendarPopupComponentImpl implements CalendarPopupComponent {
     public void clearInput() {
         // TODO Auto-generated method stub
 
+    }
+
+    public WebElement getNextMonthScroller() {
+        return nextMonthScroller;
     }
 
     // public class TimeUnitImpl implements TimeUnit {
