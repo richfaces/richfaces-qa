@@ -182,6 +182,46 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                        timeZone="#{richCalendarBean.timeZone}"/>
                 </h:outputText>
             </a4j:outputPanel>
+            <br/><br/>
+            <fieldset>
+                <legend>JavaScript API</legend>
+                On click:
+                <br/>
+                <input id="showDateEditor" type="button" value="showDateEditor()" onclick="#{rich:component('calendar')}.showDateEditor()" />
+                <input id="setValue" type="button" value="setValue('Oct 10, 2012 12:00')" onclick="#{rich:component('calendar')}.setValue('Oct 10, 2012 12:00')" />
+                <br/>
+                <br/>
+                On mouseover:
+                <br/>
+                <input id="showPopup" type="button" value="showPopup()" onmouseover="#{rich:component('calendar')}.showPopup()" />
+                <input id="switchPopup" type="button" value="switchPopup()" onmouseover="#{rich:component('calendar')}.switchPopup()" />
+                <br/>
+                <br/>
+                Applicable when date is set, on click:
+                <br/>
+                <input id="showTimeEditor" type="button" value="showTimeEditor()" onclick="#{rich:component('calendar')}.showTimeEditor()" />
+                <br/>
+                <br/>
+                Applicable with opened popup, on mouseover:
+                <br/>
+                <input id="hideDateEditor" type="button" value="hideDateEditor()" onmouseover="#{rich:component('calendar')}.hideDateEditor()" />
+                <input id="hidePopup" type="button" value="hidePopup()" onmouseover="#{rich:component('calendar')}.hidePopup()" />
+                <input id="hideTimeEditor" type="button" value="hideTimeEditor()" onmouseover="#{rich:component('calendar')}.hideTimeEditor()" />
+                <input id="resetValue" type="button" value="resetValue()" onmouseover="#{rich:component('calendar')}.resetValue()" />
+                <input id="showSelectedDate" type="button" value="showSelectedDate()" onmouseover="#{rich:component('calendar')}.showSelectedDate()" />
+                <input id="today" type="button" value="today()" onmouseover="#{rich:component('calendar')}.today()" />
+                <br/>
+                <br/>
+                Applicable when date is set, on click: 
+                <br/>
+                Output value for all get methods: <h:inputText id="value"/>
+                <br/>
+                <input id="getValue" type="button" value="getValue()" onclick="$('[id$=value]').val(String(#{rich:component('calendar')}.getValue()))" />
+                <input id="getValueAsString" type="button" value="getValueAsString()" onclick="$('[id$=value]').val(#{rich:component('calendar')}.getValueAsString())" />
+                <input id="getCurrentMonth" type="button" value="getCurrentMonth()" onclick="$('[id$=value]').val(String(#{rich:component('calendar')}.getCurrentMonth()))" />
+                <input id="getCurrentYear" type="button" value="getCurrentYear()" onclick="$('[id$=value]').val(String(#{rich:component('calendar')}.getCurrentYear()))" />
+                <br/>
+            </fieldset>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
