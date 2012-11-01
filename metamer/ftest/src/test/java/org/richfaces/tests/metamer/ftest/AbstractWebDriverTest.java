@@ -27,23 +27,14 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-import com.google.common.base.Predicate;
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.android.AndroidDriver;
@@ -56,19 +47,20 @@ import org.openqa.selenium.iphone.IPhoneDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 
-public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends AbstractMetamerTest {
+public abstract class AbstractWebDriverTest<P extends MetamerPage> extends AbstractMetamerTest {
 
     @Drone
     protected WebDriver driver;
-    protected Page page;
+    @Page
+    protected P page;
     protected static final int WAIT_TIME = 5;// s
     private static final int NUMBER_OF_TRIES = 5;
     protected static final int MINOR_WAIT_TIME = 50;// ms
@@ -117,19 +109,10 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
         driverType = DriverType.getCurrentType(driver);
     }
 
-    @BeforeMethod(alwaysRun = true, dependsOnMethods = { "loadPage" })
-    public void initializePage() {
-        injectWebElementsToPage(getPage());
-    }
-
-    protected Page getPage() {
-        if (page == null) {
-            page = createPage();
-        }
-        return page;
-    }
-
-    protected abstract Page createPage();
+//    @BeforeMethod(alwaysRun = true, dependsOnMethods = { "loadPage" })
+//    public void initializePage() {
+//        injectWebElementsToPage(page);
+//    }
 
     /**
      * Waiting method. Waits number of milis defined by @milis
@@ -456,16 +439,14 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
      * Do a full page refresh (regular HTTP request) by triggering a command with no action bound.
      */
     public void fullPageRefresh() {
-        Graphene.waitModel().until(Graphene.element(page.fullPageRefreshIcon).isPresent());
-        Graphene.guardHttp(page.fullPageRefreshIcon).click();
+        MetamerPage.waitRequest(page.fullPageRefreshIcon, WaitRequestType.HTTP).click();
     }
 
     /**
      * Rerender all content of the page (AJAX request) by trigerring a command with no action but render bound.
      */
     public void rerenderAll() {
-        Graphene.waitModel().until(Graphene.element(page.rerenderAllIcon).isPresent());
-        Graphene.guardXhr(page.rerenderAllIcon).click();
+        MetamerPage.waitRequest(page.rerenderAllIcon, WaitRequestType.XHR).click();
     }
 
     /**
@@ -497,134 +478,12 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
         return list;
     }
 
-    protected enum WaitRequestType {
-
-        XHR,
-        HTTP,
-        NONE;
-    }
-
-    /**
-     * !All requests depends on Metamer`s requestTime!
-     * Temporary method before https://issues.jboss.org/browse/ARQGRA-200 is
-     * resolved. Generates a waiting proxy, which will wait for page rendering
-     * after expected @waitRequestType which will be launched via
-     * communicating with @element.
-     *
-     * @param element WebElement which will launch a request (e.g. with methods
-     * click(), submit()...) after invoking it.
-     * @param waitRequestType type of expected request which will be launched
-     * @return waiting proxy for input element
-     */
-    protected WebElement waitRequest(WebElement element, WaitRequestType waitRequestType) {
-        switch (waitRequestType) {
-            case HTTP:
-                return requestTimeChangesWaiting(Graphene.guardHttp(element));
-            case XHR:
-                return requestTimeChangesWaiting(Graphene.guardXhr(element));
-            case NONE:
-                return requestTimeNotChangesWaiting(Graphene.guardNoRequest(element));
-            default:
-                throw new UnsupportedOperationException("Not supported request: " + waitRequestType);
-        }
-    }
-
-    /**
-     * Method for guarding that Metamer's requestTime changes.
-     * @param element element which action should resolve in Metamer's requestTime change
-     * @return guarded element
-     */
-    protected WebElement requestTimeChangesWaiting(WebElement element) {
-        return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
-                new Class[]{ WebElement.class }, new RequestTimeChangesHandler(element));
-    }
-
-    /**
-     * Method for guarding that Metamer's requestTime not changes. Waits for 2 seconds.
-     * @param element element which action should not resolve in Metamer's requestTime change
-     * @return guarded element
-     */
-    protected WebElement requestTimeNotChangesWaiting(WebElement element) {
-        return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
-                new Class[]{ WebElement.class }, new RequestTimeNotChangesHandler(element, 2));
-    }
-
-    /**
-     * Waits for change of requestTime in Metamer.
-     */
-    private class RequestTimeChangesHandler implements InvocationHandler {
-
-        protected final WebElement element;
-        protected String time1;
-        protected final By REQ_TIME = By.cssSelector("span[id='requestTime']");
-
-        public RequestTimeChangesHandler(WebElement element) {
-            this.element = element;
-        }
-
-        protected String getTime() {
-            WebElement el = waitUntilElementIsVisible(By.cssSelector("span[id='requestTime']"));
-            String time = el.getText();
-            return time;
-        }
-
-        protected void beforeAction() {
-            time1 = getTime();
-        }
-
-        protected void afterAction() {
-            new WDWait().until(new Predicate<WebDriver>() {
-                @Override
-                public boolean apply(WebDriver input) {
-                    return !input.findElement(REQ_TIME).getText().equals(time1);
-                }
-            });
-        }
-
-        @Override
-        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            beforeAction();
-            Object o = method.invoke(element, args);
-            afterAction();
-            return o;
-        }
-    }
-
-    /**
-     * Waits number of seconds and checks if requestTime was not changed,
-     */
-    private class RequestTimeNotChangesHandler extends RequestTimeChangesHandler {
-
-        private final int waitTime;
-
-        public RequestTimeNotChangesHandler(WebElement element, int waitTime) {
-            super(element);
-            this.waitTime = waitTime;
-        }
-
-        @Override
-        protected void afterAction() {
-            waiting(waitTime);
-            if (!getTime().equals(time1)) {
-                throw new RuntimeException("No request expected, but request time has changed.");
-            }
-        }
-
-        @Override
-        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            beforeAction();
-            Object o = method.invoke(element, args);
-            afterAction();
-            return o;
-        }
-    }
-
     /**
      * Decoder for Attributes. Converts given Attribute to String. If Attribute
      * ends with 'class' or 'style', then it returns the correct one, when the attribute does not
      * end with none of those, then it returns toString() method of attribute
      */
-    private static class Attribute2StringDecoder {
+    public static class Attribute2StringDecoder {
 
         private static final String CLASS = "class";
         private static final String STYLE = "style";
@@ -646,47 +505,7 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
     }
 
     /**
-     * Wait for element to be visible.
-     *
-     * @param by locate by
-     * @return found element
-     */
-    protected WebElement waitUntilElementIsVisible(final By by) {
-        return new WDWait().until(ExpectedConditions.visibilityOfElementLocated(by));
-    }
-
-    /**
-     * WebDriver wait which ignores StaleElementException and
-     * NoSuchElementException and is polling every 50 ms.
-     */
-    protected class WDWait extends WebDriverWait {
-
-        /**
-         * WebDriver wait which ignores StaleElementException and
-         * NoSuchElementException and polling every 50 ms with max wait time of
-         * 5 seconds
-         */
-        public WDWait() {
-            this(5);
-        }
-
-        /**
-         * WebDriver wait which ignores StaleElementException and
-         * NoSuchElementException and polling every 50 ms with max wait time set
-         * in attribute
-         *
-         * @param seconds max wait time
-         */
-        public WDWait(int seconds) {
-            super(driver, seconds);
-            ignoring(NoSuchElementException.class);
-            ignoring(StaleElementReferenceException.class);
-            pollingEvery(50, TimeUnit.MILLISECONDS);
-        }
-    }
-
-    /**
-     * Abstract ReloadTester for testing componen't state after reloading the page
+     * Abstract ReloadTester for testing component's state after reloading the page
      *
      * @param <T>
      *            the type of input values which will be set, sent and then verified
@@ -703,7 +522,7 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
             for (T inputValue : getInputValues()) {
                 doRequest(inputValue);
                 verifyResponse(inputValue);
-                AbstractWebDriverTest.this.rerenderAll();
+                rerenderAll();
                 verifyResponse(inputValue);
             }
         }
@@ -712,14 +531,9 @@ public abstract class AbstractWebDriverTest<Page extends MetamerPage> extends Ab
             for (T inputValue : getInputValues()) {
                 doRequest(inputValue);
                 verifyResponse(inputValue);
-                AbstractWebDriverTest.this.fullPageRefresh();
+                fullPageRefresh();
                 verifyResponse(inputValue);
             }
         }
-    }
-
-    protected interface IEventLaunchAction {
-
-        void launchAction();
     }
 }

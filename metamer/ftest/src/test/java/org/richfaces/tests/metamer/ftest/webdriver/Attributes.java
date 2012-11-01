@@ -21,30 +21,20 @@
  */
 package org.richfaces.tests.metamer.ftest.webdriver;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
-
-import com.google.common.base.Predicate;
 
 public class Attributes<T extends AttributeEnum> {
 
@@ -113,8 +103,8 @@ public class Attributes<T extends AttributeEnum> {
     protected void setProperty(String propertyName, Object value) {
         String valueAsString = (value == null ? NULLSTRING : value.toString());
         //locator for all types of input elements
-        String cssSelector = "[id$=':" + propertyName + "Input']";
-        WebElement foundElement = waitUntilElementIsVisible(By.cssSelector(cssSelector));
+        By cssSelector = By.cssSelector("[id$=':" + propertyName + "Input']");
+        WebElement foundElement = MetamerPage.waitUntilElementIsVisible(cssSelector);
         //handle the property by the tagname of the input element
         Tag tag = Tag.getTag(foundElement);
         switch (tag) {
@@ -148,8 +138,8 @@ public class Attributes<T extends AttributeEnum> {
             if (!text.isEmpty()) {
                 ((JavascriptExecutor) driver).executeScript("$(\"input[id$=':" + propertyName + "Input']\").val('')");
             }
-            waitUntilElementIsVisible(cssSelector).sendKeys(value);
-            waitGuard(driver.findElement(cssSelector)).submit();
+            MetamerPage.waitUntilElementIsVisible(cssSelector).sendKeys(value);
+            MetamerPage.waitRequest(MetamerPage.waitUntilElementIsVisible(cssSelector), WaitRequestType.HTTP).submit();
         }
     }
 
@@ -161,19 +151,19 @@ public class Attributes<T extends AttributeEnum> {
             if (valueToBeSet.equals(NULLSTRING)) {
                 if (new StringEqualsWrapper(attributeValue).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
                     if (!element.isSelected()) {
-                        waitGuard(element).click();
+                        MetamerPage.waitRequest(element, WaitRequestType.HTTP).click();
                     }
                     return;
                 }
             } else if (valueToBeSet.equals(attributeValue)) {
                 if (!element.isSelected()) {
-                    waitGuard(element).click();
+                    MetamerPage.waitRequest(element, WaitRequestType.HTTP).click();
                 }
                 return;
             } else if (attributeValue.contains(valueToBeSet)) {
                 //for image selection radios, which value contains a source url of the image
                 if (!element.isSelected()) {
-                    waitGuard(element).click();
+                    MetamerPage.waitRequest(element, WaitRequestType.HTTP).click();
                 }
                 return;
             }
@@ -189,7 +179,7 @@ public class Attributes<T extends AttributeEnum> {
                 String val = element.getAttribute("value");
                 if (new StringEqualsWrapper(val).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
                     if (!element.isSelected()) {
-                        waitGuard(element).click();
+                        MetamerPage.waitRequest(element, WaitRequestType.HTTP).click();
                     }
                     return;
                 }
@@ -218,8 +208,8 @@ public class Attributes<T extends AttributeEnum> {
      * @return
      */
     private String getProperty(String propertyName) {
-        String xpathLocator = "//*[contains(@id, ':" + propertyName + "Input')]";
-        WebElement foundElement = waitUntilElementIsVisible(By.xpath(xpathLocator));
+        By cssSelector = By.cssSelector("[id$=':" + propertyName + "Input']");
+        WebElement foundElement = MetamerPage.waitUntilElementIsVisible(cssSelector);
         //handle the property by the tagname of the input element
         Tag tag = Tag.getTag(foundElement);
         switch (tag) {
@@ -318,18 +308,6 @@ public class Attributes<T extends AttributeEnum> {
         }
     }
 
-    /**
-     * Waiting guard for page re-render.
-     *
-     * @param element element which will launch page re-render with his action
-     * @return guarded element
-     */
-    private WebElement waitGuard(WebElement element) {
-        return (WebElement) Proxy.newProxyInstance(WebElement.class.getClassLoader(),
-                new Class[]{ WebElement.class },
-                new RequestTimeChangeWaitHandler(element));
-    }
-
     private enum Tag {
 
         input("input"),
@@ -371,61 +349,6 @@ public class Attributes<T extends AttributeEnum> {
                 }
             }
             return unknown;
-        }
-    }
-
-    /**
-     * Waits for change of requestTime in Metamer.
-     */
-    private class RequestTimeChangeWaitHandler implements InvocationHandler {
-
-        private final WebElement element;
-        private String time1;
-        private final By REQ_TIME = By.cssSelector("span[id='requestTime']");
-
-        public RequestTimeChangeWaitHandler(WebElement element) {
-            this.element = element;
-        }
-
-        private String getDate() {
-            WebElement el = waitUntilElementIsVisible(By.cssSelector("span[id='requestTime']"));
-            String time = el.getText();
-            return time;
-        }
-
-        private void beforeAction() {
-            time1 = getDate();
-        }
-
-        private void afterAction() {
-            new WDWait().until(new Predicate<WebDriver>() {
-                @Override
-                public boolean apply(WebDriver input) {
-                    return !input.findElement(REQ_TIME).getText().equals(time1);
-                }
-            });
-        }
-
-        @Override
-        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            beforeAction();
-            Object o = method.invoke(element, args);
-            afterAction();
-            return o;
-        }
-    }
-
-    private WebElement waitUntilElementIsVisible(final By by) {
-        return new WDWait().until(ExpectedConditions.visibilityOfElementLocated(by));
-    }
-
-    private class WDWait extends WebDriverWait {
-
-        public WDWait() {
-            super(driver, 5);
-            ignoring(NoSuchElementException.class);
-            ignoring(StaleElementReferenceException.class);
-            pollingEvery(50, TimeUnit.MILLISECONDS);
         }
     }
 }

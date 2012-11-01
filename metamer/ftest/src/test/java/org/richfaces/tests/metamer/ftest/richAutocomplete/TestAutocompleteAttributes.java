@@ -21,28 +21,31 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
-import java.net.URL;
 import static java.text.MessageFormat.format;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocompleteAttributes;
+import static org.testng.Assert.assertEquals;
+
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocompleteAttributes;
 import org.richfaces.tests.page.fragments.impl.autocomplete.AutocompleteComponentImpl;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
-import static org.testng.Assert.assertEquals;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAutocompleteAttributes extends AbstractAutocompleteTest<SimplePage>{
+public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest<SimplePage> {
 
     private static final String PHASE_LISTENER_LOG_FORMAT = "*1 value changed: {0} -> {1}";
 
-    @FindBy(id="form:autocomplete")
+    @FindBy(css="span[id$=autocomplete]")
     private AutocompleteComponentImpl<String> autocomplete;
 
     @Override
@@ -55,11 +58,6 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest<SimpleP
         autocomplete.setSuggestionParser(new TextSuggestionParser());
     }
 
-    @Override
-    protected SimplePage createPage() {
-        return new SimplePage();
-    }
-
     @Test
     public void testClientFilterFunction() {
         autocompleteAttributes.set(AutocompleteAttributes.clientFilterFunction, Boolean.TRUE);
@@ -70,16 +68,16 @@ public class TestAutocompleteAttributes extends AbstractAutocompleteTest<SimpleP
     public void testValueChangeListener() {
         autocomplete.clear(ClearType.BACK_SPACE);
         autocomplete.type("something");
-        getPage().blur();
+        page.blur();
 
-        Graphene.waitAjax().until(Graphene.element(getPage().getOutput()).textEquals("something"));
+        Graphene.waitAjax().withTimeout(4, TimeUnit.SECONDS).until(Graphene.element(page.getOutput()).textEquals("something"));
 
         autocomplete.clear(ClearType.BACK_SPACE);
         autocomplete.type("something else");
-        getPage().blur();
+        page.blur();
         // valueChangeListener output as 4th record
-        Graphene.waitAjax().until(Graphene.element(getPage().getOutput()).textEquals("something else"));
-        assertEquals(getPage().getPhases().get(3), format(PHASE_LISTENER_LOG_FORMAT, "something", "something else"));
+        Graphene.waitAjax().until(Graphene.element(page.getOutput()).textEquals("something else"));
+        assertEquals(page.getPhases().get(3), format(PHASE_LISTENER_LOG_FORMAT, "something", "something else"));
     }
 
     @Test(groups = { "4.Future" })

@@ -26,11 +26,14 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractTreeToggleListenerTest extends AbstractWebDriverTest<TTLPage> {
+// FIXME AbstractTreeToggleListenerTest should not be generic (bug in Graphene)
+public abstract class AbstractTreeToggleListenerTest<P extends TTLPage> extends AbstractWebDriverTest<P> {
 
     private final String collapsedNodeString = " collapsed";
     private final String expandedNodeString = " expanded";
@@ -38,11 +41,6 @@ public abstract class AbstractTreeToggleListenerTest extends AbstractWebDriverTe
 
     public AbstractTreeToggleListenerTest(String testedComponent) {
         this.testedComponent = testedComponent;
-    }
-
-    @Override
-    protected TTLPage createPage() {
-        return new TTLPage();
     }
 
     @Override
@@ -63,22 +61,22 @@ public abstract class AbstractTreeToggleListenerTest extends AbstractWebDriverTe
 
     private void testTTL(final String expectedText, String failMessage) {
         //test expanding of node
-        waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText + expandedNodeString), failMessage);
         //then test collapsing of node
-        waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText + collapsedNodeString), failMessage);
     }
 
     private void testTTLWithoutAdditionalStateStrings(final String expectedText, String failMessage) {
         //test expanding of node
-        waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText));
         //then test collapsing of node
-        waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText));
     }

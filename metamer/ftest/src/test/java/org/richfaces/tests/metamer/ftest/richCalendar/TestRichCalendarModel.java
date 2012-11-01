@@ -21,92 +21,88 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
-import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
 
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import java.util.List;
+import org.jboss.arquillian.graphene.Graphene;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay;
+import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.DayPicker;
+import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.CalendarPopup;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for basic functionality of calendar on page faces/components/richCalendar/dataModel.xhtml.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22661 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichCalendarModel extends AbstractCalendarTest {
+public class TestRichCalendarModel extends AbstractCalendarTest<MetamerPage> {
+
+    private static final String datePattern = "MMM dd, yyyy";
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richCalendar/dataModel.xhtml");
     }
 
+    @Override
     @Test(groups = { "4.0.0.Final" })
-    @IssueTracking("https://issues.jboss.org/browse/RFPL-1222")
-    public void testClasses() {
-        selenium.click(input);
-        String month = selenium.getText(monthLabel);
-        selenium.click(nextMonthButton);
-        waitGui.failWith("Month did not change.").waitForChange(month, retrieveText.locator(monthLabel));
+    @RegressionTest("https://issues.jboss.org/browse/RFPL-1222")
+    public void testApplyButton() {
+        int wednesdays = 4;
+        DateTime nextMonth = todayMidday.plusMonths(1);
+        CalendarPopup openedPopup = calendar.openPopup();
+        Graphene.guardXhr(calendar.openPopup().getHeaderControls()).nextMonth();
+        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
+        List<CalendarDay> wednesdayDays = proxiedDayPicker.getSpecificDays(wednesdays);
+        wednesdayDays.removeAll(proxiedDayPicker.getBoundaryDays());
+        Integer firstWednesday = wednesdayDays.get(0).getDayNumber();
+        nextMonth = nextMonth.withDayOfMonth(firstWednesday);
 
-        for (int i = 7; i < 28; i++) {
-            switch (i % 7) {
-                case 0:
-                case 6:
-                    assertTrue(selenium.belongsClass(cellDay.format(i), "yellowDay"),
-                        "Weekends should be yellow (cell " + i + ")");
-                    break;
-                case 2:
-                    assertTrue(selenium.belongsClass(cellDay.format(i), "aquaDay"), "Tuesdays should be blue (cell "
-                        + i + ")");
-                    break;
-                case 4:
-                    assertTrue(selenium.belongsClass(cellDay.format(i), "aquaDay"), "Thursdays should be blue (cell "
-                        + i + ")");
-                    break;
-                default:
-                    assertFalse(selenium.belongsClass(cellDay.format(i), "aquaDay"),
-                        "Mondays, Wednesdays and Fridays should not be styled (cell " + i + ")");
-                    assertFalse(selenium.belongsClass(cellDay.format(i), "yellowDay"),
-                        "Mondays, Wednesdays and Fridays should not be styled (cell " + i + ")");
-            }
-        }
+        Graphene.guardXhr(wednesdayDays.get(0)).select();
+        assertFalse(openedPopup.isVisible());
+        DateTimeFormatter dtf = DateTimeFormat.forPattern(datePattern);
+
+        DateTime selectedDate = dtf.parseDateTime(calendar.getInputValue());
+        assertEquals(selectedDate.getYear(), nextMonth.getYear());
+        assertEquals(selectedDate.getMonthOfYear(), nextMonth.getMonthOfYear());
+        assertEquals(selectedDate.getDayOfMonth(), nextMonth.getDayOfMonth());
     }
 
     @Test(groups = { "4.0.0.Final" })
-    @Override
-    @IssueTracking("https://issues.jboss.org/browse/RFPL-1222")
-    public void testApplyButton() {
-        selenium.click(input);
-        String month = selenium.getText(monthLabel);
-        selenium.click(nextMonthButton);
-        waitGui.failWith("Month did not change.").waitForChange(month, retrieveText.locator(monthLabel));
+    @RegressionTest("https://issues.jboss.org/browse/RFPL-1222")
+    public void testClasses() {
+        //need to switch to next month to refresh data model
+        int sundays = 1;
+        int tuesdays = 3;
+        int thursdays = 5;
+        int saturdays = 7;
 
-        selenium.click(cellDay.format(17));
-        String day = selenium.getText(cellDay.format(17));
-        month = selenium.getText(monthLabel);
+        Graphene.guardXhr(calendar.openPopup().getHeaderControls()).nextMonth();
+        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
+        List<CalendarDay> weekends = proxiedDayPicker.getSpecificDays(sundays);
+        weekends.addAll(proxiedDayPicker.getSpecificDays(saturdays));
+        weekends.removeAll(proxiedDayPicker.getBoundaryDays());
 
-        @SuppressWarnings("unused")
-        String selectedDate = null;
-        try {
-            Date date = new SimpleDateFormat("d MMMM, yyyy hh:mm").parse(day + " " + month + " 12:00");
-            selectedDate = new SimpleDateFormat("MMM d, yyyy hh:mm").format(date);
-        } catch (ParseException ex) {
-            fail(ex.getMessage());
+        for (CalendarDay day : weekends) {
+            assertTrue(day.containsStyleClass("yellowDay"), "Weekends should be yellow.");
         }
 
-        selenium.click(cellDay.format(17));
-        assertFalse(selenium.isVisible(popup), "Popup should not be displayed.");
+        List<CalendarDay> busyDays = proxiedDayPicker.getSpecificDays(tuesdays);
+        busyDays.addAll(proxiedDayPicker.getSpecificDays(thursdays));
+        busyDays.removeAll(proxiedDayPicker.getBoundaryDays());
+
+        for (CalendarDay day : busyDays) {
+            assertTrue(day.containsStyleClass("aquaDay"), "Tuesdays and thursdays should be aqua.");
+        }
     }
 }

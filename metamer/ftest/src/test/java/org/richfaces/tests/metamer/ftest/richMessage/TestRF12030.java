@@ -39,11 +39,6 @@ public class TestRF12030 extends AbstractWebDriverTest<RF12030Page> {
         return buildUrl(contextPath, "faces/components/richMessage/RF-12030.xhtml");
     }
 
-    @Override
-    protected RF12030Page createPage() {
-        return new RF12030Page();
-    }
-
     @Test(groups = "4.3")
     @IssueTracking("https://issues.jboss.org/browse/RFPL-12030")
     public void testDataScrollerWorksAfterCollapseOfPanel() {

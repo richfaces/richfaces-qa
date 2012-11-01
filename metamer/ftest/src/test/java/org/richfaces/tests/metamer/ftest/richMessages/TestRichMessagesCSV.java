@@ -27,6 +27,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
@@ -75,8 +76,8 @@ public class TestRichMessagesCSV extends RichMessagesTest {
         super.testFor();
     }
 
-    @Test(groups = { "4.Future" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-11415")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11415")
     public void testGlobalOnly() {
         super.testGlobalOnly();
     }

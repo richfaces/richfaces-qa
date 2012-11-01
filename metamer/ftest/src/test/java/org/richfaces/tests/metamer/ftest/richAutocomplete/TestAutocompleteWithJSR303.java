@@ -28,7 +28,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAutocompleteWithJSR303 extends TestComponentWithJSR303 {
+public class TestAutocompleteWithJSR303 extends TestComponentWithJSR303<JSR303Page> {
 
     @Override
     public URL getTestUrl() {

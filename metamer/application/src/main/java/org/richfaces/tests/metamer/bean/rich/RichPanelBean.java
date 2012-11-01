@@ -57,23 +57,6 @@ public class RichPanelBean implements Serializable {
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIPanel.class, getClass());
 
         attributes.setAttribute("rendered", true);
-
-        // FIXME these attributes were not found automatically
-        attributes.setAttribute("bodyClass", null);
-        attributes.setAttribute("header", null);
-        attributes.setAttribute("headerClass", null);
-        attributes.setAttribute("onclick", null);
-        attributes.setAttribute("ondblclick", null);
-        attributes.setAttribute("onkeydown", null);
-        attributes.setAttribute("onkeypress", null);
-        attributes.setAttribute("onkeyup", null);
-        attributes.setAttribute("onmousedown", null);
-        attributes.setAttribute("onmousemove", null);
-        attributes.setAttribute("onmouseout", null);
-        attributes.setAttribute("onmouseover", null);
-        attributes.setAttribute("onmouseup", null);
-        attributes.setAttribute("style", null);
-        attributes.setAttribute("styleClass", null);
     }
 
     public Attributes getAttributes() {

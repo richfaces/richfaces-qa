@@ -26,11 +26,14 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractItemChangeListenerTest extends AbstractWebDriverTest<ICLPage> {
+// FIXME AbstractItemChangeListenerTest should not be generic (Graphene bug)
+public abstract class AbstractItemChangeListenerTest<P extends ICLPage> extends AbstractWebDriverTest<P> {
 
     private final String testedComponent;
 
@@ -55,7 +58,7 @@ public abstract class AbstractItemChangeListenerTest extends AbstractWebDriverTe
     }
 
     private void testICL(final String expectedText, String failMessage) {
-        waitRequest(page.getInactivePanel(), WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getInactivePanel(), WaitRequestType.XHR).click();
         assertTrue(subTest(expectedText), failMessage);
     }
 

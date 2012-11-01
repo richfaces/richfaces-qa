@@ -90,7 +90,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                buttonIcon="#{richCalendarBean.attributes['buttonIcon'].value}"
                                buttonLabel="#{richCalendarBean.attributes['buttonLabel'].value}"
                                converterMessage="#{richCalendarBean.attributes['converterMessage'].value}"
-                               currentDate="#{richCalendarBean.attributes['currentDate'].value}"
                                datePattern="#{richCalendarBean.attributes['datePattern'].value}"
                                dayClassFunction="#{richCalendarBean.attributes['dayClassFunction'].value}"
                                dayDisableFunction="#{richCalendarBean.attributes['dayDisableFunction'].value}"
@@ -121,7 +120,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                ondatemouseout="#{richCalendarBean.attributes['ondatemouseout'].value}"
                                ondatemouseover="#{richCalendarBean.attributes['ondatemouseover'].value}"
                                ondateselect="#{richCalendarBean.attributes['ondateselect'].value}"
-                               onhide="#{richCalendarBean.attributes['ondateselect'].value}"
+                               onhide="#{richCalendarBean.attributes['onhide'].value}"
                                oninputblur="#{richCalendarBean.attributes['oninputblur'].value}"
                                oninputchange="#{richCalendarBean.attributes['oninputchange'].value}"
                                oninputclick="#{richCalendarBean.attributes['oninputclick'].value}"
@@ -158,8 +157,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                tabindex="#{richCalendarBean.attributes['tabindex'].value}"
                                timeZone="#{richCalendarBean.timeZone}"
                                todayControlMode="#{richCalendarBean.attributes['todayControlMode'].value}"
+                               validator="#{richCalendarBean.validateDate}"
                                validatorMessage="#{richCalendarBean.attributes['validatorMessage'].value}"
-                               value="#{richCalendarBean.attributes['value'].value}"
+                               value="#{richCalendarBean.value}"
                                valueChangeListener="#{richCalendarBean.valueChangeListener}"
                                verticalOffset="#{richCalendarBean.attributes['verticalOffset'].value}"
                                weekDayLabels="#{richCalendarBean.attributes['weekDayLabels'].value}"
@@ -177,9 +177,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/><br/>
 
             output:
-            <h:outputText id="output" value="#{richCalendarBean.attributes['value'].value}">
-                <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
-                                   timeZone="#{richCalendarBean.timeZone}"/>
+            <h:outputText id="output" value="#{richCalendarBean.value}">
+                    <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
+                                       timeZone="#{richCalendarBean.timeZone}"/>
             </h:outputText>
 
         </ui:define>

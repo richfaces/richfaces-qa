@@ -50,36 +50,36 @@ public class JSR303Page extends MetamerPage {
     private static final String CORRECT_CUSTOM_STRING = "RichFaces";
     private static final String CUSTOM_STRING_VALIDATION_MSG = "string is not \"RichFaces\"";
 
-    @FindBy(id="form:input1Input")
+    @FindBy(css="input[id$=input1Input]")
     private WebElement notEmptyInput;
-    @FindBy(id="form:input2Input")
+    @FindBy(css="input[id$=input2Input]")
     private WebElement regExpPatternInput;
-    @FindBy(id="form:input3Input")
+    @FindBy(css="input[id$=input3Input]")
     private WebElement stringSizeInput;
-    @FindBy(id="form:input4Input")
+    @FindBy(css="input[id$=input4Input]")
     private WebElement customStringInput;
 
-    @FindBy(id="form:hButton")
+    @FindBy(css="input[id$=hButton]")
     private WebElement hCommandButton;
-    @FindBy(id="form:a4jButton")
+    @FindBy(css="input[id$=a4jButton]")
     private WebElement a4jCommandButton;
 
-    @FindBy(id="form:output1")
+    @FindBy(css="span[id$=output1]")
     private WebElement output1;
-    @FindBy(id="form:output2")
+    @FindBy(css="span[id$=output2]")
     private WebElement output2;
-    @FindBy(id="form:output3")
+    @FindBy(css="span[id$=output3]")
     private WebElement output3;
-    @FindBy(id="form:output4")
+    @FindBy(css="span[id$=output4]")
     private WebElement output4;
 
-    @FindBy(css="span[id='form:inputMsg1:form:input1'] span")
+    @FindBy(css="span.rf-msg[id$=inputMsg1] span.rf-msg-det")
     private WebElement input1Message;
-    @FindBy(css="span[id='form:inputMsg2:form:input2'] span")
+    @FindBy(css="span.rf-msg[id$=inputMsg2] span.rf-msg-det")
     private WebElement input2Message;
-    @FindBy(css="span[id='form:inputMsg3:form:input3'] span")
+    @FindBy(css="span.rf-msg[id$=inputMsg3] span.rf-msg-det")
     private WebElement input3Message;
-    @FindBy(css="span[id='form:inputMsg4:form:input4'] span")
+    @FindBy(css="span.rf-msg[id$=inputMsg4] span.rf-msg-det")
     private WebElement input4Message;
 
     @FindBy(id="locale")

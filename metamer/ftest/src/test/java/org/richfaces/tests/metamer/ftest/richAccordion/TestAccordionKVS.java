@@ -21,24 +21,24 @@
  */
 package org.richfaces.tests.metamer.ftest.richAccordion;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.BooleanConditionWrapper;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
- * Test rich:accordion keeping visual state (KVS) on page faces/components/richAccordion/simple.xhtml
- *
- * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision$
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAccordionKVS extends AbstractGrapheneTest {
+public class TestAccordionKVS extends AbstractWebDriverTest<AccordionPage> {
 
     AccordionReloadTester reloadTester = new AccordionReloadTester();
 
@@ -47,32 +47,39 @@ public class TestAccordionKVS extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richAccordion/simple.xhtml");
     }
 
-    @Test(groups = { "keepVisualStateTesting" })
+    @Test(groups = {"keepVisualStateTesting"})
     public void testRefreshFullPage() {
         reloadTester.testFullPageRefresh();
     }
 
-    @Test(groups = { "keepVisualStateTesting", "4.3" })
+    @Test(groups = {"keepVisualStateTesting", "4.3"})
     @IssueTracking("https://issues.jboss.org/browse/RF-12035")
     public void testRenderAll() {
         reloadTester.testRerenderAll();
     }
 
-    private class AccordionReloadTester extends ReloadTester<String> {
+    private class AccordionReloadTester extends ReloadTester<Integer> {
+
         @Override
-        public void doRequest(String accordionIndex) {
-            guardXhr(selenium).click(pjq("div[id$='item{0}:header']").format(accordionIndex));
+        public void doRequest(Integer accordionIndex) {
+            page.getAccordion().getItem(accordionIndex).activate();
         }
 
         @Override
-        public void verifyResponse(String accordionIndex) {
-            waitGui.until(elementVisible.locator(pjq("div[id$='item{0}:content']").format(accordionIndex)));
+        public void verifyResponse(final Integer accordionIndex) {
+            Graphene.waitAjax()
+                    .withMessage("Test failed with accordion item " + (accordionIndex+1))
+                    .until(new BooleanConditionWrapper(new ExpectedCondition<Boolean>() {
+                        @Override
+                        public Boolean apply(WebDriver input) {
+                            return page.getAccordion().getItem(accordionIndex).isActive();
+                        }
+                    }, NoSuchElementException.class, StaleElementReferenceException.class));
         }
 
         @Override
-        public String[] getInputValues() {
-            return new String[] { "3", "2", "1" };
+        public Integer[] getInputValues() {
+            return new Integer[]{4, 2, 1, 0};
         }
     }
-
 }

@@ -29,6 +29,8 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -38,7 +40,7 @@ import org.testng.annotations.Test;
  * @since 4.3.0.M2
  */
 @RegressionTest("https://issues.jboss.org/browse/RF-10482")
-public class TestHCommandLink extends AbstractAjaxTest {
+public class TestHCommandLink extends AbstractAjaxTest<AjaxPage> {
 
     @Override
     public URL getTestUrl() {
@@ -48,7 +50,7 @@ public class TestHCommandLink extends AbstractAjaxTest {
     @Test
     public void testSimpleClick() {
         page.input.sendKeys("RichFaces 4");
-        waitRequest(page.link, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.link, WaitRequestType.XHR).click();
 
         assertOutput1Changed();
         assertOutput2Changed();
@@ -58,7 +60,7 @@ public class TestHCommandLink extends AbstractAjaxTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-9665")
     public void testSimpleClickUnicode() {
         page.input.sendKeys("ľščťžýáíéúôň фывацукйешгщь");
-        waitRequest(page.link, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.link, WaitRequestType.XHR).click();
 
         assertEquals(page.output1.getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output2 should change");
         assertEquals(page.output2.getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output2 should change");

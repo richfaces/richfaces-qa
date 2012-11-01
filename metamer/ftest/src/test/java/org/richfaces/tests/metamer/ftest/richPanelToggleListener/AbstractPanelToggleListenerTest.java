@@ -26,11 +26,14 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractPanelToggleListenerTest extends AbstractWebDriverTest<PTLCollapsiblePanelPage> {
+// FIXME AbstractPanelToggleListenerTest should not be generic (bug in Graphene)
+public abstract class AbstractPanelToggleListenerTest<P extends PTLCollapsiblePanelPage> extends AbstractWebDriverTest<P> {
 
     private final String collapsedPanelString = " collapsed";
     private final String expandedPanelString = " expanded";
@@ -38,11 +41,6 @@ public abstract class AbstractPanelToggleListenerTest extends AbstractWebDriverT
 
     public AbstractPanelToggleListenerTest(String testedComponent) {
         this.testedComponent = testedComponent;
-    }
-
-    @Override
-    protected PTLCollapsiblePanelPage createPage() {
-        return new PTLCollapsiblePanelPage();
     }
 
     @Override
@@ -63,11 +61,11 @@ public abstract class AbstractPanelToggleListenerTest extends AbstractWebDriverT
 
     private void testPTL(final String expectedText, String failMessage) {
         //first test collapsing of panel
-        waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText + collapsedPanelString), failMessage);
         //then test expanding of panel
-        waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText + expandedPanelString), failMessage);
     }

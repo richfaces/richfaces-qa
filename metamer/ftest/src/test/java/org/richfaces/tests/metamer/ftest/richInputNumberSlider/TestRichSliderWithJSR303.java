@@ -149,18 +149,11 @@ public class TestRichSliderWithJSR303 extends AbstractGrapheneTest {
     }
 
     @Test
-    @Templates(exclude = { "richPopupPanel" })
     public void testSlideToMin() {
         setAllCorrect();
 
         selenium.mouseDownAt(sliderFormat.format(ID.MIN.val()), new Point(POSITION.ZERO.val(), 0));
         waitGui.until(TextContainsCondition.getInstance().locator(msgFormat.format(ID.MIN.val())).text(MSG_MIN));
-    }
-
-    @Test(groups = { "4.Future" })
-    @Templates(value = { "richPopupPanel" })
-    public void testSlideToMinInPopupPanel() {
-        testSlideToMin();
     }
 
     @Test

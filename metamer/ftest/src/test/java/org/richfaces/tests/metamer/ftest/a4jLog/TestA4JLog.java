@@ -57,10 +57,10 @@ public class TestA4JLog extends AbstractWebDriverTest<LogPage> {
         return buildUrl(contextPath, "faces/components/a4jLog/simple.xhtml");
     }
 
-    @Override
-    protected LogPage createPage() {
-        return new LogPage();
-    }
+//    @Override
+//    protected LogPage createPage() {
+//        return new LogPage();
+//    }
 
     @Test
     public void testSubmit() {

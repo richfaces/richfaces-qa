@@ -30,7 +30,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
  */
 public class SimplePage extends MetamerPage {
 
-    @FindBy(id="form:output")
+    @FindBy(css="span[id$=output]")
     private WebElement output;
     @FindBy(id="locale")
     private WebElement locale;

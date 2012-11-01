@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j"
@@ -27,14 +27,6 @@
     -->
     <ui:composition template="/templates/template.xhtml">
 
-        <ui:define name="view">
-            <f:metadata>
-                <f:viewParam name="templates" value="#{templateBean.templates}">
-                    <f:converter converterId="templatesListConverter" />
-                </f:viewParam>
-            </f:metadata>
-        </ui:define>
-
         <ui:define name="head">
             <style type="text/css">
                 .rf-msg-err {
@@ -47,13 +39,13 @@
         <ui:define name="component">
             <script type="text/javascript">
                 function setCorrectValues() {
-                    $('input[id$=simpleInput1]').val('10').change();
-                    $('input[id$=simpleInput2]').val('10').change();
+                    $('input[id$=simpleInput1]').val('10');
+                    $('input[id$=simpleInput2]').val('10');
                 }
 
                 function setWrongValues() {
-                    $('input[id$=simpleInput1]').val('200').change();
-                    $('input[id$=simpleInput2]').val('200').change();
+                    $('input[id$=simpleInput1]').val('200');
+                    $('input[id$=simpleInput2]').val('200');
                 }
             </script>
 
@@ -128,7 +120,8 @@
 
                 <h:outputLabel for="simpleInput2" value="#{multipleValidationRulesBean.description}" />
                 <h:inputText id="simpleInput2" value="#{multipleValidationRulesBean.value}" label="Input 2" 
-                             converter="#{multipleValidationRulesBean.converter}" > <ui:insert name="validation"/>
+                             converter="#{multipleValidationRulesBean.converter}" > 
+                    <ui:insert name="validation"/>
                 </h:inputText>
                 <rich:message id="simpleInputMsg2" ajaxRendered="true" for="simpleInput2" />
             </h:panelGrid>

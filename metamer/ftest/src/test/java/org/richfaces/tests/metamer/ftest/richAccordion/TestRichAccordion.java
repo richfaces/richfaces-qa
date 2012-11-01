@@ -21,30 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richAccordion;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
-import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
-import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.accordionAttributes;
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
-import javax.faces.event.PhaseId;
-
-import org.jboss.arquillian.ajocado.css.CssProperty;
-import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
-import org.jboss.test.selenium.waiting.EventFiredCondition;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
@@ -59,11 +42,6 @@ import org.testng.annotations.Test;
  */
 public class TestRichAccordion extends AbstractGrapheneTest {
 
-    private JQueryLocator accordion = pjq("div[id$=accordion]");
-    private JQueryLocator[] itemHeaders = { pjq("div[id$=item1:header]"), pjq("div[id$=item2:header]"),
-            pjq("div[id$=item3:header]"), pjq("div[id$=item4:header]"), pjq("div[id$=item5:header]") };
-    private JQueryLocator[] itemContents = { pjq("div[id$=item1:content]"), pjq("div[id$=item2:content]"),
-            pjq("div[id$=item3:content]"), pjq("div[id$=item4:content]"), pjq("div[id$=item5:content]") };
     private JQueryLocator leftIcon = pjq("div[id$=item{0}] td.rf-ac-itm-ico");
     private JQueryLocator rightIcon = pjq("div[id$=item{0}] td.rf-ac-itm-exp-ico");
 
@@ -138,50 +116,6 @@ public class TestRichAccordion extends AbstractGrapheneTest {
         JQueryLocator image = rightIcon.format(3).getChild(jq("img"));
 
         verifyStandardIcons(input, icon, image, "");
-    }
-
-    @Test
-    public void testItemchangeEvents() {
-        accordionAttributes.set(AccordionAttributes.onbeforeitemchange, "metamerEvents += \"beforeitemchange \"");
-        accordionAttributes.set(AccordionAttributes.onitemchange, "metamerEvents += \"itemchange \"");
-
-        selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
-        String time1Value = selenium.getText(time);
-
-        guardXhr(selenium).click(itemHeaders[2]);
-        waitGui.failWith("Page was not updated").waitForChange(time1Value, retrieveText.locator(time));
-
-        String[] events = selenium.getEval(new JavaScript("window.metamerEvents")).split(" ");
-
-        assertEquals(events[0], "beforeitemchange", "Attribute onbeforeitemchange doesn't work");
-        assertEquals(events[1], "itemchange", "Attribute onbeforeitemchange doesn't work");
-    }
-
-    @Test
-    public void testOnbeforeitemchange() {
-        accordionAttributes.set(AccordionAttributes.onbeforeitemchange, "metamerEvents += \"onbeforeitemchange \"");
-
-        guardXhr(selenium).click(itemHeaders[1]);
-        waitGui.failWith("Item 2 is not displayed.").until(elementVisible.locator(itemContents[1]));
-
-        waitGui.failWith("onbeforeitemchange attribute does not work correctly").until(
-            new EventFiredCondition(new Event("beforeitemchange")));
-    }
-
-    @Test
-    public void testOnitemchange() {
-        accordionAttributes.set(AccordionAttributes.onitemchange, "metamerEvents += \"onitemchange \"");
-
-        guardXhr(selenium).click(itemHeaders[1]);
-        waitGui.failWith("Item 2 is not displayed.").until(elementVisible.locator(itemContents[1]));
-
-        waitGui.failWith("onitemchange attribute does not work correctly").until(
-            new EventFiredCondition(new Event("itemchange")));
-    }
-
-    @Test
-    public void testOnmouseout() {
-        testFireEvent(Event.MOUSEOUT, accordion);
     }
 
     private void verifyStandardIcons(JQueryLocator input, JQueryLocator icon, JQueryLocator image, String classSuffix) {

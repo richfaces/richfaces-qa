@@ -66,25 +66,6 @@ public class RichMessageBean implements Serializable {
         attributes.setAttribute("escape", true);
         attributes.setAttribute("showSummary", true);
         attributes.setAttribute("ajaxRendered", true); // make sense for a4j:commandButton submit
-
-        // workaround for missing attribute def from rich.taglib.xml
-        // to get it in list of attrs in metamer
-        attributes.setAttribute("dir", null); // direction
-        attributes.setAttribute("lang", null);
-        attributes.setAttribute("onclick", null);
-        attributes.setAttribute("ondblclick", null);
-        attributes.setAttribute("onkeydown", null);
-        attributes.setAttribute("onkeypress", null);
-        attributes.setAttribute("onkeyup", null);
-        attributes.setAttribute("onmousedown", null);
-        attributes.setAttribute("onmousemove", null);
-        attributes.setAttribute("onmouseout", null);
-        attributes.setAttribute("onmouseover", null);
-        attributes.setAttribute("onmouseup", null);
-        attributes.setAttribute("style", null);
-        attributes.setAttribute("styleClass", null);
-        attributes.setAttribute("title", null);
-
     }
 
     public void setAttributes(Attributes attributes) {

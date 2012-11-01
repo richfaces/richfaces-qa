@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
+
+    <body>
+        <ui:composition template="/templates/template.xhtml">
+
+            <ui:define name="title">Calendar Component testing</ui:define>
+
+            <ui:define name="body">
+                <h:form>
+                    <a4j:outputPanel ajaxRendered="true">
+                        <h:panelGrid columns="2">
+                            <p>calendar:</p>
+                            <rich:calendar id="calendar"  datePattern="#{calendarBean.datePattern}" />
+                            <p>calendarWithApplyButton:</p>
+                            <rich:calendar id="calendarWithApplyButton" showApplyButton="true" datePattern="#{calendarBean.datePattern}" />
+                            <p>calendarWithoutFooter:</p>
+                            <rich:calendar id="calendarWithoutFooter" showFooter="false" datePattern="#{calendarBean.datePattern}" />
+                            <p>calendarWithoutHeader:</p>
+                            <rich:calendar id="calendarWithoutHeader" showHeader="false" datePattern="#{calendarBean.datePattern}" />
+                            <p>calendarWithoutInput:</p>
+                            <rich:calendar id="calendarWithoutInput" showInput="false" datePattern="#{calendarBean.datePattern}" />
+                            <p>calendarWithoutWeekDaysBar:</p>
+                            <rich:calendar id="calendarWithoutWeekDaysBar" showWeekDaysBar="false" datePattern="#{calendarBean.datePattern}" />
+                            <p>calendarWithoutWeeksBar:</p>
+                            <rich:calendar id="calendarWithoutWeeksBar" showWeeksBar="false" datePattern="#{calendarBean.datePattern}" />
+                            <p>calendarInline:</p>
+                            <rich:calendar id="calendarInline" popup="false" datePattern="#{calendarBean.datePattern}"/>
+                            <p>datePattern:</p>
+                            <rich:inplaceInput id="datePattern" value="#{calendarBean.datePattern}"/>
+                        </h:panelGrid>
+                    </a4j:outputPanel>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

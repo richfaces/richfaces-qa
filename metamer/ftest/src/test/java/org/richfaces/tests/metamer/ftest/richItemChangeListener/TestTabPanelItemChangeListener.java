@@ -27,7 +27,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestTabPanelItemChangeListener extends AbstractItemChangeListenerTest {
+public class TestTabPanelItemChangeListener extends AbstractItemChangeListenerTest<ICLTabPanelPage> {
 
     private final String ICL_as_ComponentAttribute_PhaseName = "* item changed: null -> tab2";
     private final String ICL_inComponent_usingType_PhaseName = "* itemChangeListenerBean item changed: null -> tab2";
@@ -36,11 +36,6 @@ public class TestTabPanelItemChangeListener extends AbstractItemChangeListenerTe
 
     public TestTabPanelItemChangeListener() {
         super("tabPanel");
-    }
-
-    @Override
-    protected ICLPage createPage() {
-        return new ICLTabPanelPage();
     }
 
     @Test

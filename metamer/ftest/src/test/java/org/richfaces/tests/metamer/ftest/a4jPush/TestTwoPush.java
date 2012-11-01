@@ -20,10 +20,10 @@ public class TestTwoPush extends AbstractWebDriverTest<TwoPushPage> {
     TextNotEquals textNotEq = TextNotEquals.getInstance();
     TextEquals textEq = TextEquals.getInstance();
 
-    @Override
-    protected TwoPushPage createPage() {
-        return new TwoPushPage();
-    }
+//    @Override
+//    protected TwoPushPage createPage() {
+//        return new TwoPushPage();
+//    }
 
     @Override
     public URL getTestUrl() {

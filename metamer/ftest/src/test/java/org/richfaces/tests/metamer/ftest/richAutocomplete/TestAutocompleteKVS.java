@@ -21,14 +21,16 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
-import java.net.URL;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.testng.Assert.assertEquals;
+
+import java.net.URL;
+
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.page.fragments.impl.autocomplete.AutocompleteComponentImpl;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
-import static org.testng.Assert.assertEquals;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -47,11 +49,6 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest<SimplePage> {
     private AutocompleteComponentImpl<String> autocomplete;
 
     private AutocompleteReloadTester reloadTester = new AutocompleteReloadTester();
-
-    @Override
-    protected SimplePage createPage() {
-        return new SimplePage();
-    }
 
     @BeforeMethod
     public void setParser() {

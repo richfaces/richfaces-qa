@@ -1,6 +1,6 @@
-/*******************************************************************************
+/**
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,33 +18,34 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
 
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import java.util.Arrays;
+import java.util.List;
+import org.jboss.arquillian.graphene.Graphene;
+import org.joda.time.DateTime;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay;
+import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.DayPicker;
+import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.CalendarPopup;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for basic functionality of calendar on page faces/components/richCalendar/simple.xhtml.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 21887 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichCalendarBasic extends AbstractCalendarTest {
+public class TestRichCalendarBasic extends AbstractCalendarTest<MetamerPage> {
 
     @Override
     public URL getTestUrl() {
@@ -53,215 +54,144 @@ public class TestRichCalendarBasic extends AbstractCalendarTest {
 
     @Test
     public void testInit() {
-        boolean displayed = selenium.isVisible(calendar);
-        assertTrue(displayed, "Calendar is not present on the page.");
-
-        displayed = selenium.isVisible(input);
-        assertTrue(displayed, "Calendar's input should be visible.");
-
-        displayed = selenium.isVisible(image);
-        assertTrue(displayed, "Calendar's image should be visible.");
-
-        displayed = selenium.isVisible(popup);
-        assertFalse(displayed, "Popup should not be visible.");
-
-        displayed = selenium.isElementPresent(button);
-        assertFalse(displayed, "Calendar's button should not be visible.");
+        assertTrue(calendar.isVisible(), "Calendar is not present on the page.");
+        assertTrue(Graphene.element(calendar.getInput()).isVisible().apply(driver), "Calendar's input should be visible.");
+        assertTrue(Graphene.element(calendar.getPopupButton()).isVisible().apply(driver), "Calendar's image should be visible.");
+        assertTrue(calendar.getPopupButton().getTagName().equalsIgnoreCase("img"), "Calendar's image should be visible.");
+        assertFalse(calendar.getPopupButton().getTagName().equalsIgnoreCase("button"), "Calendar's popup button should not be visible.");
+        CalendarPopup popup = calendar.openPopup();
+        assertTrue(popup.isVisible());
+        calendar.closePopup();
+        assertFalse(popup.isVisible());
     }
 
     @Test
-    @Override
     public void testOpenPopupClickOnInput() {
         super.testOpenPopupClickOnInput();
     }
 
     @Test
-    @Override
     public void testOpenPopupClickOnImage() {
         super.testOpenPopupClickOnImage();
     }
 
     @Test
-    @Override
     public void testHeaderButtons() {
         super.testHeaderButtons();
     }
 
     @Test
     public void testHeaderMonth() {
-        String month = new SimpleDateFormat("MMMM, yyyy").format(new Date());
-
-        selenium.click(input);
-        String month2 = selenium.getText(monthLabel);
-        assertEquals(month2, month, "Calendar shows wrong month or year in its header.");
+        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
+        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.getMonthOfYear(), "Calendar shows wrong month in its header.");
+        assertEquals(yearAndMonth.getYear(), todayMidday.getYear(), "Calendar shows wrong year in its header.");
     }
 
     @Test
-    @Override
     public void testFooterButtons() {
         super.testFooterButtons();
     }
 
     @Test
     public void testWeekDaysLabels() {
-        selenium.click(input);
-
-        String[] labels = {"", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-
-        for (int i = 0; i < 8; i++) {
-            String label = selenium.getText(weekDayLabel.format(i));
-            assertEquals(label, labels[i], "Week day label " + i);
-        }
+        List<String> weekDayShortNames = calendar.openPopup().getDayPicker().getWeekDayShortNames();
+        assertEquals(weekDayShortNames, Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"));
     }
 
     @Test
     public void testTodayIsSelected() {
-        SimpleDateFormat formatter = new SimpleDateFormat("d");
-        String today = formatter.format(new Date());
-
-        int lowerBoundary = 0;
-        int upperBoundary = 42;
-
-        // go through first half of popup or second half of popup depending on today's date
-        // it is necessary because of dates from other months are also displayed
-        if (Integer.parseInt(today) < 15) {
-            upperBoundary = 28;
-        } else {
-            lowerBoundary = 14;
-        }
-
-        selenium.click(input);
-
-        for (int i = lowerBoundary; i < upperBoundary; i++) {
-            String day = selenium.getText(cellDay.format(i));
-            if (day.equals(today)) {
-                assertTrue(selenium.belongsClass(cellDay.format(i), "rf-cal-today"), "Today's date is not styled correctly.");
-                return;
-            }
-        }
-
-        fail("Today's date is not styled correctly.");
+        CalendarDay todayDay = calendar.openPopup().getDayPicker().getTodayDay();
+        assertEquals(todayDay.getDayNumber().intValue(), todayMidday.getDayOfMonth());
     }
 
     @Test
     public void testWeekNumbers() {
-        selenium.click(input);
-        String month = selenium.getText(monthLabel);
-        String day = selenium.getText(cellDay.format(6));
+        calendar.openPopup().getHeaderControls().openYearAndMonthEditor()
+                .selectDate(firstOfJanuary2012).confirmDate();
+        calendar.openPopup().getFooterControls().applyDate();
 
-        Date date = null;
-        try {
-            date = new SimpleDateFormat("d MMMM, yyyy").parse(day + " " + month);
-        } catch (ParseException ex) {
-            fail(ex.getMessage());
-        }
-        String weekNumber = new SimpleDateFormat("w").format(date);
-
-        assertEquals(selenium.getText(week.format(0)), weekNumber, "Week number on the first line.");
+        DayPicker dayPicker = calendar.openPopup().getDayPicker();
+        List<Integer> weeksNumbers = dayPicker.getWeeksNumbers();
+        assertEquals(weeksNumbers, Arrays.asList(1, 2, 3, 4, 5, 6));
     }
 
     @Test
     public void testSelectDate() {
-        selenium.click(input);
+        CalendarDay selectedDay = calendar.openPopup().getDayPicker().getSelectedDay();
+        assertNull(selectedDay);
 
-        guardNoRequest(selenium).click(cellDay.format(6));
-        assertTrue(selenium.belongsClass(cellDay.format(6), "rf-cal-sel"), "Last date in the first week is not selected.");
+        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
+        Graphene.guardNoRequest(proxiedDayPicker.getWeek(3).getCalendarDays().get(3)).select();
 
-        selenium.click(cellDay.format(8));
-        assertFalse(selenium.belongsClass(cellDay.format(6), "rf-cal-sel"), "Last date in the first week should not be selected.");
+        selectedDay = proxiedDayPicker.getSelectedDay();
+        assertNotNull(selectedDay);
     }
 
     @Test
     public void testCleanButton() {
-        selenium.click(input);
-        selenium.click(cellDay.format(6));
+        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
+        proxiedDayPicker.getWeek(3).getCalendarDays().get(3).select();
+        Graphene.guardNoRequest(calendar.openPopup().getFooterControls()).cleanDate();
 
-        guardNoRequest(selenium).click(cleanButton);
-        assertFalse(selenium.belongsClass(cellDay.format(6), "rf-cal-sel"), "Last date in the first week should not be selected.");
+        CalendarDay selectedDay = proxiedDayPicker.getSelectedDay();
+        assertNull(selectedDay);
     }
 
     @Test
     public void testCloseButton() {
-        selenium.click(input);
-        boolean displayed = selenium.isVisible(popup);
-        assertTrue(displayed, "Popup should be visible.");
+        CalendarPopup popup = calendar.openPopup();
+        assertTrue(popup.isVisible());
 
-        guardNoRequest(selenium).click(closeButton);
-        displayed = selenium.isVisible(popup);
-        assertFalse(displayed, "Popup should not be visible.");
+        Graphene.guardNoRequest(popup.getHeaderControls()).closePopup();
+
+        assertFalse(popup.isVisible());
     }
 
     @Test
     public void testPrevYearButton() {
-        selenium.click(input);
-        String thisYear = selenium.getText(monthLabel);
-        // November, 2010 -> 2010
-        thisYear = thisYear.substring(thisYear.indexOf(" ") + 1, thisYear.length());
+        Graphene.guardNoRequest(calendar.openPopup().getHeaderControls()).previousYear();
+        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
 
-        guardNoRequest(selenium).click(prevYearButton);
-        String prevYear = selenium.getText(monthLabel);
-        prevYear = prevYear.substring(prevYear.indexOf(" ") + 1, prevYear.length());
-
-        assertEquals(Integer.parseInt(prevYear), Integer.parseInt(thisYear) - 1, "Year did not change correctly.");
+        assertEquals(yearAndMonth.getYear(), todayMidday.minusYears(1).getYear(), "Year did not change correctly.");
+        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.minusYears(1).getMonthOfYear(), "Month did not change correctly.");
     }
 
     @Test
     public void testNextYearButton() {
-        selenium.click(input);
-        String thisYear = selenium.getText(monthLabel);
-        // November, 2010 -> 2010
-        thisYear = thisYear.substring(thisYear.indexOf(" ") + 1, thisYear.length());
+        Graphene.guardNoRequest(calendar.openPopup().getHeaderControls()).nextYear();
+        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
 
-        guardNoRequest(selenium).click(nextYearButton);
-        String nextYear = selenium.getText(monthLabel);
-        nextYear = nextYear.substring(nextYear.indexOf(" ") + 1, nextYear.length());
-
-        assertEquals(Integer.parseInt(nextYear), Integer.parseInt(thisYear) + 1, "Year did not change correctly.");
+        assertEquals(yearAndMonth.getYear(), todayMidday.plusYears(1).getYear(), "Year did not change correctly.");
+        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.plusYears(1).getMonthOfYear(), "Month did not change correctly.");
     }
 
     @Test
     public void testPrevMonthButton() {
-        selenium.click(input);
-        String thisMonth = selenium.getText(monthLabel);
-        // November, 2010 -> November
-        thisMonth = thisMonth.substring(0, thisMonth.indexOf(","));
+        Graphene.guardNoRequest(calendar.openPopup().getHeaderControls()).previousMonth();
+        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
 
-        guardNoRequest(selenium).click(prevMonthButton);
-        String prevMonth = selenium.getText(monthLabel);
-        prevMonth = prevMonth.substring(0, prevMonth.indexOf(","));
-
-        assertEquals(Month.valueOf(prevMonth), Month.valueOf(thisMonth).previous(), "Month did not change correctly.");
+        assertEquals(yearAndMonth.getYear(), todayMidday.minusMonths(1).getYear(), "Year did not change correctly.");
+        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.minusMonths(1).getMonthOfYear(), "Month did not change correctly.");
     }
 
     @Test
     public void testNextMonthButton() {
-        selenium.click(input);
-        String thisMonth = selenium.getText(monthLabel);
-        // November, 2010 -> November
-        thisMonth = thisMonth.substring(0, thisMonth.indexOf(","));
+        Graphene.guardNoRequest(calendar.openPopup().getHeaderControls()).nextMonth();
+        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
 
-        guardNoRequest(selenium).click(nextMonthButton);
-        String nextMonth = selenium.getText(monthLabel);
-        nextMonth = nextMonth.substring(0, nextMonth.indexOf(","));
-
-        assertEquals(Month.valueOf(nextMonth), Month.valueOf(thisMonth).next(), "Month did not change correctly.");
+        assertEquals(yearAndMonth.getYear(), todayMidday.plusMonths(1).getYear(), "Year did not change correctly.");
+        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.plusMonths(1).getMonthOfYear(), "Month did not change correctly.");
     }
 
     @Test
     public void testTodayButton() {
-        selenium.click(input);
-        String thisMonth = selenium.getText(monthLabel);
-
-        selenium.click(nextMonthButton);
-        selenium.click(prevYearButton);
-        guardNoRequest(selenium).click(todayButton);
-        String thisMonth2 = selenium.getText(monthLabel);
-
-        assertEquals(thisMonth2, thisMonth, "Today button does not work.");
+        Graphene.guardNoRequest(calendar.openPopup().getFooterControls()).todayDate();
+        CalendarDay selectedDay = calendar.openPopup().getDayPicker().getSelectedDay();
+        CalendarDay todayDay = calendar.openPopup().getDayPicker().getTodayDay();
+        assertEquals(selectedDay.getDayNumber(), todayDay.getDayNumber());
     }
 
     @Test
-    @Override
     public void testApplyButton() {
         super.testApplyButton();
     }

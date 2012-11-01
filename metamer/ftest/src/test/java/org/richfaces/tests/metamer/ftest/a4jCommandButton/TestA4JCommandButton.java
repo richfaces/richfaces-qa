@@ -41,6 +41,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -57,11 +58,6 @@ public class TestA4JCommandButton extends AbstractWebDriverTest<CommandButtonLin
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jCommandButton/simple.xhtml");
-    }
-
-    @Override
-    protected CommandButtonLinkPage createPage() {
-        return new CommandButtonLinkPage();
     }
 
     @Test(groups = "client-side-perf")
@@ -132,7 +128,7 @@ public class TestA4JCommandButton extends AbstractWebDriverTest<CommandButtonLin
     @Test
     public void testBypassUpdates() {
         commandButtonAttributes.set(CommandButtonAttributes.bypassUpdates, true);
-        Graphene.guardXhr(page.button).click();
+        page.waitRequest(page.button, WaitRequestType.XHR).click();
         page.verifyOutput1Text("");
         page.verifyOutput2Text("");
         page.verifyOutput3Text("");

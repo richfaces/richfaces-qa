@@ -30,7 +30,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichMessageCSV extends AbstractRichMessageWDTest {
+public class TestRichMessageCSV extends AbstractRichMessageWDTest<MessagePage> {
 
     @Override
     protected void waitingForValidationMessages() {

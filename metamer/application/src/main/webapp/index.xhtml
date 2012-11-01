@@ -44,9 +44,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <h:form id="linksForm" style="padding-top: 130px;">
         
-            <rich:tabPanel id="components" switchType="client">
+            <rich:tabPanel id="components" switchType="ajax" activeItem="#{richBean.activeTabOnIndex}">
 
-                <rich:tab id="a4jComponentsTab" header="A4J">
+                <rich:tab id="a4jComponentsTab" name="a4j" header="A4J">
                     <h:panelGrid id="a4jComponents" columns="3" columnClasses="valign-top,valign-top,valign-top">
 
                         <rich:list id="a4jComponentsList1" value="#{richBean.a4jComponentsList}" 
@@ -66,7 +66,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </h:panelGrid>
                 </rich:tab>
 
-                <rich:tab id="richComponentsTab" header="Rich">
+                <rich:tab id="richComponentsTab" name="rich" header="Rich">
                     <h:panelGrid id="richComponents" columns="3" columnClasses="valign-top,valign-top,valign-top">
 
                         <rich:list id="richComponentsList1" value="#{richBean.richComponentsList}" 

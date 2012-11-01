@@ -58,12 +58,7 @@ public class TestElementAWebDriver extends AbstractWebDriverTest<TestElementAWeb
         testHTMLAttribute(page.link, mediaOutputAttributes, MediaOutputAttributes.type, typeValue);
     }
 
-    @Override
-    protected MediaOutputPage createPage() {
-        return new MediaOutputPage();
-    }
-
-    protected class MediaOutputPage extends MetamerPage {
+    public class MediaOutputPage extends MetamerPage {
 
         @FindBy(css = "a[id$=mediaOutput]")
         WebElement link;

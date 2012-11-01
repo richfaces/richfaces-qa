@@ -28,12 +28,14 @@ import java.net.URISyntaxException;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.BeforeMethod;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractFileUploadWebDriverTest extends AbstractWebDriverTest<FileUploadPage> {
+public abstract class AbstractFileUploadWebDriverTest<P extends FileUploadPage> extends AbstractWebDriverTest<P> {
 
     protected static final String notAcceptableFile = "file1.x";
     protected static final String acceptableFile = "file1.txt";
@@ -47,11 +49,6 @@ public abstract class AbstractFileUploadWebDriverTest extends AbstractWebDriverT
     public void resetCounters() {
         filesToUploadCount = 0;
         filesUploadedCount = 0;
-    }
-
-    @Override
-    protected FileUploadPage createPage() {
-        return new FileUploadPage();
     }
 
     /**
@@ -89,9 +86,10 @@ public abstract class AbstractFileUploadWebDriverTest extends AbstractWebDriverT
     protected void sendFileWithWaiting(String filename, boolean willBeAccepted, boolean willBeUploaded) {
         sendFileToInputWithWaiting(filename, willBeAccepted);
         if (willBeUploaded) {
-            waitRequest(Graphene.guardXhr(page.uploadButton), WaitRequestType.XHR).click();
+            MetamerPage.waitRequest(page.uploadButton, WaitRequestType.XHR).click();
         } else {
-            waitRequest(Graphene.guardXhr(page.uploadButton), WaitRequestType.NONE).click();
+            //Metamer's request time will not change, but XHR request will be send
+            Graphene.guardXhr(page.uploadButton).click();
         }
         if (willBeUploaded) {
             this.filesUploadedCount++;

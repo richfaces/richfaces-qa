@@ -26,11 +26,14 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractTreeSelectionChangeListenerTest extends AbstractWebDriverTest<TSCLPage> {
+// FIXME AbstractTreeSelectionChangeListenerTest should not be generic (bug in Graphene)
+public abstract class AbstractTreeSelectionChangeListenerTest<P extends TSCLPage> extends AbstractWebDriverTest<P> {
 
     private final String nullToFirst = " []->[org.richfaces.model.SequenceRowKey[1]]";
     private final String firstToSecond = " [org.richfaces.model.SequenceRowKey[1]]->[org.richfaces.model.SequenceRowKey[2]]";
@@ -38,11 +41,6 @@ public abstract class AbstractTreeSelectionChangeListenerTest extends AbstractWe
 
     public AbstractTreeSelectionChangeListenerTest(String testedComponent) {
         this.testedComponent = testedComponent;
-    }
-
-    @Override
-    protected TSCLPage createPage() {
-        return new TSCLPage();
     }
 
     @Override
@@ -63,22 +61,22 @@ public abstract class AbstractTreeSelectionChangeListenerTest extends AbstractWe
 
     private void testTSCL(String expectedText, String failMessage) {
         //selects a first node
-        waitRequest(page.getItem(1), WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getItem(1), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText + nullToFirst), failMessage);
         //then selectis a second node
-        waitRequest(page.getItem(2), WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getItem(2), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText + firstToSecond), failMessage);
     }
 
     private void testTSCLWithoutAdditionalStrings(String expectedText, String failMessage) {
         //selects a first node
-        waitRequest(page.getItem(1), WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getItem(1), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText), failMessage);
         //then test selecting a second node
-        waitRequest(page.getItem(2), WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.getItem(2), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
         assertTrue(subTest(expectedText), failMessage);
     }

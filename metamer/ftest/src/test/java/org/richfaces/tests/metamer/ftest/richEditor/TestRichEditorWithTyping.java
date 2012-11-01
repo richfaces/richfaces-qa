@@ -49,11 +49,6 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest<EditorSimple
         return buildUrl(contextPath, "faces/components/richEditor/anotherSimple.xhtml");
     }
 
-    @Override
-    protected EditorSimplePage createPage() {
-        return new EditorSimplePage();
-    }
-
     @Test
     public void testImmediate() {
         editorAttributes.set(EditorAttributes.immediate, Boolean.TRUE);
