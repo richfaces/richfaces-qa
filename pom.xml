@@ -29,11 +29,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-<<<<<<< HEAD
         <version.richfaces>4.2.3.Final-redhat-1</version.richfaces>
-=======
-        <version.richfaces>4.2.3.Final</version.richfaces>
->>>>>>> origin/4.2.x
         <richfaces.checkstyle.version>5</richfaces.checkstyle.version>
 
         <!-- version of JBoss containers to use and download -->
