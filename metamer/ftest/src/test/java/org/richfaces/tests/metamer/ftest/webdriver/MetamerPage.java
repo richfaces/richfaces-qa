@@ -311,7 +311,7 @@ public class MetamerPage {
 
     private static class RequestTimeNotChangesWaitingInterceptor extends RequestTimeChangesWaitingInterceptor {
 
-        private static final int waitTime = 1;//s
+        private static final int waitTime = 1000;//ms
 
         @Override
         protected void afterAction() {
