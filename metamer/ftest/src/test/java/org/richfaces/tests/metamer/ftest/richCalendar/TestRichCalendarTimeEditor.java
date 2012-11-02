@@ -24,11 +24,13 @@ package org.richfaces.tests.metamer.ftest.richCalendar;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.calendarAttributes;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import org.joda.time.DateTime;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeEditor;
 import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeEditor.SetValueBy;
 import org.testng.annotations.Test;
@@ -44,6 +46,77 @@ public class TestRichCalendarTimeEditor extends AbstractCalendarTest<MetamerPage
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richCalendar/simple.xhtml");
+    }
+
+    @Test
+    public void testCancelButton() {
+        int plusMinutes = 5;
+        MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
+        TimeEditor openedTimeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
+        MetamerPage.waitRequest(openedTimeEditor, WaitRequestType.NONE).setTime(todayMidday.plusMinutes(plusMinutes), SetValueBy.buttons);
+        DateTime time1 = openedTimeEditor.getTime();
+        assertEquals(time1.getMinuteOfHour(), plusMinutes);
+
+        MetamerPage.waitRequest(openedTimeEditor, WaitRequestType.NONE).cancelTime();
+        assertFalse(openedTimeEditor.isVisible());
+        openedTimeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
+        time1 = openedTimeEditor.getTime();
+        assertEquals(time1.getHourOfDay(), 12);//default value
+        assertEquals(time1.getMinuteOfHour(), 0);//default value
+    }
+
+    @Test
+    public void testHoursInputClick() {
+        testTimeSet(new int[]{ 2, 15 }, Time.hours, SetValueBy.buttons);
+    }
+
+    @Test
+    public void testHoursInputType() {
+        testTimeSet(new int[]{ 2, 15 }, Time.hours, SetValueBy.typing);
+    }
+
+    @Test
+    public void testMinutesInputClick() {
+        testTimeSet(new int[]{ 1, 59 }, Time.minutes, SetValueBy.buttons);
+    }
+
+    @Test
+    public void testMinutesInputType() {
+        testTimeSet(new int[]{ 1, 59 }, Time.minutes, SetValueBy.typing);
+    }
+
+    @Test
+    public void testSecondsInputClick() {
+        calendarAttributes.set(CalendarAttributes.datePattern, "MMM d, yyyy HH:mm:ss");
+        testTimeSet(new int[]{ 1, 59 }, Time.seconds, SetValueBy.buttons);
+    }
+
+    @Test
+    public void testSecondsInputType() {
+        calendarAttributes.set(CalendarAttributes.datePattern, "MMM d, yyyy HH:mm:ss");
+        testTimeSet(new int[]{ 1, 59 }, Time.seconds, SetValueBy.typing);
+    }
+
+    @Test
+    public void testShowTimeEditor() {
+        MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
+        TimeEditor openedTimeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
+        assertTrue(openedTimeEditor.isVisible());
+        DateTime time1 = openedTimeEditor.getTime();
+        assertEquals(time1.getHourOfDay(), 12);
+        assertEquals(time1.getMinuteOfHour(), 0);
+    }
+
+    private void testTimeSet(int[] valuesToTest, Time time, SetValueBy interaction) {
+        for (int value : valuesToTest) {
+            MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
+            TimeEditor openedTimeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
+            DateTime changedTime = time.change(todayMidday, value);
+            openedTimeEditor.setTime(changedTime, interaction).confirmTime();
+            openedTimeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
+            DateTime time1 = openedTimeEditor.getTime();
+            time.checkTimeChanged(changedTime, time1);
+        }
     }
 
     private enum Time {
@@ -85,74 +158,5 @@ public class TestRichCalendarTimeEditor extends AbstractCalendarTest<MetamerPage
         public abstract DateTime change(DateTime time, int value);
 
         public abstract void checkTimeChanged(DateTime referenceTime, DateTime changedTime);
-    }
-
-    @Test
-    public void testShowTimeEditor() {
-        calendar.openPopup().getFooterControls().setTodaysDate();
-        TimeEditor openedTimeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
-        assertTrue(openedTimeEditor.isVisible());
-        DateTime time1 = openedTimeEditor.getTime();
-        assertEquals(time1.getHourOfDay(), 12);
-        assertEquals(time1.getMinuteOfHour(), 0);
-    }
-
-    @Test
-    public void testCancelButton() {
-        int plusMinutes = 5;
-        calendar.openPopup().getFooterControls().setTodaysDate();
-        TimeEditor openedTimeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
-        openedTimeEditor.setTime(todayMidday.plusMinutes(plusMinutes), SetValueBy.buttons);
-        DateTime time1 = openedTimeEditor.getTime();
-        assertEquals(time1.getMinuteOfHour(), plusMinutes);
-        openedTimeEditor.cancelTime();
-        openedTimeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
-        time1 = openedTimeEditor.getTime();
-        assertEquals(time1.getHourOfDay(), 12);//default value
-        assertEquals(time1.getMinuteOfHour(), 0);//default value
-    }
-
-    @Test
-    public void testHoursInputClick() {
-        testTimeSet(new int[]{ 2, 15 }, Time.hours, SetValueBy.buttons);
-    }
-
-    @Test
-    public void testHoursInputType() {
-        testTimeSet(new int[]{ 2, 15 }, Time.hours, SetValueBy.typing);
-    }
-
-    @Test
-    public void testMinutesInputClick() {
-        testTimeSet(new int[]{ 1, 59 }, Time.minutes, SetValueBy.buttons);
-    }
-
-    @Test
-    public void testMinutesInputType() {
-        testTimeSet(new int[]{ 1, 59 }, Time.minutes, SetValueBy.typing);
-    }
-
-    @Test
-    public void testSecondsInputClick() {
-        calendarAttributes.set(CalendarAttributes.datePattern, "MMM d, yyyy HH:mm:ss");
-        testTimeSet(new int[]{ 1, 59 }, Time.seconds, SetValueBy.buttons);
-    }
-
-    @Test
-    public void testSecondsInputType() {
-        calendarAttributes.set(CalendarAttributes.datePattern, "MMM d, yyyy HH:mm:ss");
-        testTimeSet(new int[]{ 1, 59 }, Time.seconds, SetValueBy.typing);
-    }
-
-    private void testTimeSet(int[] valuesToTest, Time time, SetValueBy interaction) {
-        for (int value : valuesToTest) {
-            calendar.openPopup().getFooterControls().setTodaysDate();
-            TimeEditor openedTimeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
-            DateTime changedTime = time.change(todayMidday, value);
-            openedTimeEditor.setTime(changedTime, interaction).confirmTime();
-            openedTimeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
-            DateTime time1 = openedTimeEditor.getTime();
-            time.checkTimeChanged(changedTime, time1);
-        }
     }
 }
