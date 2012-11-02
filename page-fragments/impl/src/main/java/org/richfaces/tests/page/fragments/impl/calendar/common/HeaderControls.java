@@ -41,25 +41,23 @@ public interface HeaderControls extends VisibleComponent {
 
     /**
      * Returns year and month visible in this component.
-     * @return
      */
     DateTime getYearAndMonth();
 
     /**
      * Returns Year and month editor without opening it.
-     * @return
      */
     YearAndMonthEditor getYearAndMonthEditor();
 
     WebElement getYearAndMonthEditorOpenerElement();
 
     /**
-     * Clicks on nextMonrh button.
+     * Clicks on nextMonrh button with waiting.
      */
     void nextMonth();
 
     /**
-     * Clicks on nextYear button.
+     * Clicks on nextYear button with waiting.
      */
     void nextYear();
 
@@ -69,12 +67,12 @@ public interface HeaderControls extends VisibleComponent {
     YearAndMonthEditor openYearAndMonthEditor();
 
     /**
-     * Clicks on previousMonth button.
+     * Clicks on previousMonth button with waiting.
      */
     void previousMonth();
 
     /**
-     * Clicks on previousYear button.
+     * Clicks on previousYear button with waiting.
      */
     void previousYear();
 }

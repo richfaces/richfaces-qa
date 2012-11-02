@@ -32,12 +32,12 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 public interface YearAndMonthEditor {
 
     /**
-     * Clicks on 'Cancel' button.
+     * Clicks on 'Cancel' button.  Waits for editor to close.
      */
     void cancelDate();
 
     /**
-     * Clicks on 'OK' button.
+     * Clicks on 'OK' button. Waits for editor to close.
      */
     void confirmDate();
 
@@ -45,13 +45,11 @@ public interface YearAndMonthEditor {
 
     /**
      * Returns DateTime instance with current month and year selection.
-     * @return
      */
     DateTime getDate();
 
     /**
      * Collects all numbers of visible years for selection.
-     * @return
      */
     List<Integer> getDisplayedYears();
 
@@ -62,52 +60,48 @@ public interface YearAndMonthEditor {
     WebElement getPreviousDecadeButtonElement();
 
     /**
-     * Returns selected month number.<1;12>
-     * @return
+     * Returns selected month number. <1;12>
      */
     Integer getSelectedMonth();
 
     /**
      * Returns selected year number.
-     * @return
      */
     Integer getSelectedYear();
 
     /**
      * Collects all short labels of months.
-     * @return
      */
     List<String> getShortMonthsLabels();
 
     /**
-     * Condition for not-visibility of calendar's year and month editor popup
+     * Condition for not-visibility of calendar's year and month editor popup.
      */
     ExpectedCondition<Boolean> isNotVisibleCondition();
 
     /**
-     * Checks if calendar's year and month editor's popup is visible
-     * @return
+     * Checks if calendar's year and month editor's popup is visible.
      */
     boolean isVisible();
 
     /**
-     * Condition for visibility of calendar's year and month editor popup
+     * Condition for visibility of calendar's year and month editor popup.
      */
     ExpectedCondition<Boolean> isVisibleCondition();
 
     /**
-     * Clicks on nextDecadeButton '>>>'
+     * Clicks on nextDecadeButton '>>>'. Waits for change.
      */
     void nextDecade();
 
     /**
-     * Clicks on previousDecadeButton '<<<'
+     * Clicks on previousDecadeButton '<<<'.  Waits for change.
      */
     void previousDecade();
 
     /**
      * Selects a month and year in this editor. Returns same instance to be easily
-     * confirmed or canceled.
+     * confirmed or canceled. Waits for change.
      * @param date date with year and month to be set
      * @return
      */

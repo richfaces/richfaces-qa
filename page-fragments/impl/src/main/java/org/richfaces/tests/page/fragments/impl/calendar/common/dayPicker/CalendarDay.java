@@ -24,7 +24,7 @@ package org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker;
 import org.openqa.selenium.WebElement;
 
 /**
- * Component for calendar's days
+ * Component for calendar's days.
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class CalendarDay {
@@ -57,7 +57,6 @@ public class CalendarDay {
     /**
      * Checks if this day contains chosen styleClass
      * @param styleClass
-     * @return
      */
     public boolean containsStyleClass(String styleClass) {
         return check(day, styleClass);
@@ -65,7 +64,6 @@ public class CalendarDay {
 
     /**
      * Parses and returns the element's text representing day number.
-     * @return
      */
     public Integer getDayNumber() {
         return Integer.parseInt(day.getText().trim());
@@ -80,7 +78,7 @@ public class CalendarDay {
     }
 
     /**
-     * Clicks on this day element.
+     * Clicks on this day element. Without waiting,
      */
     public void select() {
         day.click();

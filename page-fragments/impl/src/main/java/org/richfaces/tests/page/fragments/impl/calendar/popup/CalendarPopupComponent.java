@@ -50,35 +50,30 @@ public interface CalendarPopupComponent extends VisibleComponent {
 
     /**
      * Returns popup component without opening it.
-     * @return
      */
     CalendarPopup getPopup();
 
     WebElement getPopupButton();
 
     /**
-     * Returns proxy for CalendarPopup. The proxy will always open popup if needed
-     * @return
+     * Returns proxy for CalendarPopup. The proxy will always open popup if needed.
      */
     CalendarPopup getProxiedPopup();
 
     /**
      * Returns proxy for CalendarPopup. The proxy will always open popup if needed.
      * @param by the popup will be opened by
-     * @return
      */
     CalendarPopup getProxiedPopup(final OpenedBy by);
 
     /**
      * Opens popup if needed.
-     * @return
      */
     CalendarPopup openPopup();
 
     /**
      * Opens popup if needed.
      * @param by the popup will be opened by
-     * @return
      */
     CalendarPopup openPopup(OpenedBy by);
 

@@ -48,9 +48,9 @@ public class CalendarPopupComponentImpl implements CalendarPopupComponent {
     //
     private WebDriver driver = GrapheneContext.getProxy();
     //
-    @FindBy(className = "rf-cal-inp")
+    @FindBy(css = "span[id$=Popup] > .rf-cal-inp")
     private WebElement input;
-    @FindBy(className = "rf-cal-btn")
+    @FindBy(css = "span[id$=Popup] > .rf-cal-btn")
     private WebElement popupButton;
     @FindBy(css = "table[id$=Content]")
     private CalendarPopupImpl calendarPopup;
@@ -67,18 +67,17 @@ public class CalendarPopupComponentImpl implements CalendarPopupComponent {
                     throw new RuntimeException("input is not displayed");
                 }
                 input.click();
-                Graphene.waitGui().until(calendarPopup.isVisibleCondition());
                 break;
             case openButtonClicking:
                 if (Graphene.element(popupButton).not().isVisible().apply(driver)) {
                     throw new RuntimeException("popup button is not displayed");
                 }
                 popupButton.click();
-                Graphene.waitGui().until(calendarPopup.isVisibleCondition());
                 break;
             default:
                 throw new IllegalArgumentException();
         }
+        Graphene.waitGui().until(calendarPopup.isVisibleCondition());
         return calendarPopup;
     }
 

@@ -31,22 +31,14 @@ import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeE
 public interface FooterControls extends VisibleComponent {
 
     /**
-     * Clicks on 'Apply' button
-     */
-    void applyDate();
-
-    /**
-     * Clicks on 'Clean' button
+     * Clicks on 'Clean' button. Waits for cleaning of set date.
      */
     void cleanDate();
-
-    WebElement getApplyButtonElement();
 
     WebElement getCleanButtonElement();
 
     /**
      * Returns Time editor component without opening it.
-     * @return
      */
     TimeEditor getTimeEditor();
 
@@ -55,18 +47,19 @@ public interface FooterControls extends VisibleComponent {
     WebElement getTodayButtonElement();
 
     /**
-     * Opens time editor with waiting
-     * @return
+     * Opens time editor with waiting.
      */
     TimeEditor openTimeEditor();
 
     /**
-     * Clicks on 'Today' button and then clicks on 'Apply' button if there is any
+     * Clicks on 'Today' button. Does not wait for date setting.
      */
     void setTodaysDate();
 
     /**
-     * Clicks on 'Today' button
+     * Clicks on 'Today' button. Does not wait for date setting.
      */
     void todayDate();
+
+    WebElement getSelectedDateElement();
 }

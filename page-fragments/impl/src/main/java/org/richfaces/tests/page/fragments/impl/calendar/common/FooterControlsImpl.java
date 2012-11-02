@@ -28,6 +28,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.DayPickerImpl;
 import org.richfaces.tests.page.fragments.impl.calendar.common.editor.CalendarEditor;
 import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeEditor;
 
@@ -38,20 +39,21 @@ import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeE
 public class FooterControlsImpl implements FooterControls {
 
     @Root
-    private WebElement root;
+    protected WebElement root;
     //
-    private WebDriver driver = GrapheneContext.getProxy();
+    protected WebDriver driver = GrapheneContext.getProxy();
     //
-    private CalendarEditor calendarEditor;
+    protected CalendarEditor calendarEditor;
+    protected DayPickerImpl dayPicker;
     //
     @FindBy(xpath = "//div[@class='rf-cal-tl-btn'][contains('Clean',text())]")
-    private WebElement cleanButtonElement;
-    @FindBy(xpath = "//td[@class='rf-cal-tl-ftr'][3]//div")
-    private WebElement timeEditorOpenerElement;
+    protected WebElement cleanButtonElement;
+    @FindBy(xpath = "//td[@class='rf-cal-tl-ftr']/div[contains(@onclick,'showTimeEditor')]")
+    protected WebElement timeEditorOpenerElement;
+    @FindBy(xpath = "//td[@class='rf-cal-tl-ftr']/div[contains(@onclick,'showSelectedDate')]")
+    protected WebElement selectedDateElement;
     @FindBy(xpath = "//div[@class='rf-cal-tl-btn'][contains('Today',text())]")
-    private WebElement todayButtonElement;
-    @FindBy(xpath = "//div[@class='rf-cal-tl-btn'][contains('Apply',text())]")
-    private WebElement applyButtonElement;
+    protected WebElement todayButtonElement;
 
     private void _openTimeEditor() {
         if (!isVisible()) {
@@ -67,17 +69,6 @@ public class FooterControlsImpl implements FooterControls {
     }
 
     @Override
-    public void applyDate() {
-        if (!isVisible()) {
-            throw new RuntimeException("Footer controls are not displayed, cannot interact with apply button");
-        }
-        if (Graphene.element(applyButtonElement).not().isVisible().apply(driver)) {
-            throw new RuntimeException("Apply button is not displayed.");
-        }
-        applyButtonElement.click();
-    }
-
-    @Override
     public void cleanDate() {
         if (!isVisible()) {
             throw new RuntimeException("Footer controls are not displayed, cannot interact with  clean button");
@@ -86,11 +77,7 @@ public class FooterControlsImpl implements FooterControls {
             throw new RuntimeException("Clean button is not displayed.");
         }
         cleanButtonElement.click();
-    }
-
-    @Override
-    public WebElement getApplyButtonElement() {
-        return applyButtonElement;
+        Graphene.waitGui().until(Graphene.element(cleanButtonElement).not().isVisible());
     }
 
     @Override
@@ -111,6 +98,11 @@ public class FooterControlsImpl implements FooterControls {
     @Override
     public WebElement getTodayButtonElement() {
         return todayButtonElement;
+    }
+
+    @Override
+    public WebElement getSelectedDateElement() {
+        return selectedDateElement;
     }
 
     @Override
@@ -142,18 +134,13 @@ public class FooterControlsImpl implements FooterControls {
         this.calendarEditor = calendarEditor;
     }
 
+    public void setDayPicker(DayPickerImpl dayPicker) {
+        this.dayPicker = dayPicker;
+    }
+
     @Override
     public void setTodaysDate() {
-        if (!isVisible()) {
-            throw new RuntimeException("Footer controls are not displayed, cannot interact with button");
-        }
-        if (Graphene.element(todayButtonElement).not().isVisible().apply(driver)) {
-            throw new RuntimeException("Today button is not displayed.");
-        }
-        todayButtonElement.click();
-        if (Graphene.element(applyButtonElement).isVisible().apply(driver)) {
-            applyButtonElement.click();
-        }
+        todayDate();
     }
 
     @Override
@@ -161,7 +148,7 @@ public class FooterControlsImpl implements FooterControls {
         if (!isVisible()) {
             throw new RuntimeException("Footer controls are not displayed, cannot interact with today button");
         }
-        if (Graphene.element(applyButtonElement).not().isVisible().apply(driver)) {
+        if (Graphene.element(todayButtonElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Today button is not displayed.");
         }
         todayButtonElement.click();

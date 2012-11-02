@@ -59,35 +59,73 @@ public class TimeEditorImpl implements TimeEditor {
     @FindBy(css = "div[id$=TimeEditorButtonOk]")
     private WebElement okButtonElement;
     @FindBy(css = "div[id$=TimeEditorButtonCancel]")
-    private WebElement cancelButtonEleme;
+    private WebElement cancelButtonElement;
     //
     private static final int defaultHours = 12;
     private static final int defaultMinutes = 0;
     private static final int defaultSeconds = 0;
 
     @Override
-    public boolean isVisible() {
-        return isVisibleCondition().apply(driver);
-    }
-
-    @Override
-    public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(root).isVisible();
-    }
-
-    @Override
-    public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(root).not().isVisible();
+    public void cancelTime() {
+        if (!isVisible()) {
+            throw new RuntimeException("Cannot interact with TimePicker. "
+                    + "Ensure that it it is opened.");
+        }
+        if (Graphene.element(cancelButtonElement).not().isVisible().apply(driver)) {
+            throw new RuntimeException("Cancel button is not visible.");
+        }
+        cancelButtonElement.click();
+        Graphene.waitGui().until(isNotVisibleCondition());
     }
 
     @Override
     public void confirmTime() {
+        if (!isVisible()) {
+            throw new RuntimeException("Cannot interact with TimePicker. "
+                    + "Ensure that it it is opened.");
+        }
+        if (Graphene.element(okButtonElement).not().isVisible().apply(driver)) {
+            throw new RuntimeException("Ok button is not visible.");
+        }
         okButtonElement.click();
+        Graphene.waitGui().until(isNotVisibleCondition());
     }
 
     @Override
-    public void cancelTime() {
-        cancelButtonEleme.click();
+    public WebElement getCancelButtonElement() {
+        return cancelButtonElement;
+    }
+
+    private TimeSpinner getHoursSpinner() {
+        if (getTimeSignSpinner() == null) {
+            if (hoursSpinner24.isVisible()) {
+                return hoursSpinner24;
+            }
+        } else {
+            if (hoursSpinner12.isVisible()) {
+                return hoursSpinner12;
+            }
+        }
+        return null;
+    }
+
+    private TimeSpinner getMinutesSpinner() {
+        if (minutesSpinner.isVisible()) {
+            return minutesSpinner;
+        }
+        return null;
+    }
+
+    @Override
+    public WebElement getOkButtonElement() {
+        return okButtonElement;
+    }
+
+    private TimeSpinner getSecondsSpinner() {
+        if (secondsSpinner.isVisible()) {
+            return secondsSpinner;
+        }
+        return null;
     }
 
     @Override
@@ -119,9 +157,26 @@ public class TimeEditorImpl implements TimeEditor {
         return result;
     }
 
+    private TimeSignSpinner getTimeSignSpinner() {
+        if (timeSignSpinner.isVisible()) {
+            return timeSignSpinner;
+        }
+        return null;
+    }
+
     @Override
-    public TimeEditor setTime(DateTime time, SetValueBy inputType) {
-        return setTime(time.getHourOfDay(), time.getMinuteOfHour(), time.getSecondOfMinute(), inputType);
+    public ExpectedCondition<Boolean> isNotVisibleCondition() {
+        return Graphene.element(root).not().isVisible();
+    }
+
+    @Override
+    public boolean isVisible() {
+        return isVisibleCondition().apply(driver);
+    }
+
+    @Override
+    public ExpectedCondition<Boolean> isVisibleCondition() {
+        return Graphene.element(root).isVisible();
     }
 
     private TimeEditor setTime(int hours, int minutes, int seconds, SetValueBy by) {
@@ -151,37 +206,8 @@ public class TimeEditorImpl implements TimeEditor {
         return this;
     }
 
-    private TimeSpinner getSecondsSpinner() {
-        if (secondsSpinner.isVisible()) {
-            return secondsSpinner;
-        }
-        return null;
-    }
-
-    private TimeSpinner getMinutesSpinner() {
-        if (minutesSpinner.isVisible()) {
-            return minutesSpinner;
-        }
-        return null;
-    }
-
-    private TimeSpinner getHoursSpinner() {
-        if (getTimeSignSpinner() == null) {
-            if (hoursSpinner24.isVisible()) {
-                return hoursSpinner24;
-            }
-        } else {
-            if (hoursSpinner12.isVisible()) {
-                return hoursSpinner12;
-            }
-        }
-        return null;
-    }
-
-    private TimeSignSpinner getTimeSignSpinner() {
-        if (timeSignSpinner.isVisible()) {
-            return timeSignSpinner;
-        }
-        return null;
+    @Override
+    public TimeEditor setTime(DateTime time, SetValueBy inputType) {
+        return setTime(time.getHourOfDay(), time.getMinuteOfHour(), time.getSecondOfMinute(), inputType);
     }
 }

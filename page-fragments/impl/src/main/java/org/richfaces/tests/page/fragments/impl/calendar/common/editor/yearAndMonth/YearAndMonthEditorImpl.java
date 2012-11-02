@@ -60,38 +60,25 @@ public class YearAndMonthEditorImpl implements YearAndMonthEditor {
     private static final String SELECTED = "rf-cal-edtr-btn-sel";
 
     @Override
-    public boolean isVisible() {
-        return isVisibleCondition().apply(driver);
-    }
-
-    @Override
-    public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(root).isVisible();
-    }
-
-    @Override
-    public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(root).not().isVisible();
+    public void cancelDate() {
+        cancelButtonElement.click();
+        Graphene.waitGui().until(isNotVisibleCondition());
     }
 
     @Override
     public void confirmDate() {
         okButtonElement.click();
+        Graphene.waitGui().until(isNotVisibleCondition());
     }
 
     @Override
-    public void cancelDate() {
-        cancelButtonElement.click();
+    public WebElement getCancelButtonElement() {
+        return cancelButtonElement;
     }
 
     @Override
-    public List<String> getShortMonthsLabels() {
-        List<WebElement> inRightOrder = inRightOrder(months);
-        List<String> result = new ArrayList<String>(12);
-        for (WebElement webElement : inRightOrder) {
-            result.add(webElement.getText().trim());
-        }
-        return result;
+    public DateTime getDate() {
+        return new DateTime().withMonthOfYear(getSelectedMonth()).withYear(getSelectedYear());
     }
 
     @Override
@@ -105,20 +92,18 @@ public class YearAndMonthEditorImpl implements YearAndMonthEditor {
     }
 
     @Override
-    public DateTime getDate() {
-        return new DateTime().withMonthOfYear(getSelectedMonth()).withYear(getSelectedYear());
+    public WebElement getNextDecadeButtonElement() {
+        return nextDecadeButtonElement;
     }
 
     @Override
-    public YearAndMonthEditorImpl selectDate(DateTime date) {
-        return selectDate(date.getMonthOfYear(), date.getYear());
+    public WebElement getOkButtonElement() {
+        return okButtonElement;
     }
 
-    private YearAndMonthEditorImpl selectDate(int month, int year) {
-        Validate.isTrue(month > 0 && month < 13, "Month number has to be in interval <1,12>");//this should not be necessary
-        selectMonth(month);
-        selectYear(year);
-        return this;
+    @Override
+    public WebElement getPreviousDecadeButtonElement() {
+        return previousDecadeButtonElement;
     }
 
     @Override
@@ -146,33 +131,14 @@ public class YearAndMonthEditorImpl implements YearAndMonthEditor {
         return null;
     }
 
-    private void selectMonth(int month) {
-        inRightOrder(months).get(month - 1).click();
-    }
-
-    private void selectYear(int year) {
-        int yearsPickerSize = years.size();
-        int yearInTheFirstColumn = Integer.parseInt(years.get(0).getText());
-        int diff = year - yearInTheFirstColumn;
-        if (diff > 0 && diff >= yearsPickerSize) {
-            while (diff > 0) {
-                nextDecadeButtonElement.click();
-                diff -= yearsPickerSize;
-            }
-        } else {
-            while (diff < 0) {
-                previousDecadeButtonElement.click();
-                diff += yearsPickerSize;
-            }
+    @Override
+    public List<String> getShortMonthsLabels() {
+        List<WebElement> inRightOrder = inRightOrder(months);
+        List<String> result = new ArrayList<String>(12);
+        for (WebElement webElement : inRightOrder) {
+            result.add(webElement.getText().trim());
         }
-        String yearString = String.valueOf(year);
-        for (WebElement yearElement : years) {
-            if (yearElement.getText().trim().equals(yearString)) {
-                yearElement.click();
-                return;
-            }
-        }
-        throw new IllegalStateException("The year was not found");
+        return result;
     }
 
     private List<WebElement> inRightOrder(List<WebElement> list) {
@@ -194,32 +160,75 @@ public class YearAndMonthEditorImpl implements YearAndMonthEditor {
     }
 
     @Override
+    public ExpectedCondition<Boolean> isNotVisibleCondition() {
+        return Graphene.element(root).not().isVisible();
+    }
+
+    @Override
+    public boolean isVisible() {
+        return isVisibleCondition().apply(driver);
+    }
+
+    @Override
+    public ExpectedCondition<Boolean> isVisibleCondition() {
+        return Graphene.element(root).isVisible();
+    }
+
+    @Override
     public void nextDecade() {
+        String firstBefore = years.get(0).getText();
         nextDecadeButtonElement.click();
+        Graphene.waitGui().until(Graphene.element(years.get(0)).not().textEquals(firstBefore));
     }
 
     @Override
     public void previousDecade() {
+        String firstBefore = years.get(0).getText();
         previousDecadeButtonElement.click();
+        Graphene.waitGui().until(Graphene.element(years.get(0)).not().textEquals(firstBefore));
     }
 
     @Override
-    public WebElement getPreviousDecadeButtonElement() {
-        return previousDecadeButtonElement;
+    public YearAndMonthEditorImpl selectDate(DateTime date) {
+        return selectDate(date.getMonthOfYear(), date.getYear());
     }
 
-    @Override
-    public WebElement getNextDecadeButtonElement() {
-        return nextDecadeButtonElement;
+    private YearAndMonthEditorImpl selectDate(int month, int year) {
+        Validate.isTrue(month > 0 && month < 13, "Month number has to be in interval <1,12>");//this should not be necessary
+        selectMonth(month);
+        selectYear(year);
+        return this;
     }
 
-    @Override
-    public WebElement getOkButtonElement() {
-        return okButtonElement;
+    private void selectMonth(int month) {
+        WebElement monthElement = inRightOrder(months).get(month - 1);
+        monthElement.click();
+        Graphene.waitGui().until(Graphene.attribute(monthElement, "class").valueContains(SELECTED));
     }
 
-    @Override
-    public WebElement getCancelButtonElement() {
-        return cancelButtonElement;
+    private void selectYear(int year) {
+        int yearsPickerSize = years.size();
+        int yearInTheFirstColumn = Integer.parseInt(years.get(0).getText());
+        int diff = year - yearInTheFirstColumn;
+        if (diff > 0 && diff >= yearsPickerSize) {
+            while (diff > 0) {
+                nextDecadeButtonElement.click();
+                diff -= yearsPickerSize;
+            }
+        } else {
+            while (diff < 0) {
+                previousDecadeButtonElement.click();
+                diff += yearsPickerSize;
+            }
+        }
+        String yearString = String.valueOf(year);
+        for (WebElement yearElement : years) {
+            if (yearElement.getText().trim().equals(yearString)) {
+                yearElement.click();
+                Graphene.waitGui().until(Graphene.attribute(yearElement, "class").valueContains(SELECTED));
+                return;
+            }
+        }
+        throw new IllegalStateException("The year was not found");
     }
 }
