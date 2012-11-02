@@ -22,6 +22,7 @@
 package org.richfaces.tests.page.fragments.impl.calendar.common.editor.time;
 
 import org.joda.time.DateTime;
+import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.VisibleComponent;
 
 /**
@@ -36,18 +37,21 @@ public interface TimeEditor extends VisibleComponent {
     }
 
     /**
-     * Clicks on the 'Cancel' button.
+     * Clicks on the 'Cancel' button. Waits for time editor to close.
      */
     void cancelTime();
 
     /**
-     * Clicks on the 'OK' button.
+     * Clicks on the 'OK' button. Waits for time editor to close.
      */
     void confirmTime();
 
+    WebElement getCancelButtonElement();
+
+    WebElement getOkButtonElement();
+
     /**
      * Returns time set in the spinners.
-     * @return
      */
     DateTime getTime();
 

@@ -21,7 +21,6 @@
  */
 package org.richfaces.tests.page.fragments.impl.calendar.popup.popup;
 
-import org.richfaces.tests.page.fragments.impl.calendar.common.FooterControls;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.DayPicker;
 import org.richfaces.tests.page.fragments.impl.calendar.inline.CalendarInlineComponent;
 
@@ -40,7 +39,10 @@ public interface CalendarPopup extends CalendarInlineComponent {
      * Returns proxy for FooterControls. The proxy will always open popup if needed.
      * @return
      */
-    FooterControls getProxiedFooterControls();
+    PopupFooterControls getProxiedFooterControls();
+
+    @Override
+    PopupFooterControls getFooterControls();
 
     /**
      * Returns proxy for HeaderControls. The proxy will always open popup if needed.

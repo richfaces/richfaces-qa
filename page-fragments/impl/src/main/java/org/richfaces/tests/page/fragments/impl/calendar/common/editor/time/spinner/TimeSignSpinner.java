@@ -36,7 +36,7 @@ public class TimeSignSpinner extends Spinner<TimeSign> {
 
     @Override
     public void setValueByButtons(TimeSign value) {
-        if (!getValue().equals(value)) {
+        if (!isSameValueAreadySet(value)) {
             buttonDownElement.click();
             if (!getValue().equals(value)) {
                 throw new RuntimeException("The time sign spinner should contain only 2 values: am, pm");

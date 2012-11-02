@@ -21,7 +21,6 @@
  */
 package org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.jboss.arquillian.graphene.Graphene;
@@ -49,10 +48,9 @@ public class CalendarWeek implements Iterable<CalendarDay> {
 
     /**
      * Returns calendar days in this week.
-     * @return
      */
-    public List<CalendarDay> getCalendarDays() {
-        List<CalendarDay> result = new ArrayList<CalendarDay>(7);
+    public CalendarDays getCalendarDays() {
+        CalendarDays result = new CalendarDays(7);
         for (WebElement day : days) {
             result.add(new CalendarDay(day));
         }
@@ -61,7 +59,6 @@ public class CalendarWeek implements Iterable<CalendarDay> {
 
     /**
      * Returns week number.
-     * @return
      */
     public Integer getWeekNumber() {
         if (Graphene.element(weekNumberElement).not().isVisible().apply(driver)) {
