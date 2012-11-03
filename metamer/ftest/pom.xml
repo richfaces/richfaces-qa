@@ -41,6 +41,7 @@ FSF site: http://www.fsf.org. -->
 
         <testng.listeners>org.richfaces.tests.metamer.ftest.MatrixConfigurator,org.richfaces.tests.metamer.ftest.MetamerSeleniumLoggingTestListener,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
+	<version.metamer-portlet>4.2.3.Final</version.metamer-portlet>
     </properties>
 
     <dependencies>
@@ -288,7 +289,7 @@ FSF site: http://www.fsf.org. -->
                 <dependency>
                     <groupId>org.richfaces.tests</groupId>
                     <artifactId>metamer-portlet</artifactId>
-                    <version>4.3.0-SNAPSHOT</version>
+                    <version>${version.metamer-portlet}</version>
                     <type>war</type>
                 </dependency>
                 
@@ -309,7 +310,7 @@ FSF site: http://www.fsf.org. -->
                                          <artifactItem>
                                              <groupId>org.richfaces.tests</groupId>
                                              <artifactId>metamer-portlet</artifactId>
-                                             <version>4.3.0-SNAPSHOT</version>
+                                             <version>${version.metamer-portlet}</version>
                                              <type>war</type>
                                              <destFileName>metamer-portlet.war</destFileName>
                                          </artifactItem>
