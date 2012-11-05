@@ -119,7 +119,7 @@ public abstract class AbstractWebDriverTest<P extends MetamerPage> extends Abstr
      *
      * @param milis
      */
-    protected static void waiting(int milis) {
+    protected static void waiting(long milis) {
         try {
             Thread.sleep(milis);
         } catch (InterruptedException ignored) {
