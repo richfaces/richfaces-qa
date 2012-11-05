@@ -21,11 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richProgressBar;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
-import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.progressBarAttributes;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.progressBarAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -34,29 +31,22 @@ import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.ajocado.javascript.JavaScript;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
-import org.testng.annotations.Test;
+import java.util.concurrent.TimeUnit;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.test.selenium.support.ui.ElementPresent;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.testng.annotations.Test;
 
 /**
  * Test case for page /faces/components/richProgressBar/clientMode.xhtml
  *
- * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 21055 $
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
+ * @since 4.3.0.M3
  */
-public class TestProgressBarClient extends AbstractGrapheneTest {
-
-    private JQueryLocator progressBar = pjq("div[id$=progressBar]");
-    private JQueryLocator initialOutput = pjq("div.rf-pb-init > span");
-    private JQueryLocator completeOutput = pjq("div.rf-pb-fin > span");
-    private JQueryLocator startButton = pjq("input[id$=startButton]");
-    private JQueryLocator pauseButton = pjq("input[id$=pauseButton]");
-    private JQueryLocator remain = pjq("div.rf-pb-rmng");
-    private JQueryLocator progress = pjq("div.rf-pb-prgs");
-    private JQueryLocator complete = pjq("div[id$=complete]");
+public class TestProgressBarClient extends AbstractWebDriverTest<ProgressBarPage> {
 
     @Override
     public URL getTestUrl() {
@@ -65,52 +55,60 @@ public class TestProgressBarClient extends AbstractGrapheneTest {
 
     @Test
     public void testInit() {
-        assertTrue(selenium.isElementPresent(progressBar), "Progress bar is not present on the page.");
-        assertTrue(selenium.isVisible(progressBar), "Progress bar is not present on the page.");
-        assertTrue(selenium.isVisible(initialOutput), "Initial output is not present on the page.");
-        assertFalse(selenium.isVisible(completeOutput), "Complete output should not be present on the page.");
-        assertTrue(selenium.isVisible(startButton), "Start button should be present on the page.");
-        assertTrue(selenium.isVisible(pauseButton), "Pause button should be present on the page.");
+        assertTrue(ElementPresent.getInstance().element(page.progressBar).apply(driver),
+            "Progress bar is not present on the page.");
+        assertTrue(page.progressBar.isDisplayed(), "Progress bar should be visible on the page.");
+        assertTrue(page.initialOutput.isDisplayed(), "Initial output should be present on the page.");
+        assertFalse(page.finishOutput.isDisplayed(), "Finish output should not be present on the page.");
+        assertTrue(page.startButtonClient.isDisplayed(), "Start button is not present on the page.");
+        assertTrue(page.pauseButton.isDisplayed(), "Pause button is not present on the page.");
 
-        assertFalse(selenium.isVisible(remain), "Progress bar should not show progress.");
-        assertFalse(selenium.isVisible(progress), "Progress bar should not show progress.");
+        if (ElementPresent.getInstance().element(page.remain).apply(driver)) {
+            assertFalse(page.remain.isDisplayed(), "Progress bar should not show progress.");
+        }
+        if (ElementPresent.getInstance().element(page.progress).apply(driver)) {
+            assertFalse(page.progress.isDisplayed(), "Progress bar should not show progress.");
+        }
+        if (ElementPresent.getInstance().element(page.label).apply(driver)) {
+            assertFalse(page.label.isDisplayed(), "Progress bar should not show progress.");
+        }
     }
 
     @Test
     public void testStart() {
-        guardNoRequest(selenium).click(startButton);
+        Graphene.guardNoRequest(page.startButtonClient).click();
 
-        assertTrue(selenium.isVisible(progressBar), "Progress bar is not present on the page.");
-        assertFalse(selenium.isVisible(initialOutput), "Initial output should not be present on the page.");
-        assertFalse(selenium.isVisible(completeOutput), "Complete output should not be present on the page.");
-        assertTrue(selenium.isVisible(startButton), "Start button should be present on the page.");
-        assertTrue(selenium.isVisible(pauseButton), "Restart button should be present on the page.");
+        assertTrue(page.progressBar.isDisplayed(), "Progress bar should be visible on the page.");
+        assertFalse(page.initialOutput.isDisplayed(), "Initial output should not be present on the page.");
+        assertFalse(page.finishOutput.isDisplayed(), "Finish output should not be present on the page.");
+        assertTrue(page.startButtonClient.isDisplayed(), "Start button should be present on the page.");
+        assertTrue(page.pauseButton.isDisplayed(), "Pause button should be present on the page.");
 
-        assertTrue(selenium.isElementPresent(remain), "Progress bar should show progress.");
-        assertTrue(selenium.isVisible(remain), "Progress bar should show progress.");
-        assertTrue(selenium.isVisible(progress), "Progress bar should not show progress.");
-        assertFalse(selenium.isElementPresent(complete), "Progress bar should not show progress.");
+        assertTrue(page.remain.isDisplayed(), "Progress bar should show progress.");
+        assertTrue(page.progress.isDisplayed(), "Progress bar should not show progress.");
+        assertFalse(ElementPresent.getInstance().element(page.complete).apply(driver),
+            "Progress bar should not show progress.");
     }
 
     @Test
     public void testProgress() throws ParseException {
-        testOneRunOfProgressBar(startButton, 1000);
-        testOneRunOfProgressBar(startButton, 1000);
+        testOneRunOfProgressBar(page.startButtonClient, 1000);
+        testOneRunOfProgressBar(page.startButtonClient, 1000);
     }
 
     @Test
     public void testPause() {
-        selenium.click(startButton);
-        waitFor(4000);
+        page.startButtonClient.click();
+        waiting(3000);
 
-        selenium.click(pauseButton);
+        page.pauseButton.click();
         int value = getProgress();
         assertTrue(value > 0, "Progress bar should show non-null progress after 4 seconds.");
 
-        waitFor(4000);
+        waiting(3000);
         int value2 = getProgress();
         assertEquals(value2, value, "Progress bar should not be updated when paused.");
-        selenium.click(startButton);
+        page.startButtonClient.click();
 
         value = getProgress();
         assertTrue(value > value2, "Progress bar's value should increase after pause.");
@@ -120,29 +118,31 @@ public class TestProgressBarClient extends AbstractGrapheneTest {
     public void testOnfinish() {
         progressBarAttributes.set(ProgressBarAttributes.onfinish, "metamerEvents += \"finish \"");
 
-        selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
+        ((JavascriptExecutor) driver).executeScript("metamerEvents = \"\"");
 
-        selenium.click(startButton);
-        waitGui.timeout(60000).failWith("Progress bar should disappear after it finishes.").until(elementVisible.locator(pjq("div.rf-pb-fin")));
+        page.startButtonClient.click();
+        Graphene.waitAjax().withTimeout(60, TimeUnit.SECONDS)
+            .withMessage("Progress bar should disappear after it finishes.")
+            .until(Graphene.element(page.finish).isVisible());
 
-        String[] events = selenium.getEval(new JavaScript("window.metamerEvents")).split(" ");
+        String[] events = ((String) ((JavascriptExecutor) driver).executeScript("return metamerEvents")).split(" ");
 
         assertEquals(events.length, 1, "Only one event should be fired.");
         assertEquals(events[0], "finish", "Onfinish doesn't work.");
     }
 
-    private void testOneRunOfProgressBar(JQueryLocator button, int interval) throws ParseException {
+    private void testOneRunOfProgressBar(WebElement button, long interval) throws ParseException {
         long delta = (long) (interval * 0.5);
         List<Integer> progressList = new ArrayList<Integer>();
 
-        selenium.click(button);
+        button.click();
 
         for (int i = 0; i < 40; i++) {
-            waitFor(delta);
+            waiting(delta);
             progressList.add(getProgress());
         }
 
-        int first,second;
+        int first, second;
 
         for (int i = 0; i < progressList.size() - 1; i++) {
             first = progressList.get(i);
@@ -150,21 +150,27 @@ public class TestProgressBarClient extends AbstractGrapheneTest {
             assertTrue(first <= second, "Progress of progress bar should be increasing: " + first + "!<= " + second);
         }
 
-        waitGui.timeout(40000).failWith("Progress bar should disappear after it finishes.").until(elementVisible.locator(pjq("div.rf-pb-fin")));
-        assertTrue(selenium.isElementPresent(completeOutput), "Complete output should be present on the page.");
+        Graphene.waitAjax().withTimeout(40, TimeUnit.SECONDS)
+            .withMessage("Progress bar should disappear after it finishes.")
+            .until(Graphene.element(page.finish).isVisible());
+        assertTrue(ElementPresent.getInstance().element(page.finishOutput).apply(driver),
+            "Complete output should be present on the page.");
 
-        assertTrue(selenium.isVisible(progressBar), "Progress bar is not present on the page.");
-        assertFalse(selenium.isVisible(initialOutput), "Initial output should not be present on the page.");
-        assertTrue(selenium.isVisible(completeOutput), "Complete output should be present on the page.");
-        assertTrue(selenium.isVisible(startButton), "Start button should be present on the page.");
-        assertTrue(selenium.isVisible(pauseButton), "Restart button should be present on the page.");
+        assertTrue(page.progressBar.isDisplayed(), "Progress bar should be visible on the page.");
+        assertFalse(page.initialOutput.isDisplayed(), "Initial output should not be present on the page.");
+        assertTrue(page.finishOutput.isDisplayed(), "Finish output should be present on the page.");
+        assertTrue(page.startButtonClient.isDisplayed(), "Start button should be present on the page.");
+        assertTrue(page.pauseButton.isDisplayed(), "Pause button should be present on the page.");
 
-        assertFalse(selenium.isVisible(remain), "Progress bar should not show progress.");
+        assertFalse(page.remain.isDisplayed(), "Progress bar should not show progress.");
     }
 
     private int getProgress() {
-        String width = selenium.getAttribute(progress.getAttribute(Attribute.STYLE));
-        width = width.replace("%", "").replace("width:", "").replace(";", "").trim();
-        return Integer.parseInt(width);
+        String width = page.progress.getCssValue("width");
+        if (width.contains("%")) {
+            return Integer.parseInt(width.replace("%", ""));
+        } else {
+            return Integer.parseInt(width.replace("px", "")) / 2; // progress bar width is 200px
+        }
     }
 }
