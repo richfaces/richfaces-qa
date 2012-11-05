@@ -64,7 +64,7 @@
 <!--         <shrinkwrap.descriptors.javaee.version>2.0.0-alpha-3</shrinkwrap.descriptors.javaee.version> -->
 
         <version.selenium>2.25.0</version.selenium>
-        <version.selenium.server>2.25.0</version.selenium.server>
+        <version.selenium.server>2.26.0</version.selenium.server>
         <version.opera.driver>0.18</version.opera.driver>
         <version.slf4j.jbossas6>1.6.1</version.slf4j.jbossas6>
 
