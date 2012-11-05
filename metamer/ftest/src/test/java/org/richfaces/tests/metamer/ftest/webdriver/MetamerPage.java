@@ -195,7 +195,7 @@ public class MetamerPage {
      *
      * @param milis
      */
-    public static void waiting(int milis) {
+    public static void waiting(long milis) {
         try {
             Thread.sleep(milis);
         } catch (InterruptedException ignored) {
