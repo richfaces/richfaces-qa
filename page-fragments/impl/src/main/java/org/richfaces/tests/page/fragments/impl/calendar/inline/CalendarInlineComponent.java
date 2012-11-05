@@ -37,25 +37,21 @@ public interface CalendarInlineComponent extends VisibleComponent {
 
     /**
      * Returns DayPicker.
-     * @return
      */
     DayPicker getDayPicker();
 
     /**
      * Returns FooterControls.
-     * @return
      */
     FooterControls getFooterControls();
 
     /**
-     * Returns HeaderControls
-     * @return
+     * Returns HeaderControls.
      */
     HeaderControls getHeaderControls();
 
     /**
      * Returns locations of all borders of this component.
-     * @return
      */
     Locations getLocations();
 

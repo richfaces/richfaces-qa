@@ -67,8 +67,11 @@ public class DayPickerImpl implements DayPicker {
     //
 
     @Override
-    public List<CalendarDay> getBoundaryDays() {
-        List<CalendarDay> result = new ArrayList<CalendarDay>(14);
+    public CalendarDays getBoundaryDays() {
+        if (!isVisible()) {
+            throw new RuntimeException("Cannot interact with DayPicker.");
+        }
+        CalendarDays result = new CalendarDays(14);
         for (CalendarWeek calendarWeek : getWeeks()) {
             for (CalendarDay day : calendarWeek.getCalendarDays()) {
                 if (day.is(DayType.boundaryDay)) {
@@ -80,22 +83,24 @@ public class DayPickerImpl implements DayPicker {
     }
 
     @Override
-    public List<CalendarDay> getMonthDays() {
-        List<CalendarDay> result = new ArrayList<CalendarDay>(42);
+    public CalendarDays getMonthDays() {
+        if (!isVisible()) {
+            throw new RuntimeException("Cannot interact with DayPicker.");
+        }
+        CalendarDays result = new CalendarDays(42);
         for (CalendarWeek calendarWeek : getWeeks()) {
-            for (CalendarDay day : calendarWeek) {
-                if (!day.is(DayType.boundaryDay)) {
-                    result.add(day);
-                }
-            }
+            result.addAll(calendarWeek.getCalendarDays().removeSpecificDays(DayType.boundaryDay));
         }
         return result;
     }
 
     @Override
     public CalendarDay getSelectedDay() {
+        if (!isVisible()) {
+            throw new RuntimeException("Cannot interact with DayPicker.");
+        }
         for (CalendarWeek calendarWeek : getWeeks()) {
-            for (CalendarDay day : calendarWeek.getCalendarDays()) {
+            for (CalendarDay day : calendarWeek) {
                 if (day.is(DayType.selectedDay)) {
                     return day;
                 }
@@ -105,9 +110,12 @@ public class DayPickerImpl implements DayPicker {
     }
 
     @Override
-    public List<CalendarDay> getSpecificDays(int weekDayPosition) {
+    public CalendarDays getSpecificDays(int weekDayPosition) {
+        if (!isVisible()) {
+            throw new RuntimeException("Cannot interact with DayPicker.");
+        }
         Validate.isTrue(weekDayPosition > 0 && weekDayPosition < 8);
-        List<CalendarDay> result = new ArrayList<CalendarDay>();
+        CalendarDays result = new CalendarDays(6);
         for (CalendarWeek calendarWeek : getWeeks()) {
             result.add(calendarWeek.getCalendarDays().get(weekDayPosition - 1));
         }
@@ -116,12 +124,14 @@ public class DayPickerImpl implements DayPicker {
 
     @Override
     public CalendarDay getTodayDay() {
+        if (!isVisible()) {
+            throw new RuntimeException("Cannot interact with DayPicker.");
+        }
         List<CalendarWeek> weeks = getWeeks();
         for (CalendarWeek calendarWeek : weeks) {
-            for (CalendarDay day : calendarWeek.getCalendarDays()) {
-                if (day.is(DayType.todayDay)) {
-                    return day;
-                }
+            CalendarDay today = calendarWeek.getCalendarDays().getSpecificDay(DayType.todayDay);
+            if (today != null) {
+                return today;
             }
         }
         return null;
@@ -129,12 +139,18 @@ public class DayPickerImpl implements DayPicker {
 
     @Override
     public CalendarWeek getWeek(int weekFromActCalendar) {
+        if (!isVisible()) {
+            throw new RuntimeException("Cannot interact with DayPicker.");
+        }
         Validate.isTrue(weekFromActCalendar > 0 && weekFromActCalendar < 7);
         return getWeeks().get(weekFromActCalendar - 1);
     }
 
     @Override
     public List<String> getWeekDayShortNames() {
+        if (!isVisible()) {
+            throw new RuntimeException("Cannot interact with DayPicker.");
+        }
         if (Graphene.element(weekDaysBarElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Week days bar is not visible");
         }
@@ -154,11 +170,17 @@ public class DayPickerImpl implements DayPicker {
 
     @Override
     public List<CalendarWeek> getWeeks() {
+        if (!isVisible()) {
+            throw new RuntimeException("Cannot interact with DayPicker.");
+        }
         return Arrays.asList(week1, week2, week3, week4, week5, week6);
     }
 
     @Override
     public List<Integer> getWeeksNumbers() {
+        if (!isVisible()) {
+            throw new RuntimeException("Cannot interact with DayPicker.");
+        }
         List<Integer> result = new ArrayList<Integer>(6);
 
         for (CalendarWeek week : getWeeks()) {
@@ -183,12 +205,15 @@ public class DayPickerImpl implements DayPicker {
     }
 
     @Override
-    public void setDayInMonth(DateTime dateTime) {
-        setDayInMonth(dateTime.getDayOfMonth());
+    public void selectDayInMonth(DateTime dateTime) {
+        selectDayInMonth(dateTime.getDayOfMonth());
     }
 
     @Override
-    public void setDayInMonth(int day) {
+    public void selectDayInMonth(int day) {
+        if (!isVisible()) {
+            throw new RuntimeException("Cannot interact with DayPicker.");
+        }
         Validate.isTrue(day > 0 && day < 32);
         List<CalendarDay> monthDays = getMonthDays();
         Validate.isTrue(monthDays.size() >= day);

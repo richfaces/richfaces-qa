@@ -34,70 +34,61 @@ public interface DayPicker extends VisibleComponent {
 
     /**
      * Returns all boundary days (not this month days) as list of Calendar days.
-     * @return
      */
-    List<CalendarDay> getBoundaryDays();
+    CalendarDays getBoundaryDays();
 
     /**
      * Returns all month's days in current DayPicker view.
-     * @return
      */
-    List<CalendarDay> getMonthDays();
+    CalendarDays getMonthDays();
 
     /**
      * Returns the selected day in this DayPicker view. If no found than null is returned.
-     * @return
      */
     CalendarDay getSelectedDay();
 
     /**
      * Returns specific days of all weeks (with boundary days) in this DayPicker view.
      * @param weekDayPosition position of day in week. I.e. 1 = sunday (with standard calendar settings)
-     * @return
      */
-    List<CalendarDay> getSpecificDays(int weekDayPosition);
+    CalendarDays getSpecificDays(int weekDayPosition);
 
     /**
      * Returns today CalendarDay from current DayPicker view. If no found than null is returned.
-     * @return
      */
     CalendarDay getTodayDay();
 
     /**
      * Returns week <1;6> from current DayPicker view.
      * @param weekFromActCalendar <1;6>
-     * @return
      */
     CalendarWeek getWeek(int weekFromActCalendar);
 
     /**
-     * Returns short names of weekdays (Sun, Mon...)
-     * @return
+     * Returns short names of weekdays (Sun, Mon...).
      */
     List<String> getWeekDayShortNames();
 
     WebElement getWeekDaysBarElement();
 
     /**
-     * Returns all weeks from current DayPicker view
-     * @return
+     * Returns all weeks from current DayPicker view.
      */
     List<CalendarWeek> getWeeks();
 
     /**
      * Returns all week numbers from current DayPicker view.
-     * @return
      */
     List<Integer> getWeeksNumbers();
 
     /**
      * Set day in current view. Indexed from 1.
      */
-    void setDayInMonth(int day);
+    void selectDayInMonth(int day);
 
     /**
      * Set day in current view. Indexed from 1;
      * @param dateTime
      */
-    void setDayInMonth(DateTime dateTime);
+    void selectDayInMonth(DateTime dateTime);
 }

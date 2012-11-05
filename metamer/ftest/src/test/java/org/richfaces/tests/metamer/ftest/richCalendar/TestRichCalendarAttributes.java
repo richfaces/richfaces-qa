@@ -59,15 +59,16 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.Locations;
-import org.richfaces.tests.page.fragments.impl.calendar.common.FooterControls;
 import org.richfaces.tests.page.fragments.impl.calendar.common.HeaderControls;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay.DayType;
+import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDays;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarWeek;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.DayPicker;
 import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeEditor;
 import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeEditor.SetValueBy;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.CalendarPopupComponent.OpenedBy;
+import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.PopupFooterControls;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.PopupHeaderControls;
 import org.richfaces.tests.page.fragments.impl.message.MessageComponentImpl;
 import org.testng.annotations.BeforeMethod;
@@ -102,6 +103,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
     private final Action setTimeAction = new SetTimeAction();
     private final Action setCurrentDateWithCalendarsTodayButtonAction = new SetCurrentDateWithCalendarsTodayButtonAction();
     private final Action setTodayAndThenClickToNextMonthAction = new SetTodayAndThenClickToNextMonthAction();
+    private final DateTime firstOfNovember2012 = new DateTime(2012, 11, 1, 12, 0, 0, 0);
 
     private enum BoundaryDatesMode {
 
@@ -171,39 +173,41 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
     public void testBoundaryDatesMode() {
         calendarAttributes.set(CalendarAttributes.boundaryDatesMode, boundaryDatesMode.value);
         DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
-        FooterControls proxiedFooterControls = calendar.openPopup().getProxiedFooterControls();
+        MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(firstOfNovember2012);
+        PopupFooterControls proxiedFooterControls = calendar.openPopup().getProxiedFooterControls();
         HeaderControls proxiedHeaderControls = calendar.openPopup().getProxiedHeaderControls();
         DateTime yearAndMonth;
+        String firstOfNovember2012String = firstOfNovember2012.toString(dateTimeFormatter);
         switch (boundaryDatesMode) {
             case INACTIVE:
             case NULL:
-                Graphene.guardNoRequest(proxiedDayPicker.getBoundaryDays().get(0)).select();
-                proxiedFooterControls.applyDate();
-                assertTrue(calendar.getInputValue().isEmpty());
+                MetamerPage.waitRequest(proxiedDayPicker.getBoundaryDays().get(0), WaitRequestType.NONE).select();
+                //apply and check, that the date has not changed
+                MetamerPage.waitRequest(proxiedFooterControls, WaitRequestType.NONE).applyDate();
+                assertEquals(calendar.getInputValue(), firstOfNovember2012String);
                 break;
             case SCROLL:
-                //scroll to last day of previous month
-                Graphene.guardNoRequest(proxiedDayPicker.getBoundaryDays().get(0)).select();
+                //scroll to 28th of October 2012
+                MetamerPage.waitRequest(proxiedDayPicker.getBoundaryDays().get(0), WaitRequestType.NONE).select();
                 yearAndMonth = proxiedHeaderControls.getYearAndMonth();
-                assertEquals(yearAndMonth.getYear(), todayMidday.getYear());
-                assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.minusMonths(1).getMonthOfYear());
-                proxiedFooterControls.applyDate();
-                assertTrue(calendar.getInputValue().isEmpty());
+                assertEquals(yearAndMonth.getYear(), 2012);
+                assertEquals(yearAndMonth.getMonthOfYear(), 10);
+                //apply and check, that the date has not changed
+                MetamerPage.waitRequest(proxiedFooterControls, WaitRequestType.NONE).applyDate();
+                assertEquals(calendar.getInputValue(), firstOfNovember2012String);
                 break;
             case SELECT:
-                //scroll and select last day of previous month
-                DateTime referenceDate = todayMidday.withDayOfMonth(1).minusDays(1);
-                Graphene.guardNoRequest(proxiedDayPicker.getBoundaryDays().get(0)).select();
+                //select 28th of October 2012
+                MetamerPage.waitRequest(proxiedDayPicker.getBoundaryDays().get(0), WaitRequestType.NONE).select();
                 yearAndMonth = proxiedHeaderControls.getYearAndMonth();
-                assertEquals(yearAndMonth.getYear(), referenceDate.getYear());
-                assertEquals(yearAndMonth.getMonthOfYear(), referenceDate.getMonthOfYear());
-                assertEquals(proxiedDayPicker.getSelectedDay().getDayNumber().intValue(), referenceDate.getDayOfMonth());
+                assertEquals(yearAndMonth.getYear(), 2012);
+                assertEquals(yearAndMonth.getMonthOfYear(), 10);
 
-                Graphene.guardXhr(proxiedFooterControls).applyDate();
+                MetamerPage.waitRequest(proxiedFooterControls, WaitRequestType.XHR).applyDate();
                 DateTime parsedDateTime = dateTimeFormatter.parseDateTime(calendar.getInputValue());
-                assertEquals(parsedDateTime.getYear(), referenceDate.getYear());
-                assertEquals(parsedDateTime.getMonthOfYear(), referenceDate.getMonthOfYear());
-                assertEquals(parsedDateTime.getDayOfMonth(), referenceDate.getDayOfMonth());
+                assertEquals(parsedDateTime.getYear(), 2012);
+                assertEquals(parsedDateTime.getMonthOfYear(), 10);
+                assertEquals(parsedDateTime.getDayOfMonth(), 28);
                 break;
         }
     }
@@ -303,8 +307,8 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
         //switch to next month to refresh classes
         calendar.openPopup().getHeaderControls().nextMonth();
         DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
-        List<CalendarDay> tuesdays = proxiedDayPicker.getSpecificDays(tuesdayDay);
-        tuesdays.removeAll(proxiedDayPicker.getBoundaryDays());
+        CalendarDays tuesdays = proxiedDayPicker.getSpecificDays(tuesdayDay);
+        tuesdays.removeSpecificDays(DayType.boundaryDay);
 
         for (CalendarDay tuesday : tuesdays) {
             assertTrue(tuesday.containsStyleClass("yellowDay"), "All tuesdays should be yellow.");
@@ -312,9 +316,8 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
 
         calendarAttributes.set(CalendarAttributes.dayClassFunction, "null");
 
-        //TODO: the following 2 lines should be removed after arquillian can handle proxy for elements in list
         tuesdays = proxiedDayPicker.getSpecificDays(tuesdayDay);
-        tuesdays.removeAll(proxiedDayPicker.getBoundaryDays());
+        tuesdays.removeSpecificDays(DayType.boundaryDay);
 
         for (CalendarDay tuesday : tuesdays) {
             assertFalse(tuesday.containsStyleClass("yellowDay"), "All tuesdays should not be yellow.");
@@ -325,17 +328,19 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
     public void testDayDisableFunction() {
         calendarAttributes.set(CalendarAttributes.dayDisableFunction, "disableTuesdays");
         int tuesdayDay = 3;
+        //switch to next month to refresh classes
+        calendar.openPopup().getHeaderControls().nextMonth();
         DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
-        List<CalendarDay> tuesdays = proxiedDayPicker.getSpecificDays(tuesdayDay);
-        tuesdays.removeAll(proxiedDayPicker.getBoundaryDays());
+        CalendarDays tuesdays = proxiedDayPicker.getSpecificDays(tuesdayDay);
+        tuesdays.removeSpecificDays(DayType.boundaryDay);
         for (CalendarDay tuesday : tuesdays) {
             assertFalse(tuesday.is(DayType.clickable), "All tuesdays should not be enabled.");
         }
 
         calendarAttributes.set(CalendarAttributes.dayDisableFunction, "null");
-        //TODO: the following 2 lines should be removed after arquillian can handle proxy for elements in list
+
         tuesdays = proxiedDayPicker.getSpecificDays(tuesdayDay);
-        tuesdays.removeAll(proxiedDayPicker.getBoundaryDays());
+        tuesdays.removeSpecificDays(DayType.boundaryDay);
 
         for (CalendarDay tuesday : tuesdays) {
             assertTrue(tuesday.is(DayType.clickable), "All tuesdays should be enabled.");
@@ -374,13 +379,20 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
     }
 
     @Test
+    public void testDefaultLabel() {
+        String defaultLabel = "RichFaces 4";
+        calendarAttributes.set(CalendarAttributes.defaultLabel, defaultLabel);
+        assertEquals(calendar.getInputValue(), defaultLabel);
+    }
+
+    @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RF-9837", "https://issues.jboss.org/browse/RF-10085" })
     public void testDefaultTime() {
-        final String time = "06:06";
-        calendarAttributes.set(CalendarAttributes.defaultTime, time);
+        final String t = "06:06";
+        calendarAttributes.set(CalendarAttributes.defaultTime, t);
         setCurrentDateWithCalendarsTodayButtonAction.perform();
         String text = calendar.openPopup().getFooterControls().getTimeEditorOpenerElement().getText();
-        assertTrue(text.equals(time), "Default time");
+        assertTrue(text.equals(t), "Default time");
 
         //another check in time editor
         TimeEditor timeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
@@ -569,7 +581,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
         String labelsString = "január, február, marec, apríl, máj, jún, júl, august, september, október, november, december";
         calendarAttributes.set(CalendarAttributes.monthLabels, labelsString);
 
-        //set date to first month
+        //set date to 1st day of year
         calendar.setDateTime(todayMidday.withMonthOfYear(1).withDayOfMonth(1));
 
         List<String> expectedLabels = Arrays.asList(labelsString.split(", "));
@@ -619,12 +631,12 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
         testFireEvent(calendarAttributes, CalendarAttributes.onclean, new Action() {
             @Override
             public void perform() {
-                FooterControls proxiedFooterControls = calendar.openPopup()
+                PopupFooterControls proxiedFooterControls = calendar.openPopup()
                         .getProxiedFooterControls();
-                proxiedFooterControls.todayDate();
+                MetamerPage.waitRequest(proxiedFooterControls, WaitRequestType.NONE).todayDate();
                 Graphene.waitGui().until(Graphene.element(proxiedFooterControls
                         .getCleanButtonElement()).isVisible());
-                proxiedFooterControls.cleanDate();
+                MetamerPage.waitRequest(proxiedFooterControls, WaitRequestType.NONE).cleanDate();
             }
         });
     }
@@ -635,7 +647,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
         testFireEvent(calendarAttributes, CalendarAttributes.oncomplete, new Action() {
             @Override
             public void perform() {
-                Graphene.guardXhr(calendar.openPopup().getHeaderControls()).nextMonth();
+                MetamerPage.waitRequest(calendar.openPopup().getHeaderControls(), WaitRequestType.XHR).nextMonth();
             }
         });
     }
@@ -779,13 +791,6 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
     }
 
     @Test
-    public void testDefaultLabel() {
-        String defaultLabel = "RichFaces 4";
-        calendarAttributes.set(CalendarAttributes.defaultLabel, defaultLabel);
-        assertEquals(calendar.getInputValue(), defaultLabel);
-    }
-
-    @Test
     public void testOnbeforecurrentdateselect() {
         testFireEvent(calendarAttributes, CalendarAttributes.onbeforecurrentdateselect, setTodayAndThenClickToNextMonthAction);
     }
@@ -793,6 +798,13 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
     @Test
     public void testOnbeforedateselect() {
         testFireEvent(calendarAttributes, CalendarAttributes.onbeforedateselect, setCurrentDateWithCalendarsTodayButtonAction);
+    }
+
+    @Test
+    public void testPopup() {
+        calendarAttributes.set(CalendarAttributes.popup, Boolean.FALSE);
+        assertTrue(inlineCalendar.isVisible(), "Inline calendar should be visible.");
+        assertListOfWebElementsNotVisible(Arrays.asList(calendar.getInput(), calendar.getPopupButton()));
     }
 
     @Test
@@ -842,7 +854,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
         int minutes = 33;
 
         //set yesterday with some minutes
-        calendar.setDateTime(todayMidday.plusMinutes(minutes).minusDays(1));
+        MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(todayMidday.plusMinutes(minutes).minusDays(1));
         //second time, but without minutes setting, to see if the minutes will reset
         setCurrentDateWithCalendarsTodayButtonAction.perform();
 
@@ -859,9 +871,9 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
     @Use(field = "booleanValue", booleans = { false, true })
     public void testShowApplyButton() {
         calendarAttributes.set(CalendarAttributes.showApplyButton, booleanValue);
-        FooterControls proxiedFooterControls = calendar.openPopup().getProxiedFooterControls();
+        PopupFooterControls proxiedFooterControls = calendar.openPopup().getProxiedFooterControls();
         if (booleanValue) {
-            assertVisible(proxiedFooterControls.getTodayButtonElement());
+            assertVisible(proxiedFooterControls.getApplyButtonElement());
         } else {
             assertNotVisible(proxiedFooterControls.getApplyButtonElement());
             setCurrentDateWithCalendarsTodayButtonAction.perform();
@@ -877,7 +889,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
     public void testShowFooter() {
         setCurrentDateWithCalendarsTodayButtonAction.perform();
         calendarAttributes.set(CalendarAttributes.showFooter, booleanValue);
-        FooterControls proxiedFooterControls = calendar.openPopup().getProxiedFooterControls();
+        PopupFooterControls proxiedFooterControls = calendar.openPopup().getProxiedFooterControls();
         if (booleanValue) {
             assertListOfWebElementsVisible(Arrays.asList(
                     proxiedFooterControls.getApplyButtonElement(),
@@ -986,7 +998,6 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
     @Use(field = "todayControlMode", enumeration = true)
     public void testTodayControlMode() {
         calendarAttributes.set(CalendarAttributes.todayControlMode, todayControlMode.value);
-        DateTime dt;
         switch (todayControlMode) {
             case HIDDEN:
                 assertNotVisible(calendar.openPopup().getFooterControls().getTodayButtonElement());
@@ -995,21 +1006,21 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
             case SELECT:
                 //set date to tomorrow
                 calendar.setDateTime(todayMidday.plusDays(1));
-                //set current date with calendar's 'Today' button,
+                //set date with calendar's 'Today' button,
                 //this will scroll and select todays day
-                calendar.openPopup().getFooterControls().todayDate();
-                assertNotNull(calendar.openPopup().getDayPicker().getSelectedDay());
-                assertEquals(calendar.openPopup().getDayPicker().getSelectedDay().getDayNumber(),
-                        calendar.openPopup().getDayPicker().getTodayDay().getDayNumber());
+                MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
+                CalendarDay selectedDay = calendar.openPopup().getDayPicker().getSelectedDay();
+                assertNotNull(selectedDay);
+                assertTrue(selectedDay.is(DayType.todayDay));
                 break;
             case SCROLL:
                 calendar.setDateTime(todayMidday.plusMonths(1));
-                //set current date with calendar's 'Today' button,
+                //set date with calendar's 'Today' button,
                 //this will only scroll to today but will not select it
-                calendar.openPopup().getFooterControls().todayDate();
+                MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
                 //no selected day should be in calendar
                 assertNull(calendar.openPopup().getDayPicker().getSelectedDay());
-                //month will change
+                //but view of day picker should will change to current month
                 assertEquals(calendar.openPopup().getHeaderControls().getYearAndMonth().getMonthOfYear(), todayMidday.getMonthOfYear());
                 break;
         }
@@ -1093,9 +1104,8 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
 
         @Override
         public void perform() {
-            calendar.openPopup().getFooterControls().todayDate();
-            calendar.openPopup().getFooterControls()
-                    .openTimeEditor().setTime(todayMidday.plusMinutes(5),
+            MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
+            calendar.openPopup().getFooterControls().openTimeEditor().setTime(todayMidday.plusMinutes(5),
                     SetValueBy.buttons).confirmTime();
         }
     }
@@ -1112,7 +1122,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
 
         @Override
         public void perform() {
-            calendar.openPopup().getFooterControls().todayDate();
+            MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
             calendar.openPopup().getHeaderControls().nextMonth();
         }
     }

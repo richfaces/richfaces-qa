@@ -36,11 +36,12 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.calendar.common.FooterControls;
 import org.richfaces.tests.page.fragments.impl.calendar.common.editor.yearAndMonth.YearAndMonthEditor;
+import org.richfaces.tests.page.fragments.impl.calendar.inline.CalendarInlineComponentImpl;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.CalendarPopupComponent.OpenedBy;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.CalendarPopupComponentImpl;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.CalendarPopup;
+import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.PopupFooterControls;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.PopupHeaderControls;
 import org.testng.annotations.BeforeMethod;
 
@@ -52,10 +53,12 @@ import org.testng.annotations.BeforeMethod;
 public abstract class AbstractCalendarTest<P extends MetamerPage> extends AbstractWebDriverTest<P> {
 
     protected static final DateTime firstOfJanuary2012 = new DateTime(2012, 1, 1, 12, 0);
-    protected DateTime todayMidday;
+    protected DateTime todayMidday = new DateTime().withHourOfDay(12).withMinuteOfHour(0).withSecondOfMinute(0);
     //
     @FindBy(css = "span[id$=calendar]")
     protected CalendarPopupComponentImpl calendar;
+    @FindBy(css = "span[id$=calendar]")
+    protected CalendarInlineComponentImpl inlineCalendar;
 
     @BeforeMethod
     public void init() {
@@ -105,7 +108,7 @@ public abstract class AbstractCalendarTest<P extends MetamerPage> extends Abstra
     public void testFooterButtons() {
         CalendarPopup openedPopup = calendar.openPopup();
         assertTrue(openedPopup.getFooterControls().isVisible());
-        FooterControls footerControls = openedPopup.getProxiedFooterControls();
+        PopupFooterControls footerControls = openedPopup.getProxiedFooterControls();
 
         assertTrue(isVisible(footerControls.getTodayButtonElement()), "Today button should be visible.");
         assertEquals(footerControls.getTodayButtonElement().getText(), "Today", "Button's text");
@@ -132,7 +135,7 @@ public abstract class AbstractCalendarTest<P extends MetamerPage> extends Abstra
         DateTime today = new DateTime();
 
         CalendarPopup openedPopup = calendar.openPopup();
-        FooterControls footerControls = openedPopup.getProxiedFooterControls();
+        PopupFooterControls footerControls = openedPopup.getProxiedFooterControls();
 
         MetamerPage.waitRequest(footerControls, WaitRequestType.XHR).setTodaysDate();
 

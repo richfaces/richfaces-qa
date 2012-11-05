@@ -22,7 +22,7 @@
 package org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.spinner;
 
 /**
- * Spinner component for setting minutes/seconds/milisieconds <0;59>
+ * Spinner component for setting minutes/seconds/milliseconds <0;59>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TimeSpinner extends Spinner<Integer> {
@@ -44,14 +44,16 @@ public class TimeSpinner extends Spinner<Integer> {
 
     @Override
     public void setValueByButtons(Integer value) {
-        int actual = getValue();
-        int difference = actual - value;
-        int optimizedDifference = (difference < 0 ? maxValue + difference : difference - maxValue);
-        optimizedDifference = (Math.abs(optimizedDifference) > Math.abs(difference) ? difference : optimizedDifference);
-        if (optimizedDifference < 0) {
-            clickUp(optimizedDifference);
-        } else if (optimizedDifference > 0) {
-            clickDown(optimizedDifference);
+        if (!isSameValueAreadySet(value)) {
+            int actual = getValue();
+            int difference = actual - value;
+            int optimizedDifference = (difference < 0 ? maxValue + difference : difference - maxValue);
+            optimizedDifference = (Math.abs(optimizedDifference) > Math.abs(difference) ? difference : optimizedDifference);
+            if (optimizedDifference < 0) {
+                clickUp(optimizedDifference);
+            } else if (optimizedDifference > 0) {
+                clickDown(optimizedDifference);
+            }
         }
     }
 

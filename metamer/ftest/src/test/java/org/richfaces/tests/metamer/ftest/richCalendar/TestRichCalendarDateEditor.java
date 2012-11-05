@@ -34,6 +34,7 @@ import java.util.List;
 import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.calendar.common.HeaderControls;
 import org.richfaces.tests.page.fragments.impl.calendar.common.editor.yearAndMonth.YearAndMonthEditor;
 import org.testng.annotations.Test;
@@ -53,13 +54,13 @@ public class TestRichCalendarDateEditor extends AbstractCalendarTest<MetamerPage
 
     @Test
     public void testCancelButton() {
-        calendar.openPopup().getFooterControls().setTodaysDate();
+        MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
 
         HeaderControls hc = calendar.openPopup().getProxiedHeaderControls();
 
         DateTime canceledDate = todayMidday.plusMonths(2).plusYears(2);
         YearAndMonthEditor openYearAndMonthEditor = hc.openYearAndMonthEditor();
-        openYearAndMonthEditor.selectDate(canceledDate).cancelDate();
+        MetamerPage.waitRequest(openYearAndMonthEditor, WaitRequestType.NONE).selectDate(canceledDate).cancelDate();
         assertFalse(openYearAndMonthEditor.isVisible());
 
         DateTime yearAndMonthAfter = hc.getYearAndMonth();
@@ -71,11 +72,13 @@ public class TestRichCalendarDateEditor extends AbstractCalendarTest<MetamerPage
     public void testNextDecadeButton() {
         HeaderControls hc = calendar.openPopup().getProxiedHeaderControls();
         List<Integer> displayedYears = hc.openYearAndMonthEditor().getDisplayedYears();
-        hc.openYearAndMonthEditor().nextDecade();
+        MetamerPage.waitRequest(hc.openYearAndMonthEditor(), WaitRequestType.NONE).nextDecade();
+
         assertNotEquals(hc.openYearAndMonthEditor().getDisplayedYears(), displayedYears);
         Integer selectedYear = hc.openYearAndMonthEditor().getSelectedYear();
         assertNull(selectedYear);//no selected Year found
-        hc.openYearAndMonthEditor().confirmDate();
+
+        MetamerPage.waitRequest(hc.openYearAndMonthEditor(), WaitRequestType.NONE).confirmDate();
         DateTime yearAndMonth = hc.getYearAndMonth();
         assertEquals(yearAndMonth.getYear(), todayMidday.getYear());
         assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.plusYears(1).getMonthOfYear());
@@ -85,12 +88,13 @@ public class TestRichCalendarDateEditor extends AbstractCalendarTest<MetamerPage
     public void testPreviousDecadeButton() {
         HeaderControls hc = calendar.openPopup().getProxiedHeaderControls();
         List<Integer> displayedYears = hc.openYearAndMonthEditor().getDisplayedYears();
-        hc.openYearAndMonthEditor().previousDecade();
+        MetamerPage.waitRequest(hc.openYearAndMonthEditor(), WaitRequestType.NONE).previousDecade();
+
         assertNotEquals(hc.openYearAndMonthEditor().getDisplayedYears(), displayedYears);
         Integer selectedYear = hc.openYearAndMonthEditor().getSelectedYear();
         assertNull(selectedYear);//no selected Year found
         //confirm previously selected date
-        hc.openYearAndMonthEditor().confirmDate();
+        MetamerPage.waitRequest(hc.openYearAndMonthEditor(), WaitRequestType.NONE).confirmDate();
         //so the date stays at previous value, check it
         DateTime yearAndMonth = hc.getYearAndMonth();
         assertEquals(yearAndMonth.getYear(), todayMidday.getYear());
@@ -101,13 +105,11 @@ public class TestRichCalendarDateEditor extends AbstractCalendarTest<MetamerPage
     public void testSelectMonthAndYear() {
         DateTime someFutureDate = todayMidday.plusMonths(1).plusYears(1);
         HeaderControls hc = calendar.openPopup().getProxiedHeaderControls();
-        DateTime yearAndMonth = hc.getYearAndMonth();
         YearAndMonthEditor yearAndMonthEditor = hc.openYearAndMonthEditor();
-        yearAndMonthEditor.selectDate(someFutureDate).confirmDate();
+        MetamerPage.waitRequest(yearAndMonthEditor, WaitRequestType.NONE).selectDate(someFutureDate).confirmDate();
+
         assertFalse(yearAndMonthEditor.isVisible());
         DateTime yearAndMonthAfter = hc.getYearAndMonth();
-        assertNotEquals(yearAndMonthAfter.getYear(), yearAndMonth.getYear());
-        assertNotEquals(yearAndMonthAfter.getMonthOfYear(), yearAndMonth.getMonthOfYear());
         assertEquals(yearAndMonthAfter.getYear(), someFutureDate.getYear());
         assertEquals(yearAndMonthAfter.getMonthOfYear(), someFutureDate.getMonthOfYear());
     }

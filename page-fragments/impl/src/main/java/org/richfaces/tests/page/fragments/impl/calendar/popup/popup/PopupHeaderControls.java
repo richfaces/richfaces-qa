@@ -25,13 +25,12 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.calendar.common.HeaderControls;
 
 /**
- *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public interface PopupHeaderControls extends HeaderControls {
 
     /**
-     * Close popup if needed.
+     * Closes popup if needed.
      */
     void closePopup();
 

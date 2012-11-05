@@ -125,7 +125,9 @@ public class HeaderControlsImpl implements HeaderControls {
             throw new RuntimeException("Cannot interact with nextMonth button. "
                     + "Ensure that calendar popup and header controls are displayed.");
         }
+        String before = yearAndMonthEditorOpenerElement.getText();
         nextMonthElement.click();
+        Graphene.waitAjax().until(Graphene.element(yearAndMonthEditorOpenerElement).not().textEquals(before));
     }
 
     @Override
@@ -134,7 +136,9 @@ public class HeaderControlsImpl implements HeaderControls {
             throw new RuntimeException("Cannot interact with nextYear button. "
                     + "Ensure that calendar popup and header controls are displayed.");
         }
+        String before = yearAndMonthEditorOpenerElement.getText();
         nextYearElement.click();
+        Graphene.waitAjax().until(Graphene.element(yearAndMonthEditorOpenerElement).not().textEquals(before));
     }
 
     @Override
@@ -153,7 +157,9 @@ public class HeaderControlsImpl implements HeaderControls {
             throw new RuntimeException("Cannot interact with previousYear button. "
                     + "Ensure that calendar popup and header controls are displayed.");
         }
+        String before = yearAndMonthEditorOpenerElement.getText();
         previousYearElement.click();
+        Graphene.waitAjax().until(Graphene.element(yearAndMonthEditorOpenerElement).not().textEquals(before));
     }
 
     @Override
@@ -162,7 +168,9 @@ public class HeaderControlsImpl implements HeaderControls {
             throw new RuntimeException("Cannot interact with previousMonth button. "
                     + "Ensure that calendar popup and header controls are displayed.");
         }
+        String before = yearAndMonthEditorOpenerElement.getText();
         previousMonthElement.click();
+        Graphene.waitAjax().until(Graphene.element(yearAndMonthEditorOpenerElement).not().textEquals(before));
     }
 
     public void setCalendarEditor(CalendarEditor calendarEditor) {

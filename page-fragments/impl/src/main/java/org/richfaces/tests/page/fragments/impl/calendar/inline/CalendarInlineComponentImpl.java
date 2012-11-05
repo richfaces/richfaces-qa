@@ -69,6 +69,7 @@ public class CalendarInlineComponentImpl implements CalendarInlineComponent {
     @Override
     public FooterControls getFooterControls() {
         footerControls.setCalendarEditor(calendarEditor);
+        footerControls.setDayPicker(dayPicker);
         return footerControls;
     }
 
@@ -106,10 +107,7 @@ public class CalendarInlineComponentImpl implements CalendarInlineComponent {
     @Override
     public void setDateTime(DateTime dt) {
         getHeaderControls().openYearAndMonthEditor().selectDate(dt).confirmDate();
-        getDayPicker().setDayInMonth(dt);
+        getDayPicker().selectDayInMonth(dt);
         getFooterControls().openTimeEditor().setTime(dt, TimeEditor.SetValueBy.typing).confirmTime();
-        if (Graphene.element(getFooterControls().getApplyButtonElement()).isVisible().apply(driver)) {
-            getFooterControls().applyDate();
-        }
     }
 }

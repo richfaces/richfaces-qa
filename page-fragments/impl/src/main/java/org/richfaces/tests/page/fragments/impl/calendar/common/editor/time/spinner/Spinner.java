@@ -72,7 +72,7 @@ public abstract class Spinner<T> implements VisibleComponent {
         return Graphene.element(root).not().isVisible();
     }
 
-    private boolean isSameValueAreadySet(T value) {
+    protected boolean isSameValueAreadySet(T value) {
         return getValue().equals(value);
     }
 

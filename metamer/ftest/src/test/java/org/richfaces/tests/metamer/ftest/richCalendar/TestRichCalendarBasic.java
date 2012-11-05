@@ -34,6 +34,7 @@ import java.util.List;
 import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.DayPicker;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.CalendarPopup;
@@ -53,6 +54,49 @@ public class TestRichCalendarBasic extends AbstractCalendarTest<MetamerPage> {
     }
 
     @Test
+    public void testApplyButton() {
+        super.testApplyButton();
+    }
+
+    @Test
+    public void testCleanButton() {
+        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
+        proxiedDayPicker.getWeek(3).getCalendarDays().get(3).select();
+        MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.NONE).cleanDate();
+
+        CalendarDay selectedDay = proxiedDayPicker.getSelectedDay();
+        assertNull(selectedDay);
+    }
+
+    @Test
+    public void testCloseButton() {
+        CalendarPopup popup = calendar.openPopup();
+        assertTrue(popup.isVisible());
+
+        MetamerPage.waitRequest(calendar.openPopup().getHeaderControls(), WaitRequestType.NONE).closePopup();
+        assertFalse(popup.isVisible());
+    }
+
+    @Test
+    public void testFooterButtons() {
+        super.testFooterButtons();
+    }
+
+    @Test
+    public void testHeaderButtons() {
+        super.testHeaderButtons();
+    }
+
+    @Test
+    public void testHeaderMonth() {
+        MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(todayMidday);
+
+        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
+        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.getMonthOfYear(), "Calendar shows wrong month in its header.");
+        assertEquals(yearAndMonth.getYear(), todayMidday.getYear(), "Calendar shows wrong year in its header.");
+    }
+
+    @Test
     public void testInit() {
         assertTrue(calendar.isVisible(), "Calendar is not present on the page.");
         assertTrue(Graphene.element(calendar.getInput()).isVisible().apply(driver), "Calendar's input should be visible.");
@@ -66,8 +110,25 @@ public class TestRichCalendarBasic extends AbstractCalendarTest<MetamerPage> {
     }
 
     @Test
-    public void testOpenPopupClickOnInput() {
-        super.testOpenPopupClickOnInput();
+    public void testNextMonthButton() {
+        MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(todayMidday);
+
+        calendar.openPopup().getHeaderControls().nextMonth();
+        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
+
+        assertEquals(yearAndMonth.getYear(), todayMidday.plusMonths(1).getYear(), "Year did not change correctly.");
+        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.plusMonths(1).getMonthOfYear(), "Month did not change correctly.");
+    }
+
+    @Test
+    public void testNextYearButton() {
+        MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(todayMidday);
+
+        calendar.openPopup().getHeaderControls().nextYear();
+        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
+
+        assertEquals(yearAndMonth.getYear(), todayMidday.plusYears(1).getYear(), "Year did not change correctly.");
+        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.plusYears(1).getMonthOfYear(), "Month did not change correctly.");
     }
 
     @Test
@@ -76,26 +137,51 @@ public class TestRichCalendarBasic extends AbstractCalendarTest<MetamerPage> {
     }
 
     @Test
-    public void testHeaderButtons() {
-        super.testHeaderButtons();
+    public void testOpenPopupClickOnInput() {
+        super.testOpenPopupClickOnInput();
     }
 
     @Test
-    public void testHeaderMonth() {
+    public void testPrevMonthButton() {
+        MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(todayMidday);
+
+        calendar.openPopup().getHeaderControls().previousMonth();
         DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
-        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.getMonthOfYear(), "Calendar shows wrong month in its header.");
-        assertEquals(yearAndMonth.getYear(), todayMidday.getYear(), "Calendar shows wrong year in its header.");
+
+        assertEquals(yearAndMonth.getYear(), todayMidday.minusMonths(1).getYear(), "Year did not change correctly.");
+        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.minusMonths(1).getMonthOfYear(), "Month did not change correctly.");
     }
 
     @Test
-    public void testFooterButtons() {
-        super.testFooterButtons();
+    public void testPrevYearButton() {
+        MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(todayMidday);
+
+        calendar.openPopup().getHeaderControls().previousYear();
+        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
+
+        assertEquals(yearAndMonth.getYear(), todayMidday.minusYears(1).getYear(), "Year did not change correctly.");
+        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.minusYears(1).getMonthOfYear(), "Month did not change correctly.");
     }
 
     @Test
-    public void testWeekDaysLabels() {
-        List<String> weekDayShortNames = calendar.openPopup().getDayPicker().getWeekDayShortNames();
-        assertEquals(weekDayShortNames, Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"));
+    public void testSelectDate() {
+        CalendarDay selectedDay = calendar.openPopup().getDayPicker().getSelectedDay();
+        assertNull(selectedDay);
+
+        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
+        MetamerPage.waitRequest(proxiedDayPicker.getWeek(3).getCalendarDays().get(3), WaitRequestType.NONE).select();
+
+        selectedDay = proxiedDayPicker.getSelectedDay();
+        assertNotNull(selectedDay);
+    }
+
+    @Test
+    public void testTodayButton() {
+        MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
+
+        CalendarDay selectedDay = calendar.openPopup().getDayPicker().getSelectedDay();
+        CalendarDay todayDay = calendar.openPopup().getDayPicker().getTodayDay();
+        assertEquals(selectedDay.getDayNumber(), todayDay.getDayNumber());
     }
 
     @Test
@@ -105,94 +191,17 @@ public class TestRichCalendarBasic extends AbstractCalendarTest<MetamerPage> {
     }
 
     @Test
+    public void testWeekDaysLabels() {
+        List<String> weekDayShortNames = calendar.openPopup().getDayPicker().getWeekDayShortNames();
+        assertEquals(weekDayShortNames, Arrays.asList("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"));
+    }
+
+    @Test
     public void testWeekNumbers() {
-        calendar.openPopup().getHeaderControls().openYearAndMonthEditor()
-                .selectDate(firstOfJanuary2012).confirmDate();
-        calendar.openPopup().getFooterControls().applyDate();
+        MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(firstOfJanuary2012);
 
         DayPicker dayPicker = calendar.openPopup().getDayPicker();
         List<Integer> weeksNumbers = dayPicker.getWeeksNumbers();
         assertEquals(weeksNumbers, Arrays.asList(1, 2, 3, 4, 5, 6));
-    }
-
-    @Test
-    public void testSelectDate() {
-        CalendarDay selectedDay = calendar.openPopup().getDayPicker().getSelectedDay();
-        assertNull(selectedDay);
-
-        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
-        Graphene.guardNoRequest(proxiedDayPicker.getWeek(3).getCalendarDays().get(3)).select();
-
-        selectedDay = proxiedDayPicker.getSelectedDay();
-        assertNotNull(selectedDay);
-    }
-
-    @Test
-    public void testCleanButton() {
-        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
-        proxiedDayPicker.getWeek(3).getCalendarDays().get(3).select();
-        Graphene.guardNoRequest(calendar.openPopup().getFooterControls()).cleanDate();
-
-        CalendarDay selectedDay = proxiedDayPicker.getSelectedDay();
-        assertNull(selectedDay);
-    }
-
-    @Test
-    public void testCloseButton() {
-        CalendarPopup popup = calendar.openPopup();
-        assertTrue(popup.isVisible());
-
-        Graphene.guardNoRequest(popup.getHeaderControls()).closePopup();
-
-        assertFalse(popup.isVisible());
-    }
-
-    @Test
-    public void testPrevYearButton() {
-        Graphene.guardNoRequest(calendar.openPopup().getHeaderControls()).previousYear();
-        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
-
-        assertEquals(yearAndMonth.getYear(), todayMidday.minusYears(1).getYear(), "Year did not change correctly.");
-        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.minusYears(1).getMonthOfYear(), "Month did not change correctly.");
-    }
-
-    @Test
-    public void testNextYearButton() {
-        Graphene.guardNoRequest(calendar.openPopup().getHeaderControls()).nextYear();
-        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
-
-        assertEquals(yearAndMonth.getYear(), todayMidday.plusYears(1).getYear(), "Year did not change correctly.");
-        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.plusYears(1).getMonthOfYear(), "Month did not change correctly.");
-    }
-
-    @Test
-    public void testPrevMonthButton() {
-        Graphene.guardNoRequest(calendar.openPopup().getHeaderControls()).previousMonth();
-        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
-
-        assertEquals(yearAndMonth.getYear(), todayMidday.minusMonths(1).getYear(), "Year did not change correctly.");
-        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.minusMonths(1).getMonthOfYear(), "Month did not change correctly.");
-    }
-
-    @Test
-    public void testNextMonthButton() {
-        Graphene.guardNoRequest(calendar.openPopup().getHeaderControls()).nextMonth();
-        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
-
-        assertEquals(yearAndMonth.getYear(), todayMidday.plusMonths(1).getYear(), "Year did not change correctly.");
-        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.plusMonths(1).getMonthOfYear(), "Month did not change correctly.");
-    }
-
-    @Test
-    public void testTodayButton() {
-        Graphene.guardNoRequest(calendar.openPopup().getFooterControls()).todayDate();
-        CalendarDay selectedDay = calendar.openPopup().getDayPicker().getSelectedDay();
-        CalendarDay todayDay = calendar.openPopup().getDayPicker().getTodayDay();
-        assertEquals(selectedDay.getDayNumber(), todayDay.getDayNumber());
-    }
-
-    @Test
-    public void testApplyButton() {
-        super.testApplyButton();
     }
 }

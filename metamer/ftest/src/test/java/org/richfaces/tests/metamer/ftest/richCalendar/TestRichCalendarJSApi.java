@@ -91,14 +91,14 @@ public class TestRichCalendarJSApi extends AbstractCalendarTest<MetamerPage> {
     @Test
     public void testGetCurrentMonth() {
         setTodaysDate();
-        getCurrentMonth.click();
+        MetamerPage.waitRequest(getCurrentMonth, MetamerPage.WaitRequestType.NONE).click();
         assertEquals(getGettersValue(), String.valueOf(todayMidday.getMonthOfYear() - 1));
     }
 
     @Test
     public void testGetCurrentYear() {
         setTodaysDate();
-        getCurrentYear.click();
+        MetamerPage.waitRequest(getCurrentYear, MetamerPage.WaitRequestType.NONE).click();
         assertEquals(getGettersValue(), String.valueOf(todayMidday.getYear()));
     }
 
@@ -107,8 +107,8 @@ public class TestRichCalendarJSApi extends AbstractCalendarTest<MetamerPage> {
         String datePattern = "EEE MMM d yyyy HH:mm:ss";
         DateTimeFormatter dtf = DateTimeFormat.forPattern(datePattern);
         setTodaysDate();
-        getValue.click();
-        String date=getGettersValue();
+        MetamerPage.waitRequest(getValue, MetamerPage.WaitRequestType.NONE).click();
+        String date = getGettersValue();
         date = date.substring(0, date.lastIndexOf(":00") + 3);
         DateTime parsedDateTime = dtf.parseDateTime(date);
         assertEquals(parsedDateTime.getYear(), todayMidday.getYear());
@@ -119,7 +119,7 @@ public class TestRichCalendarJSApi extends AbstractCalendarTest<MetamerPage> {
     @Test
     public void testGetValueAsString() {
         setTodaysDate();
-        getValueAsString.click();
+        MetamerPage.waitRequest(getValueAsString, MetamerPage.WaitRequestType.NONE).click();
         assertEquals(getGettersValue(), calendar.getInputValue());
     }
 
@@ -137,9 +137,7 @@ public class TestRichCalendarJSApi extends AbstractCalendarTest<MetamerPage> {
     @Test
     public void testSetValue() {
         //setValue sets the date to 10 Oct of 2012
-        String datePattern = calendarAttributes.get(CalendarAttributes.datePattern);
-        DateTimeFormatter dtf = DateTimeFormat.forPattern(datePattern);
-        setValue.click();
+        MetamerPage.waitRequest(setValue, MetamerPage.WaitRequestType.NONE).click();
         CalendarDay selectedDay = calendar.openPopup().getDayPicker().getSelectedDay();
         assertNotNull(selectedDay);
         assertEquals(selectedDay.getDayNumber().intValue(), 10);
@@ -220,6 +218,6 @@ public class TestRichCalendarJSApi extends AbstractCalendarTest<MetamerPage> {
     }
 
     private void setTodaysDate() {
-        Graphene.guardXhr(calendar.openPopup().getFooterControls()).setTodaysDate();
+        MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), MetamerPage.WaitRequestType.XHR).setTodaysDate();
     }
 }

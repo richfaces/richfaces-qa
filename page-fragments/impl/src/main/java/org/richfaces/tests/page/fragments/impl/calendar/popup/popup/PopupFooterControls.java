@@ -21,32 +21,18 @@
  */
 package org.richfaces.tests.page.fragments.impl.calendar.popup.popup;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.calendar.common.HeaderControlsImpl;
+import org.richfaces.tests.page.fragments.impl.calendar.common.FooterControls;
 
 /**
- * Component for header controls of calendar.
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class PopupHeaderControlsImpl extends HeaderControlsImpl implements PopupHeaderControls {
+public interface PopupFooterControls extends FooterControls {
 
-    @FindBy(xpath = "//td[contains(@id,'calendarHeader')] //td[6] /div")
-    private WebElement closeButtonElement;
+    /**
+     * Clicks on 'Apply' button. Do not waits for popup to hide.
+     */
+    void applyDate();
 
-    @Override
-    public void closePopup() {
-        if (!isVisible() || Graphene.element(closeButtonElement).not().isVisible().apply(driver)) {
-            throw new RuntimeException("Cannot interact with close button. "
-                    + "Ensure that calendar popup and header controls are displayed.");
-        }
-        closeButtonElement.click();
-        Graphene.waitGui().until(isNotVisibleCondition());
-    }
-
-    @Override
-    public WebElement getCloseButtonElement() {
-        return closeButtonElement;
-    }
+    WebElement getApplyButtonElement();
 }

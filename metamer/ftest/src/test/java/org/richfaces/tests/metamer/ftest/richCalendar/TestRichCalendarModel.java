@@ -28,12 +28,12 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import java.util.List;
-import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.DayPicker;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.CalendarPopup;
@@ -61,14 +61,14 @@ public class TestRichCalendarModel extends AbstractCalendarTest<MetamerPage> {
         int wednesdays = 4;
         DateTime nextMonth = todayMidday.plusMonths(1);
         CalendarPopup openedPopup = calendar.openPopup();
-        Graphene.guardXhr(calendar.openPopup().getHeaderControls()).nextMonth();
+        MetamerPage.waitRequest(calendar.openPopup().getHeaderControls(), WaitRequestType.XHR).nextMonth();
         DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
         List<CalendarDay> wednesdayDays = proxiedDayPicker.getSpecificDays(wednesdays);
         wednesdayDays.removeAll(proxiedDayPicker.getBoundaryDays());
         Integer firstWednesday = wednesdayDays.get(0).getDayNumber();
         nextMonth = nextMonth.withDayOfMonth(firstWednesday);
 
-        Graphene.guardXhr(wednesdayDays.get(0)).select();
+        MetamerPage.waitRequest(wednesdayDays.get(0), WaitRequestType.XHR).select();
         assertFalse(openedPopup.isVisible());
         DateTimeFormatter dtf = DateTimeFormat.forPattern(datePattern);
 
@@ -87,7 +87,7 @@ public class TestRichCalendarModel extends AbstractCalendarTest<MetamerPage> {
         int thursdays = 5;
         int saturdays = 7;
 
-        Graphene.guardXhr(calendar.openPopup().getHeaderControls()).nextMonth();
+        MetamerPage.waitRequest(calendar.openPopup().getHeaderControls(), WaitRequestType.XHR).nextMonth();
         DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
         List<CalendarDay> weekends = proxiedDayPicker.getSpecificDays(sundays);
         weekends.addAll(proxiedDayPicker.getSpecificDays(saturdays));

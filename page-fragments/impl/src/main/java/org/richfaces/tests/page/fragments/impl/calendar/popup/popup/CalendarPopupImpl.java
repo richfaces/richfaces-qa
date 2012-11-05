@@ -24,8 +24,9 @@ package org.richfaces.tests.page.fragments.impl.calendar.popup.popup;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import org.jboss.arquillian.graphene.Graphene;
+import org.joda.time.DateTime;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.calendar.common.FooterControls;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.DayPicker;
 import org.richfaces.tests.page.fragments.impl.calendar.common.editor.CalendarEditor;
 import org.richfaces.tests.page.fragments.impl.calendar.inline.CalendarInlineComponentImpl;
@@ -38,8 +39,22 @@ public class CalendarPopupImpl extends CalendarInlineComponentImpl implements Ca
 
     private CalendarPopupComponentImpl calendar;
     //
+    @FindBy(css = "td[id$=Footer]")
+    private PopupFooterControlsImpl popupFooterControls;
     @FindBy(css = "td[id$=Header]")
     private PopupHeaderControlsImpl popupHeaderControls;
+
+    @Override
+    public PopupFooterControlsImpl getFooterControls() {
+        popupFooterControls.setCalendarEditor(calendarEditor);
+        return popupFooterControls;
+    }
+
+    @Override
+    public PopupHeaderControls getHeaderControls() {
+        popupHeaderControls.setCalendarEditor(calendarEditor);
+        return popupHeaderControls;
+    }
 
     @Override
     public DayPicker getProxiedDayPicker() {
@@ -47,18 +62,18 @@ public class CalendarPopupImpl extends CalendarInlineComponentImpl implements Ca
                 new Class[]{ DayPicker.class }, new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                return method.invoke(calendar.getProxiedPopup().getDayPicker(), args);
+                return method.invoke(calendar.openPopup().getDayPicker(), args);
             }
         });
     }
 
     @Override
-    public FooterControls getProxiedFooterControls() {
-        return (FooterControls) Proxy.newProxyInstance(FooterControls.class.getClassLoader(),
-                new Class[]{ FooterControls.class }, new InvocationHandler() {
+    public PopupFooterControls getProxiedFooterControls() {
+        return (PopupFooterControls) Proxy.newProxyInstance(PopupFooterControls.class.getClassLoader(),
+                new Class[]{ PopupFooterControls.class }, new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                return method.invoke(calendar.getProxiedPopup().getFooterControls(), args);
+                return method.invoke(calendar.openPopup().getFooterControls(), args);
             }
         });
     }
@@ -69,7 +84,7 @@ public class CalendarPopupImpl extends CalendarInlineComponentImpl implements Ca
                 new Class[]{ PopupHeaderControls.class }, new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                return method.invoke(calendar.getProxiedPopup().getHeaderControls(), args);
+                return method.invoke(calendar.openPopup().getHeaderControls(), args);
             }
         });
     }
@@ -83,8 +98,10 @@ public class CalendarPopupImpl extends CalendarInlineComponentImpl implements Ca
     }
 
     @Override
-    public PopupHeaderControls getHeaderControls() {
-        popupHeaderControls.setCalendarEditor(calendarEditor);
-        return popupHeaderControls;
+    public void setDateTime(DateTime dt) {
+        super.setDateTime(dt);
+        if (Graphene.element(getFooterControls().getApplyButtonElement()).isVisible().apply(driver)) {
+            getFooterControls().getApplyButtonElement().click();
+        }
     }
 }
