@@ -42,9 +42,8 @@ import org.richfaces.tests.metamer.bean.rich.RichCalendarBean;
 @ApplicationScoped
 public class CalendarModel implements CalendarDataModel {
 
-    private static final String WEEKEND_DAY_CLASS = "yellowDay";
-    private static final String BUSY_DAY_CLASS = "aquaDay";
-    private static final String BOUNDARY_DAY_CLASS = "rf-ca-boundary-dates";
+    public static final String WEEKEND_DAY_CLASS = "yellowDay";
+    public static final String BUSY_DAY_CLASS = "aquaDay";
 
     private boolean checkBusyDay(Calendar calendar) {
         return (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY);
@@ -54,18 +53,17 @@ public class CalendarModel implements CalendarDataModel {
         return (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY);
     }
 
+    @Override
     public CalendarDataModelItem[] getData(Date[] dateArray) {
         CalendarDataModelItem[] modelItems = new CalendarModelItem[dateArray.length];
         Calendar current = GregorianCalendar.getInstance(RichCalendarBean.TIME_ZONE);
         Calendar today = GregorianCalendar.getInstance(RichCalendarBean.TIME_ZONE);
         today.setTime(new Date());
+        CalendarModelItem modelItem;
         for (int i = 0; i < dateArray.length; i++) {
             current.setTime(dateArray[i]);
-            CalendarModelItem modelItem = new CalendarModelItem();
-            if (current.before(today)) {
-                modelItem.setEnabled(false);
-                modelItem.setStyleClass(BOUNDARY_DAY_CLASS);
-            } else if (checkBusyDay(current)) {
+            modelItem = new CalendarModelItem();
+            if (checkBusyDay(current)) {
                 modelItem.setEnabled(false);
                 modelItem.setStyleClass(BUSY_DAY_CLASS);
             } else if (checkWeekend(current)) {
@@ -77,7 +75,6 @@ public class CalendarModel implements CalendarDataModel {
             }
             modelItems[i] = modelItem;
         }
-
         return modelItems;
     }
 
