@@ -28,6 +28,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+
 import org.joda.time.DateTime;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -46,6 +47,11 @@ public class TestRichCalendarTimeEditor extends AbstractCalendarTest<MetamerPage
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richCalendar/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Calendar", "Simple");
     }
 
     @Test

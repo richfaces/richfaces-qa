@@ -212,8 +212,6 @@ public class TestA4JLog extends AbstractWebDriverTest<LogPage> {
     }
 
     private void testLogging(LogLevel logLevel, LogLevel filterLevel) {
-        WebElement logButton = driver.findElement(By.cssSelector("input[id$=" + logLevel.toString().toLowerCase()
-            + "Button]"));
 
         if (filterLevel != LogLevel.DEBUG) {
             logAttributes.set(LogAttributes.level, filterLevel.toString().toLowerCase());

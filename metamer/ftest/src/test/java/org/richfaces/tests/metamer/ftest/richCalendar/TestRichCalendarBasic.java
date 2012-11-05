@@ -30,6 +30,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;

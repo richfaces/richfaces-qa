@@ -12,7 +12,7 @@
 
    <!--groupId>org.jboss.portletbridge.examples</groupId-->
    <artifactId>metamer-portlet</artifactId>
-   <version>3.1.0.CR1</version><!-- make sure that we want keep metamer-portlet version dependent on PBR release -->
+   <version>3.1.0.Final</version><!-- make sure that we want keep metamer-portlet version dependent on PBR release -->
    <packaging>war</packaging>
 
    <name>RichFaces Metamer Portlet</name>

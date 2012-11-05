@@ -24,12 +24,14 @@ package org.richfaces.tests.metamer.ftest.richCalendar;
 import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import java.util.List;
 import org.jboss.arquillian.graphene.Graphene;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;

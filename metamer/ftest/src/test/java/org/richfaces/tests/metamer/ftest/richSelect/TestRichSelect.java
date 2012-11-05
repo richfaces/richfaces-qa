@@ -44,7 +44,6 @@ import javax.faces.event.PhaseId;
 import org.jboss.arquillian.ajocado.css.CssProperty;
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.javascript.KeyCode;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;

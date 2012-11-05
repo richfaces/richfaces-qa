@@ -26,6 +26,7 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.calendar
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -44,6 +45,11 @@ public class TestRichCalendarCurrentDate extends AbstractCalendarTest<MetamerPag
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richCalendar/currentDate.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Calendar", "Current Date");
     }
 
     @BeforeMethod

@@ -38,7 +38,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+
 import javax.faces.event.PhaseId;
+
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;

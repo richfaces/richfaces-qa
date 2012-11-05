@@ -78,12 +78,6 @@ public class TestRichCalendarKVS extends AbstractCalendarTest<MetamerPage> {
         reloadTesterInput.testFullPageRefresh();
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-12300")
-    @Test(groups = { "keepVisualStateTesting", "4.Future" })
-    public void testRenderAll() {
-        reloadTesterInput.testRerenderAll();
-    }
-
     @Test(groups = { "keepVisualStateTesting" })
     public void testRenderAllPopupApplied() {
         reloadTesterPopup.testRerenderAll();

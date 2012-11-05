@@ -28,7 +28,6 @@ import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.Graphene.id;
 import static org.jboss.arquillian.ajocado.Graphene.jq;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.jboss.arquillian.ajocado.Graphene.waitModel;
 import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEDOWN;

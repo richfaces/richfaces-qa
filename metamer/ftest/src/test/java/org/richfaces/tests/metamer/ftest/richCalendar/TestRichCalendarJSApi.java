@@ -22,13 +22,13 @@
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.calendarAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -86,6 +86,11 @@ public class TestRichCalendarJSApi extends AbstractCalendarTest<MetamerPage> {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richCalendar/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Calendar", "Simple");
     }
 
     @Test

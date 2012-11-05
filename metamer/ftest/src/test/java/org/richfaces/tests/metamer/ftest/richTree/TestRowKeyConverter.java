@@ -1,8 +1,10 @@
 package org.richfaces.tests.metamer.ftest.richTree;
 
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+
 import java.net.URL;
 import java.util.List;
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,6 +29,11 @@ public class TestRowKeyConverter extends AbstractWebDriverTest<TestRowKeyConvert
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richTree/" + sample + ".xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Context Menu", "Simple");
     }
 
     @Test

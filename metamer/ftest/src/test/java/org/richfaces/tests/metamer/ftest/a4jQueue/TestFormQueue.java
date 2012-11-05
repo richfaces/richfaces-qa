@@ -23,11 +23,9 @@ package org.richfaces.tests.metamer.ftest.a4jQueue;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.testng.Assert.assertTrue;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
+
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.javascript.JavaScript;
-import org.jboss.arquillian.ajocado.waiting.ajax.JavaScriptCondition;
 import org.jboss.cheiron.halt.XHRHalter;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueModel.Input;

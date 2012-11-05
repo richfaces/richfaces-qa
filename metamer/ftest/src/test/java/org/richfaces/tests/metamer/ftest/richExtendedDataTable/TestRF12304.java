@@ -42,6 +42,11 @@ public class TestRF12304 extends AbstractWebDriverTest<RF12304Page> {
         return buildUrl(contextPath, "faces/components/richExtendedDataTable/rf-12304.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Extended Data Table", "RF-12304");
+    }
+
     @Test(groups = "4.Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12304")
     @Templates(value = { "plain" })

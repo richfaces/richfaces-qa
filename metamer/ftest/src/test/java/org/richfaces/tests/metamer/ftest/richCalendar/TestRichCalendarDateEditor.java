@@ -31,6 +31,7 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -50,6 +51,11 @@ public class TestRichCalendarDateEditor extends AbstractCalendarTest<MetamerPage
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richCalendar/simple.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Calendar", "Simple");
     }
 
     @Test
