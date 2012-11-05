@@ -31,6 +31,7 @@ import org.richfaces.tests.page.fragments.impl.accordion.AccordionImpl;
 
 /**
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @since 4.3.0.M2
  */
 public class AccordionPage extends MetamerPage {
@@ -38,12 +39,49 @@ public class AccordionPage extends MetamerPage {
     @FindBy(css = "div[id$=accordion]")
     private AccordionImpl accordion;
 
+    @FindBy(css = "div[id$=item1] td.rf-ac-itm-ico div.rf-ac-itm-ico-act")
+    private WebElement leftActiveIcon;
+    @FindBy(css = "div[id$=item1] td.rf-ac-itm-exp-ico div.rf-ac-itm-ico-act")
+    private WebElement rightActiveIcon;
+    @FindBy(css = "div[id$=item4] td.rf-ac-itm-ico div.rf-ac-itm-ico-inact")
+    private WebElement leftDisabledIcon;
+    @FindBy(css = "div[id$=item4] td.rf-ac-itm-exp-ico div.rf-ac-itm-ico-inact")
+    private WebElement rightDisabledIcon;
+    @FindBy(css = "div[id$=item3] td.rf-ac-itm-ico div.rf-ac-itm-ico-inact")
+    private WebElement leftInactiveIcon;
+    @FindBy(css = "div[id$=item3] td.rf-ac-itm-exp-ico div.rf-ac-itm-ico-inact")
+    private WebElement rightInactiveIcon;
+
     public Accordion getAccordion() {
         return accordion;
     }
 
     public WebElement getAccordionRootElement() {
         return accordion.getRootElement();
+    }
+
+    public WebElement getLeftActiveIcon() {
+        return leftActiveIcon;
+    }
+
+    public WebElement getRightActiveIcon() {
+        return rightActiveIcon;
+    }
+
+    public WebElement getLeftDisabledIcon() {
+        return leftDisabledIcon;
+    }
+
+    public WebElement getRightDisabledIcon() {
+        return rightDisabledIcon;
+    }
+
+    public WebElement getLeftInactiveIcon() {
+        return leftInactiveIcon;
+    }
+
+    public WebElement getRightInactiveIcon() {
+        return rightInactiveIcon;
     }
 
     public boolean isAccordionVisible() {
