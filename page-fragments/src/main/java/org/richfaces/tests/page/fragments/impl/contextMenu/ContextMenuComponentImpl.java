@@ -21,16 +21,17 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.contextMenu;
 
+import static org.jboss.arquillian.graphene.Graphene.element;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.openqa.selenium.WebDriver;
+import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-
-import com.google.common.base.Predicate;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -43,21 +44,33 @@ public class ContextMenuComponentImpl {
     @FindBy(className = "rf-ctx-lst")
     private WebElement contextMenuPopup;
 
-    private ContextMenuInvoker invoker;
+    private ContextMenuInvoker invoker = RIGHT_CLICK;
 
     private WebElement target;
 
     /**
-     * Returns menu items labels.
-     * 
+     * The right click invoker of context menu
+     */
+    public static final ContextMenuInvoker RIGHT_CLICK = new RightClickContextMenuInvoker();
+
+    /**
+     * The left click invoker of context menu
+     */
+    public static final ContextMenuInvoker LEFT_CLICK = new LeftClickContextMenuInvoker();
+
+    /* ************************************************************************************************
+     * API
+     */
+
+    /**
+     * Returns menu items labels. By default it is presumed that context menu is invoked by right click. To change this behavior
+     * use <code>setInvoker()</code> method.
+     *
      * @param givenTarget the target on which the contextMenu is invoked.
-     * @throws IllegalStateException if ContextMenuInvoker is not set before invocation of this method
      * @see #setInvoker(ContextMenuInvoker)
      * @return
      */
     public List<ContextMenuItem> getMenuItemsLabels(WebElement givenTarget) {
-        checkWhetherContextMenuInvokerIsSet();
-
         invoker.invoke(givenTarget);
 
         List<ContextMenuItem> itemsText = new ArrayList<ContextMenuItem>();
@@ -69,10 +82,10 @@ public class ContextMenuComponentImpl {
     }
 
     /**
-     * Returns menu items labels.
-     * 
+     * Returns menu items labels. By default it is presumed that context menu is invoked by right click. To change this behavior
+     * use <code>setInvoker()</code> method.
+     *
      * @param givenTarget the target on which the contextMenu is invoked.
-     * @throws IllegalStateException if ContextMenuInvoker or target is not set before invocation of this method
      * @see #setInvoker(ContextMenuInvoker)
      * @see #setTarget(WebElement)
      * @return
@@ -85,7 +98,7 @@ public class ContextMenuComponentImpl {
 
     /**
      * Returns menu items elements.
-     * 
+     *
      * @return
      */
     public List<WebElement> getMemuItemsElements() {
@@ -93,15 +106,13 @@ public class ContextMenuComponentImpl {
     }
 
     /**
-     * Invokes context menu and selects from it given item.
-     * 
+     * Invokes context menu and selects from it given item. By default it is presumed that context menu is invoked by right
+     * click. To change this behavior use <code>setInvoker()</code> method.
+     *
      * @param item
-     * @throws IllegalStateException if ContextMenuInvoker is not set before invocation of this method
      * @see #setInvoker(ContextMenuInvoker)
      */
     public void selectFromContextMenu(ContextMenuItem item, WebElement givenTarget) {
-        checkWhetherContextMenuInvokerIsSet();
-
         invokeContextMenu(givenTarget);
 
         for (WebElement itemElement : menuItemsElements) {
@@ -114,10 +125,10 @@ public class ContextMenuComponentImpl {
     }
 
     /**
-     * Invokes context menu and selects from it given item.
-     * 
+     * Invokes context menu and selects from it given item. By default it is presumed that context menu is invoked by right
+     * click. To change this behavior use <code>setInvoker()</code> method.
+     *
      * @param item
-     * @throws IllegalStateException if ContextMenuInvoker or target is not set before invocation of this method
      * @see #setInvoker(ContextMenuInvoker)
      * @see #setTarget(WebElement)
      */
@@ -128,35 +139,28 @@ public class ContextMenuComponentImpl {
     }
 
     /**
-     * Invokes context menu.
-     * 
+     * Invokes context menu. By default it is presumed that context menu is invoked by right click. To change this behavior use
+     * <code>setInvoker()</code> method.
+     *
      * @param invoker
-     * @throws IllegalStateException if ContextMenuInvoker is not set before invocation of this method
      * @see #setInvoker(ContextMenuInvoker)
      * @return true if context menu is displayed, false otherwise
      */
     public boolean invokeContextMenu(WebElement givenTarget) {
-        checkWhetherContextMenuInvokerIsSet();
-
         invoker.invoke(givenTarget);
 
         Graphene.waitGui().withTimeout(3, TimeUnit.SECONDS)
-            .withMessage("The Context Menu was not rendered in the given timeout!").until(new Predicate<WebDriver>() {
-
-                @Override
-                public boolean apply(WebDriver input) {
-                    return contextMenuPopup.isDisplayed();
-                }
-            });
+            .withMessage("The Context Menu was not rendered in the given timeout!")
+            .until(element(contextMenuPopup).isVisible());
 
         return contextMenuPopup.isDisplayed();
     }
 
     /**
-     * Invokes context menu.
-     * 
+     * Invokes context menu. By default it is presumed that context menu is invoked by right click. To change this behavior use
+     * <code>setInvoker()</code> method.
+     *
      * @param invoker
-     * @throws IllegalStateException if ContextMenuInvoker or target is not set before invocation of this method
      * @see #setInvoker(ContextMenuInvoker)
      * @see #setTarget(WebElement)
      * @return true if context menu is displayed, false otherwise
@@ -176,15 +180,32 @@ public class ContextMenuComponentImpl {
     }
 
     /* ****************************************************************************************************
-     * Help Methods
+     * Neste classes
      */
 
-    private void checkWhetherContextMenuInvokerIsSet() {
-        if (invoker == null) {
-            throw new IllegalStateException(
-                "The context menu invoker has to be set before this operation! Use setInvoker() method!");
+    public static final class LeftClickContextMenuInvoker implements ContextMenuInvoker {
+
+        @Override
+        public void invoke(WebElement target) {
+            target.click();
         }
+
     }
+
+    public static final class RightClickContextMenuInvoker implements ContextMenuInvoker {
+
+        @Override
+        public void invoke(WebElement target) {
+            Actions builder = new Actions(GrapheneContext.getProxy());
+
+            builder.contextClick(target).build().perform();
+        }
+
+    }
+
+    /* ****************************************************************************************************
+     * Help Methods
+     */
 
     private void checkWhetherTargetIsSet() {
         if (target == null) {
@@ -211,4 +232,5 @@ public class ContextMenuComponentImpl {
     public void setContextMenuPopup(WebElement contextMenuPopup) {
         this.contextMenuPopup = contextMenuPopup;
     }
+
 }
