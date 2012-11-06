@@ -84,9 +84,9 @@ public abstract class AbstractAjaxTest<P extends AjaxPage> extends AbstractWebDr
             .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
 
         assertOutput1NotChanged();
-        phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
+        page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
             PhaseId.RENDER_RESPONSE);
-        phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, "listener invoked");
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "listener invoked");
     }
 
     public void testData() {
@@ -139,9 +139,9 @@ public abstract class AbstractAjaxTest<P extends AjaxPage> extends AbstractWebDr
             .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
 
         assertOutput1Changed();
-        phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
+        page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
             PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
-        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "listener invoked");
+        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "listener invoked");
     }
 
     public void testImmediateBypassUpdates() {
@@ -155,9 +155,9 @@ public abstract class AbstractAjaxTest<P extends AjaxPage> extends AbstractWebDr
             .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
 
         assertOutput1NotChanged();
-        phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
+        page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
             PhaseId.RENDER_RESPONSE);
-        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "listener invoked");
+        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "listener invoked");
     }
 
     public void testLimitRender(String expectedOutput) {

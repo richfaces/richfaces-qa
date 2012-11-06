@@ -165,7 +165,7 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
         String cmd = "executeChecker";
         fileUploadAttributes.set(FileUploadAttributes.execute, cmd);
         succesfulFileUploadAction.perform();
-        phaseInfo.assertListener(PhaseId.UPDATE_MODEL_VALUES, "executeChecker");
+        page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "executeChecker");
     }
 
     @Test
@@ -175,7 +175,7 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
         waitUntilUploadedFilesListShow(1);
         assertEquals(page.uploadedFilesList.size(), 1);
         assertEquals(page.uploadedFilesList.get(0).getText(), filenames[0]);
-        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "upload listener");
+        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "upload listener");
     }
 
     @Test

@@ -148,6 +148,6 @@ public abstract class AbstractCalendarTest<P extends MetamerPage> extends Abstra
         assertEquals(setTime.getMonthOfYear(), today.getMonthOfYear());
         assertEquals(setTime.getYear(), today.getYear());
 
-        phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> " + dateSetInCalendar);
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> " + dateSetInCalendar);
     }
 }

@@ -467,8 +467,8 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
     public void testImmediate() {
         calendarAttributes.set(CalendarAttributes.immediate, Boolean.TRUE);
         setCurrentDateWithCalendarsTodayButtonAction.perform();
-        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: null -> " + calendar.getInputValue());
-        phaseInfo.assertImmediatePhasesCycle();
+        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: null -> " + calendar.getInputValue());
+        page.assertImmediatePhasesCycle();
     }
 
     @Test
@@ -1029,7 +1029,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
     @Test
     public void testValueChangeListener() {
         setCurrentDateWithCalendarsTodayButtonAction.perform();
-        phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> " + calendar.getInputValue());
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> " + calendar.getInputValue());
     }
 
     @Test
