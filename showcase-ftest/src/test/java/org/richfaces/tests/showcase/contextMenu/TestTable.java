@@ -21,92 +21,57 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.contextMenu;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-
+import static org.jboss.arquillian.graphene.Graphene.element;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
-import java.util.Iterator;
+import java.util.List;
 
-import org.jboss.arquillian.ajocado.geometry.Point;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.contextMenu.page.TableContextMenuPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
- * @version $Revision$
  */
-public class TestTable extends AbstractContextMenuTest {
+public class TestTable extends AbstractContextMenuTest<TableContextMenuPage> {
 
-    private final int NUMBER_OF_LINES_TO_TEST_ON = 10;
+    public static final int NUMBER_OF_LINES_TO_TEST_ON = 3;
 
-    /* ***************************************************
-     * Locators***************************************************
-     */
-    private JQueryLocator contextMenuItem = jq(contextMenu.getRawLocator() + " .rf-ctx-itm-lbl");
-
-    private JQueryLocator pricesTds = jq(".rf-edt-b .rf-edt-tbl tbody tr > td:eq(1) tr");
-    private JQueryLocator selectedTr = jq(".rf-edt-r-sel.rf-edt-r-act");
-
-    private JQueryLocator vendorInputPopup = jq("input[type=text]:eq(0)");
-    private JQueryLocator modelInputPopup = jq("input[type=text]:eq(1)");
-    private JQueryLocator priceInputPopup = jq("input[type=text]:eq(2)");
-    private JQueryLocator closeButtonPopup = jq("input[type=button]");
-
-    /* *********************************************
-     * Tests*********************************************
-     */
     @Test
-    public void testViewBackingDataByContextMenu() {
+    public void testContextMenuOnSomeLines() {
+        int step = 0;
+        List<WebElement> prices = testPage.getPrices();
 
-        int soFar = 0;
-
-        for (Iterator<JQueryLocator> i = pricesTds.iterator(); i.hasNext();) {
-            if (soFar > NUMBER_OF_LINES_TO_TEST_ON) {
+        for (WebElement rowPrice : prices) {
+            if (step >= NUMBER_OF_LINES_TO_TEST_ON) {
                 break;
             }
 
-            JQueryLocator priceTd = i.next();
-            soFar++;
-            selenium.clickAt(priceTd, new Point(3, 3));
+            rowPrice.click();
+            Graphene.waitGui().until(testPage.getWaitConditionOnSelectingRow(rowPrice));
 
-            int priceFromTable = Integer.valueOf(selenium.getText(priceTd).trim());
-            String venderAndModelFromTable = selenium.getText(selectedTr);
+            String priceFromTable = rowPrice.getText();
 
-            tryToInvokeContextMenu(priceTd, new Point(3, 3), contextMenu);
+            testPage.getContextMenu().selectFromContextMenu(TableContextMenuPage.VIEW, rowPrice);
 
-            waitGui
-                .failWith(
-                    new RuntimeException("The context menu on line " + soFar + " was not invoked correctly!"))
-                .timeout(2000).until(elementVisible.locator(contextMenu));
+            Graphene.waitGui().until(element(testPage.getPriceFromPopup()).isVisible());
 
-            selenium.click(contextMenuItem);
-
-            waitGui.failWith(new RuntimeException("The popup triggered from context menu is not visible within 3 sec"))
-                .timeout(3000).until(elementVisible.locator(vendorInputPopup));
-
-            int priceFromPopup = Integer.valueOf(selenium.getValue(priceInputPopup));
-            String vendorFromPopup = selenium.getValue(vendorInputPopup);
-            String modelFromPopup = selenium.getValue(modelInputPopup);
+            String priceFromPopup = testPage.getPriceFromPopup().getAttribute("value");
 
             assertEquals(priceFromPopup, priceFromTable,
-                "The price from popup should be the same as in the table for particular selected row.");
-            assertTrue(venderAndModelFromTable.contains(vendorFromPopup),
-                "The popup sould contains vendor name from selected table row!");
-            assertTrue(venderAndModelFromTable.contains(modelFromPopup),
-                "The popup sould contains model name from selected table row!");
+                "The price is different in the table and in the popup invoked from context menu!");
 
-            selenium.click(closeButtonPopup);
+            testPage.closePopup();
+            step++;
         }
     }
 
     @Test
-    public void testContextMenuRenderedAtCorrectPosition() {
+    public void testContextMenuRenderedOnTheCorrectPosition() {
+        WebElement elementToTryOn = testPage.getPrices().get(5);
 
-        checkContextMenuRenderedAtCorrectPosition(jq(pricesTds.getRawLocator() + ":eq(10)"), new Point(3, 3), true,
-            contextMenu, TOLERANCE);
+        checkContextMenuRenderedAtCorrectPosition(elementToTryOn, testPage.getContextMenu().getContextMenuPopup(),
+            InvocationType.RIGHT_CLICK, testPage.getWaitConditionOnSelectingRow(elementToTryOn));
     }
 }
