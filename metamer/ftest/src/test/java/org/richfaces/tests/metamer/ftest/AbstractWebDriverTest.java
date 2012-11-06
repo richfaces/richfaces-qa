@@ -67,7 +67,6 @@ public abstract class AbstractWebDriverTest<P extends MetamerPage> extends Abstr
     protected static final int TRIES = 20;//for guardListSize and expectedReturnJS
     private FieldDecorator fieldDecorator;
     protected DriverType driverType;
-    protected PhaseInfoWD phaseInfo = new PhaseInfoWD();
 
     public enum DriverType {
 
