@@ -41,6 +41,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
@@ -128,7 +129,7 @@ public class TestA4JCommandButton extends AbstractWebDriverTest<CommandButtonLin
     @Test
     public void testBypassUpdates() {
         commandButtonAttributes.set(CommandButtonAttributes.bypassUpdates, true);
-        page.waitRequest(page.button, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(page.button, WaitRequestType.XHR).click();
         page.verifyOutput1Text("");
         page.verifyOutput2Text("");
         page.verifyOutput3Text("");
