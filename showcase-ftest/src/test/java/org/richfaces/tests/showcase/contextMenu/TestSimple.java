@@ -21,78 +21,42 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.contextMenu;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.ajocado.geometry.Point;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.richfaces.tests.showcase.contextMenu.page.SimpleContextMenuPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
- * @version $Revision$
  */
-public class TestSimple extends AbstractContextMenuTest {
+public class TestSimple extends AbstractContextMenuTest<SimpleContextMenuPage> {
 
-    /* *****************************************************
-     * Locators*****************************************************
-     */
-    private JQueryLocator picture = jq("img[id$=pic]");
-
-    private JQueryLocator contextMenuZoomIn = jq("div[id$=zin]");
-    private JQueryLocator contextMenuZoomOut = jq("div[id$=zout]");
-
-    /* ******************************************************
-     * Tests ****************************************************
-     */
     @Test
     public void testZoomIn() {
-        zoom(true);
+        double widthBeforeZoomIn = getTargetWidth(testPage.getPicture());
+
+        testPage.getContextMenu().selectFromContextMenu(SimpleContextMenuPage.ZOOM_IN);
+
+        double widthAfterZoom = getTargetWidth(testPage.getPicture());
+
+        assertTrue((widthAfterZoom - widthBeforeZoomIn) > EPSILON, "The picture was not zoomed in!");
     }
 
     @Test
     public void testZoomOut() {
-        zoom(false);
+        double widthBeforeZoomOut = getTargetWidth(testPage.getPicture());
+
+        testPage.getContextMenu().selectFromContextMenu(SimpleContextMenuPage.ZOOM_OUT);
+
+        double widthAfterZoomOut = getTargetWidth(testPage.getPicture());
+
+        assertTrue((widthBeforeZoomOut - widthAfterZoomOut) > EPSILON, "The picture was not zoomed out!");
+
     }
 
     @Test
     public void testContextMenuRenderedAtCorrectPosition() {
-
-        checkContextMenuRenderedAtCorrectPosition(picture, new Point(20, 20), false, contextMenu, TOLERANCE);
-    }
-
-    /* ********************************************************
-     * Help methods********************************************************
-     */
-    private void zoom(boolean in) {
-
-        int widthBeforeZoom = selenium.getElementWidth(picture);
-
-        selenium.focus(picture);
-        selenium.clickAt(picture, new Point(20, 20));
-
-        waitGui.failWith(new RuntimeException("The context menu should be visible")).timeout(2000)
-            .until(elementVisible.locator(contextMenu));
-
-        if (in) {
-            selenium.click(contextMenuZoomIn);
-        } else {
-            selenium.click(contextMenuZoomOut);
-        }
-
-        int widthAfterZoom = selenium.getElementWidth(picture);
-
-        if (in) {
-            assertTrue(widthAfterZoom > widthBeforeZoom,
-                "The width of the picture should be bigger after zoom in triggered from context menu!");
-        } else {
-            assertTrue(widthAfterZoom < widthBeforeZoom,
-                "The width of the picture should be smaller after zoom out triggered from context menu");
-        }
-
+        checkContextMenuRenderedAtCorrectPosition(testPage.getPicture(), testPage.getContextMenu().getContextMenuPopup(),
+            InvocationType.LEFT_CLICK, null);
     }
 }
