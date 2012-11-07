@@ -139,8 +139,8 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
 
         page.getAccordion().getItem(2).activate();
 
-        phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
-        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "item changed: item1 -> item3");
+        page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
+        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "item changed: item1 -> item3");
     }
 
     @Test
@@ -151,7 +151,7 @@ public class TestAccordion extends AbstractWebDriverTest<AccordionPage> {
     @Test
     public void testItemChangeListener() {
         page.getAccordion().getItem(2).activate();
-        phaseInfo.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: item1 -> item3");
+        page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: item1 -> item3");
     }
 
     @Test

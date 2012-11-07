@@ -21,16 +21,25 @@
  */
 package org.richfaces.tests.metamer.ftest.webdriver;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
 import javax.faces.event.PhaseId;
 
+import org.apache.commons.lang.ArrayUtils;
+import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.test.selenium.support.ui.ElementPresent;
@@ -57,7 +66,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class MetamerPage {
 
     protected static final int MINOR_WAIT_TIME = 50;// ms
-    protected static final int TRIES = 20;//for guardListSize and expectedReturnJS
+    protected static final int TRIES = 20;// for guardListSize and expectedReturnJS
     @FindBy(css = "div#phasesPanel li")
     public List<WebElement> phases;
     @FindBy(css = "span[id$=requestTime]")
@@ -72,13 +81,16 @@ public class MetamerPage {
     public WebElement rerenderAllIcon;
     protected ElementPresent elementPresent = ElementPresent.getInstance();
     protected WebDriver driver = GrapheneContext.getProxy();
+    private String reqTime;
+    private Map<PhaseId, Set<String>> map = new LinkedHashMap<PhaseId, Set<String>>();
 
     public void assertPhasesContainAllOf(String... s) {
         assertTrue(checkPhasesContainAllOf(s), "Phases {" + getPhases() + "} don't contain some of " + Arrays.asList(s));
     }
 
     public void assertPhasesDontContainSomeOf(PhaseId... phase) {
-        assertTrue(checkPhasesDontContainSomeOf(phase), "Phases {" + getPhases() + "} contain some of " + Arrays.asList(phase));
+        assertTrue(checkPhasesDontContainSomeOf(phase),
+            "Phases {" + getPhases() + "} contain some of " + Arrays.asList(phase));
     }
 
     public boolean checkPhasesContainAllOf(String... s) {
@@ -90,13 +102,14 @@ public class MetamerPage {
     }
 
     /**
-     * Tries to execute JavaScript script for few times with some wait time
-     * between tries and expecting a predicted result. Method waits for expected
-     * string defined in @expectedValue. Returns single trimmed String with
-     * expected value or what it found or null.
+     * Tries to execute JavaScript script for few times with some wait time between tries and expecting a predicted
+     * result. Method waits for expected string defined in @expectedValue. Returns single trimmed String with expected
+     * value or what it found or null.
      *
-     * @param expectedValue expected return value of javaScript
-     * @param script whole JavaScript that will be executed
+     * @param expectedValue
+     *            expected return value of javaScript
+     * @param script
+     *            whole JavaScript that will be executed
      * @param args
      * @return single and trimmed string or null
      */
@@ -126,8 +139,11 @@ public class MetamerPage {
 
     /**
      * Method for guarding that Metamer's requestTime changes.
-     * @param <T> type of the given target
-     * @param target object to be guarded
+     *
+     * @param <T>
+     *            type of the given target
+     * @param target
+     *            object to be guarded
      * @return guarded element
      */
     public static <T> T requestTimeChangesWaiting(T target) {
@@ -136,8 +152,11 @@ public class MetamerPage {
 
     /**
      * Method for guarding that Metamer's requestTime not changes. Waits 1 second.
-     * @param <T> type of the given target
-     * @param target object to be guarded
+     *
+     * @param <T>
+     *            type of the given target
+     * @param target
+     *            object to be guarded
      * @return guarded element
      */
     public static <T> T requestTimeNotChangesWaiting(T target) {
@@ -156,15 +175,16 @@ public class MetamerPage {
     }
 
     /**
-     * !All requests depends on Metamer`s requestTime!
-     * Generates a waiting proxy. The proxy will wait for expected @waitRequestType
-     * which will be launched via interactions with @target and then it waits until
-     * Metamer's request time changes(@waitRequestType is HTTP or XHR) or not
-     * changes(@waitRequestType is NONE).
+     * !All requests depends on Metamer`s requestTime! Generates a waiting proxy. The proxy will wait for expected @waitRequestType
+     * which will be launched via interactions with @target and then it waits until Metamer's request time
+     * changes(@waitRequestType is HTTP or XHR) or not changes(@waitRequestType is NONE).
      *
-     * @param <T> type of the given target
-     * @param target object to be guarded
-     * @param waitRequestType type of expected request which will be launched
+     * @param <T>
+     *            type of the given target
+     * @param target
+     *            object to be guarded
+     * @param waitRequestType
+     *            type of expected request which will be launched
      * @return waiting proxy for target object
      */
     public static <T> T waitRequest(T target, WaitRequestType waitRequestType) {
@@ -183,7 +203,8 @@ public class MetamerPage {
     /**
      * Wait for element to be visible.
      *
-     * @param by locate by
+     * @param by
+     *            locate by
      * @return found element
      */
     public static WebElement waitUntilElementIsVisible(final By by) {
@@ -195,15 +216,16 @@ public class MetamerPage {
      *
      * @param milis
      */
-    public static void waiting(int milis) {
+    public static void waiting(long milis) {
         try {
             Thread.sleep(milis);
         } catch (InterruptedException ignored) {
         }
     }
-    ///////////////////////////////////////
+
+    // /////////////////////////////////////
     // Helper classes
-    ///////////////////////////////////////
+    // /////////////////////////////////////
 
     /**
      * Wrapper for Metamer's phases list.
@@ -217,10 +239,10 @@ public class MetamerPage {
         }
 
         /**
-         * Checks if the wrapped phases do not contain some of a PhaseIds (JSF
-         * phases).
+         * Checks if the wrapped phases do not contain some of a PhaseIds (JSF phases).
          *
-         * @param values PhasesIds that phases should not contain
+         * @param values
+         *            PhasesIds that phases should not contain
          * @return false if the wrapped phases contains some PhaseId value
          */
         public boolean notContainsSomeOf(PhaseId... values) {
@@ -242,8 +264,8 @@ public class MetamerPage {
         /**
          * Checks if the wrapped phases do not contain some of a given values.
          *
-         * @param values given values, that the wrapped phases should not
-         * contain
+         * @param values
+         *            given values, that the wrapped phases should not contain
          * @return false if the wrapped phases contains some of given values
          */
         public boolean notContainsSomeOf(String... values) {
@@ -261,7 +283,8 @@ public class MetamerPage {
         /**
          * Checks if phases contains all of given values.
          *
-         * @param values given values, that the wrapped phases should contain
+         * @param values
+         *            given values, that the wrapped phases should contain
          * @return true if phases contain all of given values
          */
         public boolean containsAllOf(String... values) {
@@ -311,7 +334,7 @@ public class MetamerPage {
 
     private static class RequestTimeNotChangesWaitingInterceptor extends RequestTimeChangesWaitingInterceptor {
 
-        private static final int waitTime = 1000;//ms
+        private static final int waitTime = 1000;// ms
 
         @Override
         protected void afterAction() {
@@ -323,26 +346,24 @@ public class MetamerPage {
     }
 
     /**
-     * WebDriver wait which ignores StaleElementException and
-     * NoSuchElementException and is polling every 50 ms.
+     * WebDriver wait which ignores StaleElementException and NoSuchElementException and is polling every 50 ms.
      */
     public static class WDWait extends WebDriverWait {
 
         /**
-         * WebDriver wait which ignores StaleElementException and
-         * NoSuchElementException and polling every 50 ms with max wait time of
-         * 5 seconds
+         * WebDriver wait which ignores StaleElementException and NoSuchElementException and polling every 50 ms with
+         * max wait time of 5 seconds
          */
         public WDWait() {
             this(5);
         }
 
         /**
-         * WebDriver wait which ignores StaleElementException and
-         * NoSuchElementException and polling every 50 ms with max wait time set
-         * in attribute
+         * WebDriver wait which ignores StaleElementException and NoSuchElementException and polling every 50 ms with
+         * max wait time set in attribute
          *
-         * @param seconds max wait time
+         * @param seconds
+         *            max wait time
          */
         public WDWait(int seconds) {
             super(GrapheneContext.getProxy(), seconds);
@@ -353,9 +374,124 @@ public class MetamerPage {
     }
 
     public enum WaitRequestType {
+        XHR, HTTP, NONE;
+    }
 
-        XHR,
-        HTTP,
-        NONE;
+    /**
+     * Asserts that the phases has occurred in last request by the specified list.
+     */
+    public void assertPhases(PhaseId... expectedPhases) {
+        initialize();
+        if (ArrayUtils.contains(expectedPhases, PhaseId.ANY_PHASE)) {
+            expectedPhases = new LinkedList<PhaseId>(PhaseId.VALUES).subList(1, 7).toArray(new PhaseId[6]);
+        }
+        PhaseId[] actualPhases = map.keySet().toArray(new PhaseId[map.size()]);
+        assertEquals(actualPhases, expectedPhases);
+    }
+
+    /**
+     * Asserts that in the given phase has occurred the listener or order producer writing the log message to phases
+     * list.
+     *
+     * @param phaseId
+     *            the phase where the listener occurred
+     * @param message
+     *            the part of the message which it should be looked up
+     */
+    public void assertListener(PhaseId phaseId, String message) {
+        initialize();
+        Set<String> set = map.get(phaseId);
+        if (set != null && set.size() > 0) {
+            for (String description : set) {
+                if (description.contains(message)) {
+                    return;
+                }
+            }
+        }
+        throw new AssertionError("The '" + message + "' wasn't found across messages in phase " + phaseId);
+    }
+
+    /**
+     * Asserts that there is no specified message in phases list.
+     *
+     * @param message
+     *            the part of the message which it should be looked up
+     */
+    public void assertNoListener(String message) {
+        initialize();
+        for (Entry<PhaseId, Set<String>> entry : map.entrySet()) {
+            PhaseId phaseId = entry.getKey();
+            Set<String> descriptions = entry.getValue();
+
+            for (String description : descriptions) {
+                if (description.contains(message)) {
+                    throw new AssertionError("The '" + message + "' was found across messages in phase " + phaseId);
+                }
+            }
+        }
+    }
+
+    /**
+     * Asserts that phases contains phases: RESTORE_VIEW, APPLY_REQUEST_VALUES, RENDER_RESPONSE
+     */
+    public void assertImmediatePhasesCycle() {
+        initialize();
+        assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
+    }
+
+    /**
+     * Asserts that phases contains phases: RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, RENDER_RESPONSE
+     */
+    public void assertBypassUpdatesPhasesCycle() {
+        initialize();
+        assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
+            PhaseId.RENDER_RESPONSE);
+    }
+
+    public SeleniumCondition getListenerCondition(final PhaseId phaseId, final String message) {
+        return new SeleniumCondition() {
+            @Override
+            public boolean isTrue() {
+                initialize();
+                Set<String> set = map.get(phaseId);
+                if (set != null && set.size() > 0) {
+                    for (String description : set) {
+                        if (description.contains(message)) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        };
+    }
+
+    private void initialize() {
+        if (reqTime == null || !reqTime.equals(requestTime.getText())) {
+
+            reqTime = requestTime.getText();
+            map.clear();
+            Set<String> set = null;
+
+            for (WebElement element : phases) {
+                String description = element.getText();
+
+                if (!description.startsWith("*")) {
+                    set = new LinkedHashSet<String>();
+                    map.put(getPhaseId(description), set);
+                } else {
+                    set.add(description.substring(2));
+                }
+            }
+        }
+    }
+
+    private PhaseId getPhaseId(String phaseIdentifier) {
+        for (PhaseId phaseId : PhaseId.VALUES) {
+            if (phaseIdentifier.startsWith(phaseId.toString())) {
+                return phaseId;
+            }
+        }
+        throw new IllegalStateException("no such phase '" + phaseIdentifier + "'");
     }
 }

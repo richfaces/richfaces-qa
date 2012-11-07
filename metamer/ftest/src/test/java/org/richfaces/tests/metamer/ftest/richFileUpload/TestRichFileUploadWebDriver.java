@@ -174,7 +174,7 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
         String cmd = "executeChecker";
         fileUploadAttributes.set(FileUploadAttributes.execute, cmd);
         succesfulFileUploadAction.perform();
-        phaseInfo.assertListener(PhaseId.UPDATE_MODEL_VALUES, "executeChecker");
+        page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "executeChecker");
     }
 
     @Test

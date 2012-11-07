@@ -28,13 +28,17 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import java.util.List;
+import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.richfaces.tests.metamer.model.CalendarModel;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay;
+import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay.DayType;
+import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDays;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.DayPicker;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.CalendarPopup;
 import org.testng.annotations.Test;
@@ -59,50 +63,46 @@ public class TestRichCalendarModel extends AbstractCalendarTest<MetamerPage> {
     @RegressionTest("https://issues.jboss.org/browse/RFPL-1222")
     public void testApplyButton() {
         int wednesdays = 4;
-        DateTime nextMonth = todayMidday.plusMonths(1);
-        CalendarPopup openedPopup = calendar.openPopup();
-        MetamerPage.waitRequest(calendar.openPopup().getHeaderControls(), WaitRequestType.XHR).nextMonth();
-        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
-        List<CalendarDay> wednesdayDays = proxiedDayPicker.getSpecificDays(wednesdays);
-        wednesdayDays.removeAll(proxiedDayPicker.getBoundaryDays());
-        Integer firstWednesday = wednesdayDays.get(0).getDayNumber();
-        nextMonth = nextMonth.withDayOfMonth(firstWednesday);
+        CalendarPopup popup = calendar.getPopup();
+        DayPicker proxiedDayPicker = calendar.getPopup().getProxiedDayPicker();
 
-        MetamerPage.waitRequest(wednesdayDays.get(0), WaitRequestType.XHR).select();
-        assertFalse(openedPopup.isVisible());
+        List<CalendarDay> wednesdayDays = proxiedDayPicker.getSpecificDays(wednesdays).removeSpecificDays(DayType.boundaryDay);
+        CalendarDay dayToBeSelected = wednesdayDays.get(0);
+        DateTime referenceDate = todayMidday.withDayOfMonth(dayToBeSelected.getDayNumber());
+        MetamerPage.waitRequest(dayToBeSelected, WaitRequestType.XHR).select();
+        Graphene.waitAjax().until(popup.isNotVisibleCondition());
+
+        assertFalse(popup.isVisible(), "Popup should not be visible now.");
         DateTimeFormatter dtf = DateTimeFormat.forPattern(datePattern);
-
         DateTime selectedDate = dtf.parseDateTime(calendar.getInputValue());
-        assertEquals(selectedDate.getYear(), nextMonth.getYear());
-        assertEquals(selectedDate.getMonthOfYear(), nextMonth.getMonthOfYear());
-        assertEquals(selectedDate.getDayOfMonth(), nextMonth.getDayOfMonth());
+        assertEquals(selectedDate.getYear(), referenceDate.getYear());
+        assertEquals(selectedDate.getMonthOfYear(), referenceDate.getMonthOfYear());
+        assertEquals(selectedDate.getDayOfMonth(), referenceDate.getDayOfMonth());
     }
 
     @Test(groups = { "4.0.0.Final" })
     @RegressionTest("https://issues.jboss.org/browse/RFPL-1222")
     public void testClasses() {
-        //need to switch to next month to refresh data model
         int sundays = 1;
         int tuesdays = 3;
         int thursdays = 5;
         int saturdays = 7;
 
-        MetamerPage.waitRequest(calendar.openPopup().getHeaderControls(), WaitRequestType.XHR).nextMonth();
-        DayPicker proxiedDayPicker = calendar.openPopup().getProxiedDayPicker();
-        List<CalendarDay> weekends = proxiedDayPicker.getSpecificDays(sundays);
+        DayPicker proxiedDayPicker = calendar.getPopup().getProxiedDayPicker();
+        CalendarDays weekends = proxiedDayPicker.getSpecificDays(sundays);
         weekends.addAll(proxiedDayPicker.getSpecificDays(saturdays));
-        weekends.removeAll(proxiedDayPicker.getBoundaryDays());
-
+        weekends.removeSpecificDays(DayType.boundaryDay);
         for (CalendarDay day : weekends) {
-            assertTrue(day.containsStyleClass("yellowDay"), "Weekends should be yellow.");
+            assertTrue(day.containsStyleClass(CalendarModel.WEEKEND_DAY_CLASS), "Weekends are not marked correctly (yellow color).");
+            assertFalse(day.is(DayType.clickable), "Weekends should not be selectable.");
         }
 
-        List<CalendarDay> busyDays = proxiedDayPicker.getSpecificDays(tuesdays);
+        CalendarDays busyDays = proxiedDayPicker.getSpecificDays(tuesdays);
         busyDays.addAll(proxiedDayPicker.getSpecificDays(thursdays));
-        busyDays.removeAll(proxiedDayPicker.getBoundaryDays());
-
+        busyDays.removeSpecificDays(DayType.boundaryDay);
         for (CalendarDay day : busyDays) {
-            assertTrue(day.containsStyleClass("aquaDay"), "Tuesdays and thursdays should be aqua.");
+            assertTrue(day.containsStyleClass(CalendarModel.BUSY_DAY_CLASS), "Tuesdays and thursdays should be busy (aqua color).");
+            assertFalse(day.is(DayType.clickable), "Busy days should not be selectable.");
         }
     }
 }
