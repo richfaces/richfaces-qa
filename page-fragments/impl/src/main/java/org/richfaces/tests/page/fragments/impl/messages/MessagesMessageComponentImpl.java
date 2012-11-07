@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.page.fragments.impl.message;
+package org.richfaces.tests.page.fragments.impl.messages;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
@@ -28,21 +28,22 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.tests.page.fragments.impl.message.MessageComponent;
 
 /**
- * Component for rich: message.
+ * Clone of MessageComponentImpl, only css selectors + method isType are different
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class MessageComponentImpl implements MessageComponent {
+public class MessagesMessageComponentImpl implements MessageComponent {
 
     @Root
     private WebElement root;
-    @FindBy(className = "rf-msg-dtl")
+    @FindBy(className = "rf-msgs-dtl")
     private WebElement messageDetailElement;
     //Workaround for RF-12514, delete after issue is fixed
-    @FindBy(className = "rf-msg-det")
+    @FindBy(className = "rf-msgs-det")
     private WebElement messageDetailRF12514;
-    @FindBy(className = "rf-msg-sum")
+    @FindBy(className = "rf-msgs-sum")
     private WebElement messageSummaryElement;
     private WebDriver driver = GrapheneContext.getProxy();
 
@@ -155,7 +156,7 @@ public class MessageComponentImpl implements MessageComponent {
 
     @Override
     public boolean isType(MessageType type) {
-        return this.getRoot().getAttribute("class").contains(type.getValue());
+        return this.getRoot().getAttribute("class").contains(type.getValue().replace("-msg-", "-msgs-"));
     }
 
     @Override
