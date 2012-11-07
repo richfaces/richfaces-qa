@@ -21,7 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.bean.rich;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -39,7 +45,7 @@ import org.slf4j.LoggerFactory;
  * Simple bean for rich:messages component example.
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision: 23138 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean(name = "richMessagesBean")
 @ViewScoped
@@ -50,14 +56,17 @@ public class RichMessagesBean implements Serializable {
     // id for input element to bound some FacesMessage to it
     private static final String INPUT1_ID = "form:simpleInput1";
     private static final String INPUT2_ID = "form:simpleInput2";
-    private static Logger logger;
+    private static final Logger logger = LoggerFactory.getLogger(RichMessagesBean.class);
     private Attributes attributes;
     private String simpleInput1;
     private String simpleInput2;
+    private static final List<FacesMessage.Severity> msgsTypes = Lists
+            .newArrayList(FacesMessage.SEVERITY_FATAL,
+            FacesMessage.SEVERITY_ERROR, FacesMessage.SEVERITY_WARN,
+            FacesMessage.SEVERITY_INFO);
 
     @PostConstruct
     public void init() {
-        logger = LoggerFactory.getLogger(getClass());
         logger.debug("initializing bean " + getClass().getName());
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIRichMessages.class, getClass());
 
@@ -65,8 +74,10 @@ public class RichMessagesBean implements Serializable {
         simpleInput2 = "10";
 
         attributes.setAttribute("ajaxRendered", true);
-        attributes.setAttribute("rendered", true);
         attributes.setAttribute("for", "simpleInput1");
+        attributes.setAttribute("escape", true);
+        attributes.setAttribute("globalOnly", false);
+        attributes.setAttribute("rendered", true);
         attributes.setAttribute("showSummary", true);
 
         // add attributes with missing appropriate annotation
@@ -89,56 +100,40 @@ public class RichMessagesBean implements Serializable {
 
     }
 
-    public void generateFacesError(ActionEvent event) {
+    private void generateAllKindOfMessagesForID(String componentID) {
+        String value;
+        for (FacesMessage.Severity severity : msgsTypes) {
+            value = "Generated " + severity.toString() + " message for input " + componentID;
+            FacesContext.getCurrentInstance().addMessage(componentID,
+                    new FacesMessage(severity, value, value));
+        }
+    }
 
+    public void generateFacesMsgs(ActionEvent event) {
         logger.info(" ### Just called generateFacesError()");
-
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                "Generated error message without binding to any component (global)",
-                "Generated error message without binding to any component (global)"));
-
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_WARN,
-                "Generated warning message without binding to any component (global)",
-                "Generated warning message without binding to any component (global)"));
-
-        // Message bound to component on page
-        FacesContext.getCurrentInstance().addMessage(INPUT1_ID,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Generated error message for Input 1",
-                "Generated error message for Input 1"));
-
-        FacesContext.getCurrentInstance().addMessage(INPUT1_ID,
-                new FacesMessage(FacesMessage.SEVERITY_WARN, "Generated warning message for Input 1",
-                "Generated warning message for Input 1"));
-
-        FacesContext.getCurrentInstance().addMessage(INPUT2_ID,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Generated error message for Input 2",
-                "Generated error message for Input 2"));
-
-        FacesContext.getCurrentInstance().addMessage(INPUT2_ID,
-                new FacesMessage(FacesMessage.SEVERITY_WARN, "Generated warning message for Input 2",
-                "Generated warning message for Input 2"));
+        generateAllKindOfMessagesForID(null);
+        generateAllKindOfMessagesForID(INPUT1_ID);
+        generateAllKindOfMessagesForID(INPUT2_ID);
     }
 
     public Attributes getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(Attributes attributes) {
-        this.attributes = attributes;
-    }
-
     public String getSimpleInput1() {
         return simpleInput1;
     }
 
-    public void setSimpleInput1(String simpleInput1) {
-        this.simpleInput1 = simpleInput1;
-    }
-
     public String getSimpleInput2() {
         return simpleInput2;
+    }
+
+    public void setAttributes(Attributes attributes) {
+        this.attributes = attributes;
+    }
+
+    public void setSimpleInput1(String simpleInput1) {
+        this.simpleInput1 = simpleInput1;
     }
 
     public void setSimpleInput2(String simpleInput2) {

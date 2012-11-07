@@ -38,36 +38,49 @@
 
         <ui:define name="component">
             <script type="text/javascript">
-                function setCorrectValues() {
-                    $('input[id$=simpleInput1]').val('10');
-                    $('input[id$=simpleInput2]').val('10');
+                function command(button){
+                    window.valuesSettingState="started";
+                    if(button=="wrong"){
+                        setWrongValues();
+                    }else{
+                        setCorrectValues(); 
+                    }
+                    window.valuesSettingState="finished";
+                }
+                if(window.onload == null){
+                    window.onload = function(){
+                        window.valuesSettingState="";
+                    } 
+                }else{
+                    window.onload += function(){
+                        window.valuesSettingState="";
+                    }
+                }
+                function setCorrectValues() {                
+                    $('input[id$=simpleInput1]').val('6').change();
+                    $('input[id$=simpleInput2]').val('6').change();        
                 }
 
                 function setWrongValues() {
-                    $('input[id$=simpleInput1]').val('200');
-                    $('input[id$=simpleInput2]').val('200');
+                    $('input[id$=simpleInput1]').val('-5000').change();
+                    $('input[id$=simpleInput2]').val('-5000').change(); 
                 }
             </script>
 
-            <input id="setCorrectValuesButton" type="button" value="set correct values" onclick="setCorrectValues()"/>
-            <input id="setWrongValuesButton" type="button" value="set wrong values" onclick="setWrongValues()"/>
+            <input id="setCorrectValuesButton" type="button" value="set correct values" onclick="command('correct')"/>
+            <input id="setWrongValuesButton" type="button" value="set wrong values" onclick="command('wrong')"/>
 
             <br/>
 
             <fieldset title="Msgs1 - with for attribute" >
                 <legend>Messages1 - with 'for' attribute</legend>
-                <rich:messages id="msgs1"
-                               for="#{richMessagesBean.attributes['for'].value}"
+                <rich:messages id="messagesWithFor"
                                ajaxRendered="#{richMessagesBean.attributes['ajaxRendered'].value}"            			   
-                               keepTransient="#{richMessagesBean.attributes['keepTransient'].value}"
-                               rendered="#{richMessagesBean.attributes['rendered'].value}"
-                               showDetail="#{richMessagesBean.attributes['showDetail'].value}"
-                               showSummary="#{richMessagesBean.attributes['showSummary'].value}"
                                dir="#{richMessagesBean.attributes['dir'].value}"
+                               escape="#{richMessagesBean.attributes['escape'].value}"
+                               for="#{richMessagesBean.attributes['for'].value}"
+                               keepTransient="#{richMessagesBean.attributes['keepTransient'].value}"
                                lang="#{richMessagesBean.attributes['lang'].value}"
-                               style="#{richMessagesBean.attributes['style'].value}"
-                               styleClass="#{richMessagesBean.attributes['styleClass'].value}"
-                               title="#{richMessagesBean.attributes['title'].value}"
                                onclick="#{richMessagesBean.attributes['onclick'].value}"
                                ondblclick="#{richMessagesBean.attributes['ondblclick'].value}"
                                onkeydown="#{richMessagesBean.attributes['onkeydown'].value}"
@@ -78,6 +91,12 @@
                                onmouseout="#{richMessagesBean.attributes['onmouseout'].value}"
                                onmouseover="#{richMessagesBean.attributes['onmouseover'].value}"
                                onmouseup="#{richMessagesBean.attributes['onmouseup'].value}"
+                               rendered="#{richMessagesBean.attributes['rendered'].value}"
+                               showDetail="#{richMessagesBean.attributes['showDetail'].value}"
+                               showSummary="#{richMessagesBean.attributes['showSummary'].value}"
+                               style="#{richMessagesBean.attributes['style'].value}"
+                               styleClass="#{richMessagesBean.attributes['styleClass'].value}"
+                               title="#{richMessagesBean.attributes['title'].value}"
                                />
             </fieldset>
 
@@ -85,18 +104,13 @@
 
             <fieldset title="Msgs2 - with globalOnly attribute">
                 <legend>Messages2 - without 'for' but 'globalOnly' attribute instead</legend>
-                <rich:messages id="msgs2"
-                               ajaxRendered="#{richMessagesBean.attributes['ajaxRendered'].value}"
+                <rich:messages id="messagesWithGlobal"
+                               ajaxRendered="#{richMessagesBean.attributes['ajaxRendered'].value}"            			   
+                               dir="#{richMessagesBean.attributes['dir'].value}"
+                               escape="#{richMessagesBean.attributes['escape'].value}"
                                globalOnly="#{richMessagesBean.attributes['globalOnly'].value}"
                                keepTransient="#{richMessagesBean.attributes['keepTransient'].value}"
-                               rendered="#{richMessagesBean.attributes['rendered'].value}"
-                               showDetail="#{richMessagesBean.attributes['showDetail'].value}"
-                               showSummary="#{richMessagesBean.attributes['showSummary'].value}"
-                               dir="#{richMessagesBean.attributes['dir'].value}"
-                               lang="#{richMessagesBean.attributes['lang'].value}"            			               			   
-                               style="#{richMessagesBean.attributes['style'].value}"
-                               styleClass="#{richMessagesBean.attributes['styleClass'].value}"
-                               title="#{richMessagesBean.attributes['title'].value}"
+                               lang="#{richMessagesBean.attributes['lang'].value}"
                                onclick="#{richMessagesBean.attributes['onclick'].value}"
                                ondblclick="#{richMessagesBean.attributes['ondblclick'].value}"
                                onkeydown="#{richMessagesBean.attributes['onkeydown'].value}"
@@ -107,35 +121,35 @@
                                onmouseout="#{richMessagesBean.attributes['onmouseout'].value}"
                                onmouseover="#{richMessagesBean.attributes['onmouseover'].value}"
                                onmouseup="#{richMessagesBean.attributes['onmouseup'].value}"
+                               rendered="#{richMessagesBean.attributes['rendered'].value}"
+                               showDetail="#{richMessagesBean.attributes['showDetail'].value}"
+                               showSummary="#{richMessagesBean.attributes['showSummary'].value}"
+                               style="#{richMessagesBean.attributes['style'].value}"
+                               styleClass="#{richMessagesBean.attributes['styleClass'].value}"
+                               title="#{richMessagesBean.attributes['title'].value}"
                                />
             </fieldset>
 
-            <h:panelGrid columns="3">
+            <h:panelGrid columns="2">
                 <h:outputLabel for="simpleInput1" value="#{multipleValidationRulesBean.description}" />
                 <h:inputText id="simpleInput1" value="#{multipleValidationRulesBean.value}" label="Input 1" 
                              converter="#{multipleValidationRulesBean.converter}" >
                     <ui:insert name="validation"/>
                 </h:inputText>
-                <rich:message id="simpleInputMsg1" ajaxRendered="true" for="simpleInput1" />
 
                 <h:outputLabel for="simpleInput2" value="#{multipleValidationRulesBean.description}" />
                 <h:inputText id="simpleInput2" value="#{multipleValidationRulesBean.value}" label="Input 2" 
                              converter="#{multipleValidationRulesBean.converter}" > 
                     <ui:insert name="validation"/>
                 </h:inputText>
-                <rich:message id="simpleInputMsg2" ajaxRendered="true" for="simpleInput2" />
             </h:panelGrid>
 
             <br/>
 
             <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
             <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
-            <a4j:commandButton id="generateMsgsBtn" value="Generate Msgs" 
-                               actionListener="#{richMessagesBean.generateFacesError}" />
-
-            <br/>
-            <rich:messages id="msgs" />
-
+            <a4j:commandButton id="generateMsgsBtn" value="Generate All kinds of Msgs" 
+                               actionListener="#{richMessagesBean.generateFacesMsgs}" />
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

@@ -21,290 +21,312 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richMessages;
 
-import static org.jboss.arquillian.ajocado.Graphene.attributeEquals;
-import static org.jboss.arquillian.ajocado.Graphene.elementNotPresent;
-import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
-import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.basicAttributes;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.messageAttributes;
-import static org.richfaces.tests.metamer.ftest.richMessage.MessageAttributes.ajaxRendered;
-import static org.richfaces.tests.metamer.ftest.richMessage.MessageAttributes.dir;
-import static org.richfaces.tests.metamer.ftest.richMessage.MessageAttributes.lang;
-import static org.richfaces.tests.metamer.ftest.richMessage.MessageAttributes.rendered;
-import static org.richfaces.tests.metamer.ftest.richMessage.MessageAttributes.showDetail;
-import static org.richfaces.tests.metamer.ftest.richMessage.MessageAttributes.showSummary;
-import static org.richfaces.tests.metamer.ftest.richMessage.MessageAttributes.style;
-import static org.richfaces.tests.metamer.ftest.richMessage.MessageAttributes.title;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.messagesAttributes;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
-import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
-import org.jboss.arquillian.ajocado.locator.element.ExtendedLocator;
-import org.jboss.test.selenium.waiting.EventFiredCondition;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
-import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.metamer.ftest.richMessage.MessageAttributes;
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.richfaces.tests.page.fragments.impl.message.MessageComponent.MessageType;
+import org.richfaces.tests.page.fragments.impl.messages.MessagesComponentImpl;
+import org.testng.annotations.BeforeMethod;
 
 /**
- * Common test case for rich:message component
+ * Common test case for rich:messages component
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision: 22748 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractRichMessagesTest extends AbstractGrapheneTest {
+// FIXME AbstractRichMessagesTest should not be generic (bug in Graphene)
+public abstract class AbstractRichMessagesTest<P extends MessagesPage> extends AbstractWebDriverTest<MessagesPage> {
 
-    // component's locators
-    protected static JQueryLocator message4Input1 = pjq("span[id$=simpleInputMsg1]");
-    protected static JQueryLocator message4Input2 = pjq("span[id$=simpleInputMsg2]");
-    protected static JQueryLocator messages = pjq("span[id$=msgs]");
+    // components
+    @FindBy(xpath = "//fieldset/span[contains(@id, 'messagesWithFor')]")
+    protected MessagesComponentImpl messagesWithFor;
+    @FindBy(xpath = "//fieldset/span[contains(@id, 'messagesWithGlobal')]")
+    protected MessagesComponentImpl messagesWithGlobal;
 
-    // controls
-    protected JQueryLocator wrongValuesBtn = pjq("input[type=button][id$=setWrongValuesButton]");
-    protected JQueryLocator correctValuesBtn = pjq("input[type=button][id$=setCorrectValuesButton]");
-    protected JQueryLocator hCommandBtn = pjq("input[id$=hButton]");
-    protected JQueryLocator a4jCommandBtn = pjq("input[id$=a4jButton]");
+    protected void generateAllKindsOfMessagesWithWait() {
+        setCorrectValues();
+        submitWithA4jBtn();
+        MetamerPage.waitRequest(page.generateMsgsBtn, WaitRequestType.XHR).click();
+        Graphene.waitAjax().until(messagesWithGlobal.isVisibleCondition());
+    }
 
-    /**
-     * Because of message and messages have many attributes very similar, this method helps test method distinguish
-     * between metamer page for rich:message and rich:messages (there are different element IDs per page and for
-     * messages there are messages container rendered conditionally)
-     *
-     * @return ElementLocator for container with rich:message(s)
-     */
-    public abstract JQueryLocator getTestElemLocator();
+    private void generateValidationMessagesWithoutWait() {
+        executeJS("window.valuesSettingState=''");
+        page.wrongValuesButton.click();
+        waitForValuesSetting();
+    }
 
-    /**
-     * This method implementation specific for rich:message and rich:messages help distinguish between them, and return
-     * correct locator
-     *
-     * @return JQueryLocator for container with summary or detail of message(s) component
-     */
-    public abstract JQueryLocator getSummaryElemLocator();
+    @BeforeMethod(alwaysRun = true)
+    public void generateValidationMessagesWithWait() {
+        generateValidationMessagesWithoutWait();
+        waitingForValidationMessages();
+    }
 
-    public abstract JQueryLocator getDetailElemLocator();
+    private String getIDOfElement(WebElement element) {
+        return element.getAttribute("id");
+    }
 
-    public void testHtmlAttribute(ElementLocator<?> element, MessageAttributes attribute, String value) {
+    protected String getSimpleInput1ID() {
+        return getIDOfElement(page.simpleInput1);
+    }
 
-        AttributeLocator<?> attr = element.getAttribute(new Attribute(attribute.toString()));
+    protected String getSimpleInput2ID() {
+        return getIDOfElement(page.simpleInput2);
+    }
 
-        messageAttributes.set(attribute, value);
-
-        // generate validation message
-        generateValidationMessages(false);
-
-        assertTrue(selenium.getAttribute(attr).contains(value), "Attribute " + attribute + " should contain \"" + value
-            + "\".");
+    private WebElement getTestedElementRoot() {
+        return messagesWithGlobal.getRoot();
     }
 
     /**
-     * A helper method for testing javascripts events. It sets alert('testedevent') to the input field for given event
-     * and fires the event. Then it checks the message in the alert dialog.
-     *
-     * @param event
-     *            JavaScript event to be tested
-     * @param element
-     *            locator of tested element
+     * Sets correct values by clicking button and wait for the client update.
+     * !Does not do any request!.
      */
-    @Override
-    protected void testFireEvent(Event event, ElementLocator<?> element) {
-        ElementLocator<?> eventInput = pjq("input[id$=on" + event.getEventName() + "Input]");
-        String value = "metamerEvents += \"" + event.getEventName() + " \"";
-
-        guardHttp(selenium).type(eventInput, value);
-
-        // generate validation messages
-        generateValidationMessages(false);
-
-        selenium.fireEvent(element, event);
-
-        waitGui.failWith("Attribute on" + event.getEventName() + " does not work correctly").until(
-            new EventFiredCondition(event));
+    protected void setCorrectValues() {
+        page.correctValuesButton.click();
+        waitForValuesSetting();
     }
 
-    /**
-     * A helper method for testing attribute "class". It sets "metamer-ftest-class" to the input field and checks that
-     * it was changed on the page.
-     *
-     * @param element
-     *            locator of tested element
-     * @param attribute
-     *            name of the attribute that will be set (e.g. styleClass, headerClass, itemContentClass)
-     */
-    @Override
-    protected void testStyleClass(ExtendedLocator<JQueryLocator> element, BasicAttributes attribute) {
-        final String styleClass = "metamer-ftest-class";
-
-        basicAttributes.set(attribute, styleClass);
-
-        generateValidationMessages(false);
-
-        JQueryLocator elementWhichHasntThatClass = jq(element.getRawLocator() + ":not(.{0})").format(styleClass);
-        assertTrue(selenium.isElementPresent(element));
-        assertFalse(selenium.isElementPresent(elementWhichHasntThatClass));
+    protected void submitWithA4jBtn() {
+        MetamerPage.waitRequest(page.a4jCommandButton, WaitRequestType.XHR).click();
     }
 
-    /**
-     * Set wrong values into appropriate inputs and generate validation messages by submitting form.
-     *
-     * There are 2 possible ways how to submit: by h:commandButton or by a4j:commandButton. Switch between them is done
-     * by 'byAjax' param
-     *
-     * @param byAjax
-     *            use to choose submit button type used to submit form
-     */
-    public void generateValidationMessages(Boolean byAjax) {
-        waitModel.until(elementPresent.locator(wrongValuesBtn));
-        selenium.click(wrongValuesBtn);
-        if (byAjax) {
-            waitModel.until(elementPresent.locator(a4jCommandBtn));
-            selenium.click(a4jCommandBtn);
-        } else {
-            waitModel.until(elementPresent.locator(hCommandBtn));
-            selenium.click(hCommandBtn);
-            selenium.waitForPageToLoad();
-        }
+    protected void submitWithHBtn() {
+        MetamerPage.waitRequest(page.hCommandButton, WaitRequestType.HTTP).click();
     }
-
-    protected void waitForAttribute(MessageAttributes attr) {
-        waitGui.until(attributeEquals.locator(getTestElemLocator().getAttribute(new Attribute(attr.toString()))).text(
-            attr.toString()));
-    }
-
     // ==================== test methods ====================
-    /**
-     * ajaxRendered attribute change behavior: messages are displayed after action performed by a4j:button (not only by
-     * h:command*)
-     */
+
     public void testAjaxRendered() {
-        // with set to false, element with id$=simpleInputMsg shouldn't appear
+        assertTrue(messagesWithFor.isVisible());
+        assertTrue(messagesWithGlobal.isVisible());
 
-        // by default is ajaxRendered set to true
-        generateValidationMessages(true);
-        waitGui.until(elementPresent.locator(getTestElemLocator()));
+        messagesAttributes.set(MessagesAttributes.ajaxRendered, Boolean.FALSE);
+        generateValidationMessagesWithoutWait();
 
-        // then disable ajaxRendered
-        messageAttributes.set(ajaxRendered, Boolean.FALSE);
-        generateValidationMessages(true);
-        waitGui.until(elementPresent.locator(jq(getTestElemLocator().getRawLocator() + ":empty")));
-    }
+        assertFalse(messagesWithFor.isVisible());
+        assertFalse(messagesWithGlobal.isVisible());
 
-    /**
-     * This attribute could disable displaying message
-     */
-    public void testRendered() {
-        // with set to false, element with id$=simpleInputMsg shouldn't appear
-
-        messageAttributes.set(rendered, Boolean.TRUE);
-        generateValidationMessages(false);
-        waitGui.until(elementPresent.locator(getTestElemLocator()));
-
-        // now disable rendering message
-        messageAttributes.set(rendered, Boolean.FALSE);
-        generateValidationMessages(false);
-        waitGui.until(elementNotPresent.locator(jq(getTestElemLocator().getRawLocator())));
-    }
-
-    /**
-     * Attribute for managing display Summary
-     */
-    public void testShowSummary() {
-        // span with class=rf-msg-sum should appear when set to true
-
-        messageAttributes.set(showSummary, Boolean.TRUE);
-        generateValidationMessages(false);
-        waitModel.until(elementPresent.locator(getSummaryElemLocator()));
-
-        messageAttributes.set(showSummary, Boolean.FALSE);
-        generateValidationMessages(false);
-        waitGui.until(elementNotPresent.locator(jq(getSummaryElemLocator().getRawLocator())));
-    }
-
-    /**
-     * Attribute for managing display Detail
-     */
-    public void testShowDetail() {
-        // span with class=rf-msg-det should appear when set to true
-
-        messageAttributes.set(showDetail, Boolean.TRUE);
-        generateValidationMessages(false);
-        waitGui.until(elementPresent.locator(getDetailElemLocator()));
-
-        messageAttributes.set(showDetail, Boolean.FALSE);
-        generateValidationMessages(false);
-        waitGui.until(elementNotPresent.locator(jq(getDetailElemLocator().getRawLocator())));
-    }
-
-    public void testTitle() {
-        testHtmlAttribute(getTestElemLocator(), title, "Title test");
+        //submit with h:commandbutton
+        MetamerPage.waitRequest(page.hCommandButton, WaitRequestType.HTTP).click();
+        assertTrue(messagesWithFor.isVisible());
+        assertTrue(messagesWithGlobal.isVisible());
     }
 
     public void testDir() {
-        testHtmlAttribute(getTestElemLocator(), dir, "rtl");
+        super.testDir(getTestedElementRoot());
+    }
+
+    public void testEscape() {
+        //this will only show 1 message after generation of validation msgs,
+        //because of unique id of span, taht will be created
+        messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.TRUE);
+        String newSpanString = "<span id='newSpan'>newSpan</span>";
+        page.simpleInput1.clear();
+        page.simpleInput1.sendKeys(newSpanString);
+        submitWithA4jBtn();
+        assertTrue(Graphene.waitGui().until(Graphene.element(page.newSpan).not().isVisible()).booleanValue());
+
+        messagesAttributes.set(MessagesAttributes.escape, Boolean.FALSE);
+        page.simpleInput1.clear();
+        page.simpleInput1.sendKeys(newSpanString);
+        submitWithA4jBtn();
+        assertTrue(Graphene.waitGui().until(Graphene.element(page.newSpan).isVisible()).booleanValue());
+    }
+
+    public void testFor(int expectedMessages) {
+        // firstly, remove value from attribute for and generate message
+        messagesAttributes.setLower(MessagesAttributes.FOR, "");
+        generateValidationMessagesWithoutWait();
+        submitWithA4jBtn();
+
+        assertFalse(messagesWithFor.isVisible());
+
+        // now set for attribute to "simpleInput1"
+        messagesAttributes.setLower(MessagesAttributes.FOR, "simpleInput1");
+        generateValidationMessagesWithWait();
+
+        assertTrue(messagesWithFor.isVisible());
+        assertEquals(messagesWithFor.size(), expectedMessages);
+        assertEquals(messagesWithFor.getMessagesForInput(getSimpleInput1ID()).size(), expectedMessages, expectedMessages + " messages for input 1 were expected.");
+        assertEquals(messagesWithFor.getMessagesForInput(getSimpleInput2ID()).size(), 0, "No messages for input 2 were expected.");
+
+        // now set for attribute back to "simpleInput2"
+        messagesAttributes.setLower(MessagesAttributes.FOR, "simpleInput2");
+        generateValidationMessagesWithWait();
+
+        assertTrue(messagesWithFor.isVisible());
+        assertEquals(messagesWithFor.size(), expectedMessages);
+        assertEquals(messagesWithFor.getMessagesForInput(getSimpleInput1ID()).size(), 0, "No messages for input 1 were expected.");
+        assertEquals(messagesWithFor.getMessagesForInput(getSimpleInput2ID()).size(), expectedMessages, expectedMessages + " messages for input 2 were expected.");
+    }
+
+    /**
+     * globalOnly change behavior of displaying messages.
+     * When <b>true</b> only messages not bound to any input are displayed
+     *      <b>false</b> all messages are displayed
+     * This attribute cannot be set with <i>for</i> attribute.
+     *
+     * In this case, messages component messagesGlobal is relevant.
+     */
+    public void testGlobalOnly(int expectedMessagesPerInput) {
+        //firstly set for attribute to null
+        messagesAttributes.setLower(MessagesAttributes.FOR, "");
+        //then set globalOnly attribute
+        messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.FALSE);
+
+        generateValidationMessagesWithWait();
+        //All messages should appear:
+        assertTrue(messagesWithGlobal.isVisible());
+        assertEquals(messagesWithGlobal.size(), expectedMessagesPerInput * 2);
+        assertEquals(messagesWithGlobal.getMessagesForInput(getSimpleInput1ID()).size(), expectedMessagesPerInput, expectedMessagesPerInput + " messages for input 1 were expected.");
+        assertEquals(messagesWithGlobal.getMessagesForInput(getSimpleInput2ID()).size(), expectedMessagesPerInput, expectedMessagesPerInput + " messages for input 2 were expected.");
+
+        messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.TRUE);
+        generateValidationMessagesWithoutWait();
+        //no messages should appear:
+        assertFalse(messagesWithGlobal.isVisible());
     }
 
     public void testLang() {
-        testHtmlAttribute(getTestElemLocator(), lang, "US.en");
+        testAttributeLang(getTestedElementRoot());
     }
 
-    public void testStyle() {
-        // this style test is different from other tests: need generate message
-        // before testing
-        testHtmlAttribute(getTestElemLocator(), style, "color: blue;");
+    public void testMesssagesTypes() {
+        generateAllKindsOfMessagesWithWait();
+        assertEquals(messagesWithFor.size(), 4);
+        messagesWithFor.getMessage(0).isType(MessageType.fatal);
+        messagesWithFor.getMessage(1).isType(MessageType.error);
+        messagesWithFor.getMessage(2).isType(MessageType.warning);
+        messagesWithFor.getMessage(3).isType(MessageType.information);
     }
 
-    public void testStyleClass() {
-        // attribute styleClass is propagated as class attribute in target HTML
-        // element
-        // testStyleClass(getTestElemLocator(),
-        // RichMessageAttributes.STYLE_CLASS.toString());
-        // TODO: for RFPL-1439 use default mechanism to set attributes
-        testStyleClass(getTestElemLocator(), BasicAttributes.styleClass);
+    public void testNoShowDetailNoShowSummary() {
+        messagesAttributes.set(MessagesAttributes.showSummary, Boolean.FALSE);
+        messagesAttributes.set(MessagesAttributes.showDetail, Boolean.FALSE);
+
+        generateValidationMessagesWithoutWait();
+        submitWithA4jBtn();
+
+        assertFalse(messagesWithGlobal.isVisible());
+        assertFalse(messagesWithFor.isVisible());
     }
 
     public void testOnClick() {
-        testFireEvent(Event.CLICK, getTestElemLocator());
+        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.onclick);
     }
 
     public void testOnDblClick() {
-        testFireEvent(Event.DBLCLICK, getTestElemLocator());
+        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.ondblclick);
     }
 
     public void testOnKeyDown() {
-        testFireEvent(Event.KEYDOWN, getTestElemLocator());
+        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.onkeydown);
     }
 
     public void testOnKeyPress() {
-        testFireEvent(Event.KEYPRESS, getTestElemLocator());
+        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.onkeypress);
     }
 
     public void testOnKeyUp() {
-        testFireEvent(Event.KEYUP, getTestElemLocator());
+        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.onkeyup);
     }
 
     public void testOnMouseDown() {
-        testFireEvent(Event.MOUSEDOWN, getTestElemLocator());
+        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.onmousedown);
     }
 
     public void testOnMouseMove() {
-        testFireEvent(Event.MOUSEMOVE, getTestElemLocator());
+        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.onmousemove);
     }
 
     public void testOnMouseOut() {
-        testFireEvent(Event.MOUSEOUT, getTestElemLocator());
+        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.onmouseout);
     }
 
     public void testOnMouseOver() {
-        testFireEvent(Event.MOUSEOVER, getTestElemLocator());
+        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.onmouseover);
     }
 
     public void testOnMouseUp() {
-        testFireEvent(Event.MOUSEUP, getTestElemLocator());
+        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.onmouseup);
+    }
+
+    public void testRendered() {
+        messagesAttributes.set(MessagesAttributes.rendered, Boolean.TRUE);
+        generateValidationMessagesWithWait();
+
+        assertTrue(messagesWithGlobal.isVisible());
+        assertTrue(messagesWithFor.isVisible());
+
+
+        messagesAttributes.set(MessagesAttributes.rendered, Boolean.FALSE);
+        generateValidationMessagesWithoutWait();
+        submitWithA4jBtn();
+
+        assertFalse(messagesWithGlobal.isVisible());
+        assertFalse(messagesWithFor.isVisible());
+    }
+
+    public void testShowDetail() {
+        messagesAttributes.set(MessagesAttributes.showSummary, Boolean.TRUE);
+        messagesAttributes.set(MessagesAttributes.showDetail, Boolean.TRUE);
+        generateValidationMessagesWithWait();
+
+        assertTrue(messagesWithGlobal.getMessage(0).isDetailVisible());
+        assertTrue(messagesWithFor.getMessage(0).isDetailVisible());
+
+        messagesAttributes.set(MessagesAttributes.showDetail, Boolean.FALSE);
+        generateValidationMessagesWithWait();
+
+        assertFalse(messagesWithGlobal.getMessage(0).isDetailVisible());
+        assertFalse(messagesWithFor.getMessage(0).isDetailVisible());
+    }
+
+    public void testShowSummary() {
+        messagesAttributes.set(MessagesAttributes.showDetail, Boolean.TRUE);
+        messagesAttributes.set(MessagesAttributes.showSummary, Boolean.TRUE);
+        generateValidationMessagesWithWait();
+
+        assertTrue(messagesWithGlobal.getMessage(0).isSummaryVisible());
+        assertTrue(messagesWithFor.getMessage(0).isSummaryVisible());
+
+        messagesAttributes.set(MessagesAttributes.showSummary, Boolean.FALSE);
+        generateValidationMessagesWithWait();
+
+        assertFalse(messagesWithGlobal.getMessage(0).isSummaryVisible());
+        assertFalse(messagesWithFor.getMessage(0).isSummaryVisible());
+    }
+
+    public void testStyle() {
+        super.testStyle(getTestedElementRoot());
+    }
+
+    public void testStyleClass() {
+        super.testStyleClass(getTestedElementRoot());
+    }
+
+    public void testTitle() {
+        super.testTitle(getTestedElementRoot());
+    }
+
+    private void waitForValuesSetting() {
+        String finishedString = "finished";
+        String ret = expectedReturnJS("return window.valuesSettingState", finishedString);
+        if (ret == null || !ret.equalsIgnoreCase(finishedString)) {
+            throw new IllegalStateException("The setting of values with buttons was not acomplished.");
+        }
+    }
+
+    protected void waitingForValidationMessages() {
+        submitWithA4jBtn();
+        Graphene.waitGui().until(messagesWithGlobal.isVisibleCondition());
     }
 }
