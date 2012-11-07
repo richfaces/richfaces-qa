@@ -24,62 +24,22 @@ package org.richfaces.tests.metamer.ftest.richMessages;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
-
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
-
 /**
  * Test case for page /faces/components/richMessages/jsfValidator.xhtml
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision: 23138 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichMessagesJSFValidator extends RichMessagesTest {
+public class TestRichMessagesJSFValidator extends AbstractRichMessagesTest<MessagesPage> {
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richMessages/jsfValidator.xhtml");
-    }
-
-    @Override
-    public JQueryLocator getTestElemLocator() {
-        return mainMsg1;
-    }
-
-    @Override
-    public JQueryLocator getSummaryElemLocator() {
-        return summary;
-    }
-
-    @Override
-    public JQueryLocator getDetailElemLocator() {
-        return detail;
-    }
-
-    // list of called test methods
-    @Test
-    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
-    public void testFor() {
-        super.testFor();
-    }
-
-    @Test(groups = { "4.Future" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-11298")
-    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
-    public void testForInIterationComponents() {
-        super.testFor();
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11415")
-    public void testGlobalOnly() {
-        super.testGlobalOnly();
     }
 
     @Test
@@ -88,28 +48,41 @@ public class TestRichMessagesJSFValidator extends RichMessagesTest {
     }
 
     @Test
-    public void testRendered() {
-        super.testRendered();
-    }
-
-    @Test
-    public void testShowSummary() {
-        super.testShowSummary();
-    }
-
-    @Test
-    public void testShowDetail() {
-        super.testShowDetail();
-    }
-
-    @Test
-    public void testTitle() {
-        super.testTitle();
-    }
-
-    @Test
     public void testDir() {
         super.testDir();
+    }
+
+    @Test
+    public void testEscape() {
+        super.testEscape();
+    }
+
+    @Test
+    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
+    public void testFor() {
+        super.testFor(4);//4 messages
+    }
+
+    @Test(groups = { "4.Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-11298")
+    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
+    public void testForInIterationComponents() {
+        testFor();
+    }
+
+    @Test
+    @Templates(exclude = { "richAccordion", "richCollapsiblePanel" })
+    public void testGlobalOnly() {
+        super.testGlobalOnly(4);
+    }
+
+    @Test
+    @Templates(value = { "richAccordion", "richCollapsiblePanel" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-11415")
+    public void testGlobalOnlyInAccordionCollapsiblePanel() {
+        testGlobalOnly();
     }
 
     @Test
@@ -118,13 +91,13 @@ public class TestRichMessagesJSFValidator extends RichMessagesTest {
     }
 
     @Test
-    public void testStyle() {
-        super.testStyle();
+    public void testMesssagesTypes() {
+        super.testMesssagesTypes();
     }
 
     @Test
-    public void testStyleClass() {
-        super.testStyleClass();
+    public void testNoShowDetailNoShowSummary() {
+        super.testNoShowDetailNoShowSummary();
     }
 
     @Test
@@ -175,5 +148,35 @@ public class TestRichMessagesJSFValidator extends RichMessagesTest {
     @Test
     public void testOnMouseUp() {
         super.testOnMouseUp();
+    }
+
+    @Test
+    public void testRendered() {
+        super.testRendered();
+    }
+
+    @Test
+    public void testShowDetail() {
+        super.testShowDetail();
+    }
+
+    @Test
+    public void testShowSummary() {
+        super.testShowSummary();
+    }
+
+    @Test
+    public void testStyle() {
+        super.testStyle();
+    }
+
+    @Test
+    public void testStyleClass() {
+        super.testStyleClass();
+    }
+
+    @Test
+    public void testTitle() {
+        super.testTitle();
     }
 }
