@@ -31,18 +31,18 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 public class MessagePage extends MetamerPage {
 
     // controls
-    @FindBy(css = "input[type=button][id$=setWrongValuesButton]")
-    WebElement wrongValuesButton;
-    @FindBy(css = "input[type=button][id$=setCorrectValuesButton]")
-    WebElement correctValuesButton;
-    @FindBy(css = "input[id$=hButton]")
-    WebElement hCommandButton;
     @FindBy(css = "input[id$=a4jButton]")
-    WebElement a4jCommandButton;
-    @FindBy(css = "input[id$=simpleInput1]")
-    WebElement simpleInput1;
-    @FindBy(css = "input[id$=simpleInput2]")
-    WebElement simpleInput2;
+    public WebElement a4jCommandButton;
+    @FindBy(css = "input[type=button][id$=setCorrectValuesButton]")
+    public WebElement correctValuesButton;
+    @FindBy(css = "input[id$=hButton]")
+    public WebElement hCommandButton;
     @FindBy(css = "span[id$=newSpan]")
-    WebElement newSpan;
+    public WebElement newSpan;
+    @FindBy(css = "input[id$=simpleInput1]")
+    public WebElement simpleInput1;
+    @FindBy(css = "input[id$=simpleInput2]")
+    public WebElement simpleInput2;
+    @FindBy(css = "input[type=button][id$=setWrongValuesButton]")
+    public WebElement wrongValuesButton;
 }

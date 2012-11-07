@@ -30,7 +30,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichMessageCSV extends AbstractRichMessageWDTest<MessagePage> {
+public class TestRichMessageCSV extends AbstractRichMessageTest<MessagePage> {
 
     @Override
     protected void waitingForValidationMessages() {
@@ -42,7 +42,10 @@ public class TestRichMessageCSV extends AbstractRichMessageWDTest<MessagePage> {
         return buildUrl(contextPath, "faces/components/richMessage/csv.xhtml");
     }
 
-    @Test
+    /**
+     * This test is not needed = the validation is performed on client side
+     */
+    @Test(enabled = false)
     @Override
     public void testAjaxRendered() {
         //no testing for CSV, messages are generated on client side
