@@ -24,6 +24,10 @@
         <param-value>false</param-value>
     </context-param>
     <context-param>
+        <param-name>org.gatein.portletbridge.WAR_BUNDLES_PORTLETBRIDGE</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
         <param-name>org.richfaces.fileUpload.maxRequestSize</param-name>
         <param-value>20000</param-value>
     </context-param>
