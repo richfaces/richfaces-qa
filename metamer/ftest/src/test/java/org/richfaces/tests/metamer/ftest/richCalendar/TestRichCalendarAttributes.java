@@ -44,6 +44,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -1036,6 +1037,10 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
     public void testVerticalOffset() {
         int tolerance = 3;
         int verticalOffset = 13;
+
+        // should help stabilizing test on Jenkins
+        driver.manage().window().setSize(new Dimension(1280, 960));
+
         Locations before = calendar.openPopup().getLocations();
         calendarAttributes.set(CalendarAttributes.verticalOffset, verticalOffset);
         Locations after = calendar.openPopup().getLocations();
