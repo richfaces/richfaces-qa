@@ -274,6 +274,7 @@ public abstract class AbstractAjaxTest<P extends AjaxPage> extends AbstractWebDr
             ((JavascriptExecutor) driver).executeScript("$(\"[id$=input]\").val('"
                 + text.substring(0, i) + "');");
             ((JavascriptExecutor) driver).executeScript("$(\"[id$=input]\").trigger('keyup');");
+            waiting(200);
         }
     }
 
