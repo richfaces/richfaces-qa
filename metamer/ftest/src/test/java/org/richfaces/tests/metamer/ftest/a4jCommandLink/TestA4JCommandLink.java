@@ -38,6 +38,8 @@ import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.a4jCommandButton.CommandButtonLinkPage;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -121,7 +123,7 @@ public class TestA4JCommandLink extends AbstractWebDriverTest<CommandButtonLinkP
     @Test
     public void testBypassUpdates() {
         commandLinkAttributes.set(CommandLinkAttributes.bypassUpdates, true);
-        Graphene.guardXhr(page.link).click();
+        MetamerPage.waitRequest(page.link, WaitRequestType.XHR).click();
         page.verifyOutput1Text("");
         page.verifyOutput2Text("");
         page.verifyOutput3Text("");
