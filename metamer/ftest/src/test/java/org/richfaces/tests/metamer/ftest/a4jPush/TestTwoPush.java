@@ -13,6 +13,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 public class TestTwoPush extends AbstractWebDriverTest<TwoPushPage> {
@@ -38,17 +40,10 @@ public class TestTwoPush extends AbstractWebDriverTest<TwoPushPage> {
     @Test
     public void testPushEnable() {
         // disable push updates
-        page.pushEnabledChckBox.click();
-
-        (new WebDriverWait(driver, TIMEOUT)).until(
-            new ExpectedCondition<Boolean>() {
-                public Boolean apply(WebDriver d) {
-                    return page.pushEnabledChckBox.isEnabled();
-                }
-            });
+        MetamerPage.waitRequest(page.pushEnabledChckBox, WaitRequestType.XHR).click();
 
         // enable push updates
-        page.pushEnabledChckBox.click();
+        MetamerPage.waitRequest(page.pushEnabledChckBox, WaitRequestType.XHR).click();
 
         verifyPushUpdateReceive(10L);
     }
