@@ -81,7 +81,7 @@ FSF site: http://www.fsf.org. -->
             <groupId>org.jboss.shrinkwrap.resolver</groupId>
             <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
             <scope>test</scope>
-            <version>2.0.0-alpha-1</version>
+            <version>2.0.0-alpha-5</version>
         </dependency>
         <!--         <dependency> -->
         <!--             <groupId>org.jboss.shrinkwrap.descriptors</groupId> -->
@@ -170,7 +170,7 @@ FSF site: http://www.fsf.org. -->
         <dependency>
             <groupId>org.jboss.spec</groupId>
             <artifactId>jboss-javaee-6.0</artifactId>
-            <version>3.0.0.Final</version>
+            <version>3.0.1.Final</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
