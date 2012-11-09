@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.jboss.test.selenium.support.ui;
 
-import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang.Validate;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Clock;
