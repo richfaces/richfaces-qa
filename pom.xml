@@ -59,13 +59,10 @@
         <arquillian.jboss-as6.version>1.0.0.CR3</arquillian.jboss-as6.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
         <arquillian.android.version>1.0.0.Alpha1</arquillian.android.version>
-        <shrinkwrap.descriptors.version>1.1.0-beta-1</shrinkwrap.descriptors.version>
-        <version.shrinkwrap.descriptor>2.0.0-alpha-3</version.shrinkwrap.descriptor>
-<!--         <shrinkwrap.descriptors.javaee.version>2.0.0-alpha-3</shrinkwrap.descriptors.javaee.version> -->
+        <shrinkwrap.descriptors.version>2.0.0-alpha-4</shrinkwrap.descriptors.version>
 
-        <version.selenium>2.25.0</version.selenium>
+        <version.selenium>2.26.0</version.selenium>
         <version.selenium.server>2.26.0</version.selenium.server>
-        <version.opera.driver>0.18</version.opera.driver>
         <version.slf4j.jbossas6>1.6.1</version.slf4j.jbossas6>
 
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->
@@ -87,7 +84,7 @@
         <openshift.ssh.user>54abf287bcf646319d0b1c8d35f15546</openshift.ssh.user>
         <openshift.identity.file />
 
-        <jodatime.version>2.0</jodatime.version>
+        <jodatime.version>2.1</jodatime.version>
     </properties>
 
     <modules>
@@ -378,16 +375,45 @@
                 <artifactId>shrinkwrap-descriptors-impl</artifactId>
                 <version>${shrinkwrap.descriptors.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+                <artifactId>shrinkwrap-descriptors-api-jboss</artifactId>
+                <version>${shrinkwrap.descriptors.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+                <artifactId>shrinkwrap-descriptors-impl-jboss</artifactId>
+                <version>${shrinkwrap.descriptors.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+                <artifactId>shrinkwrap-descriptors-api-javaee</artifactId>
+                <version>${shrinkwrap.descriptors.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.jboss.shrinkwrap.descriptors</groupId>
                 <artifactId>shrinkwrap-descriptors-impl-javaee</artifactId>
-                <version>${version.shrinkwrap.descriptor}</version>
+                <version>${shrinkwrap.descriptors.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.shrinkwrap.descriptors</groupId>
                 <artifactId>shrinkwrap-descriptors-api-base</artifactId>
-                <version>${version.shrinkwrap.descriptor}</version>
+                <version>${shrinkwrap.descriptors.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+                <artifactId>shrinkwrap-descriptors-impl-base</artifactId>
+                <version>${shrinkwrap.descriptors.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+                <artifactId>shrinkwrap-descriptors-gen</artifactId>
+                <version>${shrinkwrap.descriptors.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+                <artifactId>shrinkwrap-descriptors-spi</artifactId>
+                <version>${shrinkwrap.descriptors.version}</version>
             </dependency>
 
             <!-- Selenium Server -->
@@ -455,11 +481,6 @@
                 <artifactId>graphene-webdriver</artifactId>
                 <version>${arquillian.graphene-webdriver.version}</version>
                 <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>com.opera</groupId>
-                <artifactId>operadriver</artifactId>
-                <version>${version.opera.driver}</version>
             </dependency>
             
             <!-- Page Fragments dependencies -->
