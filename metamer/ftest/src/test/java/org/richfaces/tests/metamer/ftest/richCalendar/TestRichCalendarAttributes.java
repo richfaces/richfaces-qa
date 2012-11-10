@@ -451,7 +451,11 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
     @Test
     public void testHorizontalOffset() {
         int tolerance = 3;
-        int horizontalOffset = 13;
+        int horizontalOffset = 15;
+
+        // should help stabilizing test on Jenkins
+        driver.manage().window().setSize(new Dimension(1280, 960));
+
         Locations before = calendar.openPopup().getLocations();
         calendarAttributes.set(CalendarAttributes.horizontalOffset, horizontalOffset);
         Locations after = calendar.openPopup().getLocations();
@@ -1036,7 +1040,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
     @Test
     public void testVerticalOffset() {
         int tolerance = 3;
-        int verticalOffset = 13;
+        int verticalOffset = 15;
 
         // should help stabilizing test on Jenkins
         driver.manage().window().setSize(new Dimension(1280, 960));
@@ -1073,12 +1077,12 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
         assertEquals(contentZindex, zindex, "Z-index of the popup");
     }
 
-    private void tolerantAssertLocations(Point location1, Point location2, int tolerance) {
-        assertTrue(_tolerantAssertLocations(location1, location2, tolerance));
+    private void tolerantAssertLocations(Point actual, Point expected, int tolerance) {
+        assertTrue(_tolerantAssertLocations(actual, expected, tolerance), "actual " + actual + ", expected " + expected);
     }
 
-    private boolean _tolerantAssertLocations(Point location1, Point location2, int tolerance) {
-        return (Math.abs(location1.x - location2.x) <= tolerance && Math.abs(location1.y - location2.y) <= tolerance);
+    private boolean _tolerantAssertLocations(Point actual, Point expected, int tolerance) {
+        return (Math.abs(actual.x - expected.x) <= tolerance && Math.abs(actual.y - expected.y) <= tolerance);
     }
 
     private void assertVisible(WebElement element) {
