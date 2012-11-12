@@ -1,6 +1,6 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
@@ -29,10 +29,10 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import java.util.List;
-import org.jboss.test.selenium.support.ui.ElementDisplayed;
+
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.test.selenium.support.ui.ElementNotPresent;
 import org.jboss.test.selenium.support.ui.ElementPresent;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -79,13 +79,13 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest<TestEDTFrozenCol
 
         //change page
         page.nextPage.click();
-        new WebDriverWait(driver, 5).until(ElementDisplayed.getInstance().element(page.secondPageSpan));
+        Graphene.waitModel().until(Graphene.element(page.secondPageSpan).isVisible());
         //test
         _testFrozenColumnsShow();
 
         //change page
         page.nextPage.click();
-        new WebDriverWait(driver, 5).until(ElementDisplayed.getInstance().element(page.thirdPageSpan));
+        Graphene.waitModel().until(Graphene.element(page.thirdPageSpan).isVisible());
         //test
         _testFrozenColumnsShow();
     }
@@ -117,13 +117,13 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest<TestEDTFrozenCol
 
         //change page
         page.nextPage.click();
-        new WebDriverWait(driver, 5).until(ElementDisplayed.getInstance().element(page.secondPageSpan));
+        Graphene.waitModel().until(Graphene.element(page.secondPageSpan).isVisible());
         //test
         _testScrollerForNotFrozenColumns();
 
         //change page
         page.nextPage.click();
-        new WebDriverWait(driver, 5).until(ElementDisplayed.getInstance().element(page.thirdPageSpan));
+        Graphene.waitModel().until(Graphene.element(page.thirdPageSpan).isVisible());
         //test
         _testScrollerForNotFrozenColumns();
     }
@@ -149,13 +149,13 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest<TestEDTFrozenCol
 
         //change page
         page.nextPage.click();
-        new WebDriverWait(driver, 5).until(ElementDisplayed.getInstance().element(page.secondPageSpan));
+        Graphene.waitModel().until(Graphene.element(page.secondPageSpan).isVisible());
         //test
         _testScrollerForNotFrozenColumns();
 
         //change page
         page.nextPage.click();
-        new WebDriverWait(driver, 5).until(ElementDisplayed.getInstance().element(page.thirdPageSpan));
+        Graphene.waitModel().until(Graphene.element(page.thirdPageSpan).isVisible());
         //test
         _testScrollerForNotFrozenColumns();
     }
