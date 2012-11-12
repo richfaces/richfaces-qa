@@ -61,7 +61,7 @@
         <arquillian.android.version>1.0.0.Alpha1</arquillian.android.version>
         <shrinkwrap.descriptors.version>2.0.0-alpha-4</shrinkwrap.descriptors.version>
 
-        <version.selenium>2.25.0</version.selenium>
+        <version.selenium>2.26.0</version.selenium>
         <version.selenium.server>2.26.0</version.selenium.server>
         <version.slf4j.jbossas6>1.6.1</version.slf4j.jbossas6>
 
@@ -482,7 +482,7 @@
                 <version>${arquillian.graphene-webdriver.version}</version>
                 <type>pom</type>
             </dependency>
-            
+
             <!-- Page Fragments dependencies -->
             <dependency>
                 <groupId>joda-time</groupId>
