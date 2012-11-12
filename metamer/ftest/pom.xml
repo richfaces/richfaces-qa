@@ -81,6 +81,14 @@ FSF site: http://www.fsf.org. -->
             <scope>test</scope>
         </dependency>
 
+        <!-- Resolution of JAR libraries into WAR archive -->
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+            <scope>test</scope>
+            <version>2.0.0-alpha-5</version>
+        </dependency>
+
         <dependency>
             <groupId>org.jboss.shrinkwrap.descriptors</groupId>
             <artifactId>shrinkwrap-descriptors-impl-javaee</artifactId>
@@ -173,12 +181,12 @@ FSF site: http://www.fsf.org. -->
         </dependency>
         
         <!-- Selenium 2.26.0 requires httpcore 4.2 but 4.1 comes with Shrinkwrap 2.0.0-alpha-5 -->
-        <!-- <dependency>
+        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
             <version>4.2.2</version>
             <scope>test</scope>
-        </dependency>-->
+        </dependency>
     </dependencies>
 
     <build>
