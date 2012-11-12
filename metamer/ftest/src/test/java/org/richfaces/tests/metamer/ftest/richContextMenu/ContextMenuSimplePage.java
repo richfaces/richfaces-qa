@@ -1,8 +1,8 @@
-/*
- * JBoss, Home of Professional Open Source.
- * Copyright 2010-2012, Red Hat, Inc., and individual contributors
- * as indicated by the @author tags. See the copyright.txt file in the
- * distribution for a full listing of individual contributors.
+/*******************************************************************************
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -18,12 +18,10 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richContextMenu;
 
-import org.jboss.test.selenium.support.ui.ElementDisplayed;
-import org.jboss.test.selenium.support.ui.ElementNotDisplayed;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -32,14 +30,13 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.DriverType;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**
- * Page object rich:contextMenu component at
- * faces/components/richContextMenu/simple.xhtml
+ * Page object rich:contextMenu component at faces/components/richContextMenu/simple.xhtml
  *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @since 4.2.1.Final
  */
-public class ContextMenuSimplePage extends MetamerPage{
+public class ContextMenuSimplePage extends MetamerPage {
 
     @FindBy(css = "div[id$=targetPanel1]")
     public WebElement targetPanel1;
@@ -63,12 +60,12 @@ public class ContextMenuSimplePage extends MetamerPage{
     }
 
     public void checkIfContextMenuDisplayed(WebDriver driver) {
-        new WebDriverWait(driver, 5).failWith("Context menu did not show.").until(
-                ElementDisplayed.getInstance().element(contextMenuContent));
+        Graphene.waitModel().withMessage("Context menu did not show.")
+            .until(Graphene.element(contextMenuContent).isVisible());
     }
 
     public void checkIfContextMenuNotDisplayed(WebDriver driver) {
-        new WebDriverWait(driver, 5).failWith("Context menu should not be showed.").until(
-                ElementNotDisplayed.getInstance().element(contextMenuContent));
+        Graphene.waitModel().withMessage("Context menu should not be showed.")
+            .until(Graphene.element(contextMenuContent).isVisible());
     }
 }

@@ -28,7 +28,7 @@ import static org.testng.Assert.assertEquals;
 import java.net.URL;
 import java.util.List;
 
-import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -53,7 +53,7 @@ public class TestRF12566 extends AbstractWebDriverTest<TestRF12566.RF12566Page> 
     public void testClickOnTheNextMonthAndJSErrorIsThrown() {
         page.getShowCalendarButton().click();
 
-        (new WebDriverWait(driver, 2)).until(new ExpectedCondition<Boolean>() {
+        Graphene.waitAjax().until(new ExpectedCondition<Boolean>() {
 
             public Boolean apply(WebDriver d) {
 
