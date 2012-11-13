@@ -467,13 +467,13 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
         }
     }
 
-    @Test(groups = { "4.Future" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-10821")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-10821")
     public void testImmediate() {
         calendarAttributes.set(CalendarAttributes.immediate, Boolean.TRUE);
         setCurrentDateWithCalendarsTodayButtonAction.perform();
         page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: null -> " + calendar.getInputValue());
-        page.assertImmediatePhasesCycle();
+        page.assertPhases(PhaseId.ANY_PHASE);
     }
 
     @Test
