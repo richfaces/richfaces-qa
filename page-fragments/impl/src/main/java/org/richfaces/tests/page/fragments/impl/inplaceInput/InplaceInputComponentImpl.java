@@ -34,7 +34,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
  * Component implementation of rich:inplaceInput
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class InplaceInputImpl implements InplaceInput {
+public class InplaceInputComponentImpl implements InplaceInputComponent {
 
     @Root
     private WebElement root;
