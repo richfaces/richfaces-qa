@@ -64,7 +64,7 @@ public class TestRichMessagesJSFValidator extends AbstractRichMessagesTest<Messa
         super.testFor(4);//4 messages
     }
 
-    @Test(groups = { "4.Future" })
+    @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-11298")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
