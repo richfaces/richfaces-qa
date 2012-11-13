@@ -27,7 +27,7 @@ import org.richfaces.tests.page.fragments.impl.VisibleComponent;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface InplaceInput extends VisibleComponent {
+public interface InplaceInputComponent extends VisibleComponent {
 
     public enum State {
 
