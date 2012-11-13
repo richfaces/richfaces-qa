@@ -32,9 +32,9 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.inplaceInput.EditingState;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceInput.OpenBy;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceInput.State;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceInputImpl;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceInputComponent.OpenBy;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceInputComponent.State;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceInputComponentImpl;
 import org.testng.annotations.Test;
 
 /**
@@ -46,7 +46,7 @@ import org.testng.annotations.Test;
 public class TestRichInplaceInputFAjax extends AbstractWebDriverTest<MetamerPage> {
 
     @FindBy(css = "span[id$=inplaceInput]")
-    private InplaceInputImpl inplaceInput;
+    private InplaceInputComponentImpl inplaceInput;
 
     @Override
     public URL getTestUrl() {

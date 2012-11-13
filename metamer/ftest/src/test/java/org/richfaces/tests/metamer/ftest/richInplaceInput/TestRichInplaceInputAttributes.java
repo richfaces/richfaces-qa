@@ -42,9 +42,10 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.inplaceInput.EditingState;
 import org.richfaces.tests.page.fragments.impl.inplaceInput.EditingState.FinishEditingBy;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceInput.OpenBy;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceInput.State;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceInputImpl;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceInputComponent.OpenBy;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceInputComponent.State;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.message.MessageComponentImpl;
 import org.testng.annotations.Test;
 
 /**
@@ -58,7 +59,9 @@ public class TestRichInplaceInputAttributes extends AbstractWebDriverTest<Metame
     @FindBy(css = "span[id$=output]")
     private WebElement output;
     @FindBy(css = "span[id$=inplaceInput]")
-    private InplaceInputImpl inplaceInput;
+    private InplaceInputComponentImpl inplaceInput;
+    @FindBy(css = "span[id$=msg]")
+    private MessageComponentImpl requiredMessage;
 
     @Override
     public URL getTestUrl() {
@@ -386,6 +389,26 @@ public class TestRichInplaceInputAttributes extends AbstractWebDriverTest<Metame
     }
 
     @Test
+    public void testRequired() {
+        inplaceInputAttributes.set(InplaceInputAttributes.required, Boolean.TRUE);
+        MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK).type(""),
+                WaitRequestType.XHR).confirm();
+        assertTrue(requiredMessage.isVisible());
+        assertEquals(requiredMessage.getDetail(), inplaceInputAttributes.get(InplaceInputAttributes.requiredMessage));
+    }
+
+    @Test
+    public void testRequiredMessage() {
+        String reqMsg = "Another new, completely different required message.";
+        inplaceInputAttributes.set(InplaceInputAttributes.required, Boolean.TRUE);
+        inplaceInputAttributes.set(InplaceInputAttributes.requiredMessage, reqMsg);
+        MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK).type(""),
+                WaitRequestType.XHR).confirm();
+        assertTrue(requiredMessage.isVisible());
+        assertEquals(requiredMessage.getDetail(), reqMsg);
+    }
+
+    @Test
     public void testSaveOnBlur() {
         inplaceInputAttributes.set(InplaceInputAttributes.saveOnBlur, Boolean.FALSE);
         inplaceInput.editBy(OpenBy.CLICK).type("value that will be canceled");
@@ -415,6 +438,11 @@ public class TestRichInplaceInputAttributes extends AbstractWebDriverTest<Metame
     @Test
     public void testStyle() {
         testStyle(inplaceInput.getRoot());
+    }
+
+    @Test
+    public void testStyleClass() {
+        testStyleClass(inplaceInput.getRoot());
     }
 
     @Test
