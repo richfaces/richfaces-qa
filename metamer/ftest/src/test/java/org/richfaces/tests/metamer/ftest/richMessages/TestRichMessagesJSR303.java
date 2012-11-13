@@ -65,7 +65,7 @@ public class TestRichMessagesJSR303 extends AbstractRichMessagesTest<MessagesPag
         super.testFor(2);//2 messages
     }
 
-    @Test(groups = { "4.Future" })
+    @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-11298")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat", "hDataTable", "uiRepeat" })

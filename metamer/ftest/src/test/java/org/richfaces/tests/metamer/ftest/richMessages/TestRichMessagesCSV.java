@@ -68,7 +68,7 @@ public class TestRichMessagesCSV extends AbstractRichMessagesTest<MessagesPage> 
         testFor(1);//1 message
     }
 
-    @Test(groups = { "4.Future" })
+    @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-11298")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
