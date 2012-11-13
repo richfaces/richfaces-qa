@@ -1,6 +1,6 @@
-/*******************************************************************************
+/**
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,44 +18,35 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Graphene.textEquals;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-
 import javax.faces.event.PhaseId;
-
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.EditingState;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceInput.OpenBy;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceInput.State;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceInputImpl;
 import org.testng.annotations.Test;
-
 
 /**
  * Test case for page faces/components/richInplaceInput/fAjax.xhtml.
  *
- * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22636 $
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichInplaceInputFAjax extends AbstractGrapheneTest {
+public class TestRichInplaceInputFAjax extends AbstractWebDriverTest<MetamerPage> {
 
-    private JQueryLocator inplaceInput = pjq("span[id$=inplaceInput]");
-    private JQueryLocator label = pjq("span.rf-ii-lbl");
-    private JQueryLocator input = pjq("input[id$=inplaceInputInput]");
-    private JQueryLocator edit = pjq("span.rf-ii-fld-cntr");
-    private JQueryLocator output = pjq("span[id$=output]");
+    @FindBy(css = "span[id$=inplaceInput]")
+    private InplaceInputImpl inplaceInput;
 
     @Override
     public URL getTestUrl() {
@@ -64,26 +55,19 @@ public class TestRichInplaceInputFAjax extends AbstractGrapheneTest {
 
     @Test
     public void testClick() {
-        guardNoRequest(selenium).click(inplaceInput);
-        assertFalse(selenium.belongsClass(edit, "rf-ii-none"),
-            "Edit should not contain class rf-ii-none when popup is open.");
-        assertTrue(selenium.isVisible(input), "Input should be displayed.");
+        assertTrue(inplaceInput.isVisible(), "Inplace input should be visible.");
 
-        selenium.type(input, "new value");
-        selenium.fireEvent(input, Event.BLUR);
-        assertTrue(selenium.belongsClass(inplaceInput, "rf-ii-chng"), "New class should be added to inplace input.");
-        assertTrue(selenium.belongsClass(edit, "rf-ii-none"),
-            "Edit should contain class rf-ii-none when popup is closed.");
+        EditingState editingState = MetamerPage.waitRequest(inplaceInput, WaitRequestType.NONE).editBy(OpenBy.CLICK);
+        assertTrue(inplaceInput.is(State.active), "Input should be active.");
 
-        assertEquals(selenium.getText(label), "new value", "Label should contain selected value.");
-        waitGui.failWith("Output did not change.").until(textEquals.locator(output).text("new value"));
+        String testedValue = "new value";
+        MetamerPage.waitRequest(editingState.type(testedValue), WaitRequestType.XHR).confirm();
 
-        String listenerText = selenium.getText(jq("div#phasesPanel li:eq(3)"));
-        assertEquals(listenerText, "*1 value changed: RichFaces 4 -> new value",
-            "Value change listener was not invoked.");
+        assertTrue(inplaceInput.is(State.changed), "Input should contain class indicating a change.");
+        assertEquals(inplaceInput.getEditValue(), testedValue, "Input should contain typed text.");
+        assertEquals(inplaceInput.getLabelValue(), testedValue, "Label should contain typed text.");
 
-        phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
-            PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
-        phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: RichFaces 4 -> new value");
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: RichFaces 4 -> " + testedValue);
+        page.assertPhases(PhaseId.ANY_PHASE);
     }
 }
