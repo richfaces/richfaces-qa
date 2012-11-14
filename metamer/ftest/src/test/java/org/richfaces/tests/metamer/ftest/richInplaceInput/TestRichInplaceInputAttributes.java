@@ -260,7 +260,7 @@ public class TestRichInplaceInputAttributes extends AbstractWebDriverTest<Metame
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-9868")
+    @RegressionTest("https://issues.jboss.org/browse/RF-9868")
     public void testOnfocus() {
         testFireEvent(inplaceInputAttributes, InplaceInputAttributes.onfocus,
                 new Actions(driver).click(inplaceInput.getRoot()).build());
@@ -394,12 +394,18 @@ public class TestRichInplaceInputAttributes extends AbstractWebDriverTest<Metame
         MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK).type(""),
                 WaitRequestType.XHR).confirm();
         assertTrue(requiredMessage.isVisible());
-        assertEquals(requiredMessage.getDetail(), inplaceInputAttributes.get(InplaceInputAttributes.requiredMessage));
+        assertEquals(requiredMessage.getDetail(),
+                inplaceInputAttributes.get(InplaceInputAttributes.requiredMessage));
+
+        inplaceInputAttributes.set(InplaceInputAttributes.required, Boolean.FALSE);
+        MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK).type(""),
+                WaitRequestType.XHR).confirm();
+        assertFalse(requiredMessage.isVisible());
     }
 
     @Test
     public void testRequiredMessage() {
-        String reqMsg = "Another new, completely different required message.";
+        String reqMsg = "Another new and completely different required message.";
         inplaceInputAttributes.set(InplaceInputAttributes.required, Boolean.TRUE);
         inplaceInputAttributes.set(InplaceInputAttributes.requiredMessage, reqMsg);
         MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK).type(""),
