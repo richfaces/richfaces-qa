@@ -40,8 +40,6 @@ import org.testng.annotations.Test;
  */
 public class TestAccordionKVS extends AbstractWebDriverTest<AccordionPage> {
 
-    AccordionReloadTester reloadTester = new AccordionReloadTester();
-
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richAccordion/simple.xhtml");
@@ -54,16 +52,20 @@ public class TestAccordionKVS extends AbstractWebDriverTest<AccordionPage> {
 
     @Test(groups = { "keepVisualStateTesting" })
     public void testRefreshFullPage() {
-        reloadTester.testFullPageRefresh();
+        new AccordionReloadTester().testFullPageRefresh();
     }
 
     @Test(groups = {"keepVisualStateTesting", "4.3"})
     @IssueTracking("https://issues.jboss.org/browse/RF-12035")
     public void testRenderAll() {
-        reloadTester.testRerenderAll();
+        new AccordionReloadTester().testRerenderAll();
     }
 
     private class AccordionReloadTester extends ReloadTester<Integer> {
+
+        public AccordionReloadTester() {
+            super(page);
+        }
 
         @Override
         public void doRequest(Integer accordionIndex) {

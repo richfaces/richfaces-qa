@@ -48,8 +48,6 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest<SimplePage> {
     @FindBy(id="form:autocomplete")
     private AutocompleteComponentImpl<String> autocomplete;
 
-    private AutocompleteReloadTester reloadTester = new AutocompleteReloadTester();
-
     @BeforeMethod
     public void setParser() {
         autocomplete.setSuggestionParser(new TextSuggestionParser());
@@ -72,15 +70,19 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest<SimplePage> {
 
     @Test(groups = {"keepVisualStateTesting"})
     public void testRefreshFullPage() {
-        reloadTester.testFullPageRefresh();
+        new AutocompleteReloadTester().testFullPageRefresh();
     }
 
     @Test(groups = {"keepVisualStateTesting"})
     public void testRerenderAll() {
-        reloadTester.testRerenderAll();
+        new AutocompleteReloadTester().testRerenderAll();
     }
 
     private class AutocompleteReloadTester extends AbstractWebDriverTest<SimplePage>.ReloadTester<String> {
+
+        public AutocompleteReloadTester() {
+            super(page);
+        }
 
         @Override
         public void doRequest(String inputValue) {

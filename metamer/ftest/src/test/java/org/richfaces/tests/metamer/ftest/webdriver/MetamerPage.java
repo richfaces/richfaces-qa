@@ -494,4 +494,18 @@ public class MetamerPage {
         }
         throw new IllegalStateException("no such phase '" + phaseIdentifier + "'");
     }
+
+    /**
+     * Do a full page refresh (regular HTTP request) by triggering a command with no action bound.
+     */
+    public void fullPageRefresh() {
+        waitRequest(fullPageRefreshIcon, WaitRequestType.HTTP).click();
+    }
+
+    /**
+     * Rerender all content of the page (AJAX request) by trigerring a command with no action but render bound.
+     */
+    public void rerenderAll() {
+        waitRequest(rerenderAllIcon, WaitRequestType.XHR).click();
+    }
 }
