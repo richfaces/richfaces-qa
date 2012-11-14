@@ -97,6 +97,26 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/><br/>
 
             output: <h:outputText id="output" value="#{richInplaceInputBean.attributes['value'].value}"/>
+            <br/><br/>
+            <fieldset>
+                <legend>JavaScript API</legend> 
+                Output value for all get methods: <h:inputText id="value"/>
+                <br/><br/>
+                On click:
+                <br/>
+                <input id="getInput" type="button" value="getInput(), and click on it" onclick="#{rich:component('inplaceInput')}.getInput().click()" />
+                <input id="getValue" type="button" value="getValue()" onclick="$('[id$=value]').val(String(#{rich:component('inplaceInput')}.getValue()))" />
+                <input id="isValueChanged" type="button" value="isValueChanged()" onclick="$('[id$=value]').val(String(#{rich:component('inplaceInput')}.isValueChanged()))" />
+                <input id="setValue" type="button" value="setValue('Completely different value')" onclick="#{rich:component('inplaceInput')}.setValue('Completely different value')" />
+                <br/><br/>
+                On mouseover:
+                <br/>
+                <input id="cancel" type="button" value="cancel()" onmouseover="#{rich:component('inplaceInput')}.cancel()" />
+                <input id="isEditState" type="button" value="isEditState()" onmouseover="$('[id$=value]').val(String(#{rich:component('inplaceInput')}.isEditState()))" />
+                <input id="save" type="button" value="save()" onmouseover="#{rich:component('inplaceInput')}.save()" />
+            </fieldset>
+
+
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
