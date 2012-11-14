@@ -41,8 +41,6 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 // FIXME AbstractAjaxPage should not be generic
 public abstract class AbstractAjaxTest<P extends AjaxPage> extends AbstractWebDriverTest<P> {
 
-    private LocalReloadTester reloadTester = new LocalReloadTester();
-
     public void testClick() {
         String reqTime = page.requestTime.getText();
         performAction();
@@ -241,14 +239,18 @@ public abstract class AbstractAjaxTest<P extends AjaxPage> extends AbstractWebDr
     }
 
     public void testRerenderAll() {
-        reloadTester.testRerenderAll();
+        new LocalReloadTester().testRerenderAll();
     }
 
     public void testFullPageRefresh() {
-        reloadTester.testFullPageRefresh();
+        new LocalReloadTester().testFullPageRefresh();
     }
 
     private class LocalReloadTester extends ReloadTester<String> {
+
+        public LocalReloadTester() {
+            super(page);
+        }
 
         @Override
         public void doRequest(String inputValue) {

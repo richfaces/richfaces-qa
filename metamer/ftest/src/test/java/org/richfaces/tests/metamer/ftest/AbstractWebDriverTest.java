@@ -435,20 +435,6 @@ public abstract class AbstractWebDriverTest<P extends MetamerPage> extends Abstr
     }
 
     /**
-     * Do a full page refresh (regular HTTP request) by triggering a command with no action bound.
-     */
-    public void fullPageRefresh() {
-        MetamerPage.waitRequest(page.fullPageRefreshIcon, WaitRequestType.HTTP).click();
-    }
-
-    /**
-     * Rerender all content of the page (AJAX request) by trigerring a command with no action but render bound.
-     */
-    public void rerenderAll() {
-        MetamerPage.waitRequest(page.rerenderAllIcon, WaitRequestType.XHR).click();
-    }
-
-    /**
      * Tries to check and wait for correct size (@size) of list. Depends on list
      * of WebElements decorated with StaleReferenceAwareFieldDecorator.
      *
@@ -511,6 +497,13 @@ public abstract class AbstractWebDriverTest<P extends MetamerPage> extends Abstr
      */
     public abstract class ReloadTester<T> {
 
+        private MetamerPage page;
+
+        public ReloadTester(MetamerPage page) {
+            super();
+            this.page = page;
+        }
+
         public abstract void doRequest(T inputValue);
 
         public abstract void verifyResponse(T inputValue);
@@ -521,7 +514,7 @@ public abstract class AbstractWebDriverTest<P extends MetamerPage> extends Abstr
             for (T inputValue : getInputValues()) {
                 doRequest(inputValue);
                 verifyResponse(inputValue);
-                rerenderAll();
+                page.rerenderAll();
                 verifyResponse(inputValue);
             }
         }
@@ -530,7 +523,7 @@ public abstract class AbstractWebDriverTest<P extends MetamerPage> extends Abstr
             for (T inputValue : getInputValues()) {
                 doRequest(inputValue);
                 verifyResponse(inputValue);
-                fullPageRefresh();
+                page.fullPageRefresh();
                 verifyResponse(inputValue);
             }
         }
