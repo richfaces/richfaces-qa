@@ -95,6 +95,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest<SimplePage> {
     public void testTypingPrefixAndThenConfirm() throws InterruptedException {
         assertFalse(autocomplete.areSuggestionsAvailable());
         autocomplete.type("ala");
+        waiting(1000);
         assertTrue(autocomplete.areSuggestionsAvailable());
         autocomplete.autocomplete();
         assertFalse(autocomplete.areSuggestionsAvailable());
@@ -119,6 +120,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest<SimplePage> {
        Suggestion<String> expected = new SuggestionImpl<String>("Alaska");
        autocomplete.type("ala");
        autocomplete.autocompleteWithSuggestion(expected, getScrollingType());
+       waiting(500);
        assertEquals(autocomplete.getInputValue(), expected.getValue());
     }
 
