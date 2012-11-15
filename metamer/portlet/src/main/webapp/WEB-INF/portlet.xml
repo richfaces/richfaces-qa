@@ -34,5 +34,14 @@
 			<value>true</value>
 		</container-runtime-option>
 	</portlet>
+	<filter>
+		<filter-name>testIdentityFilter</filter-name>
+		<filter-class>org.richfaces.tests.metamer.TestIdentityPorltletFilter</filter-class>
+		<lifecycle>RENDER_PHASE</lifecycle>
+	</filter>
+	<filter-mapping>
+		<filter-name>testIdentityFilter</filter-name>
+		<portlet-name>richfaces-metamer</portlet-name>
+	</filter-mapping
 
 </portlet-app>
