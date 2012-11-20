@@ -22,7 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import org.richfaces.tests.metamer.ftest.abstractions.InputValidationPage;
-import org.richfaces.tests.metamer.ftest.abstractions.StringInputComponentCSVTest;
+import org.richfaces.tests.metamer.ftest.abstractions.StringInputComponentJSR303Test;
 import org.testng.annotations.Test;
 
 /**
@@ -30,16 +30,11 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 //FIXME shoud not be generic (Graphene bug)
-public class TestAutocompleteCSV extends StringInputComponentCSVTest<InputValidationPage> {
+public class TestAutocompleteJSR303 extends StringInputComponentJSR303Test<InputValidationPage> {
 
     @Override
     public String getComponentName() {
         return "richAutocomplete";
-    }
-
-    @Override
-    public MetamerNavigation getComponentExampleNavigation() {
-        return new MetamerNavigation("Rich", "Rich Autocomplete", "Client Side Validation");
     }
 
     @Test

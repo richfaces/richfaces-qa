@@ -19,51 +19,33 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.richAutocomplete;
+package org.richfaces.tests.metamer.ftest.abstractions;
 
-import org.richfaces.tests.metamer.ftest.abstractions.InputValidationPage;
-import org.richfaces.tests.metamer.ftest.abstractions.StringInputComponentCSVTest;
-import org.testng.annotations.Test;
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+
+import java.net.URL;
+import org.richfaces.tests.metamer.ftest.annotations.Inject;
+import org.richfaces.tests.metamer.ftest.annotations.Use;
 
 /**
- * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 //FIXME shoud not be generic (Graphene bug)
-public class TestAutocompleteCSV extends StringInputComponentCSVTest<InputValidationPage> {
+public abstract class StringInputComponentJSR303Test<P extends InputValidationPage> extends AbstractStringInputComponentValidationTest<P> {
+
+    @Inject
+    @Use(strings = { A4J_COMMANDBUTTON, H_COMMANDBUTTON })
+    private String submitMethod;
+
+    public abstract String getComponentName();
 
     @Override
-    public String getComponentName() {
-        return "richAutocomplete";
+    public String getSubmitMethod() {
+        return submitMethod;
     }
 
     @Override
-    public MetamerNavigation getComponentExampleNavigation() {
-        return new MetamerNavigation("Rich", "Rich Autocomplete", "Client Side Validation");
-    }
-
-    @Test
-    public void testAllInputsWrong() {
-        verifyAllInputs();
-    }
-
-    @Test
-    public void testCustomString() {
-        verifyCustomString();
-    }
-
-    @Test
-    public void testNotEmpty() {
-        verifyNotEmpty();
-    }
-
-    @Test
-    public void testRegExpPattern() {
-        verifyRegExpPattern();
-    }
-
-    @Test
-    public void testStringSize() {
-        verifyStringSize();
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/" + getComponentName() + "/jsr303.xhtml");
     }
 }
