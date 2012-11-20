@@ -80,9 +80,10 @@ public class MetamerPage {
     private Map<PhaseId, Set<String>> map = new LinkedHashMap<PhaseId, Set<String>>();
 
     /**
-     * Tries to execute JavaScript script for few times with some wait time between tries and expecting a predicted
-     * result. Method waits for expected string defined in @expectedValue. Returns single trimmed String with expected
-     * value or what it found or null.
+     * Executes JavaScript script.
+     * Method will execute the script few times until an expected String is returned,
+     * the String is defined in @expectedValue. Returns a single trimmed String with expected
+     * value or what it has found or null.
      *
      * @param expectedValue
      *            expected return value of javaScript
@@ -95,14 +96,13 @@ public class MetamerPage {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         String result = null;
         for (int i = 0; i < TRIES; i++) {
-            Object executeScript = js.executeScript(script, args);
-            if (executeScript != null) {
-                result = ((String) js.executeScript(script, args)).trim();
+            Object executedScriptResult = js.executeScript(script, args);
+            if (executedScriptResult != null) {
+                result = ((String) executedScriptResult).trim();
                 if (result.equals(expectedValue)) {
                     break;
                 }
             }
-            waiting(MINOR_WAIT_TIME);
         }
         return result;
     }
