@@ -34,7 +34,7 @@ public class ValidationPage extends MetamerPage {
 
     public static final String JS_COMPLETED_STATE_STRING = "completed";
     public static final String JS_STATE_VARIABLE = "document.valuesSettingState";
-
+    //
     @FindBy(id = "setCorrectValuesButton")
     WebElement setCorrectValuesButton;
     @FindBy(id = "setWrongValuesButton")
