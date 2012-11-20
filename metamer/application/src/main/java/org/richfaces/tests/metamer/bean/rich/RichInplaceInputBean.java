@@ -1,6 +1,6 @@
-/*******************************************************************************
+/**
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.bean.rich;
 
 import java.io.Serializable;
@@ -26,13 +26,10 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import org.richfaces.component.UIInplaceInput;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBeanImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,30 +37,20 @@ import org.slf4j.LoggerFactory;
  * Managed bean for rich:inplaceInput.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22460 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean(name = "richInplaceInputBean")
 @ViewScoped
-public class RichInplaceInputBean implements Serializable {
-
-    public static final String NOT_EMPTY_VALIDATION_MSG = "may not be empty";
-    public static final String REGEXP_VALIDATION_MSG = "must match \"[a-z].*\"";
-    public static final String STRING_SIZE_VALIDATION_MSG = "size must be between 3 and 6";
+public class RichInplaceInputBean extends StringInputValidationBeanImpl implements Serializable {
 
     private static final long serialVersionUID = -1L;
-    private static Logger logger;
-    private Attributes attributes;
-    private String value1;
-    private String value2;
-    private String value3;
-    private String value4;
+    private static final Logger logger = LoggerFactory.getLogger(RichInplaceInputBean.class);
 
     /**
      * Initializes the managed bean.
      */
     @PostConstruct
     public void init() {
-        logger = LoggerFactory.getLogger(getClass());
         logger.debug("initializing bean " + getClass().getName());
 
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIInplaceInput.class, getClass());
@@ -81,51 +68,5 @@ public class RichInplaceInputBean implements Serializable {
         attributes.remove("validator");
         attributes.remove("validatorMessage");
         attributes.remove("valueChangeListener");
-
-        // TODO remove as soon as RF-10411 is fixed
-        attributes.setAttribute("style", null);
-    }
-
-    public Attributes getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(Attributes attributes) {
-        this.attributes = attributes;
-    }
-
-    @NotEmpty(message = NOT_EMPTY_VALIDATION_MSG)
-    public String getValue1() {
-        return value1;
-    }
-
-    public void setValue1(String value1) {
-        this.value1 = value1;
-    }
-
-    @Pattern(regexp = "[a-z].*", message = REGEXP_VALIDATION_MSG)
-    public String getValue2() {
-        return value2;
-    }
-
-    public void setValue2(String value2) {
-        this.value2 = value2;
-    }
-
-    @Size(min = 3, max = 6, message = STRING_SIZE_VALIDATION_MSG)
-    public String getValue3() {
-        return value3;
-    }
-
-    public void setValue3(String value3) {
-        this.value3 = value3;
-    }
-
-    public String getValue4() {
-        return value4;
-    }
-
-    public void setValue4(String value4) {
-        this.value4 = value4;
     }
 }
