@@ -465,6 +465,11 @@ public class TestRichInplaceInputAttributes extends AbstractWebDriverTest<Metame
     }
 
     @Test
+    public void testTitle() {
+        testTitle(inplaceInput.getRoot());
+    }
+
+    @Test
     public void testValue() {
         String testedValue = "new value";
         inplaceInputAttributes.set(InplaceInputAttributes.value, testedValue);

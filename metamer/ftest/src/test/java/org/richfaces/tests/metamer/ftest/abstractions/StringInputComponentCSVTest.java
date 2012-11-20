@@ -48,4 +48,9 @@ public abstract class StringInputComponentCSVTest<P extends InputValidationPage>
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/" + getComponentName() + "/csv.xhtml");
     }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich " + getComponentName(), "Client Side Validation");
+    }
 }

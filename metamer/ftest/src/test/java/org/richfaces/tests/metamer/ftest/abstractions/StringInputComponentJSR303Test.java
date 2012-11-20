@@ -48,4 +48,9 @@ public abstract class StringInputComponentJSR303Test<P extends InputValidationPa
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/" + getComponentName() + "/jsr303.xhtml");
     }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich " + getComponentName(), "JSR303 Validation");
+    }
 }
