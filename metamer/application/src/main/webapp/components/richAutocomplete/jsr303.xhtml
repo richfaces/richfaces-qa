@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:rich="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -25,77 +25,28 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="/templates/template.xhtml">
-
-        <ui:define name="view">
-            <f:metadata>
-                <f:viewParam name="templates" value="#{templateBean.templates}">
-                    <f:converter converterId="templatesListConverter" />
-                </f:viewParam>
-            </f:metadata>
+    <ui:composition template="/templates/inputComponentValidationTemplate.xhtml">
+        <ui:define name="notEmpty" >
+            <rich:autocomplete id="notEmpty"
+                               value="#{richAutocompleteBean.notEmptyValue}"
+                               />
         </ui:define>
-
-        <ui:define name="component">
-            <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
-            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
-            <br/><br/>
-
-            <h:panelGrid columns="3">
-                not empty
-                <rich:autocomplete id="input1" 
-                                   autocompleteMethod="#{richAutocompleteBean.autocomplete}" 
-                                   value="#{richAutocompleteBean.value1}"
-                                   >                                   
-                    <a4j:ajax event="change" render="output1"/>
-                </rich:autocomplete>
-                <rich:message id="inputMsg1" for="input1"/>
-
-                pattern [a-z].*
-                <rich:autocomplete id="input2"
-                                   autocompleteMethod="#{richAutocompleteBean.autocomplete}"
-                                   value="#{richAutocompleteBean.value2}"
-                                   >
-                    <a4j:ajax event="change" render="output2"/>
-                </rich:autocomplete>
-                <rich:message id="inputMsg2" for="input2"/>
-
-                size 3-6
-                <rich:autocomplete id="input3"
-                                   autocompleteMethod="#{richAutocompleteBean.autocomplete}"
-                                   value="#{richAutocompleteBean.value3}"
-                                   >
-                    <a4j:ajax event="change" render="output3"/>
-                </rich:autocomplete>
-                <rich:message id="inputMsg3" for="input3"/>
-
-                custom (RichFaces)
-                <rich:autocomplete id="input4"
-                                   autocompleteMethod="#{richAutocompleteBean.autocomplete}"                                   
-                                   value="#{richAutocompleteBean.value4}"                                   
-                                   >
-                    <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>
-                    <a4j:ajax event="change" render="output4"/>
-                </rich:autocomplete>
-                <rich:message id="inputMsg4" for="input4"/>
-
-            </h:panelGrid>
-            <br/><br/>
-
-            <h:panelGrid columns="2">
-                output1
-                <h:outputText id="output1" value="#{richAutocompleteBean.value1}"/>
-                output2
-                <h:outputText id="output2" value="#{richAutocompleteBean.value2}"/>
-                output3
-                <h:outputText id="output3" value="#{richAutocompleteBean.value3}"/>
-                output4
-                <h:outputText id="output4" value="#{richAutocompleteBean.value4}"/>
-            </h:panelGrid>
-            
+        <ui:define name="pattern" >
+            <rich:autocomplete id="pattern"
+                               value="#{richAutocompleteBean.patternValue}"
+                               />
         </ui:define>
-
-        <ui:define name="outOfTemplateAfter">
+        <ui:define name="size" >
+            <rich:autocomplete id="size"
+                               value="#{richAutocompleteBean.sizeValue}"
+                               />
         </ui:define>
-
+        <ui:define name="custom" >
+            <rich:autocomplete id="custom"
+                               value="#{richAutocompleteBean.customValue}"
+                               >
+                <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>
+            </rich:autocomplete>
+        </ui:define>
     </ui:composition>
 </html>
