@@ -30,10 +30,10 @@ import org.testng.annotations.Test;
  */
 public class TestTabPanelItemChangeListener extends AbstractItemChangeListenerTest<ICLTabPanelPage> {
 
-    private final String ICL_as_ComponentAttribute_PhaseName = "* item changed: tab1 -> tab2";
-    private final String ICL_inComponent_usingType_PhaseName = "* itemChangeListenerBean item changed: tab1 -> tab2";
-    private final String ICL_inComponent_usingListener_PhaseName = "* itemChangeListenerBean2 item changed: tab1 -> tab2";
-    private final String ICL_outsideComponent_usingType_PhaseName = "* itemChangeListenerBean3 item changed: tab1 -> tab2";
+    private final String ICL_as_ComponentAttribute_PhaseName = "item changed: tab1 -> tab2";
+    private final String ICL_inComponent_usingType_PhaseName = "itemChangeListenerBean item changed: tab1 -> tab2";
+    private final String ICL_inComponent_usingListener_PhaseName = "itemChangeListenerBean2 item changed: tab1 -> tab2";
+    private final String ICL_outsideComponent_usingType_PhaseName = "itemChangeListenerBean3 item changed: tab1 -> tab2";
 
     public TestTabPanelItemChangeListener() {
         super("tabPanel");

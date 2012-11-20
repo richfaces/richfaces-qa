@@ -22,10 +22,9 @@
 package org.richfaces.tests.metamer.ftest.richTreeSelectionChangeListener;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-
+import javax.faces.event.PhaseId;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -54,59 +53,41 @@ public abstract class AbstractTreeSelectionChangeListenerTest<P extends TSCLPage
         return new MetamerNavigation("Rich", "Rich Tree Selection Change Listener", testedComponent);
     }
 
-    /**
-     * Gets list of WebElements and check if some of them has same text as
-     * expected in attribute @expectedText.
-     *
-     * @param expectedText value of the text to be find
-     * @return true if text was found or false
-     */
-    private boolean subTest(String expectedText) {
-        return page.checkPhasesContainAllOf(expectedText);
-    }
-
-    private void testTSCL(String expectedText, String failMessage) {
+    private void testTSCL(String expectedText) {
         //selects a first node
         MetamerPage.waitRequest(page.getItem(1), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
-        assertTrue(subTest(expectedText + nullToFirst), failMessage);
+        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, expectedText + nullToFirst);
         //then selectis a second node
         MetamerPage.waitRequest(page.getItem(2), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
-        assertTrue(subTest(expectedText + firstToSecond), failMessage);
+        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, expectedText + firstToSecond);
     }
 
-    private void testTSCLWithoutAdditionalStrings(String expectedText, String failMessage) {
+    private void testTSCLWithoutAdditionalStrings(String expectedText) {
         //selects a first node
         MetamerPage.waitRequest(page.getItem(1), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
-        assertTrue(subTest(expectedText), failMessage);
+        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, expectedText);
         //then test selecting a second node
         MetamerPage.waitRequest(page.getItem(2), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
-        assertTrue(subTest(expectedText), failMessage);
+        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, expectedText);
     }
 
     public void testTSCLAsAttributeOfComponent(String expectedMSG) {
-        testTSCLWithoutAdditionalStrings(expectedMSG,
-                "TreeToggleListener as attribute of component " + testedComponent + " does not work.");
+        testTSCLWithoutAdditionalStrings(expectedMSG);
     }
 
     public void testTSCLInComponentWithType(String expectedMSG) {
-        testTSCL(expectedMSG,
-                "TreeToggleListener set in attribute @type in component "
-                + testedComponent + " does not work.");
+        testTSCLWithoutAdditionalStrings(expectedMSG);
     }
 
     public void testTSCLInComponentWithListener(String expectedMSG) {
-        testTSCL(expectedMSG,
-                "TreeToggleListener set in attribute @listener in component "
-                + testedComponent + " does not work.");
+        testTSCLWithoutAdditionalStrings(expectedMSG);
     }
 
     public void testTSCLAsForAttributeWithType(String expectedMSG) {
-        testTSCL(expectedMSG,
-                "TreeToggleListener set in attribute @type and using attribute @for outside component "
-                + testedComponent + " does not work.");
+        testTSCLWithoutAdditionalStrings(expectedMSG);
     }
 }
