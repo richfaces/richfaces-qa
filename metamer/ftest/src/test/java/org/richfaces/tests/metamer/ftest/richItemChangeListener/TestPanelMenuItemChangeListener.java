@@ -29,10 +29,10 @@ import org.testng.annotations.Test;
  */
 public class TestPanelMenuItemChangeListener extends AbstractItemChangeListenerTest<ICLPanelMenuPage> {
 
-    private final String ICL_as_ComponentAttribute_PhaseName = "* item changed: null -> item1";
-    private final String ICL_inComponent_usingType_PhaseName = "* itemChangeListenerBean item changed: null -> item1";
-    private final String ICL_inComponent_usingListener_PhaseName = "* itemChangeListenerBean2 item changed: null -> item1";
-    private final String ICL_outsideComponent_usingType_PhaseName = "* itemChangeListenerBean3 item changed: null -> item1";
+    private final String ICL_as_ComponentAttribute_PhaseName = "item changed: null -> item1";
+    private final String ICL_inComponent_usingType_PhaseName = "itemChangeListenerBean item changed: null -> item1";
+    private final String ICL_inComponent_usingListener_PhaseName = "itemChangeListenerBean2 item changed: null -> item1";
+    private final String ICL_outsideComponent_usingType_PhaseName = "itemChangeListenerBean3 item changed: null -> item1";
 
     public TestPanelMenuItemChangeListener() {
         super("panelMenu");
