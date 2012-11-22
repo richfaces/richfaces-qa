@@ -188,6 +188,28 @@ FSF site: http://www.fsf.org. -->
             <version>4.2.2</version>
             <scope>test</scope>
         </dependency>
+        
+        <!-- Specific version to make remoting compatible with EAP 6.0.1 -->
+        <dependency>
+            <groupId>org.jboss.remotingjmx</groupId>
+            <artifactId>remoting-jmx</artifactId>
+        </dependency>
+         
+        <dependency>
+            <groupId>org.jboss.remoting3</groupId>
+            <artifactId>jboss-remoting</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jboss.xnio</groupId>
+            <artifactId>xnio-api</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jboss.xnio</groupId>
+            <artifactId>xnio-nio</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
