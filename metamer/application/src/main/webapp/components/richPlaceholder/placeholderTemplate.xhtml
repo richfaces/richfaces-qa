@@ -37,7 +37,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
             <ui:debug/>
-            <ui:insert name="testedComponent"/>
+            <ui:insert name="testedComponents"/>
             <br/>
             <br/>
             <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
@@ -45,8 +45,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/>
             <br/>
             <a4j:outputPanel ajaxRendered="true">
-                output : 
-                <h:outputText value="#{richPlaceholderBean.inputValue}"/>
+                output 1 : <h:outputText value="#{richPlaceholderBean.inputValue1}"/>
+                <br/>
+                output 2 : <h:outputText value="#{richPlaceholderBean.inputValue2}"/>
             </a4j:outputPanel>
         </ui:define>
 

@@ -27,10 +27,13 @@
     -->
 
     <ui:composition template="placeholderTemplate.xhtml">
-        <ui:define name="testedComponent">
-            <rich:select id="component" value="#{richPlaceholderBean.inputValue}">
+        <ui:define name="testedComponents">
+            <rich:select id="input1" enableManualInput="true" value="#{richPlaceholderBean.inputValue1}">
                 <f:selectItems value="#{richInplaceSelectBean.validationOptions}" />
                 <ui:include src="componentToInclude.xhtml"/>
+            </rich:select>
+            <rich:select id="input2" enableManualInput="true" value="#{richPlaceholderBean.inputValue2}">
+                <f:selectItems value="#{richInplaceSelectBean.validationOptions}" />
             </rich:select>
         </ui:define>
     </ui:composition>

@@ -27,13 +27,11 @@
     -->
 
     <ui:composition template="placeholderTemplate.xhtml">
-        <ui:define name="testedComponent">
-            Input for integer &ge; 3:
-            <h:inputText id="component" value="#{richPlaceholderBean.intValue}">
+        <ui:define name="testedComponents">
+            <h:inputText id="input1" value="#{richPlaceholderBean.inputValue1}">
                 <ui:include src="componentToInclude.xhtml"/>
-                <rich:validator/>
             </h:inputText>
-            <rich:message for="component"/>
+            <h:inputText id="input2" value="#{richPlaceholderBean.inputValue2}"/>
         </ui:define>
     </ui:composition>
 </html>

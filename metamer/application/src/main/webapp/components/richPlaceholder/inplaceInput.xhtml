@@ -27,10 +27,11 @@
     -->
 
     <ui:composition template="placeholderTemplate.xhtml">
-        <ui:define name="testedComponent">
-            <rich:inplaceInput id="component" value="#{richPlaceholderBean.inputValue}">
+        <ui:define name="testedComponents">
+            <rich:inplaceInput id="input1" value="#{richPlaceholderBean.inputValue1}">
                 <ui:include src="componentToInclude.xhtml"/>
             </rich:inplaceInput>
+            <rich:inplaceInput id="input2" value="#{richPlaceholderBean.inputValue2}"/>
         </ui:define>
     </ui:composition>
 </html>

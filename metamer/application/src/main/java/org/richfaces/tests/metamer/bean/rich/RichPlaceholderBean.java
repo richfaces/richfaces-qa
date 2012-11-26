@@ -41,7 +41,8 @@ public class RichPlaceholderBean implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(RichPlaceholderBean.class);
     private Attributes attributes;
-    private Object inputValue;
+    private Object inputValue1;
+    private Object inputValue2;
     @Min(value = 3)
     private Integer intValue;
 
@@ -53,16 +54,19 @@ public class RichPlaceholderBean implements Serializable {
         attributes.setAttribute("value", "Watermark text");
         attributes.setAttribute("rendered", "true");
         attributes.setAttribute("styleClass", "customPlaceholderClass");
-
-        attributes.remove("selector");
+        attributes.setAttribute("selector", "[id$=input1]");
     }
 
     public Attributes getAttributes() {
         return attributes;
     }
 
-    public Object getInputValue() {
-        return inputValue;
+    public Object getInputValue1() {
+        return inputValue1;
+    }
+
+    public Object getInputValue2() {
+        return inputValue2;
     }
 
     public Integer getIntValue() {
@@ -73,8 +77,12 @@ public class RichPlaceholderBean implements Serializable {
         this.attributes = attributes;
     }
 
-    public void setInputValue(Object inputValue) {
-        this.inputValue = inputValue;
+    public void setInputValue1(Object inputValue1) {
+        this.inputValue1 = inputValue1;
+    }
+
+    public void setInputValue2(Object inputValue2) {
+        this.inputValue2 = inputValue2;
     }
 
     public void setIntValue(Integer intValue) {

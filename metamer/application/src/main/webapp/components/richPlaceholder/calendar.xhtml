@@ -27,10 +27,11 @@
     -->
 
     <ui:composition template="placeholderTemplate.xhtml">
-        <ui:define name="testedComponent">
-            <rich:calendar id="component" enableManualInput="true" value="#{richPlaceholderBean.inputValue}">
+        <ui:define name="testedComponents">
+            <rich:calendar id="input1" enableManualInput="true" value="#{richPlaceholderBean.inputValue1}">
                 <ui:include src="componentToInclude.xhtml"/>
             </rich:calendar>
+            <rich:calendar id="input2" enableManualInput="true" value="#{richPlaceholderBean.inputValue2}"/>
         </ui:define>
     </ui:composition>
 </html>

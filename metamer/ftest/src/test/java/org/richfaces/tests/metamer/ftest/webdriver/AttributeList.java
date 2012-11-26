@@ -55,6 +55,7 @@ import org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes;
 import org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes;
 import org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes;
 import org.richfaces.tests.metamer.ftest.richPickList.PickListAttributes;
+import org.richfaces.tests.metamer.ftest.richPlaceholder.PlaceholderAttributes;
 import org.richfaces.tests.metamer.ftest.richPopupPanel.PopupPanelAttributes;
 import org.richfaces.tests.metamer.ftest.richProgressBar.ProgressBarAttributes;
 import org.richfaces.tests.metamer.ftest.richSelect.SelectAttributes;
@@ -127,6 +128,7 @@ public class AttributeList {
     public static Attributes<PanelMenuItemAttributes> panelMenuItemAttributes = new Attributes<PanelMenuItemAttributes>();
     public static Attributes<ParamAttributes> paramAttributes = new Attributes<ParamAttributes>();
     public static Attributes<PickListAttributes> pickListAttributes = new Attributes<PickListAttributes>();
+    public static Attributes<PlaceholderAttributes> placeholderAttributes = new Attributes<PlaceholderAttributes>();
     public static Attributes<PollAttributes> pollAttributes = new Attributes<PollAttributes>();
     public static Attributes<PopupPanelAttributes> popupPanelAttributes = new Attributes<PopupPanelAttributes>();
     public static Attributes<ProgressBarAttributes> progressBarAttributes = new Attributes<ProgressBarAttributes>();
