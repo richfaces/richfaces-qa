@@ -12,7 +12,7 @@
 
    <!--groupId>org.jboss.portletbridge.examples</groupId-->
    <artifactId>metamer-portlet</artifactId>
-   <version>3.1.0.Final</version><!-- make sure that we want keep metamer-portlet version dependent on PBR release -->
+   <version>${version.portletbridge}</version><!-- make sure that we want keep metamer-portlet version dependent on PBR release -->
    <packaging>war</packaging>
 
    <name>RichFaces Metamer Portlet</name>
@@ -24,9 +24,9 @@
       <!-- for RF 4.2 is jee6 valid identifier -->
       <org.richfaces.qualifier>jee6</org.richfaces.qualifier>
       <!-- Choose Metamer version which works in Portal correctly -->
-      <version.richfaces4.metamer>4.2.3.20121017-Final</version.richfaces4.metamer>
+      <version.richfaces4.metamer>4.2.4-SNAPSHOT</version.richfaces4.metamer>
       <version.hibernate.validator>4.2.0.Final</version.hibernate.validator>
-      <version.portletbridge>3.1.0.Final</version.portletbridge>
+      <version.portletbridge>3.2.0.Final-SNAPSHOT</version.portletbridge>
    </properties>
 
    <dependencies>
@@ -39,7 +39,52 @@
             <type>war</type>
             <scope>compile</scope>
       </dependency>
-   
+      
+      <!-- Required for PortletFilter compile: dependency on UserBean from metamer application -->
+      <dependency>
+         <groupId>org.richfaces.tests</groupId>
+         <artifactId>metamer</artifactId>
+         <version>${version.richfaces4.metamer}</version>
+         <classifier>classes</classifier>
+         <type>jar</type>
+         <scope>provided</scope><!-- this scope really matters to avoid include it into metamer-portlet.war -->
+      </dependency>
+      
+      <!-- Fix dependency problem with RF components when build metamer portlet from 4.3.0 branch -->
+      <!-- RichFaces 4 -->
+        <dependency>
+            <groupId>org.richfaces.core</groupId>
+            <artifactId>richfaces-core-impl</artifactId>
+            <version>4.2.3.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.richfaces.core</groupId>
+            <artifactId>richfaces-core-api</artifactId>
+            <version>4.2.3.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.richfaces.ui</groupId>
+            <artifactId>richfaces-components-ui</artifactId>
+            <version>4.2.3.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.richfaces.ui</groupId>
+            <artifactId>richfaces-components-api</artifactId>
+            <version>4.2.3.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.richfaces.cdk</groupId>
+            <artifactId>annotations</artifactId>
+            <version>4.2.3.Final</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.spec.javax.faces</groupId>
+                    <artifactId>jboss-jsf-api_2.1_spec</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+      
+      
       <dependency>
          <groupId>junit</groupId>
          <artifactId>junit</artifactId>
@@ -70,11 +115,11 @@
             <scope>runtime</scope>
         </dependency>
 
-	<dependency>
-	    <groupId>org.jboss.portletbridge</groupId>
-	    <artifactId>portletbridge-extension-richfaces</artifactId>
+      	<dependency>
+      	    <groupId>org.jboss.portletbridge</groupId>
+      	    <artifactId>portletbridge-extension-richfaces</artifactId>
             <version>${version.portletbridge}</version>
-	</dependency>
+      	</dependency>
    </dependencies>
 
    <build>
