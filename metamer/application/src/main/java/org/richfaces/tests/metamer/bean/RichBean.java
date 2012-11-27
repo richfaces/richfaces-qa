@@ -144,6 +144,7 @@ public class RichBean implements Serializable {
         richComponents.put("richEditor", "Rich Editor");
         richComponents.put("richExtendedDataTable", "Rich Extended Data Table");
         richComponents.put("richFileUpload", "Rich File Upload");
+        richComponents.put("richFocus", "Rich Focus");
         richComponents.put("richFunctions", "Rich Functions");
         richComponents.put("richGraphValidator", "Rich Graph Validator");
         richComponents.put("richHashParam", "Rich Hash Parameter");

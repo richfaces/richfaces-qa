@@ -36,6 +36,7 @@ import org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes;
 import org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes;
 import org.richfaces.tests.metamer.ftest.richExtendedDataTable.ExtendedDataTableAttributes;
 import org.richfaces.tests.metamer.ftest.richFileUpload.FileUploadAttributes;
+import org.richfaces.tests.metamer.ftest.richFocus.FocusAttributes;
 import org.richfaces.tests.metamer.ftest.richGraphValidator.GraphValidatorAttributes;
 import org.richfaces.tests.metamer.ftest.richHashParam.HashParamAttributes;
 import org.richfaces.tests.metamer.ftest.richInplaceInput.InplaceInputAttributes;
@@ -102,6 +103,7 @@ public class AttributeList {
     public static Attributes<EditorAttributes> editorAttributes = new Attributes<EditorAttributes>();
     public static Attributes<ExtendedDataTableAttributes> extendedDataTableAttributes = new Attributes<ExtendedDataTableAttributes>();
     public static Attributes<FileUploadAttributes> fileUploadAttributes = new Attributes<FileUploadAttributes>();
+    public static Attributes<FocusAttributes> focusAttributes = new Attributes<FocusAttributes>();
     public static Attributes<GraphValidatorAttributes> graphValidatorAttributes = new Attributes<GraphValidatorAttributes>();
     public static Attributes<HashParamAttributes> hashParamAttributes = new Attributes<HashParamAttributes>();
     public static Attributes<InplaceInputAttributes> inplaceInputAttributes = new Attributes<InplaceInputAttributes>();
