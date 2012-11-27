@@ -1,8 +1,8 @@
-package org.richfaces.tests.page.fragments.impl.checkbox;
+package org.richfaces.tests.page.fragments.impl.input;
 
 import org.jboss.arquillian.graphene.component.object.api.checkbox.CheckboxComponent;
 
-public class CheckboxComponentImpl implements CheckboxComponent {
+public class CheckboxInputComponentImpl implements CheckboxComponent {
 
     @Override
     public void check() {

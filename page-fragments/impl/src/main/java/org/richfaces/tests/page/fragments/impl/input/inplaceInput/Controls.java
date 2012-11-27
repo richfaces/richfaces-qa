@@ -19,54 +19,27 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.page.fragments.impl.inplaceInput;
+package org.richfaces.tests.page.fragments.impl.input.inplaceInput;
+
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.VisibleComponent;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface EditingState {
-
-    public enum FinishEditingBy {
-
-        keys,
-        controls;
-    }
+public interface Controls extends VisibleComponent {
 
     /**
-     * Cancels the input.
-     * Cancel is done by keys, by pressing ESCAPE
+     * Clicks on Cancel button.
      */
     void cancel();
 
     /**
-     * Cancels the input.
-     * @param by specifies how will be the cancel done
+     * Clicks on Ok button.
      */
-    void cancel(FinishEditingBy by);
+    void ok();
 
-    /**
-     * Confirmation of input.
-     * Confirms by keys, by pressing RETURN
-     */
-    void confirm();
+    WebElement getCancelButtonElement();
 
-    /**
-     * Confirmation of input.
-     * @param by specifies how will be the confirmation done
-     */
-    void confirm(FinishEditingBy by);
-
-    /**
-     * Returns an instance, with which can user interact with control buttons
-     * (OK and Cancel button).
-     */
-    Controls getControls();
-
-    /**
-     * Clears input, types to input the @newValue and then it returns same instance
-     * to be easily confirmed or canceled.
-     * @param newValue value to be set
-     * @return same instance after typing to input
-     */
-    EditingState type(String newValue);
+    WebElement getOkButtonElement();
 }
