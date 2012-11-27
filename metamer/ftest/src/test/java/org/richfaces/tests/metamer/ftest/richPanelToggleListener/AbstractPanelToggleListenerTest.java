@@ -57,11 +57,11 @@ public abstract class AbstractPanelToggleListenerTest<P extends PTLCollapsiblePa
         //first test collapsing of panel
         MetamerPage.waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, expectedText + collapsedPanelString);
+        page.assertListener(PhaseId.INVOKE_APPLICATION, expectedText + collapsedPanelString);
         //then test expanding of panel
         MetamerPage.waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
-        page.assertListener(PhaseId.PROCESS_VALIDATIONS, expectedText + expandedPanelString);
+        page.assertListener(PhaseId.INVOKE_APPLICATION, expectedText + expandedPanelString);
     }
 
     public void testPTLAsAttributeOfComponent(String expectedMSG) {
