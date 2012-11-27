@@ -37,6 +37,7 @@
     <modules>
         <module>application</module>
         <module>ftest</module>
+	<module>portlet</module>
     </modules>
 
     <dependencyManagement>
