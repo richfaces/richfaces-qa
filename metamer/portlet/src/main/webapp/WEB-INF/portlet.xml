@@ -42,6 +42,6 @@
 	<filter-mapping>
 		<filter-name>testIdentityFilter</filter-name>
 		<portlet-name>richfaces-metamer</portlet-name>
-	</filter-mapping
+	</filter-mapping>
 
 </portlet-app>
