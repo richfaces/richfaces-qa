@@ -29,6 +29,8 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.autocomplete.AutocompleteComponentImpl;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
 import org.testng.annotations.BeforeMethod;
@@ -45,7 +47,7 @@ import org.testng.annotations.Test;
  */
 public class TestAutocompleteKVS extends AbstractAutocompleteTest<SimplePage> {
 
-    @FindBy(id="form:autocomplete")
+    @FindBy(id = "form:autocomplete")
     private AutocompleteComponentImpl<String> autocomplete;
 
     @BeforeMethod
@@ -68,12 +70,12 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest<SimplePage> {
         return new MetamerNavigation("Rich", "Rich Autocomplete", "Simple");
     }
 
-    @Test(groups = {"keepVisualStateTesting"})
+    @Test(groups = { "keepVisualStateTesting" })
     public void testRefreshFullPage() {
         new AutocompleteReloadTester().testFullPageRefresh();
     }
 
-    @Test(groups = {"keepVisualStateTesting"})
+    @Test(groups = { "keepVisualStateTesting" })
     public void testRerenderAll() {
         new AutocompleteReloadTester().testRerenderAll();
     }
@@ -86,7 +88,7 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest<SimplePage> {
 
         @Override
         public void doRequest(String inputValue) {
-            autocomplete.type(inputValue);
+            MetamerPage.waitRequest(autocomplete, WaitRequestType.XHR).type(inputValue);
         }
 
         @Override
@@ -96,9 +98,7 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest<SimplePage> {
 
         @Override
         public String[] getInputValues() {
-            return new String[] {"not-in-list-value"};
+            return new String[]{ "not-in-list-value" };
         }
-
     }
-
 }
