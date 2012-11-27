@@ -74,4 +74,9 @@ public class Locations implements Iterable<Point> {
     public Iterator<Point> iterator() {
         return Arrays.asList(topLeft, topRight, bottomLeft, bottomRight).iterator();
     }
+
+    @Override
+    public String toString() {
+        return "Locations{" + "topLeft=" + topLeft + ", topRight=" + topRight + ", bottomLeft=" + bottomLeft + ", bottomRight=" + bottomRight + '}';
+    }
 }
