@@ -31,6 +31,7 @@ import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
+import com.google.common.collect.Iterables;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +39,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.event.PhaseId;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
@@ -463,12 +466,18 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
 
         Locations before = calendar.openPopup().getLocations();
         calendarAttributes.set(CalendarAttributes.horizontalOffset, horizontalOffset);
+        new Actions(driver).moveToElement(page.fullPageRefreshIcon).build().perform();
+
         Locations after = calendar.openPopup().getLocations();
 
         Iterator<Point> itAfter = after.iterator();
-        Iterator<Point> itBefore = before.moveAllBy(horizontalOffset, 0).iterator();
+        Locations movedFromBefore = before.moveAllBy(horizontalOffset, 0);
+        Iterator<Point> itMovedBefore = movedFromBefore.iterator();
+        //FIXME delete these logs after test method stabilized
+        System.out.println(after);
+        System.out.println(movedFromBefore);
         while (itAfter.hasNext()) {
-            tolerantAssertLocations(itAfter.next(), itBefore.next(), tolerance);
+            tolerantAssertLocations(itAfter.next(), itMovedBefore.next(), tolerance);
         }
     }
 
@@ -1052,12 +1061,18 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage
 
         Locations before = calendar.openPopup().getLocations();
         calendarAttributes.set(CalendarAttributes.verticalOffset, verticalOffset);
-        Locations after = calendar.openPopup().getLocations();
+        new Actions(driver).moveToElement(page.fullPageRefreshIcon).build().perform();
 
+        Locations after = calendar.openPopup().getLocations();
+        Locations movedFromBefore = before.moveAllBy(0, verticalOffset);
         Iterator<Point> itAfter = after.iterator();
-        Iterator<Point> itBefore = before.moveAllBy(0, verticalOffset).iterator();
+        Iterator<Point> itMovedBefore = movedFromBefore.iterator();
+        //FIXME delete these logs after test method stabilized
+        System.out.println(after);
+        System.out.println(movedFromBefore);
+
         while (itAfter.hasNext()) {
-            tolerantAssertLocations(itAfter.next(), itBefore.next(), tolerance);
+            tolerantAssertLocations(itAfter.next(), itMovedBefore.next(), tolerance);
         }
     }
 
