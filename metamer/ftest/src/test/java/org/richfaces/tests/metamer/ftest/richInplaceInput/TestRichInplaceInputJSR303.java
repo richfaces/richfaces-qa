@@ -21,26 +21,31 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import java.net.URL;
-
-import org.richfaces.tests.metamer.ftest.richAutocomplete.JSR303Page;
-import org.richfaces.tests.metamer.ftest.richAutocomplete.TestComponentWithJSR303;
+import org.richfaces.tests.metamer.ftest.abstractions.InputValidationPage;
+import org.richfaces.tests.metamer.ftest.abstractions.StringInputComponentJSR303Test;
 import org.testng.annotations.Test;
-
 
 /**
  * Test for page faces/components/richInplaceInput/jsr303.xhtml
  *
- * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision: 22534 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestInplaceInputWithJSR303 extends TestComponentWithJSR303<JSR303Page> {
+//FIXME shoud not be generic (Graphene bug)
+public class TestRichInplaceInputJSR303 extends StringInputComponentJSR303Test<InputValidationPage> {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richInplaceInput/jsr303.xhtml");
+    public String getComponentName() {
+        return "richInplaceInput";
+    }
+
+    @Test
+    public void testAllInputsWrong() {
+        verifyAllInputs();
+    }
+
+    @Test
+    public void testCustomString() {
+        verifyCustomString();
     }
 
     @Test
@@ -57,16 +62,4 @@ public class TestInplaceInputWithJSR303 extends TestComponentWithJSR303<JSR303Pa
     public void testStringSize() {
         verifyStringSize();
     }
-
-    @Test
-    public void testCustomString() {
-        verifyCustomString();
-    }
-
-    @Test
-    public void testAllInputs() {
-        verifyAllInputs();
-    }
-
-
 }
