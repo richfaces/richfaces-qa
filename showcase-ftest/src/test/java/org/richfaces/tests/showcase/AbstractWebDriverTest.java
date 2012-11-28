@@ -24,7 +24,7 @@ package org.richfaces.tests.showcase;
 import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -34,7 +34,7 @@ import org.testng.annotations.BeforeMethod;
 public class AbstractWebDriverTest<P> extends AbstractShowcaseTest {
 
     @Drone
-    protected FirefoxDriver webDriver;
+    protected WebDriver webDriver;
 
     @Page
     protected P testPage;
