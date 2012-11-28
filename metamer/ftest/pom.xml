@@ -77,7 +77,7 @@ FSF site: http://www.fsf.org. -->
         </dependency>
         <dependency>
             <groupId>org.richfaces.tests</groupId>
-            <artifactId>page-fragments-impl</artifactId>
+            <artifactId>richfaces-page-fragments</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
