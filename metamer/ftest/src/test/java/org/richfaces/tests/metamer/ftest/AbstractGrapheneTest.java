@@ -482,8 +482,8 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
      */
     protected void openComponentExamplePageInPortal(MetamerNavigation navigation) {
 
-        // waitModel.until(elementPresent.locator(navigation.getGroup()) );
-        // selenium.click(navigation.getGroup());
+        waitGui.until(elementPresent.locator(navigation.getGroupLocator()) );
+        selenium.click(navigation.getGroupLocator());
 
         selenium.click(navigation.getComponentLocator());
         selenium.waitForPageToLoad(TIMEOUT);
