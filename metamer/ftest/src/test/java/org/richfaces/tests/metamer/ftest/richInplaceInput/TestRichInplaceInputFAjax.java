@@ -53,6 +53,11 @@ public class TestRichInplaceInputFAjax extends AbstractWebDriverTest<MetamerPage
         return buildUrl(contextPath, "faces/components/richInplaceInput/fAjax.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Inplace Input", "f:ajax");
+    }
+
     @Test
     public void testClick() {
         assertTrue(inplaceInput.isVisible(), "Inplace input should be visible.");

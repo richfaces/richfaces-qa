@@ -82,6 +82,11 @@ public class TestCollapsibleSubTableToggler extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richCollapsibleSubTableToggler/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Collapsible Sub Table Toggler", "Simple");
+    }
+
     @Test
     @Use(field = "event", value = "events")
     public void testEvent() {

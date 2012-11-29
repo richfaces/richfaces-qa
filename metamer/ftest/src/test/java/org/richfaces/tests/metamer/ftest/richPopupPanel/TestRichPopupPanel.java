@@ -76,6 +76,11 @@ public class TestRichPopupPanel extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richPopupPanel/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Popup Panel", "Simple");
+    }
+
     @Test
     public void testInit() {
         assertTrue(selenium.isElementPresent(openButton), "Button for opening popup should be on the page.");

@@ -58,6 +58,11 @@ public class TestRichSpinner extends AbstractSpinnerTest {
         return buildUrl(contextPath, "faces/components/richInputNumberSpinner/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Input Number Spinner", "Simple");
+    }
+
     @Test
     public void testInit() {
         assertTrue(selenium.isVisible(spinner), "Spinner is not present on the page.");

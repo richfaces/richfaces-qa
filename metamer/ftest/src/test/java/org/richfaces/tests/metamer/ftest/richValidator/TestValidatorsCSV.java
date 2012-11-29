@@ -42,6 +42,11 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
         return buildUrl(contextPath, "faces/components/richValidator/csv.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Validator", "Client Side Validation");
+    }
+
     @Test
     public void testAllWrong() {
         verifyAllWrongWithAjaxSubmit();

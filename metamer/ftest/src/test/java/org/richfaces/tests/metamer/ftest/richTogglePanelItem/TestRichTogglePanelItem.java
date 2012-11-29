@@ -63,6 +63,11 @@ public class TestRichTogglePanelItem extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richTogglePanelItem/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Toggle Panel Item", "Simple");
+    }
+
     @Test
     public void testInit() {
         assertTrue(selenium.isElementPresent(item1), "Item 1 should be present on the page.");

@@ -63,6 +63,11 @@ public class TestMatrix extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/a4jRepeat/matrix.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Repeat", "Matrix");
+    }
+
     @BeforeMethod
     public void initializeTest() {
         initializeMatrixProperties();

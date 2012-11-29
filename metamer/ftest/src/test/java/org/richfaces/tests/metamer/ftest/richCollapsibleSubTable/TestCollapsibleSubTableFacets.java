@@ -57,6 +57,11 @@ public class TestCollapsibleSubTableFacets extends AbstractCollapsibleSubTableTe
         return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/facets.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Collapsible Sub Table", "Facets");
+    }
+
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RFPL-1515")
     public void testNoDataFacet() {

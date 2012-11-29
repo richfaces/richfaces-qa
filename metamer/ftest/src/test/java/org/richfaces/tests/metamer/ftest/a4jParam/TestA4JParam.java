@@ -58,6 +58,11 @@ public class TestA4JParam extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/a4jParam/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Action Parameter", "Simple");
+    }
+
     @Test
     public void testParameter() {
         String reqTime = selenium.getText(time);

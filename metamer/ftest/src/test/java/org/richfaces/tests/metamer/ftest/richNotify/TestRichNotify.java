@@ -79,6 +79,11 @@ public class TestRichNotify extends AbstractRichNotifyTest {
         return buildUrl(contextPath, "faces/components/richNotify/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Notify", "Simple");
+    }
+
     @Test
     public void testAttributeDelay() {
         // set the delay to <2000>

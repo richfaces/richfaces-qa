@@ -45,6 +45,11 @@ public class TestExtendingAttachQueue extends AbstractAttachQueueTest {
         return buildUrl(contextPath, "faces/components/a4jAttachQueue/extending.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Attach Queue", "Extending");
+    }
+
     @BeforeMethod
     public void setupDelays() {
         attachQueueAttrs1.set(AttachQueueAttributes.requestDelay, DELAY_A);

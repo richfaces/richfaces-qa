@@ -48,6 +48,11 @@ public class TestColumnGroupHeaderFooter extends AbstractColumnModelTest {
         return buildUrl(contextPath, "faces/components/richColumnGroup/headerFooter.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Column Group", "Header and Footer");
+    }
+
     @Test
     public void testRendered() {
         int bodyRowCount = model.getBodyRowCount();

@@ -44,6 +44,11 @@ public class TestDataTableSortingUsingComponentControl extends DataTableSortingT
         return buildUrl(contextPath, "faces/components/richDataTable/sorting-using-component-control.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Data Table", "Table Sorting - Component Control");
+    }
+
     @BeforeClass
     public void setupModel() {
         model = new DataTable(pjq("table.rf-dt[id$=richDataTable]"));

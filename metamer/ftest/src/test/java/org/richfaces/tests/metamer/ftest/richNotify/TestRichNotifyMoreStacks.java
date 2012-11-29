@@ -75,6 +75,11 @@ public class TestRichNotifyMoreStacks extends AbstractRichNotifyTest {
         return buildUrl(contextPath, "faces/components/richNotify/moreStacks.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Notify", "More Stacks");
+    }
+
     @Test
     public void testInit() {
         assertTrue(selenium.isElementPresent(inStack(stack1, notify)), "The notify in the first stack is not present.");

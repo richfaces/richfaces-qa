@@ -42,6 +42,11 @@ public class TestTextPlain extends AbstractMediaOutputTest {
         return buildUrl(contextPath, "faces/components/a4jMediaOutput/textPlain.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Media Output", "Text Plain");
+    }
+
     @Test
     public void testInit() throws IOException {
         assertTrue(

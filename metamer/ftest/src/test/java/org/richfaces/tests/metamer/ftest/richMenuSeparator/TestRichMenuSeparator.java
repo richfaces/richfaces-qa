@@ -46,6 +46,11 @@ public class TestRichMenuSeparator extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richMenuSeparator/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Menu Separator", "Simple");
+    }
+
     @Test
     public void testRendered() {
         int count = selenium.getCount(separators);

@@ -61,6 +61,11 @@ public class TestCollapsibleSubTableSimple extends AbstractCollapsibleSubTableTe
         return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Collapsible Sub Table", "Simple");
+    }
+
     @Test
     @Use(field = "expandMode", enumeration = true)
     public void testExpandMode() {

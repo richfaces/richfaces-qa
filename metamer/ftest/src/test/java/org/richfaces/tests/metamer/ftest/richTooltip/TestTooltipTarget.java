@@ -65,6 +65,11 @@ public class TestTooltipTarget extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richTooltip/targetting.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Tooltip", "Targetting");
+    }
+
     @BeforeMethod
     public void setupAttributes() {
         tooltipAttributes.set(showEvent, "mouseover");

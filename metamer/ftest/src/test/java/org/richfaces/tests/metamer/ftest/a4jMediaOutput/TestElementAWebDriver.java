@@ -47,6 +47,11 @@ public class TestElementAWebDriver extends AbstractWebDriverTest<TestElementAWeb
         return buildUrl(contextPath, "faces/components/a4jMediaOutput/elementA.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Media Output", "Element <a></a>");
+    }
+
     @Test
     public void testLang() {
         testHTMLAttribute(page.link, mediaOutputAttributes, MediaOutputAttributes.lang, "cz");

@@ -54,6 +54,11 @@ public class TestAutocompleteFiltering extends AbstractAutocompleteTest<SimplePa
         return buildUrl(contextPath, "faces/components/richAutocomplete/filtering.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Autocomplete", "Filtering");
+    }
+
     @BeforeMethod
     public void setParser() {
         autocomplete.setSuggestionParser(new TextSuggestionParser());

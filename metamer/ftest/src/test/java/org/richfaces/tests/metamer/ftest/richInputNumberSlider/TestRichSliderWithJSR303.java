@@ -141,6 +141,11 @@ public class TestRichSliderWithJSR303 extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richInputNumberSlider/jsr303.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Input Number Slider", "JSR-303 Bean Validation");
+    }
+
     @Test
     public void testMin() {
         selenium.type(inputFormat.format(ID.MIN.val()), WRONG_MIN_VAL);

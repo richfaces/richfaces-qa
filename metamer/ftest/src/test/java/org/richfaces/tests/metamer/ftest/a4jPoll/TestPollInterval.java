@@ -68,6 +68,11 @@ public class TestPollInterval extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/a4jPoll/simple.xhtml?enabled=false");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Poll", "Simple");
+    }
+
     @BeforeMethod
     public void resetDeviations() {
         deviationTotal = 0;

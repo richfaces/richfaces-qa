@@ -51,6 +51,11 @@ public class TestAccordionIcons extends AbstractWebDriverTest<AccordionPage> {
         return buildUrl(contextPath, "faces/components/richAccordion/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Accordion", "Simple");
+    }
+
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10352")
     public void testItemActiveLeftIcon() {

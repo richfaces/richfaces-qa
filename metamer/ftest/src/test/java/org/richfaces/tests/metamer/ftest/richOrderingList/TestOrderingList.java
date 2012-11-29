@@ -46,6 +46,11 @@ public class TestOrderingList extends AbstractOrderingListTest {
         return buildUrl(contextPath, "faces/components/richOrderingList/withColumn.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Ordering List", "With Column");
+    }
+
     @Test
     public void testInit() {
         assertTrue(getOrderingList().isOrderingListPresent(), "The ordering list should be present.");

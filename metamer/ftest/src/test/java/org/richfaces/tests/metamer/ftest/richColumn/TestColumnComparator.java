@@ -39,6 +39,11 @@ public class TestColumnComparator extends AbstractColumnSortingTest {
         return buildUrl(contextPath, "faces/components/richColumn/comparator.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Column", "Custom Comparator");
+    }
+
     @Test
     @Override
     public void testSortingWithSortOrder() {

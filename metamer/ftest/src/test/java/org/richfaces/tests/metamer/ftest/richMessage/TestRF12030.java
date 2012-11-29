@@ -39,6 +39,11 @@ public class TestRF12030 extends AbstractWebDriverTest<RF12030Page> {
         return buildUrl(contextPath, "faces/components/richMessage/RF-12030.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Message", "RF-12030");
+    }
+
     @Test(groups = "4.3")
     @IssueTracking("https://issues.jboss.org/browse/RFPL-12030")
     public void testDataScrollerWorksAfterCollapseOfPanel() {

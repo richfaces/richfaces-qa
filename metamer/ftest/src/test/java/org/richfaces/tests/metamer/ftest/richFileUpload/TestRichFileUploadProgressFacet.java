@@ -40,6 +40,11 @@ public class TestRichFileUploadProgressFacet extends AbstractFileUploadWebDriver
         return buildUrl(contextPath, "faces/components/richFileUpload/progressFacet.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich FileUpload", "Progress Facet");
+    }
+
     @Test
     public void testCustomProgressBarPresenceBeforeFinishedUpload() {
         assertTrue(Graphene.element(page.customPB).isPresent().apply(driver), "No custom progress bar is present on page.");

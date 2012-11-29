@@ -72,6 +72,11 @@ public class TestRichInplaceInputJSApi extends AbstractWebDriverTest<MetamerPage
         return buildUrl(contextPath, "faces/components/richInplaceInput/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Inplace Input", "Simple");
+    }
+
     @Test
     public void cancel() {
         String defaultText = inplaceInput.getLabelValue();

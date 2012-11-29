@@ -55,6 +55,11 @@ public class TestNestedAttachQueue extends AbstractAttachQueueTest {
         return buildUrl(contextPath, "faces/components/a4jAttachQueue/nested.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Attach Queue", "Nested");
+    }
+
     @BeforeMethod
     public void setupDelays() {
         attachQueueAttrs1.set(AttachQueueAttributes.requestDelay, DELAY_A);

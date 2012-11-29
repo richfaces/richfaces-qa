@@ -65,4 +65,9 @@ public class UsageTest extends AbstractGrapheneTest {
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richTooltip/simple.xhtml");
     }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Tooltip", "Simple");
+    }
 }

@@ -47,6 +47,11 @@ public class TestRF12108 extends AbstractStatusTest {
         return buildUrl(contextPath, "faces/components/richTabPanel/rf-12108.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Tab", "RF-12108");
+    }
+
     @Test(groups = "4.3")
     @IssueTracking("https://issues.jboss.org/browse/RF-12108")
     public void testStatusIsClearedWhenRequestCompleted() {

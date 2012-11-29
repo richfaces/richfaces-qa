@@ -48,6 +48,11 @@ public class TestIterationStatus extends AbstractDataGridTest {
         return buildUrl(contextPath, "faces/components/richDataGrid/iterationStatus.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Data Grid", "Iteration Status");
+    }
+
     @Test
     public void testBegin() {
         for(int i=0; i<dataGrid.getElementCount(); i++) {

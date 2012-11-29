@@ -67,6 +67,11 @@ public class TestCollapsibleSubTableSorting extends AbstractCollapsibleSubTableT
         return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/sorting-using-column.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Collapsible Sub Table", "Table Sorting - Column based");
+    }
+
     @BeforeMethod
     public void prepare() {
         sortPriority.clear();

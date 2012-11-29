@@ -138,6 +138,11 @@ public class TestPickList extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richPickList/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Pick List", "Simple");
+    }
+
     private void addItem(int id) {
         selenium.click(pickListSrcItem.format(id));
         selenium.click(addBtn);

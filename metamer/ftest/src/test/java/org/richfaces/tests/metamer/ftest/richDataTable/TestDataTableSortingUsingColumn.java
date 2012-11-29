@@ -43,6 +43,11 @@ public class TestDataTableSortingUsingColumn extends DataTableSortingTest {
         return buildUrl(contextPath, "faces/components/richDataTable/sorting-using-column.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Data Table", "Table Sorting - Column based");
+    }
+
     @BeforeClass
     public void setupModel() {
         model = new DataTable(pjq("table.rf-dt[id$=richDataTable]"));

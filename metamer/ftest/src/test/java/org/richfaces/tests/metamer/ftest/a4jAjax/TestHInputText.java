@@ -42,6 +42,11 @@ public class TestHInputText extends AbstractAjaxTest<AjaxPage> {
         return buildUrl(contextPath, "faces/components/a4jAjax/hInputText.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Ajax", "Input Text");
+    }
+
     @Test
     public void testSimpleType() {
         super.testType();

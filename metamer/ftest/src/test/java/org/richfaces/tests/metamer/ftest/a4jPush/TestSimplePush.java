@@ -54,6 +54,11 @@ public class TestSimplePush extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/a4jPush/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Push", "Simple");
+    }
+
     @Test
     public void testPushComponentExists() {
         TextRetriever messageRetriever = retrieveText.locator(messagePanel);

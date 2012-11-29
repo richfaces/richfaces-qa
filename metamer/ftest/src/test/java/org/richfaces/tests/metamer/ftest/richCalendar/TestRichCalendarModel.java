@@ -59,6 +59,10 @@ public class TestRichCalendarModel extends AbstractCalendarTest<MetamerPage> {
     }
 
     @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Calendar", "Data Model");
+    }
+
     @Test(groups = { "4.0.0.Final" })
     @RegressionTest("https://issues.jboss.org/browse/RFPL-1222")
     public void testApplyButton() {

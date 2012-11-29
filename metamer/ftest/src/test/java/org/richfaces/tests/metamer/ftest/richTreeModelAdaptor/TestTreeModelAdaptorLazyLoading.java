@@ -61,6 +61,11 @@ public class TestTreeModelAdaptorLazyLoading extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richTree/treeAdaptors.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Tree", "Tree Adaptors");
+    }
+
     @Test
     public void testLazyLoading() {
         List<String> expected = getListOfVisibleNodes();

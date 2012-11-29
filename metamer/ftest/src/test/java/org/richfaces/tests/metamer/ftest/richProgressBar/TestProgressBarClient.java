@@ -53,6 +53,11 @@ public class TestProgressBarClient extends AbstractWebDriverTest<ProgressBarPage
         return buildUrl(contextPath, "faces/components/richProgressBar/clientMode.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Progress Bar", "Client Mode");
+    }
+
     @Test
     public void testInit() {
         assertTrue(ElementPresent.getInstance().element(page.progressBar).apply(driver),

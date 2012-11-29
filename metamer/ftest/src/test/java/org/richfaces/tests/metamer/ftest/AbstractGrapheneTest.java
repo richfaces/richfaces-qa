@@ -44,6 +44,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -96,9 +97,21 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
             throw new SkipException("selenium isn't initialized");
         }
 
-        selenium.open(buildUrl(getTestUrl() + "?templates=" + template.toString()));
-        selenium.waitForPageToLoad(TIMEOUT);
+        URL url;
+        if (runInPortalEnv) {
+            url = buildUrl(format("{0}://{1}:{2}/{3}",
+                contextPath.getProtocol(), contextPath.getHost(), contextPath.getPort(), "portal/classic/metamer"));
+            selenium.open(url);
+            openComponentExamplePageInPortal(getComponentExampleNavigation());
+        } else {
+            url = buildUrl(getTestUrl() + "?templates=" + template.toString());
+            selenium.open(url);
+            selenium.waitForPageToLoad(TIMEOUT);
+        }
+        System.out.println(" ### Opening following URL: " + url);
     }
+
+    public abstract MetamerNavigation getComponentExampleNavigation();
 
     @Parameters("takeScreenshots")
     @BeforeMethod(alwaysRun = true, dependsOnMethods = { "loadPage" })
@@ -460,6 +473,23 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
         } else {
             selenium.fireEvent(target, event);
         }
+    }
+
+    /**
+     * Opens component example page in portal environment.
+     * Since metamer app deloyed to AS is accessible by URL,
+     * in portal it is better to use click to main menu
+     */
+    protected void openComponentExamplePageInPortal(MetamerNavigation navigation) {
+
+        waitGui.until(elementPresent.locator(navigation.getGroupLocator()) );
+        selenium.click(navigation.getGroupLocator());
+
+        selenium.click(navigation.getComponentLocator());
+        selenium.waitForPageToLoad(TIMEOUT);
+
+        selenium.click(navigation.getPageLocator());
+        selenium.waitForPageToLoad(TIMEOUT);
     }
 
     /**

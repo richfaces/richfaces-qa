@@ -49,6 +49,11 @@ public class TestAttachQueueNamed extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/a4jAttachQueue/namedQueue.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Attach Queue", "Named Queue");
+    }
+
     /**
      * Tests that queue is referenced by name from attachQueues by watching their requestDelay.
      */

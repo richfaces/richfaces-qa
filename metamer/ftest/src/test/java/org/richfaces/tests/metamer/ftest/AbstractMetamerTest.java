@@ -25,6 +25,7 @@ import static org.jboss.arquillian.ajocado.Graphene.id;
 import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.javascript.JavaScript.js;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
+import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 
 import java.io.File;
 import java.net.URL;
@@ -99,6 +100,12 @@ public abstract class AbstractMetamerTest extends Arquillian {
             "richCollapsiblePanel", "richTabPanel", "richPopupPanel", "a4jRegion", "a4jRepeat", "uiRepeat" })
     protected TemplatesList template;
 
+    protected final String metamerGroupMenuLoc = "span.rf-tab-lbl:contains({0})";
+    protected final String metamerComponentMenuLoc = "li.rf-ulst-itm a:contains({0})";
+    protected final String metamerPageMenuLoc = "div.links a:contains({0})";
+
+    protected static final Boolean runInPortalEnv = Boolean.getBoolean("runInPortalEnv");
+
     /**
      * Returns the url to test page to be opened by Selenium
      *
@@ -109,7 +116,13 @@ public abstract class AbstractMetamerTest extends Arquillian {
     @Deployment(testable = false)
     public static WebArchive createTestArchive() {
 
-        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/metamer.war"));
+        File warFile2deploy;
+        if (runInPortalEnv) {
+            warFile2deploy = new File("target/metamer-portlet.war");
+        } else {
+            warFile2deploy = new File("target/metamer.war");
+        }
+        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, warFile2deploy);
 
         /*
          * If value on system property "org.richfaces.resourceMapping.enabled" is set to true, modify context-params in web.xml.
@@ -211,5 +224,44 @@ public abstract class AbstractMetamerTest extends Arquillian {
 
         // TODO
         return war;
+    }
+
+    public class MetamerNavigation {
+        /** "A4J", "Rich", "Other" */
+        final String group;
+        /** Such as "Rich Calendar" */
+        final String component;
+        /** Such as "Simple" or "RF-12345" */
+        final String page;
+
+        public MetamerNavigation(String group, String component, String page) {
+            this.group = group;
+            this.component = component;
+            this.page = page;
+        }
+
+        public String getGroup() {
+            return group;
+        }
+
+        public JQueryLocator getGroupLocator() {
+            return jq(format(metamerGroupMenuLoc, group));
+        }
+
+        public String getComponent() {
+            return component;
+        }
+
+        public JQueryLocator getComponentLocator() {
+            return jq(format(metamerComponentMenuLoc, component));
+        }
+
+        public String getPage() {
+            return page;
+        }
+
+        public JQueryLocator getPageLocator() {
+            return jq(format(metamerPageMenuLoc, page));
+        }
     }
 }

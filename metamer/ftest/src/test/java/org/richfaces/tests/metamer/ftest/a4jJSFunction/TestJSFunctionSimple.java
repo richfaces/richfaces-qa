@@ -65,6 +65,11 @@ public class TestJSFunctionSimple extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/a4jJSFunction/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Functions", "All");
+    }
+
     @Test
     public void testSimpleClick() {
         String time1Value = selenium.getText(time1);

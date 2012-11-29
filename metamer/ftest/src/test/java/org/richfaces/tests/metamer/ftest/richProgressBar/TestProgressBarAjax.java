@@ -60,6 +60,11 @@ public class TestProgressBarAjax extends AbstractWebDriverTest<ProgressBarPage> 
         return buildUrl(contextPath, "faces/components/richProgressBar/ajaxMode.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Progress Bar", "Ajax Mode");
+    }
+
     @Test
     public void testInit() {
         assertTrue(ElementPresent.getInstance().element(page.progressBar).apply(driver),

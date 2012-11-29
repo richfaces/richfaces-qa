@@ -51,6 +51,11 @@ public class TestSimple extends AbstractDataGridTest {
         return buildUrl(contextPath, "faces/components/richDataGrid/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Data Grid", "Simple");
+    }
+
     @Test
     @Use(field = "columns", ints = { 1, 3, 11, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL,
             ELEMENTS_TOTAL + 1 })

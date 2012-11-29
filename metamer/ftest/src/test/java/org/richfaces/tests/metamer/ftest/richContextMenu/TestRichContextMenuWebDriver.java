@@ -48,6 +48,11 @@ public class TestRichContextMenuWebDriver extends AbstractWebDriverTest<ContextM
         return buildUrl(contextPath, "faces/components/richContextMenu/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Context Menu", "Simple");
+    }
+
     @BeforeMethod(alwaysRun = true)
     public void updateShowAction() {
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, "click");

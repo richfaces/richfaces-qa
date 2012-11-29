@@ -58,6 +58,11 @@ public class TestRichPanel extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richPanel/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Panel", "Simple");
+    }
+
     @Test
     public void testInit() {
         assertTrue(selenium.isElementPresent(panels[0]), "Panel with header should be present on the page.");

@@ -69,6 +69,11 @@ public class TestRichToolbarGroup extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richToolbarGroup/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Toolbar Group", "Simple");
+    }
+
     @Test
     public void testInit() {
         assertTrue(selenium.isElementPresent(toolbar), "Toolbar should be present on the page.");

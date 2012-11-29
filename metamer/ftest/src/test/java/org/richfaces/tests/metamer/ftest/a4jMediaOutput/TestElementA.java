@@ -46,6 +46,11 @@ public class TestElementA extends AbstractMediaOutputTest {
         return buildUrl(contextPath, "faces/components/a4jMediaOutput/elementA.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Media Output", "Element <a></a>");
+    }
+
     @Test
     public void init() throws IOException {
         assertEquals(selenium.getText(MEDIA_OUTPUT), "This is a link", "The link text doesn't match.");

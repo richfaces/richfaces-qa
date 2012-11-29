@@ -68,6 +68,11 @@ public class TestSimple extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richJQuery/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich jQuery", "Simple");
+    }
+
     @Test
     public void testDefaultTiming() {
         setupDomReadyTypeAttributes();

@@ -59,6 +59,11 @@ public class TestClientFunctions extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richFunctions/all.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Functions", "All");
+    }
+
     @Test
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
         "richExtendedDataTable", "richList", "hDataTable", "uiRepeat" })

@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -133,14 +134,14 @@ public class ValidationPage extends MetamerPage {
      * @return false if some error message is there, else true
      */
     public boolean noErrorMessagesDisplayed() {
-        if (elementPresent.element(csvInAttMsg).apply(driver)
-                || elementPresent.element(csvInBeanMsg).apply(driver)
-                || elementPresent.element(csvInBundleMsg).apply(driver)
-                || elementPresent.element(jsfInAttMsg).apply(driver)
-                || elementPresent.element(jsfInBundleMsg).apply(driver)
-                || elementPresent.element(jsr303InAttMsg).apply(driver)
-                || elementPresent.element(jsr303InBeanMsg).apply(driver)
-                || elementPresent.element(jsr303InBundleMsg).apply(driver)) {
+        if (Graphene.element(csvInAttMsg).isVisible().apply(driver)
+                || Graphene.element(csvInBeanMsg).isVisible().apply(driver)
+                || Graphene.element(csvInBundleMsg).isVisible().apply(driver)
+                || Graphene.element(jsfInAttMsg).isVisible().apply(driver)
+                || Graphene.element(jsfInBundleMsg).isVisible().apply(driver)
+                || Graphene.element(jsr303InAttMsg).isVisible().apply(driver)
+                || Graphene.element(jsr303InBeanMsg).isVisible().apply(driver)
+                || Graphene.element(jsr303InBundleMsg).isVisible().apply(driver)) {
             return false;
         }
         return true;

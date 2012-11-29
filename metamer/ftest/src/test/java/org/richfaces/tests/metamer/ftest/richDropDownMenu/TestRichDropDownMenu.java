@@ -73,6 +73,11 @@ public class TestRichDropDownMenu extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richDropDownMenu/topMenu.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Drop Down Menu", "Top Menu");
+    }
+
     @Test
     public void testInit() {
         assertTrue(selenium.isElementPresent(fileMenu), "Drop down menu \"File\" should be present on the page.");

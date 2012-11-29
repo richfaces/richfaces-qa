@@ -59,6 +59,11 @@ public class TestWithoutFacets extends AbstractStatusTest {
         return buildUrl(contextPath, "faces/components/a4jStatus/withoutFacets.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Status", "WithoutFacets");
+    }
+
     @Test
     public void testRequestButton1() {
         statusAttributes.set(StatusAttributes.startText, STARTTEXT);

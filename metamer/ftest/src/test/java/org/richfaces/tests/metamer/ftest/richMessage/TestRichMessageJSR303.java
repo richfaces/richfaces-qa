@@ -44,6 +44,11 @@ public class TestRichMessageJSR303 extends AbstractRichMessageTest<MessagePage> 
         return buildUrl(contextPath, "faces/components/richMessage/jsr303.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Message", "JSR-303 Bean Validation");
+    }
+
     @Test
     public void testAjaxRendered() {
         super.testAjaxRendered();

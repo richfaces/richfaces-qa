@@ -61,6 +61,11 @@ public class TestA4JCommandButton extends AbstractWebDriverTest<CommandButtonLin
         return buildUrl(contextPath, "faces/components/a4jCommandButton/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Command Button", "Simple");
+    }
+
     @Test(groups = "client-side-perf")
     public void testSimpleClick() {
         page.typeToInput(CommandButtonLinkPage.STRING_RF1);

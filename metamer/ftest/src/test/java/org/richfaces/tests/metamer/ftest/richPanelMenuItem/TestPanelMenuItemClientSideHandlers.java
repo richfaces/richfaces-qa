@@ -62,6 +62,11 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richPanelMenuItem/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Panel Menu Item", "Simple");
+    }
+
     @Test
     @Use(field = "event", value = "ajaxEvents")
     public void testClientSideEvent() {

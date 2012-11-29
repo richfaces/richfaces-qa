@@ -58,6 +58,11 @@ public class TestDragIndicator extends AbstractDragNDropTest {
         return buildUrl(contextPath, "faces/components/richDragIndicator/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Drag Indicator", "Simple");
+    }
+
     @BeforeMethod
     public void setup() {
         dragIndicatorAttributes.set(draggingClass, DRAGGING_CLASS);

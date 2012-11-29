@@ -60,6 +60,11 @@ public class TestGlobalQueue extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/a4jQueue/globalQueue.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Queue", "Global Queue");
+    }
+
     /**
      * Tests delay between time last event occurs and time when event triggers
      * request (begin).

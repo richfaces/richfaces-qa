@@ -51,6 +51,11 @@ public class TestImagePng extends AbstractMediaOutputTest {
         return buildUrl(contextPath, "faces/components/a4jMediaOutput/imagePng.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Media Output", "Image Png");
+    }
+
     @Test
     public void init() {
         AttributeLocator<?> imageURLAttr = MEDIA_OUTPUT.getAttribute(Attribute.SRC);

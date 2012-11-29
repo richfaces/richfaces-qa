@@ -66,6 +66,11 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
         return buildUrl(contextPath, "faces/components/richExtendedDataTable/selection.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Extended Data Table", "Selection");
+    }
+
     @BeforeClass
     public void setupModel() {
         model = new ExtendedDataTable(pjq("div.rf-edt[id$=richEDT]"));

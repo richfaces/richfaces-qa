@@ -45,4 +45,15 @@ public abstract class AbstractTestTree extends AbstractGrapheneTest {
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richTree/" + sample + ".xhtml");
     }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        if ("simpleSwingTreeNode".equals(sample))
+            return new MetamerNavigation("Rich", "Rich Tree", "Simple - Swing Tree Node");
+        if ("simpleRichFacesTreeNode".equals(sample))
+            return new MetamerNavigation("Rich", "Rich Tree", "Simple - RichFaces Tree Node");
+        if ("simpleRichFacesTreeDataModel".equals(sample))
+            return new MetamerNavigation("Rich", "Rich Tree", "Simple - RichFaces Tree Data Model");
+        else return null;
+    }
 }

@@ -152,6 +152,11 @@ public class TestRichSpinnerWithJSR303 extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richInputNumberSpinner/jsr303.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Input Number Spinner", "JSR-303 Bean Validation");
+    }
+
     @Test
     public void testMin() {
         selenium.type(inputFormat.format(ID.MIN.val()), WRONG_MIN_VAL);

@@ -52,6 +52,11 @@ public class TestColumnSimple extends AbstractColumnModelTest {
         return buildUrl(contextPath, "faces/components/richColumn/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Column", "Simple");
+    }
+
     @BeforeMethod
     public void checkInitialState() {
         assertEquals(headerCount(1), 1);

@@ -48,6 +48,11 @@ public abstract class AbstractTreeToggleListenerTest<P extends TTLPage> extends 
         return buildUrl(contextPath, "faces/components/richTreeToggleListener/" + testedComponent + ".xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Tree Toggle Listener", testedComponent);
+    }
+
     /**
      * Gets list of WebElements and check if some of them has same text as
      * expected in attribute @expectedText.

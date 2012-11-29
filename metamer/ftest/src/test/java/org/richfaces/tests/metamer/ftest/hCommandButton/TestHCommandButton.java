@@ -58,6 +58,11 @@ public class TestHCommandButton extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/commandButton/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Command Button", "Simple");
+    }
+
     @Test(groups = "client-side-perf")
     public void testSimpleClick() {
         selenium.typeKeys(input, "RichFaces 4");

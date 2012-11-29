@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest;
 
+import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.basicAttributes;
 import static org.testng.Assert.assertEquals;
@@ -34,6 +35,7 @@ import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -53,6 +55,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.testng.SkipException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 public abstract class AbstractWebDriverTest<P extends MetamerPage> extends AbstractMetamerTest {
@@ -104,9 +107,43 @@ public abstract class AbstractWebDriverTest<P extends MetamerPage> extends Abstr
         if (driver == null) {
             throw new SkipException("webDriver isn't initialized");
         }
-        driver.get(buildUrl(getTestUrl() + "?templates=" + template.toString()).toExternalForm());
+        if (runInPortalEnv) {
+            driver.get(format("{0}://{1}:{2}/{3}",
+                contextPath.getProtocol(), contextPath.getHost(), contextPath.getPort(), "portal/classic/metamer"));
+            openComponentExamplePageInPortal(getComponentExampleNavigation());
+        } else {
+            driver.get(buildUrl(getTestUrl() + "?templates=" + template.toString()).toExternalForm());
+        }
         driverType = DriverType.getCurrentType(driver);
     }
+
+    /**
+     * Opens component example page in portal environment.
+     * Since metamer app deloyed to AS is accessible by URL,
+     * in portal it is better to use click to main menu
+     */
+    protected void openComponentExamplePageInPortal(MetamerNavigation navigation) {
+        WebElement group = driver.findElement(By.xpath(
+             format("//span[@class='rf-tab-lbl'][text()='{0}']",
+                 navigation.getGroup())));
+        group.click();
+
+        WebElement component = driver.findElement(By.linkText(navigation.getComponent()));
+        component.click();
+        MetamerPage.waitUntilElementIsVisible(By.linkText(navigation.getPage()));
+        driver.findElement(By.linkText(navigation.getPage())).click();
+    }
+
+    @AfterMethod
+    public void return2DefaultPage() {
+        if (runInPortalEnv) {
+            // open Metamer home page after test execution
+            // Open portal page (loadPage) just show Metamer portlet in his last state
+            driver.findElement(By.cssSelector("a[id$=goHomeLink]")).click();
+        }
+    }
+
+    public abstract MetamerNavigation getComponentExampleNavigation();
 
 //    @BeforeMethod(alwaysRun = true, dependsOnMethods = { "loadPage" })
 //    public void initializePage() {

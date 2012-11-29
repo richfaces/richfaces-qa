@@ -45,6 +45,11 @@ public class TestRichTCAccordion extends AbstractTestToggleControl {
         return buildUrl(contextPath, "faces/components/richToggleControl/accordion.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Toggle Control", "Accordion");
+    }
+
     @Test
     public void testSwitchFirstPanel() {
         testSwitchFirstPanel(items1);

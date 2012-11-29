@@ -67,6 +67,11 @@ public class TestCollapsibleSubTableScroller extends AbstractCollapsibleSubTable
         return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/scroller.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Collapsible Sub Table", "Data Scroller");
+    }
+
     @BeforeMethod
     public void prepareComponent() {
         if (paralelScrolling) {

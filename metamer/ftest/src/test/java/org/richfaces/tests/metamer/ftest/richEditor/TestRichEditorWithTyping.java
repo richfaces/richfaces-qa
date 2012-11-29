@@ -50,6 +50,11 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest<EditorSimple
         return buildUrl(contextPath, "faces/components/richEditor/anotherSimple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Editor", "Another Simple");
+    }
+
     @Test
     public void testImmediate() {
         editorAttributes.set(EditorAttributes.immediate, Boolean.TRUE);

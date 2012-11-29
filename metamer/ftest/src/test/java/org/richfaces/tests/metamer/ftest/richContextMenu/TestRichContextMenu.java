@@ -74,6 +74,11 @@ public class TestRichContextMenu extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richContextMenu/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Context Menu", "Simple");
+    }
+
     private void clickOnTarget(JQueryLocator target) {
         // mouseDownRight doesn't work, so have to use left click for common cases
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, Event.CLICK);

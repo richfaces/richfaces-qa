@@ -65,6 +65,11 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest<SimpleP
         return buildUrl(contextPath, "faces/components/richAutocomplete/fetchValueAttr.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Autocomplete", "Formatted suggestions");
+    }
+
     @BeforeMethod
     public void setParser() {
         autocomplete.setSuggestionParser(new TextSuggestionParser());

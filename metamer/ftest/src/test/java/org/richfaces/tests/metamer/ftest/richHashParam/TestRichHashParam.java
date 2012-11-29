@@ -71,6 +71,11 @@ public class TestRichHashParam extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richHashParam/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Hash Parameter", "Simple");
+    }
+
     @Test
     public void testPanelInit() {
         assertTrue(selenium.isElementPresent(openButton), "Button for opening popup should be on the page.");

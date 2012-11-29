@@ -66,6 +66,11 @@ public class TestRichInplaceSelectFAjax extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richInplaceSelect/fAjax.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Inplace Select", "f:ajax");
+    }
+
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-11227")
     public void testClick() {

@@ -46,6 +46,11 @@ public class TestElementLink extends AbstractMediaOutputTest {
         return buildUrl(contextPath, "faces/components/a4jMediaOutput/elementLink.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Media Output", "Element <link/>");
+    }
+
     @Test
     public void init() {
         assertEquals(selenium.getStyle(MARKED_TEXT, CssProperty.COLOR), "rgb(255, 0, 0)", "The marked text should be red.");

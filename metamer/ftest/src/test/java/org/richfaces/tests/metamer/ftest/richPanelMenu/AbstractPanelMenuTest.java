@@ -57,6 +57,11 @@ public class AbstractPanelMenuTest extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richPanelMenu/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Panel Menu", "Simple");
+    }
+
     @BeforeMethod
     public void setupModes() {
         panelMenuAttributes.set(itemMode, ajax);

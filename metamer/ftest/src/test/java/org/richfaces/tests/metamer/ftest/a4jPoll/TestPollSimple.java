@@ -78,6 +78,11 @@ public class TestPollSimple extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/a4jPoll/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Poll", "Simple");
+    }
+
     @BeforeMethod
     public void enablePoll() {
         pollAttributes.set(interval, 2500);

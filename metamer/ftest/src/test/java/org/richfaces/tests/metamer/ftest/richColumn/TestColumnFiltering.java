@@ -57,6 +57,11 @@ public class TestColumnFiltering extends AbstractColumnModelTest {
         return buildUrl(contextPath, "faces/components/richColumn/filtering.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Column", "Filtering");
+    }
+
     @Test
     public void testFilterAttribute() {
         model.setRoot(tableWithFilter);

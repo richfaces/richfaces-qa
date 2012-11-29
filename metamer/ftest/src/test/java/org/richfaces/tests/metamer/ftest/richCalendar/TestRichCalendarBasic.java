@@ -53,6 +53,11 @@ public class TestRichCalendarBasic extends AbstractCalendarTest<MetamerPage> {
         return buildUrl(contextPath, "faces/components/richCalendar/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Calendar", "Simple");
+    }
+
     @Test
     public void testApplyButton() {
         super.testApplyButton();

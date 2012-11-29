@@ -79,6 +79,11 @@ public class TestRichTab extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richTab/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Tab", "Simple");
+    }
+
     @Test(groups = { "4.3" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11427")
     public void testAction() {

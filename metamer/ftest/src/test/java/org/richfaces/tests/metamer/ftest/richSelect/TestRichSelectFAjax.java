@@ -62,6 +62,11 @@ public class TestRichSelectFAjax extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richSelect/fAjax.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Select", "f:ajax");
+    }
+
     @Test
     public void testSelectWithMouse() {
         guardNoRequest(selenium).mouseDown(button);

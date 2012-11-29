@@ -41,6 +41,11 @@ public class TestDragSourceRF12256 extends AbstractDragSourceTest {
         return buildUrl(contextPath, "faces/components/richDragSource/RF-12256.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Drag Source", "RF-12256");
+    }
+
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12441")
     public void testDefaultIndicator() {

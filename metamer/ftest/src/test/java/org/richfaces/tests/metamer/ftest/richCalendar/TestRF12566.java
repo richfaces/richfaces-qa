@@ -49,6 +49,11 @@ public class TestRF12566 extends AbstractWebDriverTest<TestRF12566.RF12566Page> 
         return buildUrl(contextPath, "faces/components/richCalendar/RF-12566.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Calendar", "RF-12566");
+    }
+
     @Test(groups = "4.Future")
     public void testClickOnTheNextMonthAndJSErrorIsThrown() {
         page.getShowCalendarButton().click();

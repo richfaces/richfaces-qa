@@ -67,6 +67,11 @@ public class TestSimple extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/a4jRepeat/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Repeat", "Simple");
+    }
+
     @BeforeMethod(alwaysRun = true, dependsOnMethods={"loadPage"})
     public void prepareAttributes() {
         model = new SimpleModel();

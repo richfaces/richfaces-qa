@@ -43,6 +43,11 @@ public class TestExtendedDataTableFiltering extends DataTableFilteringTest {
         return buildUrl(contextPath, "faces/components/richExtendedDataTable/filtering.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Extended Data Table", "Table Filtering");
+    }
+
     @BeforeClass
     public void setupModel() {
         model = new ExtendedDataTable(pjq("div.rf-edt[id$=richEDT]"));

@@ -43,6 +43,11 @@ public class TestRF12510 extends AbstractWebDriverTest<TestRF12510.RF12510Page> 
         return buildUrl(contextPath, "faces/components/a4jJSFunction/rf-12510.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Function", "RF-12510");
+    }
+
     @Test(groups = "4.3")
     @IssueTracking("https://issues.jboss.org/browse/RFPL-12510")
     public void testTriggerJSFunctionAndSeeHowManyTimesCalledMethodOnData() {

@@ -77,6 +77,11 @@ public class TestRichTabPanel extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richTabPanel/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Tab Panel", "Simple");
+    }
+
     @Test
     @Templates(exclude = { "hDataTable", "richCollapsibleSubTable", "richDataGrid", "richDataTable" })
     public void testHeaderAlignment() {

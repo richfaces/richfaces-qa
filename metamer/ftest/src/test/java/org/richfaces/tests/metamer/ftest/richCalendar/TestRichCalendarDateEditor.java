@@ -52,6 +52,11 @@ public class TestRichCalendarDateEditor extends AbstractCalendarTest<MetamerPage
         return buildUrl(contextPath, "faces/components/richCalendar/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Calendar", "Simple");
+    }
+
     @Test
     public void testCancelButton() {
         MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();

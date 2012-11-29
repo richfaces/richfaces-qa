@@ -50,6 +50,11 @@ public class TestProgressBarStatic extends AbstractWebDriverTest<ProgressBarPage
         return buildUrl(contextPath, "faces/components/richProgressBar/static.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Progress Bar", "Static");
+    }
+
     @Test
     public void testInitialFacet() {
         assertTrue(ElementPresent.getInstance().element(page.progressBar).apply(driver),

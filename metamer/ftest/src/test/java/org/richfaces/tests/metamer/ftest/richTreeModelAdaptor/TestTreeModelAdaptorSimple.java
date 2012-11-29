@@ -57,6 +57,11 @@ public class TestTreeModelAdaptorSimple extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richTree/treeAdaptors.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Tree", "Tree Adaptors");
+    }
+
     @Test
     public void testModelAdaptorRendered() {
         tree.getNode(2).expand();

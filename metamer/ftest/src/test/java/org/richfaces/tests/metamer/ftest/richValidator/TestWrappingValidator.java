@@ -47,6 +47,11 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
         return buildUrl(contextPath, "faces/components/richValidator/wrapping.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Validator", "Client side validation for many inputs wrapped by rich:validator");
+    }
+
     @Test
     public void testAllWrong() {
         verifyAllWrongWithAjaxSubmit();

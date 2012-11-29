@@ -43,6 +43,11 @@ public class TestHSelectManyCheckbox extends AbstractAjaxTest<AjaxPage> {
         return buildUrl(contextPath, "faces/components/a4jAjax/hSelectManyCheckbox.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Ajax", "Select Many Checkbox");
+    }
+
     @Test
     public void testSimpleClick() {
         super.testClick();

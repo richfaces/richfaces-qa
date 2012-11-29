@@ -72,6 +72,11 @@ public class TestDataScrollerAttributes extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richDataScroller/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Data Scroller", "Simple");
+    }
+
     @Test
     public void testBoundaryControls() {
         // init - show

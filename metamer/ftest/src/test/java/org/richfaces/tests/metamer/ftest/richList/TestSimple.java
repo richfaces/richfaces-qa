@@ -45,6 +45,11 @@ public class TestSimple extends AbstractListTest {
         return buildUrl(contextPath, "faces/components/richList/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich List", "Simple");
+    }
+
     @Test
     public void testRenderedAttribute() {
         listAttributes.set(ListAttributes.rendered, "false");

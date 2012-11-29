@@ -46,6 +46,11 @@ public abstract class AbstractItemChangeListenerTest<P extends ICLPage> extends 
         return buildUrl(contextPath, "faces/components/richItemChangeListener/" + testedComponent + ".xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Item Change Listener", testedComponent);
+    }
+
     /**
      * Gets list of WebElements and check if some of them has same text as
      * expected in attribute @expectedText.

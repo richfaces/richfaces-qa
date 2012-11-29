@@ -86,6 +86,11 @@ public class TestDropTarget extends AbstractDragNDropTest {
         return buildUrl(contextPath, "faces/components/richDropTarget/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Drop Target", "Simple");
+    }
+
     @Test
     public void testAcceptedTypes() {
         dropTargetAttributes.set(acceptedTypes, "drg2");

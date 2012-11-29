@@ -48,6 +48,11 @@ public class TestAttributes extends AbstractMediaOutputTest {
         return buildUrl(contextPath, "faces/components/a4jMediaOutput/imagePng.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Media Output", "Image Png");
+    }
+
     @Test
     public void testAccesskey() {
         testHtmlAttribute(MEDIA_OUTPUT, "accesskey", "r");

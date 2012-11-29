@@ -44,6 +44,11 @@ public class TestHSelectManyListbox extends AbstractAjaxTest<AjaxPage> {
         return buildUrl(contextPath, "faces/components/a4jAjax/hSelectManyListbox.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Ajax", "Select Many Listbox");
+    }
+
     @Test
     public void testSimpleClick() {
         super.testClick();

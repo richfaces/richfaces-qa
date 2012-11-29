@@ -58,6 +58,11 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
         return buildUrl(contextPath, "faces/components/richCollapsibleSubTable/filtering.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Collapsible Sub Table", "Table Filtering");
+    }
+
     @BeforeMethod
     public void prepare() {
         collapsibleSubTabAttributes.set(CollapsibleSubTableAttributes.rows, rows);

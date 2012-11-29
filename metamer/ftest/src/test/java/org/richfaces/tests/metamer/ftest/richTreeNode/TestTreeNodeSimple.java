@@ -128,6 +128,11 @@ public class TestTreeNodeSimple extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richTree/simpleSwingTreeNode.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Tree", "Simple - Swing Tree Node");
+    }
+
     @Test
     public void testDir() {
         super.testDir(treeNode.getTreeNode());

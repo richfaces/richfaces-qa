@@ -59,6 +59,11 @@ public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
         return buildUrl(contextPath, "faces/components/richValidator/single.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Validator", "Client side validation for only one input component wrapped by rich:validator");
+    }
+
     @Test(groups = { "4.Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11576")
     public void testIntegerMin() {

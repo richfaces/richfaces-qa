@@ -64,6 +64,11 @@ public class TestCustomMessages extends AbstractWebDriverTest<CustomMessagesPage
         return buildUrl(contextPath, "faces/components/richValidator/customMessages.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Validator", "Client Side Validation With Custom Validator Messages");
+    }
+
     public void submit() {
         if (button.equals("hButton")) {
             page.submitByHButton();

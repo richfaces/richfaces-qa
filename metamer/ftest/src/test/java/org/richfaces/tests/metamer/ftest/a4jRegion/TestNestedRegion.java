@@ -64,6 +64,11 @@ public class TestNestedRegion extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/a4jRegion/nested.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Region", "Nested regions");
+    }
+
     @Test
     @Templates(exclude = { "a4jRegion" })
     public void test() {

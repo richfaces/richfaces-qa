@@ -42,6 +42,11 @@ public class TestSelectWithJSR303 extends TestSelectsWithJSR303 {
         return buildUrl(contextPath, "faces/components/richSelect/jsr303.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Select", "JSR-303 Bean Validation");
+    }
+
     @Test
     public void testNotEmpty() {
         verifyNotEmpty();

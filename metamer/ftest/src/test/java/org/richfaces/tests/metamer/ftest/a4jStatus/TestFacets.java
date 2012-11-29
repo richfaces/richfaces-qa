@@ -45,6 +45,11 @@ public class TestFacets extends AbstractStatusTest {
         return buildUrl(contextPath, "faces/components/a4jStatus/facets.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Status", "Facets");
+    }
+
     @Test
     public void testInterleavedChangingOfFacets() {
         for (int i = 0; i < 13; i++) {

@@ -48,6 +48,11 @@ public abstract class AbstractTreeSelectionChangeListenerTest<P extends TSCLPage
         return buildUrl(contextPath, "faces/components/richTreeSelectionChangeListener/" + testedComponent + ".xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Tree Selection Change Listener", testedComponent);
+    }
+
     /**
      * Gets list of WebElements and check if some of them has same text as
      * expected in attribute @expectedText.

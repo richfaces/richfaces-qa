@@ -42,6 +42,11 @@ public class TestDataTableScroller extends DataTableScrollerTest {
         return buildUrl(contextPath, "faces/components/richDataTable/scroller.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Data Table", "Data Scroller");
+    }
+
     @BeforeClass
     public void setupModel() {
         model = new DataTable(pjq("table.rf-dt[id$=richDataTable]"));

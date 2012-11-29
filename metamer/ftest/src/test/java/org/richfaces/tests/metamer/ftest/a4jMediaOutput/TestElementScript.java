@@ -46,6 +46,11 @@ public class TestElementScript extends AbstractMediaOutputTest {
         return buildUrl(contextPath, "faces/components/a4jMediaOutput/elementScript.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Media Output", "Element <script></script>");
+    }
+
     @Test
     public void init() {
         assertTrue(selenium.isElementPresent(JAVASCRIPT_TEXT), "The javascript text is not present.");

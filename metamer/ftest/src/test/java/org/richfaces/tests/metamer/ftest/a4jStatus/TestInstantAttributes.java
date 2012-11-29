@@ -61,6 +61,11 @@ public class TestInstantAttributes extends AbstractStatusTest {
         return buildUrl(contextPath, "faces/components/a4jStatus/instantAttributes.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Status", "Instant Attributes");
+    }
+
     @BeforeClass
     public void setupAttributes() {
         statusAttributes.setRequestType(RequestType.XHR);

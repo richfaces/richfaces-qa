@@ -57,6 +57,11 @@ public class TestA4JLog extends AbstractWebDriverTest<LogPage> {
         return buildUrl(contextPath, "faces/components/a4jLog/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Log", "Simple");
+    }
+
 //    @Override
 //    protected LogPage createPage() {
 //        return new LogPage();

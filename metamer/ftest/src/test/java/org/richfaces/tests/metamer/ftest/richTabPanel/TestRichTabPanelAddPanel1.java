@@ -74,6 +74,11 @@ public class TestRichTabPanelAddPanel1 extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richTabPanel/addTab2.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Tab Panel", "Add Tab v2");
+    }
+
     /**
      * Simple create new tab (without tab switch)
      *

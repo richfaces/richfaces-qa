@@ -57,6 +57,11 @@ public class TestRegionSimple extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/a4jRegion/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("A4J", "A4J Region", "Simple");
+    }
+
     @Test
     public void testExecution() {
         nameRetriever.initializeValue();

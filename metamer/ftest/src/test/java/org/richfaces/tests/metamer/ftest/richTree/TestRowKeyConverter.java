@@ -29,6 +29,11 @@ public class TestRowKeyConverter extends AbstractWebDriverTest<TestRowKeyConvert
         return buildUrl(contextPath, "faces/components/richTree/" + sample + ".xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Context Menu", "Simple");
+    }
+
     @Test
     public void testToggle() {
         page.toggle();

@@ -44,6 +44,11 @@ public class TestExtendedDataTableSortingUsingComponentControl extends DataTable
         return buildUrl(contextPath, "faces/components/richExtendedDataTable/sorting-using-component-control.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Extended Data Table", "Table Sorting - Component Control");
+    }
+
     @BeforeClass
     public void setupModel() {
         model = new ExtendedDataTable(pjq("div.rf-edt[id$=richEDT]"));

@@ -75,6 +75,11 @@ public class TestRichCollapsiblePanel extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richCollapsiblePanel/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Collapsible Panel", "Simple");
+    }
+
     @Test
     public void testInit() {
         boolean displayed = selenium.isVisible(panel);

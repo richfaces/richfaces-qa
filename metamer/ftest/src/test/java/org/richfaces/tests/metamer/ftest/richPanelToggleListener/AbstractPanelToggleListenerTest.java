@@ -48,6 +48,11 @@ public abstract class AbstractPanelToggleListenerTest<P extends PTLCollapsiblePa
         return buildUrl(contextPath, "faces/components/richPanelToggleListener/" + testedComponent + ".xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Panel Toggle Listener", testedComponent);
+    }
+
     /**
      * Gets list of WebElements and check if some of them has same text as
      * expected in attribute @expectedText.

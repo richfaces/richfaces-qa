@@ -46,6 +46,11 @@ public class TestRichCalendarCurrentDate extends AbstractCalendarTest<MetamerPag
         return buildUrl(contextPath, "faces/components/richCalendar/currentDate.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Calendar", "Current Date");
+    }
+
     @BeforeMethod
     public void initDateFormatter() {
         this.dateTimeFormatter = DateTimeFormat.forPattern(calendarAttributes.get(CalendarAttributes.datePattern));

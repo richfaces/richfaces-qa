@@ -61,6 +61,11 @@ public abstract class AbstractRichHotKeyTest extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richHotKey/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Hot Key", "Simple");
+    }
+
     protected void checkEvent(String text, int number) {
         waitGui
             .failWith("The number of hotkey events doesn't match. Found <" + selenium.getCount(pjq(format(HOT_KEY_EVENT_LOCATOR_WITH_CONTENT, text))) + ">, expected <" + number + ">.")

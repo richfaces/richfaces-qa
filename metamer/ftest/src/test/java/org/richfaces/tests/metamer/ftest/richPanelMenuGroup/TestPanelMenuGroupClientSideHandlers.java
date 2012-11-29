@@ -70,6 +70,11 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         return buildUrl(contextPath, "faces/components/richPanelMenuGroup/simple.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Panel Menu Group", "Simple");
+    }
+
     @Test
     @Use(field = "event", value = "ajaxCollapsionEvents")
     public void testClientSideCollapsionEvent() {

@@ -48,6 +48,11 @@ public class TestRichNotifyValidation extends AbstractRichNotifyTest {
         return buildUrl(contextPath, "faces/components/richNotify/validation.xhtml");
     }
 
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Notify", "Validation");
+    }
+
     @Test
     public void testAttributeMessagesGlobalOnly() {
 
