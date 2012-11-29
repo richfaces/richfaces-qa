@@ -25,6 +25,8 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.mediaOutputAttributes;
 
 import java.net.URL;
+
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -36,7 +38,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestElementAWebDriver extends AbstractWebDriverTest<TestElementAWebDriver.MediaOutputPage> {
+public class TestElementAWebDriver extends AbstractWebDriverTest {
+
+    @Page
+    private MediaOutputPage page;
 
     @Inject
     @Use(empty = false)

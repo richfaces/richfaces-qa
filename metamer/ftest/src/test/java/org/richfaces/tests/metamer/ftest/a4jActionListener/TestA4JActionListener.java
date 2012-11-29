@@ -28,6 +28,7 @@ import static org.testng.Assert.assertFalse;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebDriver;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
@@ -41,7 +42,10 @@ import com.google.common.base.Predicate;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M2
  */
-public class TestA4JActionListener extends AbstractWebDriverTest<ActionListenerPage> {
+public class TestA4JActionListener extends AbstractWebDriverTest {
+
+    @Page
+    private ActionListenerPage page;
 
     @Override
     public URL getTestUrl() {

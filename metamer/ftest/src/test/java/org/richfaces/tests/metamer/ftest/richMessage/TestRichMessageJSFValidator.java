@@ -33,7 +33,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichMessageJSFValidator extends AbstractRichMessageTest<MessagePage> {
+public class TestRichMessageJSFValidator extends AbstractRichMessageTest {
 
     @Override
     protected void waitingForValidationMessages() {

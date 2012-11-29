@@ -33,7 +33,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichFileUploadProgressFacet extends AbstractFileUploadWebDriverTest<FileUploadPage> {
+public class TestRichFileUploadProgressFacet extends AbstractFileUploadWebDriverTest {
 
     @Override
     public URL getTestUrl() {

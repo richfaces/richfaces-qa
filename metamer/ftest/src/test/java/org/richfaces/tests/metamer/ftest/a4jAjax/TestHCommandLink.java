@@ -40,7 +40,7 @@ import org.testng.annotations.Test;
  * @since 4.3.0.M2
  */
 @RegressionTest("https://issues.jboss.org/browse/RF-10482")
-public class TestHCommandLink extends AbstractAjaxTest<AjaxPage> {
+public class TestHCommandLink extends AbstractAjaxTest {
 
     @Override
     public URL getTestUrl() {

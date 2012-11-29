@@ -30,6 +30,7 @@ import static org.testng.Assert.fail;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -43,7 +44,10 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M2
  */
-public class TestA4JLog extends AbstractWebDriverTest<LogPage> {
+public class TestA4JLog extends AbstractWebDriverTest {
+
+    @Page
+    private LogPage page;
 
     /**
      * Enumeration representing all possible levels for a4j:log.
@@ -61,11 +65,6 @@ public class TestA4JLog extends AbstractWebDriverTest<LogPage> {
     public MetamerNavigation getComponentExampleNavigation() {
         return new MetamerNavigation("A4J", "A4J Log", "Simple");
     }
-
-//    @Override
-//    protected LogPage createPage() {
-//        return new LogPage();
-//    }
 
     @Test
     public void testSubmit() {
@@ -212,9 +211,6 @@ public class TestA4JLog extends AbstractWebDriverTest<LogPage> {
     }
 
     private void testLogging(LogLevel logLevel, LogLevel filterLevel) {
-        WebElement logButton = driver.findElement(By.cssSelector("input[id$=" + logLevel.toString().toLowerCase()
-            + "Button]"));
-
         if (filterLevel != LogLevel.DEBUG) {
             logAttributes.set(LogAttributes.level, filterLevel.toString().toLowerCase());
         }
@@ -240,6 +236,8 @@ public class TestA4JLog extends AbstractWebDriverTest<LogPage> {
                 break;
             case ERROR:
                 page.errorButton.click();
+                break;
+            default:
                 break;
         }
 

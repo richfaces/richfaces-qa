@@ -28,6 +28,7 @@ import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -36,7 +37,10 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
-public class TestTwoPush extends AbstractWebDriverTest<TwoPushPage> {
+public class TestTwoPush extends AbstractWebDriverTest {
+
+    @Page
+    private TwoPushPage page;
 
     @Override
     public URL getTestUrl() {

@@ -37,7 +37,7 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M2
  */
-public class TestHSelectOneMenu extends AbstractAjaxTest<AjaxPage> {
+public class TestHSelectOneMenu extends AbstractAjaxTest {
 
     @Override
     public URL getTestUrl() {

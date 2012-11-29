@@ -23,6 +23,8 @@ package org.richfaces.tests.metamer.ftest.richValidator;
 
 import java.net.URL;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
@@ -33,16 +35,14 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestCustomMessages extends AbstractWebDriverTest<CustomMessagesPage> {
+public class TestCustomMessages extends AbstractWebDriverTest {
+
+    @Page
+    private CustomMessagesPage page;
 
     @Inject
     @Use(strings={"hButton", "a4jButton"})
     private String button;
-
-//    @Override
-//    protected CustomMessagesPage createPage() {
-//        return new CustomMessagesPage();
-//    }
 
     @Test
     public void testMessages1() {

@@ -25,6 +25,8 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 import javax.faces.event.PhaseId;
+
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -32,8 +34,10 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-// FIXME AbstractPanelToggleListenerTest should not be generic (bug in Graphene)
-public abstract class AbstractPanelToggleListenerTest<P extends PTLCollapsiblePanelPage> extends AbstractWebDriverTest<P> {
+public abstract class AbstractPanelToggleListenerTest extends AbstractWebDriverTest {
+
+    @Page
+    private PTLCollapsiblePanelPage page;
 
     private final String collapsedPanelString = " collapsed";
     private final String expandedPanelString = " expanded";

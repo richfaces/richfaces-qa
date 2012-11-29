@@ -30,8 +30,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-//FIXME shoud not be generic (Graphene bug)
-public abstract class StringInputComponentJSR303Test<P extends InputValidationPage> extends AbstractStringInputComponentValidationTest<P> {
+public abstract class StringInputComponentJSR303Test extends AbstractStringInputComponentValidationTest {
 
     @Inject
     @Use(strings = { A4J_COMMANDBUTTON, H_COMMANDBUTTON })

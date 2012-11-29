@@ -49,7 +49,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichCalendarModel extends AbstractCalendarTest<MetamerPage> {
+public class TestRichCalendarModel extends AbstractCalendarTest {
 
     private static final String datePattern = "MMM dd, yyyy";
 

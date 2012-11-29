@@ -21,7 +21,6 @@
  */
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
-import org.richfaces.tests.metamer.ftest.abstractions.InputValidationPage;
 import org.richfaces.tests.metamer.ftest.abstractions.StringInputComponentCSVTest;
 import org.testng.annotations.Test;
 
@@ -29,7 +28,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 //FIXME shoud not be generic (Graphene bug)
-public class TestRichInplaceInputCSV extends StringInputComponentCSVTest<InputValidationPage> {
+public class TestRichInplaceInputCSV extends StringInputComponentCSVTest {
 
     @Override
     public String getComponentName() {

@@ -36,7 +36,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @version $Revision: 23138 $
  */
-public class TestRichMessagesJSR303 extends AbstractRichMessagesTest<MessagesPage> {
+public class TestRichMessagesJSR303 extends AbstractRichMessagesTest {
 
     @Override
     public URL getTestUrl() {

@@ -32,6 +32,7 @@ import java.net.URL;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Action;
@@ -48,7 +49,10 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M2
  */
-public class TestA4JCommandLink extends AbstractWebDriverTest<CommandButtonLinkPage> {
+public class TestA4JCommandLink extends AbstractWebDriverTest {
+
+    @Page
+    private CommandButtonLinkPage page;
 
     @Override
     public URL getTestUrl() {

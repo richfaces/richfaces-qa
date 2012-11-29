@@ -30,6 +30,7 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -41,7 +42,10 @@ import com.google.common.base.Predicate;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichEditorWithTyping extends AbstractWebDriverTest<EditorSimplePage> {
+public class TestRichEditorWithTyping extends AbstractWebDriverTest {
+
+    @Page
+    private EditorSimplePage page;
 
     private String phaseListenerLogFormat = "*3 value changed: <p> {0}</p> -> <p> {1}</p>";
 

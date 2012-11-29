@@ -26,6 +26,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
@@ -35,7 +36,10 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision: 22407 $
  */
-public class TestRF12304 extends AbstractWebDriverTest<RF12304Page> {
+public class TestRF12304 extends AbstractWebDriverTest {
+
+    @Page
+    private RF12304Page page;
 
     @Override
     public URL getTestUrl() {

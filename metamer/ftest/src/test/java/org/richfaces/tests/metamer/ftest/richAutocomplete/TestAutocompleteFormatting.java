@@ -43,7 +43,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAutocompleteFormatting extends AbstractAutocompleteTest<SimplePage>{
+public class TestAutocompleteFormatting extends AbstractAutocompleteTest{
 
     @FindBy(id="form:autocomplete")
     private AutocompleteComponentImpl<String> autocomplete;

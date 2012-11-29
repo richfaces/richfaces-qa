@@ -39,7 +39,7 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M2
  */
-public class TestHGraphicImage extends AbstractAjaxTest<AjaxPage> {
+public class TestHGraphicImage extends AbstractAjaxTest {
 
     @Override
     public URL getTestUrl() {

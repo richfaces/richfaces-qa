@@ -31,7 +31,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 //FIXME shoud not be generic (Graphene bug)
-public abstract class StringInputComponentCSVTest<P extends InputValidationPage> extends AbstractStringInputComponentValidationTest<P> {
+public abstract class StringInputComponentCSVTest extends AbstractStringInputComponentValidationTest {
 
     @Inject
     @Use(strings = { CSV, A4J_COMMANDBUTTON, H_COMMANDBUTTON })
@@ -47,5 +47,9 @@ public abstract class StringInputComponentCSVTest<P extends InputValidationPage>
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/" + getComponentName() + "/csv.xhtml");
+    }
+
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich " + getComponentName(), "Client Side Validation");
     }
 }

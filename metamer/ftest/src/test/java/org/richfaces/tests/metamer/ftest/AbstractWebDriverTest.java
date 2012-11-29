@@ -58,12 +58,10 @@ import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
-public abstract class AbstractWebDriverTest<P extends MetamerPage> extends AbstractMetamerTest {
+public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     @Drone
     protected WebDriver driver;
-    @Page
-    protected P page;
     protected static final int WAIT_TIME = 5;// s
     private static final int NUMBER_OF_TRIES = 5;
     protected static final int MINOR_WAIT_TIME = 50;// ms

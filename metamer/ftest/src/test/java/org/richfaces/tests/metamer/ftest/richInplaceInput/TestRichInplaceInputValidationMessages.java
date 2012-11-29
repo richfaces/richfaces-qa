@@ -21,13 +21,12 @@
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractValidationMessagesTest;
-import org.richfaces.tests.metamer.ftest.abstractions.ValidationPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichInplaceInputValidationMessages extends AbstractValidationMessagesTest<ValidationPage> {
+public class TestRichInplaceInputValidationMessages extends AbstractValidationMessagesTest {
 
     public TestRichInplaceInputValidationMessages() {
         super("richInplaceInput");

@@ -41,7 +41,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 21568 $
  */
-public class TestRichCalendarTimeEditor extends AbstractCalendarTest<MetamerPage> {
+public class TestRichCalendarTimeEditor extends AbstractCalendarTest {
 
     @Override
     public URL getTestUrl() {

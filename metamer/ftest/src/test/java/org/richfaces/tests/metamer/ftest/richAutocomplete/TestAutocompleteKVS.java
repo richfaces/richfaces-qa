@@ -27,6 +27,7 @@ import static org.testng.Assert.assertEquals;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -45,7 +46,10 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAutocompleteKVS extends AbstractAutocompleteTest<SimplePage> {
+public class TestAutocompleteKVS extends AbstractAutocompleteTest {
+
+    @Page
+    private MetamerPage page;
 
     @FindBy(id = "form:autocomplete")
     private AutocompleteComponentImpl<String> autocomplete;
@@ -80,7 +84,7 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest<SimplePage> {
         new AutocompleteReloadTester().testRerenderAll();
     }
 
-    private class AutocompleteReloadTester extends AbstractWebDriverTest<SimplePage>.ReloadTester<String> {
+    private class AutocompleteReloadTester extends AbstractWebDriverTest.ReloadTester<String> {
 
         public AutocompleteReloadTester() {
             super(page);
