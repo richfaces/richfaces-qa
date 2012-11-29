@@ -27,6 +27,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.BooleanConditionWrapper;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -38,7 +39,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAccordionKVS extends AbstractWebDriverTest<AccordionPage> {
+public class TestAccordionKVS extends AbstractWebDriverTest {
+
+    @Page
+    private AccordionPage page;
 
     @Override
     public URL getTestUrl() {

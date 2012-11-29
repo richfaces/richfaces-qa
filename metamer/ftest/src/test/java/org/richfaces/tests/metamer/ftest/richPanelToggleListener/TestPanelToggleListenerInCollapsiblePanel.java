@@ -28,7 +28,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestPanelToggleListenerInCollapsiblePanel extends AbstractPanelToggleListenerTest<PTLCollapsiblePanelPage> {
+public class TestPanelToggleListenerInCollapsiblePanel extends AbstractPanelToggleListenerTest {
 
     private final String PTL_as_ComponentAttribute_PhaseName = "panel";
     private final String PTL_inComponent_usingListener_PhaseName = "pannelToggleListenerBean panel";

@@ -26,6 +26,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -38,8 +39,10 @@ import org.testng.annotations.BeforeMethod;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-// FIXME AbstractRichMessageWDTest should not be generic (bug in Graphene)
-public abstract class AbstractRichMessageTest<P extends MessagePage> extends AbstractWebDriverTest<P> {
+public abstract class AbstractRichMessageTest extends AbstractWebDriverTest {
+
+    @Page
+    protected MessagePage page;
 
     @FindBy(css = "span[id$=simpleInputMsg]")
     MessageComponentImpl messageComponentForInputX;

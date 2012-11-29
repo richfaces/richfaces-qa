@@ -46,7 +46,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest<FileUploadPage> {
+public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest {
 
     private Action succesfulFileUploadAction = new SuccesfulFileUploadAction();
 

@@ -42,7 +42,7 @@ import org.testng.annotations.Test;
  * Test case for JavaScript API on page faces/components/richInplaceInput/simple.xhtml.
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichInplaceInputJSApi extends AbstractWebDriverTest<MetamerPage> {
+public class TestRichInplaceInputJSApi extends AbstractWebDriverTest {
 
     @FindBy(css = "span[id$=inplaceInput]")
     private InplaceInputComponentImpl inplaceInput;

@@ -31,6 +31,7 @@ import java.net.URL;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.test.selenium.support.ui.ElementNotPresent;
 import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.openqa.selenium.Point;
@@ -47,7 +48,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestEDTFrozenColumns extends AbstractWebDriverTest<TestEDTFrozenColumns.FrozenColumnsPage> {
+public class TestEDTFrozenColumns extends AbstractWebDriverTest {
+
+    @Page
+    private FrozenColumnsPage page;
 
     @Inject
     @Use(empty = false)

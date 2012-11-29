@@ -48,7 +48,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAutocomplete extends AbstractAutocompleteTest<SimplePage> {
+public class TestAutocomplete extends AbstractAutocompleteTest {
 
     @FindBy(css="span.rf-au")
     protected AutocompleteComponentImpl<String> autocomplete;

@@ -26,6 +26,7 @@ import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -36,7 +37,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class TestRF12510 extends AbstractWebDriverTest<TestRF12510.RF12510Page> {
+public class TestRF12510 extends AbstractWebDriverTest {
+
+    @Page
+    private RF12510Page page;
 
     @Override
     public URL getTestUrl() {

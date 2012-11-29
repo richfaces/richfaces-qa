@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.abstractions;
 import static org.testng.Assert.assertFalse;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -34,8 +35,10 @@ import org.testng.annotations.BeforeMethod;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-//FIXME shoud not be generic (Graphene bug)
-public abstract class AbstractStringInputComponentValidationTest<P extends InputValidationPage> extends AbstractWebDriverTest<P> {
+public abstract class AbstractStringInputComponentValidationTest extends AbstractWebDriverTest {
+
+    @Page
+    private InputValidationPage page;
 
     //Submit types:
     public static final String A4J_COMMANDBUTTON = "a4jCommandButton";

@@ -27,6 +27,8 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import javax.faces.event.PhaseId;
+
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -43,7 +45,10 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichInplaceInputFAjax extends AbstractWebDriverTest<MetamerPage> {
+public class TestRichInplaceInputFAjax extends AbstractWebDriverTest {
+
+    @Page
+    private MetamerPage page;
 
     @FindBy(css = "span[id$=inplaceInput]")
     private InplaceInputComponentImpl inplaceInput;

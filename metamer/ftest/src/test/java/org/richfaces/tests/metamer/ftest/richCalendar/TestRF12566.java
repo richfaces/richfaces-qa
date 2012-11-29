@@ -29,6 +29,7 @@ import java.net.URL;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -42,7 +43,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRF12566 extends AbstractWebDriverTest<TestRF12566.RF12566Page> {
+public class TestRF12566 extends AbstractWebDriverTest {
+
+    @Page
+    private RF12566Page page;
 
     @Override
     public URL getTestUrl() {

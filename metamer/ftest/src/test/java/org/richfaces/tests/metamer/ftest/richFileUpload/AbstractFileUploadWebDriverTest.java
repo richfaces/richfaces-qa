@@ -26,6 +26,7 @@ import static org.testng.Assert.assertTrue;
 import java.io.File;
 import java.net.URISyntaxException;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.By;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -35,7 +36,10 @@ import org.testng.annotations.BeforeMethod;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractFileUploadWebDriverTest<P extends FileUploadPage> extends AbstractWebDriverTest<P> {
+public abstract class AbstractFileUploadWebDriverTest extends AbstractWebDriverTest {
+
+    @Page
+    protected FileUploadPage page;
 
     protected static final String notAcceptableFile = "file1.x";
     protected static final String acceptableFile = "file1.txt";
