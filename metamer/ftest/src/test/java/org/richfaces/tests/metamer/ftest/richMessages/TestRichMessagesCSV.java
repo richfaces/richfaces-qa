@@ -36,7 +36,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichMessagesCSV extends AbstractRichMessagesTest<MessagesPage> {
+public class TestRichMessagesCSV extends AbstractRichMessagesTest {
 
     @Override
     public URL getTestUrl() {

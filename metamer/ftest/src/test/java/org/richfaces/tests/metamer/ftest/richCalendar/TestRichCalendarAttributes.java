@@ -81,7 +81,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichCalendarAttributes extends AbstractCalendarTest<MetamerPage> {
+public class TestRichCalendarAttributes extends AbstractCalendarTest {
 
     private DateTimeFormatter dateTimeFormatter;
     @Inject

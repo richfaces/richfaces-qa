@@ -29,6 +29,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.test.selenium.support.ui.ElementNotPresent;
 import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -43,7 +44,10 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M3
  */
-public class TestProgressBarStatic extends AbstractWebDriverTest<ProgressBarPage> {
+public class TestProgressBarStatic extends AbstractWebDriverTest {
+
+    @Page
+    private ProgressBarPage page;
 
     @Override
     public URL getTestUrl() {

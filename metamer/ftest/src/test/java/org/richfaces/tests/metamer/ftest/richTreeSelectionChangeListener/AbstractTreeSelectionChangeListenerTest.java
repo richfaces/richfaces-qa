@@ -25,6 +25,8 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 import javax.faces.event.PhaseId;
+
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -32,8 +34,10 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-// FIXME AbstractTreeSelectionChangeListenerTest should not be generic (bug in Graphene)
-public abstract class AbstractTreeSelectionChangeListenerTest<P extends TSCLPage> extends AbstractWebDriverTest<P> {
+public abstract class AbstractTreeSelectionChangeListenerTest extends AbstractWebDriverTest {
+
+    @Page
+    private TSCLPage page;
 
     private final String nullToFirst = " []->[org.richfaces.model.SequenceRowKey[1]]";
     private final String firstToSecond = " [org.richfaces.model.SequenceRowKey[1]]->[org.richfaces.model.SequenceRowKey[2]]";

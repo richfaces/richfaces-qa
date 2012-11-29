@@ -42,7 +42,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAutocompleteFiltering extends AbstractAutocompleteTest<SimplePage>{
+public class TestAutocompleteFiltering extends AbstractAutocompleteTest {
 
     private static final String CLIENT_FILTER_FUNCTION_NAME = "customClientFilterFunction";
 

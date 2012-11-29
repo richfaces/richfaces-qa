@@ -28,6 +28,7 @@ import static org.testng.Assert.assertTrue;
 
 import javax.faces.event.PhaseId;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -50,11 +51,14 @@ import org.testng.annotations.BeforeMethod;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractCalendarTest<P extends MetamerPage> extends AbstractWebDriverTest<P> {
+public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
+
+    @Page
+    protected MetamerPage page;
 
     protected static final DateTime firstOfJanuary2012 = new DateTime(2012, 1, 1, 12, 0);
     protected DateTime todayMidday = new DateTime().withHourOfDay(12).withMinuteOfHour(0).withSecondOfMinute(0);
-    //
+
     @FindBy(css = "span[id$=calendar]")
     protected CalendarPopupComponentImpl calendar;
     @FindBy(css = "span[id$=calendar]")

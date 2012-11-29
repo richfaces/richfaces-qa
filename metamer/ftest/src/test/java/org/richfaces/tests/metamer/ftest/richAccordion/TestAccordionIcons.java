@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.richAccordion;
 import java.net.URL;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -40,11 +41,13 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAccordionIcons extends AbstractWebDriverTest<AccordionPage> {
+public class TestAccordionIcons extends AbstractWebDriverTest {
+
+    @Page
+    private AccordionPage page;
 
     private final String leftIcon = "div[id$=item%s] td.rf-ac-itm-ico";
     private final String rightIcon = "div[id$=item%s] td.rf-ac-itm-exp-ico";
-
 
     @Override
     public URL getTestUrl() {

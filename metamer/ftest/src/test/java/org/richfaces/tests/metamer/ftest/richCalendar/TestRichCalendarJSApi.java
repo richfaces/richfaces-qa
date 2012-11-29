@@ -46,7 +46,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichCalendarJSApi extends AbstractCalendarTest<MetamerPage> {
+public class TestRichCalendarJSApi extends AbstractCalendarTest {
 
     @FindBy(css = "[id$=value]")
     private WebElement gettersValue;

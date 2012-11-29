@@ -28,6 +28,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
 import org.testng.annotations.Test;
@@ -35,7 +36,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class TestSimple extends AbstractWebDriverTest<FocusSimplePage> {
+public class TestSimple extends AbstractWebDriverTest {
+
+    @Page
+    private FocusSimplePage page;
 
     @Override
     public URL getTestUrl() {

@@ -28,6 +28,7 @@ import static org.testng.Assert.fail;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -38,8 +39,10 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M2
  */
-// FIXME AbstractAjaxPage should not be generic
-public abstract class AbstractAjaxTest<P extends AjaxPage> extends AbstractWebDriverTest<P> {
+public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
+
+    @Page
+    protected AjaxPage page;
 
     public void testClick() {
         String reqTime = page.requestTime.getText();

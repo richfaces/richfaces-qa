@@ -28,13 +28,17 @@ import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class TestDelayed extends AbstractWebDriverTest<FocusDelayedPage> {
+public class TestDelayed extends AbstractWebDriverTest {
+
+    @Page
+    private FocusDelayedPage page;
 
     @Override
     public URL getTestUrl() {

@@ -21,13 +21,12 @@
 package org.richfaces.tests.metamer.ftest.richSelect;
 
 import org.richfaces.tests.metamer.ftest.abstractions.AbstractValidationMessagesTest;
-import org.richfaces.tests.metamer.ftest.abstractions.ValidationPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichSelectValidationMessages extends AbstractValidationMessagesTest<ValidationPage> {
+public class TestRichSelectValidationMessages extends AbstractValidationMessagesTest {
 
     public TestRichSelectValidationMessages() {
         super("richSelect");

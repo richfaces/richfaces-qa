@@ -40,7 +40,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichCalendarKVS extends AbstractCalendarTest<MetamerPage> {
+public class TestRichCalendarKVS extends AbstractCalendarTest {
 
     @FindBy(css = "input[id$=a4jButton]")
     private WebElement a4jbutton;

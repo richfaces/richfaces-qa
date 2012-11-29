@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -46,7 +47,10 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M3
  */
-public class TestProgressBarClient extends AbstractWebDriverTest<ProgressBarPage> {
+public class TestProgressBarClient extends AbstractWebDriverTest {
+
+    @Page
+    private ProgressBarPage page;
 
     @Override
     public URL getTestUrl() {

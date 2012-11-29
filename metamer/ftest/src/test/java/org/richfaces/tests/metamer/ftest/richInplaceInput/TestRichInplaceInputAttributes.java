@@ -31,6 +31,7 @@ import java.net.URL;
 import javax.faces.event.PhaseId;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -54,7 +55,10 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichInplaceInputAttributes extends AbstractWebDriverTest<MetamerPage> {
+public class TestRichInplaceInputAttributes extends AbstractWebDriverTest {
+
+    @Page
+    private MetamerPage page;
 
     @FindBy(css = "span[id$=output]")
     private WebElement output;
