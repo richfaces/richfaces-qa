@@ -8,3 +8,4 @@ test-output
 .externalToolBuilders
 **/apps/*
 archetypes/richfaces-kitchensink-ftest/kitchensink-webdriver-ftest/
+**.checkstyle
