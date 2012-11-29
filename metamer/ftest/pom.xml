@@ -179,7 +179,7 @@ FSF site: http://www.fsf.org. -->
             <scope>test</scope>
             <type>jar</type>
         </dependency>
-        
+
         <!-- Selenium 2.26.0 requires httpcore 4.2 but 4.1 comes with Shrinkwrap 2.0.0-alpha-5 -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -264,6 +264,66 @@ FSF site: http://www.fsf.org. -->
                 <jvm.args.ip>-Djava.net.preferIPv4Stack=false -Djava.net.preferIPv6Addresses=true</jvm.args.ip>
                 <arquillian.container.jbossas.7-1.node0>[::1]</arquillian.container.jbossas.7-1.node0>
             </properties>
+        </profile>
+
+        <!-- Jenkins Profile -->
+        <profile>
+            <id>jenkins</id>
+            <properties>
+                <firefox.version>12</firefox.version>
+                <firefox.bin.solaris10>/qa/tools/SunOS/${os.arch}/firefox-${firefox.version}/firefox</firefox.bin.solaris10>
+                <firefox.bin.solaris11>/qa/tools/OpenSolaris/${os.arch}/firefox-${firefox.version}/firefox</firefox.bin.solaris11>
+                <firefox.bin.linux>/qa/tools/opt/firefox-${firefox.version}/firefox</firefox.bin.linux>
+                <firefox.bin.windows>t:/opt/windows/firefox-${firefox.version}/firefox.exe</firefox.bin.windows>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target name="firefox.bin">
+                                        <condition property="firefox.bin" value="${firefox.bin.solaris10}">
+                                            <os name="SunOS" version="5.10"/>
+                                        </condition>
+                                        <condition property="firefox.bin" value="${firefox.bin.solaris11}">
+                                            <os name="SunOS" version="5.11"/>
+                                        </condition>
+                                        <condition property="firefox.bin" value="${firefox.bin.linux}">
+                                            <os name="Linux" />
+                                        </condition>
+                                        <condition property="firefox.bin" value="${firefox.bin.windows}">
+                                            <os family="windows" />
+                                        </condition>
+                                        <condition property="firefox.bin" value="undefined firefox binary for ${os.name}-${os.arch}">
+                                            <not>
+                                                <isset property="firefox.bin" />
+                                            </not>
+                                        </condition>
+                                        <property name="firefox.bin" value="${firefox.bin}" />
+                                        <echo>using firefox binary: ${firefox.bin}</echo>
+                                    </target>
+                                    <exportAntProperties>true</exportAntProperties>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                            <configuration>
+                                <systemProperties>
+                                    <webdriver.firefox.bin>${firefox.bin}</webdriver.firefox.bin>
+                                    <arquillian.graphene.browser>*firefox ${firefox.bin}</arquillian.graphene.browser>
+                                </systemProperties>
+                            </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 </project>
