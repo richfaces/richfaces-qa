@@ -134,8 +134,8 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         super.testRequestEventsAfter(clientCollapsionEvents);
     }
 
-    @Test(groups = "4.3")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12549")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12549")
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
         "richExtendedDataTable", "richList" })
     public void testClientSideExpansionEventsOrderAjax() {
@@ -156,8 +156,8 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         testClientSideExpansionEventsOrderAjax();
     }
 
-    @Test(groups = "4.3")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12549")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12549")
     public void testClientSideCollapsionEventsOrderAjax() {
         panelMenuGroupAttributes.set(mode, ajax);
         menu.setGroupMode(ajax);

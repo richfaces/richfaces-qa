@@ -79,8 +79,8 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractGrapheneTest {
         super.testRequestEventsAfter(clientEvents);
     }
 
-    @Test(groups = "4.3")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12549")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12549")
     public void testClientSideEventsOrderAjax() {
         panelMenuItemAttributes.set(mode, ajax);
         menu.setItemMode(ajax);
