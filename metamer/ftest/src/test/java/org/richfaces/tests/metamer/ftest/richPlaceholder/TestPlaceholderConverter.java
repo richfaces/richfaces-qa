@@ -29,13 +29,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.ValueBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestPlaceholderConverter extends AbstractWebDriverTest<MetamerPage> {
+public class TestPlaceholderConverter extends AbstractWebDriverTest {
 
     @FindBy(css = "[id$=input]")
     WebElement input;

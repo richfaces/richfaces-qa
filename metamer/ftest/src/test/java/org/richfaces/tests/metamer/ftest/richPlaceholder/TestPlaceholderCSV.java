@@ -28,6 +28,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -39,8 +40,10 @@ import org.testng.annotations.Test;
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestPlaceholderCSV extends AbstractWebDriverTest<MetamerPage> {
+public class TestPlaceholderCSV extends AbstractWebDriverTest {
 
+    @Page
+    MetamerPage page;
     @FindBy(css = "[id$=input]")
     WebElement input;
     @FindBy(css = "[id$=msg]")

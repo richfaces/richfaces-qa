@@ -31,6 +31,7 @@ import java.awt.Color;
 import java.net.URL;
 import org.jboss.arquillian.ajocado.utils.ColorUtils;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -42,7 +43,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 //FIXME should not be generic
-public abstract class AbstractPlaceholderTest<P extends MetamerPage> extends AbstractWebDriverTest<P> {
+public abstract class AbstractPlaceholderTest extends AbstractWebDriverTest {
 
     public static final String INPUT1_ID = "[id$=input1]";
     public static final String INPUT2_ID = "[id$=input2]";
@@ -61,6 +62,8 @@ public abstract class AbstractPlaceholderTest<P extends MetamerPage> extends Abs
     WebElement output1;
     @FindBy(css = "[id$=output2]")
     WebElement output2;
+    @Page
+    MetamerPage page;
 
     public AbstractPlaceholderTest(String componentName) {
         this.componentName = componentName;

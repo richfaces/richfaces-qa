@@ -28,14 +28,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest<MetamerPage> {
+public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
 
     @FindBy(css = INPUT1_ID + " textarea")
     WebElement input1;

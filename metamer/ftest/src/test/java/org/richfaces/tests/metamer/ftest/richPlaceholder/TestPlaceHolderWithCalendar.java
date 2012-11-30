@@ -24,14 +24,13 @@ package org.richfaces.tests.metamer.ftest.richPlaceholder;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestPlaceHolderWithCalendar extends AbstractPlaceholderTest<MetamerPage> {
+public class TestPlaceHolderWithCalendar extends AbstractPlaceholderTest {
 
     @FindBy(css = INPUT1_ID + " input")
     WebElement input1;
