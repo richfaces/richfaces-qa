@@ -46,6 +46,8 @@ import org.testng.annotations.BeforeMethod;
  */
 public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
 
+    private static final String SAMPLE_TAB_LOC = "td.rf-tab-hdr-inact > span.rf-tab-lbl > a:contains('{0}')";
+
     @Drone
     protected GrapheneSelenium selenium;
 
@@ -66,6 +68,13 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
             JQueryLocator menuItemLoc = jq(format("a.rf-pm-itm-lbl:contains({0})", getDemoName()));
             waitModel.until(elementPresent.locator(menuItemLoc));
             selenium.click(menuItemLoc);
+            if (null != getSampleLabel()) {
+                System.out.println(" ### switchning tab to: " + getSampleLabel());
+                JQueryLocator tab = getSampleTabLocator(getSampleLabel());
+                waitGui.until(elementPresent.locator(tab));
+                selenium.click(tab);
+                selenium.waitForPageToLoad();
+            }
         } else {
             selenium.open(buildUrl(contextRoot, addition));
         }
@@ -225,6 +234,17 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
         }
     }
 
+    /**
+     * For tests running for portal env it is not working open sample tab by URL,
+     * and using click on tab is required instead. This is reason why need the
+     * sample label. Override this method in tests which need change tab,
+     * and provide correct tab label.
+     * @return sampleLabel - label on tab with required sample
+     */
+    protected String getSampleLabel() {
+        return null;
+    }
+
     /* ***************************************************************************************************
      * help methods ************************************************************** *************************************
      */
@@ -250,5 +270,9 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
         }
 
         return false;
+    }
+
+    private JQueryLocator getSampleTabLocator(String sampleTabLabel) {
+        return jq(format(SAMPLE_TAB_LOC, sampleTabLabel));
     }
 }

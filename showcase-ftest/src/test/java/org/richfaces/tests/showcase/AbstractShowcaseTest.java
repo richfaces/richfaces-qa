@@ -25,9 +25,12 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.swing.text.StyledEditorKit.BoldAction;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
+import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.testng.Arquillian;
@@ -60,17 +63,8 @@ public abstract class AbstractShowcaseTest extends Arquillian {
 
     protected String getAdditionToContextRoot() {
 
-        // sample name - removes Test- prefix from class name and uncapitalize
-        // first letter
-        String sampleName = this.getClass().getSimpleName().substring(4);
-        sampleName = WordUtils.uncapitalize(sampleName);
-
-        // demo name - takes last part of package name
-        String demoName = this.getClass().getPackage().getName();
-        demoName = StringUtils.substringAfterLast(demoName, ".");
-
-        String addition = SimplifiedFormat.format("richfaces/component-sample.jsf?skin=blueSky&demo={0}&sample={1}", demoName,
-            sampleName);
+        String addition = SimplifiedFormat.format("richfaces/component-sample.jsf?skin=blueSky&demo={0}&sample={1}",
+            getDemoName(), getSampleName());
 
         return addition;
     }
@@ -80,6 +74,14 @@ public abstract class AbstractShowcaseTest extends Arquillian {
         // demo name - takes last part of package name
         String demoName = this.getClass().getPackage().getName();
         return StringUtils.substringAfterLast(demoName, ".");
+    }
+
+    protected String getSampleName() {
+        // sample name - removes Test- prefix from class name and uncapitalize
+        // first letter
+        String sampleName = this.getClass().getSimpleName().substring(4);
+        sampleName = WordUtils.uncapitalize(sampleName);
+        return sampleName;
     }
 
     protected URL getContextRoot() {
