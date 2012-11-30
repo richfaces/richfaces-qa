@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich">
-
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
     <!--
     JBoss, Home of Professional Open Source
     Copyright 2010-2012, Red Hat, Inc. and individual contributors
@@ -26,12 +27,29 @@
     02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="placeholderTemplate.xhtml">
-        <ui:define name="testedComponents">
-            <h:inputText id="input1" value="#{richPlaceholderBean.inputValue1}">
-                <ui:include src="componentToInclude.xhtml"/>
-            </h:inputText>
-            <h:inputText id="input2" value="#{richPlaceholderBean.inputValue2}"/>
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="head">
+            <style type="text/css">
+                .customPlaceholderClass {
+                    color: blue !important;
+                }
+            </style>
         </ui:define>
+
+        <ui:define name="component">
+            <h:inputText id="input" value="#{richPlaceholderBean.validatedInput}">
+                <rich:placeholder id="placeholder"
+                                  value="#{richPlaceholderBean.attributes['value'].value}" 
+                                  />
+                <rich:validator event="blur"/>
+                <a4j:ajax event="change" execute="@form" render="output" />
+            </h:inputText>
+            <rich:message for="input" id="msg" ajaxRendered="true"/>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+        </ui:define>
+
     </ui:composition>
 </html>

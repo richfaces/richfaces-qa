@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
       xmlns:rich="http://richfaces.org/rich">
 
     <!--
@@ -29,8 +29,10 @@
     <ui:composition template="placeholderTemplate.xhtml">
         <ui:define name="testedComponents">
             <rich:inplaceInput id="input1" value="#{richPlaceholderBean.inputValue1}">
-                <ui:include src="componentToInclude.xhtml"/>
+                <ui:include src="placeholder.xhtml"/>
             </rich:inplaceInput>
+            <br/>
+            <br/>
             <rich:inplaceInput id="input2" value="#{richPlaceholderBean.inputValue2}"/>
         </ui:define>
     </ui:composition>

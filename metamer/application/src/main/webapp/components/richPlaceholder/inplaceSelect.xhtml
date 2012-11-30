@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core">
 
     <!--
     JBoss, Home of Professional Open Source
@@ -30,8 +31,10 @@
         <ui:define name="testedComponents">
             <rich:inplaceSelect id="input1" value="#{richPlaceholderBean.inputValue1}">
                 <f:selectItems value="#{richInplaceSelectBean.validationOptions}" />
-                <ui:include src="componentToInclude.xhtml"/>
+                <ui:include src="placeholder.xhtml"/>
             </rich:inplaceSelect>
+            <br/>
+            <br/>
             <rich:inplaceSelect id="input2" value="#{richPlaceholderBean.inputValue2}">
                 <f:selectItems value="#{richInplaceSelectBean.validationOptions}" />
             </rich:inplaceSelect>

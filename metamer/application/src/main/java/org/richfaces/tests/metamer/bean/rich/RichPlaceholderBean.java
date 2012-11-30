@@ -26,6 +26,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import org.richfaces.component.UIPlaceholder;
 import org.richfaces.tests.metamer.Attributes;
 import org.slf4j.Logger;
@@ -43,8 +44,8 @@ public class RichPlaceholderBean implements Serializable {
     private Attributes attributes;
     private Object inputValue1;
     private Object inputValue2;
-    @Min(value = 3)
-    private Integer intValue;
+    @Size(min = 3, max = 6)
+    private String validatedInput;
 
     @PostConstruct
     public void init() {
@@ -55,6 +56,8 @@ public class RichPlaceholderBean implements Serializable {
         attributes.setAttribute("rendered", "true");
         attributes.setAttribute("styleClass", "customPlaceholderClass");
         attributes.setAttribute("selector", "[id$=input1]");
+
+        attributes.remove("converter");
     }
 
     public Attributes getAttributes() {
@@ -65,27 +68,27 @@ public class RichPlaceholderBean implements Serializable {
         return inputValue1;
     }
 
-    public Object getInputValue2() {
-        return inputValue2;
-    }
-
-    public Integer getIntValue() {
-        return intValue;
-    }
-
-    public void setAttributes(Attributes attributes) {
-        this.attributes = attributes;
-    }
-
     public void setInputValue1(Object inputValue1) {
         this.inputValue1 = inputValue1;
+    }
+
+    public Object getInputValue2() {
+        return inputValue2;
     }
 
     public void setInputValue2(Object inputValue2) {
         this.inputValue2 = inputValue2;
     }
 
-    public void setIntValue(Integer intValue) {
-        this.intValue = intValue;
+    public String getValidatedInput() {
+        return validatedInput;
+    }
+
+    public void setValidatedInput(String validatedInput) {
+        this.validatedInput = validatedInput;
+    }
+
+    public void setAttributes(Attributes attributes) {
+        this.attributes = attributes;
     }
 }

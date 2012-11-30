@@ -31,8 +31,20 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="links">
 
+            <metamer:testPageLink id="autocomplete" outcome="autocomplete" value="Autocomplete">
+                Simple page containing rich:placeholder inside of rich:autocomplete component and input boxes for all its attributes.
+            </metamer:testPageLink>
+
             <metamer:testPageLink id="calendar" outcome="calendar" value="Calendar">
                 Simple page containing rich:placeholder inside of rich:calendar component and input boxes for all its attributes.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="converter" outcome="converter" value="Converter">
+                Simple page containing rich:placeholder inside of h:inputText component with preset attributes value and converter.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="csv" outcome="csv" value="Client side validated InputText">
+                Simple page containing rich:placeholder inside of h:inputText component validated with rich:validator and input boxes for all its attributes.
             </metamer:testPageLink>
 
             <metamer:testPageLink id="editor" outcome="editor" value="Editor">
@@ -49,10 +61,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <metamer:testPageLink id="inputText" outcome="inputText" value="InputText">
                 Simple page containing rich:placeholder inside of h:inputText component and input boxes for all its attributes.
-            </metamer:testPageLink>
-
-            <metamer:testPageLink id="inputTextCSV" outcome="inputTextCSV" value="Client side validated InputText">
-                Simple page containing rich:placeholder inside of rich:inplaceInput component validated with rich:validator and input boxes for all its attributes.
             </metamer:testPageLink>
 
             <metamer:testPageLink id="inputTextarea" outcome="inputTextarea" value="InputTextarea">
