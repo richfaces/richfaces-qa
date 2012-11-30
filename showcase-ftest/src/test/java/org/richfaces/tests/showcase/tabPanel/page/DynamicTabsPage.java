@@ -19,33 +19,41 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase;
+package org.richfaces.tests.showcase.tabPanel.page;
 
-import org.jboss.arquillian.ajocado.utils.URLUtils;
-import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.openqa.selenium.WebDriver;
-import org.testng.annotations.BeforeMethod;
+import static org.jboss.arquillian.graphene.Graphene.guardXhr;
+import static org.testng.Assert.assertTrue;
+
+import java.util.List;
+
+import org.jboss.arquillian.graphene.spi.annotations.FindBy;
+import org.openqa.selenium.WebElement;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc and Juraj Huska</a>
+ * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class AbstractWebDriverTest<P> extends AbstractShowcaseTest {
+public class DynamicTabsPage {
 
-    @Drone
-    protected WebDriver webDriver;
+    @FindBy(jquery = ".example-cnt td[id*='header:active']:visible")
+    public WebElement activeTabHeader;
 
-    @Page
-    protected P page;
+    @FindBy(jquery = ".example-cnt td[id*='header:inactive']:visible")
+    public List<WebElement> inactiveTabsHeaders;
 
-    @BeforeMethod
-    public void loadPage() {
+    @FindBy(jquery = "input[type='submit']:visible")
+    public WebElement submitButton;
 
-        String addition = getAdditionToContextRoot();
+    public static final int NUM_OF_TABS = 8;
 
-        this.contextRoot = getContextRoot();
+    public void iterateOverTabsAndAssert() {
+        for (WebElement i : inactiveTabsHeaders) {
+            String headerText = i.getText();
 
-        webDriver.get(URLUtils.buildUrl(contextRoot, "/showcase/", addition).toExternalForm());
+            guardXhr(i).click();
+
+            String buttonText = submitButton.getAttribute("value");
+            assertTrue(buttonText.contains(headerText), "The tab was not switched correctly!");
+        }
     }
 }

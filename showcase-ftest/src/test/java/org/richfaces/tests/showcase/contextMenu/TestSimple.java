@@ -33,22 +33,22 @@ public class TestSimple extends AbstractContextMenuTest<SimpleContextMenuPage> {
 
     @Test
     public void testZoomIn() {
-        double widthBeforeZoomIn = getTargetWidth(testPage.getPicture());
+        double widthBeforeZoomIn = getTargetWidth(page.getPicture());
 
-        testPage.getContextMenu().selectFromContextMenu(SimpleContextMenuPage.ZOOM_IN);
+        page.getContextMenu().selectFromContextMenu(SimpleContextMenuPage.ZOOM_IN);
 
-        double widthAfterZoom = getTargetWidth(testPage.getPicture());
+        double widthAfterZoom = getTargetWidth(page.getPicture());
 
         assertTrue((widthAfterZoom - widthBeforeZoomIn) > EPSILON, "The picture was not zoomed in!");
     }
 
     @Test
     public void testZoomOut() {
-        double widthBeforeZoomOut = getTargetWidth(testPage.getPicture());
+        double widthBeforeZoomOut = getTargetWidth(page.getPicture());
 
-        testPage.getContextMenu().selectFromContextMenu(SimpleContextMenuPage.ZOOM_OUT);
+        page.getContextMenu().selectFromContextMenu(SimpleContextMenuPage.ZOOM_OUT);
 
-        double widthAfterZoomOut = getTargetWidth(testPage.getPicture());
+        double widthAfterZoomOut = getTargetWidth(page.getPicture());
 
         assertTrue((widthBeforeZoomOut - widthAfterZoomOut) > EPSILON, "The picture was not zoomed out!");
 
@@ -56,7 +56,7 @@ public class TestSimple extends AbstractContextMenuTest<SimpleContextMenuPage> {
 
     @Test
     public void testContextMenuRenderedAtCorrectPosition() {
-        checkContextMenuRenderedAtCorrectPosition(testPage.getPicture(), testPage.getContextMenu().getContextMenuPopup(),
+        checkContextMenuRenderedAtCorrectPosition(page.getPicture(), page.getContextMenu().getContextMenuPopup(),
             InvocationType.LEFT_CLICK, null);
     }
 }

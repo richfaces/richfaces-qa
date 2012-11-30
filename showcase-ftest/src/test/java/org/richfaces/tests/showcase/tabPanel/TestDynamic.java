@@ -19,33 +19,24 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase;
+package org.richfaces.tests.showcase.tabPanel;
 
-import org.jboss.arquillian.ajocado.utils.URLUtils;
-import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.openqa.selenium.WebDriver;
-import org.testng.annotations.BeforeMethod;
+import static org.testng.Assert.assertTrue;
+
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.tabPanel.page.DynamicTabsPage;
+import org.testng.annotations.Test;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc and Juraj Huska</a>
+ * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class AbstractWebDriverTest<P> extends AbstractShowcaseTest {
+public class TestDynamic extends AbstractWebDriverTest<DynamicTabsPage> {
 
-    @Drone
-    protected WebDriver webDriver;
+    @Test
+    public void testTabs() {
+        assertTrue(page.inactiveTabsHeaders.size() == (DynamicTabsPage.NUM_OF_TABS - 1), "There is not enough tabs generated!");
 
-    @Page
-    protected P page;
-
-    @BeforeMethod
-    public void loadPage() {
-
-        String addition = getAdditionToContextRoot();
-
-        this.contextRoot = getContextRoot();
-
-        webDriver.get(URLUtils.buildUrl(contextRoot, "/showcase/", addition).toExternalForm());
+        page.iterateOverTabsAndAssert();
     }
 }

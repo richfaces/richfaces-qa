@@ -40,10 +40,10 @@ public class TestTree extends AbstractContextMenuTest<TreeContextMenuPage> {
 
     @Test
     public void testViewNodesInfoByCtxMenu() {
-        testPage.expandNodes(4);
+        page.expandNodes(4);
 
         int counter = 0;
-        for (WebElement leaf : testPage.getLeaves()) {
+        for (WebElement leaf : page.getLeaves()) {
             if (counter == TestTable.NUMBER_OF_LINES_TO_TEST_ON) {
                 break;
             }
@@ -51,30 +51,30 @@ public class TestTree extends AbstractContextMenuTest<TreeContextMenuPage> {
             String artistFromTree = leaf.getText();
 
             leaf.click();
-            waitGui().withTimeout(3, TimeUnit.SECONDS).until(testPage.getExpextedConditionOnNodeSelected(leaf));
+            waitGui().withTimeout(3, TimeUnit.SECONDS).until(page.getExpextedConditionOnNodeSelected(leaf));
             waitGui();
 
-            testPage.getContextMenu().selectFromContextMenu(TableContextMenuPage.VIEW, leaf);
-            waitGui().withTimeout(3, TimeUnit.SECONDS).until(element(testPage.getArtistFromPopup()).isVisible());
+            page.getContextMenu().selectFromContextMenu(TableContextMenuPage.VIEW, leaf);
+            waitGui().withTimeout(3, TimeUnit.SECONDS).until(element(page.getArtistFromPopup()).isVisible());
 
-            String artistFromPopup = testPage.getArtistFromPopup().getText();
+            String artistFromPopup = page.getArtistFromPopup().getText();
 
             assertTrue(artistFromTree.contains(artistFromPopup),
                 "The context menu was not invoked correctly! The popup contains different artist name than the node in the tree!");
 
-            testPage.getCloseButton().click();
-            waitGui().withTimeout(3, TimeUnit.SECONDS).until(element(testPage.getArtistFromPopup()).not().isVisible());
+            page.getCloseButton().click();
+            waitGui().withTimeout(3, TimeUnit.SECONDS).until(element(page.getArtistFromPopup()).not().isVisible());
             counter++;
         }
     }
 
     @Test
     public void testContextMenuRenderedAtCorrectPosition() {
-        testPage.expandNodes(4);
-        WebElement elementToTryOn = testPage.getLeaves().get(0);
+        page.expandNodes(4);
+        WebElement elementToTryOn = page.getLeaves().get(0);
         Graphene.waitGui().withTimeout(2, TimeUnit.SECONDS).until(element(elementToTryOn).isVisible());
 
-        checkContextMenuRenderedAtCorrectPosition(elementToTryOn, testPage.getContextMenu().getContextMenuPopup(),
-            InvocationType.RIGHT_CLICK, testPage.getExpextedConditionOnNodeSelected(elementToTryOn));
+        checkContextMenuRenderedAtCorrectPosition(elementToTryOn, page.getContextMenu().getContextMenuPopup(),
+            InvocationType.RIGHT_CLICK, page.getExpextedConditionOnNodeSelected(elementToTryOn));
     }
 }
