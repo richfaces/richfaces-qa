@@ -18,6 +18,8 @@
         <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
         <!-- testng listeners for better console output -->
         <testng.listeners>org.jboss.test.selenium.listener.ConsoleStatusTestListener,org.jboss.test.selenium.listener.FailureLoggingTestListener,org.jboss.test.selenium.listener.SeleniumLoggingTestListener</testng.listeners>
+        <version.showcase-portlet>3.1.0.Final</version.showcase-portlet><!-- for testing purpose use released version available in 
+            https://repository.jboss.org/nexus/content/groups/public/ repo -->
     </properties>
 
     <dependencies>
@@ -146,6 +148,78 @@
                 </plugins>
             </build>
         </profile>
+        
+        <profile>
+            <id>jbossportal-remote-71</id>
+            <properties>
+                <metamer.classifier>jbas71</metamer.classifier>
+                <showcase.classifier>jbas71</showcase.classifier>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.spec</groupId>
+                    <artifactId>jboss-javaee-6.0</artifactId>
+                    <version>1.0.0.Final</version>
+                    <type>pom</type>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.jboss.as</groupId>
+                    <artifactId>jboss-as-arquillian-container-remote</artifactId>
+                    <version>${version.jbossas7-1}</version>
+                </dependency>
+                
+                <!-- dependency for showcase-portlet -->
+                <dependency>
+                    <groupId>org.jboss.portletbridge.examples</groupId>
+                    <artifactId>richfaces-showcase-portlet</artifactId>
+                    <version>${version.showcase-portlet}</version>
+                    <type>war</type>
+                </dependency>
+                
+            </dependencies>
+            <build>
+                <plugins>                
+                    <plugin>
+                         <artifactId>maven-dependency-plugin</artifactId>
+                         <executions>
+                             <execution>
+                                 <id>copy-showcase-portlet</id>
+                                 <phase>validate</phase>
+                                 <goals>
+                                     <goal>copy</goal>
+                                 </goals>
+                                 <configuration>
+                                     <artifactItems>
+                                         <artifactItem>
+                                             <groupId>org.jboss.portletbridge.examples</groupId>
+                                             <artifactId>richfaces-showcase-portlet</artifactId>
+                                             <version>${version.showcase-portlet}</version>
+                                             <type>war</type>
+                                             <destFileName>showcase-portlet.war</destFileName>
+                                         </artifactItem>
+                                     </artifactItems>
+                                     <outputDirectory>target</outputDirectory>
+                                     <overWriteIfNewer>false</overWriteIfNewer>
+                                 </configuration>
+                             </execution>
+                         </executions>
+                     </plugin>
+                
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemPropertyVariables>
+                                <arquillian.launch>jbossas-remote-7-1</arquillian.launch>
+                                <runInPortalEnv>true</runInPortalEnv>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        
+        </profile>
+        
     </profiles>
 
 </project>
