@@ -41,7 +41,7 @@ public class TestTable extends AbstractContextMenuTest<TableContextMenuPage> {
     @Test
     public void testContextMenuOnSomeLines() {
         int step = 0;
-        List<WebElement> prices = testPage.getPrices();
+        List<WebElement> prices = page.getPrices();
 
         for (WebElement rowPrice : prices) {
             if (step >= NUMBER_OF_LINES_TO_TEST_ON) {
@@ -49,29 +49,29 @@ public class TestTable extends AbstractContextMenuTest<TableContextMenuPage> {
             }
 
             rowPrice.click();
-            Graphene.waitGui().until(testPage.getWaitConditionOnSelectingRow(rowPrice));
+            Graphene.waitGui().until(page.getWaitConditionOnSelectingRow(rowPrice));
 
             String priceFromTable = rowPrice.getText();
 
-            testPage.getContextMenu().selectFromContextMenu(TableContextMenuPage.VIEW, rowPrice);
+            page.getContextMenu().selectFromContextMenu(TableContextMenuPage.VIEW, rowPrice);
 
-            Graphene.waitGui().until(element(testPage.getPriceFromPopup()).isVisible());
+            Graphene.waitGui().until(element(page.getPriceFromPopup()).isVisible());
 
-            String priceFromPopup = testPage.getPriceFromPopup().getAttribute("value");
+            String priceFromPopup = page.getPriceFromPopup().getAttribute("value");
 
             assertEquals(priceFromPopup, priceFromTable,
                 "The price is different in the table and in the popup invoked from context menu!");
 
-            testPage.closePopup();
+            page.closePopup();
             step++;
         }
     }
 
     @Test
     public void testContextMenuRenderedOnTheCorrectPosition() {
-        WebElement elementToTryOn = testPage.getPrices().get(5);
+        WebElement elementToTryOn = page.getPrices().get(5);
 
-        checkContextMenuRenderedAtCorrectPosition(elementToTryOn, testPage.getContextMenu().getContextMenuPopup(),
-            InvocationType.RIGHT_CLICK, testPage.getWaitConditionOnSelectingRow(elementToTryOn));
+        checkContextMenuRenderedAtCorrectPosition(elementToTryOn, page.getContextMenu().getContextMenuPopup(),
+            InvocationType.RIGHT_CLICK, page.getWaitConditionOnSelectingRow(elementToTryOn));
     }
 }
