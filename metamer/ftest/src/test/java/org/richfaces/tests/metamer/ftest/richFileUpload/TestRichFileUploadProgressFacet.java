@@ -51,7 +51,7 @@ public class TestRichFileUploadProgressFacet extends AbstractFileUploadWebDriver
         //send file to server, the file will not be shown in uploaded files list, because we stop the rendering before it
         sendFileWithWaiting(acceptableFile, true, false);
 
-        assertTrue(Graphene.waitGui().until(Graphene.element(page.customPB).isVisible()).booleanValue(), "Custom progress bar should be displayed now.");
+        Graphene.waitGui().withMessage("Custom progress bar should be displayed now.").until(Graphene.element(page.customPB).isVisible());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class TestRichFileUploadProgressFacet extends AbstractFileUploadWebDriver
         //send file to server
         sendFileWithWaiting(acceptableFile, true, true);
 
-        assertTrue(Graphene.waitGui().until(Graphene.element(page.uploadStatusLabel).isVisible()).booleanValue(), "Done label should be displayed after upload.");
-        assertTrue(Graphene.waitGui().until(Graphene.element(page.customPB).not().isVisible()).booleanValue(), "Progress bar should not be displayed after upload is completed.");
+        Graphene.waitGui().withMessage("Done label should be displayed after upload.").until(Graphene.element(page.uploadStatusLabel).isVisible());
+        Graphene.waitGui().withMessage("Progress bar should not be displayed after upload is completed.").until(Graphene.element(page.customPB).not().isVisible());
     }
 }
