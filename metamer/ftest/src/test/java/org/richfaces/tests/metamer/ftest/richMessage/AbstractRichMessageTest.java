@@ -88,13 +88,13 @@ public abstract class AbstractRichMessageTest extends AbstractWebDriverTest {
         page.simpleInput1.clear();
         page.simpleInput1.sendKeys(newSpanString);
         MetamerPage.waitRequest(page.a4jCommandButton, WaitRequestType.XHR).click();
-        assertTrue(Graphene.waitGui().until(Graphene.element(page.newSpan).not().isVisible()).booleanValue());
+        Graphene.waitGui().withMessage("should not be visible").until(Graphene.element(page.newSpan).not().isVisible());
 
         messageAttributes.set(MessageAttributes.escape, Boolean.FALSE);
         page.simpleInput1.clear();
         page.simpleInput1.sendKeys(newSpanString);
         MetamerPage.waitRequest(page.a4jCommandButton, WaitRequestType.XHR).click();
-        assertTrue(Graphene.waitGui().until(Graphene.element(page.newSpan).isVisible()).booleanValue());
+        Graphene.waitGui().withMessage("should be visible").until(Graphene.element(page.newSpan).isVisible());
     }
 
     public void testFor() {
