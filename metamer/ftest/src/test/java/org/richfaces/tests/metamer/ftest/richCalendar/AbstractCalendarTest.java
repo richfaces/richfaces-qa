@@ -59,9 +59,9 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
     protected static final DateTime firstOfJanuary2012 = new DateTime(2012, 1, 1, 12, 0);
     protected DateTime todayMidday = new DateTime().withHourOfDay(12).withMinuteOfHour(0).withSecondOfMinute(0);
 
-    @FindBy(css = "span[id$=calendar]")
+    @FindBy(css = "div[id$=calendar]")
     protected CalendarPopupComponentImpl calendar;
-    @FindBy(css = "span[id$=calendar]")
+    @FindBy(css = "div[id$=calendar]")
     protected CalendarInlineComponentImpl inlineCalendar;
 
     @BeforeMethod
