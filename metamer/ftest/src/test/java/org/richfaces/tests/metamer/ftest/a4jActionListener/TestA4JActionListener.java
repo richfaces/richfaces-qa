@@ -32,6 +32,8 @@ import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebDriver;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Predicate;
@@ -74,10 +76,7 @@ public class TestA4JActionListener extends AbstractWebDriverTest {
 
         // do the same once again
 
-        String reqTime = page.requestTime.getText();
-        Graphene.guardXhr(page.invokeButtonType).click();
-        Graphene.waitModel().withMessage("Page was not updated")
-            .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
+        MetamerPage.waitRequest(page.invokeButtonType, WaitRequestType.XHR).click();
 
         assertFalse(page.messages.get(0).getText().equals(output1), "Message should change");
         assertEquals(page.messages.size(), 1, "Only one message should be displayed on the page.");
