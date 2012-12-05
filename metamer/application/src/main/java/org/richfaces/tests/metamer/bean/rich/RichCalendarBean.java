@@ -60,6 +60,7 @@ public class RichCalendarBean implements Serializable {
     private Attributes attributes;
     private Date date = new Date();
     public static final TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");
+    private TimeZone tz = TimeZone.getTimeZone("GMT");
     private Date date1;
     private Date date2;
     private Date date3;
@@ -124,6 +125,14 @@ public class RichCalendarBean implements Serializable {
 
     public TimeZone getTimeZone() {
         return TIME_ZONE;
+    }
+
+    public TimeZone getTz() {
+        return tz;
+    }
+
+    public void setTz(TimeZone tz) {
+        this.tz = tz;
     }
 
     public Date getCurrentDate() {
