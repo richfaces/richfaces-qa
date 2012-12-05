@@ -8,7 +8,7 @@
     if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF site:
     http://www.fsf.org. -->
 <arquillian xmlns="http://jboss.com/arquillian" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+            xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
     <engine>
         <property name="maxTestClassesBeforeRestart">${arquillian.maxTestClassesBeforeRestart:10}</property>
@@ -71,9 +71,20 @@
         <configuration>
             <property name="httpPort">8080</property>
             <property name="stopPort">9005</property>
-<!--             <property name="tomcatVersion"></property> -->
+            <!--             <property name="tomcatVersion"></property> -->
             <property name="openejbVersion">${version.tomee1-1}</property>
             <property name="dir">target/apache-tomee-webprofile-${version.tomee1-1}</property>
+            <property name="appWorkingDir">target/arquillian-test-working-dir</property>
+        </configuration>
+    </container>
+    
+    <container qualifier="tomee-remote-1-5">
+        <configuration>
+            <property name="conf">src/test/resources/tomEE</property>
+            <property name="httpPort">8080</property>
+            <property name="stopPort">9005</property>
+            <property name="openejbVersion">${version.tomee1-5}</property>
+            <property name="dir">target/apache-tomee-webprofile-${version.tomee1-5}</property>
             <property name="appWorkingDir">target/arquillian-test-working-dir</property>
         </configuration>
     </container>
