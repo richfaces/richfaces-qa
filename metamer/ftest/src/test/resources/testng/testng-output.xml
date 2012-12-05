@@ -10,10 +10,6 @@
             </run>
         </groups>
 
-        <classes>
-            <class name="org.richfaces.tests.metamer.ftest.richPanel.TestRichPanel" />
-        </classes>
-
         <packages>
             <package name="org.richfaces.tests.metamer.ftest.richPopupPanel" />
             <package name="org.richfaces.tests.metamer.ftest.richProgressBar" />
@@ -21,6 +17,10 @@
             <package name="org.richfaces.tests.metamer.ftest.richToolbarGroup" />
             <package name="org.richfaces.tests.metamer.ftest.richTooltip" />
         </packages>
+        
+        <classes>
+            <class name="org.richfaces.tests.metamer.ftest.richPanel.TestRichPanel" />
+        </classes>
     </test>
 
 </suite>

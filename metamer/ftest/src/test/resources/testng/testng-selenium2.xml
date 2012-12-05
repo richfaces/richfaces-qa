@@ -10,19 +10,6 @@
             </run>
         </groups>
 
-        <classes>
-            <class name="org.richfaces.tests.metamer.ftest.a4jJSFunction.TestRF12510" />
-            <class name="org.richfaces.tests.metamer.ftest.a4jMediaOutput.TestElementAWebDriver" />
-            <class name="org.richfaces.tests.metamer.ftest.a4jPush.TestTwoPush" />
-            <class name="org.richfaces.tests.metamer.ftest.richContextMenu.TestRichContextMenuWebDriver" />
-            <class name="org.richfaces.tests.metamer.ftest.richEditor.TestRichEditorWithTyping" />
-            <class name="org.richfaces.tests.metamer.ftest.richExtendedDataTable.TestEDTFrozenColumns" />
-            <class name="org.richfaces.tests.metamer.ftest.richInplaceSelect.TestRichInplaceSelectValidationMessages" />
-            <class name="org.richfaces.tests.metamer.ftest.richInputNumberSlider.TestRichSliderValidationMessages" />
-            <class name="org.richfaces.tests.metamer.ftest.richInputNumberSpinner.TestRichSpinnerValidationMessages" />
-            <class name="org.richfaces.tests.metamer.ftest.richSelect.TestRichSelectValidationMessages" />
-        </classes>
-        
         <packages>
             <package name="org.richfaces.tests.metamer.ftest.a4jActionListener"/>
             <package name="org.richfaces.tests.metamer.ftest.a4jAjax"/>
@@ -44,6 +31,18 @@
             <package name="org.richfaces.tests.metamer.ftest.richTreeToggleListener"/>
         </packages>
         
+        <classes>
+            <class name="org.richfaces.tests.metamer.ftest.a4jJSFunction.TestRF12510" />
+            <class name="org.richfaces.tests.metamer.ftest.a4jMediaOutput.TestElementAWebDriver" />
+            <class name="org.richfaces.tests.metamer.ftest.a4jPush.TestTwoPush" />
+            <class name="org.richfaces.tests.metamer.ftest.richContextMenu.TestRichContextMenuWebDriver" />
+            <class name="org.richfaces.tests.metamer.ftest.richEditor.TestRichEditorWithTyping" />
+            <class name="org.richfaces.tests.metamer.ftest.richExtendedDataTable.TestEDTFrozenColumns" />
+            <class name="org.richfaces.tests.metamer.ftest.richInplaceSelect.TestRichInplaceSelectValidationMessages" />
+            <class name="org.richfaces.tests.metamer.ftest.richInputNumberSlider.TestRichSliderValidationMessages" />
+            <class name="org.richfaces.tests.metamer.ftest.richInputNumberSpinner.TestRichSpinnerValidationMessages" />
+            <class name="org.richfaces.tests.metamer.ftest.richSelect.TestRichSelectValidationMessages" />
+        </classes>
     </test>
 
 </suite>
