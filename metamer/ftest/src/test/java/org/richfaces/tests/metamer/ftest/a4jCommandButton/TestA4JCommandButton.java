@@ -206,10 +206,7 @@ public class TestA4JCommandButton extends AbstractWebDriverTest {
         commandLinkAttributes.set(CommandLinkAttributes.oncomplete, "metamerEvents += \"complete \"");
 
         ((JavascriptExecutor) driver).executeScript("metamerEvents = \"\"");
-        String reqTime = page.requestTime.getText();
-        Graphene.guardXhr(page.button).click();
-        Graphene.waitModel().withMessage("Page was not updated")
-            .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
+        MetamerPage.waitRequest(page.button, WaitRequestType.XHR).click();
 
         String[] events = ((JavascriptExecutor) driver).executeScript("return metamerEvents").toString().split(" ");
 

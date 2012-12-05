@@ -79,13 +79,13 @@ public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
         autocomplete.type("something");
         page.blur();
 
-        Graphene.waitAjax().withTimeout(4, TimeUnit.SECONDS).until(Graphene.element(page.getOutput()).textEquals("something"));
+        Graphene.waitAjax().withTimeout(4, TimeUnit.SECONDS).until(Graphene.element(page.getOutput()).text().equalTo("something"));
 
         autocomplete.clear(ClearType.BACK_SPACE);
         autocomplete.type("something else");
         page.blur();
         // valueChangeListener output as 4th record
-        Graphene.waitAjax().until(Graphene.element(page.getOutput()).textEquals("something else"));
+        Graphene.waitAjax().until(Graphene.element(page.getOutput()).text().equalTo("something else"));
         assertEquals(page.getPhases().get(3), format(PHASE_LISTENER_LOG_FORMAT, "something", "something else"));
     }
 

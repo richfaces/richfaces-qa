@@ -129,7 +129,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         MetamerPage.waitRequest(page.startButton, WaitRequestType.XHR).click();
         String reqTime = page.requestTime.getText();
         Graphene.waitGui().withMessage("Page was not updated")
-            .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
+            .until(Graphene.element(page.requestTime).not().text().equalTo(reqTime));
 
         String data = (String) ((JavascriptExecutor) driver).executeScript("return data");
         assertEquals(data, "RichFaces 4", "Data sent with ajax request");

@@ -34,6 +34,8 @@ import java.util.List;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.StringConditionFactory;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -90,8 +92,8 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
         waitUntilUploadedFilesListShow(1);
         List<WebElement> uploadedFiles = guardListSize(page.uploadedFilesList, 1);
         assertTrue(uploadedFiles.size() == 1, "List of uploaded files should contain one file.");
-        assertTrue(Graphene.element(uploadedFiles.get(0)).textEquals(filenames[0]).apply(driver),
-            "Uploaded file does not appear in uploadedList.");
+        assertTrue(uploadedFiles.get(0).getText().equals(filenames[0]),
+                "Uploaded file does not appear in uploadedList.");
     }
 
     @Test
@@ -170,7 +172,7 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
 
         succesfulFileUploadAction.perform();
 
-        Graphene.waitAjax().until(Graphene.element(page.uploadStatusLabel).textEquals(doneLabel));
+        Graphene.waitAjax().until(Graphene.element(page.uploadStatusLabel).text().equalTo(doneLabel));
     }
 
     @Test
