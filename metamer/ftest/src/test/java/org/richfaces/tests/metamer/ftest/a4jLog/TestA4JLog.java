@@ -31,9 +31,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.Test;
@@ -67,7 +65,7 @@ public class TestA4JLog extends AbstractWebDriverTest {
         page.input.sendKeys("RichFaces 4");
         page.submitButton.click();
 
-        Graphene.waitGui().until(Graphene.element(page.output).textEquals("Hello RichFaces 4!"));
+        Graphene.waitGui().until(Graphene.element(page.output).text().equalTo("Hello RichFaces 4!"));
 
         assertTrue(page.logMsg.size() > 0,
             "There should be at least one message in log after submit button was clicked.");
@@ -79,7 +77,7 @@ public class TestA4JLog extends AbstractWebDriverTest {
         page.input.sendKeys("ľščťžýáíéôúäň");
         page.submitButton.click();
 
-        Graphene.waitGui().until(Graphene.element(page.output).textEquals("Hello ľščťžýáíéôúäň!"));
+        Graphene.waitGui().until(Graphene.element(page.output).text().equalTo("Hello ľščťžýáíéôúäň!"));
 
         assertTrue(page.logMsg.size() > 0,
             "There should be at least one message in log after submit button was clicked.");

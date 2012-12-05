@@ -187,7 +187,7 @@ public class TestA4JCommandLink extends AbstractWebDriverTest {
         String reqTime = page.requestTime.getText();
         page.submitByLink();
         Graphene.waitModel().withMessage("Page was not updated")
-            .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
+            .until(Graphene.element(page.requestTime).not().text().equalTo(reqTime));
 
         page.verifyOutput1Text("");
         page.verifyOutput2Text("");
@@ -220,7 +220,7 @@ public class TestA4JCommandLink extends AbstractWebDriverTest {
         String reqTime = page.requestTime.getText();
         page.submitByLink();
         Graphene.waitModel().withMessage("Page was not updated")
-            .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
+            .until(Graphene.element(page.requestTime).not().text().equalTo(reqTime));
 
         String[] events = ((JavascriptExecutor) driver).executeScript("return metamerEvents").toString().split(" ");
 
