@@ -603,7 +603,7 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <systemProperties>
-                                <arquillian.launch>tomee-remote-1-1</arquillian.launch>
+                                <arquillian.launch>tomee-remote-1-5</arquillian.launch>
                             </systemProperties>
                         </configuration>
                     </plugin>
