@@ -138,8 +138,7 @@ public class TestArrangeableModel extends AbstractGrapheneTest {
 
         boolean result = doesColumnContainsOnlyRowsWithData(column, filterValue);
 
-        assertTrue(result, "The table should contains only rows, which column " + column + " contains only data "
-            + filterValue);
+        assertTrue(result, "The table should contains only rows, which column " + column + " contains only data " + filterValue);
     }
 
     private void ascendingDescendingSortingOnColumn(int column, String firstCharOfRowWhenDescending) {
@@ -150,7 +149,7 @@ public class TestArrangeableModel extends AbstractGrapheneTest {
         JQueryLocator td = firstRowSomeColumn.format(column);
         String checkedValue = selenium.getText(td);
 
-        assertEquals(String.valueOf(checkedValue.charAt(0)), "A",
+        assertTrue(String.valueOf(checkedValue.charAt(0)).equalsIgnoreCase("A"),
             "Rows should be sorted in an ascending order, by column " + td.getRawLocator());
 
         // descending
@@ -158,7 +157,7 @@ public class TestArrangeableModel extends AbstractGrapheneTest {
 
         checkedValue = selenium.getText(td);
 
-        assertEquals(String.valueOf(checkedValue.charAt(0)), firstCharOfRowWhenDescending,
+        assertEquals(String.valueOf(checkedValue.charAt(0)).equalsIgnoreCase(firstCharOfRowWhenDescending),
             "Rows should be sorted in an descending order, by column " + td.getRawLocator());
     }
 

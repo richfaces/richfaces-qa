@@ -80,6 +80,12 @@
             <scope>test</scope>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.richfaces.tests</groupId>
+            <artifactId>webdriver-utils</artifactId>
+            <scope>test</scope>
+            <version>${project.version}</version>
+        </dependency>
         <!-- Page Fragments Implementations -->
         <dependency>
             <groupId>org.richfaces.tests</groupId>
