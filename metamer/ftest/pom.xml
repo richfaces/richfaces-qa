@@ -10,7 +10,7 @@ software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, F
 FSF site: http://www.fsf.org. -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -217,6 +217,8 @@ FSF site: http://www.fsf.org. -->
                         <arquillian.container.jbossas.7-1.node0>${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.node0>
                         <arquillian.container.jbossas.7-1.jvm.args>${arquillian.container.jbossas.7-1.jvm.args}</arquillian.container.jbossas.7-1.jvm.args>
                         <arquillian.container.all.jvm.args>${arquillian.container.all.jvm.args}</arquillian.container.all.jvm.args>
+                        <version.tomee1-1>${version.tomee1-1}</version.tomee1-1>
+                        <version.tomee1-5>${version.tomee1-5}</version.tomee1-5>
                         <logging.props.dir>${project.basedir}/src/test/resources</logging.props.dir>
                     </systemPropertyVariables>
                 </configuration>
