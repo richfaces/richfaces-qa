@@ -38,9 +38,9 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.calendar.common.editor.yearAndMonth.YearAndMonthEditor;
-import org.richfaces.tests.page.fragments.impl.calendar.inline.CalendarInlineComponentImpl;
+import org.richfaces.tests.page.fragments.impl.calendar.inline.RichFacesCalendarInlineComponent;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.CalendarPopupComponent.OpenedBy;
-import org.richfaces.tests.page.fragments.impl.calendar.popup.CalendarPopupComponentImpl;
+import org.richfaces.tests.page.fragments.impl.calendar.popup.RichFacesCalendarPopupComponent;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.CalendarPopup;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.PopupFooterControls;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.PopupHeaderControls;
@@ -60,9 +60,9 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
     protected DateTime todayMidday = new DateTime().withHourOfDay(12).withMinuteOfHour(0).withSecondOfMinute(0);
 
     @FindBy(css = "div[id$=calendar]")
-    protected CalendarPopupComponentImpl calendar;
+    protected RichFacesCalendarPopupComponent calendar;
     @FindBy(css = "div[id$=calendar]")
-    protected CalendarInlineComponentImpl inlineCalendar;
+    protected RichFacesCalendarInlineComponent inlineCalendar;
 
     @BeforeMethod
     public void init() {
@@ -70,12 +70,12 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
     }
 
     public void testOpenPopupClickOnInput() {
-        CalendarPopup openedPopup = Graphene.guardNoRequest(calendar).openPopup(OpenedBy.inputClicking);
+        CalendarPopup openedPopup = Graphene.guardNoRequest(calendar).openPopup(OpenedBy.INPUT_CLICKING);
         assertTrue(openedPopup.isVisible(), "Popup should be visible.");
     }
 
     public void testOpenPopupClickOnImage() {
-        CalendarPopup openedPopup = Graphene.guardNoRequest(calendar).openPopup(OpenedBy.openButtonClicking);
+        CalendarPopup openedPopup = Graphene.guardNoRequest(calendar).openPopup(OpenedBy.OPEN_BUTTON_CLICKING);
         assertTrue(openedPopup.isVisible(), "Popup should be visible.");
     }
 

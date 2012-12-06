@@ -46,16 +46,16 @@ public class EditingStateImpl implements EditingState {
 
     @Override
     public void cancel() {
-        cancel(FinishEditingBy.keys);
+        cancel(FinishEditingBy.KEYS);
     }
 
     @Override
     public void cancel(FinishEditingBy by) {
         switch (by) {
-            case controls:
+            case CONTROLS:
                 cancelByControls();
                 break;
-            case keys:
+            case KEYS:
                 cancelByKeys();
                 break;
             default:
@@ -73,16 +73,16 @@ public class EditingStateImpl implements EditingState {
 
     @Override
     public void confirm() {
-        confirm(FinishEditingBy.keys);
+        confirm(FinishEditingBy.KEYS);
     }
 
     @Override
     public void confirm(FinishEditingBy by) {
         switch (by) {
-            case controls:
+            case CONTROLS:
                 confirmByControls();
                 break;
-            case keys:
+            case KEYS:
                 confirmByKeys();
                 break;
             default:

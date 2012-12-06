@@ -33,7 +33,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.autocomplete.AutocompleteComponentImpl;
+import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -49,7 +49,7 @@ public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
     private static final String PHASE_LISTENER_LOG_FORMAT = "*1 value changed: {0} -> {1}";
 
     @FindBy(css="span[id$=autocomplete]")
-    private AutocompleteComponentImpl<String> autocomplete;
+    private RichFacesAutocomplete<String> autocomplete;
 
     @Override
     public URL getTestUrl() {

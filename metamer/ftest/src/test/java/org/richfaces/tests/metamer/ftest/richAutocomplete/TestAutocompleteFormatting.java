@@ -36,7 +36,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.page.fragments.impl.autocomplete.AutocompleteComponentImpl;
+import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -46,7 +46,7 @@ import org.testng.annotations.Test;
 public class TestAutocompleteFormatting extends AbstractAutocompleteTest{
 
     @FindBy(id="form:autocomplete")
-    private AutocompleteComponentImpl<String> autocomplete;
+    private RichFacesAutocomplete<String> autocomplete;
 
     @Inject
     @Use(booleans = { true, false })

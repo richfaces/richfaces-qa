@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.richfaces.tests.page.fragments.impl.contextMenu.ContextMenuComponentImpl;
+import org.richfaces.tests.page.fragments.impl.contextMenu.RichFacesContextMenu;
 
 public class TreeContextMenuPage {
 
@@ -20,7 +20,7 @@ public class TreeContextMenuPage {
     private List<WebElement> expandSigns;
 
     @FindBy(css = "form[name='form']")
-    private ContextMenuComponentImpl contextMenu;
+    private RichFacesContextMenu contextMenu;
 
     @FindBy(css = "input[type='button']")
     private WebElement closeButton;
@@ -41,7 +41,7 @@ public class TreeContextMenuPage {
         };
     }
 
-    public ContextMenuComponentImpl getContextMenu() {
+    public RichFacesContextMenu getContextMenu() {
         return contextMenu;
     }
 

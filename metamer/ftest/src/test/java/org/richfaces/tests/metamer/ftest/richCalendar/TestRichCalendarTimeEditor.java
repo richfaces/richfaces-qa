@@ -53,7 +53,7 @@ public class TestRichCalendarTimeEditor extends AbstractCalendarTest {
         int plusMinutes = 5;
         MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.XHR).setTodaysDate();
         TimeEditor openedTimeEditor = calendar.openPopup().getFooterControls().openTimeEditor();
-        MetamerPage.waitRequest(openedTimeEditor, WaitRequestType.NONE).setTime(todayMidday.plusMinutes(plusMinutes), SetValueBy.buttons);
+        MetamerPage.waitRequest(openedTimeEditor, WaitRequestType.NONE).setTime(todayMidday.plusMinutes(plusMinutes), SetValueBy.BUTTONS);
         DateTime time1 = openedTimeEditor.getTime();
         assertEquals(time1.getMinuteOfHour(), plusMinutes);
 
@@ -67,34 +67,34 @@ public class TestRichCalendarTimeEditor extends AbstractCalendarTest {
 
     @Test
     public void testHoursInputClick() {
-        testTimeSet(new int[]{ 2, 15 }, Time.hours, SetValueBy.buttons);
+        testTimeSet(new int[]{ 2, 15 }, Time.hours, SetValueBy.BUTTONS);
     }
 
     @Test
     public void testHoursInputType() {
-        testTimeSet(new int[]{ 2, 15 }, Time.hours, SetValueBy.typing);
+        testTimeSet(new int[]{ 2, 15 }, Time.hours, SetValueBy.TYPING);
     }
 
     @Test
     public void testMinutesInputClick() {
-        testTimeSet(new int[]{ 1, 59 }, Time.minutes, SetValueBy.buttons);
+        testTimeSet(new int[]{ 1, 59 }, Time.minutes, SetValueBy.BUTTONS);
     }
 
     @Test
     public void testMinutesInputType() {
-        testTimeSet(new int[]{ 1, 59 }, Time.minutes, SetValueBy.typing);
+        testTimeSet(new int[]{ 1, 59 }, Time.minutes, SetValueBy.TYPING);
     }
 
     @Test
     public void testSecondsInputClick() {
         calendarAttributes.set(CalendarAttributes.datePattern, "MMM d, yyyy HH:mm:ss");
-        testTimeSet(new int[]{ 1, 59 }, Time.seconds, SetValueBy.buttons);
+        testTimeSet(new int[]{ 1, 59 }, Time.seconds, SetValueBy.BUTTONS);
     }
 
     @Test
     public void testSecondsInputType() {
         calendarAttributes.set(CalendarAttributes.datePattern, "MMM d, yyyy HH:mm:ss");
-        testTimeSet(new int[]{ 1, 59 }, Time.seconds, SetValueBy.typing);
+        testTimeSet(new int[]{ 1, 59 }, Time.seconds, SetValueBy.TYPING);
     }
 
     @Test

@@ -28,8 +28,8 @@ public interface EditingState {
 
     public enum FinishEditingBy {
 
-        keys,
-        controls;
+        KEYS,
+        CONTROLS;
     }
 
     /**

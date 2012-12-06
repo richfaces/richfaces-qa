@@ -29,7 +29,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.message.MessageComponentImpl;
+import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -47,13 +47,13 @@ public class InputValidationPage extends MetamerPage {
     private WebElement a4jCommandButton;
     //
     @FindBy(css = "span[id$=notEmptyMsg]")
-    private MessageComponentImpl messageNotEmpty;
+    private RichFacesMessage messageNotEmpty;
     @FindBy(css = "span[id$=patternMsg] ")
-    private MessageComponentImpl messageRegExpPattern;
+    private RichFacesMessage messageRegExpPattern;
     @FindBy(css = "span[id$=sizeMsg]")
-    private MessageComponentImpl messageStringSize;
+    private RichFacesMessage messageStringSize;
     @FindBy(css = "span[id$=customMsg]")
-    private MessageComponentImpl messageCustomString;
+    private RichFacesMessage messageCustomString;
     //
     @FindBy(css = "input[id$=setAllCorrectButton]")
     private WebElement setAllCorrectButton;

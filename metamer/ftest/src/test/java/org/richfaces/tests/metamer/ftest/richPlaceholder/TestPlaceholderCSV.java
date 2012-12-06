@@ -33,7 +33,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.message.MessageComponentImpl;
+import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 import org.testng.annotations.Test;
 
 /**
@@ -47,7 +47,7 @@ public class TestPlaceholderCSV extends AbstractWebDriverTest {
     @FindBy(css = "[id$=input]")
     WebElement input;
     @FindBy(css = "[id$=msg]")
-    MessageComponentImpl msg;
+    RichFacesMessage msg;
 
     @Override
     public URL getTestUrl() {

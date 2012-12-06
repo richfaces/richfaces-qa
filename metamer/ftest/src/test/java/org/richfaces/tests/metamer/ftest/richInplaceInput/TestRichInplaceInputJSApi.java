@@ -33,9 +33,9 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInputComponent.OpenBy;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInputComponent.State;
+import org.richfaces.tests.page.fragments.impl.input.inplaceInput.RichFacesInplaceInput;
+import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInput.OpenBy;
+import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInput.State;
 import org.testng.annotations.Test;
 
 /**
@@ -45,7 +45,7 @@ import org.testng.annotations.Test;
 public class TestRichInplaceInputJSApi extends AbstractWebDriverTest {
 
     @FindBy(css = "span[id$=inplaceInput]")
-    private InplaceInputComponentImpl inplaceInput;
+    private RichFacesInplaceInput inplaceInput;
     //
     @FindBy(css = "input[id$=value]")
     private WebElement output;
@@ -78,7 +78,7 @@ public class TestRichInplaceInputJSApi extends AbstractWebDriverTest {
         inplaceInput.editBy(OpenBy.CLICK).type(SOME_TEXT);
         fireEvent(cancelButton, Event.MOUSEOVER);
         assertEquals(inplaceInput.getLabelValue(), defaultText);
-        assertFalse(inplaceInput.is(State.changed));
+        assertFalse(inplaceInput.is(State.CHANGED));
     }
 
     @Test
@@ -87,7 +87,7 @@ public class TestRichInplaceInputJSApi extends AbstractWebDriverTest {
         //so the state of inplace input is set to active
         getInputButton.click();
         waiting(100);
-        inplaceInput.is(State.active);
+        inplaceInput.is(State.ACTIVE);
     }
 
     @Test
@@ -125,7 +125,7 @@ public class TestRichInplaceInputJSApi extends AbstractWebDriverTest {
         inplaceInput.editBy(OpenBy.CLICK).type(SOME_TEXT);
         fireEvent(saveButton, Event.MOUSEOVER);
         assertEquals(inplaceInput.getLabelValue(), SOME_TEXT);
-        assertTrue(inplaceInput.is(State.changed));
+        assertTrue(inplaceInput.is(State.CHANGED));
     }
 
     @Test

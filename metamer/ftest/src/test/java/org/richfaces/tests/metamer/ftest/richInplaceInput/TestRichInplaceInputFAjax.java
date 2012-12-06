@@ -34,9 +34,9 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.input.inplaceInput.EditingState;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInputComponent.OpenBy;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInputComponent.State;
+import org.richfaces.tests.page.fragments.impl.input.inplaceInput.RichFacesInplaceInput;
+import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInput.OpenBy;
+import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInput.State;
 import org.testng.annotations.Test;
 
 /**
@@ -51,7 +51,7 @@ public class TestRichInplaceInputFAjax extends AbstractWebDriverTest {
     private MetamerPage page;
 
     @FindBy(css = "span[id$=inplaceInput]")
-    private InplaceInputComponentImpl inplaceInput;
+    private RichFacesInplaceInput inplaceInput;
 
     @Override
     public URL getTestUrl() {
@@ -63,12 +63,12 @@ public class TestRichInplaceInputFAjax extends AbstractWebDriverTest {
         assertTrue(inplaceInput.isVisible(), "Inplace input should be visible.");
 
         EditingState editingState = MetamerPage.waitRequest(inplaceInput, WaitRequestType.NONE).editBy(OpenBy.CLICK);
-        assertTrue(inplaceInput.is(State.active), "Input should be active.");
+        assertTrue(inplaceInput.is(State.ACTIVE), "Input should be active.");
 
         String testedValue = "new value";
         MetamerPage.waitRequest(editingState.type(testedValue), WaitRequestType.XHR).confirm();
 
-        assertTrue(inplaceInput.is(State.changed), "Input should contain class indicating a change.");
+        assertTrue(inplaceInput.is(State.CHANGED), "Input should contain class indicating a change.");
         assertEquals(inplaceInput.getEditValue(), testedValue, "Input should contain typed text.");
         assertEquals(inplaceInput.getLabelValue(), testedValue, "Label should contain typed text.");
 

@@ -32,7 +32,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.message.MessageComponentImpl;
+import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -45,11 +45,11 @@ public abstract class AbstractRichMessageTest extends AbstractWebDriverTest {
     protected MessagePage page;
 
     @FindBy(css = "span[id$=simpleInputMsg]")
-    MessageComponentImpl messageComponentForInputX;
+    RichFacesMessage messageComponentForInputX;
     @FindBy(css = "span[id$=simpleInputMsg1]")
-    MessageComponentImpl messageComponentFoInput1;
+    RichFacesMessage messageComponentFoInput1;
     @FindBy(css = "span[id$=simpleInputMsg2]")
-    MessageComponentImpl messageComponentForInput2;
+    RichFacesMessage messageComponentForInput2;
 
     @BeforeMethod(alwaysRun = true)
     public void generateMessages() {

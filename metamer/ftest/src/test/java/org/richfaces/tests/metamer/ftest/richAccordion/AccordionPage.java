@@ -27,7 +27,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.accordion.Accordion;
-import org.richfaces.tests.page.fragments.impl.accordion.AccordionImpl;
+import org.richfaces.tests.page.fragments.impl.accordion.RichFacesAccordion;
 
 /**
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
@@ -37,7 +37,7 @@ import org.richfaces.tests.page.fragments.impl.accordion.AccordionImpl;
 public class AccordionPage extends MetamerPage {
 
     @FindBy(css = "div[id$=accordion]")
-    private AccordionImpl accordion;
+    private RichFacesAccordion accordion;
 
     @FindBy(css = "div[id$=item1] td.rf-ac-itm-ico div.rf-ac-itm-ico-act")
     private WebElement leftActiveIcon;

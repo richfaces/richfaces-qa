@@ -19,48 +19,15 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.page.fragments.impl.calendar.common.editor.time;
-
-import org.joda.time.DateTime;
-import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.VisibleComponent;
+package org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.spinner;
 
 /**
- *
+ * Spinner component for 12 hours format input. <0;12>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface TimeEditor extends VisibleComponent {
+public class RichFacesHoursSpinner12 extends RichFacesTimeSpinner {
 
-    public enum SetValueBy {
-
-        TYPING, BUTTONS;
+    public RichFacesHoursSpinner12() {
+        super(12);
     }
-
-    /**
-     * Clicks on the 'Cancel' button. Waits for time editor to close.
-     */
-    void cancelTime();
-
-    /**
-     * Clicks on the 'OK' button. Waits for time editor to close.
-     */
-    void confirmTime();
-
-    WebElement getCancelButtonElement();
-
-    WebElement getOkButtonElement();
-
-    /**
-     * Returns time set in the spinners.
-     */
-    DateTime getTime();
-
-    /**
-     * Sets time: hours, minutes, seconds and time-sign. Returns same instance so
-     * the time can be easily confirmed or canceled.
-     * @param time time that will be set
-     * @param inputType how will be the time set
-     * @return this time editor
-     */
-    TimeEditor setTime(DateTime time, SetValueBy by);
 }
