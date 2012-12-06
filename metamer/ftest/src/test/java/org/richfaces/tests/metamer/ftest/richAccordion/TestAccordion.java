@@ -41,7 +41,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.page.fragments.impl.accordion.AccordionItem;
-import org.richfaces.tests.page.fragments.impl.accordion.AccordionItemImpl;
+import org.richfaces.tests.page.fragments.impl.accordion.RichFacesAccordionItem;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -149,7 +149,7 @@ public class TestAccordion extends AbstractWebDriverTest {
 
     @Test
     public void testItemActiveHeaderClass() {
-        testStyleClass(((AccordionItemImpl) page.getAccordion().getActiveItem()).getHeaderElement(), BasicAttributes.itemActiveHeaderClass);
+        testStyleClass(((RichFacesAccordionItem) page.getAccordion().getActiveItem()).getHeaderElement(), BasicAttributes.itemActiveHeaderClass);
     }
 
     @Test
@@ -161,7 +161,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     @Test
     public void testItemContentClass() {
         for (AccordionItem item: page.getAccordion()) {
-            testStyleClass(((AccordionItemImpl) item).getContentElement(), BasicAttributes.itemContentClass);
+            testStyleClass(((RichFacesAccordionItem) item).getContentElement(), BasicAttributes.itemContentClass);
         }
     }
 
@@ -169,7 +169,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     public void testItemDisabledHeaderClass() {
         for (AccordionItem item: page.getAccordion()) {
             if (!item.isEnabled()) {
-                testStyleClass(((AccordionItemImpl) item).getHeaderElement(), BasicAttributes.itemDisabledHeaderClass);
+                testStyleClass(((RichFacesAccordionItem) item).getHeaderElement(), BasicAttributes.itemDisabledHeaderClass);
             }
         }
     }
@@ -177,7 +177,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     @Test
     public void testItemHeaderClass() {
         for (AccordionItem item: page.getAccordion()) {
-            testStyleClass(((AccordionItemImpl) item).getToActivateElement(), BasicAttributes.itemHeaderClass);
+            testStyleClass(((RichFacesAccordionItem) item).getToActivateElement(), BasicAttributes.itemHeaderClass);
         }
     }
 
@@ -198,7 +198,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     public void testItemInactiveHeaderClass() {
         for (AccordionItem item: page.getAccordion()) {
             if (item.isInactive() && item.isEnabled()) {
-                testStyleClass(((AccordionItemImpl) item).getHeaderElement(), BasicAttributes.itemInactiveHeaderClass);
+                testStyleClass(((RichFacesAccordionItem) item).getHeaderElement(), BasicAttributes.itemInactiveHeaderClass);
             }
         }
     }

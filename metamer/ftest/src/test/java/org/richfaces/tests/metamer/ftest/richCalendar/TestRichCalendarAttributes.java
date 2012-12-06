@@ -74,7 +74,7 @@ import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeE
 import org.richfaces.tests.page.fragments.impl.calendar.popup.CalendarPopupComponent.OpenedBy;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.PopupFooterControls;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.PopupHeaderControls;
-import org.richfaces.tests.page.fragments.impl.message.MessageComponentImpl;
+import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -102,7 +102,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
     @FindBy(css = "input[id$=a4jButton]")
     private WebElement a4jbutton;
     @FindBy(css = "span[id$=msg]")
-    private MessageComponentImpl message;
+    private RichFacesMessage message;
     //
     private final Action setTimeAction = new SetTimeAction();
     private final Action setCurrentDateWithCalendarsTodayButtonAction = new SetCurrentDateWithCalendarsTodayButtonAction();
@@ -414,12 +414,12 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
         //Popup should not be displayed
         int catched = 0;
         try {
-            Graphene.guardNoRequest(calendar).openPopup(OpenedBy.inputClicking);
+            Graphene.guardNoRequest(calendar).openPopup(OpenedBy.INPUT_CLICKING);
         } catch (TimeoutException ex) {
             catched++;
         }
         try {
-            Graphene.guardNoRequest(calendar).openPopup(OpenedBy.openButtonClicking);
+            Graphene.guardNoRequest(calendar).openPopup(OpenedBy.OPEN_BUTTON_CLICKING);
         } catch (TimeoutException ex) {
             catched++;
         }
@@ -1130,7 +1130,7 @@ public class TestRichCalendarAttributes extends AbstractCalendarTest {
         public void perform() {
             MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
             calendar.openPopup().getFooterControls().openTimeEditor().setTime(todayMidday.plusMinutes(5),
-                    SetValueBy.buttons).confirmTime();
+                    SetValueBy.BUTTONS).confirmTime();
         }
     }
 

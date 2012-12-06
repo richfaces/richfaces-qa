@@ -19,48 +19,51 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.page.fragments.impl.calendar.common.editor.time;
+package org.richfaces.tests.page.fragments.impl.message;
 
-import org.joda.time.DateTime;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.VisibleComponent;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
- *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface TimeEditor extends VisibleComponent {
+public interface Message {
 
-    public enum SetValueBy {
-
-        TYPING, BUTTONS;
+    public enum MessageType {
+        FATAL,
+        ERROR,
+        INFORMATION,
+        WARNING,
+        OK;
     }
 
-    /**
-     * Clicks on the 'Cancel' button. Waits for time editor to close.
-     */
-    void cancelTime();
+    String getDetail();
 
-    /**
-     * Clicks on the 'OK' button. Waits for time editor to close.
-     */
-    void confirmTime();
+    WebElement getMessageDetailElement();
 
-    WebElement getCancelButtonElement();
+    WebElement getMessageSummaryElement();
 
-    WebElement getOkButtonElement();
+    WebElement getRoot();
 
-    /**
-     * Returns time set in the spinners.
-     */
-    DateTime getTime();
+    String getSummary();
 
-    /**
-     * Sets time: hours, minutes, seconds and time-sign. Returns same instance so
-     * the time can be easily confirmed or canceled.
-     * @param time time that will be set
-     * @param inputType how will be the time set
-     * @return this time editor
-     */
-    TimeEditor setTime(DateTime time, SetValueBy by);
+    ExpectedCondition<Boolean> isDetailNotVisibleCondition();
+
+    boolean isDetailVisible();
+
+    ExpectedCondition<Boolean> isDetailVisibleCondition();
+
+    ExpectedCondition<Boolean> isNotVisibleCondition();
+
+    ExpectedCondition<Boolean> isSummaryNotVisibleCondition();
+
+    boolean isSummaryVisible();
+
+    ExpectedCondition<Boolean> isSummaryVisibleCondition();
+
+    boolean isType(MessageType type);
+
+    boolean isVisible();
+
+    ExpectedCondition<Boolean> isVisibleCondition();
 }

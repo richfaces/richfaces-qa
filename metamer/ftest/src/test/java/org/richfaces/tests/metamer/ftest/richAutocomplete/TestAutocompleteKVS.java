@@ -32,7 +32,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.autocomplete.AutocompleteComponentImpl;
+import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -52,7 +52,7 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest {
     private MetamerPage page;
 
     @FindBy(id = "form:autocomplete")
-    private AutocompleteComponentImpl<String> autocomplete;
+    private RichFacesAutocomplete<String> autocomplete;
 
     @BeforeMethod
     public void setParser() {

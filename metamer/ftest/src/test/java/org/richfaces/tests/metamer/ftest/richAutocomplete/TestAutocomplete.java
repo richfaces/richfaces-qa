@@ -39,7 +39,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.model.Capital;
-import org.richfaces.tests.page.fragments.impl.autocomplete.AutocompleteComponentImpl;
+import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
 import org.richfaces.tests.page.fragments.impl.autocomplete.SuggestionImpl;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
 import org.testng.annotations.BeforeMethod;
@@ -51,7 +51,7 @@ import org.testng.annotations.Test;
 public class TestAutocomplete extends AbstractAutocompleteTest {
 
     @FindBy(css="span.rf-au")
-    protected AutocompleteComponentImpl<String> autocomplete;
+    protected RichFacesAutocomplete<String> autocomplete;
 
     @Inject
     @Use(strings= { "mouse", "keys" })

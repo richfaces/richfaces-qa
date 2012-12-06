@@ -19,48 +19,34 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.page.fragments.impl.calendar.common.editor.time;
+package org.richfaces.tests.page.fragments.impl.calendar.popup.popup;
 
-import org.joda.time.DateTime;
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.VisibleComponent;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.calendar.common.RichFacesHeaderControls;
 
 /**
- *
+ * Component for header controls of calendar.
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface TimeEditor extends VisibleComponent {
+public class RichFacesPopupHeaderControls extends RichFacesHeaderControls implements PopupHeaderControls {
 
-    public enum SetValueBy {
+    @FindBy(xpath = "//td[contains(@id,'calendarHeader')] //td[6] /div")
+    private WebElement closeButtonElement;
 
-        TYPING, BUTTONS;
+    @Override
+    public void closePopup() {
+        if (!isVisible() || Graphene.element(closeButtonElement).not().isVisible().apply(driver)) {
+            throw new RuntimeException("Cannot interact with close button. "
+                    + "Ensure that calendar popup and header controls are displayed.");
+        }
+        closeButtonElement.click();
+        Graphene.waitGui().until(isNotVisibleCondition());
     }
 
-    /**
-     * Clicks on the 'Cancel' button. Waits for time editor to close.
-     */
-    void cancelTime();
-
-    /**
-     * Clicks on the 'OK' button. Waits for time editor to close.
-     */
-    void confirmTime();
-
-    WebElement getCancelButtonElement();
-
-    WebElement getOkButtonElement();
-
-    /**
-     * Returns time set in the spinners.
-     */
-    DateTime getTime();
-
-    /**
-     * Sets time: hours, minutes, seconds and time-sign. Returns same instance so
-     * the time can be easily confirmed or canceled.
-     * @param time time that will be set
-     * @param inputType how will be the time set
-     * @return this time editor
-     */
-    TimeEditor setTime(DateTime time, SetValueBy by);
+    @Override
+    public WebElement getCloseButtonElement() {
+        return closeButtonElement;
+    }
 }

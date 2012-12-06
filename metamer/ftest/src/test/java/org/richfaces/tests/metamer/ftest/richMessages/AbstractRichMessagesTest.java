@@ -33,8 +33,8 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.message.MessageComponent.MessageType;
-import org.richfaces.tests.page.fragments.impl.messages.MessagesComponentImpl;
+import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
+import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -50,9 +50,9 @@ public abstract class AbstractRichMessagesTest extends AbstractWebDriverTest {
 
     // components
     @FindBy(xpath = "//fieldset/span[contains(@id, 'messagesWithFor')]")
-    protected MessagesComponentImpl messagesWithFor;
+    protected RichFacesMessages messagesWithFor;
     @FindBy(xpath = "//fieldset/span[contains(@id, 'messagesWithGlobal')]")
-    protected MessagesComponentImpl messagesWithGlobal;
+    protected RichFacesMessages messagesWithGlobal;
 
     protected void generateAllKindsOfMessagesWithWait() {
         setCorrectValues();
@@ -205,10 +205,10 @@ public abstract class AbstractRichMessagesTest extends AbstractWebDriverTest {
     public void testMesssagesTypes() {
         generateAllKindsOfMessagesWithWait();
         assertEquals(messagesWithFor.size(), 4);
-        messagesWithFor.getMessage(0).isType(MessageType.fatal);
-        messagesWithFor.getMessage(1).isType(MessageType.error);
-        messagesWithFor.getMessage(2).isType(MessageType.warning);
-        messagesWithFor.getMessage(3).isType(MessageType.information);
+        messagesWithFor.getMessage(0).isType(MessageType.FATAL);
+        messagesWithFor.getMessage(1).isType(MessageType.ERROR);
+        messagesWithFor.getMessage(2).isType(MessageType.WARNING);
+        messagesWithFor.getMessage(3).isType(MessageType.INFORMATION);
     }
 
     public void testNoShowDetailNoShowSummary() {

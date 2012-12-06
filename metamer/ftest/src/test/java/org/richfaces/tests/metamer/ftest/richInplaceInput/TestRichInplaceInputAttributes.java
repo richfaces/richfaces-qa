@@ -42,11 +42,11 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.input.inplaceInput.EditingState;
+import org.richfaces.tests.page.fragments.impl.input.inplaceInput.RichFacesInplaceInput;
 import org.richfaces.tests.page.fragments.impl.input.inplaceInput.EditingState.FinishEditingBy;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInputComponent.OpenBy;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInputComponent.State;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.message.MessageComponentImpl;
+import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInput.OpenBy;
+import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInput.State;
+import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 import org.testng.annotations.Test;
 
 /**
@@ -63,9 +63,9 @@ public class TestRichInplaceInputAttributes extends AbstractWebDriverTest {
     @FindBy(css = "span[id$=output]")
     private WebElement output;
     @FindBy(css = "span[id$=inplaceInput]")
-    private InplaceInputComponentImpl inplaceInput;
+    private RichFacesInplaceInput inplaceInput;
     @FindBy(css = "span[id$=msg]")
-    private MessageComponentImpl requiredMessage;
+    private RichFacesMessage requiredMessage;
 
     @Override
     public URL getTestUrl() {
@@ -113,12 +113,12 @@ public class TestRichInplaceInputAttributes extends AbstractWebDriverTest {
     @Test
     public void testClick() {
         EditingState editingState = MetamerPage.waitRequest(inplaceInput, WaitRequestType.NONE).editBy(OpenBy.CLICK);
-        assertTrue(inplaceInput.is(State.active), "Input should be active.");
+        assertTrue(inplaceInput.is(State.ACTIVE), "Input should be active.");
 
         String testedValue = "new value";
         MetamerPage.waitRequest(editingState.type(testedValue), WaitRequestType.XHR).confirm();
 
-        assertTrue(inplaceInput.is(State.changed), "Input should contain class indicating a change.");
+        assertTrue(inplaceInput.is(State.CHANGED), "Input should contain class indicating a change.");
         assertEquals(inplaceInput.getLabelValue(), testedValue, "Input should contain typed text.");
 
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: RichFaces 4 -> " + testedValue);
@@ -132,7 +132,7 @@ public class TestRichInplaceInputAttributes extends AbstractWebDriverTest {
         inplaceInputAttributes.set(InplaceInputAttributes.showControls, Boolean.TRUE);
         MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK)
                 .type("value that will be canceled"), WaitRequestType.NONE)
-                .cancel(FinishEditingBy.controls);
+                .cancel(FinishEditingBy.CONTROLS);
         assertEquals(inplaceInput.getLabelValue(), "RichFaces 4", "Default value was expected.");
     }
 
@@ -141,7 +141,7 @@ public class TestRichInplaceInputAttributes extends AbstractWebDriverTest {
         inplaceInputAttributes.set(InplaceInputAttributes.showControls, Boolean.TRUE);
         String testedValue = "value that will be confirmed and changed";
         MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK)
-                .type(testedValue), WaitRequestType.XHR).confirm(FinishEditingBy.controls);
+                .type(testedValue), WaitRequestType.XHR).confirm(FinishEditingBy.CONTROLS);
         assertEquals(inplaceInput.getLabelValue(), testedValue);
     }
 
@@ -181,10 +181,10 @@ public class TestRichInplaceInputAttributes extends AbstractWebDriverTest {
         inplaceInputAttributes.set(InplaceInputAttributes.editEvent, "mouseup");
 
         inplaceInput.editBy(OpenBy.CLICK);
-        assertFalse(inplaceInput.is(State.active));
+        assertFalse(inplaceInput.is(State.ACTIVE));
 
         inplaceInput.editBy(OpenBy.MOUSEUP);
-        assertTrue(inplaceInput.is(State.active));
+        assertTrue(inplaceInput.is(State.ACTIVE));
     }
 
     @Test

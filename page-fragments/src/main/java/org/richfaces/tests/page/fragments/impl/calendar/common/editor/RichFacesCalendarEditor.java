@@ -19,48 +19,34 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.page.fragments.impl.calendar.common.editor.time;
+package org.richfaces.tests.page.fragments.impl.calendar.common.editor;
 
-import org.joda.time.DateTime;
+import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.VisibleComponent;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeEditor;
+import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.RichFacesTimeEditor;
+import org.richfaces.tests.page.fragments.impl.calendar.common.editor.yearAndMonth.YearAndMonthEditor;
+import org.richfaces.tests.page.fragments.impl.calendar.common.editor.yearAndMonth.RichFacesYearAndMonthEditor;
 
 /**
- *
+ * Helper component to set root for YearAndMonthEditor and TimeEditor
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface TimeEditor extends VisibleComponent {
+public class RichFacesCalendarEditor {
 
-    public enum SetValueBy {
+    @Root
+    private WebElement root;
+    @FindBy(css = "table[id$=DateEditorLayout]")
+    private RichFacesYearAndMonthEditor dateEditor;
+    @FindBy(css = "table[id$=TimeEditorLayout]")
+    private RichFacesTimeEditor timeEditor;
 
-        TYPING, BUTTONS;
+    public YearAndMonthEditor getDateEditor() {
+        return dateEditor;
     }
 
-    /**
-     * Clicks on the 'Cancel' button. Waits for time editor to close.
-     */
-    void cancelTime();
-
-    /**
-     * Clicks on the 'OK' button. Waits for time editor to close.
-     */
-    void confirmTime();
-
-    WebElement getCancelButtonElement();
-
-    WebElement getOkButtonElement();
-
-    /**
-     * Returns time set in the spinners.
-     */
-    DateTime getTime();
-
-    /**
-     * Sets time: hours, minutes, seconds and time-sign. Returns same instance so
-     * the time can be easily confirmed or canceled.
-     * @param time time that will be set
-     * @param inputType how will be the time set
-     * @return this time editor
-     */
-    TimeEditor setTime(DateTime time, SetValueBy by);
+    public TimeEditor getTimeEditor() {
+        return timeEditor;
+    }
 }

@@ -34,8 +34,8 @@ public interface CalendarPopupComponent extends VisibleComponent {
 
     public enum OpenedBy {
 
-        inputClicking,
-        openButtonClicking,;
+        INPUT_CLICKING,
+        OPEN_BUTTON_CLICKING,;
     }
 
     void closePopup();
