@@ -25,9 +25,13 @@ import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
 
+import javax.swing.event.DocumentEvent.ElementChange;
+
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.Test;
+
+import com.gargoylesoftware.htmlunit.javascript.host.Element;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>

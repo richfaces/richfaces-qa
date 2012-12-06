@@ -90,4 +90,9 @@ public class TestReferencedUsage extends AbstractGrapheneTest {
             elementNotVisible.locator(imageOfAjaxRequestProgress));
     }
 
+    @Override
+    protected String getSampleLabel() {
+        return "Referenced status";
+    }
+
 }
