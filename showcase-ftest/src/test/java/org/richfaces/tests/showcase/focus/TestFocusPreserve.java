@@ -24,11 +24,9 @@ package org.richfaces.tests.showcase.focus;
 import static org.jboss.arquillian.graphene.Graphene.guardXhr;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.focus.page.FocusPage;
 import org.richfaces.tests.showcase.focus.page.FocusPreservePage;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -38,17 +36,6 @@ import org.testng.annotations.Test;
 public class TestFocusPreserve extends AbstractWebDriverTest<FocusPreservePage> {
 
     private static final String EXPECTED_OUTCOME = "RichFaces";
-
-    // workaround till the sample will not be renamed to comply camel case convention
-    @Override
-    @BeforeMethod
-    public void loadPage() {
-
-        this.contextRoot = getContextRoot();
-
-        webDriver.get(URLUtils.buildUrl(contextRoot, "/showcase/",
-            "richfaces/component-sample.jsf?demo=focus&sample=focus-preserve&skin=blueSky").toExternalForm());
-    }
 
     @Test
     public void testFocusIsPreserved() {

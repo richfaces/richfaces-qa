@@ -24,10 +24,8 @@ package org.richfaces.tests.showcase.focus;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.arquillian.graphene.Graphene.guardXhr;
 
-import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.focus.page.FocusManagerPage;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -35,17 +33,6 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestFocusManager extends AbstractWebDriverTest<FocusManagerPage> {
-
-    // workaround till the sample will not be renamed to comply camel case convention
-    @Override
-    @BeforeMethod
-    public void loadPage() {
-
-        this.contextRoot = getContextRoot();
-
-        webDriver.get(URLUtils.buildUrl(contextRoot, "/showcase/",
-            "richfaces/component-sample.jsf?demo=focus&sample=focus-manager&skin=blueSky").toExternalForm());
-    }
 
     @Test
     public void testFocusOnSecInputAfterLoad() {

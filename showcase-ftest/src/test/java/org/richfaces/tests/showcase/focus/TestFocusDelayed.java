@@ -21,10 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.focus;
 
-import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.focus.page.FocusDelayedPage;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -32,17 +30,6 @@ import org.testng.annotations.Test;
  * @version $Revision$
  */
 public class TestFocusDelayed extends AbstractWebDriverTest<FocusDelayedPage> {
-
-    // workaround till the sample will not be renamed to comply camel case convention
-    @Override
-    @BeforeMethod
-    public void loadPage() {
-
-        this.contextRoot = getContextRoot();
-
-        webDriver.get(URLUtils.buildUrl(contextRoot, "/showcase/",
-            "richfaces/component-sample.jsf?demo=focus&sample=focus-delayed&skin=blueSky").toExternalForm());
-    }
 
     @Test
     public void testDelayedFocusOnNameInput() {
