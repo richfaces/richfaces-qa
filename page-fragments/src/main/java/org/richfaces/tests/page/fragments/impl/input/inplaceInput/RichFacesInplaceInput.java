@@ -63,13 +63,19 @@ public class RichFacesInplaceInput implements InplaceInput {
         return controls;
     }
 
-    public WebElement getEditInputElement() {
-        return editInputElement;
+    protected String getCssClass(State state) {
+        switch (state) {
+            case ACTIVE:
+                return "rf-ii-act";
+            case CHANGED:
+                return "rf-ii-chng";
+            default:
+                throw new UnsupportedOperationException();
+        }
     }
 
-    @Override
-    public WebElement getRoot() {
-        return root;
+    public WebElement getEditInputElement() {
+        return editInputElement;
     }
 
     @Override
@@ -77,9 +83,18 @@ public class RichFacesInplaceInput implements InplaceInput {
         return editInputElement.getAttribute("value");
     }
 
+    public WebElement getLabelInputElement() {
+        return label;
+    }
+
     @Override
     public String getLabelValue() {
         return label.getText();
+    }
+
+    @Override
+    public WebElement getRoot() {
+        return root;
     }
 
     @Override
@@ -100,16 +115,5 @@ public class RichFacesInplaceInput implements InplaceInput {
     @Override
     public ExpectedCondition<Boolean> isVisibleCondition() {
         return Graphene.element(root).isVisible();
-    }
-
-    protected String getCssClass(State state) {
-        switch(state) {
-            case ACTIVE:
-                return "rf-ii-act";
-            case CHANGED:
-                return "rf-ii-chng";
-            default:
-                throw new UnsupportedOperationException();
-        }
     }
 }
