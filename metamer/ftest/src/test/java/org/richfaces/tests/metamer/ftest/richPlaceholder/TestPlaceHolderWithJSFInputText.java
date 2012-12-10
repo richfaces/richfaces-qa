@@ -24,13 +24,14 @@ package org.richfaces.tests.metamer.ftest.richPlaceholder;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestPlaceHolderWithJSFInputText extends AbstractPlaceholderTest {
+public class TestPlaceHolderWithJSFInputText extends AbstractPlaceholderJSFTest {
 
     @FindBy(css = INPUT1_ID)
     WebElement input1;
@@ -51,8 +52,8 @@ public class TestPlaceHolderWithJSFInputText extends AbstractPlaceholderTest {
         return input2;
     }
 
-    @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12625")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12625")
     @Override
     public void testAjaxSubmit() {
         super.testAjaxSubmit();
@@ -76,7 +77,8 @@ public class TestPlaceHolderWithJSFInputText extends AbstractPlaceholderTest {
         super.testHTTPSubmit();
     }
 
-    @Test
+    @Test(groups = "4.Future")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12650")
     @Override
     public void testRendered() {
         super.testRendered();
@@ -88,8 +90,8 @@ public class TestPlaceHolderWithJSFInputText extends AbstractPlaceholderTest {
         super.testSelector();
     }
 
-    @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12621")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12621")
     @Override
     public void testSelectorEmpty() {
         super.testSelectorEmpty();

@@ -25,7 +25,6 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import org.richfaces.component.UIPlaceholder;
 import org.richfaces.tests.metamer.Attributes;
@@ -55,7 +54,7 @@ public class RichPlaceholderBean implements Serializable {
         attributes.setAttribute("value", "Watermark text");
         attributes.setAttribute("rendered", "true");
         attributes.setAttribute("styleClass", "customPlaceholderClass");
-        attributes.setAttribute("selector", "[id$=input1]");
+        attributes.setAttribute("selector", "");
 
         attributes.remove("converter");
     }

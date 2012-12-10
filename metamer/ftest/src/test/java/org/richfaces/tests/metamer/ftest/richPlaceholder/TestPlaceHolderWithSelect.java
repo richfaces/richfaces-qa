@@ -21,16 +21,19 @@
  */
 package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
+import java.awt.Color;
+import org.jboss.arquillian.ajocado.dom.Event;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestPlaceHolderWithSelect extends AbstractPlaceholderTest {
+public class TestPlaceHolderWithSelect extends AbstractPlaceholderJSFTest {
 
     @FindBy(css = INPUT1_ID + " [id$=Input]")
     WebElement input1;
@@ -39,6 +42,11 @@ public class TestPlaceHolderWithSelect extends AbstractPlaceholderTest {
 
     public TestPlaceHolderWithSelect() {
         super("select");
+    }
+
+    @Override
+    Color getDefaultInputColor() {
+        return new Color(255, 0, 0);
     }
 
     @Override
@@ -51,64 +59,63 @@ public class TestPlaceHolderWithSelect extends AbstractPlaceholderTest {
         return input2;
     }
 
-    @Test(groups = "4.Future")
-    @IssueTracking({ "https://issues.jboss.org/browse/RF-12625", "https://issues.jboss.org/browse/RF-12623" })
+    @Override
+    protected void clearInput1() {
+        input1.clear();
+    }
+
+    @Override
+    protected void sendKeysToInput1(String keys) {
+        input1.sendKeys(keys);
+        fireEvent(input1, Event.BLUR);
+        fireEvent(input1, Event.BLUR);
+    }
+
+    @Test
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-12625", "https://issues.jboss.org/browse/RF-12623" })
     @Override
     public void testAjaxSubmit() {
         super.testAjaxSubmit();
     }
 
-    @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12623")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
     @Override
     public void testClickOnInputWithPlaceholder() {
         super.testClickOnInputWithPlaceholder();
     }
 
-    @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12623")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
     @Override
     public void testDeleteTextFromInputWithPlaceholder() {
         super.testDeleteTextFromInputWithPlaceholder();
     }
 
-    @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12623")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
     @Override
     public void testHTTPSubmit() {
         super.testHTTPSubmit();
     }
 
     @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12623")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12650")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
     @Override
     public void testRendered() {
         super.testRendered();
     }
 
-    @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12623")
-    @Override
-    public void testSelector() {
-        super.testSelector();
-    }
-
-    @Test(groups = "4.Future")
-    @IssueTracking({ "https://issues.jboss.org/browse/RF-12621", "https://issues.jboss.org/browse/RF-12623" })
-    @Override
-    public void testSelectorEmpty() {
-        super.testSelectorEmpty();
-    }
-
-    @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12623")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
     @Override
     public void testStyleClass() {
         super.testStyleClass();
     }
 
-    @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12623")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
     @Override
     public void testTypeToInputWithPlaceholder() {
         super.testTypeToInputWithPlaceholder();

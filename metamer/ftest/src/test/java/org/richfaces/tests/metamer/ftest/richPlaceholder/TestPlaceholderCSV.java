@@ -69,7 +69,7 @@ public class TestPlaceholderCSV extends AbstractWebDriverTest {
     public void testValidation() {
         String goodText = "1234";
         String longText = "1234567";
-        assertEquals(input.getAttribute("value"), AbstractPlaceholderTest.DEFAULT_PLACEHOLDER_TEXT);
+        assertEquals(input.getAttribute("value"), AbstractPlaceholderJSFTest.DEFAULT_PLACEHOLDER_TEXT);
         assertFalse(msg.isVisible(), "Validation message should not be visible");
 
         typeTextAndBlur(goodText);
@@ -78,7 +78,7 @@ public class TestPlaceholderCSV extends AbstractWebDriverTest {
 
         typeTextAndBlur("");
         Graphene.waitGui().until(msg.isVisibleCondition());
-        assertEquals(input.getAttribute("value"), AbstractPlaceholderTest.DEFAULT_PLACEHOLDER_TEXT);
+        assertEquals(input.getAttribute("value"), AbstractPlaceholderJSFTest.DEFAULT_PLACEHOLDER_TEXT);
         assertTrue(msg.isVisible(), "Validation message should  be visible");
 
         typeTextAndBlur(goodText);

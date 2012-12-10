@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:ui="http://java.sun.com/jsf/facelets" 
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
 
     <!--
     JBoss, Home of Professional Open Source
@@ -28,12 +28,12 @@
 
     <ui:composition template="placeholderTemplate.xhtml">
         <ui:define name="testedComponents">
-            <rich:editor id="input1" value="#{richPlaceholderBean.inputValue1}">
-                <ui:include src="placeholderWithoutSelector.xhtml"/>
-            </rich:editor>
+            <textarea id="input1"/>
+            <textarea id="input2"/>
+            <textarea id="input3"/>
+            <ui:include src="placeholder.xhtml"/>
             <br/>
             <br/>
-            <rich:editor id="input2" value="#{richPlaceholderBean.inputValue2}"/>
         </ui:define>
     </ui:composition>
 </html>

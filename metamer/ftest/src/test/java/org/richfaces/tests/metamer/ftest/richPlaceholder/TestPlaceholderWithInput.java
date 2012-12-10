@@ -21,107 +21,55 @@
  */
 package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 /**
- *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestPlaceHolderWithAutocomplete extends AbstractPlaceholderJSFTest {
+public class TestPlaceholderWithInput extends AbstractPlaceholderNonJSFTest {
 
-    @FindBy(css = INPUT1_ID + " > span > input")
-    WebElement input1;
-    @FindBy(css = INPUT2_ID + " > span > input")
-    WebElement input2;
-
-    public TestPlaceHolderWithAutocomplete() {
-        super("autocomplete");
-    }
-
-    @Override
-    WebElement getInput1() {
-        return input1;
-    }
-
-    @Override
-    WebElement getInput2() {
-        return input2;
-    }
-
-    @Override
-    protected void clickOnInput1() {
-        fireEvent(getInput1(), Event.FOCUS);
-    }
-
-    @Override
-    protected void clickOnInput2() {
-        fireEvent(getInput2(), Event.FOCUS);
+    public TestPlaceholderWithInput() {
+        super("input");
     }
 
     @Test
-    @RegressionTest({ "https://issues.jboss.org/browse/RF-12623", "https://issues.jboss.org/browse/RF-12625" })
-    @Override
-    public void testAjaxSubmit() {
-        super.testAjaxSubmit();
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
-    @Override
     public void testClickOnInputWithPlaceholder() {
         super.testClickOnInputWithPlaceholder();
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
-    @Override
     public void testDeleteTextFromInputWithPlaceholder() {
         super.testDeleteTextFromInputWithPlaceholder();
     }
 
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
-    @Override
-    public void testHTTPSubmit() {
-        super.testHTTPSubmit();
-    }
-
     @Test(groups = "4.Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12650")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
-    @Override
     public void testRendered() {
         super.testRendered();
     }
 
     @Test
-    @Override
-    public void testSelector() {
-        super.testSelector();
+    public void testSelectorSingle() {
+        super.testSelectorSingle();
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12621")
-    @Override
+    public void testSelectorMultiple() {
+        super.testSelectorMultiple();
+    }
+
+    @Test
     public void testSelectorEmpty() {
         super.testSelectorEmpty();
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
-    @Override
     public void testStyleClass() {
         super.testStyleClass();
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
-    @Override
     public void testTypeToInputWithPlaceholder() {
         super.testTypeToInputWithPlaceholder();
     }
