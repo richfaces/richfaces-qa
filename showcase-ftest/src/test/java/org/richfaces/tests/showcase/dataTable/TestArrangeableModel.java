@@ -21,10 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataTable;
 
+import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 
 import java.util.Iterator;
 
@@ -158,7 +158,7 @@ public class TestArrangeableModel extends AbstractGrapheneTest {
 
         checkedValue = selenium.getText(td);
 
-        assertEquals(String.valueOf(checkedValue.charAt(0)), firstCharOfRowWhenDescending,
+        assertTrue(String.valueOf(checkedValue.charAt(0)).equalsIgnoreCase(firstCharOfRowWhenDescending),
             "Rows should be sorted in an descending order, by column " + td.getRawLocator());
     }
 

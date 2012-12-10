@@ -58,8 +58,7 @@ public class TestModes extends AbstractGrapheneTest {
 
         selenium.keyPress(minCharInput, 'a');
 
-        assertFalse(selenium.isElementPresent(selection),
-            "The selection should not be visible, since there is only one char!");
+        assertFalse(selenium.isElementPresent(selection), "The selection should not be visible, since there is only one char!");
 
         String keys = "ar";
         selenium.focus(minCharInput);
@@ -76,15 +75,14 @@ public class TestModes extends AbstractGrapheneTest {
 
     }
 
-    @Test
+    @Test(groups = "4.Future")
     public void testMultipleSelectionInput() {
 
         char key = 'a';
         selenium.focus(multipleSelectionInput);
         guardXhr(selenium).keyPress(multipleSelectionInput, key);
 
-        assertTrue(selenium.isVisible(selection),
-            "The selection should be visible, since there is correct starting char!");
+        assertTrue(selenium.isVisible(selection), "The selection should be visible, since there is correct starting char!");
 
         selenium.keyPressNative(KeyEvent.VK_ENTER);
 
@@ -96,8 +94,7 @@ public class TestModes extends AbstractGrapheneTest {
         selenium.focus(multipleSelectionInput);
         guardXhr(selenium).keyPress(multipleSelectionInput, key);
 
-        assertTrue(selenium.isVisible(selection),
-            "The selection should be visible, since there is correct starting char!");
+        assertTrue(selenium.isVisible(selection), "The selection should be visible, since there is correct starting char!");
 
         selenium.keyPressNative(KeyEvent.VK_ENTER);
 
@@ -105,15 +102,14 @@ public class TestModes extends AbstractGrapheneTest {
         assertEquals(actualContentOfInput, "Alabama Washington", "The input should contain something else!");
     }
 
-    @Test
+    @Test(groups = "4.Future")
     public void testSelectFirstFalseInput() {
 
         char key = 'a';
         selenium.focus(selectFirstFalseInput);
         guardXhr(selenium).keyPress(selectFirstFalseInput, key);
 
-        assertTrue(selenium.isVisible(selection),
-            "The selection should be visible, since there is correct starting char!");
+        assertTrue(selenium.isVisible(selection), "The selection should be visible, since there is correct starting char!");
 
         selenium.keyPressNative(KeyEvent.VK_ENTER);
 
