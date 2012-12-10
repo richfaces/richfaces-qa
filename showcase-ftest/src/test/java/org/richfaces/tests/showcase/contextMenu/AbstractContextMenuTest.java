@@ -55,9 +55,8 @@ public class AbstractContextMenuTest<P> extends AbstractWebDriverTest<P> {
         InvocationType type, ExpectedCondition<Boolean> conditionTargetIsFocused) {
         Actions builder = new Actions(GrapheneContext.getProxy());
 
-        target.click();
-
         if (conditionTargetIsFocused != null) {
+            target.click();
             Graphene.waitGui(webDriver).withTimeout(2, TimeUnit.SECONDS).until(conditionTargetIsFocused);
         }
         waitGui();

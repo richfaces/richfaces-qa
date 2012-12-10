@@ -37,7 +37,7 @@ public class TestFocusPreserve extends AbstractWebDriverTest<FocusPreservePage> 
 
     private static final String EXPECTED_OUTCOME = "RichFaces";
 
-    @Test
+    @Test(groups = "4.Future")
     public void testFocusIsPreserved() {
         page.waitTillFirstInputIsFocused();
 

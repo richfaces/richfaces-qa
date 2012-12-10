@@ -21,10 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.tabPanel.page;
 
+import static org.jboss.arquillian.graphene.Graphene.attribute;
+import static org.jboss.arquillian.graphene.Graphene.element;
 import static org.jboss.arquillian.graphene.Graphene.guardXhr;
-import static org.testng.Assert.assertTrue;
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.spi.annotations.FindBy;
 import org.openqa.selenium.WebElement;
@@ -51,9 +54,9 @@ public class DynamicTabsPage {
             String headerText = i.getText();
 
             guardXhr(i).click();
-
-            String buttonText = submitButton.getAttribute("value");
-            assertTrue(buttonText.contains(headerText), "The tab was not switched correctly!");
+            waitGui().until(element(submitButton).isVisible());
+            waitGui().withTimeout(2, TimeUnit.SECONDS).withMessage("The tab was not switched correctly!")
+                .until(attribute(submitButton, "value").contains(headerText));
         }
     }
 }
