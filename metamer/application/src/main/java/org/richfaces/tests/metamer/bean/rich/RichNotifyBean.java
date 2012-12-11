@@ -32,6 +32,7 @@ import javax.faces.context.FacesContext;
 import org.richfaces.component.UINotify;
 import org.richfaces.component.UINotifyMessages;
 import org.richfaces.component.UINotifyStack;
+import org.richfaces.component.html.HtmlNotifyMessages;
 import org.richfaces.tests.metamer.Attributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,16 +64,16 @@ public class RichNotifyBean implements Serializable {
         logger = LoggerFactory.getLogger(getClass());
         logger.debug("initializing bean " + getClass().getName());
         attributesNotify = Attributes.getComponentAttributesFromFacesConfig(UINotify.class, getClass());
-        attributesNotifyMessages = Attributes.getComponentAttributesFromFacesConfig(UINotifyMessages.class, getClass());
+        attributesNotifyMessages = Attributes.getComponentAttributesFromFacesConfig(HtmlNotifyMessages.class, getClass());
         attributesNotifyStackFirst = Attributes.getComponentAttributesFromFacesConfig(UINotifyStack.class, getClass());
         attributesNotifyStackSecond = Attributes.getComponentAttributesFromFacesConfig(UINotifyStack.class, getClass());
         attributesBean = Attributes.getEmptyAttributes(getClass());
 
-        // FIXME these attributes should be in the list after fixing RF-12144
+        // faces-config doesn't contain these attributes but they work
         attributesNotify.setAttribute("showHistory", false);
         attributesNotify.get("showHistory").setType(Boolean.class);
-
         attributesNotify.setAttribute("delay", null);
+
         attributesNotify.setAttribute("detail", DEFAULT_DETAIL);
         attributesNotify.setAttribute("rendered", true);
         attributesNotify.setAttribute("showCloseButton", true);
@@ -80,21 +81,10 @@ public class RichNotifyBean implements Serializable {
         attributesNotify.setAttribute("summary", DEFAULT_SUMMARY);
         attributesNotify.remove("stack");
 
-        // FIXME these attributes should be in the list after fixing RF-12144
+        // faces-config doesn't contain these attributes but they work
         attributesNotifyMessages.setAttribute("showHistory", false);
         attributesNotifyMessages.get("showHistory").setType(Boolean.class);
-        attributesNotifyMessages.setAttribute("onclick", null);
-        attributesNotifyMessages.setAttribute("ondblclick", null);
-        attributesNotifyMessages.setAttribute("onkeydown", null);
-        attributesNotifyMessages.setAttribute("onkeypress", null);
-        attributesNotifyMessages.setAttribute("onkeyup", null);
-        attributesNotifyMessages.setAttribute("onmousedown", null);
-        attributesNotifyMessages.setAttribute("onmousemove", null);
-        attributesNotifyMessages.setAttribute("onmouseout", null);
-        attributesNotifyMessages.setAttribute("onmouseover", null);
-        attributesNotifyMessages.setAttribute("onmouseup", null);
-        attributesNotifyMessages.setAttribute("style", null);
-        attributesNotifyMessages.setAttribute("title", null);
+        attributesNotifyMessages.setAttribute("delay", null);
 
         attributesNotifyMessages.setAttribute("animationSpeed", 100);
         attributesNotifyMessages.setAttribute("appearAnimation", "fade");
@@ -103,7 +93,6 @@ public class RichNotifyBean implements Serializable {
         attributesNotifyMessages.setAttribute("stayTime", 100000);
         attributesNotifyMessages.remove("stack");
 
-        attributesNotifyMessages.setAttribute("delay", null);
         attributesNotifyMessages.setAttribute("interval", 800);
         attributesNotifyMessages.setAttribute("showSummary", true);
         attributesNotifyMessages.setAttribute("rendered", true);
