@@ -21,14 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.jboss.arquillian.ajocado.Graphene.waitModel;
 import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
@@ -58,15 +52,9 @@ public class AbstractWebDriverTest<P> extends AbstractShowcaseTest {
         if (runInPortalEnv) {
             webDriver.get(format("{0}://{1}:{2}/{3}",
                 contextRoot.getProtocol(), contextRoot.getHost(), contextRoot.getPort(), "portal/classic/showcase"));
-            //
-            JQueryLocator menuItemLoc = jq(format("a.rf-pm-itm-lbl:contains({0})", getDemoName()));
-            waitModel.until(elementPresent.locator(menuItemLoc));
-            webDriver.findElement(By.className("rf-pm-itm-lbl").linkText(getDemoName())).click();
-            // selenium.click(menuItemLoc);
+            webDriver.findElement(By.partialLinkText(getDemoName())).click();
             if (null != getSampleLabel()) {
                 System.out.println(" ### switchning tab to: " + getSampleLabel());
-                // JQueryLocator tab = getSampleTabLocator(getSampleLabel());
-                // waitGui.until(elementPresent.locator(tab));
                 webDriver.findElement(By.linkText(getSampleLabel())).click();
             }
         } else {
