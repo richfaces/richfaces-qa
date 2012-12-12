@@ -134,4 +134,7 @@ public class TestCustomLayouts extends AbstractGrapheneTest {
         eraseInput(input);
     }
 
+    protected String getSampleLabel() {
+        return "Custom Popup Layouts";
+    }
 }

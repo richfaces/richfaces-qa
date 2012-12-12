@@ -130,4 +130,8 @@ public class TestEDTSorting extends AbstractExtendedTableTest {
             this.sortButton = jq("a:contains(" + name() + ")");
         }
     }
+
+    protected String getSampleLabel() {
+        return "Table Sorting";
+    }
 }

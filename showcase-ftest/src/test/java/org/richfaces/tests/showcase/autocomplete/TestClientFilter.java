@@ -68,4 +68,7 @@ public class TestClientFilter extends AbstractGrapheneTest {
         assertEquals(actualValueOfInput, "Alaska", "The content should be Alaska, since it contains string ska");
     }
 
+    protected String getSampleLabel() {
+        return "Custom Client Filter";
+    }
 }

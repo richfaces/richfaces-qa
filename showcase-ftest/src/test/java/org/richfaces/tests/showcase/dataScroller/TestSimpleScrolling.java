@@ -245,4 +245,7 @@ public class TestSimpleScrolling extends AbstractDataScrollerTest {
         }
     }
 
+    protected String getSampleLabel() {
+        return "DataScroller Basic Usage";
+    }
 }

@@ -61,4 +61,9 @@ public class TestSkinChange extends AbstractGrapheneTest {
 
     }
 
+    @Override
+    protected String getSampleLabel() {
+        return "Parameters for non-Ajax components";
+    }
+
 }

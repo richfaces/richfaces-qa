@@ -34,4 +34,7 @@ public class TestDragIndicator extends AbstractDragAndDropTest {
         dragAndDropAllSourcesToCorrectTarget(true);
     }
 
+    protected String getSampleLabel() {
+        return "Drag Indicator usage example";
+    }
 }

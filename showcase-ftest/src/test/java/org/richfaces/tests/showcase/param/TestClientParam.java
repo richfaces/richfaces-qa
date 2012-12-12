@@ -75,4 +75,9 @@ public class TestClientParam extends AbstractGrapheneTest {
             + "different from height returned from this code");
     }
 
+    @Override
+    protected String getSampleLabel() {
+        return "Parameters from client side";
+    }
+
 }

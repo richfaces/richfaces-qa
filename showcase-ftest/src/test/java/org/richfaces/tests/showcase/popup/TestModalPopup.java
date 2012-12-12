@@ -69,4 +69,7 @@ public class TestModalPopup extends AbstractPoppupPanel {
         assertFalse(selenium.isElementPresent(poppupPanelContent), "The poppup panel should not be visible now!");
     }
 
+    protected String getSampleLabel() {
+        return "Modal panel example";
+    }
 }

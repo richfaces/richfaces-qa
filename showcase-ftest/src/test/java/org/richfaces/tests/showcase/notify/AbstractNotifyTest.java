@@ -53,4 +53,9 @@ public class AbstractNotifyTest extends AbstractGrapheneTest {
 
     }
 
+    @Override
+    protected String getSampleLabel() {
+        return null;
+    }
+
 }

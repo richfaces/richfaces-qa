@@ -93,4 +93,7 @@ public class TestToolbarAndSkinning extends AbstractGrapheneTest {
         assertEquals(numberOfButtonsActual, CUSTOM_NUMBERS, "The number of buttons in custom mode is incorrect!");
     }
 
+    protected String getSampleLabel() {
+        return "Toolbar and Skinning";
+    }
 }

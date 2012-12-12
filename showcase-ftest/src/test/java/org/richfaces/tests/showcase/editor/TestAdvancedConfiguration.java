@@ -98,4 +98,7 @@ public class TestAdvancedConfiguration extends AbstractGrapheneTest {
         fail("implement me correctly!");
     }
 
+    protected String getSampleLabel() {
+        return "Advanced Configuration";
+    }
 }

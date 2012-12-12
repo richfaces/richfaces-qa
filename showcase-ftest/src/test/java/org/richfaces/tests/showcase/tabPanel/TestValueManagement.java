@@ -76,4 +76,8 @@ public class TestValueManagement extends AbstractGrapheneTest {
 
         assertEquals(actualContent, BODY_OF_PANEL_1, "The previous button does not work!");
     }
+
+    protected String getSampleLabel() {
+        return "Selected Tab Management";
+    }
 }

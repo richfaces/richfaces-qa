@@ -94,4 +94,9 @@ public class TestSelectsUpdates extends AbstractGrapheneTest {
 
     }
 
+    @Override
+    protected String getSampleLabel() {
+        return "Dynamic Selects";
+    }
+
 }

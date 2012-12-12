@@ -34,4 +34,7 @@ public class TestDragDrop extends AbstractDragAndDropTest {
         dragAndDropAllSourcesToCorrectTarget(false);
     }
 
+    protected String getSampleLabel() {
+        return "Drag and Drop usage example";
+    }
 }

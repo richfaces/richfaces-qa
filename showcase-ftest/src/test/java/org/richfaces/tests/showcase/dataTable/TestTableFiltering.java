@@ -352,4 +352,9 @@ public class TestTableFiltering extends AbstractDataIterationWithCars {
         eraseInput(vinInput);
         guardXhr(selenium).fireEvent(vinInput, Event.BLUR);
     }
+
+    @Override
+    protected String getSampleLabel() {
+        return "Filtering";
+    }
 }

@@ -168,4 +168,8 @@ public class TestTableSorting extends AbstractDataIterationWithStates {
         return new StateWithCapitalAndTimeZone(stateName, capitalName, timeZone);
     }
 
+    @Override
+    protected String getSampleLabel() {
+        return "Sorting";
+    }
 }

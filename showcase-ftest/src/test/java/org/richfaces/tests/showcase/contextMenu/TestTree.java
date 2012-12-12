@@ -77,4 +77,8 @@ public class TestTree extends AbstractContextMenuTest<TreeContextMenuPage> {
         checkContextMenuRenderedAtCorrectPosition(elementToTryOn, page.getContextMenu().getContextMenuPopup(),
             InvocationType.RIGHT_CLICK, page.getExpextedConditionOnNodeSelected(elementToTryOn));
     }
+
+    protected String getSampleLabel() {
+        return "Tree ContextMenu";
+    }
 }

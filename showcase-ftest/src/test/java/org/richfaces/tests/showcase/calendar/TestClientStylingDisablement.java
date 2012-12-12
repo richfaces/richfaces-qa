@@ -45,4 +45,7 @@ public class TestClientStylingDisablement extends AbstractCalendarTest {
         abstractTestThereAreAllRequiredComponents();
     }
 
+    protected String getSampleLabel() {
+        return "Client Side Styling/Disablement";
+    }
 }

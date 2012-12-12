@@ -361,4 +361,8 @@ public class TestDataTableEdit extends AbstractDataIterationWithCars {
         return car;
     }
 
+    @Override
+    protected String getSampleLabel() {
+        return "Editing";
+    }
 }

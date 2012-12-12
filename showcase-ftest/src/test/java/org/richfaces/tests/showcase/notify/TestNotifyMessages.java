@@ -104,4 +104,5 @@ public class TestNotifyMessages extends AbstractTestMessage {
         assertTrue(messages.contains(JOB_ERROR_LESS_THAN_MINIMUM), "The notify message for job is incorrect");
         assertTrue(messages.contains(ZIP_ERROR_LESS_THAN_MINIMUM), "The notify message for zip is incorrect");
     }
+
 }

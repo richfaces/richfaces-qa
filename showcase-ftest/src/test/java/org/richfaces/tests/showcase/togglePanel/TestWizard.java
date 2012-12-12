@@ -156,4 +156,7 @@ public class TestWizard extends AbstractGrapheneTest {
         isThereErrorMessage(errorMessageCompany, ERROR_MSG_COMPANY, shouldErrorMessagePresented);
     }
 
+    protected String getSampleLabel() {
+        return "Wizard creation";
+    }
 }

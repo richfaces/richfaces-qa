@@ -57,4 +57,7 @@ public class TestDataModel extends AbstractCalendarTest {
         abstractTestThereAreAllRequiredComponents();
     }
 
+    protected String getSampleLabel() {
+        return "Data Model Support";
+    }
 }

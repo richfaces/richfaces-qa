@@ -225,4 +225,8 @@ public class TestNotifyAttributes extends AbstractNotifyTest {
         }
     }
 
+    @Override
+    protected String getSampleLabel() {
+        return "Attributes of Notify";
+    }
 }

@@ -131,4 +131,9 @@ public class AbstractDragAndDropTest extends AbstractGrapheneTest {
         assertEquals(selenium.getCount(coldFusionTableRow), NUMBER_OF_COLDFUSION_FRAMEWORKS,
             "The number of dragged cold fusion frameworks is wrong!");
     }
+
+    @Override
+    protected String getSampleLabel() {
+        return null;
+    }
 }

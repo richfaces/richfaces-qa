@@ -294,4 +294,8 @@ public class TestExTableSelection extends AbstractExtendedTableTest {
             }
         }
     }
+
+    protected String getSampleLabel() {
+        return "Selection Management";
+    }
 }

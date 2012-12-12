@@ -167,4 +167,7 @@ public class TestDataScrollerAPI extends AbstractGrapheneTest {
         return src;
     }
 
+    protected String getSampleLabel() {
+        return "DataScroller API";
+    }
 }

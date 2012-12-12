@@ -58,4 +58,8 @@ public class TestSimpleTable extends AbstractExtendedTableTest {
 
         checkTheRow("Infiniti", "EX35", row);
     }
+
+    protected String getSampleLabel() {
+        return "Basic Usage";
+    }
 }

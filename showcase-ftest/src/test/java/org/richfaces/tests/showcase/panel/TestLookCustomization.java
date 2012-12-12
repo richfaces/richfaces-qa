@@ -126,4 +126,8 @@ public class TestLookCustomization extends AbstractPanelTest {
             + "value on the mouseout state");
 
     }
+
+    protected String getSampleLabel() {
+        return "Look and feel customization";
+    }
 }

@@ -125,4 +125,8 @@ public class TestToolBarIcons extends AbstractGrapheneTest {
         assertEquals(actualNumberOfSeparators, numberOfSeparators, "Wrong number of square groups/items separators");
 
     }
+
+    protected String getSampleLabel() {
+        return "Icons Customization";
+    }
 }

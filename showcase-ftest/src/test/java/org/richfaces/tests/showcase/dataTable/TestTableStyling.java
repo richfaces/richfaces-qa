@@ -106,4 +106,9 @@ public class TestTableStyling extends AbstractDataIterationWithCars {
 
         return rowClass.contains("active-row");
     }
+
+    @Override
+    protected String getSampleLabel() {
+        return "Styling";
+    }
 }

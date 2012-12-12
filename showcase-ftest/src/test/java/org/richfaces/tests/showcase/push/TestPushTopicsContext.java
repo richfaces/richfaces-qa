@@ -107,4 +107,8 @@ public class TestPushTopicsContext extends AbstractGrapheneTest {
         assertEquals(uuid.length(), 36, "The length of uuid is wrong!");
         assertEquals(StringUtils.countMatches(uuid, "-"), 4, "Wrong uuid, there should be 4 hyphens");
     }
+
+    protected String getSampleLabel() {
+        return "Topics Context Usage";
+    }
 }

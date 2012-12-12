@@ -81,4 +81,8 @@ public class TestSideMenu extends AbstractGrapheneTest {
             + "since there was hover over element " + optionLabel);
 
     }
+
+    protected String getSampleLabel() {
+        return "Side Menu";
+    }
 }

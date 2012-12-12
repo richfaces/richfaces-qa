@@ -62,4 +62,8 @@ public class TestEDTFiltering extends TestTableFiltering {
 
         eraseAllInputs();
     }
+
+    protected String getSampleLabel() {
+        return "Table Filtering";
+    }
 }

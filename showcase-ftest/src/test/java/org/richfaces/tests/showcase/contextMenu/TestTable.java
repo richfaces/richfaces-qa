@@ -74,4 +74,8 @@ public class TestTable extends AbstractContextMenuTest<TableContextMenuPage> {
         checkContextMenuRenderedAtCorrectPosition(elementToTryOn, page.getContextMenu().getContextMenuPopup(),
             InvocationType.RIGHT_CLICK, page.getWaitConditionOnSelectingRow(elementToTryOn));
     }
+
+    protected String getSampleLabel() {
+        return "Table ContextMenu";
+    }
 }

@@ -264,4 +264,8 @@ public class TestJsr303 extends AbstractClientValidationTest {
         guardNoRequest(selenium).fireEvent(iAgreeTheTermsCheckBox, Event.CHANGE);
         guardNoRequest(selenium).fireEvent(iAgreeTheTermsCheckBox, Event.CLICK);
     }
+
+    protected String getSampleLabel() {
+        return "JSR-303 Validators";
+    }
 }

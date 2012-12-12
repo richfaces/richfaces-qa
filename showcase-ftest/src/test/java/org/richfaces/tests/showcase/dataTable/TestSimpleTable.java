@@ -114,4 +114,8 @@ public class TestSimpleTable extends AbstractGrapheneTest {
         return new Double(valueWithoutDollarSign);
     }
 
+    @Override
+    protected String getSampleLabel() {
+        return "Basic Data Table";
+    }
 }

@@ -196,4 +196,9 @@ public class TestJsfValidators extends AbstractClientValidationTest {
             shouldBeErrorMessagePresent);
     }
 
+    @Override
+    protected String getSampleLabel() {
+        return "Standard JSF Validators";
+    }
+
 }

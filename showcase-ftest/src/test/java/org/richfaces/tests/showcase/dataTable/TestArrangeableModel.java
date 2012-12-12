@@ -162,4 +162,8 @@ public class TestArrangeableModel extends AbstractGrapheneTest {
             "Rows should be sorted in an descending order, by column " + td.getRawLocator());
     }
 
+    @Override
+    protected String getSampleLabel() {
+        return "Arrangeable";
+    }
 }
