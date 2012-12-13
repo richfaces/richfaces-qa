@@ -33,6 +33,7 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
@@ -57,9 +58,9 @@ public class TestCollapsiblePanelKVS extends AbstractGrapheneTest {
         reloadTester.testFullPageRefresh();
     }
 
-    @Test(groups = { "4.3" })
+    @Test
     @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richExtendedDataTable" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-12131")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12131")
     public void testRefreshFullPageInIterationComponents() {
         testRefreshFullPage();
     }

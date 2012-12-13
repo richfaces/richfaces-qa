@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richPanelToggleListener;
 
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
@@ -45,15 +46,15 @@ public class TestPanelToggleListenerInCollapsiblePanel extends AbstractPanelTogg
         super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-11568")
-    @Test(groups={ "4.Future" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-11568")
+    @Test
     @Templates(value="richCollapsibleSubTable")
     public void testPTLAsAttributeInRichCollapsibleSubTable() {
         super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-11568")
-    @Test(groups={ "4.Future" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-11568")
+    @Test
     @Templates(value="richExtendedDataTable")
     public void testPTLAsAttributeInRichExtendedDataTable() {
         super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
@@ -66,15 +67,15 @@ public class TestPanelToggleListenerInCollapsiblePanel extends AbstractPanelTogg
         super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-11568")
-    @Test(groups={ "4.Future" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-11568")
+    @Test
     @Templates(value="a4jRepeat")
     public void testPTLAsAttributeInA4jRepeat() {
         super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-11568")
-    @Test(groups={ "4.Future" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-11568")
+    @Test
     @Templates(value="richDataGrid")
     public void testPTLAsAttributeInRichDataGrid() {
         super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
@@ -86,15 +87,15 @@ public class TestPanelToggleListenerInCollapsiblePanel extends AbstractPanelTogg
         super.testPTLInComponentWithListener(PTL_inComponent_usingType_PhaseName);
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-12280")
-    @Test(groups={ "4.Future" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-12280")
+    @Test
     @Templates(value="richCollapsibleSubTable")
     public void testPTLInsideComponentUsingTypeInRichCollapsibleSubTable() {
         super.testPTLInComponentWithListener(PTL_inComponent_usingType_PhaseName);
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-12280")
-    @Test(groups={ "4.Future" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-12280")
+    @Test
     @Templates(value="richExtendedDataTable")
     public void testPTLInsideComponentUsingTypeInRichExtendedDataTable() {
         super.testPTLInComponentWithListener(PTL_inComponent_usingType_PhaseName);
@@ -107,15 +108,15 @@ public class TestPanelToggleListenerInCollapsiblePanel extends AbstractPanelTogg
         super.testPTLInComponentWithListener(PTL_inComponent_usingType_PhaseName);
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-12280")
-    @Test(groups={ "4.Future" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-12280")
+    @Test
     @Templates(value="a4jRepeat")
     public void testPTLInsideComponentUsingTypeInA4jRepeat() {
         super.testPTLInComponentWithListener(PTL_inComponent_usingType_PhaseName);
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-12280")
-    @Test(groups={ "4.Future" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-12280")
+    @Test
     @Templates(value="richDataGrid")
     public void testPTLInsideComponentUsingTypeInRichDataGrid() {
         super.testPTLInComponentWithListener(PTL_inComponent_usingType_PhaseName);

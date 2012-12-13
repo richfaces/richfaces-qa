@@ -102,8 +102,8 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         testClientSideExpansionEvent();
     }
 
-    @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-11547")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11547")
     @Use(field = "event", strings = { "beforeexpand", "expand" })
     @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
         "richExtendedDataTable", "richList" })
@@ -148,8 +148,8 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         super.testRequestEventsAfter(ajaxExpansionEvents);
     }
 
-    @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-11547")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11547")
     @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
         "richExtendedDataTable", "richList" })
     public void testClientSideExpansionEventsOrderAjaxInIterationComponents() {
@@ -193,8 +193,8 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         testRequestEventsAfterByAlert(event);
     }
 
-    @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-11547")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11547")
     @Use(field = "event", value = "serverExpansionEvents2")
     @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
         "richExtendedDataTable", "richList" })

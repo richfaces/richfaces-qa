@@ -26,15 +26,12 @@ import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory.optionLabel;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.collapsiblePanelAttributes;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.bodyClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerClass;
-
+import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.collapsiblePanelAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -49,7 +46,6 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
@@ -326,8 +322,8 @@ public class TestRichCollapsiblePanel extends AbstractGrapheneTest {
         phaseInfo.assertListener(PhaseId.INVOKE_APPLICATION, "panel expanded");
     }
 
-    @Test(groups = { "4.Future" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-11568")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11568")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid", "richList",
             "a4jRepeat" })
     public void testToggleListenerInIterationComponents() {

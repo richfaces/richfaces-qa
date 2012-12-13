@@ -30,6 +30,7 @@ import java.net.URL;
 
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
@@ -55,10 +56,10 @@ public class TestAccordionItemKVS extends AbstractGrapheneTest {
         reloadTester.testFullPageRefresh();
     }
 
-    @Test(groups = { "keepVisualStateTesting", "4.Future" })
+    @Test(groups = { "keepVisualStateTesting" })
     @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
         "richExtendedDataTable", "richList" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-12131")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12131")
     public void testRefreshFullPageInIterationComponents() {
         testRefreshFullPage();
     }
