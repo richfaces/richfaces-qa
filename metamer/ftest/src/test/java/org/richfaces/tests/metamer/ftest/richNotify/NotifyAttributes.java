@@ -31,14 +31,12 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 public enum NotifyAttributes implements AttributeEnum {
 
     binding,
-    delay,
     detail,
     id,
     nonblocking,
     nonblockingOpacity,
     rendered,
     showCloseButton,
-    showHistory,
     showShadow,
     stack,
     stayTime,

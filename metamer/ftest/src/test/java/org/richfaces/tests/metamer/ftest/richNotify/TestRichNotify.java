@@ -25,12 +25,8 @@ import static org.jboss.arquillian.ajocado.Graphene.countEquals;
 import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
 import static org.jboss.arquillian.ajocado.Graphene.textEquals;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -41,7 +37,6 @@ import java.util.Map;
 
 import org.jboss.arquillian.ajocado.css.CssProperty;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
 import org.jboss.test.selenium.waiting.NegationCondition;
 import org.richfaces.tests.metamer.bean.rich.RichNotifyBean;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
@@ -80,18 +75,6 @@ public class TestRichNotify extends AbstractRichNotifyTest {
     }
 
     @Test
-    public void testAttributeDelay() {
-        // set the delay to <2000>
-        attributesNotify.set(NotifyAttributes.delay, 2000);
-        // wait for <1000>
-        delay(1000);
-        assertFalse(selenium.isElementPresent(notify), "The delay is set to 1000 and after some little waiting the notify shouldn't be present.");
-        // wait for <2000>
-        delay(2000);
-        assertTrue(selenium.isElementPresent(notify), "The delay is set to 1000 and after some waiting the notify should be present.");
-    }
-
-    @Test
     public void testAttributeRendered() {
         // set the rendered to <false>
         attributesNotify.set(NotifyAttributes.rendered, false);
@@ -103,27 +86,6 @@ public class TestRichNotify extends AbstractRichNotifyTest {
         // set the showCloseButton to <false>
         attributesNotify.set(NotifyAttributes.showCloseButton, false);
         assertTrue(selenium.getStyle(getCloseButton(notify), new CssProperty("visibility")).contains("hidden"), "The showCloseButton is set to <false> and therefore the close button shouldn't be displayed.");
-    }
-
-    @Test
-    public void testAttributeShowHistory() {
-        // check whether the history is not present (showHistory is set to <false>)
-        assertFalse(selenium.isElementPresent(notifyHistory), "The showHistory is set to <false> and there shouldn't be any history menu.");
-        // set the showHistory to <true>
-        attributesNotify.set(NotifyAttributes.showHistory, true);
-        assertTrue(selenium.isElementPresent(notifyHistory), "The showHistory is set to <true> and one notify is present, but there is no history menu.");
-        close(notify);
-        // click on the All button in history menu
-        selenium.click(notifyHistoryAll);
-        waitGui
-            .failWith("After clicking on <All> in history menu there should be all notifies.")
-            .until(elementPresent.locator(notify));
-        close(notify);
-        // click on the Last button in the history menu
-        selenium.click(notifyHistoryLast);
-        waitModel
-            .failWith("After clicking on <Last> in history menu there should be last notify.")
-            .until(elementPresent.locator(notify));
     }
 
     @Test
@@ -178,20 +140,6 @@ public class TestRichNotify extends AbstractRichNotifyTest {
     }
 
     @Test
-    public void testAttributeMessagesDelay() {
-        // set the delay to <1000>
-        attributesMessages.set(NotifyMessagesAttributes.delay, 1000);
-        // check the delay for each message type
-        for(String type : messages.keySet()) {
-            selenium.click(pjq("input[id$=produce" + type + "]"));
-            delay(500);
-            assertFalse(selenium.isElementPresent(messages.get(type)), "The delay is set to 1000 and after some little waiting the " + type + " message shouldn't be present.");
-            delay(1000);
-            assertTrue(selenium.isElementPresent(messages.get(type)), "The delay is set to 1000 and after some waiting the " + type + " message should be present.");
-        }
-    }
-
-    @Test
     public void testAttributeMessagesRendered() {
         // set the rendered to <false>
         attributesMessages.set(NotifyMessagesAttributes.rendered, false);
@@ -229,46 +177,6 @@ public class TestRichNotify extends AbstractRichNotifyTest {
             // FIXME:
             assertFalse(selenium.getStyle(jq(messages.get(type) + " > div.rf-ny-co > div.rf-ny-te"), new CssProperty("display")).contains("none"));
         }
-    }
-
-    @Test
-    public void testAttributeMessagesShowHistory() {
-        // check whether the history isn't present (showHistory is set to <false>)
-        assertFalse(selenium.isElementPresent(notifyHistory), "The showHistory is set to <false> and there shouldn't be any history menu.");
-        // set the showHistory to <true>
-        attributesMessages.set(NotifyMessagesAttributes.showHistory, true);
-        close(notify);
-        // check whether the history isn't displayed (there is no message in the history)
-        assertFalse(selenium.isElementPresent(notifyHistory), "The showHistory is set to <true>, but there is no message, so there shouldn't be any history menu.");
-        // produce messages and close them
-        for(String type : messages.keySet()) {
-            produceMessage(messages.get(type), type, 1);
-            close(messages.get(type));
-        }
-        // click on All button in the history menu
-        selenium.click(notifyHistoryAll);
-        final int expected = messages.size();
-        waitModel
-            .failWith("After clicking on <All> in history menu there should be all messages. Expected <" + expected + ">, found <" + selenium.getCount(notify) + ">")
-            .until(new SeleniumCondition() {
-                @Override
-                public boolean isTrue() {
-                    return selenium.getCount(notify) == expected;
-                }
-            });
-        for(int i=0; i<expected; i++) {
-            close(notify);
-        }
-        // click on Last button in the history menu
-        selenium.click(notifyHistoryLast);
-        waitModel
-            .failWith("After clicking on <Last> in history menu there should be last message. Expected <1>, found <" + selenium.getCount(notify)  + ">")
-            .until(new SeleniumCondition() {
-                @Override
-                public boolean isTrue() {
-                    return selenium.getCount(notify) == 1;
-                }
-            });
     }
 
     @Test

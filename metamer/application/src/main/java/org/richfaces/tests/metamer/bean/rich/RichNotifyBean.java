@@ -30,7 +30,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.richfaces.component.UINotify;
-import org.richfaces.component.UINotifyMessages;
 import org.richfaces.component.UINotifyStack;
 import org.richfaces.component.html.HtmlNotifyMessages;
 import org.richfaces.tests.metamer.Attributes;
@@ -69,11 +68,6 @@ public class RichNotifyBean implements Serializable {
         attributesNotifyStackSecond = Attributes.getComponentAttributesFromFacesConfig(UINotifyStack.class, getClass());
         attributesBean = Attributes.getEmptyAttributes(getClass());
 
-        // faces-config doesn't contain these attributes but they work
-        attributesNotify.setAttribute("showHistory", false);
-        attributesNotify.get("showHistory").setType(Boolean.class);
-        attributesNotify.setAttribute("delay", null);
-
         attributesNotify.setAttribute("detail", DEFAULT_DETAIL);
         attributesNotify.setAttribute("rendered", true);
         attributesNotify.setAttribute("showCloseButton", true);
@@ -81,19 +75,9 @@ public class RichNotifyBean implements Serializable {
         attributesNotify.setAttribute("summary", DEFAULT_SUMMARY);
         attributesNotify.remove("stack");
 
-        // faces-config doesn't contain these attributes but they work
-        attributesNotifyMessages.setAttribute("showHistory", false);
-        attributesNotifyMessages.get("showHistory").setType(Boolean.class);
-        attributesNotifyMessages.setAttribute("delay", null);
-
-        attributesNotifyMessages.setAttribute("animationSpeed", 100);
-        attributesNotifyMessages.setAttribute("appearAnimation", "fade");
-        attributesNotifyMessages.setAttribute("hideAnimation", "show");
         attributesNotifyMessages.setAttribute("showCloseButton", true);
         attributesNotifyMessages.setAttribute("stayTime", 100000);
         attributesNotifyMessages.remove("stack");
-
-        attributesNotifyMessages.setAttribute("interval", 800);
         attributesNotifyMessages.setAttribute("showSummary", true);
         attributesNotifyMessages.setAttribute("rendered", true);
         attributesNotifyMessages.remove("for");
