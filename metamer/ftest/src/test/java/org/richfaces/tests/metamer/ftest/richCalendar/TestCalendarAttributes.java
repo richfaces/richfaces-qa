@@ -31,7 +31,6 @@ import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-import com.google.common.collect.Iterables;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,9 +38,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.faces.event.PhaseId;
+
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
@@ -409,7 +408,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Test
     public void testDisabled() {
         calendarAttributes.set(CalendarAttributes.disabled, Boolean.TRUE);
-        assertTrue(Graphene.attribute(calendar.getInput(), "disabled").valueEquals("true").apply(driver));
+        assertEquals(calendar.getInput().getAttribute("disabled"), "true");
 
         //Popup should not be displayed
         int catched = 0;
@@ -428,7 +427,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testEnableManualInput() {
-        assertTrue(Graphene.attribute(calendar.getInput(), "readonly").valueEquals("true").apply(driver));
+        assertEquals(calendar.getInput().getAttribute("readonly"), "true");
 
         calendarAttributes.set(CalendarAttributes.enableManualInput, Boolean.TRUE);
         assertTrue(Graphene.attribute(calendar.getInput(), "readonly").not().isPresent().apply(driver), "Readonly attribute of input should not be defined.");
@@ -493,7 +492,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Test
     public void testInputSize() {
         calendarAttributes.set(CalendarAttributes.inputSize, "30");
-        assertTrue(Graphene.attribute(calendar.getInput(), "size").valueEquals("30").apply(driver), "Size attribute of input should be defined.");
+        assertEquals(calendar.getInput().getAttribute("size"), "30", "Size attribute of input should be defined.");
     }
 
     @Test
