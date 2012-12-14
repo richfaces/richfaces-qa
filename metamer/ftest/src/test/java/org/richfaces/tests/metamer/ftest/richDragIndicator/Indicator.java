@@ -42,6 +42,7 @@ public class Indicator extends AbstractModel<JQueryLocator> {
     private String acceptClass;
     private String rejectClass;
     private String draggingClass;
+    private JQueryLocator activeIndicator = new JQueryLocator("body > div.rf-ind");
 
     public Indicator(String name, JQueryLocator root) {
         super(name, root);
@@ -64,10 +65,10 @@ public class Indicator extends AbstractModel<JQueryLocator> {
     }
 
     public boolean isVisible() {
-        if (selenium.isElementPresent(this)) {
-            return selenium.isVisible(this);
+        if (defaultIndicator) {
+            return selenium.isElementPresent(this) && selenium.isVisible(this);
         } else {
-            return false;
+            return selenium.isElementPresent(activeIndicator) && selenium.isVisible(activeIndicator);
         }
     }
 
@@ -79,18 +80,15 @@ public class Indicator extends AbstractModel<JQueryLocator> {
     }
 
     public boolean isAccepting() {
-        return isVisible() && selenium.belongsClass(this, "rf-ind-acpt");
+        return selenium.belongsClass(activeIndicator, "rf-ind-acpt");
     }
 
     public boolean isDragging() {
-        if (defaultIndicator) {
-            return isVisible();
-        }
-        return isVisible() && selenium.belongsClass(this, "rf-ind-drag");
+        return selenium.belongsClass(activeIndicator, "rf-ind-drag");
     }
 
     public boolean isRejecting() {
-        return isVisible() && selenium.belongsClass(this, "rf-ind-rejt");
+        return selenium.belongsClass(activeIndicator, "rf-ind-rejt");
     }
 
     public void verifyState(IndicatorState state) {
@@ -100,27 +98,27 @@ public class Indicator extends AbstractModel<JQueryLocator> {
                 break;
             case DRAGGING:
                 assertTrue(isVisible());
-                assertTrue(isDragging());
-                assertFalse(isAccepting());
-                assertFalse(isRejecting());
+                assertTrue(defaultIndicator ? true : isDragging());
+                assertFalse(defaultIndicator ? false : isAccepting());
+                assertFalse(defaultIndicator ? false : isRejecting());
                 verifyCustomClass(draggingClass, true);
                 verifyCustomClass(acceptClass, false);
                 verifyCustomClass(rejectClass, false);
                 break;
             case ACCEPTING:
                 assertTrue(isVisible());
-                assertTrue(isDragging());
-                assertTrue(isAccepting());
-                assertFalse(isRejecting());
+                assertTrue(defaultIndicator ? true : isDragging());
+                assertTrue(defaultIndicator ? true : isAccepting());
+                assertFalse(defaultIndicator ? false : isRejecting());
                 verifyCustomClass(draggingClass, true);
                 verifyCustomClass(acceptClass, true);
                 verifyCustomClass(rejectClass, false);
                 break;
             case REJECTING:
                 assertTrue(isVisible());
-                assertTrue(isDragging());
-                assertFalse(isAccepting());
-                assertTrue(isRejecting());
+                assertTrue(defaultIndicator ? true : isDragging());
+                assertFalse(defaultIndicator ? false : isAccepting());
+                assertTrue(defaultIndicator ? true : isRejecting());
                 verifyCustomClass(draggingClass, true);
                 verifyCustomClass(acceptClass, false);
                 verifyCustomClass(rejectClass, true);
