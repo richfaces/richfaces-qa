@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"  xmlns:xi="http://www.w3.org/2001/XInclude"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+    <application>
+
+        <!-- due to still unresolved problem with following Initializers (permissions on JBAS 7.1.2) excluded.
+             To get push component example working, set topics manually
+        <system-event-listener>
+            <system-event-listener-class>org.richfaces.demo.push.JMSInitializer</system-event-listener-class>
+            <system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.richfaces.demo.push.TopicsInitializer</system-event-listener-class>
+            <system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.richfaces.demo.push.JMSMessageProducerInitializer</system-event-listener-class>
+            <system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
+        </system-event-listener>
+        <system-event-listener>
+            <system-event-listener-class>org.richfaces.demo.push.TopicsContextMessageProducerInitializer</system-event-listener-class>
+            <system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
+        </system-event-listener-->
+
+        <message-bundle>CustomErrorMessages</message-bundle>
+        <message-bundle>DefaultErrorMessages</message-bundle>
+        
+    </application>
+    
+    <lifecycle>
+        <phase-listener>org.richfaces.tests.metamer.RichPhaseListener</phase-listener>
+        <phase-listener>org.richfaces.tests.metamer.ResponseDelayListener</phase-listener>
+    </lifecycle>
+
+</faces-config>
