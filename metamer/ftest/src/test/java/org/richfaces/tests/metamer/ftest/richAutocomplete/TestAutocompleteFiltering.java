@@ -46,7 +46,7 @@ public class TestAutocompleteFiltering extends AbstractAutocompleteTest {
 
     private static final String CLIENT_FILTER_FUNCTION_NAME = "customClientFilterFunction";
 
-    @FindBy(id="form:autocomplete")
+    @FindBy(css = "span[id$=autocomplete]")
     private RichFacesAutocomplete<String> autocomplete;
 
     @Override
@@ -70,12 +70,13 @@ public class TestAutocompleteFiltering extends AbstractAutocompleteTest {
         Assert.assertNotNull(found, "Suggestions aren't available.");
         Set<Suggestion<String>> suggestions = new HashSet<Suggestion<String>>(found);
 
-        String[] expected = new String[] {"Springfield of Illinois", "Raleigh of North Carolina", "Bismarck of North Dakota"};
+        String[] expected = new String[] { "Springfield of Illinois", "Raleigh of North Carolina",
+            "Bismarck of North Dakota" };
 
-        for (String text: expected) {
-            assertTrue(suggestions.contains(new SuggestionImpl<String>(text)), "Suggestions should contain '"+text+"', found " + suggestions + ".");
+        for (String text : expected) {
+            assertTrue(suggestions.contains(new SuggestionImpl<String>(text)), "Suggestions should contain '" + text
+                + "', found " + suggestions + ".");
         }
     }
-
 
 }
