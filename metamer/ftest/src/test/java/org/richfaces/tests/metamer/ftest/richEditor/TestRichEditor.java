@@ -180,12 +180,12 @@ public class TestRichEditor extends AbstractGrapheneTest {
 
         String readOnlyAttrVal = selenium.getAttribute(
             editorTextArea.getAttribute(new Attribute("readonly")));
-        assertTrue("true".equals(readOnlyAttrVal));
+        assertEquals(readOnlyAttrVal, "readonly");
 
         selenium.selectFrame(frameLocator);
         String contentEditableVal = selenium.getAttribute(
             editorArea.getAttribute(new Attribute("contenteditable")));
-        assertTrue("false".equals(contentEditableVal));
+        assertEquals(contentEditableVal, "false");
 
         selenium.selectFrame(FrameRelativeLocator.TOP);
     }
