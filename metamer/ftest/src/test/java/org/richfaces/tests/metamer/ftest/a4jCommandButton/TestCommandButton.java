@@ -31,7 +31,6 @@ import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.test.selenium.support.ui.ElementNotPresent;
 import org.openqa.selenium.JavascriptExecutor;
@@ -172,7 +171,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     @Test
     public void testImmediate() {
         commandButtonAttributes.set(CommandButtonAttributes.immediate, true);
-        Graphene.guardXhr(page.button).click();
+        MetamerPage.waitRequest(page.button, WaitRequestType.XHR).click();
         page.verifyOutput1Text("");
         page.verifyOutput2Text("");
         page.verifyOutput3Text("");
