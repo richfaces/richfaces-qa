@@ -187,7 +187,7 @@ public class TestRichSlider extends AbstractSliderTest {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.disabled, Boolean.TRUE);
 
         AttributeLocator<?> disabledAttribute = input.getAttribute(new Attribute("disabled"));
-        assertEquals(selenium.getAttribute(disabledAttribute), "true", "Input should be disabled.");
+        assertEquals(selenium.getAttribute(disabledAttribute), "disabled", "Input should be disabled.");
 
         assertFalse(selenium.isElementPresent(handle), "Handle should not be present on the page.");
 
@@ -201,7 +201,7 @@ public class TestRichSlider extends AbstractSliderTest {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.enableManualInput, Boolean.FALSE);
 
         AttributeLocator<?> readonlyAttribute = input.getAttribute(new Attribute("readonly"));
-        assertEquals(selenium.getAttribute(readonlyAttribute), "true", "Input should be read-only.");
+        assertEquals(selenium.getAttribute(readonlyAttribute), "readonly", "Input should be read-only.");
 
         testClick();
     }
