@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import org.richfaces.tests.metamer.ftest.abstractions.StringInputComponentCSVTest;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 /**
@@ -35,12 +36,14 @@ public class TestAutocompleteCSV extends StringInputComponentCSVTest {
         return "richAutocomplete";
     }
 
-    @Test
+    @Test(groups = "4.Future")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12669")
     public void testAllInputsWrong() {
         verifyAllInputs();
     }
 
-    @Test
+    @Test(groups = "4.Future")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12669")
     public void testCustomString() {
         verifyCustomString();
     }
