@@ -38,11 +38,12 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+
 import javax.faces.event.PhaseId;
+
 import org.jboss.arquillian.ajocado.css.CssProperty;
 import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.javascript.KeyCode;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
@@ -182,7 +183,7 @@ public class TestRichSelect extends AbstractGrapheneTest {
         assertTrue(selenium.belongsClass(button, "rf-sel-btn-dis"), "Button should contain class rf-sel-btn-dis.");
         AttributeLocator<?> disabledAttr = input.getAttribute(new Attribute("disabled"));
         assertTrue(selenium.isAttributePresent(disabledAttr), "Input should be disabled.");
-        assertEquals(selenium.getAttribute(disabledAttr), "true", "Input should be disabled.");
+        assertEquals(selenium.getAttribute(disabledAttr), "disabled", "Input should be disabled.");
     }
 
     @Test
@@ -191,7 +192,7 @@ public class TestRichSelect extends AbstractGrapheneTest {
         selectAttributes.set(SelectAttributes.enableManualInput, Boolean.FALSE);
 
         AttributeLocator<?> readonlyAttr = input.getAttribute(new Attribute("readonly"));
-        assertEquals(selenium.getAttribute(readonlyAttr), "true", "Input should be read-only");
+        assertEquals(selenium.getAttribute(readonlyAttr), "readonly", "Input should be read-only");
 
         selenium.mouseDown(button);
         assertTrue(selenium.isVisible(popup), "Popup should be displayed.");

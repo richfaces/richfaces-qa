@@ -252,6 +252,7 @@ public class TestRichSlider extends AbstractSliderTest {
 
         selenium.mouseDown(right);
         assertTrue(selenium.belongsClass(right, value), "increaseSelectedClass does not work");
+        selenium.mouseUp(right);
     }
 
     @Test
