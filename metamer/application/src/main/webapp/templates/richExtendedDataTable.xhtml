@@ -34,14 +34,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 Rich Extended Data Table
             </f:facet>
 
-            <h:column id="col1">
+            <rich:column id="col1">
                 <f:facet name="header">
                     Column 1
                 </f:facet>
                 #{containerRichExtendedDataTableItem}
-            </h:column>
+            </rich:column>
 
-            <h:column id="col2">
+            <rich:column id="col2">
                 <f:facet name="header">
                     Column 2
                 </f:facet>
@@ -49,7 +49,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <ui:decorate template="#{templateBean.nextTemplate}.xhtml" />
                 </h:panelGroup>
                 <h:outputText value="#{containerRichExtendedDataTableItem}" rendered="#{containerRichExtendedDataTableItem != 'row 3'}" />
-            </h:column>
+            </rich:column>
 
         </rich:extendedDataTable>
 
