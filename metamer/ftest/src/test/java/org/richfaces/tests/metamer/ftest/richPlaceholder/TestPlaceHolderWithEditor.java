@@ -166,7 +166,7 @@ public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
     }
 
     @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12625")
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-12624", "https://issues.jboss.org/browse/RF-12625" })
     @Override
     public void testAjaxSubmit() {
         super.testAjaxSubmit();
@@ -208,7 +208,7 @@ public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
     }
 
     @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12621")
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-12621", "https://issues.jboss.org/browse/RF-12624" })
     @Override
     public void testSelectorEmpty() {
         super.testSelectorEmpty();

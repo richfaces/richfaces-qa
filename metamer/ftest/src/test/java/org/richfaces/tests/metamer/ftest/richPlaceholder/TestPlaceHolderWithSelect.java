@@ -25,7 +25,6 @@ import java.awt.Color;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
@@ -99,9 +98,8 @@ public class TestPlaceHolderWithSelect extends AbstractPlaceholderJSFTest {
         super.testHTTPSubmit();
     }
 
-    @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12650")
-    @RegressionTest("https://issues.jboss.org/browse/RF-12623")
+    @Test
+    @RegressionTest({"https://issues.jboss.org/browse/RF-12623", "https://issues.jboss.org/browse/RF-12650"})
     @Override
     public void testRendered() {
         super.testRendered();

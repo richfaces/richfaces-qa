@@ -21,7 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richPlaceholder;
 
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 /**
@@ -43,8 +43,8 @@ public class TestPlaceholderWithTextarea extends AbstractPlaceholderNonJSFTest {
         super.testDeleteTextFromInputWithPlaceholder();
     }
 
-    @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12650")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12650")
     public void testRendered() {
         super.testRendered();
     }
