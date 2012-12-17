@@ -38,6 +38,7 @@ import java.util.Vector;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.request.RequestType;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -111,6 +112,7 @@ public class TestMatrix extends AbstractGrapheneTest {
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12512")
     public void testClear() {
         coordinate = new Coordinate(columns, 1);
         coordinate.change(5);
