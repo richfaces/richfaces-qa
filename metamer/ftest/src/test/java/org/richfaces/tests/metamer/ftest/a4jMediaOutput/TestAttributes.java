@@ -91,7 +91,7 @@ public class TestAttributes extends AbstractMediaOutputTest {
         mediaOutputAttributes.set(MediaOutputAttributes.ismap, true);
 
         assertTrue(selenium.isAttributePresent(attr), "Attribute ismap should be present.");
-        assertEquals(selenium.getAttribute(attr), "true", "Attribute dir");
+        assertEquals(selenium.getAttribute(attr), "ismap", "Attribute ismap");
     }
 
     @Test
