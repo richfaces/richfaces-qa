@@ -32,7 +32,6 @@ import java.util.List;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -50,17 +49,14 @@ import org.openqa.selenium.support.pagefactory.FieldDecorator;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 
-public abstract class AbstractWebDriverTest<P extends MetamerPage> extends AbstractMetamerTest {
+public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     @Drone
     protected WebDriver driver;
-    @Page
-    protected P page;
     protected static final int WAIT_TIME = 5;// s
     private static final int NUMBER_OF_TRIES = 5;
     protected static final int MINOR_WAIT_TIME = 50;// ms
@@ -435,20 +431,6 @@ public abstract class AbstractWebDriverTest<P extends MetamerPage> extends Abstr
     }
 
     /**
-     * Do a full page refresh (regular HTTP request) by triggering a command with no action bound.
-     */
-    public void fullPageRefresh() {
-        MetamerPage.waitRequest(page.fullPageRefreshIcon, WaitRequestType.HTTP).click();
-    }
-
-    /**
-     * Rerender all content of the page (AJAX request) by trigerring a command with no action but render bound.
-     */
-    public void rerenderAll() {
-        MetamerPage.waitRequest(page.rerenderAllIcon, WaitRequestType.XHR).click();
-    }
-
-    /**
      * Tries to check and wait for correct size (@size) of list. Depends on list
      * of WebElements decorated with StaleReferenceAwareFieldDecorator.
      *
@@ -511,6 +493,13 @@ public abstract class AbstractWebDriverTest<P extends MetamerPage> extends Abstr
      */
     public abstract class ReloadTester<T> {
 
+        private MetamerPage page;
+
+        public ReloadTester(MetamerPage page) {
+            super();
+            this.page = page;
+        }
+
         public abstract void doRequest(T inputValue);
 
         public abstract void verifyResponse(T inputValue);
@@ -521,7 +510,7 @@ public abstract class AbstractWebDriverTest<P extends MetamerPage> extends Abstr
             for (T inputValue : getInputValues()) {
                 doRequest(inputValue);
                 verifyResponse(inputValue);
-                rerenderAll();
+                page.rerenderAll();
                 verifyResponse(inputValue);
             }
         }
@@ -530,7 +519,7 @@ public abstract class AbstractWebDriverTest<P extends MetamerPage> extends Abstr
             for (T inputValue : getInputValues()) {
                 doRequest(inputValue);
                 verifyResponse(inputValue);
-                fullPageRefresh();
+                page.fullPageRefresh();
                 verifyResponse(inputValue);
             }
         }

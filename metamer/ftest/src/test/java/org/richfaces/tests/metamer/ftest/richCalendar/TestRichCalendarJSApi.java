@@ -22,11 +22,9 @@
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.calendarAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
-import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 import org.jboss.arquillian.graphene.Graphene;
@@ -46,7 +44,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichCalendarJSApi extends AbstractCalendarTest<MetamerPage> {
+public class TestRichCalendarJSApi extends AbstractCalendarTest {
 
     @FindBy(css = "[id$=value]")
     private WebElement gettersValue;
@@ -136,7 +134,7 @@ public class TestRichCalendarJSApi extends AbstractCalendarTest<MetamerPage> {
 
     @Test
     public void testSetValue() {
-        //setValue sets the date to 10 Oct of 2012
+        // setValue sets the date to 10 Oct of 2012
         MetamerPage.waitRequest(setValue, MetamerPage.WaitRequestType.NONE).click();
         CalendarDay selectedDay = calendar.openPopup().getDayPicker().getSelectedDay();
         assertNotNull(selectedDay);
@@ -147,18 +145,20 @@ public class TestRichCalendarJSApi extends AbstractCalendarTest<MetamerPage> {
     public void testShowAndHideDateEditor() {
         YearAndMonthEditor yearAndMonthEditor = calendar.getPopup().getHeaderControls().getYearAndMonthEditor();
         executeJSFromElement(showDateEditor);
-        assertTrue(Graphene.waitGui().until(yearAndMonthEditor.isVisibleCondition()).booleanValue());
+        Graphene.waitGui().withMessage("year and month editor should be visible")
+            .until(yearAndMonthEditor.isVisibleCondition());
         executeJSFromElement(hideDateEditor);
-        assertTrue(Graphene.waitGui().until(yearAndMonthEditor.isNotVisibleCondition()).booleanValue());
+        Graphene.waitGui().withMessage("year and month editor should not be visible")
+            .until(yearAndMonthEditor.isNotVisibleCondition());
     }
 
     @Test
     public void testShowAndHidePopup() {
         CalendarPopup popup = calendar.getPopup();
         executeJSFromElement(showPopup);
-        assertTrue(Graphene.waitGui().until(popup.isVisibleCondition()).booleanValue());
+        Graphene.waitGui().withMessage("popup should be visible").until(popup.isVisibleCondition());
         executeJSFromElement(hidePopup);
-        assertTrue(Graphene.waitGui().until(popup.isNotVisibleCondition()).booleanValue());
+        Graphene.waitGui().withMessage("popup should not be visible").until(popup.isNotVisibleCondition());
     }
 
     @Test
@@ -166,9 +166,9 @@ public class TestRichCalendarJSApi extends AbstractCalendarTest<MetamerPage> {
         calendar.setDateTime(todayMidday.plusMonths(1));
         TimeEditor timeEditor = calendar.getPopup().getFooterControls().getTimeEditor();
         executeJSFromElement(showTimeEditor);
-        assertTrue(Graphene.waitGui().until(timeEditor.isVisibleCondition()).booleanValue());
+        Graphene.waitGui().withMessage("time editor should be visible").until(timeEditor.isVisibleCondition());
         executeJSFromElement(hideTimeEditor);
-        assertTrue(Graphene.waitGui().until(timeEditor.isNotVisibleCondition()).booleanValue());
+        Graphene.waitGui().withMessage("time editor should not be visible").until(timeEditor.isNotVisibleCondition());
     }
 
     @Test
@@ -186,11 +186,11 @@ public class TestRichCalendarJSApi extends AbstractCalendarTest<MetamerPage> {
     public void testSwitchPopup() {
         CalendarPopup popup = calendar.getPopup();
         executeJSFromElement(switchPopup);
-        assertTrue(Graphene.waitGui().until(popup.isVisibleCondition()).booleanValue());
+        Graphene.waitGui().withMessage("popup should be visible").until(popup.isVisibleCondition());
         executeJSFromElement(switchPopup);
-        assertTrue(Graphene.waitGui().until(popup.isNotVisibleCondition()).booleanValue());
+        Graphene.waitGui().withMessage("popup should not be visible").until(popup.isNotVisibleCondition());
         executeJSFromElement(switchPopup);
-        assertTrue(Graphene.waitGui().until(popup.isVisibleCondition()).booleanValue());
+        Graphene.waitGui().withMessage("popup should be visible").until(popup.isVisibleCondition());
     }
 
     @Test
@@ -203,13 +203,14 @@ public class TestRichCalendarJSApi extends AbstractCalendarTest<MetamerPage> {
 
     /**
      * Executes script, which is saved in attribute "onclick" or "onmouseover" of chosen element
-     * @param element chosen element
+     *
+     * @param element
+     *            chosen element
      * @return
      */
     private Object executeJSFromElement(WebElement element) {
-        return executeJS(element.getAttribute("onclick") != null
-                ? element.getAttribute("onclick")
-                : element.getAttribute("onmouseover"));
+        return executeJS(element.getAttribute("onclick") != null ? element.getAttribute("onclick") : element
+            .getAttribute("onmouseover"));
     }
 
     private String getGettersValue() {
@@ -218,6 +219,7 @@ public class TestRichCalendarJSApi extends AbstractCalendarTest<MetamerPage> {
     }
 
     private void setTodaysDate() {
-        MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), MetamerPage.WaitRequestType.XHR).setTodaysDate();
+        MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), MetamerPage.WaitRequestType.XHR)
+            .setTodaysDate();
     }
 }

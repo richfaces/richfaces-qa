@@ -1,6 +1,6 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richEditor;
 
 import static java.text.MessageFormat.format;
@@ -27,20 +27,25 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.editorAt
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import com.google.common.base.Predicate;
 import java.net.URL;
-import org.jboss.test.selenium.support.ui.TextContains;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
+
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
+import com.google.common.base.Predicate;
+
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichEditorWithTyping extends AbstractWebDriverTest<EditorSimplePage> {
+public class TestRichEditorWithTyping extends AbstractWebDriverTest {
+
+    @Page
+    private EditorSimplePage page;
 
     private String phaseListenerLogFormat = "*3 value changed: <p> {0}</p> -> <p> {1}</p>";
 
@@ -69,8 +74,7 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest<EditorSimple
     public void testTypeAndSubmit() throws InterruptedException {
         typeTextToEditor("SOMETHING");
         page.hButton.submit();
-        new WebDriverWait(driver, WAIT_TIME).until(TextContains.getInstance().
-                element(page.output).text("SOMETHING"));
+        Graphene.waitModel().until(Graphene.element(page.output).textContains("SOMETHING"));
     }
 
     @Test
@@ -96,16 +100,15 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest<EditorSimple
     }
 
     /**
-     * Method for retrieve text from editor. Editor lives within iFrame, so
-     * there are need some additional steps to reach element containing editor
-     * text
+     * Method for retrieve text from editor. Editor lives within iFrame, so there are need some additional steps to
+     * reach element containing editor text
      *
      * @return
      */
     private String getTextFromEditor() {
         try {
-//            driver.switchTo().frame(page.editorFrame);
-            driver.switchTo().frame(0);//must be this way
+            // driver.switchTo().frame(page.editorFrame);
+            driver.switchTo().frame(0);// must be this way
             WebElement activeArea = driver.findElement(By.tagName("body"));
             return activeArea.getText();
         } finally {
@@ -114,18 +117,16 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest<EditorSimple
     }
 
     /**
-     * Since editor component lives within iFrame element, additional steps are
-     * required
+     * Since editor component lives within iFrame element, additional steps are required
      *
-     * This method selects appropriate iframe, do action, and return focus to
-     * PARENT frame
+     * This method selects appropriate iframe, do action, and return focus to PARENT frame
      *
      * @param text
      */
     private void typeTextToEditor(String text) {
         try {
-//            driver.switchTo().frame(page.editorFrame);
-            driver.switchTo().frame(0);//must be this way
+            // driver.switchTo().frame(page.editorFrame);
+            driver.switchTo().frame(0);// must be this way
             WebElement activeArea = driver.findElement(By.tagName("body"));
             activeArea.click();
             activeArea.sendKeys(text);
@@ -135,9 +136,8 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest<EditorSimple
     }
 
     /**
-     * Provide common steps needed to verify valueChangeListener. Accepts
-     * JQueryLocator for submit button - provide ability to verify JSF submit as
-     * well as Ajax submit.
+     * Provide common steps needed to verify valueChangeListener. Accepts JQueryLocator for submit button - provide
+     * ability to verify JSF submit as well as Ajax submit.
      *
      * @param submitBtn
      */
@@ -146,16 +146,16 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest<EditorSimple
         typeTextToEditor("text1");
         // and submit typed text
         submitBtn.submit();
-        new WebDriverWait(driver, WAIT_TIME).until(TextContains.getInstance().
-                element(page.output).text("text1"));
+        Graphene.waitModel().until(Graphene.element(page.output).textContains("text1"));
         typeTextToEditor("text2");
         // and submit typed text
         submitBtn.submit();
-        new WebDriverWait(driver, WAIT_TIME).until(new Predicate<WebDriver>() {
+        Graphene.waitModel().until(new Predicate<WebDriver>() {
 
             @Override
             public boolean apply(WebDriver webDriver) {
-                return listener.getText().contains(format(phaseListenerLogFormat, "text1", "text1text2")) || listener.getText().contains(format(phaseListenerLogFormat, "text1", "text2text1"));
+                return listener.getText().contains(format(phaseListenerLogFormat, "text1", "text1text2"))
+                    || listener.getText().contains(format(phaseListenerLogFormat, "text1", "text2text1"));
             }
         });
     }

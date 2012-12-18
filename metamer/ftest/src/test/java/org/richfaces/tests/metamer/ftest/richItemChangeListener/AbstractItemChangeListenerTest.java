@@ -22,9 +22,11 @@
 package org.richfaces.tests.metamer.ftest.richItemChangeListener;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+import javax.faces.event.PhaseId;
+
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -32,8 +34,10 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-// FIXME AbstractItemChangeListenerTest should not be generic (Graphene bug)
-public abstract class AbstractItemChangeListenerTest<P extends ICLPage> extends AbstractWebDriverTest<P> {
+public abstract class AbstractItemChangeListenerTest<P extends ICLPage> extends AbstractWebDriverTest {
+
+    @Page
+    protected P page;
 
     private final String testedComponent;
 
@@ -46,42 +50,24 @@ public abstract class AbstractItemChangeListenerTest<P extends ICLPage> extends 
         return buildUrl(contextPath, "faces/components/richItemChangeListener/" + testedComponent + ".xhtml");
     }
 
-    /**
-     * Gets list of WebElements and check if some of them has same text as
-     * expected in attribute @expectedText.
-     *
-     * @param expectedText value of the text to be find
-     * @return true if text was found or false
-     */
-    private boolean subTest(String expectedText) {
-        return page.checkPhasesContainAllOf(expectedText);
-    }
-
-    private void testICL(final String expectedText, String failMessage) {
+    private void testICL(final String expectedText) {
         MetamerPage.waitRequest(page.getInactivePanel(), WaitRequestType.XHR).click();
-        assertTrue(subTest(expectedText), failMessage);
+        page.assertListener(PhaseId.UPDATE_MODEL_VALUES, expectedText);
     }
 
     public void testICLAsAttributeOfComponent(String expectedMSG) {
-        testICL(expectedMSG,
-                "ItemChangeListener as attribute of component " + testedComponent + " does not work.");
+        testICL(expectedMSG);
     }
 
     public void testICLInComponentWithType(String expectedMSG) {
-        testICL(expectedMSG,
-                "ItemChangeListener set in attribute @type in component "
-                + testedComponent + " does not work.");
+        testICL(expectedMSG);
     }
 
     public void testICLInComponentWithListener(String expectedMSG) {
-        testICL(expectedMSG,
-                "ItemChangeListener set in attribute @listener in component "
-                + testedComponent + " does not work.");
+        testICL(expectedMSG);
     }
 
     public void testICLAsForAttributeWithType(String expectedMSG) {
-        testICL(expectedMSG,
-                "ItemChangeListener set in attribute @type and using attribute @for outside component "
-                + testedComponent + " does not work.");
+        testICL(expectedMSG);
     }
 }

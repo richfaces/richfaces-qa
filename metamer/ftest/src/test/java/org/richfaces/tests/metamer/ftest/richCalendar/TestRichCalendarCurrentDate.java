@@ -37,7 +37,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichCalendarCurrentDate extends AbstractCalendarTest<MetamerPage> {
+public class TestRichCalendarCurrentDate extends AbstractCalendarTest {
 
     private DateTimeFormatter dateTimeFormatter;
 

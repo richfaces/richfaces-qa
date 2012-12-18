@@ -9,7 +9,8 @@ General Public License for more details. You should have received a copy of the 
 software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the
 FSF site: http://www.fsf.org. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -31,7 +32,10 @@ FSF site: http://www.fsf.org. -->
         <arquillian.container.all.jvm.args.withIP>${arquillian.container.all.jvm.args} ${jvm.args.ip}</arquillian.container.all.jvm.args.withIP>
         <!-- following will be set as system properties -->
         <arquillian.container.jbossas.7-1.node0>127.0.0.1</arquillian.container.jbossas.7-1.node0>
-        <arquillian.container.jbossas.7-1.jvm.args>${arquillian.container.all.jvm.args.withIP} -Djboss.bind.address=${arquillian.container.jbossas.7-1.node0} -Djboss.bind.address.management=${arquillian.container.jbossas.7-1.node0} -Djboss.bind.address.unsecure=${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.jvm.args>
+        <arquillian.container.jbossas.7-1.jvm.args>${arquillian.container.all.jvm.args.withIP}
+            -Djboss.bind.address=${arquillian.container.jbossas.7-1.node0}
+            -Djboss.bind.address.management=${arquillian.container.jbossas.7-1.node0}
+            -Djboss.bind.address.unsecure=${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.jvm.args>
 
         <templates>plain</templates>
 
@@ -72,7 +76,7 @@ FSF site: http://www.fsf.org. -->
         </dependency>
         <dependency>
             <groupId>org.richfaces.tests</groupId>
-            <artifactId>page-fragments-impl</artifactId>
+            <artifactId>richfaces-page-fragments</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
@@ -81,7 +85,7 @@ FSF site: http://www.fsf.org. -->
             <groupId>org.jboss.shrinkwrap.resolver</groupId>
             <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
             <scope>test</scope>
-            <version>2.0.0-alpha-1</version>
+            <version>2.0.0-alpha-5</version>
         </dependency>
         <!--         <dependency> -->
         <!--             <groupId>org.jboss.shrinkwrap.descriptors</groupId> -->
@@ -170,7 +174,7 @@ FSF site: http://www.fsf.org. -->
         <dependency>
             <groupId>org.jboss.spec</groupId>
             <artifactId>jboss-javaee-6.0</artifactId>
-            <version>3.0.0.Final</version>
+            <version>3.0.1.Final</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
@@ -181,6 +185,14 @@ FSF site: http://www.fsf.org. -->
             <artifactId>joda-time</artifactId>
             <scope>test</scope>
             <type>jar</type>
+        </dependency>
+        
+        <!-- Selenium 2.26.0 requires httpcore 4.2 but 4.1 comes with Shrinkwrap 2.0.0-alpha-5 -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.2.2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -205,6 +217,8 @@ FSF site: http://www.fsf.org. -->
                         <arquillian.container.jbossas.7-1.node0>${arquillian.container.jbossas.7-1.node0}</arquillian.container.jbossas.7-1.node0>
                         <arquillian.container.jbossas.7-1.jvm.args>${arquillian.container.jbossas.7-1.jvm.args}</arquillian.container.jbossas.7-1.jvm.args>
                         <arquillian.container.all.jvm.args>${arquillian.container.all.jvm.args}</arquillian.container.all.jvm.args>
+                        <version.tomee1-1>${version.tomee1-1}</version.tomee1-1>
+                        <version.tomee1-5>${version.tomee1-5}</version.tomee1-5>
                         <logging.props.dir>${project.basedir}/src/test/resources</logging.props.dir>
                     </systemPropertyVariables>
                 </configuration>

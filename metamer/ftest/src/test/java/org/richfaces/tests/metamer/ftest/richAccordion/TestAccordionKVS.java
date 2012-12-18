@@ -27,6 +27,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.BooleanConditionWrapper;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -38,9 +39,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAccordionKVS extends AbstractWebDriverTest<AccordionPage> {
+public class TestAccordionKVS extends AbstractWebDriverTest {
 
-    AccordionReloadTester reloadTester = new AccordionReloadTester();
+    @Page
+    private AccordionPage page;
 
     @Override
     public URL getTestUrl() {
@@ -49,16 +51,20 @@ public class TestAccordionKVS extends AbstractWebDriverTest<AccordionPage> {
 
     @Test(groups = {"keepVisualStateTesting"})
     public void testRefreshFullPage() {
-        reloadTester.testFullPageRefresh();
+        new AccordionReloadTester().testFullPageRefresh();
     }
 
     @Test(groups = {"keepVisualStateTesting", "4.3"})
     @IssueTracking("https://issues.jboss.org/browse/RF-12035")
     public void testRenderAll() {
-        reloadTester.testRerenderAll();
+        new AccordionReloadTester().testRerenderAll();
     }
 
     private class AccordionReloadTester extends ReloadTester<Integer> {
+
+        public AccordionReloadTester() {
+            super(page);
+        }
 
         @Override
         public void doRequest(Integer accordionIndex) {

@@ -24,8 +24,7 @@ package org.richfaces.tests.metamer.ftest.richMessages;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
-
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
@@ -36,75 +35,21 @@ import org.testng.annotations.Test;
  * Test case for page /faces/components/richMessages/csv.xhtml
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision: 23138 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichMessagesCSV extends RichMessagesTest {
+public class TestRichMessagesCSV extends AbstractRichMessagesTest {
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richMessages/csv.xhtml");
     }
 
-    @Override
-    public JQueryLocator getTestElemLocator() {
-        return mainMsg1;
-    }
-
-    @Override
-    public JQueryLocator getSummaryElemLocator() {
-        return summary;
-    }
-
-    @Override
-    public JQueryLocator getDetailElemLocator() {
-        return detail;
-    }
-
-    // list of called test methods
-    @Test
-    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
-    public void testFor() {
-        super.testFor();
-    }
-
-    @Test(groups = { "4.Future" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-11298")
-    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
-    public void testForInIterationComponents() {
-        super.testFor();
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11415")
-    public void testGlobalOnly() {
-        super.testGlobalOnly();
-    }
-
-    @Test
+    /**
+     * This test is not needed = the validation is performed on client side
+     */
+    @Test(enabled=false)
     public void testAjaxRendered() {
         super.testAjaxRendered();
-    }
-
-    @Test
-    public void testRendered() {
-        super.testRendered();
-    }
-
-    @Test
-    public void testShowSummary() {
-        super.testShowSummary();
-    }
-
-    @Test
-    public void testShowDetail() {
-        super.testShowDetail();
-    }
-
-    @Test
-    public void testTitle() {
-        super.testTitle();
     }
 
     @Test
@@ -113,18 +58,51 @@ public class TestRichMessagesCSV extends RichMessagesTest {
     }
 
     @Test
+    public void testEscape() {
+        super.testEscape();
+    }
+
+    @Test
+    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
+    public void testFor() {
+        testFor(1);//1 message
+    }
+
+    @Test
+    @IssueTracking("https://issues.jboss.org/browse/RF-11298")
+    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
+        "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
+    public void testForInIterationComponents() {
+        testFor();
+    }
+
+    @Test
+    @Templates(exclude = { "richAccordion", "richCollapsiblePanel" })
+    public void testGlobalOnly() {
+        super.testGlobalOnly(1);//1 message
+    }
+
+    @Test
+    @Templates(value = { "richAccordion", "richCollapsiblePanel" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-11415")
+    public void testGlobalOnlyInAccordionCollapsiblePanel() {
+        testGlobalOnly();
+    }
+
+    @Test
     public void testLang() {
         super.testLang();
     }
 
     @Test
-    public void testStyle() {
-        super.testStyle();
+    public void testMesssagesTypes() {
+        super.testMesssagesTypes();
     }
 
     @Test
-    public void testStyleClass() {
-        super.testStyleClass();
+    public void testNoShowDetailNoShowSummary() {
+        super.testNoShowDetailNoShowSummary();
     }
 
     @Test
@@ -175,5 +153,40 @@ public class TestRichMessagesCSV extends RichMessagesTest {
     @Test
     public void testOnMouseUp() {
         super.testOnMouseUp();
+    }
+
+    @Test
+    public void testRendered() {
+        super.testRendered();
+    }
+
+    @Test
+    public void testShowDetail() {
+        super.testShowDetail();
+    }
+
+    @Test
+    public void testShowSummary() {
+        super.testShowSummary();
+    }
+
+    @Test
+    public void testStyle() {
+        super.testStyle();
+    }
+
+    @Test
+    public void testStyleClass() {
+        super.testStyleClass();
+    }
+
+    @Test
+    public void testTitle() {
+        super.testTitle();
+    }
+
+    @Override
+    protected void waitingForValidationMessages() {
+        Graphene.waitGui().until(messagesWithGlobal.isVisibleCondition());
     }
 }

@@ -31,6 +31,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.page.fragments.impl.autocomplete.AutocompleteComponentImpl;
@@ -41,7 +42,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest<SimplePage> {
+public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
+
+    @Page
+    private SimplePage page;
 
     private static final String PHASE_LISTENER_LOG_FORMAT = "*1 value changed: {0} -> {1}";
 
@@ -70,13 +74,13 @@ public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest<Simp
         autocomplete.type("something");
         page.blur();
 
-        Graphene.waitAjax().withTimeout(4, TimeUnit.SECONDS).until(Graphene.element(page.getOutput()).textEquals("something"));
+        Graphene.waitAjax().withTimeout(4, TimeUnit.SECONDS).until(Graphene.element(page.getOutput()).text().equalTo("something"));
 
         autocomplete.clear(ClearType.BACK_SPACE);
         autocomplete.type("something else");
         page.blur();
         // valueChangeListener output as 4th record
-        Graphene.waitAjax().until(Graphene.element(page.getOutput()).textEquals("something else"));
+        Graphene.waitAjax().until(Graphene.element(page.getOutput()).text().equalTo("something else"));
         assertEquals(page.getPhases().get(3), format(PHASE_LISTENER_LOG_FORMAT, "something", "something else"));
     }
 

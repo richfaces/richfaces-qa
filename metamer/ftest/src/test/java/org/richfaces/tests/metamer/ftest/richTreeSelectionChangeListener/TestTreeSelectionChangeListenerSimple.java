@@ -27,12 +27,12 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestTreeSelectionChangeListenerSimple extends AbstractTreeSelectionChangeListenerTest<TSCLPage> {
+public class TestTreeSelectionChangeListenerSimple extends AbstractTreeSelectionChangeListenerTest {
 
-    private final String TSCL_as_ComponentAttribute_PhaseName = "* selection change listener invoked";
-    private final String TSCL_inComponent_usingListener_PhaseName = "* TreeSelectionChangeListenerBean2";
-    private final String TSCL_inComponent_usingType_PhaseName = "* TreeSelectionChangeListenerBean1";
-    private final String TSCL_outsideComponent_usingType_PhaseName = "* TreeSelectionChangeListenerBean3";
+    private final String TSCL_as_ComponentAttribute_PhaseName = "selection change listener invoked";
+    private final String TSCL_inComponent_usingListener_PhaseName = "TreeSelectionChangeListenerBean2";
+    private final String TSCL_inComponent_usingType_PhaseName = "TreeSelectionChangeListenerBean1";
+    private final String TSCL_outsideComponent_usingType_PhaseName = "TreeSelectionChangeListenerBean3";
 
     public TestTreeSelectionChangeListenerSimple() {
         super("simple");

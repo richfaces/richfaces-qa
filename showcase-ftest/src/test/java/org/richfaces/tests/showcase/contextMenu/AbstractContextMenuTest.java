@@ -21,18 +21,94 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.contextMenu;
 
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import static org.jboss.arquillian.graphene.Graphene.element;
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
+import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import java.util.concurrent.TimeUnit;
+
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class AbstractContextMenuTest extends AbstractGrapheneTest {
+public class AbstractContextMenuTest<P> extends AbstractWebDriverTest<P> {
 
-    protected final int TOLERANCE = 2;
+    public static final double EPSILON = 0.000000001;
 
-    protected JQueryLocator contextMenu = jq(".rf-ctx-lst");
+    public static final double TOLERANCE = 3.0;
+
+    public enum InvocationType {
+        RIGHT_CLICK,
+        LEFT_CLICK
+    }
+
+    protected void checkContextMenuRenderedAtCorrectPosition(WebElement target, WebElement contextMenuPopup,
+        InvocationType type, ExpectedCondition<Boolean> conditionTargetIsFocused) {
+        Actions builder = new Actions(GrapheneContext.getProxy());
+
+        target.click();
+
+        if (conditionTargetIsFocused != null) {
+            Graphene.waitGui(webDriver).withTimeout(2, TimeUnit.SECONDS).until(conditionTargetIsFocused);
+        }
+        waitGui();
+
+        // clicks in the middle of the target
+        switch (type) {
+            case LEFT_CLICK:
+                builder.click(target);
+                break;
+            case RIGHT_CLICK:
+                builder.contextClick(target);
+                break;
+            default:
+                throw new IllegalArgumentException("Wrong type of context menu invocation!");
+        }
+        builder.build().perform();
+
+        Graphene.waitGui().withTimeout(2, TimeUnit.SECONDS).until(element(contextMenuPopup).isVisible());
+
+        Point locationOfTarget = target.getLocation();
+        Point locationOfCtxMenu = contextMenuPopup.getLocation();
+
+        double witdth = getTargetWidth(target);
+        double height = getTargetHeight(target);
+
+        double halfOfDiagonal = Math.sqrt((height * height) + (witdth * witdth)) / 2.0;
+        double distance = getDistance(locationOfTarget, locationOfCtxMenu);
+
+        double result = halfOfDiagonal - distance;
+
+        assertTrue(result >= 0 && result < TOLERANCE,
+            "The context menu was not rendered on the correct position! The difference is: " + result);
+    }
+
+    public double getTargetWidth(WebElement target) {
+        Dimension dimension = target.getSize();
+
+        return dimension.getWidth();
+    }
+
+    public double getTargetHeight(WebElement target) {
+        Dimension dimension = target.getSize();
+
+        return dimension.getHeight();
+    }
+
+    private double getDistance(Point point1, Point point2) {
+        java.awt.Point point3 = new java.awt.Point(point1.getX(), point1.getY());
+        java.awt.Point point4 = new java.awt.Point(point2.getX(), point2.getY());
+
+        return point3.distance(point4);
+    }
+
 }

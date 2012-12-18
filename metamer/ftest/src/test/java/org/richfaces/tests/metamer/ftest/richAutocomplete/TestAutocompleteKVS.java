@@ -27,8 +27,11 @@ import static org.testng.Assert.assertEquals;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.autocomplete.AutocompleteComponentImpl;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
 import org.testng.annotations.BeforeMethod;
@@ -43,12 +46,13 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAutocompleteKVS extends AbstractAutocompleteTest<SimplePage> {
+public class TestAutocompleteKVS extends AbstractAutocompleteTest {
 
-    @FindBy(id="form:autocomplete")
+    @Page
+    private MetamerPage page;
+
+    @FindBy(id = "form:autocomplete")
     private AutocompleteComponentImpl<String> autocomplete;
-
-    private AutocompleteReloadTester reloadTester = new AutocompleteReloadTester();
 
     @BeforeMethod
     public void setParser() {
@@ -65,21 +69,25 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest<SimplePage> {
         return buildUrl(contextPath, "faces/components/richAutocomplete/autocomplete.xhtml");
     }
 
-    @Test(groups = {"keepVisualStateTesting"})
+    @Test(groups = { "keepVisualStateTesting" })
     public void testRefreshFullPage() {
-        reloadTester.testFullPageRefresh();
+        new AutocompleteReloadTester().testFullPageRefresh();
     }
 
-    @Test(groups = {"keepVisualStateTesting"})
+    @Test(groups = { "keepVisualStateTesting" })
     public void testRerenderAll() {
-        reloadTester.testRerenderAll();
+        new AutocompleteReloadTester().testRerenderAll();
     }
 
-    private class AutocompleteReloadTester extends AbstractWebDriverTest<SimplePage>.ReloadTester<String> {
+    private class AutocompleteReloadTester extends AbstractWebDriverTest.ReloadTester<String> {
+
+        public AutocompleteReloadTester() {
+            super(page);
+        }
 
         @Override
         public void doRequest(String inputValue) {
-            autocomplete.type(inputValue);
+            MetamerPage.waitRequest(autocomplete, WaitRequestType.XHR).type(inputValue);
         }
 
         @Override
@@ -89,9 +97,7 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest<SimplePage> {
 
         @Override
         public String[] getInputValues() {
-            return new String[] {"not-in-list-value"};
+            return new String[]{ "not-in-list-value" };
         }
-
     }
-
 }

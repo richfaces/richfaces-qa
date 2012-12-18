@@ -50,231 +50,228 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 		<script type="text/javascript">
         </script>
 
-		<h:form>					
-			<ui:fragment rendered="#{richGraphValidatorBean.attributes['summary'].value==null 
-					|| richGraphValidatorBean.attributes['summary'].value==''}" >
-				<rich:graphValidator id="gv1"
-									 value="#{richGraphValidatorBean}"
-									 groups="#{richGraphValidatorBean.validationGroups}"
-									 type="#{richGraphValidatorBean.attributes['type'].value}"
-									 rendered="#{richGraphValidatorBean.attributes['rendered'].value}" >										
-					<rich:panel id="gv1h" header="Many rich components within rich:graphValidator" style="width:800px">
-						<rich:messages for="gv1" />
-						<rich:messages id="gv1_globalMessages" globalOnly="true" />
-						<h:panelGrid columns="6">
-							<h:outputText for="inplaceSelect" value="Inplace Select" />
-							<rich:inplaceSelect id="inplaceSelect" value="#{richGraphValidatorBean.inplaceSelect}" >
-								<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
-							</rich:inplaceSelect>
-							<rich:message for="inplaceSelect" />
-							
-							<h:outputText for="select" value="Select" />
-							<rich:select id="select" value="#{richGraphValidatorBean.select}" >
-								<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
-							</rich:select>
-							<rich:message for="select" />
-							
-							<h:outputText for="inplaceInput" value="Inplace Input" />
-							<rich:inplaceInput id="inplaceInput" value="#{richGraphValidatorBean.inplaceInput}" />
-							<rich:message for="inplaceInput" />
-							
-							<h:outputText for="inputNumberSlider" value="Input Number Slider" />
-							<rich:inputNumberSlider id="inputNumberSlider" value="#{richGraphValidatorBean.inputNumberSlider}" />
-							<rich:message for="inputNumberSlider" />
-							
-							<h:outputText for="inputNumberSpinner" value="Input Number Spinner" />
-							<rich:inputNumberSpinner id="inputNumberSpinner" value="#{richGraphValidatorBean.inputNumberSpinner}" />
-							<rich:message for="inputNumberSpinner" />
-														
-							<h:outputText for="autocomplete" value="Autocomplete" />
-							<rich:autocomplete id="autocomplete" value="#{richGraphValidatorBean.autocompleteInput}"
-											   autocompleteMethod="#{richGraphValidatorBean.autocomplete}" />
-							<rich:message for="autocomplete" />
-							
-							<h:outputText for="selectBooleanCheckbox" value="Select Boolean Checkbox" />
-							<h:selectBooleanCheckbox id="selectBooleanCheckbox" value="#{richGraphValidatorBean.selectBooleanCheckbox}" />
-							<rich:message for="selectBooleanCheckbox" />
-							
-							<h:outputText for="inputText" value="Input Text" />
-							<h:inputText id="inputText" value="#{richGraphValidatorBean.inputText}" />
-							<rich:message for="inputText" />
-							
-							<h:outputText for="inputSecret" value="Input Secret" />
-							<h:inputSecret id="inputSecret" value="#{richGraphValidatorBean.inputSecret}" />
-							<rich:message for="inputSecret" />
-							
-							<h:outputText for="calendar" value="Calendar" />
-							<rich:calendar id="calendar" value="#{richGraphValidatorBean.calendar}" 
-										   enableManualInput="true" />
-							<rich:message for="calendar" />
-							
-							<h:column/>
-							<h:column/>
-							<h:column/>
-							
-							<h:outputText for="inputTextarea" value="Input Text Area" />
-							<h:inputTextarea id="inputTextarea" value="#{richGraphValidatorBean.inputTextarea}" />
-							<rich:message for="inputTextarea" />
-							
-							<h:outputText for="selectOneListbox" value="Select One Listbox" />
-							<h:selectOneListbox id="selectOneListbox" value="#{richGraphValidatorBean.selectOneListbox}" >
-								<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
-							</h:selectOneListbox>
-							<rich:message for="selectOneListbox" />
-							
-							<h:outputText for="selectManyCheckbox" value="Select Many Checkbox" />
-							<h:selectManyCheckbox id="selectManyCheckbox" 
-                                                  value="#{richGraphValidatorBean.selectManyCheckbox}" >
-                            	<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
-							</h:selectManyCheckbox>
-							<rich:message for="selectManyCheckbox" />
-							
-							<h:outputText for="selectManyListbox" value="Select Many Listbox" />
-							<h:selectManyListbox id="selectManyListbox" value="#{richGraphValidatorBean.selectManyListbox}" >
-								<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
-							</h:selectManyListbox>
-							<rich:message for="selectManyListbox" />
-							
-							<h:outputText for="selectOneMenu" value="Select One Menu" />
-							<h:selectOneMenu id="selectOneMenu" value="#{richGraphValidatorBean.selectOneMenu}" >
-								<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
-							</h:selectOneMenu>
-							<rich:message for="selectOneMenu" />
-							
-							<h:outputText for="selectManyMenu" value="Select Many Menu" />
-							<h:selectManyMenu id="selectManyMenu" value="#{richGraphValidatorBean.selectManyMenu}" >
-								<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
-							</h:selectManyMenu>
-							<rich:message for="selectManyMenu" />
-							
-							<h:outputText for="selectOneRadio" value="Select One Radio" />
-							<h:selectOneRadio id="selectOneRadio" value="#{richGraphValidatorBean.selectOneRadio}" >
-								<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
-							</h:selectOneRadio>
-							<rich:message for="selectOneRadio" />							
-							
-						</h:panelGrid>
-						<a4j:commandButton id="applyChanges"
-                                           value="Apply changes" 
-                                           action="#{richGraphValidatorBean.anotherActionOnAllComponents}" />
-					</rich:panel>
-				</rich:graphValidator>
-			</ui:fragment>
-			
-			<ui:fragment rendered="#{richGraphValidatorBean.attributes['summary'].value!=null 
-									&amp;&amp; richGraphValidatorBean.attributes['summary'].value!=''}" >
-				<rich:graphValidator id="gv2"									 
-									 value="#{richGraphValidatorBean}"
-									 groups="#{richGraphValidatorBean.validationGroups}"
-									 rendered="#{richGraphValidatorBean.attributes['rendered'].value}"
-									 summary="#{richGraphValidatorBean.attributes['summary'].value}"
-									 type="#{richGraphValidatorBean.attributes['type'].value}" >
-					<rich:panel id="gv2h" header="Many rich components within rich:graphValidator" style="width:800px">
-						<rich:messages for="gv2" />
-						<rich:messages id="gv2_globalMessages" globalOnly="true" />
-						<h:panelGrid columns="6">
-							<h:outputText for="gv2_inplaceSelect" value="Inplace Select" />
-							<rich:inplaceSelect id="gv2_inplaceSelect" value="#{richGraphValidatorBean.inplaceSelect}" >
-								<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
-							</rich:inplaceSelect>
-							<rich:message for="gv2_inplaceSelect" />
-							
-							<h:outputText for="gv2_select" value="Select" />
-							<rich:select id="gv2_select" value="#{richGraphValidatorBean.select}" >
-								<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
-							</rich:select>
-							<rich:message for="gv2_select" />
-							
-							<h:outputText for="gv2_inplaceInput" value="Inplace Input" />
-							<rich:inplaceInput id="gv2_inplaceInput" value="#{richGraphValidatorBean.inplaceInput}" />
-							<rich:message for="gv2_inplaceInput" />
-							
-							<h:outputText for="gv2_inputNumberSlider" value="Input Number Slider" />
-							<rich:inputNumberSlider id="gv2_inputNumberSlider" value="#{richGraphValidatorBean.inputNumberSlider}" />
-							<rich:message for="gv2_inputNumberSlider" />
-							
-							<h:outputText for="gv2_inputNumberSpinner" value="Input Number Spinner" />
-							<rich:inputNumberSpinner id="gv2_inputNumberSpinner" value="#{richGraphValidatorBean.inputNumberSpinner}" />
-							<rich:message for="gv2_inputNumberSpinner" />
-														
-							<h:outputText for="gv2_autocomplete" value="Autocomplete" />
-							<rich:autocomplete id="gv2_autocomplete" value="#{richGraphValidatorBean.autocompleteInput}"
-											   autocompleteMethod="#{richGraphValidatorBean.autocomplete}" />
-							<rich:message for="gv2_autocomplete" />
-							
-							<h:outputText for="gv2_selectBooleanCheckbox" value="Select Boolean Checkbox" />
-							<h:selectBooleanCheckbox id="gv2_selectBooleanCheckbox" value="#{richGraphValidatorBean.selectBooleanCheckbox}" />
-							<rich:message for="gv2_selectBooleanCheckbox" />
-							
-							<h:outputText for="gv2_inputText" value="Input Text" />
-							<h:inputText id="gv2_inputText" value="#{richGraphValidatorBean.inputText}" />
-							<rich:message for="gv2_inputText" />
-							
-							<h:outputText for="gv2_inputSecret" value="Input Secret" />
-							<h:inputSecret id="gv2_inputSecret" value="#{richGraphValidatorBean.inputSecret}" />
-							<rich:message for="gv2_inputSecret" />
-							
-							<h:outputText for="gv2_calendar" value="Calendar" />
-							<rich:calendar id="gv2_calendar" value="#{richGraphValidatorBean.calendar}" 
-										   enableManualInput="true" />
-							<rich:message for="gv2_calendar" />
-							
-							<h:column/>
-							<h:column/>
-							<h:column/>
-							
-							<h:outputText for="gv2_inputTextarea" value="Input Text Area" />
-							<h:inputTextarea id="gv2_inputTextarea" value="#{richGraphValidatorBean.inputTextarea}" />
-							<rich:message for="gv2_inputTextarea" />
-							
-							<h:outputText for="gv2_selectOneListbox" value="Select One Listbox" />
-							<h:selectOneListbox id="gv2_selectOneListbox" value="#{richGraphValidatorBean.selectOneListbox}" >
-								<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
-							</h:selectOneListbox>
-							<rich:message for="gv2_selectOneListbox" />
-							
-							<h:outputText for="gv2_selectManyCheckbox" value="Select Many Checkbox" />
-							<h:selectManyCheckbox id="gv2_selectManyCheckbox" 
-                                                  value="#{richGraphValidatorBean.selectManyCheckbox}" >
-                            	<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
-							</h:selectManyCheckbox>
-							<rich:message for="gv2_selectManyCheckbox" />
-							
-							<h:outputText for="gv2_selectManyListbox" value="Select Many Listbox" />
-							<h:selectManyListbox id="gv2_selectManyListbox" value="#{richGraphValidatorBean.selectManyListbox}" >
-								<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
-							</h:selectManyListbox>
-							<rich:message for="gv2_selectManyListbox" />
-							
-							<h:outputText for="gv2_selectOneMenu" value="Select One Menu" />
-							<h:selectOneMenu id="gv2_selectOneMenu" value="#{richGraphValidatorBean.selectOneMenu}" >
-								<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
-							</h:selectOneMenu>
-							<rich:message for="gv2_selectOneMenu" />
-							
-							<h:outputText for="gv2_selectManyMenu" value="Select Many Menu" />
-							<h:selectManyMenu id="gv2_selectManyMenu" value="#{richGraphValidatorBean.selectManyMenu}" >
-								<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
-							</h:selectManyMenu>
-							<rich:message for="gv2_selectManyMenu" />
-							
-							<h:outputText for="gv2_selectOneRadio" value="Select One Radio" />
-							<h:selectOneRadio id="gv2_selectOneRadio" value="#{richGraphValidatorBean.selectOneRadio}" >
-								<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
-							</h:selectOneRadio>
-							<rich:message for="gv2_selectOneRadio" />							
-							
-						</h:panelGrid>
-						<a4j:commandButton id="gv2_applyChanges"
-                                           value="Apply changes" 
-                                           action="#{richGraphValidatorBean.anotherActionOnAllComponents}" />
+		<ui:fragment rendered="#{richGraphValidatorBean.attributes['summary'].value==null 
+				|| richGraphValidatorBean.attributes['summary'].value==''}" >
+			<rich:graphValidator id="gv1"
+								 value="#{richGraphValidatorBean}"
+								 groups="#{richGraphValidatorBean.validationGroups}"
+								 type="#{richGraphValidatorBean.attributes['type'].value}"
+								 rendered="#{richGraphValidatorBean.attributes['rendered'].value}" >										
+				<rich:panel id="gv1h" header="Many rich components within rich:graphValidator" style="width:800px">
+					<rich:messages for="gv1" />
+					<rich:messages id="gv1_globalMessages" globalOnly="true" />
+					<h:panelGrid columns="6">
+						<h:outputText for="inplaceSelect" value="Inplace Select" />
+						<rich:inplaceSelect id="inplaceSelect" value="#{richGraphValidatorBean.inplaceSelect}" >
+							<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
+						</rich:inplaceSelect>
+						<rich:message for="inplaceSelect" />
 						
-					</rich:panel>
-				</rich:graphValidator>
-			</ui:fragment>
+						<h:outputText for="select" value="Select" />
+						<rich:select id="select" value="#{richGraphValidatorBean.select}" >
+							<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
+						</rich:select>
+						<rich:message for="select" />
+						
+						<h:outputText for="inplaceInput" value="Inplace Input" />
+						<rich:inplaceInput id="inplaceInput" value="#{richGraphValidatorBean.inplaceInput}" />
+						<rich:message for="inplaceInput" />
+						
+						<h:outputText for="inputNumberSlider" value="Input Number Slider" />
+						<rich:inputNumberSlider id="inputNumberSlider" value="#{richGraphValidatorBean.inputNumberSlider}" />
+						<rich:message for="inputNumberSlider" />
+						
+						<h:outputText for="inputNumberSpinner" value="Input Number Spinner" />
+						<rich:inputNumberSpinner id="inputNumberSpinner" value="#{richGraphValidatorBean.inputNumberSpinner}" />
+						<rich:message for="inputNumberSpinner" />
+													
+						<h:outputText for="autocomplete" value="Autocomplete" />
+						<rich:autocomplete id="autocomplete" value="#{richGraphValidatorBean.autocompleteInput}"
+										   autocompleteMethod="#{richGraphValidatorBean.autocomplete}" />
+						<rich:message for="autocomplete" />
+						
+						<h:outputText for="selectBooleanCheckbox" value="Select Boolean Checkbox" />
+						<h:selectBooleanCheckbox id="selectBooleanCheckbox" value="#{richGraphValidatorBean.selectBooleanCheckbox}" />
+						<rich:message for="selectBooleanCheckbox" />
+						
+						<h:outputText for="inputText" value="Input Text" />
+						<h:inputText id="inputText" value="#{richGraphValidatorBean.inputText}" />
+						<rich:message for="inputText" />
+						
+						<h:outputText for="inputSecret" value="Input Secret" />
+						<h:inputSecret id="inputSecret" value="#{richGraphValidatorBean.inputSecret}" />
+						<rich:message for="inputSecret" />
+						
+						<h:outputText for="calendar" value="Calendar" />
+						<rich:calendar id="calendar" value="#{richGraphValidatorBean.calendar}" 
+									   enableManualInput="true" />
+						<rich:message for="calendar" />
+						
+						<h:column/>
+						<h:column/>
+						<h:column/>
+						
+						<h:outputText for="inputTextarea" value="Input Text Area" />
+						<h:inputTextarea id="inputTextarea" value="#{richGraphValidatorBean.inputTextarea}" />
+						<rich:message for="inputTextarea" />
+						
+						<h:outputText for="selectOneListbox" value="Select One Listbox" />
+						<h:selectOneListbox id="selectOneListbox" value="#{richGraphValidatorBean.selectOneListbox}" >
+							<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
+						</h:selectOneListbox>
+						<rich:message for="selectOneListbox" />
+						
+						<h:outputText for="selectManyCheckbox" value="Select Many Checkbox" />
+						<h:selectManyCheckbox id="selectManyCheckbox" 
+                                          value="#{richGraphValidatorBean.selectManyCheckbox}" >
+                    	<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
+						</h:selectManyCheckbox>
+						<rich:message for="selectManyCheckbox" />
+						
+						<h:outputText for="selectManyListbox" value="Select Many Listbox" />
+						<h:selectManyListbox id="selectManyListbox" value="#{richGraphValidatorBean.selectManyListbox}" >
+							<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
+						</h:selectManyListbox>
+						<rich:message for="selectManyListbox" />
+						
+						<h:outputText for="selectOneMenu" value="Select One Menu" />
+						<h:selectOneMenu id="selectOneMenu" value="#{richGraphValidatorBean.selectOneMenu}" >
+							<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
+						</h:selectOneMenu>
+						<rich:message for="selectOneMenu" />
+						
+						<h:outputText for="selectManyMenu" value="Select Many Menu" />
+						<h:selectManyMenu id="selectManyMenu" value="#{richGraphValidatorBean.selectManyMenu}" >
+							<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
+						</h:selectManyMenu>
+						<rich:message for="selectManyMenu" />
+						
+						<h:outputText for="selectOneRadio" value="Select One Radio" />
+						<h:selectOneRadio id="selectOneRadio" value="#{richGraphValidatorBean.selectOneRadio}" >
+							<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
+						</h:selectOneRadio>
+						<rich:message for="selectOneRadio" />							
+						
+					</h:panelGrid>
+					<a4j:commandButton id="applyChanges"
+                                   value="Apply changes" 
+                                   action="#{richGraphValidatorBean.anotherActionOnAllComponents}" />
+				</rich:panel>
+			</rich:graphValidator>
+		</ui:fragment>
+		
+		<ui:fragment rendered="#{richGraphValidatorBean.attributes['summary'].value!=null 
+								&amp;&amp; richGraphValidatorBean.attributes['summary'].value!=''}" >
+			<rich:graphValidator id="gv2"									 
+								 value="#{richGraphValidatorBean}"
+								 groups="#{richGraphValidatorBean.validationGroups}"
+								 rendered="#{richGraphValidatorBean.attributes['rendered'].value}"
+								 summary="#{richGraphValidatorBean.attributes['summary'].value}"
+								 type="#{richGraphValidatorBean.attributes['type'].value}" >
+				<rich:panel id="gv2h" header="Many rich components within rich:graphValidator" style="width:800px">
+					<rich:messages for="gv2" />
+					<rich:messages id="gv2_globalMessages" globalOnly="true" />
+					<h:panelGrid columns="6">
+						<h:outputText for="gv2_inplaceSelect" value="Inplace Select" />
+						<rich:inplaceSelect id="gv2_inplaceSelect" value="#{richGraphValidatorBean.inplaceSelect}" >
+							<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
+						</rich:inplaceSelect>
+						<rich:message for="gv2_inplaceSelect" />
+						
+						<h:outputText for="gv2_select" value="Select" />
+						<rich:select id="gv2_select" value="#{richGraphValidatorBean.select}" >
+							<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
+						</rich:select>
+						<rich:message for="gv2_select" />
+						
+						<h:outputText for="gv2_inplaceInput" value="Inplace Input" />
+						<rich:inplaceInput id="gv2_inplaceInput" value="#{richGraphValidatorBean.inplaceInput}" />
+						<rich:message for="gv2_inplaceInput" />
+						
+						<h:outputText for="gv2_inputNumberSlider" value="Input Number Slider" />
+						<rich:inputNumberSlider id="gv2_inputNumberSlider" value="#{richGraphValidatorBean.inputNumberSlider}" />
+						<rich:message for="gv2_inputNumberSlider" />
+						
+						<h:outputText for="gv2_inputNumberSpinner" value="Input Number Spinner" />
+						<rich:inputNumberSpinner id="gv2_inputNumberSpinner" value="#{richGraphValidatorBean.inputNumberSpinner}" />
+						<rich:message for="gv2_inputNumberSpinner" />
+													
+						<h:outputText for="gv2_autocomplete" value="Autocomplete" />
+						<rich:autocomplete id="gv2_autocomplete" value="#{richGraphValidatorBean.autocompleteInput}"
+										   autocompleteMethod="#{richGraphValidatorBean.autocomplete}" />
+						<rich:message for="gv2_autocomplete" />
+						
+						<h:outputText for="gv2_selectBooleanCheckbox" value="Select Boolean Checkbox" />
+						<h:selectBooleanCheckbox id="gv2_selectBooleanCheckbox" value="#{richGraphValidatorBean.selectBooleanCheckbox}" />
+						<rich:message for="gv2_selectBooleanCheckbox" />
+						
+						<h:outputText for="gv2_inputText" value="Input Text" />
+						<h:inputText id="gv2_inputText" value="#{richGraphValidatorBean.inputText}" />
+						<rich:message for="gv2_inputText" />
+						
+						<h:outputText for="gv2_inputSecret" value="Input Secret" />
+						<h:inputSecret id="gv2_inputSecret" value="#{richGraphValidatorBean.inputSecret}" />
+						<rich:message for="gv2_inputSecret" />
+						
+						<h:outputText for="gv2_calendar" value="Calendar" />
+						<rich:calendar id="gv2_calendar" value="#{richGraphValidatorBean.calendar}" 
+									   enableManualInput="true" />
+						<rich:message for="gv2_calendar" />
+						
+						<h:column/>
+						<h:column/>
+						<h:column/>
+						
+						<h:outputText for="gv2_inputTextarea" value="Input Text Area" />
+						<h:inputTextarea id="gv2_inputTextarea" value="#{richGraphValidatorBean.inputTextarea}" />
+						<rich:message for="gv2_inputTextarea" />
+						
+						<h:outputText for="gv2_selectOneListbox" value="Select One Listbox" />
+						<h:selectOneListbox id="gv2_selectOneListbox" value="#{richGraphValidatorBean.selectOneListbox}" >
+							<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
+						</h:selectOneListbox>
+						<rich:message for="gv2_selectOneListbox" />
+						
+						<h:outputText for="gv2_selectManyCheckbox" value="Select Many Checkbox" />
+						<h:selectManyCheckbox id="gv2_selectManyCheckbox" 
+                                          value="#{richGraphValidatorBean.selectManyCheckbox}" >
+                    	<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
+						</h:selectManyCheckbox>
+						<rich:message for="gv2_selectManyCheckbox" />
+						
+						<h:outputText for="gv2_selectManyListbox" value="Select Many Listbox" />
+						<h:selectManyListbox id="gv2_selectManyListbox" value="#{richGraphValidatorBean.selectManyListbox}" >
+							<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
+						</h:selectManyListbox>
+						<rich:message for="gv2_selectManyListbox" />
+						
+						<h:outputText for="gv2_selectOneMenu" value="Select One Menu" />
+						<h:selectOneMenu id="gv2_selectOneMenu" value="#{richGraphValidatorBean.selectOneMenu}" >
+							<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
+						</h:selectOneMenu>
+						<rich:message for="gv2_selectOneMenu" />
+						
+						<h:outputText for="gv2_selectManyMenu" value="Select Many Menu" />
+						<h:selectManyMenu id="gv2_selectManyMenu" value="#{richGraphValidatorBean.selectManyMenu}" >
+							<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
+						</h:selectManyMenu>
+						<rich:message for="gv2_selectManyMenu" />
+						
+						<h:outputText for="gv2_selectOneRadio" value="Select One Radio" />
+						<h:selectOneRadio id="gv2_selectOneRadio" value="#{richGraphValidatorBean.selectOneRadio}" >
+							<f:selectItems value="#{richGraphValidatorBean.selectItems}" />
+						</h:selectOneRadio>
+						<rich:message for="gv2_selectOneRadio" />							
+						
+					</h:panelGrid>
+					<a4j:commandButton id="gv2_applyChanges"
+                                   value="Apply changes" 
+                                   action="#{richGraphValidatorBean.anotherActionOnAllComponents}" />
+					
+				</rich:panel>
+			</rich:graphValidator>
+		</ui:fragment>
 			
-		</h:form>
-
 		<br />
 		<rich:messages id="msgs" value="#{richGraphValidatorBean}" />
 

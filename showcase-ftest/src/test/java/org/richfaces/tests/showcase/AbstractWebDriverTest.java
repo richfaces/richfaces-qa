@@ -23,29 +23,24 @@ package org.richfaces.tests.showcase;
 
 import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeMethod;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc and Juraj Huska</a>
  * @version $Revision$
  */
-public class AbstractWebDriverTest extends AbstractShowcaseTest {
+public class AbstractWebDriverTest<P> extends AbstractShowcaseTest {
 
     @Drone
-    protected FirefoxDriver webDriver;
+    protected WebDriver webDriver;
+
+    @Page
+    protected P page;
 
     @BeforeMethod
     public void loadPage() {
-
-        // workaround for jboss as 7, since it throws error when is looking up
-        // for contextRoot
-
-        // try {
-        // contextRoot = new URL("http://localhost:8080");
-        // } catch (MalformedURLException e) { // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // }
 
         String addition = getAdditionToContextRoot();
 

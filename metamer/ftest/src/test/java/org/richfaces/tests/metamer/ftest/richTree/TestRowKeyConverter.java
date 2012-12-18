@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.List;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,7 +19,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRowKeyConverter extends AbstractWebDriverTest<TestRowKeyConverter.RowKeyConverterPage> {
+public class TestRowKeyConverter extends AbstractWebDriverTest {
+
+    @Page
+    private RowKeyConverterPage page;
 
     @Inject
     @Use(strings = { "rowKeyConverterSwingTreeNode", "rowKeyConverterRichFacesTreeNode", "rowKeyConverterRichFacesTreeDataModel" })

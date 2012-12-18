@@ -22,18 +22,16 @@
 package org.richfaces.tests.metamer.ftest.webdriver;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javax.faces.event.PhaseId;
@@ -42,7 +40,6 @@ import org.apache.commons.lang.ArrayUtils;
 import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
-import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -51,7 +48,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 
 import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
@@ -79,32 +75,15 @@ public class MetamerPage {
     public WebElement fullPageRefreshIcon;
     @FindBy(css = "[id$=reRenderAllImage]")
     public WebElement rerenderAllIcon;
-    protected ElementPresent elementPresent = ElementPresent.getInstance();
     protected WebDriver driver = GrapheneContext.getProxy();
     private String reqTime;
     private Map<PhaseId, Set<String>> map = new LinkedHashMap<PhaseId, Set<String>>();
 
-    public void assertPhasesContainAllOf(String... s) {
-        assertTrue(checkPhasesContainAllOf(s), "Phases {" + getPhases() + "} don't contain some of " + Arrays.asList(s));
-    }
-
-    public void assertPhasesDontContainSomeOf(PhaseId... phase) {
-        assertTrue(checkPhasesDontContainSomeOf(phase),
-            "Phases {" + getPhases() + "} contain some of " + Arrays.asList(phase));
-    }
-
-    public boolean checkPhasesContainAllOf(String... s) {
-        return new PhasesWrapper(getPhases()).containsAllOf(s);
-    }
-
-    public boolean checkPhasesDontContainSomeOf(PhaseId... phase) {
-        return new PhasesWrapper(getPhases()).notContainsSomeOf(phase);
-    }
-
     /**
-     * Tries to execute JavaScript script for few times with some wait time between tries and expecting a predicted
-     * result. Method waits for expected string defined in @expectedValue. Returns single trimmed String with expected
-     * value or what it found or null.
+     * Executes JavaScript script.
+     * Method will execute the script few times until an expected String is returned,
+     * the String is defined in @expectedValue. Returns a single trimmed String with expected
+     * value or what it has found or null.
      *
      * @param expectedValue
      *            expected return value of javaScript
@@ -117,14 +96,13 @@ public class MetamerPage {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         String result = null;
         for (int i = 0; i < TRIES; i++) {
-            Object executeScript = js.executeScript(script, args);
-            if (executeScript != null) {
-                result = ((String) js.executeScript(script, args)).trim();
+            Object executedScriptResult = js.executeScript(script, args);
+            if (executedScriptResult != null) {
+                result = ((String) executedScriptResult).trim();
                 if (result.equals(expectedValue)) {
                     break;
                 }
             }
-            waiting(MINOR_WAIT_TIME);
         }
         return result;
     }
@@ -226,80 +204,6 @@ public class MetamerPage {
     // /////////////////////////////////////
     // Helper classes
     // /////////////////////////////////////
-
-    /**
-     * Wrapper for Metamer's phases list.
-     */
-    protected class PhasesWrapper {
-
-        private final List<String> phases;
-
-        public PhasesWrapper(List<String> phases) {
-            this.phases = phases;
-        }
-
-        /**
-         * Checks if the wrapped phases do not contain some of a PhaseIds (JSF phases).
-         *
-         * @param values
-         *            PhasesIds that phases should not contain
-         * @return false if the wrapped phases contains some PhaseId value
-         */
-        public boolean notContainsSomeOf(PhaseId... values) {
-            if (values == null) {
-                throw new IllegalArgumentException("No Phases specified.");
-            }
-            String[] valuesAsString = new String[values.length];
-            for (int i = 0; i < values.length; i++) {
-                valuesAsString[i] = values[i].toString();
-            }
-            for (String value : valuesAsString) {
-                if (new StringEqualsWrapper(value).isSimilarToSomeOfThis(phases)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        /**
-         * Checks if the wrapped phases do not contain some of a given values.
-         *
-         * @param values
-         *            given values, that the wrapped phases should not contain
-         * @return false if the wrapped phases contains some of given values
-         */
-        public boolean notContainsSomeOf(String... values) {
-            if (values == null) {
-                throw new IllegalArgumentException("No String specified.");
-            }
-            for (String value : values) {
-                if (new StringEqualsWrapper(value).isSimilarToSomeOfThis(phases)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        /**
-         * Checks if phases contains all of given values.
-         *
-         * @param values
-         *            given values, that the wrapped phases should contain
-         * @return true if phases contain all of given values
-         */
-        public boolean containsAllOf(String... values) {
-            if (values == null) {
-                throw new IllegalArgumentException("No String specified.");
-            }
-            for (String value : values) {
-                if (!new StringEqualsWrapper(value).isSimilarToSomeOfThis(phases)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-    }
-
     private static class RequestTimeChangesWaitingInterceptor implements Interceptor {
 
         protected String time1;
@@ -316,7 +220,7 @@ public class MetamerPage {
         }
 
         protected void afterAction() {
-            Graphene.waitModel().until(Graphene.element(REQ_TIME).not().textEquals(time1));
+            Graphene.waitModel().until(Graphene.element(REQ_TIME).not().text().equalTo(time1));
         }
 
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -445,7 +349,7 @@ public class MetamerPage {
     public void assertBypassUpdatesPhasesCycle() {
         initialize();
         assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
-            PhaseId.RENDER_RESPONSE);
+                PhaseId.RENDER_RESPONSE);
     }
 
     public SeleniumCondition getListenerCondition(final PhaseId phaseId, final String message) {
@@ -493,5 +397,19 @@ public class MetamerPage {
             }
         }
         throw new IllegalStateException("no such phase '" + phaseIdentifier + "'");
+    }
+
+    /**
+     * Do a full page refresh (regular HTTP request) by triggering a command with no action bound.
+     */
+    public void fullPageRefresh() {
+        waitRequest(fullPageRefreshIcon, WaitRequestType.HTTP).click();
+    }
+
+    /**
+     * Rerender all content of the page (AJAX request) by trigerring a command with no action but render bound.
+     */
+    public void rerenderAll() {
+        waitRequest(rerenderAllIcon, WaitRequestType.XHR).click();
     }
 }

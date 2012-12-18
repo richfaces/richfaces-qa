@@ -1,24 +1,24 @@
-/**
- *  JBoss, Home of Professional Open Source
- *  Copyright 2012, Red Hat, Inc. and individual contributors
- *  by the @authors tag. See the copyright.txt in the distribution for a
- *  full listing of individual contributors.
+/*******************************************************************************
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- *  This is free software; you can redistribute it and/or modify it
- *  under the terms of the GNU Lesser General Public License as
- *  published by the Free Software Foundation; either version 2.1 of
- *  the License, or (at your option) any later version.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- *  This software is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- *  Lesser General Public License for more details.
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
- *  You should have received a copy of the GNU Lesser General Public
- *  License along with this software; if not, write to the Free
- *  Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- *  02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jCommandButton;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
@@ -32,6 +32,7 @@ import java.net.URL;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.test.selenium.support.ui.ElementNotPresent;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Action;
@@ -50,7 +51,10 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M1
  */
-public class TestA4JCommandButton extends AbstractWebDriverTest<CommandButtonLinkPage> {
+public class TestA4JCommandButton extends AbstractWebDriverTest {
+
+    @Page
+    private CommandButtonLinkPage page;
 
     @Inject
     @Use(empty = false)
@@ -197,10 +201,7 @@ public class TestA4JCommandButton extends AbstractWebDriverTest<CommandButtonLin
         commandLinkAttributes.set(CommandLinkAttributes.oncomplete, "metamerEvents += \"complete \"");
 
         ((JavascriptExecutor) driver).executeScript("metamerEvents = \"\"");
-        String reqTime = page.requestTime.getText();
-        Graphene.guardXhr(page.button).click();
-        Graphene.waitModel().withMessage("Page was not updated")
-            .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
+        MetamerPage.waitRequest(page.button, WaitRequestType.XHR).click();
 
         String[] events = ((JavascriptExecutor) driver).executeScript("return metamerEvents").toString().split(" ");
 

@@ -28,6 +28,8 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.Point;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.BeforeMethod;
@@ -41,7 +43,10 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @since 4.2.1.Final
  */
-public class TestRichContextMenuWebDriver extends AbstractWebDriverTest<ContextMenuSimplePage> {
+public class TestRichContextMenuWebDriver extends AbstractWebDriverTest {
+
+    @Page
+    private ContextMenuSimplePage page;
 
     @Override
     public URL getTestUrl() {

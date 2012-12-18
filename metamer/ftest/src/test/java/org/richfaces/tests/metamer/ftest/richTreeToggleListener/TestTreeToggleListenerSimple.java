@@ -27,12 +27,12 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestTreeToggleListenerSimple extends AbstractTreeToggleListenerTest<TTLPage> {
+public class TestTreeToggleListenerSimple extends AbstractTreeToggleListenerTest {
 
-    private final String TTL_as_ComponentAttribute_PhaseName = "* tree toggle listener invoked";
-    private final String TTL_inComponent_usingListener_PhaseName = "* TreeToggleListenerBean2";
-    private final String TTL_inComponent_usingType_PhaseName = "* TreeToggleListenerBean1";
-    private final String TTL_outsideComponent_usingType_PhaseName = "* TreeToggleListenerBean3";
+    private final String TTL_as_ComponentAttribute_PhaseName = "tree toggle listener invoked";
+    private final String TTL_inComponent_usingListener_PhaseName = "TreeToggleListenerBean2";
+    private final String TTL_inComponent_usingType_PhaseName = "TreeToggleListenerBean1";
+    private final String TTL_outsideComponent_usingType_PhaseName = "TreeToggleListenerBean3";
 
     public TestTreeToggleListenerSimple() {
         super("simple");

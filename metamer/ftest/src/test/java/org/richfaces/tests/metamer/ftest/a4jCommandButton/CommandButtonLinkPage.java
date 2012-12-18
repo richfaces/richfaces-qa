@@ -1,12 +1,29 @@
+/*******************************************************************************
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jCommandButton;
 
 import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
-import org.jboss.test.selenium.support.ui.TextEquals;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -15,7 +32,6 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M2
- *
  */
 public class CommandButtonLinkPage extends MetamerPage {
 
@@ -46,7 +62,6 @@ public class CommandButtonLinkPage extends MetamerPage {
     public WebElement output2;
     @FindBy(css = "span[id$=output3]")
     public WebElement output3;
-    private WebDriver driver = GrapheneContext.getProxy();
 
     public void typeToInput(String s) {
         input.clear();
@@ -62,21 +77,17 @@ public class CommandButtonLinkPage extends MetamerPage {
     }
 
     public void waitUntilOutput1Changes(String expectedText) {
-        new WebDriverWait(driver).until(TextEquals.getInstance().element(output1).text(expectedText));
+        Graphene.waitAjax().until(Graphene.element(output1).text().equalTo(expectedText));
     }
 
     public void waitUntilOutput2ChangesToText(String expectedText) {
-        new WebDriverWait(driver, 5).until(TextEquals.getInstance().element(output2).text(expectedText));
+        Graphene.waitModel().until(Graphene.element(output2).text().equalTo(expectedText));
     }
 
     public void typeToInputAndSubmitWithoutRequest(String s) {
         input.clear();
         input.sendKeys(s);
         Graphene.guardNoRequest(button).click();
-    }
-
-    public String getRequestTime() {
-        return requestTime.getText();
     }
 
     public void verifyOutput1Text() {

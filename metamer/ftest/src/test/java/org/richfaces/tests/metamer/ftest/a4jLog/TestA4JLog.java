@@ -30,9 +30,8 @@ import static org.testng.Assert.fail;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.openqa.selenium.By;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.Test;
@@ -43,7 +42,10 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M2
  */
-public class TestA4JLog extends AbstractWebDriverTest<LogPage> {
+public class TestA4JLog extends AbstractWebDriverTest {
+
+    @Page
+    private LogPage page;
 
     /**
      * Enumeration representing all possible levels for a4j:log.
@@ -57,18 +59,13 @@ public class TestA4JLog extends AbstractWebDriverTest<LogPage> {
         return buildUrl(contextPath, "faces/components/a4jLog/simple.xhtml");
     }
 
-//    @Override
-//    protected LogPage createPage() {
-//        return new LogPage();
-//    }
-
     @Test
     public void testSubmit() {
         page.input.clear();
         page.input.sendKeys("RichFaces 4");
         page.submitButton.click();
 
-        Graphene.waitGui().until(Graphene.element(page.output).textEquals("Hello RichFaces 4!"));
+        Graphene.waitGui().until(Graphene.element(page.output).text().equalTo("Hello RichFaces 4!"));
 
         assertTrue(page.logMsg.size() > 0,
             "There should be at least one message in log after submit button was clicked.");
@@ -80,7 +77,7 @@ public class TestA4JLog extends AbstractWebDriverTest<LogPage> {
         page.input.sendKeys("ľščťžýáíéôúäň");
         page.submitButton.click();
 
-        Graphene.waitGui().until(Graphene.element(page.output).textEquals("Hello ľščťžýáíéôúäň!"));
+        Graphene.waitGui().until(Graphene.element(page.output).text().equalTo("Hello ľščťžýáíéôúäň!"));
 
         assertTrue(page.logMsg.size() > 0,
             "There should be at least one message in log after submit button was clicked.");
@@ -207,9 +204,6 @@ public class TestA4JLog extends AbstractWebDriverTest<LogPage> {
     }
 
     private void testLogging(LogLevel logLevel, LogLevel filterLevel) {
-        WebElement logButton = driver.findElement(By.cssSelector("input[id$=" + logLevel.toString().toLowerCase()
-            + "Button]"));
-
         if (filterLevel != LogLevel.DEBUG) {
             logAttributes.set(LogAttributes.level, filterLevel.toString().toLowerCase());
         }
@@ -235,6 +229,8 @@ public class TestA4JLog extends AbstractWebDriverTest<LogPage> {
                 break;
             case ERROR:
                 page.errorButton.click();
+                break;
+            default:
                 break;
         }
 

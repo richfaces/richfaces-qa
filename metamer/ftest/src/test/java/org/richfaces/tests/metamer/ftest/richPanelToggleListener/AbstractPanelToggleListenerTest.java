@@ -22,9 +22,11 @@
 package org.richfaces.tests.metamer.ftest.richPanelToggleListener;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+import javax.faces.event.PhaseId;
+
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -32,8 +34,10 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-// FIXME AbstractPanelToggleListenerTest should not be generic (bug in Graphene)
-public abstract class AbstractPanelToggleListenerTest<P extends PTLCollapsiblePanelPage> extends AbstractWebDriverTest<P> {
+public abstract class AbstractPanelToggleListenerTest extends AbstractWebDriverTest {
+
+    @Page
+    private PTLCollapsiblePanelPage page;
 
     private final String collapsedPanelString = " collapsed";
     private final String expandedPanelString = " expanded";
@@ -48,48 +52,30 @@ public abstract class AbstractPanelToggleListenerTest<P extends PTLCollapsiblePa
         return buildUrl(contextPath, "faces/components/richPanelToggleListener/" + testedComponent + ".xhtml");
     }
 
-    /**
-     * Gets list of WebElements and check if some of them has same text as
-     * expected in attribute @expectedText.
-     *
-     * @param expectedText value of the text to be find
-     * @return true if text was found or false
-     */
-    private boolean subTest(String expectedText) {
-        return page.checkPhasesContainAllOf(expectedText);
-    }
-
-    private void testPTL(final String expectedText, String failMessage) {
+    private void testPTL(final String expectedText) {
         //first test collapsing of panel
         MetamerPage.waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
-        assertTrue(subTest(expectedText + collapsedPanelString), failMessage);
+        page.assertListener(PhaseId.INVOKE_APPLICATION, expectedText + collapsedPanelString);
         //then test expanding of panel
         MetamerPage.waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
-        assertTrue(subTest(expectedText + expandedPanelString), failMessage);
+        page.assertListener(PhaseId.INVOKE_APPLICATION, expectedText + expandedPanelString);
     }
 
     public void testPTLAsAttributeOfComponent(String expectedMSG) {
-        testPTL(expectedMSG,
-                "PanelToggleListener as attribute of component " + testedComponent + " does not work.");
+        testPTL(expectedMSG);
     }
 
     public void testPTLInComponentWithType(String expectedMSG) {
-        testPTL(expectedMSG,
-                "PanelToggleListener set in attribute @type in component "
-                + testedComponent + " does not work.");
+        testPTL(expectedMSG);
     }
 
     public void testPTLInComponentWithListener(String expectedMSG) {
-        testPTL(expectedMSG,
-                "PanelToggleListener set in attribute @listener in component "
-                + testedComponent + " does not work.");
+        testPTL(expectedMSG);
     }
 
     public void testPTLAsForAttributeWithType(String expectedMSG) {
-        testPTL(expectedMSG,
-                "PanelToggleListener set in attribute @type and using attribute @for outside component "
-                + testedComponent + " does not work.");
+        testPTL(expectedMSG);
     }
 }

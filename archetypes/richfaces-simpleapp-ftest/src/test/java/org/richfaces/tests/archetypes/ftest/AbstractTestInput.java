@@ -21,8 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.archetypes.ftest;
 
-import org.jboss.test.selenium.support.ui.TextEquals;
-import org.jboss.test.selenium.support.ui.WebDriverWait;
+import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.archetypes.AbstractWebDriverTest;
 import org.richfaces.tests.archetypes.TestConfiguration;
 
@@ -55,9 +54,8 @@ public abstract class AbstractTestInput extends AbstractWebDriverTest<WithInputP
         getPage().getInput().click();
         getPage().getInput().clear();
         getPage().getInput().sendKeys(inputName);
-        new WebDriverWait(getWebDriver())
-            .failWith("The output text doesn't match.")
-            .until(TextEquals.getInstance().element(getPage().getOutput()).text("Hello " + inputName + "!"));
+        Graphene.waitGui().withMessage("The output text doesn't match.")
+            .until(Graphene.element(getPage().getOutput()).textEquals("Hello " + inputName + "!"));
 
     }
 

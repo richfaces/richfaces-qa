@@ -40,11 +40,8 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichCalendarKVS extends AbstractCalendarTest<MetamerPage> {
+public class TestRichCalendarKVS extends AbstractCalendarTest {
 
-    private final CalendarInputReloadTester reloadTesterInput = new CalendarInputReloadTester();
-    private final CalendarPopupReloadTester reloadTesterPopup = new CalendarPopupReloadTester();
-    //
     @FindBy(css = "input[id$=a4jButton]")
     private WebElement a4jbutton;
 
@@ -59,27 +56,35 @@ public class TestRichCalendarKVS extends AbstractCalendarTest<MetamerPage> {
 
     @Test(groups = { "keepVisualStateTesting" })
     public void testFullPageRefresPopupApplied() {
+        CalendarPopupReloadTester reloadTesterPopup = new CalendarPopupReloadTester();
         reloadTesterPopup.testFullPageRefresh();
     }
 
     @Test(groups = { "keepVisualStateTesting" })
     public void testFullPageRefresh() {
+        CalendarInputReloadTester reloadTesterInput = new CalendarInputReloadTester();
         reloadTesterInput.testFullPageRefresh();
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12300")
     @Test(groups = { "keepVisualStateTesting", "4.Future" })
     public void testRenderAll() {
+        CalendarInputReloadTester reloadTesterInput = new CalendarInputReloadTester();
         reloadTesterInput.testRerenderAll();
     }
 
     @Test(groups = { "keepVisualStateTesting" })
     public void testRenderAllPopupApplied() {
+        CalendarPopupReloadTester reloadTesterPopup = new CalendarPopupReloadTester();
         reloadTesterPopup.testRerenderAll();
     }
 
     /** Test visual state get by typing date into input */
     private class CalendarInputReloadTester extends ReloadTester<String> {
+
+        public CalendarInputReloadTester() {
+            super(page);
+        }
 
         @Override
         public void doRequest(String inputValue) {
@@ -102,6 +107,10 @@ public class TestRichCalendarKVS extends AbstractCalendarTest<MetamerPage> {
 
     /** Test visual state get by selection from popup and confirmed by apply button */
     private class CalendarPopupReloadTester extends ReloadTester<String> {
+
+        public CalendarPopupReloadTester() {
+            super(page);
+        }
 
         private String selectedDate = null;
 

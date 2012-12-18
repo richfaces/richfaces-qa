@@ -21,81 +21,60 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.contextMenu;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import static org.jboss.arquillian.graphene.Graphene.element;
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.testng.Assert.assertTrue;
 
-import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
-import org.jboss.arquillian.ajocado.geometry.Point;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.tree.AbstractTreeTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.contextMenu.page.TableContextMenuPage;
+import org.richfaces.tests.showcase.contextMenu.page.TreeContextMenuPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
- * @version $Revision$
  */
-public class TestTree extends AbstractTreeTest {
+public class TestTree extends AbstractContextMenuTest<TreeContextMenuPage> {
 
-    private final int DEVIATION = 5;
-
-    /* *****************************************
-     * Locators*****************************************
-     */
-    private JQueryLocator nodeExpander = jq(".rf-trn-hnd.rf-trn-hnd-colps");
-    private JQueryLocator node = jq(".rf-trn-lbl");
-
-    private JQueryLocator contextMenu = jq(".rf-ctx-lst");
-    private JQueryLocator contextMenuItem = jq(contextMenu.getRawLocator() + " .rf-ctx-itm-lbl");
-
-    private JQueryLocator popupContent = jq("div[id=popup_content]");
-    private JQueryLocator closeButtonPopup = jq("input[type=button]");
-
-    /* *********************************************
-     * Tests*********************************************
-     */
     @Test
-    public void testSelectNodesByCtxMenu() {
+    public void testViewNodesInfoByCtxMenu() {
+        page.expandNodes(4);
 
-        collapseOrExpandAllNodes(nodeExpander);
-
-        int soFar = 0;
-
-        for (Iterator<JQueryLocator> i = node.iterator(); i.hasNext();) {
-            if(soFar > 20) {
+        int counter = 0;
+        for (WebElement leaf : page.getLeaves()) {
+            if (counter == TestTable.NUMBER_OF_LINES_TO_TEST_ON) {
                 break;
             }
-            JQueryLocator currentNode = i.next();
-            soFar++;
-            String text = selenium.getText(currentNode);
-            if (text.contains("-")) {
-                text = text.substring(0, text.indexOf('-'));
-            }
 
-            // workaround for invoking context menu, sometimes it is managed to be invoked on the thrid time max,
-            // do not know why
-            tryToInvokeContextMenu(currentNode, new Point(2, 5), contextMenu);
+            String artistFromTree = leaf.getText();
 
-            selenium.click(contextMenuItem);
+            leaf.click();
+            waitGui().withTimeout(3, TimeUnit.SECONDS).until(page.getExpextedConditionOnNodeSelected(leaf));
+            waitGui();
 
-            waitGui.failWith(new RuntimeException("The popup should be visible when triggering it from context menu!"))
-                .timeout(2000).until(elementVisible.locator(popupContent));
+            page.getContextMenu().selectFromContextMenu(TableContextMenuPage.VIEW, leaf);
+            waitGui().withTimeout(3, TimeUnit.SECONDS).until(element(page.getArtistFromPopup()).isVisible());
 
-            String actualText = selenium.getText(popupContent);
-            assertTrue(actualText.contains(text),
-                "The text in the popup triggered from context menu, does not contain selected text");
+            String artistFromPopup = page.getArtistFromPopup().getText();
 
-            selenium.click(closeButtonPopup);
+            assertTrue(artistFromTree.contains(artistFromPopup),
+                "The context menu was not invoked correctly! The popup contains different artist name than the node in the tree!");
+
+            page.getCloseButton().click();
+            waitGui().withTimeout(3, TimeUnit.SECONDS).until(element(page.getArtistFromPopup()).not().isVisible());
+            counter++;
         }
     }
 
     @Test
-    public void testContextMenuPosition() {
-        Point offset = new Point(2, 5);
-        JQueryLocator target = jq(node.getRawLocator() + ":eq(0)");
+    public void testContextMenuRenderedAtCorrectPosition() {
+        page.expandNodes(4);
+        WebElement elementToTryOn = page.getLeaves().get(0);
+        Graphene.waitGui().withTimeout(2, TimeUnit.SECONDS).until(element(elementToTryOn).isVisible());
 
-        checkContextMenuRenderedAtCorrectPosition(target, offset, true, contextMenu, DEVIATION);
+        checkContextMenuRenderedAtCorrectPosition(elementToTryOn, page.getContextMenu().getContextMenuPopup(),
+            InvocationType.RIGHT_CLICK, page.getExpextedConditionOnNodeSelected(elementToTryOn));
     }
 }

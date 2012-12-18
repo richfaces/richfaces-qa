@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:rich="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -25,76 +25,32 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="/templates/template.xhtml">
-
-        <ui:define name="view">
-            <f:metadata>
-                <f:viewParam name="templates" value="#{templateBean.templates}">
-                    <f:converter converterId="templatesListConverter" />
-                </f:viewParam>
-            </f:metadata>
+    <ui:composition template="/templates/inputComponentValidationTemplate.xhtml">
+        <ui:define name="notEmpty" >
+            <rich:inplaceInput id="notEmpty"
+                               defaultLabel="#{richInplaceInputBean.attributes['defaultLabel'].value}"
+                               value="#{richInplaceInputBean.notEmptyValue}"
+                               />
         </ui:define>
-
-        <ui:define name="component">
-            <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
-            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
-            <br/><br/>
-
-            <h:panelGrid columns="3">
-                not empty
-                <rich:inplaceInput id="input1"
-                                   defaultLabel="#{richInplaceInputBean.attributes['defaultLabel'].value}"
-                                   value="#{richInplaceInputBean.value1}"
-                                   >
-                    <a4j:ajax event="change" render="output1"/>
-                </rich:inplaceInput>
-                <rich:message id="inputMsg1" for="input1"/>
-
-                pattern [a-z].*
-                <rich:inplaceInput id="input2"
-                                   defaultLabel="#{richInplaceInputBean.attributes['defaultLabel'].value}"
-                                   value="#{richInplaceInputBean.value2}"
-                                   >
-                    <a4j:ajax event="change" render="output2"/>
-                </rich:inplaceInput>
-                <rich:message id="inputMsg2" for="input2"/>
-
-                size 3-6
-                <rich:inplaceInput id="input3"
-                                   defaultLabel="#{richInplaceInputBean.attributes['defaultLabel'].value}"
-                                   value="#{richInplaceInputBean.value3}"
-                                   >
-                    <a4j:ajax event="change" render="output3"/>
-                </rich:inplaceInput>
-                <rich:message id="inputMsg3" for="input3"/>
-
-                custom (RichFaces)
-                <rich:inplaceInput id="input4"
-                                   defaultLabel="#{richInplaceInputBean.attributes['defaultLabel'].value}"
-                                   value="#{richInplaceInputBean.value4}"
-                                   >
-                    <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>
-                    <a4j:ajax event="change" render="output4"/>
-                </rich:inplaceInput>
-                <rich:message id="inputMsg4" for="input4"/>
-
-            </h:panelGrid>
-            <br/><br/>
-
-            <h:panelGrid columns="2">
-                output1
-                <h:outputText id="output1" value="#{richInplaceInputBean.value1}"/>
-                output2
-                <h:outputText id="output2" value="#{richInplaceInputBean.value2}"/>
-                output3
-                <h:outputText id="output3" value="#{richInplaceInputBean.value3}"/>
-                output4
-                <h:outputText id="output4" value="#{richInplaceInputBean.value4}"/>
-            </h:panelGrid>
+        <ui:define name="pattern" >
+            <rich:inplaceInput id="pattern"
+                               defaultLabel="#{richInplaceInputBean.attributes['defaultLabel'].value}"
+                               value="#{richInplaceInputBean.patternValue}"
+                               />
         </ui:define>
-
-        <ui:define name="outOfTemplateAfter">
+        <ui:define name="size" >
+            <rich:inplaceInput id="size"
+                               defaultLabel="#{richInplaceInputBean.attributes['defaultLabel'].value}"
+                               value="#{richInplaceInputBean.sizeValue}"
+                               />
         </ui:define>
-
+        <ui:define name="custom" >
+            <rich:inplaceInput id="custom"
+                               defaultLabel="#{richInplaceInputBean.attributes['defaultLabel'].value}"
+                               value="#{richInplaceInputBean.customValue}"
+                               >
+                <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>
+            </rich:inplaceInput>
+        </ui:define>
     </ui:composition>
 </html>

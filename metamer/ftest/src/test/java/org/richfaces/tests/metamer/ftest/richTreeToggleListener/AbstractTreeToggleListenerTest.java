@@ -22,9 +22,11 @@
 package org.richfaces.tests.metamer.ftest.richTreeToggleListener;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+import javax.faces.event.PhaseId;
+
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -32,8 +34,10 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-// FIXME AbstractTreeToggleListenerTest should not be generic (bug in Graphene)
-public abstract class AbstractTreeToggleListenerTest<P extends TTLPage> extends AbstractWebDriverTest<P> {
+public abstract class AbstractTreeToggleListenerTest extends AbstractWebDriverTest {
+
+    @Page
+    protected TTLPage page;
 
     private final String collapsedNodeString = " collapsed";
     private final String expandedNodeString = " expanded";
@@ -48,59 +52,41 @@ public abstract class AbstractTreeToggleListenerTest<P extends TTLPage> extends 
         return buildUrl(contextPath, "faces/components/richTreeToggleListener/" + testedComponent + ".xhtml");
     }
 
-    /**
-     * Gets list of WebElements and check if some of them has same text as
-     * expected in attribute @expectedText.
-     *
-     * @param expectedText value of the text to be find
-     * @return true if text was found or false
-     */
-    private boolean subTest(String expectedText) {
-        return page.checkPhasesContainAllOf(expectedText);
-    }
-
-    private void testTTL(final String expectedText, String failMessage) {
+    private void testTTL(String expectedText) {
         //test expanding of node
         MetamerPage.waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
-        assertTrue(subTest(expectedText + expandedNodeString), failMessage);
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, expectedText + expandedNodeString);
         //then test collapsing of node
         MetamerPage.waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
-        assertTrue(subTest(expectedText + collapsedNodeString), failMessage);
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, expectedText + collapsedNodeString);
     }
 
-    private void testTTLWithoutAdditionalStateStrings(final String expectedText, String failMessage) {
+    private void testTTLWithoutAdditionalStateStrings(String expectedText) {
         //test expanding of node
         MetamerPage.waitRequest(page.getExpandButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
-        assertTrue(subTest(expectedText));
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, expectedText);
         //then test collapsing of node
         MetamerPage.waitRequest(page.getCollapseButton(), WaitRequestType.XHR).click();
         //checks if phases contains the correct listener message
-        assertTrue(subTest(expectedText));
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, expectedText);
     }
 
     public void testTTLAsAttributeOfComponent(String expectedMSG) {
-        testTTLWithoutAdditionalStateStrings(expectedMSG,
-                "TreeToggleListener as attribute of component " + testedComponent + " does not work.");
+        testTTLWithoutAdditionalStateStrings(expectedMSG);
     }
 
     public void testTTLInComponentWithType(String expectedMSG) {
-        testTTL(expectedMSG,
-                "TreeToggleListener set in attribute @type in component "
-                + testedComponent + " does not work.");
+        testTTLWithoutAdditionalStateStrings(expectedMSG);
     }
 
     public void testTTLInComponentWithListener(String expectedMSG) {
-        testTTL(expectedMSG,
-                "TreeToggleListener set in attribute @listener in component "
-                + testedComponent + " does not work.");
+        testTTLWithoutAdditionalStateStrings(expectedMSG);
     }
 
     public void testTTLAsForAttributeWithType(String expectedMSG) {
-        testTTL(expectedMSG,
-                "TreeToggleListener set in attribute @type and using attribute @for outside component "
-                + testedComponent + " does not work.");
+        testTTLWithoutAdditionalStateStrings(expectedMSG);
     }
 }

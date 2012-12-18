@@ -34,6 +34,8 @@ import java.util.List;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.StringConditionFactory;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -46,7 +48,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest<FileUploadPage> {
+public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest {
 
     private Action succesfulFileUploadAction = new SuccesfulFileUploadAction();
 
@@ -76,17 +78,17 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
 
         assertTrue(filesToUpload.size() == 1, "File not loaded");
         assertTrue(filesToUpload.get(0).getText().equals(filenames[0]), "Label with filename does not appear.");
-        assertTrue(Graphene.waitModel().until(Graphene.element(page.itemClear).isPresent()).booleanValue(), "Clear button does not appear.");
-        assertTrue(Graphene.waitModel().until(Graphene.element(page.uploadButton).isPresent()).booleanValue(), "Upload button should be on the page.");
-        assertTrue(Graphene.waitModel().until(Graphene.element(page.clearAllButton).isPresent()).booleanValue(), "Clear all button should be on the page.");
+        Graphene.waitModel().withMessage("Clear button does not appear.").until(Graphene.element(page.itemClear).isPresent());
+        Graphene.waitModel().withMessage("Upload button should be on the page.").until(Graphene.element(page.uploadButton).isPresent());
+        Graphene.waitModel().withMessage("Clear all button should be on the page.").until(Graphene.element(page.clearAllButton).isPresent());
 
         MetamerPage.waitRequest(page.uploadButton, WaitRequestType.XHR).click();
 
         waitUntilUploadedFilesListShow(1);
         List<WebElement> uploadedFiles = guardListSize(page.uploadedFilesList, 1);
         assertTrue(uploadedFiles.size() == 1, "List of uploaded files should contain one file.");
-        assertTrue(Graphene.element(uploadedFiles.get(0)).textEquals(filenames[0]).apply(driver),
-            "Uploaded file does not appear in uploadedList.");
+        assertTrue(uploadedFiles.get(0).getText().equals(filenames[0]),
+                "Uploaded file does not appear in uploadedList.");
     }
 
     @Test
@@ -165,7 +167,7 @@ public class TestRichFileUploadWebDriver extends AbstractFileUploadWebDriverTest
 
         succesfulFileUploadAction.perform();
 
-        Graphene.waitAjax().until(Graphene.element(page.uploadStatusLabel).textEquals(doneLabel));
+        Graphene.waitAjax().until(Graphene.element(page.uploadStatusLabel).text().equalTo(doneLabel));
     }
 
     @Test

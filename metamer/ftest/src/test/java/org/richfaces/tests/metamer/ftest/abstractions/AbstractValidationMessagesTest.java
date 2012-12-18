@@ -27,6 +27,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
@@ -34,8 +35,10 @@ import org.testng.annotations.BeforeMethod;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-// FIXME AbstractValidationMessagesTest should not be generic (Graphene bug)
-public abstract class AbstractValidationMessagesTest<P extends ValidationPage> extends AbstractWebDriverTest<P> {
+public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTest {
+
+    @Page
+    protected ValidationPage page;
 
     protected static final String MSG_ATT = "Custom validator error message from attribute of component.";
     private static final String MSG_BEAN = "Custom validator error message from bean.";

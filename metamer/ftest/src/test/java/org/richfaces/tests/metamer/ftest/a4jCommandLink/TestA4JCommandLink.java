@@ -32,12 +32,15 @@ import java.net.URL;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.a4jCommandButton.CommandButtonLinkPage;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -46,7 +49,10 @@ import org.testng.annotations.Test;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @since 4.3.0.M2
  */
-public class TestA4JCommandLink extends AbstractWebDriverTest<CommandButtonLinkPage> {
+public class TestA4JCommandLink extends AbstractWebDriverTest {
+
+    @Page
+    private CommandButtonLinkPage page;
 
     @Override
     public URL getTestUrl() {
@@ -121,7 +127,7 @@ public class TestA4JCommandLink extends AbstractWebDriverTest<CommandButtonLinkP
     @Test
     public void testBypassUpdates() {
         commandLinkAttributes.set(CommandLinkAttributes.bypassUpdates, true);
-        Graphene.guardXhr(page.link).click();
+        MetamerPage.waitRequest(page.link, WaitRequestType.XHR).click();
         page.verifyOutput1Text("");
         page.verifyOutput2Text("");
         page.verifyOutput3Text("");
@@ -181,7 +187,7 @@ public class TestA4JCommandLink extends AbstractWebDriverTest<CommandButtonLinkP
         String reqTime = page.requestTime.getText();
         page.submitByLink();
         Graphene.waitModel().withMessage("Page was not updated")
-            .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
+            .until(Graphene.element(page.requestTime).not().text().equalTo(reqTime));
 
         page.verifyOutput1Text("");
         page.verifyOutput2Text("");
@@ -214,7 +220,7 @@ public class TestA4JCommandLink extends AbstractWebDriverTest<CommandButtonLinkP
         String reqTime = page.requestTime.getText();
         page.submitByLink();
         Graphene.waitModel().withMessage("Page was not updated")
-            .until(Graphene.element(page.requestTime).not().textEquals(reqTime));
+            .until(Graphene.element(page.requestTime).not().text().equalTo(reqTime));
 
         String[] events = ((JavascriptExecutor) driver).executeScript("return metamerEvents").toString().split(" ");
 

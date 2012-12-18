@@ -1,6 +1,6 @@
-/*******************************************************************************
+/**
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,23 +18,31 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import java.net.URL;
-
+import org.richfaces.tests.metamer.ftest.abstractions.StringInputComponentCSVTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestAutocompleteCSV extends TestComponentWithJSR303<JSR303Page> {
+public class TestAutocompleteCSV extends StringInputComponentCSVTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richAutocomplete/csv.xhtml");
+    public String getComponentName() {
+        return "richAutocomplete";
+    }
+
+    @Test
+    public void testAllInputsWrong() {
+        verifyAllInputs();
+    }
+
+    @Test
+    public void testCustomString() {
+        verifyCustomString();
     }
 
     @Test
@@ -51,15 +59,4 @@ public class TestAutocompleteCSV extends TestComponentWithJSR303<JSR303Page> {
     public void testStringSize() {
         verifyStringSize();
     }
-
-    @Test
-    public void testCustomString() {
-        verifyCustomString();
-    }
-
-    @Test
-    public void testAllInputsWrong() {
-        verifyAllInputs();
-    }
-
 }
