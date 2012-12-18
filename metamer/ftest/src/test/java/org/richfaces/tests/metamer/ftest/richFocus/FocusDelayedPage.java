@@ -1,6 +1,6 @@
 package org.richfaces.tests.metamer.ftest.richFocus;
 
-import org.jboss.arquillian.graphene.spi.annotations.FindBy;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
 

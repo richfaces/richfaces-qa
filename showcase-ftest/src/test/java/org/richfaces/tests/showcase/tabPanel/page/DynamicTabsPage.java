@@ -29,7 +29,7 @@ import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.jboss.arquillian.graphene.spi.annotations.FindBy;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
 
 /**

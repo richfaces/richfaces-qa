@@ -25,7 +25,7 @@ import static org.jboss.arquillian.graphene.Graphene.waitModel;
 
 import java.util.concurrent.TimeUnit;
 
-import org.jboss.arquillian.graphene.spi.annotations.FindBy;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;

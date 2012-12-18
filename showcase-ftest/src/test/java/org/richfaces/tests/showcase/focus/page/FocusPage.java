@@ -22,7 +22,7 @@
 package org.richfaces.tests.showcase.focus.page;
 
 import org.jboss.arquillian.graphene.context.GrapheneContext;
-import org.jboss.arquillian.graphene.spi.annotations.FindBy;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
