@@ -9,3 +9,5 @@ test-output
 **/apps/*
 archetypes/richfaces-kitchensink-ftest/kitchensink-webdriver-ftest/
 .checkstyle
+metamer/application/bin
+metamer/ftest/bin
