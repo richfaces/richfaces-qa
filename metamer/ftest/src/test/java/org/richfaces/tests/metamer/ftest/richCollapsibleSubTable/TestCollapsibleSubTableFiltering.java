@@ -37,6 +37,8 @@ import java.util.List;
 import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
 import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.model.DataTable;
 import org.richfaces.tests.metamer.model.Employee;
 import org.testng.annotations.BeforeMethod;
@@ -65,15 +67,26 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
     }
 
     @Test
+    @Templates(exclude = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testFilteringExpressionContainsIgnoreCase() {
         filterBy(Column.NAME, "Alexander");
+        waitFor(5000);
         verifyFiltering();
+        waitFor(5000);
 
         filterBy(Column.NAME, "aLEX");
         verifyFiltering();
     }
 
+    @Test(groups = "4.Future")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12673")
+    @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
+    public void testFilteringExpressionContainsIgnoreCaseInSwitchablePanels() {
+        testFilteringExpressionContainsIgnoreCase();
+    }
+
     @Test
+    @Templates(exclude = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testFilteringExpressionEquals() {
         filterBy(Column.TITLE, "Director");
         verifyFiltering();
@@ -83,6 +96,13 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
 
         filterBy(Column.TITLE, "direct");
         verifyFiltering();
+    }
+
+    @Test(groups = "4.Future")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12673")
+    @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
+    public void testFilteringExpressionEqualsInSwitchablePanels() {
+        testFilteringExpressionEquals();
     }
 
     public void verifyFiltering() {

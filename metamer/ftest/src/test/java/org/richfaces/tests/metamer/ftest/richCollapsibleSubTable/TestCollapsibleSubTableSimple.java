@@ -45,6 +45,8 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.request.RequestType;
 import org.richfaces.ExpandMode;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.model.Employee;
 import org.testng.annotations.Test;
@@ -89,6 +91,7 @@ public class TestCollapsibleSubTableSimple extends AbstractCollapsibleSubTableTe
     }
 
     @Test
+    @Templates(exclude = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testFirst() {
         collapsibleSubTabAttributes.set(first, 2);
 
@@ -101,6 +104,13 @@ public class TestCollapsibleSubTableSimple extends AbstractCollapsibleSubTableTe
             assertEquals(name, visibleEmployees.get(i).getName());
             assertEquals(title, visibleEmployees.get(i).getTitle());
         }
+    }
+
+    @Test(groups = "4.Future")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12673")
+    @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
+    public void testFirstInSwitchablePanels() {
+        testFirst();
     }
 
     @Test
@@ -121,6 +131,7 @@ public class TestCollapsibleSubTableSimple extends AbstractCollapsibleSubTableTe
     }
 
     @Test
+    @Templates(exclude = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testRows() {
         collapsibleSubTabAttributes.set(rows, 11);
 
@@ -135,6 +146,13 @@ public class TestCollapsibleSubTableSimple extends AbstractCollapsibleSubTableTe
             assertEquals(name, visibleEmployees.get(i).getName());
             assertEquals(title, visibleEmployees.get(i).getTitle());
         }
+    }
+
+    @Test(groups = "4.Future")
+    @RegressionTest("https://issues.jboss.org/browse/RF-12673")
+    @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
+    public void testRowsInSwitchablePanels() {
+        testRows();
     }
 
     @Test
