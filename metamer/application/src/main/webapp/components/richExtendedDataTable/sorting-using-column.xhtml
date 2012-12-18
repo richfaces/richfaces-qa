@@ -129,31 +129,31 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputText value="There is no data." style="color: red;"/>
                 </f:facet>
 
-                <rich:column id="columnSex" sortBy="#{record.sex}" sortOrder="#{richExtendedDataTableBean.sorting['columnSex'].order}">
+                <rich:column id="columnSex" sortBy="#{record.sex}" sortOrder="#{richExtendedDataTableBean.sorting['columnSex'].order}" sortType="custom">
                     <f:facet name="header">
-                        <a4j:commandLink id="sortBySex" value="Sex" render="richEDT" action="#{richExtendedDataTableBean.sorting['columnSex'].reverseOrder}" />
+                        <a4j:commandLink id="sortBySex" value="Sex" execute="@this" render="richEDT" action="#{richExtendedDataTableBean.sorting['columnSex'].reverseOrder}" />
                     </f:facet>
                     <h:graphicImage library="images" name="#{record.sex == 'MALE' ? 'male.png' : 'female.png'}" alt="#{record.sex}" />
                 </rich:column>
 
 
-                <rich:column id="columnName" sortBy="#{record.name}" sortOrder="#{richExtendedDataTableBean.sorting['columnName'].order}">
+                <rich:column id="columnName" sortBy="#{record.name}" sortOrder="#{richExtendedDataTableBean.sorting['columnName'].order}" sortType="custom">
                     <f:facet name="header">
-                        <a4j:commandLink id="sortByName" value="Name" render="richEDT" action="#{richExtendedDataTableBean.sorting['columnName'].reverseOrder}" />
+                        <a4j:commandLink id="sortByName" value="Name" execute="@this" render="richEDT" action="#{richExtendedDataTableBean.sorting['columnName'].reverseOrder}" />
                     </f:facet>
                     <h:outputText value="#{record.name}" />
                 </rich:column>
 
-                <rich:column id="columnTitle" sortBy="#{record.title}" sortOrder="#{richExtendedDataTableBean.sorting['columnTitle'].order}">
+                <rich:column id="columnTitle" sortBy="#{record.title}" sortOrder="#{richExtendedDataTableBean.sorting['columnTitle'].order}" sortType="custom">
                     <f:facet name="header">
-                        <a4j:commandLink id="sortByTitle" value="Title" render="richEDT" action="#{richExtendedDataTableBean.sorting['columnTitle'].reverseOrder}" />
+                        <a4j:commandLink id="sortByTitle" value="Title" execute="@this" render="richEDT" action="#{richExtendedDataTableBean.sorting['columnTitle'].reverseOrder}" />
                     </f:facet>
                     <h:outputText value="#{record.title}" />
                 </rich:column>
 
-                <rich:column id="columnNumberOfKids" sortBy="#{record.numberOfKids}" sortOrder="#{richExtendedDataTableBean.sorting['columnNumberOfKids'].order}">
+                <rich:column id="columnNumberOfKids" sortBy="#{record.numberOfKids}" sortOrder="#{richExtendedDataTableBean.sorting['columnNumberOfKids'].order}" sortType="custom">
                     <f:facet name="header">
-                        <a4j:commandLink id="sortByNumberOfKids" value="# of Kids" render="richEDT" action="#{richExtendedDataTableBean.sorting['columnNumberOfKids'].reverseOrder}" />
+                        <a4j:commandLink id="sortByNumberOfKids" value="# of Kids" execute="@this" render="richEDT" action="#{richExtendedDataTableBean.sorting['columnNumberOfKids'].reverseOrder}" />
                     </f:facet>
                     <h:outputText value="#{record.numberOfKids}" />
                 </rich:column>
