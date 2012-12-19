@@ -85,6 +85,7 @@
         <openshift.identity.file />
 
         <jodatime.version>2.1</jodatime.version>
+        <commons-lang.version>2.6</commons-lang.version>
     </properties>
 
     <modules>
@@ -503,6 +504,11 @@
                 <groupId>org.jboss.arquillian.graphene</groupId>
                 <artifactId>graphene-webdriver-impl</artifactId>
                 <version>${arquillian.graphene-webdriver.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commons-lang.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
