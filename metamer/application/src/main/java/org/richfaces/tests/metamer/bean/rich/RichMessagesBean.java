@@ -21,13 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.bean.rich;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.EnumSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -40,6 +35,8 @@ import org.richfaces.component.UIRichMessages;
 import org.richfaces.tests.metamer.Attributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Lists;
 
 /**
  * Simple bean for rich:messages component example.
