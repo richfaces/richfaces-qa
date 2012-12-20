@@ -37,7 +37,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.log.LogEntry;
-import org.richfaces.tests.page.fragments.impl.log.LogImpl;
+import org.richfaces.tests.page.fragments.impl.log.RichFacesLog;
 import org.testng.annotations.Test;
 
 /**
@@ -74,7 +74,7 @@ public class TestRF12566 extends AbstractWebDriverTest {
     public static class RF12566Page extends MetamerPage {
 
         @FindBy(id = "richfaces.log")
-        private LogImpl log;
+        private RichFacesLog log;
 
         @FindBy(css = "img[id$='cal1PopupButton']")
         private WebElement showCalendarButton;
@@ -82,11 +82,11 @@ public class TestRF12566 extends AbstractWebDriverTest {
         @FindBy(css = "td[class='rf-cal-tl'] > div")
         private WebElement nextMonthScroller;
 
-        public LogImpl getLog() {
+        public RichFacesLog getLog() {
             return log;
         }
 
-        public void setLog(LogImpl log) {
+        public void setLog(RichFacesLog log) {
             this.log = log;
         }
 

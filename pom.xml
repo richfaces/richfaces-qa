@@ -49,7 +49,7 @@
 
         <!-- versions of TomEE containers to use and download -->
         <version.tomee1-1>1.1.0-SNAPSHOT</version.tomee1-1>
-        <version.tomee1-5>1.5.0</version.tomee1-5>
+        <version.tomee1-5>1.5.1</version.tomee1-5>
 
         <!-- arquillian versions -->
         <arquillian.bom.version>1.0.3.Final</arquillian.bom.version>
@@ -87,6 +87,7 @@
         <openshift.identity.file />
 
         <jodatime.version>2.1</jodatime.version>
+        <commons-lang.version>2.6</commons-lang.version>
     </properties>
 
     <modules>
@@ -505,6 +506,11 @@
                 <groupId>org.jboss.arquillian.graphene</groupId>
                 <artifactId>graphene-webdriver-impl</artifactId>
                 <version>${arquillian.graphene-webdriver.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commons-lang.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

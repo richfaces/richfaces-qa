@@ -10,7 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.richfaces.tests.page.fragments.impl.contextMenu.ContextMenuComponentImpl;
+import org.richfaces.tests.page.fragments.impl.contextMenu.RichFacesContextMenu;
 import org.richfaces.tests.page.fragments.impl.contextMenu.ContextMenuItem;
 
 public class TableContextMenuPage {
@@ -19,7 +19,7 @@ public class TableContextMenuPage {
     private List<WebElement> prices;
 
     @FindBy(css = "form[name='form']")
-    private ContextMenuComponentImpl contextMenu;
+    private RichFacesContextMenu contextMenu;
 
     @FindBy(css = "#popupContent tr:nth-of-type(3) input")
     private WebElement priceFromPopup;
@@ -56,7 +56,7 @@ public class TableContextMenuPage {
         this.prices = prices;
     }
 
-    public ContextMenuComponentImpl getContextMenu() {
+    public RichFacesContextMenu getContextMenu() {
         return contextMenu;
     }
 

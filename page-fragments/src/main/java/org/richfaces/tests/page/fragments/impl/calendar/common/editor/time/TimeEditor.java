@@ -33,7 +33,7 @@ public interface TimeEditor extends VisibleComponent {
 
     public enum SetValueBy {
 
-        typing, buttons;
+        TYPING, BUTTONS;
     }
 
     /**

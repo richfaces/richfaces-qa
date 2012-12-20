@@ -105,5 +105,5 @@ public interface YearAndMonthEditor {
      * @param date date with year and month to be set
      * @return
      */
-    YearAndMonthEditorImpl selectDate(DateTime date);
+    RichFacesYearAndMonthEditor selectDate(DateTime date);
 }

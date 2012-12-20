@@ -146,7 +146,7 @@ public class TestRichSpinner extends AbstractSpinnerTest {
         inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.disabled, Boolean.TRUE);
 
         AttributeLocator<?> disabledAttribute = input.getAttribute(new Attribute("disabled"));
-        assertEquals(selenium.getAttribute(disabledAttribute), "true", "Input should be disabled.");
+        assertEquals(selenium.getAttribute(disabledAttribute), "disabled", "Input should be disabled.");
 
         assertFalse(selenium.isElementPresent(up), "Arrow up should be disabled.");
         assertFalse(selenium.isElementPresent(down), "Arrow down should be disabled.");
@@ -162,7 +162,7 @@ public class TestRichSpinner extends AbstractSpinnerTest {
     public void testEnableManualInput() {
         inputNumberSpinnerAttributes.set(InputNumberSpinnerAttributes.enableManualInput, Boolean.FALSE);
         AttributeLocator<?> readonlyAttribute = input.getAttribute(new Attribute("readonly"));
-        assertEquals(selenium.getAttribute(readonlyAttribute), "true", "Input should be read-only.");
+        assertEquals(selenium.getAttribute(readonlyAttribute), "readonly", "Input should be read-only.");
 
         assertTrue(selenium.isElementPresent(up), "Arrow up should be displayed.");
         assertTrue(selenium.isElementPresent(down), "Arrow down should be displayed.");
