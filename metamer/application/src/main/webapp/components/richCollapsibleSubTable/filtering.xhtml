@@ -86,7 +86,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <rich:collapsibleSubTable id="richSubTable" expanded="#{richSubTableBean.expanded[list]}"
                 expandMode="#{richSubTableBean.attributes['expandMode'].value}"
-                filterVar="#{richSubTableBean.attributes['filterVar'].value}"
+                filterVar="filterVar"
                 first="#{richSubTableBean.attributes['first'].value}"
                 iterationStatusVar="#{richSubTableBean.attributes['iterationStatusVar'].value}"
                 keepSaved="#{richSubTableBean.attributes['keepSaved'].value}"
@@ -115,7 +115,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 var="item">
 
                 <rich:column id="columnName"
-                    filterExpression="#{fn:containsIgnoreCase(item.name, richSubTableBean.filtering['name'])}">
+                    filterExpression="#{fn:containsIgnoreCase(item.name, filterVar)}"
+                    filterValue="#{richSubTableBean.filtering['name']}" >
                     <h:outputText id="name" value="#{item.name}" />
                 </rich:column>
                 <rich:column id="columnTitle"
