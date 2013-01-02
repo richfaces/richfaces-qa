@@ -36,13 +36,13 @@ public class TestAutocompleteCSV extends StringInputComponentCSVTest {
         return "richAutocomplete";
     }
 
-    @Test(groups = "4.Future")
+    @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12669")
     public void testAllInputsWrong() {
         verifyAllInputs();
     }
 
-    @Test(groups = "4.Future")
+    @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12669")
     public void testCustomString() {
         verifyCustomString();
