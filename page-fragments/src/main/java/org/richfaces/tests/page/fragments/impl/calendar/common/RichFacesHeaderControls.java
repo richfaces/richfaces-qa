@@ -49,13 +49,13 @@ public class RichFacesHeaderControls implements HeaderControls {
     //
     @FindBy(css = "td.rf-cal-hdr-month > div.rf-cal-tl-btn")
     private WebElement yearAndMonthEditorOpenerElement;
-    @FindBy(xpath = "//td[contains(@id,'calendarHeader')] //td[1] /div")
+    @FindBy(xpath = ".//td[1] /div")
     private WebElement previousYearElement;
-    @FindBy(xpath = "//td[contains(@id,'calendarHeader')] //td[2] /div")
+    @FindBy(xpath = ".//td[2] /div")
     private WebElement previousMonthElement;
-    @FindBy(xpath = "//td[contains(@id,'calendarHeader')] //td[4] /div")
+    @FindBy(xpath = ".//td[4] /div")
     private WebElement nextMonthElement;
-    @FindBy(xpath = "//td[contains(@id,'calendarHeader')] //td[5] /div")
+    @FindBy(xpath = ".//td[5] /div")
     private WebElement nextYearElement;
     //
     private final DateTimeFormatter formatter = DateTimeFormat.forPattern("MMMM, yyyy");

@@ -32,7 +32,7 @@ import org.richfaces.tests.page.fragments.impl.calendar.common.RichFacesHeaderCo
  */
 public class RichFacesPopupHeaderControls extends RichFacesHeaderControls implements PopupHeaderControls {
 
-    @FindBy(xpath = "//td[contains(@id,'calendarHeader')] //td[6] /div")
+    @FindBy(xpath = ".//td[6] /div")
     private WebElement closeButtonElement;
 
     @Override

@@ -48,9 +48,9 @@ public class RichFacesYearAndMonthEditor implements YearAndMonthEditor {
     private List<WebElement> months;
     @FindBy(css = "div[id*='DateEditorLayoutY']")
     private List<WebElement> years;
-    @FindBy(xpath = "//tr[contains(@id,'DateEditorLayoutTR')][1] //td[3] //div")
+    @FindBy(xpath = ".//tr[contains(@id,'DateEditorLayoutTR')][1] //td[3] //div")
     private WebElement previousDecadeButtonElement;
-    @FindBy(xpath = "//tr[contains(@id,'DateEditorLayoutTR')][1] //td[4] //div")
+    @FindBy(xpath = ".//tr[contains(@id,'DateEditorLayoutTR')][1] //td[4] //div")
     private WebElement nextDecadeButtonElement;
     @FindBy(css = "div[id$=DateEditorButtonOk]")
     private WebElement okButtonElement;

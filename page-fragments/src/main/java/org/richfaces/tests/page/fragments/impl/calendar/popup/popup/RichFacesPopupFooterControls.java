@@ -32,7 +32,7 @@ import org.richfaces.tests.page.fragments.impl.calendar.common.RichFacesFooterCo
  */
 public class RichFacesPopupFooterControls extends RichFacesFooterControls implements PopupFooterControls {
 
-    @FindBy(xpath = "//div[@class='rf-cal-tl-btn'][contains('Apply',text())]")
+    @FindBy(xpath = ".//div[@class='rf-cal-tl-btn'][contains('Apply',text())]")
     private WebElement applyButtonElement;
 
     @Override
