@@ -78,7 +78,7 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
         verifyFiltering();
     }
 
-    @Test(groups = "4.Future")
+    @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12673")
     @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testFilteringExpressionContainsIgnoreCaseInSwitchablePanels() {
@@ -98,7 +98,7 @@ public class TestCollapsibleSubTableFiltering extends AbstractCollapsibleSubTabl
         verifyFiltering();
     }
 
-    @Test(groups = "4.Future")
+    @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12673")
     @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testFilteringExpressionEqualsInSwitchablePanels() {
