@@ -46,13 +46,13 @@ public class RichFacesFooterControls implements FooterControls {
     protected RichFacesCalendarEditor calendarEditor;
     protected RichFacesDayPicker dayPicker;
     //
-    @FindBy(xpath = "//div[@class='rf-cal-tl-btn'][contains('Clean',text())]")
+    @FindBy(xpath = ".//div[@class='rf-cal-tl-btn'][contains('Clean',text())]")
     protected WebElement cleanButtonElement;
-    @FindBy(xpath = "//td[@class='rf-cal-tl-ftr']/div[contains(@onclick,'showTimeEditor')]")
+    @FindBy(xpath = ".//td[@class='rf-cal-tl-ftr']/div[contains(@onclick,'showTimeEditor')]")
     protected WebElement timeEditorOpenerElement;
-    @FindBy(xpath = "//td[@class='rf-cal-tl-ftr']/div[contains(@onclick,'showSelectedDate')]")
+    @FindBy(xpath = ".//td[@class='rf-cal-tl-ftr']/div[contains(@onclick,'showSelectedDate')]")
     protected WebElement selectedDateElement;
-    @FindBy(xpath = "//div[@class='rf-cal-tl-btn'][contains('Today',text())]")
+    @FindBy(xpath = ".//div[@class='rf-cal-tl-btn'][contains('Today',text())]")
     protected WebElement todayButtonElement;
 
     private void _openTimeEditor() {

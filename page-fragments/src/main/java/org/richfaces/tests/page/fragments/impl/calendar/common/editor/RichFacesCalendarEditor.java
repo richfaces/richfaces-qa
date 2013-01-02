@@ -24,10 +24,10 @@ package org.richfaces.tests.page.fragments.impl.calendar.common.editor;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeEditor;
 import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.RichFacesTimeEditor;
-import org.richfaces.tests.page.fragments.impl.calendar.common.editor.yearAndMonth.YearAndMonthEditor;
+import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeEditor;
 import org.richfaces.tests.page.fragments.impl.calendar.common.editor.yearAndMonth.RichFacesYearAndMonthEditor;
+import org.richfaces.tests.page.fragments.impl.calendar.common.editor.yearAndMonth.YearAndMonthEditor;
 
 /**
  * Helper component to set root for YearAndMonthEditor and TimeEditor
