@@ -22,14 +22,11 @@
 package org.richfaces.tests.metamer.ftest.richCollapsibleSubTable;
 
 import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.footer;
 import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.header;
 import static org.richfaces.tests.metamer.ftest.abstractions.DataTableFacets.noData;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.dataTableFacets;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -38,9 +35,8 @@ import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -58,7 +54,7 @@ public class TestCollapsibleSubTableFacets extends AbstractCollapsibleSubTableTe
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RFPL-1515")
+    @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1515", "https://issues.jboss.org/browse/RF-12672" })
     public void testNoDataFacet() {
         waitModel.until(new SeleniumCondition() {
             public boolean isTrue() {
