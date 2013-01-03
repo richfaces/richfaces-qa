@@ -53,19 +53,19 @@ public class TestLists extends AbstractGrapheneTest {
     @Test
     public void testOrderedList() {
 
-        checkList(orderedList, "ol#list");
+        checkList(orderedList, "ol[id$=list]");
     }
 
     @Test
     public void testUnorderedList() {
 
-        checkList(unordered, "ul#list");
+        checkList(unordered, "ul[id$=list]");
     }
 
     @Test
     public void testDefinitionsList() {
 
-        checkList(definitions, "dl#list");
+        checkList(definitions, "dl[id$=list]");
     }
 
     /* ********************************************************************************************************************
