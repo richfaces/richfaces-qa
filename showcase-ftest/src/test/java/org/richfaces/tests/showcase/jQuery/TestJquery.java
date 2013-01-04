@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.jquery;
+package org.richfaces.tests.showcase.jQuery;
 
 import static org.jboss.arquillian.ajocado.Graphene.styleEquals;
 import static org.jboss.arquillian.ajocado.Graphene.waitModel;
@@ -50,7 +50,7 @@ public class TestJquery extends AbstractGrapheneTest {
      * Locators*************************************************************************
      */
 
-    protected JQueryLocator images = jq("#gallery img:eq({0})");
+    protected JQueryLocator images = jq("[id$=gallery] img:eq({0})");
 
     /* ***************************************************************************
      * Tests***************************************************************************
