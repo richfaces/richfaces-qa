@@ -26,7 +26,8 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+// import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.spi.annotations.FindBy;
 import org.openqa.selenium.WebElement;
 
 /**
