@@ -23,8 +23,8 @@ package org.richfaces.tests.showcase.commandButton;
 
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -37,6 +37,6 @@ public class AbstractTestA4jCommand extends AbstractGrapheneTest {
      */
 
     protected JQueryLocator input = jq("fieldset form input[type=text]");
-    protected JQueryLocator outHello = jq("fieldset span#out");
+    protected JQueryLocator outHello = jq("fieldset span[id$=out]");
 
 }

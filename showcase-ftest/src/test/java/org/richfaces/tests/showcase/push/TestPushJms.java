@@ -50,7 +50,7 @@ public class TestPushJms extends AbstractPollTest {
      *
      * ***************************************************************************************
      */
-    @Test
+    @Test(enabled=false)
     public void testDeviationInServerDate() {
 
         List<Integer> deviations = new ArrayList<Integer>();
