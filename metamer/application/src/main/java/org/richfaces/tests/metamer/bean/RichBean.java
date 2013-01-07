@@ -364,9 +364,6 @@ public class RichBean implements Serializable {
         ExpressionFactory factory = ctx.getApplication().getExpressionFactory();
         ValueExpression exp = factory.createValueExpression(ctx.getELContext(), "#{phasesBean.phases}", List.class);
         List<String> phases = (List<String>) exp.getValue(ctx.getELContext());
-        System.out.println(msg);
-        System.out.println();
-        System.out.println(phases);
         phases.add(msg);
     }
 
