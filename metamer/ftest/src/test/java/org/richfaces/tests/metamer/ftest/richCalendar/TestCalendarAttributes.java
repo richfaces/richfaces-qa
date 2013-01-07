@@ -545,26 +545,46 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         assertEquals(parsedDateTime.getYear(), todayMidday.getYear(), "Input doesn't contain selected date.");
     }
 
-    @IssueTracking("https://issues.jboss.org/browse/RF-12552")
-    @Test(groups = "4.Future")
+    @Test
+    @Templates(exclude = { "richExtendedDataTable", "richPopupPanel" })
     public void testMinDaysInFirstWeek() {
         calendarAttributes.set(CalendarAttributes.minDaysInFirstWeek, 1);
         //1.1.2011 starts with saturday => only 1 day in first weak
         DateTime firstOf2011 = firstOfJanuary2012.withYear(2011);
         calendar.setDateTime(firstOf2011);
-        CalendarWeek firstWeek = calendar.openPopup().getDayPicker().getWeek(1);
-        List<CalendarDay> days = firstWeek.getCalendarDays();
-        days.removeAll(calendar.openPopup().getDayPicker().getBoundaryDays());
+        CalendarWeek firstDisplayedWeek = calendar.openPopup().getDayPicker().getWeek(1);
+        int secondDisplayedWeekNumber = calendar.openPopup().getDayPicker()
+                .getWeek(2).getWeekNumber();
+        CalendarDays days = firstDisplayedWeek.getCalendarDays().removeSpecificDays(DayType.boundaryDay);
 
-        assertTrue(days.size() >= 1, "The first week should contain at least 1 day");
+        assertEquals(days.size(), 1, "Month days in first displayed week.");
+        assertEquals(firstDisplayedWeek.getWeekNumber().intValue(), 1, "First displayed week number.");
+        assertEquals(secondDisplayedWeekNumber, 2, "Second displayed week number.");
 
         calendarAttributes.set(CalendarAttributes.minDaysInFirstWeek, 2);
-        calendar.setDateTime(firstOf2011);
-        firstWeek = calendar.openPopup().getDayPicker().getWeek(1);
-        days = firstWeek.getCalendarDays();
-        days.removeAll(calendar.openPopup().getDayPicker().getBoundaryDays());
 
-        assertTrue(days.size() >= 2, "The first week should contain at least 2 days");
+        firstDisplayedWeek = calendar.openPopup().getDayPicker().getWeek(1);
+        secondDisplayedWeekNumber = calendar.openPopup().getDayPicker()
+                .getWeek(2).getWeekNumber();
+        days = firstDisplayedWeek.getCalendarDays().removeSpecificDays(DayType.boundaryDay);
+
+        assertEquals(days.size(), 1, "Month days in first displayed week.");
+        assertEquals(firstDisplayedWeek.getWeekNumber().intValue(), 53, "First displayed week number.");
+        assertEquals(secondDisplayedWeekNumber, 1, "Second displayed week number.");
+    }
+
+    @IssueTracking("https://issues.jboss.org/browse/RF-12552")
+    @Test(groups = "4.Future")
+    @Templates(value = "richExtendedDataTable")
+    public void testMinDaysInFirstWeekInEDT() {
+        testMinDaysInFirstWeek();
+    }
+
+    @IssueTracking("https://issues.jboss.org/browse/RF-12552")
+    @Test(groups = "4.Future")
+    @Templates(value = "richPopupPanel")
+    public void testMinDaysInFirstWeekInPopupPanel() {
+        testMinDaysInFirstWeek();
     }
 
     @Test
