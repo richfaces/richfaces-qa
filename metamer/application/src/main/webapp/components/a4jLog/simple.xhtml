@@ -39,13 +39,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="component">
             <h:inputText id="nameInput" styleClass="nameInput" value="#{a4jLogBean.name}" />
             <a4j:commandButton id="submitButton" value="Submit" render="out" execute="@form" />
-            <input type="button" id="debugButton" value="Debug Message"
+            <input type="button" id="debugButton" name="debugButton" value="Debug Message"
                    onclick="eval('RichFaces.log.debug(\'' + jQuery('input[type=text][id$=nameInput]').val() + '\')')"/>
-            <input type="button" id="infoButton" value="Info Message"
+            <input type="button" id="infoButton" name="infoButton" value="Info Message"
                    onclick="eval('RichFaces.log.info(\'' + jQuery('input[type=text][id$=nameInput]').val() + '\')')"/>
-            <input type="button" id="warnButton" value="Warning Message"
+            <input type="button" id="warnButton" name="warnButton" value="Warning Message"
                    onclick="eval('RichFaces.log.warn(\'' + jQuery('input[type=text][id$=nameInput]').val() + '\')')"/>
-            <input type="button" id="errorButton" value="Error Message" 
+            <input type="button" id="errorButton" name="errorButton" value="Error Message" 
                    onclick="eval('RichFaces.log.error(\'' + jQuery('input[type=text][id$=nameInput]').val() + '\')')"/>
             <br/>
 
