@@ -45,15 +45,15 @@ public class RichFacesTimeEditor implements TimeEditor {
     private WebElement root;
     //
     private WebDriver driver = GrapheneContext.getProxy();
-    @FindBy(xpath = "//td[@class='rf-cal-timepicker-inp']/table/tbody/tr/td/table[tbody/tr/td/input[contains(@id, 'TimeHours')]]")
+    @FindBy(xpath = ".//td[@class='rf-cal-timepicker-inp']/table/tbody/tr/td/table[tbody/tr/td/input[contains(@id, 'TimeHours')]]")
     private RichFacesHoursSpinner12 hoursSpinner12;
-    @FindBy(xpath = "//td[@class='rf-cal-timepicker-inp']/table/tbody/tr/td/table[tbody/tr/td/input[contains(@id, 'TimeHours')]]")
+    @FindBy(xpath = ".//td[@class='rf-cal-timepicker-inp']/table/tbody/tr/td/table[tbody/tr/td/input[contains(@id, 'TimeHours')]]")
     private RichFacesHoursSpinner24 hoursSpinner24;
-    @FindBy(xpath = "//td[@class='rf-cal-timepicker-inp']/table/tbody/tr/td/table[tbody/tr/td/input[contains(@id, 'TimeMinutes')]]")
+    @FindBy(xpath = ".//td[@class='rf-cal-timepicker-inp']/table/tbody/tr/td/table[tbody/tr/td/input[contains(@id, 'TimeMinutes')]]")
     private RichFacesTimeSpinner minutesSpinner;
-    @FindBy(xpath = "//td[@class='rf-cal-timepicker-inp']/table/tbody/tr/td/table[tbody/tr/td/input[contains(@id, 'TimeSeconds')]]")
+    @FindBy(xpath = ".//td[@class='rf-cal-timepicker-inp']/table/tbody/tr/td/table[tbody/tr/td/input[contains(@id, 'TimeSeconds')]]")
     private RichFacesTimeSpinner secondsSpinner;
-    @FindBy(xpath = "//td[@class='rf-cal-timepicker-inp']/table/tbody/tr/td/table[tbody/tr/td/input[contains(@id, 'TimeSign')]]")
+    @FindBy(xpath = ".//td[@class='rf-cal-timepicker-inp']/table/tbody/tr/td/table[tbody/tr/td/input[contains(@id, 'TimeSign')]]")
     private RichFacesTimeSignSpinner timeSignSpinner;
     //
     @FindBy(css = "div[id$=TimeEditorButtonOk]")

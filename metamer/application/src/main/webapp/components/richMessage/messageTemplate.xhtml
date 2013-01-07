@@ -66,8 +66,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <input id="setCorrectValuesButton" type="button" value="set correct values" onclick="command('correct')"/>
-            <input id="setWrongValuesButton" type="button" value="set wrong values" onclick="command('wrong')"/>
+            <input id="setCorrectValuesButton" type="button" name="setCorrectValuesButton" value="set correct values" onclick="command('correct')"/>
+            <input id="setWrongValuesButton" type="button" name="setWrongValuesButton" value="set wrong values" onclick="command('wrong')"/>
 
             <rich:message id="simpleInputMsg"
                           ajaxRendered="#{richMessageBean.attributes['ajaxRendered'].value}" 

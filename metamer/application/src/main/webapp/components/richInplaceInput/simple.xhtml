@@ -104,16 +104,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <br/><br/>
                 On click:
                 <br/>
-                <input id="getInput" type="button" value="getInput(), and click on it" onclick="#{rich:component('inplaceInput')}.getInput().click()" />
-                <input id="getValue" type="button" value="getValue()" onclick="$('[id$=value]').val(String(#{rich:component('inplaceInput')}.getValue()))" />
-                <input id="isValueChanged" type="button" value="isValueChanged()" onclick="$('[id$=value]').val(String(#{rich:component('inplaceInput')}.isValueChanged()))" />
-                <input id="setValue" type="button" value="setValue('Completely different value')" onclick="#{rich:component('inplaceInput')}.setValue('Completely different value')" />
+                <input id="getInput" type="button" name="getInput" value="getInput(), and click on it" onclick="#{rich:component('inplaceInput')}.getInput().click()" />
+                <input id="getValue" type="button" name="getValue" value="getValue()" onclick="$('[id$=value]').val(String(#{rich:component('inplaceInput')}.getValue()))" />
+                <input id="isValueChanged" type="button" name="isValueChanged" value="isValueChanged()" onclick="$('[id$=value]').val(String(#{rich:component('inplaceInput')}.isValueChanged()))" />
+                <input id="setValue" type="button" name="setValue" value="setValue('Completely different value')" onclick="#{rich:component('inplaceInput')}.setValue('Completely different value')" />
                 <br/><br/>
                 On mouseover:
                 <br/>
-                <input id="cancel" type="button" value="cancel()" onmouseover="#{rich:component('inplaceInput')}.cancel()" />
-                <input id="isEditState" type="button" value="isEditState()" onmouseover="$('[id$=value]').val(String(#{rich:component('inplaceInput')}.isEditState()))" />
-                <input id="save" type="button" value="save()" onmouseover="#{rich:component('inplaceInput')}.save()" />
+                <input id="cancel" type="button" name="cancel" value="cancel()" onmouseover="#{rich:component('inplaceInput')}.cancel()" />
+                <input id="isEditState" type="button" name="isEditState" value="isEditState()" onmouseover="$('[id$=value]').val(String(#{rich:component('inplaceInput')}.isEditState()))" />
+                <input id="save" type="button" name="save" value="save()" onmouseover="#{rich:component('inplaceInput')}.save()" />
             </fieldset>
 
 
