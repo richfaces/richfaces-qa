@@ -39,6 +39,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="component">
             <rich:inputNumberSlider id="slider"
                                     accesskey="#{richInputNumberSliderBean.attributes['accesskey'].value}"
+                                    converterMessage="#{richInputNumberSliderBean.attributes['converterMessage'].value}"
                                     decreaseClass="#{richInputNumberSliderBean.attributes['decreaseClass'].value}"
                                     decreaseSelectedClass="#{richInputNumberSliderBean.attributes['decreaseSelectedClass'].value}"
                                     delay="#{richInputNumberSliderBean.attributes['delay'].value}"
@@ -101,6 +102,20 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/><br/>
 
             output: <h:outputText id="output" value="#{richInputNumberSliderBean.attributes['value'].value}"/>
+
+            <br/><br/>
+            <fieldset>
+                <legend>JavaScript API</legend> 
+                Output value for all get methods: <h:inputText id="value"/>
+                <br/><br/>
+                On click:
+                <br/>
+                <input id="decrease" name="decrease" type="button" value="decrease()" onclick="#{rich:component('slider')}.decrease()" />
+                <input id="getValue" name="getValue" type="button" value="getValue()" onclick="$('[id$=value]').val(String(#{rich:component('slider')}.getValue()))" />
+                <input id="increase" name="increase" type="button" value="increase()" onclick="#{rich:component('slider')}.increase()" />
+                <input id="setValue" name="setValue" type="button" value="setValue('5')" onclick="#{rich:component('slider')}.setValue(5)" />
+            </fieldset>
+
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

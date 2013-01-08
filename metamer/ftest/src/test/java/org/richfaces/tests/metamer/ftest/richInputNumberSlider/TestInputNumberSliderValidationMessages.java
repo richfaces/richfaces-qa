@@ -21,67 +21,57 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.richfaces.tests.metamer.ftest.abstractions.AbstractValidationMessagesTest;
+import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public enum InputNumberSliderAttributes implements AttributeEnum {
+public class TestInputNumberSliderValidationMessages extends AbstractValidationMessagesTest {
 
-    accesskey,
-    binding,
-    converter,
-    converterMessage,
-    decreaseClass,
-    decreaseSelectedClass,
-    delay,
-    dir,
-    disabled,
-    enableManualInput,
-    handleClass,
-    handleSelectedClass,
-    id,
-    immediate,
-    increaseClass,
-    increaseSelectedClass,
-    inputClass,
-    inputPosition,
-    inputSize,
-    label,
-    lang,
-    maxValue,
-    maxlength,
-    minValue,
-    onblur,
-    onchange,
-    onclick,
-    ondblclick,
-    onfocus,
-    onkeydown,
-    onkeypress,
-    onkeyup,
-    onmousedown,
-    onmousemove,
-    onmouseout,
-    onmouseover,
-    onmouseup,
-    onselect,
-    rendered,
-    required,
-    requiredMessage,
-    showArrows,
-    showBoundaryValues,
-    showInput,
-    showTooltip,
-    step,
-    style,
-    styleClass,
-    tabindex,
-    title,
-    tooltipClass,
-    trackClass,
-    validator,
-    validatorMessage,
-    value,
-    valueChangeListener
+    public TestInputNumberSliderValidationMessages() {
+        super("richInputNumberSlider");
+    }
+
+    @Test
+    @Override
+    public void testInit() {
+        super.testInit();
+    }
+
+    @Test
+    @Override
+    public void testJSR303MessagesJSF() {
+        super.testJSR303MessagesJSF();
+    }
+
+    @Test
+    @Override
+    public void testJSR303MessagesRF() {
+        super.testJSR303MessagesRF();
+    }
+
+    @Test
+    @Override
+    public void testCSVMessagesJSF() {
+        super.testCSVMessagesJSF();
+    }
+
+    @Test
+    @Override
+    public void testCSVMessagesRF() {
+        super.testCSVMessagesRF();
+    }
+
+    @Test
+    @Override
+    public void testJSFMessagesJSF() {
+        super.testJSFMessagesJSF();
+    }
+
+    @Test
+    @Override
+    public void testJSFMessagesRF() {
+        super.testJSFMessagesRF();
+    }
 }

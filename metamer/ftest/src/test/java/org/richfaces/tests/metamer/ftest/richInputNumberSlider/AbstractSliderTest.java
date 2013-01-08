@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -21,153 +21,146 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
-import static org.jboss.arquillian.ajocado.Graphene.textEquals;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inputNumberSliderAttributes;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
-import java.net.URL;
-
-import org.jboss.arquillian.ajocado.geometry.Point;
-import org.jboss.arquillian.ajocado.javascript.JavaScript;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
+import org.richfaces.tests.page.fragments.impl.input.inputNumberSlider.RichFacesInputNumberSlider;
 
 /**
  * Abstract test case for rich:inputNumberSlider.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22499 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractSliderTest extends AbstractGrapheneTest {
+public abstract class AbstractSliderTest extends AbstractWebDriverTest {
 
-    protected JQueryLocator slider = pjq("span[id$=slider]");
-    protected JQueryLocator input = pjq("input.rf-insl-inp");
-    protected JQueryLocator left = pjq("span.rf-insl-dec");
-    protected JQueryLocator right = pjq("span.rf-insl-inc");
-    protected JQueryLocator minBoundary = pjq("span.rf-insl-mn");
-    protected JQueryLocator maxBoundary = pjq("span.rf-insl-mx");
-    protected JQueryLocator track = pjq("span.rf-insl-trc");
-    protected JQueryLocator handle = pjq("span.rf-insl-hnd");
-    protected JQueryLocator tooltip = pjq("span.rf-insl-tt");
-    protected JQueryLocator output = pjq("span[id$=output]");
-    protected String[] correctNumbers = {"-10", "-5", "-1", "0", "1", "5", "10"};
-    protected String[] smallNumbers = {"-11", "-15", "-100"};
-    protected String[] bigNumbers = {"11", "15", "100"};
-    protected String[] decimalNumbers = {"1.4999", "5.6", "7.0001", "-5.50001", "-9.9", "1.222e0", "0e0", "-5.50001e0"};
+    @Page
+    MetamerPage page;
+    //
+    protected static final int DEFAULT_MAX_VALUE = 10;
+    protected static final String DEFAULT_MAX_VALUE_STR = "10";
+    protected static final int DEFAULT_MIN_VALUE = -10;
+    protected static final String DEFAULT_MIN_VALUE_STR = "-10";
+    //
+    protected String[] correctNumbers = { "-10", "-5", "-1", "0", "1", "5", "10" };
+    protected String[] smallNumbers = { "-11", "-15", "-100" };
+    protected String[] bigNumbers = { "11", "15", "100" };
+    protected String[] decimalNumbers = { "1.4999", "5.6", "7.0001", "-5.50001", "-9.9", "1.222e0", "0e0", "-5.50001e0" };
+    //
     @Inject
     @Use(empty = true)
     protected String number;
     @Inject
     @Use(empty = true)
     protected Integer delay;
-    protected JavaScript clickLeft = new JavaScript("jQuery(\"" + left.getRawLocator() + "\").mousedown().mouseup()");
-    protected JavaScript clickRight = new JavaScript("jQuery(\"" + right.getRawLocator() + "\").mousedown().mouseup()");
+    //
+    @FindBy(css = "span[id$=slider]")
+    protected RichFacesInputNumberSlider slider;
+    @FindBy(css = "span[id$=output]")
+    protected WebElement output;
 
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richInputNumberSlider/simple.xhtml");
+    protected Action moveWithSliderActionWithWaitRequest(final int pixels) {
+        return new Action() {
+            @Override
+            public void perform() {
+                MetamerPage.waitRequest(slider.getNumberSlider(), WaitRequestType.XHR).moveHandleToPointInTraceHorizontally(pixels);
+            }
+        };
     }
 
-    public void testTypeIntoInputCorrect() {
-        String reqTime = selenium.getText(time);
-        guardXhr(selenium).type(input, number);
-        waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
+    public void testClickLeftArrow() {
+        int startValue = slider.getInput().getIntValue();
+        int clicks = 1;
 
-        assertEquals(selenium.getText(output), number, "Output was not updated.");
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, 500);
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
+
+        MetamerPage.waitRequest(slider, WaitRequestType.XHR).decreaseWithArrows();
+
+        Graphene.waitGui().withMessage("Output was not updated.").until(Graphene.element(output).textEquals(String.valueOf(startValue - clicks)));
     }
 
-    public void testTypeIntoInputSmall() {
-        String reqTime = selenium.getText(time);
-        guardXhr(selenium).type(input, number);
-        waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
+    public void testClickRightArrow() {
+        int startValue = slider.getInput().getIntValue();
+        int clicks = 1;
 
-        assertEquals(selenium.getText(output), "-10", "Output was not updated.");
-        assertEquals(selenium.getValue(input), "-10", "Input was not updated.");
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, 500);
+        inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
+
+        MetamerPage.waitRequest(slider, WaitRequestType.XHR).increaseWithArrows();
+
+        Graphene.waitGui().withMessage("Output was not updated.").until(Graphene.element(output).textEquals(String.valueOf(startValue + clicks)));
+    }
+
+    public void testMoveWithSlider() {
+        moveWithSliderActionWithWaitRequest(0).perform();
+        assertEquals(slider.getInput().getStringValue(), "-10", "Input was not updated.");
+        assertEquals(output.getText(), "-10", "Output was not updated.");
+
+        moveWithSliderActionWithWaitRequest(35).perform();
+        assertEquals(slider.getInput().getStringValue(), "-7", "Input was not updated.");
+        assertEquals(output.getText(), "-7", "Output was not updated.");
+
+        moveWithSliderActionWithWaitRequest(195).perform();
+        assertEquals(slider.getInput().getStringValue(), "10", "Input was not updated.");
+        assertEquals(output.getText(), "10", "Output was not updated.");
     }
 
     public void testTypeIntoInputBig() {
-        String reqTime = selenium.getText(time);
-        guardXhr(selenium).type(input, number);
-        waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
+        typeToInputActionWithXHRWaitRequest(number).perform();
 
-        assertEquals(selenium.getText(output), "10", "Output was not updated.");
-        assertEquals(selenium.getValue(input), "10", "Input was not updated.");
+        assertEquals(output.getText(), DEFAULT_MAX_VALUE_STR, "Output was not updated.");
+        assertEquals(slider.getInput().getIntValue(), DEFAULT_MAX_VALUE, "Input was not updated.");
+    }
+
+    public void testTypeIntoInputCorrect() {
+        typeToInputActionWithXHRWaitRequest(number).perform();
+        assertEquals(output.getText(), number, "Output was not updated.");
     }
 
     public void testTypeIntoInputDecimal() {
-        String reqTime = selenium.getText(time);
-        guardXhr(selenium).type(input, number);
-        waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
+        typeToInputActionWithXHRWaitRequest(number).perform();
 
         Double newNumber = new Double(number);
-
-        assertEquals(selenium.getText(output), newNumber == 0 ? "0" : newNumber.toString(), "Output was not updated.");
-        assertEquals(selenium.getValue(input), newNumber == 0 ? "0" : newNumber.toString(), "Input was not updated.");
+        assertEquals(output.getText(), newNumber == 0 ? "0" : newNumber.toString(), "Output was not updated.");
+        assertEquals(slider.getInput().getStringValue(), newNumber == 0 ? "0" : newNumber.toString(), "Input was not updated.");
     }
 
     public void testTypeIntoInputNotNumber() {
-        guardNoRequest(selenium).type(input, "aaa");
-        assertEquals(selenium.getText(output), "2", "Output should not be updated.");
-        assertEquals(selenium.getValue(input), "2", "Input should not be updated.");
+        typeToInputActionWithWaitRequest("RF 4", WaitRequestType.NONE).perform();
+
+        assertEquals(output.getText(), "2", "Output should not be updated.");
+        assertEquals(slider.getInput().getStringValue(), "2", "Input should not be updated.");
     }
 
-    public void testClickLeft() {
-        selenium.type(pjq("input[type=text][id$=delayInput]"), "500");
-        selenium.waitForPageToLoad();
-        selenium.click(pjq("input[type=radio][name$=showArrowsInput][value=true]"));
-        selenium.waitForPageToLoad();
+    public void testTypeIntoInputSmall() {
+        typeToInputActionWithXHRWaitRequest(number).perform();
 
-        selenium.runScript(clickLeft);
-        selenium.runScript(clickLeft);
-        selenium.runScript(clickLeft);
-        selenium.runScript(clickLeft);
-        waitGui.failWith("Output was not updated.").until(textEquals.locator(output).text("-2"));
+        assertEquals(output.getText(), DEFAULT_MIN_VALUE_STR, "Output was not updated.");
+        assertEquals(slider.getInput().getIntValue(), DEFAULT_MIN_VALUE, "Input was not updated.");
     }
 
-    public void testClickRight() {
-        selenium.type(pjq("input[type=text][id$=delayInput]"), "500");
-        selenium.waitForPageToLoad();
-        selenium.click(pjq("input[type=radio][name$=showArrowsInput][value=true]"));
-        selenium.waitForPageToLoad();
-
-        selenium.runScript(clickRight);
-        selenium.runScript(clickRight);
-        selenium.runScript(clickRight);
-        selenium.runScript(clickRight);
-        waitGui.failWith("Output was not updated.").until(textEquals.locator(output).text("6"));
+    protected Action typeToInputActionWithWaitRequest(final String num, final WaitRequestType type) {
+        return new Action() {
+            @Override
+            public void perform() {
+                MetamerPage.waitRequest(slider.getInput().clear(ClearType.JS).fillIn(num), type).trigger("blur");
+            }
+        };
     }
 
-    public void testClick() {
-        String reqTime = selenium.getText(time);
-        guardXhr(selenium).mouseDownAt(track, new Point(0, 0));
-
-        waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
-        assertEquals(selenium.getText(output), "-10", "Output was not updated.");
-        int margin = selenium.getElementPositionLeft(handle) - selenium.getElementPositionLeft(track);
-        assertTrue(margin <= 3, "Left margin of handle should be 0 (was " + margin + ").");
-
-        reqTime = selenium.getText(time);
-        guardXhr(selenium).mouseDownAt(track, new Point(30, 0));
-        waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
-
-        assertEquals(selenium.getText(output), "-7", "Output was not updated.");
-        margin = selenium.getElementPositionLeft(handle) - selenium.getElementPositionLeft(track);
-        assertTrue(margin >= 27 && margin <= 33, "Left margin of handle should be between 27 and 33 (was " + margin + ").");
-
-        reqTime = selenium.getText(time);
-        guardXhr(selenium).mouseDownAt(track, new Point(195, 0));
-        waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
-        assertEquals(selenium.getText(output), "10", "Output was not updated.");
-        margin = selenium.getElementPositionLeft(handle) - selenium.getElementPositionLeft(track);
-        assertTrue(margin >= 192 && margin <= 198, "Left margin of handle should be between 192 and 198 (was " + margin + ").");
+    protected Action typeToInputActionWithXHRWaitRequest(final String num) {
+        return typeToInputActionWithWaitRequest(num, WaitRequestType.XHR);
     }
 }

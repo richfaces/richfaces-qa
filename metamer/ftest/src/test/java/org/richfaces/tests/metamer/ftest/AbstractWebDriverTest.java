@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -32,7 +32,6 @@ import java.util.List;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -43,9 +42,6 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.iphone.IPhoneDriver;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
-import org.openqa.selenium.support.pagefactory.FieldDecorator;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -58,10 +54,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     @Drone
     protected WebDriver driver;
     protected static final int WAIT_TIME = 5;// s
-    private static final int NUMBER_OF_TRIES = 5;
     protected static final int MINOR_WAIT_TIME = 50;// ms
     protected static final int TRIES = 20;//for guardListSize and expectedReturnJS
-    private FieldDecorator fieldDecorator;
     protected DriverType driverType;
 
     public enum DriverType {
@@ -104,11 +98,6 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         driverType = DriverType.getCurrentType(driver);
     }
 
-//    @BeforeMethod(alwaysRun = true, dependsOnMethods = { "loadPage" })
-//    public void initializePage() {
-//        injectWebElementsToPage(page);
-//    }
-
     /**
      * Waiting method. Waits number of milis defined by @milis
      *
@@ -119,6 +108,22 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             Thread.sleep(milis);
         } catch (InterruptedException ignored) {
         }
+    }
+
+    protected void assertNotPresent(WebElement element, String msg) {
+        assertTrue(Graphene.element(element).not().isPresent().apply(driver), msg);
+    }
+
+    protected void assertNotVisible(WebElement element, String msg) {
+        assertTrue(Graphene.element(element).not().isVisible().apply(driver), msg);
+    }
+
+    protected void assertPresent(WebElement element, String msg) {
+        assertTrue(Graphene.element(element).isPresent().apply(driver), msg);
+    }
+
+    protected void assertVisible(WebElement element, String msg) {
+        assertTrue(Graphene.element(element).isVisible().apply(driver), msg);
     }
 
     /**
@@ -135,10 +140,9 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Tries to execute JavaScript script for few times with some wait time
-     * between tries and expecting a predicted result. Method waits for expected
-     * string defined in @expectedValue. Returns single trimmed String with
-     * expected value or what it found or null.
+     * Tries to execute JavaScript script for few times
+     * and expects a @expectedValue as result. Returns single trimmed String
+     * with expected value or what it found or null.
      *
      * @param expectedValue expected return value of javaScript
      * @param script whole JavaScript that will be executed
@@ -146,27 +150,17 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * @return single and trimmed string or null
      */
     protected String expectedReturnJS(String script, String expectedValue, Object... args) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
         String result = null;
         for (int i = 0; i < TRIES; i++) {
-            Object executeScript = js.executeScript(script, args);
-            if (executeScript != null) {
-                result = ((String) js.executeScript(script, args)).trim();
+            Object executedScriptResult = executeJS(script, args);
+            if (executedScriptResult != null) {
+                result = ((String) executedScriptResult).trim();
                 if (result.equals(expectedValue)) {
-                    break;
+                    return result;
                 }
             }
-            waiting(MINOR_WAIT_TIME);
         }
         return result;
-    }
-
-    protected void injectWebElementsToPage(Object page) {
-        if (fieldDecorator == null) {
-            fieldDecorator = new StaleReferenceAwareFieldDecorator(new DefaultElementLocatorFactory(driver),
-                    NUMBER_OF_TRIES);
-        }
-        PageFactory.initElements(fieldDecorator, page);
     }
 
     /**
@@ -276,7 +270,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     /**
      * A helper method for testing JavaScripts events. It sets "metamerEvents +=
-     * "testedAttribute" to the input field and fires the event using jQuery.
+     * "testedAttribute" to the input field of the tested attribute and fires
+     * the event @event using jQuery on the given element @element.
      * Then it checks if the event was fired. This method should only be used
      * for attributes consistent with DOM events (e.g. (on)click,
      * (on)change...).
@@ -297,7 +292,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     /**
      * A helper method for testing JavaScripts events. It sets "metamerEvents +=
-     * "testedAttribute" to the input field and fires the event @event using jQuery.
+     * "testedAttribute" to the input field of the tested attribute and fires
+     * the event @event using jQuery on the element @element.
      * Then it checks if the event was fired.
      *
      * @see testFireEventWithJS(WebElement element, Attributes<T> attributes, T testedAttribute)
@@ -336,16 +332,14 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Method for firing JavaScript events on given element.
+     * Method for firing JavaScript events on given element using jQuery.
      *
      * @param element
      * @param event
      */
     protected void fireEvent(WebElement element, Event event) {
-        String elementID = element.getAttribute("id");
-        String eventname = event.getEventName();
-        String jQueryCmd = String.format("$(\"[id='%s']\").trigger('%s')", elementID, eventname);
-        executeJS(jQueryCmd);
+        String jQueryCmd = String.format("jQuery(arguments[0]).trigger('%s')", event.getEventName());
+        executeJS(jQueryCmd, element);
     }
 
     /**
@@ -367,7 +361,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             labelChangeAction.perform();
         }
         Graphene.waitModel().until(Graphene.element(element).isPresent());
-        assertTrue(Graphene.element(element).textEquals(rf).apply(driver), testedAttribute + " does not work, label has not changed.");
+        Graphene.waitModel().until(testedAttribute + " does not work, label has not changed.").element(element).text().equalTo(rf);
     }
 
     /**

@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -29,14 +29,13 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
 
-
 /**
  * Test case for page /faces/components/richInputNumberSlider/fAjax.xhtml
  *
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
- * @version $Revision: 23011 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichSliderFAjax extends AbstractSliderTest {
+public class TestInputNumberSliderFAjax extends AbstractSliderTest {
 
     @Override
     public URL getTestUrl() {
@@ -44,17 +43,22 @@ public class TestRichSliderFAjax extends AbstractSliderTest {
     }
 
     @Test
-    @Use(field = "number", value = "correctNumbers")
     @Override
-    public void testTypeIntoInputCorrect() {
-        super.testTypeIntoInputCorrect();
+    public void testClickLeftArrow() {
+        super.testClickLeftArrow();
     }
 
     @Test
-    @Use(field = "number", value = "smallNumbers")
     @Override
-    public void testTypeIntoInputSmall() {
-        super.testTypeIntoInputSmall();
+    public void testClickRightArrow() {
+        super.testClickRightArrow();
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11314")
+    @Override
+    public void testMoveWithSlider() {
+        super.testMoveWithSlider();
     }
 
     @Test
@@ -62,6 +66,13 @@ public class TestRichSliderFAjax extends AbstractSliderTest {
     @Override
     public void testTypeIntoInputBig() {
         super.testTypeIntoInputBig();
+    }
+
+    @Test
+    @Use(field = "number", value = "correctNumbers")
+    @Override
+    public void testTypeIntoInputCorrect() {
+        super.testTypeIntoInputCorrect();
     }
 
     @Test
@@ -78,22 +89,9 @@ public class TestRichSliderFAjax extends AbstractSliderTest {
     }
 
     @Test
+    @Use(field = "number", value = "smallNumbers")
     @Override
-    public void testClickLeft() {
-        super.testClickLeft();
+    public void testTypeIntoInputSmall() {
+        super.testTypeIntoInputSmall();
     }
-
-    @Test
-    @Override
-    public void testClickRight() {
-        super.testClickRight();
-    }
-
-    @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11314")
-    @Override
-    public void testClick() {
-        super.testClick();
-    }
-
 }
