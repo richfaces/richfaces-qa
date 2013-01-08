@@ -118,27 +118,27 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <h:panelGrid columns="4">
                 not empty
                 <ui:insert name="notEmpty"/>
-                <input id="notEmptyCorrect" type="button" value="set correct value" onclick="command('correct', 'notEmpty')"/>
-                <input id="notEmptyWrong" type="button" value="set wrong value" onclick="command('wrong', 'notEmpty')"/>
+                <input id="notEmptyCorrect" name="notEmptyCorrect" type="button" value="set correct value" onclick="command('correct', 'notEmpty')"/>
+                <input id="notEmptyWrong" name="notEmptyWrong" type="button" value="set wrong value" onclick="command('wrong', 'notEmpty')"/>
                 <rich:message id="notEmptyMsg" for="notEmpty"/>
 
 
                 pattern [a-z].*
                 <ui:insert name="pattern"/>
-                <input id="patternCorrect" type="button" value="set correct value" onclick="command('correct', 'pattern')"/>
-                <input id="patternWrong" type="button" value="set wrong value" onclick="command('wrong', 'pattern')"/>
+                <input id="patternCorrect" name="patternCorrect" type="button" value="set correct value" onclick="command('correct', 'pattern')"/>
+                <input id="patternWrong" name="patternWrong" type="button" value="set wrong value" onclick="command('wrong', 'pattern')"/>
                 <rich:message id="patternMsg" for="pattern"/>
 
                 size 3-6
                 <ui:insert name="size"/>
-                <input id="sizeCorrect" type="button" value="set correct value" onclick="command('correct', 'size')"/>
-                <input id="sizeWrong" type="button" value="set wrong value" onclick="command('wrong', 'size')"/>
+                <input id="sizeCorrect" name="sizeCorrect" type="button" value="set correct value" onclick="command('correct', 'size')"/>
+                <input id="sizeWrong" name="sizeWrong" type="button" value="set wrong value" onclick="command('wrong', 'size')"/>
                 <rich:message id="sizeMsg" for="size"/>
 
                 custom (RichFaces)
                 <ui:insert name="custom"/>
-                <input id="customCorrect" type="button" value="set correct value" onclick="command('correct', 'custom')"/>
-                <input id="customWrong" type="button" value="set wrong value" onclick="command('wrong', 'custom')"/>
+                <input id="customCorrect" name="customCorrect" type="button" value="set correct value" onclick="command('correct', 'custom')"/>
+                <input id="customWrong" name="customWrong" type="button" value="set wrong value" onclick="command('wrong', 'custom')"/>
                 <rich:message id="customMsg" for="custom"/>
             </h:panelGrid>
             <br/><br/>
