@@ -1,6 +1,6 @@
 /**
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
+ * Copyright 2012-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -21,7 +21,9 @@
  */
 package org.richfaces.tests.page.fragments.impl;
 
+import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 
@@ -31,6 +33,10 @@ import org.openqa.selenium.WebElement;
  */
 public final class Utils {
 
+    /**
+     * Returns Locations of input element.
+     * @see Locations
+     */
     public static Locations getLocations(WebElement root) {
         Point topLeft = root.getLocation();
         Dimension dimension = root.getSize();
@@ -38,5 +44,26 @@ public final class Utils {
         Point bottomRight = topRight.moveBy(0, dimension.getHeight());
         Point bottomLeft = topLeft.moveBy(0, dimension.getHeight());
         return new Locations(topLeft, topRight, bottomLeft, bottomRight);
+    }
+
+    /**
+     * Executes jQuery command on input element. E.g. to trigger click use jQ("click()", element).
+     * @param cmd command to be executed
+     * @param element element on which the command will be executed
+     */
+    public static void jQ(String cmd, WebElement element) {
+        JavascriptExecutor executor = (JavascriptExecutor) GrapheneContext.getProxy();
+        String jQueryCmd = String.format("jQuery(arguments[0]).%s", cmd);
+        executor.executeScript(jQueryCmd, element);
+    }
+
+    /**
+     * Executes jQuery trigger command on input element. Useful for easy triggering
+     * of JavaScript events like click, dblclick, mouseout...
+     * @param event event to be triggered
+     * @param element element on which the command will be executed
+     */
+    public static void triggerJQ(String event, WebElement element) {
+        jQ(String.format("trigger('%s')", event), element);
     }
 }

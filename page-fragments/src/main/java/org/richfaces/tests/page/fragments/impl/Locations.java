@@ -1,6 +1,6 @@
 /**
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
+ * Copyright 2012-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -23,6 +23,7 @@ package org.richfaces.tests.page.fragments.impl;
 
 import java.util.Arrays;
 import java.util.Iterator;
+
 import org.openqa.selenium.Point;
 
 /**
@@ -43,6 +44,18 @@ public class Locations implements Iterable<Point> {
         this.bottomRight = bottomRight;
     }
 
+    public Point getBottomLeft() {
+        return bottomLeft;
+    }
+
+    public Point getBottomRight() {
+        return bottomRight;
+    }
+
+    public int getHeight() {
+        return bottomRight.y - topRight.y;
+    }
+
     public Point getTopLeft() {
         return topLeft;
     }
@@ -51,12 +64,13 @@ public class Locations implements Iterable<Point> {
         return topRight;
     }
 
-    public Point getBottomLeft() {
-        return bottomLeft;
+    public int getWidth() {
+        return topRight.x - topLeft.x;
     }
 
-    public Point getBottomRight() {
-        return bottomRight;
+    @Override
+    public Iterator<Point> iterator() {
+        return Arrays.asList(topLeft, topRight, bottomLeft, bottomRight).iterator();
     }
 
     /**
@@ -68,11 +82,6 @@ public class Locations implements Iterable<Point> {
     public Locations moveAllBy(int x, int y) {
         return new Locations(topLeft.moveBy(x, y), topRight.moveBy(x, y),
                 bottomLeft.moveBy(x, y), bottomRight.moveBy(x, y));
-    }
-
-    @Override
-    public Iterator<Point> iterator() {
-        return Arrays.asList(topLeft, topRight, bottomLeft, bottomRight).iterator();
     }
 
     @Override
