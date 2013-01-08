@@ -110,10 +110,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <br/><br/>
                 On click:
                 <br/>
-                <input id="decrease" type="button" value="decrease()" onclick="#{rich:component('slider')}.decrease()" />
-                <input id="getValue" type="button" value="getValue()" onclick="$('[id$=value]').val(String(#{rich:component('slider')}.getValue()))" />
-                <input id="increase" type="button" value="increase()" onclick="#{rich:component('slider')}.increase()" />
-                <input id="setValue" type="button" value="setValue('5')" onclick="#{rich:component('slider')}.setValue(5)" />
+                <input id="decrease" name="decrease" type="button" value="decrease()" onclick="#{rich:component('slider')}.decrease()" />
+                <input id="getValue" name="getValue" type="button" value="getValue()" onclick="$('[id$=value]').val(String(#{rich:component('slider')}.getValue()))" />
+                <input id="increase" name="increase" type="button" value="increase()" onclick="#{rich:component('slider')}.increase()" />
+                <input id="setValue" name="setValue" type="button" value="setValue('5')" onclick="#{rich:component('slider')}.setValue(5)" />
             </fieldset>
 
         </ui:define>
