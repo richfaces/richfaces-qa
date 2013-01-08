@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2012-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -21,96 +21,46 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.input;
 
-import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.tests.page.fragments.impl.Utils;
 
 /**
  * Fragment for text input component. Note that the root of the component has to point to the actual input!
  *
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TextInputComponentImpl {
+public class TextInputComponentImpl implements TextInputComponent {
 
     @Root
     private WebElement root;
 
-    /**
-     * Fills in given text
-     *
-     * @param text
-     */
-    public void fillIn(String text) {
-        root.sendKeys(text);
-    }
-
-    /**
-     * Focuses this input.
-     */
-    public void focus() {
-        root.sendKeys("");
-    }
-
-    /**
-     * Retruns the actual WebElement of input
-     *
-     * @return
-     */
-    public WebElement getInput() {
-        return root;
-    }
-
-    /**
-     * Returns <code>String</code> value of this input.
-     *
-     * @return
-     */
-    public String getStringValue() {
-        return root.getAttribute("value");
-    }
-
-    /**
-     * Returns <code>int</code> value of this input.
-     *
-     * @throws NumberFormatException if the value of the input cannot be parsed as an integer
-     * @return
-     */
-    public int getIntValue() {
-        return Integer.valueOf(getStringValue());
-    }
-
-    /**
-     * <p>
-     * Clears the input. The method of clearing can be passed as argument to determine the way the input will be cleared
-     * </p>
-     *
-     * @param clearType
-     * @throws IllegalArgumentException when there is illegal number of arguments passed
-     */
-    public void clear(ClearType... clearType) {
-        if (clearType.length == 0) {
-            root.clear();
-            return;
-        }
-        if (clearType.length > 1) {
-            throw new IllegalArgumentException("The number of clear type method arguments should be one!");
-        }
-
+    @Override
+    public TextInputComponent clear(ClearType clearType) {
         int valueLength = root.getAttribute("value").length();
-
-        switch (clearType[0]) {
-            case BACK_SPACE: {
-                Actions builder = new Actions(GrapheneContext.getProxy());
+        Actions builder = new Actions(getWebDriver());
+        JavascriptExecutor executor = (JavascriptExecutor) getWebDriver();
+        switch (clearType) {
+            case BACKSPACE:
                 for (int i = 0; i < valueLength; i++) {
                     builder.sendKeys(root, Keys.BACK_SPACE);
                 }
                 builder.build().perform();
                 break;
-            }
-            case ESCAPE_SQ: {
+            case DELETE:
+                String ctrlADel = Keys.chord(Keys.CONTROL, "a", Keys.DELETE);
+                builder.sendKeys(root, ctrlADel);
+                builder.build().perform();
+                break;
+            case ESCAPE_SQ:
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < valueLength; i++) {
                     sb.append("\b");
@@ -118,14 +68,72 @@ public class TextInputComponentImpl {
                 root.sendKeys(sb.toString());
                 root.click();
                 break;
-            }
-            case DELETE: {
-                Actions builder = new Actions(GrapheneContext.getProxy());
-                String ctrlADel = Keys.chord(Keys.CONTROL, "a", Keys.DELETE);
-                builder.sendKeys(root, ctrlADel);
-
-                builder.build().perform();
-            }
+            case JS:
+                executor.executeScript("jQuery(arguments[0]).val('')", root);
+                break;
+            case WD:
+                root.clear();
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown type of clear method " + clearType);
         }
+        return this;
+    }
+
+    @Override
+    public TextInputComponent fillIn(String text) {
+        root.sendKeys(text);
+        return this;
+    }
+
+    @Override
+    public TextInputComponent focus() {
+        root.sendKeys("");
+        return this;
+    }
+
+    @Override
+    public WebElement getInput() {
+        return root;
+    }
+
+    @Override
+    public int getIntValue() {
+        return Integer.valueOf(getStringValue());
+    }
+
+    @Override
+    public String getStringValue() {
+        return root.getAttribute("value");
+    }
+
+    private WebDriver getWebDriver() {
+        return GrapheneContext.getProxy();
+    }
+
+    @Override
+    public ExpectedCondition<Boolean> isNotVisibleCondition() {
+        return Graphene.element(root).not().isVisible();
+    }
+
+    @Override
+    public boolean isVisible() {
+        return isVisibleCondition().apply(getWebDriver());
+    }
+
+    @Override
+    public ExpectedCondition<Boolean> isVisibleCondition() {
+        return Graphene.element(root).isVisible();
+    }
+
+    @Override
+    public void submit() {
+        root.submit();
+    }
+
+    @Override
+    public TextInputComponent trigger(String event) {
+        Utils.triggerJQ(event, root);
+        return this;
     }
 }
