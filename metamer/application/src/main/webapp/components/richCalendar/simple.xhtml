@@ -217,10 +217,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <br/>
                 Output value for all get methods: <h:inputText id="value"/>
                 <br/>
-                <input id="getValue" type="button" value="getValue()" onclick="$('[id$=value]').val(String(#{rich:component('calendar')}.getValue()))" />
-                <input id="getValueAsString" type="button" value="getValueAsString()" onclick="$('[id$=value]').val(#{rich:component('calendar')}.getValueAsString())" />
-                <input id="getCurrentMonth" type="button" value="getCurrentMonth()" onclick="$('[id$=value]').val(String(#{rich:component('calendar')}.getCurrentMonth()))" />
-                <input id="getCurrentYear" type="button" value="getCurrentYear()" onclick="$('[id$=value]').val(String(#{rich:component('calendar')}.getCurrentYear()))" />
+                <input id="getValue" name="getValue" type="button" value="getValue()" onclick="$('[id$=value]').val(String(#{rich:component('calendar')}.getValue()))" />
+                <input id="getValueAsString" name="getValueAsString" type="button" value="getValueAsString()" onclick="$('[id$=value]').val(#{rich:component('calendar')}.getValueAsString())" />
+                <input id="getCurrentMonth" name="getCurrentMonth" type="button" value="getCurrentMonth()" onclick="$('[id$=value]').val(String(#{rich:component('calendar')}.getCurrentMonth()))" />
+                <input id="getCurrentYear" name="getCurrentYear" type="button" value="getCurrentYear()" onclick="$('[id$=value]').val(String(#{rich:component('calendar')}.getCurrentYear()))" />
                 <br/>
             </fieldset>
         </ui:define>
