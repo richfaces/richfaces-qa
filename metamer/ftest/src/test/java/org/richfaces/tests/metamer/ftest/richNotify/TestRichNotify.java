@@ -95,8 +95,8 @@ public class TestRichNotify extends AbstractRichNotifyTest {
         assertTrue(selenium.isElementPresent(notify), "The stayTime is set to very high number and after some little delay the notify is not present.");
         // set the stayTime to <500>
         attributesNotify.set(NotifyAttributes.stayTime, 500);
-        // wait for <1000>
-        delay(1000);
+        // wait for <2000>
+        delay(2000);
         assertFalse(selenium.isElementPresent(notify), "The stayTime is set to 500 but after some delay the notify is still present.");
     }
 
@@ -190,10 +190,10 @@ public class TestRichNotify extends AbstractRichNotifyTest {
         }
         // set the stayTime to <500>
         attributesMessages.set(NotifyMessagesAttributes.stayTime, 500);
-        // produce messages and check whether the stay less then 1000 ms
+        // produce messages and check whether the stay less then 2000 ms
         for(String type : messages.keySet()) {
             produceMessage(messages.get(type), type, 1);
-            delay(1000);
+            delay(2000);
             assertFalse(selenium.isElementPresent(messages.get(type)), "The stayTime is set to 500 but after some delay the " + type + " message is still present.");
         }
     }
