@@ -83,28 +83,28 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <rich:tab id="tab5" name="tab5" header="tab5 header">
                     content of tab 5
                 </rich:tab>
-                
+
                 <c:forEach items="#{richTabPanelBean.tabBeans}" var="newTab">
-                	<rich:tab id="#{newTab.tabId}" name="#{newTab.tabName}">
-                    	#{newTab.tabContentText}
-                    	<f:facet name="header">
-							<h:outputText value="#{newTab.tabHeader} " />
-							<h:commandLink value="[x]" 
-										   rendered="#{newTab.closable}" 
-										   onclick="removeTab('#{newTab.tabId}');" />
-						</f:facet>
-                	</rich:tab>       	      	
-            	</c:forEach>
-            	
+                    <rich:tab id="#{newTab.tabId}" name="#{newTab.tabName}">
+                        #{newTab.tabContentText}
+                        <f:facet name="header">
+                            <h:outputText value="#{newTab.tabHeader} " />
+                            <h:commandLink value="[x]" 
+                                           rendered="#{newTab.closable}" 
+                                           onclick="removeTab('#{newTab.tabId}');" />
+                        </f:facet>
+                    </rich:tab>       	      	
+                </c:forEach>
+
             </rich:tabPanel>
-            
+
             <a4j:jsFunction name="removeTab"
-                    		action="#{richTabPanelBean.removeTab}"
-                    		render="tabPanel"
-                    		oncomplete="#{rich:component('tabPanel')}.switchToItem('tab1');">
-					<a4j:param name="removeTabId"/>
-				</a4j:jsFunction>
-            
+                            action="#{richTabPanelBean.removeTab}"
+                            render="tabPanel"
+                            oncomplete="#{rich:component('tabPanel')}.switchToItem('tab1');">
+                <a4j:param name="removeTabId"/>
+            </a4j:jsFunction>
+
             <br/><br/>
             <fieldset>
                 <legend>JavaScript API</legend>
@@ -112,7 +112,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <script type="text/javascript">
                     testedComponentId = "#{rich:clientId('tabPanel')}";
                 </script>
-                
+
                 <h:commandButton id="switchButton1" value="switch to tab1">
                     <rich:componentControl event="click" operation="switchToItem" target="tabPanel" >
                         <f:param value="tab1" />
@@ -138,13 +138,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         <f:param value="tab5" />
                     </rich:componentControl>
                 </h:commandButton>
-                
+
                 <h:commandButton id="hCreateTabButton" value="[h] Create tab" 
-                				   actionListener="#{richTabPanelBean.generateNewTab}" />
+                                 actionListener="#{richTabPanelBean.generateNewTab}" />
                 <a4j:commandButton id="a4jCreateTabButton" value="[a4j] Create tab"
-                				   render="tabPanel"                				   
-                				   actionListener="#{richTabPanelBean.generateNewTab}" />
-                				   
+                                   render="tabPanel"                				   
+                                   actionListener="#{richTabPanelBean.generateNewTab}" />
+
             </fieldset>
 
         </ui:define>
