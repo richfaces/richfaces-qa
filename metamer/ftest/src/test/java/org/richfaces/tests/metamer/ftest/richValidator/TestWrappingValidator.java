@@ -130,7 +130,7 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
     @RegressionTest(value = "https://issues.jboss.org/browse/RF-12154")
     public void testDisabled() {
         JQueryLocator integerMax10Field = pjq("input[type=text][id$=max]");
-        JQueryLocator errorMsgLocator = pjq("span[id$=max] > span[class=rf-msg-dtl]");
+        JQueryLocator errorMsgLocator = pjq("span[id$=max] > span[class=rf-msg-det]");
         String invalidValue = "11";
         //set disabled to false
         validatorAttributes.set(ValidatorAttributes.disabled, Boolean.FALSE);
