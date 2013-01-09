@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.bean.rich;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -37,17 +36,19 @@ import org.slf4j.LoggerFactory;
  * Managed bean for rich:progressBar.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richProgressBarBean")
 @ViewScoped
 public class RichProgressBarBean implements Serializable {
 
+    public static final long UPDATE_INTERVAL = 500; //1 update per 500ms
     private static final long serialVersionUID = -1L;
-    private static Logger logger;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RichProgressBarBean.class);
     private Attributes attributes;
+    private long startTime = -1L;
     private boolean buttonRendered = true;
-    private Long startTime;
     private boolean initialFacetRendered = true;
     private boolean finishFacetRendered = true;
     private boolean childrenRendered = false;
@@ -57,12 +58,11 @@ public class RichProgressBarBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        logger = LoggerFactory.getLogger(getClass());
-        logger.debug("initializing bean " + getClass().getName());
+        LOGGER.debug("initializing bean " + getClass().getName());
 
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIProgressBar.class, getClass());
 
-        attributes.setAttribute("maxValue", 100);
+        attributes.setAttribute("maxValue", 20);
         attributes.setAttribute("minValue", 0);
         attributes.setAttribute("interval", 500);
         attributes.setAttribute("rendered", true);
@@ -83,33 +83,38 @@ public class RichProgressBarBean implements Serializable {
     public String startProcess() {
         attributes.setAttribute("enabled", true);
         buttonRendered = false;
-        setStartTime(new Date().getTime());
+        this.startTime = System.currentTimeMillis();
         return null;
+    }
+
+    private long getActualMaxValue() {
+        Object value = attributes.get("maxValue").getValue();
+        if (value instanceof Integer) {
+            return Long.valueOf((Integer) value);
+        } else if (value instanceof Long) {
+            return (Long) value;
+        } else if (value instanceof String) {
+            return Long.valueOf((String) value);
+        }
+        throw new IllegalStateException("Cannot convert value: " + value);
     }
 
     public Long getCurrentValue() {
         if (Boolean.TRUE.equals(attributes.get("enabled").getValue())) {
-            Long current = (new Date().getTime() - startTime) / 500;
-            if (current >= 100) {
+            long current = (System.currentTimeMillis() - startTime) / UPDATE_INTERVAL;
+            if (current >= getActualMaxValue()) {
+                //in tests there is no need to continue further than maximum
                 buttonRendered = true;
-            } else if (current.equals(0L)) {
+            } else if (current == 0) {
                 return 1L;
             }
-            return (new Date().getTime() - startTime) / 500;
+            return current;
         }
-        if (startTime == null) {
-            return -1L;
+        if (startTime < 0) {
+            return startTime;
         } else {
-            return 101L;
+            return getActualMaxValue() + 1L;
         }
-    }
-
-    public Long getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Long startTime) {
-        this.startTime = startTime;
     }
 
     public boolean isButtonRendered() {
