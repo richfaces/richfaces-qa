@@ -49,7 +49,6 @@ public class RichTabPanelBean implements Serializable {
     private static final long serialVersionUID = -1L;
     private static Logger logger;
     private Attributes attributes;
-
     private List<UITab> tabs = new ArrayList<UITab>();
     private List<TabBean> tabBeans = new ArrayList<TabBean>();
 
@@ -89,21 +88,18 @@ public class RichTabPanelBean implements Serializable {
     }
 
     public void generateNewTab() {
-
-        System.out.println(" ###### adding new tabBean... ");
+        logger.info("# generate new tab");
 
         int i = tabBeans.size();
         String idBase = "tab" + (i + 6); // there is already 5 tabs
         tabBeans.add(new TabBean(idBase, idBase, idBase + " header", "Content of dynamicaly created " + idBase));
 
-        System.out.println(" Now is tabBeans list " + tabBeans.size() + " long");
+        logger.info("# TabBeans list size: " + tabBeans.size() + ".");
     }
 
     public void removeTab() throws Exception {
-        // setActiveTabId("TAB1");
-
         String tabIdToRemove = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
-            .get("removeTabId");
+                .get("removeTabId");
 
         TabBean currentTab = getTabById(tabIdToRemove);
 
@@ -115,7 +111,7 @@ public class RichTabPanelBean implements Serializable {
     }
 
     private TabBean getTabById(String tabId) {
-        System.out.println(" #tabId to remove: '" + tabId + "'");
+        logger.info("# tabId to remove: '" + tabId + "'" + ", tabbeans: " + tabBeans);
         for (TabBean currentTab : tabBeans) {
             if (currentTab.getTabId().equals(tabId)) {
                 return currentTab;
@@ -140,7 +136,9 @@ public class RichTabPanelBean implements Serializable {
         this.tabs = tabs;
     }
 
-    public class TabBean {
+    public static class TabBean implements Serializable {
+
+        private static final long serialVersionUID = 1L;
         private String tabId;
         private String tabName;
         private String tabHeader;
@@ -197,6 +195,10 @@ public class RichTabPanelBean implements Serializable {
             this.closable = closable;
         }
 
+        @Override
+        public String toString() {
+            return tabId;
+        }
     }
 
     public List<TabBean> getTabBeans() {
