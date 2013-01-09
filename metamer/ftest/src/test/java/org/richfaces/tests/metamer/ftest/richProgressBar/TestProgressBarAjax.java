@@ -75,7 +75,6 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richProgressBar/ajaxMode.xhtml");
     }
 
-<<<<<<< HEAD
     @Override
     public MetamerNavigation getComponentExampleNavigation() {
         return new MetamerNavigation("Rich", "Rich Progress Bar", "Ajax Mode");
@@ -102,12 +101,11 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         }
         if (ElementPresent.getInstance().element(page.label).apply(driver)) {
             assertFalse(page.label.isDisplayed(), "Progress bar should not show progress.");
-=======
+
     private long countAverage(List<DateTime> times) {
         long total = 0;
         for (int i = 0; i < times.size() - 1; i++) {
             total += times.get(i + 1).getMillis() - times.get(i).getMillis();
->>>>>>> 76a5cb7... metamer: progressBar: test fix
         }
         return Math.abs(total / (times.size() - 1));
     }
