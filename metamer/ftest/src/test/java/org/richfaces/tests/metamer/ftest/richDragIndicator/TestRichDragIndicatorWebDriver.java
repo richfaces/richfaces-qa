@@ -44,7 +44,7 @@ import org.testng.annotations.Test;
  * faces/components/richContextMenu/simple.xhtml
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @since
+ * @since 4.3.0.CR1
  */
 public class TestRichDragIndicatorWebDriver extends AbstractWebDriverTest {
 
@@ -85,7 +85,7 @@ public class TestRichDragIndicatorWebDriver extends AbstractWebDriverTest {
         assertTrue(page.indicator.isDisplayed());
         assertTrue(page.indicator.getAttribute("class").contains(DRAGGING_CLASS));
 
-        // dragging = new Actions(driver).clickAndHold(page.drag1).moveByOffset(1, 1).release(page.drag1).build();
+        // simulate drop
         dragging = actionQueue.release().build();
         elementPresent.element(page.indicator);
         dragging.perform();
