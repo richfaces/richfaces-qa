@@ -28,6 +28,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 /**
@@ -193,8 +194,8 @@ public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
         super.testHTTPSubmit();
     }
 
-    @Test(groups = "4.Future")
-    @IssueTracking({ "https://issues.jboss.org/browse/RF-12624", "https://issues.jboss.org/browse/RF-12632" })
+    @Test
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-12624", "https://issues.jboss.org/browse/RF-12632" })
     @Override
     public void testRendered() {
         super.testRendered();
@@ -207,8 +208,8 @@ public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
         super.testSelector();
     }
 
-    @Test(groups = "4.Future")
-    @IssueTracking({ "https://issues.jboss.org/browse/RF-12621", "https://issues.jboss.org/browse/RF-12624" })
+    @Test
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-12621", "https://issues.jboss.org/browse/RF-12624" })
     @Override
     public void testSelectorEmpty() {
         super.testSelectorEmpty();
@@ -219,7 +220,8 @@ public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
     @Override
     public void testStyleClass() {
         placeholderAttributes.set(PlaceholderAttributes.styleClass, "metamer-ftest-class");
-        assertTrue(getInput1StyleClass().contains("metamer-ftest-class"), "Input does not contain set class 'metamer-ftest-class'");
+        assertTrue(getInput1StyleClass().contains("metamer-ftest-class"),
+            "Input does not contain set class 'metamer-ftest-class'");
     }
 
     @Test(groups = "4.Future")

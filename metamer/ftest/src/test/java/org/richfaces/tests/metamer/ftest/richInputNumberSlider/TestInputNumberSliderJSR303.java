@@ -85,9 +85,7 @@ public class TestInputNumberSliderJSR303 extends AbstractWebDriverTest {
      */
     private enum Position {
 
-        LESS_THAN_ZERO(10),
-        ZERO(100),
-        MORE_THAN_TWO(150);
+        LESS_THAN_ZERO(10), ZERO(100), MORE_THAN_TWO(150);
         private int position;
 
         private Position(int position) {
@@ -101,9 +99,7 @@ public class TestInputNumberSliderJSR303 extends AbstractWebDriverTest {
 
     private enum Value {
 
-        min(3, 1),
-        max(1, 5),
-        custom(5, -1);
+        min(3, 1), max(1, 5), custom(5, -1);
         public final int correct;
         public final int wrong;
 
@@ -133,16 +129,14 @@ public class TestInputNumberSliderJSR303 extends AbstractWebDriverTest {
     private void setAllCorrect() {
         List<RichFacesInputNumberSlider> sliders = getSliders();
         for (int i = 0; i < sliders.size(); i++) {
-            typeToInputActionWithXHRWaitRequest(
-                    Value.valueForInput(i).correct, sliders.get(i)).perform();
+            typeToInputActionWithXHRWaitRequest(Value.valueForInput(i).correct, sliders.get(i)).perform();
         }
     }
 
     private void setAllWrong() {
         List<RichFacesInputNumberSlider> sliders = getSliders();
         for (int i = 0; i < sliders.size(); i++) {
-            typeToInputActionWithXHRWaitRequest(
-                    Value.valueForInput(i).wrong, sliders.get(i)).perform();
+            typeToInputActionWithXHRWaitRequest(Value.valueForInput(i).wrong, sliders.get(i)).perform();
         }
         // wait until validation appears on last input before go ahead (e.g. submit form)
         Graphene.waitAjax().until(msgCustom.isVisibleCondition());
@@ -159,8 +153,8 @@ public class TestInputNumberSliderJSR303 extends AbstractWebDriverTest {
     }
 
     @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-11264")
-    @Templates(include = { "a4jRegion" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-11264", "https://issues.jboss.org/browse/RF-12301" })
+    @Templates(value = { "a4jRegion" })
     public void testAllCorrectInA4jRegion() {
         setAllCorrect();
         List<WebElement> outputs = getOutputs();
@@ -191,9 +185,9 @@ public class TestInputNumberSliderJSR303 extends AbstractWebDriverTest {
         assertEquals(msgCustom.getDetail(), MSG_CUSTOM);
     }
 
-    @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-11264")
-    @Templates(include = { "a4jRegion" })
+    @Test
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-11264", "https://issues.jboss.org/browse/RF-12301" })
+    @Templates(value = { "a4jRegion" })
     public void testAllWrongInA4jRegion() {
         setAllCorrect();
         setAllWrong();
@@ -262,11 +256,13 @@ public class TestInputNumberSliderJSR303 extends AbstractWebDriverTest {
         return typeToInputActionWithWaitRequest(num, slider, WaitRequestType.XHR);
     }
 
-    private Action typeToInputActionWithWaitRequest(final int num, final RichFacesInputNumberSlider slider, final WaitRequestType type) {
+    private Action typeToInputActionWithWaitRequest(final int num, final RichFacesInputNumberSlider slider,
+        final WaitRequestType type) {
         return new Action() {
             @Override
             public void perform() {
-                MetamerPage.waitRequest(slider.getInput().clear(ClearType.JS).fillIn(String.valueOf(num)), type).trigger("blur");
+                MetamerPage.waitRequest(slider.getInput().clear(ClearType.JS).fillIn(String.valueOf(num)), type)
+                    .trigger("blur");
             }
         };
     }
