@@ -25,6 +25,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -36,11 +37,9 @@ import org.openqa.selenium.WebElement;
  */
 public class IndicatorWD {
 
-    // private GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
-
     private static final String CLASS = "class";
 
-    private WebDriver driver;
+    private WebDriver driver = GrapheneContext.getProxy();
     private By indicatorLoc;
 
     private boolean defaultIndicator = false;
@@ -48,14 +47,11 @@ public class IndicatorWD {
     private String rejectClass;
     private String draggingClass;
 
-    // private JQueryLocator activeIndicator = new JQueryLocator("body > div.rf-ind");
-    // TODO JJa: make sure that factory and By.findBy wouldn't be the right replacement
     By activeIndicatorLoc = By.cssSelector("body > div.rf-ind");
 
     private ElementPresent elementPresent = ElementPresent.getInstance();
 
-    public IndicatorWD(By indicatorLoc, WebDriver driver) {
-        this.driver = driver;
+    public IndicatorWD(By indicatorLoc) {
         this.indicatorLoc = indicatorLoc;
     }
 

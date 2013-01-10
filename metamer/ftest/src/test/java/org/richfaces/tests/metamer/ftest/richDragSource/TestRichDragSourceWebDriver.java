@@ -49,6 +49,7 @@ import org.testng.annotations.Test;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
+ * @since 4.3.0.CR1
  *
  */
 public class TestRichDragSourceWebDriver extends AbstractWebDriverTest {
@@ -71,7 +72,7 @@ public class TestRichDragSourceWebDriver extends AbstractWebDriverTest {
     public void testDefaultIndicator() {
 
         By defaultIndocatorLoc = By.cssSelector("body > div.ui-draggable");
-        indicator = new IndicatorWD(defaultIndocatorLoc, driver);
+        indicator = new IndicatorWD(defaultIndocatorLoc);
         indicator.setDefaultIndicator(true);
         dragSourceAttributes.set(dragIndicator, "");
         Actions actionQueue = new Actions(driver);
@@ -93,7 +94,7 @@ public class TestRichDragSourceWebDriver extends AbstractWebDriverTest {
 
         dragSourceAttributes.set(dragIndicator, "indicator2");
         By customIndicatorLoc = By.cssSelector("div.rf-ind[id$=indicator2Clone");
-        indicator = new IndicatorWD(customIndicatorLoc, driver);
+        indicator = new IndicatorWD(customIndicatorLoc);
 
         testMovingOverDifferentStates();
     }
@@ -109,7 +110,7 @@ public class TestRichDragSourceWebDriver extends AbstractWebDriverTest {
         // before any mouse move, no indicator appears on page
         // elementNotPresent.element(indicator.getIndicator(indicatorLoc)).apply(driver);
 
-        indicator = new IndicatorWD(indicatorLoc, driver);
+        indicator = new IndicatorWD(indicatorLoc);
         Actions actionQueue = new Actions(driver);
 
         // firstly just drag and don't move. Indicator no displayed
@@ -151,7 +152,6 @@ public class TestRichDragSourceWebDriver extends AbstractWebDriverTest {
     }
 
     protected void enterAndVerify(WebElement target, IndicatorState state) {
-        // drag.setDropTarget(target);
         new Actions(driver).clickAndHold(page.drag1).moveToElement(target).perform();
         indicator.verifyState(state);
     }
