@@ -218,4 +218,24 @@ public class RichCalendarBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage("form:calendar", message);
         }
     }
+
+    // for preloadedDates.xhtml
+
+    public Date getCurrentDateForPreloadedDates() {
+        Calendar calendar = Calendar.getInstance(tz);
+        calendar.set(Calendar.MONTH, 3);
+        return calendar.getTime();
+    }
+
+    public Date getPreloadedDateRangeBegin() {
+        Calendar calendar = Calendar.getInstance(tz);
+        calendar.set(2012, 0, 1);
+        return calendar.getTime();
+    }
+
+    public Date getPreloadedDateRangeEnd() {
+        Calendar calendar = Calendar.getInstance(tz);
+        calendar.set(2013, 1, 1);
+        return calendar.getTime();
+    }
 }

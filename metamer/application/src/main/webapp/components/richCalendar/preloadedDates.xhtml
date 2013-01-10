@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" 
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
@@ -35,9 +35,22 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </f:metadata>
         </ui:define>
 
+        <ui:define name="head">
+            <style type="text/css">
+                .yellowDay {
+                    background: yellow !important;
+                }
+
+                .aquaDay {
+                    background: aqua !important;
+                }
+
+            </style>
+        </ui:define>
+
         <ui:define name="component">
             <p style="width:75em">
-                Calendar is predefined with mode="client", preloadDateRangeBegin="Jan 1, 2012", 
+                Calendar is predefined with mode="client", preloadDateRangeBegin="Jan 1, 2012",
                 preloadDateRangeEnd="Feb 1, 2013", currentDate="Jan 1, 2012" and dataModel.
                 <br/>
                 Switching to not preloaded date should be forbidden or an update of calendar should be made by ajax.
@@ -50,10 +63,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                dataModel="#{calendarModel}"
                                mode="client"
                                timeZone="#{richCalendarBean.timeZone}"
-                               preloadDateRangeBegin="Jan 1, 2012"
-                               preloadDateRangeEnd="Feb 1, 2013"
-                               pattern="MMM d, yyyy"
-                               currentDate="Jan 1, 2012"
+                               preloadDateRangeBegin="#{richCalendarBean.preloadedDateRangeBegin}"
+                               preloadDateRangeEnd="#{richCalendarBean.preloadedDateRangeEnd}"
+                               datePattern="MMM d, yyyy"
+                               currentDate="#{richCalendarBean.currentDateForPreloadedDates}"
                                value="#{richCalendarBean.value}" >
                     <a4j:ajax event="change" render="output, phasesPanel"/>
                 </rich:calendar>
