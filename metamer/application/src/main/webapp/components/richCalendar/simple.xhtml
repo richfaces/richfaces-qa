@@ -189,7 +189,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 On click:
                 <br/>
                 <input id="showDateEditor" type="button" name="showDateEditor" value="showDateEditor()" onclick="#{rich:component('calendar')}.showDateEditor()" />
-                <input id="setValue" type="button" name="setValue" value="setValue('Oct 10, 2012 12:00')" onclick="#{rich:component('calendar')}.setValue('Oct 10, 2012 12:00')" />
+                <input id="setValue" type="button" name="setValue" value="setValue('Oct 10, 2012 12:00')" onclick="#{rich:component('calendar')}.setValue(new Date('October 10, 2012 12:00:00'))" />
                 <br/>
                 <br/>
                 On mouseover:
@@ -213,7 +213,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <input id="today" type="button" name="today" value="today()" onmouseover="#{rich:component('calendar')}.today()" />
                 <br/>
                 <br/>
-                Applicable when date is set, on click: 
+                Applicable when date is set, on click:
                 <br/>
                 Output value for all get methods: <h:inputText id="value"/>
                 <br/>
