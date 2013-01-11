@@ -34,6 +34,9 @@ public class DragSourceSimplePage extends MetamerPage {
     @FindBy(css = "div.rf-ind[id$=indicator]")
     public WebElement indicator;
 
+    @FindBy(css = "div.rf-ind[id$=indicator2Clone]")
+    public WebElement indicator2;
+
     @FindBy(css = "body > div.ui-draggable")
     public WebElement defaultIndicator;
 

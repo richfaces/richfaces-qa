@@ -87,6 +87,9 @@ public class TestRichDragSourceWebDriver extends AbstractWebDriverTest {
 
         testMovingOverDifferentStates();
 
+        Action drop = actionQueue.release(page.drop1).build();
+        drop.perform();
+
     }
 
     @Test
@@ -108,7 +111,7 @@ public class TestRichDragSourceWebDriver extends AbstractWebDriverTest {
         By indicatorLoc = By.cssSelector("div.rf-ind[id$=indicator2Clone]");
 
         // before any mouse move, no indicator appears on page
-        // elementNotPresent.element(indicator.getIndicator(indicatorLoc)).apply(driver);
+        elementNotPresent.element(page.indicator2).apply(driver);
 
         indicator = new IndicatorWD(indicatorLoc);
         Actions actionQueue = new Actions(driver);
@@ -116,17 +119,17 @@ public class TestRichDragSourceWebDriver extends AbstractWebDriverTest {
         // firstly just drag and don't move. Indicator no displayed
         Action dragging = actionQueue.clickAndHold(page.drag1).build();
         dragging.perform();
-        elementPresent.element(indicator.getIndicator(indicatorLoc)).apply(driver);
+        elementNotPresent.element(page.indicator2).apply(driver);
 
         // just small move to display indicator
         dragging = actionQueue.moveByOffset(1, 1).build();
         dragging.perform();
-        elementPresent.element(indicator.getIndicator(indicatorLoc)).apply(driver);
+        elementPresent.element(page.indicator2).apply(driver);
 
         dragging = actionQueue.release().build();
-        elementNotPresent.element(indicator.getIndicator(indicatorLoc)).apply(driver);
+        elementPresent.element(page.indicator2).apply(driver);
         dragging.perform();
-        elementNotPresent.element(indicator.getIndicator(indicatorLoc)).apply(driver);
+        elementNotPresent.element(page.indicator2).apply(driver);
 
     }
 
