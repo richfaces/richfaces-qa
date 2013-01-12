@@ -40,19 +40,19 @@ public class IndicatorWD {
     private static final String CLASS = "class";
 
     private WebDriver driver = GrapheneContext.getProxy();
-    private By indicatorLoc;
+    private WebElement indicator;
 
     private boolean defaultIndicator = false;
     private String acceptClass;
     private String rejectClass;
     private String draggingClass;
 
-    By activeIndicatorLoc = By.cssSelector("body > div.rf-ind");
+    WebElement activeIndicator;
 
     private ElementPresent elementPresent = ElementPresent.getInstance();
 
-    public IndicatorWD(By indicatorLoc) {
-        this.indicatorLoc = indicatorLoc;
+    public IndicatorWD(WebElement indicator) {
+        this.indicator = indicator;
     }
 
     public void setDefaultIndicator(boolean defaultIndicator) {
@@ -73,11 +73,11 @@ public class IndicatorWD {
 
     public boolean isVisible() {
         if (defaultIndicator) {
-            return elementPresent.element(getIndicator(indicatorLoc)).apply(driver)
-                && getIndicator(indicatorLoc).isDisplayed();
+            return elementPresent.element(indicator).apply(driver)
+                && indicator.isDisplayed();
         } else {
-            return elementPresent.element(getIndicator(activeIndicatorLoc)).apply(driver)
-                && getIndicator(activeIndicatorLoc).isDisplayed();
+            return elementPresent.element(getActiveIndicator()).apply(driver)
+                && getActiveIndicator().isDisplayed();
         }
     }
 
@@ -85,19 +85,19 @@ public class IndicatorWD {
         if (className == null) {
             return false;
         }
-        return getIndicator(indicatorLoc).getAttribute(CLASS).contains(className);
+        return indicator.getAttribute(CLASS).contains(className);
     }
 
     public boolean isAccepting() {
-        return getIndicator(activeIndicatorLoc).getAttribute(CLASS).contains("rf-ind-acpt");
+        return getActiveIndicator().getAttribute(CLASS).contains("rf-ind-acpt");
     }
 
     public boolean isDragging() {
-        return getIndicator(activeIndicatorLoc).getAttribute(CLASS).contains("rf-ind-drag");
+        return getActiveIndicator().getAttribute(CLASS).contains("rf-ind-drag");
     }
 
     public boolean isRejecting() {
-        return getIndicator(activeIndicatorLoc).getAttribute(CLASS).contains("rf-ind-rejt");
+        return getActiveIndicator().getAttribute(CLASS).contains("rf-ind-rejt");
     }
 
     public void verifyState(IndicatorState state) {
@@ -147,6 +147,10 @@ public class IndicatorWD {
 
     public WebElement getIndicator(By by) {
         return driver.findElement(by);
+    }
+
+    public WebElement getActiveIndicator() {
+        return driver.findElement(By.cssSelector("body > div.rf-ind"));
     }
 
     public enum IndicatorState {

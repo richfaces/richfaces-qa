@@ -22,14 +22,13 @@
 package org.richfaces.tests.metamer.ftest.richDragSource;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.IndicatorWD.IndicatorState.ACCEPTING;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.IndicatorWD.IndicatorState.DRAGGING;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.IndicatorWD.IndicatorState.REJECTING;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.dragSourceAttributes;
 import static org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes.dragIndicator;
 import static org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes.rendered;
 import static org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes.type;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.dragSourceAttributes;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
@@ -37,7 +36,6 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.test.selenium.support.ui.ElementNotPresent;
 import org.jboss.test.selenium.support.ui.ElementPresent;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -71,8 +69,7 @@ public class TestRichDragSourceWebDriver extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-12441")
     public void testDefaultIndicator() {
 
-        By defaultIndocatorLoc = By.cssSelector("body > div.ui-draggable");
-        indicator = new IndicatorWD(defaultIndocatorLoc);
+        indicator = new IndicatorWD(page.defaultIndicator);
         indicator.setDefaultIndicator(true);
         dragSourceAttributes.set(dragIndicator, "");
         Actions actionQueue = new Actions(driver);
@@ -96,8 +93,7 @@ public class TestRichDragSourceWebDriver extends AbstractWebDriverTest {
     public void testCustomIndicator() {
 
         dragSourceAttributes.set(dragIndicator, "indicator2");
-        By customIndicatorLoc = By.cssSelector("div.rf-ind[id$=indicator2Clone");
-        indicator = new IndicatorWD(customIndicatorLoc);
+        indicator = new IndicatorWD(page.indicator2);
 
         testMovingOverDifferentStates();
     }
@@ -108,12 +104,11 @@ public class TestRichDragSourceWebDriver extends AbstractWebDriverTest {
         dragSourceAttributes.set(dragIndicator, "indicator2");
         dragSourceAttributes.set(rendered, true);
 
-        By indicatorLoc = By.cssSelector("div.rf-ind[id$=indicator2Clone]");
-
         // before any mouse move, no indicator appears on page
         elementNotPresent.element(page.indicator2).apply(driver);
 
-        indicator = new IndicatorWD(indicatorLoc);
+        // indicator = new IndicatorWD(indicatorLoc);
+        indicator = new IndicatorWD(page.indicator2);
         Actions actionQueue = new Actions(driver);
 
         // firstly just drag and don't move. Indicator no displayed
@@ -155,7 +150,12 @@ public class TestRichDragSourceWebDriver extends AbstractWebDriverTest {
     }
 
     protected void enterAndVerify(WebElement target, IndicatorState state) {
-        new Actions(driver).clickAndHold(page.drag1).moveToElement(target).perform();
+        // since this method verify indicator rendering over drag source, need force move a bit
+        // to render indicator in this case (otherwise it doesn't get rendered)
+        new Actions(driver).clickAndHold(page.drag1).moveByOffset(1, 1).moveToElement(target).build().perform();
         indicator.verifyState(state);
+        // since dragSource is the same for all iteration, it is not required drop.
+        // but keep droping to simulate real behavior
+        new Actions(driver).moveToElement(page.drag1).release().build().perform();
     }
 }
