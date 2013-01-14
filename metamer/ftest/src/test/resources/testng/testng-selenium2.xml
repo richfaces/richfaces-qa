@@ -19,6 +19,9 @@
             <package name="org.richfaces.tests.metamer.ftest.richAccordion"/>
             <package name="org.richfaces.tests.metamer.ftest.richAutocomplete"/>
             <package name="org.richfaces.tests.metamer.ftest.richCalendar"/>
+            <package name="org.richfaces.tests.metamer.ftest.richDragIndicator" />
+            <package name="org.richfaces.tests.metamer.ftest.richDragSource" />
+            <package name="org.richfaces.tests.metamer.ftest.richDropTarget" />
             <package name="org.richfaces.tests.metamer.ftest.richFileUpload"/>
             <package name="org.richfaces.tests.metamer.ftest.richInplaceInput"/>
             <package name="org.richfaces.tests.metamer.ftest.richInputNumberSlider"/>
