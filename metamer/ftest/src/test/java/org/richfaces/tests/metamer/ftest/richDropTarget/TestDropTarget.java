@@ -1,6 +1,6 @@
-/*******************************************************************************
+/**
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ */
 package org.richfaces.tests.metamer.ftest.richDropTarget;
 
 import static javax.faces.event.PhaseId.ANY_PHASE;
@@ -28,16 +28,8 @@ import static javax.faces.event.PhaseId.PROCESS_VALIDATIONS;
 import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
-import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
-import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
-import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.dropTargetAttributes;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState.ACCEPTING;
-import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState.DRAGGING;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState.REJECTING;
 import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.acceptedTypes;
 import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.bypassUpdates;
@@ -47,39 +39,36 @@ import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttribu
 import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.onbegin;
 import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.oncomplete;
 import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.render;
-import static org.richfaces.tests.metamer.ftest.richDropTarget.DropTargetAttributes.rendered;
-
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.dropTargetAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.actions.Drag;
-import org.jboss.arquillian.ajocado.javascript.JavaScript;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.request.RequestType;
-import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
-import org.jboss.test.selenium.GuardRequest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.richDragIndicator.AbstractDragNDropTest;
-import org.richfaces.tests.metamer.ftest.richDragIndicator.Draggable;
+import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
-
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22743 $
+ * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
+ * @since 4.3.0.CR1
+ *
  */
-public class TestDropTarget extends AbstractDragNDropTest {
+public class TestDropTarget extends AbstractWebDriverTest {
 
-    TextRetriever retrieveDrop1 = retrieveText.locator(drop1);
-    TextRetriever retrieveDrop2 = retrieveText.locator(drop2);
+    @Page
+    DropTargetSimplePage page;
 
-    JQueryLocator clientId = jq("span[id$=:clientId]");
-    JQueryLocator dragValue = jq("span[id$=:dragValue]");
-    JQueryLocator dropValue = jq("span[id$=:dropValue]");
+    private Indicator indicator;
 
     @Override
     public URL getTestUrl() {
@@ -89,93 +78,85 @@ public class TestDropTarget extends AbstractDragNDropTest {
     @Test
     public void testAcceptedTypes() {
         dropTargetAttributes.set(acceptedTypes, "drg2");
+        indicator = new Indicator(page.indicator);
 
-        testAcception(drg1, REJECTING);
-        drag.drop();
-        testAcception(drg2, ACCEPTING);
-        drag.drop();
-        testAcception(drg3, REJECTING);
-        drag.drop();
+        testAcception(page.drg1, REJECTING); doDrop();
+        testAcception(page.drg2, ACCEPTING); doDrop();
+        testAcception(page.drg3, REJECTING); doDrop();
 
         dropTargetAttributes.set(acceptedTypes, "drg1, drg3");
 
-        testAcception(drg1, ACCEPTING);
-        drag.drop();
-        testAcception(drg2, REJECTING);
-        drag.drop();
-        testAcception(drg3, ACCEPTING);
-        drag.drop();
+        testAcception(page.drg1, ACCEPTING); doDrop();
+        testAcception(page.drg2, REJECTING); doDrop();
+        testAcception(page.drg3, ACCEPTING); doDrop();
     }
 
     @Test
     public void testRender() {
         dropTargetAttributes.set(render, "droppable1 droppable2 renderChecker");
 
-        testAcception(drg1, ACCEPTING);
+        indicator = new Indicator(page.indicator);
 
-        retrieveDrop1.initializeValue();
-        retrieveDrop2.initializeValue();
-        drag.drop();
-        waitAjax.waitForChange(retrieveDrop1);
-        assertTrue(retrieveDrop2.isValueChanged());
-    }
+        testAcception(page.drg1, ACCEPTING);
 
-    @Test
-    public void testRendered() {
-        dropTargetAttributes.set(rendered, false);
-        selenium.getPageExtensions().install();
-        selenium.getRequestGuard().clearRequestDone();
+        String drop1Content = page.drop1.getText();
+        String drop2Content = page.drop2.getText();
 
-        testAcception(drg1, DRAGGING);
+        new Actions(driver).dragAndDrop(page.drg1, page.drop1).build().perform();
 
-        drag.drop();
-
-        waitModel.timeout(5000).waitForTimeout();
-        assertEquals(selenium.getRequestGuard().getRequestDone(), RequestType.NONE);
+        // TODO JJa: find replacement
+        // waitAjax.waitForChange(retrieveDrop1);
+        // assertTrue(retrieveDrop2.isValueChanged());
+        Graphene.waitModel().until(Graphene.element(page.drop1).not().text().equalTo(drop1Content));
+        // Graphene.waitModel().until(Graphene.element(page.drop2).not().text().equalTo(drop2Content));
+        assertFalse(Graphene.element(page.drop2).equals(drop2Content));
     }
 
     @Test
     public void testDropListenerAndEvent() {
-        testAcceptedDropping(drg1);
-        assertTrue(selenium.getText(clientId).endsWith("richDropTarget1"));
-        assertTrue(selenium.getText(dragValue).contains("1"));
-        assertTrue(selenium.getText(dropValue).contains("1"));
 
-        testAcceptedDropping(drg1);
-        assertTrue(selenium.getText(clientId).endsWith("richDropTarget1"));
-        assertTrue(selenium.getText(dragValue).contains("1"));
-        assertTrue(selenium.getText(dropValue).contains("2"));
+        indicator =  new Indicator(page.indicator);
 
-        testAcceptedDropping(drg2);
-        assertTrue(selenium.getText(clientId).endsWith("richDropTarget1"));
-        assertTrue(selenium.getText(dragValue).contains("2"));
-        assertTrue(selenium.getText(dropValue).contains("3"));
+        testAcceptedDropping(page.drg1);
+        assertTrue(page.clientId.getText().endsWith("richDropTarget1"));
+        assertTrue(page.dragValue.getText().contains("1"));
+        assertTrue(page.dropValue.getText().contains("1"));
 
-        testAcceptedDropping(drg1);
-        assertTrue(selenium.getText(clientId).endsWith("richDropTarget1"));
-        assertTrue(selenium.getText(dragValue).contains("1"));
-        assertTrue(selenium.getText(dropValue).contains("4"));
+        testAcceptedDropping(page.drg1);
+        assertTrue(page.clientId.getText().endsWith("richDropTarget1"));
+        assertTrue(page.dragValue.getText().contains("1"));
+        assertTrue(page.dropValue.getText().contains("2"));
 
-        drag = new Drag(drg3, drop2);
-        drag.setDragIndicator(indicator);
-        retrieveRequestTime.initializeValue();
-        drag.drop();
-        waitAjax.waitForChange(retrieveRequestTime);
-        assertTrue(selenium.getText(clientId).endsWith("richDropTarget2"));
-        assertTrue(selenium.getText(dragValue).contains("3"));
-        assertTrue(selenium.getText(dropValue).contains("5"));
+        testAcceptedDropping(page.drg2);
+        assertTrue(page.clientId.getText().endsWith("richDropTarget1"));
+        assertTrue(page.dragValue.getText().contains("2"));
+        assertTrue(page.dropValue.getText().contains("3"));
+
+        testAcceptedDropping(page.drg1);
+        assertTrue(page.clientId.getText().endsWith("richDropTarget1"));
+        assertTrue(page.dragValue.getText().contains("1"));
+        assertTrue(page.dropValue.getText().contains("4"));
+
+        new Actions(driver).clickAndHold(page.drg3).moveByOffset(1, 1).moveToElement(page.drop2).build().perform();
+        String requestTime = page.requestTime.getText();
+        waiting(500);
+        doDrop();
+        Graphene.waitModel().until().element(page.requestTime).text().not().equalTo(requestTime);
+        assertTrue(page.clientId.getText().endsWith("richDropTarget2"));
+        assertTrue(page.dragValue.getText().contains("3"));
+        assertTrue(page.dropValue.getText().contains("5"));
     }
 
     @Test
     public void testExecute() {
         dropTargetAttributes.set(execute, "executeChecker");
 
-        testAcception(drg1, ACCEPTING);
-        guardedDrop(RequestType.XHR);
+        testAcception(page.drg1, ACCEPTING);
+        guardedDrop();
 
-        phaseInfo.assertListener(UPDATE_MODEL_VALUES, "executeChecker");
-        phaseInfo.assertListener(INVOKE_APPLICATION, "dropListener");
-        phaseInfo.assertPhases(ANY_PHASE);
+        page.assertListener(UPDATE_MODEL_VALUES, "executeChecker");
+        page.assertListener(INVOKE_APPLICATION, "dropListener");
+        page.assertPhases(ANY_PHASE);
     }
 
     @Test
@@ -183,19 +164,11 @@ public class TestDropTarget extends AbstractDragNDropTest {
     public void testImmediate() {
         dropTargetAttributes.set(immediate, true);
 
-        testAcception(drg1, ACCEPTING);
-        guardedDrop(RequestType.XHR);
+        testAcception(page.drg1, ACCEPTING);
+        guardedDrop();
 
-        phaseInfo.assertListener(APPLY_REQUEST_VALUES, "dropListener");
-        phaseInfo.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, RENDER_RESPONSE);
-    }
-
-    private void guardedDrop(RequestType type) {
-        new GuardRequest(type) {
-            public void command() {
-                drag.drop();
-            }
-        }.waitRequest();
+        page.assertListener(APPLY_REQUEST_VALUES, "dropListener");
+        page.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, RENDER_RESPONSE);
     }
 
     @Test
@@ -203,11 +176,11 @@ public class TestDropTarget extends AbstractDragNDropTest {
     public void testBypassUpdates() {
         dropTargetAttributes.set(bypassUpdates, true);
 
-        testAcception(drg1, ACCEPTING);
-        guardedDrop(RequestType.XHR);
+        testAcception(page.drg1, ACCEPTING);
+        guardedDrop();
 
-        phaseInfo.assertListener(PROCESS_VALIDATIONS, "dropListener");
-        phaseInfo.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, RENDER_RESPONSE);
+        page.assertListener(PROCESS_VALIDATIONS, "dropListener");
+        page.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, RENDER_RESPONSE);
     }
 
     @Test
@@ -215,30 +188,43 @@ public class TestDropTarget extends AbstractDragNDropTest {
         dropTargetAttributes.set(onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
         dropTargetAttributes.set(onbegin, "metamerEvents += \"begin \"");
         dropTargetAttributes.set(oncomplete, "metamerEvents += \"complete \"");
-        selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
 
-        testAcception(drg1, ACCEPTING);
-        guardedDrop(RequestType.XHR);
+        executeJS("metamerEvents = \"\";");
 
-        String[] events = selenium.getEval(new JavaScript("window.metamerEvents")).split(" ");
+        testAcception(page.drg1, ACCEPTING);
+        guardedDrop();
+        waiting(500);
+
+        String[] events = ((String) executeJS("return metamerEvents;")).split(" ");
+
         assertEquals(events.length, 3, "3 events should be fired.");
         assertEquals(events[0], "begin", "Attribute onbegin doesn't work");
         assertEquals(events[1], "beforedomupdate", "Attribute onbeforedomupdate doesn't work");
         assertEquals(events[2], "complete", "Attribute oncomplete doesn't work");
     }
 
-    private void testAcceptedDropping(Draggable draggable) {
+    private void testAcception(WebElement drag, IndicatorState state) {
+        new Actions(driver).clickAndHold(drag).moveToElement(page.drop1).perform();
+        indicator.verifyState(state);
+    }
+
+    private void testAcceptedDropping(WebElement draggable) {
         testAcception(draggable, ACCEPTING);
-
-        retrieveRequestTime.initializeValue();
-        drag.drop();
-        waitAjax.waitForChange(retrieveRequestTime);
-        assertFalse(indicator.isVisible());
+        String requestTime = page.requestTime.getText();
+        // waiting(1000);
+        doDrop();
+        Graphene.waitModel().until(Graphene.element(page.requestTime).not().text().equalTo(requestTime));
+        assertNotPresent(page.indicator, "Indicator should be no longer visible");
     }
 
-    private void testAcception(Draggable draggable, IndicatorState state) {
-        drag = new Drag(draggable, drop1);
-        drag.setDragIndicator(indicator);
-        enterAndVerify(drop1, state);
+    private void doDrop() {
+        new Actions(driver).release().build().perform();
     }
+
+    private void guardedDrop() {
+        Actions release = new Actions(driver).release();
+        MetamerPage.waitRequest(release, WaitRequestType.XHR);
+        release.build().perform();
+    }
+
 }

@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -25,27 +25,34 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
-import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.model.AbstractModel;
+import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.test.selenium.support.ui.ElementPresent;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22499 $
+ * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
+ * @version $Revision: $
  */
-public class Indicator extends AbstractModel<JQueryLocator> {
+public class Indicator {
 
-    private GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
+    private static final String CLASS = "class";
+
+    private WebDriver driver = GrapheneContext.getProxy();
+    private WebElement indicator;
 
     private boolean defaultIndicator = false;
     private String acceptClass;
     private String rejectClass;
     private String draggingClass;
-    private JQueryLocator activeIndicator = new JQueryLocator("body > div.rf-ind");
 
-    public Indicator(String name, JQueryLocator root) {
-        super(name, root);
+    WebElement activeIndicator;
+
+    private ElementPresent elementPresent = ElementPresent.getInstance();
+
+    public Indicator(WebElement indicator) {
+        this.indicator = indicator;
     }
 
     public void setDefaultIndicator(boolean defaultIndicator) {
@@ -66,9 +73,11 @@ public class Indicator extends AbstractModel<JQueryLocator> {
 
     public boolean isVisible() {
         if (defaultIndicator) {
-            return selenium.isElementPresent(this) && selenium.isVisible(this);
+            return elementPresent.element(indicator).apply(driver)
+                && indicator.isDisplayed();
         } else {
-            return selenium.isElementPresent(activeIndicator) && selenium.isVisible(activeIndicator);
+            return elementPresent.element(getActiveIndicator()).apply(driver)
+                && getActiveIndicator().isDisplayed();
         }
     }
 
@@ -76,19 +85,19 @@ public class Indicator extends AbstractModel<JQueryLocator> {
         if (className == null) {
             return false;
         }
-        return selenium.belongsClass(this, className);
+        return indicator.getAttribute(CLASS).contains(className);
     }
 
     public boolean isAccepting() {
-        return selenium.belongsClass(activeIndicator, "rf-ind-acpt");
+        return getActiveIndicator().getAttribute(CLASS).contains("rf-ind-acpt");
     }
 
     public boolean isDragging() {
-        return selenium.belongsClass(activeIndicator, "rf-ind-drag");
+        return getActiveIndicator().getAttribute(CLASS).contains("rf-ind-drag");
     }
 
     public boolean isRejecting() {
-        return selenium.belongsClass(activeIndicator, "rf-ind-rejt");
+        return getActiveIndicator().getAttribute(CLASS).contains("rf-ind-rejt");
     }
 
     public void verifyState(IndicatorState state) {
@@ -134,6 +143,14 @@ public class Indicator extends AbstractModel<JQueryLocator> {
             return;
         }
         assertEquals(belongsClass(customClass), shouldBePresent);
+    }
+
+    public WebElement getIndicator(By by) {
+        return driver.findElement(by);
+    }
+
+    public WebElement getActiveIndicator() {
+        return driver.findElement(By.cssSelector("body > div.rf-ind"));
     }
 
     public enum IndicatorState {
