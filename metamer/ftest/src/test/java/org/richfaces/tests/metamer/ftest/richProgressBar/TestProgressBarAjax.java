@@ -177,7 +177,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "testInterval", ints = { 1200, 1600, 2200 })
-    public void testInterval() throws ParseException {
+    public void testInterval() {
         testOneRunOfProgressBar(page.startButton, testInterval);
     }
 
@@ -193,7 +193,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
                 new Actions(driver).doubleClick(page.progressBar).build());
     }
 
-    private void testOneRunOfProgressBar(WebElement button, int interval) throws ParseException {
+    private void testOneRunOfProgressBar(WebElement button, int interval) {
         progressBarAttributes.set(ProgressBarAttributes.interval, interval);
 
         long delta = (long) (interval * 0.3);
@@ -211,6 +211,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
             labelsList.add(page.label.getText().replace(" %", ""));
             progressList.add(getProgress());
         }
+        labelsList.remove("");//there can be empty string from label after progress finishes
 
         List<DateTime> timesList = new ArrayList<DateTime>(timesString.size());
         for (String s : timesString) {
