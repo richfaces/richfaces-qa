@@ -21,10 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
 import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.jboss.arquillian.ajocado.Graphene.waitModel;
 import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
@@ -62,7 +60,13 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
 
         if (runInPortalEnv) {
             selenium.open(buildUrl(format("{0}://{1}:{2}/{3}",
-                contextRoot.getProtocol(), contextRoot.getHost(), contextRoot.getPort(), "portal/classic/showcase")));
+            contextRoot.getProtocol(), contextRoot.getHost(), contextRoot.getPort(), "portal/classic/showcase")));
+            selenium.waitForPageToLoad();
+            selenium.type(jq("input[id$='portalForm:portalDemo']"), getDemoName());
+            selenium.type(jq("input[id$='portalForm:portalSample']"), getSampleName());
+            selenium.click(jq("a[id$='portalForm:redirectToPortlet']"));
+            /*selenium.open(buildUrl(format("{0}://{1}:{2}/{3}",
+            contextRoot.getProtocol(), contextRoot.getHost(), contextRoot.getPort(), "portal/classic/showcase")));
             selenium.waitForPageToLoad();
 
             JQueryLocator menuItemLoc = jq(format("a.rf-pm-itm-lbl:contains({0})", getDemoName()));
@@ -74,7 +78,7 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
                 waitGui.until(elementPresent.locator(tab));
                 selenium.click(tab);
                 selenium.waitForPageToLoad();
-            }
+            }*/
         } else {
             selenium.open(buildUrl(contextRoot, addition));
         }
