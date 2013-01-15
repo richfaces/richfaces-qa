@@ -65,20 +65,6 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
             selenium.type(jq("input[id$='portalForm:seleniumTestDemo']"), getDemoName());
             selenium.type(jq("input[id$='portalForm:seleniumTestSample']"), getSampleName());
             selenium.click(jq("a[id$='portalForm:redirectToPortlet']"));
-            /*selenium.open(buildUrl(format("{0}://{1}:{2}/{3}",
-            contextRoot.getProtocol(), contextRoot.getHost(), contextRoot.getPort(), "portal/classic/showcase")));
-            selenium.waitForPageToLoad();
-
-            JQueryLocator menuItemLoc = jq(format("a.rf-pm-itm-lbl:contains({0})", getDemoName()));
-            waitModel.until(elementPresent.locator(menuItemLoc));
-            selenium.click(menuItemLoc);
-            if (null != getSampleLabel()) {
-                System.out.println(" ### switchning tab to: " + getSampleLabel());
-                JQueryLocator tab = getSampleTabLocator(getSampleLabel());
-                waitGui.until(elementPresent.locator(tab));
-                selenium.click(tab);
-                selenium.waitForPageToLoad();
-            }*/
         } else {
             selenium.open(buildUrl(contextRoot, addition));
         }
