@@ -62,8 +62,8 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
             selenium.open(buildUrl(format("{0}://{1}:{2}/{3}",
             contextRoot.getProtocol(), contextRoot.getHost(), contextRoot.getPort(), "portal/classic/showcase")));
             selenium.waitForPageToLoad();
-            selenium.type(jq("input[id$='portalForm:portalDemo']"), getDemoName());
-            selenium.type(jq("input[id$='portalForm:portalSample']"), getSampleName());
+            selenium.type(jq("input[id$='portalForm:seleniumTestDemo']"), getDemoName());
+            selenium.type(jq("input[id$='portalForm:seleniumTestSample']"), getSampleName());
             selenium.click(jq("a[id$='portalForm:redirectToPortlet']"));
             /*selenium.open(buildUrl(format("{0}://{1}:{2}/{3}",
             contextRoot.getProtocol(), contextRoot.getHost(), contextRoot.getPort(), "portal/classic/showcase")));
