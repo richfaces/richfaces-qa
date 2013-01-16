@@ -165,7 +165,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
         succesfulFileUploadAction.perform();
 
-        Graphene.waitAjax().until(Graphene.element(page.uploadStatusLabel).text().equalTo(doneLabel));
+        Graphene.waitAjax().until().element(page.uploadStatusLabel).text().equalTo(doneLabel);
     }
 
     @Test
