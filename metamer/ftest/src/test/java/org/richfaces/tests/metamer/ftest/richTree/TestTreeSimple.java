@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTree;
 
+import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.Graphene.waitModel;
@@ -70,14 +71,12 @@ import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.jboss.arquillian.ajocado.locator.element.ExtendedLocator;
 import org.jboss.arquillian.ajocado.request.RequestType;
 import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
-import org.jboss.cheiron.halt.XHRHalter;
 import org.richfaces.component.SwitchType;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -145,7 +144,7 @@ public class TestTreeSimple extends AbstractTestTree {
         selenium.waitForPageToLoad();
         AttributeLocator<?> styleAttr = tree.getAnyNode().getHandle().getAttribute(Attribute.CLASS);
         assertTrue(selenium.getAttribute(styleAttr).contains(value), "Attribute handleClass should contain \"" + value
-            + "\"");
+                + "\"");
     }
 
     @Test
@@ -157,7 +156,7 @@ public class TestTreeSimple extends AbstractTestTree {
         selenium.waitForPageToLoad();
         AttributeLocator<?> styleAttr = tree.getAnyNode().getIcon().getAttribute(Attribute.CLASS);
         assertTrue(selenium.getAttribute(styleAttr).contains(value), "Attribute iconClass should contain \"" + value
-            + "\"");
+                + "\"");
     }
 
     @Test
@@ -169,7 +168,7 @@ public class TestTreeSimple extends AbstractTestTree {
         selenium.waitForPageToLoad();
         AttributeLocator<?> styleAttr = tree.getAnyNode().getLabel().getAttribute(Attribute.CLASS);
         assertTrue(selenium.getAttribute(styleAttr).contains(value), "Attribute labelClass should contain \"" + value
-            + "\"");
+                + "\"");
     }
 
     @Test
@@ -371,13 +370,12 @@ public class TestTreeSimple extends AbstractTestTree {
 
     @Test
     public void testLoadingFacet() {
+        int sufficientTimeToCheckHandles = 2000;//ms
         setLoadingFacet(true);
+        setResponseDelay(sufficientTimeToCheckHandles);
         tree.setToggleType(null);
-        XHRHalter.enable();
 
-        XHRHalter xhrHalter = null;
-
-        for (int index : new int[] { 1, 2 }) {
+        for (int index : new int[]{ 1, 2 }) {
             treeNode = (index == 1) ? tree.getNode(index) : treeNode.getNode(index);
 
             assertFalse(treeNode.getHandleLoading().isVisible());
@@ -388,11 +386,6 @@ public class TestTreeSimple extends AbstractTestTree {
             assertTrue(treeNode.getHandleLoading().getImageUrl().endsWith(IMAGE_URL));
             assertFalse(treeNode.getHandle().isCollapsed());
             assertFalse(treeNode.getHandle().isExpanded());
-
-            if (xhrHalter == null) {
-                xhrHalter = XHRHalter.getHandleBlocking();
-            }
-            xhrHalter.complete();
 
             waitModel.until(treeNodeExpanded);
         }
@@ -419,6 +412,10 @@ public class TestTreeSimple extends AbstractTestTree {
         if (checked != turnOn) {
             guardXhr(selenium).click(loadingFacet);
         }
+    }
+
+    private void setResponseDelay(int milis) {
+        guardHttp(selenium).type(jq("input[id$='metamerResponseDelayInput']"), String.valueOf(milis));
     }
 
     private void expandAll() {
