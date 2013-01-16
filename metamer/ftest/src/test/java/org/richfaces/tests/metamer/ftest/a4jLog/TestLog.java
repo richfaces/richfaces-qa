@@ -65,7 +65,7 @@ public class TestLog extends AbstractWebDriverTest {
         page.input.sendKeys("RichFaces 4");
         page.submitButton.click();
 
-        Graphene.waitGui().until(Graphene.element(page.output).text().equalTo("Hello RichFaces 4!"));
+        Graphene.waitGui().until().element(page.output).text().equalTo("Hello RichFaces 4!");
 
         assertTrue(page.logMsg.size() > 0,
             "There should be at least one message in log after submit button was clicked.");
@@ -77,7 +77,7 @@ public class TestLog extends AbstractWebDriverTest {
         page.input.sendKeys("ľščťžýáíéôúäň");
         page.submitButton.click();
 
-        Graphene.waitGui().until(Graphene.element(page.output).text().equalTo("Hello ľščťžýáíéôúäň!"));
+        Graphene.waitGui().until().element(page.output).text().equalTo("Hello ľščťžýáíéôúäň!");
 
         assertTrue(page.logMsg.size() > 0,
             "There should be at least one message in log after submit button was clicked.");

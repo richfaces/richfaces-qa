@@ -123,6 +123,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         progressBarAttributes.set(ProgressBarAttributes.interval, 2000);//more time for checking
 
         MetamerPage.waitRequest(page.startButton, WaitRequestType.XHR).click();
+
         String data = (String) ((JavascriptExecutor) driver).executeScript("return data");
         assertEquals(data, "RichFaces 4", "Data sent with ajax request");
     }

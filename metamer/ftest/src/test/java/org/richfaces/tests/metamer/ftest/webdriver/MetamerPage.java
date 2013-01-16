@@ -220,7 +220,7 @@ public class MetamerPage {
         }
 
         protected void afterAction() {
-            Graphene.waitModel().until(Graphene.element(REQ_TIME).not().text().equalTo(time1));
+            Graphene.waitModel().until().element(REQ_TIME).text().not().equalTo(time1);
         }
 
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {

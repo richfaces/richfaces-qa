@@ -120,7 +120,7 @@ public class TestRichToolbarGroup extends AbstractGrapheneTest {
         toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "star");
 
         JQueryLocator separatorImg = separator.getDescendant(jq("> img"));
-        AttributeLocator attr = separatorImg.getAttribute(Attribute.SRC);
+        AttributeLocator<?> attr = separatorImg.getAttribute(Attribute.SRC);
 
         assertTrue(selenium.isElementPresent(separator), "Item separator should be present on the page.");
         assertEquals(selenium.getCount(separator), 5, "Number of separators.");
@@ -136,7 +136,7 @@ public class TestRichToolbarGroup extends AbstractGrapheneTest {
         toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "non-existing");
 
         JQueryLocator separatorImg = separator.getDescendant(jq("> img"));
-        AttributeLocator attr = separatorImg.getAttribute(Attribute.SRC);
+        AttributeLocator<?> attr = separatorImg.getAttribute(Attribute.SRC);
 
         assertTrue(selenium.isElementPresent(separator), "Item separators should be present on the page.");
         assertEquals(selenium.getCount(separator), 5, "Number of separators.");

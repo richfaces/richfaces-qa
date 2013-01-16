@@ -107,7 +107,7 @@ public class TestDropTarget extends AbstractWebDriverTest {
         // TODO JJa: find replacement
         // waitAjax.waitForChange(retrieveDrop1);
         // assertTrue(retrieveDrop2.isValueChanged());
-        Graphene.waitModel().until(Graphene.element(page.drop1).not().text().equalTo(drop1Content));
+        Graphene.waitModel().until().element(page.drop1).text().not().equalTo(drop1Content);
         // Graphene.waitModel().until(Graphene.element(page.drop2).not().text().equalTo(drop2Content));
         assertFalse(Graphene.element(page.drop2).equals(drop2Content));
     }
@@ -213,7 +213,7 @@ public class TestDropTarget extends AbstractWebDriverTest {
         String requestTime = page.requestTime.getText();
         // waiting(1000);
         doDrop();
-        Graphene.waitModel().until(Graphene.element(page.requestTime).not().text().equalTo(requestTime));
+        Graphene.waitModel().until().element(page.requestTime).text().not().equalTo(requestTime);
         assertNotPresent(page.indicator, "Indicator should be no longer visible");
     }
 
