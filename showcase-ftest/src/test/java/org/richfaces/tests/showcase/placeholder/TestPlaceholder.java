@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.placeholder;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.placeholder.page.PlaceholderPage;
 import org.testng.annotations.Test;
@@ -29,7 +30,10 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestPlaceholder extends AbstractWebDriverTest<PlaceholderPage> {
+public class TestPlaceholder extends AbstractWebDriverTest {
+
+    @Page
+    private PlaceholderPage page;
 
     @Test
     public void testPlaceholders() {

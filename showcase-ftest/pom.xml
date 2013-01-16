@@ -18,6 +18,15 @@
         <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
         <!-- testng listeners for better console output -->
         <testng.listeners>org.jboss.test.selenium.listener.ConsoleStatusTestListener,org.jboss.test.selenium.listener.FailureLoggingTestListener,org.jboss.test.selenium.listener.SeleniumLoggingTestListener</testng.listeners>
+        <!-- allow to test common/mobile layout -->
+        <showcase.layout>common</showcase.layout>
+        <!-- allow to use several browsers -->
+        <browser.capabilities>firefox</browser.capabilities>
+        <!-- Android Properties -->
+        <android.serial>has to be specified</android.serial>
+        <android.sdk.home />
+        <android.apk.version>2.21.0</android.apk.version>
+        <android.skip>true</android.skip>
     </properties>
 
     <dependencies>
@@ -137,6 +146,15 @@
                             <value>${testng.listeners}</value>
                         </property>
                     </properties>
+                    <!-- Propagate properties from browser profiles to Arquillian -->
+                    <systemPropertyVariables>
+                        <android.serial>${android.serial}</android.serial>
+                        <android.sdk.home>${android.sdk.home}</android.sdk.home>
+                        <android.apk.version>${android.apk.version}</android.apk.version>
+                        <android.skip>${android.skip}</android.skip>
+                        <browser.capabilities>${browser.capabilities}</browser.capabilities>
+                        <showcase.layout>${showcase.layout}</showcase.layout>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
         </plugins>
@@ -157,6 +175,23 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+        <!-- Browsers -->
+        <profile>
+            <id>android</id>
+            <properties>
+                <android.skip>false</android.skip>
+                <browser.capabilities>android</browser.capabilities>
+                <showcase.layout>mobile</showcase.layout>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.arquillian.extension</groupId>
+                    <artifactId>arquillian-android-depchain</artifactId>
+                    <type>pom</type>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
         </profile>
     </profiles>
 

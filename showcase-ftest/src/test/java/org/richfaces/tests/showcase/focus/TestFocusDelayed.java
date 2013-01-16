@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.focus;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.focus.page.FocusDelayedPage;
 import org.testng.annotations.Test;
@@ -29,7 +30,10 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestFocusDelayed extends AbstractWebDriverTest<FocusDelayedPage> {
+public class TestFocusDelayed extends AbstractWebDriverTest {
+
+    @Page
+    private FocusDelayedPage page;
 
     @Test
     public void testDelayedFocusOnNameInput() {

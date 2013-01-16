@@ -23,6 +23,7 @@ package org.richfaces.tests.showcase.focus;
 
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.arquillian.graphene.Graphene.guardXhr;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.focus.page.FocusManagerPage;
@@ -32,7 +33,10 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestFocusManager extends AbstractWebDriverTest<FocusManagerPage> {
+public class TestFocusManager extends AbstractWebDriverTest {
+
+    @Page
+    private FocusManagerPage page;
 
     @Test
     public void testFocusOnSecInputAfterLoad() {

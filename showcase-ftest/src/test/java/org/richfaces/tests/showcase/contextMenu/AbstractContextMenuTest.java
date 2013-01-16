@@ -40,7 +40,7 @@ import org.richfaces.tests.showcase.AbstractWebDriverTest;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class AbstractContextMenuTest<P> extends AbstractWebDriverTest<P> {
+public class AbstractContextMenuTest extends AbstractWebDriverTest {
 
     public static final double EPSILON = 0.000000001;
 

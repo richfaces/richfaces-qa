@@ -24,6 +24,7 @@ package org.richfaces.tests.showcase.focus;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 
 import java.util.concurrent.TimeUnit;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
@@ -34,7 +35,10 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestFocus extends AbstractWebDriverTest<FocusPage> {
+public class TestFocus extends AbstractWebDriverTest {
+
+    @Page
+    private FocusPage page;
 
     public static final int TIMEOUT_FOCUS = 2;
 

@@ -22,6 +22,7 @@
 package org.richfaces.tests.showcase.focus;
 
 import static org.jboss.arquillian.graphene.Graphene.guardXhr;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertEquals;
 
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
@@ -33,7 +34,10 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestFocusPreserve extends AbstractWebDriverTest<FocusPreservePage> {
+public class TestFocusPreserve extends AbstractWebDriverTest {
+
+    @Page
+    private FocusPreservePage page;
 
     private static final String EXPECTED_OUTCOME = "RichFaces";
 

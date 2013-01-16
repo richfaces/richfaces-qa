@@ -28,6 +28,7 @@ import static org.testng.Assert.assertTrue;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.contextMenu.page.TableContextMenuPage;
 import org.richfaces.tests.showcase.contextMenu.page.TreeContextMenuPage;
@@ -36,7 +37,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class TestTree extends AbstractContextMenuTest<TreeContextMenuPage> {
+public class TestTree extends AbstractContextMenuTest {
+
+    @Page
+    private TreeContextMenuPage page;
 
     @Test
     public void testViewNodesInfoByCtxMenu() {
