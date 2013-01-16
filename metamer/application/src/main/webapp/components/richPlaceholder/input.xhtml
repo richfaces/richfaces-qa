@@ -26,17 +26,16 @@
     02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="placeholderTemplate.xhtml">
+    <ui:composition template="placeholderTemplateNonJSF.xhtml">
         <ui:define name="testedComponents">
-            <input type="text" id="input1"/>
+            <input type="text" name="input1" id="input1"/>
             <br/>
             <br/>
-            <input type="text" id="input2"/>
+            <input type="text" name="input2" id="input2"/>
             <br/>
             <br/>
-            <input type="text" id="input3"/>
+            <input type="text" name="input3" id="input3"/>
             <ui:include src="placeholder.xhtml"/>
-
         </ui:define>
     </ui:composition>
 </html>
