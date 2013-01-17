@@ -21,100 +21,96 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.outputPanel;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-import static org.jboss.arquillian.ajocado.dom.Event.KEYUP;
-
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.outputPanel.page.SimplePage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
-public class TestSimple extends AbstractGrapheneTest {
+public class TestSimple extends AbstractWebDriverTest {
 
-    /* *******************************************************************************************************
-     * Locators ****************************************************************** *************************************
-     */
+    @Page
+    private SimplePage page;
 
-    protected JQueryLocator firstWrongInput = jq("input[id$=text1]");
-    protected JQueryLocator secondRightInput = jq("input[id$=text2]");
-    protected JQueryLocator approvedTextWichShouldBeEmpty = jq("");
-    protected JQueryLocator approvedText = jq("div[id$=out2]");
-    protected JQueryLocator errorValidationLength = jq("div:contains('text2: Validation Error')");
-
-    /* ********************************************************************************************************
-     * Tests ********************************************************************* ***********************************
-     */
+    private static final String CORRECT = "aaaaaaaaaa";
+    private static final String WRONG = "aaaaaaaaaaa";
 
     @Test
-    public void testFirstWrongInputStringLessThan10() {
-
-        String testStringLessThan10 = "foo";
-
-        selenium.typeKeys(firstWrongInput, testStringLessThan10);
-
-        guardXhr(selenium).fireEvent(firstWrongInput, KEYUP);
-
-        assertFalse(selenium.isTextPresent(testStringLessThan10), "The string: " + testStringLessThan10
-            + " should not be present!");
-
-        assertFalse(selenium.isTextPresent("Validation Error: Value"),
-            "The error message about length of string should not appear!");
+    public void testFirstCorrectInput() {
+        page.firstInput.click();
+        page.firstInput.sendKeys(CORRECT);
+        Graphene.waitAjax()
+                .until("After typing a correct value into the first input field no output text should be present.")
+                .element(page.firstOutput)
+                .is().not().present();
+        Graphene.waitAjax()
+                .until("After typing a correct value into the first input field no error message text should be present.")
+                .element(page.firstError)
+                .is().not().present();
+        page.firstInput.submit();
+        Graphene.waitAjax()
+                .until("After typing a correct value and into the first input field and submitting  the output text should be present.")
+                .element(page.firstOutput)
+                .is().present();
+        assertEquals(page.firstOutput.getText(), "Approved Text: " + CORRECT, "The output text doesn't match.");
     }
 
     @Test
-    public void testFirstWrongInputStringMoreThan10() {
-
-        String testStringMoreThan10 = "This string has definitely length more than 10";
-
-        selenium.typeKeys(firstWrongInput, testStringMoreThan10);
-
-        guardXhr(selenium).fireEvent(firstWrongInput, KEYUP);
-
-        assertFalse(selenium.isTextPresent(testStringMoreThan10), "The string: " + testStringMoreThan10
-            + " should not be present!");
-
-        assertFalse(selenium.isTextPresent("Validation Error: Value"),
-            "The error message about length of string should not appear!");
+    public void testFirstWrongInput() {
+        page.firstInput.click();
+        page.firstInput.sendKeys(WRONG);
+        Graphene.waitAjax()
+                .until("After typing a wrong value into the first input field no output text should be present.")
+                .element(page.firstOutput)
+                .is().not().present();
+        Graphene.waitAjax()
+                .until("After typing a wrong value into the first input field no error message should be present.")
+                .element(page.firstError)
+                .is().not().present();
+        page.firstInput.submit();
+        Graphene.waitAjax()
+                .until("After typing a wrong value and into the first input field and submitting the error message should be present.")
+                .element(page.firstError)
+                .is().present();
+        Graphene.waitAjax()
+                .until("After typing a wrong value into the first input field and submitting no output text should be present.")
+                .element(page.firstOutput)
+                .is().not().present();
     }
 
     @Test
-    public void testSecondRightInput() {
+    public void testSecondCorrectInput() {
+        page.secondInput.click();
+        page.secondInput.sendKeys(CORRECT);
+        Graphene.waitAjax()
+                .until("After typing a correct value into the second input field, the output text should be present.")
+                .element(page.secondOutput)
+                .is().present();
+        Graphene.waitAjax()
+                .until("After typing a wrong value into the second input field no error message should be present.")
+                .element(page.secondError)
+                .is().not().present();
+        assertEquals(page.secondOutput.getText(), "Approved Text: " + CORRECT, "The output text doesn't match.");
+    }
 
-        StringBuilder sb = new StringBuilder();
-
-        // try to type 10 characters and check whether the text is still approved
-        // and also whether text appears in the approved text part
-        for (int i = 0; i < 10; i++) {
-            sb.append(i);
-
-            selenium.typeKeys(secondRightInput, sb.toString());
-            guardXhr(selenium).fireEvent(secondRightInput, KEYUP);
-
-            assertEquals(selenium.getText(approvedText), "Approved Text: " + sb.toString(), "The text still"
-                + "should appear in the approved text part, since it is no longer than 10 characters!");
-
-            assertFalse(selenium.isElementPresent(errorValidationLength),
-                "The error message should not appear, there are " + "not more than 10 characters!");
-        }
-
-        // now there are 10 characters, adding one more should render error message and approved
-        // text should be empty
-        sb.append("X");
-        selenium.typeKeys(secondRightInput, sb.toString());
-        guardXhr(selenium).fireEvent(secondRightInput, KEYUP);
-
-        assertEquals(selenium.getText(approvedText).trim(), "", "The text from element approved text should be"
-            + "empty string, since there are more than 10 characters in the input!");
-
-        assertTrue(selenium.isElementPresent(errorValidationLength), "The error message about text length should "
-            + "be present and visible because there are more than 10 characters in the input!");
-
+    @Test
+    public void testSecondWrongInput() throws InterruptedException {
+        page.secondInput.click();
+        page.secondInput.sendKeys(WRONG);
+        Graphene.waitAjax()
+                .until("After typing a wrong value into the second input field, an error message should be present.")
+                .element(page.secondError)
+                .is().present();
+        Graphene.waitAjax()
+                .until("After typing a wrong value into the second input field no output text should be present.")
+                .element(page.secondOutput)
+                .text()
+                .equalTo("");
     }
 }

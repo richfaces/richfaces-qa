@@ -19,16 +19,15 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.page.a4jMediaOutput;
+package org.richfaces.tests.showcase.mediaOutput.page;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class ImgUsagePage implements ShowcasePage {
+public class ImgUsagePage {
 
     public static final int INDEX_RED = 0;
     public static final int INDEX_DARK_BLUE = 1;
@@ -37,44 +36,14 @@ public class ImgUsagePage implements ShowcasePage {
     public static final int INDEX_BLUE = 4;
 
     @FindBy(css = ".example-cnt img")
-    private WebElement image;
+    public WebElement image;
     @FindBy(xpath = "//*[@class='example-cnt']//td[contains(text(), 'Color 1')]/../td[position()=2]/select")
-    private WebElement selectLeftColor;
+    public WebElement selectLeftColor;
     @FindBy(xpath = "//*[@class='example-cnt']//td[contains(text(), 'Color 1')]/../td[position()=4]/select")
-    private WebElement selectRightColor;
+    public WebElement selectRightColor;
     @FindBy(xpath = "//*[@class='example-cnt']//td[contains(text(), 'Color 1')]/../td[position()=6]/select")
-    private WebElement selectTextColor;
+    public WebElement selectTextColor;
     @FindBy(css = ".example-cnt input[type='submit']")
-    private WebElement submitButton;
-
-    @Override
-    public String getDemoName() {
-        return "mediaOutput";
-    }
-
-    @Override
-    public String getSampleName() {
-        return "imgUsage";
-    }
-
-    public WebElement getImage() {
-        return image;
-    }
-
-    public WebElement getSelectLeftColor() {
-        return selectLeftColor;
-    }
-
-    public WebElement getSelectRightColor() {
-        return selectRightColor;
-    }
-
-    public WebElement getSelectTextColor() {
-        return selectTextColor;
-    }
-
-    public WebElement getSubmitButton() {
-        return submitButton;
-    }
+    public WebElement submitButton;
 
 }
