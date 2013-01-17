@@ -25,17 +25,41 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.testng.annotations.Test;
+
 /**
  * Test extending default drag source test for RF-12256 simulation
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision$
  */
-public class TestDragSourceRF12256 extends TestDragSource {
+public class TestDragSourceRF12256 extends AbstractDragSourceTest {
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richDragSource/RF-12256.xhtml");
+    }
+
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12441")
+    public void testDefaultIndicator() {
+        super.testDefaultIndicator();
+    }
+
+    @Test
+    public void testCustomIndicator() {
+        super.testCustomIndicator();
+    }
+
+    @Test
+    public void testRendered() {
+        super.testRendered();
+    }
+
+    @Test
+    public void testType() {
+        super.testType();
     }
 
 }
