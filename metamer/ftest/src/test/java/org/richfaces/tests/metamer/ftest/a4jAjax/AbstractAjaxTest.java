@@ -158,7 +158,7 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
 
         String reqTime = page.requestTime.getText();
         performAction();
-        Graphene.waitModel().until("Page was not updated").element(page.requestTime).text().not().equalTo(reqTime);
+        Graphene.waitModel().until("Page was not updated").element(page.output1).text().equalTo(expectedOutput);
 
         assertEquals(page.requestTime.getText(), reqTime, "Ajax-rendered a4j:outputPanel shouldn't change");
     }
