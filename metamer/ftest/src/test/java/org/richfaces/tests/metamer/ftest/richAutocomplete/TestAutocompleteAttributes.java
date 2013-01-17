@@ -27,7 +27,6 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocomp
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
@@ -72,13 +71,13 @@ public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
         autocomplete.type("something");
         page.blur();
 
-        Graphene.waitAjax().withTimeout(4, TimeUnit.SECONDS).until(Graphene.element(page.getOutput()).text().equalTo("something"));
+        Graphene.waitModel().until().element(page.getOutput()).text().equalTo("something");
 
         autocomplete.clear(ClearType.BACK_SPACE);
         autocomplete.type("something else");
         page.blur();
         // valueChangeListener output as 4th record
-        Graphene.waitAjax().until(Graphene.element(page.getOutput()).text().equalTo("something else"));
+        Graphene.waitModel().until().element(page.getOutput()).text().equalTo("something else");
         assertEquals(page.getPhases().get(3), format(PHASE_LISTENER_LOG_FORMAT, "something", "something else"));
     }
 
