@@ -74,6 +74,7 @@ import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
 import org.richfaces.component.SwitchType;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
@@ -369,6 +370,7 @@ public class TestTreeSimple extends AbstractTestTree {
     }
 
     @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12696")
     public void testLoadingFacet() {
         int sufficientTimeToCheckHandles = 2000;//ms
         setLoadingFacet(true);
