@@ -19,42 +19,27 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.page.a4jAjax;
+package org.richfaces.tests.showcase.outputPanel.page;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
-
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class AjaxPage implements ShowcasePage {
+public class SimplePage {
 
-    @FindBy(css = ".example-cnt input[type='text']")
-    private WebElement input;
-
-    @FindBy(xpath = "//*[@class='example-cnt']//span")
-    private WebElement output;
-
-    @Override
-    public String getDemoName() {
-        return "ajax";
-    }
-
-    @Override
-    public String getSampleName() {
-        return "ajax";
-    }
-
-    public WebElement getInput() {
-        return input;
-    }
-
-    public WebElement getOutput() {
-        return output;
-    }
-
-
+    @FindBy(xpath = "//*[@class='example-cnt']//span[contains(text(), 'text1')]")
+    public WebElement firstError;
+    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='text'][contains(@name, 'text1')]")
+    public WebElement firstInput;
+    @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'out1')]")
+    public WebElement firstOutput;
+    @FindBy(xpath = "//*[@class='example-cnt']//span[contains(text(), 'text2')]")
+    public WebElement secondError;
+    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='text'][contains(@name, 'text2')]")
+    public WebElement secondInput;
+    @FindBy(xpath = "//*[@class='example-cnt']//div[contains(@id, 'out2')]")
+    public WebElement secondOutput;
 
 }

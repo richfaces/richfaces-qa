@@ -21,22 +21,77 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.commandButton;
 
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import static org.testng.Assert.assertEquals;
+import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
-public class AbstractTestA4jCommand extends AbstractGrapheneTest {
+public abstract class AbstractTestA4jCommand extends AbstractWebDriverTest {
 
     /* *********************************************************************
      * Locators*********************************************************************
      */
 
-    protected JQueryLocator input = jq("fieldset form input[type=text]");
-    protected JQueryLocator outHello = jq("fieldset span#out");
+    @FindBy(css="fieldset form input[type=text]")
+    protected WebElement input;
+    @FindBy(css="fieldset span#out")
+    protected WebElement output;
+
+    /* ******************************************************************************
+     * Tests******************************************************************************
+     */
+
+    protected void checkClickOnTheButtonWhileInputIsEmpty(String empty) {
+
+        /*
+         * click on the button, the output should be empty string
+         */
+        Graphene.guardXhr(getCommand()).click();
+
+        assertEquals(output.getText().trim(), empty, "The output should be emtpy string");
+    }
+
+
+    protected void checkTypeSomeCharactersAndClickOnTheButton() {
+
+        /*
+         * type a string and click on the button, check the outHello
+         */
+        String testString = "Test string";
+
+        input.sendKeys(testString);
+
+        Graphene.guardXhr(getCommand()).click();
+
+        String expectedOutput = "Hello " + testString + " !";
+        assertEquals(output.getText(), expectedOutput, "The output should be: " + expectedOutput);
+    }
+
+    protected void checkEraseSomeStringAndClickOnTheButton(String empty) {
+
+        /*
+         * erases string and check the output is empty string
+         */
+        String testString = "Test string";
+
+        input.sendKeys(testString);
+
+        Graphene.guardXhr(getCommand()).click();
+
+        input.clear();
+
+        Graphene.guardXhr(getCommand()).click();
+
+        Graphene.waitAjax().until().element(output).text().equalTo(empty);
+    }
+
+    protected abstract WebElement getCommand();
 
 }

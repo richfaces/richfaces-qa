@@ -19,32 +19,45 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jAjax;
+package org.richfaces.tests.showcase.log.page;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.ftest.webdriver.page.a4jAjax.AjaxPage;
-import org.testng.annotations.Test;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jAjaxSimple extends AbstractWebDriverTest<AjaxPage> {
+public class LogPage {
 
-    @Test
-    public void testType() {
-        getPage().getInput().click();
-        getPage().getInput().sendKeys("something");
+    @FindBy(xpath = "//*[@class='example-cnt']//button")
+    public WebElement clear;
+    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='text']")
+    public WebElement input;
+    @FindBy(xpath = "//*[@class='example-cnt']//div[@class='rf-log-contents']")
+    public WebElement loggingArea;
+    @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'out')]")
+    public WebElement output;
+    @FindBy(xpath = "//*[@class='example-cnt']//select")
+    public WebElement severitySelect;
+    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='submit']")
+    public WebElement submit;
 
-        Graphene.waitAjax()
-                .withMessage("After typing something into the input, the text should appear in the output area.")
-                .until(Graphene.element(getPage().getOutput()).textEquals("something"));
+    public static enum Severity {
+        DEBUG(0), INFO(1), WARN(2), ERROR(3);
+        private int index;
 
-    }
+        private Severity(int index) {
+            this.index = index;
+        }
 
-    @Override
-    protected AjaxPage createPage() {
-        return new AjaxPage();
+        public int getIndex() {
+            return index;
+        }
+
+        @Override
+        public String toString() {
+            return super.toString().toLowerCase();
+        }
     }
 
 }

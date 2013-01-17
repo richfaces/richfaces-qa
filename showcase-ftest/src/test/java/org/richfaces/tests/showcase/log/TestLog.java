@@ -21,40 +21,27 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.log;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.support.ui.Select;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.log.page.LogPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
-public class TestLog extends AbstractGrapheneTest {
+public class TestLog extends AbstractWebDriverTest {
 
     /* *******************************************************************************************************
      * Locators *************************************
      */
 
-    protected JQueryLocator input = jq("input[type=text]");
-    protected JQueryLocator submitButton = jq("input[type=submit]");
-    protected JQueryLocator outputText = jq("span[id$=out]");
-    protected JQueryLocator clearButton = jq("button");
-    protected JQueryLocator selectMenu = jq("select");
-    protected JQueryLocator rfLogContents = jq("div[class=rf-log-contents]");
-
-    /* *****************************************************************************************************
-     * Constants*****************************************************************************************************
-     */
-
-    private final int INDEX_OF_DEBUG = 0;
-    private final int INDEX_OF_INFO = 1;
+    @Page
+    private LogPage page;
 
     /* ********************************************************************************************************
      * Tests ********************************************************************* ***********************************
@@ -63,57 +50,102 @@ public class TestLog extends AbstractGrapheneTest {
     @Test
     public void testInitialStateNothingToInputAndCheckTheOutput() {
 
-        guardXhr(selenium).click(submitButton);
+        Graphene.guardXhr(page.submit).click();
 
-        assertEquals(selenium.getText(outputText).trim(), "", "The ouput string should be empty!");
+        assertEquals(page.output.getText().trim(), "", "The ouput string should be empty!");
     }
 
     @Test
-    public void testTypeSomethingToInputAndCheckTheOutput() {
-
-        String testString = "Test String";
-
-        selenium.type(input, testString);
-
-        guardXhr(selenium).click(submitButton);
-
-        assertEquals(selenium.getText(outputText).trim(), "Hello " + testString + "!", "The ouput string is incorrect!");
+    public void testLogAndClear() {
+        Select select = new Select(page.severitySelect);
+        select.selectByIndex(LogPage.Severity.INFO.getIndex());
+        page.submit.click();
+        Graphene.waitAjax()
+                .until("After setting severity to <info> and submitting, the logging area should contain a message with severity <info>.")
+                .element(page.loggingArea)
+                .text()
+                .contains("info");
+        page.clear.click();
+        Graphene.waitAjax()
+                .until("After setting severity to <info>, submitting and clicking on the clear button, the logging area should be empty.")
+                .element(page.loggingArea)
+                .text()
+                .equalTo("");
     }
 
     @Test
-    public void testTypeSomethingToTheInputSelectDebugAndCheckTheLog() {
-
-        selenium.type(input, "Test String");
-        selenium.select(selectMenu, OptionLocatorFactory.optionIndex(INDEX_OF_DEBUG));
-        guardXhr(selenium).click(submitButton);
-
-        assertTrue(selenium.getText(rfLogContents).contains("debug"), "The log should contain debug informations.");
-        assertTrue(selenium.getText(rfLogContents).contains("info"), "The log should contain info informations.");
+    public void testLogDebug() {
+        Select select = new Select(page.severitySelect);
+        select.selectByIndex(LogPage.Severity.DEBUG.getIndex());
+        page.submit.click();
+        Graphene.waitAjax()
+                .until("After setting severity to <debug> and submitting, the logging area should contain a message with severity <debug>.")
+                .element(page.loggingArea)
+                .text()
+                .contains("debug");
+        Graphene.waitAjax()
+                .until("After setting severity to <debug> and submitting, the logging area should contain a message with severity <info>.")
+                .element(page.loggingArea)
+                .text()
+                .contains("info");
     }
 
     @Test
-    public void testTypeSomethingToTheInputSelectInfoAndCheckTheLog() {
-
-        selenium.type(input, "Test string");
-        selenium.select(selectMenu, OptionLocatorFactory.optionIndex(INDEX_OF_INFO));
-        guardXhr(selenium).click(submitButton);
-
-        assertFalse(selenium.getText(rfLogContents).contains("debug"), "The log should not contain debug informations");
-        assertTrue(selenium.getText(rfLogContents).contains("info"), "The log should contain info informations");
-
+    public void testLogError() {
+        Select select = new Select(page.severitySelect);
+        select.selectByIndex(LogPage.Severity.ERROR.getIndex());
+        page.submit.click();
+        Graphene.waitAjax()
+                .until("After setting severity to <error> and submitting, the logging area should contain no message.")
+                .element(page.loggingArea)
+                .text()
+                .equalTo("");
     }
 
     @Test
-    public void testClearButton() {
+    public void testLogInfo() {
+        Select select = new Select(page.severitySelect);
+        select.selectByIndex(LogPage.Severity.INFO.getIndex());
+        page.submit.click();
+        Graphene.waitAjax()
+                .until("After setting severity to <info> and submitting, the logging area should contain a message with severity <info>.")
+                .element(page.loggingArea)
+                .text()
+                .contains("info");
+    }
 
-        selenium.type(input, "test String");
-        selenium.select(selectMenu, OptionLocatorFactory.optionIndex(INDEX_OF_INFO));
-        guardXhr(selenium).click(submitButton);
+    @Test(groups = { "RF-11479" })
+    public void testLogWarn() {
+        Select select = new Select(page.severitySelect);
+        select.selectByIndex(LogPage.Severity.WARN.getIndex());
+        page.submit.click();
+        Graphene.waitAjax()
+                .until("After setting severity to <warn> and submitting, the logging area should contain no message.")
+                .element(page.loggingArea)
+                .text()
+                .equalTo("");
+    }
 
-        assertTrue(selenium.getText(rfLogContents).contains("info"), "The log should contain info information");
+    @Test
+    public void testSubmitEmpty() {
+        page.submit.click();
+        Graphene.waitAjax()
+                .until("After submitting empty input, the output should contain nothing.")
+                .element(page.output)
+                .text()
+                .equalTo("");
+    }
 
-        selenium.click(clearButton);
-        assertEquals(selenium.getText(rfLogContents).trim(), "", "The log info should be empty!");
+    @Test
+    public void testSubmitSomething() {
+        page.input.click();
+        page.input.sendKeys("something");
+        page.submit.click();
+        Graphene.waitAjax()
+                .until("After submitting the input, the content of the output should match.")
+                .element(page.output)
+                .text()
+                .equalTo("Hello something!");
     }
 
 }

@@ -19,32 +19,20 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jJsFunction;
+package org.richfaces.tests.showcase.ajax.page;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.ftest.webdriver.page.a4jJsFunction.JsFunctionPage;
-import org.testng.annotations.Test;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jJsFunctionSimple extends AbstractWebDriverTest<JsFunctionPage> {
+public class AjaxPage {
 
-    @Test(groups = {"broken"})
-    public void testClick() {
-        for (String name : getPage().getNames().keySet()) {
-            getPage().getNames().get(name).click();
-            Graphene.waitAjax()
-                    .withMessage("After clicking on the name <" + name + ">, the name should appear in the output area.")
-                    .until(Graphene.element(getPage().getOutput()).textEquals(name));
-        }
-    }
+    @FindBy(css = ".example-cnt input[type='text']")
+    public WebElement input;
 
-    @Override
-    protected JsFunctionPage createPage() {
-        return new JsFunctionPage();
-    }
-
+    @FindBy(xpath = "//*[@class='example-cnt']//span")
+    public WebElement output;
 
 }

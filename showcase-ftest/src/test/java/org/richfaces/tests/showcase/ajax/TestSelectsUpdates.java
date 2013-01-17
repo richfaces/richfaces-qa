@@ -24,29 +24,32 @@ package org.richfaces.tests.showcase.ajax;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory.optionLabel;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
 /**
  *
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
-public class TestSelectsUpdates extends AbstractGrapheneTest {
+public class TestSelectsUpdates extends AbstractWebDriverTest {
 
     /* *************************************************************************************
      * Locators*************************************************************************************
      */
 
-    protected JQueryLocator firstSelect = jq("fieldset form select:eq(0)");
-    protected JQueryLocator secondSelect = jq("fieldset form select:eq(1)");
+    @FindBy(jquery="fieldset form select:eq(0)")
+    protected WebElement firstSelect;
+    @FindBy(jquery="div[id$='second'] select")
+    protected WebElement secondSelect;
 
     /* ***************************************************************************************
      * Tests***************************************************************************************
@@ -69,25 +72,30 @@ public class TestSelectsUpdates extends AbstractGrapheneTest {
         vegetablesExpected.add("Garlic");
         vegetablesExpected.add("Carrot");
 
-        boolean isFirstSelectDispalyed = selenium.isElementPresent(firstSelect);
-        assertTrue(isFirstSelectDispalyed, "First select should be displayed!");
+        assertTrue(firstSelect.isDisplayed(), "First select should be displayed!");
 
-        boolean isSecondSelectDisplayed = selenium.isElementPresent(secondSelect);
-        assertFalse(isSecondSelectDisplayed, "Second select should be dispayed");
+//        assertFalse(secondSelect.isDisplayed(), "Second select should be dispayed");
 
-        guardXhr(selenium).select(firstSelect, optionLabel("Fruits"));
+        Graphene.guardXhr(new Select(firstSelect)).selectByVisibleText("Fruits");
 
-        List<String> fruitsActual = selenium.getSelectOptions(secondSelect);
+        List<String> fruitsActual = new ArrayList<String>();
+        List<WebElement> fruitsOptions = new Select(secondSelect).getOptions();
+        for (WebElement option: fruitsOptions) {
+            fruitsActual.add(option.getText().trim());
+        }
 
-        isSecondSelectDisplayed = selenium.isElementPresent(secondSelect);
-        assertTrue(isSecondSelectDisplayed, "Second select should be dispayed");
+        assertTrue(secondSelect.isDisplayed(), "Second select should be dispayed");
 
         assertEquals(fruitsActual, fruitsExpected, "When selected fruits in first select, in the second "
             + "should be some examples of Fruits");
 
-        guardXhr(selenium).select(firstSelect, optionLabel("Vegetables"));
+        Graphene.guardXhr(new Select(firstSelect)).selectByVisibleText("Vegetables");
 
-        List<String> vegetablesActual = selenium.getSelectOptions(secondSelect);
+        List<String> vegetablesActual = new ArrayList<String>();
+        List<WebElement> vegetablesOptions = new Select(secondSelect).getOptions();
+        for (WebElement option: vegetablesOptions) {
+            vegetablesActual.add(option.getText().trim());
+        }
 
         assertEquals(vegetablesActual, vegetablesExpected, "When selected vegetables in first select, in the second "
             + "should be some examples of vegetables");
