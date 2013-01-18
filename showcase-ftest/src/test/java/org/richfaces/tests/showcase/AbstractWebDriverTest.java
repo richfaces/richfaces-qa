@@ -27,7 +27,9 @@ import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -53,6 +55,9 @@ public class AbstractWebDriverTest<P> extends AbstractShowcaseTest {
             webDriver.get(format("{0}://{1}:{2}/{3}",
                 contextRoot.getProtocol(), contextRoot.getHost(), contextRoot.getPort(), "portal/classic/showcase"));
             webDriver.findElement(By.partialLinkText(getDemoName())).click();
+            setTextToHiddenField("seleniumTestDemo", getDemoName());
+            setTextToHiddenField("seleniumTestSample", getSampleName());
+            clickOnHiddenLink("redirectToPortlet");
             if (null != getSampleLabel()) {
                 System.out.println(" ### switchning tab to: " + getSampleLabel());
                 webDriver.findElement(By.linkText(getSampleLabel())).click();
@@ -60,6 +65,21 @@ public class AbstractWebDriverTest<P> extends AbstractShowcaseTest {
         } else {
             webDriver.get(URLUtils.buildUrl(contextRoot, "/showcase/", addition).toExternalForm());
         }
+    }
+
+    private void setTextToHiddenField(String id, String text) {
+        WebElement element = webDriver.findElement(By.cssSelector("input[id$='portalForm:" + id + "']"));
+        ((JavascriptExecutor) webDriver).executeScript("argument[0].text = " + text, element);
+        /*String script = "var inputs = document.getElementsByTagName(\"input\");" +
+            "for (var i = 0; i < inputs.length; i++) {" +
+                "if(inputs[i].id.indexOf(" + id + ") == 0)" +
+                    "inputs[i].text = " + text +"; " +
+                "}";*/
+    }
+
+    private void clickOnHiddenLink(String id) {
+        WebElement element = webDriver.findElement(By.cssSelector("input[id$='portalForm:" + id + "']"));
+        ((JavascriptExecutor) webDriver).executeScript("argument[0].click()", element);
     }
 
     /**
