@@ -135,7 +135,7 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
     @Test
     public void testSetValue() {
         // setValue sets the date to 10 Oct of 2012
-        MetamerPage.waitRequest(setValue, MetamerPage.WaitRequestType.NONE).click();
+        MetamerPage.waitRequest(setValue, MetamerPage.WaitRequestType.XHR).click();
         CalendarDay selectedDay = calendar.openPopup().getDayPicker().getSelectedDay();
         assertNotNull(selectedDay);
         assertEquals(selectedDay.getDayNumber().intValue(), 10);
