@@ -110,9 +110,4 @@ public class AbstractContextMenuTest<P> extends AbstractWebDriverTest<P> {
 
         return point3.distance(point4);
     }
-
-    @Override
-    protected String getSampleLabel() {
-        return null;
-    }
 }

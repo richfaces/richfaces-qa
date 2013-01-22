@@ -201,9 +201,4 @@ public class TestPushCdi extends AbstractWebDriverTest {
                 + " should contains different messages");
         }
     }
-
-    @Override
-    protected String getSampleLabel() {
-        return "CDI Push";
-    }
 }
