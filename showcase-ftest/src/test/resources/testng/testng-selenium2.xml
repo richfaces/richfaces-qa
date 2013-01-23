@@ -16,6 +16,7 @@
             <package name="org.richfaces.tests.showcase.jsFunction" />
             <package name="org.richfaces.tests.showcase.log" />
             <package name="org.richfaces.tests.showcase.mediaOutput" />
+            <package name="org.richfaces.tests.showcase.param" />
         </packages>
 
         <classes>

@@ -19,39 +19,24 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.page.a4jParam;
+package org.richfaces.tests.showcase.param.page;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class ParamPage implements ShowcasePage {
+public class ParamPage {
 
     @FindBy(xpath = "//*[@class='example-cnt']//div[@class='rf-p-b ']/span")
-    private WebElement output;
+    public WebElement output;
     @FindBy(xpath = "//*[@class='example-cnt']//input[@value='Set Name to Alex']")
     private WebElement setAlex;
     @FindBy(xpath = "//*[@class='example-cnt']//input[@value='Set Name to John']")
     private WebElement setJohn;
 
-    @Override
-    public String getDemoName() {
-        return "param";
-    }
-
-    public WebElement getOutput() {
-        return output;
-    }
-
-    @Override
-    public String getSampleName() {
-        return "param";
-    }
-
-    public void setName(Name name) {
+    public void setName(ParamPage.Name name) {
         switch(name) {
             case ALEX:
                 setAlex.click();
@@ -70,10 +55,11 @@ public class ParamPage implements ShowcasePage {
             this.name = name;
         }
 
-        public static Name[] getAll() {
-            return new Name[] {ALEX, JOHN};
+        public static ParamPage.Name[] getAll() {
+            return new ParamPage.Name[] {ALEX, JOHN};
         }
 
+        @Override
         public String toString() {
             return name;
         }
