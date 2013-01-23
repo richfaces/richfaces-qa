@@ -19,31 +19,21 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jParam;
+package org.richfaces.tests.showcase.param.page;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.ftest.webdriver.page.a4jParam.ParamPage;
-import org.testng.annotations.Test;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.WebElement;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jParamSimple extends AbstractWebDriverTest<ParamPage>{
+public class ClientParamPage {
 
-    @Test(groups = {"RF-12146"})
-    public void testSetName() {
-        for(ParamPage.Name name : ParamPage.Name.getAll()) {
-            getPage().setName(name);
-            Graphene.waitAjax()
-                .withMessage("After selecting name, the output should contain the name.")
-                .until(Graphene.element(getPage().getOutput()).textEquals("Selected Name:" + name));
-        }
-    }
-
-    @Override
-    protected ParamPage createPage() {
-        return new ParamPage();
-    }
+    @FindBy(css="input[type=submit]")
+    public WebElement buttonShowScreenSize;
+    @FindBy(jquery="fieldset table:first tr:first td:last")
+    public WebElement widthValueLocator;
+    @FindBy(jquery="fieldset table:first tr:last td:last")
+    public WebElement heightValueLocator;
 
 }
