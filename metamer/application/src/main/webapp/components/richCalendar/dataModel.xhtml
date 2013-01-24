@@ -46,10 +46,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 }
 
             </style>
-
-            <script type="text/javascript">
-                testedComponentId = "#{rich:clientId('calendar')}";
-            </script>
         </ui:define>
 
         <ui:define name="component">
@@ -75,7 +71,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         </ui:define>
 
-        <ui:define name="outOfTemplateAfter"/>
+        <ui:define name="outOfTemplateAfter">
+            <ui:include src="resizedTemplatesStyles.xhtml"/>
+        </ui:define>
 
     </ui:composition>
 </html>

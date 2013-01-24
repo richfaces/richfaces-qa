@@ -36,18 +36,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </f:metadata>
         </ui:define>
 
-        <ui:define name="head">
-            <script type="text/javascript">
-                testedComponentId = "#{rich:clientId('calendar')}";
-            </script>
-        </ui:define>
-
         <ui:define name="component">
-
             <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
             <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
             <br/><br/>
-            
+
             <h:panelGrid columns="3">
                 past
                 <rich:calendar id="calendar1"
@@ -104,6 +97,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
+            <ui:include src="resizedTemplatesStyles.xhtml"/>
             <metamer:attributes value="#{richCalendarBean.attributes}" id="attributes" />
         </ui:define>
 

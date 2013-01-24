@@ -76,8 +76,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     }
                     return true;
                 }
-
-                testedComponentId = "#{rich:clientId('calendar')}";
             </script>
         </ui:define>
 
@@ -179,13 +177,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             output:
             <h:outputText id="output" value="#{richCalendarBean.value}">
-                    <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
-                                       timeZone="#{richCalendarBean.timeZone}"/>
+                <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
+                                   timeZone="#{richCalendarBean.timeZone}"/>
             </h:outputText>
 
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
+            <ui:include src="resizedTemplatesStyles.xhtml"/>
             <metamer:attributes value="#{richCalendarBean.attributes}" id="attributes" />
         </ui:define>
 

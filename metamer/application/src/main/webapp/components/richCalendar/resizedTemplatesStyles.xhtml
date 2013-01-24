@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2012, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but inAtt ANY WARRANTY; inAtt even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along inBean this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+    <style type="text/css">
+        /* templates needs to be resized, because scrolling in them causes calendar to hide */
+        
+        /* EDT */
+        .rf-edt[id$="containerRichExtendedDataTable"] tr:nth-child(3) .rf-edt-c-col2 {
+            height: 1100px !important;
+            overflow: auto;
+        }
+        .rf-edt[id$="containerRichExtendedDataTable"] tr:nth-child(3) .rf-edt-c-col1 {
+            height: 1100px !important;
+        }
+        
+        /* PopupPanel */
+        div[id$="containerPopupPanel_container"]{height: 930px !important;}
+        div[id$="containerPopupPanel_content_scroller"]{height: 910px !important;}
+        div[id$="containerPopupPanelResizerW"]{height: 930px !important;}
+        div[id$="containerPopupPanelResizerE"]{height: 930px !important;}
+    </style>
+</html>
