@@ -17,6 +17,7 @@
             <package name="org.richfaces.tests.showcase.log" />
             <package name="org.richfaces.tests.showcase.mediaOutput" />
             <package name="org.richfaces.tests.showcase.param" />
+            <package name="org.richfaces.tests.showcase.region" />
         </packages>
 
         <classes>
