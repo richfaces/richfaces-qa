@@ -38,7 +38,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
             <div style="padding: 250px">
-
                 <rich:calendar id="calendar"
                                boundaryDatesMode="#{richCalendarBean.attributes['boundaryDatesMode'].value}"
                                buttonClass="#{richCalendarBean.attributes['buttonClass'].value}"
@@ -127,7 +126,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </rich:calendar>
                 <rich:message id="msg" for="calendar"/>
             </div>
-
             <br/><br/>
             <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
             <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
@@ -139,24 +137,22 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
                                        timeZone="#{richCalendarBean.timeZone}"/>
                 </h:outputText>
-
                 <br/>
                 <br/>
-
                 Current date:  
                 <h:inputText id="currentDateInput" value="#{richCalendarBean.currentDate}">
                     <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
                                        timeZone="#{richCalendarBean.timeZone}"/>
                 </h:inputText>
-
                 <br/>
                 <br/>
-
                 Date pattern:
                 <h:inputText id="datePatternInput" value="#{richCalendarBean.attributes['datePattern'].value}"/>
-
             </a4j:outputPanel>
         </ui:define>
-
+        
+        <ui:define name="outOfTemplateAfter">
+            <ui:include src="resizedTemplatesStyles.xhtml"/>
+        </ui:define>
     </ui:composition>
 </html>

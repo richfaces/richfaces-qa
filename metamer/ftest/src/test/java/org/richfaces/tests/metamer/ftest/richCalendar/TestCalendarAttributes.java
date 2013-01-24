@@ -1,6 +1,6 @@
 /**
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
+ * Copyright 2012-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -129,6 +129,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         BOTTOMLEFT("bottomLeft"),
         BOTTOMRIGHT("bottomRight"),
         NULL("null");
+
         private final String value;
 
         private Direction(String value) {
@@ -167,8 +168,10 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @BeforeMethod
-    public void initDateFormatter() {
+    public void initPage() {
         this.dateTimeFormatter = DateTimeFormat.forPattern(calendarAttributes.get(CalendarAttributes.datePattern));
+        // should help stabilizing offset tests on Jenkins
+        driver.manage().window().setSize(new Dimension(1280, 960));
     }
 
     @Test
@@ -353,7 +356,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Test
     @Use(field = "direction", enumeration = true)
     public void testDirection() {
-        int tolerance = 4;
+        int tolerance = 5;
         calendarAttributes.set(CalendarAttributes.direction, direction.value);
         calendarAttributes.set(CalendarAttributes.jointPoint, Direction.BOTTOMLEFT.value);
         //scrolls page down
@@ -452,27 +455,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testHorizontalOffset() {
-        int tolerance = 3;
-        int horizontalOffset = 15;
-
-        // should help stabilizing test on Jenkins
-        driver.manage().window().setSize(new Dimension(1280, 960));
-
-        Locations before = calendar.openPopup().getLocations();
-        calendarAttributes.set(CalendarAttributes.horizontalOffset, horizontalOffset);
-        new Actions(driver).moveToElement(page.fullPageRefreshIcon).build().perform();
-
-        Locations after = calendar.openPopup().getLocations();
-
-        Iterator<Point> itAfter = after.iterator();
-        Locations movedFromBefore = before.moveAllBy(horizontalOffset, 0);
-        Iterator<Point> itMovedBefore = movedFromBefore.iterator();
-        //FIXME delete these logs after test method stabilized
-        System.out.println(after);
-        System.out.println(movedFromBefore);
-        while (itAfter.hasNext()) {
-            tolerantAssertLocations(itAfter.next(), itMovedBefore.next(), tolerance);
-        }
+        testOffset(Boolean.TRUE);
     }
 
     @Test
@@ -538,10 +521,13 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         assertEquals(weekDayShortNames, expectedShortNames);
 
         setCurrentDateWithCalendarsTodayButtonAction.perform();
-        DateTime parsedDateTime = dateTimeFormatter.withLocale(new Locale(locale)).parseDateTime(calendar.getInputValue());
+        DateTime parsedDateTime = dateTimeFormatter.withLocale(new Locale(locale)).parseDateTime(
+                calendar.getInputValue());
 
-        assertEquals(parsedDateTime.getDayOfMonth(), todayMidday.getDayOfMonth(), "Input doesn't contain selected date.");
-        assertEquals(parsedDateTime.getMonthOfYear(), todayMidday.getMonthOfYear(), "Input doesn't contain selected date.");
+        assertEquals(parsedDateTime.getDayOfMonth(), todayMidday.getDayOfMonth(),
+                "Input doesn't contain selected date.");
+        assertEquals(parsedDateTime.getMonthOfYear(), todayMidday.getMonthOfYear(),
+                "Input doesn't contain selected date.");
         assertEquals(parsedDateTime.getYear(), todayMidday.getYear(), "Input doesn't contain selected date.");
     }
 
@@ -635,10 +621,36 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.monthLabelsShort, labelsString);
 
         List<String> expectedLabels = Arrays.asList(labelsString.split(", "));
-        List<String> shortMonthsLabels = calendar.openPopup().getHeaderControls()
-                .openYearAndMonthEditor().getShortMonthsLabels();
+        List<String> shortMonthsLabels = calendar.openPopup().getHeaderControls().openYearAndMonthEditor()
+                .getShortMonthsLabels();
 
         assertEquals(shortMonthsLabels, expectedLabels, "Month label in calendar");
+    }
+
+    private void testOffset(boolean horizontal) {
+        int offset = 15;
+        int tolerance = 5;
+        Locations before = calendar.openPopup().getLocations();
+        if (horizontal) {
+            calendarAttributes.set(CalendarAttributes.horizontalOffset, offset);
+        } else {
+            calendarAttributes.set(CalendarAttributes.verticalOffset, offset);
+        }
+        new Actions(driver).moveToElement(page.fullPageRefreshIcon).build().perform();
+
+        Locations after = calendar.openPopup().getLocations();
+        Locations movedFromBefore = (horizontal
+                ? before.moveAllBy(offset, 0) : before.moveAllBy(0, offset));
+        Iterator<Point> itAfter = after.iterator();
+        Iterator<Point> itMovedBefore = movedFromBefore.iterator();
+
+        // FIXME delete these logs after test method stabilized
+        System.out.println(after);
+        System.out.println(movedFromBefore);
+
+        while (itAfter.hasNext()) {
+            tolerantAssertLocations(itAfter.next(), itMovedBefore.next(), tolerance);
+        }
     }
 
     @Test
@@ -719,16 +731,16 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testOnhide() {
-        testFireEvent(calendarAttributes, CalendarAttributes.onhide,
-                new Actions(driver).click(calendar.getInput()).click(calendar.getInput()).build());
+        testFireEvent(calendarAttributes, CalendarAttributes.onhide, new Actions(driver).click(calendar.getInput())
+                .click(calendar.getInput()).build());
     }
 
     @Test
     public void testOninputblur() {
-        //this throws the condition 2x
-        //testFireEventWithJS(calendar.getInput(), Event.BLUR, calendarAttributes, CalendarAttributes.oninputblur);
-        testFireEvent(calendarAttributes, CalendarAttributes.oninputblur,
-                new Actions(driver).click(calendar.getInput()).click(page.requestTime).build());
+        // this throws the condition 2x
+        // testFireEventWithJS(calendar.getInput(), Event.BLUR, calendarAttributes, CalendarAttributes.oninputblur);
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputblur, new Actions(driver)
+                .click(calendar.getInput()).click(page.requestTime).build());
     }
 
     @Test
@@ -886,7 +898,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.resetTimeOnDateSelect, booleanValue);
         int minutes = 33;
 
-        //set yesterday with some minutes
+        // set yesterday with some minutes
         MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(todayMidday.plusMinutes(minutes).minusDays(1));
         //second time, but without minutes setting, to see if the minutes will reset
         setCurrentDateWithCalendarsTodayButtonAction.perform();
@@ -1067,27 +1079,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testVerticalOffset() {
-        int tolerance = 3;
-        int verticalOffset = 15;
-
-        // should help stabilizing test on Jenkins
-        driver.manage().window().setSize(new Dimension(1280, 960));
-
-        Locations before = calendar.openPopup().getLocations();
-        calendarAttributes.set(CalendarAttributes.verticalOffset, verticalOffset);
-        new Actions(driver).moveToElement(page.fullPageRefreshIcon).build().perform();
-
-        Locations after = calendar.openPopup().getLocations();
-        Locations movedFromBefore = before.moveAllBy(0, verticalOffset);
-        Iterator<Point> itAfter = after.iterator();
-        Iterator<Point> itMovedBefore = movedFromBefore.iterator();
-        //FIXME delete these logs after test method stabilized
-        System.out.println(after);
-        System.out.println(movedFromBefore);
-
-        while (itAfter.hasNext()) {
-            tolerantAssertLocations(itAfter.next(), itMovedBefore.next(), tolerance);
-        }
+        testOffset(Boolean.FALSE);
     }
 
     @Test
