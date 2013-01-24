@@ -21,75 +21,68 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.region;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.region.page.RegionPage;
 import static org.testng.Assert.assertEquals;
-
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
-public class TestRegion extends AbstractGrapheneTest {
+public class TestRegion extends AbstractWebDriverTest {
 
     /* *******************************************************************************************************
      * Locators ****************************************************************** *************************************
      */
 
-    protected JQueryLocator firstUserName = jq("input[type=text]:first");
-    protected JQueryLocator firstEmail = jq("input[type=text]:odd:first");
-    protected JQueryLocator firstEnteredName = jq("table[id$=echopanel1] tr:eq(1) td:eq(1)");
-    protected JQueryLocator firstEnteredEmail = jq("table[id$=echopanel1] tr:eq(2) td:eq(1)");
-    protected JQueryLocator firstWrongSubmit = jq("input[type=submit]:first");
-    protected JQueryLocator secondUserName = jq("input[type=text]:even:last");
-    protected JQueryLocator secondEmail = jq("input[type=text]:odd:last");
-    protected JQueryLocator secondEnteredName = jq("table[id$=echopanel2] tr:eq(1) td:eq(1)");
-    protected JQueryLocator secondEnteredEmail = jq("table[id$=echopanel2] tr:eq(2) td:eq(1)");
-    protected JQueryLocator secondRightSubmit = jq("input[type=submit]:last");
-
-    @Test
-    public void testFirstWrongSubmitUserName() {
-
-        typeSomethingToInputTestWhetherOutputIsEmpty(firstUserName, firstEnteredName, firstWrongSubmit, true);
-    }
+    @Page
+    private RegionPage page;
 
     /* ********************************************************************************************************
      * Tests ********************************************************************* ***********************************
      */
 
     @Test
+    public void testFirstWrongSubmitUserName() {
+
+        typeSomethingToInputTestWhetherOutputIsEmpty(page.brokenNameInput, page.brokenNameOutput, page.brokenSubmit, true);
+    }
+
+    @Test
     public void testFirstWrongSubmitEmail() {
 
-        typeSomethingToInputTestWhetherOutputIsEmpty(firstEmail, firstEnteredEmail, firstWrongSubmit, true);
+        typeSomethingToInputTestWhetherOutputIsEmpty(page.brokenEmailInput, page.brokenEmailOutput, page.brokenSubmit, true);
     }
 
     @Test
     public void testFirstWrongSubmitUserNameAndEmail() {
 
-        typeSomethingToTwoInputsTestWhetherOuputIsEmpty(firstUserName, firstEmail, firstEnteredName, firstEnteredEmail,
-            firstWrongSubmit, true);
+        typeSomethingToTwoInputsTestWhetherOuputIsEmpty(page.brokenNameInput, page.brokenEmailInput, page.brokenNameOutput, page.brokenEmailOutput,
+            page.brokenSubmit, true);
     }
 
     @Test
     public void testSecondRightSubmitUserName() {
 
-        typeSomethingToInputTestWhetherOutputIsEmpty(secondUserName, secondEnteredName, secondRightSubmit, false);
+        typeSomethingToInputTestWhetherOutputIsEmpty(page.nameInput, page.nameOutput, page.submit, false);
     }
 
     @Test
     public void testSecondRightSubmitEmail() {
 
-        typeSomethingToInputTestWhetherOutputIsEmpty(secondEmail, secondEnteredEmail, secondRightSubmit, false);
+        typeSomethingToInputTestWhetherOutputIsEmpty(page.emailInput, page.emailOutput, page.submit, false);
     }
 
     @Test
     public void testSecondRightSubmitUserNameAndEmail() {
 
-        typeSomethingToTwoInputsTestWhetherOuputIsEmpty(secondUserName, secondEmail, secondEnteredName,
-            secondEnteredEmail, secondRightSubmit, false);
+        typeSomethingToTwoInputsTestWhetherOuputIsEmpty(page.nameInput, page.emailInput, page.nameOutput,
+            page.emailOutput, page.submit, false);
     }
 
     /* ********************************************************************************************************
@@ -105,16 +98,18 @@ public class TestRegion extends AbstractGrapheneTest {
      * @param output
      *            output which should be empty
      */
-    private void typeSomethingToInputTestWhetherOutputIsEmpty(JQueryLocator input, JQueryLocator output,
-        JQueryLocator submit, boolean shouldBeEmpty) {
+    private void typeSomethingToInputTestWhetherOutputIsEmpty(WebElement input, WebElement output,
+        WebElement submit, boolean shouldBeEmpty) {
 
         String testString = "Test String";
 
-        selenium.type(input, testString);
+        input.click();
+        input.clear();
+        input.sendKeys(testString);
 
-        guardXhr(selenium).click(submit);
+        Graphene.guardXhr(submit).click();
 
-        String actualString = selenium.getText(output).trim();
+        String actualString = output.getText().trim();
 
         if (shouldBeEmpty) {
             assertEquals(actualString, "", "The string should be empty!");
@@ -139,19 +134,24 @@ public class TestRegion extends AbstractGrapheneTest {
      * @param shouldBeEmpty
      *            should be outputs empty?
      */
-    private void typeSomethingToTwoInputsTestWhetherOuputIsEmpty(JQueryLocator input1, JQueryLocator input2,
-        JQueryLocator output1, JQueryLocator output2, JQueryLocator submit, boolean shouldBeEmpty) {
+    private void typeSomethingToTwoInputsTestWhetherOuputIsEmpty(WebElement input1, WebElement input2,
+        WebElement output1, WebElement output2, WebElement submit, boolean shouldBeEmpty) {
 
         String testStringUserName = "Test String user name";
         String testStringEmail = "Test String email";
 
-        selenium.type(input1, testStringUserName);
-        selenium.type(input2, testStringEmail);
+        input1.click();
+        input1.clear();
+        input1.sendKeys(testStringUserName);
 
-        guardXhr(selenium).click(submit);
+        input2.click();
+        input2.clear();
+        input2.sendKeys(testStringEmail);
 
-        String actualName = selenium.getText(output1).trim();
-        String actualEmail = selenium.getText(output2).trim();
+        Graphene.guardXhr(submit).click();
+
+        String actualName = output1.getText().trim();
+        String actualEmail = output2.getText().trim();
 
         if (shouldBeEmpty) {
             assertEquals(actualName, "", "The string retrieved from entered name should be empty!");
