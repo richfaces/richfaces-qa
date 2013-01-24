@@ -22,8 +22,8 @@
 package org.richfaces.tests.showcase.param;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.openqa.selenium.JavascriptExecutor;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.param.page.ClientParamPage;
 import static org.testng.Assert.assertEquals;
@@ -42,6 +42,9 @@ public class TestClientParam extends AbstractWebDriverTest {
 
     @Page
     private ClientParamPage page;
+
+    @JavaScript
+    private Screen screen;
 
     /* ********************************************************************************************************
      * Tests ********************************************************************* ***********************************
@@ -65,8 +68,8 @@ public class TestClientParam extends AbstractWebDriverTest {
         long widthActual = Long.parseLong(page.widthValueLocator.getText().trim());
         long heightActual = Long.parseLong(page.heightValueLocator.getText().trim());
 
-        long widthExpected = (Long) ((JavascriptExecutor) webDriver).executeScript("return window.screen.width");
-        long heightExpected = (Long) ((JavascriptExecutor) webDriver).executeScript("return window.screen.height");
+        long widthExpected = screen.getWidth();
+        long heightExpected = screen.getHeight();
 
         assertEquals(widthActual, widthExpected, "The width returned from website can not be "
             + "different from width returned from this code");
@@ -74,4 +77,10 @@ public class TestClientParam extends AbstractWebDriverTest {
             + "different from height returned from this code");
     }
 
+
+    @JavaScript("window.screen")
+    public interface Screen {
+        Long getHeight();
+        Long getWidth();
+    }
 }
