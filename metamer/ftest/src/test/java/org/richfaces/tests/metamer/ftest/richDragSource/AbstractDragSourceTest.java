@@ -142,8 +142,7 @@ public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
         // split into more steps for better ability debug in case it doesn't work
         new Actions(driver).clickAndHold(page.drag1).build().perform();
         new Actions(driver).moveByOffset(1, 1).build().perform();
-        Dimension tgtDim = target.getSize();
-        new Actions(driver).moveToElement(target, tgtDim.getWidth()/2, tgtDim.getHeight()/2).build().perform();
+        new Actions(driver).moveToElement(target).build().perform();
         indicator.verifyState(state);
         // since dragSource is the same for all iteration, it is not required drop.
         // but keep droping to simulate real behavior
