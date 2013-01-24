@@ -33,6 +33,7 @@ import static org.testng.Assert.assertTrue;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.test.selenium.support.ui.ElementNotPresent;
 import org.jboss.test.selenium.support.ui.ElementPresent;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -116,6 +117,8 @@ public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
     public void testType() {
         dragSourceAttributes.set(type, "drg3");
 
+        indicator = new Indicator(page.indicator);
+
         enterAndVerify(page.drop2, IndicatorState.ACCEPTING);
         enterAndVerify(page.drag2, IndicatorState.DRAGGING);
         enterAndVerify(page.drop1, IndicatorState.REJECTING);
@@ -136,7 +139,11 @@ public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
     protected void enterAndVerify(WebElement target, IndicatorState state) {
         // since this method verify indicator rendering over drag source, need force move a bit
         // to render indicator in this case (otherwise it doesn't get rendered)
-        new Actions(driver).clickAndHold(page.drag1).moveByOffset(1, 1).moveToElement(target).build().perform();
+        // split into more steps for better ability debug in case it doesn't work
+        new Actions(driver).clickAndHold(page.drag1).build().perform();
+        new Actions(driver).moveByOffset(1, 1).build().perform();
+        Dimension tgtDim = target.getSize();
+        new Actions(driver).moveToElement(target, tgtDim.getWidth()/2, tgtDim.getHeight()/2).build().perform();
         indicator.verifyState(state);
         // since dragSource is the same for all iteration, it is not required drop.
         // but keep droping to simulate real behavior
