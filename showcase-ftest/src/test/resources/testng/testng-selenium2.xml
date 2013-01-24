@@ -18,6 +18,7 @@
             <package name="org.richfaces.tests.showcase.mediaOutput" />
             <package name="org.richfaces.tests.showcase.param" />
             <package name="org.richfaces.tests.showcase.region" />
+            <package name="org.richfaces.tests.showcase.repeat" />
         </packages>
 
         <classes>
