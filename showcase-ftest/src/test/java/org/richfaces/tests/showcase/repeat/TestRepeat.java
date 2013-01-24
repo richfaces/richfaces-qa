@@ -21,11 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.repeat;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.repeat.page.RepeatPage;
 import static org.testng.Assert.assertEquals;
-
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.testng.annotations.Test;
 
 /**
@@ -38,12 +38,8 @@ public class TestRepeat extends AbstractDataIterationWithStates {
      * Locators ****************************************************************** *************************************
      */
 
-    private JQueryLocator firstStateHeader = jq("div.rf-p:first div[id$=header]");
-    private JQueryLocator firstStateBody = jq("div.rf-p:first div[id$=body]");
-    private JQueryLocator lastStateHeader = jq("div.rf-p:last div[id$=header]");
-    private JQueryLocator lastStateBody = jq("div.rf-p:last div[id$=body]");
-    private JQueryLocator anchorForSecondPage = jq("a.rf-ds-nmb-btn:first");
-    private JQueryLocator anchorForThirdPage = jq("a.rf-ds-nmb-btn:last");
+    @Page
+    private RepeatPage page;
 
     /* *****************************************************************************************************
      * Constants*****************************************************************************************************
@@ -74,50 +70,50 @@ public class TestRepeat extends AbstractDataIterationWithStates {
     @Test
     public void testFirstStateFirstPage() {
 
-        StateWithCapitalAndTimeZone actual = retrieveDataAboutState(firstStateHeader, firstStateBody);
+        StateWithCapitalAndTimeZone actual = retrieveDataAboutState(page.firstStateHeader, page.firstStateBody);
         assertEquals(actual, FIRST_STATE_FIRST_PAGE, "The first state on first page is not correct");
     }
 
     @Test
     public void testLastStateFirstPage() {
 
-        StateWithCapitalAndTimeZone actual = retrieveDataAboutState(lastStateHeader, lastStateBody);
+        StateWithCapitalAndTimeZone actual = retrieveDataAboutState(page.lastStateHeader, page.lastStateBody);
         assertEquals(actual, LAST_STATE_FIRST_PAGE, "The last state on first page is not correct");
     }
 
     @Test
     public void testFirstStateSecondPage() {
 
-        guardXhr(selenium).click(anchorForSecondPage);
+        Graphene.guardXhr(page.anchorForSecondPage).click();
 
-        StateWithCapitalAndTimeZone actual = retrieveDataAboutState(firstStateHeader, firstStateBody);
+        StateWithCapitalAndTimeZone actual = retrieveDataAboutState(page.firstStateHeader, page.firstStateBody);
         assertEquals(actual, FIRST_STATE_SECOND_PAGE, "The first state on second page is not correct");
     }
 
     @Test
     public void testLastStateSecondPage() {
 
-        guardXhr(selenium).click(anchorForSecondPage);
+        Graphene.guardXhr(page.anchorForSecondPage).click();
 
-        StateWithCapitalAndTimeZone actual = retrieveDataAboutState(lastStateHeader, lastStateBody);
+        StateWithCapitalAndTimeZone actual = retrieveDataAboutState(page.lastStateHeader, page.lastStateBody);
         assertEquals(actual, LAST_STATE_SECOND_PAGE, "The last state on second page is not correct");
     }
 
     @Test
     public void testFirstStateThirdPage() {
 
-        guardXhr(selenium).click(anchorForThirdPage);
+        Graphene.guardXhr(page.anchorForThirdPage).click();
 
-        StateWithCapitalAndTimeZone actual = retrieveDataAboutState(firstStateHeader, firstStateBody);
+        StateWithCapitalAndTimeZone actual = retrieveDataAboutState(page.firstStateHeader, page.firstStateBody);
         assertEquals(actual, FIRST_STATE_THIRD_PAGE, "The first state on third page is not correct");
     }
 
     @Test
     public void testLastStateThirdPage() {
 
-        guardXhr(selenium).click(anchorForThirdPage);
+        Graphene.guardXhr(page.anchorForThirdPage).click();
 
-        StateWithCapitalAndTimeZone actual = retrieveDataAboutState(lastStateHeader, lastStateBody);
+        StateWithCapitalAndTimeZone actual = retrieveDataAboutState(page.lastStateHeader, page.lastStateBody);
         assertEquals(actual, LAST_STATE_THIRD_PAGE, "The last state on third page is not correct");
     }
 
@@ -135,18 +131,18 @@ public class TestRepeat extends AbstractDataIterationWithStates {
      *            there is capital and timezone with particular format
      * @return
      */
-    private StateWithCapitalAndTimeZone retrieveDataAboutState(JQueryLocator header, JQueryLocator body) {
+    private StateWithCapitalAndTimeZone retrieveDataAboutState(WebElement header, WebElement body) {
 
         StateWithCapitalAndTimeZone state = new StateWithCapitalAndTimeZone();
 
-        state.setState(selenium.getText(header));
+        state.setState(header.getText());
 
-        String capitalAndTimeZone = selenium.getText(body);
+        String capitalAndTimeZone = body.getText();
 
         // since capitalAndTimeZone is in format State Capital (particular capital) State TimeZone (particular time
         // zone)
         // for example State Capital Annapolis State TimeZone GMT-5
-        String[] capitalAndTimeZoneSplitted = capitalAndTimeZone.split(" ");
+        String[] capitalAndTimeZoneSplitted = capitalAndTimeZone.split("[ \\n]");
 
         // capital and timezone will be always at these indices, since the samples I am testing do have capitals
         // and timezones which consist from one word only
