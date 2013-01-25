@@ -47,8 +47,8 @@ public class TestRF12510 extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/a4jJSFunction/rf-12510.xhtml");
     }
 
-    @Test(groups = "4.3")
-    @IssueTracking("https://issues.jboss.org/browse/RFPL-12510")
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12510")
     public void testTriggerJSFunctionAndSeeHowManyTimesCalledMethodOnData() {
         int beforeTrigger = page.parseCounterToInt();
         page.triggerJSFunction();

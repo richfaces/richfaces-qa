@@ -43,7 +43,7 @@ public class TestRF12030 extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richMessage/RF-12030.xhtml");
     }
 
-    @Test(groups = "4.3")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RFPL-12030")
     public void testDataScrollerWorksAfterCollapseOfPanel() {
         String valueFromFstRowBeforeCollapse = page.firstTableRow.getText().trim();
@@ -51,9 +51,12 @@ public class TestRF12030 extends AbstractWebDriverTest {
         page.collapsePanel.click();
         page.nextButton.click();
 
-        Graphene.waitModel().withMessage("The value from the first row of table"
-                + " should be different as the table was navigated to the second page. "
-                + "DataScroller does not work as expected!").until(Graphene.
-                element(page.firstTableRow).not().textContains(valueFromFstRowBeforeCollapse));
+        Graphene
+            .waitModel()
+            .until(
+                "The value from the first row of table"
+                    + " should be different as the table was navigated to the second page. "
+                    + "DataScroller does not work as expected!").element(page.firstTableRow).text().not()
+            .contains(valueFromFstRowBeforeCollapse);
     }
 }

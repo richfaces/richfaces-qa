@@ -262,7 +262,7 @@ public class TestTreeSimple extends AbstractTestTree {
         testRequestEventsAfter(events);
     }
 
-    @Test(groups = { "4.3" })
+    @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
     @Use(field = "sample", strings = { "simpleRichFacesTreeNode" })
     @Templates(exclude = "a4jRegion")

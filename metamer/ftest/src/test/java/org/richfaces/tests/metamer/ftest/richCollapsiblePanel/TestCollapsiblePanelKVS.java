@@ -65,7 +65,7 @@ public class TestCollapsiblePanelKVS extends AbstractGrapheneTest {
         testRefreshFullPage();
     }
 
-    @Test(groups = { "4.3" })
+    @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-12035")
     public void testRenderAll() {
         reloadTester.testRerenderAll();

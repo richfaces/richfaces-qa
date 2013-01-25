@@ -54,7 +54,7 @@ public class TestAccordionKVS extends AbstractWebDriverTest {
         new AccordionReloadTester().testFullPageRefresh();
     }
 
-    @Test(groups = {"keepVisualStateTesting", "4.3"})
+    @Test(groups = {"keepVisualStateTesting", "Future"})
     @IssueTracking("https://issues.jboss.org/browse/RF-12035")
     public void testRenderAll() {
         new AccordionReloadTester().testRerenderAll();

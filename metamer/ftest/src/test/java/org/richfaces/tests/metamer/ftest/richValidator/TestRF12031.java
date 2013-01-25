@@ -50,8 +50,8 @@ public class TestRF12031 extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richValidator/RF-12031.xhtml");
     }
 
-    @Test(groups = { "4.3" })
-    @IssueTracking(value = "https://issues.jboss.org/browse/RF-12031")
+    @Test(groups = { "Future" })
+    @IssueTracking({ "https://issues.jboss.org/browse/RF-12031", "https://issues.jboss.org/browse/RF-12536" })
     public void testCSVOnConditionallyRenderedInput() {
         selenium.click(toggleButton);
         waitModel.timeout(1000).until(elementPresent.locator(input));
@@ -59,7 +59,8 @@ public class TestRF12031 extends AbstractGrapheneTest {
         selenium.type(input, "RichFaces 4");
         selenium.fireEvent(input, Event.BLUR);
 
-        waitModel.failWith(new Exception("Client side validation should be performed, but there are no error messages!"))
+        waitModel
+            .failWith(new Exception("Client side validation should be performed, but there are no error messages!"))
             .timeout(1000).until(elementPresent.locator(errorMessage));
     }
 

@@ -47,7 +47,7 @@ public class TestRF12108 extends AbstractStatusTest {
         return buildUrl(contextPath, "faces/components/richTabPanel/rf-12108.xhtml");
     }
 
-    @Test(groups = "4.3")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12108")
     public void testStatusIsClearedWhenRequestCompleted() {
 

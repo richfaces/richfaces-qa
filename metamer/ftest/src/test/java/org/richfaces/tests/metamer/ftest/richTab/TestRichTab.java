@@ -79,7 +79,7 @@ public class TestRichTab extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/richTab/simple.xhtml");
     }
 
-    @Test(groups = { "4.3" })
+    @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11427")
     public void testAction() {
         retrieveRequestTime.initializeValue();
@@ -94,7 +94,7 @@ public class TestRichTab extends AbstractGrapheneTest {
             .until(textEquals.locator(PHASE_FORMAT.format(6)).text(ACTION_LOG));
     }
 
-    @Test(groups = { "4.3" })
+    @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11427")
     public void testActionListener() {
         retrieveRequestTime.initializeValue();
