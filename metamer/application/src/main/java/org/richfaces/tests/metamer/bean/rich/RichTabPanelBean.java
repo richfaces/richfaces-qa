@@ -51,6 +51,8 @@ public class RichTabPanelBean implements Serializable {
     private Attributes attributes;
     private List<UITab> tabs = new ArrayList<UITab>();
     private List<TabBean> tabBeans = new ArrayList<TabBean>();
+    // there are 5 tabs by default, so this is base for new tabs
+    private int tabIdLast = 5;
 
     /**
      * Initializes the managed bean.
@@ -90,8 +92,7 @@ public class RichTabPanelBean implements Serializable {
     public void generateNewTab() {
         logger.info("# generate new tab");
 
-        int i = tabBeans.size();
-        String idBase = "tab" + (i + 6); // there is already 5 tabs
+        String idBase = "tab" + ++tabIdLast;
         tabBeans.add(new TabBean(idBase, idBase, idBase + " header", "Content of dynamicaly created " + idBase));
 
         logger.info("# TabBeans list size: " + tabBeans.size() + ".");
