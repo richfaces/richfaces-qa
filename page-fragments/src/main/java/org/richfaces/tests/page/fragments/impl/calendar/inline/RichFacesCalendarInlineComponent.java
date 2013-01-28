@@ -32,8 +32,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.calendar.common.FooterControls;
-import org.richfaces.tests.page.fragments.impl.calendar.common.RichFacesFooterControls;
 import org.richfaces.tests.page.fragments.impl.calendar.common.HeaderControls;
+import org.richfaces.tests.page.fragments.impl.calendar.common.RichFacesFooterControls;
 import org.richfaces.tests.page.fragments.impl.calendar.common.RichFacesHeaderControls;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.DayPicker;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.RichFacesDayPicker;
@@ -108,6 +108,8 @@ public class RichFacesCalendarInlineComponent implements CalendarInlineComponent
     public void setDateTime(DateTime dt) {
         getHeaderControls().openYearAndMonthEditor().selectDate(dt).confirmDate();
         getDayPicker().selectDayInMonth(dt);
-        getFooterControls().openTimeEditor().setTime(dt, TimeEditor.SetValueBy.TYPING).confirmTime();
+        if (Graphene.element(getFooterControls().getTimeEditorOpenerElement()).isVisible().apply(driver)) {
+            getFooterControls().openTimeEditor().setTime(dt, TimeEditor.SetValueBy.TYPING).confirmTime();
+        }
     }
 }
