@@ -39,9 +39,9 @@ public abstract class AbstractTestA4jCommand extends AbstractWebDriverTest {
      * Locators*********************************************************************
      */
 
-    @FindBy(css="fieldset form input[type=text]")
+    @FindBy(css="form input[type=text]")
     protected WebElement input;
-    @FindBy(css="fieldset span#out")
+    @FindBy(jquery="span[id$=out]")
     protected WebElement output;
 
     /* ******************************************************************************
@@ -66,6 +66,8 @@ public abstract class AbstractTestA4jCommand extends AbstractWebDriverTest {
          */
         String testString = "Test string";
 
+        input.click();
+        input.clear();
         input.sendKeys(testString);
 
         Graphene.guardXhr(getCommand()).click();
@@ -81,6 +83,8 @@ public abstract class AbstractTestA4jCommand extends AbstractWebDriverTest {
          */
         String testString = "Test string";
 
+        input.click();
+        input.clear();
         input.sendKeys(testString);
 
         Graphene.guardXhr(getCommand()).click();
