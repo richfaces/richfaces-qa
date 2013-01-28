@@ -93,6 +93,8 @@ public class RichCalendarBean implements Serializable {
         attributes.remove("converter");
         attributes.remove("currentDate");
         attributes.remove("dataModel");
+        attributes.remove("preloadDateRangeBegin");
+        attributes.remove("preloadDateRangeEnd");
         attributes.remove("validator");
         attributes.remove("valueChangeListener");
         attributes.remove("timeZone");
@@ -217,25 +219,5 @@ public class RichCalendarBean implements Serializable {
         if (componentYear < 1991) {
             FacesContext.getCurrentInstance().addMessage("form:calendar", message);
         }
-    }
-
-    // for preloadedDates.xhtml
-
-    public Date getCurrentDateForPreloadedDates() {
-        Calendar calendar = Calendar.getInstance(tz);
-        calendar.set(Calendar.MONTH, 3);
-        return calendar.getTime();
-    }
-
-    public Date getPreloadedDateRangeBegin() {
-        Calendar calendar = Calendar.getInstance(tz);
-        calendar.set(2012, 0, 1);
-        return calendar.getTime();
-    }
-
-    public Date getPreloadedDateRangeEnd() {
-        Calendar calendar = Calendar.getInstance(tz);
-        calendar.set(2013, 1, 1);
-        return calendar.getTime();
     }
 }

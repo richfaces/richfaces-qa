@@ -53,9 +53,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 Calendar is predefined with mode="client", preloadDateRangeBegin="Jan 1, 2012",
                 preloadDateRangeEnd="Feb 1, 2013", currentDate="Jan 1, 2012" and dataModel.
                 <br/>
-                Switching to not preloaded date should be forbidden or an update of calendar should be made by ajax.
+                Switching to not preloaded dates(ie. 'Feb 1, 2013', 'Dec 1, 2011') will not show busyDays(aqua color) and weekends(yellow color) marked with colors.
                 <br/>
-                Not automated.
+                Automated.
             </p>
 
             <div style="padding: 250px">
@@ -63,10 +63,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                dataModel="#{calendarModel}"
                                mode="client"
                                timeZone="#{richCalendarBean.timeZone}"
-                               preloadDateRangeBegin="#{richCalendarBean.preloadedDateRangeBegin}"
-                               preloadDateRangeEnd="#{richCalendarBean.preloadedDateRangeEnd}"
+                               preloadDateRangeBegin="Jan 1, 2012"
+                               preloadDateRangeEnd="Feb 1, 2013"
                                datePattern="MMM d, yyyy"
-                               currentDate="#{richCalendarBean.currentDateForPreloadedDates}"
+                               currentDate="Jan 1, 2012"
                                value="#{richCalendarBean.value}" >
                     <a4j:ajax event="change" render="output, phasesPanel"/>
                 </rich:calendar>
@@ -82,7 +82,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         </ui:define>
 
-        <ui:define name="outOfTemplateAfter">         
+        <ui:define name="outOfTemplateAfter">
             <ui:include src="resizedTemplatesStyles.xhtml"/>
         </ui:define>
 
