@@ -44,6 +44,7 @@ public class TestAjax extends AbstractWebDriverTest {
     @Test
     public void testTypeSomeStringToTheInputAndCheckTheOutput() {
         page.input.click();
+        page.input.clear();
         String toWrite = "text";
         for (char ch: toWrite.toCharArray()) {
             Graphene.guardXhr(page.input).sendKeys(Character.toString(ch));
@@ -59,7 +60,8 @@ public class TestAjax extends AbstractWebDriverTest {
 
     @Test
     public void testEraseStringFromInputAndCheckTheOutput() {
-
+        page.input.click();
+        page.input.clear();
         String toWrite = "to erase";
 
         for (char ch: toWrite.toCharArray()) {

@@ -37,7 +37,7 @@ public class TestCommandLink extends AbstractTestA4jCommand {
      * Locators*****************************************************************************
      */
 
-    @FindBy(css="fieldset form a")
+    @FindBy(css="form a")
     protected WebElement commandLink;
 
     /* ******************************************************************************

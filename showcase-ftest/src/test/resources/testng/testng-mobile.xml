@@ -1,0 +1,21 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="seleniumTest">
+
+    <test name="All Selenium 2 Tests for Mobile Showcase" preserve-order="false">
+        <groups>
+            <run>
+                <exclude name="4.Future" />
+                <exclude name="old-selenium" />
+            </run>
+        </groups>
+
+        <packages>
+            <package name="org.richfaces.tests.showcase.commandButton" />
+            <package name="org.richfaces.tests.showcase.commandLink" />
+        </packages>
+
+        <classes>
+            <class name="org.richfaces.tests.showcase.ajax.TestAjax" />
+        </classes>
+    </test>
+</suite>
