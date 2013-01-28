@@ -313,20 +313,19 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
 
     @Test
     public void testStart() {
-        progressBarAttributes.set(ProgressBarAttributes.interval, 5000);//more time for checking
         MetamerPage.waitRequest(page.startButton, WaitRequestType.XHR).click();
+
+        String labelValue = page.label.getText();
+        assertTrue("1 %".equals(labelValue) || "2 %".equals(labelValue),
+                "Progress bar's label after start should be \"1 %\" or \"2 %\".");
+
+        assertVisible(page.remain, "Progress bar should show progress.");
+        assertVisible(page.progress, "Progress bar should not show progress.");
 
         assertVisible(page.progressBar, "Progress bar should be visible on the page.");
         assertNotPresent(page.initialOutput, "Initial output should not be present on the page.");
         assertNotPresent(page.finishOutput, "Complete output should not be present on the page.");
         assertNotPresent(page.startButton, "Start button should not be present on the page.");
         assertNotPresent(page.restartButton, "Restart button should not be present on the page.");
-
-        assertVisible(page.remain, "Progress bar should show progress.");
-        assertVisible(page.progress, "Progress bar should not show progress.");
-
-        String labelValue = page.label.getText();
-        assertTrue("1 %".equals(labelValue) || "2 %".equals(labelValue),
-                "Progress bar's label after start should be \"1 %\" or \"2 %\".");
     }
 }
