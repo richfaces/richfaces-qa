@@ -29,6 +29,7 @@ import org.joda.time.DateTime;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.DayPicker;
 import org.richfaces.tests.page.fragments.impl.calendar.common.editor.RichFacesCalendarEditor;
+import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.TimeEditor;
 import org.richfaces.tests.page.fragments.impl.calendar.inline.RichFacesCalendarInlineComponent;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.RichFacesCalendarPopupComponent;
 
@@ -99,9 +100,15 @@ public class RichFacesCalendarPopup extends RichFacesCalendarInlineComponent imp
 
     @Override
     public void setDateTime(DateTime dt) {
-        super.setDateTime(dt);
         if (Graphene.element(getFooterControls().getApplyButtonElement()).isVisible().apply(driver)) {
+            super.setDateTime(dt);
             getFooterControls().getApplyButtonElement().click();
+        } else {
+            getHeaderControls().openYearAndMonthEditor().selectDate(dt).confirmDate();
+            getDayPicker().selectDayInMonth(dt);
+            if (Graphene.element(getProxiedFooterControls().getTimeEditorOpenerElement()).isVisible().apply(driver)) {
+                getProxiedFooterControls().openTimeEditor().setTime(dt, TimeEditor.SetValueBy.TYPING).confirmTime();
+            }
         }
     }
 }
