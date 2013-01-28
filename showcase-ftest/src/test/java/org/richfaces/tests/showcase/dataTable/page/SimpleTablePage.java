@@ -19,27 +19,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.page.richDataTable;
+package org.richfaces.tests.showcase.dataTable.page;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class SimpleTablePage implements ShowcasePage {
-
-    @Override
-    public String getDemoName() {
-        return "dataTable";
-    }
-
-    @Override
-    public String getSampleName() {
-        return "simpleTable";
-    }
+public class SimpleTablePage {
 
     // Subtables
     @FindBy(xpath = "//*[@class='example-cnt']//tbody[@class='rf-cst'][1]/tr[4]")

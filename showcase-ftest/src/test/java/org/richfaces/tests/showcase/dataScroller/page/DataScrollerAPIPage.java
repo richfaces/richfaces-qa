@@ -19,33 +19,21 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.extendedDataTable;
+package org.richfaces.tests.showcase.dataScroller.page;
 
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars;
-import static org.testng.Assert.assertEquals;
 
 /**
- * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
- * @version $Revision$
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class AbstractExtendedTableTest extends AbstractDataIterationWithCars {
+public class DataScrollerAPIPage extends AbstractDataScrollerPage {
 
-    /**
-     * Checks whether there is correct car in the row, according to given vendor and model strings
-     *
-     * @param vendor
-     * @param model
-     * @param row
-     */
-    protected void checkTheRow(String vendor, String model, WebElement row) {
+    @FindBy(jquery="table[id$=repeat] tbody tr:first td:eq(1) img:eq(0)")
+    public WebElement firstImgOnThePage;
+    @FindBy(jquery="table[id$=repeat] tbody tr:first td:first img")
+    public WebElement previousButton;
+    @FindBy(jquery="table[id$=repeat] tbody tr:first td:last img")
+    public WebElement nextButton;
 
-        Car expectedCar = new Car();
-        expectedCar.setVendor(vendor);
-        expectedCar.setModel(model);
-
-        Car actualCar = retrieveCarFromRow(row, 0, 1);
-
-        assertEquals(actualCar, expectedCar, "The car in the row should be different!");
-    }
 }

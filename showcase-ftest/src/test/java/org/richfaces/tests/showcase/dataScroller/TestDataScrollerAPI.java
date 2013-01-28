@@ -21,41 +21,27 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataScroller;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 
-import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.dataScroller.page.DataScrollerAPIPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestDataScrollerAPI extends AbstractGrapheneTest {
+public class TestDataScrollerAPI extends AbstractWebDriverTest {
 
-    /* **********************************************************************************************************************
-     * Constants
-     * *********************************************************************************************************
-     * *************
-     */
-    private final String CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER = "rf-ds-nmb-btn";
-    private final String CLASS_OF_ACTIVE_BUTTON_WITH_NUMBER = CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER + " rf-ds-act";
+    @Page
+    private DataScrollerAPIPage page;
 
-    /* ************************************************************************************************************************
-     * Locators
-     * **********************************************************************************************************
-     * **************
-     */
-    private JQueryLocator buttonWithNumberOfPageActive = jq("span[class*='" + CLASS_OF_ACTIVE_BUTTON_WITH_NUMBER + "']");
-
-    private JQueryLocator firstImgOnThePage = jq("table[id$=repeat] tbody tr:first td:eq(1) img:eq(0)");
-
-    private JQueryLocator previousButton = jq("table[id$=repeat] tbody tr:first td:first img");
-    private JQueryLocator nextButton = jq("table[id$=repeat] tbody tr:first td:last img");
 
     /* *************************************************************************************************************************
      * Tests
@@ -77,30 +63,29 @@ public class TestDataScrollerAPI extends AbstractGrapheneTest {
     @Test
     public void testAPINextPrevious() {
 
-        int currentNumberOfThePage = getNumberOfCurrentPage();
+        int currentNumberOfThePage = page.getNumberOfCurrentPage();
 
         if (currentNumberOfThePage > 1) {
-
-            guardXhr(selenium).click(previousButton);
-            guardXhr(selenium).click(previousButton);
+            Graphene.guardXhr(page.previousButton).click();
+            Graphene.guardXhr(page.previousButton).click();
         }
 
         String srcBeforeClicking = getSrcOfFirstImage();
 
-        guardXhr(selenium).click(nextButton);
+        Graphene.guardXhr(page.nextButton).click();
 
         String srcAfterClicking = getSrcOfFirstImage();
 
         assertFalse(srcBeforeClicking.equals(srcAfterClicking), "The data should be different on he different pages!");
 
-        int numberOfThePageAfterClicking = getNumberOfCurrentPage();
+        int numberOfThePageAfterClicking = page.getNumberOfCurrentPage();
 
         assertEquals(numberOfThePageAfterClicking, currentNumberOfThePage + 1,
             "The current number of the page should be higher");
 
-        guardXhr(selenium).click(previousButton);
+        Graphene.guardXhr(page.previousButton).click();
 
-        numberOfThePageAfterClicking = getNumberOfCurrentPage();
+        numberOfThePageAfterClicking = page.getNumberOfCurrentPage();
 
         assertEquals(numberOfThePageAfterClicking, currentNumberOfThePage,
             "The current number of the page should be less");
@@ -117,54 +102,36 @@ public class TestDataScrollerAPI extends AbstractGrapheneTest {
      */
     private void checkNumberOfPagesButtons(int numberOfPage) {
 
-        JQueryLocator checkingButton = jq("a[class*='" + CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER + "']:contains('"
-            + numberOfPage + "')");
-
         String imgSrcBeforeClick = null;
 
-        if (selenium.isElementPresent(checkingButton)) {
-
+        try {
+            WebElement checkingButton = webDriver
+                    .findElement(ByJQuery.jquerySelector("a[class*='" + page.CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER + "']:contains('"
+                            + numberOfPage + "')"));
             imgSrcBeforeClick = getSrcOfFirstImage();
-            guardXhr(selenium).click(checkingButton);
-        } else {
-
-            JQueryLocator inactiveButton = jq("a[class*='" + CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER + "']:first");
-
+            Graphene.guardXhr(checkingButton).click();
+        } catch (NoSuchElementException ignored) {
+            WebElement inactiveButton = webDriver
+                    .findElement(ByJQuery.jquerySelector("a[class*='" + page.CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER + "']:first"));
             imgSrcBeforeClick = getSrcOfFirstImage();
-            guardXhr(selenium).click(inactiveButton);
-            numberOfPage = getNumberOfCurrentPage();
+            Graphene.guardXhr(inactiveButton).click();
+            numberOfPage = page.getNumberOfCurrentPage();
         }
 
         String imgSrcAfterClick = getSrcOfFirstImage();
 
         assertFalse(imgSrcAfterClick.equals(imgSrcBeforeClick), "The data should be different on the different pages!");
 
-        int actualCurrentNumberOfPage = getNumberOfCurrentPage();
+        int actualCurrentNumberOfPage = page.getNumberOfCurrentPage();
 
         assertEquals(actualCurrentNumberOfPage, numberOfPage, "We should be on the " + numberOfPage + ". page");
-    }
-
-    /**
-     * Gets the number of the current page
-     *
-     * @return number of the current page
-     */
-    private int getNumberOfCurrentPage() {
-
-        String currentPage = selenium.getText(buttonWithNumberOfPageActive).trim();
-        int currentPageInt = Integer.valueOf(currentPage).intValue();
-
-        return currentPageInt;
     }
 
     /**
      * Gets the src attribute of the first image on the page
      */
     private String getSrcOfFirstImage() {
-
-        String src = selenium.getAttribute(firstImgOnThePage.getAttribute(Attribute.SRC));
-
-        return src;
+        return page.firstImgOnThePage.getAttribute("src");
     }
 
 }

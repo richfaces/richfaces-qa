@@ -21,14 +21,17 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataTable;
 
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.util.Iterator;
+import java.util.List;
 
-import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.showcase.dataTable.page.TableStylingPage;
 import org.testng.annotations.Test;
 
 /**
@@ -37,25 +40,11 @@ import org.testng.annotations.Test;
  */
 public class TestTableStyling extends AbstractDataIterationWithCars {
 
-    /*
-     * Locators
-     * ************************************************************************************************************
-     */
-    JQueryLocator firstRow = jq("tbody.rf-dt-b tr:eq(0)");
-    JQueryLocator tenthRow = jq("tbody.rf-dt-b tr:eq(9)");
-    JQueryLocator lastRow = jq("tbody.rf-dt-b tr:last");
-    JQueryLocator tbody = jq("tbody.rf-dt-b");
+    @Page
+    private TableStylingPage page;
 
-    /*
-     * Since the samples with the cars are created dynamically, I am testing only whether rows in the table are non
-     * empty strings, and then whether the class of row is changed, when the mouse is over them
-     */
-    @Test
-    public void testTableContainsSomeData() {
-
-        assertFalse(testWhetherTableContainsNonEmptyStrings(tbody), "The table should contain some data!");
-
-    }
+    @ArquillianResource
+    private Actions actions;
 
     @Test
     public void testAllRowsHighlighting() {
@@ -73,9 +62,9 @@ public class TestTableStyling extends AbstractDataIterationWithCars {
 
     private boolean isAllRowsHighLightedWhenMouseIsOverThem() {
 
-        JQueryLocator trs = jq(tbody.getRawLocator() + " > tr");
+        List<WebElement> trs = page.tbody.findElements(By.tagName("tr"));
 
-        for (Iterator<JQueryLocator> i = trs.iterator(); i.hasNext();) {
+        for (Iterator<WebElement> i = trs.iterator(); i.hasNext();) {
 
             boolean result = isRowHighlighted(i.next());
 
@@ -96,13 +85,11 @@ public class TestTableStyling extends AbstractDataIterationWithCars {
      * @param row
      * @return true if the row is highlighted, false otherwise
      */
-    private boolean isRowHighlighted(JQueryLocator row) {
+    private boolean isRowHighlighted(WebElement row) {
 
-        selenium.mouseOver(row);
+        actions.moveToElement(row).perform();
 
-        String rowClass = (selenium.getAttribute(row.getAttribute(Attribute.CLASS)));
-
-        selenium.mouseOut(row);
+        String rowClass = row.getAttribute("class");
 
         return rowClass.contains("active-row");
     }

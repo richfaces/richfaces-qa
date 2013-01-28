@@ -21,27 +21,31 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataGrid;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.fail;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.dataScroller.AbstractDataScrollerTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.dataGrid.page.GridPage;
+import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars;
+import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars.Car;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
-public class TestGrid extends AbstractDataScrollerTest {
+public class TestGrid extends AbstractDataIterationWithCars {
 
     /* *****************************************************************************************************
      * Locators*****************************************************************************************************
      */
-    JQueryLocator firstPanelGridOnThePage = jq("td.rf-dg-c:first");
-    JQueryLocator lastPanelGridOnThePage = jq("td.rf-dg-c:contains('Price'):last");
+    @Page
+    private GridPage page;
 
     /* ********************************************************************************************************
      * Tests********************************************************************************************************
@@ -51,14 +55,14 @@ public class TestGrid extends AbstractDataScrollerTest {
     public void testDataGridIsNotEmpty() {
 
         @SuppressWarnings("unused")
-        Car pageFirstCar = retrieveCarFromThePanelGrid(firstPanelGridOnThePage);
+        Car pageFirstCar = retrieveCarFromThePanelGrid(page.firstPanelGridOnThePage);
         @SuppressWarnings("unused")
-        Car pageLastCar = retrieveCarFromThePanelGrid(lastPanelGridOnThePage);
+        Car pageLastCar = retrieveCarFromThePanelGrid(page.lastPanelGridOnThePage);
 
-        guardXhr(selenium).click(lastPageButton);
+        Graphene.guardXhr(page.lastPageButton).click();
 
-        pageFirstCar = retrieveCarFromThePanelGrid(firstPanelGridOnThePage);
-        pageLastCar = retrieveCarFromThePanelGrid(lastPanelGridOnThePage);
+        pageFirstCar = retrieveCarFromThePanelGrid(page.firstPanelGridOnThePage);
+        pageLastCar = retrieveCarFromThePanelGrid(page.lastPanelGridOnThePage);
     }
 
     @Test
@@ -67,26 +71,23 @@ public class TestGrid extends AbstractDataScrollerTest {
         int numberOfThePageBeforeClick;
         Car carBeforeClicking;
 
-        if (!selenium.isElementPresent(firstPageButton)) {
+        try {
+            page.firstPageButton.isDisplayed();
+            Graphene.guardXhr(page.firstPageButton).click();
 
-            numberOfThePageBeforeClick = getNumberOfCurrentPage();
-            carBeforeClicking = retrieveCarFromThePanelGrid(firstPanelGridOnThePage);
+            numberOfThePageBeforeClick = page.getNumberOfCurrentPage();
+            carBeforeClicking = retrieveCarFromThePanelGrid(page.firstPanelGridOnThePage);
 
-            guardXhr(selenium).click(nextButton);
+            Graphene.guardXhr(page.nextButton).click();
+        } catch (NoSuchElementException ignored) {
+            numberOfThePageBeforeClick = page.getNumberOfCurrentPage();
+            carBeforeClicking = retrieveCarFromThePanelGrid(page.firstPanelGridOnThePage);
 
-        } else {
-
-            guardXhr(selenium).click(firstPageButton);
-
-            numberOfThePageBeforeClick = getNumberOfCurrentPage();
-            carBeforeClicking = retrieveCarFromThePanelGrid(firstPanelGridOnThePage);
-
-            guardXhr(selenium).click(nextButton);
-
+            Graphene.guardXhr(page.nextButton).click();
         }
 
-        int numberOfThePageAfterClick = getNumberOfCurrentPage();
-        Car carAfterClicking = retrieveCarFromThePanelGrid(firstPanelGridOnThePage);
+        int numberOfThePageAfterClick = page.getNumberOfCurrentPage();
+        Car carAfterClicking = retrieveCarFromThePanelGrid(page.firstPanelGridOnThePage);
 
         assertEquals(numberOfThePageBeforeClick, numberOfThePageAfterClick - 1, "The next button does not works!");
 
@@ -97,13 +98,13 @@ public class TestGrid extends AbstractDataScrollerTest {
      * Help methods
      * **********************************************************************************************************
      */
-    private Car retrieveCarFromThePanelGrid(JQueryLocator panelGrid) {
+    private Car retrieveCarFromThePanelGrid(WebElement panelGrid) {
 
         Car car = new Car();
 
-        String panelGridText = selenium.getText(panelGrid);
+        String panelGridText = panelGrid.getText();
 
-        String[] partsOfPanelGrid = panelGridText.split(" ");
+        String[] partsOfPanelGrid = panelGridText.split("[ \n]");
 
         try {
 

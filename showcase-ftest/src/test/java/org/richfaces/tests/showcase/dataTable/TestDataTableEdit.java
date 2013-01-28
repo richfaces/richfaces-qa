@@ -21,23 +21,24 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataTable;
 
+import java.util.Iterator;
 import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars.Car;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
-import java.util.Iterator;
-
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestDataTableEdit extends AbstractDataIterationWithCars {
+@Test(groups={"old-selenium"})
+public class TestDataTableEdit extends AbstractGrapheneTest {
 
     private JQueryLocator deleteButtonInpopup = jq("input[value=Delete]:visible");
     private JQueryLocator cancelButtonInpopup = jq("input[value=Cancel]:visible");
@@ -357,6 +358,61 @@ public class TestDataTableEdit extends AbstractDataIterationWithCars {
         JQueryLocator rowInsertButton = row.getChild(jq("td a:last"));
 
         guardXhr(selenium).click(rowInsertButton);
+
+        return car;
+    }
+
+    /**
+    * retrieves info about car from the row, it starts collecting data on the row specified by startingIndexTd and ends
+    * on the endIndexOfTd, other values from car lets uninitialized
+    *
+    * This method is copy of {@link AbstractDataIterationWithCars#retrieveCarFromRow(org.openqa.selenium.WebElement, int, int) },
+    * but for old Selenium
+    *
+    * @param row
+    * @param startingIndexOfTd
+    * @param endIndexOfTd
+    * @return car
+    */
+    private Car retrieveCarFromRow(JQueryLocator row, int startingIndexOfTd, int endIndexOfTd) {
+
+        Car car = new Car();
+
+        JQueryLocator td = jq(row.getRawLocator() + " > td");
+
+        int j = 0;
+        for (Iterator<JQueryLocator> i = td.iterator(); i.hasNext();) {
+
+            if (j < startingIndexOfTd) {
+                i.next();
+            }
+
+            if (j == startingIndexOfTd) {
+                car.setVendor(selenium.getText(i.next()));
+            }
+
+            else if (j == (startingIndexOfTd + 1)) {
+                car.setModel(selenium.getText(i.next()));
+            }
+
+            else if (j == (startingIndexOfTd + 2)) {
+                car.setPrice(selenium.getText(i.next()));
+            }
+
+            else if (j == (startingIndexOfTd + 3)) {
+                car.setMileage(selenium.getText(i.next()));
+            }
+
+            else if (j == (startingIndexOfTd + 4)) {
+                car.setVin(selenium.getText(i.next()));
+            }
+
+            else if (j > endIndexOfTd) {
+                break;
+            }
+
+            j++;
+        }
 
         return car;
     }

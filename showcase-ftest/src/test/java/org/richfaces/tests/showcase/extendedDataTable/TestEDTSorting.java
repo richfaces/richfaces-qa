@@ -20,20 +20,22 @@
  */
 package org.richfaces.tests.showcase.extendedDataTable;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import org.apache.commons.lang.StringUtils;
 import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.showcase.extendedDataTable.page.EDTSortingPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestEDTSorting extends AbstractExtendedTableTest {
+
+    @Page
+    private EDTSortingPage page;
 
     @Override
     protected String getAdditionToContextRoot() {
@@ -49,38 +51,52 @@ public class TestEDTSorting extends AbstractExtendedTableTest {
         return addition;
     }
 
-    /**
-     * Test table's single sorting by price and by model.
-     */
-    public void testSingleSorting() {
-        //sort by price
+    @Test
+    public void testSingleSortingModel() {
         //first reset the sorting
-        guardXhr(selenium).click(jq("input[value='Reset Sorting']"));
-        guardXhr(selenium).click(SortBy.Price.sortButton); //sort values by price
-        Double firstrowValue, secondRowValue;
-        //check the price values
-        firstrowValue = Double.parseDouble(selenium.getText(SortBy.Price.firstRow));
-        secondRowValue = Double.parseDouble(selenium.getText(SortBy.Price.secondRow));
-        assertTrue(firstrowValue <= secondRowValue, "The price in first row should be lesser or equal to the price in second row.");
-
-        guardXhr(selenium).click(SortBy.Price.sortButton); //sort values reverse order
-
-        firstrowValue = Double.parseDouble(selenium.getText(SortBy.Price.firstRow));
-        secondRowValue = Double.parseDouble(selenium.getText(SortBy.Price.secondRow));
-        assertTrue(firstrowValue >= secondRowValue, "The price in first row should be greater or equal to the price in second row.");
-
+        page.resetSorting();
         //sort by model
+        page.sort(Field.MODEL);
+        //check the price values
+        Car previous = null;
+        for (Car car: page.getCars()) {
+            if (previous != null) {
+                assertTrue(previous.getModel().compareTo(car.getModel()) <= 0, "The model in previous row should be lesser or equal to the model in next row.");
+            }
+            previous = car;
+        }
+        //sort by model again (reverse order)
+        page.sort(Field.MODEL);
+        for (Car car: page.getCars()) {
+            if (previous != null) {
+                assertTrue(previous.getModel().compareTo(car.getModel()) >= 0, "The model in previous row <" + previous.getModel() + "> should be greater or equal to the model in next row <" + car.getModel() + ">.");
+            }
+            previous = car;
+        }
+    }
+
+    @Test
+    public void testSingleSortingPrice() {
         //first reset the sorting
-        guardXhr(selenium).click(jq("input[value='Reset Sorting']"));
-        guardXhr(selenium).click(SortBy.Model.sortButton);
-
-        assertEquals(selenium.getText(SortBy.Model.firstRow), "4-Runner", "The first model should be 4-Runner");
-        checkStrings(selenium.getText(SortBy.Model.firstRow), selenium.getText(SortBy.Model.secondRow));
-
-        guardXhr(selenium).click(SortBy.Model.sortButton); //sort values reverse order
-
-        assertEquals(selenium.getText(SortBy.Model.secondRow), "Yukon", "The first model should be Yukon");
-        checkStrings(selenium.getText(SortBy.Model.secondRow), selenium.getText(SortBy.Model.firstRow));
+        page.resetSorting();
+        //sort by price
+        page.sort(Field.PRICE);
+        //check the price values
+        Car previous = null;
+        for (Car car: page.getCars()) {
+            if (previous != null) {
+                assertTrue(Double.valueOf(previous.getPrice()) <= Double.valueOf(car.getPrice()), "The price in previous row should be lesser or equal to the price in next row.");
+            }
+            previous = car;
+        }
+        //sort by price again (reverse order)
+        page.sort(Field.PRICE);
+        for (Car car: page.getCars()) {
+            if (previous != null) {
+                assertTrue(Double.valueOf(previous.getPrice()) >= Double.valueOf(car.getPrice()), "The price in previous row should be greater or equal to the price in next row.");
+            }
+            previous = car;
+        }
     }
 
     /**
@@ -89,45 +105,21 @@ public class TestEDTSorting extends AbstractExtendedTableTest {
     @Test
     public void testMultipleSorting() {
         //set multiple sorting
-        selenium.click(jq("input[type=checkbox]"));
-        //sort by model
-        guardXhr(selenium).click(SortBy.Model.sortButton);
-        //check if table is sorted by model
-        assertEquals(selenium.getText(SortBy.Model.firstRow), "4-Runner", "The first model should be 4-Runner");
-        //sort by price
-        guardXhr(selenium).click(SortBy.Price.sortButton);
-        //check if table is still sorted by model
-        assertEquals(selenium.getText(SortBy.Model.firstRow), "4-Runner", "The first model should be 4-Runner");
-        //table is sorted by model, check if price is also sorted
-        assertTrue(Double.parseDouble(selenium.getText(SortBy.Price.firstRow))
-                <= Double.parseDouble(selenium.getText(SortBy.Price.secondRow)),
-                "The price in first row should be lesser or equal to the price in second row.");
-    }
-
-    /**
-     * Asserts that bigger string is bigger or equal the other string
-     *
-     * @param bigger
-     * @param lowerOrEqual
-     */
-    private void checkStrings(String bigger, String lowerOrEqual) {
-        assertTrue(bigger.compareTo(lowerOrEqual) >= 0);
-    }
-
-    public enum SortBy {
-
-        Vendor("tbody[id$=tbf] > tr:eq(0) td:eq(0)", "tbody[id$=tbf] > tr:eq(1) td:eq(0)"),
-        Model("tbody[id$=tbf] > tr:eq(0) td:eq(1)", "tbody[id$=tbf] > tr:eq(1) td:eq(1)"),
-        Price("table[id$=tbtn] tr:eq(0) td:eq(0)", "table[id$=tbtn] tr:eq(1) td:eq(0)"),
-        Mileage("table[id$=tbtn] tr:eq(0) td:eq(1)", "table[id$=tbtn] tr:eq(1) td:eq(1)");
-        private final JQueryLocator firstRow;
-        private final JQueryLocator secondRow;
-        private final JQueryLocator sortButton;
-
-        private SortBy(String firstRow, String secondRow) {
-            this.firstRow = jq(firstRow);
-            this.secondRow = jq(secondRow);
-            this.sortButton = jq("a:contains(" + name() + ")");
+        page.setMultipleSorting(true);
+        //sort by model and price
+        page.sort(Field.MODEL);
+        page.sort(Field.PRICE);
+        //check if table is sorted by model and price
+        Car previous = null;
+        for (Car car: page.getCars()) {
+            if (previous != null) {
+                int modelsCompared = previous.getModel().compareTo(car.getModel());
+                assertTrue(previous.getModel().compareTo(car.getModel()) <= 0, "The model in previous row should be lesser or equal to the model in next row.");
+                if (modelsCompared == 0) {
+                    assertTrue(Double.valueOf(previous.getPrice()) <= Double.valueOf(car.getPrice()), "The price in previous row should be lesser or equal to the price in next row.");
+                }
+            }
+            previous = car;
         }
     }
 }

@@ -19,44 +19,46 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.extendedDataTable;
+package org.richfaces.tests.showcase.dataTable.page;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.Test;
 
 /**
- * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
- * @version $Revision$
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestSimpleTable extends AbstractExtendedTableTest {
+public class ArrangableModelPage {
 
-    @FindBy(jquery="tbody[id$=tbf]")
-    private WebElement tableNonScrollablePart;
+    @Drone
+    private WebDriver webDriver;
 
-    /*
-     * Tests
-     *
-     * The method of testing should be improved in the future, but I chose this way of testing due to problems of
-     * scrolling with selenium over extended data table I also have to test manually the expanding of columns and that
-     * there is a possibility to change the order of columns, it should be implemented in the future too.
-     * ********************************************************************************************
-     */
-    @Test
-    public void testFirstRow() {
+    @FindBy(jquery="input[type=text]:eq(0)")
+    public WebElement firstNameFilterInput;
+    @FindBy(jquery="input[type=text]:eq(1)")
+    public WebElement secondNameFilterInput;
+    @FindBy(jquery="input[type=text]:eq(2)")
+    public WebElement emailFilterInput;
+    @FindBy(css="tbody.rf-dt-b")
+    public WebElement table;
+    @FindBy(jquery="a:contains(ascending)")
+    public WebElement ascendingLink;
+    @FindBy(jquery="a:contains(descending)")
+    public WebElement descendingLink;
 
-        WebElement row = tableNonScrollablePart.findElement(ByJQuery.jquerySelector("tr:eq(0)"));
+    @FindBy(id="footer")
+    public WebElement toBlur;
 
-        checkTheRow("Chevrolet", "Corvette", row);
-
+    public WebElement getFirstRowSomeColumn(int column) {
+        return table.findElement(ByJQuery.jquerySelector(String.format("tr:eq(0) > td:eq(%s)", column)));
     }
 
-    @Test
-    public void testLastRow() {
-
-        WebElement row = tableNonScrollablePart.findElement(ByJQuery.jquerySelector("tr:last"));
-
-        checkTheRow("Infiniti", "EX35", row);
+    public WebElement getUnsortedLink(int column) {
+        // these are links for filtering rows in a ascending, descending way
+        // 0 is for first name column, 1 surname, 2 email
+        return webDriver.findElement(ByJQuery.jquerySelector(String.format("a[onClick*='RichFaces']:eq(%s)", column)));
     }
+
 }
