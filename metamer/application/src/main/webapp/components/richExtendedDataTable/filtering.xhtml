@@ -128,7 +128,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputText value="There is no data." style="color: red;"/>
                 </f:facet>
 
-                <rich:column id="columnSex" filter="#{richExtendedDataTableBean.filterSexImpl}">
+                <rich:column id="columnSex" filter="#{richExtendedDataTableBean.filterSexImpl}" filterType="custom">
                     <f:facet name="header">
                         <h:panelGroup>
                             <h:outputText id="columnHeaderSex" value="Sex"  />
@@ -152,7 +152,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </rich:column>
 
 
-                <rich:column id="columnName" filterExpression="#{fn:containsIgnoreCase(record.name, richExtendedDataTableBean.filtering['name'])}">
+                <rich:column id="columnName" filterType="custom"
+                             filterExpression="#{fn:containsIgnoreCase(record.name, richExtendedDataTableBean.filtering['name'])}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderName" value="Name" />
                         <br/>
@@ -169,7 +170,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </f:facet>
                 </rich:column>
 
-                <rich:column id="columnTitle" filterExpression="#{richExtendedDataTableBean.filtering['title'] == null || richExtendedDataTableBean.filtering['title'] == '' || record.title == richExtendedDataTableBean.filtering['title']}">
+                <rich:column id="columnTitle" filterType="custom" 
+                             filterExpression="#{richExtendedDataTableBean.filtering['title'] == null || richExtendedDataTableBean.filtering['title'] == '' || record.title == richExtendedDataTableBean.filtering['title']}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderTitle" value="Title" />
                         <br/>
@@ -186,7 +188,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </f:facet>
                 </rich:column>
 
-                <rich:column id="columnNumberOfKids1" filterExpression="#{empty richExtendedDataTableBean.filtering['numberOfKids1'] || record.numberOfKids >= richExtendedDataTableBean.filtering['numberOfKids1']}">
+                <rich:column id="columnNumberOfKids1" filterType="custom" 
+                             filterExpression="#{empty richExtendedDataTableBean.filtering['numberOfKids1'] || record.numberOfKids >= richExtendedDataTableBean.filtering['numberOfKids1']}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderNumberOfKids" value="Number of Kids" />
                         <br/>
