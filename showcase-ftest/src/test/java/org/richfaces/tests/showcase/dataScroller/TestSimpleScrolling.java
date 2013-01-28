@@ -21,28 +21,28 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataScroller;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.dataScroller.page.SimpleScrollingPage;
+import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestSimpleScrolling extends AbstractDataScrollerTest {
+public class TestSimpleScrolling extends AbstractDataIterationWithCars {
 
-    /* ***********************************************************************************************************
-     * Locators
-     * ***********************************************************************************************************
-     */
-
-    private JQueryLocator firstRowOfTable = jq("tbody[class=rf-dt-b] tr:first");
+    @Page
+    private SimpleScrollingPage page;
 
     /* **********************************************************************************************************
      * Tests**********************************************************************************************************
@@ -50,37 +50,65 @@ public class TestSimpleScrolling extends AbstractDataScrollerTest {
 
     @Test
     public void testFirstPageButton() {
+        // starting from the first page
+        // click on the last page
+        Graphene.guardXhr(page.lastPageButton).click();
+        Car carBeforeClick = retrieveCarFromRow(page.firstRowOfTable, 0, 4);
+        // click on the first page
+        Graphene.guardXhr(page.firstPageButton).click();
+        Car carAfterClick = retrieveCarFromRow(page.firstRowOfTable, 0, 4);
 
-        checkFirstOrLastPageButton(firstPageButton, firstPageButtonDis, lastPageButton, lastPageButtonDis,
-            fastPrevButtonDis, previousButtonDis);
+        // check
+        assertFalse(carBeforeClick.equals(carAfterClick), "The data from table should be different, "
+            + "when clicking on the on the the first page button");
+
+        assertTrue(isElementPresent(page.firstPageButtonDis), "The first page button should be disabled");
+
+        assertTrue(isElementPresent(page.fastPrevButtonDis), "The fast previous page button should be disabled");
+
+        assertTrue(isElementPresent(page.previousButtonDis), "The previous button should be disabled");
     }
 
     @Test
     public void testLastPageButton() {
+        // starting from the last page
+        Graphene.guardXhr(page.lastPageButton).click();
+        // click on the first page
+        Graphene.guardXhr(page.firstPageButton).click();
+        Car carBeforeClick = retrieveCarFromRow(page.firstRowOfTable, 0, 4);
+        // click on the last page
+        Graphene.guardXhr(page.lastPageButton).click();
+        Car carAfterClick = retrieveCarFromRow(page.firstRowOfTable, 0, 4);
 
-        checkFirstOrLastPageButton(lastPageButton, lastPageButtonDis, firstPageButton, firstPageButtonDis,
-            fastNextButtonDis, nextButtonDis);
+        // check
+        assertFalse(carBeforeClick.equals(carAfterClick), "The data from table should be different, "
+            + "when clicking on the on the the last page button");
+
+        assertTrue(isElementPresent(page.lastPageButtonDis), "The last page button should be disabled");
+
+        assertTrue(isElementPresent(page.fastNextButtonDis), "The fast next page button should be disabled");
+
+        assertTrue(isElementPresent(page.nextButtonDis), "The next button should be disabled");
     }
 
     @Test
     public void testPreviousAndNextPageButton() {
-
-        testFastAndNormalButtons(nextButton, previousButton);
+        testFastAndNormalButtons(page.nextButton, page.previousButton, false);
     }
 
     // in this demo the fasts button have the same functionality as the next/previous buttons
     @Test
-    public void testFastNextPrevious() {
-
-        testFastAndNormalButtons(fastNextButton, fastPrevButton);
+    public void testPreviousAndNextPageButtonFast() {
+        testFastAndNormalButtons(page.fastNextButton, page.fastPrevButton, true);
     }
 
     @Test
     public void testNumberOfPagesButtons() {
 
-        if (!selenium.isElementPresent(firstPageButtonDis)) {
-
-            guardXhr(selenium).click(firstPageButton);
+        try {
+            page.firstPageButtonDis.isDisplayed();
+        } catch (NoSuchElementException ignored) {
+            Graphene.guardXhr(page.firstPageButton).click();
         }
 
         checkNumberOfPagesButtons(3);
@@ -103,18 +131,19 @@ public class TestSimpleScrolling extends AbstractDataScrollerTest {
      */
     private void checkNumberOfPagesButtons(int numberOfPage) {
 
-        JQueryLocator checkingButton = jq("a[class*='" + CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER + "']:contains('"
-            + numberOfPage + "'):first");
+        WebElement checkingButton = webDriver
+                .findElement(ByJQuery.jquerySelector("a[class*='" + page.CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER + "']:contains('"
+                        + numberOfPage + "'):first"));
 
-        Car carBeforeClicking = retrieveCarFromRow(firstRowOfTable, 0, 4);
+        Car carBeforeClicking = retrieveCarFromRow(page.firstRowOfTable, 0, 4);
 
-        guardXhr(selenium).click(checkingButton);
+        Graphene.guardXhr(checkingButton).click();
 
-        Car carAfterClicking = retrieveCarFromRow(firstRowOfTable, 0, 4);
+        Car carAfterClicking = retrieveCarFromRow(page.firstRowOfTable, 0, 4);
 
         assertFalse(carBeforeClicking.equals(carAfterClicking), "The data should be different on the different pages!");
 
-        int actualCurrentNumberOfPage = getNumberOfCurrentPage();
+        int actualCurrentNumberOfPage = page.getNumberOfCurrentPage();
 
         assertEquals(actualCurrentNumberOfPage, numberOfPage, "We should be on the " + numberOfPage + ". page");
     }
@@ -125,124 +154,31 @@ public class TestSimpleScrolling extends AbstractDataScrollerTest {
      * @param nextButton
      * @param previousButton
      */
-    private void testFastAndNormalButtons(JQueryLocator nextButton, JQueryLocator previousButton) {
-
-        // checks where are we now, there are three possible cases:
-
-        if (selenium.isElementPresent(firstPageButtonDis)) { // -we are on the first page
-
-            checkButton(nextButton, previousButton, 1);
-
-        } else if (selenium.isElementPresent(lastPageButtonDis)) { // -we are on the last page
-
-            checkButton(previousButton, nextButton, 1);
-
-        } else { // -we are somewhere else and therefore it does not matter which function we use
-
-            checkButton(previousButton, nextButton, 1);
-        }
-    }
-
-    /**
-     * Checks the functionality of first page button or last page button, according to parameters
-     *
-     * @param checkingButton
-     *            the button which functionality is checked
-     * @param checkingButtonDis
-     *            disabled checked button
-     * @param otherButton
-     *            the other button according to checkingButton, for example when checking button is first page button
-     *            then otherButton should be last page button, and vice versa
-     * @param otherButtonDis
-     *            disabled other button
-     * @param fastButtonOfCheckingDis
-     *            disabled fast button which is between the checking button
-     * @param previousOrNextButtonOfCheckingDis
-     *            disabled previous or next page button
-     */
-    private void checkFirstOrLastPageButton(JQueryLocator checkingButton, JQueryLocator checkingButtonDis,
-        JQueryLocator otherButton, JQueryLocator otherButtonDis, JQueryLocator fastButtonOfCheckingDis,
-        JQueryLocator previousOrNextButtonOfCheckingDis) {
-
-        // click on the last page button, if exists, if does not, it means that it is already on the last page
-        // but for sure check for it
-        if (selenium.isElementPresent(otherButton)) {
-
-            guardXhr(selenium).click(otherButton);
-        } else if (!selenium.isElementPresent(otherButtonDis)) {
-
-            fail("The button for " + otherButtonDis.getRawLocator() + " should be there");
-        }
-
-        Car carBeforeClick = retrieveCarFromRow(firstRowOfTable, 0, 4);
-
-        guardXhr(selenium).click(checkingButton);
-
-        Car carAfterClick = retrieveCarFromRow(firstRowOfTable, 0, 4);
-
-        assertFalse(carBeforeClick.equals(carAfterClick), "The data from table should be different, "
-            + "when clicking on the on the " + checkingButton.getRawLocator());
-
-        assertTrue(selenium.isElementPresent(checkingButtonDis), "The " + checkingButtonDis.getRawLocator()
-            + " button should be disabled");
-
-        assertTrue(selenium.isElementPresent(fastButtonOfCheckingDis), "The " + fastButtonOfCheckingDis.getRawLocator()
-            + " page button should be disabled");
-
-        assertTrue(selenium.isElementPresent(previousOrNextButtonOfCheckingDis), "The "
-            + previousOrNextButtonOfCheckingDis + " button should be disabled");
-    }
-
-    /**
-     * Checks functionality of two buttons, one is moving forward and second backward
-     *
-     * @param button1
-     *            either forward or backward moving button
-     * @param button2
-     *            either forward or backward moving button
-     * @param step
-     *            the number of pages we are moving by pressing of the button
-     */
-    private void checkButton(JQueryLocator button1, JQueryLocator button2, int step) {
-
-        int numberOfPageAtBeginning = getNumberOfCurrentPage();
-
-        Car carBeforeClick = retrieveCarFromRow(firstRowOfTable, 0, 4);
-
-        guardXhr(selenium).click(button1);
-
-        Car carAfterClick = retrieveCarFromRow(firstRowOfTable, 0, 4);
-
-        assertFalse(carBeforeClick.equals(carAfterClick), "The data from table should be different, "
-            + "when clicking on the on the " + button1.getRawLocator());
-
-        int numberOfPageAfterClickOnButton1 = getNumberOfCurrentPage();
-
-        if (button1.equals(nextButton) || button1.equals(fastNextButton)) {
-            assertEquals(numberOfPageAtBeginning, numberOfPageAfterClickOnButton1 - 1,
-                "Next button or fast next button does not work");
-        } else {
-            assertEquals(numberOfPageAtBeginning, numberOfPageAfterClickOnButton1 + 1,
-                "Previous button or fase previous button does not work");
-        }
-
-        carBeforeClick = retrieveCarFromRow(firstRowOfTable, 0, 4);
-
-        guardXhr(selenium).click(button2);
-
-        carAfterClick = retrieveCarFromRow(firstRowOfTable, 0, 4);
-
-        assertFalse(carBeforeClick.equals(carAfterClick), "The data from table should be different, "
-            + "when clicking on the on the " + button2.getRawLocator());
-
-        int currentNumberOfPage = getNumberOfCurrentPage();
-
-        if (button2.equals(previousButton) || button2.equals(fastPrevButton)) {
-            assertEquals(currentNumberOfPage, numberOfPageAtBeginning,
-                "Previous button or fase previous button does not work");
-        } else {
-            assertEquals(currentNumberOfPage, numberOfPageAtBeginning, "Next button or fast next button does not work");
-        }
+    private void testFastAndNormalButtons(WebElement nextButton, WebElement previousButton, boolean fast) {
+        // starting on the first page
+        int numberOfPageAtBeginning = page.getNumberOfCurrentPage();
+        Car carBeforeClick = retrieveCarFromRow(page.firstRowOfTable, 0, 4);
+        // click on the next button
+        Graphene.guardXhr(nextButton).click();
+        Car carAfterClick = retrieveCarFromRow(page.firstRowOfTable, 0, 4);
+        // check
+        //  -- car
+        Assert.assertNotEquals(carBeforeClick, carAfterClick, "The data from table should be different, "
+            + "when clicking on the on the " + (fast ? "fast " : "") + "next button");
+        //  -- page
+        int numberOfPageAfterClickOnNext = page.getNumberOfCurrentPage();
+        assertEquals(numberOfPageAtBeginning+1, numberOfPageAfterClickOnNext,
+                "Previous button or " + (fast ? "fast " : "") + " previous button does not work");
+        // click on the previous button
+        Graphene.guardXhr(previousButton).click();
+        // check
+        //  -- car
+        carAfterClick = retrieveCarFromRow(page.firstRowOfTable, 0, 4);
+        assertEquals(carBeforeClick, carAfterClick, "The data from table should be the same as in the beginning, "
+            + "when clicking on the on " + (fast ? "fast " : "") + " the previous");
+        //  -- page
+        int currentNumberOfPage = page.getNumberOfCurrentPage();
+        assertEquals(currentNumberOfPage, numberOfPageAtBeginning, "The " + (fast ? "fast " : "") + " previous button does not work");
     }
 
 }

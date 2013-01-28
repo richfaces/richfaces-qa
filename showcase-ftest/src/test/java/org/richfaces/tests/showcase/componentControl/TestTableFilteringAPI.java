@@ -21,13 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.componentControl;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
 
-import java.util.Iterator;
-
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.componentControl.page.TableFilteringAPIPage;
 import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars;
 import org.testng.annotations.Test;
 
@@ -41,8 +40,8 @@ public class TestTableFilteringAPI extends AbstractDataIterationWithCars {
      * Locators***********************************************************************
      */
 
-    protected JQueryLocator filterValues = jq("a[name*=form]:eq({0})");
-    protected JQueryLocator tableRow = jq("tbody.rf-dt-b tr[class*=rf-dt-r]");
+    @Page
+    private TableFilteringAPIPage page;
 
     /* *************************************************************************
      * Tests*************************************************************************
@@ -53,14 +52,13 @@ public class TestTableFilteringAPI extends AbstractDataIterationWithCars {
 
         for (int i = 0; i < 6; i++) {
 
-            JQueryLocator filterValue = filterValues.format(i);
-            guardXhr(selenium).click(filterValue);
+            Graphene.guardXhr(page.getFilterValue(i)).click();
 
-            for (Iterator<JQueryLocator> j = tableRow.iterator(); j.hasNext();) {
+            for (WebElement row: page.tableRows) {
 
-                Car carFromRow = retrieveCarFromRow(j.next(), 0, 0);
+                Car carFromRow = retrieveCarFromRow(row, 0, 0);
 
-                String expectedVendor = selenium.getText(filterValue);
+                String expectedVendor = page.getFilterValue(i).getText();
                 assertEquals(carFromRow.getVendor(), expectedVendor, "The table should contain cars with vendors "
                     + expectedVendor);
             }

@@ -22,35 +22,21 @@
  */
 package org.richfaces.tests.showcase.extendedDataTable;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
-
-import java.util.ArrayList;
 import java.util.List;
-import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.showcase.extendedDataTable.page.EDTSelectionPage;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestExTableSelection extends AbstractExtendedTableTest {
 
-    JQueryLocator table = jq("tbody[id$=tbf]");
-    JQueryLocator selectedRowInfo = jq("li[class$=itm]");
-    JQueryLocator firstColumn = jq("div[class$=hdr] tr td:eq(1)");
-    JQueryLocator secondColumn = jq("div[class$=hdr] tr td:eq(2)");
-    JQueryLocator thirdColumnd = jq("div[class$=hdr] tr td:eq(4)");
-    JQueryLocator fourthColumn = jq("div[class$=hdr] tr td:eq(5)");
-    JQueryLocator fifthColumn = jq("div[class$=hdr] tr td:eq(6)");
-    JQueryLocator firstResize = jq("div[class$=rsz]:first");
-    JQueryLocator secondResize = jq("div[class$=rsz]:eq(1)");
-    JQueryLocator thirdResize = jq("div[class$=rsz]:eq(2)");
+    @Page
+    private EDTSelectionPage page;
 
     /*
      * ********************************************************************************************************
@@ -60,238 +46,47 @@ public class TestExTableSelection extends AbstractExtendedTableTest {
      * ********************************************************************************************************
      */
     @Test
-    public void testFirstRow() {
-
-        JQueryLocator row = table.getChild(jq("tr:eq(0)"));
-
-        checkTheRow("Chevrolet", "Corvette", row);
+    public void testInit() {
+        // first row
+        Car firstCar = page.getCar(0);
+        Assert.assertEquals(firstCar.getVendor(), "Chevrolet");
+        Assert.assertEquals(firstCar.getModel(), "Corvette");
+        // last row
+        Car secondCar = page.getCar(50);
+        Assert.assertEquals(secondCar.getVendor(), "Nissan");
+        Assert.assertEquals(secondCar.getModel(), "Maxima");
     }
 
     @Test
-    public void testLastRow() {
-
-        JQueryLocator row = table.getChild(jq("tr:last"));
-
-        checkTheRow("Infiniti", "EX35", row);
+    public void testSingleSelection() {
+        int index = 0;
+        for (Car car: page.getCars(5)) {
+            page.selectionWithMouse().select(index);
+            Car selected = page.getSelectedCars().get(0);
+            Assert.assertEquals(selected.getVendor(), car.getVendor());
+            Assert.assertEquals(selected.getModel(), car.getModel());
+            Assert.assertTrue(page.isRowHighlighted(index));
+            index++;
+        }
     }
 
     @Test
-    public void testRowAndSelectedRowsInfo() {
-
-        JQueryLocator row = table.getChild(jq("tr:eq(0)"));
-
-        checkRowAndSelectedRowInfo(row);
-
-        row = table.getChild(jq("tr:eq(15)"));
-
-        checkRowAndSelectedRowInfo(row);
-
-        row = table.getChild(jq("tr:eq(50)"));
-
-        checkRowAndSelectedRowInfo(row);
-    }
-
-    @Test
-    public void testRowhighlightingWhenSelected() {
-
-        JQueryLocator row1 = table.getChild(jq("tr:eq(0)"));
-
-        String classAttribute = checkClassAttributePresentAndRetrievesIt(row1);
-
-        if (classAttribute != null) {
-
-            assertFalse(classAttribute.contains("act"), "No rows should be selected");
+    public void testMultipleSelection() {
+        page.setSelectionMode(EDTSelectionPage.SelectionMode.MULTIPLE_KEYBOARD_FREE);
+        // simple selection
+        page.selectionWithMouse().select(0, 1, 2, 3, 4);
+        Assert.assertTrue(page.isRowHighlighted(4));
+        List<Car> selected = page.getSelectedCars();
+        Assert.assertEquals(selected.size(), 5);
+        int index = 0;
+        for (Car car: page.getCars(5)) {
+            Assert.assertEquals(selected.get(index).getVendor(), car.getVendor());
+            Assert.assertEquals(selected.get(index).getModel(), car.getModel());
+            index++;
         }
-
-        guardXhr(selenium).click(row1);
-
-        classAttribute = checkClassAttributePresentAndRetrievesIt(row1);
-
-        if (classAttribute != null) {
-
-            assertTrue(classAttribute.contains("act"), "First row should be selected");
-        } else {
-
-            fail("First row should be selected");
-        }
-
-        JQueryLocator row2 = table.getChild(jq("tr:eq(1)"));
-
-        guardXhr(selenium).click(row2);
-
-        classAttribute = checkClassAttributePresentAndRetrievesIt(row1);
-
-        if (classAttribute != null) {
-
-            assertFalse(classAttribute.contains("act"), "First row is no more selected");
-        }
-
-        classAttribute = checkClassAttributePresentAndRetrievesIt(row2);
-
-        if (classAttribute != null) {
-
-            assertTrue(classAttribute.contains("act"), "Second row should be selected");
-        } else {
-
-            fail("Second row should be selected");
-        }
-    }
-
-    /**
-     * Tests multiple selection with keyboard. First selects a few rows in table
-     * and then deselects them with each step checking.
-     */
-    @Test
-    public void testMultipleSelectionWithKeyboard() {
-        //set selection mode, unnecessary -- it is default value
-        JQueryLocator selectionMode = jq("input[value=multiple]");
-        guardXhr(selenium).click(selectionMode);
-
-        //select few rows and check them
-        selectFewRowsAndDeselectThemWithChecking(new MultiSelectionModeWithKeyboard());
-    }
-
-    @Test
-    public void testMultipleSelectionWithMouse() {
-        //set selection mode
-        JQueryLocator selectionMode = jq("input[value=multipleKeyboardFree]");
-        guardXhr(selenium).click(selectionMode);
-
-        //select few rows and check them
-        selectFewRowsAndDeselectThemWithChecking(new MultiSelectionModeWithMouse());
-    }
-
-    /*
-     * ***********************************************************************************************************
-     * Help methods
-     * ***********************************************************************************************************
-     */
-    /**
-     * Selects few rows and deselect them with ckecking if the selection is
-     * correct.
-     *
-     * @param mode selection mode
-     */
-    private void selectFewRowsAndDeselectThemWithChecking(ISelectionMode mode) {
-        JQueryLocator firstRow = table.getChild(jq("tr:first"));
-        JQueryLocator lastRow = table.getChild(jq("tr:last"));
-        JQueryLocator someRow = table.getChild(jq("tr:eq(33)"));
-        JQueryLocator someOtherRow = table.getChild(jq("tr:eq(20)"));
-
-        //add more rows if you wish
-        //BEWARE THE ORDER
-        JQueryLocator[] selection = new JQueryLocator[]{firstRow, someRow, someOtherRow, lastRow};
-        //select all rows with chosen mode
-        mode.select(selection);
-        //check if all selected cars are correctly chosen
-        checkSelectedCars(selection);
-        //deselect a car
-        mode.select(someRow);
-        //check if deselected car disappeared
-        checkSelectedCars(firstRow, someOtherRow, lastRow);
-        //deselect another car
-        mode.select(someOtherRow);
-        //check if deselected car disappeared
-        checkSelectedCars(firstRow, lastRow);
-        //deselect another car
-        mode.select(firstRow);
-        //check if deselected car disappeared
-        checkSelectedCars(lastRow);
-        //deselect last car
-        mode.select(lastRow);
-        //check if deselected car disappeared
-        checkSelectedCars();
-    }
-
-    /**
-     * Checks if selected cars are in "Selected Rows" list and checks if the
-     * list does not contain more cars
-     *
-     * @param rows jquerry selector of rows with selected cars
-     */
-    private void checkSelectedCars(JQueryLocator... rows) {
-        List<Car> cars = new ArrayList<Car>();
-        for (JQueryLocator row : rows) {
-            cars.add(retrieveCarFromRow(row, 0, 1));
-        }
-
-        List<Car> parsedCars = new ArrayList<Car>();
-        JQueryLocator selectedParent = jq("ul.rf-ulst");
-        for (int i = 0; i < cars.size(); i++) {
-            String childString = ":nth-child(" + (i + 1) + ")";
-            JQueryLocator child = selectedParent.getChild(jq(childString));
-            parsedCars.add(parseSimplifiedCarFromListItem(child));
-        }
-        //try to find a non existing child
-        try {
-            JQueryLocator nonExistingChild = selectedParent.getChild(jq(":nth-child(" + (rows.length + 1) + ")"));
-            parsedCars.add(parseSimplifiedCarFromListItem(nonExistingChild));
-        } catch (Exception expected) {//no car found == this is correct
-            assertEquals(cars, parsedCars);
-            return;
-        }
-        fail("List contains more elements that it should");
-    }
-
-    /**
-     * Checks whether both info from table and selected wors info are the same
-     *
-     * @param row
-     */
-    private void checkRowAndSelectedRowInfo(JQueryLocator row) {
-
-        Car actualCarInTheRow = retrieveCarFromRow(row, 0, 1);
-
-        guardXhr(selenium).click(row);
-
-        Car actualCarInTheSelectedCarInfo = parseSimplifiedCarFromListItem(selectedRowInfo);
-
-        assertEquals(actualCarInTheRow, actualCarInTheSelectedCarInfo,
-                "The car from selected row can not differ from the " + "car in the selected rows info");
-
-    }
-
-    /**
-     * Checks whether there is class attribute of particular row, and when it is
-     * there retrieves it, returns null otherwise
-     *
-     * @param row
-     * @return
-     */
-    private String checkClassAttributePresentAndRetrievesIt(JQueryLocator row) {
-
-        if (selenium.isAttributePresent(row.getAttribute(Attribute.CLASS))) {
-
-            return selenium.getAttribute(row.getAttribute(Attribute.CLASS));
-        }
-
-        return null;
-    }
-
-    private interface ISelectionMode {
-
-        void select(JQueryLocator... rows);
-    }
-
-    private class MultiSelectionModeWithKeyboard implements ISelectionMode {
-
-        @Override
-        public void select(JQueryLocator... rows) {
-            selenium.controlKeyDown();
-            for (JQueryLocator row : rows) {
-                guardXhr(selenium).click(row);
-            }
-            selenium.controlKeyUp();
-        }
-    }
-
-    private class MultiSelectionModeWithMouse implements ISelectionMode {
-
-        @Override
-        public void select(JQueryLocator... rows) {
-            for (JQueryLocator row : rows) {
-                guardXhr(selenium).click(row);
-            }
-        }
+        // select and deselect
+        page.selectionWithMouse().select(4, 3, 2, 1, 0);
+        Assert.assertTrue(page.isRowHighlighted(0));
+        Assert.assertEquals(page.getSelectedCars().size(), 0);
     }
 }

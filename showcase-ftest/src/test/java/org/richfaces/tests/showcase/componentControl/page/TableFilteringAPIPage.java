@@ -19,53 +19,28 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.page.richDataScroller;
+package org.richfaces.tests.showcase.componentControl.page;
 
-import org.openqa.selenium.By;
+import java.util.List;
+import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.showcase.ftest.webdriver.model.Car;
-import org.richfaces.tests.showcase.ftest.webdriver.page.DataScrollablePage;
-import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class SimpleScrollingPage extends DataScrollablePage implements ShowcasePage {
+public class TableFilteringAPIPage {
 
-    @FindBy(xpath = "//table[contains(@id, 'table')]/tbody[1]/tr[1]")
-    private WebElement firstCarRow;
-    @FindBy(xpath = "//table[contains(@id, 'table')]/tbody[1]/tr[last()]")
-    private WebElement lastCarRow;
+    @Drone
+    private WebDriver driver;
 
-    public SimpleScrollingPage(WebDriver webDriver) {
-        super(webDriver);
-    }
+    @FindBy(jquery="tbody.rf-dt-b tr[class*=rf-dt-r]")
+    public List<WebElement> tableRows;
 
-    @Override
-    public String getDemoName() {
-        return "dataScroller";
-    }
-
-    @Override
-    public String getSampleName() {
-        return "simpleScrolling";
-    }
-
-    public Car getFirstCar() {
-        return createCarFromRow(firstCarRow);
-    }
-
-    public Car getLastCar() {
-        return createCarFromRow(lastCarRow);
-    }
-
-    private Car createCarFromRow(WebElement row) {
-        return new Car(
-            row.findElement(By.xpath("td[1]")).getText(),
-            row.findElement(By.xpath("td[2]")).getText()
-        );
+    public WebElement getFilterValue(int index) {
+        return driver.findElement(ByJQuery.jquerySelector(String.format("a[name*=form]:eq(%s)", index)));
     }
 
 }

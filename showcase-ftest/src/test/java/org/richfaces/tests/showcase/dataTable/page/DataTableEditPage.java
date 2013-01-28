@@ -19,44 +19,42 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.extendedDataTable;
+package org.richfaces.tests.showcase.dataTable.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.Test;
 
 /**
- * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
- * @version $Revision$
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestSimpleTable extends AbstractExtendedTableTest {
+public class DataTableEditPage {
 
-    @FindBy(jquery="tbody[id$=tbf]")
-    private WebElement tableNonScrollablePart;
+    @FindBy(jquery="input[value=Delete]:visible")
+    public WebElement deleteButtonInpopup;
+    @FindBy(jquery="input[value=Cancel]:visible")
+    public WebElement cancelButtonInpopup;
+    @FindBy(jquery="input[value=Store]:visible")
+    public WebElement storeButtonInpopup;
 
-    /*
-     * Tests
-     *
-     * The method of testing should be improved in the future, but I chose this way of testing due to problems of
-     * scrolling with selenium over extended data table I also have to test manually the expanding of columns and that
-     * there is a possibility to change the order of columns, it should be implemented in the future too.
-     * ********************************************************************************************
-     */
-    @Test
-    public void testFirstRow() {
+    @FindBy(jquery="table[id$=editGrid] tbody tr:eq(0) td:eq(1)")
+    public WebElement vendorpopup;
+    @FindBy(jquery="table[id$=editGrid] tbody tr:eq(1) td:eq(1)")
+    public WebElement modelpopup;
+    @FindBy(jquery="input[id$=price]")
+    public WebElement priceInputpopup;
+    @FindBy(jquery="input[id$=mage]")
+    public WebElement mileageInputpopup;
+    @FindBy(jquery="input[id$=vin]")
+    public WebElement vinInputpopup;
 
-        WebElement row = tableNonScrollablePart.findElement(ByJQuery.jquerySelector("tr:eq(0)"));
+    @FindBy(jquery="span[id$=price] span")
+    public WebElement errorMsgPrice;
+    @FindBy(jquery="span[id$=mage] span")
+    public WebElement errorMsgMileage;
+    @FindBy(jquery="span[id$=vin] span")
+    public WebElement errorMsgVin;
 
-        checkTheRow("Chevrolet", "Corvette", row);
+    @FindBy(jquery="tbody[class=rf-dt-b]")
+    public WebElement table;
 
-    }
-
-    @Test
-    public void testLastRow() {
-
-        WebElement row = tableNonScrollablePart.findElement(ByJQuery.jquerySelector("tr:last"));
-
-        checkTheRow("Infiniti", "EX35", row);
-    }
 }

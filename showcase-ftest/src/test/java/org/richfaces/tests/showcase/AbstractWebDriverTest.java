@@ -27,8 +27,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.android.AndroidDriver;
+import org.openqa.selenium.interactions.Action;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -62,6 +66,46 @@ public class AbstractWebDriverTest extends AbstractShowcaseTest {
             }
         } else {
             return contextRootFromParent;
+        }
+    }
+
+    protected Action fireEventAction(final WebElement element, final String event) {
+        return new EventAction(webDriver, element, event);
+    }
+
+    protected void fireEvent(WebElement element, String event) {
+        fireEventAction(element, event).perform();
+    }
+
+    public static class EventAction implements Action {
+        private final WebDriver driver;
+        private final String event;
+        private final WebElement element;
+
+        public EventAction(WebDriver driver, WebElement element, String event) {
+            this.driver = driver;
+            this.element = element;
+            this.event = event;
+        }
+
+        @Override
+        public void perform() {
+            String jQueryCmd = String.format("jQuery(arguments[0]).trigger('%s')", event);
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript(jQueryCmd, element);
+        }
+
+    }
+
+    /**
+     * Works only with injected elements.
+     */
+    public boolean isElementPresent(WebElement element) {
+        try {
+            element.isDisplayed();
+            return true;
+        } catch (NoSuchElementException ignored) {
+            return false;
         }
     }
 }

@@ -19,30 +19,23 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.ftest.richExtendedDataTable;
+package org.richfaces.tests.showcase.dataTable.page;
 
-import static org.testng.Assert.assertEquals;
-
-import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.ftest.webdriver.model.CarWithVinCode;
-import org.richfaces.tests.showcase.ftest.webdriver.page.richExtendedDataTable.SimpleTablePage;
-import org.testng.annotations.Test;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.WebElement;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichExtendedDataTableSimple extends AbstractWebDriverTest<SimpleTablePage>{
+public class TableStylingPage {
 
-    private static final CarWithVinCode FIRST_CAR = new CarWithVinCode("Chevrolet", "Corvette", "LRAZJGURJUKEWMIXV");
-
-    @Test(enabled=false)
-    public void testInit() {
-        assertEquals(getPage().getFirstCar(), FIRST_CAR, "The first car doesn't match.");
-    }
-
-    @Override
-    protected SimpleTablePage createPage() {
-        return new SimpleTablePage();
-    }
+    @FindBy(jquery="tbody.rf-dt-b tr:last")
+    public WebElement firstRow;
+    @FindBy(jquery="tbody.rf-dt-b tr:last")
+    public WebElement tenthRow;
+    @FindBy(jquery="tbody.rf-dt-b tr:last")
+    public WebElement lastRow;
+    @FindBy(jquery="tbody.rf-dt-b tr:last")
+    public WebElement tbody;
 
 }

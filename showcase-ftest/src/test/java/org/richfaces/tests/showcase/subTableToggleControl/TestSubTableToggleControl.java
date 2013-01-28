@@ -21,14 +21,16 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.subTableToggleControl;
 
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import java.util.Iterator;
-import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import java.util.List;
+import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars;
+import org.richfaces.tests.showcase.subTableToggleControl.page.SubTableToggleControlPage;
 import org.testng.annotations.Test;
 
 /**
@@ -37,17 +39,8 @@ import org.testng.annotations.Test;
  */
 public class TestSubTableToggleControl extends AbstractDataIterationWithCars {
 
-    /* *******************************************************************************************************
-     * Locators ****************************************************************** *************************************
-     */
-
-    private JQueryLocator chevroletToggler = jq("span.rf-csttg:eq(0)");
-    private JQueryLocator gMCToggler = jq("span.rf-csttg:eq(2)");
-    private JQueryLocator nissanToggler = jq("span.rf-csttg:eq(4)");
-
-    private JQueryLocator bodyOfChevroletSubtable = jq("tbody.rf-cst:eq(0)");
-    private JQueryLocator bodyOfGMCSubtable = jq("tbody.rf-cst:eq(2)");
-    private JQueryLocator bodyOfNissanSubtable = jq("tbody.rf-cst:eq(4)");
+    @Page
+    private SubTableToggleControlPage page;
 
     /* *****************************************************************************************************************
      * Tests
@@ -57,21 +50,21 @@ public class TestSubTableToggleControl extends AbstractDataIterationWithCars {
     @Test
     public void testTogglers() {
 
-        checkTogglersFunctionality(chevroletToggler, bodyOfChevroletSubtable);
+        checkTogglersFunctionality(page.chevroletToggler, page.bodyOfChevroletSubtable);
 
-        checkTogglersFunctionality(gMCToggler, bodyOfGMCSubtable);
+        checkTogglersFunctionality(page.gMCToggler, page.bodyOfGMCSubtable);
 
-        checkTogglersFunctionality(nissanToggler, bodyOfNissanSubtable);
+        checkTogglersFunctionality(page.nissanToggler, page.bodyOfNissanSubtable);
     }
 
     @Test
     public void testTotalCountOfCars() {
 
-        checksCountingOfRows(chevroletToggler, bodyOfChevroletSubtable);
+        checksCountingOfRows(page.chevroletToggler, page.bodyOfChevroletSubtable);
 
-        checksCountingOfRows(gMCToggler, bodyOfGMCSubtable);
+        checksCountingOfRows(page.gMCToggler, page.bodyOfGMCSubtable);
 
-        checksCountingOfRows(nissanToggler, bodyOfNissanSubtable);
+        checksCountingOfRows(page.nissanToggler, page.bodyOfNissanSubtable);
     }
 
     /* *******************************************************************************************************************
@@ -88,30 +81,30 @@ public class TestSubTableToggleControl extends AbstractDataIterationWithCars {
      * @param bodyOfTable
      *            the body of table
      */
-    private void checksCountingOfRows(JQueryLocator toggler, JQueryLocator bodyOfTable) {
+    private void checksCountingOfRows(WebElement toggler, WebElement bodyOfTable) {
 
-        selenium.click(toggler);
+        toggler.click();
 
-        String style = selenium.getAttribute(bodyOfTable.getAttribute(Attribute.STYLE));
+        String style = bodyOfTable.getAttribute("style");
 
         if (style.contains("display: none;")) {
 
-            selenium.click(toggler);
+            toggler.click();
         }
 
-        JQueryLocator trs = jq(bodyOfTable.getRawLocator() + " > tr");
+        List<WebElement> trs = bodyOfTable.findElements(By.tagName("tr"));
 
         int numberOfVisibleTrs = 0;
 
-        for (Iterator<JQueryLocator> i = trs.iterator(); i.hasNext();) {
+        for (WebElement element: trs) {
 
-            if (selenium.isVisible(i.next())) {
+            if (element.isDisplayed()) {
 
                 numberOfVisibleTrs++;
             }
         }
 
-        String expectedNumberOfTrs = selenium.getText(bodyOfTable.getChild(jq("tr:visible:last"))).trim();
+        String expectedNumberOfTrs = bodyOfTable.findElement(ByJQuery.jquerySelector("tr:visible:last")).getText().trim();
 
         String[] partsOfLine = expectedNumberOfTrs.split(":");
         int expectedNumberOfTrsInt = Integer.valueOf(partsOfLine[1].trim()).intValue();
@@ -128,17 +121,17 @@ public class TestSubTableToggleControl extends AbstractDataIterationWithCars {
      * @param toggler
      *            the toggler on which user click the subtable is displayed/hidden
      */
-    private void checkTogglersFunctionality(JQueryLocator toggler, JQueryLocator subtable) {
+    private void checkTogglersFunctionality(WebElement toggler, WebElement subtable) {
 
-        selenium.click(toggler);
+        toggler.click();
 
-        String style = selenium.getAttribute(subtable.getAttribute(Attribute.STYLE));
+        String style = subtable.getAttribute("style");
 
         boolean isSubTableDisplayedAfterFirstClick = !(style.contains("display: none;"));
 
-        selenium.click(toggler);
+        toggler.click();
 
-        style = selenium.getAttribute(subtable.getAttribute(Attribute.STYLE));
+        style = subtable.getAttribute("style");
 
         boolean isSubTableDisplayedAfterSecondClick = !(style.contains("display: none;"));
 
