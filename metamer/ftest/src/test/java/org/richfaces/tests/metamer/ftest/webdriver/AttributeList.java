@@ -1,9 +1,31 @@
+/*******************************************************************************
+ * JBoss, Home of Professional Open Source
+ * Copyright 2012-2013, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.webdriver;
 
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.MetamerAttributes;
 import org.richfaces.tests.metamer.ftest.a4jActionListener.ActionListenerAttributes;
 import org.richfaces.tests.metamer.ftest.a4jAjax.AjaxAttributes;
+import org.richfaces.tests.metamer.ftest.a4jAttachQueue.AttachQueueAttributes;
 import org.richfaces.tests.metamer.ftest.a4jCommandButton.CommandButtonAttributes;
 import org.richfaces.tests.metamer.ftest.a4jCommandLink.CommandLinkAttributes;
 import org.richfaces.tests.metamer.ftest.a4jJSFunction.JSFunctionAttributes;
@@ -13,6 +35,7 @@ import org.richfaces.tests.metamer.ftest.a4jOutputPanel.OutputPanelAttributes;
 import org.richfaces.tests.metamer.ftest.a4jParam.ParamAttributes;
 import org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes;
 import org.richfaces.tests.metamer.ftest.a4jPush.PushAttributes;
+import org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes;
 import org.richfaces.tests.metamer.ftest.a4jRegion.RegionAttributes;
 import org.richfaces.tests.metamer.ftest.a4jRepeat.RepeatAttributes;
 import org.richfaces.tests.metamer.ftest.a4jStatus.StatusAttributes;
@@ -67,19 +90,21 @@ import org.richfaces.tests.metamer.ftest.richTogglePanelItem.TogglePanelItemAttr
 import org.richfaces.tests.metamer.ftest.richToolbar.ToolbarAttributes;
 import org.richfaces.tests.metamer.ftest.richToolbarGroup.ToolbarGroupAttributes;
 import org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes;
+import org.richfaces.tests.metamer.ftest.richTree.TreeAttributes;
 import org.richfaces.tests.metamer.ftest.richTreeModelAdaptor.TreeModelAdapterAttributes;
 import org.richfaces.tests.metamer.ftest.richValidator.ValidatorAttributes;
 
+/**
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ */
 public class AttributeList {
 
     public static Attributes<AccordionAttributes> accordionAttributes = new Attributes<AccordionAttributes>();
     public static Attributes<ActionListenerAttributes> actionListenerAttributes = new Attributes<ActionListenerAttributes>();
     public static Attributes<AjaxAttributes> ajaxAttributes = new Attributes<AjaxAttributes>();
     public static Attributes<AccordionItemAttributes> accordionItemAttributes = new Attributes<AccordionItemAttributes>();
-//    public static Attributes<AttachQueueAttributes> attachQueueAttrs1 = new Attributes<AttachQueueAttributes>(
-//        pjq("table.attributes[id$=attributes1]"));
-//    public static Attributes<AttachQueueAttributes> attachQueueAttrs2 = new Attributes<AttachQueueAttributes>(
-//        pjq("table.attributes[id$=attributes2]"));
+    public static Attributes<AttachQueueAttributes> attachQueueAttrs1 = new Attributes<AttachQueueAttributes>("attributes1");
+    public static Attributes<AttachQueueAttributes> attachQueueAttrs2 = new Attributes<AttachQueueAttributes>("attributes2");
     public static Attributes<AutocompleteAttributes> autocompleteAttributes = new Attributes<AutocompleteAttributes>();
     public static Attributes<BasicAttributes> basicAttributes = new Attributes<BasicAttributes>();
     public static Attributes<CalendarAttributes> calendarAttributes = new Attributes<CalendarAttributes>();
@@ -93,9 +118,6 @@ public class AttributeList {
     public static Attributes<ComponentControlAttributes> componentControllAttributes = new Attributes<ComponentControlAttributes>();
     public static Attributes<DataGridAttributes> dataGridAttributes = new Attributes<DataGridAttributes>();
     public static Attributes<DataTableAttributes> dataTableAttributes = new Attributes<DataTableAttributes>();
-//    public static Attributes<DataTableFacets> dataTableFacets = new Attributes<DataTableFacets>(RequestType.XHR); // for facets
-//    // use XHR by
-//    // default
     public static Attributes<DataScrollerAttributes> dataScrollerAttributes = new Attributes<DataScrollerAttributes>();
     public static Attributes<DragIndicatorAttributes> dragIndicatorAttributes = new Attributes<DragIndicatorAttributes>();
     public static Attributes<DragSourceAttributes> dragSourceAttributes = new Attributes<DragSourceAttributes>();
@@ -133,8 +155,7 @@ public class AttributeList {
     public static Attributes<PopupPanelAttributes> popupPanelAttributes = new Attributes<PopupPanelAttributes>();
     public static Attributes<ProgressBarAttributes> progressBarAttributes = new Attributes<ProgressBarAttributes>();
     public static Attributes<PushAttributes> pushAttributes = new Attributes<PushAttributes>();
-//    public static Attributes<QueueAttributes> queueAttributes = new Attributes<QueueAttributes>(
-//        pjq("table.attributes[id$=queueAttributes]"));
+    public static Attributes<QueueAttributes> queueAttributes = new Attributes<QueueAttributes>("queueAttributes");
     public static Attributes<RegionAttributes> regionAttributes = new Attributes<RegionAttributes>();
     public static Attributes<RepeatAttributes> repeatAttributes = new Attributes<RepeatAttributes>();
     public static Attributes<RichJQueryAttributes> jQueryAttributes = new Attributes<RichJQueryAttributes>();
@@ -148,7 +169,7 @@ public class AttributeList {
     public static Attributes<ToolbarAttributes> toolbarAttributes = new Attributes<ToolbarAttributes>();
     public static Attributes<ToolbarGroupAttributes> toolbarGroupAttributes = new Attributes<ToolbarGroupAttributes>();
     public static Attributes<TooltipAttributes> tooltipAttributes = new Attributes<TooltipAttributes>();
-//    public static Attributes<TreeAttributes> treeAttributes = new Attributes<TreeAttributes>(jq("span[id*=attributes]"));
+    public static Attributes<TreeAttributes> treeAttributes = new Attributes<TreeAttributes>("attributes");
     public static Attributes<TreeModelAdapterAttributes> treeModelAdapterAttributes = new Attributes<TreeModelAdapterAttributes>();
     public static Attributes<ValidatorAttributes> validatorAttributes = new Attributes<ValidatorAttributes>();
 }
