@@ -154,6 +154,7 @@ public class TestDropTarget extends AbstractWebDriverTest {
         testAcception(page.drg1, ACCEPTING);
         guardedDrop();
 
+        Graphene.waitModel().until().element(page.dropValue).is().present();
         page.assertListener(UPDATE_MODEL_VALUES, "executeChecker");
         page.assertListener(INVOKE_APPLICATION, "dropListener");
         page.assertPhases(ANY_PHASE);
@@ -163,10 +164,12 @@ public class TestDropTarget extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-10535")
     public void testImmediate() {
         dropTargetAttributes.set(immediate, true);
+        indicator =  new Indicator(page.indicator);
 
         testAcception(page.drg1, ACCEPTING);
         guardedDrop();
 
+        Graphene.waitModel().until().element(page.dropValue).is().present();
         page.assertListener(APPLY_REQUEST_VALUES, "dropListener");
         page.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, RENDER_RESPONSE);
     }
@@ -175,10 +178,13 @@ public class TestDropTarget extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-10535")
     public void testBypassUpdates() {
         dropTargetAttributes.set(bypassUpdates, true);
+        indicator =  new Indicator(page.indicator);
 
         testAcception(page.drg1, ACCEPTING);
         guardedDrop();
-
+        // wait for drop accept before assert listener to avoid IndexOutOfBounds
+        // while drop processing change phases list
+        Graphene.waitModel().until().element(page.dropValue).is().present();
         page.assertListener(PROCESS_VALIDATIONS, "dropListener");
         page.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, RENDER_RESPONSE);
     }
@@ -188,12 +194,13 @@ public class TestDropTarget extends AbstractWebDriverTest {
         dropTargetAttributes.set(onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
         dropTargetAttributes.set(onbegin, "metamerEvents += \"begin \"");
         dropTargetAttributes.set(oncomplete, "metamerEvents += \"complete \"");
+        indicator =  new Indicator(page.indicator);
 
         executeJS("metamerEvents = \"\";");
 
         testAcception(page.drg1, ACCEPTING);
         guardedDrop();
-        waiting(500);
+        Graphene.waitModel().until().element(page.dropValue).is().present();
 
         String[] events = ((String) executeJS("return metamerEvents;")).split(" ");
 
