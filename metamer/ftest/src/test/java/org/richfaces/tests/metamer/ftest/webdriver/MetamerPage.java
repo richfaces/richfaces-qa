@@ -1,6 +1,6 @@
 /**
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
+ * Copyright 2012-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -40,6 +40,10 @@ import org.apache.commons.lang.ArrayUtils;
 import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
+import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
+import org.jboss.arquillian.graphene.proxy.Interceptor;
+import org.jboss.arquillian.graphene.proxy.InvocationContext;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -47,13 +51,8 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
-import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
-import org.jboss.arquillian.graphene.proxy.Interceptor;
-import org.jboss.arquillian.graphene.proxy.InvocationContext;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.richfaces.tests.metamer.ftest.webdriver.utils.WebElementProxyUtils;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -129,7 +128,7 @@ public class MetamerPage {
     }
 
     /**
-     * Method for guarding that Metamer's requestTime not changes. Waits 1 second.
+     * Method for guarding that Metamer's requestTime not changes. Guards for 1 second.
      *
      * @param <T>
      *            type of the given target
@@ -138,7 +137,22 @@ public class MetamerPage {
      * @return guarded element
      */
     public static <T> T requestTimeNotChangesWaiting(T target) {
-        return requestTimeWaiting(target, new RequestTimeNotChangesWaitingInterceptor());
+        return requestTimeNotChangesWaiting(target, 1000);
+    }
+
+    /**
+     * Method for guarding that Metamer's requestTime not changes.
+     *
+     * @param <T>
+     *            type of the given target
+     * @param target
+     *            object to be guarded
+     * @param waitTimeInMillis
+     *            time for which will be the target guarded
+     * @return guarded element
+     */
+    public static <T> T requestTimeNotChangesWaiting(T target, long waitTimeInMillis) {
+        return requestTimeWaiting(target, new RequestTimeNotChangesWaitingInterceptor(waitTimeInMillis));
     }
 
     private static <T> T requestTimeWaiting(T target, Interceptor interceptor) {
@@ -179,14 +193,33 @@ public class MetamerPage {
     }
 
     /**
-     * Wait for element to be visible.
+     * !All requests depends on Metamer`s requestTime! Generates a waiting proxy.
+     * The proxy will wait for expected @waitRequestType which will be launched
+     * via interactions with @target and then it waits until Metamer's request
+     * time changes(@waitRequestType is HTTP or XHR) or not changes
+     * (@waitRequestType is NONE).
      *
-     * @param by
-     *            locate by
-     * @return found element
+     * @param <T>
+     *            type of the given target
+     * @param target
+     *            object to be guarded
+     * @param waitRequestType
+     *            type of expected request which will be launched
+     * @param guardTime
+     *            time for which will be the target guarded, applicable only for @waitRequestType = NONE
+     * @return waiting proxy for target object
      */
-    public static WebElement waitUntilElementIsVisible(final By by) {
-        return new WDWait().until(ExpectedConditions.visibilityOfElementLocated(by));
+    public static <T> T waitRequest(T target, WaitRequestType waitRequestType, long guardTime) {
+        switch (waitRequestType) {
+            case HTTP:
+                return requestTimeChangesWaiting(Graphene.guardHttp(target));
+            case XHR:
+                return requestTimeChangesWaiting(Graphene.guardXhr(target));
+            case NONE:
+                return requestTimeNotChangesWaiting(Graphene.guardNoRequest(target), guardTime);
+            default:
+                throw new UnsupportedOperationException("Not supported request: " + waitRequestType);
+        }
     }
 
     /**
@@ -207,20 +240,25 @@ public class MetamerPage {
     private static class RequestTimeChangesWaitingInterceptor implements Interceptor {
 
         protected String time1;
-        protected final By REQ_TIME = By.cssSelector("span[id='requestTime']");
+        private static final WebElement requestTime = WebElementProxyUtils
+                .createProxyForElement(By.cssSelector("span[id='requestTime']"));
 
-        protected String getTime() {
-            WebElement el = waitUntilElementIsVisible(REQ_TIME);
-            String time = el.getText();
-            return time;
+        protected void afterAction() {
+            Graphene.waitModel().until().element(requestTime).text().not().equalTo(time1);
         }
 
         protected void beforeAction() {
             time1 = getTime();
         }
 
-        protected void afterAction() {
-            Graphene.waitModel().until().element(REQ_TIME).text().not().equalTo(time1);
+        protected String getTime() {
+            String time = requestTime.getText();
+            return time;
+        }
+
+        @Override
+        public Object intercept(InvocationContext context) throws Throwable {
+            return invoke(context.getTarget(), context.getMethod(), context.getArguments());
         }
 
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -229,20 +267,19 @@ public class MetamerPage {
             afterAction();
             return o;
         }
-
-        @Override
-        public Object intercept(InvocationContext context) throws Throwable {
-            return invoke(context.getTarget(), context.getMethod(), context.getArguments());
-        }
     }
 
     private static class RequestTimeNotChangesWaitingInterceptor extends RequestTimeChangesWaitingInterceptor {
 
-        private static final int waitTime = 1000;// ms
+        private final long guardTime;// ms
+
+        public RequestTimeNotChangesWaitingInterceptor(long waitTime) {
+            this.guardTime = waitTime;
+        }
 
         @Override
         protected void afterAction() {
-            waiting(waitTime);
+            waiting(guardTime);
             if (!getTime().equals(time1)) {
                 throw new RuntimeException("No request expected, but request time has changed.");
             }
@@ -278,6 +315,7 @@ public class MetamerPage {
     }
 
     public enum WaitRequestType {
+
         XHR, HTTP, NONE;
     }
 
@@ -336,7 +374,8 @@ public class MetamerPage {
     }
 
     /**
-     * Asserts that phases contains phases: RESTORE_VIEW, APPLY_REQUEST_VALUES, RENDER_RESPONSE
+     * Method for checking immediate JSF phases cycle for a4j:commandButton and a4j:commandLink.
+     * Asserts that phases contains phases: RESTORE_VIEW, APPLY_REQUEST_VALUES, RENDER_RESPONSE.
      */
     public void assertImmediatePhasesCycle() {
         initialize();
@@ -344,7 +383,8 @@ public class MetamerPage {
     }
 
     /**
-     * Asserts that phases contains phases: RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, RENDER_RESPONSE
+     * Method for checking bypass updates JSF phases cycle for a4j:commandButton and a4j:commandLink.
+     * Asserts that phases contains phases: RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, RENDER_RESPONSE.
      */
     public void assertBypassUpdatesPhasesCycle() {
         initialize();
