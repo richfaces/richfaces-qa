@@ -32,6 +32,7 @@ public enum NotifyAttributes implements AttributeEnum {
 
     binding,
     detail,
+    escape,
     id,
     nonblocking,
     nonblockingOpacity,

@@ -28,6 +28,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  */
 public enum NotifyMessagesAttributes implements AttributeEnum {
 
+    escape,
     rendered,
     showCloseButton,
     showDetail,

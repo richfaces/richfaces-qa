@@ -75,6 +75,24 @@ public class TestRichNotify extends AbstractRichNotifyTest {
     }
 
     @Test
+    public void testAttributeEscape() {
+
+        String htmlLink = "<a href=\"mailto:xyz@nowhere.xyz\">link</a>";
+        String notEscapedHtmlLink = "link";
+
+        attributesNotify.set(NotifyAttributes.summary, htmlLink);
+        attributesNotify.set(NotifyAttributes.detail, htmlLink);
+
+        attributesNotify.set(NotifyAttributes.escape, true);
+        waitGui.until(textEquals.locator(getSummary(null)).text(htmlLink));
+        waitGui.until(textEquals.locator(getDetail(null)).text(htmlLink));
+
+        attributesNotify.set(NotifyAttributes.escape, false);
+        waitGui.until(textEquals.locator(getSummary(null)).text(notEscapedHtmlLink));
+        waitGui.until(textEquals.locator(getDetail(null)).text(notEscapedHtmlLink));
+    }
+
+    @Test
     public void testAttributeRendered() {
         // set the rendered to <false>
         attributesNotify.set(NotifyAttributes.rendered, false);
