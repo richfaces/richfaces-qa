@@ -99,10 +99,4 @@ public class TestStackingMessages extends AbstractNotifyTest {
         assertTrue(notifyPosition.getX() > ((Integer.valueOf(screenWidth) / 10) * 6), "The X coordination is wrong");
         assertTrue(notifyPosition.getY() > ((Integer.valueOf(screenHeight) / 10) * 8), "The Y coordination is wrong");
     }
-
-    @Override
-    protected String getSampleLabel() {
-        return "Message Stacking";
-    }
-
 }

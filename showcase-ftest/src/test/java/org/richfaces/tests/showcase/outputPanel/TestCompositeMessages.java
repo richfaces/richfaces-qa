@@ -376,9 +376,4 @@ public class TestCompositeMessages extends AbstractGrapheneTest {
 
         }
     }
-
-    @Override
-    protected String getSampleLabel() {
-        return "Auto update for h:messages component";
-    }
 }

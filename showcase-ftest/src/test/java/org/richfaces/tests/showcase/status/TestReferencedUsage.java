@@ -89,10 +89,4 @@ public class TestReferencedUsage extends AbstractGrapheneTest {
         waitGui.failWith("There can not be image of ajax request, since it is completed!").until(
             elementNotVisible.locator(imageOfAjaxRequestProgress));
     }
-
-    @Override
-    protected String getSampleLabel() {
-        return "Referenced status";
-    }
-
 }

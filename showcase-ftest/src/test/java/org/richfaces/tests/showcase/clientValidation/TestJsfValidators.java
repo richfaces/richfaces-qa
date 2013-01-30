@@ -195,10 +195,4 @@ public class TestJsfValidators extends AbstractClientValidationTest {
         isThereErrorMessage(errorMessageAboutValueRequired, ERROR_MESSAGE_ABOUT_VALUE_REQUIRED,
             shouldBeErrorMessagePresent);
     }
-
-    @Override
-    protected String getSampleLabel() {
-        return "Standard JSF Validators";
-    }
-
 }

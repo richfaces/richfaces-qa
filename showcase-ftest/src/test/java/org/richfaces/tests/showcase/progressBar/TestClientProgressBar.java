@@ -145,8 +145,4 @@ public class TestClientProgressBar extends AbstractGrapheneTest {
             }
         }
     }
-
-    protected String getSampleLabel() {
-        return "ProgressBar in client mode";
-    }
 }

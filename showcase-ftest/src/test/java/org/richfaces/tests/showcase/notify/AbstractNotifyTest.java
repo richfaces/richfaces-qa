@@ -52,10 +52,4 @@ public class AbstractNotifyTest extends AbstractGrapheneTest {
             .until(elementPresent.locator(notify));
 
     }
-
-    @Override
-    protected String getSampleLabel() {
-        return null;
-    }
-
 }

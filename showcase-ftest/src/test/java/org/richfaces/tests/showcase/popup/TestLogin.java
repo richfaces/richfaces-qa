@@ -79,8 +79,4 @@ public class TestLogin extends AbstractPoppupPanel {
 
         assertFalse(selenium.isVisible(poppupPanelContent), "The poppup panel should not be visible!");
     }
-
-    protected String getSampleLabel() {
-        return "Login panel positioning";
-    }
 }

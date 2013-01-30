@@ -46,9 +46,6 @@ public class AbstractWebDriverTest<P> extends AbstractShowcaseTest {
 
     @BeforeMethod
     public void loadPage() {
-
-        String addition = getAdditionToContextRoot();
-
         this.contextRoot = getContextRoot();
 
         if (runInPortalEnv) {
@@ -61,7 +58,7 @@ public class AbstractWebDriverTest<P> extends AbstractShowcaseTest {
             js.executeScript(format(setTextQuery, "seleniumTestSample", getSampleName()));
             js.executeScript("document.querySelector(\"a[id$='portalForm:redirectToPortlet']\").click()");
         } else {
-            webDriver.get(URLUtils.buildUrl(contextRoot, "/showcase/", addition).toExternalForm());
+            webDriver.get(URLUtils.buildUrl(contextRoot, "/showcase/", getAdditionToContextRoot())toExternalForm());
         }
     }
 }

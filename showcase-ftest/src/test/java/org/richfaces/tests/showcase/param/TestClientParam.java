@@ -74,10 +74,4 @@ public class TestClientParam extends AbstractGrapheneTest {
         assertEquals(heightActual, heightExpected, "The height returned from website can not be "
             + "different from height returned from this code");
     }
-
-    @Override
-    protected String getSampleLabel() {
-        return "Parameters from client side";
-    }
-
 }

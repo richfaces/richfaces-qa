@@ -53,9 +53,6 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
     public void loadPage() {
 
         selenium.getCommandInterceptionProxy().registerInterceptor(new AjaxAwareInterceptor());
-
-        String addition = getAdditionToContextRoot();
-
         this.contextRoot = getContextRoot();
 
         if (runInPortalEnv) {
@@ -66,7 +63,7 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
             selenium.type(jq("input[id$='portalForm:seleniumTestSample']"), getSampleName());
             selenium.click(jq("a[id$='portalForm:redirectToPortlet']"));
         } else {
-            selenium.open(buildUrl(contextRoot, addition));
+            selenium.open(buildUrl(contextRoot, getAdditionToContextRoot()));
         }
     }
 
@@ -224,17 +221,6 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
         }
     }
 
-    /**
-     * For tests running for portal env it is not working open sample tab by URL,
-     * and using click on tab is required instead. This is reason why need the
-     * sample label. Override this method in tests which need change tab,
-     * and provide correct tab label.
-     * @return sampleLabel - label on tab with required sample
-     */
-    protected String getSampleLabel() {
-        return null;
-    }
-
     /* ***************************************************************************************************
      * help methods ************************************************************** *************************************
      */
@@ -260,9 +246,5 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
         }
 
         return false;
-    }
-
-    private JQueryLocator getSampleTabLocator(String sampleTabLabel) {
-        return jq(format(SAMPLE_TAB_LOC, sampleTabLabel));
     }
 }

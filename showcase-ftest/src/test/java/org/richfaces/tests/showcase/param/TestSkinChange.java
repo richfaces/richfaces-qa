@@ -65,10 +65,4 @@ public class TestSkinChange extends AbstractGrapheneTest {
         assertTrue(hrefOfLink2.contains("skin=blueSky"), "The link should contains blue sky");*/
 
     }
-
-    @Override
-    protected String getSampleLabel() {
-        return "Parameters for non-Ajax components";
-    }
-
 }

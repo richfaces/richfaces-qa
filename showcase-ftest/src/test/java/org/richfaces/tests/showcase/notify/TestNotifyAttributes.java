@@ -224,9 +224,4 @@ public class TestNotifyAttributes extends AbstractNotifyTest {
             currentTime = System.currentTimeMillis();
         }
     }
-
-    @Override
-    protected String getSampleLabel() {
-        return "Attributes of Notify";
-    }
 }
