@@ -80,28 +80,6 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         return new MetamerNavigation("Rich", "Rich Progress Bar", "Ajax Mode");
     }
 
-    @Test
-    public void testInit() {
-        assertTrue(ElementPresent.getInstance().element(page.progressBar).apply(driver),
-            "Progress bar is not present on the page.");
-        assertTrue(page.progressBar.isDisplayed(), "Progress bar should be visible on the page.");
-        assertTrue(page.initialOutput.isDisplayed(), "Initial output should be present on the page.");
-
-        assertFalse(ElementPresent.getInstance().element(page.finishOutput).apply(driver),
-            "Finish output should not be present on the page.");
-        assertTrue(page.startButton.isDisplayed(), "Start button is not present on the page.");
-        assertFalse(ElementPresent.getInstance().element(page.restartButton).apply(driver),
-            "Restart button should not be present on the page.");
-
-        if (ElementPresent.getInstance().element(page.remain).apply(driver)) {
-            assertFalse(page.remain.isDisplayed(), "Progress bar should not show progress.");
-        }
-        if (ElementPresent.getInstance().element(page.progress).apply(driver)) {
-            assertFalse(page.progress.isDisplayed(), "Progress bar should not show progress.");
-        }
-        if (ElementPresent.getInstance().element(page.label).apply(driver)) {
-            assertFalse(page.label.isDisplayed(), "Progress bar should not show progress.");
-
     private long countAverage(List<DateTime> times) {
         long total = 0;
         for (int i = 0; i < times.size() - 1; i++) {
