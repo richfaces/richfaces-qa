@@ -58,6 +58,18 @@ public final class Utils {
     }
 
     /**
+     * Executes returning jQuery command on input element. E.g. to get a position
+     * of element from top of the page use returningjQ("position().top", element).
+     * @param cmd command to be executed
+     * @param element element on which the command will be executed
+     */
+    public static String returningJQ(String cmd, WebElement element) {
+        JavascriptExecutor executor = (JavascriptExecutor) GrapheneContext.getProxy();
+        String jQueryCmd = String.format("x = jQuery(arguments[0]).%s ; return x;", cmd);
+        return String.valueOf(executor.executeScript(jQueryCmd, element));
+    }
+
+    /**
      * Executes jQuery trigger command on input element. Useful for easy triggering
      * of JavaScript events like click, dblclick, mouseout...
      * @param event event to be triggered
