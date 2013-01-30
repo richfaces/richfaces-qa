@@ -42,8 +42,8 @@ public class TestReferencedUsage extends AbstractGrapheneTest {
      * Locators ****************************************************************** *************************************
      */
 
-    protected JQueryLocator userNameInput = jq("input[type=text]:first");
-    protected JQueryLocator addressInput = jq("input[type=text]:last");
+    protected JQueryLocator userNameInput = jq("input[type=text]:eq(0)");
+    protected JQueryLocator addressInput = jq("input[type=text]:eq(1)");
     protected JQueryLocator firstAjaxRequestProgressImage = jq("span[class=rf-st-start] img:first");
     protected JQueryLocator secondAjaxRequestProgressImage = jq("span[class=rf-st-start] img:last");
 

@@ -43,16 +43,16 @@ public class TestRegion extends AbstractGrapheneTest {
      * Locators ****************************************************************** *************************************
      */
 
-    protected JQueryLocator firstUserName = jq("input[type=text]:first");
-    protected JQueryLocator firstEmail = jq("input[type=text]:odd:first");
+    protected JQueryLocator firstUserName = jq("input[type=text]:eq(0)");
+    protected JQueryLocator firstEmail = jq("input[type=text]:odd:eq(1)");
     protected JQueryLocator firstEnteredName = jq("table[id$=echopanel1] tr:eq(1) td:eq(1)");
     protected JQueryLocator firstEnteredEmail = jq("table[id$=echopanel1] tr:eq(2) td:eq(1)");
-    protected JQueryLocator firstWrongSubmit = jq("input[type=submit]:first");
-    protected JQueryLocator secondUserName = jq("input[type=text]:even:last");
-    protected JQueryLocator secondEmail = jq("input[type=text]:odd:last");
+    protected JQueryLocator firstWrongSubmit = jq("input[type=submit]:eq(0)");
+    protected JQueryLocator secondUserName = jq("input[type=text]:even:eq(1)");
+    protected JQueryLocator secondEmail = jq("input[type=text]:odd:eq(1)");
     protected JQueryLocator secondEnteredName = jq("table[id$=echopanel2] tr:eq(1) td:eq(1)");
     protected JQueryLocator secondEnteredEmail = jq("table[id$=echopanel2] tr:eq(2) td:eq(1)");
-    protected JQueryLocator secondRightSubmit = jq("input[type=submit]:last");
+    protected JQueryLocator secondRightSubmit = jq("input[type=submit]:eq(1)");
 
     @Test
     public void testFirstWrongSubmitUserName() {

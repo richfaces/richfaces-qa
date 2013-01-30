@@ -43,10 +43,10 @@ public class TestViewUsage extends AbstractGrapheneTest {
      * Locators ****************************************************************** *************************************
      */
 
-    protected JQueryLocator userName = jq("input[type=text]:first");
+    protected JQueryLocator userName = jq("input[type=text]:eq(0)");
     protected JQueryLocator address = jq("input[type=text]:odd");
-    protected JQueryLocator submitForUserDetails = jq("input[type=button]:first");
-    protected JQueryLocator submitForSearchPanel = jq("input[type=button]:last");
+    protected JQueryLocator submitForUserDetails = jq("input[type=button]:eq(0)");
+    protected JQueryLocator submitForSearchPanel = jq("input[type=button]:eq(1)");
     protected JQueryLocator imageOfAjaxRequestProgress = jq("span[class=rf-st-start] img");
 
     /* ********************************************************************************************************

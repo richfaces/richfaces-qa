@@ -39,10 +39,10 @@ public class TestLogin extends AbstractPoppupPanel {
      * Locators********************************************************************************
      */
 
-    protected JQueryLocator loginAnchorOnTheToolbar = jq("a:contains('Login'):eq(0)");
-    protected JQueryLocator loginAnchorOnThePoppup = jq("a:contains('Login'):eq(1)");
-    protected JQueryLocator searchAnchorOnTheToolbar = jq("a:contains('Search'):eq(0)");
-    protected JQueryLocator searchAnchorOnThePoppup = jq("a:contains('Search'):eq(1)");
+    protected JQueryLocator loginAnchorOnTheToolbar = jq("tr[class$='rf-tb-cntr'] a:contains('Login')");
+    protected JQueryLocator loginAnchorOnThePoppup = jq("div[id$='lp_content'] a:contains('Login')");
+    protected JQueryLocator searchAnchorOnTheToolbar = jq("tr[class$='rf-tb-cntr'] a:contains('Search')");
+    protected JQueryLocator searchAnchorOnThePoppup = jq("div[id$='ls_content'] a:contains('Search')");
 
     /* **********************************************************************************
      * Tests**********************************************************************************

@@ -43,8 +43,8 @@ public class TestSimple extends AbstractGrapheneTest {
      * Locators ****************************************************************** *************************************
      */
 
-    protected JQueryLocator userNameInput = jq("input[type=text]:first");
-    protected JQueryLocator address = jq("input[type=text]:last");
+    protected JQueryLocator userNameInput = jq("input[type=text]:eq(0)");
+    protected JQueryLocator address = jq("input[type=text]:eq(1)");
     protected JQueryLocator submitButton = jq("input[type=button]");
     protected JQueryLocator userStoredSuccessfully = jq("span[id$=out]");
     protected JQueryLocator imageOfAjaxRequestProgress = jq("span[class=rf-st-start] img");

@@ -50,7 +50,7 @@ public class TestModalPopup extends AbstractPoppupPanel {
      * ****************
      */
 
-    JQueryLocator poppupShadow = jq("div#popup_shade");
+    JQueryLocator poppupShadow = jq("div[id$=popup_shade]");
 
     /* *****************************************************************************
      * Tests*****************************************************************************
