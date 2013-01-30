@@ -62,6 +62,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.Locations;
+import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.calendar.common.HeaderControls;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay.DayType;
@@ -100,6 +101,8 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     private Boolean booleanValue;
     @FindBy(css = "input[id$=a4jButton]")
     private WebElement a4jbutton;
+    @FindBy(id = "a4jLogLabel")
+    private WebElement a4jLogLabel;
     @FindBy(css = "span[id$=msg]")
     private RichFacesMessage message;
     //
@@ -618,24 +621,27 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     private void testOffset(boolean horizontal) {
         int offset = 15;
         int tolerance = 5;
+
+        // should help stabilizing test on Jenkins
+        // sometimes the a4jLogLabel splits into 2 rows
+        Utils.jQ("css('width','140px').css('display','block')", a4jLogLabel);
+
         Locations before = calendar.openPopup().getLocations();
+        Locations movedFromBefore = (horizontal
+                ? before.moveAllBy(offset, 0) : before.moveAllBy(0, offset));
         if (horizontal) {
             calendarAttributes.set(CalendarAttributes.horizontalOffset, offset);
         } else {
             calendarAttributes.set(CalendarAttributes.verticalOffset, offset);
         }
-        new Actions(driver).moveToElement(page.fullPageRefreshIcon).build().perform();
+        // should help stabilizing test on Jenkins
+        // sometimes the a4jLogLabel splits into 2 rows
+        Utils.jQ("css('width','140px').css('display','block')", a4jLogLabel);
 
         Locations after = calendar.openPopup().getLocations();
-        Locations movedFromBefore = (horizontal
-                ? before.moveAllBy(offset, 0) : before.moveAllBy(0, offset));
+
         Iterator<Point> itAfter = after.iterator();
         Iterator<Point> itMovedBefore = movedFromBefore.iterator();
-
-        // FIXME delete these logs after test method stabilized
-        System.out.println(after);
-        System.out.println(movedFromBefore);
-
         while (itAfter.hasNext()) {
             tolerantAssertLocations(itAfter.next(), itMovedBefore.next(), tolerance);
         }
