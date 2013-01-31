@@ -52,6 +52,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator;
 import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -63,6 +64,7 @@ import org.testng.annotations.Test;
  * @since 4.3.0.CR1
  *
  */
+@Templates(exclude="richCollapsibleSubTable")
 public class TestDropTarget extends AbstractWebDriverTest {
 
     @Page
