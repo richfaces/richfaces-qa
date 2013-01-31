@@ -68,6 +68,7 @@ import org.jboss.arquillian.ajocado.locator.element.ExtendedLocator;
 import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
