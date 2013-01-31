@@ -202,7 +202,7 @@ public abstract class AbstractMessagesTest extends AbstractWebDriverTest {
         testAttributeLang(getTestedElementRoot());
     }
 
-    public void testMesssagesTypes() {
+    public void testMessagesTypes() {
         generateAllKindsOfMessagesWithWait();
         assertEquals(messagesWithFor.size(), 4);
         messagesWithFor.getMessage(0).isType(MessageType.FATAL);

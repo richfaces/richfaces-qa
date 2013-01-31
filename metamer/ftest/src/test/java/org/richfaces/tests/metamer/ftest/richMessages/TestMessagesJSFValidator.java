@@ -91,8 +91,8 @@ public class TestMessagesJSFValidator extends AbstractMessagesTest {
     }
 
     @Test
-    public void testMesssagesTypes() {
-        super.testMesssagesTypes();
+    public void testMessagesTypes() {
+        super.testMessagesTypes();
     }
 
     @Test
