@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.ftest.a4jCommandLink;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.commandLinkAttributes;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
@@ -33,7 +32,6 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -162,8 +160,8 @@ public class TestCommandLink extends AbstractWebDriverTest {
     public void testDisabled() {
         commandLinkAttributes.set(CommandLinkAttributes.disabled, true);
 
+        Graphene.waitModel().until("Link should not be on page.").element(page.link).is().not().present();
         assertTrue(page.disabledLink.isDisplayed(), "Link should be disabled.");
-        assertFalse(ElementPresent.getInstance().element(page.link).apply(driver), "Link should not be on page.");
     }
 
     @Test
@@ -343,7 +341,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     public void testRendered() {
         commandLinkAttributes.set(CommandLinkAttributes.rendered, false);
 
-        assertFalse(ElementPresent.getInstance().element(page.link).apply(driver), "Link should not be on page.");
+        Graphene.waitModel().until("Link should not be on page.").element(page.link).is().not().present();
     }
 
     @Test
