@@ -19,38 +19,39 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.richPanel;
+package org.richfaces.tests.page.fragments.impl.panel;
 
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
  *
  */
-public class PanelPage extends MetamerPage {
+public class RichFacesPanel {
 
-    @FindBy(css = "div[id$=panelWithHeader]")
-    public WebElement panelWithHeader;
+    public static final String CSS_HEADER = "div.rf-p-hdr";
+    public static final String CSS_BODY = "div.rf-p-b";
 
-    @FindBy(css = "div[id$=panelWithoutHeader]")
-    public WebElement panelWithoutHeader;
+    @Root
+    WebElement root;
 
-    @FindBy(css = "div[id$=panelWithHeader] div.rf-p-hdr")
-    public WebElement headersWithHeader;
+    @FindBy(css = CSS_HEADER)
+    WebElement header;
 
-    @FindBy(css = "div[id$=panelWithoutHeader] div.rf-p-hdr")
-    public WebElement headersWithoutHeader;
+    @FindBy(css = CSS_BODY)
+    WebElement body;
 
-    @FindBy(css = "div[id$=panelWithHeader] div.rf-p-b")
-    public WebElement bodiesWithHeader;
-
-    @FindBy(css = "div[id$=panelWithoutHeader] div.rf-p-b")
-    public WebElement bodiesWithoutHeader;
-
-    public WebElement getPanelWithHeader() {
-        return panelWithHeader;
+    public WebElement getRoot() {
+        return root;
     }
 
+    public WebElement getHeader() {
+        return header;
+    }
+
+    public WebElement getBody() {
+        return body;
+    }
 }
