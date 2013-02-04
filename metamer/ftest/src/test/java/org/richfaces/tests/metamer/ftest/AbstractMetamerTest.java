@@ -23,9 +23,9 @@ package org.richfaces.tests.metamer.ftest;
 
 import static org.jboss.arquillian.ajocado.Graphene.id;
 import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
+import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 import static org.jboss.arquillian.ajocado.javascript.JavaScript.js;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 
 import java.io.File;
 import java.net.URL;
@@ -89,8 +89,8 @@ public abstract class AbstractMetamerTest extends Arquillian {
     protected IdLocator rerenderAllIcon = id("controlsForm:reRenderAllImage");
     protected TextRetriever retrieveRequestTime = retrieveText.locator(time);
     protected Retriever<String> retrieveWindowData = new ScriptEvaluationRetriever().script(js("window.data"));
-    protected TextRetriever retrieveRenderChecker = retrieveText.locator(jq("#renderChecker"));
-    protected TextRetriever retrieveStatusChecker = retrieveText.locator(jq("#statusCheckerOutput"));
+    protected TextRetriever retrieveRenderChecker = retrieveText.locator(jq("span[id$=renderChecker]"));
+    protected TextRetriever retrieveStatusChecker = retrieveText.locator(jq("span[id$=statusCheckerOutput]"));
     protected TextRetriever retrieveJsFunctionChecker = retrieveText.locator(jsFunctionChecker);
     protected LocatorReference<JQueryLocator> attributesRoot = new LocatorReference<JQueryLocator>(
         pjq("span[id$=:attributes:panel]"));
@@ -211,7 +211,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
         }
 
         // TODO
-        return (WebArchive) war;
+        return war;
     }
 
     /**
