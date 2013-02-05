@@ -22,6 +22,7 @@
             <package name="org.richfaces.tests.metamer.ftest.richFileUpload"/>
             <package name="org.richfaces.tests.metamer.ftest.richInplaceInput"/>
             <package name="org.richfaces.tests.metamer.ftest.richInputNumberSlider"/>
+            <package name="org.richfaces.tests.metamer.ftest.richInputNumberSpinner"/>
             <package name="org.richfaces.tests.metamer.ftest.richItemChangeListener"/>
             <package name="org.richfaces.tests.metamer.ftest.richMessage"/>
             <package name="org.richfaces.tests.metamer.ftest.richMessages"/>
@@ -39,7 +40,6 @@
             <class name="org.richfaces.tests.metamer.ftest.richEditor.TestRichEditorWithTyping" />
             <class name="org.richfaces.tests.metamer.ftest.richExtendedDataTable.TestEDTFrozenColumns" />
             <class name="org.richfaces.tests.metamer.ftest.richInplaceSelect.TestRichInplaceSelectValidationMessages" />
-            <class name="org.richfaces.tests.metamer.ftest.richInputNumberSpinner.TestRichSpinnerValidationMessages" />
             <class name="org.richfaces.tests.metamer.ftest.richPanel.TestRichPanel" />
             <class name="org.richfaces.tests.metamer.ftest.richSelect.TestRichSelectValidationMessages" />
             <class name="org.richfaces.tests.metamer.ftest.richTree.TestToggleNodeEvent" />
