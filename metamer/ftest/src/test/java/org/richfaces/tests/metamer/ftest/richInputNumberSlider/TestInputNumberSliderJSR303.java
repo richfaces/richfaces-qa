@@ -30,7 +30,6 @@ import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.rich.RichInputNumberSliderBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -122,6 +121,11 @@ public class TestInputNumberSliderJSR303 extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richInputNumberSlider/jsr303.xhtml");
     }
 
+    private void moveSliderWithXHRWaitRequest(int byPixels, RichFacesInputNumberSlider slider) {
+        MetamerPage.waitRequest(slider.getNumberSlider(), WaitRequestType.XHR)
+                .moveHandleToPointInTraceHorizontally(byPixels);
+    }
+
     private List<RichFacesInputNumberSlider> getSliders() {
         return Arrays.asList(sliderMin, sliderMax, sliderCustom);
     }
@@ -133,16 +137,14 @@ public class TestInputNumberSliderJSR303 extends AbstractWebDriverTest {
     private void setAllCorrect() {
         List<RichFacesInputNumberSlider> sliders = getSliders();
         for (int i = 0; i < sliders.size(); i++) {
-            typeToInputActionWithXHRWaitRequest(
-                    Value.valueForInput(i).correct, sliders.get(i)).perform();
+            typeToInputWithXHRWaitRequest(Value.valueForInput(i).correct, sliders.get(i));
         }
     }
 
     private void setAllWrong() {
         List<RichFacesInputNumberSlider> sliders = getSliders();
         for (int i = 0; i < sliders.size(); i++) {
-            typeToInputActionWithXHRWaitRequest(
-                    Value.valueForInput(i).wrong, sliders.get(i)).perform();
+            typeToInputWithXHRWaitRequest(Value.valueForInput(i).wrong, sliders.get(i));
         }
         // wait until validation appears on last input before go ahead (e.g. submit form)
         Graphene.waitAjax().until(msgCustom.isVisibleCondition());
@@ -216,33 +218,33 @@ public class TestInputNumberSliderJSR303 extends AbstractWebDriverTest {
 
     @Test
     public void testCustom() {
-        typeToInputActionWithXHRWaitRequest(Value.custom.wrong, sliderCustom).perform();
+        typeToInputWithXHRWaitRequest(Value.custom.wrong, sliderCustom);
         assertEquals(msgCustom.getDetail(), MSG_CUSTOM);
     }
 
     @Test
     public void testMax() {
-        typeToInputActionWithXHRWaitRequest(Value.max.wrong, sliderMax).perform();
+        typeToInputWithXHRWaitRequest(Value.max.wrong, sliderMax);
         assertEquals(msgMax.getDetail(), MSG_MAX);
     }
 
     @Test
     public void testMin() {
-        typeToInputActionWithXHRWaitRequest(Value.min.wrong, sliderMin).perform();
+        typeToInputWithXHRWaitRequest(Value.min.wrong, sliderMin);
         assertEquals(msgMin.getDetail(), MSG_MIN);
     }
 
     @Test
     public void testSlideToMax() {
         setAllCorrect();
-        moveSliderActionWithXHRWaitRequest(sliderMax.getNumberSlider().getWidth(), sliderMax).perform();
+        moveSliderWithXHRWaitRequest(Position.MORE_THAN_TWO.position, sliderMax);
         assertEquals(msgMax.getDetail(), MSG_MAX);
     }
 
     @Test
     public void testSlideToMin() {
         setAllCorrect();
-        moveSliderActionWithXHRWaitRequest(0, sliderMin).perform();
+        moveSliderWithXHRWaitRequest(Position.ZERO.position, sliderMin);
         assertEquals(msgMin.getDetail(), MSG_MIN);
     }
 
@@ -250,24 +252,12 @@ public class TestInputNumberSliderJSR303 extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-11314")
     public void testSlideToNegative() {
         setAllCorrect();
-        moveSliderActionWithXHRWaitRequest(0, sliderCustom).perform();
+        moveSliderWithXHRWaitRequest(Position.LESS_THAN_ZERO.position, sliderCustom);
         assertEquals(msgCustom.getDetail(), MSG_CUSTOM);
     }
 
-    private Action moveSliderActionWithXHRWaitRequest(int num, RichFacesInputNumberSlider slider) {
-        return typeToInputActionWithWaitRequest(num, slider, WaitRequestType.XHR);
-    }
-
-    private Action typeToInputActionWithXHRWaitRequest(int num, RichFacesInputNumberSlider slider) {
-        return typeToInputActionWithWaitRequest(num, slider, WaitRequestType.XHR);
-    }
-
-    private Action typeToInputActionWithWaitRequest(final int num, final RichFacesInputNumberSlider slider, final WaitRequestType type) {
-        return new Action() {
-            @Override
-            public void perform() {
-                MetamerPage.waitRequest(slider.getInput().clear(ClearType.JS).fillIn(String.valueOf(num)), type).trigger("blur");
-            }
-        };
+    private void typeToInputWithXHRWaitRequest(int num, RichFacesInputNumberSlider slider) {
+        MetamerPage.waitRequest(slider.getInput().clear(ClearType.JS)
+                .fillIn(String.valueOf(num)), WaitRequestType.XHR).trigger("blur");
     }
 }
