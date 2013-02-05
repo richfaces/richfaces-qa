@@ -21,38 +21,28 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.autocomplete;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import java.awt.event.KeyEvent;
-
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.component.object.api.autocomplete.Suggestion;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
+import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.autocomplete.page.CustomLayoutsPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestCustomLayouts extends AbstractGrapheneTest {
+public class TestCustomLayouts extends AbstractWebDriverTest {
 
-    /* *********************************************************************************************************************
-     * Locators
-     * **********************************************************************************************************
-     * **********
-     */
-
-    private JQueryLocator inputWithTableLayout = jq("input[type=text]:eq(0)");
-    private JQueryLocator inputWithDivLayout = jq("input[type=text]:eq(1)");
-    private JQueryLocator firstRowOfSelectOfFirstInput = jq("tr.rf-au-itm:eq(0):visible");
-    private JQueryLocator firstRowOfSelectOfSecondInput = jq("div.rf-au-itm:eq(0):visible");
+    @Page
+    public CustomLayoutsPage page;
 
     /* ********************************************************************************************************************
-     * Constants
-     * *********************************************************************************************************
+     * Constants *********************************************************************************************************
      * ***********
      */
 
@@ -62,76 +52,52 @@ public class TestCustomLayouts extends AbstractGrapheneTest {
     private final String EXP_SUGG_AFTER_ALA_SC_INPUT = "Alabama - (Montgomery)";
 
     /* **********************************************************************************************************************
-     * Tests
-     * *************************************************************************************************************
+     * Tests *************************************************************************************************************
      * ********
      */
 
-    @Test(groups = { "4.Future" })
+    @Test
     public void testAutocompletionOfInputWithTableLayout() {
 
-        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(inputWithTableLayout,
-            firstRowOfSelectOfFirstInput, "v", EXP_SUGG_AFTER_V_FST_INPUT, EXP_SUGG_AFTER_V_FST_INPUT.split(" ")[0]);
+        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(page.autocomplete1, "v", EXP_SUGG_AFTER_V_FST_INPUT,
+            EXP_SUGG_AFTER_V_FST_INPUT.split(" ")[0]);
 
-        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(inputWithTableLayout,
-            firstRowOfSelectOfFirstInput, "ala", EXP_SUGG_AFTER_ALA_FST_INPUT,
+        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(page.autocomplete1, "ala", EXP_SUGG_AFTER_ALA_FST_INPUT,
             EXP_SUGG_AFTER_ALA_FST_INPUT.split(" ")[0]);
     }
 
-    @Test(groups = { "4.Future" })
+    @Test
     public void testAutocompletionOfInputWithDivlayput() {
 
-        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(inputWithDivLayout,
-            firstRowOfSelectOfSecondInput, "v", EXP_SUGG_AFTER_V_SC_INPUT, EXP_SUGG_AFTER_V_SC_INPUT.split(" ")[0]);
+        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(page.autocomplete2, "v", EXP_SUGG_AFTER_V_SC_INPUT,
+            EXP_SUGG_AFTER_V_SC_INPUT.split(" ")[0]);
 
-        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(inputWithDivLayout,
-            firstRowOfSelectOfSecondInput, "ala", EXP_SUGG_AFTER_ALA_SC_INPUT,
+        typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(page.autocomplete2, "ala", EXP_SUGG_AFTER_ALA_SC_INPUT,
             EXP_SUGG_AFTER_ALA_SC_INPUT.split(" ")[0]);
 
     }
 
-    @Test
-    public void testFirstInputPopupIsCreatedFromTable() {
-
-        selenium.type(inputWithTableLayout, "a");
-        guardXhr(selenium).fireEvent(inputWithTableLayout, Event.KEYPRESS);
-
-        assertTrue(selenium.isElementPresent(firstRowOfSelectOfFirstInput),
-            "The poppup with suggestions should be visible!");
-
-        JQueryLocator tdState = jq(firstRowOfSelectOfFirstInput.getRawLocator() + " > td:eq(1)");
-
-        assertTrue(selenium.isElementPresent(tdState), "The popup should be built from table!");
-
-        eraseInput(inputWithTableLayout);
-    }
-
     /* ******************************************************************************************************************
-     * Help methods
-     * ******************************************************************************************************
+     * Help methods ******************************************************************************************************
      * ************
      */
 
-    private void typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(JQueryLocator input,
-        JQueryLocator firstRow, String whatTotype, String expectedValueInPopup, String expectedValueInInputAfterEnter) {
+    private void typeSomethingToInputCheckThePoppupPressEnterCheckTheInputValue(RichFacesAutocomplete<String> autocomplete,
+        String whatTotype, String expectedValueInPopup, String expectedValueInInputAfterEnter) {
 
-        selenium.type(input, whatTotype);
-        guardXhr(selenium).fireEvent(input, Event.KEYPRESS);
+        autocomplete.setSuggestionParser(new TextSuggestionParser());
+        autocomplete.type(whatTotype);
 
-        assertTrue(selenium.isElementPresent(firstRow));
-
-        String firstRowContent = selenium.getText(firstRow).trim();
-
-        assertTrue(expectedValueInPopup.equals(firstRowContent), "The first row of popup should suggest "
+        Suggestion<String> firstSuggestion = autocomplete.getFirstSuggestion();
+        assertTrue(expectedValueInPopup.equals(firstSuggestion.getValue()), "The first row of popup should suggest "
             + expectedValueInPopup + " " + "when " + whatTotype + " is typed in input");
 
-        guardXhr(selenium).keyPressNative(KeyEvent.VK_ENTER);
+        autocomplete.autocompleteWithSuggestion(firstSuggestion);
 
-        String valueInInput = selenium.getValue(input);
-
+        String valueInInput = autocomplete.getInputValue();
         assertEquals(valueInInput, expectedValueInInputAfterEnter, "The value in input should be different!");
 
-        eraseInput(input);
+        autocomplete.clear();
     }
 
 }
