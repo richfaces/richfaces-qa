@@ -28,14 +28,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.richfaces.tests.page.fragments.impl.VisibleComponent;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesInputNumberSpinner implements VisibleComponent, InputNumberSpinner {
+public class RichFacesInputNumberSpinner implements InputNumberSpinner {
 
     @Root
     private WebElement root;

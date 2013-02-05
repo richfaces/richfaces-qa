@@ -22,13 +22,14 @@
 package org.richfaces.tests.page.fragments.impl.input.inputNumberSpinner;
 
 import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.VisibleComponent;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
 
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface InputNumberSpinner {
+public interface InputNumberSpinner extends VisibleComponent{
 
     /**
      * Decreases value by clicking on the decrease button.
