@@ -6,7 +6,7 @@
    <parent>
       <groupId>org.richfaces.tests</groupId>
       <artifactId>metamer-root</artifactId>
-      <version>4.2.4-SNAPSHOT</version>
+      <version>4.2.3.Final</version>
       <relativePath>../pom.xml</relativePath>
    </parent>
 
@@ -24,7 +24,7 @@
       <!-- for RF 4.2 is jee6 valid identifier -->
       <org.richfaces.qualifier>jee6</org.richfaces.qualifier>
       <!-- Choose Metamer version which works in Portal correctly -->
-      <version.richfaces4.metamer>4.2.3.20121017-Final</version.richfaces4.metamer>
+      <version.richfaces4.metamer>4.2.3.Final</version.richfaces4.metamer>
       <version.hibernate.validator>4.2.0.Final</version.hibernate.validator>
       <version.portletbridge>3.1.1.Final</version.portletbridge>
    </properties>
