@@ -21,17 +21,16 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.commandButton;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.testng.Assert.assertEquals;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
-import static org.jboss.arquillian.ajocado.Graphene.textEquals;
+import org.jboss.arquillian.graphene.Graphene;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
 public class TestCommandButton extends AbstractTestA4jCommand {
@@ -40,7 +39,8 @@ public class TestCommandButton extends AbstractTestA4jCommand {
      * Locators*****************************************************************************
      */
 
-    protected JQueryLocator commandButton = jq("fieldset form input[type=submit]");
+    @FindBy(css="form input[type=submit]")
+    protected WebElement commandButton;
 
     /* ******************************************************************************
      * Tests******************************************************************************
@@ -48,50 +48,22 @@ public class TestCommandButton extends AbstractTestA4jCommand {
 
     @Test
     public void testClickOnTheButtonWhileInputIsEmpty() {
-
-        /*
-         * click on the button, the output should be empty string
-         */
-        guardXhr(selenium).click(commandButton);
-
-        String expectedOutput = "";
-        assertEquals(selenium.getText(outHello).trim(), expectedOutput, "The output should be emtpy string");
+        checkClickOnTheButtonWhileInputIsEmpty("");
     }
 
     @Test
     public void testTypeSomeCharactersAndClickOnTheButton() {
-
-        /*
-         * type a string and click on the button, check the outHello
-         */
-        String testString = "Test string";
-
-        selenium.typeKeys(input, testString);
-
-        guardXhr(selenium).click(commandButton);
-
-        String expectedOutput = "Hello " + testString + " !";
-        assertEquals(selenium.getText(outHello), expectedOutput, "The output should be: " + expectedOutput);
+        checkTypeSomeCharactersAndClickOnTheButton();
     }
 
     @Test
     public void testEraseSomeStringAndClickOnTheButton() {
+        checkEraseSomeStringAndClickOnTheButton("");
+    }
 
-        /*
-         * erases string and check the output is empty string
-         */
-        String testString = "Test string";
-
-        selenium.typeKeys(input, testString);
-
-        guardXhr(selenium).click(commandButton);
-
-        eraseInput(input);
-
-        guardXhr(selenium).click(commandButton);
-
-        String expectedOutput = "";
-        waitAjax.until(textEquals.locator(outHello).text(expectedOutput));
+    @Override
+    protected WebElement getCommand() {
+        return commandButton;
     }
 
 }

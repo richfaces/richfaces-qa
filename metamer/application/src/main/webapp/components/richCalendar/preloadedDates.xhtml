@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" 
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
@@ -35,14 +35,27 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </f:metadata>
         </ui:define>
 
+        <ui:define name="head">
+            <style type="text/css">
+                .yellowDay {
+                    background: yellow !important;
+                }
+
+                .aquaDay {
+                    background: aqua !important;
+                }
+
+            </style>
+        </ui:define>
+
         <ui:define name="component">
             <p style="width:75em">
-                Calendar is predefined with mode="client", preloadDateRangeBegin="Jan 1, 2012", 
+                Calendar is predefined with mode="client", preloadDateRangeBegin="Jan 1, 2012",
                 preloadDateRangeEnd="Feb 1, 2013", currentDate="Jan 1, 2012" and dataModel.
                 <br/>
-                Switching to not preloaded date should be forbidden or an update of calendar should be made by ajax.
+                Switching to not preloaded dates(ie. 'Feb 1, 2013', 'Dec 1, 2011') will not show busyDays(aqua color) and weekends(yellow color) marked with colors.
                 <br/>
-                Not automated.
+                Automated.
             </p>
 
             <div style="padding: 250px">
@@ -52,7 +65,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                timeZone="#{richCalendarBean.timeZone}"
                                preloadDateRangeBegin="Jan 1, 2012"
                                preloadDateRangeEnd="Feb 1, 2013"
-                               pattern="MMM d, yyyy"
+                               datePattern="MMM d, yyyy"
                                currentDate="Jan 1, 2012"
                                value="#{richCalendarBean.value}" >
                     <a4j:ajax event="change" render="output, phasesPanel"/>
@@ -69,7 +82,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         </ui:define>
 
-        <ui:define name="outOfTemplateAfter"/>
+        <ui:define name="outOfTemplateAfter">
+            <ui:include src="resizedTemplatesStyles.xhtml"/>
+        </ui:define>
 
     </ui:composition>
 </html>

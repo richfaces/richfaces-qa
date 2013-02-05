@@ -21,28 +21,35 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.jsFunction;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import java.util.Map.Entry;
+import org.jboss.arquillian.graphene.Graphene;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.android.AndroidDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.jsFunction.page.JsFunctionPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
-public class TestJsFunction extends AbstractGrapheneTest {
+public class TestJsFunction extends AbstractWebDriverTest {
 
     /* *****************************************************************************
      * Locators*****************************************************************************
      */
 
-    protected JQueryLocator firstTd = jq("fieldset table tr:first td:first span");
-    protected JQueryLocator secondTd = jq("fieldset table tr:first td:odd span");
-    protected JQueryLocator lastTd = jq("fieldset table tr:first td:last span");
-    protected JQueryLocator showName = jq("span#showname");
+    @Page
+    private JsFunctionPage page;
+
+    @ArquillianResource
+    private Actions actions;
 
     /* ******************************************************************************
      * Tests******************************************************************************
@@ -50,61 +57,34 @@ public class TestJsFunction extends AbstractGrapheneTest {
 
     @Test
     public void testInitialState() {
-
-        String textInShowName = selenium.getText(showName).trim();
-        assertEquals("", textInShowName, "The text in shownName should be empty");
+        assertEquals(page.output.getText().trim(), "", "The text in output should be empty");
     }
 
     @Test
     public void testMouseOverSpecificTdElement() {
         /*
          * Move mouse over all td elements and check whether the showName is same as text of particular td element then
-         * move mouse out of td element and check whether the showName is empty
+         * move mouse out of td element and check whether the output is empty
          */
-        // first td
-        String textInFirstTd = selenium.getText(firstTd).trim();
 
-        guardXhr(selenium).mouseOver(firstTd);
-
-        String textInShowName = selenium.getText(showName).trim();
-
-        assertEquals(textInShowName, textInFirstTd, "The text in shownName should be same as in the first td!");
-
-        guardXhr(selenium).mouseOut(firstTd);
-
-        textInShowName = selenium.getText(showName).trim();
-
-        assertEquals(textInShowName, "", "The text in shownName should be empty");
-
-        // second td
-        String textInSecondTd = selenium.getText(secondTd).trim();
-
-        guardXhr(selenium).mouseOver(secondTd);
-
-        textInShowName = selenium.getText(showName).trim();
-
-        assertEquals(textInShowName, textInSecondTd, "The text in shownName should be same as in the second td!");
-
-        guardXhr(selenium).mouseOut(secondTd);
-
-        textInShowName = selenium.getText(showName).trim();
-
-        assertEquals(textInShowName, "", "The text in shownName should be empty");
-
-        // last td
-        String textLastTd = selenium.getText(lastTd).trim();
-
-        guardXhr(selenium).mouseOver(lastTd);
-
-        textInShowName = selenium.getText(showName).trim();
-
-        assertEquals(textInShowName, textLastTd, "The text in shownName should be same as in the last td!");
-
-        guardXhr(selenium).mouseOut(lastTd);
-
-        textInShowName = selenium.getText(showName).trim();
-
-        assertEquals(textInShowName, "", "The text in shownName should be empty");
-
+        for (Entry<String, WebElement> entry: page.getNames().entrySet()) {
+            String name = entry.getKey();
+            WebElement element = entry.getValue();
+            activate(element);
+            Graphene.waitGui()
+                    .until("The text in output should be same as in the active td!")
+                    .element(page.output)
+                    .text()
+                    .equalTo(name);
+        }
     }
+
+    private void activate(WebElement element) {
+        if (webDriver instanceof AndroidDriver) {
+            element.click();
+        } else {
+            actions.moveToElement(element).perform();
+        }
+    }
+
 }

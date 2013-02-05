@@ -21,23 +21,28 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.android.AndroidDriver;
+import org.openqa.selenium.interactions.Action;
 import org.testng.annotations.BeforeMethod;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc and Juraj Huska</a>
  * @version $Revision$
  */
-public class AbstractWebDriverTest<P> extends AbstractShowcaseTest {
+public class AbstractWebDriverTest extends AbstractShowcaseTest {
 
     @Drone
     protected WebDriver webDriver;
-
-    @Page
-    protected P page;
 
     @BeforeMethod
     public void loadPage() {
@@ -47,5 +52,60 @@ public class AbstractWebDriverTest<P> extends AbstractShowcaseTest {
         this.contextRoot = getContextRoot();
 
         webDriver.get(URLUtils.buildUrl(contextRoot, "/showcase/", addition).toExternalForm());
+    }
+
+    @Override
+    protected URL getContextRoot() {
+        URL contextRootFromParent = super.getContextRoot();
+        if (webDriver instanceof AndroidDriver) {
+            try {
+                return new URL(contextRootFromParent.toExternalForm().replace(contextRootFromParent.getHost(), "10.0.2.2"));
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(AbstractWebDriverTest.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
+            }
+        } else {
+            return contextRootFromParent;
+        }
+    }
+
+    protected Action fireEventAction(final WebElement element, final String event) {
+        return new EventAction(webDriver, element, event);
+    }
+
+    protected void fireEvent(WebElement element, String event) {
+        fireEventAction(element, event).perform();
+    }
+
+    public static class EventAction implements Action {
+        private final WebDriver driver;
+        private final String event;
+        private final WebElement element;
+
+        public EventAction(WebDriver driver, WebElement element, String event) {
+            this.driver = driver;
+            this.element = element;
+            this.event = event;
+        }
+
+        @Override
+        public void perform() {
+            String jQueryCmd = String.format("jQuery(arguments[0]).trigger('%s')", event);
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript(jQueryCmd, element);
+        }
+
+    }
+
+    /**
+     * Works only with injected elements.
+     */
+    public boolean isElementPresent(WebElement element) {
+        try {
+            element.isDisplayed();
+            return true;
+        } catch (NoSuchElementException ignored) {
+            return false;
+        }
     }
 }

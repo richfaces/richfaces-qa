@@ -55,15 +55,15 @@
         <arquillian.bom.version>1.0.3.Final</arquillian.bom.version>
         <arquillian.tomcat.version>1.0.0.CR4</arquillian.tomcat.version>
         <arquillian.drone.version>1.1.0.Final</arquillian.drone.version>
-        <arquillian.graphene-testng.version>2.0.0.Alpha3-SNAPSHOT</arquillian.graphene-testng.version>
-        <arquillian.graphene-webdriver.version>2.0.0.Alpha3-SNAPSHOT</arquillian.graphene-webdriver.version>
+        <arquillian.graphene-testng.version>2.0.0.Alpha3</arquillian.graphene-testng.version>
+        <arquillian.graphene-webdriver.version>2.0.0.Alpha3</arquillian.graphene-webdriver.version>
         <arquillian.jboss-as6.version>1.0.0.CR3</arquillian.jboss-as6.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
-        <arquillian.android.version>1.0.0.Alpha1</arquillian.android.version>
+        <arquillian.android.version>1.0.0.Alpha2</arquillian.android.version>
         <shrinkwrap.descriptors.version>2.0.0-alpha-4</shrinkwrap.descriptors.version>
 
-        <version.selenium>2.28.0</version.selenium>
-        <version.selenium.server>2.28.0</version.selenium.server>
+        <version.selenium>2.29.0</version.selenium>
+        <version.selenium.server>2.29.0</version.selenium.server>
         <version.slf4j.jbossas6>1.6.1</version.slf4j.jbossas6>
 
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->

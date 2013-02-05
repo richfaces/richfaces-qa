@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTree;
 
+import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.Graphene.waitModel;
@@ -38,7 +39,6 @@ import static org.jboss.arquillian.ajocado.dom.Event.MOUSEUP;
 
 import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 
-import static org.jboss.arquillian.ajocado.guard.RequestGuardFactory.guard;
 
 import static org.jboss.test.selenium.JQuerySelectors.append;
 import static org.jboss.test.selenium.JQuerySelectors.not;
@@ -54,9 +54,7 @@ import static org.richfaces.tests.metamer.ftest.richTree.TreeAttributes.limitRen
 import static org.richfaces.tests.metamer.ftest.richTree.TreeAttributes.oncomplete;
 import static org.richfaces.tests.metamer.ftest.richTree.TreeAttributes.render;
 import static org.richfaces.tests.metamer.ftest.richTree.TreeAttributes.rendered;
-import static org.richfaces.tests.metamer.ftest.richTree.TreeAttributes.selectionType;
 import static org.richfaces.tests.metamer.ftest.richTree.TreeAttributes.status;
-import static org.richfaces.tests.metamer.ftest.richTree.TreeAttributes.toggleNodeEvent;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -66,18 +64,14 @@ import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
-import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.jboss.arquillian.ajocado.locator.element.ExtendedLocator;
-import org.jboss.arquillian.ajocado.request.RequestType;
 import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
-import org.jboss.cheiron.halt.XHRHalter;
-import org.richfaces.component.SwitchType;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -87,28 +81,28 @@ import org.testng.annotations.Test;
 public class TestTreeSimple extends AbstractTestTree {
 
     private static final String IMAGE_URL = "/resources/images/loading.gif";
-
     SeleniumCondition treeNodeExpanded = new SeleniumCondition() {
-
         @Override
         public boolean isTrue() {
             return treeNode.isExpanded();
         }
     };
-
+    SeleniumCondition treeNodeCollapsed = new SeleniumCondition() {
+        @Override
+        public boolean isTrue() {
+            return treeNode.isCollapsed();
+        }
+    };
     @Inject
     @Use(empty = true)
     Event eventToFire;
-    Event[] eventsToFire = new Event[] { MOUSEDOWN, MOUSEUP, MOUSEOVER, MOUSEOUT };
-
+    Event[] eventsToFire = new Event[]{ MOUSEDOWN, MOUSEUP, MOUSEOVER, MOUSEOUT };
     @Inject
     @Use(empty = true)
     Event domEvent;
     Event[] domEvents = { CLICK, DBLCLICK, KEYDOWN, KEYPRESS, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER, MOUSEUP };
-
     TreeModel tree = new TreeModel(pjq("div.rf-tr[id$=richTree]"));
     TreeNodeModel treeNode;
-
     JQueryLocator expandAll = jq("input:submit[id$=expandAll]");
     JQueryLocator loadingFacet = jq("input:checkbox[id$=loadingFacet]");
 
@@ -145,7 +139,7 @@ public class TestTreeSimple extends AbstractTestTree {
         selenium.waitForPageToLoad();
         AttributeLocator<?> styleAttr = tree.getAnyNode().getHandle().getAttribute(Attribute.CLASS);
         assertTrue(selenium.getAttribute(styleAttr).contains(value), "Attribute handleClass should contain \"" + value
-            + "\"");
+                + "\"");
     }
 
     @Test
@@ -157,7 +151,7 @@ public class TestTreeSimple extends AbstractTestTree {
         selenium.waitForPageToLoad();
         AttributeLocator<?> styleAttr = tree.getAnyNode().getIcon().getAttribute(Attribute.CLASS);
         assertTrue(selenium.getAttribute(styleAttr).contains(value), "Attribute iconClass should contain \"" + value
-            + "\"");
+                + "\"");
     }
 
     @Test
@@ -169,7 +163,7 @@ public class TestTreeSimple extends AbstractTestTree {
         selenium.waitForPageToLoad();
         AttributeLocator<?> styleAttr = tree.getAnyNode().getLabel().getAttribute(Attribute.CLASS);
         assertTrue(selenium.getAttribute(styleAttr).contains(value), "Attribute labelClass should contain \"" + value
-            + "\"");
+                + "\"");
     }
 
     @Test
@@ -255,7 +249,7 @@ public class TestTreeSimple extends AbstractTestTree {
     @Use(field = "sample", strings = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates(exclude = "a4jRegion")
     public void testSelectionClientSideEvents() {
-        String[] events = new String[] { "beforeselectionchange", "begin", "beforedomupdate", "complete",
+        String[] events = new String[]{ "beforeselectionchange", "begin", "beforedomupdate", "complete",
             "selectionchange" };
         testRequestEventsBefore(events);
         tree.getNode(1).select();
@@ -274,7 +268,7 @@ public class TestTreeSimple extends AbstractTestTree {
     @IssueTracking("https://issues.jboss.org/browse/RF-11319")
     @Templates(value = "a4jRegion")
     public void testSelectionClientSideEventsInRegion() {
-        String[] events = new String[] { "beforeselectionchange", "begin", "beforedomupdate", "complete",
+        String[] events = new String[]{ "beforeselectionchange", "begin", "beforedomupdate", "complete",
             "selectionchange" };
         testRequestEventsBefore(events);
         tree.getNode(1).select();
@@ -284,7 +278,7 @@ public class TestTreeSimple extends AbstractTestTree {
     @Test(groups = "4.Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-10265")
     public void testToggleClientSideEvents() {
-        String[] events = new String[] { "beforenodetoggle", "begin", "beforedomupdate", "complete", "nodetoggle" };
+        String[] events = new String[]{ "beforenodetoggle", "begin", "beforedomupdate", "complete", "nodetoggle" };
         testRequestEventsBefore(events);
         tree.getNode(1).expand();
         testRequestEventsAfter(events);
@@ -347,37 +341,14 @@ public class TestTreeSimple extends AbstractTestTree {
     }
 
     @Test
-    @Use(field = "eventToFire", value = "eventsToFire")
-    public void testToggleNodeEvent() {
-        treeNode = tree.getNode(2);
-        treeAttributes.set(selectionType, SwitchType.client);
-        ExtendedLocator<JQueryLocator> target = treeNode.getLabel();
-
-        for (Event eventToSetup : eventsToFire) {
-            assertTrue(treeNode.isCollapsed());
-            treeAttributes.set(toggleNodeEvent, eventToSetup.getEventName());
-
-            fireEvent(target, eventToFire, eventToSetup);
-
-            if (eventToFire == eventToSetup) {
-                assertTrue(treeNode.isExpanded());
-                fireEvent(target, eventToFire, eventToSetup);
-                assertTrue(treeNode.isCollapsed());
-            } else {
-                assertTrue(treeNode.isCollapsed());
-            }
-        }
-    }
-
-    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12696")
     public void testLoadingFacet() {
+        int sufficientTimeToCheckHandles = 2000;//ms
         setLoadingFacet(true);
+        setResponseDelay(sufficientTimeToCheckHandles);
         tree.setToggleType(null);
-        XHRHalter.enable();
 
-        XHRHalter xhrHalter = null;
-
-        for (int index : new int[] { 1, 2 }) {
+        for (int index : new int[]{ 1, 2 }) {
             treeNode = (index == 1) ? tree.getNode(index) : treeNode.getNode(index);
 
             assertFalse(treeNode.getHandleLoading().isVisible());
@@ -389,28 +360,7 @@ public class TestTreeSimple extends AbstractTestTree {
             assertFalse(treeNode.getHandle().isCollapsed());
             assertFalse(treeNode.getHandle().isExpanded());
 
-            if (xhrHalter == null) {
-                xhrHalter = XHRHalter.getHandleBlocking();
-            }
-            xhrHalter.complete();
-
             waitModel.until(treeNodeExpanded);
-        }
-    }
-
-    private void fireEvent(ElementLocator<?> target, Event eventToFire, Event eventToSetup) {
-        RequestType requestType = (eventToFire == eventToSetup) ? RequestType.XHR : RequestType.NONE;
-        if (eventToFire == MOUSEDOWN) {
-            guard(selenium, requestType).mouseDown(target);
-        }
-        if (eventToFire == MOUSEUP) {
-            guard(selenium, requestType).mouseUp(target);
-        }
-        if (eventToFire == MOUSEOVER) {
-            guard(selenium, requestType).mouseOver(target);
-        }
-        if (eventToFire == MOUSEOUT) {
-            guard(selenium, requestType).mouseOut(target);
         }
     }
 
@@ -419,6 +369,10 @@ public class TestTreeSimple extends AbstractTestTree {
         if (checked != turnOn) {
             guardXhr(selenium).click(loadingFacet);
         }
+    }
+
+    private void setResponseDelay(int milis) {
+        guardHttp(selenium).type(jq("input[id$='metamerResponseDelayInput']"), String.valueOf(milis));
     }
 
     private void expandAll() {

@@ -27,6 +27,7 @@ import static org.testng.Assert.assertEquals;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.contextMenu.page.TableContextMenuPage;
 import org.testng.annotations.Test;
@@ -34,7 +35,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class TestTable extends AbstractContextMenuTest<TableContextMenuPage> {
+public class TestTable extends AbstractContextMenuTest {
+
+    @Page
+    private TableContextMenuPage page;
 
     public static final int NUMBER_OF_LINES_TO_TEST_ON = 3;
 

@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richContextMenu;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.DriverType;
@@ -59,13 +58,13 @@ public class ContextMenuSimplePage extends MetamerPage {
         targetPanel2.click();
     }
 
-    public void checkIfContextMenuDisplayed(WebDriver driver) {
+    public void waitUntilContextMenuAppears() {
         Graphene.waitModel().withMessage("Context menu did not show.")
-            .until(Graphene.element(contextMenuContent).isVisible());
+                .until(Graphene.element(contextMenuContent).isVisible());
     }
 
-    public void checkIfContextMenuNotDisplayed(WebDriver driver) {
-        Graphene.waitModel().withMessage("Context menu should not be showed.")
-            .until(Graphene.element(contextMenuContent).isVisible());
+    public void waitUntilContextMenuHides() {
+        Graphene.waitModel().withMessage("Context menu should not be visible.")
+                .until(Graphene.element(contextMenuContent).not().isVisible());
     }
 }

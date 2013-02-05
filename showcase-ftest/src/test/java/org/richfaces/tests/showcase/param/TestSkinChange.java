@@ -21,26 +21,26 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.param;
 
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.testng.Assert.assertTrue;
-
-import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.param.page.SkinChangePage;
+import static org.testng.Assert.assertTrue;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
-public class TestSkinChange extends AbstractGrapheneTest {
+public class TestSkinChange extends AbstractWebDriverTest {
 
     /* *******************************************************************************************************
      * Locators ****************************************************************** *************************************
      */
 
-    protected JQueryLocator deepMarineSkin = jq("fieldset form a:first");
-    protected JQueryLocator blueSky = jq("fieldset form a:last");
+    @Page
+    private SkinChangePage page;
 
     /* ********************************************************************************************************
      * Tests ********************************************************************* ***********************************
@@ -51,11 +51,11 @@ public class TestSkinChange extends AbstractGrapheneTest {
 
         // This method of testing is not ideal
         // but selenium 1 is not ableto click on the link, therefore I choose this primitive way of testing
-        String hrefOfLink1 = selenium.getAttribute(deepMarineSkin.getAttribute(Attribute.HREF));
+        String hrefOfLink1 = page.deepMarineSkin.getAttribute("href");
 
         assertTrue(hrefOfLink1.contains("skin=deepMarine"), "The link should contains deep marine");
 
-        String hrefOfLink2 = selenium.getAttribute(blueSky.getAttribute(Attribute.HREF));
+        String hrefOfLink2 = page.blueSky.getAttribute("href");
 
         assertTrue(hrefOfLink2.contains("skin=blueSky"), "The link should contains blue sky");
 

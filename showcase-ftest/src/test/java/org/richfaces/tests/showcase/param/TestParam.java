@@ -21,27 +21,27 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.param;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.param.page.ParamPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
-public class TestParam extends AbstractGrapheneTest {
+public class TestParam extends AbstractWebDriverTest {
 
     /* *******************************************************************************************************
      * Locators ****************************************************************** *************************************
      */
 
-    protected JQueryLocator buttonAlex = jq("fieldset form input[type=submit]:first");
-    protected JQueryLocator buttonJohn = jq("fieldset form input[type=submit]:last");
-    protected JQueryLocator selectedName = jq("span[id$=rep]");
+    @Page
+    private ParamPage page;
 
     /* ********************************************************************************************************
      * Tests ********************************************************************* ***********************************
@@ -49,26 +49,20 @@ public class TestParam extends AbstractGrapheneTest {
 
     @Test
     public void testWhetherThereIsNothigSetAtFirst() {
-        String actualString = selenium.getText(selectedName).trim();
-        assertEquals(actualString, "Selected Name:",
+        assertEquals(page.output.getText().trim(), "Selected Name:",
             "There can not be anything selected at first after page first load!");
     }
 
     @Test
     public void testClickToButtonAndCheckTheSelectedName() {
-        guardXhr(selenium).click(buttonAlex);
-
-        String actualString = selenium.getText(selectedName).trim();
-        assertEquals(actualString, "Selected Name:Alex", "Selected name shoud be Alex!");
-
-        guardXhr(selenium).click(buttonJohn);
-
-        actualString = selenium.getText(selectedName).trim();
-        assertEquals(actualString, "Selected Name:John", "Selected name shoud be John!");
-
-        guardXhr(selenium).click(buttonAlex);
-        actualString = selenium.getText(selectedName).trim();
-        assertEquals(actualString, "Selected Name:Alex", "Selected name shoud be again Alex!");
+        for(ParamPage.Name name : ParamPage.Name.getAll()) {
+            page.setName(name);
+            Graphene.waitAjax()
+                    .until("After selecting name, the output should contain the name.")
+                    .element(page.output)
+                    .text()
+                    .equalTo("Selected Name:" + name);
+        }
     }
 
 }

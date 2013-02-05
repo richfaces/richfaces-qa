@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.calendarAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
@@ -134,8 +135,9 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
 
     @Test
     public void testSetValue() {
+        calendarAttributes.set(CalendarAttributes.showApplyButton, Boolean.FALSE);
         // setValue sets the date to 10 Oct of 2012
-        MetamerPage.waitRequest(setValue, MetamerPage.WaitRequestType.NONE).click();
+        MetamerPage.waitRequest(setValue, MetamerPage.WaitRequestType.XHR).click();
         CalendarDay selectedDay = calendar.openPopup().getDayPicker().getSelectedDay();
         assertNotNull(selectedDay);
         assertEquals(selectedDay.getDayNumber().intValue(), 10);
@@ -146,10 +148,10 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
         YearAndMonthEditor yearAndMonthEditor = calendar.getPopup().getHeaderControls().getYearAndMonthEditor();
         executeJSFromElement(showDateEditor);
         Graphene.waitGui().withMessage("year and month editor should be visible")
-            .until(yearAndMonthEditor.isVisibleCondition());
+                .until(yearAndMonthEditor.isVisibleCondition());
         executeJSFromElement(hideDateEditor);
         Graphene.waitGui().withMessage("year and month editor should not be visible")
-            .until(yearAndMonthEditor.isNotVisibleCondition());
+                .until(yearAndMonthEditor.isNotVisibleCondition());
     }
 
     @Test
@@ -210,7 +212,7 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
      */
     private Object executeJSFromElement(WebElement element) {
         return executeJS(element.getAttribute("onclick") != null ? element.getAttribute("onclick") : element
-            .getAttribute("onmouseover"));
+                .getAttribute("onmouseover"));
     }
 
     private String getGettersValue() {
@@ -220,6 +222,6 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
 
     private void setTodaysDate() {
         MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), MetamerPage.WaitRequestType.XHR)
-            .setTodaysDate();
+                .setTodaysDate();
     }
 }

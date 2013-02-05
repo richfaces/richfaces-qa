@@ -21,10 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.extendedDataTable;
 
-import static org.testng.Assert.assertEquals;
-
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars;
+import static org.testng.Assert.assertEquals;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -39,7 +38,7 @@ public class AbstractExtendedTableTest extends AbstractDataIterationWithCars {
      * @param model
      * @param row
      */
-    protected void checkTheRow(String vendor, String model, JQueryLocator row) {
+    protected void checkTheRow(String vendor, String model, WebElement row) {
 
         Car expectedCar = new Car();
         expectedCar.setVendor(vendor);

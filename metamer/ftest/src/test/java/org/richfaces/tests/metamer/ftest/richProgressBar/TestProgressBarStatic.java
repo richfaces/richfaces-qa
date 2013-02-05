@@ -30,8 +30,6 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.jboss.test.selenium.support.ui.ElementNotPresent;
-import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -56,60 +54,53 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
 
     @Test
     public void testInitialFacet() {
-        assertTrue(ElementPresent.getInstance().element(page.progressBar).apply(driver),
-            "Progress bar is not present on the page.");
-        assertTrue(page.progressBar.isDisplayed(), "Progress bar should be visible on the page.");
-        assertTrue(page.initialOutput.isDisplayed(), "Initial output should be present on the page.");
-        assertFalse(page.finishOutput.isDisplayed(), "Finish output should not be present on the page.");
+        assertPresent(page.progressBar, "Progress bar is not present on the page.");
+        assertVisible(page.progressBar, "Progress bar should be visible on the page.");
+        assertVisible(page.initialOutput, "Initial output should be visible on the page.");
+        assertNotVisible(page.finishOutput, "Finish output should not be visible on the page.");
         assertEquals(page.initialOutput.getText(), "Initial", "Content of initial facet.");
 
-        assertFalse(page.remain.isDisplayed(), "Progress bar should not show progress.");
-        assertFalse(page.progress.isDisplayed(), "Progress bar should not show progress.");
-        assertFalse(page.label.isDisplayed(), "Progress bar should not show progress.");
+        assertNotVisible(page.remain, "Progress bar should not show progress.");
+        assertNotVisible(page.progress, "Progress bar should not show progress.");
+        assertNotVisible(page.label, "Progress bar should not show progress.");
 
         MetamerPage.waitRequest(page.initialFacetRenderedCheckbox, WaitRequestType.HTTP).click();
 
-        assertTrue(ElementPresent.getInstance().element(page.progressBar).apply(driver),
-            "Progress bar is not present on the page.");
-        assertTrue(page.progressBar.isDisplayed(), "Progress bar should be visible on the page.");
-        assertTrue(ElementNotPresent.getInstance().element(page.initialOutput).apply(driver),
-            "Initial output should not be present on the page.");
-        assertFalse(page.finishOutput.isDisplayed(), "Finish output should not be present on the page.");
+        assertPresent(page.progressBar, "Progress bar is not present on the page.");
+        assertVisible(page.progressBar, "Progress bar should be visible on the page.");
+        assertNotPresent(page.initialOutput, "Initial output should not be present on the page.");
+        assertNotVisible(page.finishOutput, "Finish output should not be visible on the page.");
 
-        assertTrue(ElementPresent.getInstance().element(page.remain).apply(driver),
-            "Progress bar should show progress.");
-        assertTrue(ElementPresent.getInstance().element(page.progress).apply(driver),
-            "Progress bar should show progress.");
-        assertTrue(ElementPresent.getInstance().element(page.label).apply(driver), "Progress bar should show progress.");
+        assertPresent(page.remain, "Progress bar should show progress.");
+        assertPresent(page.progress, "Progress bar should show progress.");
+        assertPresent(page.label, "Progress bar should show progress.");
     }
 
     @Test
     public void testFinishFacet() {
+        progressBarAttributes.set(ProgressBarAttributes.maxValue, 100);
         progressBarAttributes.set(ProgressBarAttributes.value, 100);
 
-        assertTrue(ElementPresent.getInstance().element(page.progressBar).apply(driver),
-            "Progress bar is not present on the page.");
-        assertTrue(page.progressBar.isDisplayed(), "Progress bar should be visible on the page.");
-        assertFalse(page.initialOutput.isDisplayed(), "Initial output should not be present on the page.");
-        assertTrue(page.finishOutput.isDisplayed(), "Finish output should be present on the page.");
+        assertPresent(page.progressBar, "Progress bar is not present on the page.");
+        assertVisible(page.progressBar, "Progress bar should be visible on the page.");
+        assertNotVisible(page.initialOutput, "Initial output should not be visible on the page.");
+        assertVisible(page.finishOutput, "Finish output should be visible on the page.");
         assertEquals(page.finishOutput.getText(), "Finish", "Content of finish facet.");
 
-        assertFalse(page.remain.isDisplayed(), "Progress bar should not show progress.");
-        assertFalse(page.progress.isDisplayed(), "Progress bar should not show progress.");
-        assertFalse(page.label.isDisplayed(), "Progress bar should not show progress.");
+        assertNotVisible(page.remain, "Progress bar should not show progress.");
+        assertNotVisible(page.progress, "Progress bar should not show progress.");
+        assertNotVisible(page.label, "Progress bar should not show progress.");
 
         MetamerPage.waitRequest(page.finishFacetRenderedCheckbox, WaitRequestType.HTTP).click();
 
-        assertTrue(ElementPresent.getInstance().element(page.progressBar).apply(driver),
-            "Progress bar is not present on the page.");
-        assertTrue(page.progressBar.isDisplayed(), "Progress bar should be visible on the page.");
-        assertFalse(page.initialOutput.isDisplayed(), "Initial output should not be present on the page.");
-        assertFalse(ElementPresent.getInstance().element(page.finishOutput).apply(driver),
-            "Finish output should not be present on the page.");
+        assertPresent(page.progressBar, "Progress bar is not present on the page.");
+        assertVisible(page.progressBar, "Progress bar should be visible on the page.");
+        assertNotVisible(page.initialOutput, "Initial output should not be visible on the page.");
+        assertNotPresent(page.finishOutput, "Finish output should not be present on the page.");
 
-        assertTrue(page.remain.isDisplayed(), "Progress bar should show progress.");
-        assertTrue(page.progress.isDisplayed(), "Progress bar should show progress.");
-        assertFalse(page.label.isDisplayed(), "Progress bar should not show label.");
+        assertVisible(page.remain, "Progress bar should show progress.");
+        assertVisible(page.progress, "Progress bar should show progress.");
+        assertNotVisible(page.label, "Progress bar should not show label.");
     }
 
     @Test
@@ -133,7 +124,7 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
 
         MetamerPage.waitRequest(page.childrenRenderedCheckbox, WaitRequestType.HTTP).click();
         assertEquals(page.label.getText(), "child + metamer",
-            "Label when set to metamer and children are rendered too.");
+                "Label when set to metamer and children are rendered too.");
     }
 
     @Test
@@ -145,6 +136,7 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
 
     @Test
     public void testMinValue() {
+        progressBarAttributes.set(ProgressBarAttributes.maxValue, 100);
         progressBarAttributes.set(ProgressBarAttributes.minValue, 90);
         progressBarAttributes.set(ProgressBarAttributes.value, 95);
         assertEquals(getProgress(), 50, "Progress when value=95 and minValue=90.");
@@ -172,6 +164,7 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
 
     @Test
     public void testValue() {
+        progressBarAttributes.set(ProgressBarAttributes.maxValue, 100);
         progressBarAttributes.set(ProgressBarAttributes.value, 0);
         assertEquals(getProgress(), 0, "Progress when value=0.");
 

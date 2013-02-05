@@ -21,9 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.extendedDataTable;
 
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 /**
@@ -32,7 +32,8 @@ import org.testng.annotations.Test;
  */
 public class TestSimpleTable extends AbstractExtendedTableTest {
 
-    JQueryLocator tableNonScrollablePart = jq("tbody[id$=tbf]");
+    @FindBy(jquery="tbody[id$=tbf]")
+    private WebElement tableNonScrollablePart;
 
     /*
      * Tests
@@ -45,7 +46,7 @@ public class TestSimpleTable extends AbstractExtendedTableTest {
     @Test
     public void testFirstRow() {
 
-        JQueryLocator row = tableNonScrollablePart.getChild(jq("tr:eq(0)"));
+        WebElement row = tableNonScrollablePart.findElement(ByJQuery.jquerySelector("tr:eq(0)"));
 
         checkTheRow("Chevrolet", "Corvette", row);
 
@@ -54,7 +55,7 @@ public class TestSimpleTable extends AbstractExtendedTableTest {
     @Test
     public void testLastRow() {
 
-        JQueryLocator row = tableNonScrollablePart.getChild(jq("tr:last"));
+        WebElement row = tableNonScrollablePart.findElement(ByJQuery.jquerySelector("tr:last"));
 
         checkTheRow("Infiniti", "EX35", row);
     }

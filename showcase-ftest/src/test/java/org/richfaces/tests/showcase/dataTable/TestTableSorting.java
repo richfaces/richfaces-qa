@@ -21,18 +21,20 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataTable;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.testng.Assert.assertEquals;
-
 import java.util.Iterator;
-
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import java.util.List;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.dataTable.page.TableSortingPage;
 import org.richfaces.tests.showcase.repeat.AbstractDataIterationWithStates;
+import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
 public class TestTableSorting extends AbstractDataIterationWithStates {
@@ -40,10 +42,8 @@ public class TestTableSorting extends AbstractDataIterationWithStates {
     /*
      * Locators****************************************************************************************************
      */
-    private JQueryLocator sortByCapitalName = jq("a:contains('Sort by Capital Name')");
-    private JQueryLocator sortByStateName = jq("a:contains('Sort by State Name')");
-    private JQueryLocator sortByTimeZone = jq("a:contains('Sort by Time Zone')");
-    private JQueryLocator firstRow = jq("tr[class='rf-dt-r rf-dt-fst-r']");
+    @Page
+    private TableSortingPage page;
 
     /*
      * Constants*****************************************************************************************************
@@ -73,7 +73,7 @@ public class TestTableSorting extends AbstractDataIterationWithStates {
     @Test
     public void testSortByCapitalName() {
 
-        clickOnParticularSortAnchorCheckFirstRow(sortByCapitalName, FIRST_STATE_SORTED_BY_CAPITAL_ASCENDING_ORDER,
+        clickOnParticularSortAnchorCheckFirstRow(page.sortByCapitalName, FIRST_STATE_SORTED_BY_CAPITAL_ASCENDING_ORDER,
             FIRST_STATE_SORTED_BY_CAPITAL_DESCENDING_ORDER,
             "The table should be ordered by capital name in ascending order",
             "The table should be ordered by capital name in descending order");
@@ -83,7 +83,7 @@ public class TestTableSorting extends AbstractDataIterationWithStates {
     @Test
     public void testSortByStateName() {
 
-        clickOnParticularSortAnchorCheckFirstRow(sortByStateName, FIRST_STATE_SORTED_BY_STATE_ASCENDING_ORDER,
+        clickOnParticularSortAnchorCheckFirstRow(page.sortByStateName, FIRST_STATE_SORTED_BY_STATE_ASCENDING_ORDER,
             FIRST_STATE_SORTED_BY_STATE_DESCENDING_ORDER,
             "The table shoould be ordered by state name in ascending order",
             "The table should be ordered by state name in descending order");
@@ -93,7 +93,7 @@ public class TestTableSorting extends AbstractDataIterationWithStates {
     @Test
     public void testSortByTimeZone() {
 
-        clickOnParticularSortAnchorCheckFirstRow(sortByTimeZone, FIRST_STATE_SORTED_BY_TIME_ZONE_ASCENDING_ORDER,
+        clickOnParticularSortAnchorCheckFirstRow(page.sortByTimeZone, FIRST_STATE_SORTED_BY_TIME_ZONE_ASCENDING_ORDER,
             FIRST_STATE_SORTED_BY_TIME_ZONE_DESCENDING_ORDER,
             "The table sould be ordered by time zone in ascending order",
             "The table should be ordered by time zone in descending order");
@@ -111,17 +111,17 @@ public class TestTableSorting extends AbstractDataIterationWithStates {
      * @param ascendingError
      * @param descendingError
      */
-    private void clickOnParticularSortAnchorCheckFirstRow(JQueryLocator sortBy,
+    private void clickOnParticularSortAnchorCheckFirstRow(WebElement sortBy,
         StateWithCapitalAndTimeZone ascendingState, StateWithCapitalAndTimeZone descendingState, String ascendingError,
         String descendingError) {
 
-        guardXhr(selenium).click(sortBy);
+        Graphene.guardXhr(sortBy).click();
 
         StateWithCapitalAndTimeZone actualState = initializeStateDataFromRow();
 
         assertEquals(actualState, ascendingState, ascendingError);
 
-        guardXhr(selenium).click(sortBy);
+        Graphene.guardXhr(sortBy).click();
 
         actualState = initializeStateDataFromRow();
 
@@ -137,26 +137,26 @@ public class TestTableSorting extends AbstractDataIterationWithStates {
      */
     private StateWithCapitalAndTimeZone initializeStateDataFromRow() {
 
-        JQueryLocator tds = jq(firstRow.getRawLocator() + " > td");
+        List<WebElement> tds = page.firstRow.findElements(By.tagName("td"));
 
         String capitalName = null;
         String stateName = null;
         String timeZone = null;
 
         int i = 0;
-        for (Iterator<JQueryLocator> iterator = tds.iterator(); iterator.hasNext();) {
+        for (Iterator<WebElement> iterator = tds.iterator(); iterator.hasNext();) {
 
-            JQueryLocator currentTd = iterator.next();
+            WebElement currentTd = iterator.next();
 
             switch (i) {
                 case 1:
-                    capitalName = selenium.getText(currentTd);
+                    capitalName = currentTd.getText();
                     break;
                 case 2:
-                    stateName = selenium.getText(currentTd);
+                    stateName = currentTd.getText();
                     break;
                 case 3:
-                    timeZone = selenium.getText(currentTd);
+                    timeZone = currentTd.getText();
                     break;
                 default:
                     break;

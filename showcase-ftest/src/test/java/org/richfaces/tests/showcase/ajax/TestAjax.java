@@ -21,27 +21,21 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ajax;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
-
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.ajax.page.AjaxPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
-public class TestAjax extends AbstractGrapheneTest {
+public class TestAjax extends AbstractWebDriverTest {
 
-    /* *************************************************************************************
-     * Locators*************************************************************************************
-     */
-    protected JQueryLocator input = jq("fieldset input:text");
-    protected JQueryLocator ajaxOutput = jq("fieldset form span");
+    @Page
+    private AjaxPage page;
 
     /* ***************************************************************************************
      * Tests***************************************************************************************
@@ -49,43 +43,39 @@ public class TestAjax extends AbstractGrapheneTest {
 
     @Test
     public void testTypeSomeStringToTheInputAndCheckTheOutput() {
-
-        String testString = "Test string";
-
-        /*
-         * Simulates user input, key by key
-         */
-        for (int i = 0; i < testString.length(); i++) {
-            if (i == 0) {
-                selenium.type(input, String.valueOf(testString.charAt(0)));
-            } else {
-                selenium.type(input, testString.subSequence(0, i + 1).toString());
-            }
-
-            guardXhr(selenium).fireEvent(input, Event.KEYUP);
-
-            if (i == 0) {
-                assertTrue((testString.charAt(0) == selenium.getText(ajaxOutput).charAt(0)), "The ajax output "
-                    + "should be equal to the given input");
-            } else {
-                assertEquals((testString.substring(0, i + 1).trim()), selenium.getText(ajaxOutput).trim(),
-                    "The ajax output " + "should be equal to the given input");
-            }
+        page.input.click();
+        page.input.clear();
+        String toWrite = "text";
+        for (char ch: toWrite.toCharArray()) {
+            Graphene.guardXhr(page.input).sendKeys(Character.toString(ch));
         }
+
+
+        Graphene.waitAjax()
+                .until()
+                .element(page.output)
+                .text()
+                .equalTo(toWrite);
     }
 
     @Test
     public void testEraseStringFromInputAndCheckTheOutput() {
+        page.input.click();
+        page.input.clear();
+        String toWrite = "to erase";
 
-        selenium.typeKeys(input, "This will be erased");
-        guardXhr(selenium).fireEvent(input, Event.KEYUP);
+        for (char ch: toWrite.toCharArray()) {
+            Graphene.guardXhr(page.input).sendKeys(Character.toString(ch));
+        }
 
-        eraseInput(input);
-        guardXhr(selenium).fireEvent(input, Event.KEYUP);
+        page.input.clear();
+        page.input.sendKeys("x");
 
-        String expectedOutput = "";
-
-        assertEquals(selenium.getText(ajaxOutput), expectedOutput, "The ajax output should be deleted");
+        Graphene.waitAjax()
+                .until()
+                .element(page.output)
+                .text()
+                .equalTo("x");
     }
 
 }

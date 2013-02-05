@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.contextMenu;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertTrue;
 
 import org.richfaces.tests.showcase.contextMenu.page.SimpleContextMenuPage;
@@ -29,7 +30,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class TestSimple extends AbstractContextMenuTest<SimpleContextMenuPage> {
+public class TestSimple extends AbstractContextMenuTest {
+
+    @Page
+    private SimpleContextMenuPage page;
 
     @Test
     public void testZoomIn() {

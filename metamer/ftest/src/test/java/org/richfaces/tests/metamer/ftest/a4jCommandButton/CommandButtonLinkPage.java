@@ -77,11 +77,11 @@ public class CommandButtonLinkPage extends MetamerPage {
     }
 
     public void waitUntilOutput1Changes(String expectedText) {
-        Graphene.waitAjax().until(Graphene.element(output1).text().equalTo(expectedText));
+        Graphene.waitAjax().until().element(output1).text().equalTo(expectedText);
     }
 
     public void waitUntilOutput2ChangesToText(String expectedText) {
-        Graphene.waitModel().until(Graphene.element(output2).text().equalTo(expectedText));
+        Graphene.waitModel().until().element(output2).text().equalTo(expectedText);
     }
 
     public void typeToInputAndSubmitWithoutRequest(String s) {

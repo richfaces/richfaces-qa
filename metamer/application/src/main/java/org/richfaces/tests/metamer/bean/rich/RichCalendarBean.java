@@ -93,6 +93,8 @@ public class RichCalendarBean implements Serializable {
         attributes.remove("converter");
         attributes.remove("currentDate");
         attributes.remove("dataModel");
+        attributes.remove("preloadDateRangeBegin");
+        attributes.remove("preloadDateRangeEnd");
         attributes.remove("validator");
         attributes.remove("valueChangeListener");
         attributes.remove("timeZone");

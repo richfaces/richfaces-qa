@@ -21,20 +21,22 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataTable;
 
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
 import java.util.Iterator;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
-public class AbstractDataIterationWithCars extends AbstractGrapheneTest {
+public class AbstractDataIterationWithCars extends AbstractWebDriverTest {
 
     // help class for saving data about car
-    public class Car {
+    public static class Car {
 
         String vendor;
         String model;
@@ -145,7 +147,7 @@ public class AbstractDataIterationWithCars extends AbstractGrapheneTest {
         public int hashCode() {
             final int prime = 31;
             int result = 1;
-            result = prime * result + getOuterType().hashCode();
+            result = prime * result;
             result = prime * result + ((mileage == null) ? 0 : mileage.hashCode());
             result = prime * result + ((model == null) ? 0 : model.hashCode());
             result = prime * result + ((price == null) ? 0 : price.hashCode());
@@ -163,8 +165,6 @@ public class AbstractDataIterationWithCars extends AbstractGrapheneTest {
             if (getClass() != obj.getClass())
                 return false;
             Car other = (Car) obj;
-            if (!getOuterType().equals(other.getOuterType()))
-                return false;
             if (mileage == null) {
                 if (other.mileage != null)
                     return false;
@@ -193,10 +193,6 @@ public class AbstractDataIterationWithCars extends AbstractGrapheneTest {
             return true;
         }
 
-        private AbstractDataIterationWithCars getOuterType() {
-            return AbstractDataIterationWithCars.this;
-        }
-
         @Override
         public String toString() {
             return "Car [vendor=" + vendor + ", model=" + model + ", price=" + price + ", mileage=" + mileage
@@ -213,37 +209,37 @@ public class AbstractDataIterationWithCars extends AbstractGrapheneTest {
      * @param endIndexOfTd
      * @return car
      */
-    public Car retrieveCarFromRow(JQueryLocator row, int startingIndexOfTd, int endIndexOfTd) {
+    public Car retrieveCarFromRow(WebElement row, int startingIndexOfTd, int endIndexOfTd) {
 
         Car car = new Car();
 
-        JQueryLocator td = jq(row.getRawLocator() + " > td");
+        List<WebElement> tds = row.findElements(By.tagName("td"));
 
         int j = 0;
-        for (Iterator<JQueryLocator> i = td.iterator(); i.hasNext();) {
+        for (Iterator<WebElement> i = tds.iterator(); i.hasNext();) {
 
             if (j < startingIndexOfTd) {
                 i.next();
             }
 
             if (j == startingIndexOfTd) {
-                car.setVendor(selenium.getText(i.next()));
+                car.setVendor(i.next().getText());
             }
 
             else if (j == (startingIndexOfTd + 1)) {
-                car.setModel(selenium.getText(i.next()));
+                car.setModel(i.next().getText());
             }
 
             else if (j == (startingIndexOfTd + 2)) {
-                car.setPrice(selenium.getText(i.next()));
+                car.setPrice(i.next().getText());
             }
 
             else if (j == (startingIndexOfTd + 3)) {
-                car.setMileage(selenium.getText(i.next()));
+                car.setMileage(i.next().getText());
             }
 
             else if (j == (startingIndexOfTd + 4)) {
-                car.setVin(selenium.getText(i.next()));
+                car.setVin(i.next().getText());
             }
 
             else if (j > endIndexOfTd) {
@@ -256,8 +252,17 @@ public class AbstractDataIterationWithCars extends AbstractGrapheneTest {
         return car;
     }
 
-    public Car parseSimplifiedCarFromListItem(JQueryLocator listItem) {
-        String[] partsOfContent = selenium.getText(listItem).split("-");
+    public Car parseSimplifiedCarFromListItem(WebElement listItem) {
+        String[] partsOfContent = listItem.getText().split("-");
         return new Car(partsOfContent[0].trim(), partsOfContent[1].trim());
+    }
+
+    public static enum Field {
+        VENDOR,
+        MODEL,
+        PRICE,
+        MILEAGE,
+        VIN,
+        STOCK;
     }
 }

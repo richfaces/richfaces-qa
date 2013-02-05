@@ -21,71 +21,58 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataTable;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
-
 import java.util.Iterator;
-
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import java.util.List;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.dataTable.page.ArrangableModelPage;
+import static org.testng.Assert.assertTrue;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestArrangeableModel extends AbstractGrapheneTest {
+public class TestArrangeableModel extends AbstractWebDriverTest {
 
     /* *******************************************************************************************
      * Locators ****************************************************************** *************************
      */
 
-    protected JQueryLocator firstNameFilterInput = jq("input[type=text]:eq(0)");
-    protected JQueryLocator secondNameFilterInput = jq("input[type=text]:eq(1)");
-    protected JQueryLocator emailFilterInput = jq("input[type=text]:eq(2)");
-    protected JQueryLocator table = jq("tbody.rf-dt-b");
-    // these are links for filtering rows in a ascending, descending way
-    // 0 is for first name column, 1 surname, 2 email
-    protected JQueryLocator unsortedLink = jq("a[onClick*='RichFaces']:eq({0})");
-    protected JQueryLocator ascendingLink = jq("a:contains(ascending)");
-    protected JQueryLocator descendingLink = jq("a:contains(descending)");
-    protected JQueryLocator firstRowSomeColumn = jq(table.getRawLocator() + " > tr:eq(0) > td:eq({0})");
+    @Page
+    private ArrangableModelPage page;
 
     /* *******************************************************************************************
      * Tests ********************************************************************* **********************
      */
 
     @Test
-    public void testTableIsNotEmpty() {
-
-        testWhetherTableContainsNonEmptyStrings(table);
-    }
-
-    @Test
     public void testFirstNameFilter() {
 
-        filterAnColumn(firstNameFilterInput, "as", "td:eq(0)");
-        eraseInput(firstNameFilterInput);
-        guardXhr(selenium).fireEvent(firstNameFilterInput, Event.KEYUP);
+        filterAnColumn(page.firstNameFilterInput, "as", ByJQuery.jquerySelector("td:eq(0)"));
+        page.firstNameFilterInput.click();
+        page.firstNameFilterInput.clear();
+        fireEvent(page.firstNameFilterInput, "keyup");
     }
 
     @Test
     public void testSurnameFilter() {
-
-        filterAnColumn(secondNameFilterInput, "al", "td:eq(1)");
-        eraseInput(secondNameFilterInput);
-        guardXhr(selenium).fireEvent(secondNameFilterInput, Event.KEYUP);
+        filterAnColumn(page.secondNameFilterInput, "al", ByJQuery.jquerySelector("td:eq(1)"));
+        page.secondNameFilterInput.click();
+        page.secondNameFilterInput.clear();
+        fireEvent(page.secondNameFilterInput, "keyup");
     }
 
     @Test
     public void testEmailFilter() {
-
-        filterAnColumn(emailFilterInput, "ac", "td:eq(2)");
-        eraseInput(emailFilterInput);
-        guardXhr(selenium).fireEvent(emailFilterInput, Event.KEYUP);
+        filterAnColumn(page.emailFilterInput, "ac", ByJQuery.jquerySelector("td:eq(2)"));
+        page.emailFilterInput.click();
+        page.emailFilterInput.clear();
+        fireEvent(page.emailFilterInput, "keyup");
 
     }
 
@@ -111,15 +98,15 @@ public class TestArrangeableModel extends AbstractGrapheneTest {
      * Help methods ************************************************************** ********************************
      */
 
-    private boolean doesColumnContainsOnlyRowsWithData(String column, String data) {
+    private boolean doesColumnContainsOnlyRowsWithData(By column, String data) {
 
-        JQueryLocator table = jq(this.table.getRawLocator() + " > tr");
+        List<WebElement> table = page.table.findElements(By.tagName("tr"));
 
-        for (Iterator<JQueryLocator> i = table.iterator(); i.hasNext();) {
+        for (Iterator<WebElement> i = table.iterator(); i.hasNext();) {
 
-            JQueryLocator td = jq(i.next().getRawLocator() + " > " + column);
+            WebElement td = i.next().findElement(column);
 
-            String tdText = selenium.getText(td);
+            String tdText = td.getText();
 
             if (!tdText.toLowerCase().contains(data)) {
 
@@ -131,35 +118,36 @@ public class TestArrangeableModel extends AbstractGrapheneTest {
         return true;
     }
 
-    private void filterAnColumn(JQueryLocator filterInput, String filterValue, String column) {
+    private void filterAnColumn(WebElement filterInput, String filterValue, By column) {
 
-        selenium.type(filterInput, filterValue);
-        guardXhr(selenium).fireEvent(filterInput, Event.KEYUP);
+        filterInput.click();
+        filterInput.clear();
+        for (char ch: filterValue.toCharArray()) {
+            Graphene.guardXhr(filterInput).sendKeys(Character.toString(ch));
+        }
 
         boolean result = doesColumnContainsOnlyRowsWithData(column, filterValue);
 
-        assertTrue(result, "The table should contains only rows, which column " + column + " contains only data "
-            + filterValue);
+        assertTrue(result, "The table should contains only rows, which column " + column + " contains only data '" + filterValue + "'");
     }
 
     private void ascendingDescendingSortingOnColumn(int column, String firstCharOfRowWhenDescending) {
 
         // ascending
-        guardXhr(selenium).click(unsortedLink.format(column));
+        Graphene.guardXhr(page.getUnsortedLink(column)).click();
 
-        JQueryLocator td = firstRowSomeColumn.format(column);
-        String checkedValue = selenium.getText(td);
+        String checkedValue = page.getFirstRowSomeColumn(column).getText();
 
-        assertEquals(String.valueOf(checkedValue.charAt(0)), "A",
-            "Rows should be sorted in an ascending order, by column " + td.getRawLocator());
+        assertTrue(String.valueOf(checkedValue.charAt(0)).equalsIgnoreCase("A"),
+            "Rows should be sorted in an ascending order, by column " + page.getFirstRowSomeColumn(column));
 
         // descending
-        guardXhr(selenium).click(ascendingLink);
+        Graphene.guardXhr(page.ascendingLink).click();
 
-        checkedValue = selenium.getText(td);
+        checkedValue = page.getFirstRowSomeColumn(column).getText();
 
         assertTrue(String.valueOf(checkedValue.charAt(0)).equalsIgnoreCase(firstCharOfRowWhenDescending),
-            "Rows should be sorted in an descending order, by column " + td.getRawLocator());
+            "Rows should be sorted in an descending order, by column " + page.getFirstRowSomeColumn(column).getText());
     }
 
 }

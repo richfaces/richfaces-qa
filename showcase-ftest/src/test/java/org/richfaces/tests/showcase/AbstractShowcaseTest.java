@@ -61,8 +61,14 @@ public abstract class AbstractShowcaseTest extends Arquillian {
         String demoName = this.getClass().getPackage().getName();
         demoName = StringUtils.substringAfterLast(demoName, ".");
 
-        String addition = SimplifiedFormat.format("richfaces/component-sample.jsf?skin=blueSky&demo={0}&sample={1}", demoName,
-            sampleName);
+        ShowcaseLayout layout = loadLayout();
+        String addition;
+        if (layout == ShowcaseLayout.COMMON) {
+            addition = SimplifiedFormat.format("richfaces/component-sample.jsf?skin=blueSky&demo={0}&sample={1}", demoName,
+                sampleName);
+        } else {
+            addition = SimplifiedFormat.format("mobile/#{0}:{1}", demoName, sampleName);
+        }
 
         return addition;
     }
@@ -81,5 +87,14 @@ public abstract class AbstractShowcaseTest extends Arquillian {
         }
 
         return this.contextRoot;
+    }
+
+    protected ShowcaseLayout loadLayout() {
+        String fromProperties = System.getProperty("showcase.layout", "common");
+        return ShowcaseLayout.valueOf(fromProperties.toUpperCase());
+    }
+
+    protected static enum ShowcaseLayout {
+        COMMON, MOBILE;
     }
 }

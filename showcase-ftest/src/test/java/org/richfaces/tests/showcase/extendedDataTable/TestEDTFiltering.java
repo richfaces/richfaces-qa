@@ -20,19 +20,20 @@
  */
 package org.richfaces.tests.showcase.extendedDataTable;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.testng.Assert.assertTrue;
-
 import org.apache.commons.lang.StringUtils;
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.showcase.dataTable.TestTableFiltering;
+import org.richfaces.tests.showcase.dataTable.page.TableFilteringPage;
+import org.richfaces.tests.showcase.extendedDataTable.page.EDTFilteringPage;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestEDTFiltering extends TestTableFiltering {
+
+    @Page
+    private EDTFilteringPage page;
 
     @Override
     protected String getAdditionToContextRoot() {
@@ -49,17 +50,8 @@ public class TestEDTFiltering extends TestTableFiltering {
     }
 
     @Override
-    public void testNoRowsSatisfyConditions() {
-        selenium.type(mileageInput, "1");
-        guardXhr(selenium).fireEvent(mileageInput, Event.BLUR);
-
-        selenium.type(vinInput, "RICHFACES 4");//maybe not necessary
-        guardXhr(selenium).fireEvent(vinInput, Event.BLUR);
-
-        boolean nothingFoundPresent = selenium.isElementPresent(jq("div.rf-edt-ndt:contains('Nothing found')"));
-
-        assertTrue(nothingFoundPresent, "No rows should satisfy the filter conditions");
-
-        eraseAllInputs();
+    protected TableFilteringPage getPage() {
+        return page;
     }
+
 }

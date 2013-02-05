@@ -1,6 +1,6 @@
 /**
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.webdriver;
 
 import java.util.List;
+
 import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
@@ -35,16 +36,27 @@ import org.openqa.selenium.support.ui.Select;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
+import org.richfaces.tests.metamer.ftest.webdriver.utils.WebElementProxyUtils;
 
+/**
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ */
 public class Attributes<T extends AttributeEnum> {
 
     protected WebDriver driver = GrapheneContext.getProxy();
+    private final String attributesID;
+    private static final String PROPERTY_CSS_SELECTOR = "[id$='%s:%sInput']";
     private static final String NULLSTRING = "null";
     private static final String[] NULLSTRINGOPTIONS = { "null", "", " " };
     private static final int WAITTIME = 100;
     private static final int NUMBEROFTRIES = 5;
 
     public Attributes() {
+        this.attributesID = "";
+    }
+
+    public Attributes(String attributesID) {
+        this.attributesID = attributesID;
     }
 
     public void set(T attribute, String string) {
@@ -102,11 +114,11 @@ public class Attributes<T extends AttributeEnum> {
      */
     protected void setProperty(String propertyName, Object value) {
         String valueAsString = (value == null ? NULLSTRING : value.toString());
-        //locator for all types of input elements
-        By cssSelector = By.cssSelector("[id$=':" + propertyName + "Input']");
-        WebElement foundElement = MetamerPage.waitUntilElementIsVisible(cssSelector);
+        //element for all types of input elements
+        WebElement foundElementProxy = WebElementProxyUtils.createProxyForElement(
+                getCssSelectorForProperty(propertyName));
         //handle the property by the tagname of the input element
-        Tag tag = Tag.getTag(foundElement);
+        Tag tag = Tag.getTag(foundElementProxy);
         switch (tag) {
             case input:
                 applyText(propertyName, valueAsString);
@@ -132,14 +144,15 @@ public class Attributes<T extends AttributeEnum> {
      * @param value value to be set
      */
     private void applyText(String propertyName, String value) {
-        By cssSelector = By.cssSelector("[id$=':" + propertyName + "Input']");
-        String text = driver.findElement(cssSelector).getAttribute("value");
+        WebElement input = WebElementProxyUtils.createProxyForElement(
+                getCssSelectorForProperty(propertyName));
+        String text = input.getAttribute("value");
         if (!value.equals(text)) {
             if (!text.isEmpty()) {
                 ((JavascriptExecutor) driver).executeScript("$(\"input[id$=':" + propertyName + "Input']\").val('')");
             }
-            MetamerPage.waitUntilElementIsVisible(cssSelector).sendKeys(value);
-            MetamerPage.waitRequest(MetamerPage.waitUntilElementIsVisible(cssSelector), WaitRequestType.HTTP).submit();
+            input.sendKeys(value);
+            MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
         }
     }
 
@@ -201,6 +214,10 @@ public class Attributes<T extends AttributeEnum> {
         return getProperty(attribute.toString());
     }
 
+    private By getCssSelectorForProperty(String property) {
+        return By.cssSelector(String.format(PROPERTY_CSS_SELECTOR, attributesID, property));
+    }
+
     /**
      * Gets String representation of attribute value set in page.
      *
@@ -208,13 +225,13 @@ public class Attributes<T extends AttributeEnum> {
      * @return
      */
     private String getProperty(String propertyName) {
-        By cssSelector = By.cssSelector("[id$=':" + propertyName + "Input']");
-        WebElement foundElement = MetamerPage.waitUntilElementIsVisible(cssSelector);
+        WebElement foundElementProxy = WebElementProxyUtils.createProxyForElement(
+                getCssSelectorForProperty(propertyName));
         //handle the property by the tagname of the input element
-        Tag tag = Tag.getTag(foundElement);
+        Tag tag = Tag.getTag(foundElementProxy);
         switch (tag) {
             case input:
-                return foundElement.getAttribute("value");
+                return foundElementProxy.getAttribute("value");
             case checkbox:
                 throw new UnsupportedOperationException("Checkboxes are not supported");
             case radio:
@@ -250,6 +267,7 @@ public class Attributes<T extends AttributeEnum> {
 
     private String getValueFromSelect(Tag tag) {
         Validate.notEmpty(tag.selection.getOptions(), "No inputs for this attribute found");
+
         WebElement nullSelectionOption = null;
         for (WebElement webElement : tag.selection.getAllSelectedOptions()) {
             String value = webElement.getAttribute("value");
@@ -329,8 +347,8 @@ public class Attributes<T extends AttributeEnum> {
             for (Tag t : values()) {
                 if (t.tagname.equals(elementTag)) {
                     if (t.equals(radio) || t.equals(checkbox)) {
-                        List<WebElement> foundElements = foundElement.findElements(By.tagName("input"));
-
+                        List<WebElement> foundElements = WebElementProxyUtils
+                                .createProxyForElements(By.tagName("input"), foundElement);
                         String inputType = foundElements.get(0).getAttribute("type");
                         if ("radio".equals(inputType)) {
                             radio.radioElements = foundElements;

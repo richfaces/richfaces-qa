@@ -1,6 +1,6 @@
 /**
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -34,8 +34,6 @@ import java.util.List;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.condition.StringConditionFactory;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -167,7 +165,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
         succesfulFileUploadAction.perform();
 
-        Graphene.waitAjax().until(Graphene.element(page.uploadStatusLabel).text().equalTo(doneLabel));
+        Graphene.waitAjax().until().element(page.uploadStatusLabel).text().equalTo(doneLabel);
     }
 
     @Test

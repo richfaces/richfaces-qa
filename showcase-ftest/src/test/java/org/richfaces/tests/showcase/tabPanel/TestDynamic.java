@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.tabPanel;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertTrue;
 
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
@@ -31,7 +32,10 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestDynamic extends AbstractWebDriverTest<DynamicTabsPage> {
+public class TestDynamic extends AbstractWebDriverTest {
+
+    @Page
+    private DynamicTabsPage page;
 
     @Test
     public void testTabs() {

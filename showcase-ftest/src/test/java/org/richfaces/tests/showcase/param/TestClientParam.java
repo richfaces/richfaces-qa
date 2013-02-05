@@ -21,28 +21,30 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.param;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.javascript.JavaScript;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.param.page.ClientParamPage;
 import static org.testng.Assert.assertEquals;
-
-import org.jboss.arquillian.ajocado.javascript.JavaScript;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
-public class TestClientParam extends AbstractGrapheneTest {
+public class TestClientParam extends AbstractWebDriverTest {
 
     /* *******************************************************************************************************
      * Locators ****************************************************************** *************************************
      */
 
-    protected JQueryLocator buttonShowScreenSize = jq("input[type=submit]");
-    protected JQueryLocator widthValueLocator = jq("fieldset table:first tr:first td:last");
-    protected JQueryLocator heightValueLocator = jq("fieldset table:first tr:last td:last");
+    @Page
+    private ClientParamPage page;
+
+    @JavaScript
+    private Screen screen;
 
     /* ********************************************************************************************************
      * Tests ********************************************************************* ***********************************
@@ -51,23 +53,23 @@ public class TestClientParam extends AbstractGrapheneTest {
     @Test
     public void testShowScreenSizeAtInitialState() {
 
-        String actualString = selenium.getText(widthValueLocator).trim();
+        String actualString = page.widthValueLocator.getText().trim();
         assertEquals(actualString, "", "The value of width should be empty string!");
 
-        actualString = selenium.getText(heightValueLocator).trim();
+        actualString = page.heightValueLocator.getText().trim();
         assertEquals(actualString, "", "The value of height should be empty string!");
     }
 
     @Test
     public void testShowScreenSizeAfterClickingOnButton() {
 
-        guardXhr(selenium).click(buttonShowScreenSize);
+        Graphene.guardXhr(page.buttonShowScreenSize).click();
 
-        String widthActual = selenium.getText(widthValueLocator).trim();
-        String heightActual = selenium.getText(heightValueLocator).trim();
+        long widthActual = Long.parseLong(page.widthValueLocator.getText().trim());
+        long heightActual = Long.parseLong(page.heightValueLocator.getText().trim());
 
-        String widthExpected = selenium.getEval(new JavaScript("window.screen.width"));
-        String heightExpected = selenium.getEval(new JavaScript("window.screen.height"));
+        long widthExpected = screen.getWidth();
+        long heightExpected = screen.getHeight();
 
         assertEquals(widthActual, widthExpected, "The width returned from website can not be "
             + "different from width returned from this code");
@@ -75,4 +77,10 @@ public class TestClientParam extends AbstractGrapheneTest {
             + "different from height returned from this code");
     }
 
+
+    @JavaScript("window.screen")
+    public interface Screen {
+        Long getHeight();
+        Long getWidth();
+    }
 }
