@@ -21,26 +21,26 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.editor;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import static org.jboss.arquillian.graphene.Graphene.guardXhr;
+import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
 
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.locator.frame.FrameIndexLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import java.util.concurrent.TimeUnit;
+
+import org.jboss.arquillian.graphene.condition.element.ElementTextContains;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.editor.page.AutosavingPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestAutosaving extends AbstractGrapheneTest {
+public class TestAutosaving extends AbstractWebDriverTest {
 
-    JQueryLocator outputFromEditor = jq(".rf-p-b");
-    JQueryLocator editorArea = jq("body.rf-ed-b");
-    FrameIndexLocator frameLocator = new FrameIndexLocator(0);
+    @Page
+    private AutosavingPage page;
 
     private final String[] EXPECTED_PARAGRAPHS = {
         "\"Little Red Riding Hood\" is a famous fairy tale about a young girl's encounter with a wolf. "
@@ -70,7 +70,7 @@ public class TestAutosaving extends AbstractGrapheneTest {
     @Test
     public void testContentOfEditor() {
 
-        String contentOfEditorInput = selenium.getText(outputFromEditor);
+        String contentOfEditorInput = page.outputFromEditor.getText();
 
         int j = 1;
         for (String i : EXPECTED_PARAGRAPHS) {
@@ -79,25 +79,22 @@ public class TestAutosaving extends AbstractGrapheneTest {
         }
     }
 
-    @Test(groups = { "4.Future" })
-    public void testAutoSaving() {
+    @Test
+    public void testAutoSavingAfterBlur() {
+        String expected = "Added and possibly saved text!";
+        page.editor.typeTextToEditor(expected);
 
-        fail("Implement me correctly");
+        guardXhr(page.outputFromEditor).click();
+        String actual = page.outputFromEditor.getText();
+        assertTrue(actual.contains(expected), "The change in the editor was not saved automatically!");
+    }
 
-        selenium.selectFrame(frameLocator);
+    @Test
+    public void testAutoSavingAfter1Sec() {
+        String expected = "Added and possibly saved text!";
+        page.editor.typeTextToEditor(expected);
 
-        selenium.fireEvent(editorArea, Event.FOCUS);
-
-        String text = selenium.getText(editorArea);
-
-        eraseInput(editorArea);
-
-        selenium.typeKeys(editorArea, "Test String");
-
-        guardXhr(selenium).fireEvent(editorArea, Event.BLUR);
-
-        String outputAfterSave = selenium.getText(outputFromEditor);
-
+        waitModel().withTimeout(1200, TimeUnit.MILLISECONDS).until(new ElementTextContains(page.outputFromEditor, expected));
     }
 
 }
