@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- JBoss, Home of Professional Open Source Copyright 2010-2013, Red Hat, Inc. and individual contributors by the @authors tag.
-    See the copyright.txt in the distribution for a full listing of individual contributors. This is free software; you can redistribute
-    it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either
-    version 2.1 of the License, or (at your option) any later version. This software is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser
-    General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this
-    software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the
-    FSF site: http://www.fsf.org. -->
+See the copyright.txt in the distribution for a full listing of individual contributors. This is free software; you can redistribute
+it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version. This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser
+General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this
+software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the
+FSF site: http://www.fsf.org. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
@@ -57,6 +57,7 @@
         <arquillian.graphene-testng.version>2.0.0.Alpha3</arquillian.graphene-testng.version>
         <arquillian.graphene-webdriver.version>2.0.0.Alpha3</arquillian.graphene-webdriver.version>
         <arquillian.jboss-as6.version>1.0.0.CR3</arquillian.jboss-as6.version>
+        <arquillian.glassfish3-1.version>1.0.0.CR3</arquillian.glassfish3-1.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
         <arquillian.android.version>1.0.0.Alpha2</arquillian.android.version>
         <shrinkwrap.descriptors.version>2.0.0-alpha-4</shrinkwrap.descriptors.version>
@@ -625,7 +626,7 @@
                 <dependency>
                     <groupId>org.jboss.arquillian.container</groupId>
                     <artifactId>arquillian-glassfish-managed-3.1</artifactId>
-                    <version>1.0.0.CR3</version>
+                    <version>${arquillian.glassfish3-1.version}</version>
                 </dependency>
             </dependencies>
             <build>
@@ -662,6 +663,31 @@
                             <environmentVariables>
                                 <GLASSFISH_HOME>${glassfish3-1home}</GLASSFISH_HOME>
                             </environmentVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>glassfish-remote-3-1</id>
+            <properties>
+                <metamer.classifier>glassfish31</metamer.classifier>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.arquillian.container</groupId>
+                    <artifactId>arquillian-glassfish-remote-3.1</artifactId>
+                    <version>${arquillian.glassfish3-1.version}</version>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <arquillian.launch>glassfish-remote-3-1</arquillian.launch>
+                            </systemProperties>
                         </configuration>
                     </plugin>
                 </plugins>
