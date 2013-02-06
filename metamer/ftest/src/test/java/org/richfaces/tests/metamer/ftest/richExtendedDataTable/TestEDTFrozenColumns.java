@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -33,7 +33,6 @@ import java.util.List;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.test.selenium.support.ui.ElementNotPresent;
-import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -56,7 +55,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
     @Inject
     @Use(empty = false)
     private Integer numberOfColumns;
-    private Point location;//for testScrollerForNotFrozenColumns
+    private Point location;// for testScrollerForNotFrozenColumns
 
     @Override
     public URL getTestUrl() {
@@ -70,108 +69,103 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
     }
 
     /**
-     * Tests if frozen columns html elements show when frozen columns are
-     * enabled(set to >=1).Checks if they are still there after switching to
-     * another data page.
+     * Tests if frozen columns html elements show when frozen columns are enabled(set to >=1).Checks if they are still
+     * there after switching to another data page.
      */
     @Test
     @Use(field = "numberOfColumns", ints = { 0, 2, 4 })
     public void testFrozenColumnsShow() {
         extendedDataTableAttributes.set(ExtendedDataTableAttributes.frozenColumns, numberOfColumns);
-        //test
+        // test
         _testFrozenColumnsShow();
 
-        //change page
+        // change page
         page.nextPage.click();
         Graphene.waitModel().until(Graphene.element(page.secondPageSpan).isVisible());
-        //test
+        // test
         _testFrozenColumnsShow();
 
-        //change page
+        // change page
         page.nextPage.click();
         Graphene.waitModel().until(Graphene.element(page.thirdPageSpan).isVisible());
-        //test
+        // test
         _testFrozenColumnsShow();
     }
 
     public void _testFrozenColumnsShow() {
-        //wait for list of elements with frozen columns with expected size
+        // wait for list of elements with frozen columns with expected size
         List<WebElement> frozenColumns = guardListSize(page.frozenColumns, numberOfColumns);
         assertEquals(Integer.valueOf(frozenColumns.size()), numberOfColumns,
-                "The number of frozen columns set is not equal to the number of frozen columns found");
+            "The number of frozen columns set is not equal to the number of frozen columns found");
     }
 
     /**
-     * Tests if scroller for not frozen columns is moved to another position and
-     * if the default one is removed. Checks if scroller is still there after
-     * switching to another data page.
+     * Tests if scroller for not frozen columns is moved to another position and if the default one is removed. Checks
+     * if scroller is still there after switching to another data page.
      */
     @Test
     @Use(field = "numberOfColumns", ints = { 1, 3 })
     @Templates(exclude = { "richExtendedDataTable" })
-    //TODO https://issues.jboss.org/browse/RF-12236 , when numberOfColumns=4
+    // TODO https://issues.jboss.org/browse/RF-12236 , when numberOfColumns=4
     public void testScrollerForNotFrozenColumns() {
-        //check if default scroller is present and get its location
-        Boolean present = ElementPresent.getInstance().element(page.defaultScroller).apply(driver);
-        assertTrue(present, "Default scroller is not in the page.");
+        // check if default scroller is present and get its location
+        Graphene.waitModel().until("Default scroller is not in the page.").element(page.defaultScroller).is().present();
         location = page.defaultScroller.getLocation();
         extendedDataTableAttributes.set(ExtendedDataTableAttributes.frozenColumns, numberOfColumns);
-        //test
+        // test
         _testScrollerForNotFrozenColumns();
 
-        //change page
+        // change page
         page.nextPage.click();
         Graphene.waitModel().until(Graphene.element(page.secondPageSpan).isVisible());
-        //test
+        // test
         _testScrollerForNotFrozenColumns();
 
-        //change page
+        // change page
         page.nextPage.click();
         Graphene.waitModel().until(Graphene.element(page.thirdPageSpan).isVisible());
-        //test
+        // test
         _testScrollerForNotFrozenColumns();
     }
 
     /**
-     * Tests if scroller for not frozen columns is moved to another position and
-     * if the default one is removed. Checks if scroller is still there after
-     * switching to another data page.
+     * Tests if scroller for not frozen columns is moved to another position and if the default one is removed. Checks
+     * if scroller is still there after switching to another data page.
      */
     @Test(groups = { "4.Future" })
     @Use(field = "numberOfColumns", ints = { 1, 3 })
     @Templates(value = "richExtendedDataTable")
     @IssueTracking("https://issues.jboss.org/browse/RF-12278")
-    //TODO https://issues.jboss.org/browse/RF-12236 , when numberOfColumns=4
+    // TODO https://issues.jboss.org/browse/RF-12236 , when numberOfColumns=4
     public void testScrollerForNotFrozenColumnsInRichExtendedDataTable() {
-        //check if default scroller is present and get its location
-        Boolean present = ElementPresent.getInstance().element(page.defaultScroller).apply(driver);
-        assertTrue(present, "Default scroller is not in the page.");
+        // check if default scroller is present and get its location
+        Graphene.waitModel().until("Default scroller is not in the page.").element(page.defaultScroller).is().present();
         location = page.defaultScroller.getLocation();
         extendedDataTableAttributes.set(ExtendedDataTableAttributes.frozenColumns, numberOfColumns);
-        //test
+        // test
         _testScrollerForNotFrozenColumns();
 
-        //change page
+        // change page
         page.nextPage.click();
         Graphene.waitModel().until(Graphene.element(page.secondPageSpan).isVisible());
-        //test
+        // test
         _testScrollerForNotFrozenColumns();
 
-        //change page
+        // change page
         page.nextPage.click();
         Graphene.waitModel().until(Graphene.element(page.thirdPageSpan).isVisible());
-        //test
+        // test
         _testScrollerForNotFrozenColumns();
     }
 
     private void _testScrollerForNotFrozenColumns() {
-        //check if there is default scroller
-        Boolean present = ElementNotPresent.getInstance().element(page.defaultScroller).apply(driver);
-        assertTrue(present, "Default scroller should not be in the page.");
-        //check if there is scroller for not frozen columns
-        present = ElementPresent.getInstance().element(page.movedScroller).apply(driver);
-        assertTrue(present, "Scroller for the not frozen columns should be in the page.");
-        //check if the location of scroller moved
+        // check if there is default scroller
+        Graphene.waitModel().until("Default scroller should not be in the page.").element(page.defaultScroller).is()
+            .not().present();
+        // check if there is scroller for not frozen columns
+        Graphene.waitModel().until("Scroller for the not frozen columns should be in the page.")
+            .element(page.movedScroller).is().present();
+        // check if the location of scroller moved
         assertNotEquals(location, page.movedScroller.getLocation(), "The position of scroller has not been changed.");
     }
 

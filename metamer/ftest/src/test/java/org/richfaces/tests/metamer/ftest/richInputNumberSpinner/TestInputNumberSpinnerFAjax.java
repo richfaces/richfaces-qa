@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -24,18 +24,14 @@ package org.richfaces.tests.metamer.ftest.richInputNumberSpinner;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
-
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
 
-
 /**
- * Test case for page /faces/components/richInputNumberSpinner/fAjax.xhtml
- *
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22499 $
  */
-public class TestRichSpinnerFAjax extends AbstractSpinnerTest {
+public class TestInputNumberSpinnerFAjax extends AbstractInputNumberSpinnerTest {
 
     @Override
     public URL getTestUrl() {
@@ -43,48 +39,41 @@ public class TestRichSpinnerFAjax extends AbstractSpinnerTest {
     }
 
     @Test
-    @Use(field = "number", value = "correctNumbers")
-    @Override
-    public void testTypeIntoInputCorrect() {
-        super.testTypeIntoInputCorrect();
+    public void testDecrease() {
+        super.testDecrease();
     }
 
     @Test
-    @Use(field = "number", value = "smallNumbers")
-    @Override
-    public void testTypeIntoInputSmall() {
-        super.testTypeIntoInputSmall();
+    public void testIncrease() {
+        super.testIncrease();
     }
 
     @Test
     @Use(field = "number", value = "bigNumbers")
-    @Override
     public void testTypeIntoInputBig() {
         super.testTypeIntoInputBig();
     }
 
     @Test
+    @Use(field = "number", value = "correctNumbers")
+    public void testTypeIntoInputCorrect() {
+        super.testTypeIntoInputCorrect();
+    }
+
+    @Test
     @Use(field = "number", value = "decimalNumbers")
-    @Override
     public void testTypeIntoInputDecimal() {
         super.testTypeIntoInputDecimal();
     }
 
     @Test
-    @Override
     public void testTypeIntoInputNotNumber() {
         super.testTypeIntoInputNotNumber();
     }
 
     @Test
-    @Override
-    public void testClickUp() {
-        super.testClickUp();
-    }
-
-    @Test
-    @Override
-    public void testClickDown() {
-        super.testClickDown();
+    @Use(field = "number", value = "smallNumbers")
+    public void testTypeIntoInputSmall() {
+        super.testTypeIntoInputSmall();
     }
 }

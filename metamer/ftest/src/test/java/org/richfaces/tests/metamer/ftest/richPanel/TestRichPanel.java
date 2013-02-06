@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -24,17 +24,19 @@ package org.richfaces.tests.metamer.ftest.richPanel;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.bodyClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerClass;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.panelAttributes;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelAttributes;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+
 import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.test.selenium.support.ui.ElementNotPresent;
+import org.jboss.test.selenium.support.ui.ElementPresent;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.page.fragments.impl.panel.RichFacesPanel;
 import org.testng.annotations.Test;
 
 
@@ -42,16 +44,19 @@ import org.testng.annotations.Test;
  * Test case for page /faces/components/richPanel/simple.xhtml
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
+ * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision: 22733 $
  */
-public class TestRichPanel extends AbstractGrapheneTest {
+public class TestRichPanel extends AbstractWebDriverTest {
 
-    private JQueryLocator[] panels = {pjq("div[id$=panelWithHeader]"), pjq("div[id$=panelWithoutHeader]")};
-    private JQueryLocator[] headers = {pjq("div[id$=panelWithHeader] div.rf-p-hdr"), pjq("div[id$=panelWithoutHeader] div.rf-p-hdr")};
-    private JQueryLocator[] bodies = {pjq("div[id$=panelWithHeader] div.rf-p-b"), pjq("div[id$=panelWithoutHeader] div.rf-p-b")};
-    @Inject
-    @Use(empty = true)
-    private JQueryLocator panel;
+    @FindBy( css = "div[id$=panelWithHeader]" )
+    private RichFacesPanel panelWithHeader;
+
+    @FindBy( css = "div[id$=panelWithoutHeader]" )
+    private RichFacesPanel panelWithoutHeader;
+
+    private ElementNotPresent elemNotPresent = ElementNotPresent.getInstance();
+    private ElementPresent elemPresent = ElementPresent.getInstance();
 
     @Override
     public URL getTestUrl() {
@@ -60,127 +65,141 @@ public class TestRichPanel extends AbstractGrapheneTest {
 
     @Test
     public void testInit() {
-        assertTrue(selenium.isElementPresent(panels[0]), "Panel with header should be present on the page.");
-        assertTrue(selenium.isVisible(panels[0]), "Panel with header should be present on the page.");
-        assertTrue(selenium.isElementPresent(panels[1]), "Panel without header should be present on the page.");
-        assertTrue(selenium.isVisible(panels[1]), "Panel without header should be present on the page.");
+        assertTrue(elemPresent.element(panelWithHeader.getRoot()).apply(driver), "Panel with header should be present and visible on the page.");
+        assertTrue(elemPresent.element(panelWithoutHeader.getRoot()).apply(driver), "Panel without header should be present and visible on the page.");
 
-        assertTrue(selenium.isElementPresent(headers[0]), "The first panel should have a header.");
-        assertTrue(selenium.isVisible(headers[0]), "The first panel should have a header.");
-        assertFalse(selenium.isElementPresent(headers[1]), "The second panel should not have any header.");
+        assertTrue(elemPresent.element(panelWithHeader.getHeader()).apply(driver), "The first panel should have a header.");
+        assertTrue(elemNotPresent.element(panelWithoutHeader.getHeader()).apply(driver), "The second panel should not have any header.");
 
-        assertTrue(selenium.isElementPresent(bodies[0]), "The first panel should have a body.");
-        assertTrue(selenium.isVisible(bodies[0]), "The first panel should have a body.");
-        assertTrue(selenium.isElementPresent(bodies[1]), "The second panel should have a body.");
-        assertTrue(selenium.isVisible(bodies[1]), "The second panel should have a body.");
+        assertTrue(elemPresent.element(panelWithHeader.getBody()).apply(driver), "The first panel should have a body.");
+        assertTrue(elemPresent.element(panelWithoutHeader.getBody()).apply(driver), "The second panel should have a body.");
 
-        assertEquals(selenium.getText(headers[0]), "header of panel", "Header of the first panel.");
-        assertTrue(selenium.getText(bodies[0]).startsWith("Lorem ipsum"), "First panel's body should start with \"Lorem ipsum\".");
-        assertTrue(selenium.getText(bodies[1]).startsWith("Nulla ornare"), "Second panel's body should start with \"Nulla ornare\".");
+        assertTrue(panelWithHeader.getHeader().getText().endsWith("header of panel"));
+        assertTrue(panelWithHeader.getBody().getText().startsWith("Lorem ipsum"), "First panel's body should start with \"Lorem ipsum\".");
+        assertTrue(panelWithoutHeader.getBody().getText().startsWith("Nulla ornare"), "Second panel's body should start with \"Nulla ornare\".");
     }
 
     @Test
-    @Use(field = "panel", value = "bodies")
     public void testBodyClass() {
-        testStyleClass(panel, bodyClass);
+        testStyleClass(panelWithHeader.getBody(), bodyClass);
+        testStyleClass(panelWithoutHeader.getBody(), bodyClass);
     }
 
     @Test
     public void testHeader() {
         panelAttributes.set(PanelAttributes.header, "new header");
 
-        assertEquals(selenium.getText(headers[0]), "header of panel", "Header of the first panel should not change (facet defined).");
-        assertEquals(selenium.getText(headers[1]), "new header", "Header of the second panel.");
+        assertTrue(panelWithHeader.getHeader().getText().equals("header of panel"), "Header of the first panel should not change (facet defined).");
+        assertTrue(panelWithoutHeader.getHeader().getText().equals("new header"), "Header of the second panel.");
     }
 
     @Test
     public void testHeaderClass() {
-        testStyleClass(headers[0], headerClass);
+        testStyleClass(panelWithHeader.getHeader(), headerClass);
     }
 
     @Test
-    @Use(field = "panel", value = "panels")
     public void testOnclick() {
-        testFireEvent(Event.CLICK, panel);
+        Action clickAction = new Actions(driver).click(panelWithHeader.getRoot()).build();
+        testFireEvent(panelAttributes, PanelAttributes.onclick, clickAction);
+
+        clickAction = new Actions(driver).click(panelWithoutHeader.getRoot()).build();
+        testFireEvent(panelAttributes, PanelAttributes.onclick, clickAction);
     }
 
     @Test
-    @Use(field = "panel", value = "panels")
     public void testOndblclick() {
-        testFireEvent(Event.DBLCLICK, panel);
+        Action dblClickAction = new Actions(driver).doubleClick(panelWithHeader.getRoot()).build();
+        testFireEvent(panelAttributes, PanelAttributes.ondblclick, dblClickAction);
+
+        dblClickAction = new Actions(driver).doubleClick(panelWithoutHeader.getRoot()).build();
+        testFireEvent(panelAttributes, PanelAttributes.ondblclick, dblClickAction);
     }
 
     @Test
-    @Use(field = "panel", value = "panels")
     public void testOnkeydown() {
-        testFireEvent(Event.KEYDOWN, panel);
+        testFireEventWithJS(panelWithHeader.getRoot(), Event.KEYDOWN, panelAttributes, PanelAttributes.onkeydown);
+        testFireEventWithJS(panelWithoutHeader.getRoot(), Event.KEYDOWN, panelAttributes, PanelAttributes.onkeydown);
     }
 
     @Test
-    @Use(field = "panel", value = "panels")
     public void testOnkeypress() {
-        testFireEvent(Event.KEYPRESS, panel);
+        testFireEventWithJS(panelWithHeader.getRoot(), Event.KEYPRESS, panelAttributes, PanelAttributes.onkeypress);
+        testFireEventWithJS(panelWithoutHeader.getRoot(), Event.KEYPRESS, panelAttributes, PanelAttributes.onkeypress);
     }
 
     @Test
-    @Use(field = "panel", value = "panels")
     public void testOnkeyup() {
-        testFireEvent(Event.KEYUP, panel);
+        testFireEventWithJS(panelWithHeader.getRoot(), Event.KEYUP, panelAttributes, PanelAttributes.onkeyup);
+        testFireEventWithJS(panelWithoutHeader.getRoot(), Event.KEYUP, panelAttributes, PanelAttributes.onkeyup);
     }
 
     @Test
-    @Use(field = "panel", value = "panels")
     public void testOnmousedown() {
-        testFireEvent(Event.MOUSEDOWN, panel);
+        Action mouseDownAction = new Actions(driver).moveToElement(panelWithHeader.getRoot()).clickAndHold(panelWithHeader.getRoot()).build();
+        testFireEvent(panelAttributes, PanelAttributes.onmousedown, mouseDownAction);
+
+        mouseDownAction = new Actions(driver).moveToElement(panelWithoutHeader.getRoot()).clickAndHold(panelWithHeader.getRoot()).build();
+        testFireEvent(panelAttributes, PanelAttributes.onmousedown, mouseDownAction);
     }
 
     @Test
-    @Use(field = "panel", value = "panels")
     public void testOnmousemove() {
-        testFireEvent(Event.MOUSEMOVE, panel);
+        Action mouseMoveAction = new Actions(driver).moveToElement(panelWithHeader.getRoot(), 3, 3).build();
+        testFireEvent(panelAttributes, PanelAttributes.onmousemove, mouseMoveAction);
+
+        mouseMoveAction = new Actions(driver).moveToElement(panelWithoutHeader.getRoot(), 3, 3).build();
+        testFireEvent(panelAttributes, PanelAttributes.onmousemove, mouseMoveAction);
     }
 
     @Test
-    @Use(field = "panel", value = "panels")
     public void testOnmouseout() {
-        testFireEvent(Event.MOUSEOUT, panel);
+        // TODO 2013-02-01 JJa: try implement using WebDriver API (doesn't work for now)
+        testFireEventWithJS(panelWithHeader.getRoot(), Event.MOUSEOUT, panelAttributes, PanelAttributes.onmouseout);
+        testFireEventWithJS(panelWithoutHeader.getRoot(), Event.MOUSEOUT, panelAttributes, PanelAttributes.onmouseout);
     }
 
     @Test
-    @Use(field = "panel", value = "panels")
     public void testOnmouseover() {
-        testFireEvent(Event.MOUSEOVER, panel);
+        // TODO 2013-02-01 JJa: try implement using WebDriver API (doesn't work for now)
+        testFireEventWithJS(panelWithHeader.getRoot(), Event.MOUSEOVER, panelAttributes, PanelAttributes.onmouseover);
+        testFireEventWithJS(panelWithoutHeader.getRoot(), Event.MOUSEOVER, panelAttributes, PanelAttributes.onmouseover);
     }
 
     @Test
-    @Use(field = "panel", value = "panels")
     public void testOnmouseup() {
-        testFireEvent(Event.MOUSEUP, panel);
+        Action mouseUpAction = new Actions(driver).moveToElement(panelWithHeader.getRoot()).clickAndHold().release().build();
+        testFireEvent(panelAttributes, PanelAttributes.onmouseup, mouseUpAction);
+
+        mouseUpAction = new Actions(driver).moveToElement(panelWithoutHeader.getRoot()).clickAndHold().release().build();
+        testFireEvent(panelAttributes, PanelAttributes.onmouseup, mouseUpAction);
     }
 
     @Test
     public void testRendered() {
         panelAttributes.set(PanelAttributes.rendered, Boolean.FALSE);
 
-        assertFalse(selenium.isElementPresent(panels[0]), "First panel should not be rendered when rendered=false.");
-        assertFalse(selenium.isElementPresent(panels[0]), "Second panel should not be rendered when rendered=false.");
+        assertTrue(elemNotPresent.element(panelWithHeader.getRoot()).apply(driver),
+            "First panel should not be rendered when rendered=false.");
+        assertTrue(elemNotPresent.element(panelWithoutHeader.getRoot()).apply(driver),
+            "Second panel should not be rendered when rendered=false.");
     }
 
     @Test
-    @Use(field = "panel", value = "panels")
     public void testStyle() {
-        testStyle(panel);
+        testStyle(panelWithHeader.getRoot());
+        testStyle(panelWithoutHeader.getRoot());
     }
 
     @Test
-    @Use(field = "panel", value = "panels")
     public void testStyleClass() {
-        testStyleClass(panel);
+        testStyleClass(panelWithHeader.getRoot());
+        testStyleClass(panelWithoutHeader.getRoot());
     }
 
     @Test
-    @Use(field = "panel", value = "panels")
     public void testTitle() {
-        testTitle(panel);
+        testTitle(panelWithHeader.getRoot());
+        testTitle(panelWithoutHeader.getRoot());
     }
 }

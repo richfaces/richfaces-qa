@@ -21,6 +21,12 @@
         </configuration>
     </container>
 
+    <container qualifier="glassfish-remote-3-1">
+        <configuration>
+            <property name="javaVmArguments">${arquillian.container.all.jvm.args}</property>
+        </configuration>
+    </container>
+
     <container qualifier="jbossas-managed-6">
         <configuration>
             <property name="javaVmArguments">${arquillian.container.all.jvm.args}</property>

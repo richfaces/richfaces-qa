@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -27,12 +27,14 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import org.richfaces.component.UIRichMessages;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.bean.TemplateBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,9 +52,6 @@ public class RichMessagesBean implements Serializable {
 
     /** Generated UID */
     private static final long serialVersionUID = 4893769498631480379L;
-    // id for input element to bound some FacesMessage to it
-    private static final String INPUT1_ID = "form:simpleInput1";
-    private static final String INPUT2_ID = "form:simpleInput2";
     private static final Logger logger = LoggerFactory.getLogger(RichMessagesBean.class);
     private Attributes attributes;
     private String simpleInput1;
@@ -61,6 +60,8 @@ public class RichMessagesBean implements Serializable {
             .newArrayList(FacesMessage.SEVERITY_FATAL,
             FacesMessage.SEVERITY_ERROR, FacesMessage.SEVERITY_WARN,
             FacesMessage.SEVERITY_INFO);
+    @ManagedProperty("#{templateBean}")
+    TemplateBean templateBean;
 
     @PostConstruct
     public void init() {
@@ -107,10 +108,10 @@ public class RichMessagesBean implements Serializable {
     }
 
     public void generateFacesMsgs(ActionEvent event) {
-        logger.info(" ### Just called generateFacesError()");
+        logger.debug(" ### Just called generateFacesError()");
         generateAllKindOfMessagesForID(null);
-        generateAllKindOfMessagesForID(INPUT1_ID);
-        generateAllKindOfMessagesForID(INPUT2_ID);
+        generateAllKindOfMessagesForID(templateBean.getComponentPrefix() + "simpleInput1");
+        generateAllKindOfMessagesForID(templateBean.getComponentPrefix() + "simpleInput2");
     }
 
     public Attributes getAttributes() {
@@ -135,5 +136,13 @@ public class RichMessagesBean implements Serializable {
 
     public void setSimpleInput2(String simpleInput2) {
         this.simpleInput2 = simpleInput2;
+    }
+
+    public TemplateBean getTemplateBean() {
+        return templateBean;
+    }
+
+    public void setTemplateBean(TemplateBean templateBean) {
+        this.templateBean = templateBean;
     }
 }
