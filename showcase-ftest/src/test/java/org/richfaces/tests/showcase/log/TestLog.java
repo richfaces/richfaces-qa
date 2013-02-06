@@ -103,10 +103,11 @@ public class TestLog extends AbstractWebDriverTest {
     }
 
     @Test
-    public void testLogInfo() {
+    public void testLogInfo() throws InterruptedException {
         Select select = new Select(page.severitySelect);
         select.selectByIndex(LogPage.Severity.INFO.getIndex());
         page.submit.click();
+        Thread.sleep(400); //workaround till ARQGRA-259 is resolved
         Graphene.waitAjax()
                 .until("After setting severity to <info> and submitting, the logging area should contain a message with severity <info>.")
                 .element(page.loggingArea)
