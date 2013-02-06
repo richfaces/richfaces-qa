@@ -42,6 +42,8 @@ public class TestAutosaving extends AbstractWebDriverTest {
     @Page
     private AutosavingPage page;
 
+    private static final int TIMEOUT_FOR_AUTOSAVING = 1600;
+
     private final String[] EXPECTED_PARAGRAPHS = {
             "\"Little Red Riding Hood\" is a famous fairy tale about a young girl's encounter with a wolf. "
                 + "The story has been changed considerably in its history and subject to numerous modern adaptations and readings.",
@@ -94,7 +96,8 @@ public class TestAutosaving extends AbstractWebDriverTest {
         String expected = "Added and possibly saved text!";
         page.editor.typeTextToEditor(expected);
 
-        waitModel().withTimeout(1200, TimeUnit.MILLISECONDS).until(new ElementTextContains(page.outputFromEditor, expected));
+        waitModel().withTimeout(TIMEOUT_FOR_AUTOSAVING, TimeUnit.MILLISECONDS).until(
+            new ElementTextContains(page.outputFromEditor, expected));
     }
 
 }
