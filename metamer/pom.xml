@@ -41,13 +41,13 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
+            <!--dependency>
                 <groupId>org.richfaces</groupId>
                 <artifactId>richfaces-bom</artifactId>
                 <version>${version.richfaces}</version>
                 <scope>import</scope>
                 <type>pom</type>
-            </dependency>
+            </dependency-->
 
             <dependency>
                 <groupId>javax.el</groupId>

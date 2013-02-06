@@ -511,6 +511,15 @@ FSF site: http://www.fsf.org. -->
                 <artifactId>commons-lang</artifactId>
                 <version>${commons-lang.version}</version>
             </dependency>
+            
+            <dependency>
+                <groupId>org.richfaces</groupId>
+                <artifactId>richfaces-bom</artifactId>
+                <version>${version.richfaces}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            
         </dependencies>
     </dependencyManagement>
 
