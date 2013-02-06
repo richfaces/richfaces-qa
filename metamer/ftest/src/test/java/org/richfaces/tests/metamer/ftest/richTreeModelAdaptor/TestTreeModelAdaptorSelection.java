@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richTreeModelAdaptor;
 
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
@@ -62,6 +61,11 @@ public class TestTreeModelAdaptorSelection extends AbstractTestTreeSelection {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richTree/treeAdaptors.xhtml");
+    }
+
+    @Override
+    public MetamerNavigation getComponentExampleNavigation() {
+        return new MetamerNavigation("Rich", "Rich Tree", "Tree Adaptors");
     }
 
     @BeforeMethod
@@ -162,6 +166,7 @@ public class TestTreeModelAdaptorSelection extends AbstractTestTreeSelection {
             this.paths = paths;
         }
 
+        @Override
         public String toString() {
             return name;
         }
