@@ -147,6 +147,38 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputText id="current" value="#{richPanelMenuBean.activeItem}" />
                 </a4j:outputPanel>
             </fieldset>
+            
+            <fieldset>
+                <legend>rich:panelMenu JS API</legend>
+                <a4j:commandButton value="expandAll() Ajax" onclick="#{rich:component('panelMenu')}.expandAll()" />
+                <input type="button" name="expandAllBtn" value="expandAll()" onclick="#{rich:component('panelMenu')}.expandAll()" />
+                <br/>
+                <a4j:commandButton value="collapseAll() Ajax" onclick="#{rich:component('panelMenu')}.collapseAll()" />
+                <input type="button" name="collapseAllBtn" value="collapseAll()" onclick="#{rich:component('panelMenu')}.collapseAll()" />
+                <br/>
+                <a4j:commandButton value="selectItem('item23') Ajax" 
+                       onclick="#{rich:component('panelMenu')}.selectItem('#{rich:clientId('item23')}')" />
+                <input type="button" name="collapseAllBtn" value="selectItem('item23')" 
+                       onclick="#{rich:component('panelMenu')}.selectItem('#{rich:clientId('item23')}')" />
+            </fieldset>
+            
+            <fieldset>
+                <legend>rich:panelMenu JS API using component control</legend>
+
+                <h:commandButton id="expandAll" value="expandAll()">
+                    <rich:componentControl event="click" operation="expandAll" target="panelMenu" />                        
+                </h:commandButton>
+                
+                <h:commandButton id="collapseAll" value="collapseAll()">
+                    <rich:componentControl event="click" operation="collapseAll" target="panelMenu" />                        
+                </h:commandButton>
+                
+                <h:commandButton id="selectItem" value="selectItem('item23')">
+                    <rich:componentControl event="click" operation="selectItem" target="panelMenu" >
+                        <f:param value="item23" />
+                    </rich:componentControl>                        
+                </h:commandButton>
+            </fieldset>
 
         </ui:define>
 
