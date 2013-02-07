@@ -160,6 +160,45 @@ public class IconsCheckerWebdriver<A extends AttributeEnum> {
         }
     }
 
+    /**
+     * Checks "icon" contains image element.
+     * In the contrary of checkImageIcons this method consider By image as direct child element
+     * of icon WebElement, and then By expression for image should not be unique within whole DOM,
+     * but just within parent icon element
+     *
+     * It is useful when using page fragments where icon element is reliable and unique localized,
+     * but img child element doesn't contains any additional attributes for unique identification.
+     * Which is no longer needed since parent element is reliable identified.
+     *
+     * Used e.g. for PanelMenuGroup icons, where more groups present within menu,
+     * but icon images are difficult to localize unique over whole page.
+     *
+     * @param attribute icon attribute
+     * @param icon - root of icon "element" - it is sometime td or something like this, containing additional elements
+     * @param image - By location, it should be relative to icon element
+     * @param classSuffix
+     * @param disableIcon set to TRUE if the presence of image element causes that icon element shouldn't be present
+     */
+    public void checkImageIconsAsRelative(A attribute, ElementLocator icon, By image, String classSuffix, boolean disableIcon) {
+        // option -> image
+        Map<String, String> imageIcons = new HashMap<String, String>();
+        imageIcons.put("nonexisting", "nonexisting");
+        imageIcons.put("star", "star.png");
+        for(String imageIcon : imageIcons.keySet()) {
+            if (!setAttributeSilently(attribute, imageIcon)) {
+                continue;
+            }
+            if (disableIcon) {
+                assertFalse(Graphene.element(icon.findElement()).isPresent().apply(driver), "Icon's div (" + icon + ") should not be present when icon=" + imageIcon + ".");
+            }
+            // there is the point: image location referenced By image is relative to icon element
+            WebElement imageElem = icon.findElement().findElement(image);
+            assertTrue(Graphene.element(imageElem).isPresent().apply(driver), "Icon's image should be rendered (" + image + ") when icon=" + imageIcon + ".");
+            assertTrue(imageElem.getAttribute("src").contains(imageIcons.get(imageIcon)),
+                "Icon's src attribute (" + image + ") should contain " + imageIcons.get(imageIcon) + " when icon=" + imageIcon + ".");
+        }
+    }
+
     public void checkNone(A attribute, ElementLocator icon, String classSuffix) {
         if (!setAttributeSilently(attribute, "none")) {
             return;
