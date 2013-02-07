@@ -74,7 +74,8 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
         return new Action() {
             @Override
             public void perform() {
-                MetamerPage.waitRequest(slider.getNumberSlider(), WaitRequestType.XHR).moveHandleToPointInTraceHorizontally(pixels);
+                MetamerPage.waitRequest(slider.getNumberSlider(), WaitRequestType.XHR)
+                    .moveHandleToPointInTraceHorizontally(pixels);
             }
         };
     }
@@ -88,7 +89,8 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
 
         MetamerPage.waitRequest(slider, WaitRequestType.XHR).decreaseWithArrows();
 
-        Graphene.waitGui().withMessage("Output was not updated.").until(Graphene.element(output).textEquals(String.valueOf(startValue - clicks)));
+        Graphene.waitGui().until("Output was not updated.").element(output).text()
+            .equalTo(String.valueOf(startValue - clicks));
     }
 
     public void testClickRightArrow() {
@@ -100,7 +102,8 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
 
         MetamerPage.waitRequest(slider, WaitRequestType.XHR).increaseWithArrows();
 
-        Graphene.waitGui().withMessage("Output was not updated.").until(Graphene.element(output).textEquals(String.valueOf(startValue + clicks)));
+        Graphene.waitGui().until("Output was not updated.").element(output).text()
+            .equalTo(String.valueOf(startValue + clicks));
     }
 
     public void testMoveWithSlider() {
@@ -134,7 +137,8 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
 
         Double newNumber = new Double(number);
         assertEquals(output.getText(), newNumber == 0 ? "0" : newNumber.toString(), "Output was not updated.");
-        assertEquals(slider.getInput().getStringValue(), newNumber == 0 ? "0" : newNumber.toString(), "Input was not updated.");
+        assertEquals(slider.getInput().getStringValue(), newNumber == 0 ? "0" : newNumber.toString(),
+            "Input was not updated.");
     }
 
     public void testTypeIntoInputNotNumber() {
