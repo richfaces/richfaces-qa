@@ -24,9 +24,10 @@ package org.richfaces.tests.metamer.ftest.richAutocomplete;
 import static java.text.MessageFormat.format;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocompleteAttributes;
-import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
+
+import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
@@ -48,7 +49,7 @@ public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
 
     private static final String PHASE_LISTENER_LOG_FORMAT = "*1 value changed: {0} -> {1}";
 
-    @FindBy(css="span[id$=autocomplete]")
+    @FindBy(css = "span[id$=autocomplete]")
     private RichFacesAutocomplete<String> autocomplete;
 
     @Override
@@ -66,7 +67,8 @@ public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
         autocompleteAttributes.set(AutocompleteAttributes.clientFilterFunction, Boolean.TRUE);
     }
 
-    @Test
+    // TODO attach JIRA link
+    @Test(groups = "4.3")
     @Templates(exclude = { "richPopupPanel" })
     public void testValueChangeListener() {
         autocomplete.clear(ClearType.BACK_SPACE);
@@ -78,9 +80,10 @@ public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
         autocomplete.clear(ClearType.BACK_SPACE);
         autocomplete.type("something else");
         page.blur();
-        // valueChangeListener output as 4th record
+
         Graphene.waitModel().until().element(page.getOutput()).text().equalTo("something else");
-        assertEquals(page.getPhases().get(3), format(PHASE_LISTENER_LOG_FORMAT, "something", "something else"));
+        page.assertListener(PhaseId.INVOKE_APPLICATION,
+            format(PHASE_LISTENER_LOG_FORMAT, "something", "something else"));
     }
 
     @Test(groups = { "4.Future" })
