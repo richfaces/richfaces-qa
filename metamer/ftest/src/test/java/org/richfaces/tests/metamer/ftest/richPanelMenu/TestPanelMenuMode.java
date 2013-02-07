@@ -27,16 +27,15 @@ import static javax.faces.event.PhaseId.PROCESS_VALIDATIONS;
 import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.panelMenuAttributes;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.groupMode;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.itemMode;
-
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import javax.faces.event.PhaseId;
 
-import org.richfaces.PanelMenuMode;
+import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
@@ -50,7 +49,7 @@ public class TestPanelMenuMode extends AbstractPanelMenuTest {
 
     @Inject
     @Use(enumeration = true)
-    PanelMenuMode mode;
+    Mode mode;
 
     PhaseId[] expectedPhases = new PhaseId[] { RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS,
         UPDATE_MODEL_VALUES, INVOKE_APPLICATION, RENDER_RESPONSE };
@@ -58,37 +57,37 @@ public class TestPanelMenuMode extends AbstractPanelMenuTest {
     @Test
     public void testGroupMode() {
         panelMenuAttributes.set(groupMode, mode);
-        menu.setGroupMode(mode);
+        page.panelMenu.setGroupMode(mode);
 
-        assertTrue(group1.isCollapsed());
-        group1.toggle();
-        assertTrue(group1.isExpanded());
+        assertTrue(page.panelMenu.group1.isCollapsed());
+        page.panelMenu.group1.toggle();
+        assertTrue(page.panelMenu.group1.isExpanded());
 
-        if (mode != PanelMenuMode.client) {
-            phaseInfo.assertPhases(expectedPhases);
+        if (mode != Mode.client) {
+            page.assertPhases(expectedPhases);
         }
 
-        group1.toggle();
+        page.panelMenu.group1.toggle();
 
-        assertTrue(group1.isCollapsed());
+        assertTrue(page.panelMenu.group1.isCollapsed());
 
-        if (mode != PanelMenuMode.client) {
-            phaseInfo.assertPhases(expectedPhases);
+        if (mode != Mode.client) {
+            page.assertPhases(expectedPhases);
         }
     }
 
     @Test
     public void testItemMode() {
         panelMenuAttributes.set(itemMode, mode);
-        menu.setItemMode(mode);
+        page.panelMenu.setItemMode(mode);
 
-        assertFalse(item3.isSelected());
-        item3.select();
-        assertTrue(item3.isSelected());
+        assertFalse(page.panelMenu.item3.isSelected());
+        page.panelMenu.item3.select();
+        assertTrue(page.panelMenu.item3.isSelected());
 
-        if (mode != PanelMenuMode.client) {
-            phaseInfo.assertPhases(expectedPhases);
-            phaseInfo.assertListener(UPDATE_MODEL_VALUES, "item changed");
+        if (mode != Mode.client) {
+            page.assertPhases(expectedPhases);
+            page.assertListener(UPDATE_MODEL_VALUES, "item changed");
         }
     }
 }

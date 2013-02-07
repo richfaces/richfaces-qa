@@ -22,35 +22,26 @@
 package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.richfaces.PanelMenuMode.ajax;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.panelMenuAttributes;
+import static org.richfaces.component.Mode.ajax;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.groupMode;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.itemMode;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
-import org.richfaces.tests.metamer.ftest.model.PanelMenu;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.BeforeMethod;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision: 22749 $
  */
-public class AbstractPanelMenuTest extends AbstractGrapheneTest {
+public class AbstractPanelMenuTest extends AbstractWebDriverTest {
 
-    PanelMenu menu = new PanelMenu(pjq("div.rf-pm[id$=panelMenu]"));
-    PanelMenu.Item item3 = menu.getItemContains("Item 3");
-    PanelMenu.Item item4 = menu.getItemContains("Item 4");
-    PanelMenu.Group group1 = menu.getGroupContains("Group 1");
-    PanelMenu.Group group2 = menu.getGroupContains("Group 2");
-    PanelMenu.Item item22 = group2.getItemContains("Item 2.2");
-    PanelMenu.Item item25 = group2.getItemContains("Item 2.5");
-    PanelMenu.Group group24 = group2.getGroupContains("Group 2.4");
-    PanelMenu.Group group26 = group2.getGroupContains("Group 2.6");
-    PanelMenu.Item item242 = group24.getItemContains("Item 2.4.2");
-    PanelMenu.Group group4 = menu.getGroupContains("Group 4");
+    @Page
+    PanelMenuPage page;
 
     @Override
     public URL getTestUrl() {
@@ -61,7 +52,7 @@ public class AbstractPanelMenuTest extends AbstractGrapheneTest {
     public void setupModes() {
         panelMenuAttributes.set(itemMode, ajax);
         panelMenuAttributes.set(groupMode, ajax);
-        menu.setItemMode(ajax);
-        menu.setGroupMode(ajax);
+        page.panelMenu.setItemMode(ajax);
+        page.panelMenu.setGroupMode(ajax);
     }
 }

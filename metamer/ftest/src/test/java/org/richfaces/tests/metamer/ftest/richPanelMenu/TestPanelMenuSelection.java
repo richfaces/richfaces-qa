@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.panelMenuAttributes;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;
 
 import static org.testng.Assert.assertEquals;
 
@@ -46,16 +46,16 @@ public class TestPanelMenuSelection extends AbstractPanelMenuTest {
 
         assertEquals(getSelectedItems(), 0);
         assertEquals(getSelectedGroups(), 0);
-        group2.toggle();
+        page.panelMenu.group2.toggle();
         assertEquals(getSelectedItems(), 0);
         assertEquals(getSelectedGroups(), 0);
-        item22.select();
+        page.panelMenu.item22.select();
         assertEquals(getSelectedItems(), 1);
         assertEquals(getSelectedGroups(), bubbledGroups(1));
-        group24.toggle();
+        page.panelMenu.group24.toggle();
         assertEquals(getSelectedItems(), 1);
         assertEquals(getSelectedGroups(), bubbledGroups(1));
-        item242.select();
+        page.panelMenu.item242.select();
         assertEquals(getSelectedItems(), 1);
         assertEquals(getSelectedGroups(), bubbledGroups(2));
     }
@@ -65,10 +65,10 @@ public class TestPanelMenuSelection extends AbstractPanelMenuTest {
     }
 
     private int getSelectedItems() {
-        return selenium.getCount(menu.getAnySelectedItem());
+        return page.panelMenu.getAllSelectedItems().size();
     }
 
     private int getSelectedGroups() {
-        return selenium.getCount(menu.getAnySelectedGroup());
+        return page.panelMenu.getAllSelectedGroups().size();
     }
 }

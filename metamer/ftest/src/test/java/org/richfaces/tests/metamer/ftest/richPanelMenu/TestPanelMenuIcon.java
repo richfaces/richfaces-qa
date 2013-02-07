@@ -21,198 +21,169 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.groupCollapsedLeftIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.groupCollapsedRightIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.groupDisabledLeftIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.groupDisabledRightIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.groupExpandedLeftIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.groupExpandedRightIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.itemDisabledLeftIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.itemDisabledRightIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.itemLeftIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.itemRightIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.topGroupCollapsedLeftIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.topGroupCollapsedRightIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.topGroupDisabledLeftIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.topGroupDisabledRightIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.topGroupExpandedLeftIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.topGroupExpandedRightIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.topItemDisabledLeftIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.topItemDisabledRightIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.topItemLeftIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.topItemRightIcon;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;
+import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.IMG_BY_LOC;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
-import org.richfaces.tests.metamer.ftest.checker.IconsChecker;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22727 $
+ * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
+ * @since 4.3.1.Final
  */
 public class TestPanelMenuIcon extends AbstractPanelMenuTest {
 
     @Test
     public void testGroupCollapsedLeftIcon() {
-        group2.toggle();
-        JQueryLocator input = pjq("select[id$=groupCollapsedLeftIcon]");
-        ElementLocator<JQueryLocator> icon = group24.getLeftIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(group24.getLeftIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        page.panelMenu.group2.toggle();
+        verifyStandardIcons(groupCollapsedLeftIcon, page.panelMenu.group24.leftIcon.iconCollapsed, IMG_BY_LOC, "");
     }
 
     @Test
     public void testGroupCollapsedRightIcon() {
-        group2.toggle();
-        JQueryLocator input = pjq("select[id$=groupCollapsedRightIcon]");
-        ElementLocator<JQueryLocator> icon = group24.getRightIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(group24.getRightIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        page.panelMenu.group2.toggle();
+        verifyStandardIcons(groupCollapsedRightIcon, page.panelMenu.group24.rightIcon.iconCollapsed, IMG_BY_LOC, "");
     }
 
     @Test
     public void testGroupDisabledLeftIcon() {
-        group2.toggle();
-        JQueryLocator input = pjq("select[id$=groupDisabledLeftIcon]");
-        ElementLocator<JQueryLocator> icon = group26.getRightIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(group26.getRightIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        page.panelMenu.group2.toggle();
+        // for disabled icon both icons (expanded and collapsed) should be the same (state depends on implicit group settings)
+        verifyStandardIcons(groupDisabledLeftIcon, page.panelMenu.group26.leftIcon.iconCollapsed, IMG_BY_LOC, "");
+        verifyStandardIcons(groupDisabledLeftIcon, page.panelMenu.group26.leftIcon.iconExpanded, IMG_BY_LOC, "");
     }
 
     @Test
-    public void testDisabledRightIcon() {
-        group2.toggle();
-        JQueryLocator input = pjq("select[id$=disabledRightIcon]");
-        ElementLocator<JQueryLocator> icon = group26.getRightIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(group26.getRightIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+    public void testGroupDisabledRightIcon() {
+        // TODO JJa: have a look: there were something wrong with original version
+        page.panelMenu.group2.toggle();
+        verifyStandardIcons(groupDisabledRightIcon, page.panelMenu.group26.rightIcon.iconCollapsed, IMG_BY_LOC, "");
+        verifyStandardIcons(groupDisabledRightIcon, page.panelMenu.group26.rightIcon.iconExpanded, IMG_BY_LOC, "");
     }
 
     @Test
     public void testGroupExpandedLeftIcon() {
-        group2.toggle();
-        group24.toggle();
-        JQueryLocator input = pjq("select[id$=groupExpandedLeftIcon]");
-        ElementLocator<JQueryLocator> icon = group24.getLeftIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(group24.getLeftIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        page.panelMenu.group2.toggle();
+        page.panelMenu.group24.toggle();
+        verifyStandardIcons(groupExpandedLeftIcon, page.panelMenu.group24.leftIcon.iconExpanded, IMG_BY_LOC, "");
     }
 
     @Test
     public void testGroupExpandedRightIcon() {
-        group2.toggle();
-        group24.toggle();
-        JQueryLocator input = pjq("select[id$=groupExpandedRightIcon]");
-        ElementLocator<JQueryLocator> icon = group24.getRightIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(group24.getRightIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        page.panelMenu.group2.toggle();
+        page.panelMenu.group24.toggle();
+        verifyStandardIcons(groupExpandedRightIcon, page.panelMenu.group24.rightIcon.iconExpanded, IMG_BY_LOC, "");
     }
 
     @Test
     public void testItemDisabledLeftIcon() {
-        group2.toggle();
-        JQueryLocator input = pjq("select[id$=itemDisabledLeftIcon]");
-        ElementLocator<JQueryLocator> icon = item25.getLeftIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(item25.getLeftIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        page.panelMenu.group2.toggle();
+        verifyStandardIcons(itemDisabledLeftIcon, page.panelMenu.item25.leftIcon.icon, IMG_BY_LOC, "");
     }
 
     @Test
     public void testItemDisabledRightIcon() {
-        group2.toggle();
-        JQueryLocator input = pjq("select[id$=itemDisabledRightIcon]");
-        ElementLocator<JQueryLocator> icon = item25.getRightIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(item25.getRightIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        page.panelMenu.group2.toggle();
+        verifyStandardIcons(itemDisabledRightIcon, page.panelMenu.item25.rightIcon.icon, IMG_BY_LOC, "");
     }
 
     @Test
     public void testItemLeftIcon() {
-        group2.toggle();
-        JQueryLocator input = pjq("select[id$=itemLeftIcon]");
-        ElementLocator<JQueryLocator> icon = item22.getLeftIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(item22.getLeftIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        page.panelMenu.group2.toggle();
+        verifyStandardIcons(itemLeftIcon, page.panelMenu.item22.leftIcon.icon, IMG_BY_LOC, "");
     }
 
     @Test
     public void testItemRightIcon() {
-        group2.toggle();
-        JQueryLocator input = pjq("select[id$=itemRightIcon]");
-        ElementLocator<JQueryLocator> icon = item22.getRightIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(item22.getRightIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        page.panelMenu.group2.toggle();
+        verifyStandardIcons(itemRightIcon, page.panelMenu.item22.rightIcon.icon, IMG_BY_LOC, "");
     }
 
     @Test
     public void testTopGroupCollapsedLeftIcon() {
-        JQueryLocator input = pjq("select[id$=topGroupCollapsedLeftIcon]");
-        ElementLocator<JQueryLocator> icon = group1.getLeftIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(group1.getLeftIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        verifyStandardIcons(topGroupCollapsedLeftIcon, page.panelMenu.group1.leftIcon.iconCollapsed, IMG_BY_LOC, "");
     }
 
     @Test
     public void testTopGroupCollapsedRightIcon() {
-        JQueryLocator input = pjq("select[id$=topGroupCollapsedRightIcon]");
-        ElementLocator<JQueryLocator> icon = group1.getRightIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(group1.getRightIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        verifyStandardIcons(topGroupCollapsedRightIcon, page.panelMenu.group1.rightIcon.iconCollapsed, IMG_BY_LOC, "");
     }
 
     @Test
     public void testTopGroupDisabledLeftIcon() {
-        JQueryLocator input = pjq("select[id$=topGroupDisabledLeftIcon]");
-        ElementLocator<JQueryLocator> icon = group4.getLeftIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(group4.getLeftIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        verifyStandardIcons(topGroupDisabledLeftIcon, page.panelMenu.group4.leftIcon.iconCollapsed, IMG_BY_LOC, "");
+        verifyStandardIcons(topGroupDisabledLeftIcon, page.panelMenu.group4.leftIcon.iconExpanded, IMG_BY_LOC, "");
     }
 
     @Test
     public void testTopGroupDisabledRightIcon() {
-        JQueryLocator input = pjq("select[id$=topGroupDisabledRightIcon]");
-        ElementLocator<JQueryLocator> icon = group4.getRightIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(group4.getRightIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        verifyStandardIcons(topGroupDisabledRightIcon, page.panelMenu.group4.rightIcon.iconCollapsed, IMG_BY_LOC, "");
+        verifyStandardIcons(topGroupDisabledRightIcon, page.panelMenu.group4.rightIcon.iconExpanded, IMG_BY_LOC, "");
     }
 
     @Test
     public void testTopGroupExpandedLeftIcon() {
-        group1.toggle();
-        JQueryLocator input = pjq("select[id$=topGroupExpandedLeftIcon]");
-        ElementLocator<JQueryLocator> icon = group1.getLeftIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(group1.getLeftIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        page.panelMenu.group1.toggle();
+        verifyStandardIcons(topGroupExpandedLeftIcon, page.panelMenu.group1.leftIcon.iconExpanded, IMG_BY_LOC, "");
     }
 
     @Test
     public void testTopGroupExpandedRightIcon() {
-        group1.toggle();
-        JQueryLocator input = pjq("select[id$=topGroupExpandedRightIcon]");
-        ElementLocator<JQueryLocator> icon = group1.getRightIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(group1.getRightIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        page.panelMenu.group1.toggle();
+        verifyStandardIcons(topGroupExpandedRightIcon, page.panelMenu.group1.rightIcon.iconExpanded, IMG_BY_LOC, "");
     }
 
     @Test
     public void testTopItemDisabledLeftIcon() {
-        JQueryLocator input = pjq("select[id$=topItemDisabledLeftIcon]");
-        ElementLocator<JQueryLocator> icon = item4.getLeftIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(item4.getLeftIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        verifyStandardIcons(topItemDisabledLeftIcon, page.panelMenu.item4.leftIcon.icon, IMG_BY_LOC, "");
     }
 
     @Test
     public void testTopItemDisabledRightIcon() {
-        JQueryLocator input = pjq("select[id$=topItemDisabledRightIcon]");
-        ElementLocator<JQueryLocator> icon = item4.getRightIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(item4.getRightIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        verifyStandardIcons(topItemDisabledRightIcon, page.panelMenu.item4.rightIcon.icon, IMG_BY_LOC, "");
     }
 
     @Test
     public void testTopItemLeftIcon() {
-        JQueryLocator input = pjq("select[id$=topItemLefttIconInput]");
-        ElementLocator<JQueryLocator> icon = item3.getLeftIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(item3.getLeftIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        verifyStandardIcons(topItemLeftIcon, page.panelMenu.item3.leftIcon.icon, IMG_BY_LOC, "");
     }
 
     @Test
     public void testTopItemRightIcon() {
-        JQueryLocator input = pjq("select[id$=topItemRightIconInput]");
-        ElementLocator<JQueryLocator> icon = item3.getRightIcon().getIcon();
-        ElementLocator<JQueryLocator> image = jq(item3.getRightIcon().getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        verifyStandardIcons(topItemRightIcon, page.panelMenu.item3.rightIcon.icon, IMG_BY_LOC, "");
     }
 
-    private void verifyStandardIcons(ElementLocator<JQueryLocator> input, ElementLocator<JQueryLocator> icon, ElementLocator<JQueryLocator> image, String classSuffix) {
-        IconsChecker checker = new IconsChecker(selenium, "rf-ico-", "");
-        checker.checkCssImageIcons(input, icon, classSuffix);
-        checker.checkCssNoImageIcons(input, icon, classSuffix);
-        checker.checkImageIcons(input, icon, image, classSuffix, false);
-        checker.checkNone(input, icon, classSuffix);
+    private void verifyStandardIcons(PanelMenuAttributes attribute, WebElement icon, By image, String classSuffix) {
+        IconsCheckerWebdriver<PanelMenuAttributes> checker = new IconsCheckerWebdriver<PanelMenuAttributes>(
+            driver, panelMenuAttributes, "rf-ico-", "");
+
+        checker.checkCssImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
+        checker.checkCssNoImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
+        checker.checkImageIconsAsRelative(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), image, classSuffix, false);
+        checker.checkNone(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
+
     }
 }

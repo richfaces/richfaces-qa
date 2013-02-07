@@ -21,8 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
-import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-
 import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEDOWN;
@@ -30,26 +28,34 @@ import static org.jboss.arquillian.ajocado.dom.Event.MOUSEMOVE;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOUT;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOVER;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEUP;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.panelMenuAttributes;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.collapseEvent;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.expandEvent;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.groupMode;
-
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onclick;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.ondblclick;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onmousedown;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onmousemove;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onmouseover;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onmouseup;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
-import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumWaiting;
-import org.richfaces.PanelMenuMode;
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.page.fragments.impl.panelMenuGroup.PanelMenuGroup;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.google.common.base.Predicate;
 
 
 /**
@@ -59,26 +65,12 @@ import org.testng.annotations.Test;
 public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
 
     @Inject
-    PanelMenuMode mode;
+    Mode mode;
 
     @Inject
     @Use("events")
     Event event = DBLCLICK;
     Event[] events = new Event[] { CLICK, DBLCLICK, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER, MOUSEUP };
-
-    SeleniumWaiting waitToggle;
-
-    SeleniumCondition isGroup2Expanded = new SeleniumCondition() {
-        public boolean isTrue() {
-            return selenium.isElementPresent(group2) && group2.isExpanded();
-        }
-    };
-
-    SeleniumCondition isGroup2Collapsed = new SeleniumCondition() {
-        public boolean isTrue() {
-            return selenium.isElementPresent(group2) && group2.isCollapsed();
-        }
-    };
 
     @Override
     public URL getTestUrl() {
@@ -87,10 +79,9 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
 
     @BeforeMethod
     public void setup() {
-        waitToggle = waitModel.timeout(5000).interval(500);
         if (mode != null) {
             panelMenuAttributes.set(groupMode, mode);
-            menu.setGroupMode(mode);
+            page.panelMenu.setGroupMode(mode);
         }
     }
 
@@ -98,10 +89,10 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     @Use(field = "mode", enumeration = true)
     public void testExpandEvent() {
         panelMenuAttributes.set(expandEvent, event.getEventName());
-        assertTrue(group2.isCollapsed());
+        assertTrue(page.panelMenu.group2.isCollapsed());
 
-        fireEventNatively(group2.getLabel(), event);
-        waitToggle.until(isGroup2Expanded);
+        fireEvent(page.panelMenu.group2.label, event);
+        Graphene.waitModel(driver).until(new GroupIsExpanded(page.panelMenu.group2));
     }
 
     @Test
@@ -109,16 +100,88 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     public void testCollapseEvent() {
         panelMenuAttributes.set(collapseEvent, event.getEventName());
 
-        group2.toggle();
-        assertTrue(group2.isExpanded());
+        page.panelMenu.group2.toggle();
+        assertTrue(page.panelMenu.group2.isExpanded());
 
-        fireEventNatively(group2.getLabel(), event);
-        waitToggle.until(isGroup2Collapsed);
+        fireEvent(page.panelMenu.group2.label, event);
+        Graphene.waitModel().until(new GroupIsCollapsed(page.panelMenu.group2));
     }
 
     @Test
-    @Use(field = "mode", empty = true)
-    public void testDOMEvent() {
-        super.testFireEvent(event, menu);
+    @Use(field = "mode", enumeration = false)
+    public void testOnClick() {
+        Action click = new Actions(driver).click(page.panelMenu.getRoot()).build();
+        testFireEvent(panelMenuAttributes, onclick, click);
     }
+
+    @Test
+    @Use(field = "mode", enumeration = false)
+    public void testOnDblclick() {
+        Action dblClick = new Actions(driver).doubleClick(page.panelMenu.getRoot()).build();
+        testFireEvent(panelMenuAttributes, ondblclick, dblClick);
+    }
+
+    @Test
+    @Use(field = "mode", enumeration = false)
+    public void testOnMousedown() {
+        Action mousedown = new Actions(driver).clickAndHold(page.panelMenu.getRoot()).build();
+        testFireEvent(panelMenuAttributes, onmousedown, mousedown);
+    }
+
+    @Test
+    @Use(field = "mode", enumeration = false)
+    public void testOnMousemove() {
+        Action mousemove = new Actions(driver).moveToElement(page.panelMenu.getRoot(), 3, 3).build();
+        testFireEvent(panelMenuAttributes, onmousemove, mousemove);
+    }
+
+    @Test
+    @Use(field = "mode", enumeration = false)
+    public void testOnMouseout() {
+        // TODO 2013-02-07 JJa: implement using WebDriver API (doesn't work for now)
+        // Action mouseout = new Actions(driver).moveToElement(page.panelMenu.getRoot()).moveByOffset(-5, -5).build();
+        // testFireEvent(panelMenuAttributes, onmouseout, mouseout);
+        testFireEventWithJS(page.panelMenu.getRoot(), Event.MOUSEOUT, panelMenuAttributes, PanelMenuAttributes.onmouseout);
+    }
+
+    @Test
+    @Use(field = "mode", enumeration = false)
+    public void testOnMouseover() {
+        Action mouseover = new Actions(driver).moveToElement(page.panelMenu.getRoot(), 3, 3).build();
+        testFireEvent(panelMenuAttributes, onmouseover, mouseover);
+    }
+
+    @Test
+    @Use(field = "mode", enumeration = false)
+    public void testOnMouseup() {
+        Action mouseup = new Actions(driver).clickAndHold(page.panelMenu.getRoot()).release().build();
+        testFireEvent(panelMenuAttributes, onmouseup, mouseup);
+    }
+
+    private class GroupIsExpanded implements Predicate<WebDriver> {
+        private PanelMenuGroup group;
+
+        public GroupIsExpanded(PanelMenuGroup element) {
+            this.group = element;
+        }
+
+        @Override
+        public boolean apply(WebDriver browser) {
+            Boolean present = Graphene.element(group.getRoot()).isPresent().apply(driver);
+            return present && group.isExpanded();
+        }
+    }
+
+    private class GroupIsCollapsed implements Predicate<WebDriver> {
+        private PanelMenuGroup group;
+
+        public GroupIsCollapsed(PanelMenuGroup element) {
+            group = element;
+        }
+
+        public boolean apply(WebDriver driver) {
+            Boolean present = Graphene.element(group.getRoot()).isPresent().apply(driver);
+            return present && group.isCollapsed();
+        }
+    };
 }
