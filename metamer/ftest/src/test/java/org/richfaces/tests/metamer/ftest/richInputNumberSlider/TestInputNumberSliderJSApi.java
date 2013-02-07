@@ -70,7 +70,7 @@ public class TestInputNumberSliderJSApi extends AbstractSliderTest {
         MetamerPage.waitRequest(decreaseButton, WaitRequestType.XHR).click();
         assertEquals(slider.getInput().getStringValue(), "0");//2 - 1 - 1
         MetamerPage.waitRequest(decreaseButton, WaitRequestType.XHR).click();
-        MetamerPage.waitRequest(decreaseButton, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(decreaseButton, WaitRequestType.NONE).click();
         assertEquals(slider.getInput().getStringValue(), "-1");//-2, but min is -1
 
     }
@@ -91,7 +91,7 @@ public class TestInputNumberSliderJSApi extends AbstractSliderTest {
         MetamerPage.waitRequest(increaseButton, WaitRequestType.XHR).click();
         assertEquals(slider.getInput().getStringValue(), "4");//2 + 1 + 1
         MetamerPage.waitRequest(increaseButton, WaitRequestType.XHR).click();
-        MetamerPage.waitRequest(increaseButton, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(increaseButton, WaitRequestType.NONE).click();
         assertEquals(slider.getInput().getStringValue(), "5");//6, but max is 5
 
     }
