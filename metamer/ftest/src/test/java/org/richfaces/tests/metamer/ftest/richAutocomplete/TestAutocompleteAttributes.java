@@ -67,7 +67,7 @@ public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
         autocompleteAttributes.set(AutocompleteAttributes.clientFilterFunction, Boolean.TRUE);
     }
 
-    // TODO attach JIRA link 
+    // TODO attach JIRA link
     @Test(groups = "4.3")
     @Templates(exclude = { "richPopupPanel" })
     public void testValueChangeListener() {
