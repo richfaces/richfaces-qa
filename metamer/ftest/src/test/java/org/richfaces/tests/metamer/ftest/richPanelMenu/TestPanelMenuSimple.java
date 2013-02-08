@@ -56,13 +56,13 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
         panelMenuAttributes.set(disabled, false);
 
-        assertEquals(page.panelMenu.getAllDisabledGroups(), 2);
-        assertEquals(page.panelMenu.getAllDisabledItems(), 3);
+        assertEquals(page.panelMenu.getAllDisabledGroups().size(), 2);
+        assertEquals(page.panelMenu.getAllDisabledItems().size(), 3);
 
         panelMenuAttributes.set(disabled, true);
 
-        assertEquals(page.panelMenu.getAllDisabledGroups(), 6);
-        assertEquals(page.panelMenu.getAllDisabledItems(), 24);
+        assertEquals(page.panelMenu.getAllDisabledGroups().size(), 6);
+        assertEquals(page.panelMenu.getAllDisabledItems().size(), 24);
     }
 
     @Test
