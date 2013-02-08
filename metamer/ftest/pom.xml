@@ -41,7 +41,7 @@ FSF site: http://www.fsf.org. -->
 
         <testng.listeners>org.richfaces.tests.metamer.ftest.MatrixConfigurator,org.richfaces.tests.metamer.ftest.MetamerSeleniumLoggingTestListener,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
-	    <version.metamer-portlet>3.1.1.Final</version.metamer-portlet>
+	    <version.metamer-portlet>3.1.2.Final</version.metamer-portlet>
     </properties>
 
     <dependencies>

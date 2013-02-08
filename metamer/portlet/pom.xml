@@ -26,7 +26,7 @@
       <!-- Choose Metamer version which works in Portal correctly -->
       <version.richfaces4.metamer>4.2.3.Final</version.richfaces4.metamer>
       <version.hibernate.validator>4.2.0.Final</version.hibernate.validator>
-      <version.portletbridge>3.1.1.Final</version.portletbridge>
+      <version.portletbridge>3.1.2.Final</version.portletbridge>
    </properties>
 
    <dependencies>
