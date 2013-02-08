@@ -40,6 +40,10 @@ import org.apache.commons.lang.ArrayUtils;
 import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
+import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
+import org.jboss.arquillian.graphene.proxy.Interceptor;
+import org.jboss.arquillian.graphene.proxy.InvocationContext;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -48,11 +52,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
-import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
-import org.jboss.arquillian.graphene.proxy.Interceptor;
-import org.jboss.arquillian.graphene.proxy.InvocationContext;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
@@ -63,7 +62,7 @@ public class MetamerPage {
 
     protected static final int MINOR_WAIT_TIME = 50;// ms
     protected static final int TRIES = 20;// for guardListSize and expectedReturnJS
-    @FindBy(css = "div#phasesPanel li")
+    @FindBy(css = "div[id$=phasesPanel] li")
     public List<WebElement> phases;
     @FindBy(css = "span[id$=requestTime]")
     public WebElement requestTime;
@@ -77,7 +76,7 @@ public class MetamerPage {
     public WebElement rerenderAllIcon;
     protected WebDriver driver = GrapheneContext.getProxy();
     private String reqTime;
-    private Map<PhaseId, Set<String>> map = new LinkedHashMap<PhaseId, Set<String>>();
+    private final Map<PhaseId, Set<String>> map = new LinkedHashMap<PhaseId, Set<String>>();
 
     /**
      * Executes JavaScript script.
@@ -207,7 +206,7 @@ public class MetamerPage {
     private static class RequestTimeChangesWaitingInterceptor implements Interceptor {
 
         protected String time1;
-        protected final By REQ_TIME = By.cssSelector("span[id='requestTime']");
+        protected final By REQ_TIME = By.cssSelector("span[id$='requestTime']");
 
         protected String getTime() {
             WebElement el = waitUntilElementIsVisible(REQ_TIME);

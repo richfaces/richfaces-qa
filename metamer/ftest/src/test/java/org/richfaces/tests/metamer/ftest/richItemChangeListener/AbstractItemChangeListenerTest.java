@@ -24,6 +24,7 @@ package org.richfaces.tests.metamer.ftest.richItemChangeListener;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
+
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.spi.annotations.Page;
@@ -52,7 +53,17 @@ public abstract class AbstractItemChangeListenerTest<P extends ICLPage> extends 
 
     @Override
     public MetamerNavigation getComponentExampleNavigation() {
-        return new MetamerNavigation("Rich", "Rich Item Change Listener", testedComponent);
+        String component = "";
+        if("accordion".equals(testedComponent)) {
+            component = "Accordion";
+        } else if("panelMenu".equals(testedComponent)) {
+            component = "Panel Menu";
+        } else if("tabPanel".equals(testedComponent)) {
+            component = "Tab Panel";
+        } else if("togglePanel".equals(testedComponent)) {
+            component = "Toggle Panel";
+        }
+        return new MetamerNavigation("Rich", "Rich Item Change Listener", component);
     }
 
     private void testICL(final String expectedText) {

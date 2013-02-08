@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest;
 
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-
 import static org.testng.Assert.assertEquals;
 
 import java.util.LinkedHashMap;
@@ -50,10 +49,10 @@ import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
  */
 public class PhaseInfo {
 
-    private GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
-    private TextRetriever retrieveRequestTime = TextRetriever.getInstance().locator(jq("span[id$=requestTime]"));
-    private JQueryLocator phasesItems = jq("div#phasesPanel li");
-    private Map<PhaseId, Set<String>> map = new LinkedHashMap<PhaseId, Set<String>>();
+    private final GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
+    private final TextRetriever retrieveRequestTime = TextRetriever.getInstance().locator(jq("span[id$=requestTime]"));
+    private final JQueryLocator phasesItems = jq("div[id$=phasesPanel] li");
+    private final Map<PhaseId, Set<String>> map = new LinkedHashMap<PhaseId, Set<String>>();
 
     /**
      * Asserts that the phases has occurred in last request by the specified list.

@@ -68,14 +68,14 @@ import org.testng.annotations.Test;
  */
 public class TestRichMenuItem extends AbstractGrapheneTest {
 
-    private JQueryLocator fileMenu = pjq("div[id$=menu1]");
-    private JQueryLocator fileMenuLabel = pjq("div[id$=menu1_label]");
-    private JQueryLocator menuItem1 = pjq("div[id$=menuItem1]");
-    private JQueryLocator image = menuItem1.getDescendant(jq("img"));
-    private JQueryLocator label = menuItem1.getDescendant(jq("span.rf-ddm-itm-lbl"));
-    private JQueryLocator menuItem2 = pjq("div[id$=menuItem2]");
-    private JQueryLocator menuGroup3 = pjq("div[id$=menuGroup3]");
-    private JQueryLocator emptyIcon = jq("span.rf-ddm-emptyIcon");
+    private final JQueryLocator fileMenu = pjq("div[id$=menu1]");
+    private final JQueryLocator fileMenuLabel = pjq("div[id$=menu1_label]");
+    private final JQueryLocator menuItem1 = pjq("div[id$=menuItem1]");
+    private final JQueryLocator image = menuItem1.getDescendant(jq("img"));
+    private final JQueryLocator label = menuItem1.getDescendant(jq("span.rf-ddm-itm-lbl"));
+    private final JQueryLocator menuItem2 = pjq("div[id$=menuItem2]");
+    private final JQueryLocator menuGroup3 = pjq("div[id$=menuGroup3]");
+    private final JQueryLocator emptyIcon = jq("span.rf-ddm-emptyIcon");
 
     @Override
     public URL getTestUrl() {
@@ -126,7 +126,7 @@ public class TestRichMenuItem extends AbstractGrapheneTest {
         guardXhr(selenium).click(menuItem1);
         waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
 
-        String listenerOutput = selenium.getText(jq("div#phasesPanel li:eq(6)"));
+        String listenerOutput = selenium.getText(jq("div[id$=phasesPanel] li:eq(6)"));
         assertEquals(listenerOutput, "* action invoked", "Action's output");
     }
 
@@ -137,7 +137,7 @@ public class TestRichMenuItem extends AbstractGrapheneTest {
         guardXhr(selenium).click(menuItem1);
         waitGui.failWith("Page was not updated").waitForChange(reqTime, retrieveText.locator(time));
 
-        String listenerOutput = selenium.getText(jq("div#phasesPanel li:eq(5)"));
+        String listenerOutput = selenium.getText(jq("div[id$=phasesPanel] li:eq(5)"));
         assertEquals(listenerOutput, "* action listener invoked", "Action listener's output");
     }
 
@@ -153,9 +153,9 @@ public class TestRichMenuItem extends AbstractGrapheneTest {
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
             PhaseId.RENDER_RESPONSE);
 
-        String listenerOutput = selenium.getText(jq("div#phasesPanel li:eq(3)"));
+        String listenerOutput = selenium.getText(jq("div[id$=phasesPanel] li:eq(3)"));
         assertEquals(listenerOutput, "* action listener invoked", "Action listener's output");
-        listenerOutput = selenium.getText(jq("div#phasesPanel li:eq(4)"));
+        listenerOutput = selenium.getText(jq("div[id$=phasesPanel] li:eq(4)"));
         assertEquals(listenerOutput, "* action invoked", "Action's output");
     }
 
@@ -261,9 +261,9 @@ public class TestRichMenuItem extends AbstractGrapheneTest {
 
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
 
-        String listenerOutput = selenium.getText(jq("div#phasesPanel li:eq(2)"));
+        String listenerOutput = selenium.getText(jq("div[id$=phasesPanel] li:eq(2)"));
         assertEquals(listenerOutput, "* action listener invoked", "Action listener's output");
-        listenerOutput = selenium.getText(jq("div#phasesPanel li:eq(3)"));
+        listenerOutput = selenium.getText(jq("div[id$=phasesPanel] li:eq(3)"));
         assertEquals(listenerOutput, "* action invoked", "Action's output");
     }
 
@@ -302,9 +302,9 @@ public class TestRichMenuItem extends AbstractGrapheneTest {
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
             PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
 
-        String listenerOutput = selenium.getText(jq("div#phasesPanel li:eq(5)"));
+        String listenerOutput = selenium.getText(jq("div[id$=phasesPanel] li:eq(5)"));
         assertEquals(listenerOutput, "* action listener invoked", "Action listener's output");
-        listenerOutput = selenium.getText(jq("div#phasesPanel li:eq(6)"));
+        listenerOutput = selenium.getText(jq("div[id$=phasesPanel] li:eq(6)"));
         assertEquals(listenerOutput, "* action invoked", "Action's output");
 
         // test for @mode=server
@@ -316,9 +316,9 @@ public class TestRichMenuItem extends AbstractGrapheneTest {
         phaseInfo.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
             PhaseId.UPDATE_MODEL_VALUES, PhaseId.INVOKE_APPLICATION, PhaseId.RENDER_RESPONSE);
 
-        listenerOutput = selenium.getText(jq("div#phasesPanel li:eq(5)"));
+        listenerOutput = selenium.getText(jq("div[id$=phasesPanel] li:eq(5)"));
         assertEquals(listenerOutput, "* action listener invoked", "Action listener's output");
-        listenerOutput = selenium.getText(jq("div#phasesPanel li:eq(6)"));
+        listenerOutput = selenium.getText(jq("div[id$=phasesPanel] li:eq(6)"));
         assertEquals(listenerOutput, "* action invoked", "Action's output");
 
     }
