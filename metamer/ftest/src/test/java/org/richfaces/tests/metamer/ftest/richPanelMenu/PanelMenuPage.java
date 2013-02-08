@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.panelMenu.RichPanelMenu;
 
@@ -33,4 +34,25 @@ public class PanelMenuPage extends MetamerPage {
 
     @FindBy( css = "div.rf-pm[id$=panelMenu]")
     public RichPanelMenu panelMenu;
+
+    @FindBy(css = "input[id$=expandAll]")
+    public WebElement expandAll;
+
+    @FindBy(css = "input[id$=expandAllBtn1]")
+    public WebElement expandAllBtn1;
+
+    @FindBy(css = "input[id$=collapseAll]")
+    public WebElement collapseAll;
+
+    @FindBy(css = "input[id$=collapseAllBtn1]")
+    public WebElement collapseAllBtn1;
+
+    @FindBy(css = "input[id$=selectItem]")
+    public WebElement selecItem;
+
+    @FindBy(css = "input[id$=selectItemBtn1]")
+    public WebElement selectItemBtn1;
+
+    @FindBy(css = "span[id$=current]")
+    public WebElement selectedItem;
 }

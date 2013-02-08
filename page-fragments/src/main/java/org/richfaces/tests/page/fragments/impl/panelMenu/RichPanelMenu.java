@@ -52,6 +52,9 @@ public class RichPanelMenu {
     @FindBy(css = "div[id$=group2]")
     public PanelMenuGroup group2;
 
+    @FindBy(css = "div[id$=group3]")
+    public PanelMenuGroup group3;
+
     @FindBy(css = "div[id$=item22]")
     public PanelMenuItem item22;
 

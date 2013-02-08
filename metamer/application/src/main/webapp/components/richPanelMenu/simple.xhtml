@@ -150,15 +150,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             
             <fieldset>
                 <legend>rich:panelMenu JS API</legend>
-                <a4j:commandButton value="expandAll() Ajax" onclick="#{rich:component('panelMenu')}.expandAll()" />
-                <input type="button" name="expandAllBtn" value="expandAll()" onclick="#{rich:component('panelMenu')}.expandAll()" />
+                <input type="button" id="expandAllBtn1" name="expandAllBtn" value="expandAll()" onclick="#{rich:component('panelMenu')}.expandAll()" />
                 <br/>
-                <a4j:commandButton value="collapseAll() Ajax" onclick="#{rich:component('panelMenu')}.collapseAll()" />
-                <input type="button" name="collapseAllBtn" value="collapseAll()" onclick="#{rich:component('panelMenu')}.collapseAll()" />
+                <input type="button" id="collapseAllBtn1" name="collapseAllBtn" value="collapseAll()" onclick="#{rich:component('panelMenu')}.collapseAll()" />
                 <br/>
-                <a4j:commandButton value="selectItem('item23') Ajax" 
-                       onclick="#{rich:component('panelMenu')}.selectItem('#{rich:clientId('item23')}')" />
-                <input type="button" name="collapseAllBtn" value="selectItem('item23')" 
+                <input type="button" id="selectItemBtn1" name="collapseAllBtn" value="selectItem('item23')" 
                        onclick="#{rich:component('panelMenu')}.selectItem('#{rich:clientId('item23')}')" />
             </fieldset>
             

@@ -23,6 +23,7 @@ package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.disabled;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.groupMode;
+import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.itemMode;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.rendered;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.width;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;
@@ -136,6 +137,82 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         panelMenuAttributes.set(PanelMenuAttributes.style, "");
         panelMenuAttributes.set(width, "300px");
         assertTrue(page.panelMenu.getRoot().getCssValue("width").contains("300px"));
+    }
+
+    @Test
+    @IssueTracking("https://issues.jboss.org/browse/RF-12778")
+    public void testJsApiExpandAll() {
+        panelMenuAttributes.set(groupMode, PanelMenuMode.client);
+        panelMenuAttributes.set(itemMode, PanelMenuMode.client);
+
+        page.expandAll.click();
+
+        assertEquals(page.panelMenu.getAllExpandedGroups().size(), 4);
+    }
+
+    @Test
+    @IssueTracking("https://issues.jboss.org/browse/RF-12778")
+    public void testJsApiExpandAll1() {
+        panelMenuAttributes.set(groupMode, PanelMenuMode.client);
+        panelMenuAttributes.set(itemMode, PanelMenuMode.client);
+
+        page.expandAllBtn1.click();
+
+        assertEquals(page.panelMenu.getAllExpandedGroups().size(), 4);
+    }
+
+    @Test
+    @IssueTracking("https://issues.jboss.org/browse/RF-12778")
+    public void testJsApiCollapseAll() {
+        panelMenuAttributes.set(groupMode, PanelMenuMode.client);
+        panelMenuAttributes.set(itemMode, PanelMenuMode.client);
+
+        // expand all group manually
+        page.panelMenu.group1.label.click();
+        page.panelMenu.group2.label.click();
+        page.panelMenu.group24.label.click();
+        page.panelMenu.group3.label.click();
+        page.collapseAll.click();
+
+        assertEquals(page.panelMenu.getAllExpandedGroups().size(), 0);
+    }
+
+    @Test
+    @IssueTracking("https://issues.jboss.org/browse/RF-12778")
+    public void testJsApiCollapseAll1() {
+        panelMenuAttributes.set(groupMode, PanelMenuMode.client);
+        panelMenuAttributes.set(itemMode, PanelMenuMode.client);
+
+        // expand all group manually
+        page.panelMenu.group1.label.click();
+        page.panelMenu.group2.label.click();
+        page.panelMenu.group24.label.click();
+        page.panelMenu.group3.label.click();
+        page.collapseAllBtn1.click();
+
+        assertEquals(page.panelMenu.getAllExpandedGroups().size(), 0);
+    }
+
+    @Test
+    @IssueTracking("https://issues.jboss.org/browse/RF-12778")
+    public void testJsApiSelectItem() {
+        panelMenuAttributes.set(groupMode, PanelMenuMode.client);
+        panelMenuAttributes.set(itemMode, PanelMenuMode.client);
+
+        page.selecItem.click();
+
+        assertEquals(page.selectedItem.getText(), "item23");
+    }
+
+    @Test
+    @IssueTracking("https://issues.jboss.org/browse/RF-12778")
+    public void testJsApiSelectItem1() {
+        panelMenuAttributes.set(groupMode, PanelMenuMode.client);
+        panelMenuAttributes.set(itemMode, PanelMenuMode.client);
+
+        page.selectItemBtn1.click();
+
+        assertEquals(page.selectedItem.getText(), "item23");
     }
 
     private int getExpandedGroupsCount() {
