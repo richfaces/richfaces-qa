@@ -81,7 +81,7 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     public void setup() {
         if (mode != null) {
             panelMenuAttributes.set(groupMode, mode);
-            page.panelMenu.setGroupMode(mode);
+            page.setGroupMode(mode);
         }
     }
 
@@ -89,10 +89,10 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     @Use(field = "mode", enumeration = true)
     public void testExpandEvent() {
         panelMenuAttributes.set(expandEvent, event.getEventName());
-        assertTrue(page.panelMenu.group2.isCollapsed());
+        assertTrue(page.group2.isCollapsed());
 
-        fireEvent(page.panelMenu.group2.label, event);
-        Graphene.waitModel(driver).until(new GroupIsExpanded(page.panelMenu.group2));
+        fireEvent(page.group2.label, event);
+        Graphene.waitModel(driver).until(new GroupIsExpanded(page.group2));
     }
 
     @Test
@@ -100,11 +100,11 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     public void testCollapseEvent() {
         panelMenuAttributes.set(collapseEvent, event.getEventName());
 
-        page.panelMenu.group2.toggle();
-        assertTrue(page.panelMenu.group2.isExpanded());
+        page.group2.toggle();
+        assertTrue(page.group2.isExpanded());
 
-        fireEvent(page.panelMenu.group2.label, event);
-        Graphene.waitModel().until(new GroupIsCollapsed(page.panelMenu.group2));
+        fireEvent(page.group2.label, event);
+        Graphene.waitModel().until(new GroupIsCollapsed(page.group2));
     }
 
     @Test

@@ -23,13 +23,10 @@ package org.richfaces.tests.page.fragments.impl.panelMenu;
 
 import java.util.List;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.richfaces.component.Mode;
-import org.richfaces.tests.page.fragments.impl.panelMenuGroup.PanelMenuGroup;
-import org.richfaces.tests.page.fragments.impl.panelMenuItem.PanelMenuItem;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
@@ -39,42 +36,6 @@ public class RichPanelMenu {
 
     @Root
     WebElement root;
-
-    @FindBy(css = "div[id$=item3]")
-    public PanelMenuItem item3;
-
-    @FindBy(css = "div[id$=item4]")
-    public PanelMenuItem item4;
-
-    @FindBy(css = "div[id$=group1]")
-    public PanelMenuGroup group1;
-
-    @FindBy(css = "div[id$=group2]")
-    public PanelMenuGroup group2;
-
-    @FindBy(css = "div[id$=group3]")
-    public PanelMenuGroup group3;
-
-    @FindBy(css = "div[id$=item22]")
-    public PanelMenuItem item22;
-
-    @FindBy(css = "div[id$=item25]")
-    public PanelMenuItem item25;
-
-    @FindBy(css = "div[id$=group24]")
-    public PanelMenuGroup group24;
-
-    @FindBy(css = "div[id$=group26]")
-    public PanelMenuGroup group26;
-
-    @FindBy(css = "div[id$=item242]")
-    public PanelMenuItem item242;
-
-    @FindBy(css = "div[id$=group4]")
-    public PanelMenuGroup group4;
-
-    Mode groupMode;
-    Mode itemMode;
 
     public static final String CSS_GROUP_DISABLED = "div[class*=rf-pm-][class*=-gr-dis]";
     public static final String CSS_GROUP_SELECTED = "div[class*=rf-pm][class*=-gr-sel]";
@@ -109,28 +70,6 @@ public class RichPanelMenu {
 
     public List<WebElement> getAllSelectedGroups() {
         return root.findElements(By.cssSelector(CSS_GROUP_SELECTED));
-    }
-
-    public void setGroupMode(Mode groupMode) {
-        this.groupMode = groupMode;
-
-        // panelMenuGroup inherits mode from panelMenu until set different
-        group1.setMode(groupMode);
-        group2.setMode(groupMode);
-        group24.setMode(groupMode);
-        group26.setMode(groupMode);
-        group4.setMode(groupMode);
-    }
-
-    public void setItemMode(Mode itemMode) {
-        this.itemMode = itemMode;
-
-        // panelMenuItem inherits from panelMenu until set different
-        item22.setMode(itemMode);
-        item242.setMode(itemMode);
-        item25.setMode(itemMode);
-        item3.setMode(itemMode);
-        item4.setMode(itemMode);
     }
 
     public WebElement getRoot() {

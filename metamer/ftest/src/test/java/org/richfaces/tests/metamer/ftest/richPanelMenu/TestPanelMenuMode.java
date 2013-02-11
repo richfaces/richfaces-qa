@@ -57,19 +57,19 @@ public class TestPanelMenuMode extends AbstractPanelMenuTest {
     @Test
     public void testGroupMode() {
         panelMenuAttributes.set(groupMode, mode);
-        page.panelMenu.setGroupMode(mode);
+        page.setGroupMode(mode);
 
-        assertTrue(page.panelMenu.group1.isCollapsed());
-        page.panelMenu.group1.toggle();
-        assertTrue(page.panelMenu.group1.isExpanded());
+        assertTrue(page.group1.isCollapsed());
+        page.group1.toggle();
+        assertTrue(page.group1.isExpanded());
 
         if (mode != Mode.client) {
             page.assertPhases(expectedPhases);
         }
 
-        page.panelMenu.group1.toggle();
+        page.group1.toggle();
 
-        assertTrue(page.panelMenu.group1.isCollapsed());
+        assertTrue(page.group1.isCollapsed());
 
         if (mode != Mode.client) {
             page.assertPhases(expectedPhases);
@@ -79,11 +79,11 @@ public class TestPanelMenuMode extends AbstractPanelMenuTest {
     @Test
     public void testItemMode() {
         panelMenuAttributes.set(itemMode, mode);
-        page.panelMenu.setItemMode(mode);
+        page.setItemMode(mode);
 
-        assertFalse(page.panelMenu.item3.isSelected());
-        page.panelMenu.item3.select();
-        assertTrue(page.panelMenu.item3.isSelected());
+        assertFalse(page.item3.isSelected());
+        page.item3.select();
+        assertTrue(page.item3.isSelected());
 
         if (mode != Mode.client) {
             page.assertPhases(expectedPhases);

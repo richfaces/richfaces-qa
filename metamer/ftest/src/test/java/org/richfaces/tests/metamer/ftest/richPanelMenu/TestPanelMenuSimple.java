@@ -72,35 +72,35 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     public void testExpandSingle() {
         panelMenuAttributes.set(PanelMenuAttributes.expandSingle, expandSingle);
 
-        page.panelMenu.group2.toggle();
+        page.group2.toggle();
         assertEquals(getExpandedGroupsCount(), expanded(1));
 
-        page.panelMenu.group1.toggle();
+        page.group1.toggle();
         assertEquals(getExpandedGroupsCount(), expanded(2));
     }
 
     @Test
     public void testGroupClass() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
-        testStyleClass(page.panelMenu.group24.getRoot(), BasicAttributes.groupClass);
+        testStyleClass(page.group24.getRoot(), BasicAttributes.groupClass);
     }
 
     @Test
     public void testGroupDisabledClass() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
-        super.testStyleClass(page.panelMenu.group26.getRoot(), BasicAttributes.groupDisabledClass);
+        super.testStyleClass(page.group26.getRoot(), BasicAttributes.groupDisabledClass);
     }
 
     @Test
     public void testItemClass() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
-        super.testStyleClass(page.panelMenu.item22.getRoot(), BasicAttributes.itemClass);
+        super.testStyleClass(page.item22.getRoot(), BasicAttributes.itemClass);
     }
 
     @Test
     public void testItemDisabledClass() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
-        super.testStyleClass(page.panelMenu.item25.getRoot(), BasicAttributes.itemDisabledClass);
+        super.testStyleClass(page.item25.getRoot(), BasicAttributes.itemDisabledClass);
     }
 
     @Test
@@ -123,12 +123,12 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
 
     @Test
     public void testTopGroupClass() {
-        testStyleClass(page.panelMenu.group1.getRoot(), BasicAttributes.topGroupClass);
+        testStyleClass(page.group1.getRoot(), BasicAttributes.topGroupClass);
     }
 
     @Test
     public void testTopItemClass() {
-        testStyleClass(page.panelMenu.item3.getRoot(), BasicAttributes.topItemClass);
+        testStyleClass(page.item3.getRoot(), BasicAttributes.topItemClass);
     }
 
     @Test
@@ -168,10 +168,10 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         panelMenuAttributes.set(itemMode, PanelMenuMode.client);
 
         // expand all group manually
-        page.panelMenu.group1.label.click();
-        page.panelMenu.group2.label.click();
-        page.panelMenu.group24.label.click();
-        page.panelMenu.group3.label.click();
+        page.group1.label.click();
+        page.group2.label.click();
+        page.group24.label.click();
+        page.group3.label.click();
         page.collapseAll.click();
 
         assertEquals(page.panelMenu.getAllExpandedGroups().size(), 0);
@@ -184,10 +184,10 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         panelMenuAttributes.set(itemMode, PanelMenuMode.client);
 
         // expand all group manually
-        page.panelMenu.group1.label.click();
-        page.panelMenu.group2.label.click();
-        page.panelMenu.group24.label.click();
-        page.panelMenu.group3.label.click();
+        page.group1.label.click();
+        page.group2.label.click();
+        page.group24.label.click();
+        page.group3.label.click();
         page.collapseAllBtn1.click();
 
         assertEquals(page.panelMenu.getAllExpandedGroups().size(), 0);

@@ -23,8 +23,11 @@ package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
+import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.panelMenu.RichPanelMenu;
+import org.richfaces.tests.page.fragments.impl.panelMenuGroup.PanelMenuGroup;
+import org.richfaces.tests.page.fragments.impl.panelMenuItem.PanelMenuItem;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
@@ -34,6 +37,39 @@ public class PanelMenuPage extends MetamerPage {
 
     @FindBy( css = "div.rf-pm[id$=panelMenu]")
     public RichPanelMenu panelMenu;
+
+    @FindBy(css = "div[id$=item3]")
+    public PanelMenuItem item3;
+
+    @FindBy(css = "div[id$=item4]")
+    public PanelMenuItem item4;
+
+    @FindBy(css = "div[id$=group1]")
+    public PanelMenuGroup group1;
+
+    @FindBy(css = "div[id$=group2]")
+    public PanelMenuGroup group2;
+
+    @FindBy(css = "div[id$=group3]")
+    public PanelMenuGroup group3;
+
+    @FindBy(css = "div[id$=item22]")
+    public PanelMenuItem item22;
+
+    @FindBy(css = "div[id$=item25]")
+    public PanelMenuItem item25;
+
+    @FindBy(css = "div[id$=group24]")
+    public PanelMenuGroup group24;
+
+    @FindBy(css = "div[id$=group26]")
+    public PanelMenuGroup group26;
+
+    @FindBy(css = "div[id$=item242]")
+    public PanelMenuItem item242;
+
+    @FindBy(css = "div[id$=group4]")
+    public PanelMenuGroup group4;
 
     @FindBy(css = "input[id$=expandAll]")
     public WebElement expandAll;
@@ -55,4 +91,21 @@ public class PanelMenuPage extends MetamerPage {
 
     @FindBy(css = "span[id$=current]")
     public WebElement selectedItem;
+
+    public void setGroupMode(Mode groupMode) {
+        group1.setMode(groupMode);
+        group2.setMode(groupMode);
+        group24.setMode(groupMode);
+        group26.setMode(groupMode);
+        group4.setMode(groupMode);
+    }
+
+    public void setItemMode(Mode itemMode) {
+        item22.setMode(itemMode);
+        item242.setMode(itemMode);
+        item25.setMode(itemMode);
+        item3.setMode(itemMode);
+        item4.setMode(itemMode);
+    }
+
 }

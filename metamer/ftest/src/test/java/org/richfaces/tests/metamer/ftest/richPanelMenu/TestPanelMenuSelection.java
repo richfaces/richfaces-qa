@@ -46,16 +46,16 @@ public class TestPanelMenuSelection extends AbstractPanelMenuTest {
 
         assertEquals(getSelectedItems(), 0);
         assertEquals(getSelectedGroups(), 0);
-        page.panelMenu.group2.toggle();
+        page.group2.toggle();
         assertEquals(getSelectedItems(), 0);
         assertEquals(getSelectedGroups(), 0);
-        page.panelMenu.item22.select();
+        page.item22.select();
         assertEquals(getSelectedItems(), 1);
         assertEquals(getSelectedGroups(), bubbledGroups(1));
-        page.panelMenu.group24.toggle();
+        page.group24.toggle();
         assertEquals(getSelectedItems(), 1);
         assertEquals(getSelectedGroups(), bubbledGroups(1));
-        page.panelMenu.item242.select();
+        page.item242.select();
         assertEquals(getSelectedItems(), 1);
         assertEquals(getSelectedGroups(), bubbledGroups(2));
     }

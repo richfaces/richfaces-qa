@@ -52,7 +52,8 @@ public class AbstractPanelMenuTest extends AbstractWebDriverTest {
     public void setupModes() {
         panelMenuAttributes.set(itemMode, ajax);
         panelMenuAttributes.set(groupMode, ajax);
-        page.panelMenu.setItemMode(ajax);
-        page.panelMenu.setGroupMode(ajax);
+
+        page.setGroupMode(ajax);
+        page.setItemMode(ajax);
     }
 }
