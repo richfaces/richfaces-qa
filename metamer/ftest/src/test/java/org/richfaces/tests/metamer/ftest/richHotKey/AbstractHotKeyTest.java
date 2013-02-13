@@ -39,8 +39,8 @@ import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.log.Log.LogEntryLevel;
 import org.richfaces.tests.page.fragments.impl.log.LogEntries;
-import org.richfaces.tests.page.fragments.impl.log.RichFacesFilterBuilder;
 import org.richfaces.tests.page.fragments.impl.log.RichFacesLog;
+import org.richfaces.tests.page.fragments.impl.log.RichFacesLogFilterBuilder;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -81,7 +81,7 @@ public abstract class AbstractHotKeyTest extends AbstractWebDriverTest {
 
     protected void checkEvent(String text, int number) {
         LogEntries filter = log.getLogEntries(LogEntryLevel.INFO)
-                .filter(new RichFacesFilterBuilder().filterToContentContains(text));
+                .filter(new RichFacesLogFilterBuilder().filterToContentContains(text));
         int logEntriesWithContent = filter.size();
         assertEquals(logEntriesWithContent, number, "The number of hotkey events doesn't match.");
     }
