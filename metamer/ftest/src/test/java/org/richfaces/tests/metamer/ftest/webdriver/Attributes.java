@@ -1,4 +1,4 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.webdriver;
 
 import java.util.List;
@@ -29,7 +29,6 @@ import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -37,6 +36,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.WebElementProxyUtils;
+import org.richfaces.tests.page.fragments.impl.Utils;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -149,7 +149,7 @@ public class Attributes<T extends AttributeEnum> {
         String text = input.getAttribute("value");
         if (!value.equals(text)) {
             if (!text.isEmpty()) {
-                ((JavascriptExecutor) driver).executeScript("$(\"input[id$=':" + propertyName + "Input']\").val('')");
+                Utils.jQ("val('')", input);
             }
             input.sendKeys(value);
             MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();

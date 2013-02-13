@@ -21,21 +21,50 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richHotKey;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.openqa.selenium.Keys;
+import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public enum HotKeyAttributes implements AttributeEnum {
+public class TestHotKey extends AbstractHotKeyTest {
 
-    binding,
-    enabledInInput,
-    id,
-    key,
-    onkeydown,
-    onkeyup,
-    preventDefault,
-    rendered,
-    selector
+    private static final int NUMBER_OF_TESTS = 3;
+
+    @Test
+    public void testFirstAndSecondPair() {
+        for (int i = 1; i <= NUMBER_OF_TESTS; i++) {
+            for (int j = 0; j < i; j++) {
+                pressHotkeyOnElement(HOTKEY_CTRL_X, firstInput.getInput());
+                pressHotkeyOnElement(HOTKEY_ALT_X, firstInput.getInput());
+            }
+            checkEvents(i, i);
+            clearHotKeyEvents();
+        }
+    }
+
+    @Test
+    public void testFirstPair() {
+        testPair(HOTKEY_CTRL_X, 1);
+    }
+
+    private void testPair(String keys, int hotkeyNum) {
+        for (int i = 1; i <= NUMBER_OF_TESTS; i++) {
+            for (int j = 0; j < i; j++) {
+                pressHotkeyOnElement(keys, firstInput.getInput());
+            }
+            if (hotkeyNum == 1) {
+                checkEvents(i, 0);
+            } else {//2
+                checkEvents(0, i);
+            }
+            clearHotKeyEvents();
+        }
+    }
+
+    @Test
+    public void testSecondPair() {
+        testPair(HOTKEY_ALT_X, 2);
+    }
 }
