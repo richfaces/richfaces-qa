@@ -21,16 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.log;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.spi.annotations.Root;
-import org.joda.time.DateTime;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -39,90 +35,22 @@ public class RichFacesLog implements Log {
 
     @Root
     private WebElement root;
-
-    @FindBy(css = ".rf-log-entry-lbl-debug")
-    private List<WebElement> debugEntryTimeStamps;
-
-    @FindBy(css = ".rf-log-entry-msg-debug")
-    private List<WebElement> debugEntryContent;
-
-    @FindBy(css = ".rf-log-entry-lbl-info")
-    private List<WebElement> infoEntryTimeStamps;
-
-    @FindBy(css = ".rf-log-entry-msg-info")
-    private List<WebElement> infoEntryContent;
-
-    @FindBy(css = ".rf-log-entry-lbl-warn")
-    private List<WebElement> warnEntryTimeStamps;
-
-    @FindBy(css = ".rf-log-entry-msg-info")
-    private List<WebElement> warnEntryContent;
-
-    @FindBy(css = ".rf-log-entry-lbl-error")
-    private List<WebElement> errorEntryTimeStamps;
-
-    @FindBy(css = ".rf-log-entry-msg-error")
-    private List<WebElement> errorEntryContent;
-
+    //
+    @FindBy(css = "div.rf-log-contents > div")
+    private List<RichFacesLogEntry> logEntries;
+    @FindBy(xpath = ".//div[span[contains(@class, 'rf-log-entry-lbl-error')]]")
+    private List<RichFacesLogEntry> errorLogEntries;
+    @FindBy(xpath = ".//div[span[contains(@class, 'rf-log-entry-lbl-warn')]]")
+    private List<RichFacesLogEntry> warnLogEntries;
+    @FindBy(xpath = ".//div[span[contains(@class, 'rf-log-entry-lbl-info')]]")
+    private List<RichFacesLogEntry> infoLogEntries;
+    @FindBy(xpath = ".//div[span[contains(@class, 'rf-log-entry-lbl-debug')]]")
+    private List<RichFacesLogEntry> debugLogEntries;
+    //
     @FindBy(tagName = "button")
     private WebElement clearButton;
-
     @FindBy(tagName = "select")
     private WebElement levelSelect;
-
-    @FindBy(tagName = "option")
-    private List<WebElement> levelSelectOptions;
-
-    @Override
-    public List<LogEntry> getAllLogEntries() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public List<LogEntry> getAllDebugEntries() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public List<LogEntry> getAllInfoEntries() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public List<LogEntry> getAllWarnEntries() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public List<LogEntry> getAllErrorEntries() {
-        List<LogEntry> errorEntries = new ArrayList<LogEntry>();
-
-        for (int i = 0; i < errorEntryTimeStamps.size(); i++) {
-            LogEntry logEntry = new LogEntry();
-
-            logEntry.setLevel(LogEntryLevel.ERROR);
-            logEntry.setTimeStamp(parseTimeStamp(errorEntryTimeStamps.get(i).getText()));
-            logEntry.setContent(errorEntryContent.get(i).getText());
-
-            errorEntries.add(logEntry);
-        }
-
-        return errorEntries;
-    }
-
-    private DateTime parseTimeStamp(String text) {
-        Date date = null;
-
-        String timeStamp = text.substring(text.indexOf('[') + 1, text.indexOf(']'));
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:m:s.S");
-        try {
-            date = formatter.parse(timeStamp);
-        } catch (ParseException e) {
-            throw new RuntimeException("Something went wrong with parsing of log entry timestamp!", e);
-        }
-
-        return new DateTime(date);
-    }
 
     @Override
     public void clear() {
@@ -130,8 +58,34 @@ public class RichFacesLog implements Log {
     }
 
     @Override
-    public void changeLevel(LogEntryLevel lvl) {
-        throw new UnsupportedOperationException();
+    public void changeLevel(LogEntryLevel level) {
+        LogEntryLevel convertedLevel = (level.equals(LogEntryLevel.ALL) ? LogEntryLevel.DEBUG
+                : level.equals(LogEntryLevel.FATAL) ? LogEntryLevel.ERROR : level);
+        new Select(levelSelect).selectByValue(convertedLevel.getLevelName());
     }
 
+    @Override
+    public LogEntries getLogEntries(LogEntryLevel level) {
+        switch (level) {
+            case DEBUG:
+                return new LogEntries(debugLogEntries);
+            case INFO:
+                return new LogEntries(infoLogEntries);
+            case WARN:
+                return new LogEntries(warnLogEntries);
+            case ERROR:
+                return new LogEntries(errorLogEntries);
+            case ALL:
+                return new LogEntries(logEntries);
+            case FATAL:
+                return new LogEntries();//empty list
+            default:
+                throw new UnsupportedOperationException("Unknown level " + level);
+        }
+    }
+
+    @Override
+    public LogEntries getLogEntries(LogFilterBuilder fb) {
+        return new LogEntries(logEntries).filter(fb);
+    }
 }

@@ -21,26 +21,31 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.log;
 
-import org.joda.time.DateTime;
-import org.richfaces.tests.page.fragments.impl.log.Log.LogEntryLevel;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface LogEntry {
+public class LogEntries extends ArrayList<LogEntry> {
 
-    /**
-     * Return the content of this log entry
-     */
-    String getContent();
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * Return the level of this log entry.
-     */
-    LogEntryLevel getLevel();
+    public LogEntries() {
+    }
 
-    /**
-     * Returns the DateTime of this log entry.
-     */
-    DateTime getTimeStamp();
+    public LogEntries(Collection<? extends LogEntry> c) {
+        super(c);
+    }
+
+    public LogEntries(Iterable<? extends LogEntry> it) {
+        this.addAll(Lists.newArrayList(it));
+    }
+
+    public LogEntries filter(LogFilterBuilder builder) {
+        return new LogEntries(Iterables.filter(this, builder.build()));
+    }
 }

@@ -21,25 +21,36 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.log;
 
+import java.util.EnumSet;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.log.Log.LogEntryLevel;
+
 /**
- * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public enum LogEntryLevel {
-    ALL("all"),
-    DEBUG("debug"),
-    INFO("info"),
-    WARN("warn"),
-    FATAL("fatal"),
-    ERROR("error");
+public enum RichFacesLogEntryLevel {
 
-    private final String text;
+    DEBUG(LogEntryLevel.DEBUG, "rf-log-entry-lbl-debug"),
+    INFO(LogEntryLevel.INFO, "rf-log-entry-lbl-info"),
+    WARN(LogEntryLevel.WARN, "rf-log-entry-lbl-warn"),
+    ERROR(LogEntryLevel.ERROR, "rf-log-entry-lbl-error"),
+    ALL(LogEntryLevel.ERROR, null);
+    //
+    private final LogEntryLevel level;
+    private final String containsClass;
 
-    LogEntryLevel(String text) {
-        this.text = text;
+    private RichFacesLogEntryLevel(LogEntryLevel level, String containsClass) {
+        this.level = level;
+        this.containsClass = containsClass;
     }
 
-    @Override
-    public String toString() {
-        return text;
+    static LogEntryLevel getLevelFromLabel(WebElement label) {
+        String styleClasses = label.getAttribute("class");
+        for (RichFacesLogEntryLevel logEntryLevel : EnumSet.of(DEBUG, INFO, WARN, ERROR)) {
+            if (styleClasses.contains(logEntryLevel.containsClass)) {
+                return logEntryLevel.level;
+            }
+        }
+        throw new RuntimeException("Cannot obtain level from label: " + label);
     }
 }

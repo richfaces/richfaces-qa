@@ -25,20 +25,46 @@ import java.util.List;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public interface Log {
 
-    List<LogEntry> getAllLogEntries();
+    enum LogEntryLevel {
 
-    List<LogEntry> getAllDebugEntries();
+        ALL("all"),
+        DEBUG("debug"),
+        INFO("info"),
+        WARN("warn"),
+        ERROR("error"),
+        FATAL("fatal");
+        private final String level;
 
-    List<LogEntry> getAllInfoEntries();
+        private LogEntryLevel(String level) {
+            this.level = level;
+        }
 
-    List<LogEntry> getAllWarnEntries();
+        public String getLevelName() {
+            return level;
+        }
+    }
 
-    List<LogEntry> getAllErrorEntries();
+    /**
+     * Change level of log.
+     */
+    void changeLevel(LogEntryLevel level);
 
+    /**
+     * Clear the all messages in log. Without waiting for clearing the messages.
+     */
     void clear();
 
-    void changeLevel(LogEntryLevel lvl);
+    /**
+     * Returns all entries in log with the specified level.
+     */
+    List<LogEntry> getLogEntries(LogEntryLevel level);
+
+    /**
+     * Return all entries, which will pass through the filter.
+     */
+    List<LogEntry> getLogEntries(LogFilterBuilder fb);
 }

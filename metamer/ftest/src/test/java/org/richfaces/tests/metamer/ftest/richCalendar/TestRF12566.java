@@ -36,12 +36,13 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.page.fragments.impl.log.Log.LogEntryLevel;
 import org.richfaces.tests.page.fragments.impl.log.LogEntry;
 import org.richfaces.tests.page.fragments.impl.log.RichFacesLog;
 import org.testng.annotations.Test;
 
 /**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
 public class TestRF12566 extends AbstractWebDriverTest {
 
@@ -58,16 +59,14 @@ public class TestRF12566 extends AbstractWebDriverTest {
         page.getShowCalendarButton().click();
 
         Graphene.waitAjax().until(new ExpectedCondition<Boolean>() {
-
             public Boolean apply(WebDriver d) {
-
                 return page.getNextMonthScroller().isDisplayed();
             }
         });
 
         guardXhr(page.getNextMonthScroller()).click();
 
-        List<LogEntry> errorEntries = page.getLog().getAllErrorEntries();
+        List<LogEntry> errorEntries = page.getLog().getLogEntries(LogEntryLevel.ERROR);
         assertEquals(errorEntries.size(), 0, "There should be no errors on the log screen!");
     }
 

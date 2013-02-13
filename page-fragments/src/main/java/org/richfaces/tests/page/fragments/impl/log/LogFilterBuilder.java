@@ -21,26 +21,48 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.log;
 
+import com.google.common.base.Predicate;
+
 import org.joda.time.DateTime;
 import org.richfaces.tests.page.fragments.impl.log.Log.LogEntryLevel;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface LogEntry {
+public interface LogFilterBuilder {
 
     /**
-     * Return the content of this log entry
+     * Function that will build this filter. Merges all filter properties to one.
      */
-    String getContent();
+    Predicate<LogEntry> build();
 
     /**
-     * Return the level of this log entry.
+     * Filters out all entries with time after the specified time in @time.
      */
-    LogEntryLevel getLevel();
+    LogFilterBuilder filterOutLogsNewerThan(DateTime time);
 
     /**
-     * Returns the DateTime of this log entry.
+     * Filters out all entries with time before the specified time in @time.
      */
-    DateTime getTimeStamp();
+    LogFilterBuilder filterOutLogsOlderThan(DateTime time);
+
+    /**
+     * Filters out all entries with different content than specified in @content.
+     */
+    LogFilterBuilder filterToContentContains(String content);
+
+    /**
+     * Filters out all entries that contains String specified in @content.
+     */
+    LogFilterBuilder filterToContentNotContains(String content);
+
+    /**
+     * Filters out all entries with different level.
+     */
+    LogFilterBuilder filterToLevel(LogEntryLevel level);
+
+    /**
+     * Filters out all entries with different levels.
+     */
+    LogFilterBuilder filterToLevels(LogEntryLevel... levels);
 }
