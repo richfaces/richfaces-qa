@@ -1,50 +1,89 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core">
 
-<!--
-JBoss, Home of Professional Open Source
-Copyright 2010-2012, Red Hat, Inc. and individual contributors
-by the @authors tag. See the copyright.txt in the distribution for a
-full listing of individual contributors.
-
-This is free software; you can redistribute it and/or modify it
-under the terms of the GNU Lesser General Public License as
-published by the Free Software Foundation; either version 2.1 of
-the License, or (at your option) any later version.
-
-This software is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with this software; if not, write to the Free
-Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    <!--
+    JBoss, Home of Professional Open Source
+    Copyright 2010-2012, Red Hat, Inc. and individual contributors
+    by the @authors tag. See the copyright.txt in the distribution for a
+    full listing of individual contributors.
+    
+    This is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as
+    published by the Free Software Foundation; either version 2.1 of
+    the License, or (at your option) any later version.
+    
+    This software is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    Lesser General Public License for more details.
+    
+    You should have received a copy of the GNU Lesser General Public
+    License along with this software; if not, write to the Free
+    Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+    02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-<ui:composition>
-    <hr style="width: 1050px; margin-left: 0px;" />
+    <ui:composition>
+        <hr style="width: 1050px; margin-left: 0px;" />
 
-    <ul>
-        <li><h:outputText id="richfacesVersion" value="#{metamer.richFacesVersion}" /></li>
-        <li><h:outputText id="metamerVersion" value="#{metamer.shortVersion}" /></li>
-        <li><h:outputText id="jsfVersion" value="#{metamer.jsfVersion}" /></li>
-        <li><h:outputText id="serverVersion" value="#{metamer.serverVersion}" /></li>
-        <li><h:outputText id="javaVersion" value="#{metamer.javaVersion}" /> @ <h:outputText id="osVersion"
-                value="#{metamer.osVersion}" /></li>
-        <li><h:outputText id="browserVersion" value="#{metamer.browserVersion}" /></li>
-    </ul>
+        <ul>
+            <li><h:outputText id="richfacesVersion" value="#{metamer.richFacesVersion}" /></li>
+            <li><h:outputText id="metamerVersion" value="#{metamer.shortVersion}" /></li>
+            <li><h:outputText id="jsfVersion" value="#{metamer.jsfVersion}" /></li>
+            <li><h:outputText id="serverVersion" value="#{metamer.serverVersion}" /></li>
+            <li><h:outputText id="javaVersion" value="#{metamer.javaVersion}" /> @ <h:outputText id="osVersion"
+                                                                                                 value="#{metamer.osVersion}" /></li>
+            <li><h:outputText id="browserVersion" value="#{metamer.browserVersion}" /></li>
+        </ul>
 
-    <!-- human-readable browser detection -->
+        
+        
+        <!-- Portal link generation test code  
+        link examples:
+        http://localhost:8080/portal/classic/metamer/faces/components/a4jActionListener/all.xhtml
+        http://localhost:8080/portal/classic/metamer-portlet/faces/components/a4jActionListener/all.xhtml
+        
+        metamer/faces/components/a4jActionListener/all.xhtml
+        /metamer/faces/components/a4jActionListener/all.xhtml
+        /metamer-portlet/faces/components/a4jActionListener/all.xhtml
+        metamer-portlet/faces/components/a4jActionListener/all.xhtml
+        
+        /faces/components/a4jActionListener/all.xhtml
+        faces/components/a4jActionListener/all.xhtml
+        
+        This is what I've tried. Most of them will redirect to Metamer homepage and some of them throws exception.
+        -->
+        
+        <h:form>
 
-    <h:outputScript name="jquery.js" target="head" />
-    <h:outputScript library="script" name="detect-browser.js" target="head" />
-    <script type="text/javascript">
-                jQuery("span[id$=browserVersion]").text(jQuery.browser.name + ' ' + jQuery.browser.version + ' @ ' + jQuery.browser.os);
-    </script>
+            <h:outputLabel for="linkToTest" value="Redirection with externalContext.redirect" />&nbsp;
+            <h:inputText id="linkToTest" value="#{portalRedirectorBean.linkToTest}" />
+            <h:commandLink value="Redirect" action="#{portalRedirectorBean.redirectToTestPage}" /><br />
+            
+            <h:outputLink value="#{facesContext.externalContext.requestContextPath}/faces/index.xhtml">
+                <f:param name="javax.portlet.faces.ViewLink" value="true" />
+                <f:param name="template" value="plain" />
+                direct link to metamer homepage
+            </h:outputLink>
+            <br /><br />
 
-</ui:composition>
+            <h:outputLabel for="linkToTest2" value="Redirection with ActionRespose.sendRedirect" />&nbsp;
+            <h:inputText id="linkToTest2" value="#{portalUrlBean.linkToTest}" />
+            <h:commandLink value="Redirect" action="#{portalUrlBean.redirect}" /><br />
+        </h:form>
+        
+        requestContextPath: #{facesContext.externalContext.requestContextPath}
+        
+        <!-- human-readable browser detection -->
+        
+        <h:outputScript name="jquery.js" target="head" />
+        <h:outputScript library="script" name="detect-browser.js" target="head" />
+        <script type="text/javascript">
+            jQuery("span[id$=browserVersion]").text(jQuery.browser.name + ' ' + jQuery.browser.version + ' @ ' + jQuery.browser.os);
+        </script>
+
+    </ui:composition>
 </html>
