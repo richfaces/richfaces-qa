@@ -21,21 +21,19 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 
-import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
-import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEDOWN;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEMOVE;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOUT;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOVER;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEUP;
-
 import static org.richfaces.PanelMenuMode.client;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.panelMenuGroupAttributes;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.mode;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.onclick;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.ondblclick;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.onmousedown;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.onmousemove;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.onmouseover;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.onmouseup;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuGroupAttributes;
 
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 
 
@@ -45,14 +43,54 @@ import org.testng.annotations.Test;
  */
 public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTest {
 
-    @Inject
-    @Use("events")
-    Event event;
-    Event[] events = new Event[] { CLICK, DBLCLICK, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER, MOUSEUP };
+    @Test
+    public void testOnClick() {
+        panelMenuGroupAttributes.set(mode, client);
+
+        Action click = new Actions(driver).click(page.topGroup.getRoot()).build();
+        testFireEvent(panelMenuGroupAttributes, onclick, click);
+    }
 
     @Test
-    public void testDOMEventHandler() {
+    public void testOnDblClick() {
         panelMenuGroupAttributes.set(mode, client);
-        super.testFireEvent(event, topGroup);
+        Action dblClick = new Actions(driver).doubleClick(page.topGroup.getRoot()).build();
+        testFireEvent(panelMenuGroupAttributes, ondblclick, dblClick);
     }
+
+    @Test
+    public void testOnMousedown() {
+        panelMenuGroupAttributes.set(mode, client);
+        Action mousedown = new Actions(driver).clickAndHold(page.topGroup.getRoot()).build();
+        testFireEvent(panelMenuGroupAttributes, onmousedown, mousedown);
+    }
+
+    @Test
+    public void testOnMousemove() {
+        panelMenuGroupAttributes.set(mode, client);
+        Action mousemove = new Actions(driver).moveToElement(page.topGroup.getRoot(), 3, 3).build();
+        testFireEvent(panelMenuGroupAttributes, onmousemove, mousemove);
+    }
+
+    @Test
+    public void testOnMouseout() {
+        panelMenuGroupAttributes.set(mode, client);
+        // TODO JJa 2013-02-13: Rewrite using webdriver api when fixed (not working now)
+        testFireEventWithJS(page.topGroup.getRoot(), MOUSEOUT, panelMenuGroupAttributes, PanelMenuGroupAttributes.onmouseout);
+    }
+
+    @Test
+    public void testOnMouseover() {
+        panelMenuGroupAttributes.set(mode, client);
+        Action mouseover = new Actions(driver).moveToElement(page.topGroup.getRoot(), 3, 3).build();
+        testFireEvent(panelMenuGroupAttributes, onmouseover, mouseover);
+    }
+
+    @Test
+    public void testOnMouseup() {
+        panelMenuGroupAttributes.set(mode, client);
+        Action mouseup = new Actions(driver).clickAndHold(page.topGroup.getRoot()).release().build();
+        testFireEvent(panelMenuGroupAttributes, onmouseup, mouseup);
+    }
+
 }

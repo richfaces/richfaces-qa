@@ -19,34 +19,33 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.page.fragments.impl.panelMenuGroup;
-
-import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.ATTR_CLASS;
+package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.page.fragments.impl.panelMenu.RichPanelMenu;
+import org.richfaces.tests.page.fragments.impl.panelMenuGroup.PanelMenuGroup;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
  *
  */
-public class PanelMenuGroupIcon {
+public class PanelMenuGroupPage extends MetamerPage {
 
-    private static final String CSS_COLLAPSED = "div.rf-pm-ico-colps";
-    private static final String CSS_EXPANDED = "div.rf-pm-ico-exp";
+    @FindBy(css = "div.rf-pm[id$=panelMenu]")
+    public RichPanelMenu menu;
 
-    @Root
-    WebElement root;
+    @FindBy(css = "div[id$=group2]")
+    public PanelMenuGroup topGroup;
 
-    @FindBy(css = CSS_COLLAPSED)
-    public WebElement iconCollapsed;
+    @FindBy(css = "div[id$=group1]")
+    public PanelMenuGroup group1;
 
-    @FindBy(css = CSS_EXPANDED)
-    public WebElement iconExpanded;
+    @FindBy(css = "div[id$=group23]")
+    public PanelMenuGroup subGroup;
 
-    public boolean isTransparent(WebElement icon) {
-        return icon.getAttribute(ATTR_CLASS).contains("-transparent");
-    }
+    @FindBy(css = "table[id$='attributes:attributes']")
+    public WebElement attributesTable;
 
 }

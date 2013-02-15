@@ -26,7 +26,6 @@ import java.util.List;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.richfaces.component.Mode;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>

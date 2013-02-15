@@ -27,7 +27,10 @@ import static javax.faces.event.PhaseId.PROCESS_VALIDATIONS;
 import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.panelMenuGroupAttributes;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuGroupAttributes;
+import static org.richfaces.component.Mode.ajax;
+import static org.richfaces.component.Mode.client;
+import static org.richfaces.component.Mode.server;
 
 import static org.testng.Assert.assertTrue;
 
@@ -35,7 +38,7 @@ import java.util.LinkedList;
 
 import javax.faces.event.PhaseId;
 
-import org.richfaces.PanelMenuMode;
+import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
@@ -44,6 +47,7 @@ import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision: 22750 $
  */
 public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
@@ -58,8 +62,8 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
 
     @Inject
     @Use("requestModes")
-    PanelMenuMode mode;
-    PanelMenuMode[] requestModes = new PanelMenuMode[] { PanelMenuMode.ajax, PanelMenuMode.server };
+    Mode mode;
+    Mode[] requestModes = new Mode[] { ajax, server };
 
     @Inject
     @Use("listeners")
@@ -72,23 +76,23 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.immediate, immediate);
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.bypassUpdates, bypassUpdates);
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, mode);
-        menu.setGroupMode(mode);
+        page.topGroup.setMode(mode);
 
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.execute, "@this executeChecker");
 
-        assertTrue(topGroup.isExpanded());
-        topGroup.toggle();
-        assertTrue(topGroup.isCollapsed());
+        assertTrue(page.topGroup.isExpanded());
+        page.topGroup.toggle();
+        assertTrue(page.topGroup.isCollapsed());
 
-        if (mode != PanelMenuMode.client) {
+        if (mode != client) {
             if ("phases".equals(listener)) {
-                phaseInfo.assertPhases(getExpectedPhases());
+                page.assertPhases(getExpectedPhases());
             } else {
                 PhaseId listenerInvocationPhase = getListenerInvocationPhase();
                 if (listenerInvocationPhase == null) {
-                    phaseInfo.assertNoListener(listener);
+                    page.assertNoListener(listener);
                 } else {
-                    phaseInfo.assertListener(listenerInvocationPhase, listener);
+                    page.assertListener(listenerInvocationPhase, listener);
                 }
             }
         }
@@ -98,12 +102,12 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
     @Uses({ @Use(field = "immediate", empty = true), @Use(field = "bypassUpdates", empty = true),
         @Use(field = "mode", empty = true), @Use(field = "listener", empty = true) })
     public void testClientMode() {
-        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, PanelMenuMode.client);
-        menu.setGroupMode(PanelMenuMode.client);
+        panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, client);
+        page.topGroup.setMode(client);
 
-        assertTrue(topGroup.isExpanded());
-        topGroup.toggle();
-        assertTrue(topGroup.isCollapsed());
+        assertTrue(page.topGroup.isExpanded());
+        page.topGroup.toggle();
+        assertTrue(page.topGroup.isCollapsed());
     }
 
     private PhaseId[] getExpectedPhases() {
@@ -126,7 +130,7 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
         PhaseId phase = phases[phases.length - 2];
 
         if ("executeChecker".equals(listener)) {
-            if (phase.compareTo(UPDATE_MODEL_VALUES) < 0 || mode == PanelMenuMode.server) {
+            if (phase.compareTo(UPDATE_MODEL_VALUES) < 0 || mode == server) {
                 return null;
             } else {
                 return UPDATE_MODEL_VALUES;

@@ -24,6 +24,8 @@ package org.richfaces.tests.page.fragments.impl.panelMenuGroup;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.ATTR_CLASS;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.getGuardTypeForMode;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebElement;
@@ -72,6 +74,22 @@ public class PanelMenuGroup {
 
     public boolean isExpanded() {
         return header.getAttribute(ATTR_CLASS).contains("-exp");
+    }
+
+    public boolean isSelected() {
+        return header.getAttribute(ATTR_CLASS).contains("-sel");
+    }
+
+    public boolean isHovered() {
+        return root.getAttribute(ATTR_CLASS).contains("-hov");
+    }
+
+    public boolean isDisabled() {
+        return root.getAttribute(ATTR_CLASS).contains("-dis");
+    }
+
+    public boolean isVisible() {
+        return Graphene.element(root).isPresent().apply(GrapheneContext.getProxy()) && root.isDisplayed();
     }
 
     public WebElement getRoot() {

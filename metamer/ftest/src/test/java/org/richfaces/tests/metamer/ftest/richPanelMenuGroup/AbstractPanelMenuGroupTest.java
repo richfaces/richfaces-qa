@@ -22,28 +22,24 @@
 package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.richfaces.PanelMenuMode.ajax;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.panelMenuGroupAttributes;
+import static org.richfaces.component.Mode.ajax;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.mode;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuGroupAttributes;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
-import org.richfaces.tests.metamer.ftest.model.PanelMenu;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.BeforeMethod;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22750 $
  */
-public abstract class AbstractPanelMenuGroupTest extends AbstractGrapheneTest {
+public abstract class AbstractPanelMenuGroupTest extends AbstractWebDriverTest {
 
-    PanelMenu menu = new PanelMenu(pjq("div.rf-pm[id$=panelMenu]"));
-    PanelMenu.Group topGroup = menu.getGroupContains("Group 2");
-    PanelMenu.Group subGroup = topGroup.getGroupContains("Group 2.3");
-    PanelMenu.Icon leftIcon = topGroup.getLeftIcon();
-    PanelMenu.Icon rightIcon = topGroup.getRightIcon();
+    @Page
+    PanelMenuGroupPage page;
 
     @Override
     public URL getTestUrl() {
@@ -53,6 +49,6 @@ public abstract class AbstractPanelMenuGroupTest extends AbstractGrapheneTest {
     @BeforeMethod
     public void setupModes() {
         panelMenuGroupAttributes.set(mode, ajax);
-        menu.setGroupMode(ajax);
+        page.topGroup.setMode(ajax);
     }
 }

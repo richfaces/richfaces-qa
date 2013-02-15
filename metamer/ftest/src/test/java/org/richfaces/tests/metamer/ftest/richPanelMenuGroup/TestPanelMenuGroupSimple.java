@@ -21,31 +21,33 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 
-import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
+import static org.richfaces.component.Mode.ajax;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.disabledClass;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.panelMenuGroupAttributes;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.data;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.disabled;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.leftCollapsedIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.leftDisabledIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.leftExpandedIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.limitRender;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.oncomplete;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.render;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.rendered;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.rightCollapsedIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.rightDisabledIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.rightExpandedIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.selectable;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.status;
-
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuGroupAttributes;
+import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.IMG_BY_LOC;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
-import org.jboss.arquillian.ajocado.request.RequestType;
-import org.jboss.test.selenium.GuardRequest;
-import org.richfaces.PanelMenuMode;
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.checker.IconsChecker;
+import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
 import org.testng.annotations.Test;
 
 
@@ -55,78 +57,69 @@ import org.testng.annotations.Test;
  */
 public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
 
-    private static String sampleImage = "/resources/images/loading.gif";
-    private static String chevronDown = "chevronDown";
-    private static String chevronDownClass = "rf-ico-chevron-down";
-
     @Test
     public void testData() {
-        panelMenuGroupAttributes.set(data, "RichFaces 4");
+        final String RF_STRING = "RichFaces 4";
+        panelMenuGroupAttributes.set(data, RF_STRING);
         panelMenuGroupAttributes.set(oncomplete, "data = event.data");
 
-        retrieveRequestTime.initializeValue();
-        topGroup.toggle();
-        waitGui.waitForChange(retrieveRequestTime);
+        String requestTime = page.requestTime.getText();
+        page.topGroup.toggle();
+        Graphene.waitModel().until().element(page.requestTime).text().not().equals(requestTime);
 
-        assertEquals(retrieveWindowData.retrieve(), "RichFaces 4");
+        assertEquals(expectedReturnJS("return window.data", RF_STRING), RF_STRING);
     }
 
     @Test
     public void testDisabled() {
-        menu.setGroupMode(null);
-        assertFalse(topGroup.isDisabled());
+        page.topGroup.setMode(null);
+        assertFalse(page.topGroup.isDisabled());
 
         panelMenuGroupAttributes.set(disabled, true);
 
-        assertFalse(topGroup.isSelected());
-        assertTrue(topGroup.isDisabled());
+        assertFalse(page.topGroup.isSelected());
+        assertTrue(page.topGroup.isDisabled());
 
-        new GuardRequest(RequestType.NONE) {
-            public void command() {
-                topGroup.toggle();
-            }
-        }.waitRequest();
+        Graphene.guardNoRequest(page.topGroup).toggle();
 
-        assertFalse(topGroup.isSelected());
-        assertTrue(topGroup.isDisabled());
+        assertFalse(page.topGroup.isSelected());
+        assertTrue(page.topGroup.isDisabled());
     }
 
     @Test
     public void testDisabledClass() {
         panelMenuGroupAttributes.set(disabled, true);
-        super.testStyleClass(topGroup, disabledClass);
+        testStyleClass(page.topGroup.getRoot(), disabledClass);
     }
 
     @Test
     public void testLeftDisabledIcon() {
         panelMenuGroupAttributes.set(disabled, true);
-        JQueryLocator input = pjq("select[id$=lefttDisabledIcon]");
-        ElementLocator<JQueryLocator> icon = leftIcon.getIcon();
-        ElementLocator<JQueryLocator> image = jq(leftIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+
+        verifyStandardIcons(leftDisabledIcon, page.topGroup.leftIcon.iconCollapsed, IMG_BY_LOC, "");
+        verifyStandardIcons(leftDisabledIcon, page.topGroup.leftIcon.iconExpanded, IMG_BY_LOC, "");
     }
 
     @Test
     public void testLeftCollapsedIcon() {
-        topGroup.toggle();
-        JQueryLocator input = pjq("select[id$=leftCollapsedIcon]");
-        ElementLocator<JQueryLocator> icon = leftIcon.getIcon();
-        ElementLocator<JQueryLocator> image = jq(leftIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        page.topGroup.toggle();
+
+        verifyStandardIcons(leftCollapsedIcon, page.topGroup.leftIcon.iconCollapsed, IMG_BY_LOC, "");
 
         panelMenuGroupAttributes.set(disabled, true);
-        assertTrue(leftIcon.isTransparent());
+        // both icon should be "transparent" - invisible
+        assertTrue(page.topGroup.leftIcon.isTransparent(page.topGroup.leftIcon.iconCollapsed));
+        assertTrue(page.topGroup.leftIcon.isTransparent(page.topGroup.leftIcon.iconExpanded));
     }
 
     @Test
     public void testLeftExpandedIcon() {
-        JQueryLocator input = pjq("select[id$=leftExpandedIcon]");
-        ElementLocator<JQueryLocator> icon = leftIcon.getIcon();
-        ElementLocator<JQueryLocator> image = jq(leftIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+
+        verifyStandardIcons(leftExpandedIcon, page.topGroup.leftIcon.iconExpanded, IMG_BY_LOC, "");
 
         panelMenuGroupAttributes.set(disabled, true);
-        assertTrue(rightIcon.isTransparent());
+        assertTrue(page.topGroup.rightIcon.isTransparent(page.topGroup.rightIcon.iconCollapsed));
+        assertTrue(page.topGroup.rightIcon.isTransparent(page.topGroup.rightIcon.iconExpanded));
     }
 
     @Test
@@ -134,92 +127,93 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
         panelMenuGroupAttributes.set(render, "renderChecker");
         panelMenuGroupAttributes.set(limitRender, true);
 
-        retrieveRequestTime.initializeValue();
-        retrieveRenderChecker.initializeValue();
-        topGroup.toggle();
-        waitAjax.waitForChange(retrieveRenderChecker);
-        assertFalse(retrieveRequestTime.isValueChanged());
+        String requestTime = page.requestTime.getText();
+        String renderCheckerTime = page.renderCheckerOutput.getText();
+
+        page.topGroup.toggle();
+
+        Graphene.waitModel().until("Page was not updated").element(page.renderCheckerOutput).text().not().equalTo(renderCheckerTime);
+        assertEquals(page.requestTime.getText(), requestTime);
     }
 
     @Test
     public void testRendered() {
-        assertTrue(topGroup.isVisible());
+        assertTrue(page.topGroup.isVisible());
 
         panelMenuGroupAttributes.set(rendered, false);
 
-        assertFalse(topGroup.isVisible());
+        assertFalse(page.topGroup.isVisible());
     }
 
     @Test
     public void testRightDisabledIcon() {
         panelMenuGroupAttributes.set(disabled, true);
-        JQueryLocator input = pjq("select[id$=rightDisabledIcon]");
-        ElementLocator<JQueryLocator> icon = rightIcon.getIcon();
-        ElementLocator<JQueryLocator> image = jq(rightIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+
+        verifyStandardIcons(rightDisabledIcon, page.topGroup.rightIcon.iconCollapsed, IMG_BY_LOC, "");
+        verifyStandardIcons(rightDisabledIcon, page.topGroup.rightIcon.iconExpanded, IMG_BY_LOC, "");
     }
 
     @Test
     public void testRightExpandedIcon() {
-        JQueryLocator input = pjq("select[id$=rightExpandedIcon]");
-        ElementLocator<JQueryLocator> icon = rightIcon.getIcon();
-        ElementLocator<JQueryLocator> image = jq(rightIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        verifyStandardIcons(rightExpandedIcon, page.topGroup.rightIcon.iconExpanded, IMG_BY_LOC, "");
 
         panelMenuGroupAttributes.set(disabled, true);
-        assertTrue(rightIcon.isTransparent());
+        assertTrue(page.topGroup.rightIcon.isTransparent(page.topGroup.rightIcon.iconCollapsed));
+        assertTrue(page.topGroup.rightIcon.isTransparent(page.topGroup.rightIcon.iconExpanded));
     }
 
     @Test
     public void testRightCollapsedIcon() {
-        topGroup.toggle();
-        JQueryLocator input = pjq("select[id$=rightCollapsedIcon]");
-        ElementLocator<JQueryLocator> icon = rightIcon.getIcon();
-        ElementLocator<JQueryLocator> image = jq(rightIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        page.topGroup.toggle();
+
+        verifyStandardIcons(rightCollapsedIcon, page.topGroup.rightIcon.iconCollapsed, IMG_BY_LOC, "");
 
         panelMenuGroupAttributes.set(disabled, true);
-        assertTrue(rightIcon.isTransparent());
+        assertTrue(page.topGroup.rightIcon.isTransparent(page.topGroup.rightIcon.iconCollapsed));
+        assertTrue(page.topGroup.rightIcon.isTransparent(page.topGroup.rightIcon.iconExpanded));
     }
 
     @Test
     public void testSelectable() {
-        menu.setGroupMode(PanelMenuMode.ajax);
+        page.topGroup.setMode(ajax);
 
         panelMenuGroupAttributes.set(selectable, false);
-        topGroup.toggle();
-        assertFalse(topGroup.isSelected());
+        page.topGroup.toggle();
+        assertFalse(page.topGroup.isSelected());
 
         panelMenuGroupAttributes.set(selectable, true);
-        topGroup.toggle();
-        assertTrue(topGroup.isSelected());
+        page.topGroup.toggle();
+        assertTrue(page.topGroup.isSelected());
     }
 
     @Test
     public void testStatus() {
         panelMenuGroupAttributes.set(status, "statusChecker");
 
-        retrieveStatusChecker.initializeValue();
-        topGroup.toggle();
-        waitAjax.waitForChange(retrieveStatusChecker);
+        String statusCheckerTime = page.statusCheckerOutput.getText();
+        page.topGroup.toggle();
+        Graphene.waitModel().until("Page was not updated").element(page.statusCheckerOutput).text().not().equalTo(statusCheckerTime);
     }
 
     @Test
     public void testStyle() {
-        super.testStyle(topGroup);
+        testStyle(page.topGroup.getRoot());
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10485")
     public void testStyleClass() {
-        super.testStyleClass(topGroup);
+        testStyleClass(page.topGroup.getRoot());
     }
 
-    private void verifyStandardIcons(ElementLocator<JQueryLocator> input, ElementLocator<JQueryLocator> icon, ElementLocator<JQueryLocator> image, String classSuffix) {
-        IconsChecker checker = new IconsChecker(selenium, "rf-ico-", "");
-        checker.checkCssImageIcons(input, icon, classSuffix);
-        checker.checkCssNoImageIcons(input, icon, classSuffix);
-        checker.checkImageIcons(input, icon, image, classSuffix, false);
-        checker.checkNone(input, icon, classSuffix);
+    private void verifyStandardIcons(PanelMenuGroupAttributes attribute, WebElement icon, By image, String classSuffix) {
+        IconsCheckerWebdriver<PanelMenuGroupAttributes> checker = new IconsCheckerWebdriver<PanelMenuGroupAttributes>(
+            driver, panelMenuGroupAttributes, "rf-ico-", "");
+
+        checker.checkCssImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
+        checker.checkCssNoImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
+        checker.checkImageIconsAsRelative(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), image, classSuffix, false);
+        checker.checkNone(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
+
     }
 }
