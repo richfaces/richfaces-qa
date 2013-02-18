@@ -37,17 +37,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="outOfTemplateBefore">
-            <h:form id="attributes">
-                <fieldset>
-                    <h:panelGrid columns="2">
-                        <h:outputLabel for="sortOrderInput" value="Sort Order:" />
-                        <h:selectOneRadio id="sortOrderInput" value="#{richColumnBean.sortOrder}">
-                            <f:selectItems value="#{richColumnBean.sortOrders}" />
-                            <a4j:ajax render="#{nestedComponentId}" />
-                        </h:selectOneRadio>
-                    </h:panelGrid>
-                </fieldset>
-            </h:form>
+            <fieldset>
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="sortOrderInput" value="Sort Order:" />
+                    <h:selectOneRadio id="sortOrderInput" value="#{richColumnBean.sortOrder}">
+                        <f:selectItems value="#{richColumnBean.sortOrders}" />
+                        <a4j:ajax render="#{nestedComponentId}" />
+                    </h:selectOneRadio>
+                </h:panelGrid>
+            </fieldset>
         </ui:define>
 
         <ui:define name="component">
