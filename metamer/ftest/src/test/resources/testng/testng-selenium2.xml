@@ -29,6 +29,7 @@
             <package name="org.richfaces.tests.metamer.ftest.richInputNumberSlider"/>
             <package name="org.richfaces.tests.metamer.ftest.richInputNumberSpinner"/>
             <package name="org.richfaces.tests.metamer.ftest.richItemChangeListener"/>
+            <package name="org.richfaces.tests.metamer.ftest.richList"/>
             <package name="org.richfaces.tests.metamer.ftest.richMessage"/>
             <package name="org.richfaces.tests.metamer.ftest.richMessages"/>
             <package name="org.richfaces.tests.metamer.ftest.richPanelMenu" />
