@@ -14,7 +14,7 @@ FSF site: http://www.fsf.org. -->
 
     <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-qa-parent</artifactId>
-    <version>4.3.1-SNAPSHOT</version>
+    <version>4.3.0.Final-redhat-1</version>
     <packaging>pom</packaging>
 
     <name>RichFaces QA Parent</name>
@@ -29,7 +29,7 @@ FSF site: http://www.fsf.org. -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <version.richfaces>4.3.1-SNAPSHOT</version.richfaces>
+        <version.richfaces>4.3.0.Final-redhat-1</version.richfaces>
         <richfaces.checkstyle.version>5</richfaces.checkstyle.version>
 
         <!-- version of JBoss containers to use and download -->
@@ -76,7 +76,7 @@ FSF site: http://www.fsf.org. -->
         <jboss7-1Home>${project.build.directory}/jboss-as-${version.jbossas7-1}</jboss7-1Home>
         <jboss6Home>${project.build.directory}/jboss-${version.jbossas6}</jboss6Home>
 
-        <showcase.classifier>jbas7</showcase.classifier>
+        <showcase.classifier>jbas71</showcase.classifier>
         <metamer.classifier>jbas71</metamer.classifier>
 
         <openshift.password />
@@ -959,30 +959,6 @@ FSF site: http://www.fsf.org. -->
             </dependencies>
             <build>
                 <plugins>
-                    <plugin>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>unpack</id>
-                                <phase>process-test-classes</phase>
-                                <goals>
-                                    <goal>unpack</goal>
-                                </goals>
-                                <configuration>
-                                    <artifactItems>
-                                        <artifactItem>
-                                            <groupId>org.jboss.as</groupId>
-                                            <artifactId>jboss-as-dist</artifactId>
-                                            <version>${version.jbossas7-1}</version>
-                                            <type>zip</type>
-                                            <overWrite>false</overWrite>
-                                            <outputDirectory>${project.build.directory}</outputDirectory>
-                                        </artifactItem>
-                                    </artifactItems>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
