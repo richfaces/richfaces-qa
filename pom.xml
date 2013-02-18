@@ -1094,7 +1094,7 @@ FSF site: http://www.fsf.org. -->
         <profile>
             <id>jbosseap-managed-6-0</id>
             <properties>
-                <metamer.classifier>jee6</metamer.classifier>
+                <metamer.classifier>jbas71</metamer.classifier>
                 <showcase.classifier>jbas71</showcase.classifier>
             </properties>
             <dependencies>
