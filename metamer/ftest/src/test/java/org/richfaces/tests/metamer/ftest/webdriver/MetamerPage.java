@@ -52,7 +52,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.richfaces.tests.metamer.ftest.webdriver.utils.WebElementProxyUtils;
+import org.richfaces.tests.page.fragments.impl.WebElementProxyUtils;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>

@@ -35,7 +35,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
-import org.richfaces.tests.metamer.ftest.webdriver.utils.WebElementProxyUtils;
+import org.richfaces.tests.page.fragments.impl.WebElementProxyUtils;
 import org.richfaces.tests.page.fragments.impl.Utils;
 
 /**
