@@ -38,6 +38,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -230,6 +231,10 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
             String inputExp = format(ATTR_INPUT_LOC_FORMAT, event);
             WebElement input = page.attributesTable.findElement(By.cssSelector(inputExp));
             String inputVal = format("metamerEvents += \"{0} \"", event);
+            // even there would be some events (in params) twice, don't expect handle routine to be executed twice
+            input.clear();
+            waiting(1000);
+            input = page.attributesTable.findElement(By.cssSelector(inputExp));
             input.sendKeys(inputVal);
             MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
         }
@@ -247,7 +252,7 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
             String inputExp = format(ATTR_INPUT_LOC_FORMAT, event);
             WebElement input = page.attributesTable.findElement(By.cssSelector(inputExp));
 
-            input.sendKeys(format("alert('{0}')", event));
+            input.sendKeys(format("alert(\"{0}\")", event));
             MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
         }
     }
@@ -256,10 +261,11 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         List<String> list = new LinkedList<String>();
 
         for (int i = 0; i < events.length; i++) {
-            Graphene.waitGui().until(new AlertPresent());
-            if (new AlertPresent().apply(driver)) {
-                list.add(driver.switchTo().alert().getText());
-                driver.switchTo().alert().accept();
+            AlertPresent ap = new AlertPresent();
+            Graphene.waitGui().until(ap);
+            if (ap.apply(driver)) {
+                list.add(ap.getAlert().getText());
+                ap.getAlert().accept();
             }
         }
 
@@ -269,10 +275,15 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     }
 
     private class AlertPresent implements Predicate<WebDriver> {
+        private Alert alert;
+
         @Override
         public boolean apply(@Nullable WebDriver driver) {
-            return driver.switchTo().alert() != null;
+            alert = driver.switchTo().alert();
+            return  alert != null;
         }
+
+        public Alert getAlert() { return alert; }
     }
 }
 
