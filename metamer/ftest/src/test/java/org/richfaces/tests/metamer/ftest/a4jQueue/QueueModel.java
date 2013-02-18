@@ -30,7 +30,7 @@ import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 import static org.jboss.cheiron.retriever.RetrieverAdapter.integerAdapter;
 import static org.jboss.cheiron.retriever.RetrieverAdapter.longAdapter;
 import static org.jboss.test.selenium.locator.reference.ReferencedLocator.ref;
-import static org.richfaces.tests.metamer.ftest.AbstractMetamerTest.pjq;
+import static org.richfaces.tests.metamer.ftest.AbstractGrapheneTest.pjq;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 

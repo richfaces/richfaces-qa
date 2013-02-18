@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -19,55 +19,23 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richList;
+package org.richfaces.tests.page.fragments.impl.list;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.openqa.selenium.WebElement;
 
-/**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22747 $
- */
-public enum ListAttributes implements AttributeEnum {
+public class RichFacesListItem implements ListItem {
 
-    binding,
-    dir,
-    first,
-    id,
-    iterationStatusVar,
-    keepSaved,
-    lang,
-    onclick,
-    ondblclick,
-    onkeydown,
-    onkeypress,
-    onkeyup,
-    onmousedown,
-    onmousemove,
-    onmouseout,
-    onmouseover,
-    onmouseup,
-    onrowclick,
-    onrowdblclick,
-    onrowkeydown,
-    onrowkeypress,
-    onrowkeyup,
-    onrowmousedown,
-    onrowmousemove,
-    onrowmouseout,
-    onrowmouseover,
-    onrowmouseup,
-    rendered,
-    rowClass,
-    rowClasses,
-    rowKeyConverter,
-    rowKeyVar,
-    rows,
-    stateVar,
-    style,
-    styleClass,
-    title,
-    type,
-    value,
-    var
+    @Root
+    private WebElement root;
+
+    @Override
+    public String getText() {
+        return root.getText().trim();
+    }
+
+    @Override
+    public WebElement getItemElement() {
+        return root;
+    }
 }

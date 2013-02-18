@@ -26,7 +26,7 @@ import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.dom.Event.KEYPRESS;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.AbstractMetamerTest.pjq;
+import static org.richfaces.tests.metamer.ftest.AbstractGrapheneTest.pjq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.attachQueueAttributes;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.attachQueueAttrs1;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.attachQueueAttrs2;

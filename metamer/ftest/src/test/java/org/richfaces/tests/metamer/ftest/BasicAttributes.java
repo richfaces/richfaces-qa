@@ -69,6 +69,7 @@ public enum BasicAttributes implements AttributeEnum {
     remainingClass,
     rightIconClass,
     rowClass,
+    rowClasses,
     style,
     styleClass,
     title,

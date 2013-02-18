@@ -139,7 +139,7 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         assertTrue(page.panelMenu.getRoot().getCssValue("width").contains("300px"));
     }
 
-    @Test
+    @Test(groups = { "4.Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-12778")
     public void testJsApiExpandAll() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
@@ -150,7 +150,7 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         assertEquals(page.panelMenu.getAllExpandedGroups().size(), 4);
     }
 
-    @Test
+    @Test(groups = { "4.Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-12778")
     public void testJsApiExpandAll1() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
@@ -161,7 +161,7 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         assertEquals(page.panelMenu.getAllExpandedGroups().size(), 4);
     }
 
-    @Test
+    @Test(groups = { "4.Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-12778")
     public void testJsApiCollapseAll() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
@@ -177,7 +177,7 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         assertEquals(page.panelMenu.getAllExpandedGroups().size(), 0);
     }
 
-    @Test
+    @Test(groups = { "4.Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-12778")
     public void testJsApiCollapseAll1() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
@@ -193,7 +193,7 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         assertEquals(page.panelMenu.getAllExpandedGroups().size(), 0);
     }
 
-    @Test
+    @Test(groups = { "4.Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-12778")
     public void testJsApiSelectItem() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
@@ -204,7 +204,7 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         assertEquals(page.selectedItem.getText(), "item23");
     }
 
-    @Test
+    @Test(groups = { "4.Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-12778")
     public void testJsApiSelectItem1() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);

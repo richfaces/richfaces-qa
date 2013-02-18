@@ -25,7 +25,7 @@ import static org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory.o
 
 import static org.jboss.arquillian.ajocado.guard.RequestGuardFactory.guard;
 
-import static org.richfaces.tests.metamer.ftest.AbstractMetamerTest.pjq;
+import static org.richfaces.tests.metamer.ftest.AbstractGrapheneTest.pjq;
 
 import static org.testng.Assert.assertTrue;
 

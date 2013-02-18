@@ -22,7 +22,7 @@
 package org.richfaces.tests.metamer.ftest.model;
 
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-import static org.richfaces.tests.metamer.ftest.AbstractMetamerTest.pjq;
+import static org.richfaces.tests.metamer.ftest.AbstractGrapheneTest.pjq;
 
 import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;

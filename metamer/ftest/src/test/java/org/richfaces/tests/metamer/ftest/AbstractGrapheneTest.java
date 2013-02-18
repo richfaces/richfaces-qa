@@ -27,6 +27,7 @@ import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.Graphene.id;
 import static org.jboss.arquillian.ajocado.Graphene.jq;
+import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
@@ -36,6 +37,7 @@ import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOUT;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOVER;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEUP;
 import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
+import static org.jboss.arquillian.ajocado.javascript.JavaScript.js;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.jboss.test.selenium.locator.reference.ReferencedLocator.ref;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.basicAttributes;
@@ -56,12 +58,17 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
 import org.jboss.arquillian.ajocado.framework.SystemPropertiesConfiguration;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
+import org.jboss.arquillian.ajocado.locator.IdLocator;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.jboss.arquillian.ajocado.locator.element.ExtendedLocator;
+import org.jboss.arquillian.ajocado.waiting.retrievers.Retriever;
+import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
 import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.cheiron.retriever.ScriptEvaluationRetriever;
 import org.jboss.test.selenium.ScreenshotInterceptor;
+import org.jboss.test.selenium.locator.reference.LocatorReference;
 import org.jboss.test.selenium.locator.reference.ReferencedLocator;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
@@ -81,6 +88,22 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
 
     @Drone
     protected GrapheneSelenium selenium;
+    // timeout in miliseconds
+    protected static final long TIMEOUT = 5000;
+    protected JQueryLocator time = jq("span[id$=requestTime]");
+    protected JQueryLocator renderChecker = jq("span[id$=renderChecker]");
+    protected JQueryLocator statusChecker = jq("span[id$=statusCheckerOutput]");
+    protected JQueryLocator jsFunctionChecker = jq("span[id$=jsFunctionChecker]");
+    protected IdLocator fullPageRefreshIcon = id("controlsForm:fullPageRefreshImage");
+    protected IdLocator rerenderAllIcon = id("controlsForm:reRenderAllImage");
+    protected TextRetriever retrieveRequestTime = retrieveText.locator(time);
+    protected Retriever<String> retrieveWindowData = new ScriptEvaluationRetriever().script(js("window.data"));
+    protected TextRetriever retrieveRenderChecker = retrieveText.locator(jq("#renderChecker"));
+    protected TextRetriever retrieveStatusChecker = retrieveText.locator(jq("#statusCheckerOutput"));
+    protected TextRetriever retrieveJsFunctionChecker = retrieveText.locator(jsFunctionChecker);
+    protected LocatorReference<JQueryLocator> attributesRoot = new LocatorReference<JQueryLocator>(
+            pjq("span[id$=:attributes:panel]"));
+
     protected ScreenshotInterceptor screenshotInterceptor = new ScreenshotInterceptor();
     protected PhaseInfo phaseInfo = new PhaseInfo();
 
@@ -115,6 +138,20 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     @AfterMethod(alwaysRun = true)
     public void invalidateSession() {
         selenium.deleteAllVisibleCookies();
+    }
+
+    /**
+     * Factory method for creating instances of class JQueryLocator which locates the element using <a
+     * href="http://api.jquery.com/category/selectors/">JQuery Selector</a> syntax. It adds "div.content " in front of each
+     * selector.
+     *
+     * @param jquerySelector the jQuery selector
+     * @return the jQuery locator
+     * @see JQueryLocator
+     */
+    public static JQueryLocator pjq(String jquerySelector) {
+        String escapedString = jq(jquerySelector).getRawLocator();
+        return new JQueryLocator("div.content " + escapedString);
     }
 
     /**
@@ -180,7 +217,7 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
         selenium.fireEvent(element, event);
 
         waitGui.failWith("Attribute on" + attributeName + " does not work correctly").until(
-            new EventFiredCondition(event));
+                new EventFiredCondition(event));
     }
 
     /**
@@ -299,15 +336,15 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     public void testRequestEventsAfter(String... events) {
         String[] actualEvents = selenium.getEval(new JavaScript("window.metamerEvents")).split(" ");
         assertEquals(
-            actualEvents,
-            events,
-            format("The events ({0}) don't came in right order ({1})", Arrays.deepToString(actualEvents),
+                actualEvents,
+                events,
+                format("The events ({0}) don't came in right order ({1})", Arrays.deepToString(actualEvents),
                 Arrays.deepToString(events)));
     }
 
     public void testRequestEventAfter(AttributeEnum eventAttribute) {
         waitGui.failWith("Attribute on" + eventAttribute + " does not work correctly").until(
-            new EventFiredCondition(new Event(eventAttribute.toString())));
+                new EventFiredCondition(new Event(eventAttribute.toString())));
     }
 
     public void testRequestEventsAfterByAlert(String... events) {
@@ -322,9 +359,9 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
 
         String[] actualEvents = list.toArray(new String[list.size()]);
         assertEquals(
-            actualEvents,
-            events,
-            format("The events ({0}) don't came in right order ({1})", Arrays.deepToString(actualEvents),
+                actualEvents,
+                events,
+                format("The events ({0}) don't came in right order ({1})", Arrays.deepToString(actualEvents),
                 Arrays.deepToString(events)));
     }
 
@@ -425,7 +462,7 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
         selenium.waitForPageToLoad();
 
         assertTrue(selenium.getAttribute(attr).contains(value), "Attribute " + attribute + " should contain \"" + value
-            + "\".");
+                + "\".");
     }
 
     /**

@@ -19,55 +19,40 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richList;
+package org.richfaces.tests.page.fragments.impl.DataScroller;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.richfaces.tests.page.fragments.impl.VisibleComponent;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22747 $
  */
-public enum ListAttributes implements AttributeEnum {
+public interface DataScroller extends VisibleComponent {
 
-    binding,
-    dir,
-    first,
-    id,
-    iterationStatusVar,
-    keepSaved,
-    lang,
-    onclick,
-    ondblclick,
-    onkeydown,
-    onkeypress,
-    onkeyup,
-    onmousedown,
-    onmousemove,
-    onmouseout,
-    onmouseover,
-    onmouseup,
-    onrowclick,
-    onrowdblclick,
-    onrowkeydown,
-    onrowkeypress,
-    onrowkeyup,
-    onrowmousedown,
-    onrowmousemove,
-    onrowmouseout,
-    onrowmouseover,
-    onrowmouseup,
-    rendered,
-    rowClass,
-    rowClasses,
-    rowKeyConverter,
-    rowKeyVar,
-    rows,
-    stateVar,
-    style,
-    styleClass,
-    title,
-    type,
-    value,
-    var
+    enum DataScrollerSwitchButton {
+
+        FIRST,
+        FAST_REWIND,
+        PREVIOUS,
+        NEXT,
+        FAST_FORWARD,
+        LAST;
+    }
+
+    int getActPageNumber();
+
+    boolean isButtonDisabled(DataScrollerSwitchButton btn);
+
+    boolean isFirstPage();
+
+    boolean isLastPage();
+
+    /**
+     * Direct switch to page. Indexed from 1. Page must exist. Without any waiting.
+     */
+    void switchTo(int page);
+
+    /**
+     * Switch by buttons. Clicks on the chosen button. Without any waiting.
+     */
+    void switchTo(DataScrollerSwitchButton btn);
 }

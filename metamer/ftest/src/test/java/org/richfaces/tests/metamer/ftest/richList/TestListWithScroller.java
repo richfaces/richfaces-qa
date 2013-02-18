@@ -25,24 +25,25 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.ftest.model.DataScroller;
-import org.richfaces.tests.metamer.ftest.richDataScroller.PaginationTester;
-import org.testng.annotations.BeforeMethod;
+import org.richfaces.tests.metamer.ftest.richDataScroller.PaginationTesterWebDriver;
+import org.richfaces.tests.metamer.ftest.richDataScroller.PaginationTesterWebDriver.AssertingAndWaitingDataScroller;
 import org.testng.annotations.Test;
 
+/**
+ * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ */
+public class TestListWithScroller extends AbstractListTest {
 
-public class TestScroller extends AbstractListTest {
-
-    @Inject
-    DataScroller dataScroller;
-    DataScroller dataScroller1 = PaginationTester.DATA_SCROLLER_OUTSIDE_TABLE;
-    DataScroller dataScroller2 = PaginationTester.DATA_SCROLLER_IN_TABLE_FOOTER;
-
-    PaginationTester paginationTester = new PaginationTester() {
+    @FindBy(css = "span.rf-ds[id$=scroller1]")
+    protected AssertingAndWaitingDataScroller scrollerOutsideTable;
+    @FindBy(css = "span.rf-ds[id$=scroller2]")
+    protected AssertingAndWaitingDataScroller scrollerInTableFooter;
+    PaginationTesterWebDriver paginationTester = new PaginationTesterWebDriver() {
+        final int DEFAULT_ROWS = 20;
 
         @Override
         protected void verifyBeforeScrolling() {
@@ -50,7 +51,8 @@ public class TestScroller extends AbstractListTest {
 
         @Override
         protected void verifyAfterScrolling() {
-            int currentPage = dataScroller.getCurrentPage();
+            rows = DEFAULT_ROWS;
+            int currentPage = dataScroller.getActPageNumber();
             first = rows * (currentPage - 1);
             verifyList();
         }
@@ -61,48 +63,43 @@ public class TestScroller extends AbstractListTest {
         return buildUrl(contextPath, "faces/components/richList/scroller.xhtml");
     }
 
-    @BeforeMethod
-    public void prepareComponent() {
+    public void prepareTester(AssertingAndWaitingDataScroller dataScroller) {
         paginationTester.setDataScroller(dataScroller);
-
         int lastPage = dataScroller.obtainLastPage();
         dataScroller.setLastPage(lastPage);
         paginationTester.initializeTestedPages(lastPage);
-
         dataScroller.setFastStep(1);
     }
 
     @Test
-    @Use(field = "dataScroller", value = "dataScroller1")
     @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
     public void testScrollerWithRowsAttributeOut() {
+        prepareTester(scrollerOutsideTable);
         paginationTester.testNumberedPages();
     }
 
     @Test(groups = "4.Future")
-    @Use(field = "dataScroller", value = "dataScroller1")
     @IssueTracking("https://issues.jboss.org/browse/RF-11787")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
     public void testScrollerWithRowsAttributeOutIterationComponents() {
-        paginationTester.testNumberedPages();
+        testScrollerWithRowsAttributeOut();
     }
 
     @Test
-    @Use(field = "dataScroller", value = "dataScroller2")
     @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat" })
     public void testScrollerWithRowsAttributeIn() {
+        prepareTester(scrollerInTableFooter);
         paginationTester.testNumberedPages();
     }
 
     @Test(groups = "4.Future")
-    @Use(field = "dataScroller", value = "dataScroller2")
     @IssueTracking("https://issues.jboss.org/browse/RF-11787")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat" })
     public void testScrollerWithRowsAttributeInIterationComponents() {
-        paginationTester.testNumberedPages();
+        testScrollerWithRowsAttributeIn();
     }
 }

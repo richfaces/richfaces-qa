@@ -460,19 +460,23 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      */
     public static class Attribute2StringDecoder {
 
-        private static final String CLASS = "class";
-        private static final String STYLE = "style";
-        private static final int LENGTH_OF_STYLE_OR_CLASS_STRING = 5;
+        private static final String[] ATTRIBUTES = { "class", "classes", "style" };
 
         public static <T extends AttributeEnum> String decodeAttribute(T testedAttribute) {
             String testedAtt = testedAttribute.toString();
             if (testedAtt.length() > 6) {
                 //get the ending
-                String substring = testedAtt.substring(testedAtt.length() - LENGTH_OF_STYLE_OR_CLASS_STRING);
-                if (substring.equalsIgnoreCase(CLASS)) {
-                    return CLASS;
-                } else if (substring.equalsIgnoreCase(STYLE)) {
-                    return STYLE;
+                String tmp = testedAtt.toLowerCase();
+                for (String string : ATTRIBUTES) {
+                    if (tmp.lastIndexOf(string) > 0) {//contains an attribute to decode
+                        if (string.equalsIgnoreCase(ATTRIBUTES[0]) || string.equalsIgnoreCase(ATTRIBUTES[1])) {
+                            return ATTRIBUTES[0];
+                        } else if (string.equalsIgnoreCase(ATTRIBUTES[2])) {
+                            return ATTRIBUTES[2];
+                        } else {
+                            throw new RuntimeException("Cannot decode attribute " + testedAtt);
+                        }
+                    }
                 }
             }
             return testedAtt;

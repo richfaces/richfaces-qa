@@ -29,7 +29,7 @@ import static org.jboss.arquillian.ajocado.guard.RequestGuardFactory.guard;
 
 import static org.jboss.test.selenium.locator.reference.ReferencedLocator.referenceInferred;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-import static org.richfaces.tests.metamer.ftest.AbstractMetamerTest.pjq;
+import static org.richfaces.tests.metamer.ftest.AbstractGrapheneTest.pjq;
 
 import org.jboss.arquillian.ajocado.command.CommandContext;
 import org.jboss.arquillian.ajocado.command.CommandInterceptor;
