@@ -21,24 +21,14 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest;
 
-import static org.jboss.arquillian.ajocado.Graphene.id;
-import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
-import static org.jboss.arquillian.ajocado.javascript.JavaScript.js;
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-
 import java.io.File;
 import java.net.URL;
 import java.util.List;
 
-import org.jboss.arquillian.ajocado.locator.IdLocator;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.waiting.retrievers.Retriever;
-import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.testng.Arquillian;
-import org.jboss.cheiron.retriever.ScriptEvaluationRetriever;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -46,7 +36,6 @@ import org.jboss.shrinkwrap.descriptor.api.Descriptors;
 import org.jboss.shrinkwrap.descriptor.api.javaee6.ParamValueType;
 import org.jboss.shrinkwrap.descriptor.api.webapp30.WebAppDescriptor;
 import org.jboss.shrinkwrap.impl.base.path.BasicPath;
-import org.jboss.test.selenium.locator.reference.LocatorReference;
 import org.richfaces.tests.metamer.TemplatesList;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
@@ -62,12 +51,10 @@ public abstract class AbstractMetamerTest extends Arquillian {
 
     @ArquillianResource
     protected URL contextPath;
-
     /**
      * The path to the metamer application.
      */
     public static final String WEBAPP_SRC = "../application/src/main/webapp";
-
     /** Key to manage resourceMapping enabling context-param in web.xml */
     public static final String RESOURCE_MAPPING_ENABLED = "org.richfaces.resourceMapping.enabled";
     /** Key to manage compressedStages context-param in web.xml */
@@ -75,28 +62,9 @@ public abstract class AbstractMetamerTest extends Arquillian {
     /** Key to manage packedStages context-param in web.xml */
     public static final String RESOURCE_MAPPING_PACKED_STAGES = "org.richfaces.resourceMapping.packedStages";
 
-    /**
-     * timeout in miliseconds
-     */
-    public static final long TIMEOUT = 5000;
-
-    protected JQueryLocator time = jq("span[id$=requestTime]");
-    protected JQueryLocator renderChecker = jq("span[id$=renderChecker]");
-    protected JQueryLocator statusChecker = jq("span[id$=statusCheckerOutput]");
-    protected JQueryLocator jsFunctionChecker = jq("span[id$=jsFunctionChecker]");
-    protected IdLocator fullPageRefreshIcon = id("controlsForm:fullPageRefreshImage");
-    protected IdLocator rerenderAllIcon = id("controlsForm:reRenderAllImage");
-    protected TextRetriever retrieveRequestTime = retrieveText.locator(time);
-    protected Retriever<String> retrieveWindowData = new ScriptEvaluationRetriever().script(js("window.data"));
-    protected TextRetriever retrieveRenderChecker = retrieveText.locator(jq("#renderChecker"));
-    protected TextRetriever retrieveStatusChecker = retrieveText.locator(jq("#statusCheckerOutput"));
-    protected TextRetriever retrieveJsFunctionChecker = retrieveText.locator(jsFunctionChecker);
-    protected LocatorReference<JQueryLocator> attributesRoot = new LocatorReference<JQueryLocator>(
-        pjq("span[id$=:attributes:panel]"));
-
     @Inject
     @Templates({ "plain", "richAccordion", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-            "richCollapsiblePanel", "richTabPanel", "richPopupPanel", "a4jRegion", "a4jRepeat", "uiRepeat" })
+        "richCollapsiblePanel", "richTabPanel", "richPopupPanel", "a4jRegion", "a4jRepeat", "uiRepeat" })
     protected TemplatesList template;
 
     /**
@@ -108,9 +76,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
 
     @Deployment(testable = false)
     public static WebArchive createTestArchive() {
-
         WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/metamer.war"));
-
         /*
          * If value on system property "org.richfaces.resourceMapping.enabled" is set to true, modify context-params in web.xml.
          * For more info see https://issues.jboss.org/browse/RFPL-1682
@@ -122,7 +88,6 @@ public abstract class AbstractMetamerTest extends Arquillian {
             Boolean packedStages = Boolean.getBoolean(RESOURCE_MAPPING_PACKED_STAGES);
             war = updateArchiveWebXml(war, compressedStages, packedStages);
         }
-
         return war;
     }
 
@@ -133,52 +98,27 @@ public abstract class AbstractMetamerTest extends Arquillian {
     private static WebArchive updateArchiveWebXml(WebArchive defaultWar, Boolean compressedStages, Boolean packedStages) {
         // 1. load existing web.xml from metamer.war
         WebAppDescriptor webXmlDefault = Descriptors.importAs(WebAppDescriptor.class).fromStream(
-            defaultWar.get(new BasicPath("WEB-INF/web.xml")).getAsset().openStream());
-
+                defaultWar.get(new BasicPath("WEB-INF/web.xml")).getAsset().openStream());
         List<ParamValueType<WebAppDescriptor>> allContextParams = webXmlDefault.getAllContextParam();
-
         // 2. Iterate over all context params and alter the particular ones
         for (ParamValueType<WebAppDescriptor> param : allContextParams) {
-
             String paramName = param.getParamName();
-
             if (paramName.equals(RESOURCE_MAPPING_ENABLED)) {
                 param.paramValue("true");
-
             } else if (paramName.equals(RESOURCE_MAPPING_COMPRESSED_STAGES)) {
                 param.paramValue("All");
-
             } else if (paramName.equals(RESOURCE_MAPPING_PACKED_STAGES)) {
                 param.paramValue("All");
             }
         }
-
         // 3. create second archive (war). Set here modified web.xml
         WebArchive modifiedWar = ShrinkWrap.create(WebArchive.class);
         modifiedWar.setWebXML(new StringAsset(webXmlDefault.exportAsString()));
-
         // 4. merge newly created war with metamer.war (this is way how to change descriptor within archive)
         // war.merge(tempWar); -- this way doesn't work
         modifiedWar.merge(defaultWar);
-
         // 5. return modified archive
         return modifiedWar;
-    }
-
-    /**
-     * Factory method for creating instances of class JQueryLocator which locates the element using <a
-     * href="http://api.jquery.com/category/selectors/">JQuery Selector</a> syntax. It adds "div.content " in front of each
-     * selector.
-     *
-     * @param jquerySelector the jQuery selector
-     * @return the jQuery locator
-     * @see JQueryLocator
-     */
-    public static JQueryLocator pjq(String jquerySelector) {
-
-        String escapedString = jq(jquerySelector).getRawLocator();
-
-        return new JQueryLocator("div.content " + escapedString);
     }
 
     /**
@@ -190,13 +130,10 @@ public abstract class AbstractMetamerTest extends Arquillian {
      * @return war which is altered according to the test environment
      */
     protected static WebArchive alterWarAccordingToTestEnvironment(WebArchive war) {
-
         String tomcat = System.getProperty("TOMCAT");
-
         if (tomcat != null && tomcat.equals("true")) {
             war = alterAccordingToTomcat(war);
         }
-
         // TODO
         return (WebArchive) war;
     }
@@ -208,7 +145,6 @@ public abstract class AbstractMetamerTest extends Arquillian {
      * @return war to be altered
      */
     private static WebArchive alterAccordingToTomcat(WebArchive war) {
-
         // TODO
         return war;
     }

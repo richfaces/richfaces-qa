@@ -23,7 +23,7 @@ package org.richfaces.tests.metamer.ftest.richDataScroller;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-import static org.richfaces.tests.metamer.ftest.AbstractMetamerTest.pjq;
+import static org.richfaces.tests.metamer.ftest.AbstractGrapheneTest.pjq;
 
 import org.richfaces.tests.metamer.ftest.model.AssertingDataScroller;
 import org.richfaces.tests.metamer.ftest.model.DataScroller;
