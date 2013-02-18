@@ -62,7 +62,7 @@ FSF site: http://www.fsf.org. -->
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
         <arquillian.android.version>1.0.0.Alpha2</arquillian.android.version>
         <shrinkwrap.descriptors.version>2.0.0-alpha-4</shrinkwrap.descriptors.version>
-        <arquillian.eap.managed.version>7.1.3</arquillian.eap.managed.version>
+        <arquillian.eap.managed.version>7.1.3.Final</arquillian.eap.managed.version>
 
         <version.selenium>2.29.0</version.selenium>
         <version.selenium.server>2.29.0</version.selenium.server>
@@ -1101,7 +1101,7 @@ FSF site: http://www.fsf.org. -->
                 <dependency>
                     <groupId>org.jboss.as</groupId>
                     <artifactId>jboss-as-arquillian-container-managed</artifactId>
-                    <version>${version.arquillian.eap.managed}</version>
+                    <version>${arquillian.eap.managed.version}</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
