@@ -53,6 +53,7 @@ public class RichTabPanelBean implements Serializable {
     private List<TabBean> tabBeans = new ArrayList<TabBean>();
     // there are 5 tabs by default, so this is base for new tabs
     private int tabIdLast = 5;
+    private UITabPanel tabPanel;
 
     /**
      * Initializes the managed bean.
@@ -76,7 +77,7 @@ public class RichTabPanelBean implements Serializable {
         attributes.get("bypassUpdates").setType(Boolean.class);
     }
 
-    public void createNewTab() {
+    public void addNewTabToCollection() {
 
         UITab tab = new UITab();
         int index = tabs.size() + 6; // there is already 5 tabs
@@ -87,6 +88,19 @@ public class RichTabPanelBean implements Serializable {
         tab.setRender("tab" + index);
 
         tabs.add(tab);
+    }
+
+    public void attachNewTabProgramatically() {
+
+        UITab tab = (UITab)FacesContext.getCurrentInstance().getApplication().createComponent(UITab.COMPONENT_TYPE);
+        int index = tabPanel.getChildren().size() + 1;
+
+        tab.setHeader("tab" + index + " header");
+        tab.setId("tab" + index);
+        tab.setName("tab" + index);
+        tab.setRender("tab" + index);
+
+        tabPanel.getChildren().add(tab);
     }
 
     public void generateNewTab() {
@@ -232,5 +246,13 @@ public class RichTabPanelBean implements Serializable {
         listB.add("blueberry");
 
         return listB;
+    }
+
+    public UITabPanel getTabPanel() {
+        return tabPanel;
+    }
+
+    public void setTabPanel(UITabPanel tabPanel) {
+        this.tabPanel = tabPanel;
     }
 }
