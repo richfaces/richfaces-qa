@@ -26,7 +26,6 @@ import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
 import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.arquillian.ajocado.Graphene.id;
-import static org.jboss.arquillian.ajocado.Graphene.jq;
 import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
@@ -40,6 +39,7 @@ import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 import static org.jboss.arquillian.ajocado.javascript.JavaScript.js;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.jboss.test.selenium.locator.reference.ReferencedLocator.ref;
+import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.basicAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -273,7 +273,7 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
 
         basicAttributes.set(attribute, styleClass);
 
-        JQueryLocator elementWhichHasntThatClass = jq(element.getRawLocator() + ":not(.{0})").format(styleClass);
+        JQueryLocator elementWhichHasntThatClass = org.jboss.arquillian.ajocado.Graphene.jq(element.getRawLocator() + ":not(.{0})").format(styleClass);
         assertTrue(selenium.isElementPresent(element));
         assertFalse(selenium.isElementPresent(elementWhichHasntThatClass));
     }
