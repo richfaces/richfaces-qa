@@ -38,6 +38,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -236,6 +237,10 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
             waiting(1000);
             input = page.attributesTable.findElement(By.cssSelector(inputExp));
             input.sendKeys(inputVal);
+            // sendKeys triggers page reload automatically
+            waiting(300);
+            Graphene.waitAjax().until(ElementPresent.getInstance().element(page.attributesTable));
+            input = page.attributesTable.findElement(By.cssSelector(inputExp));
             MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
         }
         executeJS("window.metamerEvents = \"\";");
@@ -253,6 +258,10 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
             WebElement input = page.attributesTable.findElement(By.cssSelector(inputExp));
 
             input.sendKeys(format("alert(\"{0}\")", event));
+            // sendKeys triggers page reload automatically
+            waiting(300);
+            Graphene.waitAjax().until(ElementPresent.getInstance().element(page.attributesTable));
+            input = page.attributesTable.findElement(By.cssSelector(inputExp));
             MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
         }
     }
