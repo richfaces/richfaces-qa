@@ -27,7 +27,8 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision: 22750 $
+ * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
+ * @since 4.3.1
  */
 public enum PanelMenuGroupAttributes implements AttributeEnum {
 

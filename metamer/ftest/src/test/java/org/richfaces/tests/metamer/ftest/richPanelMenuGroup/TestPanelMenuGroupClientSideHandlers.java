@@ -58,7 +58,8 @@ import com.google.common.base.Predicate;
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 23138 $
+ * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
+ * @since 4.3.1
  */
 public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroupTest {
 

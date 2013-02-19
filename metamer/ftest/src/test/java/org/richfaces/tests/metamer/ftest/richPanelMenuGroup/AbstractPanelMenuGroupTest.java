@@ -34,7 +34,8 @@ import org.testng.annotations.BeforeMethod;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22750 $
+ * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
+ * @since 4.3.1
  */
 public abstract class AbstractPanelMenuGroupTest extends AbstractWebDriverTest {
 

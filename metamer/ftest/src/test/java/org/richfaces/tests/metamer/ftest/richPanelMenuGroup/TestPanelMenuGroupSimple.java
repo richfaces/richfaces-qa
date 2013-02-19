@@ -53,7 +53,8 @@ import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22750 $
+ * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
+ * @since 4.3.1
  */
 public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
 
