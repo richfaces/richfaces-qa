@@ -41,6 +41,8 @@ FSF site: http://www.fsf.org. -->
 
         <testng.listeners>org.richfaces.tests.metamer.ftest.MatrixConfigurator,org.richfaces.tests.metamer.ftest.MetamerSeleniumLoggingTestListener,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
+        <metamerapp.tested.version>4.3.0.Final</metamerapp.tested.version>
+        <metamer.unpacked.dir>metamer-unpacked</metamer.unpacked.dir>
     </properties>
 
     <dependencies>
@@ -398,6 +400,104 @@ FSF site: http://www.fsf.org. -->
                                     <arquillian.graphene.browser>*firefox ${firefox.bin}</arquillian.graphene.browser>
                                 </systemProperties>
                             </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        <profile>
+            <id>backward-compatibility-testing</id>
+            <build>
+                <plugins>
+                    <!-- unpack metamer.war and copy newest richfaces binaries into WEB-INF/lib -->
+                    <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>                        
+                            <!-- unpacky metamer.war archive -->
+                            <execution>
+                                <id>unpack-metamer</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.richfaces.tests</groupId>
+                                            <artifactId>metamer</artifactId>
+                                            <version>${project.version}</version>
+                                            <type>war</type>
+                                            <classifier>${metamer.classifier}</classifier>
+                                            <overWrite>true</overWrite>
+                                            <outputDirectory>${project.build.directory}/${metamer.unpacked.dir}</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                    <overWriteReleases>true</overWriteReleases>
+                                    <overWriteSnapshots>true</overWriteSnapshots>                                    
+                                    <!-- start replacing by exclude them while unpacking metamer.war -->
+                                    <excludes>WEB-INF/lib/richfaces-*.jar</excludes>
+                                </configuration>
+                            </execution>
+                            
+                            <!-- copy newest richfaces binaries into unpacked metamer/WEB-INF/lib -->
+                            <execution>
+                                <id>copy-newest-richfaces</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.richfaces.core</groupId>
+                                            <artifactId>richfaces-core-api</artifactId>
+                                            <version>${metamerapp.tested.version}</version>
+                                            <type>jar</type>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.richfaces.core</groupId>
+                                            <artifactId>richfaces-core-impl</artifactId>
+                                            <version>${metamerapp.tested.version}</version>
+                                            <type>jar</type>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.richfaces.ui</groupId>
+                                            <artifactId>richfaces-components-api</artifactId>
+                                            <version>${metamerapp.tested.version}</version>
+                                            <type>jar</type>     
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.richfaces.ui</groupId>
+                                            <artifactId>richfaces-components-ui</artifactId>
+                                            <version>${metamerapp.tested.version}</version>
+                                            <type>jar</type>
+                                        </artifactItem>
+                                    </artifactItems>
+                                    <outputDirectory>${project.build.directory}/${metamer.unpacked.dir}/WEB-INF/lib</outputDirectory>
+                                    <overWriteIfNewer>true</overWriteIfNewer>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    
+                    <!-- pack modified metamer back to WAR -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <configuration>
+                            <!-- classifier>${metamer.classifier}</classifier-->
+                            <warSourceDirectory>${project.build.directory}/${metamer.unpacked.dir}</warSourceDirectory>
+                            <warName>metamer</warName>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>repack-metamer-back-to-war</id>
+                                <phase>generate-test-resources</phase>
+                                <goals>
+                                    <goal>war</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
