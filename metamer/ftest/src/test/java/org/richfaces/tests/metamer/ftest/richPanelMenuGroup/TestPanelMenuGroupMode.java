@@ -48,7 +48,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision: 22750 $
+ * @since 4.3.1
  */
 public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
 

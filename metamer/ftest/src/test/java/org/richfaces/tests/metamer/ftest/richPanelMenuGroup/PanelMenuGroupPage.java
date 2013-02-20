@@ -29,6 +29,7 @@ import org.richfaces.tests.page.fragments.impl.panelMenuGroup.PanelMenuGroup;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
+ * @since 4.3.1
  *
  */
 public class PanelMenuGroupPage extends MetamerPage {

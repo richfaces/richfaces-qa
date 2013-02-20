@@ -39,6 +39,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="component">
 
             <rich:tabPanel id="tabPanel"
+                           binding="#{richTabPanelBean.tabPanel}"
                            activeItem="#{richTabPanelBean.attributes['activeItem'].value}"
                            cycledSwitching="#{richTabPanelBean.attributes['cycledSwitching'].value}"
                            dir="#{richTabPanelBean.attributes['dir'].value}"
@@ -84,12 +85,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     content of tab 5
                 </rich:tab>
                 
-                <c:forEach items="#{richTabPanelBean.tabs}" var="newTab">
-                	<rich:tab binding="#{newTab}" >
-                		content of tab
-                	</rich:tab>
-                </c:forEach>
-                
             </rich:tabPanel>
 
             <br/><br/>
@@ -127,10 +122,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </h:commandButton>
                 
                 <h:commandButton id="hCreateTabButton" value="[h] Create tab" 
-                				   actionListener="#{richTabPanelBean.addNewTabToCollection}" />
+                				   actionListener="#{richTabPanelBean.attachNewTabProgramatically}" />
                 <a4j:commandButton id="a4jCreateTabButton" value="[a4j] Create tab"
                 				   render="tabPanel"                				   
-                				   actionListener="#{richTabPanelBean.addNewTabToCollection}" />
+                				   actionListener="#{richTabPanelBean.attachNewTabProgramatically}" />
                 				   
             </fieldset>
 
