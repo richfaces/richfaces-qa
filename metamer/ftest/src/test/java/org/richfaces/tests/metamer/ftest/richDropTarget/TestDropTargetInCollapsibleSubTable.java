@@ -79,7 +79,7 @@ public class TestDropTargetInCollapsibleSubTable extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richDropTarget/simple.xhtml");
     }
 
-    @Test
+    @Test(groups = "4.Future")
     public void testAcceptedTypes() {
         dropTargetAttributes.set(acceptedTypes, "drg2");
         indicator = new Indicator(page.indicator);
