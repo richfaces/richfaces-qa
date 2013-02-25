@@ -57,6 +57,8 @@ public class TestTwoPush extends AbstractWebDriverTest {
         // disable push updates
         MetamerPage.waitRequest(page.pushEnabledChckBox, WaitRequestType.XHR).click();
 
+        waiting(400); // workaround
+
         // enable push updates
         MetamerPage.waitRequest(page.pushEnabledChckBox, WaitRequestType.XHR).click();
 
@@ -72,10 +74,10 @@ public class TestTwoPush extends AbstractWebDriverTest {
         // there are 2 push components on page (this example verify that one doesn't influence another one)
         assertEquals(event, "onsubscribed onsubscribed", "Attribute onsubscribed doesn't work");
 
-        page.pushEnabledChckBox.click();
+        MetamerPage.waitRequest(page.pushEnabledChckBox, WaitRequestType.XHR).click();
         // give some time to JS to execute click and then do it again
         waiting(1000);
-        page.pushEnabledChckBox.click();
+        MetamerPage.waitRequest(page.pushEnabledChckBox, WaitRequestType.XHR).click();
         waiting(1000);
         // second onsubscribed event receive after manual re-attach by checkbox
         event = ((String) executeJS("return window.metamerEvents")).trim();
