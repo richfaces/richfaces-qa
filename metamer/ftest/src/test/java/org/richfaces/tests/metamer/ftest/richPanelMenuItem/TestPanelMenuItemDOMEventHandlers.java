@@ -21,43 +21,36 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 
-import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
-import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEDOWN;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEMOVE;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOUT;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOVER;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEUP;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.panelMenuItemAttributes;
+import static org.richfaces.PanelMenuMode.client;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.mode;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.onclick;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.ondblclick;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.onmousedown;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.onmousemove;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.onmouseover;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.onmouseup;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuItemAttributes;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.richfaces.PanelMenuMode;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.ftest.model.PanelMenu;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22751 $
+ * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
+ * @since 4.3.1
  */
-public class TestPanelMenuItemDOMEventHandlers extends AbstractGrapheneTest {
+public class TestPanelMenuItemDOMEventHandlers extends AbstractWebDriverTest {
 
-    PanelMenu menu = new PanelMenu(pjq("div.rf-pm[id$=panelMenu]"));
-    PanelMenu.Item item = menu.getGroup(1).getItem(2);
-
-    @Inject
-    @Use("events")
-    Event event;
-    Event[] events = new Event[] { CLICK, DBLCLICK, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER, MOUSEUP };
+    @Page
+    PanelMenuItemPage page;
 
     @Override
     public URL getTestUrl() {
@@ -65,8 +58,52 @@ public class TestPanelMenuItemDOMEventHandlers extends AbstractGrapheneTest {
     }
 
     @Test
-    public void testDOMEventHandler() {
-        panelMenuItemAttributes.set(mode, PanelMenuMode.client);
-        super.testFireEvent(event, item);
+    public void testOnClick() {
+        panelMenuItemAttributes.set(mode, client);
+
+        Action click = new Actions(driver).click(page.item.getRoot()).build();
+        testFireEvent(panelMenuItemAttributes, onclick, click);
+    }
+
+    @Test
+    public void testOnDblClick() {
+        panelMenuItemAttributes.set(mode, client);
+        Action dblClick = new Actions(driver).doubleClick(page.item.getRoot()).build();
+        testFireEvent(panelMenuItemAttributes, ondblclick, dblClick);
+    }
+
+    @Test
+    public void testOnMousedown() {
+        panelMenuItemAttributes.set(mode, client);
+        Action mousedown = new Actions(driver).clickAndHold(page.item.getRoot()).build();
+        testFireEvent(panelMenuItemAttributes, onmousedown, mousedown);
+    }
+
+    @Test
+    public void testOnMousemove() {
+        panelMenuItemAttributes.set(mode, client);
+        Action mousemove = new Actions(driver).moveToElement(page.item.getRoot(), 3, 3).build();
+        testFireEvent(panelMenuItemAttributes, onmousemove, mousemove);
+    }
+
+    @Test
+    public void testOnMouseout() {
+        panelMenuItemAttributes.set(mode, client);
+        // TODO JJa 2013-02-25: Rewrite using webdriver api when fixed (not working now)
+        testFireEventWithJS(page.item.getRoot(), MOUSEOUT, panelMenuItemAttributes, PanelMenuItemAttributes.onmouseout);
+    }
+
+    @Test
+    public void testOnMouseover() {
+        panelMenuItemAttributes.set(mode, client);
+        Action mouseover = new Actions(driver).moveToElement(page.item.getRoot(), 3, 3).build();
+        testFireEvent(panelMenuItemAttributes, onmouseover, mouseover);
+    }
+
+    @Test
+    public void testOnMouseup() {
+        panelMenuItemAttributes.set(mode, client);
+        Action mouseup = new Actions(driver).clickAndHold(page.item.getRoot()).release().build();
+        testFireEvent(panelMenuItemAttributes, onmouseup, mouseup);
     }
 }

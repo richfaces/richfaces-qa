@@ -19,24 +19,23 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.page.fragments.impl.panelMenuItem;
+package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 
-import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.ATTR_CLASS;
-
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.page.fragments.impl.panelMenuItem.PanelMenuItem;
 
 /**
- * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
+ * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
+ * @since 4.3.1
  *
  */
-public class PanelMenuItemIcon {
+public class PanelMenuItemPage extends MetamerPage {
 
-    @Root
-    public WebElement icon;
+    @FindBy(jquery = "div[id$=item12]")
+    PanelMenuItem item;
 
-    public boolean isTransparent() {
-        return icon.getAttribute(ATTR_CLASS).contains("-transparent");
-    }
-
+    @FindBy(css = "table[id$='attributes:attributes']")
+    public WebElement attributesTable;
 }
