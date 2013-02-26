@@ -91,7 +91,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                             <h:outputText value="#{newTab.tabHeader} " />
                             <h:commandLink value="[x]" 
                                            rendered="#{newTab.closable}" 
-                                           onclick="removeTab('#{newTab.tabId}');" />
+                                           onclick="removeTab('#{newTab.tabId}'); return false;" />
                         </f:facet>
                     </rich:tab>       	      	
                 </c:forEach>
