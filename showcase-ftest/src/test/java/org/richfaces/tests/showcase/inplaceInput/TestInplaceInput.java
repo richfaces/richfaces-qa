@@ -21,31 +21,25 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.inplaceInput;
 
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInput;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.inplaceInput.page.SimplePage;
 import static org.testng.Assert.assertEquals;
-
-import java.awt.event.KeyEvent;
-
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
 /**
  * Test case for page faces/components/richInplaceInput/simple.xhtml.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision: 22196 $
  */
-public class TestInplaceInput extends AbstractGrapheneTest {
+public class TestInplaceInput extends AbstractWebDriverTest {
 
-    /* *******************************************************************************
-     * Locators*******************************************************************************
-     */
 
-    protected JQueryLocator nameInputLabel = jq("span.rf-ii-lbl:eq(0)");
-    protected JQueryLocator emailInputLabel = jq("span.rf-ii-lbl:eq(1)");
-    protected JQueryLocator nameInput = jq("input[id$=Input]:eq(0)");
-    protected JQueryLocator emailInput = jq("input[id$=Input]:eq(1)");
+    @Page
+    private SimplePage page;
 
     /* ********************************************************************************
      * Tests********************************************************************************
@@ -53,27 +47,23 @@ public class TestInplaceInput extends AbstractGrapheneTest {
 
     @Test
     public void testEnterSomethingToNameInput() {
-        enterSomethingToInputAndCheck(nameInput, nameInputLabel);
+        enterSomethingToInputAndCheck(page.name);
     }
 
     @Test
     public void testEnterSomethingToEmail() {
-        enterSomethingToInputAndCheck(emailInput, emailInputLabel);
+        enterSomethingToInputAndCheck(page.email);
     }
 
     /* ***********************************************************************************
      * Help methods***********************************************************************************
      */
 
-    private void enterSomethingToInputAndCheck(JQueryLocator input, JQueryLocator label) {
-        selenium.click(input);
-
+    private void enterSomethingToInputAndCheck(InplaceInput input) {
         String expectedString = "Test string";
-        selenium.type(input, expectedString);
-        selenium.focus(input);
-        selenium.keyPressNative(KeyEvent.VK_ENTER);
+        input.editBy(InplaceInput.OpenBy.CLICK).type(expectedString).confirm();
 
-        String actualString = selenium.getText(label);
+        String actualString = input.getLabelValue();
 
         assertEquals(actualString, expectedString, "The value in the input is not what have been typed there!");
     }

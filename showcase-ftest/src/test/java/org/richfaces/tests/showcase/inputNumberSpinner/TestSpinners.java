@@ -21,23 +21,22 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.inputNumberSpinner;
 
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import java.util.List;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.arquillian.ajocado.geometry.Point;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
+import org.richfaces.tests.page.fragments.impl.input.inputNumberSpinner.InputNumberSpinner;
+import org.richfaces.tests.page.fragments.impl.input.inputNumberSpinner.RichFacesInputNumberSpinner;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
-public class TestSpinners extends AbstractGrapheneTest {
-
-    /* *********************************************************************************
-     * Constants ***************************************************************** ****************
-     */
+public class TestSpinners extends AbstractWebDriverTest {
 
     protected final int MAX_VALUE = 100;
     protected final int MIN_VALUE = 0;
@@ -45,18 +44,8 @@ public class TestSpinners extends AbstractGrapheneTest {
     protected final int FIRST_INPUT_STEP = 1;
     protected final int SECOND_INPUT_STEP = 10;
 
-    /* *********************************************************************************
-     * Locators ****************************************************************** ***************
-     */
-
-    protected JQueryLocator inputChangingByOne = jq("input[type=text]:eq(0)");
-    protected JQueryLocator inputChangingByTen = jq("input[type=text]:eq(1)");
-
-    protected JQueryLocator increaseByOne = jq("span.rf-insp-inc:eq(0)");
-    protected JQueryLocator increaseByTen = jq("span.rf-insp-inc:eq(1)");
-
-    protected JQueryLocator decreaseByOne = jq("span.rf-insp-dec:eq(0)");
-    protected JQueryLocator decreaseByTen = jq("span.rf-insp-dec:eq(1)");
+    @FindBy(css = ".rf-insp")
+    private List<RichFacesInputNumberSpinner> spinners;
 
     /* *********************************************************************************
      * Tests ********************************************************************* ************
@@ -64,28 +53,32 @@ public class TestSpinners extends AbstractGrapheneTest {
 
     @Test
     public void testInputIncreasedByOne() {
-
-        increaseByStep(inputChangingByOne, increaseByOne, FIRST_INPUT_STEP);
-
+        increaseByStep(spinners.get(0), FIRST_INPUT_STEP);
     }
 
     @Test
     public void testInputIcreaseByTen() {
-
-        increaseByStep(inputChangingByTen, increaseByTen, SECOND_INPUT_STEP);
-
+        increaseByStep(spinners.get(1), SECOND_INPUT_STEP);
     }
 
     @Test
     public void testInputDecreaseByOne() {
-
-        decreaseByStep(inputChangingByOne, decreaseByOne, FIRST_INPUT_STEP);
+        decreaseByStep(spinners.get(0), FIRST_INPUT_STEP);
     }
 
     @Test
     public void testInputDecreaseByTen() {
+        decreaseByStep(spinners.get(1), SECOND_INPUT_STEP);
+    }
 
-        decreaseByStep(inputChangingByTen, decreaseByTen, SECOND_INPUT_STEP);
+    @Test
+    public void testInputSetAndDecreaseByTen() {
+        setAndDecrease(spinners.get(1), SECOND_INPUT_STEP);
+    }
+
+    @Test
+    public void testInputSetAndDecreaseByOne() {
+        setAndDecrease(spinners.get(0), FIRST_INPUT_STEP);
     }
 
     /* **************************************************************************************************************************
@@ -103,59 +96,64 @@ public class TestSpinners extends AbstractGrapheneTest {
      * @param step
      *            the step by which will be the value decreased
      */
-    private void decreaseByStep(JQueryLocator input, JQueryLocator decreaseSpinner, int step) {
+    private void decreaseByStep(InputNumberSpinner spinner, int step) {
 
-        int currentValueOfInput = Integer.valueOf(selenium.getValue(input));
+        int currentValueOfInput = spinner.getInput().getIntValue();
 
         for (int i = currentValueOfInput; i > MIN_VALUE; i -= step) {
 
-            selenium.clickAt(decreaseSpinner, new Point(1, 1));
+            spinner.decrease();
 
-            assertEquals(Integer.valueOf(selenium.getValue(input)).intValue(), currentValueOfInput - step,
+            assertEquals(spinner.getInput().getIntValue(), currentValueOfInput - step,
                 "The value should be decreased by " + step);
 
-            currentValueOfInput = Integer.valueOf(selenium.getValue(input));
+            currentValueOfInput = spinner.getInput().getIntValue();
         }
 
-        selenium.clickAt(decreaseSpinner, new Point(1, 1));
+        spinner.decrease();
 
-        currentValueOfInput = Integer.valueOf(selenium.getValue(input));
+        currentValueOfInput = spinner.getInput().getIntValue();
 
-        assertEquals(currentValueOfInput, MAX_VALUE, "The current value in the input should be minimal, so "
+        assertEquals(currentValueOfInput, MAX_VALUE, "The current value in the input should be maximal, so "
             + MAX_VALUE);
     }
 
     /**
      * Increase by step via increase spinner
      *
-     * @param input
-     *            which value will be increased
-     * @param increaseSpinner
-     *            the increase spinner which will be clicked on
+     * @param spinner
      * @param step
      *            the step by which will be the value increased
      *
      */
-    private void increaseByStep(JQueryLocator input, JQueryLocator increaseSpinner, int step) {
+    private void increaseByStep(InputNumberSpinner spinner, int step) {
 
-        int currentValueOfInput = Integer.valueOf(selenium.getValue(input));
+        int currentValueOfInput = spinner.getInput().getIntValue();
 
         for (int i = currentValueOfInput; i < MAX_VALUE; i += step) {
 
-            selenium.clickAt(increaseSpinner, new Point(1, 1));
+            spinner.increase();
 
-            assertEquals(Integer.valueOf(selenium.getValue(input)).intValue(), currentValueOfInput + step,
+            assertEquals(spinner.getInput().getIntValue(), currentValueOfInput + step,
                 "The value should be increased by " + step);
 
-            currentValueOfInput = Integer.valueOf(selenium.getValue(input));
+            currentValueOfInput = spinner.getInput().getIntValue();
         }
 
-        selenium.clickAt(increaseSpinner, new Point(1, 1));
+        spinner.increase();
 
-        currentValueOfInput = Integer.valueOf(selenium.getValue(input));
+        currentValueOfInput = spinner.getInput().getIntValue();
 
         assertEquals(currentValueOfInput, MIN_VALUE, "The current value in the input should be minimal, so "
             + MIN_VALUE);
+    }
+
+    private void setAndDecrease(InputNumberSpinner spinner, int step) {
+        spinner.getInput().clear(TextInputComponent.ClearType.BACKSPACE);
+        spinner.getInput().fillIn("30");
+        spinner.getInput().trigger("blur");
+        spinner.decrease();
+        assertEquals(spinner.getInput().getIntValue(), 30 - step);
     }
 
 }
