@@ -19,45 +19,41 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.ftest.richList;
+package org.richfaces.tests.showcase.list.page;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
-
-import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.ftest.webdriver.page.richList.ListsPage;
-import org.testng.annotations.Test;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.list.ListFragment;
+import org.richfaces.tests.page.fragments.impl.list.RichFacesList;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichListSimple extends AbstractWebDriverTest<ListsPage>{
+public class ListsPage {
 
-    @Test
-    public void testInit() throws InterruptedException {
-        assertTrue(getPage().isOrdered(), "Initally, the unordered list should be present.");
-        testNumberOfItems();
-    }
+    @FindBy(id = "list")
+    public RichFacesList list;
 
-    @Test(groups = {"RF-12146"})
-    public void testSetDefinition() {
-        getPage().setDefinition();
-        testNumberOfItems();
-    }
+    @FindBy(jquery = "a:contains('ordered')")
+    private WebElement orderedList;
+    @FindBy(jquery = "a:contains('unordered')")
+    private WebElement unordered;
+    @FindBy(jquery = "a:contains('definitions')")
+    private WebElement definitions;
 
-    @Test(groups = {"RF-12146"})
-    public void testSetUnordered() {
-        getPage().setUnordered();
-        testNumberOfItems();
-    }
-
-    @Override
-    protected ListsPage createPage() {
-        return new ListsPage(getWebDriver());
-    }
-
-    private void testNumberOfItems() {
-        assertEquals(getPage().getNumberOfItems(), 6, "Number of items doesn't match.");
+    public void setType(ListFragment.ListType type) {
+        switch(type) {
+            case DEFINITIONS:
+                Graphene.guardXhr(definitions).click();
+                break;
+            case UNORDERED:
+                Graphene.guardXhr(unordered).click();
+                break;
+            case ORDERED:
+                Graphene.guardXhr(orderedList).click();
+                break;
+        }
     }
 
 }
