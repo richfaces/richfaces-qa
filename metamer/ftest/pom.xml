@@ -43,6 +43,11 @@ FSF site: http://www.fsf.org. -->
         <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
         <metamerapp.tested.version>4.3.0.Final</metamerapp.tested.version>
         <metamer.unpacked.dir>metamer-unpacked</metamer.unpacked.dir>
+        <!-- following property in use only with 'backward-compatibility-tesing-wfk profile, 
+           + since there metamer war neither RichFaces dependencies available in (enterprise) maven repo, 
+           + so the idea is put them somewhere before profile execution, and point here through this variable
+           + -->
+        <metamer.wfk.dependencies.dir />
     </properties>
 
     <dependencies>
@@ -524,6 +529,101 @@ FSF site: http://www.fsf.org. -->
                                 </configuration>
                             </execution>
                                             
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        <!-- NOTE: this profile expects "metamer.wfk.dependencies.dir" property 
+            set with path to richfaces binaries and metamer war file -->
+        <profile>
+            <id>backward-compatibility-testing-wfk</id>
+            <build>
+                <plugins>
+                    <!-- unpack metamer.war archive obtained from file system -->
+                    <!-- Since there is metamer.war binary (in target/) brought by dep-plugin, 
+                        firstly copy correct instance from FS -->
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>validate</phase><!-- make sure this is executed after dependency 
+                                    plugin in the same phase is done -->
+                                <configuration>
+                                    <tasks>
+                                        <unzip src="${metamer.wfk.dependencies.dir}/metamer-wfk.war"
+                                            dest="${project.build.directory}/${metamer.unpacked.dir}"><!-- target/metamer-wfk -->
+                                            <patternset>
+                                                <exclude name="WEB-INF/lib/richfaces-*.jar" />
+                                            </patternset>
+                                        </unzip>
+                                        <!-- copy newest richfaces binaries into WEB-INF/lib -->
+                                        <copy
+                                            todir="${project.build.directory}/${metamer.unpacked.dir}/WEB-INF/lib/">
+                                            <fileset dir="${metamer.wfk.dependencies.dir}">
+                                                <!-- expecting that all jar would be copied into WEB-INF/lib -->
+                                                <include name="richfaces-*.jar" />
+                                            </fileset>
+                                        </copy>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+    
+                    <!-- pack modified metamer back to WAR -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <configuration>
+                            <warSourceDirectory>${project.build.directory}/${metamer.unpacked.dir}</warSourceDirectory>
+                            <warName>metamer</warName>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>repack-metamer-back-to-war</id>
+                                <phase>generate-test-resources</phase>
+                                <goals>
+                                    <goal>war</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+    
+                    <!-- update arquillian.xml: set server-config to standalone.xml, because 
+                        of expected using richfaces 4.3 binaries -->
+                    <!-- not sure if required -->
+                    <plugin>
+                        <groupId>com.google.code.maven-replacer-plugin</groupId>
+                        <artifactId>maven-replacer-plugin</artifactId>
+                        <version>1.3.9</version>
+                        <executions>
+    
+                            <execution>
+                                <id>replace-arquillian-server-configuration</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>replace</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- file>src/test/resources/arquillian.xml</file --><!-- don't want to modify sources, use following location instead -->
+                                    <file>target/test-classes/arquillian.xml</file>
+                                    <regexFlags>
+                                        <regexFlag>MULTILINE</regexFlag>
+                                    </regexFlags>
+                                    <token>&lt;property
+                                        name="serverConfig"&gt;standalone-full.xml&lt;/property&gt;</token>
+                                    <value>&lt;property
+                                        name="serverConfig"&gt;standalone.xml&lt;/property&gt;&lt;!--
+                                        added by maven-replacer-plugin on
+                                        replace-arquillian-server-configuration execution --&gt;</value>
+                                </configuration>
+                            </execution>
+    
                         </executions>
                     </plugin>
                 </plugins>
