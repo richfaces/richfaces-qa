@@ -22,14 +22,14 @@
  */
 package org.richfaces.tests.metamer.ftest.richToggleControl;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.toggleControlAttributes;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.toggleControlAttributes;
 import static org.testng.Assert.assertFalse;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.page.fragments.impl.toggleControl.RichFacesToggleControl;
 
 /**
  * Abstract test case for rich:toggleControl.
@@ -37,62 +37,80 @@ import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 21115 $
  */
-public abstract class AbstractTestToggleControl extends AbstractGrapheneTest {
+public abstract class AbstractTestToggleControl extends AbstractWebDriverTest {
 
-    private JQueryLocator[] buttons1 = { pjq("input[id$=tc11]"), pjq("input[id$=tc12]"), pjq("input[id$=tc13]") };
-    private JQueryLocator[] buttons2 = { pjq("input[id$=tc21]"), pjq("input[id$=tc22]"), pjq("input[id$=tc23]") };
-    private JQueryLocator customButton = pjq("input[id$=tcCustom]");
+    @Page
+    ToggleControlPage page;
 
-    public void testSwitchFirstPanel(JQueryLocator[] items) {
-        testSwitching(buttons1, items);
+    private RichFacesToggleControl[] firstPanelBtns;
+
+    private RichFacesToggleControl[] secondPanelBtns;
+
+    public void testSwitchFirstPanel(WebElement[] items) {
+        testSwitching(getFirstPanelButtons(), items);
     }
 
-    public void testSwitchSecondPanel(JQueryLocator[] items) {
-        testSwitching(buttons2, items);
+    public void testSwitchSecondPanel(WebElement[] items) {
+        testSwitching(getSecondPanelButtons(), items);
     }
 
-    public void testTargetItem(JQueryLocator[] items) {
+    public void testTargetItem(WebElement[] items) {
         toggleControlAttributes.set(ToggleControlAttributes.targetItem, "item2");
 
-        guardXhr(selenium).click(buttons1[2]);
-        waitGui.failWith("Item 3 is not displayed.").until(elementVisible.locator(items[2]));
-        assertFalse(selenium.isVisible(items[0]), "Item 1 should not be visible.");
-        assertFalse(selenium.isVisible(items[1]), "Item 2 should not be visible.");
+        Graphene.guardXhr(page.tcPanel1Item3).toggle();
+        Graphene.waitGui().until(Graphene.element(items[2]).isVisible());
+        assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
+        assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
 
-        guardXhr(selenium).click(customButton);
-        waitGui.failWith("Item 2 is not displayed.").until(elementVisible.locator(items[1]));
-        assertFalse(selenium.isVisible(items[0]), "Item 1 should not be visible.");
-        assertFalse(selenium.isVisible(items[2]), "Item 3 should not be visible.");
+        Graphene.guardXhr(page.tcCustom).toggle();
+        Graphene.waitGui().until(Graphene.element(items[1]).isVisible());
+        assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
+        assertFalse(items[2].isDisplayed(), "Item 3 should not be visible.");
     }
 
-    public void testTargetPanel(JQueryLocator[] items) {
+    public void testTargetPanel(WebElement[] items) {
         toggleControlAttributes.set(ToggleControlAttributes.targetPanel, "panel2");
 
-        guardXhr(selenium).click(buttons2[2]);
-        waitGui.failWith("Item 3 is not displayed.").until(elementVisible.locator(items[2]));
-        assertFalse(selenium.isVisible(items[0]), "Item 1 should not be visible.");
-        assertFalse(selenium.isVisible(items[1]), "Item 2 should not be visible.");
+        Graphene.guardXhr(page.tcPanel2Item3).toggle();
+        Graphene.waitGui().until(Graphene.element(items[2]).isVisible());
+        assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
+        assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
 
-        guardXhr(selenium).click(customButton);
-        waitGui.failWith("Item 1 is not displayed.").until(elementVisible.locator(items[0]));
-        assertFalse(selenium.isVisible(items[1]), "Item 2 should not be visible.");
-        assertFalse(selenium.isVisible(items[2]), "Item 3 should not be visible.");
+        Graphene.guardXhr(page.tcCustom).toggle();
+        // waitGui.failWith("Item 1 is not displayed.").until(elementVisible.locator(items[0]));
+        Graphene.waitGui().until(Graphene.element(items[0]).isVisible());
+        assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
+        assertFalse(items[2].isDisplayed(), "Item 3 should not be visible.");
     }
 
-    private void testSwitching(JQueryLocator[] buttons, JQueryLocator[] items) {
-        guardXhr(selenium).click(buttons[2]);
-        waitGui.failWith("Item 3 is not displayed.").until(elementVisible.locator(items[2]));
-        assertFalse(selenium.isVisible(items[0]), "Item 1 should not be visible.");
-        assertFalse(selenium.isVisible(items[1]), "Item 2 should not be visible.");
+    private void testSwitching(RichFacesToggleControl[] buttons, WebElement[] items) {
+        Graphene.guardXhr(buttons[2]).toggle();
+        Graphene.waitGui().until(Graphene.element(items[2]).isVisible());
+        assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
+        assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
 
-        guardXhr(selenium).click(buttons[1]);
-        waitGui.failWith("Item 2 is not displayed.").until(elementVisible.locator(items[1]));
-        assertFalse(selenium.isVisible(items[0]), "Item 1 should not be visible.");
-        assertFalse(selenium.isVisible(items[2]), "Item 3 should not be visible.");
+        Graphene.guardXhr(buttons[1]).toggle();
+        Graphene.waitGui().until(Graphene.element(items[1]).isVisible());
+        assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
+        assertFalse(items[2].isDisplayed(), "Item 3 should not be visible.");
 
-        guardXhr(selenium).click(buttons[0]);
-        waitGui.failWith("Item 1 is not displayed.").until(elementVisible.locator(items[0]));
-        assertFalse(selenium.isVisible(items[1]), "Item 2 should not be visible.");
-        assertFalse(selenium.isVisible(items[2]), "Item 3 should not be visible.");
+        Graphene.guardXhr(buttons[0]).toggle();
+        Graphene.waitGui().until(Graphene.element(items[0]).isVisible());
+        assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
+        assertFalse(items[2].isDisplayed(), "Item 3 should not be visible.");
+    }
+
+    public RichFacesToggleControl[] getFirstPanelButtons() {
+        if ( firstPanelBtns == null ) {
+            firstPanelBtns = new RichFacesToggleControl[] { page.tcPanel1Item1, page.tcPanel1Item2, page.tcPanel1Item3 };
+        }
+        return firstPanelBtns;
+    }
+
+    public RichFacesToggleControl[] getSecondPanelButtons() {
+        if ( secondPanelBtns == null ) {
+            secondPanelBtns = new RichFacesToggleControl[] { page.tcPanel2Item1, page.tcPanel2Item2, page.tcPanel2Item3 };
+        }
+        return secondPanelBtns;
     }
 }

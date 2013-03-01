@@ -25,7 +25,8 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.toggleControl.RichFacesToggleControl;
 import org.testng.annotations.Test;
 
 
@@ -37,8 +38,8 @@ import org.testng.annotations.Test;
  */
 public class TestRichTCTogglePanel extends AbstractTestToggleControl {
 
-    JQueryLocator[] items1 = {pjq("div[id$=item11]"), pjq("div[id$=item12]"), pjq("div[id$=item13]")};
-    JQueryLocator[] items2 = {pjq("div[id$=item21]"), pjq("div[id$=item22]"), pjq("div[id$=item23]")};
+    WebElement[] items1;
+    WebElement[] items2;
 
     @Override
     public URL getTestUrl() {
@@ -47,21 +48,35 @@ public class TestRichTCTogglePanel extends AbstractTestToggleControl {
 
     @Test
     public void testSwitchFirstPanel() {
-        testSwitchFirstPanel(items1);
+        testSwitchFirstPanel(getItems1());
     }
 
     @Test
     public void testSwitchSecondPanel() {
-        testSwitchSecondPanel(items2);
+        testSwitchSecondPanel(getItems2());
     }
 
     @Test
     public void testTargetItem() {
-        testTargetItem(items1);
+        testTargetItem(getItems1());
     }
 
     @Test
     public void testTargetPanel() {
-        testTargetPanel(items2);
+        testTargetPanel(getItems2());
+    }
+
+    private WebElement[] getItems1() {
+        if (items1 == null ) {
+            items1 = new WebElement[] { page.panel1Item1, page.panel1Item2, page.panel1Item3 };
+        }
+        return items1;
+    }
+
+    private WebElement[] getItems2() {
+        if (items2 == null ) {
+            items2 = new WebElement[] { page.panel2Item1, page.panel2Item2, page.panel2Item3 };
+        }
+        return items2;
     }
 }
