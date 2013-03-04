@@ -21,6 +21,8 @@
  */
 package org.richfaces.tests.page.fragments.impl;
 
+import java.util.Iterator;
+
 import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -67,6 +69,51 @@ public final class Utils {
         JavascriptExecutor executor = (JavascriptExecutor) GrapheneContext.getProxy();
         String jQueryCmd = String.format("x = jQuery(arguments[0]).%s ; return x;", cmd);
         return String.valueOf(executor.executeScript(jQueryCmd, element));
+    }
+
+    private static boolean _tolerantAssertPointEquals(Point p1, Point p2, int xTolerance, int yTolerance) {
+        return (Math.abs(p1.x - p2.x) <= xTolerance && Math.abs(p1.y - p2.y) <= yTolerance);
+    }
+
+    /**
+     * Asserts that two points are equal with some allowed tolerance.
+     */
+    public static void tolerantAssertPointEquals(Point p1, Point p2, int xTolerance, int yTolerance, String message) {
+        if (!_tolerantAssertPointEquals(p1, p2, xTolerance, yTolerance)) {
+            throw new AssertionError("The points are not equal or not in tolerance.\n"
+                    + " The tolerance for x axis was: " + xTolerance
+                    + ". The tolerance for y axis was: " + yTolerance + ".\n"
+                    + "First point: " + p1 + "\n"
+                    + "Second point: " + p2 + ".\n"
+                    + message);
+        }
+    }
+
+    /**
+     * Asserts that two locations are equal with some allowed tolerance.
+     */
+    public static void tolerantAssertLocationsEquals(Locations l1, Locations l2, int xTolerance, int yTolerance, String message) {
+        Iterator<Point> it1 = l1.iterator();
+        Iterator<Point> it2 = l2.iterator();
+        Point p1, p2;
+        while (it1.hasNext()) {
+            p1 = it1.next();
+            p2 = it2.next();
+            if (!_tolerantAssertPointEquals(p1, p2, xTolerance, yTolerance)) {
+                throw new AssertionError("The locations are not equal or are not in tolerance.\n"
+                        + "First location: " + l1 + ".\n"
+                        + "Second location: " + l2 + ".\n"
+                        + "Diverging point: " + p1 + " (first), " + p2 + " (second).\n"
+                        + message);
+            }
+        }
+    }
+
+    /**
+     * Asserts that elements locations and some other locations are equal with some allowed tolerance.
+     */
+    public static void tolerantAssertLocationsEquals(WebElement element, Locations l2, int xTolerance, int yTolerance, String message) {
+        tolerantAssertLocationsEquals(Utils.getLocations(element), l2, xTolerance, yTolerance, message);
     }
 
     /**
