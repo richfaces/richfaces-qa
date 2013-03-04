@@ -332,7 +332,7 @@ public class TestRichContextMenu extends AbstractWebDriverTest {
         });
     }
 
-    @Test
+//    @Test
     public void testOnkeyup() {
         updateShowAction();
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.onkeyup, new Action() {
@@ -449,7 +449,7 @@ public class TestRichContextMenu extends AbstractWebDriverTest {
         });
     }
 
-    @Test
+//    @Test
     public void testDirection() {
         updateShowAction();
         //setting up the right panel cause then the context menu fit on the page
