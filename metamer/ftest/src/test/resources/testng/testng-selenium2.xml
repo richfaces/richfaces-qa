@@ -24,6 +24,7 @@
             <package name="org.richfaces.tests.metamer.ftest.richDragSource" />
             <package name="org.richfaces.tests.metamer.ftest.richDropTarget" />
             <package name="org.richfaces.tests.metamer.ftest.richFileUpload"/>
+            <package name="org.richfaces.tests.metamer.ftest.richHashParam"/>
             <package name="org.richfaces.tests.metamer.ftest.richHotKey"/>
             <package name="org.richfaces.tests.metamer.ftest.richInplaceInput"/>
             <package name="org.richfaces.tests.metamer.ftest.richInputNumberSlider"/>
