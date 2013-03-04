@@ -65,6 +65,7 @@ public enum ContextMenuAttributes implements AttributeEnum {
     style,
     styleClass,
     target,
+    targetSelector,
     title,
     verticalOffset
 }

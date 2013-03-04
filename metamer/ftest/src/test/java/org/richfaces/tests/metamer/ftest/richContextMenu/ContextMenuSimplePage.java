@@ -21,12 +21,18 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richContextMenu;
 
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.contextMenuAttributes;
+import static org.testng.Assert.assertTrue;
+
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.richfaces.component.Positioning;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.DriverType;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.page.fragments.impl.contextMenu.internal.RichFacesContextMenuInternal;
 
 /**
  * Page object rich:contextMenu component at faces/components/richContextMenu/simple.xhtml
@@ -39,10 +45,31 @@ public class ContextMenuSimplePage extends MetamerPage {
 
     @FindBy(css = "div[id$=targetPanel1]")
     public WebElement targetPanel1;
+
     @FindBy(css = "div[id$=targetPanel2]")
     public WebElement targetPanel2;
+
     @FindBy(css = "div.rf-ctx-lst")
     public WebElement contextMenuContent;
+
+    @FindBy(css = "div[id$=ctxMenu]")
+    public RichFacesContextMenuInternal contextMenu;
+
+    @FindBy(jquery = "span[id$=output]")
+    public WebElement output;
+
+    @FindBy(jquery = "div[id$=\":ctxMenu\"]")
+    public WebElement contextMenuRoot;
+
+    @FindBy(tagName = "body")
+    public WebElement body;
+
+    public final Point TOP_LEFT = new Point(410, 109);
+    public final Point TOP_RIGHT = new Point(660, 109);
+    public final Point BOTTOM_LEFT = new Point(410, 245);
+    public final Point BOTTOM_RIGHT = new Point(660, 245);
+
+    public final int SHOW_DELAY_TOLERANCE = 400;
 
     public void clickOnFirstPanel(DriverType type) {
         if (type == DriverType.InternetExplorer) {
@@ -66,5 +93,37 @@ public class ContextMenuSimplePage extends MetamerPage {
     public void waitUntilContextMenuHides() {
         Graphene.waitModel().withMessage("Context menu should not be visible.")
                 .until(Graphene.element(contextMenuContent).not().isVisible());
+    }
+
+    public Point getContextMenuLocationWhenPosition(Positioning positioning) {
+        contextMenuAttributes.set(ContextMenuAttributes.direction, positioning);
+        contextMenu.invoke(targetPanel2);
+        Point contextMenuLocation = contextMenuContent.getLocation();
+        contextMenu.dismiss();
+        return contextMenuLocation;
+    }
+
+    public long getActualShowDelay(final int showDelay) {
+        contextMenuAttributes.set(ContextMenuAttributes.showDelay, String.valueOf(showDelay));
+        long showEventObserving = System.currentTimeMillis();
+        targetPanel1.click();
+        contextMenu.waitUntilContextMenuIsVisible();
+        long menuVisible = System.currentTimeMillis();
+
+        return menuVisible - showEventObserving;
+    }
+
+    public void assertShowDelayIsInTolerance(long actual, int expected) {
+        assertTrue((actual + SHOW_DELAY_TOLERANCE > expected) && (actual - SHOW_DELAY_TOLERANCE < expected));
+    }
+
+    public void checkShowDelay(int expected) {
+        long actual = getActualShowDelay(expected);
+        System.out.println(actual);
+        assertShowDelayIsInTolerance(actual, expected);
+    }
+
+    public String trimTheRGBAColor(String original) {
+        return original.replaceAll("\\s", "");
     }
 }

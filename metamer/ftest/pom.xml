@@ -9,7 +9,8 @@ General Public License for more details. You should have received a copy of the 
 software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the
 FSF site: http://www.fsf.org. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -49,6 +50,10 @@ FSF site: http://www.fsf.org. -->
             <version>${project.version}</version>
             <classifier>classes</classifier>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.richfaces.ui.common</groupId>
+            <artifactId>richfaces-ui-common-api</artifactId>
         </dependency>
         <!-- Arquillian dependencies -->
         <dependency>
@@ -198,7 +203,8 @@ FSF site: http://www.fsf.org. -->
                         <suiteXmlFiles>${testng.suite.xml}</suiteXmlFiles>
                     </suiteXmlFiles>
                     <!-- Logging configuration for Selenium , templates, ip -->
-                    <argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties -Dtemplates='${templates}' ${jvm.args.ip}</argLine>
+                    <argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties
+                        -Dtemplates='${templates}' ${jvm.args.ip}</argLine>
                     <properties>
                         <property>
                             <name>listener</name>
@@ -314,12 +320,12 @@ FSF site: http://www.fsf.org. -->
                     </plugin>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
-                            <configuration>
-                                <systemProperties>
-                                    <webdriver.firefox.bin>${firefox.bin}</webdriver.firefox.bin>
-                                    <arquillian.graphene.browser>*firefox ${firefox.bin}</arquillian.graphene.browser>
-                                </systemProperties>
-                            </configuration>
+                        <configuration>
+                            <systemProperties>
+                                <webdriver.firefox.bin>${firefox.bin}</webdriver.firefox.bin>
+                                <arquillian.graphene.browser>*firefox ${firefox.bin}</arquillian.graphene.browser>
+                            </systemProperties>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
