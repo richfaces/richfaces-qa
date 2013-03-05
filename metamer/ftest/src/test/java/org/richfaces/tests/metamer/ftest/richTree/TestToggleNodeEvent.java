@@ -25,10 +25,12 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.treeAttributes;
 
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -37,6 +39,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
@@ -52,6 +55,8 @@ public class TestToggleNodeEvent extends AbstractWebDriverTest {
     //
     @FindBy(css = "div[id*=':richTree:1:']")
     TreeNode testedNode;
+    //
+    private static final long NODE_TOGGLE_WAIT_TIME  = 500;//ms
 
     public enum MouseEvent {
 
@@ -94,6 +99,11 @@ public class TestToggleNodeEvent extends AbstractWebDriverTest {
                 Graphene.waitGui().withMessage("The node did not expand.").until(testedNode.isExpandedCondition());
                 fireEvent(fireOnHandle, firedEvent);
                 Graphene.waitGui().withMessage("The node did not collapse.").until(testedNode.isCollapsedCondition());
+            } else {
+                waiting(NODE_TOGGLE_WAIT_TIME);
+                if (testedNode.isExpanded()) {
+                    Assert.fail("The node shouldn't expand.");
+                }
             }
         }
     }
