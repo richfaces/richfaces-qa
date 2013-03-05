@@ -25,6 +25,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Collection;
+import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -59,6 +61,8 @@ public class RichDataTableBean implements Serializable {
     private int page = 1;
     // true = model, false = empty table
     private boolean state = true;
+
+    private boolean emptyModelCalled;
     // sorting
     private ColumnSortingMap sorting = new CustomColumnSortingMap();
     // filtering
@@ -152,6 +156,14 @@ public class RichDataTableBean implements Serializable {
         return new Date();
     }
 
+    public void setEmptyModelCalled(boolean isCalled) {
+       emptyModelCalled = isCalled;
+    }
+
+    public boolean getEmptyModelCalled() {
+       return emptyModelCalled;
+    }
+
     public Map<String, String> getFacets() {
         return facets;
     }
@@ -176,6 +188,12 @@ public class RichDataTableBean implements Serializable {
                 return false;
             }
         };
+    }
+
+    public Collection<Object> getEmptyModel() {
+       setEmptyModelCalled(true);
+       logger.info("empty model called");
+       return new ArrayList<Object>();
     }
 
     private class CustomColumnSortingMap extends ColumnSortingMap {
