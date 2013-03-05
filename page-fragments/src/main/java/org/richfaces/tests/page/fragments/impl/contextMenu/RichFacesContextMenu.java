@@ -94,7 +94,7 @@ public class RichFacesContextMenu {
      *
      * @return the context menu items
      */
-    public List<WebElement> getMemuItemsElements() {
+    public List<WebElement> getItems() {
         return menuItemsElements;
     }
 
@@ -111,7 +111,7 @@ public class RichFacesContextMenu {
         for (WebElement itemElement : menuItemsElements) {
             String currentItemText = itemElement.getText();
 
-            if (item.getItemText().equals(currentItemText.trim())) {
+            if (item.getText().equals(currentItemText.trim())) {
                 itemElement.click();
             }
         }
@@ -143,7 +143,7 @@ public class RichFacesContextMenu {
         new Actions(GrapheneContext.getProxy()).moveToElement(givenTarget);
         invoker.invoke(givenTarget);
 
-        waitUntilContextMenuIsVisible();
+        waitUntilIsVisible();
     }
 
     /**
@@ -151,7 +151,7 @@ public class RichFacesContextMenu {
      *
      * @see #setShowDelay(int)
      */
-    public void waitUntilContextMenuIsVisible() {
+    public void waitUntilIsVisible() {
         Graphene.waitModel().withTimeout(showDelay + 4000, TimeUnit.MILLISECONDS)
                 .withMessage("The Context Menu did not show in the given timeout!")
                 .until(element(contextMenuPopup).isVisible());

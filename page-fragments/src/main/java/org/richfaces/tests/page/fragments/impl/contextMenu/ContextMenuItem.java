@@ -35,7 +35,7 @@ public class ContextMenuItem {
         this.itemText = itemText;
     }
 
-    public String getItemText() {
+    public String getText() {
         return itemText;
     }
 
