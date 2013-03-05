@@ -1,98 +1,98 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich"
-	xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
-<!--
-JBoss, Home of Professional Open Source
-Copyright 2010-2013, Red Hat, Inc. and individual contributors
-by the @authors tag. See the copyright.txt in the distribution for a
-full listing of individual contributors.
+    <!--
+    JBoss, Home of Professional Open Source
+    Copyright 2010-2013, Red Hat, Inc. and individual contributors
+    by the @authors tag. See the copyright.txt in the distribution for a
+    full listing of individual contributors.
 
-This is free software; you can redistribute it and/or modify it
-under the terms of the GNU Lesser General Public License as
-published by the Free Software Foundation; either version 2.1 of
-the License, or (at your option) any later version.
+    This is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as
+    published by the Free Software Foundation; either version 2.1 of
+    the License, or (at your option) any later version.
 
-This software is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-Lesser General Public License for more details.
+    This software is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    Lesser General Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public
-License along with this software; if not, write to the Free
-Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    You should have received a copy of the GNU Lesser General Public
+    License along with this software; if not, write to the Free
+    Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+    02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-<ui:composition template="/templates/template.xhtml">
+    <ui:composition template="/templates/template.xhtml">
 
-	<ui:define name="view">
-		<f:metadata>
-			<f:viewParam name="templates" value="#{templateBean.templates}">
-				<f:converter converterId="templatesListConverter" />
-			</f:viewParam>
-		</f:metadata>
-	</ui:define>
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
 
-	<ui:define name="head" />
+        <ui:define name="head" />
 
-	<ui:define name="component">
+        <ui:define name="component">
 
-		<rich:panel header="Expected behavior">
-			Name input in the second step of wizard should be automatically focused.
-		</rich:panel>
+            <rich:panel header="Expected behavior">
+                Name input in the second step of wizard should be automatically focused.
+            </rich:panel>
 
-		<h:form id="myForm">
-			<h:panelGrid width="500" columns="2">
-				<rich:panel styleClass="wizard">
-					<f:facet name="header">
-						<h:outputText
-							value="First input in the next step should be focused!" />
-					</f:facet>
-					<rich:togglePanel switchType="client" onitemchange="#{rich:component('form:myForm:focus')}.applyFocus();">
-						<rich:togglePanelItem>
-							<div style="position: relative; height: 80px">
-								Foo content!
-								<a4j:commandButton style="float:right" value="Next &gt;&gt;">
-									<rich:toggleControl targetItem="@next" event="click" />
-								</a4j:commandButton>
-							</div>
-						</rich:togglePanelItem>
-						<rich:togglePanelItem>
-							<rich:focus id="focus"
-								ajaxRendered="#{richFocusBean.attributes['ajaxRendered'].value}"
-								delayed="true"
-								validationAware="#{richFocusBean.attributes['validationAware'].value}" />
-							<div style="position: relative; height: 140px">
-								<h:outputText value="Name: " />
-								<h:inputText class="input"/>
-								<br />
-								<h:outputText value="Age: "/>
-								<h:inputText />
-								<br />
-								<h:outputText value="Address: " />
-								<h:inputText />
-								<br />
-							</div>
-						</rich:togglePanelItem>
-					</rich:togglePanel>
-				</rich:panel>
-			</h:panelGrid>
+            <h:form id="myForm">
+                <h:panelGrid width="500" columns="2">
+                    <rich:panel styleClass="wizard">
+                        <f:facet name="header">
+                            <h:outputText
+                                value="First input in the next step should be focused!" />
+                        </f:facet>
+                        <rich:togglePanel switchType="client" onitemchange="#{rich:component('focus')}.applyFocus();">
+                            <rich:togglePanelItem>
+                                <div style="position: relative; height: 80px">
+                                    Foo content!
+                                    <a4j:commandButton style="float:right" value="Next &gt;&gt;">
+                                        <rich:toggleControl targetItem="@next" event="click" />
+                                    </a4j:commandButton>
+                                </div>
+                            </rich:togglePanelItem>
+                            <rich:togglePanelItem>
+                                <rich:focus id="focus"
+                                            ajaxRendered="#{richFocusBean.attributes['ajaxRendered'].value}"
+                                            delayed="true"
+                                            validationAware="#{richFocusBean.attributes['validationAware'].value}" />
+                                <div style="position: relative; height: 140px">
+                                    <h:outputText value="Name: " />
+                                    <h:inputText id="input"/>
+                                    <br />
+                                    <h:outputText value="Age: "/>
+                                    <h:inputText id="age" />
+                                    <br />
+                                    <h:outputText value="Address: " />
+                                    <h:inputText id="address" />
+                                    <br />
+                                </div>
+                            </rich:togglePanelItem>
+                        </rich:togglePanel>
+                    </rich:panel>
+                </h:panelGrid>
 
-			<br />
-		</h:form>
-	</ui:define>
+                <br />
+            </h:form>
+        </ui:define>
 
-	<ui:define name="outOfTemplateAfter">
-		<metamer:attributes value="#{richFocusBean.attributes}"
-			id="attributes" exclude="preserve, delayed" />
-	</ui:define>
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{richFocusBean.attributes}"
+                                id="attributes" exclude="preserve, delayed" />
+        </ui:define>
 
-</ui:composition>
+    </ui:composition>
 </html>

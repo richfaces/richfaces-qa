@@ -22,15 +22,15 @@ public class TestPreserve extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richFocus/preserve.xhtml");
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     // false negative - should be fixed
     public void testPreserveTrueValidationAwareTrue() {
         testPreserveTrue();
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     // false negative - should be fixed
-    public void testPreserveTrueValidationAwereFalse() {
+    public void testPreserveTrueValidationAwareFalse() {
         AttributeList.focusAttributes.set(FocusAttributes.validationAware, false);
 
         testPreserveTrue();
