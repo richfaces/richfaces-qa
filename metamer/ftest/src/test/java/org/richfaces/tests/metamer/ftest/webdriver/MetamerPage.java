@@ -38,6 +38,7 @@ import javax.faces.event.PhaseId;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
@@ -74,7 +75,8 @@ public class MetamerPage {
     public WebElement fullPageRefreshIcon;
     @FindBy(css = "[id$=reRenderAllImage]")
     public WebElement rerenderAllIcon;
-    protected WebDriver driver = GrapheneContext.getProxy();
+    @Drone
+    protected WebDriver driver;
     private String reqTime;
     private Map<PhaseId, Set<String>> map = new LinkedHashMap<PhaseId, Set<String>>();
 

@@ -147,7 +147,7 @@ public class TestRichContextMenu extends AbstractWebDriverTest {
         contextMenuAttributes.set(ContextMenuAttributes.dir, expected);
 
         page.contextMenu.invoke(page.targetPanel1);
-        String directionCSS = page.contextMenu.getMemuItemsElements().get(0).getCssValue("direction");
+        String directionCSS = page.contextMenu.getItems().get(0).getCssValue("direction");
         assertEquals(directionCSS, expected, "The direction attribute was not applied correctly!");
     }
 
@@ -167,19 +167,19 @@ public class TestRichContextMenu extends AbstractWebDriverTest {
         // ajax
         contextMenuAttributes.set(ContextMenuAttributes.mode, "ajax");
         page.contextMenu.invoke(page.targetPanel1);
-        guardXhr(page.contextMenu.getMemuItemsElements().get(0)).click();
+        guardXhr(page.contextMenu.getItems().get(0)).click();
         assertEquals(page.output.getText(), "Open", "Menu action was not performed.");
 
         // server
         contextMenuAttributes.set(ContextMenuAttributes.mode, "server");
         page.contextMenu.invoke(page.targetPanel1);
-        guardHttp(page.contextMenu.getMemuItemsElements().get(8)).click();
+        guardHttp(page.contextMenu.getItems().get(8)).click();
         assertEquals(page.output.getText(), "Exit", "Menu action was not performed.");
 
         // client
         contextMenuAttributes.set(ContextMenuAttributes.mode, "client");
         page.contextMenu.invoke(page.targetPanel1);
-        guardNoRequest(page.contextMenu.getMemuItemsElements().get(0)).click();
+        guardNoRequest(page.contextMenu.getItems().get(0)).click();
     }
 
     @Test
@@ -291,7 +291,7 @@ public class TestRichContextMenu extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
-                page.contextMenu.getMemuItemsElements().get(1).click();
+                page.contextMenu.getItems().get(1).click();
             }
         });
     }
@@ -304,7 +304,7 @@ public class TestRichContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
                 new Actions(driver)
-                .doubleClick(page.contextMenu.getMemuItemsElements().get(1))
+                .doubleClick(page.contextMenu.getItems().get(1))
                 .build().perform();
             }
         });
@@ -325,14 +325,15 @@ public class TestRichContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
                 new Actions(driver)
-                .keyDown(page.contextMenu.getMemuItemsElements().get(1), Keys.CONTROL)
-                .keyUp(page.contextMenu.getMemuItemsElements().get(1), Keys.CONTROL)
+                .keyDown(page.contextMenu.getItems().get(1), Keys.CONTROL)
+                .keyUp(page.contextMenu.getItems().get(1), Keys.CONTROL)
                 .build().perform();
             }
         });
     }
 
-//    @Test
+    @Test(groups = "4.Future")
+    //false negative
     public void testOnkeyup() {
         updateShowAction();
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.onkeyup, new Action() {
@@ -340,8 +341,8 @@ public class TestRichContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
                 new Actions(driver)
-                .keyDown(page.contextMenu.getMemuItemsElements().get(1), Keys.CONTROL)
-                .keyUp(page.contextMenu.getMemuItemsElements().get(1), Keys.CONTROL)
+                .keyDown(page.contextMenu.getItems().get(0), Keys.ALT)
+                .keyUp(page.contextMenu.getItems().get(0), Keys.ALT)
                 .build().perform();
             }
         });
@@ -369,7 +370,7 @@ public class TestRichContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
                 Mouse mouse = ((HasInputDevices) driver).getMouse();
-                mouse.mouseDown(((Locatable) page.contextMenu.getMemuItemsElements().get(1)).getCoordinates());
+                mouse.mouseDown(((Locatable) page.contextMenu.getItems().get(1)).getCoordinates());
             }
         });
     }
@@ -382,7 +383,7 @@ public class TestRichContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
                 Mouse mouse = ((HasInputDevices) driver).getMouse();
-                mouse.mouseUp(((Locatable) page.contextMenu.getMemuItemsElements().get(1)).getCoordinates());
+                mouse.mouseUp(((Locatable) page.contextMenu.getItems().get(1)).getCoordinates());
             }
         });
     }
@@ -395,7 +396,7 @@ public class TestRichContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
                 new Actions(driver)
-                .moveToElement(page.contextMenu.getMemuItemsElements().get(1))
+                .moveToElement(page.contextMenu.getItems().get(1))
                 .build().perform();
             }
         });
@@ -409,7 +410,7 @@ public class TestRichContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
                 new Actions(driver)
-                .moveToElement(page.contextMenu.getMemuItemsElements().get(1))
+                .moveToElement(page.contextMenu.getItems().get(1))
                 .moveToElement(page.body)
                 .build().perform();
             }
@@ -429,7 +430,7 @@ public class TestRichContextMenu extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
-                new Actions(driver).moveToElement(page.contextMenu.getMemuItemsElements().get(2)).build().perform();
+                new Actions(driver).moveToElement(page.contextMenu.getItems().get(2)).build().perform();
             }
         });
     }
@@ -442,45 +443,45 @@ public class TestRichContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
                 new Actions(driver)
-                .moveToElement(page.contextMenu.getMemuItemsElements().get(2))
+                .moveToElement(page.contextMenu.getItems().get(2))
                 .moveToElement(page.body)
                 .build().perform();
             }
         });
     }
 
-//    @Test
+    @Test
     public void testDirection() {
         updateShowAction();
         //setting up the right panel cause then the context menu fit on the page
         contextMenuAttributes.set(ContextMenuAttributes.target, "targetPanel2");
 
         Point contextMenuLocation = page.getContextMenuLocationWhenPosition(Positioning.topLeft);
-        assertEquals(contextMenuLocation, page.TOP_LEFT);
+        assertEquals(contextMenuLocation, page.getExpectedLocation(Positioning.topLeft));
 
         contextMenuLocation = page.getContextMenuLocationWhenPosition(Positioning.topRight);
-        assertEquals(contextMenuLocation, page.TOP_RIGHT);
+        assertEquals(contextMenuLocation, page.getExpectedLocation(Positioning.topRight));
 
         contextMenuLocation = page.getContextMenuLocationWhenPosition(Positioning.bottomAuto);
-        assertEquals(contextMenuLocation, page.BOTTOM_RIGHT);
+        assertEquals(contextMenuLocation, page.getExpectedLocation(Positioning.bottomRight));
 
         contextMenuLocation = page.getContextMenuLocationWhenPosition(Positioning.bottomLeft);
-        assertEquals(contextMenuLocation, page.BOTTOM_LEFT);
+        assertEquals(contextMenuLocation, page.getExpectedLocation(Positioning.bottomLeft));
 
         contextMenuLocation = page.getContextMenuLocationWhenPosition(Positioning.bottomRight);
-        assertEquals(contextMenuLocation, page.BOTTOM_RIGHT);
+        assertEquals(contextMenuLocation, page.getExpectedLocation(Positioning.bottomRight));
 
         contextMenuLocation = page.getContextMenuLocationWhenPosition(Positioning.autoLeft);
-        assertEquals(contextMenuLocation, page.BOTTOM_LEFT);
+        assertEquals(contextMenuLocation, page.getExpectedLocation(Positioning.bottomLeft));
 
         contextMenuLocation = page.getContextMenuLocationWhenPosition(Positioning.autoRight);
-        assertEquals(contextMenuLocation, page.BOTTOM_RIGHT);
+        assertEquals(contextMenuLocation, page.getExpectedLocation(Positioning.bottomRight));
 
         contextMenuLocation = page.getContextMenuLocationWhenPosition(Positioning.topAuto);
-        assertEquals(contextMenuLocation, page.TOP_RIGHT);
+        assertEquals(contextMenuLocation, page.getExpectedLocation(Positioning.topRight));
 
         contextMenuLocation = page.getContextMenuLocationWhenPosition(Positioning.auto);
-        assertEquals(contextMenuLocation, page.BOTTOM_RIGHT);
+        assertEquals(contextMenuLocation, page.getExpectedLocation(Positioning.bottomRight));
     }
 
     @Test
