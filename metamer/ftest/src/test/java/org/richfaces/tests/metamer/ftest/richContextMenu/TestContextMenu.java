@@ -58,7 +58,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @since 4.2.1.Final
  */
-public class TestRichContextMenu extends AbstractWebDriverTest {
+public class TestContextMenu extends AbstractWebDriverTest {
 
     @Page
     private ContextMenuSimplePage page;

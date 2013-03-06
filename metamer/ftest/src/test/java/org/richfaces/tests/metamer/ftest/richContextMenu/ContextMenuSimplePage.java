@@ -29,7 +29,6 @@ import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.richfaces.component.Positioning;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.DriverType;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;

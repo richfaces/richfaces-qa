@@ -47,7 +47,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision: 22733 $
  */
-public class TestRichPanel extends AbstractWebDriverTest {
+public class TestPanel extends AbstractWebDriverTest {
 
     @FindBy( css = "div[id$=panelWithHeader]" )
     private RichFacesPanel panelWithHeader;

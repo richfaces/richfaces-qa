@@ -28,21 +28,20 @@ import java.net.URL;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
-
 /**
- * Test case for page /faces/components/richToggleControl/tabPanel.xhtml
+ * Test case for page /faces/components/richToggleControl/togglePanel.xhtml
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 21307 $
  */
-public class TestRichTCTabPanel extends AbstractTestToggleControl {
+public class TestTCTogglePanel extends AbstractTestToggleControl {
 
     WebElement[] items1;
     WebElement[] items2;
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richToggleControl/tabPanel.xhtml");
+        return buildUrl(contextPath, "faces/components/richToggleControl/togglePanel.xhtml");
     }
 
     @Test

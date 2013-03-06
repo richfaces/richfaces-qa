@@ -26,24 +26,23 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.toggleControl.RichFacesToggleControl;
 import org.testng.annotations.Test;
 
 
 /**
- * Test case for page /faces/components/richToggleControl/togglePanel.xhtml
+ * Test case for page /faces/components/richToggleControl/accordion.xhtml
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 21307 $
  */
-public class TestRichTCTogglePanel extends AbstractTestToggleControl {
+public class TestTCAccordion extends AbstractTestToggleControl {
 
     WebElement[] items1;
     WebElement[] items2;
 
     @Override
     public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richToggleControl/togglePanel.xhtml");
+        return buildUrl(contextPath, "faces/components/richToggleControl/accordion.xhtml");
     }
 
     @Test
@@ -68,14 +67,14 @@ public class TestRichTCTogglePanel extends AbstractTestToggleControl {
 
     private WebElement[] getItems1() {
         if (items1 == null ) {
-            items1 = new WebElement[] { page.panel1Item1, page.panel1Item2, page.panel1Item3 };
+            items1 = new WebElement[] { page.panel1Item1Content, page.panel1Item2Content, page.panel1Item3Content };
         }
         return items1;
     }
 
     private WebElement[] getItems2() {
         if (items2 == null ) {
-            items2 = new WebElement[] { page.panel2Item1, page.panel2Item2, page.panel2Item3 };
+            items2 = new WebElement[] { page.panel2Item1Content, page.panel2Item2Content, page.panel2Item3Content };
         }
         return items2;
     }
