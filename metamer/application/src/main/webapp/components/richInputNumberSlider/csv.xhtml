@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -25,55 +29,79 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="/templates/template.xhtml">
+    <ui:composition template="/templates/numberInputComponentValidationTemplate.xhtml">
+        <ui:define name="js">
+            <script type="text/javascript">
+                function setCorrectValues(id) {
+                    switch(id){
+                        case 'min':
+                            $('[id$=min_input]').val('2').change().mouseup();
+                            break;
+                        case 'max':
+                            $('[id$=max_input]').val('2').change();
+                            break;
+                        case 'custom':
+                            $('[id$=custom_input]').val('2').change();
+                            break;
+                        default:
+                            setCorrectValues('min');
+                            setCorrectValues('custom');
+                            setCorrectValues('max');
+                            break;
+                    }
+                }
+                function setWrongValues(id) {
+                    switch(id){
+                        case "min":
+                            $('[id$=min_input]').val('1').change().mouseup();
+                            break;
+                        case "max":
+                            $('[id$=max_input]').val('3').change();
+                            break;
+                        case "custom":
+                            $('[id$=custom_input]').val('-1').change();
+                            break;
+                        default:
+                            setWrongValues('min');
+                            setWrongValues('custom');
+                            setWrongValues('max');
+                            break;
+                    }
+                }
+            </script>
 
-        <ui:define name="view">
-            <f:metadata>
-                <f:viewParam name="templates" value="#{templateBean.templates}">
-                    <f:converter converterId="templatesListConverter" />
-                </f:viewParam>
-            </f:metadata>
         </ui:define>
 
-        <ui:define name="component">
-            <h:panelGrid columns="3">
-                min 2
-                <rich:inputNumberSlider id="slider1" maxValue="10" minValue="-10" value="#{richInputNumberSliderBean.value1}">
-                    <rich:validator event="change"/>
-                    <a4j:ajax event="change" render="output1"/>
-                </rich:inputNumberSlider>
-                <rich:message id="inputMsg1" for="slider1"/>
-
-                max 2
-                <rich:inputNumberSlider id="slider2" maxValue="10" minValue="-10" value="#{richInputNumberSliderBean.value2}">
-                    <rich:validator event="change"/>
-                    <a4j:ajax event="change" render="output2"/>
-                </rich:inputNumberSlider>
-                <rich:message id="inputMsg2" for="slider2"/>
-
-                custom (positive)
-                <rich:inputNumberSlider id="slider3" maxValue="10" minValue="-10" value="#{richInputNumberSliderBean.value3}">
-                    <f:validator validatorId="org.richfaces.PositiveNumberValidator"/>
-                    <rich:validator event="change"/>
-                    <a4j:ajax event="change" render="output3"/>
-                </rich:inputNumberSlider>
-                <rich:message id="inputMsg3" for="slider3"/>
-
-            </h:panelGrid>
-            <br/><br/>
-
-            <h:panelGrid columns="2">
-                output1
-                <h:outputText id="output1" value="#{richInputNumberSliderBean.value1}"/>
-                output2
-                <h:outputText id="output2" value="#{richInputNumberSliderBean.value2}"/>
-                output3
-                <h:outputText id="output3" value="#{richInputNumberSliderBean.value3}"/>
-            </h:panelGrid>
+        <!-- There must be at least on validator with different event to get this working -->
+        <ui:define name="min">
+            <rich:inputNumberSlider id="min" maxValue="10" minValue="-10" value="#{richInputNumberSliderBean.minValue}">
+                <a4j:ajax event="change" render="minMsg"/>
+                <rich:validator event="mouseup"/>
+            </rich:inputNumberSlider>
+        </ui:define>
+        <ui:define name="minOutput">
+            <h:outputText id="minOutput" value="#{richInputNumberSliderBean.minValue}"/>
         </ui:define>
 
-        <ui:define name="outOfTemplateAfter">
+        <ui:define name="max">
+            <rich:inputNumberSlider id="max" maxValue="10" minValue="-10" value="#{richInputNumberSliderBean.maxValue}">
+                <a4j:ajax event="change" render="maxMsg"/>
+                <rich:validator event="change"/>
+            </rich:inputNumberSlider>
+        </ui:define>
+        <ui:define name="maxOutput">
+            <h:outputText id="maxOutput" value="#{richInputNumberSliderBean.maxValue}"/>
         </ui:define>
 
+        <ui:define name="custom" >
+            <rich:inputNumberSlider id="custom" maxValue="10" minValue="-10" value="#{richInputNumberSliderBean.customValue}">
+                <f:validator validatorId="org.richfaces.PositiveNumberValidator"/>
+                <a4j:ajax event="change" render="customMsg"/>
+                <rich:validator  event="change"/>
+            </rich:inputNumberSlider>
+        </ui:define>
+        <ui:define name="customOutput">
+            <h:outputText id="customOutput" value="#{richInputNumberSliderBean.customValue}"/>
+        </ui:define>
     </ui:composition>
 </html>

@@ -21,15 +21,14 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
-import org.richfaces.tests.metamer.ftest.abstractions.StringInputComponentJSR303Test;
+import org.richfaces.tests.metamer.ftest.abstractions.validations.AbstractStringInputComponentValidationTest;
+import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
 
 /**
- * Test for page faces/components/richInplaceInput/jsr303.xhtml
- *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestInplaceInputJSR303 extends StringInputComponentJSR303Test {
+public class TestInplaceInputJSR303 extends AbstractStringInputComponentValidationTest {
 
     @Override
     public String getComponentName() {
@@ -37,27 +36,8 @@ public class TestInplaceInputJSR303 extends StringInputComponentJSR303Test {
     }
 
     @Test
-    public void testAllInputsWrong() {
-        verifyAllInputs();
-    }
-
-    @Test
-    public void testCustomString() {
-        verifyCustomString();
-    }
-
-    @Test
-    public void testNotEmpty() {
-        verifyNotEmpty();
-    }
-
-    @Test
-    public void testRegExpPattern() {
-        verifyRegExpPattern();
-    }
-
-    @Test
-    public void testStringSize() {
-        verifyStringSize();
+        @Use(field = "commonCase", value = "commonCases")
+    public void testCommonCases() {
+        verifyCases();
     }
 }

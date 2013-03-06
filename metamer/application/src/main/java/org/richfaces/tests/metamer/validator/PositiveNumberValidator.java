@@ -37,10 +37,11 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("org.richfaces.PositiveNumberValidator")
 public class PositiveNumberValidator implements Validator {
 
+    public static final String VALIDATOR_ERROR_MSG = "must be a positive number";
+
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "must be a positive number",
-                "must be a positive number");
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, VALIDATOR_ERROR_MSG, VALIDATOR_ERROR_MSG);
 
         if (value == null || !(value instanceof Integer)) {
             throw new ValidatorException(msg);

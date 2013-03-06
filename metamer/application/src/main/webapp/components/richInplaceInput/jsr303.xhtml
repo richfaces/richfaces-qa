@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:rich="http://richfaces.org/rich">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -25,32 +29,55 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="/templates/inputComponentValidationTemplate.xhtml">
-        <ui:define name="notEmpty" >
+    <ui:composition template="/templates/stringInputComponentValidationTemplate.xhtml">
+        <ui:define name="notEmpty">
             <rich:inplaceInput id="notEmpty"
                                defaultLabel="#{richInplaceInputBean.attributes['defaultLabel'].value}"
                                value="#{richInplaceInputBean.notEmptyValue}"
-                               />
+                               >
+                <a4j:ajax event="change" render="notEmptyMsg"/>
+            </rich:inplaceInput>
         </ui:define>
-        <ui:define name="pattern" >
+        <ui:define name="notEmptyOutput">
+            <h:outputText id="notEmptyOutput" value="#{richInplaceInputBean.notEmptyValue}"/>
+        </ui:define>
+
+        <ui:define name="pattern">
             <rich:inplaceInput id="pattern"
                                defaultLabel="#{richInplaceInputBean.attributes['defaultLabel'].value}"
                                value="#{richInplaceInputBean.patternValue}"
-                               />
+                               >
+                <a4j:ajax event="change" render="patternMsg"/>
+            </rich:inplaceInput>
         </ui:define>
-        <ui:define name="size" >
+        <ui:define name="patternOutput">
+            <h:outputText id="patternOutput" value="#{richInplaceInputBean.patternValue}"/>
+        </ui:define>
+
+        <ui:define name="size">
             <rich:inplaceInput id="size"
                                defaultLabel="#{richInplaceInputBean.attributes['defaultLabel'].value}"
                                value="#{richInplaceInputBean.sizeValue}"
-                               />
+                               >
+                <!--Not working in different order-->
+                <a4j:ajax event="change" render="sizeMsg"/>
+            </rich:inplaceInput>
         </ui:define>
-        <ui:define name="custom" >
+        <ui:define name="sizeOutput">
+            <h:outputText id="sizeOutput" value="#{richInplaceInputBean.sizeValue}"/>
+        </ui:define>
+
+        <ui:define name="custom">
             <rich:inplaceInput id="custom"
                                defaultLabel="#{richInplaceInputBean.attributes['defaultLabel'].value}"
                                value="#{richInplaceInputBean.customValue}"
                                >
                 <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>
+                <a4j:ajax event="change" render="customMsg"/>
             </rich:inplaceInput>
+        </ui:define>
+        <ui:define name="customOutput">
+            <h:outputText id="customOutput" value="#{richInplaceInputBean.customValue}"/>
         </ui:define>
     </ui:composition>
 </html>

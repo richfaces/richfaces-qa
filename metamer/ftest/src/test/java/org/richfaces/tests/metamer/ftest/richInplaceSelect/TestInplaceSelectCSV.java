@@ -1,4 +1,4 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,33 +18,28 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
-package org.richfaces.tests.metamer.ftest.abstractions;
+ *******************************************************************************/
+package org.richfaces.tests.metamer.ftest.richInplaceSelect;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import java.net.URL;
-import org.richfaces.tests.metamer.ftest.annotations.Inject;
+import org.richfaces.tests.metamer.ftest.abstractions.validations.AbstractStringInputComponentValidationTest;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class StringInputComponentJSR303Test extends AbstractStringInputComponentValidationTest {
-
-    @Inject
-    @Use(strings = { A4J_COMMANDBUTTON, H_COMMANDBUTTON })
-    private String submitMethod;
-
-    public abstract String getComponentName();
+public class TestInplaceSelectCSV extends AbstractStringInputComponentValidationTest {
 
     @Override
-    public String getSubmitMethod() {
-        return submitMethod;
+    public String getComponentName() {
+        return "richInplaceSelect";
     }
 
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/" + getComponentName() + "/jsr303.xhtml");
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11264")
+    @Use(field = "commonCase", value = "commonCases")
+    public void testCommonCases() {
+        verifyCases();
     }
 }

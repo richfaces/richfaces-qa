@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
-      xmlns:a4j="http://richfaces.org/a4j" xmlns:h="http://java.sun.com/jsf/html">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -26,80 +29,55 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="/templates/template.xhtml">
-
-        <ui:define name="view">
-            <f:metadata>
-                <f:viewParam name="templates" value="#{templateBean.templates}">
-                    <f:converter converterId="templatesListConverter" />
-                </f:viewParam>
-            </f:metadata>
+    <ui:composition template="/templates/dateInputComponentValidationTemplate.xhtml">
+        <ui:define name="past">
+            <rich:calendar id="past" value="#{richCalendarBean.pastValue}" 
+                           datePattern="#{richCalendarBean.attributes['datePattern'].value}"
+                           timeZone="#{richCalendarBean.timeZone}">
+                <!-- must be this way or other messages will disappear-->
+                <a4j:ajax event="change" render="outputPanel pastMsg"/>
+            </rich:calendar>
+        </ui:define>
+        <ui:define name="pastOutput">
+            <h:outputText id="pastOutput" value="#{richCalendarBean.pastValue}">
+                <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
+                                   timeZone="#{richCalendarBean.timeZone}"/>
+            </h:outputText>
         </ui:define>
 
-        <ui:define name="component">
-            <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
-            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
-            <br/><br/>
+        <ui:define name="future">
+            <rich:calendar id="future" value="#{richCalendarBean.futureValue}"
+                           datePattern="#{richCalendarBean.attributes['datePattern'].value}"
+                           timeZone="#{richCalendarBean.timeZone}">
+                <!-- must be this way or other messages will disappear-->
+                <a4j:ajax event="change" render="outputPanel futureMsg"/>
+            </rich:calendar>
+        </ui:define>
+        <ui:define name="futureOutput">
+            <h:outputText id="futureOutput" value="#{richCalendarBean.futureValue}">
+                <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
+                                   timeZone="#{richCalendarBean.timeZone}"/>
+            </h:outputText>
+        </ui:define>
 
-            <h:panelGrid columns="3">
-                past
-                <rich:calendar id="calendar1"
-                               datePattern="#{richCalendarBean.attributes['datePattern'].value}"
-                               timeZone="#{richCalendarBean.timeZone}"
-                               value="#{richCalendarBean.date1}"
-                               >
-                    <a4j:ajax event="change" render="output1" />
-                </rich:calendar>
-                <rich:message id="calendarMsg1" for="calendar1"/>
-
-                future
-                <rich:calendar id="calendar2"
-                               datePattern="#{richCalendarBean.attributes['datePattern'].value}"
-                               timeZone="#{richCalendarBean.timeZone}"
-                               value="#{richCalendarBean.date2}"
-                               >
-                    <a4j:ajax event="change" render="output2" />
-                </rich:calendar>
-                <rich:message id="calendarMsg2" for="calendar2"/>
-
-                last year
-                <rich:calendar id="calendar3"
-                               datePattern="#{richCalendarBean.attributes['datePattern'].value}"
-                               timeZone="#{richCalendarBean.timeZone}"
-                               value="#{richCalendarBean.date3}"
-                               >
-                    <a4j:ajax event="change" render="output3" />
-                    <f:validator validatorId="org.richfaces.LastYearValidator"/>
-                </rich:calendar>
-                <rich:message id="calendarMsg3" for="calendar3"/>
-            </h:panelGrid>
-            <br/><br/>
-
-            <h:panelGrid columns="2">
-                output1:
-                <h:outputText id="output1" value="#{richCalendarBean.date1}">
-                    <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
-                                       timeZone="#{richCalendarBean.timeZone}"/>
-                </h:outputText>
-
-                output2:
-                <h:outputText id="output2" value="#{richCalendarBean.date2}">
-                    <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
-                                       timeZone="#{richCalendarBean.timeZone}"/>
-                </h:outputText>
-
-                output3:
-                <h:outputText id="output3" value="#{richCalendarBean.date3}">
-                    <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
-                                       timeZone="#{richCalendarBean.timeZone}"/>
-                </h:outputText>
-            </h:panelGrid>
+        <ui:define name="lastYear">
+            <rich:calendar id="lastYear" value="#{richCalendarBean.lastYearValue}"
+                           datePattern="#{richCalendarBean.attributes['datePattern'].value}"
+                           timeZone="#{richCalendarBean.timeZone}">
+                <!-- must be this way or other messages will disappear-->
+                <a4j:ajax event="change" render="outputPanel lastYearMsg"/>
+                <f:validator validatorId="org.richfaces.LastYearValidator"/>
+            </rich:calendar>
+        </ui:define>
+        <ui:define name="lastYearOutput">
+            <h:outputText id="lastYearOutput" value="#{richCalendarBean.lastYearValue}">
+                <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
+                                   timeZone="#{richCalendarBean.timeZone}"/>
+            </h:outputText>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
             <ui:include src="resizedTemplatesStyles.xhtml"/>
-            <metamer:attributes value="#{richCalendarBean.attributes}" id="attributes" />
         </ui:define>
-
     </ui:composition>
 </html>

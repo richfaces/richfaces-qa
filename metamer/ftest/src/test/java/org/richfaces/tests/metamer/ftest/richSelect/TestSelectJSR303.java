@@ -21,56 +21,27 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richSelect;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import java.net.URL;
-
+import org.richfaces.tests.metamer.ftest.abstractions.validations.AbstractStringInputComponentValidationTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
-
 
 /**
  * Test for page faces/components/richInplaceSelect/jsr303.xhtml
  *
- * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision: 22638 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestSelectWithJSR303 extends TestSelectsWithJSR303 {
+public class TestSelectJSR303 extends AbstractStringInputComponentValidationTest {
 
     @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richSelect/jsr303.xhtml");
-    }
-
-    @Test
-    public void testNotEmpty() {
-        verifyNotEmpty();
-    }
-
-    @Test
-    public void testRegExpPattern() {
-        verifyRegExpPattern();
-    }
-
-    @Test
-    public void testStringSize() {
-        verifyStringSize();
-    }
-
-    @Test
-    public void testCustomString() {
-        verifyCustomString();
+    public String getComponentName() {
+        return "richSelect";
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11264")
-    public void testAllInputsWrong() {
-        verifyAllInputsWrong();
+    @Use(field = "commonCase", value = "commonCases")
+    public void testCommonCases() {
+        verifyCases();
     }
-
-    @Test
-    public void testAllInputsCorrect() {
-        verifyAllInputsCorrect();
-    }
-
 }

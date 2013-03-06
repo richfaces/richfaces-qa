@@ -41,16 +41,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     function setCorrectValues(id) {
                         switch(id){
                             case 'notEmpty':
-                                $('[id$=notEmptyInput]').focus().val('not empty').blur();
+                                $('[id$=notEmptyInput]').focus().val('not empty').change().blur();
                                 break;
-                            case 'custom':         
-                                $('[id$=customInput]').focus().val('RichFaces').blur();
+                            case 'custom':
+                                $('[id$=customInput]').focus().val('richfaces').change().blur();
                                 break;
-                            case 'size':         
-                                $('[id$=sizeInput]').focus().val('123').blur();
+                            case 'size':
+                                $('[id$=sizeInput]').focus().val('123').change().blur();
                                 break;
-                            case 'pattern':         
-                                $('[id$=patternInput]').focus().val('abcd').blur();
+                            case 'pattern':
+                                $('[id$=patternInput]').focus().val('abcd').change().blur();
                                 break;
                             default:
                                 setCorrectValues('notEmpty');
@@ -63,16 +63,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     function setWrongValues(id) {
                         switch(id){
                             case "notEmpty":
-                                $('[id$=notEmptyInput]').focus().val('').blur();
+                                $('[id$=notEmptyInput]').focus().val('').change().blur();
                                 break;
-                            case "custom":         
-                                $('[id$=customInput]').focus().val('rich faces').blur();
+                            case "custom":
+                                $('[id$=customInput]').focus().val('rich faces').change().blur();
                                 break;
-                            case "size":         
-                                $('[id$=sizeInput]').focus().val('12').blur();
+                            case "size":
+                                $('[id$=sizeInput]').focus().val('12').change().blur();
                                 break;
-                            case "pattern":         
-                                $('[id$=patternInput]').focus().val('^(%1').blur();
+                            case "pattern":
+                                $('[id$=patternInput]').focus().val('^(%1').change().blur();
                                 break;
                             default:
                                 setWrongValues('notEmpty');
@@ -84,31 +84,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     }
                 </script>
             </ui:insert>
-            <script type="text/javascript">
-                function command(button, id){
-                    document.valuesSettingState="started";
-                    if(button=="wrong"){
-                        setWrongValues(id);
-                    }else{
-                        setCorrectValues(id); 
-                    }
-                    document.valuesSettingState="finished";
-                }
-                if(window.onload == null){
-                    window.onload = function(){
-                        document.valuesSettingState="";
-                    } 
-                }else{
-                    window.onload += function(){
-                        document.valuesSettingState="";
-                    }
-                }
-
-            </script>
             Values setting:
             <br/>
-            <input id="setAllCorrectButton" type="button" name="setAllCorrectButton" value="set correct values" onclick="command('correct', '');"/>
-            <input id="setAllWrongButton" type="button" name="setAllWrongButton" value="set wrong values" onclick="command('wrong', '')"/>
+            <input id="setAllCorrectButton" type="button" name="setAllCorrectButton" value="set correct values" onclick="setCorrectValues('');"/>
+            <input id="setAllWrongButton" type="button" name="setAllWrongButton" value="set wrong values" onclick="setWrongValues('')"/>
             <br/><br/>
             <br/><br/>
             Submit buttons:<br/>
@@ -116,32 +95,46 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
             <br/><br/>
             <h:panelGrid columns="4">
-                not empty
+                not empty:
                 <ui:insert name="notEmpty"/>
-                <input id="notEmptyCorrect" name="notEmptyCorrect" type="button" value="set correct value" onclick="command('correct', 'notEmpty')"/>
-                <input id="notEmptyWrong" name="notEmptyWrong" type="button" value="set wrong value" onclick="command('wrong', 'notEmpty')"/>
-                <rich:message id="notEmptyMsg" for="notEmpty"/>
+                <input id="notEmptyCorrect" name="notEmptyCorrect" type="button" value="set correct value" onclick="setCorrectValues('notEmpty')"/>
+                <input id="notEmptyWrong" name="notEmptyWrong" type="button" value="set wrong value" onclick="setWrongValues('notEmpty')"/>
+                <rich:message id="notEmptyMsg" ajaxRendered="false" for="notEmpty"/>
 
 
-                pattern [a-z].*
+                pattern [a-z].*:
                 <ui:insert name="pattern"/>
-                <input id="patternCorrect" name="patternCorrect" type="button" value="set correct value" onclick="command('correct', 'pattern')"/>
-                <input id="patternWrong" name="patternWrong" type="button" value="set wrong value" onclick="command('wrong', 'pattern')"/>
-                <rich:message id="patternMsg" for="pattern"/>
+                <input id="patternCorrect" name="patternCorrect" type="button" value="set correct value" onclick="setCorrectValues('pattern')"/>
+                <input id="patternWrong" name="patternWrong" type="button" value="set wrong value" onclick="setWrongValues('pattern')"/>
+                <rich:message id="patternMsg" ajaxRendered="false" for="pattern"/>
 
-                size 3-6
+
+                size 3-6:
                 <ui:insert name="size"/>
-                <input id="sizeCorrect" name="sizeCorrect" type="button" value="set correct value" onclick="command('correct', 'size')"/>
-                <input id="sizeWrong" name="sizeWrong" type="button" value="set wrong value" onclick="command('wrong', 'size')"/>
-                <rich:message id="sizeMsg" for="size"/>
+                <input id="sizeCorrect" name="sizeCorrect" type="button" value="set correct value" onclick="setCorrectValues('size')"/>
+                <input id="sizeWrong" name="sizeWrong" type="button" value="set wrong value" onclick="setWrongValues('size')"/>
+                <rich:message id="sizeMsg" ajaxRendered="false" for="size"/>
 
-                custom (RichFaces)
+                custom (RichFaces || richfaces):
                 <ui:insert name="custom"/>
-                <input id="customCorrect" name="customCorrect" type="button" value="set correct value" onclick="command('correct', 'custom')"/>
-                <input id="customWrong" name="customWrong" type="button" value="set wrong value" onclick="command('wrong', 'custom')"/>
-                <rich:message id="customMsg" for="custom"/>
+                <input id="customCorrect" name="customCorrect" type="button" value="set correct value" onclick="setCorrectValues('custom')"/>
+                <input id="customWrong" name="customWrong" type="button" value="set wrong value" onclick="setWrongValues('custom')"/>
+                <rich:message id="customMsg" ajaxRendered="false" for="custom"/>
             </h:panelGrid>
             <br/><br/>
+            <a4j:outputPanel ajaxRendered="true" id="outputPanel">
+
+                <h:panelGrid columns="2">
+                    Output for not empty string input:
+                    <ui:insert name="notEmptyOutput"/>
+                    Output for regular expression pattern (pattern [a-z].*) string input:
+                    <ui:insert name="patternOutput"/>
+                    Output for size (3-6) string input:
+                    <ui:insert name="sizeOutput"/>
+                    Output for custom (RichFaces || richfaces) string input:
+                    <ui:insert name="customOutput"/>
+                </h:panelGrid>
+            </a4j:outputPanel>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

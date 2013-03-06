@@ -35,13 +35,11 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.validator.ValidatorException;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 
 import org.richfaces.component.UICalendar;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.RichBean;
+import org.richfaces.tests.metamer.bean.abstractions.DateInputValidationBeanImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,21 +47,16 @@ import org.slf4j.LoggerFactory;
  * Managed bean for rich:calendar.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22820 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean(name = "richCalendarBean")
 @ViewScoped
-public class RichCalendarBean implements Serializable {
+public class RichCalendarBean extends DateInputValidationBeanImpl implements Serializable {
 
     private static final long serialVersionUID = -1L;
     private static final Logger logger = LoggerFactory.getLogger(RichCalendarBean.class);
-    private Attributes attributes;
-    private Date date = new Date();
     public static final TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");
     private TimeZone tz = TimeZone.getTimeZone("GMT");
-    private Date date1;
-    private Date date2;
-    private Date date3;
     private Date currentDate;
     private Date value;
 
@@ -91,38 +84,14 @@ public class RichCalendarBean implements Serializable {
 
         // TODO has to be tested in another way
         attributes.remove("converter");
-        attributes.remove("currentDate");
+        attributes.remove("currentDate");//value on page will cause convertExceptions
         attributes.remove("dataModel");
         attributes.remove("preloadDateRangeBegin");
         attributes.remove("preloadDateRangeEnd");
         attributes.remove("validator");
+        attributes.remove("value");//value on page will cause convertExceptions
         attributes.remove("valueChangeListener");
         attributes.remove("timeZone");
-        attributes.remove("value");
-    }
-
-    public Attributes getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(Attributes attributes) {
-        this.attributes = attributes;
-    }
-
-    public Date getValue() {
-        return value;
-    }
-
-    public void setValue(Date value) {
-        this.value = value;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public TimeZone getTimeZone() {
@@ -131,6 +100,10 @@ public class RichCalendarBean implements Serializable {
 
     public TimeZone getTz() {
         return tz;
+    }
+
+    public void setValue(Date value) {
+        this.value = value;
     }
 
     public void setTz(TimeZone tz) {
@@ -145,32 +118,8 @@ public class RichCalendarBean implements Serializable {
         this.currentDate = currentDate;
     }
 
-    @Past
-    @NotNull
-    public Date getDate1() {
-        return date1;
-    }
-
-    public void setDate1(Date date1) {
-        this.date1 = date1;
-    }
-
-    @Future
-    @NotNull
-    public Date getDate2() {
-        return date2;
-    }
-
-    public void setDate2(Date date2) {
-        this.date2 = date2;
-    }
-
-    public Date getDate3() {
-        return date3;
-    }
-
-    public void setDate3(Date date3) {
-        this.date3 = date3;
+    public Date getValue() {
+        return value;
     }
 
     /**

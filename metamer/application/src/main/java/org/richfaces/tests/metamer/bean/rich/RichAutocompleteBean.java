@@ -29,7 +29,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import org.richfaces.component.UIAutocomplete;
 import org.richfaces.tests.metamer.Attributes;
@@ -47,8 +47,8 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean(name = "richAutocompleteBean")
+@ViewScoped
 // cannot be view-scoped (see https://jira.jboss.org/browse/RF-9287)
-@SessionScoped
 public class RichAutocompleteBean extends StringInputValidationBeanImpl implements Serializable {
 
     private static final long serialVersionUID = -1L;

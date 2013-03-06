@@ -1,4 +1,4 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,17 +18,19 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
-import org.richfaces.tests.metamer.ftest.abstractions.StringInputComponentCSVTest;
+import org.richfaces.tests.metamer.ftest.abstractions.validations.AbstractStringInputComponentValidationTest;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-//FIXME shoud not be generic (Graphene bug)
-public class TestInplaceInputCSV extends StringInputComponentCSVTest {
+@RegressionTest("https://issues.jboss.org/browse/RF-12301")
+public class TestInplaceInputCSV extends AbstractStringInputComponentValidationTest {
 
     @Override
     public String getComponentName() {
@@ -36,27 +38,8 @@ public class TestInplaceInputCSV extends StringInputComponentCSVTest {
     }
 
     @Test
-    public void testAllInputsWrong() {
-        verifyAllInputs();
-    }
-
-    @Test
-    public void testCustomString() {
-        verifyCustomString();
-    }
-
-    @Test
-    public void testNotEmpty() {
-        verifyNotEmpty();
-    }
-
-    @Test
-    public void testRegExpPattern() {
-        verifyRegExpPattern();
-    }
-
-    @Test
-    public void testStringSize() {
-        verifyStringSize();
+    @Use(field = "commonCase", value = "commonCases")
+    public void testCommonCases() {
+        verifyCases();
     }
 }

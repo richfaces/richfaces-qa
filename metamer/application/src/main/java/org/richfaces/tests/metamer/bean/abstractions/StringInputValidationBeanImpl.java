@@ -1,4 +1,4 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.metamer.bean.abstractions;
 
 import org.richfaces.tests.metamer.Attributes;
@@ -31,10 +31,10 @@ public class StringInputValidationBeanImpl implements StringInputValidationBean 
 
     protected Attributes attributes;
     // properties for jsr303 validations
-    private String notEmptyValue = "";
-    private String patternValue = "";
-    private String sizeValue = "";
-    private String customValue = "";
+    private String customValue = CUSTOM_VALUE_DEFAULT;
+    private String notEmptyValue = NOTEMPTY_VALUE_DEFAULT;
+    private String patternValue = PATTERN_VALUE_DEFAULT;
+    private String sizeValue = SIZE_VALUE_DEFAULT;
 
     @Override
     public Attributes getAttributes() {

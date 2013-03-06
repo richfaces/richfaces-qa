@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -25,93 +29,58 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="/templates/template.xhtml">
-
-        <ui:define name="view">
-            <f:metadata>
-                <f:viewParam name="templates" value="#{templateBean.templates}">
-                    <f:converter converterId="templatesListConverter" />
-                </f:viewParam>
-            </f:metadata>
+    <ui:composition template="/templates/stringInputComponentValidationTemplate.xhtml">
+        <ui:define name="js">
+            <ui:include src="script.xhtml"/>
         </ui:define>
 
-        <ui:define name="component">
-            <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
-            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
-            <br/><br/>
-
-            <h:panelGrid columns="3">
-                not empty
-                <rich:inplaceSelect id="input1"
-                                    defaultLabel="#{richInplaceSelectBean.attributes['defaultLabel'].value}"
-                                    value="#{richInplaceSelectBean.value1}"
-                                    >
-                    <f:selectItems value="#{richInplaceSelectBean.validationOptions}" />
-                    <a4j:ajax event="change" render="output1"/>
-                </rich:inplaceSelect>
-                <rich:message id="inputMsg1" for="input1"/>
-
-                pattern [a-z].*
-                <rich:inplaceSelect id="input2"
-                                    defaultLabel="#{richInplaceSelectBean.attributes['defaultLabel'].value}"
-                                    value="#{richInplaceSelectBean.value2}"
-                                    >
-                    <f:selectItems value="#{richInplaceSelectBean.validationOptions}" />
-                    <a4j:ajax event="change" render="output2"/>
-                </rich:inplaceSelect>
-                <rich:message id="inputMsg2" for="input2"/>
-
-                size 3-6
-                <rich:inplaceSelect id="input3"
-                                    defaultLabel="#{richInplaceSelectBean.attributes['defaultLabel'].value}"
-                                    value="#{richInplaceSelectBean.value3}"
-                                    >
-                    <f:selectItems value="#{richInplaceSelectBean.validationOptions}" />
-                    <a4j:ajax event="change" render="output3"/>
-                </rich:inplaceSelect>
-                <rich:message id="inputMsg3" for="input3"/>
-
-                custom (RichFaces)
-                <rich:inplaceSelect id="input4"
-                                    defaultLabel="#{richInplaceSelectBean.attributes['defaultLabel'].value}"
-                                    value="#{richInplaceSelectBean.value4}"
-                                    >
-                    <f:selectItems value="#{richInplaceSelectBean.validationOptions}" />
-                    <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>
-                    <a4j:ajax event="change" render="output4"/>
-                </rich:inplaceSelect>
-                <rich:message id="inputMsg4" for="input4"/>
-
-                required
-                <rich:inplaceSelect id="input5"
-                                    defaultLabel="#{richInplaceSelectBean.attributes['defaultLabel'].value}"
-                                    required="true"
-                                    requiredMessage="#{richInplaceSelectBean.requiredMessage}"
-                                    value="#{richInplaceSelectBean.value5}"
-                                    >
-                    <f:selectItems value="#{richInplaceSelectBean.validationOptions}" />
-                    <a4j:ajax event="change" render="output5"/>
-                </rich:inplaceSelect>
-                <rich:message id="inputMsg5" for="input5"/>
-            </h:panelGrid>
-            <br/><br/>
-
-            <h:panelGrid columns="2">
-                output1
-                <h:outputText id="output1" value="#{richInplaceSelectBean.value1}"/>
-                output2
-                <h:outputText id="output2" value="#{richInplaceSelectBean.value2}"/>
-                output3
-                <h:outputText id="output3" value="#{richInplaceSelectBean.value3}"/>
-                output4
-                <h:outputText id="output4" value="#{richInplaceSelectBean.value4}"/>
-                output5
-                <h:outputText id="output5" value="#{richInplaceSelectBean.value5}"/>
-            </h:panelGrid>
+        <ui:define name="notEmpty">
+            <rich:inplaceSelect id="notEmpty"
+                                value="#{richInplaceSelectBean.notEmptyValue}"
+                                >
+                <f:selectItems value="#{richInplaceSelectBean.validationOptionsNotEmpty}" />
+                <a4j:ajax event="blur" render="notEmptyMsg"/>
+            </rich:inplaceSelect>
+        </ui:define>
+        <ui:define name="notEmptyOutput">
+            <h:outputText id="notEmptyOutput" value="#{richInplaceSelectBean.notEmptyValue}"/>
         </ui:define>
 
-        <ui:define name="outOfTemplateAfter">
+        <ui:define name="pattern">
+            <rich:inplaceSelect id="pattern"
+                                value="#{richInplaceSelectBean.patternValue}"
+                                >
+                <f:selectItems value="#{richInplaceSelectBean.validationOptionsPattern}" />
+                <a4j:ajax event="change" render="patternMsg"/>
+            </rich:inplaceSelect>
+        </ui:define>
+        <ui:define name="patternOutput">
+            <h:outputText id="patternOutput" value="#{richInplaceSelectBean.patternValue}"/>
         </ui:define>
 
+        <ui:define name="size">
+            <rich:inplaceSelect id="size"
+                                value="#{richInplaceSelectBean.sizeValue}"
+                                >
+                <f:selectItems value="#{richInplaceSelectBean.validationOptionsSize}" />
+                <a4j:ajax event="change" render="sizeMsg"/>
+            </rich:inplaceSelect>
+        </ui:define>
+        <ui:define name="sizeOutput">
+            <h:outputText id="sizeOutput" value="#{richInplaceSelectBean.sizeValue}"/>
+        </ui:define>
+
+        <ui:define name="custom">
+            <rich:inplaceSelect id="custom"
+                                value="#{richInplaceSelectBean.customValue}"
+                                >
+                <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>
+                <f:selectItems value="#{richInplaceSelectBean.validationOptionsCustom}" />
+                <a4j:ajax event="change" render="customMsg"/>
+            </rich:inplaceSelect>
+        </ui:define>
+        <ui:define name="customOutput">
+            <h:outputText id="customOutput" value="#{richInplaceSelectBean.customValue}"/>
+        </ui:define>
     </ui:composition>
 </html>
