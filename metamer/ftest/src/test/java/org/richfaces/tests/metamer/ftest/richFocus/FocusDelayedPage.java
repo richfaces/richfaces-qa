@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richFocus;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
 
 /**
@@ -30,10 +30,9 @@ import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
  */
 public class FocusDelayedPage extends AbstractFocusPage {
 
-    @FindBy(jquery = "[value*='Next']")
+    @FindBy(css = "[id$='next']")
     private WebElement nextButton;
-
-    @FindBy(jquery = ".input")
+    @FindBy(css = "[id$='input']")
     private TextInputComponentImpl nameInput;
 
     public WebElement getNextButton() {
