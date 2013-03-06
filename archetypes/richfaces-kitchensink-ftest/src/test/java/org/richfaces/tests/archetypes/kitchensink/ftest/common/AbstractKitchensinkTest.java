@@ -32,11 +32,9 @@ import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.android.AndroidDriver;
 import org.testng.annotations.BeforeMethod;
 
-import com.thoughtworks.selenium.DefaultSelenium;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -52,7 +50,7 @@ public class AbstractKitchensinkTest extends Arquillian {
     protected final String SSV_NAME_SIZE = "size must be between 1 and 25";
     protected final String SSV_PHONE_SIZE = "numeric value out of bounds (<12 digits>.<0 digits> expected)";
     protected final String SSV_NAME_PATTERN = "must contain only letters and spaces";
-    
+
     protected final int WAIT_FOR_ERR_MSG_RENDER = 3;
     protected final String ANDORID_LOOPBACK = "10.0.2.2";
 
@@ -61,8 +59,6 @@ public class AbstractKitchensinkTest extends Arquillian {
 
     @Drone
     protected WebDriver webDriver;
-
-    protected DefaultSelenium webDriverBackedSelenium;
 
     @Deployment(testable = false)
     public static WebArchive createTestArchive() {
@@ -75,10 +71,11 @@ public class AbstractKitchensinkTest extends Arquillian {
 
     @BeforeMethod(groups = "arquillian")
     public void loadPage() throws MalformedURLException {
-
-        webDriver.get(getDeployedURL().toExternalForm());
-
-        webDriverBackedSelenium = new WebDriverBackedSelenium(webDriver, getDeployedURL().toExternalForm());
+        if (getUrlSuffix() == null) {
+            webDriver.get(getDeployedURL().toExternalForm());
+        } else {
+            webDriver.get(new URL(getDeployedURL(), getUrlSuffix()).toExternalForm());
+        }
     }
 
     protected URL getDeployedURL() {
@@ -92,5 +89,9 @@ public class AbstractKitchensinkTest extends Arquillian {
                 throw new RuntimeException("You are attempting to load malformed URL");
             }
         }
+    }
+
+    protected String getUrlSuffix() {
+        return null;
     }
 }

@@ -1,134 +1,155 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<artifactId>richfaces-archetypes-ftest</artifactId>
-		<groupId>org.richfaces.tests</groupId>
-		<version>4.3.1-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
-	</parent>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>richfaces-archetypes-ftest</artifactId>
+        <groupId>org.richfaces.tests</groupId>
+        <version>4.3.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
-	<artifactId>richfaces-kitchensink-ftest</artifactId>
-	<name>RichFaces Archetype Kitchensink Ftest</name>
-	<description>Functional tests for richfaces-archetype-kitchensink</description>
+    <artifactId>richfaces-kitchensink-ftest</artifactId>
+    <name>RichFaces Archetype Kitchensink Ftest</name>
+    <description>Functional tests for richfaces-archetype-kitchensink</description>
 
-	<properties>
-		<application.target.directory>${basedir}/../apps/richfaces-kitchensink/target</application.target.directory>
-		<application.war>${application.target.directory}/richfaces-kitchensink.war</application.war>
+    <properties>
+        <application.target.directory>${basedir}/../apps/richfaces-kitchensink/target</application.target.directory>
+        <application.war>${application.target.directory}/richfaces-kitchensink.war</application.war>
 
-		<!-- which tests should be run and which not -->
-		<testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
-	</properties>
+        <!-- which tests should be run and which not -->
+        <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
+        <!-- testng listeners for better console output -->
+        <testng.listeners>org.jboss.test.selenium.listener.ConsoleStatusTestListener,org.jboss.test.selenium.listener.FailureLoggingTestListener,org.jboss.test.selenium.listener.SeleniumLoggingTestListener</testng.listeners>
+    </properties>
 
-	<dependencies>
-		<!-- Support for WebDriver in Arquillian Drone -->
-		<dependency>
+    <dependencies>
+        <!-- Support for WebDriver in Arquillian Drone -->
+        <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
             <artifactId>arquillian-drone-webdriver-depchain</artifactId>
             <scope>test</scope>
             <type>pom</type>
         </dependency>
-		<!-- Android extension -->
-		<dependency>
-			<groupId>org.jboss.arquillian.extension</groupId>
-			<artifactId>arquillian-android-depchain</artifactId>
-			<type>pom</type>
-		</dependency>
-		<!-- Arquillian TestNG support -->
-		<dependency>
-			<groupId>org.jboss.arquillian.testng</groupId>
-			<artifactId>arquillian-testng-container</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<!-- TestNG -->
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<!-- TestNG listeners for better console output -->
-		<!-- <dependency>
-			<groupId>org.richfaces.tests</groupId>
-			<artifactId>testng-listeners</artifactId>
-			<version>${project.version}</version>
-		</dependency> -->
-		<!-- WebDriver Utils -->
-		<dependency>
-			<groupId>org.richfaces.tests</groupId>
-			<artifactId>webdriver-utils</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-	</dependencies>
+        <!-- Android extension -->
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-android-depchain</artifactId>
+            <type>pom</type>
+        </dependency>
+        <!-- Arquillian TestNG support -->
+        <dependency>
+            <groupId>org.jboss.arquillian.testng</groupId>
+            <artifactId>arquillian-testng-container</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- TestNG -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- TestNG listeners for better console output -->
+        <dependency>
+            <groupId>org.richfaces.tests</groupId>
+            <artifactId>testng-listeners</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- Graphene -->
+        <dependency>
+            <groupId>org.jboss.arquillian.graphene</groupId>
+            <artifactId>graphene-webdriver</artifactId>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-	<profiles>
-		<profile>
-			<id>mobile</id>
-			<properties>
-				<android.serial>aaa</android.serial>
-				<android.sdk.home />
-				<android.apk.version>2.6.0</android.apk.version>
-				<android.apk.url>http://selenium.googlecode.com/files/android-server-${android.apk.version}.apk</android.apk.url>
-				<testng.suite.xml>src/test/resources/testng/testngMobile.xml</testng.suite.xml>
-			</properties>
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<configuration>
-							<testFailureIgnore>true</testFailureIgnore>
-							<!-- Variables accessible from JAVA code by System.getProperty -->
-							<systemProperties>
-								<application.war>${application.war}</application.war>
-								<!-- ip the address of your computer when you want to test on real
-									device, on emulator the 10.0.2.2 -->
-								<host>10.0.2.2</host>
-							</systemProperties>
-							<!-- Variables accessible e.g. from arquillian.xml -->
-							<systemPropertyVariables>
-								<android.serial>${android.serial}</android.serial>
-								<android.sdk.home>${android.sdk.home}</android.sdk.home>
-								<android.apk.version>${android.apk.version}</android.apk.version>
-								<webdriver.implementionClass>org.openqa.selenium.android.AndroidDriver</webdriver.implementionClass>
-								<androidSkip>false</androidSkip>
-								<androidDroneSkip>false</androidDroneSkip>
-							</systemPropertyVariables>
-							<suiteXmlFiles>
-								<suiteXmlFiles>${testng.suite.xml}</suiteXmlFiles>
-							</suiteXmlFiles>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>desktop</id>
-			<properties>
-				<testng.suite.xml>src/test/resources/testng/testngDesktop.xml</testng.suite.xml>
-			</properties>
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<configuration>
-							<testFailureIgnore>true</testFailureIgnore>
-							<!-- Variables accessible from JAVA code by System.getProperty -->
-							<systemProperties>
-								<application.war>${application.war}</application.war>
-							</systemProperties>
-							<!-- Variables accessible e.g. from arquillian.xml -->
-							<systemPropertyVariables>
-								<androidSkip>true</androidSkip>
-								<webdriver.implementionClass>org.openqa.selenium.firefox.FirefoxDriver</webdriver.implementionClass>
-							</systemPropertyVariables>
-							<suiteXmlFiles>
-								<suiteXmlFiles>${testng.suite.xml}</suiteXmlFiles>
-							</suiteXmlFiles>
-							<!-- Logging configuration for Selenium -->
-							<argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties</argLine>
-							<!-- listeners for better console output -->
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+    <profiles>
+        <profile>
+            <id>mobile</id>
+            <properties>
+                <android.serial>aaa</android.serial>
+                <android.sdk.home />
+                <android.apk.version>2.21.0</android.apk.version>
+                <testng.suite.xml>src/test/resources/testng/testngMobile.xml</testng.suite.xml>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <testFailureIgnore>true</testFailureIgnore>
+                            <!-- Variables accessible from JAVA code by System.getProperty -->
+                            <systemProperties>
+                                <application.war>${application.war}</application.war>
+                                <!--
+                                    ip the address of your computer when you want to test on real
+                                    device, on emulator the 10.0.2.2
+                                -->
+                                <host>10.0.2.2</host>
+                                <arq.extension.graphene.waitAjaxInterval>5</arq.extension.graphene.waitAjaxInterval>
+                                <arq.extension.graphene.waitModelInterval>10</arq.extension.graphene.waitModelInterval>
+                            </systemProperties>
+                            <!-- Variables accessible e.g. from arquillian.xml -->
+                            <systemPropertyVariables>
+                                <android.serial>${android.serial}</android.serial>
+                                <android.sdk.home>${android.sdk.home}</android.sdk.home>
+                                <android.apk.version>${android.apk.version}</android.apk.version>
+                                <browser.capabilities>android</browser.capabilities>
+                                <androidSkip>false</androidSkip>
+                                <androidDroneSkip>false</androidDroneSkip>
+                            </systemPropertyVariables>
+                            <suiteXmlFiles>
+                                <suiteXmlFiles>${testng.suite.xml}</suiteXmlFiles>
+                            </suiteXmlFiles>
+                            <!-- Logging configuration for Selenium -->
+                            <argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties</argLine>
+                            <!-- listeners for better console output -->
+                            <properties>
+                                <property>
+                                    <name>listener</name>
+                                    <value>${testng.listeners}</value>
+                                </property>
+                            </properties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>desktop</id>
+            <properties>
+                <testng.suite.xml>src/test/resources/testng/testngDesktop.xml</testng.suite.xml>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <testFailureIgnore>true</testFailureIgnore>
+                            <!-- Variables accessible from JAVA code by System.getProperty -->
+                            <systemProperties>
+                                <application.war>${application.war}</application.war>
+                            </systemProperties>
+                            <!-- Variables accessible e.g. from arquillian.xml -->
+                            <systemPropertyVariables>
+                                <androidSkip>true</androidSkip>
+                                <browser.capabilities>firefox</browser.capabilities>
+                            </systemPropertyVariables>
+                            <suiteXmlFiles>
+                                <suiteXmlFiles>${testng.suite.xml}</suiteXmlFiles>
+                            </suiteXmlFiles>
+                            <!-- Logging configuration for Selenium -->
+                            <argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties</argLine>
+                            <!-- listeners for better console output -->
+                            <properties>
+                                <property>
+                                    <name>listener</name>
+                                    <value>${testng.listeners}</value>
+                                </property>
+                            </properties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
