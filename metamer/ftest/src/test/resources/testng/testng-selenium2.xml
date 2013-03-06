@@ -24,6 +24,7 @@
             <package name="org.richfaces.tests.metamer.ftest.richDragSource" />
             <package name="org.richfaces.tests.metamer.ftest.richDropTarget" />
             <package name="org.richfaces.tests.metamer.ftest.richFileUpload"/>
+            <package name="org.richfaces.tests.metamer.ftest.richFocus"/>
             <package name="org.richfaces.tests.metamer.ftest.richHashParam"/>
             <package name="org.richfaces.tests.metamer.ftest.richHotKey"/>
             <package name="org.richfaces.tests.metamer.ftest.richInplaceInput"/>
@@ -33,10 +34,14 @@
             <package name="org.richfaces.tests.metamer.ftest.richList"/>
             <package name="org.richfaces.tests.metamer.ftest.richMessage"/>
             <package name="org.richfaces.tests.metamer.ftest.richMessages"/>
+            <package name="org.richfaces.tests.metamer.ftest.richPanel" />
             <package name="org.richfaces.tests.metamer.ftest.richPanelMenu" />
+            <package name="org.richfaces.tests.metamer.ftest.richPanelMenuGroup" />
+            <package name="org.richfaces.tests.metamer.ftest.richPanelMenuItem" />
             <package name="org.richfaces.tests.metamer.ftest.richPanelToggleListener"/>
             <package name="org.richfaces.tests.metamer.ftest.richPlaceholder"/>
             <package name="org.richfaces.tests.metamer.ftest.richProgressBar"/>
+            <package name="org.richfaces.tests.metamer.ftest.richToggleControl"/>
             <package name="org.richfaces.tests.metamer.ftest.richTreeSelectionChangeListener"/>
             <package name="org.richfaces.tests.metamer.ftest.richTreeToggleListener"/>
         </packages>
@@ -49,7 +54,6 @@
             <class name="org.richfaces.tests.metamer.ftest.richEditor.TestRichEditorWithTyping" />
             <class name="org.richfaces.tests.metamer.ftest.richExtendedDataTable.TestEDTFrozenColumns" />
             <class name="org.richfaces.tests.metamer.ftest.richInplaceSelect.TestRichInplaceSelectValidationMessages" />
-            <class name="org.richfaces.tests.metamer.ftest.richPanel.TestRichPanel" />
             <class name="org.richfaces.tests.metamer.ftest.richSelect.TestRichSelectValidationMessages" />
             <class name="org.richfaces.tests.metamer.ftest.richTree.TestToggleNodeEvent" />
         </classes>
