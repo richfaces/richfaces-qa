@@ -31,7 +31,7 @@ import org.openqa.selenium.WebElement;
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
  *
  */
-public class PanelMenuGroupIcon {
+public class RichFacesPanelMenuGroupIcon {
 
     private static final String CSS_COLLAPSED = "div.rf-pm-ico-colps";
     private static final String CSS_EXPANDED = "div.rf-pm-ico-exp";

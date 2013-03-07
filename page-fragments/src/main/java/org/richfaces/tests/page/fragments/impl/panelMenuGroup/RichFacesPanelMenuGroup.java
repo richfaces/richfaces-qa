@@ -35,7 +35,7 @@ import org.richfaces.component.Mode;
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
  *
  */
-public class PanelMenuGroup {
+public class RichFacesPanelMenuGroup {
 
     public static final String CSS_HEADER = "div[class*=rf-pm-][class*=-gr-hdr]";
     public static final String CSS_LABEL = "td[class*=rf-pm-][class*=-gr-lbl]";
@@ -52,10 +52,10 @@ public class PanelMenuGroup {
     public WebElement label;
 
     @FindBy(css = CSS_ICON_LEFT)
-    public PanelMenuGroupIcon leftIcon;
+    public RichFacesPanelMenuGroupIcon leftIcon;
 
     @FindBy(css = CSS_ICON_RIGHT)
-    public PanelMenuGroupIcon rightIcon;
+    public RichFacesPanelMenuGroupIcon rightIcon;
 
     // mode can be inherited from parent panelMenu
     Mode mode;

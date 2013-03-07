@@ -51,7 +51,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.page.fragments.impl.panelMenuGroup.PanelMenuGroup;
+import org.richfaces.tests.page.fragments.impl.panelMenuGroup.RichFacesPanelMenuGroup;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -159,9 +159,9 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     }
 
     private class GroupIsExpanded implements Predicate<WebDriver> {
-        private PanelMenuGroup group;
+        private RichFacesPanelMenuGroup group;
 
-        public GroupIsExpanded(PanelMenuGroup element) {
+        public GroupIsExpanded(RichFacesPanelMenuGroup element) {
             this.group = element;
         }
 
@@ -173,9 +173,9 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
     }
 
     private class GroupIsCollapsed implements Predicate<WebDriver> {
-        private PanelMenuGroup group;
+        private RichFacesPanelMenuGroup group;
 
-        public GroupIsCollapsed(PanelMenuGroup element) {
+        public GroupIsCollapsed(RichFacesPanelMenuGroup element) {
             group = element;
         }
 

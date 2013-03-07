@@ -30,7 +30,7 @@ import org.openqa.selenium.WebElement;
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
  *
  */
-public class PanelMenuItemIcon {
+public class RichFacesPanelMenuItemIcon {
 
     @Root
     public WebElement icon;

@@ -31,7 +31,7 @@ import org.openqa.selenium.WebElement;
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
  *
  */
-public class RichPanelMenu {
+public class RichFacesPanelMenu {
 
     @Root
     WebElement root;

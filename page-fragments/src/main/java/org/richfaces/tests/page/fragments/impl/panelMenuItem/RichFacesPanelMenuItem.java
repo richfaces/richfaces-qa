@@ -34,7 +34,7 @@ import org.richfaces.component.Mode;
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
  *
  */
-public class PanelMenuItem {
+public class RichFacesPanelMenuItem {
 
     @Root
     WebElement root;
@@ -43,10 +43,10 @@ public class PanelMenuItem {
     public WebElement label;
 
     @FindBy(css = "td[class*=rf-][class*=-itm-ico]")
-    public PanelMenuItemIcon leftIcon;
+    public RichFacesPanelMenuItemIcon leftIcon;
 
     @FindBy(css = "td[class*=rf-][class*=-itm-exp-ico]")
-    public PanelMenuItemIcon rightIcon;
+    public RichFacesPanelMenuItemIcon rightIcon;
 
     // mode can be inherited from parent panelMenu
     Mode mode;
