@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
+import org.jboss.arquillian.graphene.wait.WebDriverWait;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.metamer.ftest.abstractions.validations.NumberInputValidationPage;
 import org.richfaces.tests.metamer.ftest.abstractions.validations.ValidationMessageCase;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;

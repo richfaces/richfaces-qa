@@ -22,9 +22,9 @@
 package org.richfaces.tests.metamer.ftest.richValidator;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.wait.WebDriverWait;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**

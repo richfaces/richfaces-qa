@@ -55,7 +55,7 @@ FSF site: http://www.fsf.org. -->
         <arquillian.tomcat.version>1.0.0.CR4</arquillian.tomcat.version>
         <arquillian.drone.version>1.1.0.Final</arquillian.drone.version>
         <arquillian.graphene-testng.version>2.0.0.Alpha3</arquillian.graphene-testng.version>
-        <arquillian.graphene-webdriver.version>2.0.0.Alpha3</arquillian.graphene-webdriver.version>
+        <arquillian.graphene-webdriver.version>2.0.0.Beta1-SNAPSHOT</arquillian.graphene-webdriver.version>
         <arquillian.jboss-as6.version>1.0.0.CR3</arquillian.jboss-as6.version>
         <arquillian.glassfish3-1.version>1.0.0.CR3</arquillian.glassfish3-1.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
@@ -510,7 +510,7 @@ FSF site: http://www.fsf.org. -->
                 <artifactId>commons-lang</artifactId>
                 <version>${commons-lang.version}</version>
             </dependency>
-            
+
             <dependency>
                 <groupId>org.richfaces</groupId>
                 <artifactId>richfaces-bom</artifactId>
@@ -518,7 +518,7 @@ FSF site: http://www.fsf.org. -->
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-            
+
         </dependencies>
     </dependencyManagement>
 

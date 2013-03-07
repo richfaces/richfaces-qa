@@ -30,7 +30,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.jboss.arquillian.graphene.wait.WebDriverWait;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
