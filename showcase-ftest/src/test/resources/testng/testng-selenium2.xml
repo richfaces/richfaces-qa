@@ -28,6 +28,7 @@
             <package name="org.richfaces.tests.showcase.placeholder" />
             <package name="org.richfaces.tests.showcase.region" />
             <package name="org.richfaces.tests.showcase.repeat" />
+            <package name="org.richfaces.tests.showcase.select" />
             <package name="org.richfaces.tests.showcase.subTableToggleControl" />
         </packages>
 

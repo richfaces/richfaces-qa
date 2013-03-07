@@ -21,75 +21,45 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.select;
 
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
-
-import org.jboss.arquillian.ajocado.dom.Event;
-
-import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
+import org.richfaces.tests.page.fragments.impl.input.select.Option;
+import org.richfaces.tests.page.fragments.impl.input.select.OptionList;
+import org.richfaces.tests.page.fragments.impl.input.select.RichFacesSelect;
+import org.richfaces.tests.page.fragments.impl.input.select.Select;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
-public class TestSelect extends AbstractGrapheneTest {
+public class TestSelect extends AbstractWebDriverTest {
 
-    /* *************************************************************************************
-     * Constants ***************************************************************** ********************
-     */
-
-    protected final String CLASS_OF_SELECTED_OTPION = "rf-sel-sel";
-    protected final String ERROR_MSG_WHEN_POPUP_NOT_DISPLAYED = "The popup with options was not displayed in 1 second!";
-
-    /* ***********************************************************************************
-     * Locators ****************************************************************** *****************
-     */
-
-    protected JQueryLocator selectOpenButton = jq("span.rf-sel-btn:eq({0})");
-    protected JQueryLocator option = jq("div.rf-sel-opt:contains('{0}')");
-    protected JQueryLocator manualInput = jq("input[type=text]:eq(1)");
-    protected JQueryLocator popupWithOptions = jq("div.rf-sel-shdw:eq({0}):visible");
-
-    /* ***********************************************************************************
-     * Locators ****************************************************************** *****************
-     */
+    @FindBy(jquery = "div.rf-sel:eq(0)")
+    private RichFacesSelect first;
+    @FindBy(jquery = "div.rf-sel:eq(1)")
+    private RichFacesSelect second;
 
     @Test
     public void testSimpleSelectMouseSelect() {
-
-        for (int i = 1; i <= 5; i++) {
-
-            selenium.mouseDown(selectOpenButton.format(0));
-
-            JQueryLocator particularOption = option.format("Option " + i);
-
-            if (!waitForElementPresent(particularOption, 1000)) {
-
-                fail(ERROR_MSG_WHEN_POPUP_NOT_DISPLAYED);
-            }
-
-            selenium.click(particularOption);
-
-            String classOfSelectedOption = selenium.getAttribute(particularOption.getAttribute(Attribute.CLASS));
-
-            assertTrue(classOfSelectedOption.contains(CLASS_OF_SELECTED_OTPION),
-                "The option " + particularOption.getRawLocator() + " should be selected");
+        for (int i = 0; i < 5; i++) {
+            OptionList popup = first.callPopup();
+            Assert.assertTrue(first.isPopupPresent());
+            Assert.assertFalse(second.isPopupPresent());
+            popup.selectByIndex(i);
+            int selected = first.getSelectedOption().getIndex();
+            Assert.assertEquals(selected, i, "The option with index <" + i + "> should be selected.");
         }
-
     }
 
     @Test
     public void testSelectManualInputByMouse() {
-
-        selectSomethingFromCapitalsSelectAndCheck("Arizona");
-
-        selectSomethingFromCapitalsSelectAndCheck("Florida");
-
-        selectSomethingFromCapitalsSelectAndCheck("California");
+        selectSomethingFromCapitalsSelectAndCheck(second, "Arizona");
+        selectSomethingFromCapitalsSelectAndCheck(second, "Florida");
+        selectSomethingFromCapitalsSelectAndCheck(second, "California");
     }
 
     /* *******************************************************************************
@@ -99,26 +69,21 @@ public class TestSelect extends AbstractGrapheneTest {
     /**
      * Types the beginning of capital and then selects from poppup and check whether right option was selected
      */
-    private void selectSomethingFromCapitalsSelectAndCheck(String capital) {
+    private void selectSomethingFromCapitalsSelectAndCheck(Select select, String capital) {
+        select.getInput().clear(TextInputComponent.ClearType.BACKSPACE);
+        select.getInput().fillIn(capital.substring(0, 2));
 
-        eraseInput(manualInput);
+        Assert.assertTrue(select.isPopupPresent());
 
-        JQueryLocator particularOption = option.format(capital);
+        OptionList popup = select.callPopup();
+        Assert.assertTrue(select.isPopupPresent());
 
-        selenium.click(manualInput);
-
-        selenium.type(manualInput, capital.substring(0, 2));
-        selenium.fireEvent(manualInput, Event.KEYPRESS);
-
-        if (!waitForElementPresent(popupWithOptions.format(1), 1000)) {
-
-            fail(ERROR_MSG_WHEN_POPUP_NOT_DISPLAYED);
+        for (Option option: popup.getOptions()) {
+            Assert.assertTrue(option.getVisibleText().startsWith(capital.substring(0, 2)), "The option '" + option.getVisibleText() + "' doesn't start with '" + capital.substring(0, 2) + "'.");
         }
 
-        String classOfSelectedOption = selenium.getAttribute(particularOption.getAttribute(Attribute.CLASS));
-
-        assertTrue(classOfSelectedOption.contains(CLASS_OF_SELECTED_OTPION),
-            "The option " + particularOption.getRawLocator() + " should be selected");
+        Option expected = popup.selectByIndex(0);
+        Assert.assertEquals(select.getSelectedOption().getVisibleText(), expected.getVisibleText());
 
     }
 
