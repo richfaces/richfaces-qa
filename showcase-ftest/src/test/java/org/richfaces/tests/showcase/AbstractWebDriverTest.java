@@ -51,7 +51,7 @@ public class AbstractWebDriverTest extends AbstractShowcaseTest {
 
         this.contextRoot = getContextRoot();
 
-        webDriver.get(URLUtils.buildUrl(contextRoot, "/showcase/", addition).toExternalForm());
+        webDriver.get(URLUtils.buildUrl(contextRoot, addition).toExternalForm());
     }
 
     @Override
