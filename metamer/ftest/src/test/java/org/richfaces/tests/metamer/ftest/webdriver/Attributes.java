@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.webdriver;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
@@ -201,10 +202,24 @@ public class Attributes<T extends AttributeEnum> {
                 }
             }
         } else {
-            tag.selection.selectByValue(value);
+            if (isSelectOptionsContainingValue(value, tag.selection.getOptions())) {
+                tag.selection.selectByValue(value);
+            } else {
+                tag.selection.selectByVisibleText(value);
+            }
             return;
         }
         throw new IllegalArgumentException("No property with value " + value + " was found");
+    }
+
+    private boolean isSelectOptionsContainingValue(String value, List<WebElement> options) {
+        for (Iterator<WebElement> i = options.iterator(); i.hasNext();) {
+            if (value.equals(i.next().getAttribute("value"))) {
+                return true;
+            }
+        }
+        System.out.println(" Value '" + value + "' was not found in select's options as @value. Consider use it as option label.");
+        return false;
     }
 
     /**
