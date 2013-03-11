@@ -8,7 +8,7 @@
     if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF site:
     http://www.fsf.org. -->
 <arquillian xmlns="http://jboss.com/arquillian" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+    xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
     <engine>
         <property name="maxTestClassesBeforeRestart">${arquillian.maxTestClassesBeforeRestart:10}</property>
@@ -53,6 +53,15 @@
         </configuration>
     </container>
 
+    <container qualifier="jbosseap-managed-6-1">
+        <configuration>
+            <property name="jbossHome">target/jboss-eap-6.1</property>
+            <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>
+            <property name="managementAddress">${arquillian.container.jbossas.7-1.node0}</property>
+            <property name="serverConfig">standalone-full.xml</property>
+        </configuration>
+    </container>
+
     <container qualifier="jbossas-remote-7">
         <protocol type="jmx-as7">
             <property name="executionType">REMOTE</property>
@@ -82,7 +91,7 @@
             <property name="appWorkingDir">target/arquillian-test-working-dir</property>
         </configuration>
     </container>
-    
+
     <container qualifier="tomee-remote-1-5">
         <configuration>
             <property name="conf">src/test/resources/tomEE</property>

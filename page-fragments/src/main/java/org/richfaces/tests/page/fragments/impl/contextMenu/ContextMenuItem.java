@@ -30,12 +30,12 @@ public class ContextMenuItem {
 
     public ContextMenuItem(String itemText) {
         if (itemText == null || itemText.length() == 0) {
-            throw new IllegalArgumentException("Context menu text can not null nor empty!");
+            throw new IllegalArgumentException("Context menu item text can not be null or empty!");
         }
         this.itemText = itemText;
     }
 
-    public String getItemText() {
+    public String getText() {
         return itemText;
     }
 

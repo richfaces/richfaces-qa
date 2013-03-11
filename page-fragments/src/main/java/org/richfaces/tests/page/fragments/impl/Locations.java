@@ -75,13 +75,19 @@ public class Locations implements Iterable<Point> {
 
     /**
      * Returns new instance with moved borders.
-     * @param x
-     * @param y
-     * @return
      */
     public Locations moveAllBy(int x, int y) {
         return new Locations(topLeft.moveBy(x, y), topRight.moveBy(x, y),
                 bottomLeft.moveBy(x, y), bottomRight.moveBy(x, y));
+    }
+
+    /**
+     * Returns new instance with resized borders form bottom right corner.
+     * The top left point will stay unchanged, other borders will change.
+     */
+    public Locations resizeFromBottomRight(int byXPixels, int byYPixels) {
+        return new Locations(topLeft, topRight.moveBy(byXPixels, 0),
+                bottomLeft.moveBy(0, byYPixels), bottomRight.moveBy(byXPixels, byYPixels));
     }
 
     @Override

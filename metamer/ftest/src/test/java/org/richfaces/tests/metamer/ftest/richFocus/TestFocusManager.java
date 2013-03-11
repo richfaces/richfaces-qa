@@ -22,14 +22,17 @@
 package org.richfaces.tests.metamer.ftest.richFocus;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.jboss.arquillian.graphene.Graphene.waitModel;
-import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
@@ -46,14 +49,23 @@ public class TestFocusManager extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(exclude = { "richCollapsibleSubTable", "richExtendedDataTable", "richDataTable", "richDataGrid", "richList", "a4jRepeat", "uiRepeat" })
     public void testFocusManager() {
-        waitModel().until(new ElementIsFocused(page.getAgeInput().getInput()));
+        Assert.assertTrue(new ElementIsFocused(page.getAgeInput().getInput()).apply(driver), "Age input is not focused");
+        //workaround to get the code below working, need to somehow interact with page first
+        MetamerPage.waitRequest(page, WaitRequestType.HTTP).fullPageRefresh();
 
+        Graphene.waitModel().until(new ElementIsFocused(page.getAgeInput().getInput()));
         page.typeStringAndDoNotCareAboutFocus();
-
         String actual = page.getAgeInput().getStringValue();
-        assertEquals(actual, AbstractFocusPage.EXPECTED_STRING,
-            "Age input should be focused by focus manager from backing bean!");
+        Assert.assertEquals(actual, AbstractFocusPage.EXPECTED_STRING,
+                "Age input should be focused by focus manager from backing bean!");
     }
 
+    @Test(enabled = false)
+    //TODO: fix sample (id problems)
+    @Templates(value = { "richCollapsibleSubTable", "richExtendedDataTable", "richDataTable", "richDataGrid", "richList", "a4jRepeat", "uiRepeat" })
+    public void testFocusManagerInIterationComponents() {
+        testFocusManager();
+    }
 }

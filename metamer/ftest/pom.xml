@@ -15,7 +15,7 @@ FSF site: http://www.fsf.org. -->
     <parent>
         <groupId>org.richfaces.tests</groupId>
         <artifactId>metamer-root</artifactId>
-        <version>4.3.0.Final-redhat-1</version>
+        <version>4.3.1.Final-redhat-1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -56,6 +56,10 @@ FSF site: http://www.fsf.org. -->
             <version>${project.version}</version>
             <classifier>classes</classifier>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.richfaces.ui.common</groupId>
+            <artifactId>richfaces-ui-common-api</artifactId>
         </dependency>
         <!-- Arquillian dependencies -->
         <dependency>
@@ -205,7 +209,8 @@ FSF site: http://www.fsf.org. -->
                         <suiteXmlFiles>${testng.suite.xml}</suiteXmlFiles>
                     </suiteXmlFiles>
                     <!-- Logging configuration for Selenium , templates, ip -->
-                    <argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties -Dtemplates='${templates}' ${jvm.args.ip}</argLine>
+                    <argLine>-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties
+                        -Dtemplates='${templates}' ${jvm.args.ip}</argLine>
                     <properties>
                         <property>
                             <name>listener</name>
@@ -321,12 +326,12 @@ FSF site: http://www.fsf.org. -->
                     </plugin>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
-                            <configuration>
-                                <systemProperties>
-                                    <webdriver.firefox.bin>${firefox.bin}</webdriver.firefox.bin>
-                                    <arquillian.graphene.browser>*firefox ${firefox.bin}</arquillian.graphene.browser>
-                                </systemProperties>
-                            </configuration>
+                        <configuration>
+                            <systemProperties>
+                                <webdriver.firefox.bin>${firefox.bin}</webdriver.firefox.bin>
+                                <arquillian.graphene.browser>*firefox ${firefox.bin}</arquillian.graphene.browser>
+                            </systemProperties>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2013, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but inAtt ANY WARRANTY; inAtt even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along inBean this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+            <ui:insert name="js"/>
+            Values setting:
+            <br/>
+            <input id="setAllCorrectButton" type="button" name="setAllCorrectButton" value="set correct values" onclick="setCorrectValues('');"/>
+            <input id="setAllWrongButton" type="button" name="setAllWrongButton" value="set wrong values" onclick="setWrongValues('')"/>
+            <br/><br/>
+            <br/><br/>
+            Submit buttons:<br/>
+            <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
+            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
+            <br/><br/>
+            <h:panelGrid columns="4">
+                min 2:
+                <ui:insert name="min"/>
+                <input id="minCorrect" name="minCorrect" type="button" value="set correct value" onclick="setCorrectValues('min')"/>
+                <input id="minWrong" name="minWrong" type="button" value="set wrong value" onclick="setWrongValues('min')"/>
+                <rich:message id="minMsg" ajaxRendered="false" for="min"/>
+
+                max 2:
+                <ui:insert name="max"/>
+                <input id="maxCorrect" name="maxCorrect" type="button" value="set correct value" onclick="setCorrectValues('max')"/>
+                <input id="maxWrong" name="maxWrong" type="button" value="set wrong value" onclick="setWrongValues('max')"/>
+                <rich:message id="maxMsg" ajaxRendered="false" for="max"/>
+
+
+                custom (positive):
+                <ui:insert name="custom"/>
+                <input id="customCorrect" name="customCorrect" type="button" value="set correct value" onclick="setCorrectValues('custom')"/>
+                <input id="customWrong" name="customWrong" type="button" value="set wrong value" onclick="setWrongValues('custom')"/>
+                <rich:message id="customMsg" ajaxRendered="false" for="custom"/>
+            </h:panelGrid>
+            <br/><br/>
+            <a4j:outputPanel ajaxRendered="true" id="outputPanel">
+                <h:panelGrid columns="2">
+                    Output for min input:
+                    <ui:insert name="minOutput"/>
+                    Output for max input:
+                    <ui:insert name="maxOutput"/>
+                    Output for custom (positive) input:
+                    <ui:insert name="customOutput"/>
+                </h:panelGrid>
+            </a4j:outputPanel>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+        </ui:define>
+
+    </ui:composition>
+</html>

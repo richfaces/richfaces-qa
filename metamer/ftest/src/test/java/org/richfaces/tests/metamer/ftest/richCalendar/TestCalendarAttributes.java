@@ -523,7 +523,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
-    @Templates(exclude = { "richExtendedDataTable", "richPopupPanel" })
+    @RegressionTest("https://issues.jboss.org/browse/RF-12552")
     public void testMinDaysInFirstWeek() {
         calendarAttributes.set(CalendarAttributes.minDaysInFirstWeek, 1);
         // 1.1.2011 starts with saturday => only 1 day in first weak
@@ -548,20 +548,6 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         assertEquals(days.size(), 1, "Month days in first displayed week.");
         assertEquals(firstDisplayedWeek.getWeekNumber().intValue(), 53, "First displayed week number.");
         assertEquals(secondDisplayedWeekNumber, 1, "Second displayed week number.");
-    }
-
-    @IssueTracking("https://issues.jboss.org/browse/RF-12552")
-    @Test(groups = "4.Future")
-    @Templates(value = "richExtendedDataTable")
-    public void testMinDaysInFirstWeekInEDT() {
-        testMinDaysInFirstWeek();
-    }
-
-    @IssueTracking("https://issues.jboss.org/browse/RF-12552")
-    @Test(groups = "4.Future")
-    @Templates(value = "richPopupPanel")
-    public void testMinDaysInFirstWeekInPopupPanel() {
-        testMinDaysInFirstWeek();
     }
 
     @Test

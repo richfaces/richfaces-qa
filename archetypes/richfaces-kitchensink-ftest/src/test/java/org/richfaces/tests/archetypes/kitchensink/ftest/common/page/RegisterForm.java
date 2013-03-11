@@ -24,6 +24,8 @@ package org.richfaces.tests.archetypes.kitchensink.ftest.common.page;
 import static org.testng.Assert.assertTrue;
 
 import java.util.List;
+import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.arquillian.graphene.Graphene;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -44,6 +46,9 @@ public class RegisterForm {
     private final String REGISTER_BUTTON_LOC = "//input[@type='submit']";
     private final String ERROR_MSGS_LOC = "rf-msg-err";
 
+    @Drone
+    private WebDriver browser;
+
     @FindBy(xpath = NAME_LOC)
     private WebElement nameInput;
 
@@ -59,6 +64,9 @@ public class RegisterForm {
     @FindBy(className = ERROR_MSGS_LOC)
     private List<WebElement> errorMessages;
 
+    @FindBy(tagName="span")
+    private WebElement toBlur;
+
     private String CORRECT_NAME = "Andrasi Oliver";
     private String CORRECT_EMAIL = "ado@gmaul.xor";
     private String CORRECT_PHONE = "12345678910";
@@ -70,11 +78,12 @@ public class RegisterForm {
     private String INCORRECT_NAME_TOO_SHORT = "";
 
     public void clickOnRegisterButton() {
+//        Graphene.guardXhr(registerButton).click();
         registerButton.click();
     }
 
-    public void switchOffAutocompleteOnInputs(WebDriver webDriver) {
-        JavascriptExecutor js = (JavascriptExecutor) webDriver;
+    public void switchOffAutocompleteOnInputs() {
+        JavascriptExecutor js = (JavascriptExecutor) browser;
         js.executeScript("document.getElementsByName('mobileForm:memberForm:name')[0].setAttribute('autocomplete','off');");
         js.executeScript("document.getElementsByName('mobileForm:memberForm:email')[0].setAttribute('autocomplete','off');");
         js.executeScript("document.getElementsByName('mobileForm:memberForm:phoneNumber')[0].setAttribute('autocomplete','off');");
@@ -82,7 +91,7 @@ public class RegisterForm {
 
     public void areAllErrorMessagesRendered(String... errMsgs) {
         List<WebElement> errorMsgsElements = getErrorMessages();
-        boolean flag = false;
+        boolean flag;
 
         for (String i : errMsgs) {
             flag = false;
@@ -111,14 +120,12 @@ public class RegisterForm {
         assertTrue(flag, "None of messages: (" + errMsgs.toString() + ") were rendered!");
     }
 
-    public void waitForErrorMessages(int timeoutInSec, WebDriver webDriver, final int numberOfErrorMessagesBefore) {
+    public void waitForErrorMessages(final String message, final int numberOfExpectedErrorMessagesBefore) {
 
-        (new WebDriverWait(webDriver, timeoutInSec)).until(new ExpectedCondition<Boolean>() {
-
+        Graphene.waitAjax().withMessage(message).until(new ExpectedCondition<Boolean>() {
+            @Override
             public Boolean apply(WebDriver d) {
-
-                int numberOfErrorsAfter = getErrorMessages().size();
-                return (numberOfErrorMessagesBefore < numberOfErrorsAfter);
+                return numberOfExpectedErrorMessagesBefore == getErrorMessages().size();
             }
         });
     }
@@ -165,60 +172,13 @@ public class RegisterForm {
         return INCORRECT_EMAIL_PATTERN;
     }
 
-    public WebElement getRegisterButton() {
-        return registerButton;
-    }
-
     public List<WebElement> getErrorMessages() {
         return errorMessages;
     }
 
-    public void setRegisterButton(WebElement registerButton) {
-        this.registerButton = registerButton;
-    }
-
-    public WebElement getEmailInput() {
-        return emailInput;
-    }
-
-    public WebElement getPhoneInput() {
-        return phoneInput;
-    }
-
-    public void setEmailInput(WebElement emailInput) {
-        this.emailInput = emailInput;
-    }
-
-    public void setPhoneInput(WebElement phoneInput) {
-        this.phoneInput = phoneInput;
-    }
-
-    public WebElement getNameInput() {
-        return nameInput;
-    }
-
-    public void setNameInput(WebElement nameInput) {
-        this.nameInput = nameInput;
-    }
-
-    public String getNAME_LOC() {
-        return NAME_LOC;
-    }
-
-    public String getEMAIL_LOC() {
-        return EMAIL_LOC;
-    }
-
-    public String getPHONE_LOC() {
-        return PHONE_LOC;
-    }
-
-    public String getREGISTER_BUTTON_LOC() {
-        return REGISTER_BUTTON_LOC;
-    }
-
-    public String getERROR_MSGS_LOC() {
-        return ERROR_MSGS_LOC;
+    public void blur() {
+        emailInput.click();
+        nameInput.click();
     }
 
 }

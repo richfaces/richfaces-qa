@@ -26,11 +26,10 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 
 import org.richfaces.component.html.HtmlInputNumberSpinner;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.bean.abstractions.NumberInputValidationBeanImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,22 +37,15 @@ import org.slf4j.LoggerFactory;
  * Managed bean for rich:inputNumberSpinner.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @version $Revision: 22460 $
  */
 @ManagedBean(name = "richInputNumberSpinnerBean")
 @ViewScoped
-public class RichInputNumberSpinnerBean implements Serializable {
+public class RichInputNumberSpinnerBean extends NumberInputValidationBeanImpl implements Serializable {
 
-//  validation message for input validated to min value
-    public static final String MSG_MIN = "must be greater than or equal to 2";
-//  validation message for input validated to max value
-    public static final String MSG_MAX = "must be less than or equal to 2";
     private static final long serialVersionUID = -1L;
-    private static Logger logger;
-    private Attributes attributes;
-    private int value1;
-    private int value2;
-    private int value3;
+    private static Logger logger = LoggerFactory.getLogger(RichInputNumberSpinnerBean.class);
     private double valueLocaleDE;
     private double valueLocaleEN;
 
@@ -62,7 +54,6 @@ public class RichInputNumberSpinnerBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        logger = LoggerFactory.getLogger(getClass());
         logger.debug("initializing bean " + getClass().getName());
 
         attributes = Attributes.getComponentAttributesFromFacesConfig(HtmlInputNumberSpinner.class, getClass());
@@ -87,49 +78,15 @@ public class RichInputNumberSpinnerBean implements Serializable {
         return valueLocaleDE;
     }
 
-    public void setValueLocaleDE(double valueLocaleDE) {
-        this.valueLocaleDE = valueLocaleDE;
-    }
-
     public double getValueLocaleEN() {
         return valueLocaleEN;
     }
 
+    public void setValueLocaleDE(double valueLocaleDE) {
+        this.valueLocaleDE = valueLocaleDE;
+    }
+
     public void setValueLocaleEN(double valueLocaleEN) {
         this.valueLocaleEN = valueLocaleEN;
-    }
-
-    public Attributes getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(Attributes attributes) {
-        this.attributes = attributes;
-    }
-
-    @Min(value = 2, message = MSG_MIN)
-    public int getValue1() {
-        return value1;
-    }
-
-    public void setValue1(int value1) {
-        this.value1 = value1;
-    }
-
-    @Max(value = 2, message = MSG_MAX)
-    public int getValue2() {
-        return value2;
-    }
-
-    public void setValue2(int value2) {
-        this.value2 = value2;
-    }
-
-    public int getValue3() {
-        return value3;
-    }
-
-    public void setValue3(int value3) {
-        this.value3 = value3;
     }
 }

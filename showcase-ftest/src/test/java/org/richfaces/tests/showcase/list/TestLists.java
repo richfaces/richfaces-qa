@@ -21,30 +21,21 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.list;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-
-import java.util.Iterator;
-
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import junit.framework.Assert;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.page.fragments.impl.list.ListFragment;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.list.page.ListsPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestLists extends AbstractGrapheneTest {
+public class TestLists extends AbstractWebDriverTest {
 
-    /* *****************************************************************************
-     * Locators*****************************************************************************
-     */
-
-    private JQueryLocator orderedList = jq("a:contains('ordered')");
-    private JQueryLocator unordered = jq("a:contains('unordered')");
-    private JQueryLocator definitions = jq("a:contains('definitions')");
+    @Page
+    private ListsPage page;
 
     /* ***********************************************************************************************
      * Tests***********************************************************************************************
@@ -52,20 +43,17 @@ public class TestLists extends AbstractGrapheneTest {
 
     @Test
     public void testOrderedList() {
-
-        checkList(orderedList, "ol#list");
+        checkList(ListFragment.ListType.ORDERED);
     }
 
     @Test
     public void testUnorderedList() {
-
-        checkList(unordered, "ul#list");
+        checkList(ListFragment.ListType.UNORDERED);
     }
 
     @Test
     public void testDefinitionsList() {
-
-        checkList(definitions, "dl#list");
+        checkList(ListFragment.ListType.DEFINITIONS);
     }
 
     /* ********************************************************************************************************************
@@ -74,20 +62,8 @@ public class TestLists extends AbstractGrapheneTest {
      * **************
      */
 
-    private void checkList(JQueryLocator typeOfList, String listString) {
-
-        guardXhr(selenium).click(typeOfList);
-
-        JQueryLocator list = jq(listString);
-
-        assertTrue(selenium.isElementPresent(list), "There should list " + listString);
-
-        JQueryLocator liElement = jq(listString + " > li");
-
-        for (Iterator<JQueryLocator> i = liElement.iterator(); i.hasNext();) {
-
-            String textOfLi = selenium.getText(i.next()).trim();
-            assertFalse(textOfLi.equals(""), "The list should not contain empty strings");
-        }
+    private void checkList(ListFragment.ListType type) {
+        page.setType(type);
+        Assert.assertEquals(type, page.list.getType());
     }
 }

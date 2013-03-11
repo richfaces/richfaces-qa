@@ -24,8 +24,8 @@ package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.panelMenu.RichPanelMenu;
-import org.richfaces.tests.page.fragments.impl.panelMenuGroup.PanelMenuGroup;
+import org.richfaces.tests.page.fragments.impl.panelMenu.RichFacesPanelMenu;
+import org.richfaces.tests.page.fragments.impl.panelMenuGroup.RichFacesPanelMenuGroup;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
@@ -35,16 +35,16 @@ import org.richfaces.tests.page.fragments.impl.panelMenuGroup.PanelMenuGroup;
 public class PanelMenuGroupPage extends MetamerPage {
 
     @FindBy(css = "div.rf-pm[id$=panelMenu]")
-    public RichPanelMenu menu;
+    public RichFacesPanelMenu menu;
 
     @FindBy(css = "div[id$=group2]")
-    public PanelMenuGroup topGroup;
+    public RichFacesPanelMenuGroup topGroup;
 
     @FindBy(css = "div[id$=group1]")
-    public PanelMenuGroup group1;
+    public RichFacesPanelMenuGroup group1;
 
     @FindBy(css = "div[id$=group23]")
-    public PanelMenuGroup subGroup;
+    public RichFacesPanelMenuGroup subGroup;
 
     @FindBy(css = "table[id$='attributes:attributes']")
     public WebElement attributesTable;

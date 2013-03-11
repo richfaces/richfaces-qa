@@ -1,4 +1,4 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,17 +18,18 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
-import org.richfaces.tests.metamer.ftest.abstractions.StringInputComponentJSR303Test;
+import org.richfaces.tests.metamer.ftest.abstractions.validations.AbstractStringInputComponentValidationTest;
+import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestAutocompleteJSR303 extends StringInputComponentJSR303Test {
+public class TestAutocompleteJSR303 extends AbstractStringInputComponentValidationTest {
 
     @Override
     public String getComponentName() {
@@ -36,27 +37,8 @@ public class TestAutocompleteJSR303 extends StringInputComponentJSR303Test {
     }
 
     @Test
-    public void testAllInputsWrong() {
-        verifyAllInputs();
-    }
-
-    @Test
-    public void testCustomString() {
-        verifyCustomString();
-    }
-
-    @Test
-    public void testNotEmpty() {
-        verifyNotEmpty();
-    }
-
-    @Test
-    public void testRegExpPattern() {
-        verifyRegExpPattern();
-    }
-
-    @Test
-    public void testStringSize() {
-        verifyStringSize();
+    @Use(field = "commonCase", value = "commonCases")
+    public void testCommonCases() {
+        verifyCases();
     }
 }

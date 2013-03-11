@@ -8,13 +8,14 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY o
 General Public License for more details. You should have received a copy of the GNU Lesser General Public License along with this
 software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the
 FSF site: http://www.fsf.org. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.richfaces.tests</groupId>
     <artifactId>richfaces-qa-parent</artifactId>
-    <version>4.3.0.Final-redhat-1</version>
+    <version>4.3.1.Final-redhat-1</version>
     <packaging>pom</packaging>
 
     <name>RichFaces QA Parent</name>
@@ -29,7 +30,7 @@ FSF site: http://www.fsf.org. -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <version.richfaces>4.3.0.Final-redhat-1</version.richfaces>
+        <version.richfaces>4.3.1.Final-redhat-1</version.richfaces>
         <richfaces.checkstyle.version>5</richfaces.checkstyle.version>
 
         <!-- version of JBoss containers to use and download -->
@@ -37,6 +38,7 @@ FSF site: http://www.fsf.org. -->
         <version.jbossas7>7.0.2.Final</version.jbossas7>
         <version.jbossas7-1>7.1.1.Final</version.jbossas7-1>
         <version.jbossEAP6>6.0</version.jbossEAP6>
+        <eap61Zip>path/to/your/eap/distribution/zip</eap61Zip>
 
         <!-- version of Glassfish containers to use and download       -->
         <version.glassfish3-1>3.1.2.2</version.glassfish3-1>
@@ -56,7 +58,7 @@ FSF site: http://www.fsf.org. -->
         <arquillian.tomcat.version>1.0.0.CR4</arquillian.tomcat.version>
         <arquillian.drone.version>1.1.0.Final</arquillian.drone.version>
         <arquillian.graphene-testng.version>2.0.0.Alpha3</arquillian.graphene-testng.version>
-        <arquillian.graphene-webdriver.version>2.0.0.Alpha3</arquillian.graphene-webdriver.version>
+        <arquillian.graphene-webdriver.version>2.0.0.Beta1-SNAPSHOT</arquillian.graphene-webdriver.version>
         <arquillian.jboss-as6.version>1.0.0.CR3</arquillian.jboss-as6.version>
         <arquillian.glassfish3-1.version>1.0.0.CR3</arquillian.glassfish3-1.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
@@ -64,8 +66,7 @@ FSF site: http://www.fsf.org. -->
         <shrinkwrap.descriptors.version>2.0.0-alpha-4</shrinkwrap.descriptors.version>
         <arquillian.eap.managed.version>7.1.3.Final</arquillian.eap.managed.version>
 
-        <version.selenium>2.30.0</version.selenium>
-        <version.selenium.server>2.30.0</version.selenium.server>
+        <version.selenium>2.31.0</version.selenium>
         <version.slf4j.jbossas6>1.6.1</version.slf4j.jbossas6>
 
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->
@@ -78,6 +79,7 @@ FSF site: http://www.fsf.org. -->
         <jboss7-1Home>${project.build.directory}/jboss-as-${version.jbossas7-1}</jboss7-1Home>
         <jboss6Home>${project.build.directory}/jboss-${version.jbossas6}</jboss6Home>
         <jbossEAP60Home>${project.build.directory}/jboss-eap-${version.jbossEAP6}</jbossEAP60Home>
+        <jbossEAP61Home>${project.build.directory}/jboss-eap-6.1</jbossEAP61Home>
 
         <showcase.classifier>jbas71</showcase.classifier>
         <metamer.classifier>jbas71</metamer.classifier>
@@ -425,7 +427,7 @@ FSF site: http://www.fsf.org. -->
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-server</artifactId>
-                <version>${version.selenium.server}</version>
+                <version>${version.selenium}</version>
             </dependency>
 
             <!-- Selenium dependecies -->
@@ -514,7 +516,7 @@ FSF site: http://www.fsf.org. -->
                 <artifactId>commons-lang</artifactId>
                 <version>${commons-lang.version}</version>
             </dependency>
-            
+
             <dependency>
                 <groupId>org.richfaces</groupId>
                 <artifactId>richfaces-bom</artifactId>
@@ -522,7 +524,7 @@ FSF site: http://www.fsf.org. -->
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-            
+
         </dependencies>
     </dependencyManagement>
 
@@ -994,6 +996,52 @@ FSF site: http://www.fsf.org. -->
                                 </configuration>
                             </execution>
                         </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>jbosseap-managed-6-1</id>
+            <properties>
+                <metamer.classifier>jbas71</metamer.classifier>
+                <showcase.classifier>jbas71</showcase.classifier>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.as</groupId>
+                    <artifactId>jboss-as-arquillian-container-managed</artifactId>
+                    <version>7.1.3.Final</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>generate-resources</phase>
+                                <configuration>
+                                    <tasks>
+                                        <unzip src="${eap61Zip}" dest="${project.build.directory}" />
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <arquillian.launch>jbosseap-managed-6-1</arquillian.launch>
+                            </systemProperties>
+                            <environmentVariables>
+                                <JBOSS_HOME>${jbossEAP61Home}</JBOSS_HOME>
+                            </environmentVariables>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

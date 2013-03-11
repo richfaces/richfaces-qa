@@ -25,9 +25,9 @@ import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
 import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.panelMenu.RichPanelMenu;
-import org.richfaces.tests.page.fragments.impl.panelMenuGroup.PanelMenuGroup;
-import org.richfaces.tests.page.fragments.impl.panelMenuItem.PanelMenuItem;
+import org.richfaces.tests.page.fragments.impl.panelMenu.RichFacesPanelMenu;
+import org.richfaces.tests.page.fragments.impl.panelMenuGroup.RichFacesPanelMenuGroup;
+import org.richfaces.tests.page.fragments.impl.panelMenuItem.RichFacesPanelMenuItem;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
@@ -36,40 +36,40 @@ import org.richfaces.tests.page.fragments.impl.panelMenuItem.PanelMenuItem;
 public class PanelMenuPage extends MetamerPage {
 
     @FindBy( css = "div.rf-pm[id$=panelMenu]")
-    public RichPanelMenu panelMenu;
+    public RichFacesPanelMenu panelMenu;
 
     @FindBy(css = "div[id$=item3]")
-    public PanelMenuItem item3;
+    public RichFacesPanelMenuItem item3;
 
     @FindBy(css = "div[id$=item4]")
-    public PanelMenuItem item4;
+    public RichFacesPanelMenuItem item4;
 
     @FindBy(css = "div[id$=group1]")
-    public PanelMenuGroup group1;
+    public RichFacesPanelMenuGroup group1;
 
     @FindBy(css = "div[id$=group2]")
-    public PanelMenuGroup group2;
+    public RichFacesPanelMenuGroup group2;
 
     @FindBy(css = "div[id$=group3]")
-    public PanelMenuGroup group3;
+    public RichFacesPanelMenuGroup group3;
 
     @FindBy(css = "div[id$=item22]")
-    public PanelMenuItem item22;
+    public RichFacesPanelMenuItem item22;
 
     @FindBy(css = "div[id$=item25]")
-    public PanelMenuItem item25;
+    public RichFacesPanelMenuItem item25;
 
     @FindBy(css = "div[id$=group24]")
-    public PanelMenuGroup group24;
+    public RichFacesPanelMenuGroup group24;
 
     @FindBy(css = "div[id$=group26]")
-    public PanelMenuGroup group26;
+    public RichFacesPanelMenuGroup group26;
 
     @FindBy(css = "div[id$=item242]")
-    public PanelMenuItem item242;
+    public RichFacesPanelMenuItem item242;
 
     @FindBy(css = "div[id$=group4]")
-    public PanelMenuGroup group4;
+    public RichFacesPanelMenuGroup group4;
 
     @FindBy(css = "input[id$=expandAll]")
     public WebElement expandAll;

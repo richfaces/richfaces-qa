@@ -31,6 +31,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.test.selenium.support.ui.ElementNotPresent;
 import org.jboss.test.selenium.support.ui.ElementPresent;
@@ -161,8 +162,10 @@ public class TestDragIndicator extends AbstractWebDriverTest {
 
         // then release
         dragging = actionQueue.release().build();
+        String drop1Content = page.drop1.getText();
         dragging.perform();
         elementNotPresent.element(page.indicator);
+        Graphene.waitModel().until().element(page.drop1).text().not().equalTo(drop1Content);
     }
 
     @Test

@@ -44,6 +44,7 @@ import org.richfaces.tests.metamer.validation.PastBean;
 import org.richfaces.tests.metamer.validation.PatternBean;
 import org.richfaces.tests.metamer.validation.SizeBean;
 import org.richfaces.tests.metamer.validation.StringSizeBean;
+import org.richfaces.tests.metamer.validator.StringRichFacesValidator;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
@@ -147,7 +148,7 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
         messages.put(ID.notEmpty, NotEmptyBean.VALIDATION_MSG);
         messages.put(ID.notNull,NotNullBean.VALIDATION_MSG);
         messages.put(ID.pattern, PatternBean.VALIDATION_MSG);
-        messages.put(ID.custom, "string is not \"RichFaces\"");
+        messages.put(ID.custom, StringRichFacesValidator.VALIDATION_ERROR_MSG);
         messages.put(ID.regexp, "Regex pattern of '\\d{3}' not matched");
         messages.put(ID.past, PastBean.VALIDATION_MSG);
         messages.put(ID.future, FutureBean.VALIDATION_MSG);

@@ -39,7 +39,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 Simple page containing <b>rich:calendar</b> and input for attribute currentDate. 
                 Need to be separated from page simple because of <a href="https://issues.jboss.org/browse/RF-11487">RF-11487</a>
             </metamer:testPageLink>
+            
+            <metamer:testPageLink id="jsr303" outcome="jsr303" value="JSR-303 Bean Validation">
+                Simple page that contains some <b>rich:calendar</b>s with various JSR-303 validators.
+            </metamer:testPageLink>
 
+            <metamer:testPageLink id="csv" outcome="csv" value="Client Side Validation">
+                Simple page that contains some <b>rich:calendar</b>s testing client-side validation..
+            </metamer:testPageLink>
             <metamer:testPageLink id="fAjax" outcome="fAjax" value="f:ajax">
                 Simple page containing <b>rich:calendar</b> with f:ajax and inputs for all its attributes.
             </metamer:testPageLink>

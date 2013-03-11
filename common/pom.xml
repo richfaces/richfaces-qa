@@ -3,7 +3,7 @@
     <parent>
         <artifactId>richfaces-qa-parent</artifactId>
         <groupId>org.richfaces.tests</groupId>
-        <version>4.3.0.Final-redhat-1</version>
+        <version>4.3.1.Final-redhat-1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 

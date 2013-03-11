@@ -22,13 +22,16 @@
 package org.richfaces.tests.page.fragments.impl.contextMenu;
 
 import static org.jboss.arquillian.graphene.Graphene.element;
+import static org.jboss.arquillian.graphene.Graphene.waitModel;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -38,11 +41,16 @@ import org.openqa.selenium.support.FindBy;
  */
 public class RichFacesContextMenu {
 
-    @FindBy(className = "rf-ctx-itm-lbl")
+    @Root
+    protected WebElement root;
+
+    @FindBy(className = "rf-ctx-itm")
     private List<WebElement> menuItemsElements;
 
-    @FindBy(className = "rf-ctx-lst")
+    @FindBy(css = "div.rf-ctx-lst")
     private WebElement contextMenuPopup;
+
+    private int showDelay = 50;
 
     private ContextMenuInvoker invoker = RIGHT_CLICK;
 
@@ -58,67 +66,52 @@ public class RichFacesContextMenu {
      */
     public static final ContextMenuInvoker LEFT_CLICK = new LeftClickContextMenuInvoker();
 
+    /**
+     * The hover invoker of context menu
+     */
+    public static final ContextMenuInvoker HOVER = new LeftClickContextMenuInvoker();
+
     /* ************************************************************************************************
      * API
      */
-
     /**
-     * Returns menu items labels. By default it is presumed that context menu is invoked by right click. To change this behavior
-     * use <code>setInvoker()</code> method.
+     * Dismisses currently displayed context menu. If no context menu is currently displayed an exception is thrown.
      *
-     * @param givenTarget the target on which the contextMenu is invoked.
-     * @see #setInvoker(ContextMenuInvoker)
-     * @return
+     * @throws IllegalStateException when no context menu is displayed in the time of invoking
      */
-    public List<ContextMenuItem> getMenuItemsLabels(WebElement givenTarget) {
-        invoker.invoke(givenTarget);
-
-        List<ContextMenuItem> itemsText = new ArrayList<ContextMenuItem>();
-        for (WebElement item : menuItemsElements) {
-            itemsText.add(new ContextMenuItem(item.getText()));
+    public void dismiss() {
+        if (!contextMenuPopup.isDisplayed()) {
+            throw new IllegalStateException(
+                    "You are attemting to dismiss the context menu, however, no context menu is displayed at the moment!");
         }
-
-        return itemsText;
+        GrapheneContext.getProxy().findElement(By.tagName("body")).click();
+        waitModel().until(element(contextMenuPopup).not().isVisible());
     }
 
     /**
-     * Returns menu items labels. By default it is presumed that context menu is invoked by right click. To change this behavior
-     * use <code>setInvoker()</code> method.
+     * Returns menu items elements. One needs to invoke context menu in order to work with them.
+     * Note that some of the elements may not become visible by just invoking the context menu (e.g. context menu items with sub items)
      *
-     * @param givenTarget the target on which the contextMenu is invoked.
-     * @see #setInvoker(ContextMenuInvoker)
-     * @see #setTarget(WebElement)
-     * @return
+     * @return the context menu items
      */
-    public List<ContextMenuItem> getMenuItemsLabels() {
-        checkWhetherTargetIsSet();
-
-        return getMenuItemsLabels(this.target);
-    }
-
-    /**
-     * Returns menu items elements.
-     *
-     * @return
-     */
-    public List<WebElement> getMemuItemsElements() {
+    public List<WebElement> getItems() {
         return menuItemsElements;
     }
 
     /**
-     * Invokes context menu and selects from it given item. By default it is presumed that context menu is invoked by right
+     * Invokes the context menu and selects from it a given item. By default it is presumed that context menu is invoked by right
      * click. To change this behavior use <code>setInvoker()</code> method.
      *
-     * @param item
+     * @param item to be selected from context menu
      * @see #setInvoker(ContextMenuInvoker)
      */
-    public void selectFromContextMenu(ContextMenuItem item, WebElement givenTarget) {
-        invokeContextMenu(givenTarget);
+    public void selectItem(ContextMenuItem item, WebElement givenTarget) {
+        invoke(givenTarget);
 
         for (WebElement itemElement : menuItemsElements) {
             String currentItemText = itemElement.getText();
 
-            if (item.getItemText().equals(currentItemText.trim())) {
+            if (item.getText().equals(currentItemText.trim())) {
                 itemElement.click();
             }
         }
@@ -132,43 +125,62 @@ public class RichFacesContextMenu {
      * @see #setInvoker(ContextMenuInvoker)
      * @see #setTarget(WebElement)
      */
-    public void selectFromContextMenu(ContextMenuItem item) {
+    public void selectItem(ContextMenuItem item) {
         checkWhetherTargetIsSet();
 
-        selectFromContextMenu(item, this.target);
+        selectItem(item, this.target);
     }
 
     /**
-     * Invokes context menu. By default it is presumed that context menu is invoked by right click. To change this behavior use
-     * <code>setInvoker()</code> method.
+     * Invokes context menu in the middle of the given target. By default it is presumed that context menu is invoked by right click. To change this behavior use
+     * <code>setInvoker()</code> method. It also works with the default value of <code>showDelay == 50ms</code>. Use <code>#setShowDelay</code> if this value is different for this menu.
      *
-     * @param invoker
+     * @param givenTarget
      * @see #setInvoker(ContextMenuInvoker)
-     * @return true if context menu is displayed, false otherwise
+     * @see #setShowDelay(int)
      */
-    public boolean invokeContextMenu(WebElement givenTarget) {
+    public void invoke(WebElement givenTarget) {
+        new Actions(GrapheneContext.getProxy()).moveToElement(givenTarget);
         invoker.invoke(givenTarget);
 
-        Graphene.waitGui().withTimeout(3, TimeUnit.SECONDS)
-            .withMessage("The Context Menu was not rendered in the given timeout!")
-            .until(element(contextMenuPopup).isVisible());
-
-        return contextMenuPopup.isDisplayed();
+        waitUntilIsVisible();
     }
 
     /**
-     * Invokes context menu. By default it is presumed that context menu is invoked by right click. To change this behavior use
+     * Waits until the context menu is visible. It takes into account the <code>showDelay</code> which has default value 50ms.
+     *
+     * @see #setShowDelay(int)
+     */
+    public void waitUntilIsVisible() {
+        Graphene.waitModel().withTimeout(showDelay + 4000, TimeUnit.MILLISECONDS)
+                .withMessage("The Context Menu did not show in the given timeout!")
+                .until(element(contextMenuPopup).isVisible());
+    }
+
+    /**
+     * Invokes context menu on a given point within the given target. By default it is presumed that context
+     * menu is invoked by right click. To change this behavior use
      * <code>setInvoker()</code> method.
      *
-     * @param invoker
+     * @param givenTarget
+     * @param location
+     * @see #setInvoker(ContextMenuInvoker)
+     */
+    public void invoke(WebElement givenTarget, Point location) {
+        throw new UnsupportedOperationException("File a feature request to have this, or even better implement it:)");
+    }
+
+    /**
+     * Invokes context menu in the middle of the currently set target. By default it is presumed that context menu is invoked by right click.
+     * To change this behavior use <code>setInvoker()</code> method. You have to have a target set before invocation of this method.
+     *
      * @see #setInvoker(ContextMenuInvoker)
      * @see #setTarget(WebElement)
-     * @return true if context menu is displayed, false otherwise
      */
-    public boolean invokeContextMenu() {
+    public void invoke() {
         checkWhetherTargetIsSet();
 
-        return invokeContextMenu(this.target);
+        invoke(this.target);
     }
 
     public WebElement getTarget() {
@@ -177,41 +189,6 @@ public class RichFacesContextMenu {
 
     public void setTarget(WebElement target) {
         this.target = target;
-    }
-
-    /* ****************************************************************************************************
-     * Neste classes
-     */
-
-    public static final class LeftClickContextMenuInvoker implements ContextMenuInvoker {
-
-        @Override
-        public void invoke(WebElement target) {
-            target.click();
-        }
-
-    }
-
-    public static final class RightClickContextMenuInvoker implements ContextMenuInvoker {
-
-        @Override
-        public void invoke(WebElement target) {
-            Actions builder = new Actions(GrapheneContext.getProxy());
-
-            builder.contextClick(target).build().perform();
-        }
-
-    }
-
-    /* ****************************************************************************************************
-     * Help Methods
-     */
-
-    private void checkWhetherTargetIsSet() {
-        if (target == null) {
-            throw new IllegalStateException(
-                "The context menu target has to be set before this operation! See setTarget() method.");
-        }
     }
 
     public ContextMenuInvoker getInvoker() {
@@ -233,4 +210,56 @@ public class RichFacesContextMenu {
         this.contextMenuPopup = contextMenuPopup;
     }
 
+    public int getShowDelay() {
+        return showDelay;
+    }
+
+    /**
+     * Sets the delay which is between showevent observing and the menu opening
+     * @param showDelay
+     */
+    public void setShowDelay(int showDelay) {
+        if (showDelay < 0) {
+            throw new IllegalArgumentException("Can not be negative!");
+        }
+        this.showDelay = showDelay;
+    }
+
+    /* ****************************************************************************************************
+     * Neste classes
+     */
+
+    public static final class LeftClickContextMenuInvoker implements ContextMenuInvoker {
+        @Override
+        public void invoke(WebElement target) {
+            target.click();
+        }
+    }
+
+    public static final class RightClickContextMenuInvoker implements ContextMenuInvoker {
+        @Override
+        public void invoke(WebElement target) {
+            Actions builder = new Actions(GrapheneContext.getProxy());
+            builder.contextClick(target).build().perform();
+        }
+    }
+
+    public static final class HoverContextMenuInvoker implements ContextMenuInvoker {
+        @Override
+        public void invoke(WebElement target) {
+            Actions builder = new Actions(GrapheneContext.getProxy());
+            builder.moveToElement(target).build().perform();
+        }
+    }
+
+    /* ****************************************************************************************************
+     * Help Methods
+     */
+
+    private void checkWhetherTargetIsSet() {
+        if (target == null) {
+            throw new IllegalStateException(
+                    "The context menu target has to be set before this operation! See setTarget() method.");
+        }
+    }
 }

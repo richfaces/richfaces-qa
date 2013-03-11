@@ -1,4 +1,4 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,18 +18,25 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.metamer.bean.abstractions;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.richfaces.tests.metamer.validator.StringRichFacesValidator;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public interface StringInputValidationBean extends AttributesHolder {
 
+    String CUSTOM_VALUE_DEFAULT = StringRichFacesValidator.RF;
+    String NOTEMPTY_VALUE_DEFAULT = "RF4";
+    String PATTERN_VALUE_DEFAULT = "xyz";
+    String SIZE_VALUE_DEFAULT = "asdf";
+    //
+    String CUSTOM_VALIDATION_MSG = StringRichFacesValidator.VALIDATION_ERROR_MSG;
     String NOT_EMPTY_VALIDATION_MSG = "may not be empty";
     String NOT_EMPTY_VALIDATION_MSG2 = "may not be null";
     String NOT_EMPTY_VALIDATION_MSG3 = "size must be between 1 and 2147483647";

@@ -41,7 +41,7 @@ public class FocusSimplePage extends AbstractFocusPage {
     @FindBy(css = "input[name$='address']")
     private TextInputComponentImpl addressInput;
 
-    @FindBy(css = "input[type='submit']")
+    @FindBy(css = "input[id$='validateButton']")
     private WebElement ajaxValidateButton;
 
     @FindBy(css = "input[id$='preserveAttribute']")

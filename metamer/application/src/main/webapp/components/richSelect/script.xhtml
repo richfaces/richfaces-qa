@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2013, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+    <script type="text/javascript">
+        function setCorrectValues(id) {
+            switch(id){
+                case 'notEmpty':
+                    $('[id$=notEmptyItem1]').click().click();
+                    $('[id$=notEmptyInput]').click().blur();
+                    break;
+                case 'custom':
+                    $('[id$=customItem1]').click().click();
+                    $('[id$=customInput]').click().blur();
+                    break;
+                case 'size':
+                    $('[id$=sizeItem1]').click().click();
+                    $('[id$=sizeInput]').click().blur();
+                    break;
+                case 'pattern':
+                    $('[id$=patternItem1]').click().click();
+                    $('[id$=patternInput]').click().blur();
+                    break;
+                default:
+                    setCorrectValues('notEmpty');
+                    setCorrectValues('custom');
+                    setCorrectValues('size');
+                    setCorrectValues('pattern');
+                    break;
+            }
+        }
+        function setWrongValues(id) {
+            switch(id){
+                case "notEmpty":
+                    $('[id$=notEmptyItem0]').click().click();
+                    $('[id$=notEmptyInput]').click().blur();
+                    break;
+                case "custom":
+                    $('[id$=customItem0]').click().click();
+                    $('[id$=customInput]').click().blur();
+                    break;
+                case "size":
+                    $('[id$=sizeItem0]').click().click();
+                    $('[id$=sizeInput]').click().blur();
+                    break;
+                case "pattern":
+                    $('[id$=patternItem0]').click().click();
+                    $('[id$=patternInput]').click().blur();
+                    break;
+                default:
+                    setWrongValues('notEmpty');
+                    setWrongValues('custom');
+                    setWrongValues('size');
+                    setWrongValues('pattern');
+                    break;
+            }
+        }
+    </script>
+</html>

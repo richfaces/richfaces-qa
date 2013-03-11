@@ -25,7 +25,7 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
 
@@ -47,8 +47,8 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
         verifyAllWrongWithAjaxSubmit();
     }
 
-    @Test(groups = { "4.Future" })
-    @IssueTracking(value = "https://issues.jboss.org/browse/RF-11035")
+    @Test
+    @RegressionTest(value = "https://issues.jboss.org/browse/RF-11035")
     public void testAllWrongJSF() {
         verifyAllWrongWithJSFSubmit();
     }
@@ -123,8 +123,8 @@ public class TestValidatorsCSV extends AbstractValidatorsTest {
         verifyStringSize();
     }
 
-    @Test(groups = { "4.Future" })
-    @IssueTracking(value = "https://issues.jboss.org/browse/RF-11035")
+    @Test
+    @RegressionTest(value = "https://issues.jboss.org/browse/RF-11035")
     public void testSelectionSize() {
         verifySelectionSize();
     }

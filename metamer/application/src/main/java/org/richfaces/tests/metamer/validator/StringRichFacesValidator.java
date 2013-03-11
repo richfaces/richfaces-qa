@@ -29,7 +29,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 /**
- * Custom string validator that accepts only string "RichFaces".
+ * Custom string validator that accepts strings "RichFaces" or "richfaces".
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22492 $
@@ -37,10 +37,14 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("org.richfaces.StringRichFacesValidator")
 public class StringRichFacesValidator implements Validator {
 
+    public static final String VALIDATION_ERROR_MSG = "string is not \"RichFaces\" or \"richfaces\"";
+    public static final String RF = "RichFaces";
+    public static final String RF_SMALLCASE = "richfaces";
+
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        if (value == null || !value.toString().equals("RichFaces")) {
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "string is not \"RichFaces\"", "string is not \"RichFaces\""));
+        if (value == null || !(value.toString().equals(RF) || value.toString().equals(RF_SMALLCASE))) {
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, VALIDATION_ERROR_MSG, VALIDATION_ERROR_MSG));
         }
     }
 }

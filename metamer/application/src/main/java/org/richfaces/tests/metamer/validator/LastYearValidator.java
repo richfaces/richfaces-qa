@@ -39,10 +39,12 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("org.richfaces.LastYearValidator")
 public class LastYearValidator implements Validator {
 
+    public static final String VALIDATOR_ERROR_MSG = "has to contain last year's date";
+
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "has to contain last year's date",
-                "has to contain last year's date");
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, VALIDATOR_ERROR_MSG,
+                VALIDATOR_ERROR_MSG);
 
         if (value == null || !(value instanceof Date)) {
             throw new ValidatorException(msg);

@@ -23,7 +23,7 @@ package org.richfaces.tests.page.fragments.impl;
 
 import java.util.List;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
-import org.jboss.arquillian.graphene.enricher.AbstractWebElementEnricher;
+import org.jboss.arquillian.graphene.enricher.WebElementUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
@@ -83,27 +83,22 @@ public class WebElementProxyUtils {
         return proxier.proxyForWebElements(by, context);
     }
 
-    private static class WebElementProxier extends AbstractWebElementEnricher {
-
-        @Override
-        public void enrich(SearchContext searchContext, Object target) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
+    private static class WebElementProxier {
 
         public final WebElement proxyForWebElement(By by) {
-            return createWebElement(by, GrapheneContext.getProxy());
+            return WebElementUtils.findElementLazily(by, GrapheneContext.getProxy());
         }
 
         protected final WebElement proxyForWebElement(By by, SearchContext searchContext) {
-            return createWebElement(by, searchContext);
+            return WebElementUtils.findElementLazily(by, searchContext);
         }
 
         public List<WebElement> proxyForWebElements(By by) {
-            return createWebElements(by, GrapheneContext.getProxy());
+            return WebElementUtils.findElementsLazily(by, GrapheneContext.getProxy());
         }
 
         public List<WebElement> proxyForWebElements(By by, SearchContext searchContext) {
-            return createWebElements(by, searchContext);
+            return WebElementUtils.findElementsLazily(by, searchContext);
         }
     }
 }

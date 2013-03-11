@@ -25,20 +25,17 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.testng.Arquillian;
-import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
-import org.openqa.selenium.support.pagefactory.FieldDecorator;
 import org.richfaces.tests.archetypes.kitchensink.ftest.common.AbstractKitchensinkTest;
 import org.richfaces.tests.archetypes.kitchensink.ftest.common.annotations.SecondWindow;
 import org.richfaces.tests.archetypes.kitchensink.ftest.common.page.MemberDetails;
 import org.richfaces.tests.archetypes.kitchensink.ftest.common.page.MembersTable;
 import org.richfaces.tests.archetypes.kitchensink.ftest.common.page.RegisterForm;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -47,17 +44,12 @@ import org.testng.annotations.Test;
  */
 public class TestForm extends AbstractKitchensinkTest {
 
-    private RegisterForm registerForm = new RegisterForm();
+    @Page
+    private RegisterForm registerForm;
+    @Page
     private MembersTable membersTable = new MembersTable();
+    @Page
     private MemberDetails memberDetails = new MemberDetails();
-
-    @BeforeMethod(groups = "arquillian")
-    public void initialiseWebElements() {
-        FieldDecorator fd = new StaleReferenceAwareFieldDecorator(new DefaultElementLocatorFactory(webDriver), 2);
-        PageFactory.initElements(fd, registerForm);
-        PageFactory.initElements(fd, membersTable);
-        PageFactory.initElements(fd, memberDetails);
-    }
 
     @Test
     public void testAddCorrectMember() {
@@ -68,40 +60,39 @@ public class TestForm extends AbstractKitchensinkTest {
         final int numberOfRowsBefore = membersTable.getNumberOfRows();
 
         registerForm.clickOnRegisterButton();
-
-        membersTable.waitUntilNumberOfRowsChanged(4, webDriver, numberOfRowsBefore);
+        membersTable.waitUntilNumberOfRowsChanged(numberOfRowsBefore);
 
         String table = membersTable.getTable().getText();
+        assertEquals(membersTable.getNumberOfRows(), numberOfRowsBefore + 1, "The new member was not added corractly!");
         assertTrue(table.contains(nameSet), "The new member was not added correctly!");
     }
 
-    @Test(groups = "4.Future")
+    @Test
     public void testAddMemberCSVNamePatternViolation() {
-        // workaround to be sure that the event was fired
-        webDriverBackedSelenium.type(registerForm.getNAME_LOC(), "122345");
-        webDriverBackedSelenium.fireEvent(registerForm.getNAME_LOC(), "click");
+        registerForm.setIncorrectNamePatternViolation();
+
+        registerForm.blur();
+        registerForm.waitForErrorMessages(ERROR_MSG_CSV, 1);
 
         assertEquals(registerForm.getErrorMessages().size(), 1, ERROR_MSG_CSV);
     }
 
     @Test
     public void testAddMemberCSVEmailPatternViolation() {
-        final int numberOfErrorMessagesBefore = registerForm.getErrorMessages().size();
+        registerForm.setIncorrectEmailPatternViolation();
 
-        // workaround to be sure that the event was fired
-        webDriverBackedSelenium.type(registerForm.getEMAIL_LOC(), "blah");
-        webDriverBackedSelenium.fireEvent(registerForm.getEMAIL_LOC(), "click");
-
-        registerForm.waitForErrorMessages(WAIT_FOR_ERR_MSG_RENDER, webDriver, numberOfErrorMessagesBefore);
+        registerForm.blur();
+        registerForm.waitForErrorMessages(ERROR_MSG_CSV, 1);
 
         assertEquals(registerForm.getErrorMessages().size(), 1, ERROR_MSG_CSV);
     }
 
     @Test
     public void testAddMemberCSVPhonePatternViolation() {
-        // workaround to be sure that the event was fired
-        webDriverBackedSelenium.type(registerForm.getPHONE_LOC(), "blah");
-        webDriverBackedSelenium.fireEvent(registerForm.getPHONE_LOC(), "click");
+        registerForm.setIncorrectPhonePatternViolation();
+
+        registerForm.blur();
+        registerForm.waitForErrorMessages(ERROR_MSG_CSV, 1);
 
         assertEquals(registerForm.getErrorMessages().size(), 1, ERROR_MSG_CSV);
     }
@@ -112,27 +103,26 @@ public class TestForm extends AbstractKitchensinkTest {
         registerForm.setIncorrectPhonePatternViolation();
         registerForm.setIncorrectNameTooShort();
 
-        final int numberOfErrorMessagesBefore = registerForm.getErrorMessages().size();
         registerForm.clickOnRegisterButton();
-
-        registerForm.waitForErrorMessages(WAIT_FOR_ERR_MSG_RENDER, webDriver, numberOfErrorMessagesBefore);
+        registerForm.waitForErrorMessages("The number of error messages after server side validation is wrong.", 3);
 
         assertEquals(registerForm.getErrorMessages().size(), 3,
             "The number of error messages after server side validation is wrong.");
     }
 
-    @Test(dataProvider = Arquillian.ARQUILLIAN_DATA_PROVIDER)
+    // skip since Graphene doesn't support more webdrivers
+    @Test(enabled=false)
     public void testPushFunctionality(@Drone @SecondWindow WebDriver secondWindow) {
-        FieldDecorator fd = new StaleReferenceAwareFieldDecorator(new DefaultElementLocatorFactory(webDriver), 3);
-        MembersTable membersTable2 = new MembersTable();
-        PageFactory.initElements(secondWindow, membersTable2);
-
-        secondWindow.get(getDeployedURL().toExternalForm());
-
-        registerNewMemberAndCheckPush("juraj@gmaul.for", membersTable2);
-        registerNewMemberAndCheckPush("michal@lala.ru", membersTable2);
-        registerNewMemberAndCheckPush("miroslav@de.du", membersTable2);
-        registerNewMemberAndCheckPush("robino@ba.sk", membersTable2);
+//        FieldDecorator fd = new StaleReferenceAwareFieldDecorator(new DefaultElementLocatorFactory(webDriver), 3);
+//        MembersTable membersTable2 = new MembersTable();
+//        PageFactory.initElements(secondWindow, membersTable2);
+//
+//        secondWindow.get(getDeployedURL().toExternalForm());
+//
+//        registerNewMemberAndCheckPush("juraj@gmaul.for", membersTable2);
+//        registerNewMemberAndCheckPush("michal@lala.ru", membersTable2);
+//        registerNewMemberAndCheckPush("miroslav@de.du", membersTable2);
+//        registerNewMemberAndCheckPush("robino@ba.sk", membersTable2);
     }
 
     @Test
@@ -146,7 +136,7 @@ public class TestForm extends AbstractKitchensinkTest {
             String emailFromTable = row.findElement(By.xpath("./td[4]")).getText();
 
             row.findElement(By.xpath("./td/a")).click();
-            memberDetails.waitMemberDetailsAreAvailableOnDesktop(2, webDriver);
+            memberDetails.waitMemberDetailsAreAvailableOnDesktop();
 
             String emailFromPopup = memberDetails.getEmailOnDesktop().getAttribute("value");
 
@@ -157,17 +147,30 @@ public class TestForm extends AbstractKitchensinkTest {
 
     @Test
     public void testRestAPI() {
-        registerNewMember("diff@de.du");
-        registerNewMember("definitelydifferent@ba.sk");
+        String originalWindow = webDriver.getWindowHandle();
+        try {
+            registerNewMember("diff@de.du");
+            registerNewMember("definitelydifferent@ba.sk");
 
-        WebElement fstRow = membersTable.getTableRow();
-        String mailFromFstRow = fstRow.findElement(By.xpath("./td[4]")).getText();
+            WebElement fstRow = membersTable.getTableRow();
+            String mailFromFstRow = fstRow.findElement(ByJQuery.jquerySelector("td:eq(3)")).getText();
 
-        fstRow.findElement(By.xpath("./td[6]/a")).click();
-
-        String jsonData = webDriver.findElement(By.xpath("//pre")).getText();
-        assertTrue(jsonData.contains(mailFromFstRow),
-            "The REST api should provide json data with all details about member from first row!");
+            fstRow.findElement(ByJQuery.jquerySelector("td:eq(5) a")).click();
+            for (String window: webDriver.getWindowHandles()) {
+                if (!window.equals(originalWindow)) {
+                    webDriver.switchTo().window(window);
+                    break;
+                }
+            }
+            String jsonData = webDriver.findElement(By.xpath("//pre")).getText();
+            assertTrue(jsonData.contains(mailFromFstRow),
+                "The REST api should provide json data with all details about member from first row!");
+        } finally {
+            if (!webDriver.getWindowHandle().equals(originalWindow)) {
+                webDriver.close();
+            }
+            webDriver.switchTo().window(originalWindow);
+        }
     }
 
     private void registerNewMemberAndCheckPush(String email, MembersTable membersTable2) {
@@ -180,14 +183,12 @@ public class TestForm extends AbstractKitchensinkTest {
     }
 
     private void registerNewMember(String email) {
+        final int numberOfRowsBefore = membersTable.getNumberOfRows();
         registerForm.setCorrectName();
         registerForm.setEmail(email);
         registerForm.setCorrectPhone();
 
-        final int numberOfRowsBefore = membersTable.getNumberOfRows();
-
-        registerForm.getRegisterButton().click();
-
-        membersTable.waitUntilNumberOfRowsChanged(4, webDriver, numberOfRowsBefore);
+        registerForm.clickOnRegisterButton();
+        membersTable.waitUntilNumberOfRowsChanged(numberOfRowsBefore);
     }
 }

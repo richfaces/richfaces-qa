@@ -15,5 +15,5 @@ echo "--------------------------------------------------------------------------
 
 cd $SCRIPT_DIR;
 ${MAVEN} ${MAVEN_ARGS} -U archetype:generate -Dbasedir=${SCRIPT_DIR} -DarchetypeGroupId=org.richfaces.archetypes -DarchetypeArtifactId=richfaces-archetype-simpleapp -DarchetypeVersion=${RICHFACES_VERSION} -DgroupId=org.richfaces.tests.archetypes -DartifactId=richfaces-simpleapp -Dversion=${RICHFACES_VERSION} -Dpackage=org.richfaces.tests.archetypes.simpleapp -DinteractiveMode=false $@;
-${MAVEN} ${MAVEN_ARGS} -U -f $SCRIPT_DIR/richfaces-simpleapp/pom.xml clean package -Prelease;
+${MAVEN} ${MAVEN_ARGS} -U -f $SCRIPT_DIR/richfaces-simpleapp/pom.xml clean package -Prelease $@;
 cd $WORKING_DIR;

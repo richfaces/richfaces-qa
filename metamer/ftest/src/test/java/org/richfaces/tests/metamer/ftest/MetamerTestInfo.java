@@ -41,8 +41,8 @@ import org.testng.ITestResult;
  * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  * @version $Revision: 21424 $
  */
-
 public final class MetamerTestInfo {
+
     private MetamerTestInfo() {
     }
 
@@ -69,7 +69,7 @@ public final class MetamerTestInfo {
                 if (o2.startsWith("template: ")) {
                     return 1;
                 }
-                return o1.length() - o2.length();
+                return o1.indexOf(":") - o2.indexOf(":");
             }
         });
 

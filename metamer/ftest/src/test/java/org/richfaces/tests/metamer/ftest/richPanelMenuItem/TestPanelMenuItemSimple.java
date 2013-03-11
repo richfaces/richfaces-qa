@@ -21,59 +21,54 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 
-import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.disabledClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.leftIconClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.rightIconClass;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.panelMenuItemAttributes;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.data;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.disabled;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.leftDisabledIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.leftIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.limitRender;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.mode;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.oncomplete;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.render;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.rendered;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.rightDisabledIcon;
+import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.rightIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.selectable;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.status;
-
-import static org.testng.Assert.assertEquals;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuItemAttributes;
+import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.IMG_BY_LOC;
+import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.getGuardTypeForMode;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
-import org.jboss.arquillian.ajocado.request.RequestType;
-import org.jboss.test.selenium.GuardRequest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.richfaces.PanelMenuMode;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.richfaces.component.Mode;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.checker.IconsChecker;
-import org.richfaces.tests.metamer.ftest.model.PanelMenu;
+import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22751 $
+ * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
+ * @since 4.3.1
  */
-public class TestPanelMenuItemSimple extends AbstractGrapheneTest {
+public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
 
-    private static String sampleImage = "/resources/images/loading.gif";
-    private static String chevronDown = "chevronDown";
-    private static String chevronDownClass = "rf-ico-chevron-down";
-
-    PanelMenu menu = new PanelMenu(pjq("div.rf-pm[id$=panelMenu]"));
-    PanelMenu.Item item = menu.getGroup(1).getItemContains("Item 1.2");
-    PanelMenu.Icon leftIcon = item.getLeftIcon();
-    PanelMenu.Icon rightIcon = item.getRightIcon();
+    @Page
+    PanelMenuItemPage page;
 
     @Override
     public URL getTestUrl() {
@@ -83,70 +78,59 @@ public class TestPanelMenuItemSimple extends AbstractGrapheneTest {
     @BeforeMethod
     public void setupMode() {
         panelMenuItemAttributes.set(mode, PanelMenuMode.ajax);
-        menu.setItemMode(PanelMenuMode.ajax);
+        page.item.setMode(Mode.ajax);
     }
 
     @Test
     public void testData() {
-        panelMenuItemAttributes.set(data, "RichFaces 4");
+        String RF = "RichFaces 4";
+        panelMenuItemAttributes.set(data, RF);
         panelMenuItemAttributes.set(oncomplete, "data = event.data");
 
-        retrieveRequestTime.initializeValue();
-        item.select();
-        waitGui.waitForChange(retrieveRequestTime);
+        MetamerPage.requestTimeChangesWaiting(page.item).select();
 
-        assertEquals(retrieveWindowData.retrieve(), "RichFaces 4");
+        expectedReturnJS("return window.data", RF);
     }
 
     @Test
     public void testDisabled() {
-        menu.setItemMode(null);
-        assertFalse(item.isDisabled());
+        page.item.setMode(null);
+        assertFalse(page.item.isDisabled());
 
         panelMenuItemAttributes.set(disabled, true);
 
-        assertFalse(item.isSelected());
-        assertTrue(item.isDisabled());
+        assertFalse(page.item.isSelected());
+        assertTrue(page.item.isDisabled());
 
-        new GuardRequest(RequestType.NONE) {
-            public void command() {
-                item.select();
-            }
-        }.waitRequest();
+        getGuardTypeForMode(page.item, Mode.client).select();
 
-        assertFalse(item.isSelected());
-        assertTrue(item.isDisabled());
+        assertFalse(page.item.isSelected());
+        assertTrue(page.item.isDisabled());
     }
 
     @Test
     public void testDisabledClass() {
         panelMenuItemAttributes.set(disabled, true);
-        super.testStyleClass(item, disabledClass);
+        testStyleClass(page.item.getRoot(), disabledClass);
     }
 
     @Test
     public void testLeftDisabledIcon() {
         panelMenuItemAttributes.set(disabled, true);
-        JQueryLocator input = pjq("select[id$=leftDisabledIcon]");
-        ElementLocator<JQueryLocator> icon = leftIcon.getIcon();
-        ElementLocator<JQueryLocator> image = jq(leftIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        verifyStandardIcons(leftDisabledIcon, page.item.leftIcon.icon, IMG_BY_LOC, "");
     }
 
     @Test
     public void testLeftIcon() {
-        JQueryLocator input = pjq("select[id$=leftIcon]");
-        ElementLocator<JQueryLocator> icon = leftIcon.getIcon();
-        ElementLocator<JQueryLocator> image = jq(leftIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        verifyStandardIcons(leftIcon, page.item.leftIcon.icon, IMG_BY_LOC, "");
 
         panelMenuItemAttributes.set(disabled, true);
-        assertTrue(leftIcon.isTransparent());
+        assertTrue(page.item.leftIcon.isTransparent());
     }
 
     @Test
     public void testLeftIconClass() {
-        super.testStyleClass(leftIcon, leftIconClass);
+        testStyleClass(page.item.leftIcon.icon, leftIconClass);
     }
 
     @Test
@@ -154,97 +138,84 @@ public class TestPanelMenuItemSimple extends AbstractGrapheneTest {
         panelMenuItemAttributes.set(render, "renderChecker");
         panelMenuItemAttributes.set(limitRender, true);
 
-        retrieveRequestTime.initializeValue();
-        retrieveRenderChecker.initializeValue();
-        item.select();
-        waitAjax.waitForChange(retrieveRenderChecker);
-        assertFalse(retrieveRequestTime.isValueChanged());
+        String renderChecker = page.renderCheckerOutput.getText();
+        MetamerPage.requestTimeNotChangesWaiting(page.item).select();
+        Graphene.waitModel().until("Page was not updated").element(page.renderCheckerOutput).text().not().equalTo(renderChecker);
     }
 
     @Test
     public void testRendered() {
-        assertTrue(item.isVisible());
+        assertTrue(page.item.isVisible());
 
         panelMenuItemAttributes.set(rendered, false);
 
-        assertFalse(item.isVisible());
+        assertFalse(page.item.isVisible());
     }
 
     @Test
     public void testRightDisabledIcon() {
         panelMenuItemAttributes.set(disabled, true);
-        JQueryLocator input = pjq("select[id$=rightDisabledIcon]");
-        ElementLocator<JQueryLocator> icon = rightIcon.getIcon();
-        ElementLocator<JQueryLocator> image = jq(rightIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        verifyStandardIcons(rightDisabledIcon, page.item.rightIcon.icon, IMG_BY_LOC, "");
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10519")
     public void testRightIcon() {
-        JQueryLocator input = pjq("select[id$=rightIcon]");
-        ElementLocator<JQueryLocator> icon = rightIcon.getIcon();
-        ElementLocator<JQueryLocator> image = jq(rightIcon.getIcon().getRawLocator()).getChild(jq("img"));
-        verifyStandardIcons(input, icon, image, "");
+        verifyStandardIcons(rightIcon, page.item.rightIcon.icon, IMG_BY_LOC, "");
 
         panelMenuItemAttributes.set(disabled, true);
-        assertTrue(rightIcon.isTransparent());
+        assertTrue(page.item.rightIcon.isTransparent());
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10519")
     public void testRightIconClass() {
-        super.testStyleClass(rightIcon, rightIconClass);
+        testStyleClass(page.item.rightIcon.icon, rightIconClass);
     }
 
     @Test
     public void testSelectable() {
-        menu.setItemMode(null);
+        page.item.setMode(null);
         panelMenuItemAttributes.set(selectable, false);
 
-        new GuardRequest(RequestType.NONE) {
-            public void command() {
-                item.select();
-            }
-        }.waitRequest();
+        getGuardTypeForMode(page.item, Mode.client).select();
 
-        assertFalse(item.isSelected());
+        assertFalse(page.item.isSelected());
 
         panelMenuItemAttributes.set(selectable, true);
 
-        new GuardRequest(RequestType.XHR) {
-            public void command() {
-                item.select();
-            }
-        }.waitRequest();
+        getGuardTypeForMode(page.item, Mode.ajax).select();
 
-        assertTrue(item.isSelected());
+        assertTrue(page.item.isSelected());
     }
 
     @Test
     public void testStatus() {
         panelMenuItemAttributes.set(status, "statusChecker");
 
-        retrieveStatusChecker.initializeValue();
-        item.select();
-        waitAjax.waitForChange(retrieveStatusChecker);
+        String statusChecker = page.statusCheckerOutput.getText();
+        page.item.select();
+        Graphene.waitAjax().until("Page was not updated").element(page.statusCheckerOutput).text().not().equalTo(statusChecker);
     }
 
     @Test
     public void testStyle() {
-        super.testStyle(item);
+        testStyle(page.item.getRoot());
     }
 
     @Test
     public void testStyleClass() {
-        super.testStyleClass(item);
+        testStyleClass(page.item.getRoot());
     }
 
-    private void verifyStandardIcons(ElementLocator<JQueryLocator> input, ElementLocator<JQueryLocator> icon, ElementLocator<JQueryLocator> image, String classSuffix) {
-        IconsChecker checker = new IconsChecker(selenium, "rf-ico-", "");
-        checker.checkCssImageIcons(input, icon, classSuffix);
-        checker.checkCssNoImageIcons(input, icon, classSuffix);
-        checker.checkImageIcons(input, icon, image, classSuffix, false);
-        checker.checkNone(input, icon, classSuffix);
+    private void verifyStandardIcons(PanelMenuItemAttributes attribute, WebElement icon, By image, String classSuffix) {
+        IconsCheckerWebdriver<PanelMenuItemAttributes> checker = new IconsCheckerWebdriver<PanelMenuItemAttributes>(
+            driver, panelMenuItemAttributes, "rf-ico-", "");
+
+        checker.checkCssImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
+        checker.checkCssNoImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
+        checker.checkImageIconsAsRelative(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), image, classSuffix, false);
+        checker.checkNone(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
+
     }
 }
