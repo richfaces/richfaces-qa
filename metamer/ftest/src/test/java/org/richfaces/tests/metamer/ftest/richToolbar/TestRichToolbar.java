@@ -30,21 +30,18 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
+import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.AttributeConditionFactory;
-import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.By;
-import org.openqa.selenium.HasInputDevices;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.Mouse;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.internal.Locatable;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.page.fragments.impl.WebElementProxyUtils;
 import org.testng.annotations.Test;
 
 
@@ -111,14 +108,14 @@ public class TestRichToolbar extends AbstractWebDriverTest {
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testItemClass() {
-        testStyleClass(page.toolbar.findElement(itemBy), itemClass);
+        testStyleClass(WebElementProxyUtils.createProxyForElement(itemBy) , itemClass);
     }
 
     @Test
     @Use(field = "itemSeparator", value = "separators")
     public void testItemSeparatorCorrect() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, itemSeparator);
-        WebElement separatorDiv = page.separator.findElement(By.cssSelector("div.rf-tb-sep-" + itemSeparator));
+        WebElement separatorDiv = WebElementProxyUtils.createProxyForElement(By.cssSelector("div.rf-tb-sep-" + itemSeparator));
 
         assertTrue(Graphene.element(page.separator).isPresent().apply(driver), "Item separator should be present on the page.");
         assertTrue(Graphene.element(separatorDiv).isPresent().apply(driver), "Item separator does not work correctly.");
@@ -158,90 +155,92 @@ public class TestRichToolbar extends AbstractWebDriverTest {
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testItemStyle() {
-        super.testStyle(GrapheneProxy.getProxyForTarget(driver.findElement(By.cssSelector("td[id$=createDocument_itm]"))), itemStyle);
+        testStyle(WebElementProxyUtils.createProxyForElement(itemBy), itemStyle);
     }
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemclick() {
-        Action click = new Actions(driver).click(page.toolbar.findElement(itemBy)).build();
+        Action click = new Actions(driver).click(WebElementProxyUtils.createProxyForElement(itemBy)).build();
         testFireEvent(toolbarAttributes, ToolbarAttributes.onitemclick, click);
     }
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemdblclick() {
-        Action dblClick = new Actions(driver).doubleClick(page.toolbar.findElement(itemBy)).build();
+        Action dblClick = new Actions(driver).doubleClick(WebElementProxyUtils.createProxyForElement(itemBy)).build();
         testFireEvent(toolbarAttributes, ToolbarAttributes.onitemdblclick, dblClick);
     }
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemkeydown() {
-        Action keyDown = new Actions(driver).keyDown(page.toolbar.findElement(itemBy), Keys.ALT).build();
-        testFireEvent(toolbarAttributes, ToolbarAttributes.onitemkeydown, keyDown);
+        // TODO JJa 2013-03-11: Doesn't work for now with Action, rewrite if it changes
+        // Action keyDown = new Actions(driver).keyDown(WebElementProxyUtils.createProxyForElement(itemBy), Keys.ALT).build();
+        // testFireEvent(toolbarAttributes, ToolbarAttributes.onitemkeydown, keyDown);
+
+        testFireEventWithJS(WebElementProxyUtils.createProxyForElement(itemBy),
+            Event.KEYDOWN, toolbarAttributes, ToolbarAttributes.onitemkeydown);
     }
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemkeypress() {
-        Action keyPress = new Actions(driver).moveToElement(page.toolbar.findElement(itemBy)).sendKeys("a").build();
-        testFireEvent(toolbarAttributes, ToolbarAttributes.onitemkeypress, keyPress);
+        // TODO JJa 2013-03-11: Doesn't work for now with Action, rewrite if it changes
+        // Action keyPress = new Actions(driver).moveToElement(WebElementProxyUtils.createProxyForElement(itemBy)).sendKeys("a").build();
+        // testFireEvent(toolbarAttributes, ToolbarAttributes.onitemkeypress, keyPress);
+
+        testFireEventWithJS(WebElementProxyUtils.createProxyForElement(itemBy),
+            Event.KEYPRESS, toolbarAttributes, ToolbarAttributes.onitemkeypress);
     }
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemkeyup() {
-        Action keyup = new Actions(driver).keyUp(page.toolbar.findElement(itemBy), Keys.ALT).build();
-        testFireEvent(toolbarAttributes, ToolbarAttributes.onitemkeyup, keyup);
+        // TODO JJa 2013-03-11: Doesn't work for now with Action, rewrite if it changes
+        // Action keyup = new Actions(driver).keyUp(WebElementProxyUtils.createProxyForElement(itemBy), Keys.ALT).build();
+        // testFireEvent(toolbarAttributes, ToolbarAttributes.onitemkeyup, keyup);
+
+        testFireEventWithJS(WebElementProxyUtils.createProxyForElement(itemBy),
+            Event.KEYUP, toolbarAttributes, ToolbarAttributes.onitemkeyup);
     }
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemmousedown() {
-        Action mouseDown = new Actions(driver).clickAndHold(page.toolbar.findElement(itemBy)).build();
-        Action mouseDown2 = new Action() {
-            @Override
-            public void perform() {
-                Mouse mouse = ((HasInputDevices) driver).getMouse();
-                mouse.mouseDown(((Locatable) page.toolbar.findElement(itemBy)).getCoordinates());
-            }
-        };
+        Action mouseDown = new Actions(driver).clickAndHold(WebElementProxyUtils.createProxyForElement(itemBy)).build();
         testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmousedown, mouseDown);
-        testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmousedown, mouseDown2);
     }
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemmousemove() {
-        Action mouseMove = new Actions(driver).moveToElement(page.toolbar.findElement(itemBy)).moveByOffset(3, 3).build();
+        Action mouseMove = new Actions(driver).moveToElement(WebElementProxyUtils.createProxyForElement(itemBy)).build();
         testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmousemove, mouseMove);
     }
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemmouseout() {
-        Action mouseOut = new Actions(driver).moveToElement(page.toolbar.findElement(itemBy), 2, 2).moveByOffset(-4, -4).build();
-        testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmouseout, mouseOut);
+        // TODO JJa 2013-03-11: Doesn't work for now with Action, rewrite if it changes
+        // Action mouseOut = new Actions(driver).moveToElement(WebElementProxyUtils.createProxyForElement(itemBy)).moveByOffset(-1, -1).build();
+        // testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmouseout, mouseOut);
+        testFireEventWithJS(WebElementProxyUtils.createProxyForElement(itemBy),
+            Event.MOUSEOUT, toolbarAttributes, ToolbarAttributes.onitemmouseout);
     }
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemmouseover() {
-        Action mouseOver = new Actions(driver).moveToElement(page.toolbar.findElement(itemBy)).moveByOffset(1, 1).build();
+        Action mouseOver = new Actions(driver).moveToElement(WebElementProxyUtils.createProxyForElement(itemBy)).build();
         testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmouseover, mouseOver);
     }
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemmouseup() {
-        Action mouseUp = new Action() {
-            @Override
-            public void perform() {
-                Mouse mouse = ((HasInputDevices) driver).getMouse();
-                mouse.mouseUp(((Locatable) page.toolbar.findElement(itemBy)).getCoordinates());
-            }
-        };
+        WebElement item = WebElementProxyUtils.createProxyForElement(itemBy);
+        Action mouseUp = new Actions(driver).clickAndHold(item).release(item).build();
         testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmouseup, mouseUp);
     }
 
