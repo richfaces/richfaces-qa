@@ -84,6 +84,7 @@
     <extension qualifier="selenium-server">
         <property name="browserSessionReuse">true</property>
         <property name="port">8444</property>
+	<property name="timeoutInSeconds">60</property>
         <!-- <property name="dontTouchLogging">true</property> -->
     </extension>
 

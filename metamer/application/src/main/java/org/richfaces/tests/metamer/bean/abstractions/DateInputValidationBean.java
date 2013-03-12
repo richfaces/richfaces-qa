@@ -28,6 +28,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.richfaces.tests.metamer.validator.LastYearValidator;
 
 /**
@@ -35,9 +36,9 @@ import org.richfaces.tests.metamer.validator.LastYearValidator;
  */
 public interface DateInputValidationBean extends AttributesHolder {
 
-    DateTime PAST_VALUE_DEFAULT = new DateTime(1980, 1, 1, 13, 0);
-    DateTime FUTURE_VALUE_DEFAULT = new DateTime(3000, 1, 1, 13, 0);
-    DateTime LAST_YEAR_VALUE_DEFAULT = new DateTime().withMonthOfYear(1).withDayOfMonth(1).withHourOfDay(13).withMinuteOfHour(0).withSecondOfMinute(0).withMillisOfSecond(0).minusYears(1);
+    DateTime PAST_VALUE_DEFAULT = new DateTime(1980, 1, 1, 12, 0, DateTimeZone.UTC);
+    DateTime FUTURE_VALUE_DEFAULT = new DateTime(3000, 1, 1, 12, 0, DateTimeZone.UTC);
+    DateTime LAST_YEAR_VALUE_DEFAULT = new DateTime(DateTimeZone.UTC).withMonthOfYear(1).withDayOfMonth(1).withHourOfDay(12).withMinuteOfHour(0).withSecondOfMinute(0).withMillisOfSecond(0).minusYears(1);
     //
     Date PAST_DATE_DEFAULT = PAST_VALUE_DEFAULT.toDate();
     Date FUTURE_DATE_DEFAULT = FUTURE_VALUE_DEFAULT.toDate();
