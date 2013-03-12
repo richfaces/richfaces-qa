@@ -55,14 +55,12 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.Locations;
-import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.calendar.common.HeaderControls;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay.DayType;
@@ -101,8 +99,6 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     private Boolean booleanValue;
     @FindBy(css = "input[id$=a4jButton]")
     private WebElement a4jbutton;
-    @FindBy(id = "a4jLogLabel")
-    private WebElement a4jLogLabel;
     @FindBy(css = "span[id$=msg]")
     private RichFacesMessage message;
     //
@@ -608,10 +604,6 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         int offset = 15;
         int tolerance = 5;
 
-        // should help stabilizing test on Jenkins
-        // sometimes the a4jLogLabel splits into 2 rows
-        Utils.jQ("css('width','140px').css('display','block')", a4jLogLabel);
-
         Locations before = calendar.openPopup().getLocations();
         Locations movedFromBefore = (horizontal
                 ? before.moveAllBy(offset, 0) : before.moveAllBy(0, offset));
@@ -620,9 +612,6 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         } else {
             calendarAttributes.set(CalendarAttributes.verticalOffset, offset);
         }
-        // should help stabilizing test on Jenkins
-        // sometimes the a4jLogLabel splits into 2 rows
-        Utils.jQ("css('width','140px').css('display','block')", a4jLogLabel);
 
         Locations after = calendar.openPopup().getLocations();
 

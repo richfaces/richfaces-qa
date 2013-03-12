@@ -54,7 +54,11 @@
             <class name="org.richfaces.tests.metamer.ftest.richEditor.TestRichEditorWithTyping" />
             <class name="org.richfaces.tests.metamer.ftest.richExtendedDataTable.TestEDTFrozenColumns" />
             <class name="org.richfaces.tests.metamer.ftest.richInplaceSelect.TestRichInplaceSelectValidationMessages" />
+            <class name="org.richfaces.tests.metamer.ftest.richInplaceSelect.TestInplaceSelectCSV" />
+            <class name="org.richfaces.tests.metamer.ftest.richInplaceSelect.TestInplaceSelectJSR303" />
             <class name="org.richfaces.tests.metamer.ftest.richSelect.TestRichSelectValidationMessages" />
+            <class name="org.richfaces.tests.metamer.ftest.richSelect.TestSelectCSV" />
+            <class name="org.richfaces.tests.metamer.ftest.richSelect.TestSelectJSR303" />
             <class name="org.richfaces.tests.metamer.ftest.richTree.TestToggleNodeEvent" />
         </classes>
     </test>

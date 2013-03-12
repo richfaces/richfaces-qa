@@ -10,17 +10,17 @@
     Copyright 2010-2013, Red Hat, Inc. and individual contributors
     by the @authors tag. See the copyright.txt in the distribution for a
     full listing of individual contributors.
-    
+
     This is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as
     published by the Free Software Foundation; either version 2.1 of
     the License, or (at your option) any later version.
-    
+
     This software is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
     Lesser General Public License for more details.
-    
+
     You should have received a copy of the GNU Lesser General Public
     License along with this software; if not, write to the Free
     Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
@@ -39,7 +39,7 @@
 
         <ui:define name="head">
             <style type="text/css">
-                /* workaround for ChromeDriver, beacause it clicks in the centre of the element and not "on" the element. */ 
+                /* workaround for ChromeDriver, beacause it clicks in the centre of the element and not "on" the element. */
                 .rf-fu-inp{
                     font-size: 1em;
                     margin: 0;
@@ -61,7 +61,7 @@
                              clearLabel="#{richFileUploadBean.attributes['clearLabel'].value}"
                              data="#{richFileUploadBean.attributes['data'].value}"
                              deleteLabel="#{richFileUploadBean.attributes['deleteLabel'].value}"
-                             dir="#{richFileUploadBean.attributes['dir'].value}" 
+                             dir="#{richFileUploadBean.attributes['dir'].value}"
                              disabled="#{richFileUploadBean.attributes['disabled'].value}"
                              doneLabel="#{richFileUploadBean.attributes['doneLabel'].value}"
                              execute="#{richFileUploadBean.attributes['execute'].value}"
@@ -94,7 +94,7 @@
                              rendered="#{richFileUploadBean.attributes['rendered'].value}"
                              serverErrorLabel="#{richFileUploadBean.attributes['serverErrorLabel'].value}"
                              sizeExceededLabel="#{richFileUploadBean.attributes['sizeExceededLabel'].value}"
-                             status="#{richFileUploadBean.attributes['status'].value}" 
+                             status="#{richFileUploadBean.attributes['status'].value}"
                              style="#{richFileUploadBean.attributes['style'].value}"
                              styleClass="#{richFileUploadBean.attributes['styleClass'].value}"
                              title="#{richFileUploadBean.attributes['title'].value}"
@@ -104,7 +104,6 @@
                                       minValue="0" maxValue="100" id="customProgressBar" />
                 </f:facet>
             </rich:fileUpload>
-            <ui:debug/>
             <br />
             <fieldset style="width: 376px;">
                 <legend>Uploaded Files</legend>

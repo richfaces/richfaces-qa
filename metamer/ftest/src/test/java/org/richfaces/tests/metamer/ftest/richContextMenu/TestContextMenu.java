@@ -34,6 +34,7 @@ import static org.testng.Assert.fail;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.HasInputDevices;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.Mouse;
@@ -47,6 +48,8 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.page.fragments.impl.Locations;
+import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.contextMenu.RichFacesContextMenu;
 import org.testng.annotations.Test;
 
@@ -65,6 +68,9 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @Inject
     @Use(empty = false)
     private Integer delay;
+    @Inject
+    @Use(empty = false)
+    private Positioning positioning;
 
     @Override
     public URL getTestUrl() {
@@ -149,6 +155,52 @@ public class TestContextMenu extends AbstractWebDriverTest {
         page.contextMenu.invoke(page.targetPanel1);
         String directionCSS = page.contextMenu.getItems().get(0).getCssValue("direction");
         assertEquals(directionCSS, expected, "The direction attribute was not applied correctly!");
+    }
+
+    @Test
+    @Use(field = "positioning", enumeration = true)
+    public void testDirection() {
+        driver.manage().window().setSize(new Dimension(1280, 1024));//for stabilizing job in all templates
+        int tolerance = 3;//px
+        String msg = "The actual menu locations should be same as shifted default locations.";
+        updateShowAction();
+        //setting up the right panel because then the context menu will fit on the page
+        contextMenuAttributes.set(ContextMenuAttributes.target, "targetPanel2");
+
+        Locations defaultLocations = page.getContextMenuLocations();//bottom right
+        Locations actMenuLocation = page.getContextMenuLocationsWhenPosition(positioning);
+
+        int defaultWidth = defaultLocations.getWidth();
+        int defaultHeight = defaultLocations.getHeight();
+        int shiftX = 0;
+        int shiftY = 0;
+
+        assertEquals(actMenuLocation.getHeight(), defaultHeight, tolerance, "Height of context menu should be same as before.");
+        assertEquals(actMenuLocation.getWidth(), defaultWidth, tolerance, "Width of context menu should be same as before.");
+        switch (positioning) {
+            case auto://default
+            case bottomRight:
+            case autoRight:
+            case bottomAuto:
+                //no shifting
+                break;
+            case autoLeft:
+            case bottomLeft:
+                shiftX = -defaultWidth;
+                break;
+            case topAuto:
+            case topRight:
+                shiftY = -defaultHeight;
+                break;
+            case topLeft:
+                shiftX = -defaultWidth;
+                shiftY = -defaultHeight;
+                break;
+            default:
+                throw new IllegalArgumentException("Uknown switch " + positioning);
+        }
+        //the actual menu locations should be same as shifted default locations
+        Utils.tolerantAssertLocationsEquals(defaultLocations.moveAllBy(shiftX, shiftY), actMenuLocation, tolerance, tolerance, msg);
     }
 
     @Test
@@ -304,8 +356,8 @@ public class TestContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
                 new Actions(driver)
-                .doubleClick(page.contextMenu.getItems().get(1))
-                .build().perform();
+                        .doubleClick(page.contextMenu.getItems().get(1))
+                        .build().perform();
             }
         });
     }
@@ -325,9 +377,9 @@ public class TestContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
                 new Actions(driver)
-                .keyDown(page.contextMenu.getItems().get(1), Keys.CONTROL)
-                .keyUp(page.contextMenu.getItems().get(1), Keys.CONTROL)
-                .build().perform();
+                        .keyDown(page.contextMenu.getItems().get(1), Keys.CONTROL)
+                        .keyUp(page.contextMenu.getItems().get(1), Keys.CONTROL)
+                        .build().perform();
             }
         });
     }
@@ -341,9 +393,9 @@ public class TestContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
                 new Actions(driver)
-                .keyDown(page.contextMenu.getItems().get(0), Keys.ALT)
-                .keyUp(page.contextMenu.getItems().get(0), Keys.ALT)
-                .build().perform();
+                        .keyDown(page.contextMenu.getItems().get(0), Keys.ALT)
+                        .keyUp(page.contextMenu.getItems().get(0), Keys.ALT)
+                        .build().perform();
             }
         });
     }
@@ -356,8 +408,8 @@ public class TestContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
                 new Actions(driver)
-                .sendKeys("a")
-                .build().perform();
+                        .sendKeys("a")
+                        .build().perform();
             }
         });
     }
@@ -396,8 +448,8 @@ public class TestContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
                 new Actions(driver)
-                .moveToElement(page.contextMenu.getItems().get(1))
-                .build().perform();
+                        .moveToElement(page.contextMenu.getItems().get(1))
+                        .build().perform();
             }
         });
     }
@@ -410,9 +462,9 @@ public class TestContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
                 new Actions(driver)
-                .moveToElement(page.contextMenu.getItems().get(1))
-                .moveToElement(page.body)
-                .build().perform();
+                        .moveToElement(page.contextMenu.getItems().get(1))
+                        .moveToElement(page.body)
+                        .build().perform();
             }
         });
     }
@@ -443,45 +495,11 @@ public class TestContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
                 new Actions(driver)
-                .moveToElement(page.contextMenu.getItems().get(2))
-                .moveToElement(page.body)
-                .build().perform();
+                        .moveToElement(page.contextMenu.getItems().get(2))
+                        .moveToElement(page.body)
+                        .build().perform();
             }
         });
-    }
-
-    @Test
-    public void testDirection() {
-        updateShowAction();
-        //setting up the right panel cause then the context menu fit on the page
-        contextMenuAttributes.set(ContextMenuAttributes.target, "targetPanel2");
-
-        Point contextMenuLocation = page.getContextMenuLocationWhenPosition(Positioning.topLeft);
-        assertEquals(contextMenuLocation, page.getExpectedLocation(Positioning.topLeft));
-
-        contextMenuLocation = page.getContextMenuLocationWhenPosition(Positioning.topRight);
-        assertEquals(contextMenuLocation, page.getExpectedLocation(Positioning.topRight));
-
-        contextMenuLocation = page.getContextMenuLocationWhenPosition(Positioning.bottomAuto);
-        assertEquals(contextMenuLocation, page.getExpectedLocation(Positioning.bottomRight));
-
-        contextMenuLocation = page.getContextMenuLocationWhenPosition(Positioning.bottomLeft);
-        assertEquals(contextMenuLocation, page.getExpectedLocation(Positioning.bottomLeft));
-
-        contextMenuLocation = page.getContextMenuLocationWhenPosition(Positioning.bottomRight);
-        assertEquals(contextMenuLocation, page.getExpectedLocation(Positioning.bottomRight));
-
-        contextMenuLocation = page.getContextMenuLocationWhenPosition(Positioning.autoLeft);
-        assertEquals(contextMenuLocation, page.getExpectedLocation(Positioning.bottomLeft));
-
-        contextMenuLocation = page.getContextMenuLocationWhenPosition(Positioning.autoRight);
-        assertEquals(contextMenuLocation, page.getExpectedLocation(Positioning.bottomRight));
-
-        contextMenuLocation = page.getContextMenuLocationWhenPosition(Positioning.topAuto);
-        assertEquals(contextMenuLocation, page.getExpectedLocation(Positioning.topRight));
-
-        contextMenuLocation = page.getContextMenuLocationWhenPosition(Positioning.auto);
-        assertEquals(contextMenuLocation, page.getExpectedLocation(Positioning.bottomRight));
     }
 
     @Test

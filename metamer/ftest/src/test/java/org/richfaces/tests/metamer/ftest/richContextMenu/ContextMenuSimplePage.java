@@ -32,6 +32,8 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.component.Positioning;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.DriverType;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.page.fragments.impl.Locations;
+import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.contextMenu.internal.RichFacesContextMenuInternal;
 
 /**
@@ -64,49 +66,7 @@ public class ContextMenuSimplePage extends MetamerPage {
     @FindBy(tagName = "body")
     public WebElement body;
 
-    //Chrome
-    public final Point TOP_LEFT_CH = new Point(410, 109);
-    public final Point TOP_RIGHT_CH = new Point(660, 109);
-    public final Point BOTTOM_LEFT_CH = new Point(410, 245);
-    public final Point BOTTOM_RIGHT_CH = new Point(660, 245);
-
-    //Firefox
-    public final Point TOP_LEFT_F = new Point(410, 143);
-    public final Point TOP_RIGHT_F = new Point(660, 143);
-    public final Point BOTTOM_LEFT_F = new Point(410, 279);
-    public final Point BOTTOM_RIGHT_F = new Point(660, 279);
-
     public final int SHOW_DELAY_TOLERANCE = 400;
-
-    public Point getExpectedLocation(Positioning positioning) {
-        if (DriverType.getCurrentType(driver).equals(DriverType.FireFox)) {
-            switch (positioning) {
-                case topLeft:
-                    return TOP_LEFT_F;
-                case topRight:
-                    return TOP_RIGHT_F;
-                case bottomRight:
-                    return BOTTOM_RIGHT_F;
-                case bottomLeft:
-                    return BOTTOM_LEFT_F;
-                default:
-                    throw new IllegalArgumentException("You should provide one of: topLeft, topRight, bottomRight, bottomLeft!");
-            }
-        } else {
-            switch (positioning) {
-                case topLeft:
-                    return TOP_LEFT_CH;
-                case topRight:
-                    return TOP_RIGHT_CH;
-                case bottomRight:
-                    return BOTTOM_RIGHT_CH;
-                case bottomLeft:
-                    return BOTTOM_LEFT_CH;
-                default:
-                    throw new IllegalArgumentException("You should provide one of: topLeft, topRight, bottomRight, bottomLeft!");
-            }
-        }
-    }
 
     public void clickOnFirstPanel(DriverType type) {
         if (type == DriverType.InternetExplorer) {
@@ -131,12 +91,19 @@ public class ContextMenuSimplePage extends MetamerPage {
                 .until(Graphene.element(contextMenuContent).not().isVisible());
     }
 
-    public Point getContextMenuLocationWhenPosition(Positioning positioning) {
+    public Locations getContextMenuLocations() {
+        contextMenu.invoke(targetPanel2);
+        Locations contextMenuLocations = Utils.getLocations(contextMenuContent);
+        contextMenu.dismiss();
+        return contextMenuLocations;
+    }
+
+    public Locations getContextMenuLocationsWhenPosition(Positioning positioning) {
         contextMenuAttributes.set(ContextMenuAttributes.direction, positioning);
         contextMenu.invoke(targetPanel2);
-        Point contextMenuLocation = contextMenuContent.getLocation();
+        Locations contextMenuLocations = Utils.getLocations(contextMenuContent);
         contextMenu.dismiss();
-        return contextMenuLocation;
+        return contextMenuLocations;
     }
 
     public long getActualShowDelay(final int showDelay) {
