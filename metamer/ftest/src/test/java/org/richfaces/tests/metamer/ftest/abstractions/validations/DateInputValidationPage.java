@@ -27,6 +27,7 @@ import com.google.common.collect.Sets;
 import java.util.List;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -90,18 +91,18 @@ public class DateInputValidationPage extends InputValidationPage {
         messageCases.put(MESSAGE_PAST_NAME,
                 new ValidationMessageCase(MESSAGE_PAST_NAME, messagePast,
                 setPastCorrectButton, setPastWrongButton,
-                pastOutput, "Jan 2, 1980 12:00", DateInputValidationBean.PAST_VALUE_DEFAULT.minusHours(1).toString(dtf),
+                pastOutput, "Jan 2, 1980 12:00", DateInputValidationBean.PAST_VALUE_DEFAULT.toString(dtf),
                 Sets.newHashSet(DateInputValidationBean.PAST_VALIDATION_MSG)));
         messageCases.put(MESSAGE_FUTURE_NAME,
                 new ValidationMessageCase(MESSAGE_FUTURE_NAME, messageFuture,
                 setFutureCorrectButton, setFutureWrongButton,
-                futureOutput, "Jan 2, 3000 12:00", DateInputValidationBean.FUTURE_VALUE_DEFAULT.minusHours(1).toString(dtf),
+                futureOutput, "Jan 2, 3000 12:00", DateInputValidationBean.FUTURE_VALUE_DEFAULT.toString(dtf),
                 Sets.newHashSet(DateInputValidationBean.FUTURE_VALIDATION_MSG)));
-        DateTime lastYear = new DateTime().minusYears(1).withMonthOfYear(1).withDayOfMonth(2).withHourOfDay(12).withMinuteOfHour(0).withSecondOfMinute(0);
+        DateTime lastYear = new DateTime(DateTimeZone.UTC).minusYears(1).withMonthOfYear(1).withDayOfMonth(2).withHourOfDay(12).withMinuteOfHour(0).withSecondOfMinute(0);
         messageCases.put(MESSAGE_LAST_YEAR_NAME,
                 new ValidationMessageCase(MESSAGE_LAST_YEAR_NAME, messageLastYear,
                 setLastYearCorrectButton, setLastYearWrongButton,
-                lastYearOutput, lastYear.toString(dtf), DateInputValidationBean.LAST_YEAR_VALUE_DEFAULT.minusHours(1).toString(dtf),
+                lastYearOutput, lastYear.toString(dtf), DateInputValidationBean.LAST_YEAR_VALUE_DEFAULT.toString(dtf),
                 Sets.newHashSet(DateInputValidationBean.LAST_YEAR_VALIDATION_MSG)));
     }
 }
