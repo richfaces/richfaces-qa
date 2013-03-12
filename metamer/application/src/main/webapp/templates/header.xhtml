@@ -97,13 +97,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </h:outputText>
                 </a4j:outputPanel>
 
-                <!--
-                TODO: disabled because of MyFaces issue: MYFACES-3061 (RF-10668)
-h:outputLabel id="showUiDebugLabel" value="Show ui:debug" for="showUiDebug"
-h:outputText id="showUiDebug" value="Ctrl+Shift+L "
+                <h:outputLabel id="showUiDebugLabel" value="Show ui:debug" for="showUiDebug"/>
+                <h:outputText id="showUiDebug" value="Ctrl+Shift+L"/>
+                <ui:debug hotkey="L"/>
 
-ui:debug hotkey="L"
-                -->
                 <a4j:jsFunction name="functionChecker" render="jsFunctionChecker"/>
             </h:panelGrid>
 
@@ -120,7 +117,7 @@ ui:debug hotkey="L"
                     <h:selectBooleanCheckbox id="reComponentCheckbox" value="#{richBean.reComponent}" onchange="submit();" />
 
                     <h:outputLabel id="metamerResponseDelayLabel" value="Delay response by [ms]: " for="metamerResponseDelayInput" />
-                    <h:inputText id="metamerResponseDelayInput" style="width: 50px;" value="#{responseDelayBean.delay}" onchange="submit();"  />                
+                    <h:inputText id="metamerResponseDelayInput" style="width: 50px;" value="#{responseDelayBean.delay}" onchange="submit();"  />
                 </h:panelGrid>
             </h:form>
 
