@@ -74,6 +74,7 @@ public class A4JPushBean implements Serializable {
         attributes = Attributes.getComponentAttributesFromClass(UIPush.class, getClass());
 
         attributes.setAttribute("onerror", "alert('Error: ' + event.rf.data)");
+        attributes.setAttribute("rendered", true);
         // attributes.setAttribute("onsubscribed", "alert(this.id + ' subscribed')");
         attributes.remove("address");
         attributes.remove("ondataavailable");
