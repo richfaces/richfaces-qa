@@ -21,10 +21,14 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.checker;
 
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.ajocado.css.CssProperty;
 import org.jboss.arquillian.graphene.Graphene;
@@ -34,8 +38,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
 
 /**
  * Checker for icon attributes (e.g. rich:accordion, rich:panelMenu)
@@ -161,10 +163,7 @@ public class IconsCheckerWebdriver<A extends AttributeEnum> {
     }
 
     /**
-     * Checks "icon" contains image element.
-     * In the contrary of checkImageIcons this method consider By image as direct child element
-     * of icon WebElement, and then By expression for image should not be unique within whole DOM,
-     * but just within parent icon element
+     * Verify img icon at location given as icon param
      *
      * It is useful when using page fragments where icon element is reliable and unique localized,
      * but img child element doesn't contains any additional attributes for unique identification.
@@ -174,12 +173,11 @@ public class IconsCheckerWebdriver<A extends AttributeEnum> {
      * but icon images are difficult to localize unique over whole page.
      *
      * @param attribute icon attribute
-     * @param icon - root of icon "element" - it is sometime td or something like this, containing additional elements
-     * @param image - By location, it should be relative to icon element
+     * @param icon - root of icon "element" - it is div for CSS icons, and img for image icons (2nd make sense in this test)
      * @param classSuffix
      * @param disableIcon set to TRUE if the presence of image element causes that icon element shouldn't be present
      */
-    public void checkImageIconsAsRelative(A attribute, ElementLocator icon, By image, String classSuffix, boolean disableIcon) {
+    public void checkImageIcons(A attribute, ElementLocator icon, WebElement imgIconElem, String classSuffix, boolean disableIcon) {
         // option -> image
         Map<String, String> imageIcons = new HashMap<String, String>();
         imageIcons.put("nonexisting", "nonexisting");
@@ -191,11 +189,10 @@ public class IconsCheckerWebdriver<A extends AttributeEnum> {
             if (disableIcon) {
                 assertFalse(Graphene.element(icon.findElement()).isPresent().apply(driver), "Icon's div (" + icon + ") should not be present when icon=" + imageIcon + ".");
             }
-            // there is the point: image location referenced By image is relative to icon element
-            WebElement imageElem = icon.findElement().findElement(image);
-            assertTrue(Graphene.element(imageElem).isPresent().apply(driver), "Icon's image should be rendered (" + image + ") when icon=" + imageIcon + ".");
-            assertTrue(imageElem.getAttribute("src").contains(imageIcons.get(imageIcon)),
-                "Icon's src attribute (" + image + ") should contain " + imageIcons.get(imageIcon) + " when icon=" + imageIcon + ".");
+            // iconElem as var to easier debug/verify what element was reached
+            assertTrue(Graphene.element(imgIconElem).isPresent().apply(driver), "Icon's image should be rendered (" + icon + ") when icon=" + imageIcon + ".");
+            assertTrue(imgIconElem.getAttribute("src").contains(imageIcons.get(imageIcon)),
+                    "Icon's src attribute (" + icon + ") should contain " + imageIcons.get(imageIcon) + " when icon=" + imageIcon + ".");
         }
     }
 

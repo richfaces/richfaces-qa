@@ -22,7 +22,9 @@
 package org.richfaces.tests.page.fragments.impl.panelMenuItem;
 
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.ATTR_CLASS;
+import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_TRANSPARENT_SUFFIX;
 
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebElement;
 
@@ -33,10 +35,13 @@ import org.openqa.selenium.WebElement;
 public class RichFacesPanelMenuItemIcon {
 
     @Root
-    public WebElement icon;
+    public WebElement root;
+
+    @FindBy(tagName = "img")
+    public WebElement imgIcon;
 
     public boolean isTransparent() {
-        return icon.getAttribute(ATTR_CLASS).contains("-transparent");
+        return root.getAttribute(ATTR_CLASS).contains(CSS_TRANSPARENT_SUFFIX);
     }
 
 }
