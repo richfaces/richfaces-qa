@@ -41,7 +41,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.page.fragments.impl.WebElementProxyUtils;
 import org.testng.annotations.Test;
 
 
@@ -108,7 +107,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testItemClass() {
-        testStyleClass(WebElementProxyUtils.createProxyForElement(itemBy) , itemClass);
+        testStyleClass(driver.findElement(itemBy) , itemClass);
     }
 
     @Test
@@ -154,20 +153,20 @@ public class TestRichToolbar extends AbstractWebDriverTest {
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testItemStyle() {
-        testStyle(WebElementProxyUtils.createProxyForElement(itemBy), itemStyle);
+        testStyle(driver.findElement(itemBy), itemStyle);
     }
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemclick() {
-        Action click = new Actions(driver).click(WebElementProxyUtils.createProxyForElement(itemBy)).build();
+        Action click = new Actions(driver).click(driver.findElement(itemBy)).build();
         testFireEvent(toolbarAttributes, ToolbarAttributes.onitemclick, click);
     }
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemdblclick() {
-        Action dblClick = new Actions(driver).doubleClick(WebElementProxyUtils.createProxyForElement(itemBy)).build();
+        Action dblClick = new Actions(driver).doubleClick(driver.findElement(itemBy)).build();
         testFireEvent(toolbarAttributes, ToolbarAttributes.onitemdblclick, dblClick);
     }
 
@@ -178,7 +177,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
         // Action keyDown = new Actions(driver).keyDown(WebElementProxyUtils.createProxyForElement(itemBy), Keys.ALT).build();
         // testFireEvent(toolbarAttributes, ToolbarAttributes.onitemkeydown, keyDown);
 
-        testFireEventWithJS(WebElementProxyUtils.createProxyForElement(itemBy),
+        testFireEventWithJS(driver.findElement(itemBy),
             Event.KEYDOWN, toolbarAttributes, ToolbarAttributes.onitemkeydown);
     }
 
@@ -189,7 +188,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
         // Action keyPress = new Actions(driver).moveToElement(WebElementProxyUtils.createProxyForElement(itemBy)).sendKeys("a").build();
         // testFireEvent(toolbarAttributes, ToolbarAttributes.onitemkeypress, keyPress);
 
-        testFireEventWithJS(WebElementProxyUtils.createProxyForElement(itemBy),
+        testFireEventWithJS(driver.findElement(itemBy),
             Event.KEYPRESS, toolbarAttributes, ToolbarAttributes.onitemkeypress);
     }
 
@@ -200,21 +199,21 @@ public class TestRichToolbar extends AbstractWebDriverTest {
         // Action keyup = new Actions(driver).keyUp(WebElementProxyUtils.createProxyForElement(itemBy), Keys.ALT).build();
         // testFireEvent(toolbarAttributes, ToolbarAttributes.onitemkeyup, keyup);
 
-        testFireEventWithJS(WebElementProxyUtils.createProxyForElement(itemBy),
+        testFireEventWithJS(driver.findElement(itemBy),
             Event.KEYUP, toolbarAttributes, ToolbarAttributes.onitemkeyup);
     }
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemmousedown() {
-        Action mouseDown = new Actions(driver).clickAndHold(WebElementProxyUtils.createProxyForElement(itemBy)).build();
+        Action mouseDown = new Actions(driver).clickAndHold(driver.findElement(itemBy)).build();
         testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmousedown, mouseDown);
     }
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemmousemove() {
-        Action mouseMove = new Actions(driver).moveToElement(WebElementProxyUtils.createProxyForElement(itemBy)).build();
+        Action mouseMove = new Actions(driver).moveToElement(driver.findElement(itemBy)).build();
         testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmousemove, mouseMove);
     }
 
@@ -224,21 +223,21 @@ public class TestRichToolbar extends AbstractWebDriverTest {
         // TODO JJa 2013-03-11: Doesn't work for now with Action, rewrite if it changes
         // Action mouseOut = new Actions(driver).moveToElement(WebElementProxyUtils.createProxyForElement(itemBy)).moveByOffset(-1, -1).build();
         // testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmouseout, mouseOut);
-        testFireEventWithJS(WebElementProxyUtils.createProxyForElement(itemBy),
+        testFireEventWithJS(driver.findElement(itemBy),
             Event.MOUSEOUT, toolbarAttributes, ToolbarAttributes.onitemmouseout);
     }
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemmouseover() {
-        Action mouseOver = new Actions(driver).moveToElement(WebElementProxyUtils.createProxyForElement(itemBy)).build();
+        Action mouseOver = new Actions(driver).moveToElement(driver.findElement(itemBy)).build();
         testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmouseover, mouseOver);
     }
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemmouseup() {
-        WebElement item = WebElementProxyUtils.createProxyForElement(itemBy);
+        WebElement item = driver.findElement(itemBy);
         Action mouseUp = new Actions(driver).clickAndHold(item).release(item).build();
         testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmouseup, mouseUp);
     }

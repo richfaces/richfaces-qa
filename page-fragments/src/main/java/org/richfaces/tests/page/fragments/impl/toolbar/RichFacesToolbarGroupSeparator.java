@@ -25,7 +25,6 @@ import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.WebElementProxyUtils;
 
 /**
  * ToolbarGroup add only group separator markup comparing to Toolbar
@@ -44,6 +43,6 @@ public class RichFacesToolbarGroupSeparator {
     public WebElement imgIcon;
 
     public WebElement getIconByName(String icoName) {
-        return WebElementProxyUtils.createProxyForElement(By.cssSelector("div.rf-tb-sep-" + icoName), root);
+        return root.findElement(By.cssSelector("div.rf-tb-sep-" + icoName));
     }
 }

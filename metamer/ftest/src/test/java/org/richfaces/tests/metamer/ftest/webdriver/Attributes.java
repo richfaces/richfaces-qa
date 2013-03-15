@@ -38,7 +38,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
-import org.richfaces.tests.page.fragments.impl.WebElementProxyUtils;
 import org.richfaces.tests.page.fragments.impl.Utils;
 
 /**
@@ -118,7 +117,7 @@ public class Attributes<T extends AttributeEnum> {
     protected void setProperty(String propertyName, Object value) {
         String valueAsString = (value == null ? NULLSTRING : value.toString());
         //element for all types of input elements
-        WebElement foundElementProxy = WebElementProxyUtils.createProxyForElement(
+        WebElement foundElementProxy = driver.findElement(
                 getCssSelectorForProperty(propertyName));
         //handle the property by the tagname of the input element
         Graphene.waitAjax().until(ElementPresent.getInstance().element(foundElementProxy));
@@ -148,7 +147,7 @@ public class Attributes<T extends AttributeEnum> {
      * @param value value to be set
      */
     private void applyText(String propertyName, String value) {
-        WebElement input = WebElementProxyUtils.createProxyForElement(
+        WebElement input = driver.findElement(
                 getCssSelectorForProperty(propertyName));
         String text = input.getAttribute("value");
         if (!value.equals(text)) {
@@ -243,7 +242,7 @@ public class Attributes<T extends AttributeEnum> {
      * @return
      */
     private String getProperty(String propertyName) {
-        WebElement foundElementProxy = WebElementProxyUtils.createProxyForElement(
+        WebElement foundElementProxy = driver.findElement(
                 getCssSelectorForProperty(propertyName));
         //handle the property by the tagname of the input element
         Tag tag = Tag.getTag(foundElementProxy);
@@ -365,8 +364,8 @@ public class Attributes<T extends AttributeEnum> {
             for (Tag t : values()) {
                 if (t.tagname.equals(elementTag)) {
                     if (t.equals(radio) || t.equals(checkbox)) {
-                        List<WebElement> foundElements = WebElementProxyUtils
-                                .createProxyForElements(By.tagName("input"), foundElement);
+                        List<WebElement> foundElements = foundElement
+                                .findElements(By.tagName("input"));
                         String inputType = foundElements.get(0).getAttribute("type");
                         if ("radio".equals(inputType)) {
                             radio.radioElements = foundElements;

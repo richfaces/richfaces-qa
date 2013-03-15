@@ -48,7 +48,6 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.model.Capital;
 import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.WebElementProxyUtils;
 import org.richfaces.tests.page.fragments.impl.input.inplace.EditingState.FinishEditingBy;
 import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.OpenBy;
 import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.State;
@@ -260,7 +259,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-9845")
     public void testListClass() {
-        testStyleClass(WebElementProxyUtils.createProxyForElement(listBy), BasicAttributes.listClass);
+        testStyleClass(driver.findElement(listBy), BasicAttributes.listClass);
     }
 
     @Test

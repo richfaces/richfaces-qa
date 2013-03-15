@@ -53,7 +53,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.richfaces.tests.page.fragments.impl.WebElementProxyUtils;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -242,8 +241,8 @@ public class MetamerPage {
     private static class RequestTimeChangesWaitingInterceptor implements Interceptor {
 
         protected String time1;
-        private static final WebElement requestTime = WebElementProxyUtils
-                .createProxyForElement(By.cssSelector("span[id='requestTime']"));
+        private static final WebElement requestTime = GrapheneContext.getProxy()
+                .findElement(By.cssSelector("span[id='requestTime']"));
 
         protected void afterAction() {
             Graphene.waitModel().until().element(requestTime).text().not().equalTo(time1);
@@ -260,15 +259,12 @@ public class MetamerPage {
 
         @Override
         public Object intercept(InvocationContext context) throws Throwable {
-            return invoke(context.getTarget(), context.getMethod(), context.getArguments());
-        }
-
-        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             beforeAction();
-            Object o = method.invoke(proxy, args);
+            Object o = context.getMethod().invoke(context.getTarget(), context.getArguments());
             afterAction();
             return o;
         }
+
     }
 
     private static class RequestTimeNotChangesWaitingInterceptor extends RequestTimeChangesWaitingInterceptor {
