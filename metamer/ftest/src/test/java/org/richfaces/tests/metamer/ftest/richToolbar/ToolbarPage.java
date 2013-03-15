@@ -21,8 +21,11 @@
  */
 package org.richfaces.tests.metamer.ftest.richToolbar;
 
+import java.util.List;
+
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.toolbar.RichFacesToolbarGroupSeparator;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
@@ -35,7 +38,17 @@ public class ToolbarPage {
     public WebElement toolbar;
 
     @FindBy(jquery = "td.rf-tb-sep")
-    public WebElement separator;
+    public RichFacesToolbarGroupSeparator separator;
+
+    @FindBy(jquery = "td.rf-tb-sep")
+    public List<WebElement> separators;
+
+    @FindBy(jquery = "td.rf-tb-sep > img")
+    public List<WebElement> separatorsImages;
+
+    /** toolbar items with no matter if tool or empty cell */
+    @FindBy(jquery = "tr.rf-tb-cntr > td")
+    public List<WebElement> items;
 
     @FindBy(jquery = "td[id$=createDocument_itm]")
     public WebElement itemCreateDoc;

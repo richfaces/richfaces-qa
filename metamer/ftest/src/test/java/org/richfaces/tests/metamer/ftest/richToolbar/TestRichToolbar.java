@@ -80,10 +80,10 @@ public class TestRichToolbar extends AbstractWebDriverTest {
     public void testInit() {
         assertTrue(Graphene.element(page.toolbar).isPresent().apply(driver), "Toolbar should be present on the page.");
         assertTrue(Graphene.element(page.toolbar).isVisible().apply(driver), "Toolbar should be visible.");
-        assertTrue(Graphene.element(page.separator).not().isPresent().apply(driver),
+        assertTrue(Graphene.element(page.separator.root).not().isPresent().apply(driver),
             "Item separator should not be present on the page.");
         // just test of inverse logic could be applied as replace
-        assertFalse(Graphene.element(page.separator).isPresent().apply(driver),
+        assertFalse(Graphene.element(page.separator.root).isPresent().apply(driver),
             "Item separator should not be present on the page.");
     }
 
@@ -115,29 +115,28 @@ public class TestRichToolbar extends AbstractWebDriverTest {
     @Use(field = "itemSeparator", value = "separators")
     public void testItemSeparatorCorrect() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, itemSeparator);
-        WebElement separatorDiv = WebElementProxyUtils.createProxyForElement(By.cssSelector("div.rf-tb-sep-" + itemSeparator));
 
-        assertTrue(Graphene.element(page.separator).isPresent().apply(driver), "Item separator should be present on the page.");
-        assertTrue(Graphene.element(separatorDiv).isPresent().apply(driver), "Item separator does not work correctly.");
+        assertTrue(Graphene.element(page.separator.root).isPresent().apply(driver), "Item separator should be present on the page.");
+        assertTrue(Graphene.element(page.separator.getIconByName(itemSeparator)).isPresent().apply(driver), "Item separator does not work correctly.");
     }
 
     @Test
     public void testItemSeparatorNone() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, "none");
-        assertTrue(Graphene.element(page.separator).not().isPresent().apply(driver), "Item separator should not be present on the page.");
+        assertTrue(Graphene.element(page.separator.root).not().isPresent().apply(driver), "Item separator should not be present on the page.");
 
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, "null");
-        assertTrue(Graphene.element(page.separator).not().isPresent().apply(driver), "Item separator should not be present on the page.");
+        assertTrue(Graphene.element(page.separator.root).not().isPresent().apply(driver), "Item separator should not be present on the page.");
     }
 
     @Test
     public void testItemSeparatorCustom() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, "star");
 
-        assertTrue(Graphene.element(page.separator).isPresent().apply(driver), "Item separator should be present on the page.");
-        assertTrue(Graphene.element(getSeparatorImg()).isPresent().apply(driver), "Item separator does not work correctly.");
+        assertTrue(Graphene.element(page.separator.root).isPresent().apply(driver), "Item separator should be present on the page.");
+        assertTrue(Graphene.element(page.separator.imgIcon).isPresent().apply(driver), "Item separator does not work correctly.");
 
-        assertTrue(Graphene.attribute(getSeparatorImg(), "src").contains("star.png").apply(driver),
+        assertTrue(Graphene.attribute(page.separator.imgIcon, "src").contains("star.png").apply(driver),
             "Separator's image should link to picture star.png.");
     }
 
@@ -145,10 +144,10 @@ public class TestRichToolbar extends AbstractWebDriverTest {
     public void testItemSeparatorNonExisting() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, "non-existing");
 
-        assertTrue(Graphene.element(page.separator).isPresent().apply(driver), "Item separator should be present on the page.");
-        assertTrue(Graphene.element(getSeparatorImg()).isPresent().apply(driver), "Item separator does not work correctly.");
+        assertTrue(Graphene.element(page.separator.root).isPresent().apply(driver), "Item separator should be present on the page.");
+        assertTrue(Graphene.element(page.separator.imgIcon).isPresent().apply(driver), "Item separator does not work correctly.");
 
-        assertTrue(Graphene.attribute(getSeparatorImg(), "src").contains("non-existing").apply(driver),
+        assertTrue(Graphene.attribute(page.separator.imgIcon, "src").contains("non-existing").apply(driver),
             "Separator's image should link to \"non-existing\".");
     }
 
@@ -273,7 +272,4 @@ public class TestRichToolbar extends AbstractWebDriverTest {
         assertTrue(styleAttr.contains("width: 500px").apply(driver), "Attribute style should have width 500px.");
     }
 
-    private WebElement getSeparatorImg() {
-        return page.separator.findElement(By.tagName("img"));
-    }
 }
