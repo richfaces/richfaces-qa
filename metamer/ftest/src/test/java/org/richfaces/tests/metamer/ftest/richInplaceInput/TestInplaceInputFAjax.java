@@ -1,4 +1,4 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
@@ -26,6 +26,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.spi.annotations.Page;
@@ -33,10 +34,10 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.EditingState;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.RichFacesInplaceInput;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInput.OpenBy;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInput.State;
+import org.richfaces.tests.page.fragments.impl.input.inplace.EditingState;
+import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.OpenBy;
+import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.State;
+import org.richfaces.tests.page.fragments.impl.input.inplace.input.RichFacesInplaceInput;
 import org.testng.annotations.Test;
 
 /**
@@ -66,7 +67,7 @@ public class TestInplaceInputFAjax extends AbstractWebDriverTest {
         assertTrue(inplaceInput.is(State.ACTIVE), "Input should be active.");
 
         String testedValue = "new value";
-        MetamerPage.waitRequest(editingState.type(testedValue), WaitRequestType.XHR).confirm();
+        MetamerPage.waitRequest(editingState.changeToValue(testedValue), WaitRequestType.XHR).confirm();
 
         assertTrue(inplaceInput.is(State.CHANGED), "Input should contain class indicating a change.");
         assertEquals(inplaceInput.getEditValue(), testedValue, "Input should contain typed text.");
