@@ -21,11 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.inplaceInput;
 
+import static org.testng.Assert.assertEquals;
+
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInput;
+import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.OpenBy;
+import org.richfaces.tests.page.fragments.impl.input.inplace.input.RichFacesInplaceInput;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.inplaceInput.page.SimplePage;
-import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
 
 /**
@@ -37,14 +39,12 @@ import org.testng.annotations.Test;
  */
 public class TestInplaceInput extends AbstractWebDriverTest {
 
-
     @Page
     private SimplePage page;
 
     /* ********************************************************************************
      * Tests********************************************************************************
      */
-
     @Test
     public void testEnterSomethingToNameInput() {
         enterSomethingToInputAndCheck(page.name);
@@ -58,14 +58,12 @@ public class TestInplaceInput extends AbstractWebDriverTest {
     /* ***********************************************************************************
      * Help methods***********************************************************************************
      */
-
-    private void enterSomethingToInputAndCheck(InplaceInput input) {
+    private void enterSomethingToInputAndCheck(RichFacesInplaceInput input) {
         String expectedString = "Test string";
-        input.editBy(InplaceInput.OpenBy.CLICK).type(expectedString).confirm();
+        input.editBy(OpenBy.CLICK).changeToValue(expectedString).confirm();
 
         String actualString = input.getLabelValue();
 
         assertEquals(actualString, expectedString, "The value in the input is not what have been typed there!");
     }
-
 }
