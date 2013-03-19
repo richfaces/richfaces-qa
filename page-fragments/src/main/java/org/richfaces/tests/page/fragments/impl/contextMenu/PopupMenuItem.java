@@ -24,13 +24,13 @@ package org.richfaces.tests.page.fragments.impl.contextMenu;
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class ContextMenuItem {
+public class PopupMenuItem {
 
     private final String itemText;
 
-    public ContextMenuItem(String itemText) {
+    public PopupMenuItem(String itemText) {
         if (itemText == null || itemText.length() == 0) {
-            throw new IllegalArgumentException("Context menu item text can not be null or empty!");
+            throw new IllegalArgumentException("Popup menu item text can not be null or empty!");
         }
         this.itemText = itemText;
     }
@@ -58,7 +58,7 @@ public class ContextMenuItem {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        ContextMenuItem other = (ContextMenuItem) obj;
+        PopupMenuItem other = (PopupMenuItem) obj;
         if (itemText == null) {
             if (other.itemText != null) {
                 return false;

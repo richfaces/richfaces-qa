@@ -19,19 +19,38 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.contextMenu;
+package org.richfaces.tests.page.fragments.impl.dropDownMenu;
 
+import java.util.List;
+
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.contextMenu.AbstractPopupMenu;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public interface ContextMenuInvoker {
+public class RichFacesDropDownMenu extends AbstractPopupMenu {
 
-    /**
-     * Invokes on the given target context menu.
-     *
-     * @param target
-     */
-    void invoke(WebElement target);
+    @FindBy(className = "rf-ddm-itm")
+    private List<WebElement> menuItemsElements;
+
+    @FindBy(jquery = ".rf-ddm-lst:eq(0)")
+    private WebElement dropDownMenuPopup;
+
+    @Override
+    public WebElement getMenuPopup() {
+        return dropDownMenuPopup;
+    }
+
+    @Override
+    public List<WebElement> getMenuItemElements() {
+        return menuItemsElements;
+    }
+
+    @Override
+    public String getNameOfFragment() {
+        return RichFacesDropDownMenu.class.getName();
+    }
+
 }

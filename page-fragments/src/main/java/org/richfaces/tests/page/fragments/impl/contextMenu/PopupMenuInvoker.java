@@ -21,35 +21,17 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.contextMenu;
 
-import java.util.List;
-
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class RichFacesContextMenu extends AbstractPopupMenu {
+public interface PopupMenuInvoker {
 
-    @FindBy(className = "rf-ctx-itm")
-    private List<WebElement> menuItemsElements;
-
-    @FindBy(css = "div.rf-ctx-lst")
-    private WebElement contextMenuPopup;
-
-    @Override
-    public WebElement getMenuPopup() {
-        return contextMenuPopup;
-    }
-
-    @Override
-    public List<WebElement> getMenuItemElements() {
-        return menuItemsElements;
-    }
-
-    @Override
-    public String getNameOfFragment() {
-        return RichFacesContextMenu.class.getName();
-    }
-
+    /**
+     * Invokes on the given target popup menu.
+     *
+     * @param target
+     */
+    void invoke(WebElement target);
 }
