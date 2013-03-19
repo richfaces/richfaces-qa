@@ -556,6 +556,7 @@ FSF site: http://www.fsf.org. -->
                                             dest="${project.build.directory}/${metamer.unpacked.dir}"><!-- target/metamer-wfk -->
                                             <patternset>
                                                 <exclude name="WEB-INF/lib/richfaces-*.jar" />
+						<exclude name="META-INF/maven/" /><!-- since binaries are replaced outside maven, no longer valid info here -->
                                             </patternset>
                                         </unzip>
                                         <!-- copy newest richfaces binaries into WEB-INF/lib -->
@@ -566,29 +567,12 @@ FSF site: http://www.fsf.org. -->
                                                 <include name="richfaces-*.jar" />
                                             </fileset>
                                         </copy>
+					<!-- since maven-war-plugin adds files we don't want, use simply zip instead to get metamer.war back -->
+					<zip destfile="${project.build.directory}/metamer.war" basedir="${project.build.directory}/${metamer.unpacked.dir}" />
                                     </tasks>
                                 </configuration>
                                 <goals>
                                     <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-    
-                    <!-- pack modified metamer back to WAR -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-war-plugin</artifactId>
-                        <configuration>
-                            <warSourceDirectory>${project.build.directory}/${metamer.unpacked.dir}</warSourceDirectory>
-                            <warName>metamer</warName>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>repack-metamer-back-to-war</id>
-                                <phase>generate-test-resources</phase>
-                                <goals>
-                                    <goal>war</goal>
                                 </goals>
                             </execution>
                         </executions>
