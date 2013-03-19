@@ -60,7 +60,7 @@ public class TestSimple extends AbstractContextMenuTest {
 
     @Test
     public void testContextMenuRenderedAtCorrectPosition() {
-        checkContextMenuRenderedAtCorrectPosition(page.getPicture(), page.getContextMenu().getContextMenuPopup(),
+        checkContextMenuRenderedAtCorrectPosition(page.getPicture(), page.getContextMenu().getMenuPopup(),
             InvocationType.LEFT_CLICK, null);
     }
 }

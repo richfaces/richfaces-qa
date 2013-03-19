@@ -27,7 +27,6 @@ import static org.testng.Assert.assertTrue;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.richfaces.component.Positioning;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.DriverType;
@@ -65,6 +64,9 @@ public class ContextMenuSimplePage extends MetamerPage {
 
     @FindBy(tagName = "body")
     public WebElement body;
+
+    @FindBy(jquery = "div[id$=menuGroup4_list]")
+    public WebElement groupList;
 
     public final int SHOW_DELAY_TOLERANCE = 400;
 
@@ -126,7 +128,7 @@ public class ContextMenuSimplePage extends MetamerPage {
         assertShowDelayIsInTolerance(actual, expected);
     }
 
-    public String trimTheRGBAColor(String original) {
+    public static String trimTheRGBAColor(String original) {
         return original.replaceAll("\\s", "");
     }
 }

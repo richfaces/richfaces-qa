@@ -3,7 +3,7 @@ package org.richfaces.tests.showcase.contextMenu.page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.contextMenu.RichFacesContextMenu;
-import org.richfaces.tests.page.fragments.impl.contextMenu.ContextMenuItem;
+import org.richfaces.tests.page.fragments.impl.contextMenu.PopupMenuItem;
 
 public class SimpleContextMenuPage {
 
@@ -13,8 +13,8 @@ public class SimpleContextMenuPage {
     @FindBy(className = "rf-ctx-pos")
     private RichFacesContextMenu contextMenu;
 
-    public static final ContextMenuItem ZOOM_IN = new ContextMenuItem("Zoom In");
-    public static final ContextMenuItem ZOOM_OUT = new ContextMenuItem("Zoom Out");
+    public static final PopupMenuItem ZOOM_IN = new PopupMenuItem("Zoom In");
+    public static final PopupMenuItem ZOOM_OUT = new PopupMenuItem("Zoom Out");
 
     public WebElement getPicture() {
         return picture;

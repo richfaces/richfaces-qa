@@ -25,6 +25,8 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.guardXhr;
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
+import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.contextMenuAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -200,7 +202,8 @@ public class TestContextMenu extends AbstractWebDriverTest {
                 throw new IllegalArgumentException("Uknown switch " + positioning);
         }
         //the actual menu locations should be same as shifted default locations
-        Utils.tolerantAssertLocationsEquals(defaultLocations.moveAllBy(shiftX, shiftY), actMenuLocation, tolerance, tolerance, msg);
+        Utils.tolerantAssertLocationsEquals(defaultLocations.moveAllBy(shiftX, shiftY), actMenuLocation, tolerance, tolerance,
+                msg);
     }
 
     @Test
@@ -275,7 +278,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         page.contextMenu.invoke(page.targetPanel1);
         String backgroundColor = page.contextMenuRoot.getCssValue("background-color");
         // webdriver retrieves the color in rgba format
-        assertEquals(page.trimTheRGBAColor(backgroundColor), "rgba(255,255,0,1)", "The style was not applied correctly!");
+        assertEquals(ContextMenuSimplePage.trimTheRGBAColor(backgroundColor), "rgba(255,255,0,1)", "The style was not applied correctly!");
     }
 
     @Test
@@ -355,9 +358,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
-                new Actions(driver)
-                        .doubleClick(page.contextMenu.getItems().get(1))
-                        .build().perform();
+                new Actions(driver).doubleClick(page.contextMenu.getItems().get(1)).build().perform();
             }
         });
     }
@@ -376,10 +377,8 @@ public class TestContextMenu extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
-                new Actions(driver)
-                        .keyDown(page.contextMenu.getItems().get(1), Keys.CONTROL)
-                        .keyUp(page.contextMenu.getItems().get(1), Keys.CONTROL)
-                        .build().perform();
+                new Actions(driver).keyDown(page.contextMenu.getItems().get(1), Keys.CONTROL)
+                        .keyUp(page.contextMenu.getItems().get(1), Keys.CONTROL).build().perform();
             }
         });
     }
@@ -392,10 +391,8 @@ public class TestContextMenu extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
-                new Actions(driver)
-                        .keyDown(page.contextMenu.getItems().get(0), Keys.ALT)
-                        .keyUp(page.contextMenu.getItems().get(0), Keys.ALT)
-                        .build().perform();
+                new Actions(driver).keyDown(page.contextMenu.getItems().get(0), Keys.ALT)
+                        .keyUp(page.contextMenu.getItems().get(0), Keys.ALT).build().perform();
             }
         });
     }
@@ -407,9 +404,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
-                new Actions(driver)
-                        .sendKeys("a")
-                        .build().perform();
+                new Actions(driver).sendKeys("a").build().perform();
             }
         });
     }
@@ -447,24 +442,23 @@ public class TestContextMenu extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
-                new Actions(driver)
-                        .moveToElement(page.contextMenu.getItems().get(1))
-                        .build().perform();
+                new Actions(driver).moveToElement(page.contextMenu.getItems().get(1)).build().perform();
             }
         });
     }
 
-    @Test
+    @Test(groups = "4.Future")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12854")
     public void testOnmouseout() {
         updateShowAction();
-        testFireEvent(contextMenuAttributes, ContextMenuAttributes.onmousemove, new Action() {
+        testFireEvent(contextMenuAttributes, ContextMenuAttributes.onmouseout, new Action() {
             @Override
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
-                new Actions(driver)
-                        .moveToElement(page.contextMenu.getItems().get(1))
-                        .moveToElement(page.body)
-                        .build().perform();
+                new Actions(driver).moveToElement(page.contextMenu.getItems().get(2)).build().perform();
+                waitModel().until().element(page.groupList).is().visible();
+                new Actions(driver).moveToElement(page.requestTime).build().perform();
+                waitGui().until().element(page.groupList).is().not().visible();
             }
         });
     }
@@ -478,11 +472,12 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @Test
     public void testOngroupshow() {
         updateShowAction();
-        testFireEvent(contextMenuAttributes, ContextMenuAttributes.onmousemove, new Action() {
+        testFireEvent(contextMenuAttributes, ContextMenuAttributes.ongroupshow, new Action() {
             @Override
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
                 new Actions(driver).moveToElement(page.contextMenu.getItems().get(2)).build().perform();
+                waitGui().until().element(page.groupList).is().visible();
             }
         });
     }
@@ -490,14 +485,14 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @Test
     public void testOngrouphide() {
         updateShowAction();
-        testFireEvent(contextMenuAttributes, ContextMenuAttributes.onmousemove, new Action() {
+        testFireEvent(contextMenuAttributes, ContextMenuAttributes.ongrouphide, new Action() {
             @Override
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
-                new Actions(driver)
-                        .moveToElement(page.contextMenu.getItems().get(2))
-                        .moveToElement(page.body)
-                        .build().perform();
+                new Actions(driver).moveToElement(page.contextMenu.getItems().get(2)).build().perform();
+                waitGui().until().element(page.groupList).is().visible();
+                new Actions(driver).click(page.contextMenu.getItems().get(1)).build().perform();
+                waitGui().until().element(page.groupList).is().not().visible();
             }
         });
     }

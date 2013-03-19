@@ -78,7 +78,7 @@ public class TestTree extends AbstractContextMenuTest {
         WebElement elementToTryOn = page.getLeaves().get(0);
         Graphene.waitGui().withTimeout(2, TimeUnit.SECONDS).until(element(elementToTryOn).isVisible());
 
-        checkContextMenuRenderedAtCorrectPosition(elementToTryOn, page.getContextMenu().getContextMenuPopup(),
+        checkContextMenuRenderedAtCorrectPosition(elementToTryOn, page.getContextMenu().getMenuPopup(),
             InvocationType.RIGHT_CLICK, page.getExpextedConditionOnNodeSelected(elementToTryOn));
     }
 }
