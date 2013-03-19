@@ -1,6 +1,6 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,22 +18,22 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
-package org.richfaces.tests.page.fragments.impl.input.inplaceInput;
+ *******************************************************************************/
+package org.richfaces.tests.page.fragments.impl.input.inplace;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.tests.page.fragments.impl.Utils;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesControls implements Controls {
+public class RichFacesInplaceComponentControls implements InplaceComponentControls {
 
     @Root
     private WebElement root;
@@ -53,9 +53,7 @@ public class RichFacesControls implements Controls {
         if (Graphene.element(cancelButtonElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Cannot interact with Cancel button. It is not visible.");
         }
-        String elementID = cancelButtonElement.getAttribute("id");
-        String jQueryCmd = String.format("$(\"[id='%s']\").trigger('%s')", elementID, "mousedown");
-        ((JavascriptExecutor) driver).executeScript(jQueryCmd);
+        Utils.triggerJQ("mousedown", cancelButtonElement);
         //after https://issues.jboss.org/browse/RF-9872 is solved, uncomment next line
         // and delete previous lines;
         //cancelButtonElement.click();
@@ -96,10 +94,7 @@ public class RichFacesControls implements Controls {
         if (Graphene.element(okButtonElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Cannot interact with OK button. It is not visible.");
         }
-        String elementID = okButtonElement.getAttribute("id");
-        String jQueryCmd = String.format("$(\"[id='%s']\").trigger('%s')", elementID, "mousedown");
-
-        ((JavascriptExecutor) driver).executeScript(jQueryCmd);
+        Utils.triggerJQ("mousedown", okButtonElement);
         // after https://issues.jboss.org/browse/RF-9872 is solved, uncomment next line
         // and delete previous lines;
         //okButtonElement.click();

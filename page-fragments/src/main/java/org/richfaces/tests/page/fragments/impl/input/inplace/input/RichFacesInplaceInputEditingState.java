@@ -1,6 +1,6 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,28 +18,28 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
-package org.richfaces.tests.page.fragments.impl.input.inplaceInput;
+ *******************************************************************************/
+package org.richfaces.tests.page.fragments.impl.input.inplace.input;
 
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.VisibleComponent;
+import org.richfaces.tests.page.fragments.impl.input.inplace.AbstractInplaceComponentEditingState;
+import org.richfaces.tests.page.fragments.impl.input.inplace.EditingState;
+import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponentControls;
 
 /**
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface Controls extends VisibleComponent {
+public class RichFacesInplaceInputEditingState extends AbstractInplaceComponentEditingState {
 
-    /**
-     * Clicks on Cancel button.
-     */
-    void cancel();
+    public RichFacesInplaceInputEditingState(WebElement root, WebElement input, InplaceComponentControls controls) {
+        super(root, input, controls);
+    }
 
-    /**
-     * Clicks on Ok button.
-     */
-    void ok();
-
-    WebElement getCancelButtonElement();
-
-    WebElement getOkButtonElement();
+    @Override
+    public EditingState changeToValue(String value) {
+        input.clear();
+        input.sendKeys(value);
+        return this;
+    }
 }

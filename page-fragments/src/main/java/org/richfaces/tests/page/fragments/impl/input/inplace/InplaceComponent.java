@@ -1,6 +1,6 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,8 +18,8 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
-package org.richfaces.tests.page.fragments.impl.input.inplaceInput;
+ *******************************************************************************/
+package org.richfaces.tests.page.fragments.impl.input.inplace;
 
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.VisibleComponent;
@@ -27,7 +27,7 @@ import org.richfaces.tests.page.fragments.impl.VisibleComponent;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface InplaceInput extends VisibleComponent {
+public interface InplaceComponent extends VisibleComponent {
 
     public enum State {
 
@@ -53,10 +53,14 @@ public interface InplaceInput extends VisibleComponent {
         private OpenBy(String eventName) {
             this.eventName = eventName;
         }
+
+        public String getEventName() {
+            return eventName;
+        }
     }
 
     /**
-     * Opens inplace input by triggering an event defined by @by
+     * Opens input by triggering an event defined by @by
      * @param by defines the event, which will 'open' inplace input
      * @return State from which user can send a value to input and confirm/cancel it.
      */
@@ -66,7 +70,7 @@ public interface InplaceInput extends VisibleComponent {
      * Returns an instance, with which can user interact with control buttons
      * (OK and Cancel button).
      */
-    Controls getControls();
+    InplaceComponentControls getControls();
 
     /**
      * Returns value which is saved in Edit input.
@@ -78,7 +82,7 @@ public interface InplaceInput extends VisibleComponent {
      */
     String getLabelValue();
 
-    WebElement getRoot();
+    WebElement getRootElement();
 
     /**
      * Checks state of inplace input.

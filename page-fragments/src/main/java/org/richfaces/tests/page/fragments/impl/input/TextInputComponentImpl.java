@@ -24,7 +24,6 @@ package org.richfaces.tests.page.fragments.impl.input;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -47,7 +46,6 @@ public class TextInputComponentImpl implements TextInputComponent {
     public TextInputComponent clear(ClearType clearType) {
         int valueLength = root.getAttribute("value").length();
         Actions builder = new Actions(getWebDriver());
-        JavascriptExecutor executor = (JavascriptExecutor) getWebDriver();
         switch (clearType) {
             case BACKSPACE:
                 for (int i = 0; i < valueLength; i++) {
@@ -69,7 +67,7 @@ public class TextInputComponentImpl implements TextInputComponent {
                 root.click();
                 break;
             case JS:
-                executor.executeScript("jQuery(arguments[0]).val('')", root);
+                Utils.jQ("val('')", root);
                 break;
             case WD:
                 root.clear();
