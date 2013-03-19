@@ -31,6 +31,7 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @version $Revision$
  */
 public enum BasicAttributes implements AttributeEnum {
+
     buttonClass,
     bodyClass,
     contentClass,
@@ -47,6 +48,7 @@ public enum BasicAttributes implements AttributeEnum {
     headerInactiveClass,
     headerStyle,
     headerActiveClass,
+    changedClass,
     iconClass,
     increaseClass,
     initialClass,
@@ -70,6 +72,7 @@ public enum BasicAttributes implements AttributeEnum {
     rightIconClass,
     rowClass,
     rowClasses,
+    selectItemClass,
     style,
     styleClass,
     title,
