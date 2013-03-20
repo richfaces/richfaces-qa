@@ -20,11 +20,13 @@
             <package name="org.richfaces.tests.metamer.ftest.richAccordion"/>
             <package name="org.richfaces.tests.metamer.ftest.richAutocomplete"/>
             <package name="org.richfaces.tests.metamer.ftest.richCalendar"/>
+            <package name="org.richfaces.tests.metamer.ftest.richContextMenu"/>
             <package name="org.richfaces.tests.metamer.ftest.richDragIndicator" />
             <package name="org.richfaces.tests.metamer.ftest.richDragSource" />
             <package name="org.richfaces.tests.metamer.ftest.richDropTarget" />
             <package name="org.richfaces.tests.metamer.ftest.richFileUpload"/>
             <package name="org.richfaces.tests.metamer.ftest.richFocus"/>
+            <package name="org.richfaces.tests.metamer.ftest.richGraphValidator"/>
             <package name="org.richfaces.tests.metamer.ftest.richHashParam"/>
             <package name="org.richfaces.tests.metamer.ftest.richHotKey"/>
             <package name="org.richfaces.tests.metamer.ftest.richInplaceInput"/>
@@ -51,7 +53,6 @@
             <class name="org.richfaces.tests.metamer.ftest.a4jJSFunction.TestRF12510" />
             <class name="org.richfaces.tests.metamer.ftest.a4jMediaOutput.TestElementAWebDriver" />
             <class name="org.richfaces.tests.metamer.ftest.a4jPush.TestTwoPush" />
-            <class name="org.richfaces.tests.metamer.ftest.richContextMenu.TestRichContextMenuWebDriver" />
             <class name="org.richfaces.tests.metamer.ftest.richEditor.TestRichEditorWithTyping" />
             <class name="org.richfaces.tests.metamer.ftest.richExtendedDataTable.TestEDTFrozenColumns" />
             <class name="org.richfaces.tests.metamer.ftest.richSelect.TestRichSelectValidationMessages" />
