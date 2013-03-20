@@ -23,6 +23,7 @@ package org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker;
 
 import java.util.Iterator;
 import java.util.List;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
