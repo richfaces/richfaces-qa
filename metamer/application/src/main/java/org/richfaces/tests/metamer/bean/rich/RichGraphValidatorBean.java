@@ -21,8 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.bean.rich;
 
+import com.google.common.collect.Lists;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -51,128 +54,90 @@ import org.slf4j.LoggerFactory;
  * Managed Bean for rich:graphValidator
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @version $Revision: 22498 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 @ManagedBean(name = "richGraphValidatorBean")
 @ViewScoped
 public class RichGraphValidatorBean implements Serializable, Cloneable {
 
-    /** Valid value of numeric inputs */
+    private static final long serialVersionUID = 1L;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RichGraphValidatorBean.class);
     public static final int REQUIRED_INT_VALUE = 10;
-
-    /** Generated UID */
-    private static final long serialVersionUID = -960575870621302059L;
-
-    private static Logger logger;
-    private final String smile = ":-)";
+    public static final Integer REQUIRED_INTEGER_VALUE = Integer.valueOf(REQUIRED_INT_VALUE);
+    public static final String SMILE = ":-)";
+    public static final String SUCCESSFULL_ACTION_MSG = "Action successfully done!";
+    public static final String VALIDATION_MSG_BOOLEANS = "Select Boolean Checkbox isn't checked!";
+    public static final String VALIDATION_MSG_NUMERICS = "One of the numeric inputs doesn't contain required value "
+            + REQUIRED_INT_VALUE + "!";
+    public static final String VALIDATION_MSG_ALL = "One of the inputs doesn't contain smile or numeric value "
+            + REQUIRED_INT_VALUE + ", date is from future or boolean checkbox is not checked!";
+    public static final List<SelectItem> SELECT_ITEMS = Lists.newArrayList(
+            new SelectItem("Abcd"),
+            new SelectItem("Bcde"),
+            new SelectItem("Cdef"),
+            new SelectItem("Defg"),
+            new SelectItem(SMILE));
+    //
     private Attributes attributes;
-
-    private List<SelectItem> selectItems;
-
+    private List<SelectItem> selectItems = Collections.unmodifiableList(SELECT_ITEMS);
+    //////////////
+    //Input values
     @NotNull
     @NotEmpty
-    private String autocompleteInput = smile;
-    @NotNull
-    @NotEmpty
-    private String inplaceSelect = smile;
-    @NotNull
-    @NotEmpty
-    private String inplaceInput = smile;
-    @NotNull
-    @NotEmpty
-    private String select = smile;
-    private Integer inputNumberSlider = new Integer(REQUIRED_INT_VALUE);
-    private Integer inputNumberSpinner = new Integer(REQUIRED_INT_VALUE);
-    @NotNull
-    @NotEmpty
-    private String inputText = smile;
-    @NotNull
-    @NotEmpty
-    private String inputSecret = smile;
-    @NotNull
-    @NotEmpty
-    private String inputTextarea = smile;
-    private Boolean selectBooleanCheckbox = Boolean.TRUE;
-    @NotEmpty
-    private List<SelectItem> selectManyCheckbox = createSelectItems();
-    @NotNull
-    @NotEmpty
-    private String selectOneListbox = smile;
-    @NotEmpty
-    private List<SelectItem> selectManyListbox = createSelectItems();
-    @NotNull
-    @NotEmpty
-    private String selectOneMenu = smile;
-    @NotEmpty
-    private List<SelectItem> selectManyMenu = createSelectItems();
-    @NotNull
-    @NotEmpty
-    private String selectOneRadio = smile;
+    private String autocompleteInput = SMILE;
     @NotNull
     private Date calendar = new Date(System.currentTimeMillis());
+    @NotNull
+    @NotEmpty
+    private String inplaceInput = SMILE;
+    @NotNull
+    @NotEmpty
+    private String inplaceSelect = SMILE;
+    private Integer inputNumberSlider = REQUIRED_INTEGER_VALUE;
+    private Integer inputNumberSpinner = REQUIRED_INTEGER_VALUE;
+    @NotNull
+    @NotEmpty
+    private String inputSecret = SMILE;
+    @NotNull
+    @NotEmpty
+    private String inputText = SMILE;
+    @NotNull
+    @NotEmpty
+    private String inputTextarea = SMILE;
+    @NotNull
+    @NotEmpty
+    private String select = SMILE;
+    private Boolean selectBooleanCheckbox = Boolean.TRUE;
+    @NotEmpty
+    private List<String> selectManyCheckbox = Lists.newArrayList(SMILE);
+    @NotEmpty
+    private List<String> selectManyListbox = Lists.newArrayList(SMILE);
+    @NotEmpty
+    private List<String> selectManyMenu = Lists.newArrayList(SMILE);
+    @NotNull
+    @NotEmpty
+    private String selectOneListbox = SMILE;
+    @NotNull
+    @NotEmpty
+    private String selectOneMenu = SMILE;
+    @NotNull
+    @NotEmpty
+    private String selectOneRadio = SMILE;
 
     @PostConstruct
-    public void init(){
-        logger = LoggerFactory.getLogger(getClass());
-        logger.info("initializing bean " + getClass().getName());
+    public void init() {
+        LOGGER.info("initializing bean " + getClass().getName());
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIGraphValidator.class, getClass());
 
         attributes.setAttribute("rendered", true);
         attributes.setAttribute("type", "org.richfaces.BeanValidator");
-    }
 
-    @AssertTrue(message = "One of following inputs doesn't contain smile or numeric value "
-                    + REQUIRED_INT_VALUE + " or date is from future!",
-                groups = {Default.class, ValidationGroupAllComponents.class})
-    public boolean isAllInputsCorrect() {
-
-        return autocompleteInput.contains(smile)
-            && inplaceSelect.contains(smile)
-            && inplaceInput.contains(smile)
-            && select.contains(smile)
-            && inputNumberSlider.equals(new Integer(REQUIRED_INT_VALUE))
-            && inputNumberSpinner.equals(new Integer(REQUIRED_INT_VALUE))
-            && inputText.contains(smile)
-            && inputSecret.contains(smile)
-            && inputTextarea.contains(smile)
-            && selectBooleanCheckbox.booleanValue()
-            && selectManyCheckbox.contains(smile)
-            && selectOneListbox.contains(smile)
-            && selectManyListbox.contains(smile)
-            && selectOneMenu.contains(smile)
-            && selectManyMenu.contains(smile)
-            && selectOneRadio.contains(smile)
-            && !calendar.after(new Date(System.currentTimeMillis()));
-    }
-
-    @AssertTrue(message = "One of following numeric inputs doesn't contain value "
-                    + REQUIRED_INT_VALUE + "!",
-                groups = {ValidationGroupNumericInputs.class})
-    public boolean isAllTextInputsCorrect() {
-        return inputNumberSlider.equals(new Integer(REQUIRED_INT_VALUE))
-            && inputNumberSpinner.equals(new Integer(REQUIRED_INT_VALUE));
-    }
-
-    @AssertTrue(message = "Select Boolean Checkbox isn't checked!",
-        groups = {ValidationGroupBooleanInputs.class})
-    public boolean isAllBooleanInputsCorrect() {
-        return selectBooleanCheckbox.booleanValue();
+        //used in sample, value contains reference to this validation bean
+        attributes.remove("value");
     }
 
     public void anotherActionOnAllComponents() {
-        FacesContext.getCurrentInstance().addMessage(null,
-            new FacesMessage(FacesMessage.SEVERITY_INFO, "Action sucessfully done!", "Action sucessfully done!"));
-    }
-
-    private List<SelectItem> createSelectItems() {
-        List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem("a", "Abcd"));
-        result.add(new SelectItem("b", "Bcde"));
-        result.add(new SelectItem("c", "Cdef"));
-        result.add(new SelectItem("d", "Defg"));
-        result.add(new SelectItem(smile, smile));
-
-        return result;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, SUCCESSFULL_ACTION_MSG, SUCCESSFULL_ACTION_MSG));
     }
 
     public List<String> autocomplete(String prefix) {
@@ -181,184 +146,212 @@ public class RichGraphValidatorBean implements Serializable, Cloneable {
             for (int i = 0; i < 10; i++) {
                 result.add(getSelectItems().get(i).getLabel());
             }
-
         } else {
             Iterator<SelectItem> iterator = selectItems.iterator();
             while (iterator.hasNext()) {
                 SelectItem elem = ((SelectItem) iterator.next());
                 if ((elem.getLabel() != null && elem.getLabel().toLowerCase().indexOf(prefix.toLowerCase()) == 0)
-                    || "".equals(prefix)) {
+                        || "".equals(prefix)) {
                     result.add(elem.getLabel());
                 }
             }
         }
-
         return result;
-    }
-
-    public Class<?>[] getValidationGroups() throws ClassNotFoundException {
-        Attribute groups = attributes.get("groups");
-        Class<?> group;
-        if (groups.getValue() != null && !"".equals(groups.getValue())) {
-            group = Class.forName(groups.getValue().toString());
-        } else {
-            group = Default.class;
-        }
-        return new Class[]{group};
     }
 
     public Attributes getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(Attributes attributes) {
-        this.attributes = attributes;
-    }
-
     public String getAutocompleteInput() {
         return autocompleteInput;
-    }
-
-    public void setAutocompleteInput(String autocompleteInput) {
-        this.autocompleteInput = autocompleteInput;
-    }
-
-    public String getInplaceSelect() {
-        return inplaceSelect;
-    }
-
-    public void setInplaceSelect(String inplaceSelect) {
-        this.inplaceSelect = inplaceSelect;
-    }
-
-    public String getInplaceInput() {
-        return inplaceInput;
-    }
-
-    public void setInplaceInput(String inplaceInput) {
-        this.inplaceInput = inplaceInput;
-    }
-
-    public String getSelect() {
-        return select;
-    }
-
-    public void setSelect(String select) {
-        this.select = select;
-    }
-
-    public List<SelectItem> getSelectItems() {
-        if (selectItems == null ) {
-            selectItems = createSelectItems();
-        }
-        return selectItems;
-    }
-
-    public void setSelectItems(List<SelectItem> selectItems) {
-        this.selectItems = selectItems;
-    }
-
-    public Integer getInputNumberSlider() {
-        return inputNumberSlider;
-    }
-
-    public void setInputNumberSlider(Integer inputNumberSlider) {
-        this.inputNumberSlider = inputNumberSlider;
-    }
-
-    public Integer getInputNumberSpinner() {
-        return inputNumberSpinner;
-    }
-
-    public void setInputNumberSpinner(Integer inputNumberSpinner) {
-        this.inputNumberSpinner = inputNumberSpinner;
-    }
-
-    public String getInputText() {
-        return inputText;
-    }
-
-    public void setInputText(String inputText) {
-        this.inputText = inputText;
-    }
-
-    public String getInputSecret() {
-        return inputSecret;
-    }
-
-    public void setInputSecret(String inputSecret) {
-        this.inputSecret = inputSecret;
-    }
-
-    public String getInputTextarea() {
-        return inputTextarea;
-    }
-
-    public void setInputTextarea(String inputTextarea) {
-        this.inputTextarea = inputTextarea;
-    }
-
-    public Boolean getSelectBooleanCheckbox() {
-        return selectBooleanCheckbox;
-    }
-
-    public void setSelectBooleanCheckbox(Boolean selectBooleanCheckbox) {
-        this.selectBooleanCheckbox = selectBooleanCheckbox;
-    }
-
-    public List<SelectItem> getSelectManyCheckbox() {
-        return selectManyCheckbox;
-    }
-
-    public void setSelectManyCheckbox(List<SelectItem> selectManyCheckbox) {
-        this.selectManyCheckbox = selectManyCheckbox;
-    }
-
-    public String getSelectOneListbox() {
-        return selectOneListbox;
-    }
-
-    public void setSelectOneListbox(String selectOneListbox) {
-        this.selectOneListbox = selectOneListbox;
-    }
-
-    public List<SelectItem> getSelectManyListbox() {
-        return selectManyListbox;
-    }
-
-    public void setSelectManyListbox(List<SelectItem> selectManyListbox) {
-        this.selectManyListbox = selectManyListbox;
-    }
-
-    public String getSelectOneMenu() {
-        return selectOneMenu;
-    }
-
-    public void setSelectOneMenu(String selectOneMenu) {
-        this.selectOneMenu = selectOneMenu;
-    }
-
-    public List<SelectItem> getSelectManyMenu() {
-        return selectManyMenu;
-    }
-
-    public void setSelectManyMenu(List<SelectItem> selectManyMenu) {
-        this.selectManyMenu = selectManyMenu;
-    }
-
-    public String getSelectOneRadio() {
-        return selectOneRadio;
-    }
-
-    public void setSelectOneRadio(String selectOneRadio) {
-        this.selectOneRadio = selectOneRadio;
     }
 
     public Date getCalendar() {
         return calendar;
     }
 
+    public String getInplaceInput() {
+        return inplaceInput;
+    }
+
+    public String getInplaceSelect() {
+        return inplaceSelect;
+    }
+
+    public Integer getInputNumberSlider() {
+        return inputNumberSlider;
+    }
+
+    public Integer getInputNumberSpinner() {
+        return inputNumberSpinner;
+    }
+
+    public String getInputSecret() {
+        return inputSecret;
+    }
+
+    public String getInputText() {
+        return inputText;
+    }
+
+    public String getInputTextarea() {
+        return inputTextarea;
+    }
+
+    public String getSelect() {
+        return select;
+    }
+
+    public Boolean getSelectBooleanCheckbox() {
+        return selectBooleanCheckbox;
+    }
+
+    public List<SelectItem> getSelectItems() {
+        return selectItems;
+    }
+
+    public List<String> getSelectManyCheckbox() {
+        return selectManyCheckbox;
+    }
+
+    public List<String> getSelectManyListbox() {
+        return selectManyListbox;
+    }
+
+    public List<String> getSelectManyMenu() {
+        return selectManyMenu;
+    }
+
+    public String getSelectOneListbox() {
+        return selectOneListbox;
+    }
+
+    public String getSelectOneMenu() {
+        return selectOneMenu;
+    }
+
+    public String getSelectOneRadio() {
+        return selectOneRadio;
+    }
+
+    public Class<?>[] getValidationGroups() throws ClassNotFoundException {
+        Attribute group = attributes.get("groups");//only one group at time is used
+        Class<?> groupClass;
+        Object _value = group.getValue();
+        String value = (_value != null ? _value.toString() : null);
+        if (value != null && !value.isEmpty()) {
+            groupClass = Class.forName(value);
+        } else {
+            groupClass = Default.class;
+        }
+        return new Class[]{ groupClass };
+    }
+
+    @AssertTrue(message = VALIDATION_MSG_BOOLEANS,
+    groups = { ValidationGroupBooleanInputs.class })
+    public boolean isAllBooleanInputsCorrect() {
+        return selectBooleanCheckbox.booleanValue();
+    }
+
+    @AssertTrue(message = VALIDATION_MSG_ALL,
+    groups = { Default.class, ValidationGroupAllComponents.class })
+    public boolean isAllInputsCorrect() {
+        return autocompleteInput.contains(SMILE)
+                && inplaceSelect.contains(SMILE)
+                && inplaceInput.contains(SMILE)
+                && select.contains(SMILE)
+                && inputNumberSlider.equals(REQUIRED_INTEGER_VALUE)
+                && inputNumberSpinner.equals(REQUIRED_INTEGER_VALUE)
+                && inputText.contains(SMILE)
+                && inputSecret.contains(SMILE)
+                && inputTextarea.contains(SMILE)
+                && selectBooleanCheckbox.booleanValue()
+                && selectManyCheckbox.contains(SMILE)
+                && selectOneListbox.contains(SMILE)
+                && selectManyListbox.contains(SMILE)
+                && selectOneMenu.contains(SMILE)
+                && selectManyMenu.contains(SMILE)
+                && selectOneRadio.contains(SMILE)
+                && !calendar.after(new Date(System.currentTimeMillis()));
+    }
+
+    @AssertTrue(message = VALIDATION_MSG_NUMERICS,
+    groups = { ValidationGroupNumericInputs.class })
+    public boolean isAllNumericInputsCorrect() {
+        return inputNumberSlider.equals(REQUIRED_INTEGER_VALUE)
+                && inputNumberSpinner.equals(REQUIRED_INTEGER_VALUE);
+    }
+
+    public void setAttributes(Attributes attributes) {
+        this.attributes = attributes;
+    }
+
+    public void setAutocompleteInput(String autocompleteInput) {
+        this.autocompleteInput = autocompleteInput;
+    }
+
     public void setCalendar(Date calendar) {
         this.calendar = calendar;
+    }
+
+    public void setInplaceInput(String inplaceInput) {
+        this.inplaceInput = inplaceInput;
+    }
+
+    public void setInplaceSelect(String inplaceSelect) {
+        this.inplaceSelect = inplaceSelect;
+    }
+
+    public void setInputNumberSlider(Integer inputNumberSlider) {
+        this.inputNumberSlider = inputNumberSlider;
+    }
+
+    public void setInputNumberSpinner(Integer inputNumberSpinner) {
+        this.inputNumberSpinner = inputNumberSpinner;
+    }
+
+    public void setInputSecret(String inputSecret) {
+        this.inputSecret = inputSecret;
+    }
+
+    public void setInputText(String inputText) {
+        this.inputText = inputText;
+    }
+
+    public void setInputTextarea(String inputTextarea) {
+        this.inputTextarea = inputTextarea;
+    }
+
+    public void setSelect(String select) {
+        this.select = select;
+    }
+
+    public void setSelectBooleanCheckbox(Boolean selectBooleanCheckbox) {
+        this.selectBooleanCheckbox = selectBooleanCheckbox;
+    }
+
+    public void setSelectManyCheckbox(List<String> selectManyCheckbox) {
+        this.selectManyCheckbox = selectManyCheckbox;
+    }
+
+    public void setSelectManyListbox(List<String> selectManyListbox) {
+        this.selectManyListbox = selectManyListbox;
+    }
+
+    public void setSelectManyMenu(List<String> selectManyMenu) {
+        this.selectManyMenu = selectManyMenu;
+    }
+
+    public void setSelectOneListbox(String selectOneListbox) {
+        this.selectOneListbox = selectOneListbox;
+    }
+
+    public void setSelectOneMenu(String selectOneMenu) {
+        this.selectOneMenu = selectOneMenu;
+    }
+
+    public void setSelectOneRadio(String selectOneRadio) {
+        this.selectOneRadio = selectOneRadio;
     }
 }
