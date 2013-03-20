@@ -1,6 +1,6 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,12 +18,14 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.messages;
 
 import com.google.common.collect.Lists;
+
 import java.util.Iterator;
 import java.util.List;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
@@ -37,20 +39,22 @@ import org.richfaces.tests.page.fragments.impl.message.Message;
  * Component for rich:messages.
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesMessages implements Iterable<Message> {
+public class RichFacesMessages implements Messages {
 
     @Root
     private WebElement root;
     //
-    @FindBy(xpath= "./span")
+    @FindBy(xpath = "./span")
     private List<RichFacesMessagesMessage> messages;
     //
     private WebDriver driver = GrapheneContext.getProxy();
 
+    @Override
     public Message getMessage(int index) {
         return messages.get(index);
     }
 
+    @Override
     public List<Message> getMessagesForInput(String inputID) {
         List<Message> result = Lists.newArrayList();
         for (Message component : this) {
@@ -61,18 +65,22 @@ public class RichFacesMessages implements Iterable<Message> {
         return result;
     }
 
+    @Override
     public WebElement getRoot() {
         return root;
     }
 
+    @Override
     public boolean isVisible() {
         return isVisibleCondition().apply(driver);
     }
 
+    @Override
     public ExpectedCondition<Boolean> isVisibleCondition() {
         return Graphene.element(root).isVisible();
     }
 
+    @Override
     public ExpectedCondition<Boolean> isNotVisibleCondition() {
         return Graphene.element(root).not().isVisible();
     }
@@ -93,22 +101,13 @@ public class RichFacesMessages implements Iterable<Message> {
 
             @Override
             public void remove() {
-                iterator.remove();
+                throw new UnsupportedOperationException("Remove operation is not supported");
             }
         };
     }
 
+    @Override
     public int size() {
         return messages.size();
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("rootID=").append(getRoot().getAttribute("id")).append(";\n");
-        for (Message component : this) {
-            sb.append("element with id=[").append(component.getRoot().getAttribute("id")).append("], visible=").append(component.isVisible()).append(";\n");
-        }
-        return sb.toString();
     }
 }

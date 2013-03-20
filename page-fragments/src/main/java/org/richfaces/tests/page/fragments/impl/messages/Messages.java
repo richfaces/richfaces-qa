@@ -19,47 +19,34 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.message;
+package org.richfaces.tests.page.fragments.impl.messages;
 
+import java.util.List;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.tests.page.fragments.impl.VisibleComponent;
+import org.richfaces.tests.page.fragments.impl.message.Message;
 
 /**
- * Component for rich:message.
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesMessage extends AbstractMessage {
+public interface Messages extends Iterable<Message>, VisibleComponent {
 
-    @FindBy(className = "rf-msg-det")
-    private WebElement messageDetailElement;
-    @FindBy(className = "rf-msg-sum")
-    private WebElement messageSummaryElement;
+    /**
+     * Returns a Message at index.
+     */
+    Message getMessage(int index);
 
-    @Override
-    protected String getCssClass(MessageType type) {
-        switch (type) {
-            case ERROR:
-                return "rf-msg-err";
-            case FATAL:
-                return "rf-msg-ftl";
-            case INFORMATION:
-                return "rf-msg-inf";
-            case OK:
-                return "rf-msg-ok";
-            case WARNING:
-                return "rf-msg-wrn";
-            default:
-                throw new UnsupportedOperationException("Unknown message type " + type);
-        }
-    }
+    /**
+     * Returns a list of Messages for an input that's id contains an @inputID.
+     */
+    List<Message> getMessagesForInput(String inputID);
 
-    @Override
-    public WebElement getMessageDetailElement() {
-        return messageDetailElement;
-    }
+    WebElement getRoot();
 
-    @Override
-    public WebElement getMessageSummaryElement() {
-        return messageSummaryElement;
-    }
+    /**
+     * Returns a number of Messages.
+     */
+    int size();
 }
