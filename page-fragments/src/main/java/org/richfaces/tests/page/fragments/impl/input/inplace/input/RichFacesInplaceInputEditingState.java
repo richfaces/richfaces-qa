@@ -21,20 +21,14 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.input.inplace.input;
 
-import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.input.inplace.AbstractInplaceComponentEditingState;
 import org.richfaces.tests.page.fragments.impl.input.inplace.EditingState;
-import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponentControls;
 
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesInplaceInputEditingState extends AbstractInplaceComponentEditingState {
-
-    public RichFacesInplaceInputEditingState(WebElement root, WebElement input, InplaceComponentControls controls) {
-        super(root, input, controls);
-    }
+class RichFacesInplaceInputEditingState extends AbstractInplaceComponentEditingState {
 
     @Override
     public EditingState changeToValue(String value) {

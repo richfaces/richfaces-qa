@@ -63,7 +63,7 @@ public class RichFacesSelectPopup extends AbstractOptionList{
 
     @Override
     public Option selectByVisibleText(String text) {
-        return select(null, Selection.BY_MOUSE);
+        return selectByVisibleText(text, Selection.BY_MOUSE);
     }
 
     @Override

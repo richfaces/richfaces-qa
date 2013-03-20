@@ -19,7 +19,9 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.inplace;
+package org.richfaces.tests.page.fragments.impl.input.inplace.select;
+
+import java.util.List;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
@@ -28,66 +30,27 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.State;
+import org.richfaces.tests.page.fragments.impl.VisibleComponent;
 
 /**
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractInplaceComponent<T extends EditingState> implements InplaceComponent {
+class InplaceSelectPopupList implements VisibleComponent {
 
     @Root
-    protected WebElement root;
+    private WebElement root;
     @Drone
-    protected WebDriver driver;
-    @FindBy(css = "span[id$=Label]")
-    protected WebElement label;
-    @FindBy(css = "span[id$=Edit] > input[id$=Input]")
-    protected WebElement editInputElement;
-    @FindBy(css = "span[id$=Edit] span[id$=Btn]")
-    private RichFacesInplaceComponentControls controls;
+    private WebDriver driver;
+    @FindBy(className = "rf-is-opt")
+    private List<WebElement> options;
 
-    @Override
-    public T editBy(OpenBy event) {
-        Utils.triggerJQ(event.getEventName(), root);
-        return instantiateFragment();
+    public OptionsList getOptionsList() {
+        return new InplaceSelectOptionsList(options);
     }
 
-    @Override
-    public InplaceComponentControls getControls() {
-        return controls;
-    }
-
-    protected abstract String getCssClassForState(State state);
-
-    public WebElement getEditInputElement() {
-        return editInputElement;
-    }
-
-    @Override
-    public String getEditValue() {
-        return editInputElement.getAttribute("value").trim();
-    }
-
-    protected abstract T instantiateFragment();
-
-    public WebElement getLabelInputElement() {
-        return label;
-    }
-
-    @Override
-    public String getLabelValue() {
-        return label.getText().trim();
-    }
-
-    @Override
-    public WebElement getRootElement() {
+    public WebElement getRoot() {
         return root;
-    }
-
-    @Override
-    public boolean is(State state) {
-        return root.getAttribute("class").contains(getCssClassForState(state));
     }
 
     @Override

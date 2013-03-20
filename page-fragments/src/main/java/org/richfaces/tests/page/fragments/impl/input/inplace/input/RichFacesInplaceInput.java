@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.input.inplace.input;
 
-import org.richfaces.tests.page.fragments.impl.Utils;
+import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.page.fragments.impl.input.inplace.AbstractInplaceComponent;
 import org.richfaces.tests.page.fragments.impl.input.inplace.EditingState;
 
@@ -29,7 +29,7 @@ import org.richfaces.tests.page.fragments.impl.input.inplace.EditingState;
  * Component implementation of rich:inplaceInput
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesInplaceInput extends AbstractInplaceComponent {
+public class RichFacesInplaceInput extends AbstractInplaceComponent<EditingState> {
 
     @Override
     protected String getCssClassForState(State state) {
@@ -44,8 +44,7 @@ public class RichFacesInplaceInput extends AbstractInplaceComponent {
     }
 
     @Override
-    public EditingState editBy(OpenBy event) {
-        Utils.triggerJQ(event.getEventName(), root);
-        return new RichFacesInplaceInputEditingState(root, editInputElement, controls);
+    protected EditingState instantiateFragment() {
+        return Graphene.createPageFragment(RichFacesInplaceInputEditingState.class, root);
     }
 }

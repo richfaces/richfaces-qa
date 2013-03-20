@@ -21,34 +21,23 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.input.inplace.select;
 
-import java.util.List;
-
 import org.jboss.arquillian.graphene.Graphene;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.WebElementProxyUtils;
 import org.richfaces.tests.page.fragments.impl.input.inplace.AbstractInplaceComponentEditingState;
-import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponentControls;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class RichFacesInplaceSelectEditingState extends AbstractInplaceComponentEditingState implements InplaceSelectEditingState {
 
-    private final List<WebElement> options;
-    private final WebElement globalList;
-    private final WebElement localList;
-    private final WebElement script;
-
-    public RichFacesInplaceSelectEditingState(WebElement root, WebElement input, InplaceComponentControls controls) {
-        super(root, input, controls);
-        localList = WebElementProxyUtils.createProxyForElement(By.cssSelector("span.rf-is-lst-cord"), inplaceComponentRoot);
-        globalList = WebElementProxyUtils.createProxyForElement(By.cssSelector("body > span.rf-is-lst-cord"));
-        waitForPopupShow();
-        script = WebElementProxyUtils.createProxyForElement(By.cssSelector("script"), inplaceComponentRoot);
-        options = WebElementProxyUtils.createProxyForElements(By.className("rf-is-opt"), driver);
-    }
+    @FindBy(css = "span.rf-is-lst-cord")
+    private WebElement localList;
+    @FindBy(tagName = "script")
+    private WebElement script;
+    @FindBy(xpath = "//body/span[contains(@class, rf-is-lst-cord)]")//whole page search
+    private InplaceSelectPopupList globalList;
 
     @Override
     public void cancel(FinishEditingBy by) {
@@ -89,7 +78,7 @@ public class RichFacesInplaceSelectEditingState extends AbstractInplaceComponent
 
     @Override
     public OptionsList getOptions() {
-        return new InplaceSelectOptionsList(options);
+        return globalList.getOptionsList();
     }
 
     private boolean isSaveOnSelect() {
@@ -107,11 +96,6 @@ public class RichFacesInplaceSelectEditingState extends AbstractInplaceComponent
 
     private void waitForPopupHide() {
         Graphene.waitModel().until().element(localList).is().present();
-        Graphene.waitModel().until().element(globalList).is().not().visible();
-    }
-
-    private void waitForPopupShow() {
-        Graphene.waitModel().until().element(localList).is().not().present();
-        Graphene.waitModel().until().element(globalList).is().visible();
+        Graphene.waitModel().until(globalList.isNotVisibleCondition());
     }
 }

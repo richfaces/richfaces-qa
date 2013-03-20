@@ -26,7 +26,7 @@ import org.openqa.selenium.WebElement;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class InplaceSelectOption implements Option {
+class InplaceSelectOption implements Option {
 
     private final WebElement element;
     private final int index;

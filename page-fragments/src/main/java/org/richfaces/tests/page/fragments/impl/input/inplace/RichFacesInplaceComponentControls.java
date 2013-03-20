@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.input.inplace;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -33,12 +33,13 @@ import org.richfaces.tests.page.fragments.impl.Utils;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesInplaceComponentControls implements InplaceComponentControls {
+class RichFacesInplaceComponentControls implements InplaceComponentControls {
 
     @Root
     private WebElement root;
     //
-    private WebDriver driver = GrapheneContext.getProxy();
+    @Drone
+    private WebDriver driver;
     //
     @FindBy(css = "input[id$=Okbtn]")
     private WebElement okButtonElement;

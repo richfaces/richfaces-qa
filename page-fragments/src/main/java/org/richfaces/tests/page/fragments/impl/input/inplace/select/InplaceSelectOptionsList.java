@@ -32,9 +32,8 @@ import org.openqa.selenium.WebElement;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class InplaceSelectOptionsList implements OptionsList {
+class InplaceSelectOptionsList implements OptionsList {
 
-    private static final long serialVersionUID = 1L;
     private final ArrayList<Option> options = Lists.newArrayList();
 
     public InplaceSelectOptionsList(List<WebElement> options) {

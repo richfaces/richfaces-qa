@@ -21,18 +21,33 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.input.inplace.select;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.input.inplace.AbstractInplaceComponent;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesInplaceSelect extends AbstractInplaceComponent {
+public class RichFacesInplaceSelect extends AbstractInplaceComponent<InplaceSelectEditingState> {
+
+    @FindBy(xpath = "//body/span[contains(@class, rf-is-lst-cord)]")//whole page search
+    private InplaceSelectPopupList globalList;
+    @FindBy(css = "span.rf-is-lst-cord")
+    private WebElement localList;
+    @FindBy(tagName = "script")
+    private WebElement script;
 
     @Override
     public InplaceSelectEditingState editBy(OpenBy event) {
-        Utils.triggerJQ(event.getEventName(), root);
-        return new RichFacesInplaceSelectEditingState(root, editInputElement, controls);
+        if (!globalList.isVisible()) {
+            Utils.triggerJQ(event.getEventName(), root);
+            if (isOpenOnEdit()) {
+                waitForPopupShow();
+            }
+        }
+        return instantiateFragment();
     }
 
     @Override
@@ -45,5 +60,23 @@ public class RichFacesInplaceSelect extends AbstractInplaceComponent {
             default:
                 throw new UnsupportedOperationException("Unknown state " + state);
         }
+    }
+
+    @Override
+    protected InplaceSelectEditingState instantiateFragment() {
+        return Graphene.createPageFragment(RichFacesInplaceSelectEditingState.class, root);
+    }
+
+    private boolean isOpenOnEdit() {
+        String text = Utils.returningJQ("text()", script);//getting text from hidden element
+        if (text.contains("\"openOnEdit\":false")) {
+            return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
+    }
+
+    private void waitForPopupShow() {
+        Graphene.waitModel().until().element(localList).is().not().present();
+        Graphene.waitModel().until(globalList.isVisibleCondition());
     }
 }

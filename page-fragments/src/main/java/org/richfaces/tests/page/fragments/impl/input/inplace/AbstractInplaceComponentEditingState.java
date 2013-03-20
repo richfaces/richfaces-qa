@@ -21,11 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.input.inplace;
 
-import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 
 /**
  *
@@ -33,16 +35,14 @@ import org.openqa.selenium.interactions.Actions;
  */
 public abstract class AbstractInplaceComponentEditingState implements EditingState {
 
-    protected WebDriver driver = GrapheneContext.getProxy();
-    protected final WebElement inplaceComponentRoot;
-    protected final WebElement input;
-    protected final InplaceComponentControls controls;
-
-    public AbstractInplaceComponentEditingState(WebElement root, WebElement input, InplaceComponentControls controls) {
-        this.inplaceComponentRoot = root;
-        this.input = input;
-        this.controls = controls;
-    }
+    @Root
+    protected WebElement root;
+    @Drone
+    protected WebDriver driver;
+    @FindBy(css = "span[id$=Edit] > input[id$=Input]")
+    protected WebElement input;
+    @FindBy(css = "span[id$=Edit] span[id$=Btn]")
+    private RichFacesInplaceComponentControls controls;
 
     @Override
     public void cancel() {
