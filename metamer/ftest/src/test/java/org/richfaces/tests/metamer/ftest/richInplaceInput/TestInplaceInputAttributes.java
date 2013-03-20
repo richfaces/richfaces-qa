@@ -39,7 +39,6 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -222,7 +221,8 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
         inplaceInputAttributes.set(InplaceInputAttributes.inputWidth, "");
 
         width = inplaceInput.getEditInputElement().getCssValue("width");
-        assertEquals(width, "66px", "Default width of input was not set.");
+        Integer widthI = Integer.parseInt(width.substring(0, width.indexOf("px")));
+        assertEquals(widthI, 66, 20, "Default width of input was not set.");
     }
 
     @Test
