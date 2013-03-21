@@ -260,7 +260,7 @@ public class MetamerPage {
         @Override
         public Object intercept(InvocationContext context) throws Throwable {
             beforeAction();
-            Object o = context.getMethod().invoke(context.getTarget(), context.getArguments());
+            Object o = context.invoke();
             afterAction();
             return o;
         }
