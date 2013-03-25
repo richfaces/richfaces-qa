@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataTable.page;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -31,11 +32,11 @@ import org.openqa.selenium.support.FindBy;
 public class SimpleTablePage {
 
     // Subtables
-    @FindBy(xpath = "//*[@class='example-cnt']//tbody[@class='rf-cst'][1]/tr[4]")
+    @FindBy(xpath = "//tbody[@class='rf-cst'][1]/tr[4]")
     private WebElement sanJoseSubtable;
-    @FindBy(xpath = "//*[@class='example-cnt']//tbody[@class='rf-cst'][2]/tr[4]")
+    @FindBy(xpath = "//tbody[@class='rf-cst'][2]/tr[4]")
     private WebElement seattleSubtable;
-    @FindBy(xpath = "//*[@class='example-cnt']//tfoot/tr")
+    @FindBy(xpath = "//tfoot/tr")
     private WebElement footSubtable;
 
     public String getSanJoseHotels() {

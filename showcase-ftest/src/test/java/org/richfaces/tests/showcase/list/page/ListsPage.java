@@ -32,7 +32,7 @@ import org.richfaces.tests.page.fragments.impl.list.RichFacesList;
  */
 public class ListsPage {
 
-    @FindBy(id = "list")
+    @FindBy(xpath="//*[substring(@id, string-length(@id) - 3) = 'list']")
     public RichFacesList list;
 
     @FindBy(jquery = "a:contains('ordered')")

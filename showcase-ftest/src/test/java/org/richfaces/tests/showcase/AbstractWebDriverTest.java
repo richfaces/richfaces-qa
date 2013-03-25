@@ -27,6 +27,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -50,8 +52,17 @@ public class AbstractWebDriverTest extends AbstractShowcaseTest {
         String addition = getAdditionToContextRoot();
 
         this.contextRoot = getContextRoot();
-
+        ShowcaseLayout layout = loadLayout();
+        if (layout == ShowcaseLayout.MOBILE) {
+            webDriver.get(URLUtils.buildUrl(this.contextRoot, "mobile/").toExternalForm()); // because of '#' in URLs
+        }
         webDriver.get(URLUtils.buildUrl(contextRoot, addition).toExternalForm());
+        if (layout == ShowcaseLayout.MOBILE) {
+        Graphene.waitAjax()
+                .until()
+                .element(By.className("sourceView"))
+                .is().visible();
+        }
     }
 
     @Override

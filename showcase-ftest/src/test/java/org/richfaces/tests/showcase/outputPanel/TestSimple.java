@@ -44,6 +44,7 @@ public class TestSimple extends AbstractWebDriverTest {
     @Test
     public void testFirstCorrectInput() {
         page.firstInput.click();
+        page.firstInput.clear();
         page.firstInput.sendKeys(CORRECT);
         Graphene.waitAjax()
                 .until("After typing a correct value into the first input field no output text should be present.")
@@ -64,6 +65,7 @@ public class TestSimple extends AbstractWebDriverTest {
     @Test
     public void testFirstWrongInput() {
         page.firstInput.click();
+        page.firstInput.clear();
         page.firstInput.sendKeys(WRONG);
         Graphene.waitAjax()
                 .until("After typing a wrong value into the first input field no output text should be present.")
@@ -87,6 +89,7 @@ public class TestSimple extends AbstractWebDriverTest {
     @Test
     public void testSecondCorrectInput() {
         page.secondInput.click();
+        page.secondInput.clear();
         page.secondInput.sendKeys(CORRECT);
         Graphene.waitAjax()
                 .until("After typing a correct value into the second input field, the output text should be present.")
@@ -102,6 +105,7 @@ public class TestSimple extends AbstractWebDriverTest {
     @Test
     public void testSecondWrongInput() throws InterruptedException {
         page.secondInput.click();
+        page.secondInput.clear();
         page.secondInput.sendKeys(WRONG);
         Graphene.waitAjax()
                 .until("After typing a wrong value into the second input field, an error message should be present.")
