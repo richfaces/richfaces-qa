@@ -50,6 +50,9 @@ public class RichTooltipBean implements Serializable {
 
     private int counter = 0;
 
+    /** following variable is for issue simulation (RF-12841), and has no glue with tooltip functionality itself */
+    private boolean expanded;
+
     private String testProperty;
 
     /**
@@ -85,6 +88,10 @@ public class RichTooltipBean implements Serializable {
         this.testProperty = "blablabl";
     }
 
+    public void toggle() {
+        expanded = !expanded;
+    }
+
     public Attributes getAttributes() {
         return attributes;
     }
@@ -107,5 +114,13 @@ public class RichTooltipBean implements Serializable {
 
     public void setTestProperty(String testProperty) {
         this.testProperty = testProperty;
+    }
+
+    public boolean isExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
     }
 }
