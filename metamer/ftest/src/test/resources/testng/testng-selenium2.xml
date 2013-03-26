@@ -37,6 +37,7 @@
             <package name="org.richfaces.tests.metamer.ftest.richItemChangeListener"/>
             <package name="org.richfaces.tests.metamer.ftest.richJQuery"/>
             <package name="org.richfaces.tests.metamer.ftest.richList"/>
+            <package name="org.richfaces.tests.metamer.ftest.richMenuGroup"/>
             <package name="org.richfaces.tests.metamer.ftest.richMessage"/>
             <package name="org.richfaces.tests.metamer.ftest.richMessages"/>
             <package name="org.richfaces.tests.metamer.ftest.richPanel" />
