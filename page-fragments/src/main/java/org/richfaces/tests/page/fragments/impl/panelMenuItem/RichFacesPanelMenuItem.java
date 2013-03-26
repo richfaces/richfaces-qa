@@ -21,6 +21,9 @@
  */
 package org.richfaces.tests.page.fragments.impl.panelMenuItem;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.ATTR_CLASS;
+import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_DISABLED_SUFFIX;
+import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_HOVERED_SUFFIX;
+import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_SELECTED_SUFFIX;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.getGuardTypeForMode;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -68,15 +71,15 @@ public class RichFacesPanelMenuItem {
     }
 
     public boolean isSelected() {
-        return root.getAttribute(ATTR_CLASS).contains("-sel");
+        return root.getAttribute(ATTR_CLASS).contains(CSS_SELECTED_SUFFIX);
     }
 
     public boolean isHovered() {
-        return root.getAttribute(ATTR_CLASS).contains("-hov");
+        return root.getAttribute(ATTR_CLASS).contains(CSS_HOVERED_SUFFIX);
     }
 
     public boolean isDisabled() {
-        return root.getAttribute(ATTR_CLASS).contains("-dis");
+        return root.getAttribute(ATTR_CLASS).contains(CSS_DISABLED_SUFFIX);
     }
 
     public boolean isVisible() {

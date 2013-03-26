@@ -22,16 +22,15 @@
 package org.richfaces.tests.page.fragments.impl.DataScroller;
 
 import java.util.List;
+import org.jboss.arquillian.drone.api.annotation.Drone;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.richfaces.tests.page.fragments.impl.WebElementProxyUtils;
 
 public class RichFacesDataScroller implements DataScroller {
 
@@ -53,8 +52,9 @@ public class RichFacesDataScroller implements DataScroller {
     protected List<WebElement> numberedPages;
     @FindBy(className = "rf-ds-act")
     protected WebElement actPage;
-    //
-    private WebDriver driver = GrapheneContext.getProxy();
+
+    @Drone
+    private WebDriver driver;
     private static final String CSS_PAGE_SELECTOR = "[id$='ds_%d']";
     private static final String CLASS_DISABLED = "rf-ds-dis";
 
@@ -125,7 +125,7 @@ public class RichFacesDataScroller implements DataScroller {
     }
 
     private void switchTo(By by) {
-        WebElementProxyUtils.createProxyForElement(by, root).click();
+        root.findElement(by).click();
     }
 
     @Override

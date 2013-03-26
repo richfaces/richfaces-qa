@@ -21,87 +21,56 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.inplaceSelect;
 
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.page.fragments.impl.input.inplace.EditingState.FinishEditingBy;
+import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.OpenBy;
+import org.richfaces.tests.page.fragments.impl.input.inplace.select.RichFacesInplaceSelect;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.inplaceSelect.page.SimplePage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
- * @version $Revision$
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestInplaceSelect extends AbstractGrapheneTest {
+public class TestInplaceSelect extends AbstractWebDriverTest {
 
-    /* ********************************************************************************************
-     * Locators ****************************************************************** **************************
-     */
-
-    protected JQueryLocator selectSimple = jq("input[id$=Input]:eq(0)");
-    protected JQueryLocator selectCustomization = jq("input[id$=Input]:eq(1)");
-
-    protected JQueryLocator selectSimpleLabel = jq("span[id$=Label]:eq(0)");
-    protected JQueryLocator selectCustomizationLabel = jq("span[id$=Label]:eq(1)");
-
-    protected JQueryLocator optionLocator = jq("span.rf-is-opt:contains('{0}')");
-
-    protected JQueryLocator declineButton = jq("input.rf-is-btn:eq(1)");
+    @Page
+    private SimplePage page;
 
     /* *********************************************************************************************
      * Tests ********************************************************************* ************************
      */
-
     @Test
     public void testSimpleSelect() {
         for (int i = 1; i <= 5; i++) {
-
-            checkSelect(selectSimple, selectSimpleLabel, "Option " + i, false);
+            checkSelect(page.simpleSelect, "Option " + i, OpenBy.CLICK);
         }
     }
 
     @Test
     public void testCustomizationSelect() {
-        checkSelect(selectCustomization, selectCustomizationLabel, "Alabama", true);
-
-        checkSelect(selectCustomization, selectCustomizationLabel, "Florida", true);
-
-        checkSelect(selectCustomization, selectCustomizationLabel, "California", true);
+        checkSelect(page.customSelect, "Alabama", OpenBy.DBLCLICK);
+        checkSelect(page.customSelect, "Florida", OpenBy.DBLCLICK);
+        checkSelect(page.customSelect, "California", OpenBy.DBLCLICK);
     }
 
     /* *********************************************************************************************************
      * Help methods **************************************************************
      * *******************************************
      */
-
     /**
      * Checks the select, when it is select which is activated by double click, then also there is need for click on
      * accept button.
      */
-
-    private void checkSelect(JQueryLocator select, JQueryLocator labelWhenSomethingIsSelected,
-        String optionLabelFromPoppup, boolean doubleClick) {
-
-        JQueryLocator acceptButton = jq("input[class*=rf-is-btn]:eq(0)");
-
-        if (doubleClick) {
-
-            selenium.doubleClick(select);
+    private void checkSelect(RichFacesInplaceSelect select, String option, OpenBy by) {
+        if (by.equals(OpenBy.DBLCLICK)) {
+            select.editBy(by).changeToValue(option).confirm(FinishEditingBy.CONTROLS);
         } else {
-
-            selenium.click(select);
+            select.editBy(by).changeToValue(option).confirm();
         }
-
-        selenium.click(optionLocator.format(optionLabelFromPoppup));
-
-        if (doubleClick) {
-
-            selenium.mouseDown(acceptButton);
-        }
-
-        String optionFromLabel = selenium.getText(labelWhenSomethingIsSelected);
-
-        assertEquals(optionFromLabel, optionFromLabel, "The selected option is different as the select shows!");
+        assertEquals(select.getLabelValue(), option, "The selected option is different as the select shows!");
     }
-
 }

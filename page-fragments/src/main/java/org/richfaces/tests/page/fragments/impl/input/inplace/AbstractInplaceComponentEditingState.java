@@ -1,6 +1,6 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,31 +18,31 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
-package org.richfaces.tests.page.fragments.impl.input.inplaceInput;
+ *******************************************************************************/
+package org.richfaces.tests.page.fragments.impl.input.inplace;
 
-import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class EditingStateImpl implements EditingState {
+public abstract class AbstractInplaceComponentEditingState implements EditingState {
 
-    private final WebElement input;
-    private final Controls controls;
-    //
-    private WebDriver driver = GrapheneContext.getProxy();
-    private Actions action = new Actions(driver);
-
-    public EditingStateImpl(WebElement input, Controls controls) {
-        this.input = input;
-        this.controls = controls;
-    }
+    @Root
+    protected WebElement root;
+    @Drone
+    protected WebDriver driver;
+    @FindBy(css = "span[id$=Edit] > input[id$=Input]")
+    protected WebElement input;
+    @FindBy(css = "span[id$=Edit] span[id$=Btn]")
+    private RichFacesInplaceComponentControls controls;
 
     @Override
     public void cancel() {
@@ -59,16 +59,17 @@ public class EditingStateImpl implements EditingState {
                 cancelByKeys();
                 break;
             default:
-                throw new UnsupportedOperationException("Unknown switch.");
+                throw new UnsupportedOperationException("Unknown switch " + by);
         }
-    }
-
-    private void cancelByKeys() {
-        input.sendKeys(Keys.chord(Keys.CONTROL, Keys.ESCAPE));
+        waitAfterConfirmOrCancel();
     }
 
     private void cancelByControls() {
         getControls().cancel();
+    }
+
+    private void cancelByKeys() {
+        input.sendKeys(Keys.chord(Keys.CONTROL, Keys.ESCAPE));
     }
 
     @Override
@@ -88,25 +89,22 @@ public class EditingStateImpl implements EditingState {
             default:
                 throw new UnsupportedOperationException("Unknown switch.");
         }
-    }
-
-    private void confirmByKeys() {
-        action.sendKeys(Keys.RETURN).build().perform();
+        waitAfterConfirmOrCancel();
     }
 
     private void confirmByControls() {
         getControls().ok();
     }
 
-    @Override
-    public Controls getControls() {
-        return controls;
+    private void confirmByKeys() {
+        new Actions(driver).sendKeys(Keys.chord(Keys.CONTROL, Keys.RETURN)).perform();
     }
 
     @Override
-    public EditingState type(String newValue) {
-        input.clear();
-        input.sendKeys(newValue);
-        return this;
+    public InplaceComponentControls getControls() {
+        return controls;
+    }
+
+    protected void waitAfterConfirmOrCancel() {//empty
     }
 }

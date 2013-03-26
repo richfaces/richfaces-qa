@@ -33,6 +33,18 @@ public abstract class PanelMenuHelper {
 
     public static final String ATTR_CLASS = "class";
 
+    public static final String CSS_TRANSPARENT_SUFFIX = "-transparent";
+
+    public static final String CSS_SELECTED_SUFFIX = "-sel";
+
+    public static final String CSS_HOVERED_SUFFIX = "-hov";
+
+    public static final String CSS_DISABLED_SUFFIX = "-dis";
+
+    public static final String CSS_COLLAPSED_SUFFIX = "-colps";
+
+    public static final String CSS_EXPANDED_SUFFIX = "-exp";
+
     public static final By IMG_BY_LOC = By.tagName("img");
 
     public static <T> T getGuardTypeForMode(T target, Mode mode) {

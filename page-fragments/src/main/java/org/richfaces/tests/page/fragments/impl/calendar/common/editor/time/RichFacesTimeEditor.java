@@ -75,7 +75,7 @@ public class RichFacesTimeEditor implements TimeEditor {
             throw new RuntimeException("Cancel button is not visible.");
         }
         cancelButtonElement.click();
-        Graphene.waitGui().until(isNotVisibleCondition());
+        Graphene.waitGui().withMessage("Time editor did not close.").until(isNotVisibleCondition());
     }
 
     @Override
@@ -88,7 +88,7 @@ public class RichFacesTimeEditor implements TimeEditor {
             throw new RuntimeException("Ok button is not visible.");
         }
         okButtonElement.click();
-        Graphene.waitGui().until(isNotVisibleCondition());
+        Graphene.waitGui().withMessage("Time editor did not close.").until(isNotVisibleCondition());
     }
 
     @Override

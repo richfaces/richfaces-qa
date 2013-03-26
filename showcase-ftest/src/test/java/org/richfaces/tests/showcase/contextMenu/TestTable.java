@@ -75,7 +75,7 @@ public class TestTable extends AbstractContextMenuTest {
     public void testContextMenuRenderedOnTheCorrectPosition() {
         WebElement elementToTryOn = page.getPrices().get(5);
 
-        checkContextMenuRenderedAtCorrectPosition(elementToTryOn, page.getContextMenu().getContextMenuPopup(),
+        checkContextMenuRenderedAtCorrectPosition(elementToTryOn, page.getContextMenu().getMenuPopup(),
             InvocationType.RIGHT_CLICK, page.getWaitConditionOnSelectingRow(elementToTryOn));
     }
 }

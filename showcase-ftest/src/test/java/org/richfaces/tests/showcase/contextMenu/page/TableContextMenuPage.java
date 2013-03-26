@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.page.fragments.impl.contextMenu.RichFacesContextMenu;
-import org.richfaces.tests.page.fragments.impl.contextMenu.ContextMenuItem;
+import org.richfaces.tests.page.fragments.impl.contextMenu.PopupMenuItem;
 
 public class TableContextMenuPage {
 
@@ -27,7 +27,7 @@ public class TableContextMenuPage {
     @FindBy(css = "input[type='button']")
     private WebElement closeButton;
 
-    public static final ContextMenuItem VIEW = new ContextMenuItem("View");
+    public static final PopupMenuItem VIEW = new PopupMenuItem("View");
     private static final String CLASS_OF_SELECTED_ROW = "rf-edt-r-act";
 
     public ExpectedCondition<Boolean> getWaitConditionOnSelectingRow(final WebElement row) {

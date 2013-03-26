@@ -19,54 +19,38 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.contextMenu;
+package org.richfaces.tests.page.fragments.impl.dropDownMenu;
+
+import java.util.List;
+
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.contextMenu.AbstractPopupMenu;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class ContextMenuItem {
+public class RichFacesDropDownMenu extends AbstractPopupMenu {
 
-    private final String itemText;
+    @FindBy(className = "rf-ddm-itm")
+    private List<WebElement> menuItemsElements;
 
-    public ContextMenuItem(String itemText) {
-        if (itemText == null || itemText.length() == 0) {
-            throw new IllegalArgumentException("Context menu item text can not be null or empty!");
-        }
-        this.itemText = itemText;
-    }
+    @FindBy(jquery = ".rf-ddm-lst:eq(0)")
+    private WebElement dropDownMenuPopup;
 
-    public String getText() {
-        return itemText;
+    @Override
+    public WebElement getMenuPopup() {
+        return dropDownMenuPopup;
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((itemText == null) ? 0 : itemText.hashCode());
-        return result;
+    public List<WebElement> getMenuItemElements() {
+        return menuItemsElements;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        ContextMenuItem other = (ContextMenuItem) obj;
-        if (itemText == null) {
-            if (other.itemText != null) {
-                return false;
-            }
-        } else if (!itemText.equals(other.itemText)) {
-            return false;
-        }
-        return true;
+    public String getNameOfFragment() {
+        return RichFacesDropDownMenu.class.getName();
     }
 
 }

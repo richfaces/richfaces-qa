@@ -24,6 +24,8 @@ package org.richfaces.tests.page.fragments.impl;
 import java.util.Iterator;
 
 import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
+import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
@@ -56,7 +58,7 @@ public final class Utils {
     public static void jQ(String cmd, WebElement element) {
         JavascriptExecutor executor = (JavascriptExecutor) GrapheneContext.getProxy();
         String jQueryCmd = String.format("jQuery(arguments[0]).%s", cmd);
-        executor.executeScript(jQueryCmd, element);
+        executor.executeScript(jQueryCmd, unwrap(element));
     }
 
     /**
@@ -68,7 +70,7 @@ public final class Utils {
     public static String returningJQ(String cmd, WebElement element) {
         JavascriptExecutor executor = (JavascriptExecutor) GrapheneContext.getProxy();
         String jQueryCmd = String.format("x = jQuery(arguments[0]).%s ; return x;", cmd);
-        return String.valueOf(executor.executeScript(jQueryCmd, element));
+        return String.valueOf(executor.executeScript(jQueryCmd, unwrap(element)));
     }
 
     private static boolean _tolerantAssertPointEquals(Point p1, Point p2, int xTolerance, int yTolerance) {
@@ -124,5 +126,13 @@ public final class Utils {
      */
     public static void triggerJQ(String event, WebElement element) {
         jQ(String.format("trigger('%s')", event), element);
+    }
+
+    public static WebElement unwrap(WebElement e) {
+        WebElement result = e;
+        while (GrapheneProxy.isProxyInstance(result)) {
+            result = ((GrapheneProxyInstance) result).unwrap();
+        }
+        return result;
     }
 }

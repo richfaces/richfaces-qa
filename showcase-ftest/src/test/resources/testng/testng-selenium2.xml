@@ -33,7 +33,7 @@
         </packages>
 
         <classes>
-          <class name="org.richfaces.tests.showcase.outputPanel.TestSimple"/>
+            <class name="org.richfaces.tests.showcase.outputPanel.TestSimple"/>
         </classes>
     </test>
 </suite>

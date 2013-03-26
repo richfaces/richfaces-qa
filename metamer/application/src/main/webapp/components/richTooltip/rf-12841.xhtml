@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+    <!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2013, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+    <ui:composition template="/templates/template.xhtml">
+
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
+        <ui:define name="component">
+            <!-- JIRA short desc: -->
+            <a href="https://issues.jboss.org/browse/RF-12841">RF-12841</a>
+            <h2>Tooltip: JavaScript Error with showDelay and partial update</h2>
+            <b>Description:</b>
+            <i>
+rich:tooltip causes script error when showDelay is used and the tooltip is updated due to a JSF request.<br/>
+Console log of Firefox:<br/>
+TypeError: tooltip.popup is null<br/>
+tooltip.popup.show(tooltip.saveShowEvent); in tooltip.js (line 245)<br/>
+            </i>
+            <!--  -->
+            <br/>
+            <a4j:commandLink action="#{richTooltipBean.toggle}" render="@this">
+                <h:graphicImage library="org.richfaces.images"
+                    name="#{richTooltipBean.expanded ? 'triangleUp.png' : 'triangleDown.png'}"/>
+                        
+                <rich:tooltip followMouse="false" showDelay="1000">
+                    #{richTooltipBean.expanded ? 'close' : 'expand'}
+                </rich:tooltip>
+            </a4j:commandLink>
+        </ui:define>
+
+    </ui:composition>
+</html>

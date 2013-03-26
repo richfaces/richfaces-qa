@@ -39,7 +39,6 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemA
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.selectable;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.status;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuItemAttributes;
-import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.IMG_BY_LOC;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.getGuardTypeForMode;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -48,7 +47,6 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.richfaces.PanelMenuMode;
 import org.richfaces.component.Mode;
@@ -117,12 +115,12 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     @Test
     public void testLeftDisabledIcon() {
         panelMenuItemAttributes.set(disabled, true);
-        verifyStandardIcons(leftDisabledIcon, page.item.leftIcon.icon, IMG_BY_LOC, "");
+        verifyStandardIcons(leftDisabledIcon, page.item.leftIcon.root, page.item.leftIcon.imgIcon, "");
     }
 
     @Test
     public void testLeftIcon() {
-        verifyStandardIcons(leftIcon, page.item.leftIcon.icon, IMG_BY_LOC, "");
+        verifyStandardIcons(leftIcon, page.item.leftIcon.root, page.item.leftIcon.imgIcon, "");
 
         panelMenuItemAttributes.set(disabled, true);
         assertTrue(page.item.leftIcon.isTransparent());
@@ -130,7 +128,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
 
     @Test
     public void testLeftIconClass() {
-        testStyleClass(page.item.leftIcon.icon, leftIconClass);
+        testStyleClass(page.item.leftIcon.root, leftIconClass);
     }
 
     @Test
@@ -155,13 +153,13 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     @Test
     public void testRightDisabledIcon() {
         panelMenuItemAttributes.set(disabled, true);
-        verifyStandardIcons(rightDisabledIcon, page.item.rightIcon.icon, IMG_BY_LOC, "");
+        verifyStandardIcons(rightDisabledIcon, page.item.rightIcon.root, page.item.rightIcon.imgIcon, "");
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10519")
     public void testRightIcon() {
-        verifyStandardIcons(rightIcon, page.item.rightIcon.icon, IMG_BY_LOC, "");
+        verifyStandardIcons(rightIcon, page.item.rightIcon.root, page.item.rightIcon.imgIcon, "");
 
         panelMenuItemAttributes.set(disabled, true);
         assertTrue(page.item.rightIcon.isTransparent());
@@ -170,7 +168,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10519")
     public void testRightIconClass() {
-        testStyleClass(page.item.rightIcon.icon, rightIconClass);
+        testStyleClass(page.item.rightIcon.root, rightIconClass);
     }
 
     @Test
@@ -208,13 +206,13 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
         testStyleClass(page.item.getRoot());
     }
 
-    private void verifyStandardIcons(PanelMenuItemAttributes attribute, WebElement icon, By image, String classSuffix) {
+    private void verifyStandardIcons(PanelMenuItemAttributes attribute, WebElement icon, WebElement imgIcon, String classSuffix) {
         IconsCheckerWebdriver<PanelMenuItemAttributes> checker = new IconsCheckerWebdriver<PanelMenuItemAttributes>(
             driver, panelMenuItemAttributes, "rf-ico-", "");
 
         checker.checkCssImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
         checker.checkCssNoImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
-        checker.checkImageIconsAsRelative(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), image, classSuffix, false);
+        checker.checkImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), imgIcon, classSuffix, false);
         checker.checkNone(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
 
     }

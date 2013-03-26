@@ -24,6 +24,7 @@ package org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;

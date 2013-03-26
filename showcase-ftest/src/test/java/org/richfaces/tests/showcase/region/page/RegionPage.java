@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.region.page;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -29,25 +30,25 @@ import org.openqa.selenium.support.FindBy;
  */
 public class RegionPage {
 
-    @FindBy(xpath = "//*[@class='example-cnt']//table[contains(@id, 'userInfoPanel1')]//td[contains(text(), 'User email')]/..//input")
+    @FindBy(xpath = "//table[contains(@id, 'userInfoPanel1')]//td[contains(text(), 'User email')]/..//input")
     public WebElement brokenEmailInput;
-    @FindBy(xpath = "//*[@class='example-cnt']//table[contains(@id, 'userInfoPanel1')]//td[contains(text(), 'User Name')]/..//input")
+    @FindBy(xpath = "//table[contains(@id, 'userInfoPanel1')]//td[contains(text(), 'User Name')]/..//input")
     public WebElement brokenNameInput;
-    @FindBy(xpath = "//*[@class='example-cnt']//table[contains(@id, 'echopanel1')]//td[text()='Entered email:']/../td[position()=2]")
+    @FindBy(xpath = "//table[contains(@id, 'echopanel1')]//td[text()='Entered email:']/../td[position()=2]")
     public WebElement brokenEmailOutput;
-    @FindBy(xpath = "//*[@class='example-cnt']//table[contains(@id, 'echopanel1')]//td[text()='Entered name:']/../td[position()=2]")
+    @FindBy(xpath = "//table[contains(@id, 'echopanel1')]//td[text()='Entered name:']/../td[position()=2]")
     public WebElement brokenNameOutput;
-    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='submit'][@value='broken submit']")
+    @FindBy(xpath = "//input[@type='submit'][@value='broken submit']")
     public WebElement brokenSubmit;
-    @FindBy(xpath = "//*[@class='example-cnt']//th[contains(text(), 'User Info Panel with Region')]/../../..//td[contains(text(), 'User email')]/..//input")
+    @FindBy(xpath = "//th[contains(text(), 'User Info Panel with Region')]/../../..//td[contains(text(), 'User email')]/..//input")
     public WebElement emailInput;
-    @FindBy(xpath = "//*[@class='example-cnt']//th[contains(text(), 'User Info Panel with Region')]/../../..//td[contains(text(), 'User Name')]/..//input")
+    @FindBy(xpath = "//th[contains(text(), 'User Info Panel with Region')]/../../..//td[contains(text(), 'User Name')]/..//input")
     public WebElement nameInput;
-    @FindBy(xpath = "//*[@class='example-cnt']//table[contains(@id, 'echopanel2')]//td[text()='Entered email:']/../td[position()=2]")
+    @FindBy(xpath = "//table[contains(@id, 'echopanel2')]//td[text()='Entered email:']/../td[position()=2]")
     public WebElement emailOutput;
-    @FindBy(xpath = "//*[@class='example-cnt']//table[contains(@id, 'echopanel2')]//td[text()='Entered name:']/../td[position()=2]")
+    @FindBy(xpath = "//table[contains(@id, 'echopanel2')]//td[text()='Entered name:']/../td[position()=2]")
     public WebElement nameOutput;
-    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='submit'][@value='submit']")
+    @FindBy(xpath = "//input[@type='submit'][@value='submit']")
     public WebElement submit;
 
 }

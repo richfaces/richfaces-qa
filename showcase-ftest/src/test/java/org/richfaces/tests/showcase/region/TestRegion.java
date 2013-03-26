@@ -27,6 +27,7 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.region.page.RegionPage;
 import static org.testng.Assert.assertEquals;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**

@@ -26,21 +26,20 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     -->
 
     <ui:composition template="/templates/template.xhtml">
-    
-    	<ui:define name="head">
-    	
-    		<script type="text/javascript">
-    			function callJQueryFadeOut() {
-    				var value = jQuery("#{rich:jQuerySelector('input')}").val();
-    				jQuery("#{rich:jQuerySelector('input')}").fadeOut();
-    			}
-    			
-    			function callJQueryFadeIn() {
-    				jQuery("#{rich:jQuerySelector('input')}").fadeIn();
-    			}	    		
-    		</script>
-    	
-    	</ui:define>
+
+        <ui:define name="head">
+
+            <script type="text/javascript">
+                function callJQueryFadeOut() {
+                    jQuery("#{rich:jQuerySelector('input')}").fadeOut();
+                }
+
+                function callJQueryFadeIn() {
+                    jQuery("#{rich:jQuerySelector('input')}").fadeIn();
+                }
+            </script>
+
+        </ui:define>
 
         <ui:define name="view">
             <f:metadata>
@@ -70,20 +69,20 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                 rich:findComponent('input').value
                 <h:outputText id="findComponentOutput" value="#{rich:findComponent('input').value}" style="font-weight: bold;" />
-                
+
                 rich:jQuerySelector('input')
                 <h:outputText id="jQuerySelectorOutput" value="#{rich:jQuerySelector('input')}" style="font-weight: bold;" />
-                
+
                 rich:jQuery('input')
                 <h:outputText id="jQueryOutput" value="#{rich:jQuery('input')}" style="font-weight: bold;" />
-                
+
                 <i>onmouseover</i> jQuery("rich:jQuerySelector('input')").fadeOut()
- 				<h:commandButton id="jQuerySelectorOutputFadeOut" value="fadeOut" onmouseover="callJQueryFadeOut();" />
- 
- 				<i>onmouseover</i> jQuery("rich:jQuerySelector('input')").fadeIn()
- 				<h:commandButton id="jQuerySelectorOutputFadeIn" value="fadeIn" onmouseover="callJQueryFadeIn();" />
- 
-                               
+                <h:commandButton id="jQuerySelectorOutputFadeOut" value="fadeOut" onmouseover="callJQueryFadeOut();" />
+
+                <i>onmouseover</i> jQuery("rich:jQuerySelector('input')").fadeIn()
+                <h:commandButton id="jQuerySelectorOutputFadeIn" value="fadeIn" onmouseover="callJQueryFadeIn();" />
+
+
             </h:panelGrid>
 
             <hr/>

@@ -19,19 +19,59 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.contextMenu;
+package org.richfaces.tests.metamer.ftest.richInplaceSelect;
 
-import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.abstractions.AbstractValidationMessagesTest;
+import org.testng.annotations.Test;
 
 /**
- * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface ContextMenuInvoker {
+public class TestInplaceSelectValidationMessages extends AbstractValidationMessagesTest {
 
-    /**
-     * Invokes on the given target context menu.
-     *
-     * @param target
-     */
-    void invoke(WebElement target);
+    public TestInplaceSelectValidationMessages() {
+        super("richInplaceSelect");
+    }
+
+    @Test
+    @Override
+    public void testInit() {
+        super.testInit();
+    }
+
+    @Test
+    @Override
+    public void testJSR303MessagesJSF() {
+        super.testJSR303MessagesJSF();
+    }
+
+    @Test
+    @Override
+    public void testJSR303MessagesRF() {
+        super.testJSR303MessagesRF();
+    }
+
+    @Test
+    @Override
+    public void testCSVMessagesJSF() {
+        super.testCSVMessagesJSF();
+    }
+
+    @Test
+    @Override
+    public void testCSVMessagesRF() {
+        super.testCSVMessagesRF();
+    }
+
+    @Test
+    @Override
+    public void testJSFMessagesJSF() {
+        super.testJSFMessagesJSF();
+    }
+
+    @Test
+    @Override
+    public void testJSFMessagesRF() {
+        super.testJSFMessagesRF();
+    }
 }

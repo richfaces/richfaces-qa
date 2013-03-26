@@ -77,7 +77,7 @@ public class RichFacesCalendarPopupComponent implements CalendarPopupComponent {
             default:
                 throw new IllegalArgumentException();
         }
-        Graphene.waitGui().until(calendarPopup.isVisibleCondition());
+        Graphene.waitGui().withMessage("Calendar's popup did not appear after " + by).until(calendarPopup.isVisibleCondition());
         return calendarPopup;
     }
 
@@ -100,7 +100,7 @@ public class RichFacesCalendarPopupComponent implements CalendarPopupComponent {
                     throw new IllegalArgumentException();
             }
         }
-        Graphene.waitGui().until(calendarPopup.isNotVisibleCondition());
+        Graphene.waitGui().withMessage("Calendar's popup did not disappear after " + by).until(calendarPopup.isNotVisibleCondition());
     }
 
     @Override

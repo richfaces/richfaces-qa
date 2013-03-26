@@ -37,7 +37,7 @@ public class TestSimpleTable extends AbstractWebDriverTest {
     @Page
     private SimpleTablePage page;
 
-        @Test
+    @Test
     public void testInit() {
         assertEquals(page.getSanJoseHotels(), "$224.00");
         assertEquals(page.getSanJoseMeals(), "$65.02");

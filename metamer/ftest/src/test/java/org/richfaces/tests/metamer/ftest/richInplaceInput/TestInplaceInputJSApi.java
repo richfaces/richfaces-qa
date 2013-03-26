@@ -1,4 +1,4 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
@@ -27,15 +27,16 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.RichFacesInplaceInput;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInput.OpenBy;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInput.State;
+import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.OpenBy;
+import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.State;
+import org.richfaces.tests.page.fragments.impl.input.inplace.input.RichFacesInplaceInput;
 import org.testng.annotations.Test;
 
 /**
@@ -75,7 +76,7 @@ public class TestInplaceInputJSApi extends AbstractWebDriverTest {
     @Test
     public void cancel() {
         String defaultText = inplaceInput.getLabelValue();
-        inplaceInput.editBy(OpenBy.CLICK).type(SOME_TEXT);
+        inplaceInput.editBy(OpenBy.CLICK).changeToValue(SOME_TEXT);
         fireEvent(cancelButton, Event.MOUSEOVER);
         assertEquals(inplaceInput.getLabelValue(), defaultText);
         assertFalse(inplaceInput.is(State.CHANGED));
@@ -114,7 +115,7 @@ public class TestInplaceInputJSApi extends AbstractWebDriverTest {
         isValueChangedButton.click();
         assertEquals(getValueFromOutput(), "false");
         MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK)
-                .type(SOME_TEXT),
+                .changeToValue(SOME_TEXT),
                 WaitRequestType.XHR).confirm();
         isValueChangedButton.click();
         assertEquals(getValueFromOutput(), "true");
@@ -122,7 +123,7 @@ public class TestInplaceInputJSApi extends AbstractWebDriverTest {
 
     @Test
     public void save() {
-        inplaceInput.editBy(OpenBy.CLICK).type(SOME_TEXT);
+        inplaceInput.editBy(OpenBy.CLICK).changeToValue(SOME_TEXT);
         fireEvent(saveButton, Event.MOUSEOVER);
         assertEquals(inplaceInput.getLabelValue(), SOME_TEXT);
         assertTrue(inplaceInput.is(State.CHANGED));

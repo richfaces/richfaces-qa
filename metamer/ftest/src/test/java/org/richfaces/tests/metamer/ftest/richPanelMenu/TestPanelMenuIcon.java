@@ -42,9 +42,7 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttribute
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.topItemLeftIcon;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.topItemRightIcon;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;
-import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.IMG_BY_LOC;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
 import org.testng.annotations.Test;
@@ -59,130 +57,126 @@ public class TestPanelMenuIcon extends AbstractPanelMenuTest {
     @Test
     public void testGroupCollapsedLeftIcon() {
         page.group2.toggle();
-        verifyStandardIcons(groupCollapsedLeftIcon, page.group24.leftIcon.iconCollapsed, IMG_BY_LOC, "");
+        verifyStandardIcons(groupCollapsedLeftIcon, page.group24.leftIcon.icon, page.group24.leftIcon.icon, "");
     }
 
     @Test
     public void testGroupCollapsedRightIcon() {
         page.group2.toggle();
-        verifyStandardIcons(groupCollapsedRightIcon, page.group24.rightIcon.iconCollapsed, IMG_BY_LOC, "");
+        verifyStandardIcons(groupCollapsedRightIcon, page.group24.rightIcon.icon, page.group24.rightIcon.icon, "");
     }
 
     @Test
     public void testGroupDisabledLeftIcon() {
         page.group2.toggle();
         // for disabled icon both icons (expanded and collapsed) should be the same (state depends on implicit group settings)
-        verifyStandardIcons(groupDisabledLeftIcon, page.group26.leftIcon.iconCollapsed, IMG_BY_LOC, "");
-        verifyStandardIcons(groupDisabledLeftIcon, page.group26.leftIcon.iconExpanded, IMG_BY_LOC, "");
+        verifyStandardIcons(groupDisabledLeftIcon, page.group26.leftIcon.icon, page.group26.leftIcon.icon, "");
     }
 
     @Test
     public void testGroupDisabledRightIcon() {
         // TODO JJa: have a look: there were something wrong with original version
         page.group2.toggle();
-        verifyStandardIcons(groupDisabledRightIcon, page.group26.rightIcon.iconCollapsed, IMG_BY_LOC, "");
-        verifyStandardIcons(groupDisabledRightIcon, page.group26.rightIcon.iconExpanded, IMG_BY_LOC, "");
+        verifyStandardIcons(groupDisabledRightIcon, page.group26.rightIcon.icon, page.group26.rightIcon.icon, "");
     }
 
     @Test
     public void testGroupExpandedLeftIcon() {
         page.group2.toggle();
         page.group24.toggle();
-        verifyStandardIcons(groupExpandedLeftIcon, page.group24.leftIcon.iconExpanded, IMG_BY_LOC, "");
+        verifyStandardIcons(groupExpandedLeftIcon, page.group24.leftIcon.icon, page.group24.leftIcon.icon, "");
     }
 
     @Test
     public void testGroupExpandedRightIcon() {
         page.group2.toggle();
         page.group24.toggle();
-        verifyStandardIcons(groupExpandedRightIcon, page.group24.rightIcon.iconExpanded, IMG_BY_LOC, "");
+        verifyStandardIcons(groupExpandedRightIcon, page.group24.rightIcon.icon, page.group24.rightIcon.icon, "");
     }
 
     @Test
     public void testItemDisabledLeftIcon() {
         page.group2.toggle();
-        verifyStandardIcons(itemDisabledLeftIcon, page.item25.leftIcon.icon, IMG_BY_LOC, "");
+        verifyStandardIcons(itemDisabledLeftIcon, page.item25.leftIcon.root, page.item25.leftIcon.imgIcon, "");
     }
 
     @Test
     public void testItemDisabledRightIcon() {
         page.group2.toggle();
-        verifyStandardIcons(itemDisabledRightIcon, page.item25.rightIcon.icon, IMG_BY_LOC, "");
+        verifyStandardIcons(itemDisabledRightIcon, page.item25.rightIcon.root, page.item25.rightIcon.imgIcon, "");
     }
 
     @Test
     public void testItemLeftIcon() {
         page.group2.toggle();
-        verifyStandardIcons(itemLeftIcon, page.item22.leftIcon.icon, IMG_BY_LOC, "");
+        verifyStandardIcons(itemLeftIcon, page.item22.leftIcon.root, page.item22.leftIcon.imgIcon, "");
     }
 
     @Test
     public void testItemRightIcon() {
         page.group2.toggle();
-        verifyStandardIcons(itemRightIcon, page.item22.rightIcon.icon, IMG_BY_LOC, "");
+        verifyStandardIcons(itemRightIcon, page.item22.rightIcon.root, page.item22.rightIcon.imgIcon, "");
     }
 
     @Test
     public void testTopGroupCollapsedLeftIcon() {
-        verifyStandardIcons(topGroupCollapsedLeftIcon, page.group1.leftIcon.iconCollapsed, IMG_BY_LOC, "");
+        verifyStandardIcons(topGroupCollapsedLeftIcon, page.group1.leftIcon.icon, page.group1.leftIcon.icon, "");
     }
 
     @Test
     public void testTopGroupCollapsedRightIcon() {
-        verifyStandardIcons(topGroupCollapsedRightIcon, page.group1.rightIcon.iconCollapsed, IMG_BY_LOC, "");
+        verifyStandardIcons(topGroupCollapsedRightIcon, page.group1.rightIcon.icon, page.group1.rightIcon.icon, "");
     }
 
     @Test
     public void testTopGroupDisabledLeftIcon() {
-        verifyStandardIcons(topGroupDisabledLeftIcon, page.group4.leftIcon.iconCollapsed, IMG_BY_LOC, "");
-        verifyStandardIcons(topGroupDisabledLeftIcon, page.group4.leftIcon.iconExpanded, IMG_BY_LOC, "");
+        verifyStandardIcons(topGroupDisabledLeftIcon, page.group4.leftIcon.icon, page.group4.leftIcon.icon, "");
     }
 
     @Test
     public void testTopGroupDisabledRightIcon() {
-        verifyStandardIcons(topGroupDisabledRightIcon, page.group4.rightIcon.iconCollapsed, IMG_BY_LOC, "");
-        verifyStandardIcons(topGroupDisabledRightIcon, page.group4.rightIcon.iconExpanded, IMG_BY_LOC, "");
+        verifyStandardIcons(topGroupDisabledRightIcon, page.group4.rightIcon.icon, page.group4.rightIcon.icon, "");
     }
 
     @Test
     public void testTopGroupExpandedLeftIcon() {
         page.group1.toggle();
-        verifyStandardIcons(topGroupExpandedLeftIcon, page.group1.leftIcon.iconExpanded, IMG_BY_LOC, "");
+        verifyStandardIcons(topGroupExpandedLeftIcon, page.group1.leftIcon.icon, page.group1.leftIcon.icon, "");
     }
 
     @Test
     public void testTopGroupExpandedRightIcon() {
         page.group1.toggle();
-        verifyStandardIcons(topGroupExpandedRightIcon, page.group1.rightIcon.iconExpanded, IMG_BY_LOC, "");
+        verifyStandardIcons(topGroupExpandedRightIcon, page.group1.rightIcon.icon, page.group1.rightIcon.icon, "");
     }
 
     @Test
     public void testTopItemDisabledLeftIcon() {
-        verifyStandardIcons(topItemDisabledLeftIcon, page.item4.leftIcon.icon, IMG_BY_LOC, "");
+        verifyStandardIcons(topItemDisabledLeftIcon, page.item4.leftIcon.root, page.item4.leftIcon.imgIcon, "");
     }
 
     @Test
     public void testTopItemDisabledRightIcon() {
-        verifyStandardIcons(topItemDisabledRightIcon, page.item4.rightIcon.icon, IMG_BY_LOC, "");
+        verifyStandardIcons(topItemDisabledRightIcon, page.item4.rightIcon.root, page.item4.rightIcon.imgIcon, "");
     }
 
     @Test
     public void testTopItemLeftIcon() {
-        verifyStandardIcons(topItemLeftIcon, page.item3.leftIcon.icon, IMG_BY_LOC, "");
+        verifyStandardIcons(topItemLeftIcon, page.item3.leftIcon.root, page.item3.leftIcon.imgIcon, "");
     }
 
     @Test
     public void testTopItemRightIcon() {
-        verifyStandardIcons(topItemRightIcon, page.item3.rightIcon.icon, IMG_BY_LOC, "");
+        verifyStandardIcons(topItemRightIcon, page.item3.rightIcon.root, page.item3.rightIcon.imgIcon, "");
     }
 
-    private void verifyStandardIcons(PanelMenuAttributes attribute, WebElement icon, By image, String classSuffix) {
+    private void verifyStandardIcons(PanelMenuAttributes attribute, WebElement icon, WebElement imgIcon, String classSuffix) {
         IconsCheckerWebdriver<PanelMenuAttributes> checker = new IconsCheckerWebdriver<PanelMenuAttributes>(
             driver, panelMenuAttributes, "rf-ico-", "");
 
         checker.checkCssImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
         checker.checkCssNoImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
-        checker.checkImageIconsAsRelative(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), image, classSuffix, false);
+        checker.checkImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), imgIcon, classSuffix, false);
         checker.checkNone(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
 
     }

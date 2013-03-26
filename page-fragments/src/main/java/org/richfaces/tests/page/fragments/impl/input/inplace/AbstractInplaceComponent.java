@@ -1,6 +1,6 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,61 +18,47 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
-package org.richfaces.tests.page.fragments.impl.input.inplaceInput;
+ *******************************************************************************/
+package org.richfaces.tests.page.fragments.impl.input.inplace;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.State;
 
 /**
- * Component implementation of rich:inplaceInput
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesInplaceInput implements InplaceInput {
+public abstract class AbstractInplaceComponent<T extends EditingState> implements InplaceComponent {
 
     @Root
-    private WebElement root;
-    //
-    private WebDriver driver = GrapheneContext.getProxy();
-    //
+    protected WebElement root;
+    @Drone
+    protected WebDriver driver;
     @FindBy(css = "span[id$=Label]")
-    private WebElement label;
-    @FindBy(css = "span[id$=Edit] > input.rf-ii-fld")
-    private WebElement editInputElement;
+    protected WebElement label;
+    @FindBy(css = "span[id$=Edit] > input[id$=Input]")
+    protected WebElement editInputElement;
     @FindBy(css = "span[id$=Edit] span[id$=Btn]")
-    private RichFacesControls controls;
+    private RichFacesInplaceComponentControls controls;
 
     @Override
-    public EditingState editBy(OpenBy event) {
-        String elementID = root.getAttribute("id");
-        String jQueryCmd = String.format("$(\"[id='%s']\").trigger('%s')", elementID, event.eventName);
-        ((JavascriptExecutor) driver).executeScript(jQueryCmd);
-        // TODO: add a waiting here with exception when input is not in editing state?
-        // Graphene.waitGui().until(Graphene.attribute(root, "class").valueContains(State.active.cssClass));
-        return new EditingStateImpl(editInputElement, controls);
+    public T editBy(OpenBy event) {
+        Utils.triggerJQ(event.getEventName(), root);
+        return instantiateFragment();
     }
 
     @Override
-    public RichFacesControls getControls() {
+    public InplaceComponentControls getControls() {
         return controls;
     }
 
-    protected String getCssClass(State state) {
-        switch (state) {
-            case ACTIVE:
-                return "rf-ii-act";
-            case CHANGED:
-                return "rf-ii-chng";
-            default:
-                throw new UnsupportedOperationException();
-        }
-    }
+    protected abstract String getCssClassForState(State state);
 
     public WebElement getEditInputElement() {
         return editInputElement;
@@ -80,8 +66,10 @@ public class RichFacesInplaceInput implements InplaceInput {
 
     @Override
     public String getEditValue() {
-        return editInputElement.getAttribute("value");
+        return editInputElement.getAttribute("value").trim();
     }
+
+    protected abstract T instantiateFragment();
 
     public WebElement getLabelInputElement() {
         return label;
@@ -89,17 +77,17 @@ public class RichFacesInplaceInput implements InplaceInput {
 
     @Override
     public String getLabelValue() {
-        return label.getText();
+        return label.getText().trim();
     }
 
     @Override
-    public WebElement getRoot() {
+    public WebElement getRootElement() {
         return root;
     }
 
     @Override
     public boolean is(State state) {
-        return root.getAttribute("class").contains(getCssClass(state));
+        return root.getAttribute("class").contains(getCssClassForState(state));
     }
 
     @Override

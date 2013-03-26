@@ -32,6 +32,7 @@ import java.util.List;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -45,7 +46,11 @@ import org.openqa.selenium.iphone.IPhoneDriver;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
+import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
+import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 
@@ -332,14 +337,59 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
+     * A helper method for testing JavaScripts events.
+     *
+     * @param event JavaScript event to be tested
+     * @param element element on which will be the event triggered
+     */
+    protected void testFireEvent(Event event, WebElement element) {
+        testFireEvent(event, element, event.getEventName());
+    }
+
+    /**
+     * A helper method for testing JavaScripts events.
+     *
+     * @param event JavaScript event to be tested
+     * @param element element on which will be the event triggered
+     * @param attributeName name of the attribute that should be set
+     */
+    protected void testFireEvent(final Event event, final WebElement element, String attributeName) {
+        testFireEvent(attributeName, new Action() {
+            @Override
+            public void perform() {
+                fireEvent(element, event);
+            }
+        });
+    }
+
+    /**
+     * A helper method for testing events.
+     *
+     * @param attributeName name of the attribute that should be set (i.e. inputselect, select ; without the prefix 'on')
+     * @param eventFiringAction action which will be performed to trigger the event
+     */
+    protected void testFireEvent(String attributeName, Action eventFiringAction) {
+        TextInputComponentImpl eventInput = Graphene.createPageFragment(TextInputComponentImpl.class, driver.findElement(By.cssSelector("input[id$=on" + attributeName + "Input]")));
+        //set attribute
+        MetamerPage.waitRequest(eventInput.clear(ClearType.JS)
+                .fillIn("metamerEvents += \"" + attributeName + " \""), WaitRequestType.HTTP)
+                .trigger("blur");
+        //clear/init events
+        executeJS("metamerEvents = \"\";");
+        //trigger event
+        eventFiringAction.perform();
+        //check
+        assertEquals(expectedReturnJS("return metamerEvents", attributeName), attributeName, "Attribute " + attributeName + " does not work.");
+    }
+
+    /**
      * Method for firing JavaScript events on given element using jQuery.
      *
      * @param element
      * @param event
      */
     protected void fireEvent(WebElement element, Event event) {
-        String jQueryCmd = String.format("jQuery(arguments[0]).trigger('%s')", event.getEventName());
-        executeJS(jQueryCmd, element);
+        Utils.triggerJQ(event.getEventName(), element);
     }
 
     /**

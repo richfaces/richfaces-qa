@@ -62,13 +62,13 @@ public class RichFacesYearAndMonthEditor implements YearAndMonthEditor {
     @Override
     public void cancelDate() {
         cancelButtonElement.click();
-        Graphene.waitGui().until(isNotVisibleCondition());
+        Graphene.waitGui().withMessage("Year and month editor did not close.").until(isNotVisibleCondition());
     }
 
     @Override
     public void confirmDate() {
         okButtonElement.click();
-        Graphene.waitGui().until(isNotVisibleCondition());
+        Graphene.waitGui().withMessage("Year and month editor did not close.").until(isNotVisibleCondition());
     }
 
     @Override
@@ -178,14 +178,14 @@ public class RichFacesYearAndMonthEditor implements YearAndMonthEditor {
     public void nextDecade() {
         String firstBefore = years.get(0).getText();
         nextDecadeButtonElement.click();
-        Graphene.waitGui().until(Graphene.element(years.get(0)).not().textEquals(firstBefore));
+        Graphene.waitGui().withMessage("The decade was not changed.").until().element(years.get(0)).text().not().equalTo(firstBefore);
     }
 
     @Override
     public void previousDecade() {
         String firstBefore = years.get(0).getText();
         previousDecadeButtonElement.click();
-        Graphene.waitGui().until(Graphene.element(years.get(0)).not().textEquals(firstBefore));
+        Graphene.waitGui().withMessage("The decade was not changed.").until().element(years.get(0)).text().not().equalTo(firstBefore);
     }
 
     @Override
@@ -203,7 +203,7 @@ public class RichFacesYearAndMonthEditor implements YearAndMonthEditor {
     private void selectMonth(int month) {
         WebElement monthElement = inRightOrder(months).get(month - 1);
         monthElement.click();
-        Graphene.waitGui().until(Graphene.attribute(monthElement, "class").valueContains(SELECTED));
+        Graphene.waitGui().withMessage("The month was not selected.").until().element(monthElement).attribute("class").contains(SELECTED);
     }
 
     private void selectYear(int year) {
@@ -225,7 +225,7 @@ public class RichFacesYearAndMonthEditor implements YearAndMonthEditor {
         for (WebElement yearElement : years) {
             if (yearElement.getText().trim().equals(yearString)) {
                 yearElement.click();
-                Graphene.waitGui().until(Graphene.attribute(yearElement, "class").valueContains(SELECTED));
+                Graphene.waitGui().withMessage("The year was not selected.").until().element(yearElement).attribute("class").contains(SELECTED);
                 return;
             }
         }

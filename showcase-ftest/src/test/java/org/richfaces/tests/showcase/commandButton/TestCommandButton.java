@@ -21,8 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.commandButton;
 
-import static org.testng.Assert.assertEquals;
-import org.jboss.arquillian.graphene.Graphene;
 
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;

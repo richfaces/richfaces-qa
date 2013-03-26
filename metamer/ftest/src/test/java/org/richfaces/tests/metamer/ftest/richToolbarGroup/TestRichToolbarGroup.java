@@ -23,23 +23,29 @@
 package org.richfaces.tests.metamer.ftest.richToolbarGroup;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.itemStyle;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.toolbarGroupAttributes;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.toolbarGroupAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-import org.jboss.arquillian.ajocado.dom.Attribute;
+import java.util.List;
+
 import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.test.selenium.support.ui.AttributeContains;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.richToolbar.ToolbarPage;
 import org.testng.annotations.Test;
 
 /**
@@ -48,21 +54,26 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22733 $
  */
-public class TestRichToolbarGroup extends AbstractGrapheneTest {
+public class TestRichToolbarGroup extends AbstractWebDriverTest {
 
-    private JQueryLocator toolbar = pjq("table[id$=toolbar]");
-    private JQueryLocator separator = pjq("td.rf-tb-sep");
-    private JQueryLocator[] items = { pjq("td[id$=createDocument_itm]"), pjq("td[id$=createFolder_itm]"),
-        pjq("td[id$=copy_itm]"), pjq("td[id$=save_itm]"), pjq("td[id$=saveAs_itm]"), pjq("td[id$=saveAll_itm]") };
-    private JQueryLocator input = pjq("td[id$=input_itm]");
-    private JQueryLocator button = pjq("td[id$=button_itm]");
+    @Page
+    ToolbarPage page;
+
+    AttributeContains attrContains = AttributeContains.getInstance();
+
     private String[] separators = { "disc", "grid", "line", "square" };
-    @Inject
-    @Use(empty = true)
-    private JQueryLocator item;
+
+    private By[] itemsBy = new By[] {By.cssSelector("td[id$=createDocument_itm]"), By.cssSelector("td[id$=createFolder_itm]"),
+        By.cssSelector("td[id$=copy_itm]"), By.cssSelector("td[id$=save_itm]"), By.cssSelector("td[id$=saveAs_itm]"),
+        By.cssSelector("td[id$=saveAll_itm]")};
+
     @Inject
     @Use(empty = true)
     private String itemSeparator;
+
+    @Inject
+    @Use(empty=true)
+    private By itemBy;
 
     @Override
     public URL getTestUrl() {
@@ -71,182 +82,197 @@ public class TestRichToolbarGroup extends AbstractGrapheneTest {
 
     @Test
     public void testInit() {
-        assertTrue(selenium.isElementPresent(toolbar), "Toolbar should be present on the page.");
-        assertTrue(selenium.isVisible(toolbar), "Toolbar should be visible.");
-        assertFalse(selenium.isElementPresent(separator), "No item separator should be present on the page.");
-        assertTrue(selenium.isElementPresent(input), "Input should be present on the page.");
-        assertTrue(selenium.isVisible(input), "Input should be visible.");
-        assertTrue(selenium.isElementPresent(button), "Button should be present on the page.");
-        assertTrue(selenium.isVisible(button), "Button should be visible.");
+        assertTrue(Graphene.element(page.toolbar).isPresent().apply(driver), "Toolbar should be present on the page.");
+        assertTrue(Graphene.element(page.toolbar).isVisible().apply(driver), "Toolbar should be visible.");
+        assertFalse(Graphene.element(page.separator.root).isPresent().apply(driver), "No item separator should be present on the page.");
+        assertTrue(Graphene.element(page.itemInput).isPresent().apply(driver), "Input should be present on the page.");
+        assertTrue(Graphene.element(page.itemInput).isVisible().apply(driver), "Input should be visible.");
+        assertTrue(Graphene.element(page.itemButton).isPresent().apply(driver), "Button should be present on the page.");
+        assertTrue(Graphene.element(page.itemButton).isVisible().apply(driver), "Button should be visible.");
     }
 
     @Test
-    @Use(field = "item", value = "items")
+    @Use(field = "itemBy", value = "itemsBy")
     public void testInitItems() {
-        assertTrue(selenium.isElementPresent(item), "Item (" + item + ") should be present on the page.");
-        assertTrue(selenium.isVisible(item), "Item (" + item + ") should be visible.");
+        assertTrue(Graphene.element(itemBy).isPresent().apply(driver), "Item (" + itemBy + ") should be present on the page.");
+        assertTrue(Graphene.element(itemBy).isVisible().apply(driver), "Item (" + itemBy + ") should be visible.");
     }
 
     @Test
-    @Use(field = "item", value = "items")
+    @Use(field = "itemBy", value = "itemsBy")
     @RegressionTest("https://issues.jboss.org/browse/RF-9976")
     public void testItemClass() {
-        testStyleClass(item, itemClass);
+        testStyleClass(driver.findElement(itemBy) , itemClass);
     }
 
     @Test
     @Use(field = "itemSeparator", value = "separators")
     public void testItemSeparatorCorrect() {
         toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, itemSeparator);
-        JQueryLocator separatorDiv = separator.getDescendant(jq("div.rf-tb-sep-" + itemSeparator));
 
-        assertTrue(selenium.isElementPresent(separator), "Item separator should be present on the page.");
-        assertEquals(selenium.getCount(separator), 5, "Number of separators.");
-        assertTrue(selenium.isElementPresent(separatorDiv), "Item separator does not work correctly.");
-        assertEquals(selenium.getCount(separatorDiv), 5, "Number of separators.");
+        List<WebElement> separatorDivs = driver.findElements(By.cssSelector("div.rf-tb-sep-" + itemSeparator));
+
+        assertTrue(Graphene.element(page.separator.root).isPresent().apply(driver), "Item separator should be present on the page.");
+        assertEquals(page.separators.size(), 5, "Number of separators.");
+        assertTrue(Graphene.element(page.separator.getIconByName(itemSeparator)).isPresent().apply(driver), "Item separator does not work correctly.");
+        assertEquals(separatorDivs.size(), 5, "Number of separators.");
     }
 
     @Test
     public void testItemSeparatorNone() {
         toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "none");
-        assertFalse(selenium.isElementPresent(separator), "No item separator should be present on the page.");
+        assertFalse(Graphene.element(page.separator.root).isPresent().apply(driver), "No item separator should be present on the page.");
 
         toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "null");
-        assertFalse(selenium.isElementPresent(separator), "No item separator should be present on the page.");
+        assertFalse(Graphene.element(page.separator.root).isPresent().apply(driver), "No item separator should be present on the page.");
     }
 
     @Test
     public void testItemSeparatorCustom() {
         toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "star");
 
-        JQueryLocator separatorImg = separator.getDescendant(jq("> img"));
-        AttributeLocator<?> attr = separatorImg.getAttribute(Attribute.SRC);
+        assertTrue(Graphene.element(page.separator.root).isPresent().apply(driver), "Item separator should be present on the page.");
+        assertEquals(page.separators.size(), 5, "Number of separators.");
+        assertTrue(Graphene.element(page.separator.imgIcon).isPresent().apply(driver), "Item separator do not work correctly.");
+        assertEquals(page.separatorsImages.size(), 5, "Number of separators.");
 
-        assertTrue(selenium.isElementPresent(separator), "Item separator should be present on the page.");
-        assertEquals(selenium.getCount(separator), 5, "Number of separators.");
-        assertTrue(selenium.isElementPresent(separatorImg), "Item separator do not work correctly.");
-        assertEquals(selenium.getCount(separatorImg), 5, "Number of separators.");
-
-        String src = selenium.getAttribute(attr);
-        assertTrue(src.contains("star.png"), "Separator's image should link to picture star.png.");
+        assertTrue(Graphene.attribute(page.separator.imgIcon, "src").contains("star.png").apply(driver),
+            "Separator's image should link to picture star.png.");
     }
 
     @Test
     public void testItemSeparatorNonExisting() {
         toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "non-existing");
 
-        JQueryLocator separatorImg = separator.getDescendant(jq("> img"));
-        AttributeLocator<?> attr = separatorImg.getAttribute(Attribute.SRC);
+        assertTrue(Graphene.element(page.separator.root).isPresent().apply(driver), "Item separators should be present on the page.");
+        assertEquals(page.separators.size(), 5, "Number of separators.");
+        assertTrue(Graphene.element(page.separator.imgIcon).isPresent().apply(driver), "Item separators do not work correctly.");
+        assertEquals(page.separatorsImages.size(), 5, "Number of separators.");
 
-        assertTrue(selenium.isElementPresent(separator), "Item separators should be present on the page.");
-        assertEquals(selenium.getCount(separator), 5, "Number of separators.");
-        assertTrue(selenium.isElementPresent(separatorImg), "Item separators do not work correctly.");
-        assertEquals(selenium.getCount(separatorImg), 5, "Number of separators.");
-
-        String src = selenium.getAttribute(attr);
-        assertTrue(src.contains("non-existing"), "Separator's image should link to \"non-existing\".");
+        assertTrue(Graphene.attribute(page.separator.imgIcon, "src").contains("non-existing").apply(driver),
+            "Separator's image should link to \"non-existing\".");
     }
 
     @Test
-    @Use(field = "item", value = "items")
+    @Use(field = "itemBy", value = "itemsBy")
     @RegressionTest("https://issues.jboss.org/browse/RF-9976")
     public void testItemStyle() {
-        testStyle(item, itemStyle);
+        testStyle(driver.findElement(itemBy), itemStyle);
     }
 
     @Test
     public void testLocation() {
-        JQueryLocator emptyCellBefore = toolbar.getDescendant(jq("td.rf-tb-emp:nth-child(1)"));
-        JQueryLocator emptyCellAfter = toolbar.getDescendant(jq("td.rf-tb-emp:nth-child(7)"));
-
-        assertFalse(selenium.isElementPresent(emptyCellBefore), "Toolbar group should  be located on the left.");
-        assertTrue(selenium.isElementPresent(emptyCellAfter), "Toolbar group should  be located on the left.");
+        assertFalse(attrContains.element(page.items.get(0)).attributeName("class").attributeValue("rf-tb-emp").apply(driver),
+            "Toolbar group should  be located on the left.");
+        assertTrue(attrContains.element(page.items.get(6)).attributeName("class").attributeValue("rf-tb-emp").apply(driver),
+            "Toolbar group should  be located on the left.");
 
         toolbarGroupAttributes.set(ToolbarGroupAttributes.location, "right");
 
-        assertTrue(selenium.isElementPresent(emptyCellBefore), "Toolbar group should  be located on the right.");
-        assertFalse(selenium.isElementPresent(emptyCellAfter), "Toolbar group should  be located on the right.");
+        assertTrue(attrContains.element(page.items.get(0)).attributeName("class").attributeValue("rf-tb-emp").apply(driver),
+            "Toolbar group should  be located on the right.");
+        assertFalse(attrContains.element(page.items.get(6)).attributeName("class").attributeValue("rf-tb-emp").apply(driver),
+            "Toolbar group should  be located on the right.");
 
         toolbarGroupAttributes.set(ToolbarGroupAttributes.location, "wrong");
 
-        assertFalse(selenium.isElementPresent(emptyCellBefore), "Toolbar group should  be located on the left.");
-        assertTrue(selenium.isElementPresent(emptyCellAfter), "Toolbar group should  be located on the left.");
+        assertFalse(attrContains.element(page.items.get(0)).attributeName("class").attributeValue("rf-tb-emp").apply(driver),
+            "Toolbar group should  be located on the left.");
+        assertTrue(attrContains.element(page.items.get(6)).attributeName("class").attributeValue("rf-tb-emp").apply(driver),
+            "Toolbar group should  be located on the left.");
     }
 
     @Test
-    @Use(field = "item", value = "items")
+    @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemclick() {
-        testFireEvent(Event.CLICK, item, "itemclick");
+        Action click = new Actions(driver).click(driver.findElement(itemBy)).build();
+        testFireEvent(toolbarGroupAttributes, ToolbarGroupAttributes.onitemclick, click);
     }
 
     @Test
-    @Use(field = "item", value = "items")
+    @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemdblclick() {
-        testFireEvent(Event.DBLCLICK, item, "itemdblclick");
+        Action dblClick = new Actions(driver).doubleClick(driver.findElement(itemBy)).build();
+        testFireEvent(toolbarGroupAttributes, ToolbarGroupAttributes.onitemdblclick, dblClick);
     }
 
     @Test
-    @Use(field = "item", value = "items")
+    @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemkeydown() {
-        testFireEvent(Event.KEYDOWN, item, "itemkeydown");
+        // TODO JJa 2013-03-14: Doesn't work for now with Action, rewrite if it changes
+        testFireEventWithJS(driver.findElement(itemBy),
+            Event.KEYDOWN, toolbarGroupAttributes, ToolbarGroupAttributes.onitemkeydown);
     }
 
     @Test
-    @Use(field = "item", value = "items")
+    @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemkeypress() {
-        testFireEvent(Event.KEYPRESS, item, "itemkeypress");
+        // TODO JJa 2013-03-14: Doesn't work for now with Action, rewrite if it changes
+        testFireEventWithJS(driver.findElement(itemBy),
+            Event.KEYPRESS, toolbarGroupAttributes, ToolbarGroupAttributes.onitemkeypress);
     }
 
     @Test
-    @Use(field = "item", value = "items")
+    @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemkeyup() {
-        testFireEvent(Event.KEYUP, item, "itemkeyup");
+        // TODO JJa 2013-03-14: Doesn't work for now with Action, rewrite if it changes
+        testFireEventWithJS(driver.findElement(itemBy),
+            Event.KEYUP, toolbarGroupAttributes, ToolbarGroupAttributes.onitemkeyup);
     }
 
     @Test
-    @Use(field = "item", value = "items")
+    @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemmousedown() {
-        testFireEvent(Event.MOUSEDOWN, item, "itemmousedown");
+        Action mouseDown = new Actions(driver).clickAndHold(driver.findElement(itemBy)).build();
+        testFireEvent(toolbarGroupAttributes, ToolbarGroupAttributes.onitemmousedown, mouseDown);
     }
 
     @Test
-    @Use(field = "item", value = "items")
+    @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemmousemove() {
-        testFireEvent(Event.MOUSEMOVE, item, "itemmousemove");
+        Action mouseMove = new Actions(driver).moveToElement(driver.findElement(itemBy)).build();
+        testFireEvent(toolbarGroupAttributes, ToolbarGroupAttributes.onitemmousemove, mouseMove);
     }
 
     @Test
-    @Use(field = "item", value = "items")
+    @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemmouseout() {
-        testFireEvent(Event.MOUSEOUT, item, "itemmouseout");
+        // TODO JJa 2013-03-14: Doesn't work for now with Action, rewrite if it changes
+        testFireEventWithJS(driver.findElement(itemBy),
+            Event.MOUSEOUT, toolbarGroupAttributes, ToolbarGroupAttributes.onitemmouseout);
     }
 
     @Test
-    @Use(field = "item", value = "items")
+    @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemmouseover() {
-        testFireEvent(Event.MOUSEOVER, item, "itemmouseover");
+        Action mouseOver = new Actions(driver).moveToElement(driver.findElement(itemBy)).build();
+        testFireEvent(toolbarGroupAttributes, ToolbarGroupAttributes.onitemmouseover, mouseOver);
     }
 
     @Test
-    @Use(field = "item", value = "items")
+    @Use(field = "itemBy", value = "itemsBy")
     public void testOnitemmouseup() {
-        testFireEvent(Event.MOUSEUP, item, "itemmouseup");
+        WebElement item = driver.findElement(itemBy);
+        Action mouseUp = new Actions(driver).clickAndHold(item).release(item).build();
+        testFireEvent(toolbarGroupAttributes, ToolbarGroupAttributes.onitemmouseup, mouseUp);
     }
 
     @Test
     public void testRendered() {
         toolbarGroupAttributes.set(ToolbarGroupAttributes.rendered, Boolean.FALSE);
 
-        assertTrue(selenium.isElementPresent(toolbar), "Toolbar should be present on the page.");
-        assertTrue(selenium.isVisible(toolbar), "Toolbar should be visible.");
-        assertFalse(selenium.isElementPresent(separator), "No item separator should be present on the page.");
-        assertTrue(selenium.isElementPresent(input), "Input should be present on the page.");
-        assertTrue(selenium.isVisible(input), "Input should be visible.");
-        assertTrue(selenium.isElementPresent(button), "Button should be present on the page.");
-        assertTrue(selenium.isVisible(button), "Button should be visible.");
+        assertTrue(Graphene.element(page.toolbar).isPresent().apply(driver), "Toolbar should be present on the page.");
+        assertTrue(Graphene.element(page.toolbar).isVisible().apply(driver), "Toolbar should be visible.");
+        assertFalse(Graphene.element(page.separator.root).isPresent().apply(driver), "No item separator should be present on the page.");
+        assertTrue(Graphene.element(page.itemInput).isPresent().apply(driver), "Input should be present on the page.");
+        assertTrue(Graphene.element(page.itemInput).isVisible().apply(driver), "Input should be visible.");
+        assertTrue(Graphene.element(page.itemButton).isPresent().apply(driver), "Button should be present on the page.");
+        assertTrue(Graphene.element(page.itemButton).isVisible().apply(driver), "Button should be visible.");
 
         for (int i = 0; i < 6; i++) {
-            assertFalse(selenium.isElementPresent(items[i]), "Item " + (i + 1) + " should not be rendered.");
+            // assertFalse(selenium.isElementPresent(items[i]), "Item " + (i + 1) + " should not be rendered.");
+            assertFalse(Graphene.element(itemsBy[i]).isPresent().apply(driver), "Item " + (i + 1) + " should not be rendered.");
         }
     }
+
 }

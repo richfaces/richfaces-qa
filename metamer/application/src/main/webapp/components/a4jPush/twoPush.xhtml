@@ -54,17 +54,17 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <a4j:commandButton id="performPushEvent1" value="Push 1!" action="#{a4jPushBean.push}" />
             <a4j:outputPanel id="pushPanel">
                 <a4j:push id="push" 
-                          rendered="#{not pushDisabled}" 
+                          rendered="#{a4jPushBean.attributes['rendered'].value}" 
                           address="sampleAddress"
                           ondataavailable="$('*[id$=outputDate]').text(event.rf.data)"
                           onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}" />
             </a4j:outputPanel>
             
             <a4j:outputPanel id="pushDisablementPanel">
-                <h:selectBooleanCheckbox id="enablePush1" value="#{pushDisabled}">
-                    <a4j:ajax render="pushPanel pushDisablementPanel" />
+                <h:selectBooleanCheckbox id="enablePush1" value="#{a4jPushBean.attributes['rendered'].value}">
+                    <a4j:ajax render="push" />
                 </h:selectBooleanCheckbox>
-                <h:outputText value="#{pushDisabled ? 'disabled' : 'enabled'}" />
+                <h:outputLabel value="enabled" for="enablePush1" />
             </a4j:outputPanel>
             
             <br />

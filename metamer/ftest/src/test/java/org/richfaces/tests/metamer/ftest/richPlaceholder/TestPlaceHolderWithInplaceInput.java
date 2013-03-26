@@ -25,8 +25,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInput;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.RichFacesInplaceInput;
+import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.OpenBy;
+import org.richfaces.tests.page.fragments.impl.input.inplace.input.RichFacesInplaceInput;
 import org.testng.annotations.Test;
 
 /**
@@ -85,22 +85,22 @@ public class TestPlaceHolderWithInplaceInput extends AbstractPlaceholderJSFTest 
 
     @Override
     protected void sendKeysToInput1(String keys) {
-        ii1.editBy(InplaceInput.OpenBy.CLICK).type(keys).confirm();
+        ii1.editBy(OpenBy.CLICK).changeToValue(keys).confirm();
     }
 
     @Override
     protected void clearInput1() {
-        ii1.editBy(InplaceInput.OpenBy.CLICK).type("").confirm();
+        ii1.editBy(OpenBy.CLICK).changeToValue("").confirm();
     }
 
     @Override
     protected void clickOnInput1() {
-        ii1.editBy(InplaceInput.OpenBy.CLICK);
+        ii1.editBy(OpenBy.CLICK);
     }
 
     @Override
     protected void clickOnInput2() {
-        ii2.editBy(InplaceInput.OpenBy.CLICK);
+        ii2.editBy(OpenBy.CLICK);
     }
 
     @Test

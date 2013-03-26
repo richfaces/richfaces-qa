@@ -1,4 +1,4 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,7 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
@@ -28,7 +28,9 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+
 import javax.faces.event.PhaseId;
+
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
@@ -37,15 +39,14 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.EditingState;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.RichFacesInplaceInput;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.EditingState.FinishEditingBy;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInput.OpenBy;
-import org.richfaces.tests.page.fragments.impl.input.inplaceInput.InplaceInput.State;
+import org.richfaces.tests.page.fragments.impl.input.inplace.EditingState;
+import org.richfaces.tests.page.fragments.impl.input.inplace.EditingState.FinishEditingBy;
+import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.OpenBy;
+import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.State;
+import org.richfaces.tests.page.fragments.impl.input.inplace.input.RichFacesInplaceInput;
 import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 import org.testng.annotations.Test;
 
@@ -59,7 +60,6 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
 
     @Page
     private MetamerPage page;
-
     @FindBy(css = "span[id$=output]")
     private WebElement output;
     @FindBy(css = "span[id$=inplaceInput]")
@@ -77,19 +77,19 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
         String testedClass = "metamer-ftest-class";
         inplaceInputAttributes.set(InplaceInputAttributes.activeClass, testedClass);
 
-        assertFalse(Graphene.attribute(inplaceInput.getRoot(), "class")
-                .valueContains(testedClass).apply(driver),
+        assertFalse(Graphene.attribute(inplaceInput.getRootElement(), "class")
+                .contains(testedClass).apply(driver),
                 "Inplace input should not have class metamer-ftest-class.");
 
         EditingState editingState = inplaceInput.editBy(OpenBy.CLICK);
-        assertTrue(Graphene.attribute(inplaceInput.getRoot(), "class")
-                .valueContains(testedClass).apply(driver),
+        assertTrue(Graphene.attribute(inplaceInput.getRootElement(), "class")
+                .contains(testedClass).apply(driver),
                 "Inplace input should have class metamer-ftest-class.");
 
         editingState.cancel();
 
-        assertFalse(Graphene.attribute(inplaceInput.getRoot(), "class")
-                .valueContains(testedClass).apply(driver),
+        assertFalse(Graphene.attribute(inplaceInput.getRootElement(), "class")
+                .contains(testedClass).apply(driver),
                 "Inplace input should not have class metamer-ftest-class.");
     }
 
@@ -98,14 +98,14 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
         String testedClass = "metamer-ftest-class";
         inplaceInputAttributes.set(InplaceInputAttributes.changedClass, testedClass);
 
-        assertFalse(Graphene.attribute(inplaceInput.getRoot(), "class")
-                .valueContains(testedClass).apply(driver),
+        assertFalse(Graphene.attribute(inplaceInput.getRootElement(), "class")
+                .contains(testedClass).apply(driver),
                 "Inplace input should not have class metamer-ftest-class.");
 
-        MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK).type("s"),
+        MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK).changeToValue("s"),
                 WaitRequestType.XHR).confirm();
-        assertTrue(Graphene.attribute(inplaceInput.getRoot(), "class")
-                .valueContains(testedClass).apply(driver),
+        assertTrue(Graphene.attribute(inplaceInput.getRootElement(), "class")
+                .contains(testedClass).apply(driver),
                 "Inplace input should have class metamer-ftest-class.");
 
     }
@@ -116,7 +116,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
         assertTrue(inplaceInput.is(State.ACTIVE), "Input should be active.");
 
         String testedValue = "new value";
-        MetamerPage.waitRequest(editingState.type(testedValue), WaitRequestType.XHR).confirm();
+        MetamerPage.waitRequest(editingState.changeToValue(testedValue), WaitRequestType.XHR).confirm();
 
         assertTrue(inplaceInput.is(State.CHANGED), "Input should contain class indicating a change.");
         assertEquals(inplaceInput.getLabelValue(), testedValue, "Input should contain typed text.");
@@ -131,7 +131,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     public void testClickCancelButton() {
         inplaceInputAttributes.set(InplaceInputAttributes.showControls, Boolean.TRUE);
         MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK)
-                .type("value that will be canceled"), WaitRequestType.NONE)
+                .changeToValue("value that will be canceled"), WaitRequestType.NONE)
                 .cancel(FinishEditingBy.CONTROLS);
         assertEquals(inplaceInput.getLabelValue(), "RichFaces 4", "Default value was expected.");
     }
@@ -141,7 +141,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
         inplaceInputAttributes.set(InplaceInputAttributes.showControls, Boolean.TRUE);
         String testedValue = "value that will be confirmed and changed";
         MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK)
-                .type(testedValue), WaitRequestType.XHR).confirm(FinishEditingBy.CONTROLS);
+                .changeToValue(testedValue), WaitRequestType.XHR).confirm(FinishEditingBy.CONTROLS);
         assertEquals(inplaceInput.getLabelValue(), testedValue);
     }
 
@@ -173,7 +173,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     @Test
     public void testDisabledClass() {
         inplaceInputAttributes.set(InplaceInputAttributes.disabled, Boolean.TRUE);
-        testStyleClass(inplaceInput.getRoot());
+        testStyleClass(inplaceInput.getRootElement());
     }
 
     @Test
@@ -191,7 +191,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     public void testImmediate() {
         inplaceInputAttributes.set(InplaceInputAttributes.immediate, Boolean.TRUE);
         String value = "new value";
-        MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK).type(value),
+        MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK).changeToValue(value),
                 WaitRequestType.XHR).confirm();
 
         page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: RichFaces 4 -> " + value);
@@ -212,7 +212,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     }
 
     @Test
-    @IssueTracking("http://java.net/jira/browse/JAVASERVERFACES-1805")
+    @RegressionTest("http://java.net/jira/browse/JAVASERVERFACES-1805")
     public void testInputWidth() {
         inplaceInputAttributes.set(InplaceInputAttributes.inputWidth, "300");
         String width = inplaceInput.getEditInputElement().getCssValue("width");
@@ -220,10 +220,9 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
 
         inplaceInputAttributes.set(InplaceInputAttributes.inputWidth, "");
 
-        // it cannot handle null because of a bug in Mojarra and Myfaces and
-        // generates style="width: ; " instead of default value
-        width = inplaceInput.getRoot().getCssValue("style");
-        assertTrue(!width.contains("width: ;"), "Default width of input was not set (was " + width + ").");
+        width = inplaceInput.getEditInputElement().getCssValue("width");
+        Integer widthI = Integer.parseInt(width.substring(0, width.indexOf("px")));
+        assertEquals(widthI, 66, 20, "Default width of input was not set.");
     }
 
     @Test
@@ -246,7 +245,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
                     @Override
                     public void perform() {
                         MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK)
-                                .type("new value"), WaitRequestType.XHR).confirm();
+                                .changeToValue("new value"), WaitRequestType.XHR).confirm();
                     }
                 });
     }
@@ -254,20 +253,20 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     @Test
     public void testOnclick() {
         testFireEvent(inplaceInputAttributes, InplaceInputAttributes.onclick,
-                new Actions(driver).click(inplaceInput.getRoot()).build());
+                new Actions(driver).click(inplaceInput.getRootElement()).build());
     }
 
     @Test
     public void testOndblclick() {
         testFireEvent(inplaceInputAttributes, InplaceInputAttributes.ondblclick,
-                new Actions(driver).doubleClick(inplaceInput.getRoot()).build());
+                new Actions(driver).doubleClick(inplaceInput.getRootElement()).build());
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-9868")
     public void testOnfocus() {
         testFireEvent(inplaceInputAttributes, InplaceInputAttributes.onfocus,
-                new Actions(driver).click(inplaceInput.getRoot()).build());
+                new Actions(driver).click(inplaceInput.getRootElement()).build());
     }
 
     @Test
@@ -338,51 +337,51 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
 
     @Test
     public void testOnkeydown() {
-        testFireEventWithJS(inplaceInput.getRoot(), inplaceInputAttributes,
+        testFireEventWithJS(inplaceInput.getRootElement(), inplaceInputAttributes,
                 InplaceInputAttributes.onkeydown);
     }
 
     @Test
     public void testOnkeypress() {
-        testFireEventWithJS(inplaceInput.getRoot(), inplaceInputAttributes,
+        testFireEventWithJS(inplaceInput.getRootElement(), inplaceInputAttributes,
                 InplaceInputAttributes.onkeypress);
     }
 
     @Test
     public void testOnkeyup() {
-        testFireEventWithJS(inplaceInput.getRoot(), inplaceInputAttributes,
+        testFireEventWithJS(inplaceInput.getRootElement(), inplaceInputAttributes,
                 InplaceInputAttributes.onkeyup);
 
     }
 
     @Test
     public void testOnmousedown() {
-        testFireEventWithJS(inplaceInput.getRoot(), inplaceInputAttributes,
+        testFireEventWithJS(inplaceInput.getRootElement(), inplaceInputAttributes,
                 InplaceInputAttributes.onmousedown);
     }
 
     @Test
     public void testOnmousemove() {
-        testFireEventWithJS(inplaceInput.getRoot(), inplaceInputAttributes,
+        testFireEventWithJS(inplaceInput.getRootElement(), inplaceInputAttributes,
                 InplaceInputAttributes.onmousemove);
 
     }
 
     @Test
     public void testOnmouseout() {
-        testFireEventWithJS(inplaceInput.getRoot(), inplaceInputAttributes,
+        testFireEventWithJS(inplaceInput.getRootElement(), inplaceInputAttributes,
                 InplaceInputAttributes.onmouseout);
     }
 
     @Test
     public void testOnmouseover() {
-        testFireEventWithJS(inplaceInput.getRoot(), inplaceInputAttributes,
+        testFireEventWithJS(inplaceInput.getRootElement(), inplaceInputAttributes,
                 InplaceInputAttributes.onmouseover);
     }
 
     @Test
     public void testOnmouseup() {
-        testFireEventWithJS(inplaceInput.getRoot(), inplaceInputAttributes,
+        testFireEventWithJS(inplaceInput.getRootElement(), inplaceInputAttributes,
                 InplaceInputAttributes.onmouseup);
     }
 
@@ -395,14 +394,14 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     @Test
     public void testRequired() {
         inplaceInputAttributes.set(InplaceInputAttributes.required, Boolean.TRUE);
-        MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK).type(""),
+        MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK).changeToValue(""),
                 WaitRequestType.XHR).confirm();
         assertTrue(requiredMessage.isVisible());
         assertEquals(requiredMessage.getDetail(),
                 inplaceInputAttributes.get(InplaceInputAttributes.requiredMessage));
 
         inplaceInputAttributes.set(InplaceInputAttributes.required, Boolean.FALSE);
-        MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK).type(""),
+        MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK).changeToValue(""),
                 WaitRequestType.XHR).confirm();
         assertFalse(requiredMessage.isVisible());
     }
@@ -412,7 +411,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
         String reqMsg = "Another new and completely different required message.";
         inplaceInputAttributes.set(InplaceInputAttributes.required, Boolean.TRUE);
         inplaceInputAttributes.set(InplaceInputAttributes.requiredMessage, reqMsg);
-        MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK).type(""),
+        MetamerPage.waitRequest(inplaceInput.editBy(OpenBy.CLICK).changeToValue(""),
                 WaitRequestType.XHR).confirm();
         assertTrue(requiredMessage.isVisible());
         assertEquals(requiredMessage.getDetail(), reqMsg);
@@ -421,21 +420,21 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     @Test
     public void testSaveOnBlur() {
         inplaceInputAttributes.set(InplaceInputAttributes.saveOnBlur, Boolean.FALSE);
-        inplaceInput.editBy(OpenBy.CLICK).type("value that will be canceled");
-        fireEvent(inplaceInput.getRoot(), Event.BLUR);
+        inplaceInput.editBy(OpenBy.CLICK).changeToValue("value that will be canceled");
+        fireEvent(inplaceInput.getRootElement(), Event.BLUR);
         assertEquals(inplaceInput.getLabelValue(), "RichFaces 4", "Value should not change.");
     }
 
-    @Test(groups = "4.Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12609")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12609")
     public void testShowControls() {
-        inplaceInputAttributes.set(InplaceInputAttributes.showControls, Boolean.TRUE);
-
         assertFalse(inplaceInput.getControls().isVisible(), "Controls should not be visible.");
         assertFalse(Graphene.element(inplaceInput.getControls()
                 .getCancelButtonElement()).isVisible().apply(driver), "Cancel button should not be visible.");
         assertFalse(Graphene.element(inplaceInput.getControls()
                 .getOkButtonElement()).isVisible().apply(driver), "Ok button should not be visible.");
+
+        inplaceInputAttributes.set(InplaceInputAttributes.showControls, Boolean.TRUE);
 
         inplaceInput.editBy(OpenBy.CLICK);
         assertTrue(inplaceInput.getControls().isVisible(), "Controls are not visible.");
@@ -447,12 +446,12 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
 
     @Test
     public void testStyle() {
-        testStyle(inplaceInput.getRoot());
+        testStyle(inplaceInput.getRootElement());
     }
 
     @Test
     public void testStyleClass() {
-        testStyleClass(inplaceInput.getRoot());
+        testStyleClass(inplaceInput.getRootElement());
     }
 
     @Test
@@ -465,7 +464,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
 
     @Test
     public void testTitle() {
-        testTitle(inplaceInput.getRoot());
+        testTitle(inplaceInput.getRootElement());
     }
 
     @Test

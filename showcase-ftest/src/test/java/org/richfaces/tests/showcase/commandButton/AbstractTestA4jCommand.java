@@ -23,6 +23,7 @@ package org.richfaces.tests.showcase.commandButton;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import static org.testng.Assert.assertEquals;
@@ -41,7 +42,7 @@ public abstract class AbstractTestA4jCommand extends AbstractWebDriverTest {
 
     @FindBy(css="form input[type=text]")
     protected WebElement input;
-    @FindBy(jquery="span[id$=out]")
+    @FindBy(className="outhello")
     protected WebElement output;
 
     /* ******************************************************************************
@@ -55,7 +56,11 @@ public abstract class AbstractTestA4jCommand extends AbstractWebDriverTest {
          */
         Graphene.guardXhr(getCommand()).click();
 
-        assertEquals(output.getText().trim(), empty, "The output should be emtpy string");
+        try {
+            output.isDisplayed();
+            assertEquals(output.getText().trim(), empty, "The output should be emtpy string");
+        } catch(NoSuchElementException ignored) {
+        }
     }
 
 
@@ -93,7 +98,11 @@ public abstract class AbstractTestA4jCommand extends AbstractWebDriverTest {
 
         Graphene.guardXhr(getCommand()).click();
 
-        Graphene.waitAjax().until().element(output).text().equalTo(empty);
+        try {
+            output.isDisplayed();
+            assertEquals(output.getText().trim(), empty, "The output should be emtpy string");
+        } catch(NoSuchElementException ignored) {
+        }
     }
 
     protected abstract WebElement getCommand();
