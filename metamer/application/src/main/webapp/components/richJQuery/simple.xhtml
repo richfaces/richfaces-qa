@@ -56,7 +56,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                              timing="#{richJQueryBean.attributes['timing'].value}"
                              />
 
-                <rich:jQuery id="rebindJQuery" event="click" name="rebindOneClickEvent" selector="#jQueryTestButton" query="alert('one attachType rebound event')" attachType="one" />
+                <rich:jQuery id="rebindJQuery" event="click" name="rebindOneClickEvent" selector="#jQueryTestButton" query="metamerEvents += 'one attachType rebound event '" attachType="one" />
             </fieldset>
 
             <br/>
@@ -72,7 +72,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </ui:repeat>
                 </h:panelGroup>
 
-                <rich:jQuery id="liveTestJQuery" selector="#liveTestGroup .liveTestComponent" attachType="live" event="click" query="alert(jQuery.trim(jQuery(this).text()))" />
+                <rich:jQuery id="liveTestJQuery" selector="#liveTestGroup .liveTestComponent" attachType="live" event="click" query="metamerEvents += jQuery.trim(jQuery(this).text())" />
 
                 <br/>
 
@@ -85,7 +85,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
-            <metamer:attributes value="#{richJQueryBean.attributes}" id="attributes" render="log"/>
+            <metamer:attributes value="#{richJQueryBean.attributes}" id="attributes"/>
         </ui:define>
 
     </ui:composition>

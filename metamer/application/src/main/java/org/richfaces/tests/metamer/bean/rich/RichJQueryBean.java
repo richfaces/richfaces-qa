@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
 public class RichJQueryBean implements Serializable {
 
     private static final long serialVersionUID = 111475400649809L;
-    private static Logger logger;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RichJQueryBean.class);
     private Attributes attributes;
     private List<String> componentsDataList;
 
@@ -55,8 +55,7 @@ public class RichJQueryBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        logger = LoggerFactory.getLogger(getClass());
-        logger.debug("initializing bean " + getClass().getName());
+        LOGGER.debug("initializing bean " + getClass().getName());
 
         componentsDataList = new ArrayList<String>();
         addComponent();
@@ -65,29 +64,28 @@ public class RichJQueryBean implements Serializable {
 
         attributes.setAttribute("event", "click");
         attributes.setAttribute("name", "bubu");
-        attributes.setAttribute("query", "alert('immediate attachment')");
+        attributes.setAttribute("query", "metamerEvents += \"immediate attachment \"");
         attributes.setAttribute("rendered", true);
         attributes.setAttribute("selector", "#jQueryTestButton");
         attributes.setAttribute("timing", "immediate");
 
         // TODO must be tested in other way
         attributes.remove("name");
+    }
 
+    public void addComponent() {
+        componentsDataList.add(UUID.randomUUID().toString());
     }
 
     public Attributes getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(Attributes attributes) {
-        this.attributes = attributes;
-    }
-
     public List<String> getComponentsDataList() {
         return componentsDataList;
     }
 
-    public void addComponent() {
-        componentsDataList.add(UUID.randomUUID().toString());
+    public void setAttributes(Attributes attributes) {
+        this.attributes = attributes;
     }
 }
