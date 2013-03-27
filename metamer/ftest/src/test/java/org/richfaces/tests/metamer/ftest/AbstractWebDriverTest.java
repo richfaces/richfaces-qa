@@ -43,6 +43,7 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.iphone.IPhoneDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -71,7 +72,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         HTMLUnit(HtmlUnitDriver.class),
         //        Opera(OperaDriver.class),
         IPhone(IPhoneDriver.class),
-        Android(AndroidDriver.class);
+        Android(AndroidDriver.class),
+        Remote(RemoteWebDriver.class);
         private final Class<?> clazz;
 
         private DriverType(Class<?> clazz) {
