@@ -27,7 +27,8 @@ import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
-import org.richfaces.component.Mode;
+import org.richfaces.TooltipMode;
+import org.richfaces.tests.page.fragments.impl.Utils;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
@@ -38,13 +39,13 @@ public class RichFacesTooltip {
     @Root
     public WebElement root;
 
-    private Mode mode = Mode.ajax;
+    private TooltipMode mode = TooltipMode.client;
 
-    public Mode getMode() {
+    public TooltipMode getMode() {
         return mode;
     }
 
-    public void setMode(Mode mode) {
+    public void setMode(TooltipMode mode) {
         this.mode = mode;
     }
 
@@ -56,33 +57,34 @@ public class RichFacesTooltip {
         if (root.isDisplayed()) {
             // guard(selenium, getRequestType()).mouseMoveAt(target, new Point(x, y));
             Action mouseMoveAt = new Actions(GrapheneContext.getProxy()).moveToElement(target, x, y).build();
-            mouseMoveAt.perform();
+            getGuardTypeForMode(mouseMoveAt, mode).perform();
         } else {
             // guard(selenium, getRequestType()).mouseOverAt(target, new Point(x, y));
             Action mouseMoveAt = new Actions(GrapheneContext.getProxy()).moveToElement(target, x, y).build();
-            mouseMoveAt.perform();
+            getGuardTypeForMode(mouseMoveAt, mode).perform();
         }
-        Graphene.waitGui().until(Graphene.element(root).isVisible());
+        // since there showDelay would be in action, let caloing method wait for display if need ensure it
+        // Graphene.waitGui().until(Graphene.element(root).isVisible());
     }
 
     public void hide(WebElement target) {
-        hide(target, -1, -1);
+        hide(target, -3, -3);
     }
 
     private void hide(WebElement target, int x, int y) {
         // guard(selenium, getRequestType()).mouseOutAt(target, new Point(x, y));
-        Action mouseOutAt = new Actions(GrapheneContext.getProxy()).moveToElement(target).moveByOffset(x, y).build();
-        getGuardTypeForMode(mouseOutAt, mode).perform();
+        // Action mouseOutAt = new Actions(GrapheneContext.getProxy()).moveToElement(target, x, y).build();
+        Action mouseOutAt = new Actions(GrapheneContext.getProxy()).moveByOffset(x, y).build();
+        mouseOutAt.perform();
+
+        // TODO JJa 2013-03-25: "mouseout" event triggered "manually" since it is not triggered by Actions
+        Utils.triggerJQ("mouseout", target);
     }
 
-    private static <T> T getGuardTypeForMode(T target, Mode mode) {
+    private static <T> T getGuardTypeForMode(T target, TooltipMode mode) {
         switch (mode) {
             case ajax:
                 return Graphene.guardXhr(target);
-            case server:
-                return Graphene.guardHttp(target);
-            case client:
-                return Graphene.guardNoRequest(target);
             default:
                 return Graphene.guardNoRequest(target);
         }

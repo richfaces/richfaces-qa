@@ -44,7 +44,7 @@ public class TooltipPage extends MetamerPage {
     @FindBy(css = "div[id$=panel_body]")
     public WebElement panel3;
 
-    @FindBy(css = "span.rf-tt")
+    @FindBy(className = "rf-tt")
     public RichFacesTooltip tooltip;
 
     @FindBy(css = "table[id$='attributes:attributes']")
