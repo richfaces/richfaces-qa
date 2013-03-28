@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.panelMenuItem.RichFacesPanelMenuItem;
 
@@ -36,6 +35,4 @@ public class PanelMenuItemPage extends MetamerPage {
     @FindBy(jquery = "div[id$=item12]")
     RichFacesPanelMenuItem item;
 
-    @FindBy(css = "table[id$='attributes:attributes']")
-    public WebElement attributesTable;
 }

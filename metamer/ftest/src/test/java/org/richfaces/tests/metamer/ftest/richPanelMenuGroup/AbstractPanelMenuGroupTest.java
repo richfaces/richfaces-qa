@@ -29,7 +29,7 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMen
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -37,7 +37,7 @@ import org.testng.annotations.BeforeMethod;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @since 4.3.1
  */
-public abstract class AbstractPanelMenuGroupTest extends AbstractWebDriverTest {
+public abstract class AbstractPanelMenuGroupTest extends AbstractPanelMenuCommonTest {
 
     @Page
     PanelMenuGroupPage page;
@@ -45,6 +45,11 @@ public abstract class AbstractPanelMenuGroupTest extends AbstractWebDriverTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richPanelMenuGroup/simple.xhtml");
+    }
+
+    @Override
+    public MetamerPage getPage() {
+        return page;
     }
 
     @BeforeMethod
