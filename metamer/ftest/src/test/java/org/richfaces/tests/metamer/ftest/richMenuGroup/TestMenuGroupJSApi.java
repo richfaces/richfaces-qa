@@ -24,8 +24,8 @@ package org.richfaces.tests.metamer.ftest.richMenuGroup;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
-import org.jboss.arquillian.ajocado.dom.Event;
 
+import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
@@ -57,6 +57,11 @@ public class TestMenuGroupJSApi extends AbstractWebDriverTest {
 
     @Test
     public void testHide() {
+        fireEvent(hideButton, Event.MOUSEOVER);
+        Graphene.waitGui().until().element(menuList).is().visible();
+        assertNotVisible(menuItem41, "Save button should not be visible.");
+        assertNotVisible(groupList, "Group list should not be visible.");
+        testShow();//show the group
         fireEvent(hideButton, Event.MOUSEOVER);
         Graphene.waitGui().until().element(menuList).is().visible();
         assertNotVisible(menuItem41, "Save button should not be visible.");
