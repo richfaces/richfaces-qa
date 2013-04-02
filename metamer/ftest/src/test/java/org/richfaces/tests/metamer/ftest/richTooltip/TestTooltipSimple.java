@@ -78,9 +78,6 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
     @Page
     TooltipPage page;
-    // TooltipAttributes attributes = new TooltipAttributes();
-    // JQueryLocator panel = pjq("div[id$=panel]");
-    // TooltipModel tooltip = new TooltipModel(jq(".rf-tt"), panel);
 
     Point eventPosition;
     @Inject
@@ -137,9 +134,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
         page.tooltip.setMode(TooltipMode.ajax);
 
-        // retrieveRequestTime.initializeValue();
         MetamerPage.requestTimeChangesWaiting(page.tooltip).recall(page.panel);
-        // waitGui.waitForChange(retrieveRequestTime);
 
         assertEquals(expectedReturnJS("return window.data;", "RichFaces 4"), "RichFaces 4"); // retrieveWindowData.retrieve(), "RichFaces 4");
     }
@@ -151,9 +146,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         page.tooltip.setMode(TooltipMode.ajax);
 
         testRequestEventsBefore("begin", "beforedomupdate", "complete");
-        // retrieveRequestTime.initializeValue();
         MetamerPage.requestTimeChangesWaiting(page.tooltip).recall(page.panel);
-        // waitGui.waitForChange(retrieveRequestTime);
         testRequestEventsAfter("begin", "beforedomupdate", "complete");
     }
 
@@ -237,27 +230,8 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
         page.tooltip.setMode(TooltipMode.ajax);
 
-        /*
-        new DelayTester(presetDelay) {
-
-            public void beforeAction() {
-                page.tooltip.recall(page.panel);
-            }
-
-            public void action() {
-                page.tooltip.hide(page.panel);
-                // waitGui.timeout(presetDelay + 2000).until(elementNotVisible.locator(page.tooltip));
-                // Graphene.waitModel() .until("Page was not updated").element(page.tooltip.root).is().not().visible();
-                WebDriverWait<Void> wait = new WebDriverWait<Void>(null, driver, presetDelay + 2000);
-                wait.until("Page was not updated").element(page.tooltip.root).is().not().visible();
-            }
-        }.run();
-        */
-
         page.tooltip.recall(page.panel);
         page.tooltip.hide(page.panel);
-        // waitGui.timeout(presetDelay + 2000).until(elementNotVisible.locator(page.tooltip));
-        // Graphene.waitModel() .until("Page was not updated").element(page.tooltip.root).is().not().visible();
         WebDriverWait<Void> wait = new WebDriverWait<Void>(null, driver, presetDelay + 2);
         wait.until("Tooltip didn't disappears!").element(page.tooltip.root).is().not().visible();
     }
@@ -268,9 +242,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
         page.tooltip.recall(page.panel);
 
-        // selenium.mouseUpAt(page.panel, new Point(5, 5));
         new Actions(driver).moveToElement(page.panel).build().perform();
-        // waitGui.until(elementNotVisible.locator(page.tooltip));
         Graphene.waitModel().until("Page was not updated").element(page.tooltip.root).is().present();
     }
 
@@ -286,7 +258,6 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
         String expectedTagName = (layout == TooltipLayout.block) ? "div" : "span";
 
-        // String actualTagName = selenium.getEval(JQueryScript.jqScript(page.tooltip, "get(0).tagName"));
         String actualTagName = page.tooltip.root.getTagName();
         actualTagName = actualTagName.toLowerCase();
 
@@ -301,14 +272,10 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
         page.tooltip.setMode(TooltipMode.ajax);
 
-        // retrieveRenderChecker.initializeValue();
         String renderCheckerText = page.renderCheckerOutput.getText();
-        // retrieveRequestTime.initializeValue();
 
         MetamerPage.requestTimeNotChangesWaiting(page.tooltip).recall(page.panel);
-        // waitAjax.waitForChange(retrieveRenderChecker);
         Graphene.waitGui().until(Graphene.element(page.renderCheckerOutput).text().not().equalTo(renderCheckerText));
-        // assertFalse(retrieveRequestTime.isValueChanged());
     }
 
     @Test
@@ -318,33 +285,15 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
         page.tooltip.setMode(mode);
 
-        // retrieveRequestTime.initializeValue();
-
         if (mode == TooltipMode.ajax) {
-            // waitGui.waitForChange(retrieveRequestTime);
             MetamerPage.requestTimeChangesWaiting(page.tooltip).recall(page.panel);
         } else {
             page.tooltip.recall(page.panel);
         }
 
-        // retrieveRequestTime.initializeValue();
-        // page.tooltip.hide(page.panel);
         MetamerPage.requestTimeNotChangesWaiting(page.tooltip).hide(page.panel);
 
-        // waitGui.until(elementNotVisible.locator(page.tooltip));
         Graphene.waitGui().until(Graphene.element(page.tooltip.root).not().isVisible());
-        // assertFalse(retrieveRequestTime.isValueChanged());
-    }
-
-    // @Test excluded since doesn't pass :-(
-    @Use(field = "domEvent", value = "domEvents")
-    public void testDomEvents() {
-        page.tooltip.setMode(TooltipMode.client);
-
-        page.tooltip.recall(page.panel);
-
-        // testFireEvent(tooltipAttributes, page.tooltip.root);
-        // testFireEventWithJS(page.tooltip, domEvent, tooltipAttributes, TooltipAttributes.???);
     }
 
     @Test
@@ -353,17 +302,165 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         tooltipAttributes.set(TooltipAttributes.mode, TooltipMode.ajax);
         page.tooltip.setMode(TooltipMode.ajax);
 
-        // verifyEventHandler(TooltipAttributes.onbeforedomupdate, null);
+        testRequestEventsBefore("beforedomupdate");
         page.tooltip.recall(page.panel);
+        testRequestEventsAfter("beforedomupdate");
+    }
 
-        Action eventFiringAction = new Actions(driver).moveByOffset(1, 1).build();
-        testFireEvent(tooltipAttributes, TooltipAttributes.onbeforedomupdate, eventFiringAction);
+    @Test
+    @Use(field = "mode", enumeration = true)
+    public void testOnBeforeHide() {
+        tooltipAttributes.set(TooltipAttributes.mode, mode);
+        page.tooltip.setMode(mode);
+
+        testRequestEventsBefore("beforehide");
+
+        // Setting handler cause tooltip disappear,
+        // so invoke them between event handler setting
+        page.tooltip.recall(page.panel);
+        page.tooltip.hide(page.panel);
+
+        testRequestEventsAfter("beforehide");
+    }
+
+    @Test
+    @Use(field = "mode", enumeration = true)
+    public void testOnBeforeShow() {
+        tooltipAttributes.set(TooltipAttributes.mode, mode);
+        page.tooltip.setMode(mode);
+
+        testRequestEventsBefore("beforeshow");
+        page.tooltip.recall(page.panel);
+        testRequestEventsAfter("beforeshow");
+
+        page.tooltip.hide(page.panel);
+    }
+
+    @Test
+    public void testOnBegin() {
+        tooltipAttributes.set(TooltipAttributes.mode, TooltipMode.ajax);
+        page.tooltip.setMode(TooltipMode.ajax);
+
+        testRequestEventsBefore("begin");
+        page.tooltip.recall(page.panel);
+        testRequestEventsAfter("begin");
+
+        page.tooltip.hide(page.panel);
+    }
+
+    @Test
+    @Use(field = "mode", enumeration = true)
+    public void testOnClick() {
+        tooltipAttributes.set(TooltipAttributes.mode, mode);
+        page.tooltip.setMode(mode);
+        Action click = new Actions(driver).click(page.tooltip.root).build();
+        verifyEventHandler(TooltipAttributes.onclick, click);
+    }
+
+    @Test
+    public void testOnComplete() {
+        tooltipAttributes.set(TooltipAttributes.mode, TooltipMode.ajax);
+        page.tooltip.setMode(TooltipMode.ajax);
+
+        testRequestEventsBefore("complete");
+        page.tooltip.recall(page.panel);
+        testRequestEventsAfter("complete");
+
+        page.tooltip.hide(page.panel);
+    }
+
+    @Test
+    @Use(field = "mode", enumeration = true)
+    public void testOnDblClick() {
+        tooltipAttributes.set(TooltipAttributes.mode, mode);
+        page.tooltip.setMode(mode);
+        Action dblClick = new Actions(driver).doubleClick(page.tooltip.root).build();
+        verifyEventHandler(TooltipAttributes.ondblclick, dblClick);
+    }
+
+    @Test
+    @Use(field = "mode", enumeration = true)
+    public void testOnHide() {
+        tooltipAttributes.set(TooltipAttributes.mode, mode);
+        page.tooltip.setMode(mode);
+
+        testRequestEventsBefore("hide");
+        page.tooltip.recall(page.panel);
+        page.tooltip.hide(page.panel);
+        testRequestEventsAfter("hide");
+    }
+
+    @Test
+    @Use(field = "mode", enumeration = true)
+    public void testOnShow() {
+        tooltipAttributes.set(TooltipAttributes.mode, mode);
+        page.tooltip.setMode(mode);
+
+        testRequestEventsBefore("show");
+        page.tooltip.recall(page.panel);
+        testRequestEventsAfter("show");
+
+        page.tooltip.hide(page.panel);
+    }
+
+    @Test
+    @Use(field = "mode", enumeration = true)
+    public void testOnMouseDown() {
+        tooltipAttributes.set(TooltipAttributes.mode, mode);
+        page.tooltip.setMode(mode);
+        Action action = new Actions(driver).clickAndHold(page.tooltip.root).build();
+        verifyEventHandler(TooltipAttributes.onmousedown, action);
+    }
+
+    @Test
+    @Use(field = "mode", enumeration = true)
+    public void testOnMouseMove() {
+        tooltipAttributes.set(TooltipAttributes.mode, mode);
+        page.tooltip.setMode(mode);
+        Action action = new Actions(driver).moveToElement(page.tooltip.root, 1, 1).build();
+        verifyEventHandler(TooltipAttributes.onmousemove, action);
+    }
+
+    @Test
+    @Use(field = "mode", enumeration = true)
+    public void testOnMouseOut() {
+        tooltipAttributes.set(TooltipAttributes.mode, mode);
+        page.tooltip.setMode(mode);
+
+        String attributeName = "mouseout";
+
+        tooltipAttributes.set(TooltipAttributes.onmouseout, "metamerEvents += \"" + TooltipAttributes.onmouseout + " \"");
+        Event e = new Event(attributeName);
+        page.tooltip.recall(page.panel);
+        executeJS("metamerEvents = \"\";");
+
+        fireEvent(page.tooltip.root, e);
+        String returnedString = expectedReturnJS("return metamerEvents", TooltipAttributes.onmouseout.toString());
+        assertEquals(returnedString, TooltipAttributes.onmouseout.toString(), "Event " + e + " does not work.");
+    }
+
+    @Test
+    @Use(field = "mode", enumeration = true)
+    public void testOnMouseOver() {
+        tooltipAttributes.set(TooltipAttributes.mode, mode);
+        page.tooltip.setMode(mode);
+        Action action = new Actions(driver).moveToElement(page.tooltip.root).build();
+        verifyEventHandler(TooltipAttributes.onmouseover, action);
+    }
+
+    @Test
+    @Use(field = "mode", enumeration = true)
+    public void testOnMouseUp() {
+        tooltipAttributes.set(TooltipAttributes.mode, mode);
+        page.tooltip.setMode(mode);
+        Action action = new Actions(driver).clickAndHold(page.tooltip.root).release(page.tooltip.root).build();
+        verifyEventHandler(TooltipAttributes.onmouseup, action);
     }
 
     @Test
     public void testRendered() {
         tooltipAttributes.set(TooltipAttributes.rendered, false);
-        // TODO JJa: I think this require trigger tooltip render first
+        page.tooltip.recall(page.panel);
         assertFalse(Graphene.element(page.tooltip.root).isPresent().apply(driver));
     }
 
@@ -381,8 +478,6 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
         if (presetDelay > 4000) {
             // make sure that tooltip not displayed earlier than after 2 sec (when  showDelay 5 sec)
-            // WebDriverWait<Void> waitBeforeDisplay = new WebDriverWait<Void>(null, driver, 2);
-            // waitBeforeDisplay.until().element(page.tooltip.root).is().not().present();
             waiting(2000);
             assertFalse(Graphene.element(page.tooltip.root).isVisible().apply(driver), "Tooltip shouldn't be displayed before deplay timeout (" + presetDelay + ") is over.");
         }
@@ -391,29 +486,13 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         wait.until(Graphene.element(page.tooltip.root).isVisible());
         page.tooltip.hide(page.panel);
 
-        /*
-        new DelayTester(presetDelay) {
-
-            public void action() {
-                page.tooltip.recall(page.panel);
-                // waitGui.timeout(presetDelay + 2000).until(elementVisible.locator(page.tooltip));
-                Graphene.waitModel().until(Graphene.element(page.tooltip.root).isPresent());
-            }
-
-            public void afterAction() {
-                page.tooltip.hide(page.panel);
-            }
-        }.run();
-        */
     }
 
     @Test
     public void testShowEvent() {
         tooltipAttributes.set(TooltipAttributes.showEvent, "mouseup");
 
-        // selenium.mouseUpAt(page.panel, new Point(5, 5));
         new Actions(driver).clickAndHold(page.panel).release(page.panel).build().perform();
-        // waitGui.until(elementVisible.locator(page.tooltip));
         Graphene.waitGui().until(Graphene.element(page.tooltip.root).isVisible());
     }
 
@@ -424,10 +503,8 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
         page.tooltip.setMode(TooltipMode.ajax);
 
-        // retrieveStatusChecker.initializeValue();
         String statusChecker = page.statusCheckerOutput.getText();
         page.tooltip.recall(page.panel);
-        // waitAjax.waitForChange(retrieveStatusChecker);
         Graphene.waitAjax().until(Graphene.element(page.statusCheckerOutput).text().not().equalTo(statusChecker));
     }
 
@@ -526,12 +603,11 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
     private void verifyEventHandler(TooltipAttributes attr, Action eventFiringAction) {
         String attributeName = attr.toString().substring(2);
-        tooltipAttributes.set(attr, "metamerEvents += " + attributeName);
-        executeJS("metamerEvents = \"\";");
-
+        tooltipAttributes.set(attr, "metamerEvents += \"" + attributeName + "\"");
         page.tooltip.recall(page.panel);
+        executeJS("window.metamerEvents = \"\";");
 
-        assertEquals(expectedReturnJS("return metamerEvents", attributeName), attributeName, "Attribute " + attributeName + " does not work.");
+        eventFiringAction.perform();
+        assertEquals(expectedReturnJS("return window.metamerEvents", attr.toString()), attributeName, "Attribute " + attributeName + " does not work.");
     }
-
 }

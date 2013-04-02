@@ -50,15 +50,6 @@ public class TestTooltipTarget extends AbstractWebDriverTest {
     @Page
     TooltipPage page;
 
-    // private TooltipAttributes attributes = new TooltipAttributes();
-    // private JQueryLocator panel1 = pjq("div[id$=regular-div]");
-    // private JQueryLocator panel2 = pjq("div[id$=jsf-div]");
-    // private JQueryLocator panel3 = pjq("div[id$=panel_body]");
-
-    // TooltipModel tooltip1 = new TooltipModel(jq(".rf-tt"), panel1);
-    // TooltipModel tooltip2 = new TooltipModel(jq(".rf-tt"), panel2);
-    // TooltipModel tooltip3 = new TooltipModel(jq(".rf-tt"), panel3);
-
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richTooltip/targetting.xhtml");
@@ -76,13 +67,11 @@ public class TestTooltipTarget extends AbstractWebDriverTest {
         // 2. target
         tooltipAttributes.set(target, "jsf-div");
         page.tooltip.recall(page.panel2);
-        // waitGui.until(elementVisible.locator(page.panel2.tooltip));
         Graphene.waitGui().until(Graphene.element(page.tooltip.root).isVisible());
 
         // 3. default target
         tooltipAttributes.set(target, "panel");
         page.tooltip.recall(page.panel3);
-        // waitGui.until(elementVisible.locator(page.panel3.tooltip));
         Graphene.waitGui().until(Graphene.element(page.tooltip.root).isVisible());
     }
 
@@ -91,7 +80,6 @@ public class TestTooltipTarget extends AbstractWebDriverTest {
     public void testTargetWithRegularDiv() {
         tooltipAttributes.set(target, "regular-div");
         page.tooltip.recall(page.panel1);
-        // waitGui.until(elementVisible.locator(page.panel1.tooltip));
         Graphene.waitGui().until(Graphene.element(page.tooltip.root).isVisible());
     }
 }
