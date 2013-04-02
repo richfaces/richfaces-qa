@@ -22,24 +22,27 @@
 package org.richfaces.tests.metamer.ftest.richMenuSeparator;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.menuSeparatorAttributes;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.menuSeparatorAttributes;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
-import org.testng.annotations.Test;
+import java.util.List;
 
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.testng.annotations.Test;
 
 /**
  * Test case for page faces/components/richMenuSeparator/simple.xhtml.
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 22407 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichMenuSeparator extends AbstractGrapheneTest {
+public class TestMenuSeparator extends AbstractWebDriverTest {
 
-    private JQueryLocator separators = pjq("div.rf-ddm-sep");
+    @FindBy(css = "div.rf-ddm-sep")
+    private List<WebElement> separators;
 
     @Override
     public URL getTestUrl() {
@@ -48,15 +51,12 @@ public class TestRichMenuSeparator extends AbstractGrapheneTest {
 
     @Test
     public void testRendered() {
-        int count = selenium.getCount(separators);
-        assertEquals(count, 2, "There should be two separators on the page - after 'Open Recent' and after 'Close'.");
+        assertEquals(separators.size(), 2, "There should be two separators on the page -- after 'Open Recent' and after 'Close'.");
 
         menuSeparatorAttributes.set(MenuSeparatorAttributes.rendered, Boolean.FALSE);
-        count = selenium.getCount(separators);
-        assertEquals(count, 1, "There should be only one separator on the page - after 'Close'.");
+        assertEquals(separators.size(), 1, "There should be only one separator on the page -- after 'Close'.");
 
         menuSeparatorAttributes.set(MenuSeparatorAttributes.rendered, Boolean.TRUE);
-        count = selenium.getCount(separators);
-        assertEquals(count, 2, "There should be two separators on the page - after 'Open Recent' and after 'Close'.");
+        assertEquals(separators.size(), 2, "There should be two separators on the page -- after 'Open Recent' and after 'Close'.");
     }
 }
