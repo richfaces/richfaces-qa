@@ -26,8 +26,8 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.util.Set;
-import org.jboss.arquillian.graphene.wait.WebDriverWait;
 
+import org.jboss.arquillian.graphene.wait.WebDriverWait;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;

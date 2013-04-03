@@ -36,6 +36,7 @@ import org.richfaces.component.UIInplaceSelect;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.RichBean;
 import org.richfaces.tests.metamer.bean.abstractions.SelectValidationBean;
+import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
 import org.richfaces.tests.metamer.model.Capital;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,14 +77,14 @@ public class RichInplaceSelectBean extends SelectValidationBean implements Seria
         attributes.setAttribute("listWidth", "200px");
         attributes.setAttribute("openOnEdit", true);
         attributes.setAttribute("rendered", true);
+        attributes.setAttribute("required", true);
+        attributes.setAttribute("requiredMessage", StringInputValidationBean.REQUIRED_VALIDATION_MSG);
         attributes.setAttribute("saveOnBlur", true);
         attributes.setAttribute("saveOnSelect", true);
 
         // TODO has to be tested in another way
         attributes.remove("converter");
         attributes.remove("converterMessage");
-        attributes.remove("required");
-        attributes.remove("requiredMessage");
         attributes.remove("validator");
         attributes.remove("validatorMessage");
         attributes.remove("valueChangeListener");

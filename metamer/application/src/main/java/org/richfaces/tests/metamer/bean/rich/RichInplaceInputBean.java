@@ -29,6 +29,7 @@ import javax.faces.bean.ViewScoped;
 
 import org.richfaces.component.UIInplaceInput;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBeanImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +59,8 @@ public class RichInplaceInputBean extends StringInputValidationBeanImpl implemen
         attributes.setAttribute("defaultLabel", "Click here to edit");
         attributes.setAttribute("editEvent", "click");
         attributes.setAttribute("rendered", true);
-        attributes.setAttribute("requiredMessage", "value is required");
+        attributes.setAttribute("required", true);
+        attributes.setAttribute("requiredMessage", StringInputValidationBean.REQUIRED_VALIDATION_MSG);
         attributes.setAttribute("saveOnBlur", true);
         attributes.setAttribute("value", "RichFaces 4");
 

@@ -39,50 +39,52 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <script type="text/javascript">
                     function setCorrectValues(id) {
                         switch(id){
-                            case 'past':
-                    #{rich:component('past')}.setValue(new Date('Jan 2, 1980 12:00:00'));
+                            case 'past':#{rich:component('past')}.setValue(new Date('Jan 2, 1980 12:00:00'));
+                                $("[id$=pastInputDate]").click().change().blur();
+                                break;
+                            case 'future':#{rich:component('future')}.setValue(new Date('Jan 2, 3000 12:00:00'));
+                                $("input[id$=futureInputDate]").click().change().blur();
+                                break;
+                            case 'lastYear':
+                                var d = new Date();
+                                var yr = d.getFullYear()-1;#{rich:component('lastYear')}.setValue(new Date('Jan 2, '+yr+' 12:00:00'));
+                                $("[id$=lastYearInputDate]").click().val('Jan 2, '+yr+' 12:00').change().blur();
+                                break;
+                            case 'required':#{rich:component('required')}.setValue(new Date('Jan 2, 1980 12:00:00'));
+                                $("input[id$=requiredInputDate]").click().change().blur();
+                                break;
+                            default:
+                                setCorrectValues('future');
+                                setCorrectValues('past');
+                                setCorrectValues('lastYear');
+                                setCorrectValues('required');
+                                break;
+                            }
+                        }
+                        function setWrongValues(id) {
+                            switch(id){
+                                case 'past':#{rich:component('past')}.setValue(new Date('Jan 2, 3000 12:00:00'));
                                     $("[id$=pastInputDate]").click().change().blur();
                                     break;
-                                case 'future':
-                    #{rich:component('future')}.setValue(new Date('Jan 2, 3000 12:00:00'));
+                                case 'future':#{rich:component('future')}.setValue(new Date('Jan 2, 1980 12:00:00'));
                                     $("input[id$=futureInputDate]").click().change().blur();
                                     break;
                                 case 'lastYear':
                                     var d = new Date();
-                                    var yr = d.getFullYear()-1;
-                    #{rich:component('lastYear')}.setValue(new Date('Jan 2, '+yr+' 12:00:00'));
+                                    var yr = d.getFullYear()+1;#{rich:component('lastYear')}.setValue(new Date('Jan 2, '+yr+' 12:00:00'));
                                     $("[id$=lastYearInputDate]").click().val('Jan 2, '+yr+' 12:00').change().blur();
                                     break;
+                                case 'required':#{rich:component('required')}.setValue('');
+                                    $("input[id$=requiredInputDate]").click().change().blur();
+                                    break;
                                 default:
-                                    setCorrectValues('future');
-                                    setCorrectValues('past');
-                                    setCorrectValues('lastYear');
+                                    setWrongValues('future');
+                                    setWrongValues('past');
+                                    setWrongValues('lastYear');
+                                    setWrongValues('required');
                                     break;
                                 }
                             }
-                            function setWrongValues(id) {
-                                switch(id){
-                                    case 'past':
-                    #{rich:component('past')}.setValue(new Date('Jan 2, 3000 12:00:00'));
-                                        $("[id$=pastInputDate]").click().change().blur();
-                                        break;
-                                    case 'future':
-                    #{rich:component('future')}.setValue(new Date('Jan 2, 1980 12:00:00'));
-                                        $("input[id$=futureInputDate]").click().change().blur();
-                                        break;
-                                    case 'lastYear':
-                                        var d = new Date();
-                                        var yr = d.getFullYear()+1;
-                    #{rich:component('lastYear')}.setValue(new Date('Jan 2, '+yr+' 12:00:00'));
-                                        $("[id$=lastYearInputDate]").click().val('Jan 2, '+yr+' 12:00').change().blur();
-                                        break;
-                                    default:
-                                        setWrongValues('future');
-                                        setWrongValues('past');
-                                        setWrongValues('lastYear');
-                                        break;
-                                    }
-                                }
                 </script>
             </ui:insert>
             Values setting:
@@ -114,6 +116,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <input id="lastYearWrong" name="lastYearWrong" type="button" value="set wrong value" onclick="setWrongValues('lastYear')"/>
                 <rich:message id="lastYearMsg" ajaxRendered="false" for="lastYear"/>
 
+                required:
+                <ui:insert name="required"/>
+                <input id="requiredCorrect" name="requiredCorrect" type="button" value="set correct value" onclick="setCorrectValues('required')"/>
+                <input id="requiredWrong" name="requiredWrong" type="button" value="set wrong value" onclick="setWrongValues('required')"/>
+                <rich:message id="requiredMsg" ajaxRendered="false" for="required"/>
+
             </h:panelGrid>
             <br/><br/>
             <a4j:outputPanel ajaxRendered="true" id="outputPanel">
@@ -124,6 +132,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <ui:insert name="futureOutput"/>
                     Output for last year input:
                     <ui:insert name="lastYearOutput"/>
+                    Output for required input:
+                    <ui:insert name="requiredOutput"/>
                 </h:panelGrid>
             </a4j:outputPanel>
         </ui:define>

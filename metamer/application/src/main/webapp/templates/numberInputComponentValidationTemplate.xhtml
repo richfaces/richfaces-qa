@@ -65,6 +65,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <input id="customCorrect" name="customCorrect" type="button" value="set correct value" onclick="setCorrectValues('custom')"/>
                 <input id="customWrong" name="customWrong" type="button" value="set wrong value" onclick="setWrongValues('custom')"/>
                 <rich:message id="customMsg" ajaxRendered="false" for="custom"/>
+
+
+                required:
+                <ui:insert name="required"/>
+                <input id="requiredCorrect" name="requiredCorrect" type="button" value="set correct value" onclick="setCorrectValues('required')"/>
+                <input id="requiredWrong" name="requiredWrong" type="button" value="set wrong value" onclick="setWrongValues('required')"/>
+                <rich:message id="requiredMsg" ajaxRendered="false" for="required"/>
             </h:panelGrid>
             <br/><br/>
             <a4j:outputPanel ajaxRendered="true" id="outputPanel">
@@ -75,6 +82,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <ui:insert name="maxOutput"/>
                     Output for custom (positive) input:
                     <ui:insert name="customOutput"/>
+                    Output for required input:
+                    <ui:insert name="requiredOutput"/>
                 </h:panelGrid>
             </a4j:outputPanel>
         </ui:define>

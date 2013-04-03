@@ -40,7 +40,7 @@ import org.testng.annotations.BeforeMethod;
  * Abstract base for testing all kinds of JSR303 and CSV tests for input components.
  * All such tests has to have:
  * # Pages: page named "csv" and "jsr303", page needs to implement an *InputComponentValidationTemplate.xhtml
- * # Test: test class name must end with 'JSR303' or 'CSV'.
+ * # Test: test class name must end with 'JSR303' or 'CSV' and must extend some of Abstract*InputComponentValidationTest.
  *
  * All tests will be run with all submit methods (ajax, http, none [CSV only]).
  *
@@ -57,8 +57,8 @@ public abstract class AbstractInputComponentValidationTest extends AbstractWebDr
     public static final String A4J_COMMANDBUTTON = "a4jCommandButton";
     public static final String H_COMMANDBUTTON = "hCommandButton";
     public static final String CSV = "csv";
-    public static final String[] CSV_SUBMIT_METHODS = { A4J_COMMANDBUTTON, H_COMMANDBUTTON, CSV };
-    public static final String[] JSR303_SUBMIT_METHODS = { A4J_COMMANDBUTTON, H_COMMANDBUTTON };
+    static final String[] CSV_SUBMIT_METHODS = { A4J_COMMANDBUTTON, H_COMMANDBUTTON, CSV };
+    static final String[] JSR303_SUBMIT_METHODS = { A4J_COMMANDBUTTON, H_COMMANDBUTTON };
     @Inject
     @Use(value = "submitMethods")
     protected String submitMethod;

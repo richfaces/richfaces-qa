@@ -23,6 +23,7 @@ package org.richfaces.tests.metamer.bean.abstractions;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
 import org.hibernate.validator.constraints.NotEmpty;
 import org.richfaces.tests.metamer.validator.StringRichFacesValidator;
 
@@ -35,6 +36,7 @@ public interface StringInputValidationBean extends AttributesHolder {
     String NOTEMPTY_VALUE_DEFAULT = "RF4";
     String PATTERN_VALUE_DEFAULT = "xyz";
     String SIZE_VALUE_DEFAULT = "asdf";
+    String REQUIRED_VALUE_DEFAULT = "required";
     //
     String CUSTOM_VALIDATION_MSG = StringRichFacesValidator.VALIDATION_ERROR_MSG;
     String NOT_EMPTY_VALIDATION_MSG = "may not be empty";
@@ -42,6 +44,7 @@ public interface StringInputValidationBean extends AttributesHolder {
     String NOT_EMPTY_VALIDATION_MSG3 = "size must be between 1 and 2147483647";
     String REGEXP_VALIDATION_MSG = "must match \"[a-z].*\"";
     String STRING_SIZE_VALIDATION_MSG = "size must be between 3 and 6";
+    String REQUIRED_VALIDATION_MSG = "value is required";
 
     String getCustomValue();
 
@@ -54,6 +57,8 @@ public interface StringInputValidationBean extends AttributesHolder {
     @Size(min = 3, max = 6, message = STRING_SIZE_VALIDATION_MSG)
     String getSizeValue();
 
+    String getRequiredValue();
+
     void setCustomValue(String customValue);
 
     void setNotEmptyValue(String notEmptyValue);
@@ -61,4 +66,6 @@ public interface StringInputValidationBean extends AttributesHolder {
     void setPatternValue(String patternValue);
 
     void setSizeValue(String sizeValue);
+
+    void setRequiredValue(String requiredValue);
 }

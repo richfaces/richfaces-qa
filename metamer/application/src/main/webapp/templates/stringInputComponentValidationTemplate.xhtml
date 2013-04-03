@@ -52,33 +52,41 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                             case 'pattern':
                                 $('[id$=patternInput]').focus().val('abcd').change().blur();
                                 break;
+                            case 'required':
+                                $('[id$=requiredInput]').focus().val('required 2').change().blur();
+                                break;
                             default:
                                 setCorrectValues('notEmpty');
                                 setCorrectValues('custom');
                                 setCorrectValues('size');
                                 setCorrectValues('pattern');
+                                setCorrectValues('required');
                                 break;
                         }
                     }
                     function setWrongValues(id) {
                         switch(id){
-                            case "notEmpty":
+                            case 'notEmpty':
                                 $('[id$=notEmptyInput]').focus().val('').change().blur();
                                 break;
-                            case "custom":
+                            case 'custom':
                                 $('[id$=customInput]').focus().val('rich faces').change().blur();
                                 break;
-                            case "size":
+                            case 'size':
                                 $('[id$=sizeInput]').focus().val('12').change().blur();
                                 break;
-                            case "pattern":
+                            case 'pattern':
                                 $('[id$=patternInput]').focus().val('^(%1').change().blur();
+                                break;
+                            case 'required':
+                                $('[id$=requiredInput]').focus().val('').change().blur();
                                 break;
                             default:
                                 setWrongValues('notEmpty');
                                 setWrongValues('custom');
                                 setWrongValues('size');
                                 setWrongValues('pattern');
+                                setWrongValues('required');
                                 break;
                         }
                     }
@@ -120,6 +128,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <input id="customCorrect" name="customCorrect" type="button" value="set correct value" onclick="setCorrectValues('custom')"/>
                 <input id="customWrong" name="customWrong" type="button" value="set wrong value" onclick="setWrongValues('custom')"/>
                 <rich:message id="customMsg" ajaxRendered="false" for="custom"/>
+
+                required:
+                <ui:insert name="required"/>
+                <input id="requiredCorrect" name="requiredCorrect" type="button" value="set correct value" onclick="setCorrectValues('required')"/>
+                <input id="requiredWrong" name="requiredWrong" type="button" value="set wrong value" onclick="setWrongValues('required')"/>
+                <rich:message id="requiredMsg" ajaxRendered="false" for="required"/>
             </h:panelGrid>
             <br/><br/>
             <a4j:outputPanel ajaxRendered="true" id="outputPanel">
@@ -133,6 +147,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <ui:insert name="sizeOutput"/>
                     Output for custom (RichFaces || richfaces) string input:
                     <ui:insert name="customOutput"/>
+                    Output for required string input:
+                    <ui:insert name="requiredOutput"/>
                 </h:panelGrid>
             </a4j:outputPanel>
         </ui:define>

@@ -39,14 +39,17 @@ public interface DateInputValidationBean extends AttributesHolder {
     DateTime PAST_VALUE_DEFAULT = new DateTime(1980, 1, 1, 12, 0, DateTimeZone.UTC);
     DateTime FUTURE_VALUE_DEFAULT = new DateTime(3000, 1, 1, 12, 0, DateTimeZone.UTC);
     DateTime LAST_YEAR_VALUE_DEFAULT = new DateTime(DateTimeZone.UTC).withMonthOfYear(1).withDayOfMonth(1).withHourOfDay(12).withMinuteOfHour(0).withSecondOfMinute(0).withMillisOfSecond(0).minusYears(1);
+    DateTime REQUIRED_VALUE_DEFAULT = PAST_VALUE_DEFAULT;
     //
     Date PAST_DATE_DEFAULT = PAST_VALUE_DEFAULT.toDate();
     Date FUTURE_DATE_DEFAULT = FUTURE_VALUE_DEFAULT.toDate();
     Date LAST_YEAR_DATE_DEFAULT = LAST_YEAR_VALUE_DEFAULT.toDate();
+    Date REQUIRED_DATE_DEFAULT = PAST_DATE_DEFAULT;
     //
     String FUTURE_VALIDATION_MSG = "must be in the future";
     String LAST_YEAR_VALIDATION_MSG = LastYearValidator.VALIDATOR_ERROR_MSG;
     String PAST_VALIDATION_MSG = "must be in the past";
+    String REQUIRED_VALIDATION_MSG = "value is required";
 
     Date getLastYearValue();
 
@@ -58,9 +61,13 @@ public interface DateInputValidationBean extends AttributesHolder {
     @NotNull
     Date getPastValue();
 
+    Date getRequiredValue();
+
     void setLastYearValue(Date value);
 
     void setFutureValue(Date value);
 
     void setPastValue(Date value);
+
+    void setRequiredValue(Date value);
 }

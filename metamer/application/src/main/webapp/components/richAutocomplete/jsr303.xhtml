@@ -48,7 +48,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="patternOutput">
             <h:outputText id="patternOutput" value="#{richAutocompleteBean.patternValue}"/>
         </ui:define>
-        
+
         <ui:define name="size">
             <rich:autocomplete id="size" value="#{richAutocompleteBean.sizeValue}">
                 <a4j:ajax event="change" render="sizeMsg"/>
@@ -66,6 +66,17 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
         <ui:define name="customOutput">
             <h:outputText id="customOutput" value="#{richAutocompleteBean.customValue}"/>
+        </ui:define>
+
+        <ui:define name="required" >
+            <rich:autocomplete id="required" required="true"
+                               requiredMessage="#{richAutocompleteBean.attributes['requiredMessage'].value}"
+                               value="#{richAutocompleteBean.requiredValue}">
+                <a4j:ajax event="change" render="requiredMsg"/>
+            </rich:autocomplete>
+        </ui:define>
+        <ui:define name="requiredOutput">
+            <h:outputText id="requiredOutput" value="#{richAutocompleteBean.requiredValue}"/>
         </ui:define>
     </ui:composition>
 </html>

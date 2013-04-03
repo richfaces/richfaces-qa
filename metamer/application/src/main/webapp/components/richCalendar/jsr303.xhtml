@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:rich="http://richfaces.org/rich"
@@ -31,7 +31,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
     <ui:composition template="/templates/dateInputComponentValidationTemplate.xhtml">
         <ui:define name="past">
-            <rich:calendar id="past" value="#{richCalendarBean.pastValue}" 
+            <rich:calendar id="past" value="#{richCalendarBean.pastValue}"
                            datePattern="#{richCalendarBean.attributes['datePattern'].value}"
                            timeZone="#{richCalendarBean.timeZone}">
                 <!-- must be this way or other messages will disappear-->
@@ -71,6 +71,23 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
         <ui:define name="lastYearOutput">
             <h:outputText id="lastYearOutput" value="#{richCalendarBean.lastYearValue}">
+                <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
+                                   timeZone="#{richCalendarBean.timeZone}"/>
+            </h:outputText>
+        </ui:define>
+
+        <ui:define name="required" >
+            <rich:calendar id="required"
+                           datePattern="#{richCalendarBean.attributes['datePattern'].value}"
+                           timeZone="#{richCalendarBean.timeZone}"
+                           required="true"
+                           requiredMessage="#{richCalendarBean.attributes['requiredMessage'].value}"
+                           value="#{richCalendarBean.requiredValue}">
+                <a4j:ajax event="change" render="requiredMsg"/>
+            </rich:calendar>
+        </ui:define>
+        <ui:define name="requiredOutput">
+            <h:outputText id="requiredOutput" value="#{richCalendarBean.requiredValue}">
                 <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
                                    timeZone="#{richCalendarBean.timeZone}"/>
             </h:outputText>

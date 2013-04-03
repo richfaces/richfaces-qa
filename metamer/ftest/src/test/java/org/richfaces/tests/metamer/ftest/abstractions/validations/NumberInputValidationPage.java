@@ -40,45 +40,44 @@ public class NumberInputValidationPage extends InputValidationPage {
     public static final String MESSAGE_CUSTOM_NAME = "messageCustom";
     public static final String MESSAGE_MAX_NAME = "messageMax";
     public static final String MESSAGE_MIN_NAME = "messageMin";
-    public static final String[] ALL_MESSAGE_CASES = { MESSAGE_CUSTOM_NAME,
-        MESSAGE_MAX_NAME, MESSAGE_MIN_NAME };
+    public static final String MESSAGE_REQUIRED_NAME = "messageRequired";
+    static final String[] ALL_MESSAGE_CASES = { MESSAGE_CUSTOM_NAME,
+        MESSAGE_MAX_NAME, MESSAGE_MIN_NAME, MESSAGE_REQUIRED_NAME };
     //
-    @FindBy(css = "span[id$=minMsg]")
-    private RichFacesMessage messageMin;
-    @FindBy(css = "span[id$=maxMsg] ")
-    private RichFacesMessage messageMax;
     @FindBy(css = "span[id$=customMsg]")
     private RichFacesMessage messageCustom;
+    @FindBy(css = "span[id$=maxMsg] ")
+    private RichFacesMessage messageMax;
+    @FindBy(css = "span[id$=minMsg]")
+    private RichFacesMessage messageMin;
+    @FindBy(css = "span[id$=requiredMsg]")
+    private RichFacesMessage messageRequired;
     //
-    @FindBy(css = "input[id$=minCorrect]")
-    private WebElement setMinCorrectButton;
-    @FindBy(css = "input[id$=minWrong]")
-    private WebElement setMinWrongButton;
-    @FindBy(css = "input[id$=maxCorrect]")
-    private WebElement setMaxCorrectButton;
-    @FindBy(css = "input[id$=maxWrong]")
-    private WebElement setMaxWrongButton;
     @FindBy(css = "input[id$=customCorrect]")
     private WebElement setCustomCorrectButton;
     @FindBy(css = "input[id$=customWrong]")
     private WebElement setCustomWrongButton;
+    @FindBy(css = "input[id$=maxCorrect]")
+    private WebElement setMaxCorrectButton;
+    @FindBy(css = "input[id$=maxWrong]")
+    private WebElement setMaxWrongButton;
+    @FindBy(css = "input[id$=minCorrect]")
+    private WebElement setMinCorrectButton;
+    @FindBy(css = "input[id$=minWrong]")
+    private WebElement setMinWrongButton;
+    @FindBy(css = "input[id$=requiredCorrect]")
+    private WebElement setRequiredCorrectButton;
+    @FindBy(css = "input[id$=requiredWrong]")
+    private WebElement setRequiredWrongButton;
     //
     @FindBy(css = "span[id$=customOutput]")
     private WebElement customOutput;
-    @FindBy(css = "span[id$=minOutput]")
-    private WebElement minOutput;
     @FindBy(css = "span[id$=maxOutput]")
     private WebElement maxOutput;
-
-    @Override
-    protected List<WebElement> getAllCorrectButtons() {
-        return Lists.newArrayList(setCustomCorrectButton, setMaxCorrectButton, setMinCorrectButton);
-    }
-
-    @Override
-    protected List<WebElement> getAllWrongButtons() {
-        return Lists.newArrayList(setCustomWrongButton, setMaxWrongButton, setMinWrongButton);
-    }
+    @FindBy(css = "span[id$=minOutput]")
+    private WebElement minOutput;
+    @FindBy(css = "span[id$=requiredOutput]")
+    private WebElement requiredOutput;
 
     @Override
     protected void initCustomMessages() {
@@ -97,5 +96,10 @@ public class NumberInputValidationPage extends InputValidationPage {
                 setMinCorrectButton, setMinWrongButton,
                 minOutput, "2", String.valueOf(NumberInputValidationBean.MIN_VALUE_DEFAULT),
                 Sets.newHashSet(NumberInputValidationBean.MIN_VALIDATION_MSG)));
+        messageCases.put(MESSAGE_REQUIRED_NAME,
+                new ValidationMessageCase(MESSAGE_REQUIRED_NAME, messageRequired,
+                setRequiredCorrectButton, setRequiredWrongButton,
+                requiredOutput, "2", String.valueOf(NumberInputValidationBean.REQUIRED_VALUE_DEFAULT),
+                Sets.newHashSet(NumberInputValidationBean.REQUIRED_VALIDATION_MSG)));
     }
 }

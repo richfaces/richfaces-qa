@@ -35,10 +35,16 @@ public class StringInputValidationBeanImpl implements StringInputValidationBean 
     private String notEmptyValue = NOTEMPTY_VALUE_DEFAULT;
     private String patternValue = PATTERN_VALUE_DEFAULT;
     private String sizeValue = SIZE_VALUE_DEFAULT;
+    private String requiredValue = REQUIRED_VALUE_DEFAULT;
 
     @Override
     public Attributes getAttributes() {
         return attributes;
+    }
+
+    @Override
+    public String getCustomValue() {
+        return customValue;
     }
 
     @Override
@@ -57,13 +63,18 @@ public class StringInputValidationBeanImpl implements StringInputValidationBean 
     }
 
     @Override
-    public String getCustomValue() {
-        return customValue;
+    public String getRequiredValue() {
+        return requiredValue;
     }
 
     @Override
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
+    }
+
+    @Override
+    public void setCustomValue(String customValue) {
+        this.customValue = customValue;
     }
 
     @Override
@@ -82,7 +93,7 @@ public class StringInputValidationBeanImpl implements StringInputValidationBean 
     }
 
     @Override
-    public void setCustomValue(String customValue) {
-        this.customValue = customValue;
+    public void setRequiredValue(String requiredValue) {
+        this.requiredValue = requiredValue;
     }
 }

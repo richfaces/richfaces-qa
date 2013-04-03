@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:rich="http://richfaces.org/rich"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:a4j="http://richfaces.org/a4j">
@@ -70,6 +70,18 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
         <ui:define name="customOutput">
             <h:outputText id="customOutput" value="#{richAutocompleteBean.customValue}"/>
+        </ui:define>
+
+        <ui:define name="required" >
+            <rich:autocomplete id="required" required="true"
+                               requiredMessage="#{richAutocompleteBean.attributes['requiredMessage'].value}"
+                               value="#{richAutocompleteBean.requiredValue}">
+                <a4j:ajax event="change" render="requiredMsg"/>
+                <rich:validator event="change"/>
+            </rich:autocomplete>
+        </ui:define>
+        <ui:define name="requiredOutput">
+            <h:outputText id="requiredOutput" value="#{richAutocompleteBean.requiredValue}"/>
         </ui:define>
     </ui:composition>
 </html>

@@ -36,6 +36,7 @@ import org.richfaces.component.UISelect;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.RichBean;
 import org.richfaces.tests.metamer.bean.abstractions.SelectValidationBean;
+import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
 import org.richfaces.tests.metamer.model.Capital;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,13 +73,13 @@ public class RichSelectBean extends SelectValidationBean implements Serializable
         attributes.setAttribute("defaultLabel", "Click here to edit");
         attributes.setAttribute("enableManualInput", true);
         attributes.setAttribute("rendered", true);
+        attributes.setAttribute("required", true);
+        attributes.setAttribute("requiredMessage", StringInputValidationBean.REQUIRED_VALIDATION_MSG);
         attributes.setAttribute("showButton", true);
 
         // TODO has to be tested in another way
         attributes.remove("converter");
         attributes.remove("converterMessage");
-        attributes.remove("required");
-        attributes.remove("requiredMessage");
         attributes.remove("validator");
         attributes.remove("validatorMessage");
 

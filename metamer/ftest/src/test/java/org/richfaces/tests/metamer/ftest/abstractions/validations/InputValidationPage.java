@@ -31,12 +31,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.testng.collections.Lists;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class InputValidationPage{
+public abstract class InputValidationPage {
 
     public static final String MESSAGE_ALL_INPUTS_NAME = "allInputs";
     @FindBy(css = "input[id$=hButton]")
@@ -91,9 +92,21 @@ public abstract class InputValidationPage{
         return a4jCommandButton;
     }
 
-    protected abstract List<WebElement> getAllCorrectButtons();
+    private List<WebElement> getAllCorrectButtons() {
+        List<WebElement> result = Lists.newArrayList();
+        for (ValidationMessageCase vmc : getMessageCases().values()) {
+            result.add(vmc.getButtonCorrect());
+        }
+        return result;
+    }
 
-    protected abstract List<WebElement> getAllWrongButtons();
+    private List<WebElement> getAllWrongButtons() {
+        List<WebElement> result = Lists.newArrayList();
+        for (ValidationMessageCase vmc : getMessageCases().values()) {
+            result.add(vmc.getButtonWrong());
+        }
+        return result;
+    }
 
     public final WebElement getHCommandButton() {
         return hCommandButton;

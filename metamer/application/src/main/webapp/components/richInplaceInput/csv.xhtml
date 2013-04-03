@@ -55,7 +55,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="patternOutput">
             <h:outputText id="patternOutput" value="#{richInplaceInputBean.patternValue}"/>
         </ui:define>
-        
+
         <ui:define name="size">
             <rich:inplaceInput id="size"
                                defaultLabel="#{richInplaceInputBean.attributes['defaultLabel'].value}"
@@ -82,6 +82,18 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
         <ui:define name="customOutput">
             <h:outputText id="customOutput" value="#{richInplaceInputBean.customValue}"/>
+        </ui:define>
+
+        <ui:define name="required" >
+            <rich:inplaceInput id="required" required="true"
+                               requiredMessage="#{richInplaceInputBean.attributes['requiredMessage'].value}"
+                               value="#{richInplaceInputBean.requiredValue}">
+                <a4j:ajax event="change" render="requiredMsg"/>
+                <rich:validator event="change"/>
+            </rich:inplaceInput>
+        </ui:define>
+        <ui:define name="requiredOutput">
+            <h:outputText id="requiredOutput" value="#{richInplaceInputBean.requiredValue}"/>
         </ui:define>
     </ui:composition>
 </html>
