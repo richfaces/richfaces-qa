@@ -1,25 +1,30 @@
-/*******************************************************************************
- * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
+/**
+ * *****************************************************************************
+ * JBoss, Home of Professional Open Source Copyright 2010-2013, Red Hat, Inc.
+ * and individual contributors by the
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
+ * @authors tag. See the copyright.txt in the distribution for a full listing of
+ * individual contributors.
  *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ * This is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ * This software is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this software; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
+ * site: http://www.fsf.org.
+ * *****************************************************************************
+ */
 package org.richfaces.tests.showcase;
+
+import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -48,20 +53,28 @@ public class AbstractWebDriverTest extends AbstractShowcaseTest {
 
     @BeforeMethod
     public void loadPage() {
-
         String addition = getAdditionToContextRoot();
-
         this.contextRoot = getContextRoot();
         ShowcaseLayout layout = loadLayout();
-        if (layout == ShowcaseLayout.MOBILE) {
-            webDriver.get(URLUtils.buildUrl(this.contextRoot, "mobile/").toExternalForm()); // because of '#' in URLs
-        }
-        webDriver.get(URLUtils.buildUrl(contextRoot, addition).toExternalForm());
-        if (layout == ShowcaseLayout.MOBILE) {
-        Graphene.waitAjax()
-                .until()
-                .element(By.className("sourceView"))
-                .is().visible();
+        if (runInPortalEnv) {
+            webDriver.get(format("{0}://{1}:{2}/{3}",
+                    contextRoot.getProtocol(), contextRoot.getHost(), contextRoot.getPort(), "portal/classic/showcase"));
+            JavascriptExecutor js = (JavascriptExecutor) webDriver;
+            String setTextQuery = "document.querySelector(\"input[id$='portalForm:{0}']\").value = '{1}';";
+            js.executeScript(format(setTextQuery, "seleniumTestDemo", getDemoName()));
+            js.executeScript(format(setTextQuery, "seleniumTestSample", getSampleName()));
+            js.executeScript("document.querySelector(\"a[id$='portalForm:redirectToPortlet']\").click()");
+        } else {
+            if (layout == ShowcaseLayout.MOBILE) {
+                webDriver.get(URLUtils.buildUrl(this.contextRoot, "mobile/").toExternalForm()); // because of '#' in URLs
+            }
+            webDriver.get(URLUtils.buildUrl(contextRoot, addition).toExternalForm());
+            if (layout == ShowcaseLayout.MOBILE) {
+                Graphene.waitAjax()
+                        .until()
+                        .element(By.className("sourceView"))
+                        .is().visible();
+            }
         }
     }
 
@@ -89,6 +102,7 @@ public class AbstractWebDriverTest extends AbstractShowcaseTest {
     }
 
     public static class EventAction implements Action {
+
         private final WebDriver driver;
         private final String event;
         private final WebElement element;
@@ -105,7 +119,6 @@ public class AbstractWebDriverTest extends AbstractShowcaseTest {
             JavascriptExecutor js = (JavascriptExecutor) driver;
             js.executeScript(jQueryCmd, element);
         }
-
     }
 
     /**
