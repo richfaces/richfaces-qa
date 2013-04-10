@@ -46,6 +46,9 @@
     </container>
 
     <container qualifier="jbossas-remote-7-1">
+        <protocol type="jmx-as7">
+            <property name="executionType">REMOTE</property>
+        </protocol>
     </container>
 
     <container qualifier="tomcat-managed-6">

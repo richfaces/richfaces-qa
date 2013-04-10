@@ -1,29 +1,34 @@
-/*******************************************************************************
- * JBoss, Home of Professional Open Source
- * Copyright 2010-2012, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
+/**
+ * *****************************************************************************
+ * JBoss, Home of Professional Open Source Copyright 2010-2012, Red Hat, Inc.
+ * and individual contributors by the
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
+ * @authors tag. See the copyright.txt in the distribution for a full listing of
+ * individual contributors.
  *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ * This is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ * This software is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this software; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
+ * site: http://www.fsf.org.
+ ******************************************************************************
+ */
 package org.richfaces.tests.showcase;
 
 import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
+import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -46,31 +51,35 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
     @Drone
     protected GrapheneSelenium selenium;
 
-    @BeforeMethod(groups = { "arquillian" })
+    @BeforeMethod(groups = {"arquillian"})
     public void loadPage() {
-
         selenium.getCommandInterceptionProxy().registerInterceptor(new AjaxAwareInterceptor());
-
-        String addition = getAdditionToContextRoot();
-
         this.contextRoot = getContextRoot();
 
-        selenium.open(URLUtils.buildUrl(contextRoot, addition));
+        if (runInPortalEnv) {
+            selenium.open(buildUrl(format("{0}://{1}:{2}/{3}",
+                    contextRoot.getProtocol(), contextRoot.getHost(), contextRoot.getPort(), "portal/classic/showcase")));
+            selenium.waitForPageToLoad();
+            selenium.type(jq("input[id$='portalForm:seleniumTestDemo']"), getDemoName());
+            selenium.type(jq("input[id$='portalForm:seleniumTestSample']"), getSampleName());
+            selenium.click(jq("a[id$='portalForm:redirectToPortlet']"));
+        } else {
+            selenium.open(buildUrl(contextRoot, getAdditionToContextRoot()));
+        }
     }
 
-    /* ***********************************************************************************************************************
-     * ajocado specific methods **************************************************************************
-     * **********************************************
-     */
-
-    /**
-     * Wait for presention of given element for given timeout
-     *
-     * @param element the element which should be displayed
-     * @param timeout the time for which the presention of element will be checked
-     * @return true when elements is found in given timeout, false otherwise
-     */
-    public boolean waitForElementPresent(JQueryLocator element, long timeout) {
+/* ***********************************************************************************************************************
+ * ajocado specific methods **************************************************************************
+ * **********************************************
+ */
+/**
+ * Wait for presention of given element for given timeout
+ *
+ * @param element the element which should be displayed
+ * @param timeout the time for which the presention of element will be checked
+ * @return true when elements is found in given timeout, false otherwise
+ */
+public boolean waitForElementPresent(JQueryLocator element, long timeout) {
 
         long end = System.currentTimeMillis() + timeout;
 

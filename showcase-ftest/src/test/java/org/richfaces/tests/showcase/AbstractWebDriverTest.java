@@ -21,6 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase;
 
+import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -46,12 +48,18 @@ public class AbstractWebDriverTest extends AbstractShowcaseTest {
 
     @BeforeMethod
     public void loadPage() {
-
-        String addition = getAdditionToContextRoot();
-
         this.contextRoot = getContextRoot();
-
-        webDriver.get(URLUtils.buildUrl(contextRoot, "/showcase/", addition).toExternalForm());
+        if (runInPortalEnv) {
+            webDriver.get(format("{0}://{1}:{2}/{3}",
+                contextRoot.getProtocol(), contextRoot.getHost(), contextRoot.getPort(), "portal/classic/showcase"));
+            JavascriptExecutor js = (JavascriptExecutor) webDriver;
+            String setTextQuery = "document.querySelector(\"input[id$='portalForm:{0}']\").value = '{1}';";
+            js.executeScript(format(setTextQuery, "seleniumTestDemo", getDemoName()));
+            js.executeScript(format(setTextQuery, "seleniumTestSample", getSampleName()));
+            js.executeScript("document.querySelector(\"a[id$='portalForm:redirectToPortlet']\").click()");
+        } else {
+            webDriver.get(URLUtils.buildUrl(contextRoot, "/showcase/", getAdditionToContextRoot()).toExternalForm());
+        }
     }
 
     @Override
