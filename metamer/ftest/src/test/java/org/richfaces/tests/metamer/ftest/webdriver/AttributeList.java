@@ -66,7 +66,7 @@ import org.richfaces.tests.metamer.ftest.richInplaceInput.InplaceInputAttributes
 import org.richfaces.tests.metamer.ftest.richInplaceSelect.InplaceSelectAttributes;
 import org.richfaces.tests.metamer.ftest.richInputNumberSlider.InputNumberSliderAttributes;
 import org.richfaces.tests.metamer.ftest.richInputNumberSpinner.InputNumberSpinnerAttributes;
-import org.richfaces.tests.metamer.ftest.richJQuery.RichJQueryAttributes;
+import org.richfaces.tests.metamer.ftest.richJQuery.JQueryAttributes;
 import org.richfaces.tests.metamer.ftest.richList.ListAttributes;
 import org.richfaces.tests.metamer.ftest.richMenuGroup.MenuGroupAttributes;
 import org.richfaces.tests.metamer.ftest.richMenuItem.MenuItemAttributes;
@@ -158,7 +158,7 @@ public class AttributeList {
     public static Attributes<QueueAttributes> queueAttributes = new Attributes<QueueAttributes>("queueAttributes");
     public static Attributes<RegionAttributes> regionAttributes = new Attributes<RegionAttributes>();
     public static Attributes<RepeatAttributes> repeatAttributes = new Attributes<RepeatAttributes>();
-    public static Attributes<RichJQueryAttributes> jQueryAttributes = new Attributes<RichJQueryAttributes>();
+    public static Attributes<JQueryAttributes> jQueryAttributes = new Attributes<JQueryAttributes>();
     public static Attributes<SelectAttributes> selectAttributes = new Attributes<SelectAttributes>();
     public static Attributes<StatusAttributes> statusAttributes = new Attributes<StatusAttributes>();
     public static Attributes<TabAttributes> tabAttributes = new Attributes<TabAttributes>();

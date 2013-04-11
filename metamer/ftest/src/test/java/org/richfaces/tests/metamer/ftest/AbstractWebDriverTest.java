@@ -28,10 +28,12 @@ import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 import java.util.List;
+import org.apache.commons.lang.Validate;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -43,6 +45,8 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.iphone.IPhoneDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -58,6 +62,10 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     @Drone
     protected WebDriver driver;
+    @FindBy(css = "input[id$=statusInput]")
+    protected TextInputComponentImpl statusInput;
+    @Page
+    private MetamerPage metamerPage;
     protected static final int WAIT_TIME = 5;// s
     protected static final int MINOR_WAIT_TIME = 50;// ms
     protected static final int TRIES = 20;//for guardListSize and expectedReturnJS
@@ -71,7 +79,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         HTMLUnit(HtmlUnitDriver.class),
         //        Opera(OperaDriver.class),
         IPhone(IPhoneDriver.class),
-        Android(AndroidDriver.class);
+        Android(AndroidDriver.class),
+        Remote(RemoteWebDriver.class);
         private final Class<?> clazz;
 
         private DriverType(Class<?> clazz) {
@@ -393,9 +402,9 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-     * Helper method for testing label's text changing. First it sets "RichFaces 4"
+     * Helper method for testing label's text changing. At first it sets "RichFaces 4"
      * to the <code>testedAttribute</code> input, then fires <code>labelChangeAction</code>(if some),
-     * then waits for the presence of <code>element</code>
+     * then waits for the visibility of <code>element</code>
      * and finally checks if the label (<code>getText()</code> method) of <code>element</code>
      * was changed as expected.
      * @param element element which <code>getText()</code> method will be used for checking of label text
@@ -410,8 +419,29 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         if (labelChangeAction != null) {
             labelChangeAction.perform();
         }
-        Graphene.waitModel().until(Graphene.element(element).isPresent());
+        Graphene.waitModel().until().element(element).is().visible();
         Graphene.waitModel().until(testedAttribute + " does not work, label has not changed.").element(element).text().equalTo(rf);
+    }
+
+    /**
+     * Helper method for testing of attribute 'status'. At first it sets @status to "statusChecker",
+     * then saves Metamer's 'statusCheckerOutput' time,
+     * then fires <code>statusChangingAction</code>,
+     * and finally checks if Metamer's 'statusCheckerOutput' time was changed.
+     *
+     * @param statusChangingAction action that will change the status.
+     */
+    protected void testStatus(Action statusChangingAction) {
+        Validate.notNull(statusChangingAction, "The @statusChangingAction cannot be null");
+        String checker = "statusChecker";
+        //set attribute
+        MetamerPage.waitRequest(statusInput.clear(ClearType.JS)
+                .fillIn(checker), WaitRequestType.HTTP)
+                .trigger("blur");
+
+        String statusCheckerTimeBefore = metamerPage.statusCheckerOutput.getText();
+        statusChangingAction.perform();
+        Graphene.waitModel().until().element(metamerPage.statusCheckerOutput).text().not().equalTo(statusCheckerTimeBefore);
     }
 
     /**

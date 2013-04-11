@@ -25,49 +25,46 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     -->
     <script type="text/javascript">
         function setCorrectValues(id) {
-            var item = 'Item1';
             switch(id){
-                case 'notEmpty':
+                case 'min':
+                    $('[id$=min_input]').val('2').change().mouseup();
+                    break;
+                case 'max':
+                    $('[id$=max_input]').val('2').change();
+                    break;
                 case 'custom':
-                case 'size':
-                case 'pattern':
-                case 'required':
-                    setValue(id,item);
+                    $('[id$=custom_input]').val('2').change();
+                    break;
+                case 'required':#{rich:component('required')}.setValue('2');
                     break;
                 default:
-                    setCorrectValues('notEmpty');
+                    setCorrectValues('min');
                     setCorrectValues('custom');
-                    setCorrectValues('size');
-                    setCorrectValues('pattern');
+                    setCorrectValues('max');
                     setCorrectValues('required');
                     break;
+                }
             }
-        }
-        function setWrongValues(id) {
-            var item = 'Item0';
-            switch(id){
-                case 'notEmpty':
-                case 'custom':
-                case 'size':
-                case 'pattern':
-                case 'required':
-                    setValue(id,item);
-                    break;
-                default:
-                    setWrongValues('notEmpty');
-                    setWrongValues('custom');
-                    setWrongValues('size');
-                    setWrongValues('pattern');
-                    setWrongValues('required');
-                    break;
-            }
-        }
-        function setValue(id, item) {
-            var input = 'Input]';
-            var cssInput='[id$='+ id +'Input]';
-            var cssItem='[id$=' + id + item + ']';
-            $(cssItem).click().click();
-            $(cssInput).click().blur();
-        }
+            function setWrongValues(id) {
+                switch(id){
+                    case 'min':
+                        $('[id$=min_input]').val('1').change().mouseup();
+                        break;
+                    case 'max':
+                        $('[id$=max_input]').val('3').change();
+                        break;
+                    case 'custom':
+                        $('[id$=custom_input]').val('-1').change();
+                        break;
+                    case 'required':#{rich:component('required')}.setValue('');
+                        break;
+                    default:
+                        setWrongValues('min');
+                        setWrongValues('custom');
+                        setWrongValues('max');
+                        setWrongValues('required');
+                        break;
+                    }
+                }
     </script>
 </html>

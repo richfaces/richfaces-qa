@@ -23,7 +23,9 @@ package org.richfaces.tests.showcase;
 
 import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
+import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -33,7 +35,6 @@ import org.jboss.arquillian.ajocado.ajaxaware.AjaxAwareInterceptor;
 import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
 import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.testng.annotations.BeforeMethod;
 
@@ -46,31 +47,35 @@ public abstract class AbstractGrapheneTest extends AbstractShowcaseTest {
     @Drone
     protected GrapheneSelenium selenium;
 
-    @BeforeMethod(groups = { "arquillian" })
+    @BeforeMethod(groups = {"arquillian"})
     public void loadPage() {
-
         selenium.getCommandInterceptionProxy().registerInterceptor(new AjaxAwareInterceptor());
-
-        String addition = getAdditionToContextRoot();
-
         this.contextRoot = getContextRoot();
 
-        selenium.open(URLUtils.buildUrl(contextRoot, addition));
+        if (runInPortalEnv) {
+            selenium.open(buildUrl(format("{0}://{1}:{2}/{3}",
+                    contextRoot.getProtocol(), contextRoot.getHost(), contextRoot.getPort(), "portal/classic/showcase")));
+            selenium.waitForPageToLoad();
+            selenium.type(jq("input[id$='portalForm:seleniumTestDemo']"), getDemoName());
+            selenium.type(jq("input[id$='portalForm:seleniumTestSample']"), getSampleName());
+            selenium.click(jq("a[id$='portalForm:redirectToPortlet']"));
+        } else {
+            selenium.open(buildUrl(contextRoot, getAdditionToContextRoot()));
+        }
     }
 
-    /* ***********************************************************************************************************************
-     * ajocado specific methods **************************************************************************
-     * **********************************************
-     */
-
-    /**
-     * Wait for presention of given element for given timeout
-     *
-     * @param element the element which should be displayed
-     * @param timeout the time for which the presention of element will be checked
-     * @return true when elements is found in given timeout, false otherwise
-     */
-    public boolean waitForElementPresent(JQueryLocator element, long timeout) {
+/* ***********************************************************************************************************************
+ * ajocado specific methods **************************************************************************
+ * **********************************************
+ */
+/**
+ * Wait for presention of given element for given timeout
+ *
+ * @param element the element which should be displayed
+ * @param timeout the time for which the presention of element will be checked
+ * @return true when elements is found in given timeout, false otherwise
+ */
+public boolean waitForElementPresent(JQueryLocator element, long timeout) {
 
         long end = System.currentTimeMillis() + timeout;
 

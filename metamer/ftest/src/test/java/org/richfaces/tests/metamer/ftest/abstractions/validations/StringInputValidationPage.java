@@ -41,17 +41,20 @@ public class StringInputValidationPage extends InputValidationPage {
     public static final String MESSAGE_STRING_NAME = "messageStringSize";
     public static final String MESSAGE_REG_EXP_PATTERN_NAME = "messageRegExpPattern";
     public static final String MESSAGE_NOT_EMPTY_NAME = "messageNotEmpty";
-    public static final String[] ALL_MESSAGE_CASES = { MESSAGE_CUSTOM_NAME,
-        MESSAGE_STRING_NAME, MESSAGE_REG_EXP_PATTERN_NAME, MESSAGE_NOT_EMPTY_NAME };
+    public static final String MESSAGE_REQUIRED_NAME = "messageRequired";
+    static final String[] ALL_MESSAGE_CASES = { MESSAGE_CUSTOM_NAME,
+        MESSAGE_STRING_NAME, MESSAGE_REG_EXP_PATTERN_NAME, MESSAGE_NOT_EMPTY_NAME, MESSAGE_REQUIRED_NAME };
     //
+    @FindBy(css = "span[id$=customMsg]")
+    private RichFacesMessage messageCustomString;
     @FindBy(css = "span[id$=notEmptyMsg]")
     private RichFacesMessage messageNotEmpty;
     @FindBy(css = "span[id$=patternMsg] ")
     private RichFacesMessage messageRegExpPattern;
     @FindBy(css = "span[id$=sizeMsg]")
     private RichFacesMessage messageStringSize;
-    @FindBy(css = "span[id$=customMsg]")
-    private RichFacesMessage messageCustomString;
+    @FindBy(css = "span[id$=requiredMsg]")
+    private RichFacesMessage messageRequired;
     //
     @FindBy(css = "input[id$=notEmptyCorrect]")
     private WebElement setNotEmptyCorrectButton;
@@ -69,6 +72,10 @@ public class StringInputValidationPage extends InputValidationPage {
     private WebElement setCustomCorrectButton;
     @FindBy(css = "input[id$=customWrong]")
     private WebElement setCustomWrongButton;
+    @FindBy(css = "input[id$=requiredCorrect]")
+    private WebElement setRequiredCorrectButton;
+    @FindBy(css = "input[id$=requiredWrong]")
+    private WebElement setRequiredWrongButton;
     //
     @FindBy(css = "span[id$=notEmptyOutput]")
     private WebElement notEmptyOutput;
@@ -78,16 +85,8 @@ public class StringInputValidationPage extends InputValidationPage {
     private WebElement sizeOutput;
     @FindBy(css = "span[id$=customOutput]")
     private WebElement customOutput;
-
-    @Override
-    protected List<WebElement> getAllCorrectButtons() {
-        return Lists.newArrayList(setNotEmptyCorrectButton, setPatternCorrectButton, setSizeCorrectButton, setCustomCorrectButton);
-    }
-
-    @Override
-    protected List<WebElement> getAllWrongButtons() {
-        return Lists.newArrayList(setNotEmptyWrongButton, setPatternWrongButton, setSizeWrongButton, setCustomWrongButton);
-    }
+    @FindBy(css = "span[id$=requiredOutput]")
+    private WebElement requiredOutput;
 
     @Override
     protected void initCustomMessages() {
@@ -113,5 +112,10 @@ public class StringInputValidationPage extends InputValidationPage {
                 Sets.newHashSet(StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG,
                 StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG2,
                 StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG3)));
+        messageCases.put(MESSAGE_REQUIRED_NAME,
+                new ValidationMessageCase(MESSAGE_REQUIRED_NAME, messageRequired,
+                setRequiredCorrectButton, setRequiredWrongButton,
+                requiredOutput, "required 2", StringInputValidationBean.REQUIRED_VALUE_DEFAULT,
+                Sets.newHashSet(StringInputValidationBean.REQUIRED_VALIDATION_MSG)));
     }
 }

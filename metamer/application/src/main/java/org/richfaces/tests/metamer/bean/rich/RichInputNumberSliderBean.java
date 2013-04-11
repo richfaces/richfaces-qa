@@ -29,6 +29,7 @@ import javax.faces.bean.ViewScoped;
 
 import org.richfaces.component.html.HtmlInputNumberSlider;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.bean.abstractions.NumberInputValidationBean;
 import org.richfaces.tests.metamer.bean.abstractions.NumberInputValidationBeanImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +62,8 @@ public class RichInputNumberSliderBean extends NumberInputValidationBeanImpl imp
         attributes.setAttribute("maxValue", 10);
         attributes.setAttribute("minValue", -10);
         attributes.setAttribute("rendered", true);
-        attributes.setAttribute("requiredMessage", "value is required");
+        attributes.setAttribute("required", true);
+        attributes.setAttribute("requiredMessage", NumberInputValidationBean.REQUIRED_VALIDATION_MSG);
         attributes.setAttribute("showBoundaryValues", true);
         attributes.setAttribute("showInput", true);
         attributes.setAttribute("step", 1);

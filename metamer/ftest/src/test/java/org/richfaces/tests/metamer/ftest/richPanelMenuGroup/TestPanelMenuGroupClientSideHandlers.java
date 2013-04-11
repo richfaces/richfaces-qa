@@ -21,38 +21,22 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 
-import static java.text.MessageFormat.format;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.component.Mode.ajax;
 import static org.richfaces.component.Mode.client;
 import static org.richfaces.component.Mode.server;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.mode;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuGroupAttributes;
-import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
-import javax.annotation.Nullable;
-
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.test.selenium.support.ui.ElementPresent;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
-
-import com.google.common.base.Predicate;
 
 
 /**
@@ -62,8 +46,6 @@ import com.google.common.base.Predicate;
  * @since 4.3.1
  */
 public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroupTest {
-
-    private static final String ATTR_INPUT_LOC_FORMAT = "input[id$=on{0}Input]";
 
     @Inject
     @Use(empty = true)
@@ -83,6 +65,10 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richPanelMenuGroup/simple.xhtml");
+    }
+
+    public MetamerPage getPage() {
+        return page;
     }
 
     @Test
@@ -134,7 +120,7 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         testRequestEventsBefore(clientExpansionEvents);
         page.topGroup.toggle();
         page.group1.toggle();
-        executeJS("window.metamerEvents = \"\";");
+        cleanMetamerEventsVariable();
         page.topGroup.toggle();
         testRequestEventsAfter(clientExpansionEvents);
     }
@@ -159,7 +145,7 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         page.topGroup.setMode(ajax);
         page.topGroup.toggle();
         testRequestEventsBefore(ajaxExpansionEvents);
-        executeJS("window.metamerEvents = \"\";");
+        cleanMetamerEventsVariable();
         page.topGroup.toggle();
         testRequestEventsAfter(ajaxExpansionEvents);
     }
@@ -189,9 +175,11 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         page.topGroup.setMode(server);
         page.topGroup.toggle();
         page.topGroup.setMode(null);
-        testRequestEventsBeforeByAlert(event);
+        // testRequestEventsBeforeByAlert(event);
+        testRequestEventsBefore(event);
         page.topGroup.toggle();
-        testRequestEventsAfterByAlert(event);
+        // testRequestEventsAfterByAlert(event);
+        testRequestEventsAfter(event);
     }
 
     @Test
@@ -204,9 +192,11 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
         page.topGroup.setMode(server);
         page.topGroup.toggle();
         page.topGroup.setMode(null);
-        testRequestEventsBeforeByAlert(event);
+        // testRequestEventsBeforeByAlert(event);
+        testRequestEventsBefore(event);
         page.topGroup.toggle();
-        testRequestEventsAfterByAlert(event);
+        // testRequestEventsAfterByAlert(event);
+        testRequestEventsAfter(event);
     }
 
     @Test
@@ -223,77 +213,11 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     public void testClientSideCollapsionEventsServer() {
         panelMenuGroupAttributes.set(mode, server);
         page.topGroup.setMode(null);
-        testRequestEventsBeforeByAlert(event);
+        // testRequestEventsBeforeByAlert(event);
+        testRequestEventsBefore(event);
         page.topGroup.toggle();
-        testRequestEventsAfterByAlert(event);
-    }
-
-    public void testRequestEventsBefore(String... events) {
-        for (String event : events) {
-            String inputExp = format(ATTR_INPUT_LOC_FORMAT, event);
-            WebElement input = page.attributesTable.findElement(By.cssSelector(inputExp));
-            String inputVal = format("metamerEvents += \"{0} \"", event);
-            // even there would be some events (in params) twice, don't expect handle routine to be executed twice
-            input.clear();
-            waiting(1000);
-            input = page.attributesTable.findElement(By.cssSelector(inputExp));
-            input.sendKeys(inputVal);
-            // sendKeys triggers page reload automatically
-            waiting(300);
-            Graphene.waitAjax().until(ElementPresent.getInstance().element(page.attributesTable));
-            input = page.attributesTable.findElement(By.cssSelector(inputExp));
-            MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
-        }
-        executeJS("window.metamerEvents = \"\";");
-    }
-
-    public void testRequestEventsAfter(String... events) {
-        String[] actualEvents = ((String)executeJS("return window.metamerEvents")).split(" ");
-        assertEquals(actualEvents, events, format("The events ({0}) don't came in right order ({1})",
-            Arrays.deepToString(actualEvents), Arrays.deepToString(events)));
-    }
-
-    public void testRequestEventsBeforeByAlert(String... events) {
-        for (String event : events) {
-            String inputExp = format(ATTR_INPUT_LOC_FORMAT, event);
-            WebElement input = page.attributesTable.findElement(By.cssSelector(inputExp));
-
-            input.sendKeys(format("alert(\"{0}\")", event));
-            // sendKeys triggers page reload automatically
-            waiting(300);
-            Graphene.waitAjax().until(ElementPresent.getInstance().element(page.attributesTable));
-            input = page.attributesTable.findElement(By.cssSelector(inputExp));
-            MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
-        }
-    }
-
-    public void testRequestEventsAfterByAlert(String... events) {
-        List<String> list = new LinkedList<String>();
-
-        for (int i = 0; i < events.length; i++) {
-            AlertPresent ap = new AlertPresent();
-            Graphene.waitGui().until(ap);
-            if (ap.apply(driver)) {
-                list.add(ap.getAlert().getText());
-                ap.getAlert().accept();
-            }
-        }
-
-        String[] actualEvents = list.toArray(new String[list.size()]);
-        assertEquals(actualEvents, events, format("The events ({0}) don't came in right order ({1})",
-            Arrays.deepToString(actualEvents), Arrays.deepToString(events)));
-    }
-
-    private class AlertPresent implements Predicate<WebDriver> {
-        private Alert alert;
-
-        @Override
-        public boolean apply(@Nullable WebDriver driver) {
-            alert = driver.switchTo().alert();
-            return  alert != null;
-        }
-
-        public Alert getAlert() { return alert; }
+        // testRequestEventsAfterByAlert(event);
+        testRequestEventsAfter(event);
     }
 }
 

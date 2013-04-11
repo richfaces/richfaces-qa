@@ -25,56 +25,49 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     -->
     <script type="text/javascript">
         function setCorrectValues(id) {
+            var item = 'Item1';
             switch(id){
                 case 'notEmpty':
-                    $('[id$=notEmptyItem1]').click().click();
-                    $('[id$=notEmptyInput]').click().blur();
-                    break;
                 case 'custom':
-                    $('[id$=customItem1]').click().click();
-                    $('[id$=customInput]').click().blur();
-                    break;
                 case 'size':
-                    $('[id$=sizeItem1]').click().click();
-                    $('[id$=sizeInput]').click().blur();
-                    break;
                 case 'pattern':
-                    $('[id$=patternItem1]').click().click();
-                    $('[id$=patternInput]').click().blur();
+                case 'required':
+                    setValue(id,item);
                     break;
                 default:
                     setCorrectValues('notEmpty');
                     setCorrectValues('custom');
                     setCorrectValues('size');
                     setCorrectValues('pattern');
+                    setCorrectValues('required');
                     break;
             }
         }
         function setWrongValues(id) {
+            var item = 'Item0';
             switch(id){
-                case "notEmpty":
-                    $('[id$=notEmptyItem0]').click().click();
-                    $('[id$=notEmptyInput]').click().blur();
-                    break;
-                case "custom":
-                    $('[id$=customItem0]').click().click();
-                    $('[id$=customInput]').click().blur();
-                    break;
-                case "size":
-                    $('[id$=sizeItem0]').click().click();
-                    $('[id$=sizeInput]').click().blur();
-                    break;
-                case "pattern":
-                    $('[id$=patternItem0]').click().click();
-                    $('[id$=patternInput]').click().blur();
+                case 'notEmpty':
+                case 'custom':
+                case 'size':
+                case 'pattern':
+                case 'required':
+                    setValue(id,item);
                     break;
                 default:
                     setWrongValues('notEmpty');
                     setWrongValues('custom');
                     setWrongValues('size');
                     setWrongValues('pattern');
+                    setWrongValues('required');
                     break;
             }
+        }
+        function setValue(id, item) {
+            var input = 'Input]';
+            var cssInput='[id$='+ id +'Input]';
+            var cssItem='[id$=' + id + item + ']';
+            $(cssItem).click().click();
+            $(cssInput).click().blur();
         }
     </script>
 </html>

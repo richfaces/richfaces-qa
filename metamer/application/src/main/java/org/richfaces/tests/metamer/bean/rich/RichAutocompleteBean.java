@@ -34,6 +34,7 @@ import javax.faces.bean.ViewScoped;
 import org.richfaces.component.UIAutocomplete;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.RichBean;
+import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBeanImpl;
 import org.richfaces.tests.metamer.model.Capital;
 import org.slf4j.Logger;
@@ -69,6 +70,8 @@ public class RichAutocompleteBean extends StringInputValidationBeanImpl implemen
         attributes.setAttribute("converterMessage", "converter message");
         attributes.setAttribute("mode", "ajax");
         attributes.setAttribute("rendered", true);
+        attributes.setAttribute("required", true);
+        attributes.setAttribute("requiredMessage", StringInputValidationBean.REQUIRED_VALIDATION_MSG);
         attributes.setAttribute("tokens", ", ");
         attributes.setAttribute("validatorMessage", "validator message");
 

@@ -19,20 +19,35 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
+package org.richfaces.tests.metamer.ftest.richTooltip;
 
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.panelMenuItem.RichFacesPanelMenuItem;
+import org.richfaces.tests.page.fragments.impl.tooltip.RichFacesTooltip;
 
 /**
- * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
- * @since 4.3.1
+ * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
  *
  */
-public class PanelMenuItemPage extends MetamerPage {
+public class TooltipPage extends MetamerPage {
 
-    @FindBy(jquery = "div[id$=item12]")
-    RichFacesPanelMenuItem item;
+    @FindBy(css = "div[id$=panel]")
+    public WebElement panel;
+
+    @FindBy(css = "div[id$=regular-div]")
+    public WebElement panel1;
+
+    @FindBy(css = "div[id$=jsf-div]")
+    public WebElement panel2;
+
+    @FindBy(css = "div[id$=panel_body]")
+    public WebElement panel3;
+
+    @FindBy(className = "rf-tt")
+    public RichFacesTooltip tooltip;
+
+    @FindBy(css = "table[id$='attributes:attributes']")
+    public WebElement attributesTable;
 
 }

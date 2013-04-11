@@ -376,18 +376,10 @@ public class TestFileUpload extends AbstractFileUploadTest {
         });
     }
 
-    @Test
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12879")
     public void testStatus() {
-        String cmd = ap + "statusChecker" + ap;
-        fileUploadAttributes.set(FileUploadAttributes.status, cmd);
-
-        String statusCheckerTime1 = page.statusCheckerOutput.getText();
-
-        succesfulFileUploadAction.perform();
-
-        String statusCheckerTime2 = page.statusCheckerOutput.getText();
-
-        assertEquals(statusCheckerTime1, statusCheckerTime2);
+        testStatus(succesfulFileUploadAction);
     }
 
     @Test

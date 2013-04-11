@@ -39,6 +39,7 @@ import javax.faces.validator.ValidatorException;
 import org.richfaces.component.UICalendar;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.RichBean;
+import org.richfaces.tests.metamer.bean.abstractions.DateInputValidationBean;
 import org.richfaces.tests.metamer.bean.abstractions.DateInputValidationBeanImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,7 +75,8 @@ public class RichCalendarBean extends DateInputValidationBeanImpl implements Ser
         attributes.setAttribute("jointPoint", "bottomLeft");
         attributes.setAttribute("popup", true);
         attributes.setAttribute("rendered", true);
-        attributes.setAttribute("requiredMessage", "value is required");
+        attributes.setAttribute("required", true);
+        attributes.setAttribute("requiredMessage", DateInputValidationBean.REQUIRED_VALIDATION_MSG);
         attributes.setAttribute("showApplyButton", true);
         attributes.setAttribute("showHeader", true);
         attributes.setAttribute("showFooter", true);

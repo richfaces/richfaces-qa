@@ -21,21 +21,17 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTooltip;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.tooltipAttributes;
 import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.hideEvent;
 import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.showEvent;
 import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.target;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.tooltipAttributes;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.BeforeMethod;
@@ -49,16 +45,10 @@ import org.testng.annotations.Test;
  *
  * @version $Revision$
  */
-public class TestTooltipTarget extends AbstractGrapheneTest {
+public class TestTooltipTarget extends AbstractWebDriverTest {
 
-    // private TooltipAttributes attributes = new TooltipAttributes();
-    private JQueryLocator panel1 = pjq("div[id$=regular-div]");
-    private JQueryLocator panel2 = pjq("div[id$=jsf-div]");
-    private JQueryLocator panel3 = pjq("div[id$=panel_body]");
-
-    TooltipModel tooltip1 = new TooltipModel(jq(".rf-tt"), panel1);
-    TooltipModel tooltip2 = new TooltipModel(jq(".rf-tt"), panel2);
-    TooltipModel tooltip3 = new TooltipModel(jq(".rf-tt"), panel3);
+    @Page
+    TooltipPage page;
 
     @Override
     public URL getTestUrl() {
@@ -76,20 +66,20 @@ public class TestTooltipTarget extends AbstractGrapheneTest {
     public void testTarget() {
         // 2. target
         tooltipAttributes.set(target, "jsf-div");
-        tooltip2.recall();
-        waitGui.until(elementVisible.locator(tooltip2));
+        page.tooltip.recall(page.panel2);
+        Graphene.waitGui().until(Graphene.element(page.tooltip.root).isVisible());
 
         // 3. default target
         tooltipAttributes.set(target, "panel");
-        tooltip3.recall();
-        waitGui.until(elementVisible.locator(tooltip3));
+        page.tooltip.recall(page.panel3);
+        Graphene.waitGui().until(Graphene.element(page.tooltip.root).isVisible());
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11370")
     public void testTargetWithRegularDiv() {
         tooltipAttributes.set(target, "regular-div");
-        tooltip1.recall();
-        waitGui.until(elementVisible.locator(tooltip1));
+        page.tooltip.recall(page.panel1);
+        Graphene.waitGui().until(Graphene.element(page.tooltip.root).isVisible());
     }
 }

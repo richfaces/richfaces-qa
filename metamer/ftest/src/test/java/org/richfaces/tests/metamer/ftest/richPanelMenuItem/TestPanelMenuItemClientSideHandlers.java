@@ -21,30 +21,22 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 
-import static java.text.MessageFormat.format;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.component.Mode.ajax;
 import static org.richfaces.component.Mode.client;
 import static org.richfaces.component.Mode.server;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuItemAttributes;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.mode;
-import static org.testng.Assert.assertEquals;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuItemAttributes;
 
 import java.net.URL;
-import java.util.Arrays;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.jboss.test.selenium.support.ui.ElementPresent;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.richPanelMenuGroup.AbstractPanelMenuCommonTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -53,9 +45,7 @@ import org.testng.annotations.Test;
  * @since 4.3.1
  */
 @RegressionTest("https://issues.jboss.org/browse/RF-10486")
-public class TestPanelMenuItemClientSideHandlers extends AbstractWebDriverTest {
-
-    private static final String ATTR_INPUT_LOC_FORMAT = "input[id$=on{0}Input]";
+public class TestPanelMenuItemClientSideHandlers extends AbstractPanelMenuCommonTest {
 
     @Page
     PanelMenuItemPage page;
@@ -70,6 +60,10 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractWebDriverTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richPanelMenuItem/simple.xhtml");
+    }
+
+    public MetamerPage getPage() {
+        return page;
     }
 
     @Test
@@ -111,28 +105,4 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractWebDriverTest {
         testRequestEventsAfter(serverEvents);
     }
 
-    public void testRequestEventsBefore(String... events) {
-        for (String event : events) {
-            String inputExp = format(ATTR_INPUT_LOC_FORMAT, event);
-            WebElement input = page.attributesTable.findElement(By.cssSelector(inputExp));
-            String inputVal = format("metamerEvents += \"{0} \"", event);
-            // even there would be some events (in params) twice, don't expect handle routine to be executed twice
-            input.clear();
-            waiting(1000);
-            input = page.attributesTable.findElement(By.cssSelector(inputExp));
-            input.sendKeys(inputVal);
-            // sendKeys triggers page reload automatically
-            waiting(300);
-            Graphene.waitAjax().until(ElementPresent.getInstance().element(page.attributesTable));
-            input = page.attributesTable.findElement(By.cssSelector(inputExp));
-            MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
-        }
-        executeJS("window.metamerEvents = \"\";");
-    }
-
-    public void testRequestEventsAfter(String... events) {
-        String[] actualEvents = ((String)executeJS("return window.metamerEvents")).split(" ");
-        assertEquals(actualEvents, events, format("The events ({0}) don't came in right order ({1})",
-            Arrays.deepToString(actualEvents), Arrays.deepToString(events)));
-    }
 }

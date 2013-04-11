@@ -42,11 +42,17 @@ public abstract class AbstractShowcaseTest extends Arquillian {
 
     @ArquillianResource
     protected URL contextRoot;
+    protected static final Boolean runInPortalEnv = Boolean.getBoolean("runInPortalEnv");
 
     @Deployment(testable = false)
     public static WebArchive createTestArchive() {
-
-        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/showcase.war"));
+        File warFile2deploy;
+        if (runInPortalEnv) {
+            warFile2deploy = new File("target/showcase-portlet.war");
+        } else {
+            warFile2deploy = new File("target/showcase.war");
+        }
+        WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, warFile2deploy);
         return war;
     }
 
@@ -65,7 +71,7 @@ public abstract class AbstractShowcaseTest extends Arquillian {
         String addition;
         if (layout == ShowcaseLayout.COMMON) {
             addition = SimplifiedFormat.format("richfaces/component-sample.jsf?skin=blueSky&demo={0}&sample={1}", demoName,
-                sampleName);
+                    sampleName);
         } else {
             addition = SimplifiedFormat.format("mobile/#{0}:{1}", demoName, sampleName);
         }
@@ -87,6 +93,20 @@ public abstract class AbstractShowcaseTest extends Arquillian {
         }
 
         return this.contextRoot;
+    }
+
+    protected String getDemoName() {
+        // demo name - takes last part of package name
+        String demoName = this.getClass().getPackage().getName();
+        return StringUtils.substringAfterLast(demoName, ".");
+    }
+
+    protected String getSampleName() {
+        // sample name - removes Test- prefix from class name and uncapitalize
+        // first letter
+        String sampleName = this.getClass().getSimpleName().substring(4);
+        sampleName = WordUtils.uncapitalize(sampleName);
+        return sampleName;
     }
 
     protected ShowcaseLayout loadLayout() {

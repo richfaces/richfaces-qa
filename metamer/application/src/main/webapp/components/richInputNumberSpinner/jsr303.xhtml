@@ -31,46 +31,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
     <ui:composition template="/templates/numberInputComponentValidationTemplate.xhtml">
         <ui:define name="js">
-            <script type="text/javascript">
-                function setCorrectValues(id) {
-                    switch(id){
-                        case 'min':
-                            $('[id$=min] > input').focus().val('2').change().mouseup();
-                            break;
-                        case 'max':
-                            $('[id$=max] > input').focus().val('2').change().blur();
-                            break;
-                        case 'custom':
-                            $('[id$=custom] > input').focus().val('2').change().blur();
-                            break;
-                        default:
-                            setCorrectValues('min');
-                            setCorrectValues('custom');
-                            setCorrectValues('max');
-                            break;
-                    }
-                }
-                function setWrongValues(id) {
-                    switch(id){
-                        case "min":
-                            $('[id$=min] > input').focus().val('1').change().mouseup();
-                            break;
-                        case "max":
-                            $('[id$=max] > input').focus().val('3').change().blur();
-                            break;
-                        case "custom":
-                            $('[id$=custom] > input').focus().val('-1').change().blur();
-                            break;
-                        default:
-                            setWrongValues('min');
-                            setWrongValues('custom');
-                            setWrongValues('max');
-                            break;
-                    }
-                }
-            </script>
+            <ui:include src="script.xhtml"/>
         </ui:define>
-            <ui:define name="min">
+        <ui:define name="min">
             <rich:inputNumberSpinner id="min" maxValue="10" minValue="-10" value="#{richInputNumberSpinnerBean.minValue}">
                 <a4j:ajax event="change" render="minMsg"/>
             </rich:inputNumberSpinner>
@@ -96,6 +59,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
         <ui:define name="customOutput">
             <h:outputText id="customOutput" value="#{richInputNumberSpinnerBean.customValue}"/>
+        </ui:define>
+        <ui:define name="required" >
+            <rich:inputNumberSpinner id="required" required="true"
+                                     requiredMessage="#{richInputNumberSpinnerBean.attributes['requiredMessage'].value}"
+                                     maxValue="10" minValue="-10" value="#{richInputNumberSpinnerBean.requiredValue}">
+                <a4j:ajax event="change" render="requiredMsg"/>
+            </rich:inputNumberSpinner>
+        </ui:define>
+        <ui:define name="requiredOutput">
+            <h:outputText id="requiredOutput" value="#{richInputNumberSpinnerBean.requiredValue}"/>
         </ui:define>
     </ui:composition>
 </html>

@@ -34,6 +34,7 @@ public class NumberInputValidationBeanImpl implements NumberInputValidationBean 
     private int customValue = CUSTOM_VALUE_DEFAULT;
     private int maxValue = MAX_VALUE_DEFAULT;
     private int minValue = MIN_VALUE_DEFAULT;
+    private int requiredValue = REQUIRED_VALUE_DEFAULT;
 
     @Override
     public Attributes getAttributes() {
@@ -56,6 +57,11 @@ public class NumberInputValidationBeanImpl implements NumberInputValidationBean 
     }
 
     @Override
+    public int getRequiredValue() {
+        return requiredValue;
+    }
+
+    @Override
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
     }
@@ -73,5 +79,10 @@ public class NumberInputValidationBeanImpl implements NumberInputValidationBean 
     @Override
     public void setMinValue(int minValue) {
         this.minValue = minValue;
+    }
+
+    @Override
+    public void setRequiredValue(int value) {
+        this.requiredValue = value;
     }
 }

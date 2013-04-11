@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.webdriver;
 
 import static org.testng.Assert.assertEquals;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -74,6 +73,9 @@ public class MetamerPage {
     public WebElement fullPageRefreshIcon;
     @FindBy(css = "[id$=reRenderAllImage]")
     public WebElement rerenderAllIcon;
+    /** root element for component attributes area */
+    @FindBy(css = "table[id$='attributes:attributes']")
+    public WebElement attributesTable;
     @Drone
     protected WebDriver driver;
     private String reqTime;

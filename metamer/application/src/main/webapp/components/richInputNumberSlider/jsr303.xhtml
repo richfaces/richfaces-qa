@@ -5,7 +5,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:rich="http://richfaces.org/rich"
       xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -31,45 +32,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
     <ui:composition template="/templates/numberInputComponentValidationTemplate.xhtml">
         <ui:define name="js">
-            <script type="text/javascript">
-                function setCorrectValues(id) {
-                    switch(id){
-                        case 'min':
-                            $('[id$=min_input]').val('2').change();
-                            break;
-                        case 'max':
-                            $('[id$=max_input]').val('2').change();
-                            break;
-                        case 'custom':
-                            $('[id$=custom_input]').val('2').change();
-                            break;
-                        default:
-                            setCorrectValues('min');
-                            setCorrectValues('custom');
-                            setCorrectValues('max');
-                            break;
-                    }
-                }
-                function setWrongValues(id) {
-                    switch(id){
-                        case "min":
-                            $('[id$=min_input]').val('1').change();
-                            break;
-                        case "max":
-                            $('[id$=max_input]').val('3').change();
-                            break;
-                        case "custom":
-                            $('[id$=custom_input]').val('-1').change();
-                            break;
-                        default:
-                            setWrongValues('min');
-                            setWrongValues('custom');
-                            setWrongValues('max');
-                            break;
-                    }
-                }
-            </script>
-
+            <ui:include src="script.xhtml"/>
         </ui:define>
 
         <ui:define name="min">
@@ -98,6 +61,17 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
         <ui:define name="customOutput">
             <h:outputText id="customOutput" value="#{richInputNumberSliderBean.customValue}"/>
+        </ui:define>
+
+        <ui:define name="required" >
+            <rich:inputNumberSlider id="required" required="true"
+                                    requiredMessage="#{richInputNumberSliderBean.attributes['requiredMessage'].value}"
+                                    maxValue="10" minValue="-10" value="#{richInputNumberSliderBean.requiredValue}">
+                <a4j:ajax event="change" render="requiredMsg"/>
+            </rich:inputNumberSlider>
+        </ui:define>
+        <ui:define name="requiredOutput">
+            <h:outputText id="requiredOutput" value="#{richInputNumberSliderBean.requiredValue}"/>
         </ui:define>
     </ui:composition>
 </html>

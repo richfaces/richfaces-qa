@@ -31,6 +31,7 @@ public class DateInputValidationBeanImpl implements DateInputValidationBean {
     private Date futureValue = FUTURE_DATE_DEFAULT;
     private Date lastYearValue = LAST_YEAR_DATE_DEFAULT;
     private Date pastValue = PAST_DATE_DEFAULT;
+    private Date requiredValue = REQUIRED_DATE_DEFAULT;
 
     @Override
     public Attributes getAttributes() {
@@ -53,6 +54,11 @@ public class DateInputValidationBeanImpl implements DateInputValidationBean {
     }
 
     @Override
+    public Date getRequiredValue() {
+        return requiredValue;
+    }
+
+    @Override
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
     }
@@ -70,5 +76,10 @@ public class DateInputValidationBeanImpl implements DateInputValidationBean {
     @Override
     public void setPastValue(Date pastValue) {
         this.pastValue = pastValue;
+    }
+
+    @Override
+    public void setRequiredValue(Date requiredValue) {
+        this.requiredValue = requiredValue;
     }
 }

@@ -45,8 +45,9 @@ public class DateInputValidationPage extends InputValidationPage {
     public static final String MESSAGE_PAST_NAME = "messagePast";
     public static final String MESSAGE_FUTURE_NAME = "messageFuture";
     public static final String MESSAGE_LAST_YEAR_NAME = "messageLastYear";
-    public static final String[] ALL_MESSAGE_CASES = { MESSAGE_PAST_NAME,
-        MESSAGE_FUTURE_NAME, MESSAGE_LAST_YEAR_NAME };
+    public static final String MESSAGE_REQUIRED_NAME = "messageRequired";
+    static final String[] ALL_MESSAGE_CASES = { MESSAGE_PAST_NAME,
+        MESSAGE_FUTURE_NAME, MESSAGE_LAST_YEAR_NAME, MESSAGE_REQUIRED_NAME };
     //
     @FindBy(css = "span[id$=pastMsg]")
     private RichFacesMessage messagePast;
@@ -54,6 +55,8 @@ public class DateInputValidationPage extends InputValidationPage {
     private RichFacesMessage messageFuture;
     @FindBy(css = "span[id$=lastYearMsg]")
     private RichFacesMessage messageLastYear;
+    @FindBy(css = "span[id$=requiredMsg]")
+    private RichFacesMessage messageRequired;
     //
     @FindBy(css = "input[id$=pastCorrect]")
     private WebElement setPastCorrectButton;
@@ -67,6 +70,10 @@ public class DateInputValidationPage extends InputValidationPage {
     private WebElement setLastYearCorrectButton;
     @FindBy(css = "input[id$=lastYearWrong]")
     private WebElement setLastYearWrongButton;
+    @FindBy(css = "input[id$=requiredCorrect]")
+    private WebElement setRequiredCorrectButton;
+    @FindBy(css = "input[id$=requiredWrong]")
+    private WebElement setRequiredWrongButton;
     //
     @FindBy(css = "span[id$=lastYearOutput]")
     private WebElement lastYearOutput;
@@ -74,16 +81,8 @@ public class DateInputValidationPage extends InputValidationPage {
     private WebElement pastOutput;
     @FindBy(css = "span[id$=futureOutput]")
     private WebElement futureOutput;
-
-    @Override
-    protected List<WebElement> getAllCorrectButtons() {
-        return Lists.newArrayList(setLastYearCorrectButton, setFutureCorrectButton, setPastCorrectButton);
-    }
-
-    @Override
-    protected List<WebElement> getAllWrongButtons() {
-        return Lists.newArrayList(setLastYearWrongButton, setFutureWrongButton, setPastWrongButton);
-    }
+    @FindBy(css = "span[id$=requiredOutput]")
+    private WebElement requiredOutput;
 
     @Override
     protected void initCustomMessages() {
@@ -104,5 +103,10 @@ public class DateInputValidationPage extends InputValidationPage {
                 setLastYearCorrectButton, setLastYearWrongButton,
                 lastYearOutput, lastYear.toString(dtf), DateInputValidationBean.LAST_YEAR_VALUE_DEFAULT.toString(dtf),
                 Sets.newHashSet(DateInputValidationBean.LAST_YEAR_VALIDATION_MSG)));
+        messageCases.put(MESSAGE_REQUIRED_NAME,
+                new ValidationMessageCase(MESSAGE_REQUIRED_NAME, messageRequired,
+                setRequiredCorrectButton, setRequiredWrongButton,
+                requiredOutput, "Jan 2, 1980 12:00", DateInputValidationBean.REQUIRED_VALUE_DEFAULT.toString(dtf),
+                Sets.newHashSet(DateInputValidationBean.REQUIRED_VALIDATION_MSG)));
     }
 }

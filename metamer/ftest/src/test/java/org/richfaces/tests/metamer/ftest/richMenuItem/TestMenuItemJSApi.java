@@ -21,49 +21,42 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richMenuItem;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+
+import java.net.URL;
+
+import javax.faces.event.PhaseId;
+
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.testng.annotations.Test;
 
 /**
- * Attributes for rich:menuItem component
- * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
+ * Test case for page /faces/components/richMenuItem/simple.xhtml
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @version $Revision$
  */
-public enum MenuItemAttributes implements AttributeEnum {
+public class TestMenuItemJSApi extends AbstractWebDriverTest {
 
-    action,
-    actionListener,
-    binding,
-    bypassUpdates,
-    data,
-    dir,
-    disabled,
-    execute,
-    icon,
-    iconDisabled,
-    id,
-    immediate,
-    label,
-    lang,
-    limitRender,
-    mode,
-    onbeforedomupdate,
-    onbegin,
-    onclick,
-    oncomplete,
-    ondblclick,
-    onkeydown,
-    onkeypress,
-    onkeyup,
-    onmousedown,
-    onmousemove,
-    onmouseout,
-    onmouseover,
-    onmouseup,
-    render,
-    rendered,
-    status,
-    style,
-    styleClass,
-    title
+    @Page
+    private MetamerPage page;
+    @FindBy(id = "activate")
+    private WebElement activateButton;
+
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richMenuItem/simple.xhtml");
+    }
+
+    @Test
+    public void testActivate() {
+        MetamerPage.waitRequest(activateButton, WaitRequestType.XHR).click();
+        page.assertPhases(PhaseId.ANY_PHASE);
+        page.assertListener(PhaseId.INVOKE_APPLICATION, "action invoked");
+        page.assertListener(PhaseId.INVOKE_APPLICATION, "action listener invoked");
+    }
 }

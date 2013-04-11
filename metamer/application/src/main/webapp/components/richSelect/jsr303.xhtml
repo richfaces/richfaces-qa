@@ -82,5 +82,17 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="customOutput">
             <h:outputText id="customOutput" value="#{richSelectBean.customValue}"/>
         </ui:define>
+
+        <ui:define name="required" >
+            <rich:select id="required" required="true"
+                         requiredMessage="#{richSelectBean.attributes['requiredMessage'].value}"
+                         value="#{richSelectBean.requiredValue}">
+                <f:selectItems value="#{richSelectBean.validationOptionsRequired}" />
+                <a4j:ajax event="change" render="requiredMsg"/>
+            </rich:select>
+        </ui:define>
+        <ui:define name="requiredOutput">
+            <h:outputText id="requiredOutput" value="#{richSelectBean.requiredValue}"/>
+        </ui:define>
     </ui:composition>
 </html>

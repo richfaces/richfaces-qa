@@ -33,10 +33,12 @@ public interface NumberInputValidationBean extends AttributesHolder {
     int CUSTOM_VALUE_DEFAULT = 1;
     int MAX_VALUE_DEFAULT = 1;
     int MIN_VALUE_DEFAULT = 10;
+    int REQUIRED_VALUE_DEFAULT = 1;
     //
+    String CUSTOM_VALIDATION_MSG = PositiveNumberValidator.VALIDATOR_ERROR_MSG;
     String MIN_VALIDATION_MSG = "must be greater than or equal to 2";
     String MAX_VALIDATION_MSG = "must be less than or equal to 2";
-    String CUSTOM_VALIDATION_MSG = PositiveNumberValidator.VALIDATOR_ERROR_MSG;
+    String REQUIRED_VALIDATION_MSG = "value is required";
 
     int getCustomValue();
 
@@ -46,9 +48,13 @@ public interface NumberInputValidationBean extends AttributesHolder {
     @Min(value = 2, message = MIN_VALIDATION_MSG)
     int getMinValue();
 
+    int getRequiredValue();
+
     void setCustomValue(int value);
 
     void setMaxValue(int value);
 
     void setMinValue(int value);
+
+    void setRequiredValue(int value);
 }

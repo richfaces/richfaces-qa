@@ -44,6 +44,10 @@ public class SelectValidationBean extends StringInputValidationBeanImpl {
             new SelectItem("^(%1", "^(%1"),
             new SelectItem("abcd", "abcd"),
             new SelectItem(PATTERN_VALUE_DEFAULT, PATTERN_VALUE_DEFAULT));
+    private List<SelectItem> validationOptionsRequired = Lists.newArrayList(
+            new SelectItem("", ""),
+            new SelectItem("required 2", "required 2"),
+            new SelectItem(REQUIRED_VALUE_DEFAULT, REQUIRED_VALUE_DEFAULT));
     private List<SelectItem> validationOptionsSize = Lists.newArrayList(
             new SelectItem("12", "12"),
             new SelectItem("123", "123"),
@@ -59,6 +63,10 @@ public class SelectValidationBean extends StringInputValidationBeanImpl {
 
     public List<SelectItem> getValidationOptionsPattern() {
         return validationOptionsPattern;
+    }
+
+    public List<SelectItem> getValidationOptionsRequired() {
+        return validationOptionsRequired;
     }
 
     public List<SelectItem> getValidationOptionsSize() {
