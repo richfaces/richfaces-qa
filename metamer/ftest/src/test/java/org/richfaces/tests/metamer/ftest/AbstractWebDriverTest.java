@@ -31,13 +31,15 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
+import java.util.Arrays;
 import java.util.List;
-import org.apache.commons.lang.Validate;
 
+import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -62,6 +64,8 @@ import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearTyp
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
+
+import com.google.common.base.Predicate;
 
 public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
@@ -600,7 +604,6 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         return list;
     }
 
-
     /**
       Method used to run selenium test in portal environment.
      */
@@ -618,6 +621,52 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         js.executeScript(format(setTextQuery, "linkToTest", testUrl));
         js.executeScript(format(setTextQuery, "template", template.toString()));
         js.executeScript("document.querySelector(\"a[id$='linksForm:redirectToPortlet']\").click()");
+    }
+
+    public void testRequestEventsBefore(String... events) {
+        testRequestEventsBefore(metamerPage.attributesTable, events);
+    }
+
+    public void testRequestEventsBefore(WebElement attributesTable, String... events) {
+        for (String event : events) {
+            String inputExp = format("input[id$=on{0}Input]", event);
+            WebElement input = attributesTable.findElement(By.cssSelector(inputExp));
+            // Note: To avoid lost metamerEvents variable when @mode=server, use sessionStorage
+            String inputVal = format("metamerEvents += \"{0} \"", event);
+            String inputValFull = "sessionStorage.setItem('metamerEvents', " + inputVal + ")";
+            // even there would be some events (in params) twice, don't expect handle routine to be executed twice
+            input.clear();
+            waiting(1000);
+            input = attributesTable.findElement(By.cssSelector(inputExp));
+            input.sendKeys(inputValFull);
+            // sendKeys triggers page reload automatically
+            waiting(300);
+            Graphene.waitAjax().until(ElementPresent.getInstance().element(attributesTable));
+            input = attributesTable.findElement(By.cssSelector(inputExp));
+            MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
+        }
+        cleanMetamerEventsVariable();
+    }
+
+    public void testRequestEventsAfter(String... events) {
+
+        final String[] expectedEvents = events;
+        Graphene.waitAjax().until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(WebDriver arg0) {
+                String[] actualEvents = ((String)executeJS("return sessionStorage.getItem('metamerEvents')")).split(" ");
+                return actualEvents != null && actualEvents.length == expectedEvents.length;
+            }
+        });
+        String[] actualEvents = ((String)executeJS("return sessionStorage.getItem('metamerEvents')")).split(" ");
+        assertEquals(actualEvents, events, format("The events ({0}) don't came in right order ({1})",
+            Arrays.deepToString(actualEvents), Arrays.deepToString(events)));
+    }
+
+    public void cleanMetamerEventsVariable() {
+        // since metamerEvents variable stored on session too, make sure that cleaned both of them
+        executeJS("window.metamerEvents = \"\";");
+        executeJS("sessionStorage.removeItem('metamerEvents')");
     }
 
     /**

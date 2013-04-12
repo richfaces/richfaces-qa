@@ -21,10 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTree;
 
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.treeAttributes;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.treeAttributes;
 
 import javax.faces.event.PhaseId;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
@@ -36,12 +37,13 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 23125 $
  */
-public class TestTreePhases extends AbstractTestTree {
+public class TestTreePhases extends AbstractTestTreeWD {
     @Inject
     @Use(booleans = { true, false })
     Boolean immediate;
 
-    private TreeModel tree = new TreeModel(pjq("div.rf-tr[id$=richTree]"));
+    @Page
+    private TreeSimplePage page;
 
     @BeforeMethod
     public void initialize() {
@@ -51,10 +53,10 @@ public class TestTreePhases extends AbstractTestTree {
     @Test
     @Use(field = "sample", strings = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     public void testPhasesSelection() {
-        tree.getNode(4).expand();
-        tree.getNode(4).getNode(3).select();
-        phaseInfo.assertPhases(PhaseId.ANY_PHASE);
-        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "selection change listener invoked");
+        page.tree.getNodes().get(3).expand();
+        page.tree.getNodes().get(3).getNode(2).select();
+        page.assertPhases(PhaseId.ANY_PHASE);
+        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "selection change listener invoked");
     }
 
     @Test(groups = { "Future" })
@@ -66,8 +68,8 @@ public class TestTreePhases extends AbstractTestTree {
 
     @Test
     public void testPhasesToggling() {
-        tree.getNode(2).expand();
+        page.tree.getNodes().get(2).expand();
         PhaseId phaseId = (immediate) ? PhaseId.APPLY_REQUEST_VALUES : PhaseId.PROCESS_VALIDATIONS;
-        phaseInfo.assertListener(phaseId, "tree toggle listener invoked");
+        page.assertListener(phaseId, "tree toggle listener invoked");
     }
 }
