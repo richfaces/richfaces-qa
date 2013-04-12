@@ -21,10 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTreeNode;
 
-import static org.jboss.arquillian.ajocado.Graphene.retrieveAttribute;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-import static org.jboss.arquillian.ajocado.dom.Attribute.SRC;
 import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.KEYDOWN;
@@ -36,9 +32,6 @@ import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOUT;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOVER;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEUP;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.jboss.test.selenium.JQuerySelectors.append;
-import static org.jboss.test.selenium.JQuerySelectors.not;
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.handleClass;
 import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.iconClass;
 import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.iconCollapsed;
@@ -57,21 +50,20 @@ import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.geometry.Point;
-import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
-import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
-import org.jboss.arquillian.ajocado.waiting.retrievers.AttributeRetriever;
-import org.jboss.cheiron.halt.XHRHalter;
-import org.jboss.test.selenium.waiting.EventFiredCondition;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.ftest.attributes.Attributes;
 import org.richfaces.tests.metamer.ftest.richTree.TreeAttributes;
-import org.richfaces.tests.metamer.ftest.richTree.TreeModel;
-import org.richfaces.tests.metamer.ftest.richTree.TreeNodeModel;
+import org.richfaces.tests.metamer.ftest.richTree.TreeSimplePage;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode;
+import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNodeIcon;
 import org.richfaces.ui.common.SwitchType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -81,26 +73,20 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 23059 $
  */
-public class TestTreeNodeSimple extends AbstractGrapheneTest {
+public class TestTreeNodeSimple extends AbstractWebDriverTest {
 
     private static final String SAMPLE_CLASS = "sample-class";
     private static final String JQ_SAMPLE_CLASS = ".sample-class";
     private static final String IMAGE_URL = "/resources/images/loading.gif";
 
-    Attributes<TreeAttributes> attributesTree = new Attributes<TreeAttributes>(jq("span[id$=attributes:panel]"));
-    Attributes<TreeNodeAttributes> attributes = new Attributes<TreeNodeAttributes>(
-        jq("span[id$=treeNode1Attributes:panel]"));
-    Attributes<TreeNodeAttributes> attributesLeaf = new Attributes<TreeNodeAttributes>(
-        jq("span[id$=treeNode3Attributes:panel]"));
+    Attributes<TreeAttributes> attributesTree = new Attributes<TreeAttributes>("attributes");
+    Attributes<TreeNodeAttributes> attributesNode = new Attributes<TreeNodeAttributes>("treeNode1Attributes"); // country
+    Attributes<TreeNodeAttributes> attributesLeaf = new Attributes<TreeNodeAttributes>("treeNode3Attributes");
 
-    TreeModel tree = new TreeModel(pjq("div.rf-tr[id$=richTree]"));
-    TreeNodeModel treeNode = tree.getNode(1);
-    TreeNodeModel subTreeNode = treeNode.getNode(1);
-    TreeNodeModel leaf = subTreeNode.getNode(1);
+    @Page
+    TreeSimplePage page;
 
-    ElementLocator<?> iconImage = treeNode.getIcon();
-    AttributeLocator<?> imageSrc = iconImage.getAttribute(SRC);
-    AttributeRetriever retrieveImageSrc = retrieveAttribute.attributeLocator(imageSrc);
+    public RichFacesTreeNode treeNode;
 
     @Inject
     @Use(empty = true)
@@ -114,8 +100,7 @@ public class TestTreeNodeSimple extends AbstractGrapheneTest {
 
     @BeforeMethod
     public void init() {
-        attributesRoot.setLocator(jq("span[id$=treeNode1Attributes:panel]"));
-        tree.setToggleType(SwitchType.ajax);
+        page.tree.setToggleType(SwitchType.ajax);
     }
 
     @Override
@@ -125,222 +110,234 @@ public class TestTreeNodeSimple extends AbstractGrapheneTest {
 
     @Test
     public void testDir() {
-        super.testDir(treeNode.getTreeNode());
+        testHTMLAttribute(getTreeNode().getNodeItself(), attributesNode, TreeNodeAttributes.dir, "null");
+        Graphene.waitGui().until().element(getTreeNode().getNodeItself()).is().present();
+        testHTMLAttribute(getTreeNode().getNodeItself(), attributesNode, TreeNodeAttributes.dir, "ltr");
+        Graphene.waitGui().until().element(getTreeNode().getNodeItself()).is().present();
+        testHTMLAttribute(getTreeNode().getNodeItself(), attributesNode, TreeNodeAttributes.dir, "rtl");
     }
 
     @Test
     public void testHandleClass() {
-        assertEquals(selenium.getCount(not(tree.getAnyNode().getHandle(), JQ_SAMPLE_CLASS)), 4);
+        assertEquals(page.tree.getNodes().size(), 4);
+        assertEquals(page.tree.root.findElements(By.cssSelector(
+            RichFacesTreeNode.CSS_NODE_HANDLER + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 4);
 
-        attributes.set(handleClass, SAMPLE_CLASS);
+        attributesNode.set(handleClass, SAMPLE_CLASS);
 
-        assertEquals(selenium.getCount(append(tree.getAnyNode().getHandle(), JQ_SAMPLE_CLASS)), 4);
-        assertEquals(selenium.getCount(not(tree.getAnyNode().getHandle(), JQ_SAMPLE_CLASS)), 0);
+        assertEquals(page.tree.root.findElements(By.cssSelector(
+            RichFacesTreeNode.CSS_NODE_HANDLER + JQ_SAMPLE_CLASS)).size(), 4);
+        assertEquals(page.tree.root.findElements(By.cssSelector(
+            RichFacesTreeNode.CSS_NODE_HANDLER + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 0);
     }
 
     @Test
     public void testIconClass() {
-        assertEquals(selenium.getCount(not(tree.getAnyNode().getIcon(), JQ_SAMPLE_CLASS)), 4);
+        assertEquals(page.tree.root.findElements(By.cssSelector(
+            RichFacesTreeNode.CSS_NODE_ICON + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 4);
+        attributesNode.set(iconClass, SAMPLE_CLASS);
 
-        attributes.set(iconClass, SAMPLE_CLASS);
-
-        assertEquals(selenium.getCount(append(tree.getAnyNode().getIcon(), JQ_SAMPLE_CLASS)), 4);
-        assertEquals(selenium.getCount(not(tree.getAnyNode().getIcon(), JQ_SAMPLE_CLASS)), 0);
+        assertEquals(page.tree.root.findElements(By.cssSelector(
+            RichFacesTreeNode.CSS_NODE_ICON + JQ_SAMPLE_CLASS)).size(), 4);
+        assertEquals(page.tree.root.findElements(By.cssSelector(
+            RichFacesTreeNode.CSS_NODE_ICON + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 0);
     }
 
     @Test
     public void testIconCollapsed() {
-        assertTrue(selenium.isElementPresent(iconImage));
-        assertFalse(selenium.isAttributePresent(imageSrc));
+        WebElement iconImage = page.tree.getNodes().get(0).getIcon().root;
+        assertTrue(Graphene.element(iconImage).isPresent().apply(driver));
+        assertFalse(Graphene.attribute(iconImage, "src").isPresent().apply(driver));
 
-        attributes.set(iconCollapsed, IMAGE_URL);
+        attributesNode.set(iconCollapsed, IMAGE_URL);
 
-        assertTrue(selenium.isElementPresent(iconImage));
-        assertTrue(selenium.isAttributePresent(imageSrc));
+        assertTrue(Graphene.element(iconImage).isPresent().apply(driver));
+        assertTrue(Graphene.attribute(iconImage, "src").isPresent().apply(driver));
 
-        String url = retrieveImageSrc.retrieve();
-        assertTrue(url.endsWith(IMAGE_URL));
+        assertTrue(Graphene.attribute(iconImage, "src").contains(IMAGE_URL).apply(driver));
     }
 
     @Test
     public void testIconExpanded() {
-        assertTrue(selenium.isElementPresent(iconImage));
-        assertFalse(selenium.isAttributePresent(imageSrc));
+        WebElement iconImage = page.tree.getNodes().get(0).getIcon().root;
+        assertTrue(Graphene.element(iconImage).isPresent().apply(driver));
+        assertFalse(Graphene.attribute(iconImage, "src").isPresent().apply(driver));
 
-        attributes.set(iconExpanded, IMAGE_URL);
+        attributesNode.set(iconExpanded, IMAGE_URL);
 
-        assertTrue(selenium.isElementPresent(iconImage));
-        assertFalse(selenium.isAttributePresent(imageSrc));
+        assertTrue(Graphene.element(iconImage).isPresent().apply(driver));
+        assertFalse(Graphene.attribute(iconImage, "src").isPresent().apply(driver));
 
-        treeNode.expand();
+        getTreeNode().expand();
 
-        assertTrue(selenium.isElementPresent(iconImage));
-        assertTrue(selenium.isAttributePresent(imageSrc));
+        assertTrue(Graphene.element(iconImage).isPresent().apply(driver));
+        assertTrue(Graphene.attribute(iconImage, "src").isPresent().apply(driver));
 
-        String url = retrieveImageSrc.retrieve();
-        assertTrue(url.endsWith(IMAGE_URL));
+        assertTrue(Graphene.attribute(iconImage, "src").contains(IMAGE_URL).apply(driver));
     }
 
     @Test
     public void testIconLeaf() {
-        treeNode.expand();
+        getTreeNode().expand();
+        RichFacesTreeNode subTreeNode = getTreeNode().getNode(0);
         subTreeNode.expand();
 
-        ElementLocator<?> leafIcon = leaf.getIcon();
-        AttributeLocator<?> leafIconImageSrc = leaf.getIcon().getAttribute(SRC);
+        RichFacesTreeNode leaf = subTreeNode.getNode(0);
+        RichFacesTreeNodeIcon leafIcon = leaf.getIcon();
 
-        assertTrue(selenium.isElementPresent(leafIcon));
-        assertFalse(selenium.isAttributePresent(leafIconImageSrc));
+        assertTrue(Graphene.element(leafIcon.root).isPresent().apply(driver));
+        assertFalse(Graphene.attribute(leafIcon.root, "src").isPresent().apply(driver));
 
         attributesLeaf.set(iconLeaf, IMAGE_URL);
 
-        assertTrue(selenium.isElementPresent(leafIcon));
-        assertTrue(selenium.isAttributePresent(leafIconImageSrc));
+        assertTrue(Graphene.element(leafIcon.root).isPresent().apply(driver));
+        assertTrue(Graphene.attribute(leafIcon.root, "src").isPresent().apply(driver));
 
-        String url = selenium.getAttribute(leafIconImageSrc);
-        assertTrue(url.endsWith(IMAGE_URL));
+        assertTrue(Graphene.attribute(leafIcon.root, "src").contains(IMAGE_URL).apply(driver));
     }
 
     @Test
     @Use(field = "toggleType", value = "toggleTypes")
     public void testImmediate() {
-        tree.setToggleType(toggleType);
         attributesTree.set(TreeAttributes.toggleType, toggleType);
 
-        treeNode.expand();
+        getTreeNode().expand();
 
-        phaseInfo.assertPhases(PhaseId.ANY_PHASE);
-        phaseInfo.assertListener(PhaseId.PROCESS_VALIDATIONS, "tree toggle listener invoked");
+        page.assertPhases(PhaseId.ANY_PHASE);
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "tree toggle listener invoked");
 
-        attributes.set(immediate, true);
+        getTreeNode().collapse();
 
-        treeNode.expand();
+        attributesNode.set(immediate, true);
 
-        phaseInfo.assertPhases(PhaseId.ANY_PHASE);
-        phaseInfo.assertListener(PhaseId.APPLY_REQUEST_VALUES, "tree toggle listener invoked");
+        getTreeNode().expand();
+
+        page.assertPhases(PhaseId.ANY_PHASE);
+        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "tree toggle listener invoked");
     }
 
     @Test
     public void testLabelClass() {
-        assertEquals(selenium.getCount(not(tree.getAnyNode().getLabel(), JQ_SAMPLE_CLASS)), 4);
+        assertEquals(page.tree.root.findElements(By.cssSelector(
+            RichFacesTreeNode.CSS_NODE_LABEL + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 4);
 
-        attributes.set(labelClass, SAMPLE_CLASS);
+        attributesNode.set(labelClass, SAMPLE_CLASS);
 
-        assertEquals(selenium.getCount(append(tree.getAnyNode().getLabel(), JQ_SAMPLE_CLASS)), 4);
-        assertEquals(selenium.getCount(not(tree.getAnyNode().getLabel(), JQ_SAMPLE_CLASS)), 0);
+        assertEquals(page.tree.root.findElements(By.cssSelector(
+            RichFacesTreeNode.CSS_NODE_LABEL + JQ_SAMPLE_CLASS)).size(), 4);
+        assertEquals(page.tree.root.findElements(By.cssSelector(
+            RichFacesTreeNode.CSS_NODE_LABEL + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 0);
     }
 
     @Test
     public void testLang() {
-        assertEquals(selenium.getCount(not(tree.getAnyNode(), "[lang=cs]")), 4);
+        assertEquals(page.tree.root.findElements(By.cssSelector(
+            RichFacesTreeNode.CSS_NODE + ":not(" + "[lang=cs]" + ")")).size(), 4);
 
-        attributes.set(lang, "cs");
+        attributesNode.set(lang, "cs");
 
-        assertEquals(selenium.getCount(append(tree.getAnyNode(), "[lang=cs]")), 0);
-        assertEquals(selenium.getCount(not(tree.getAnyNode(), "[lang=cs]")), 4);
+        assertEquals(page.tree.root.findElements(By.cssSelector(
+            RichFacesTreeNode.CSS_NODE + "[lang=cs]")).size(), 0);
+        assertEquals(page.tree.root.findElements(By.cssSelector(
+            RichFacesTreeNode.CSS_NODE + ":not(" + "[lang=cs]" + ")")).size(), 4);
     }
 
     @Test
     @Use(field = "event", value = "events")
     public void testClientEvents() {
-        String attributeName = event.getEventName();
-        ElementLocator<?> eventInput = pjq("span[id$=treeNode1Attributes:panel] input[id$=on" + attributeName
-            + "Input]");
-        String value = "metamerEvents += \"" + event.getEventName() + " \"";
+        final String attributeName = event.getEventName();
 
-        selenium.type(eventInput, value);
-        selenium.waitForPageToLoad(TIMEOUT);
+        testRequestEventsBefore(page.node1AttributesTable, attributeName);
 
-        fireEventAt(treeNode.getTreeNode(), event);
+        fireEventAt(getTreeNode().getNodeItself(), event);
 
-        waitGui.failWith("Attribute on" + attributeName + " does not work correctly").until(
-            new EventFiredCondition(event));
+        testRequestEventsAfter(attributeName);
     }
 
     @Test
     public void testOnbeforetoggle() {
-        super.testRequestEventsBefore("beforetoggle", "toggle");
-        treeNode.expand();
+        super.testRequestEventsBefore(page.node1AttributesTable, "beforetoggle", "toggle");
+        getTreeNode().expand();
         super.testRequestEventsAfter("beforetoggle", "toggle");
     }
 
     @Test
     public void testOnbeforetoggleWithJsFunction() {
-        attributes.set(onbeforetoggle, "functionChecker()");
-        retrieveJsFunctionChecker.initializeValue();
-        XHRHalter.enable();
+        attributesNode.set(onbeforetoggle, "functionChecker()");
+        String jsFunctionChecker = page.jsFunctionChecker.getText();
+        String requestTime = page.requestTime.getText();
 
-        selenium.click(treeNode.getHandle());
-        XHRHalter handle = XHRHalter.getHandleBlocking();
-        handle.complete();
+        getTreeNode().getHandle().root.click();
 
-        retrieveRequestTime.initializeValue();
-        waitGui.waitForChange(retrieveJsFunctionChecker);
-        phaseInfo.assertNoListener("tree toggle listener invoked");
-        handle.complete();
+        Graphene.waitGui().until().element(page.jsFunctionChecker).text().not().equalTo(jsFunctionChecker);
+        page.assertNoListener("tree toggle listener invoked");
 
-        waitGui.waitForChange(retrieveRequestTime);
-        waitModel
-            .failWith("The toggle listener hasn't been invoked.")
-            .until(phaseInfo.getListenerCondition(PhaseId.PROCESS_VALIDATIONS, "tree toggle listener invoked"));
-
-        XHRHalter.disable();
+        Graphene.waitGui().until().element(page.requestTime).text().not().equalTo(requestTime);
+        page.getListenerCondition(PhaseId.PROCESS_VALIDATIONS, "tree toggle listener invoked");
     }
 
     @Test
     public void testRendered() {
-        treeNode.expand();
+        getTreeNode().expand();
+        RichFacesTreeNode subTreeNode = getTreeNode().getNode(0);
         subTreeNode.expand();
+        RichFacesTreeNode leaf = subTreeNode.getNode(0);
 
-        assertTrue(selenium.isElementPresent(leaf));
+        assertTrue(Graphene.element(leaf.root).isPresent().apply(driver));
 
         attributesLeaf.set(rendered, false);
 
-        assertFalse(selenium.isElementPresent(leaf));
-        assertTrue(selenium.isElementPresent(subTreeNode));
+        // verify parent of leaf node is present
+        assertTrue(Graphene.element(getTreeNode().getNode(0).root).isPresent().apply(driver));
+        // but leaf is not
+        assertTrue(getTreeNode().getNode(0).getNode(0) == null);
     }
 
     @Test
     public void testStyle() {
         final String value = "background-color: yellow; font-size: 1.5em;";
-        selenium.type(jq("input[id$=treeNode1Attributes:styleInput]"), value);
-        selenium.waitForPageToLoad();
-        AttributeLocator<?> styleAttr = treeNode.getTreeNode().getAttribute(Attribute.STYLE);
-        assertTrue(selenium.getAttribute(styleAttr).contains(value), "Attribute style should contain \"" + value + "\"");
+        attributesNode.set(TreeNodeAttributes.style, value);
+        assertTrue(Graphene.attribute(getTreeNode().getNodeItself(), "style").contains(value).apply(driver));
     }
 
     @Test
     public void testStyleClass() {
         final String value = "metamer-ftest-class";
-        selenium.type(jq("input[id$=treeNode1Attributes:styleClassInput]"), value);
-        selenium.waitForPageToLoad();
-        AttributeLocator<?> styleAttr = treeNode.getTreeNode().getAttribute(Attribute.CLASS);
-        assertTrue(selenium.getAttribute(styleAttr).contains(value), "Attribute class should contain \"" + value + "\"");
+        attributesNode.set(TreeNodeAttributes.styleClass, value);
+        assertTrue(Graphene.attribute(getTreeNode().getNodeItself(), "class").contains(value).apply(driver));
     }
 
     @Test
     public void testTitle() {
-        super.testTitle(treeNode.getTreeNode());
+        final String testTitle = "RichFaces 4";
+        testHTMLAttribute(getTreeNode().getNodeItself(), attributesNode, TreeNodeAttributes.title, testTitle);
     }
 
-    private void fireEventAt(ElementLocator<?> element, Event event) {
-        Point coords = new Point(0, 0);
+    private void fireEventAt(WebElement element, Event event) {
         if (event == CLICK) {
-            selenium.clickAt(element, coords);
+            new Actions(driver).click(element).perform();
         } else if (event == DBLCLICK) {
-            selenium.doubleClickAt(element, coords);
+            new Actions(driver).doubleClick(element).perform();
         } else if (event == MOUSEDOWN) {
-            selenium.mouseDownAt(element, coords);
+            new Actions(driver).clickAndHold(element).perform();
         } else if (event == MOUSEMOVE) {
-            selenium.mouseMoveAt(element, coords);
-        } else if (event == MOUSEOUT) {
-            selenium.mouseOutAt(element, coords);
+            new Actions(driver).moveToElement(element).perform();
+//        } else if (event == MOUSEOUT) {
+//            selenium.mouseOutAt(element, coords);
         } else if (event == MOUSEOVER) {
-            selenium.mouseOverAt(element, coords);
+            new Actions(driver).moveToElement(element, 1, 1).perform();
         } else if (event == MOUSEUP) {
-            selenium.mouseUpAt(element, coords);
+            new Actions(driver).clickAndHold(element).release().perform();
         } else {
-            selenium.fireEvent(element, event);
+            fireEvent(element, event);
         }
+    }
+
+    private RichFacesTreeNode getTreeNode() {
+        if (treeNode == null) treeNode = page.tree.getNodes().get(0);
+
+        treeNode.setToggleType(toggleType);
+
+        return treeNode;
     }
 }

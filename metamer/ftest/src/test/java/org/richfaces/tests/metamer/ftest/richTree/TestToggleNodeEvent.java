@@ -28,15 +28,12 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -49,11 +46,8 @@ public class TestToggleNodeEvent extends AbstractWebDriverTest {
     @Use(empty = true)
     MouseEvent toggleReactEvent;
     @Page
-    MetamerPage page;
-    //
-    @FindBy(css = "div[id*=':richTree:1:']")
-    TreeNode testedNode;
-    //
+    TreeSimplePage page;
+
     private static final long NODE_TOGGLE_WAIT_TIME  = 500;//ms
 
     public enum MouseEvent {
@@ -73,11 +67,16 @@ public class TestToggleNodeEvent extends AbstractWebDriverTest {
         }
     }
 
+    private RichFacesTreeNode getTestedNode() {
+        // left second node as tested since it was originally written this way
+        return page.tree.getNodes().get(1);
+    }
+
     private void fireEvent(boolean fireOnHandle, MouseEvent firedEvent) {
         if (fireOnHandle) {
-            testedNode.fireEventOnHandle(firedEvent);
+            fireEventOnHandle(getTestedNode().getHandle().root, firedEvent);
         } else {
-            testedNode.fireEventOnLabel(firedEvent);
+            fireEventOnLabel(getTestedNode().getNodeLabel(), firedEvent);
         }
     }
 
@@ -94,12 +93,12 @@ public class TestToggleNodeEvent extends AbstractWebDriverTest {
             boolean correctEvent = (toggleReactEvent.equals(firedEvent) ? Boolean.TRUE : Boolean.FALSE);
             fireEvent(fireOnHandle, firedEvent);
             if (correctEvent) {
-                Graphene.waitGui().withMessage("The node did not expand.").until(testedNode.isExpandedCondition());
+                Graphene.waitGui().withMessage("The node did not expand.").until(getTestedNode().isExpandedCondition());
                 fireEvent(fireOnHandle, firedEvent);
-                Graphene.waitGui().withMessage("The node did not collapse.").until(testedNode.isCollapsedCondition());
+                Graphene.waitGui().withMessage("The node did not collapse.").until(getTestedNode().isCollapsedCondition());
             } else {
                 waiting(NODE_TOGGLE_WAIT_TIME);
-                if (testedNode.isExpanded()) {
+                if (getTestedNode().isExpanded()) {
                     Assert.fail("The node shouldn't expand.");
                 }
             }
@@ -118,37 +117,12 @@ public class TestToggleNodeEvent extends AbstractWebDriverTest {
         testToggleNodeEvent(Boolean.FALSE);
     }
 
-    public class TreeNode {
-
-        @Root
-        WebElement root;
-        @FindBy(css = "div > span > span.rf-trn-lbl")
-        WebElement label;
-        @FindBy(css = "div > span.rf-trn-hnd")
-        WebElement handle;
-
-        public void fireEventOnHandle(MouseEvent event) {
+    public void fireEventOnHandle(WebElement handle, MouseEvent event) {
             Utils.triggerJQ(event.getValue(), handle);
-        }
-
-        public void fireEventOnLabel(MouseEvent event) {
-            Utils.triggerJQ(event.getValue(), label);
-        }
-
-        public boolean isCollapsed() {
-            return isCollapsedCondition().apply(driver);
-        }
-
-        public ExpectedCondition<Boolean> isCollapsedCondition() {
-            return Graphene.element(root).attribute("class").contains("rf-tr-nd-colps");
-        }
-
-        public boolean isExpanded() {
-            return isExpandedCondition().apply(driver);
-        }
-
-        public ExpectedCondition<Boolean> isExpandedCondition() {
-            return Graphene.element(root).attribute("class").contains("rf-tr-nd-exp");
-        }
     }
+
+    public void fireEventOnLabel(WebElement label, MouseEvent event) {
+        Utils.triggerJQ(event.getValue(), label);
+    }
+
 }

@@ -73,6 +73,8 @@ public class MetamerPage {
     public WebElement statusCheckerOutput;
     @FindBy(css = "span[id$=renderChecker]")
     public WebElement renderCheckerOutput;
+    @FindBy(css = "span[id$=jsFunctionChecker]")
+    public WebElement jsFunctionChecker;
     @FindBy(css = "[id$=fullPageRefreshImage]")
     public WebElement fullPageRefreshIcon;
     @FindBy(css = "[id$=reRenderAllImage]")
@@ -80,6 +82,9 @@ public class MetamerPage {
     /** root element for component attributes area */
     @FindBy(css = "table[id$='attributes:attributes']")
     public WebElement attributesTable;
+    /** Delay response by [ms] */
+    @FindBy(css = "input[id$='metamerResponseDelayInput']")
+    public WebElement responseDelay;
     @Drone
     protected WebDriver driver;
     private String reqTime;

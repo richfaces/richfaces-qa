@@ -30,8 +30,8 @@ import java.util.List;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebElement;
-import org.richfaces.component.SwitchType;
 import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode;
+import org.richfaces.ui.common.SwitchType;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>

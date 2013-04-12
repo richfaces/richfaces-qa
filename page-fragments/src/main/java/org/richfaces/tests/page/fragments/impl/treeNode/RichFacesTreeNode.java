@@ -29,8 +29,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.richfaces.component.SwitchType;
 import org.richfaces.tests.page.fragments.impl.tree.RichFacesTree;
+import org.richfaces.ui.common.SwitchType;
 
 import com.google.common.base.Predicate;
 
