@@ -5,7 +5,7 @@
 
     <h:body>
         <composite:interface>
-            <composite:attribute name="id" type="java.lang.String" />
+            <composite:attribute name="id" type="java.lang.String" default="attributes" />
             <composite:attribute name="value" type="org.richfaces.tests.metamer.Attributes" required="true"
                                  shortDescription="Representation of attributes of a component." />
             <composite:attribute name="render" default="@none" />
