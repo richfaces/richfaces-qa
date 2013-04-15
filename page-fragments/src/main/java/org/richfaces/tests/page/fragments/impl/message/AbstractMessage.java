@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.message;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -37,7 +37,8 @@ public abstract class AbstractMessage implements Message {
     @Root
     protected WebElement root;
     //
-    protected WebDriver driver = GrapheneContext.getProxy();
+    @Drone
+    protected WebDriver driver;
 
     protected abstract String getCssClass(MessageType type);
 
@@ -99,7 +100,7 @@ public abstract class AbstractMessage implements Message {
 
     @Override
     public boolean isType(MessageType type) {
-        return this.getRoot().getAttribute("class").contains(getCssClass(type));
+        return getRoot().getAttribute("class").contains(getCssClass(type));
     }
 
     @Override

@@ -23,16 +23,27 @@ package org.richfaces.tests.page.fragments.impl.messages;
 
 import java.util.List;
 
-import org.richfaces.tests.page.fragments.impl.message.Message;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.VisibleComponent;
+import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
 
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface Messages extends MessagesBase<Message> {
+public interface MessagesBase<T> extends Iterable<T>, VisibleComponent {
+
+    List<T> getAllMessagesOfType(MessageType type);
 
     /**
-     * Returns a list of Messages for an input that's id contains an @inputID.
+     * Returns a Message at index.
      */
-    List<Message> getMessagesForInput(String inputID);
+    T getMessageAtIndex(int index);
+
+    WebElement getRoot();
+
+    /**
+     * Returns a number of Messages.
+     */
+    int size();
 }
