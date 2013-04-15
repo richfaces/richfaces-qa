@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
     <!--
@@ -44,7 +44,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <f:selectItem itemValue="Lexus" itemLabel="Lexus"/>
                 <f:selectItem itemValue="BMW" itemLabel="BMW"/>
 
-                <a4j:ajax bypassUpdates="#{a4jAjaxBean.attributes['bypassUpdates'].value}"
+                <r:ajax bypassUpdates="#{a4jAjaxBean.attributes['bypassUpdates'].value}"
                           data="#{a4jAjaxBean.attributes['data'].value}"
                           disabled="#{a4jAjaxBean.attributes['disabled'].value}"
                           event="change"
@@ -66,14 +66,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/>
 
             Your selection: 
-            <a4j:outputPanel id="output1">
+            <r:outputPanel id="output1">
                 #{a4jAjaxBean.cars}
-            </a4j:outputPanel>
+            </r:outputPanel>
             <br/>
             Your selection:
-            <a4j:outputPanel id="output2">
+            <r:outputPanel id="output2">
                 #{a4jAjaxBean.cars}
-            </a4j:outputPanel>
+            </r:outputPanel>
 
         </ui:define>
 

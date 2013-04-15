@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-    xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+     xmlns:r="http://richfaces.org/rich">
 
 <!--
 JBoss, Home of Professional Open Source
@@ -38,35 +38,35 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
     <ui:define name="component">
 
-        <rich:orderingList id="orderingList" listHeight="#{richOrderingListBean.attributes['listHeight'].value}"
+        <r:orderingList id="orderingList" listHeight="#{richOrderingListBean.attributes['listHeight'].value}"
             listWidth="#{richOrderingListBean.attributes['listWidth'].value}" value="#{richOrderingListBean.capitals}"
             var="capital">
 
             <f:converter converterId="capitalConverter" />
 
-            <rich:column>
+            <r:column>
                 <f:facet name="header">State</f:facet>
                     #{capital.state}
-            </rich:column>
-            <rich:column>
+            </r:column>
+            <r:column>
                 <f:facet name="header">Name</f:facet>
                     #{capital.name}
-            </rich:column>
+            </r:column>
 
-        </rich:orderingList>
+        </r:orderingList>
 
-        <rich:hotKey id="richHotKey1"
+        <r:hotKey id="richHotKey1"
             enabledInInput="#{richHotKeyBean.attributes['enabledInInput'].value}"
             key="#{richHotKeyBean.attributes['key'].value}"
-            onkeydown="#{rich:component('orderingList')}.upTop()"
+            onkeydown="#{r:component('orderingList')}.upTop()"
             preventDefault="#{richHotKeyBean.attributes['preventDefault'].value}"
             rendered="#{richHotKeyBean.attributes['rendered'].value}"
             selector="#{richHotKeyBean.attributes['selector'].value}" />
 
-        <rich:hotKey id="richHotKey2"
+        <r:hotKey id="richHotKey2"
             enabledInInput="#{richHotKeyBean.attributes2['enabledInInput'].value}"
             key="#{richHotKeyBean.attributes2['key'].value}"
-            onkeydown="#{rich:component('orderingList')}.downBottom()"
+            onkeydown="#{r:component('orderingList')}.downBottom()"
             preventDefault="#{richHotKeyBean.attributes['preventDefault'].value}"
             rendered="#{richHotKeyBean.attributes2['rendered'].value}"
             selector="#{richHotKeyBean.attributes2['selector'].value}" />
@@ -89,9 +89,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <p>
             Following attributes are hidden:
         </p>
-        <rich:list id="hiddenAttributes" value="#{richHotKeyBean.hiddenAttributes}" var="attribute">
+        <r:list id="hiddenAttributes" value="#{richHotKeyBean.hiddenAttributes}" var="attribute">
             <h:outputText value="#{attribute}" />
-        </rich:list>
+        </r:list>
     </ui:define>
 
     <!-- we don't want two logs on the page -->

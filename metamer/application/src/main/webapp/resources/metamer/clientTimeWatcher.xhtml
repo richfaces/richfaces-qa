@@ -4,8 +4,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:composite="http://java.sun.com/jsf/composite"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich"
+	xmlns:r="http://richfaces.org/rich"
+	
 	xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
 <h:body>
@@ -32,11 +32,11 @@
 		
 		<script>
 			(function( undefined ) {
-				grid = #{rich:element('grid')};
+				grid = #{r:element('grid')};
 	
 				grid.event = function(event) {
 					event = (event) ? event : 1;
-					var id = "#{rich:clientId('event1')}:outputTime".replace("event1", "event" + event);
+					var id = "#{r:clientId('event1')}:outputTime".replace("event1", "event" + event);
 					Metamer.ClientTime.refresh(document.getElementById(id));
 				}
 	
@@ -45,19 +45,19 @@
 				}
 	
 				grid.complete = function() {
-					var id = "#{rich:clientId('complete')}:outputTime";
+					var id = "#{r:clientId('complete')}:outputTime";
 					Metamer.ClientTime.refresh(document.getElementById(id));
 				}
 	
 				grid.difference = function() {
-					var differenceElement = #{rich:element('difference')};
+					var differenceElement = #{r:element('difference')};
 					var beginTimeElement = this.getBeginElement();
-					var eventTimeId = "#{rich:clientId('event1')}".replace(/1$/, "");
+					var eventTimeId = "#{r:clientId('event1')}".replace(/1$/, "");
 					Metamer.ClientTime.updateDifference(differenceElement, beginTimeElement, eventTimeId, #{cc.attrs.reverseOrder});
 				}
 	
 				grid.getBeginElement = function() {
-					var id = "#{rich:clientId('begin')}:outputTime";
+					var id = "#{r:clientId('begin')}:outputTime";
 					return document.getElementById(id);
 				}
 			})();

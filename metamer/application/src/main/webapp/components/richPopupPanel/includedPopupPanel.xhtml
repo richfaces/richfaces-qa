@@ -1,17 +1,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:r="http://richfaces.org/rich"
+      
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"> 
 
-    <rich:popupPanel id="myPopUp" height="500" width="700" >
+    <r:popupPanel id="myPopUp" height="500" width="700" >
         <f:facet name="controls">
-            <h:outputLink value="#" onclick="#{rich:component('myPopUp')}.hide(); return false;">X</h:outputLink>
+            <h:outputLink value="#" onclick="#{r:component('myPopUp')}.hide(); return false;">X</h:outputLink>
         </f:facet>
         
         Nam mattis, purus vel lobortis vehicula, orci ante blandit nisl, ut iaculis felis massa vel felis. Etiam dignissim justo mi, ut pretium justo. Morbi et faucibus elit. Nullam eros felis, facilisis quis luctus in, tincidunt sed turpis. Etiam vel erat sem. Donec nec tellus sem, vitae facilisis ipsum. Duis ut feugiat nisl. Vivamus vel turpis at erat aliquam fringilla tempor suscipit lorem. Nunc ac erat erat, id gravida nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse eget tellus nulla, non dignissim lectus. Nam non odio sit amet velit ultricies laoreet. Integer est ante, feugiat ac pulvinar vitae, placerat non quam. 
-    </rich:popupPanel>
+    </r:popupPanel>
     
 </ui:composition>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich">
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich">
 
 <!--
 JBoss, Home of Professional Open Source
@@ -27,46 +27,46 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
 <ui:composition>
     <h:commandLink id="containerTcLink1" value="Item 1">
-        <rich:toggleControl targetPanel="containerRichTogglePanel" targetItem="containerItem1" />
+        <r:toggleControl targetPanel="containerRichTogglePanel" targetItem="containerItem1" />
     </h:commandLink>
     <h:outputText value=" | " />
     <h:commandLink id="containerTcLink2" value="Item 2">
-        <rich:toggleControl targetPanel="containerRichTogglePanel" targetItem="containerItem2" />
+        <r:toggleControl targetPanel="containerRichTogglePanel" targetItem="containerItem2" />
     </h:commandLink>
     <h:outputText value=" | " />
     <h:commandLink id="containerTcLink3" value="Item 3">
-        <rich:toggleControl targetPanel="containerRichTogglePanel" targetItem="containerItem3" />
+        <r:toggleControl targetPanel="containerRichTogglePanel" targetItem="containerItem3" />
     </h:commandLink>
     <h:outputText value=" | " />
     <h:commandLink id="containerTcLink4" value="Item 4">
-        <rich:toggleControl targetPanel="containerRichTogglePanel" targetItem="containerItem4" />
+        <r:toggleControl targetPanel="containerRichTogglePanel" targetItem="containerItem4" />
     </h:commandLink>
     <h:outputText value=" | " />
     <h:commandLink id="containerTcLink5" value="Item 5">
-        <rich:toggleControl targetPanel="containerRichTogglePanel" targetItem="containerItem5" />
+        <r:toggleControl targetPanel="containerRichTogglePanel" targetItem="containerItem5" />
     </h:commandLink>
     <br />
     <br />
 
-    <rich:togglePanel id="containerRichTogglePanel" activeItem="containerItem3" switchType="client">
+    <r:togglePanel id="containerRichTogglePanel" activeItem="containerItem3" switchType="client">
 
-        <rich:togglePanelItem id="containerItem1" name="containerItem1">
+        <r:togglePanelItem id="containerItem1" name="containerItem1">
                 content of item 1
-            </rich:togglePanelItem>
-        <rich:togglePanelItem id="containerItem2" name="containerItem2">
+            </r:togglePanelItem>
+        <r:togglePanelItem id="containerItem2" name="containerItem2">
                 content of item 2
-            </rich:togglePanelItem>
-        <rich:togglePanelItem id="containerItem3" name="containerItem3">
+            </r:togglePanelItem>
+        <r:togglePanelItem id="containerItem3" name="containerItem3">
             <ui:decorate template="#{templateBean.nextTemplate}.xhtml" />
-        </rich:togglePanelItem>
-        <rich:togglePanelItem id="containerItem4" name="containerItem4">
+        </r:togglePanelItem>
+        <r:togglePanelItem id="containerItem4" name="containerItem4">
                 content of item 4
-            </rich:togglePanelItem>
-        <rich:togglePanelItem id="containerItem5" name="containerItem5">
+            </r:togglePanelItem>
+        <r:togglePanelItem id="containerItem5" name="containerItem5">
                 content of item 5
-            </rich:togglePanelItem>
+            </r:togglePanelItem>
 
-    </rich:togglePanel>
+    </r:togglePanel>
 
 </ui:composition>
 </html>

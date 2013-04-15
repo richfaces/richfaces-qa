@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -40,13 +40,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/>
             Activate own message bundle (JSF validation only):
             <br/>
-            <a4j:commandButton id="activateButton" value="activate" action="#{validationMessagesBean.activate}" render="currRB"/>
-            <a4j:commandButton id="deactivateButton" value="deactivate" action="#{validationMessagesBean.deactivate}" render="currRB"/>
+            <r:commandButton id="activateButton" value="activate" action="#{validationMessagesBean.activate}" render="currRB"/>
+            <r:commandButton id="deactivateButton" value="deactivate" action="#{validationMessagesBean.deactivate}" render="currRB"/>
 
             <br/><br/>
             Submit buttons:<br/>
             <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
-            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
+            <r:commandButton id="a4jButton" value="r:commandButton"/>
             <br/><br/>
             <ui:insert name="js">
                 <script type="text/javascript">
@@ -109,37 +109,37 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                 <h:outputLabel for="jsr-303-inBean" value="Validation messages set in bean:" />
                 <ui:insert name="jsr-303-inBean"/>
-                <rich:message id="jsr-303-inBean-msg" for="jsr-303-inBean" />
+                <r:message id="jsr-303-inBean-msg" for="jsr-303-inBean" />
 
 
                 <h:outputLabel for="jsr-303-inAtt" value="Validation message set in attribute:" />
                 <ui:insert name="jsr-303-inAtt"/>
-                <rich:message id="jsr-303-inAtt-msg" for="jsr-303-inAtt" />
+                <r:message id="jsr-303-inAtt-msg" for="jsr-303-inAtt" />
 
 
                 <h:outputLabel for="jsr-303-inBundle" value="Validation message set in bundle:" />
                 <ui:insert name="jsr-303-inBundle"/>
-                <rich:message id="jsr-303-inBundle-msg" for="jsr-303-inBundle" />
+                <r:message id="jsr-303-inBundle-msg" for="jsr-303-inBundle" />
             </h:panelGrid>
 
             <br/><br/>
             CSV: 
             <h:panelGrid columns="3">
-                <rich:validator>
+                <r:validator>
                     <h:outputLabel for="csv-inBean"  value="Validation messages set in bean:" />
                     <ui:insert name="csv-inBean"/>
-                    <rich:message id="csv-inBean-msg" for="csv-inBean" />
+                    <r:message id="csv-inBean-msg" for="csv-inBean" />
 
 
                     <h:outputLabel for="csv-inAtt" value="Validation message set in attribute:" />
                     <ui:insert name="csv-inAtt"/>
-                    <rich:message id="csv-inAtt-msg" for="csv-inAtt" />
+                    <r:message id="csv-inAtt-msg" for="csv-inAtt" />
 
 
                     <h:outputLabel for="csv-inBundle" value="Validation messages set in bundle:" />
                     <ui:insert name="csv-inBundle"/>
-                    <rich:message id="csv-inBundle-msg" for="csv-inBundle" />
-                </rich:validator>
+                    <r:message id="csv-inBundle-msg" for="csv-inBundle" />
+                </r:validator>
             </h:panelGrid>
 
             <br/><br/>
@@ -147,12 +147,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <h:panelGrid columns="3">
                 <h:outputLabel for="jsf-inAtt" value="Validation message set in attribute:" />
                 <ui:insert name="jsf-inAtt"/>
-                <rich:message id="jsf-inAtt-msg" for="jsf-inAtt" />
+                <r:message id="jsf-inAtt-msg" for="jsf-inAtt" />
 
 
                 <h:outputLabel for="jsf-inBundle" value="Validation messages set in bundle:" />
                 <ui:insert name="jsf-inBundle"/>    
-                <rich:message id="jsf-inBundle-msg" for="jsf-inBundle" />
+                <r:message id="jsf-inBundle-msg" for="jsf-inBundle" />
             </h:panelGrid>
         </ui:define>
 

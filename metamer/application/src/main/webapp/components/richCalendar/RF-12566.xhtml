@@ -1,26 +1,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:r="http://richfaces.org/rich"
+      >
 
     <ui:composition template="/templates/template.xhtml">
         <ui:define name="component">
 
-            <rich:tabPanel switchType="server" id="tabPanel">
+            <r:tabPanel switchType="server" id="tabPanel">
 
-                <rich:tab header="tab1" id="tab1">
-                    <rich:calendar id="cal1" value="#{richCalendarBean.attributes['value']}" mode="ajax" />
-                    <rich:message for="cal1" id="messages1" />
-                </rich:tab>
+                <r:tab header="tab1" id="tab1">
+                    <r:calendar id="cal1" value="#{richCalendarBean.attributes['value']}" mode="ajax" />
+                    <r:message for="cal1" id="messages1" />
+                </r:tab>
 
-                <rich:tab header="tab2" id="tab2">
-                    <rich:calendar id="cal2" value="#{richCalendarBean.attributes['value']}" mode="ajax" />
-                    <rich:message for="cal2" id="messages2" />
-                </rich:tab>
+                <r:tab header="tab2" id="tab2">
+                    <r:calendar id="cal2" value="#{richCalendarBean.attributes['value']}" mode="ajax" />
+                    <r:message for="cal2" id="messages2" />
+                </r:tab>
 
-            </rich:tabPanel>
-            <a4j:log id="log"/>
+            </r:tabPanel>
+            <r:log id="log"/>
         </ui:define>
 
     </ui:composition>

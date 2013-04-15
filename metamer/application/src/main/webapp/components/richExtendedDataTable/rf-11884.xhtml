@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -85,10 +85,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/>
             <h:outputText value="Show data in table: " />
             <h:selectBooleanCheckbox id="noDataCheckbox" value="#{richExtendedDataTableBean.state}">
-                <a4j:ajax render="#{nestedComponentId} scroller1"/>
+                <r:ajax render="#{nestedComponentId} scroller1"/>
             </h:selectBooleanCheckbox>
             <br/><br/>
-            <rich:dataScroller id="scroller1" for="richEDT" page="#{richExtendedDataTableBean.page}" maxPages="7" render="#{nestedComponentId}"/>
+            <r:dataScroller id="scroller1" for="richEDT" page="#{richExtendedDataTableBean.page}" maxPages="7" render="#{nestedComponentId}"/>
         </ui:define>
 
         <ui:define name="component">
@@ -98,7 +98,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             Don't have more info form JIRA to simulate this problem better
             </p>
 
-            <rich:extendedDataTable id="richEDT"
+            <r:extendedDataTable id="richEDT"
                                     columnClasses="#{richExtendedDataTableBean.attributes['columnClasses'].value}"
                                     first="#{richExtendedDataTableBean.attributes['first'].value}"
                                     footerClass="#{richExtendedDataTableBean.attributes['footerClass'].value}"
@@ -144,108 +144,108 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputText value="Header Facet" />
                 </f:facet>
 
-                <rich:column id="columnSex" sortBy="#{record.sex}">
+                <r:column id="columnSex" sortBy="#{record.sex}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderSex" value="Sex" />
                         <br/>
-                        <h:outputText id="columnHeaderSexComponent" value="rich:paint2D" />
+                        <h:outputText id="columnHeaderSexComponent" value="r:paint2D" />
                     </f:facet>
 
                     <h:outputText value="#{record.sex}" />
                     <f:facet name="footer">
                         <h:outputText id="columnFooterSex" value="Sex" />
                     </f:facet>
-                </rich:column>
+                </r:column>
 
-                <rich:column id="columnName" sortBy="#{record.name}">
+                <r:column id="columnName" sortBy="#{record.name}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderName" value="Name" />
                         <br/>
-                        <h:outputText id="columnHeaderNameComponent" value="rich:inplaceInput" />
+                        <h:outputText id="columnHeaderNameComponent" value="r:inplaceInput" />
                     </f:facet>
 
-                    <rich:inplaceInput id="nameInput" value="#{record.name}" defaultLabel="Click here to edit">
-                        <a4j:ajax event="change" render="@this"/>
-                    </rich:inplaceInput>
+                    <r:inplaceInput id="nameInput" value="#{record.name}" defaultLabel="Click here to edit">
+                        <r:ajax event="change" render="@this"/>
+                    </r:inplaceInput>
 
                     <f:facet name="footer">
                         <h:outputText id="columnFooterState" value="Name" />
                     </f:facet>
-                </rich:column>
+                </r:column>
 
-                <rich:column id="columnTitle" sortBy="#{record.title}">
+                <r:column id="columnTitle" sortBy="#{record.title}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderTitle" value="Title" />
                         <br/>
-                        <h:outputText id="columnHeaderTitleComponent" value="rich:inplaceSelect" />
+                        <h:outputText id="columnHeaderTitleComponent" value="r:inplaceSelect" />
                     </f:facet>
 
-                    <rich:inplaceSelect id="titleInput" value="#{record.title}">
+                    <r:inplaceSelect id="titleInput" value="#{record.title}">
                         <f:selectItems value="#{model.jobTitlesSelectItems}"/>
-                        <a4j:ajax event="change" render="@this"/>
-                    </rich:inplaceSelect>
+                        <r:ajax event="change" render="@this"/>
+                    </r:inplaceSelect>
 
                     <f:facet name="footer">
                         <h:outputText id="columnFooterTitle" value="Title" />
                     </f:facet>
-                </rich:column>
+                </r:column>
 
-                <rich:column id="columnBirthdate" sortBy="#{record.birthdate}">
+                <r:column id="columnBirthdate" sortBy="#{record.birthdate}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderBirthdate" value="Birthdate" />
                         <br/>
-                        <h:outputText id="columnHeaderBirthdateComponent" value="rich:calendar" />
+                        <h:outputText id="columnHeaderBirthdateComponent" value="r:calendar" />
                     </f:facet>
 
-                    <rich:calendar id="birthdate" value="#{record.birthdate}">
-                        <a4j:ajax event="change" render="@this"/>
-                    </rich:calendar>
+                    <r:calendar id="birthdate" value="#{record.birthdate}">
+                        <r:ajax event="change" render="@this"/>
+                    </r:calendar>
 
                     <f:facet name="footer">
                         <h:outputText id="columnFooterBirthdate" value="Birthdate" />
                     </f:facet>
-                </rich:column>
+                </r:column>
 
-                <rich:column id="columnCompanies" sortBy="#{record.companies}">
+                <r:column id="columnCompanies" sortBy="#{record.companies}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderCompanies" value="Companies" />
                         <br/>
-                        <h:outputText id="columnHeaderCompaniesComponent" value="a4j:repeat" />
+                        <h:outputText id="columnHeaderCompaniesComponent" value="r:repeat" />
                     </f:facet>
 
                     <ul>
-                        <a4j:repeat value="#{record.companies}" var="company">
+                        <r:repeat value="#{record.companies}" var="company">
                             <li>#{company.name}</li>
-                        </a4j:repeat>
+                        </r:repeat>
 
                     </ul>
 
                     <f:facet name="footer">
                         <h:outputText id="columnFooterSmoker" value="Smoker" />
                     </f:facet>
-                </rich:column>
+                </r:column>
 
-                <rich:column id="columnNumberOfKids" sortBy="#{record.numberOfKids}" width="300">
+                <r:column id="columnNumberOfKids" sortBy="#{record.numberOfKids}" width="300">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderNumberOfKids" value="Number of Kids" />
                         <br/>
-                        <h:outputText id="columnHeaderNumberOfKidsComponent" value="rich:inputNumberSlider" />
+                        <h:outputText id="columnHeaderNumberOfKidsComponent" value="r:inputNumberSlider" />
                     </f:facet>
 
-                    <rich:inputNumberSlider id="numOfKidsSlider" value="#{record.numberOfKids}" maxValue="5">
-                        <a4j:ajax/>
-                    </rich:inputNumberSlider>
+                    <r:inputNumberSlider id="numOfKidsSlider" value="#{record.numberOfKids}" maxValue="5">
+                        <r:ajax/>
+                    </r:inputNumberSlider>
 
                     <f:facet name="footer">
                         <h:outputText id="columnFooterNumberOfKids" value="Number of Kids" />
                     </f:facet>
-                </rich:column>
+                </r:column>
 
                 <f:facet name="footer">
-                    <rich:dataScroller id="scroller2" for="richEDT" page="#{richExtendedDataTableBean.page}" maxPages="7" render="richEDT scroller1" />
+                    <r:dataScroller id="scroller2" for="richEDT" page="#{richExtendedDataTableBean.page}" maxPages="7" render="richEDT scroller1" />
                 </f:facet>
 
-            </rich:extendedDataTable>
+            </r:extendedDataTable>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

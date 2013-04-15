@@ -22,12 +22,14 @@
 package org.richfaces.tests.metamer.bean.rich;
 
 import java.io.Serializable;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.validation.constraints.Size;
-import org.richfaces.component.UIPlaceholder;
+
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.ui.misc.UIPlaceholder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich" 
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
     <!--
@@ -41,15 +41,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="component">
             <h:outputScript library="script" name="swfobject.js"/>
 
-            <a4j:outputPanel id="flashPanelDynamic">
-                <a4j:mediaOutput element="a" id="swfLink" style="display: none;" mimeType="application/x-shockwave-flash" cacheable="false"
+            <r:outputPanel id="flashPanelDynamic">
+                <r:mediaOutput element="a" id="swfLink" style="display: none;" mimeType="application/x-shockwave-flash" cacheable="false"
                                  createContent="#{a4jMediaOutputBean.createContentFlash}" value="#{mediaData}" />
 
-                <a4j:outputPanel layout="block" id="myFlashContent" style="width: 200px; height: 200px">
+                <r:outputPanel layout="block" id="myFlashContent" style="width: 200px; height: 200px">
                     <a href="http://www.adobe.com/go/getflashplayer">
                         <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
                     </a>
-                </a4j:outputPanel>
+                </r:outputPanel>
 
                 <script type="text/javascript">
                         var flashvars = {};
@@ -58,7 +58,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         swfobject.embedSWF(document.getElementById('form:swfLink').href, document.getElementById('myFlashContent'), "200", "200", "9.0.0", false, flashvars, params, attributes);
                 </script>
 
-            </a4j:outputPanel>
+            </r:outputPanel>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

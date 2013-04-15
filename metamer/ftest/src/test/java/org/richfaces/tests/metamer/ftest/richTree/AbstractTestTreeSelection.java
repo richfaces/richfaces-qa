@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.ftest.richTree;
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.treeAttributes;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -36,9 +35,9 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.component.SwitchType;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.ui.common.SwitchType;
 import org.testng.annotations.BeforeMethod;
 
 /**

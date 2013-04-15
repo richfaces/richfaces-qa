@@ -27,10 +27,10 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.richfaces.component.UIInplaceInput;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBeanImpl;
+import org.richfaces.ui.input.UIInplaceInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

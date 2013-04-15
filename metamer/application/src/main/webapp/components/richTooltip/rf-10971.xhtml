@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -60,31 +60,31 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </ol>
             </p>
             <br/>
-            <rich:extendedDataTable id="richEDT"
+            <r:extendedDataTable id="richEDT"
                                     value="#{richExtendedDataTableBean.state ? model.capitals : null}"
                                     var="record" 
                                     >
-                <rich:column id="columnState" sortBy="#{record.state}">
+                <r:column id="columnState" sortBy="#{record.state}">
                     #{record.state} with tooltip
-                    <rich:tooltip>
+                    <r:tooltip>
                         <h:outputText value="THIS IS TOOLTIP" />
-                    </rich:tooltip>
-                </rich:column>
+                    </r:tooltip>
+                </r:column>
 
-                <rich:column id="columnCapital" sortBy="#{record.name}">
+                <r:column id="columnCapital" sortBy="#{record.name}">
                     #{record.name} with tooltip
-                    <rich:tooltip>
+                    <r:tooltip>
                         #{record.name}
-                    </rich:tooltip>
-                </rich:column>
+                    </r:tooltip>
+                </r:column>
 
-                <rich:column id="columnCapital2" sortBy="#{record.name}">
+                <r:column id="columnCapital2" sortBy="#{record.name}">
                     #{record.name} with tooltip
-                    <rich:tooltip>
+                    <r:tooltip>
                         THIS IS TOOLTIP
-                    </rich:tooltip>
-                </rich:column>
-            </rich:extendedDataTable>
+                    </r:tooltip>
+                </r:column>
+            </r:extendedDataTable>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

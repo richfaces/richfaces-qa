@@ -34,7 +34,7 @@ import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebElement;
-import org.richfaces.component.Mode;
+import org.richfaces.ui.common.Mode;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>

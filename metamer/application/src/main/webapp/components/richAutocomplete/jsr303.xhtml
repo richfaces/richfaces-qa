@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:r="http://richfaces.org/rich"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a4j="http://richfaces.org/a4j">
+      >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -29,51 +29,51 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
     <ui:composition template="/templates/abstractions/inputValidation/stringInputComponentValidationTemplate.xhtml">
         <ui:define name="notEmpty">
-            <rich:autocomplete id="notEmpty" value="#{richAutocompleteBean.notEmptyValue}">
-                <a4j:ajax event="change" render="notEmptyMsg"/>
-            </rich:autocomplete>
+            <r:autocomplete id="notEmpty" value="#{richAutocompleteBean.notEmptyValue}">
+                <r:ajax event="change" render="notEmptyMsg"/>
+            </r:autocomplete>
         </ui:define>
         <ui:define name="notEmptyOutput">
             <h:outputText id="notEmptyOutput" value="#{richAutocompleteBean.notEmptyValue}"/>
         </ui:define>
         <ui:define name="notEmptyMsg">
-            <rich:message id="notEmptyMsg" ajaxRendered="true" for="notEmpty"/>
+            <r:message id="notEmptyMsg" ajaxRendered="true" for="notEmpty"/>
         </ui:define>
 
         <ui:define name="pattern">
-            <rich:autocomplete id="pattern" value="#{richAutocompleteBean.patternValue}">
-                <a4j:ajax event="change" render="patternMsg"/>
-            </rich:autocomplete>
+            <r:autocomplete id="pattern" value="#{richAutocompleteBean.patternValue}">
+                <r:ajax event="change" render="patternMsg"/>
+            </r:autocomplete>
         </ui:define>
         <ui:define name="patternOutput">
             <h:outputText id="patternOutput" value="#{richAutocompleteBean.patternValue}"/>
         </ui:define>
 
         <ui:define name="size">
-            <rich:autocomplete id="size" value="#{richAutocompleteBean.sizeValue}">
-                <a4j:ajax event="change" render="sizeMsg"/>
-            </rich:autocomplete>
+            <r:autocomplete id="size" value="#{richAutocompleteBean.sizeValue}">
+                <r:ajax event="change" render="sizeMsg"/>
+            </r:autocomplete>
         </ui:define>
         <ui:define name="sizeOutput">
             <h:outputText id="sizeOutput" value="#{richAutocompleteBean.sizeValue}"/>
         </ui:define>
 
         <ui:define name="custom">
-            <rich:autocomplete id="custom" value="#{richAutocompleteBean.customValue}">
+            <r:autocomplete id="custom" value="#{richAutocompleteBean.customValue}">
                 <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>
-                <a4j:ajax event="change" render="customMsg"/>
-            </rich:autocomplete>
+                <r:ajax event="change" render="customMsg"/>
+            </r:autocomplete>
         </ui:define>
         <ui:define name="customOutput">
             <h:outputText id="customOutput" value="#{richAutocompleteBean.customValue}"/>
         </ui:define>
 
         <ui:define name="required" >
-            <rich:autocomplete id="required" required="true"
+            <r:autocomplete id="required" required="true"
                                requiredMessage="#{richAutocompleteBean.attributes['requiredMessage'].value}"
                                value="#{richAutocompleteBean.requiredValue}">
-                <a4j:ajax event="change" render="requiredMsg"/>
-            </rich:autocomplete>
+                <r:ajax event="change" render="requiredMsg"/>
+            </r:autocomplete>
         </ui:define>
         <ui:define name="requiredOutput">
             <h:outputText id="requiredOutput" value="#{richAutocompleteBean.requiredValue}"/>

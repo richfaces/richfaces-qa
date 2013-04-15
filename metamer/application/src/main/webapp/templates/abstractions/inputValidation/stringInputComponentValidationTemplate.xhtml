@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -100,43 +100,43 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/><br/>
             Submit buttons:<br/>
             <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
-            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
+            <r:commandButton id="a4jButton" value="r:commandButton"/>
             <br/><br/>
             <h:panelGrid columns="4">
                 not empty:
                 <ui:insert name="notEmpty"/>
                 <input id="notEmptyCorrect" name="notEmptyCorrect" type="button" value="set correct value" onclick="setCorrectValues('notEmpty')"/>
                 <input id="notEmptyWrong" name="notEmptyWrong" type="button" value="set wrong value" onclick="setWrongValues('notEmpty')"/>
-                <rich:message id="notEmptyMsg" ajaxRendered="false" for="notEmpty"/>
+                <r:message id="notEmptyMsg" ajaxRendered="false" for="notEmpty"/>
 
 
                 pattern [a-z].*:
                 <ui:insert name="pattern"/>
                 <input id="patternCorrect" name="patternCorrect" type="button" value="set correct value" onclick="setCorrectValues('pattern')"/>
                 <input id="patternWrong" name="patternWrong" type="button" value="set wrong value" onclick="setWrongValues('pattern')"/>
-                <rich:message id="patternMsg" ajaxRendered="false" for="pattern"/>
+                <r:message id="patternMsg" ajaxRendered="false" for="pattern"/>
 
 
                 size 3-6:
                 <ui:insert name="size"/>
                 <input id="sizeCorrect" name="sizeCorrect" type="button" value="set correct value" onclick="setCorrectValues('size')"/>
                 <input id="sizeWrong" name="sizeWrong" type="button" value="set wrong value" onclick="setWrongValues('size')"/>
-                <rich:message id="sizeMsg" ajaxRendered="false" for="size"/>
+                <r:message id="sizeMsg" ajaxRendered="false" for="size"/>
 
                 custom (RichFaces || richfaces):
                 <ui:insert name="custom"/>
                 <input id="customCorrect" name="customCorrect" type="button" value="set correct value" onclick="setCorrectValues('custom')"/>
                 <input id="customWrong" name="customWrong" type="button" value="set wrong value" onclick="setWrongValues('custom')"/>
-                <rich:message id="customMsg" ajaxRendered="false" for="custom"/>
+                <r:message id="customMsg" ajaxRendered="false" for="custom"/>
 
                 required:
                 <ui:insert name="required"/>
                 <input id="requiredCorrect" name="requiredCorrect" type="button" value="set correct value" onclick="setCorrectValues('required')"/>
                 <input id="requiredWrong" name="requiredWrong" type="button" value="set wrong value" onclick="setWrongValues('required')"/>
-                <rich:message id="requiredMsg" ajaxRendered="false" for="required"/>
+                <r:message id="requiredMsg" ajaxRendered="false" for="required"/>
             </h:panelGrid>
             <br/><br/>
-            <a4j:outputPanel ajaxRendered="true" id="outputPanel">
+            <r:outputPanel ajaxRendered="true" id="outputPanel">
 
                 <h:panelGrid columns="2">
                     Output for not empty string input:
@@ -150,7 +150,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     Output for required string input:
                     <ui:insert name="requiredOutput"/>
                 </h:panelGrid>
-            </a4j:outputPanel>
+            </r:outputPanel>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

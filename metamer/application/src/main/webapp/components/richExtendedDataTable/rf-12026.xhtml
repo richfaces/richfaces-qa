@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+     xmlns:r="http://richfaces.org/rich">
 <h:head>
     <title>JSF Demo</title>
 </h:head>
 <h:body>
     <h:form id="hwForm">
-        <a4j:queue requestDelay="0"/>
+        <r:queue requestDelay="0"/>
         
-        <rich:extendedDataTable value="#{model.capitals}" var="capital" id="table" clientRows="20"
+        <r:extendedDataTable value="#{model.capitals}" var="capital" id="table" clientRows="20"
             style="height:300px; width:500px;" selectionMode="multiple">
-            <rich:column>
+            <r:column>
                 <f:facet name="header">
                     <h:outputText value="state" />
                 </f:facet>
                 <h:outputText value="#{capital.state}" />
-            </rich:column>
-            <rich:column>
+            </r:column>
+            <r:column>
                 <f:facet name="header">
                     <h:outputText value="name" />
                 </f:facet>
                 <h:outputText value="#{capital.name}" />
-            </rich:column>
-        </rich:extendedDataTable>
+            </r:column>
+        </r:extendedDataTable>
 
     </h:form>
 </h:body>

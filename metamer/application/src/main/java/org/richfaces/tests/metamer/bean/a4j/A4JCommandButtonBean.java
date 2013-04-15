@@ -22,13 +22,14 @@
 package org.richfaces.tests.metamer.bean.a4j;
 
 import java.io.Serializable;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import org.richfaces.component.UICommandButton;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.ui.ajax.UICommandButton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

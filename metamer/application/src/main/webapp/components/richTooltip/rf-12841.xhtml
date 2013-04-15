@@ -2,8 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:r="http://richfaces.org/rich"
+      
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
@@ -46,21 +46,21 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <h2>Tooltip: JavaScript Error with showDelay and partial update</h2>
             <b>Description:</b>
             <i>
-rich:tooltip causes script error when showDelay is used and the tooltip is updated due to a JSF request.<br/>
+r:tooltip causes script error when showDelay is used and the tooltip is updated due to a JSF request.<br/>
 Console log of Firefox:<br/>
 TypeError: tooltip.popup is null<br/>
 tooltip.popup.show(tooltip.saveShowEvent); in tooltip.js (line 245)<br/>
             </i>
             <!--  -->
             <br/>
-            <a4j:commandLink action="#{richTooltipBean.toggle}" render="@this">
+            <r:commandLink action="#{richTooltipBean.toggle}" render="@this">
                 <h:graphicImage library="org.richfaces.images"
                     name="#{richTooltipBean.expanded ? 'triangleUp.png' : 'triangleDown.png'}"/>
                         
-                <rich:tooltip followMouse="false" showDelay="1000">
+                <r:tooltip followMouse="false" showDelay="1000">
                     #{richTooltipBean.expanded ? 'close' : 'expand'}
-                </rich:tooltip>
-            </a4j:commandLink>
+                </r:tooltip>
+            </r:commandLink>
         </ui:define>
 
     </ui:composition>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:r="http://richfaces.org/rich"
       xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
@@ -53,8 +53,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <rich:toolbar id="toolbar" height="26px">
-                <rich:dropDownMenu id="menu1" mode="ajax">
+            <r:toolbar id="toolbar" height="26px">
+                <r:dropDownMenu id="menu1" mode="ajax">
                     <f:facet name="label">
                         <h:panelGroup>
                             <h:graphicImage library="images/icons" name="copy.gif" styleClass="pic" />
@@ -62,43 +62,43 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         </h:panelGroup>
                     </f:facet>
 
-                    <rich:menuItem  label="New" icon="/resources/images/icons/create_doc.gif"/>
+                    <r:menuItem  label="New" icon="/resources/images/icons/create_doc.gif"/>
 
-                    <rich:menuItem  label="Open" icon="/resources/images/icons/open.gif" />
+                    <r:menuItem  label="Open" icon="/resources/images/icons/open.gif" />
 
-                    <rich:menuGroup label="Open Recent..." disabled="true">
-                        <rich:menuItem  label="Save" icon="/resources/images/icons/save.gif" />
-                        <rich:menuItem  label="Save All">
+                    <r:menuGroup label="Open Recent..." disabled="true">
+                        <r:menuItem  label="Save" icon="/resources/images/icons/save.gif" />
+                        <r:menuItem  label="Save All">
                             <f:facet name="icon">
                                 <h:graphicImage library="images/icons" name="save_all.gif" />
                             </f:facet>
-                        </rich:menuItem>
-                    </rich:menuGroup>
+                        </r:menuItem>
+                    </r:menuGroup>
 
-                    <rich:menuSeparator id="menuSeparator11"
+                    <r:menuSeparator id="menuSeparator11"
                                         rendered="#{richMenuSeparatorBean.attributes['rendered'].value}"/>
 
-                    <rich:menuGroup id="menuGroup" label="Save As...">
-                        <rich:menuItem  label="Save" icon="/resources/images/icons/save.gif" />
-                        <rich:menuItem  label="Save All" >
+                    <r:menuGroup id="menuGroup" label="Save As...">
+                        <r:menuItem  label="Save" icon="/resources/images/icons/save.gif" />
+                        <r:menuItem  label="Save All" >
                             <f:facet name="icon">
                                 <h:graphicImage library="images/icons" name="save_all.gif" />
                             </f:facet>
-                        </rich:menuItem>
-                        <rich:menuItem  label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
-                    </rich:menuGroup>
+                        </r:menuItem>
+                        <r:menuItem  label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
+                    </r:menuGroup>
 
-                    <rich:menuItem label="Print" disabled="true"/>
+                    <r:menuItem label="Print" disabled="true"/>
 
-                    <rich:menuItem label="Close" />
+                    <r:menuItem label="Close" />
 
-                    <rich:menuSeparator id="menuSeparator12" />
+                    <r:menuSeparator id="menuSeparator12" />
 
-                    <rich:menuItem label="Exit" />
+                    <r:menuItem label="Exit" />
 
-                </rich:dropDownMenu>
+                </r:dropDownMenu>
 
-            </rich:toolbar>
+            </r:toolbar>
 
             <br /><br />
         </ui:define>

@@ -21,11 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.model;
 
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-
 import static org.jboss.arquillian.ajocado.dom.Attribute.CLASS;
 import static org.jboss.arquillian.ajocado.dom.Attribute.SRC;
-
+import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.jboss.test.selenium.locator.reference.ReferencedLocator.ref;
 
 import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
@@ -39,7 +37,7 @@ import org.jboss.test.selenium.GuardRequest;
 import org.jboss.test.selenium.JQuerySelectors;
 import org.jboss.test.selenium.RequestTypeModelGuard.Model;
 import org.jboss.test.selenium.locator.reference.ReferencedLocator;
-import org.richfaces.PanelMenuMode;
+import org.richfaces.ui.menu.PanelMenuMode;
 
 public class PanelMenu extends AbstractModel<JQueryLocator> implements Model {
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
-    xmlns:a4j="http://richfaces.org/a4j">
+    xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:r="http://richfaces.org/rich"
+    >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -26,20 +26,20 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <a4j:commandButton id="expandAll" value="Expand All" action="#{richTreeBean.expandAll}" render="#{nestedComponentId}" />
-    <a4j:commandButton id="collapseAll" value="Collapse All" action="#{richTreeBean.collapseAll}" render="#{nestedComponentId}" />
+    <r:commandButton id="expandAll" value="Expand All" action="#{richTreeBean.expandAll}" render="#{nestedComponentId}" />
+    <r:commandButton id="collapseAll" value="Collapse All" action="#{richTreeBean.collapseAll}" render="#{nestedComponentId}" />
 
-    <a4j:outputPanel id="panel" ajaxRendered="true">
+    <r:outputPanel id="panel" ajaxRendered="true">
         <h:panelGrid columns="2">
 
             <h:outputLabel value="Test Loading Facet:" />
             <h:selectBooleanCheckbox id="loadingFacet" value="#{richTreeBean.testLoadingFacet}">
-                <a4j:ajax render="richTree" />
+                <r:ajax render="richTree" />
             </h:selectBooleanCheckbox>
 
             <h:outputLabel value="Delayed Render (1sec):" />
             <h:selectBooleanCheckbox value="#{richTreeBean.delayedRender}">
-                <a4j:ajax />
+                <r:ajax />
             </h:selectBooleanCheckbox>
 
             <h:outputLabel value="Selection:" />
@@ -71,22 +71,22 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <h:outputText id="toggleEventExpanded" value="#{richTreeListenerBean.treeToggleEvent.expanded}" />
             </h:panelGrid>
         </h:panelGrid>
-    </a4j:outputPanel>
+    </r:outputPanel>
 
     <fieldset>
-        <legend>rich:tree</legend>
+        <legend>r:tree</legend>
         <metamer:attributes value="#{richTreeBean.attributes}" id="attributes" />
     </fieldset>
     <fieldset>
-        <legend>rich:treeNode type="country"</legend>
+        <legend>r:treeNode type="country"</legend>
         <metamer:attributes value="#{richTreeNodeBean.attributes[0]}" id="treeNode1Attributes" />
     </fieldset>
     <fieldset>
-        <legend>rich:treeNode type="company"</legend>
+        <legend>r:treeNode type="company"</legend>
         <metamer:attributes value="#{richTreeNodeBean.attributes[1]}" id="treeNode2Attributes" />
     </fieldset>
     <fieldset>
-        <legend>rich:treeNode type="cd"</legend>
+        <legend>r:treeNode type="cd"</legend>
         <metamer:attributes value="#{richTreeNodeBean.attributes[2]}" id="treeNode3Attributes" />
     </fieldset>
 

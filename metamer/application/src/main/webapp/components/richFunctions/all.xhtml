@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -44,29 +44,29 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/><br/>
 
             <h:panelGrid columns="2">
-                rich:clientId('input')
-                <h:outputText id="clientIdOutput" value="#{rich:clientId('input')}" style="font-weight: bold;" />
+                r:clientId('input')
+                <h:outputText id="clientIdOutput" value="#{r:clientId('input')}" style="font-weight: bold;" />
 
-                rich:element('input')
-                <h:outputText id="elementOutput" value="#{rich:element('input')}" style="font-weight: bold;" />
+                r:element('input')
+                <h:outputText id="elementOutput" value="#{r:element('input')}" style="font-weight: bold;" />
 
-                rich:component('input')
-                <h:outputText id="componentOutput" value="#{rich:component('input')}" style="font-weight: bold;" />
+                r:component('input')
+                <h:outputText id="componentOutput" value="#{r:component('input')}" style="font-weight: bold;" />
 
-                rich:findComponent('input').value
-                <h:outputText id="findComponentOutput" value="#{rich:findComponent('input').value}" style="font-weight: bold;" />
+                r:findComponent('input').value
+                <h:outputText id="findComponentOutput" value="#{r:findComponent('input').value}" style="font-weight: bold;" />
 
-                rich:jQuerySelector('input')
-                <h:outputText id="jQuerySelectorOutput" value="#{rich:jQuerySelector('input')}" style="font-weight: bold;" />
+                r:jQuerySelector('input')
+                <h:outputText id="jQuerySelectorOutput" value="#{r:jQuerySelector('input')}" style="font-weight: bold;" />
 
-                rich:jQuery('input')
-                <h:outputText id="jQueryOutput" value="#{rich:jQuery('input')}" style="font-weight: bold;" />
+                r:jQuery('input')
+                <h:outputText id="jQueryOutput" value="#{r:jQuery('input')}" style="font-weight: bold;" />
 
-                <i>onmouseover</i> jQuery("rich:jQuerySelector('input')").fadeOut()
-                <h:commandButton id="jQuerySelectorOutputFadeOut" value="fadeOut" onmouseover="jQuery('#{rich:jQuerySelector('input')}').fadeOut();"/>
+                <i>onmouseover</i> jQuery("r:jQuerySelector('input')").fadeOut()
+                <h:commandButton id="jQuerySelectorOutputFadeOut" value="fadeOut" onmouseover="jQuery('#{r:jQuerySelector('input')}').fadeOut();"/>
 
-                <i>onmouseover</i> jQuery("rich:jQuerySelector('input')").fadeIn()
-                <h:commandButton id="jQuerySelectorOutputFadeIn" value="fadeIn" onmouseover="jQuery('#{rich:jQuerySelector('input')}').fadeIn();"/>
+                <i>onmouseover</i> jQuery("r:jQuerySelector('input')").fadeIn()
+                <h:commandButton id="jQuerySelectorOutputFadeIn" value="fadeIn" onmouseover="jQuery('#{r:jQuerySelector('input')}').fadeIn();"/>
 
 
             </h:panelGrid>
@@ -80,14 +80,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <hr/>
             <h:panelGrid columns="2">
-                rich:isUserInRole('admin, user')
-                <h:outputText id="outputUserInRoleAU" value="#{rich:isUserInRole('admin, user')}" style="font-weight: bold;" />
+                r:isUserInRole('admin, user')
+                <h:outputText id="outputUserInRoleAU" value="#{r:isUserInRole('admin, user')}" style="font-weight: bold;" />
 
-                rich:isUserInRole('admin')
-                <h:outputText id="outputUserInRoleA" value="#{rich:isUserInRole('admin')}" style="font-weight: bold;" />
+                r:isUserInRole('admin')
+                <h:outputText id="outputUserInRoleA" value="#{r:isUserInRole('admin')}" style="font-weight: bold;" />
 
-                rich:isUserInRole('user')
-                <h:outputText id="outputUserInRoleU" value="#{rich:isUserInRole('user')}" style="font-weight: bold;" />
+                r:isUserInRole('user')
+                <h:outputText id="outputUserInRoleU" value="#{r:isUserInRole('user')}" style="font-weight: bold;" />
             </h:panelGrid>
 
         </ui:define>

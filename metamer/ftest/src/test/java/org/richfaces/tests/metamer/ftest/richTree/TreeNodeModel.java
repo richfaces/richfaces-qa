@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richTree;
 
 import static org.jboss.arquillian.ajocado.guard.RequestGuardFactory.guard;
-
 import static org.jboss.test.selenium.locator.reference.ReferencedLocator.ref;
 
 import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
@@ -32,7 +31,7 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.element.ExtendedLocator;
 import org.jboss.arquillian.ajocado.request.RequestType;
 import org.jboss.test.selenium.locator.reference.ReferencedLocator;
-import org.richfaces.component.SwitchType;
+import org.richfaces.ui.common.SwitchType;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>

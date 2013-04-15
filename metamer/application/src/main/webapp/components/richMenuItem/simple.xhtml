@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:r="http://richfaces.org/rich"
       xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
@@ -53,8 +53,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <rich:toolbar id="toolbar" height="26px">
-                <rich:dropDownMenu id="menu1" mode="ajax">
+            <r:toolbar id="toolbar" height="26px">
+                <r:dropDownMenu id="menu1" mode="ajax">
                     <f:facet name="label">
                         <h:panelGroup>
                             <h:graphicImage library="images/icons" name="copy.gif" styleClass="pic" />
@@ -62,7 +62,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         </h:panelGroup>
                     </f:facet>
 
-                    <rich:menuItem id="menuItem1"
+                    <r:menuItem id="menuItem1"
                                    action="#{richBean.dummyAction}"
                                    actionListener="#{richBean.dummyActionListener}"
                                    bypassUpdates="#{richMenuItemBean.attributes['bypassUpdates'].value}"
@@ -98,40 +98,40 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                    title="#{richMenuItemBean.attributes['title'].value}"
                                    />
 
-                    <rich:menuItem id="menuItem2" label="Open" icon="/resources/images/icons/open.gif" />
+                    <r:menuItem id="menuItem2" label="Open" icon="/resources/images/icons/open.gif" />
 
-                    <rich:menuGroup id="menuGroup3" label="Open Recent..." disabled="true">
-                        <rich:menuItem id="menuItem31"  label="Save" icon="/resources/images/icons/save.gif" />
-                        <rich:menuItem id="menuItem32" label="Save All">
+                    <r:menuGroup id="menuGroup3" label="Open Recent..." disabled="true">
+                        <r:menuItem id="menuItem31"  label="Save" icon="/resources/images/icons/save.gif" />
+                        <r:menuItem id="menuItem32" label="Save All">
                             <f:facet name="icon">
                                 <h:graphicImage library="images/icons" name="save_all.gif" />
                             </f:facet>
-                        </rich:menuItem>
-                    </rich:menuGroup>
+                        </r:menuItem>
+                    </r:menuGroup>
 
-                    <rich:menuSeparator id="menuSeparator11" />
+                    <r:menuSeparator id="menuSeparator11" />
 
-                    <rich:menuGroup id="menuGroup4" label="Save As...">
-                        <rich:menuItem id="menuItem41" label="Save" icon="/resources/images/icons/save.gif" />
-                        <rich:menuItem id="menuItem42" label="Save All" >
+                    <r:menuGroup id="menuGroup4" label="Save As...">
+                        <r:menuItem id="menuItem41" label="Save" icon="/resources/images/icons/save.gif" />
+                        <r:menuItem id="menuItem42" label="Save All" >
                             <f:facet name="icon">
                                 <h:graphicImage library="images/icons" name="save_all.gif" />
                             </f:facet>
-                        </rich:menuItem>
-                        <rich:menuItem id="menuItem43" label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
-                    </rich:menuGroup>
+                        </r:menuItem>
+                        <r:menuItem id="menuItem43" label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
+                    </r:menuGroup>
 
-                    <rich:menuItem id="menuItem5" label="Print" disabled="true"/>
+                    <r:menuItem id="menuItem5" label="Print" disabled="true"/>
 
-                    <rich:menuItem id="menuItem6" label="Close" />
+                    <r:menuItem id="menuItem6" label="Close" />
 
-                    <rich:menuSeparator id="menuSeparator12" />
+                    <r:menuSeparator id="menuSeparator12" />
 
-                    <rich:menuItem id="menuItem7" label="Exit" />
+                    <r:menuItem id="menuItem7" label="Exit" />
 
-                </rich:dropDownMenu>
-                <input id="activate" type="button" name="activate" value="JS API: activate item" onclick="#{rich:component('menuItem1')}.activate();" />
-            </rich:toolbar>
+                </r:dropDownMenu>
+                <input id="activate" type="button" name="activate" value="JS API: activate item" onclick="#{r:component('menuItem1')}.activate();" />
+            </r:toolbar>
 
             <br /><br />
         </ui:define>

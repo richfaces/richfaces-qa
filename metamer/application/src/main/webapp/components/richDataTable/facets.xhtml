@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -45,14 +45,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/>
             <h:outputText value="Show data in table: " />
             <h:selectBooleanCheckbox id="noDataCheckbox" value="#{richDataTableBean.state}">
-                <a4j:ajax render="#{nestedComponentId}"/>
+                <r:ajax render="#{nestedComponentId}"/>
             </h:selectBooleanCheckbox>
             <br/><br/>
         </ui:define>
 
         <ui:define name="component">
 
-            <rich:dataTable id="richDataTable"
+            <r:dataTable id="richDataTable"
                             captionClass="#{richDataTableBean.attributes['captionClass'].value}"
                             columnClasses="#{richDataTableBean.attributes['columnClasses'].value}"
                             first="#{richDataTableBean.attributes['first'].value}"
@@ -97,7 +97,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                    rendered="#{not empty richDataTableBean.facets['header']}" />
                 </f:facet>
 
-                <rich:column id="columnState" sortBy="#{record.state}">
+                <r:column id="columnState" sortBy="#{record.state}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderState" value="#{richDataTableBean.facets['columnStateHeader']}"
                                       rendered="#{not empty richDataTableBean.facets['columnStateHeader']}"/>
@@ -108,9 +108,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         <h:outputText id="columnFooterState" value="#{richDataTableBean.facets['columnStateFooter']}"
                                       rendered="#{not empty richDataTableBean.facets['columnStateFooter']}"/>
                     </f:facet>
-                </rich:column>
+                </r:column>
 
-                <rich:column id="columnCapital" sortBy="#{record.name}">
+                <r:column id="columnCapital" sortBy="#{record.name}">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderCapital" value="#{richDataTableBean.facets['columnCapitalHeader']}"
                                       rendered="#{not empty richDataTableBean.facets['columnCapitalHeader']}"/>
@@ -121,19 +121,19 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         <h:outputText id="columnFooterCapital" value="#{richDataTableBean.facets['columnCapitalFooter']}"
                                       rendered="#{not empty richDataTableBean.facets['columnCapitalFooter']}"/>
                     </f:facet>
-                </rich:column>
+                </r:column>
 
                 <f:facet name="footer">
                     <h:outputText id="footer" value="#{richDataTableBean.facets['footer']}"
                                   rendered="#{not empty richDataTableBean.facets['footer']}" />
                 </f:facet>
 
-            </rich:dataTable>
+            </r:dataTable>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
 
-            <a4j:ajax render="#{nestedComponentId}">
+            <r:ajax render="#{nestedComponentId}">
                 <h:panelGrid columns="2">
                     <h:outputLabel value="No Data Facet: " />
                     <h:inputText id="noDataInput" value="#{richDataTableBean.facets['noData']}" />
@@ -159,7 +159,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputLabel value="Capital Column Footer:" />
                     <h:inputText id="capitalFooterInput" value="#{richDataTableBean.facets['columnCapitalFooter']}" />
                 </h:panelGrid>
-            </a4j:ajax>
+            </r:ajax>
 
             <br/><br/>
 

@@ -32,12 +32,12 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import org.richfaces.component.UISelect;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.RichBean;
 import org.richfaces.tests.metamer.bean.abstractions.SelectValidationBean;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
 import org.richfaces.tests.metamer.model.Capital;
+import org.richfaces.ui.select.UISelect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

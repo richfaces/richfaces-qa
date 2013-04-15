@@ -30,9 +30,9 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import org.richfaces.component.UIRegion;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.model.Employee;
+import org.richfaces.ui.ajax.UIRegion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

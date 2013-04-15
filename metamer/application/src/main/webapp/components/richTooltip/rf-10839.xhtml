@@ -2,8 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:r="http://richfaces.org/rich"
+      
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
@@ -45,11 +45,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
            <h3>tooltip: attachment using target not works if tooltip defined before the component to which it attaches.</h3>
            This page simulate issue <a href="https://issues.jboss.org/browse/RF-10839">RF-10839</a><br/><br/>
         
-           <rich:panel id="panel1" style="width: 200px; height: 100px;" > Panel 1 (with rich:tooltip defined AFTER this panel)</rich:panel>
-           <rich:tooltip target="panel1"> Hello World from Panel 1</rich:tooltip>
+           <r:panel id="panel1" style="width: 200px; height: 100px;" > Panel 1 (with r:tooltip defined AFTER this panel)</r:panel>
+           <r:tooltip target="panel1"> Hello World from Panel 1</r:tooltip>
            <br/>
-           <rich:tooltip target="panel2"> Hello World from Panel 2</rich:tooltip>
-           <rich:panel id="panel2" style="width: 200px; height: 100px;" > Panel 2 (with rich:tooltip defined BEFORE this panel)</rich:panel>
+           <r:tooltip target="panel2"> Hello World from Panel 2</r:tooltip>
+           <r:panel id="panel2" style="width: 200px; height: 100px;" > Panel 2 (with r:tooltip defined BEFORE this panel)</r:panel>
         </ui:define>
 
     </ui:composition>

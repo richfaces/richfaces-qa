@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" xmlns:h="http://java.sun.com/jsf/html">
+       xmlns:r="http://richfaces.org/rich" xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -59,7 +59,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </p>
 
             <div style="padding: 250px">
-                <rich:calendar id="calendar"
+                <r:calendar id="calendar"
                                dataModel="#{calendarModel}"
                                mode="client"
                                timeZone="#{richCalendarBean.timeZone}"
@@ -68,8 +68,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                datePattern="MMM d, yyyy"
                                currentDate="Jan 1, 2012"
                                value="#{richCalendarBean.value}" >
-                    <a4j:ajax event="change" render="output, phasesPanel"/>
-                </rich:calendar>
+                    <r:ajax event="change" render="output, phasesPanel"/>
+                </r:calendar>
             </div>
 
             <br/><br/>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -40,7 +40,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <rich:dataGrid id="richDataGrid"
+            <r:dataGrid id="richDataGrid"
                            columns="#{richDataGridBean.attributes['columns'].value}"
                            first="#{richDataGridBean.attributes['first'].value}"
                            elements="#{richDataGridBean.attributes['elements'].value}"
@@ -65,7 +65,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputText value="caption" />
                 </f:facet>
 
-                <a4j:outputPanel id="statusPanel" styleClass="statuses">
+                <r:outputPanel id="statusPanel" styleClass="statuses">
                     <h:outputText id="recordState" value="#{record.state} " style="font-weight: bold;" />
                     <br />
                     <h:outputText id="recordName" value="#{record.name}" />
@@ -78,13 +78,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputText id="statusLast" value="last=#{status.last}" />,
                     <h:outputText id="statusEven" value="even=#{status.even}" />,
                     <h:outputText id="statusRowCount" value="rowCount=#{status.rowCount}" />
-                </a4j:outputPanel>
+                </r:outputPanel>
 
             <f:facet name="footer">
                     <h:outputText value="footer" />
                 </f:facet>
 
-            </rich:dataGrid>
+            </r:dataGrid>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

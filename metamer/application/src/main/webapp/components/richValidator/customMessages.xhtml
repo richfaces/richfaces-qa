@@ -4,8 +4,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:r="http://richfaces.org/rich"
+      
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
     <!--
@@ -70,53 +70,53 @@
                 <h:outputText value="Double Range (min 5, max 10)" />
                 <h:inputText id="doubleRange" validatorMessage="Custom message" value="#{richValidatorBean.doubleValue}">
                     <f:validateDoubleRange minimum="5" maximum="10"/>
-                    <rich:validator />
+                    <r:validator />
                 </h:inputText>
-                <rich:message id="doubleRangeMessage" for="doubleRange"/>
+                <r:message id="doubleRangeMessage" for="doubleRange"/>
 
                 <h:outputText value="Long Range (min 5, max 10)" />
                 <h:inputText id="longRange" validatorMessage="Custom message" value="#{richValidatorBean.longValue}">
                     <f:validateLongRange minimum="5" maximum="10"/>
-                    <rich:validator />
+                    <r:validator />
                 </h:inputText>
-                <rich:message id="longRangeMessage" for="longRange"/>
+                <r:message id="longRangeMessage" for="longRange"/>
 
                 <h:outputText value="String Length (min 5, max 10)" />
                 <h:inputText id="length" validatorMessage="Custom message" value="#{richValidatorBean.lengthValue}">
                     <f:validateLength minimum="5" maximum="10"/>
-                    <rich:validator />
+                    <r:validator />
                 </h:inputText>
-                <rich:message id="lengthMessage" for="length"/>
+                <r:message id="lengthMessage" for="length"/>
 
                 <h:outputText value="Regular Expression (\d{3})"/>
                 <h:inputText id="regexp" validatorMessage="Custom message" value="#{richValidatorBean.regexpValue}">
                     <f:validateRegex pattern="#{richValidatorBean.regExp}"/>
-                    <rich:validator />
+                    <r:validator />
                 </h:inputText>
-                <rich:message id="regexpMessage" for="regexp"/>
+                <r:message id="regexpMessage" for="regexp"/>
 
                 <h:outputText value="Required" />
                 <h:inputText id="required" validatorMessage="Custom message" value="#{richValidatorBean.requiredValue}">
                     <f:validateRequired/>
-                    <rich:validator />
+                    <r:validator />
                 </h:inputText>
-                <rich:message id="requiredMessage" for="required"/>
+                <r:message id="requiredMessage" for="required"/>
 
                 <h:outputText value="Custom Validator (RichFaces)" />
                 <h:inputText id="custom" validatorMessage="Custom message" value="#{richValidatorBean.stringValue}">
                     <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>
-                    <rich:validator />
+                    <r:validator />
                 </h:inputText>
-                <rich:message id="customMessage" for="custom"/>
+                <r:message id="customMessage" for="custom"/>
             </h:panelGrid>
 
             <br/>
 
             <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
-            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
+            <r:commandButton id="a4jButton" value="r:commandButton"/>
 
             <br/>
-            <rich:messages id="msgs"/>
+            <r:messages id="msgs"/>
 
         </ui:define>
     </ui:composition>

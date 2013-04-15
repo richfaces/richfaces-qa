@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" 
-      xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:composite="http://java.sun.com/jsf/composite" xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:composite="http://java.sun.com/jsf/composite" xmlns:r="http://richfaces.org/rich"
       xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
     <h:body>
@@ -19,9 +19,9 @@
 
             <h:outputStylesheet library="metamer" name="css/attributes.ecss" target="head" />
 
-            <a4j:jsFunction id="submitAjaxFunction" name="submitAjax" execute="#{cc.attrs.execute}" render="#{cc.attrs.render}" />
+            <r:jsFunction id="submitAjaxFunction" name="submitAjax" execute="#{cc.attrs.execute}" render="#{cc.attrs.render}" />
 
-            <a4j:outputPanel id="panel" ajaxRendered="true">
+            <r:outputPanel id="panel" ajaxRendered="true">
                 <h:panelGrid id="#{cc.attrs.id}" columns="#{cc.attrs.columns * 2}" styleClass="attributes"
                              columnClasses="attributes-first-column, attributes-second-column, attributes-first-column, attributes-second-column">
                     <c:forEach items="#{cc.attrs.value}" var="entry">
@@ -70,7 +70,7 @@
 
                     </c:forEach>
                 </h:panelGrid>
-            </a4j:outputPanel>
+            </r:outputPanel>
         </composite:implementation>
     </h:body>
 </html>

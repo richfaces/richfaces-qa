@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" >
+      xmlns:r="http://richfaces.org/rich" >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -37,23 +37,23 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <rich:dataTable id="richDataTable"
+            <r:dataTable id="richDataTable"
                             rendered="true"
                             value="#{model.capitals}"
                             rows="5"
                             var="record">
 
                 <f:facet name="header">
-                    <rich:columnGroup>
-                        <rich:column colspan="#{richColumnBean.attributes['colspan'].value}"><tt>colspan=#{richColumnBean.attributes['colspan'].value}</tt></rich:column>
-                        <rich:column breakRowBefore="#{richColumnBean.attributes['breakRowBefore'].value}"><tt>breakBefore=#{richColumnBean.attributes['breakRowBefore'].value}</tt></rich:column>
-                        <rich:column rowspan="#{richColumnBean.attributes['rowspan'].value}"><tt>rowspan=#{richColumnBean.attributes['rowspan'].value}</tt></rich:column>
-                        <rich:column breakRowBefore="true">Dummy</rich:column>
-                        <rich:column breakRowBefore="#{richColumnBean.attributes['rowspan'].value > 1}">Breaked by <tt>rowspan</tt> > 1</rich:column>
-                    </rich:columnGroup>
+                    <r:columnGroup>
+                        <r:column colspan="#{richColumnBean.attributes['colspan'].value}"><tt>colspan=#{richColumnBean.attributes['colspan'].value}</tt></r:column>
+                        <r:column breakRowBefore="#{richColumnBean.attributes['breakRowBefore'].value}"><tt>breakBefore=#{richColumnBean.attributes['breakRowBefore'].value}</tt></r:column>
+                        <r:column rowspan="#{richColumnBean.attributes['rowspan'].value}"><tt>rowspan=#{richColumnBean.attributes['rowspan'].value}</tt></r:column>
+                        <r:column breakRowBefore="true">Dummy</r:column>
+                        <r:column breakRowBefore="#{richColumnBean.attributes['rowspan'].value > 1}">Breaked by <tt>rowspan</tt> > 1</r:column>
+                    </r:columnGroup>
                 </f:facet>
 
-                <rich:column id="columnState"
+                <r:column id="columnState"
                 			footerClass="#{richColumnBean.attributes['footerClass'].value}"
                 			headerClass="#{richColumnBean.attributes['headerClass'].value}"
                 			rendered="#{richColumnBean.attributes['rendered'].value}"
@@ -64,12 +64,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                    	<f:facet name="header">Header</f:facet>
                     <h:outputText id="state" value="#{record.state}" />
                     <f:facet name="footer">Footer</f:facet>
-                </rich:column>
+                </r:column>
 
-                <rich:column id="columnCapital">
+                <r:column id="columnCapital">
                     <h:outputText id="capital" value="#{record.name}" />
-                </rich:column>                                   
-            </rich:dataTable>
+                </r:column>                                   
+            </r:dataTable>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

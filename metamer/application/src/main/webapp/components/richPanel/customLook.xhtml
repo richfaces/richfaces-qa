@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -71,26 +71,26 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </style>
 
             <h:panelGrid columnClasses="panel" border="0" columns="2">
-                <rich:panel id="panel1">
+                <r:panel id="panel1">
                     <f:facet name="header">
                         Panel #1. Changing Style Synchronously
                     </f:facet>
                     Each component in the RichFaces has a pre-defined set of classes you can manipulate with. If defined, those
                     classes overwrite the ones come from the skin.
-                </rich:panel>
+                </r:panel>
 
-                <rich:panel id="panel2">
+                <r:panel id="panel2">
                     <f:facet name="header">
                         Panel #2. Changing Style Synchronously
                     </f:facet>
                     In this example, we define header color using the .rf-panel-header class and all panels located on the same page
                     inherit this color
-                </rich:panel>
+                </r:panel>
 
             </h:panelGrid>
 
             <h:panelGrid columnClasses="panel" border="0" columns="3">
-                <rich:panel  id="panel3"
+                <r:panel  id="panel3"
                              onmouseover="document.getElementById(this.id+'_header').style.background='#60BA01';document.getElementById(this.id+'_body').style.background='#F4FFF8'"
                              onmouseout="document.getElementById(this.id+'_header').style.background='#4C9600';document.getElementById(this.id+'_body').style.background='#E4FFC8'"
                              style="width:200px;" headerClass="head2" bodyClass="body3">
@@ -98,9 +98,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         Panel header
                     </f:facet>
                     Base on the previous layout, but some javascript behaviour added.
-                </rich:panel>
+                </r:panel>
 
-                <rich:panel  id="panel4" style="width:200px;"  bodyClass="body3">
+                <r:panel  id="panel4" style="width:200px;"  bodyClass="body3">
                     <f:facet name="header">
                         Scrolling Text Panel
                     </f:facet>
@@ -110,7 +110,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     aliquam faucibus ut in neque. Nulla facilisi. Donec sed arcu et velit egestas
                     condimentum ut ut sem. Quisque quis arcu est. Mauris nec metus congue tortor
                     sagittis porta in in orci. Suspendisse iaculis ipsum non.
-                </rich:panel>
+                </r:panel>
             </h:panelGrid>
         </ui:define>
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="http://richfaces.org/a4j"
-   xmlns:rich="http://richfaces.org/rich" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:r="http://richfaces.org/rich"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
    xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
 <!--
@@ -45,32 +45,32 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
       <br/><br/>
       </p>
    
-      <a4j:outputPanel id="pn">
+      <r:outputPanel id="pn">
          <h:inputText>
-            <rich:tooltip>
+            <r:tooltip>
 		        Hello world!
-		    </rich:tooltip>
+		    </r:tooltip>
          </h:inputText>
-         <a4j:commandButton value="rerender" render="pn" />
+         <r:commandButton value="rerender" render="pn" />
          <h:outputText value="Tooltip attached to parent input" />
          <br/>
          
          <h:inputText id="input2" />
-         <rich:tooltip target="input2">
+         <r:tooltip target="input2">
             Hello world! (for input2)
-         </rich:tooltip>
+         </r:tooltip>
          
          <h:outputText value="Workaround using @target on tooltip component" />
          
-      </a4j:outputPanel>
+      </r:outputPanel>
 
       <br />
 
-      <a4j:outputPanel id="pn2">
+      <r:outputPanel id="pn2">
          <h:inputText />
-         <rich:tooltip>Hello world!</rich:tooltip>         
+         <r:tooltip>Hello world!</r:tooltip>         
          <h:outputText value="Workaround using attach to parent, which shares the same physical area as the inputText" />
-      </a4j:outputPanel>
+      </r:outputPanel>
 
    </ui:define>
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -47,7 +47,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <a4j:queue id="a4jQueue"
+            <r:queue id="a4jQueue"
                        ignoreDupResponses="#{a4jQueueBean.attributes['ignoreDupResponses'].value}"
                        name="#{a4jQueueBean.attributes['name'].value}"
                        onbeforedomupdate="#{a4jQueueBean.attributes['onbeforedomupdate'].value}"
@@ -64,22 +64,22 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <h:form id="form">
                 <h:panelGrid columns="2">
                     <h:outputText value="Type here:" />
-                    <h:inputText id="input1" value="#{a4jQueueBean.text}" onkeypress="add(#{rich:element('events1')}); #{rich:element('timeWatcher:grid')}.event(); "
+                    <h:inputText id="input1" value="#{a4jQueueBean.text}" onkeypress="add(#{r:element('events1')}); #{r:element('timeWatcher:grid')}.event(); "
                                  disabled="#{not (facesContext.maximumSeverity==null)}">
-                        <a4j:ajax event="keypress" onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); " render="outtext" oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference(); "
-                                  onbeforedomupdate="add(#{rich:element('updates')});"/>
+                        <r:ajax event="keypress" onbegin="add(#{r:element('requests')}); #{r:element('timeWatcher:grid')}.begin(); " render="outtext" oncomplete="#{r:element('timeWatcher:grid')}.complete(); #{r:element('timeWatcher:grid')}.difference(); "
+                                  onbeforedomupdate="add(#{r:element('updates')});"/>
                     </h:inputText> 
 
                     <h:outputText value="Click here:" />
                     <h:commandButton id="actionButton" value="Action" action="#{richBean.dummyAction}"
-                                     onclick="add(#{rich:element('events1')}); #{rich:element('timeWatcher:grid')}.event();">
-                        <a4j:ajax onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); "
-                                  oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference(); "
-                                  onbeforedomupdate="add(#{rich:element('updates')});" />
+                                     onclick="add(#{r:element('events1')}); #{r:element('timeWatcher:grid')}.event();">
+                        <r:ajax onbegin="add(#{r:element('requests')}); #{r:element('timeWatcher:grid')}.begin(); "
+                                  oncomplete="#{r:element('timeWatcher:grid')}.complete(); #{r:element('timeWatcher:grid')}.difference(); "
+                                  onbeforedomupdate="add(#{r:element('updates')});" />
                     </h:commandButton>
                     
                     <h:outputText value="Click here (with error):" />
-                    <a4j:commandButton id="errorButton" value="Action" action="#{richBean.causeError}"/>
+                    <r:commandButton id="errorButton" value="Action" action="#{richBean.causeError}"/>
 
                     <h:outputText value="Repeated text:" />
                     <h:outputText value="#{a4jQueueBean.text}" id="outtext" style="font-weight:bold;" />
@@ -103,7 +103,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <h:panelGrid columns="2">
                     <h:outputLabel for="introduceDelay" value="Introduce Delay:" />
                     <h:selectBooleanCheckbox id="introduceDelay" value="#{a4jQueueBean.introduceDelay}">
-                        <a4j:ajax event="change" />
+                        <r:ajax event="change" />
                     </h:selectBooleanCheckbox>
                 </h:panelGrid>
 

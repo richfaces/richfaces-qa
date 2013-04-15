@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
     <!--
@@ -65,7 +65,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         &nbsp;&nbsp;
 
                         <!-- http://myfaces.apache.org/core20/myfaces-impl/apidocs/org/apache/myfaces/view/facelets/component/RepeatStatus.html -->
-                        <a4j:outputPanel id="statusPanel" styleClass="statuses">
+                        <r:outputPanel id="statusPanel" styleClass="statuses">
                             <h:outputText id="statusIndex" value="index=#{status.index}, "/>
                             <h:outputText id="statusFirst" value="first=#{status.first}, "/>
                             <h:outputText id="statusLast" value="last=#{status.last}, "/>
@@ -74,7 +74,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                             <h:outputText id="statusStep" value="step=#{status.step}, "/>
                             <h:outputText id="statusBegin" value="begin=#{status.begin}, "/>
                             <h:outputText id="statusEnd" value="end=#{status.end}, "/>
-                        </a4j:outputPanel>
+                        </r:outputPanel>
                     </li>
                 </ui:repeat>
             </ul>

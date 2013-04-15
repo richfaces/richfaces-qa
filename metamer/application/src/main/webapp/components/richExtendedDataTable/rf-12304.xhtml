@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:rich="http://richfaces.org/rich"
-	xmlns:a4j="http://richfaces.org/a4j">
+	xmlns:r="http://richfaces.org/rich"
+	>
 <h:head>
 	<title>Issue verification</title>
 </h:head>
@@ -12,12 +12,12 @@
 
 	<h:form id="myForm" prependId="false">
 
-		<rich:panel>
+		<r:panel>
 			Try to select on both tables. The issue is that only selecion on the first one works. The selection on second one table is corrupted.
-		</rich:panel>
+		</r:panel>
 
 			<h:panelGrid width="20%" style="height:15em">
-				<rich:extendedDataTable value="#{model.capitals}" var="record"
+				<r:extendedDataTable value="#{model.capitals}" var="record"
 					selection="#{richExtendedDataTableBean.attributes['selection'].value}"
 					frozenColumns="3" style="height:200px; width:400px;"
 					selectionMode="single" id="firstTable">
@@ -30,18 +30,18 @@
 							</h:commandLink>
 						</h:panelGrid>
 					</f:facet>
-					<rich:column>
+					<r:column>
 						<h:outputText value="#{record.name}" />
-					</rich:column>
-					<rich:column>
+					</r:column>
+					<r:column>
 						<h:outputText value="#{record.timeZone}" />
-					</rich:column>
-					<rich:column>
+					</r:column>
+					<r:column>
 						<h:outputText value="Random value" />
-					</rich:column>
-				</rich:extendedDataTable>
+					</r:column>
+				</r:extendedDataTable>
 
-				<rich:extendedDataTable value="#{model.employees}" var="employee"
+				<r:extendedDataTable value="#{model.employees}" var="employee"
 					selection="#{richExtendedDataTableBean.attributes['selection'].value}"
 					frozenColumns="3" style="height:200px; width:400px;"
 					selectionMode="single" id="secondTable">
@@ -50,16 +50,16 @@
 							<h:outputText value="Here the selection does not work" />
 						</h:panelGrid>
 					</f:facet>
-					<rich:column>
+					<r:column>
 						<h:outputText value="#{employee.name}" />
-					</rich:column>
-					<rich:column>
+					</r:column>
+					<r:column>
 						<h:outputText value="#{employee.title}" />
-					</rich:column>
-					<rich:column>
+					</r:column>
+					<r:column>
 						<h:outputText value="#{employee.numberOfKids}" />
-					</rich:column>
-				</rich:extendedDataTable>
+					</r:column>
+				</r:extendedDataTable>
 			</h:panelGrid>
 
 	</h:form>

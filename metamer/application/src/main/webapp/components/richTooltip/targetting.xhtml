@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+       xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -49,15 +49,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <div id="regular-div" class="sample-panel">Div with clientId="regular-div"</div>
 
-            <a4j:outputPanel styleClass="sample-panel" id="jsf-div" layout="block">
-        		Div with id="jsf-div", clientId="#{rich:clientId('jsf-div')}"
-            </a4j:outputPanel>
+            <r:outputPanel styleClass="sample-panel" id="jsf-div" layout="block">
+        		Div with id="jsf-div", clientId="#{r:clientId('jsf-div')}"
+            </r:outputPanel>
 
-            <rich:panel id="panel" style="width: 200px">
+            <r:panel id="panel" style="width: 200px">
 
-            	Panel's content 3 (id="panel", clientId="#{rich:clientId('panel')}")
+            	Panel's content 3 (id="panel", clientId="#{r:clientId('panel')}")
 
-                <rich:tooltip id="tooltip"
+                <r:tooltip id="tooltip"
                               attached="#{richTooltipBean.attributes['attached'].value}"
                               data="#{richTooltipBean.attributes['data'].value}"
                               dir="#{richTooltipBean.attributes['dir'].value}"
@@ -96,8 +96,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                     Tooltip content
 
-                </rich:tooltip>
-            </rich:panel>
+                </r:tooltip>
+            </r:panel>
 
         </ui:define>
 

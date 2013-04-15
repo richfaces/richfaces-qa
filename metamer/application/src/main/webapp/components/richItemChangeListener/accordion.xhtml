@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -38,30 +38,30 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <rich:accordion id="accordion"
+            <r:accordion id="accordion"
                             itemChangeListener="#{richBean.itemChangeListener}"
                             >
 
-                <rich:accordionItem id="item1" name="item1"  header="Item 1">
+                <r:accordionItem id="item1" name="item1"  header="Item 1">
                     content of item 1
-                </rich:accordionItem>
-                <rich:accordionItem id="item2" name="item2"  header="Item 2">
+                </r:accordionItem>
+                <r:accordionItem id="item2" name="item2"  header="Item 2">
                     content of item 2
-                </rich:accordionItem>
-                <rich:accordionItem id="item3" name="item3"  header="Item 3">
+                </r:accordionItem>
+                <r:accordionItem id="item3" name="item3"  header="Item 3">
                     content of item 3
-                </rich:accordionItem>
-                <rich:accordionItem id="item4" name="item4"  header="Item 4 (disabled)" disabled="true">
+                </r:accordionItem>
+                <r:accordionItem id="item4" name="item4"  header="Item 4 (disabled)" disabled="true">
                     content of item 4
-                </rich:accordionItem>
-                <rich:accordionItem id="item5" name="item5"  header="Item 5">
+                </r:accordionItem>
+                <r:accordionItem id="item5" name="item5"  header="Item 5">
                     content of item 5
-                </rich:accordionItem>
-                <rich:itemChangeListener type="org.richfaces.tests.metamer.bean.ItemChangeListenerBean"/>
-                <rich:itemChangeListener listener="#{itemChangeListenerBean2.processItemChange}"/>
-            </rich:accordion>
+                </r:accordionItem>
+                <r:itemChangeListener type="org.richfaces.tests.metamer.bean.ItemChangeListenerBean"/>
+                <r:itemChangeListener listener="#{itemChangeListenerBean2.processItemChange}"/>
+            </r:accordion>
             <!-- TODO after issue RF-12089 is solved uncomment here
-                rich:itemChangeListener for="accordion" type="org.richfaces.tests.metamer.bean.ItemChangeListenerBean3"
+                r:itemChangeListener for="accordion" type="org.richfaces.tests.metamer.bean.ItemChangeListenerBean3"
             -->
         </ui:define>
 

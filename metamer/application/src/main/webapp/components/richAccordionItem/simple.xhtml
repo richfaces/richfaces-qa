@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -37,8 +37,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <rich:accordion id="accordion" activeItem="item3">
-                <rich:accordionItem id="item1"
+            <r:accordion id="accordion" activeItem="item3">
+                <r:accordionItem id="item1"
                                     contentClass="#{richAccordionItemBean.attributes['contentClass'].value}"
                                     dir="#{richAccordionItemBean.attributes['dir'].value}"
                                     disabled="#{richAccordionItemBean.attributes['disabled'].value}"
@@ -77,46 +77,46 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                     title="#{richAccordionItemBean.attributes['title'].value}"
                                     >
                     content of item 1
-                </rich:accordionItem>
-                <rich:accordionItem id="item2" name="item2"  header="Item 2">
+                </r:accordionItem>
+                <r:accordionItem id="item2" name="item2"  header="Item 2">
                     content of item 2
-                </rich:accordionItem>
-                <rich:accordionItem id="item3" name="item3"  header="Item 3">
+                </r:accordionItem>
+                <r:accordionItem id="item3" name="item3"  header="Item 3">
                     content of item 3
-                </rich:accordionItem>
-                <rich:accordionItem id="item4" name="item4"  header="Item 4">
+                </r:accordionItem>
+                <r:accordionItem id="item4" name="item4"  header="Item 4">
                     content of item 4
-                </rich:accordionItem>
-            </rich:accordion>
+                </r:accordionItem>
+            </r:accordion>
 
             <br/><br/>
             <fieldset>
-                <legend>JavaScript API of rich:accordion</legend>
+                <legend>JavaScript API of r:accordion</legend>
 
                 <h:commandButton id="switchButton1" value="switch to item1">
-                    <rich:componentControl event="click" operation="switchToItem" target="accordion" >
+                    <r:componentControl event="click" operation="switchToItem" target="accordion" >
                         <f:param value="item1" />
-                    </rich:componentControl>
+                    </r:componentControl>
                 </h:commandButton>
                 <h:commandButton id="switchButton2" value="switch to item2">
-                    <rich:componentControl event="click" operation="switchToItem" target="accordion" >
+                    <r:componentControl event="click" operation="switchToItem" target="accordion" >
                         <f:param value="item2" />
-                    </rich:componentControl>
+                    </r:componentControl>
                 </h:commandButton>
                 <h:commandButton id="switchButton3" value="switch to item3">
-                    <rich:componentControl event="click" operation="switchToItem" target="accordion" >
+                    <r:componentControl event="click" operation="switchToItem" target="accordion" >
                         <f:param value="item3" />
-                    </rich:componentControl>
+                    </r:componentControl>
                 </h:commandButton>
                 <h:commandButton id="switchButton4" value="switch to item4">
-                    <rich:componentControl event="click" operation="switchToItem" target="accordion" >
+                    <r:componentControl event="click" operation="switchToItem" target="accordion" >
                         <f:param value="item4" />
-                    </rich:componentControl>
+                    </r:componentControl>
                 </h:commandButton>
                 <h:commandButton id="switchButtonCustom" value="switch to item with custom name (#{richAccordionItemBean.attributes['name'].value})">
-                    <rich:componentControl event="click" operation="switchToItem" target="accordion" >
+                    <r:componentControl event="click" operation="switchToItem" target="accordion" >
                         <f:param value="#{richAccordionItemBean.attributes['name'].value}" />
-                    </rich:componentControl>
+                    </r:componentControl>
                 </h:commandButton>
 
             </fieldset>

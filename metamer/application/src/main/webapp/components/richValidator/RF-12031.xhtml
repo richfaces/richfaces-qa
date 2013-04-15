@@ -4,8 +4,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich"
+	xmlns:r="http://richfaces.org/rich"
+	
 	xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
 <!--
@@ -33,7 +33,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 <ui:composition template="/templates/template.xhtml">
 
 	<ui:define name="component">
-		<rich:panel
+		<r:panel
 			header="Blur on input input(need to toggle to render it) does not fire client side validation">
 			<h:form id="dummyForm" prependId="false">
 				<h:commandButton value="Toggle"
@@ -45,13 +45,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 				<h:panelGroup rendered="#{profileBean.mustRenderThePanel}">
 					<br />
 					<h:inputText id="mytest2" value="#{profileBean.firstName}">
-						<rich:validator />
+						<r:validator />
 						<!--this fails to work when you move focus away -->
 					</h:inputText>
-					<rich:message for="mytest2" />
+					<r:message for="mytest2" />
 				</h:panelGroup>
 			</h:form>
-		</rich:panel>
+		</r:panel>
 	</ui:define>
 
 

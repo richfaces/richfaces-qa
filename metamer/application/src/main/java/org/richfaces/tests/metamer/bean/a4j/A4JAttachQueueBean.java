@@ -27,8 +27,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.richfaces.component.UIAttachQueue;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.ui.ajax.UIAttachQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

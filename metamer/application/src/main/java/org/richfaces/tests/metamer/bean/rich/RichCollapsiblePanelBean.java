@@ -27,10 +27,10 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.richfaces.component.UICollapsiblePanel;
 import org.richfaces.event.PanelToggleEvent;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.RichBean;
+import org.richfaces.ui.output.UICollapsiblePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -2,8 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:r="http://richfaces.org/rich"
+      
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
@@ -44,7 +44,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="component">
             <a href="">RF-12185</a><br/>
             <p>AJAX rendering is broken for h:commandLink:<br/>
-               Rendering of h:commandLink makes it to disappear from the page when done with a4j:commandLink or a4j:ajax.<br/>
+               Rendering of h:commandLink makes it to disappear from the page when done with r:commandLink or r:ajax.<br/>
                Notes:<br/>
                <ul>
                   <li>rendering of h:commandButton works fine</li>
@@ -61,22 +61,22 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                   <h:outputText value="h:commandLink: " />
                   <h:commandLink id="link1" value="#{a4jAjaxBean.car} - Link 1" />
                   
-                  <h:outputText value="a4j:commandLink: " />
-                  <a4j:commandLink render="link1, link2" value="render" />
+                  <h:outputText value="r:commandLink: " />
+                  <r:commandLink render="link1, link2" value="render" />
                   
                   <h:outputText value="h:inputText with ajax: " />
                   <h:inputText>
-                     <a4j:ajax event="keyup" render="link1, link2" />  
+                     <r:ajax event="keyup" render="link1, link2" />  
                   </h:inputText>
 
                </h:panelGrid>
                <br/>
                This part should work. (Workaround simulation):
                <h:panelGrid columns="2">
-                     <h:outputText value="h:commandLink within a4j:outputPanel: " />
-                     <a4j:outputPanel id="out">
+                     <h:outputText value="h:commandLink within r:outputPanel: " />
+                     <r:outputPanel id="out">
                         <h:commandLink id="link2" value="#{a4jAjaxBean.car} - Link 2" />
-                     </a4j:outputPanel>
+                     </r:outputPanel>
                </h:panelGrid>               
             </p>
              

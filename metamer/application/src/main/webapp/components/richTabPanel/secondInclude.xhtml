@@ -4,26 +4,26 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:rich="http://richfaces.org/rich"
-	xmlns:a4j="http://richfaces.org/a4j">
+	xmlns:r="http://richfaces.org/rich"
+	>
 
-	<rich:dataTable id="richDataTable1"
+	<r:dataTable id="richDataTable1"
 		value="#{paginatedDataTableBean.capitals}" var="record"
 		rows="#{paginatedDataTableBean.rowsPerPage}">
 
-		<rich:column id="columnCapital" sortBy="#{record.name}">
+		<r:column id="columnCapital" sortBy="#{record.name}">
 			<f:facet name="header">
 				<h:outputText id="columnHeaderCapital" value="Capital" />
 			</f:facet>
 
 			<h:outputText value="#{record.name}" />
-		</rich:column>
+		</r:column>
 
 		<f:facet name="footer">
-			<rich:dataScroller id="scroller2" for="richDataTable1"
+			<r:dataScroller id="scroller2" for="richDataTable1"
 				page="#{paginatedDataTableBean.page}" maxPages="5" fastStep="2" />
 		</f:facet>
 
-	</rich:dataTable>
+	</r:dataTable>
 
 </ui:composition>

@@ -59,7 +59,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.richfaces.component.UIStatus;
 import org.richfaces.tests.metamer.bean.RichBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -231,9 +230,11 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         } catch (ClassNotFoundException cnfe1) {
             try {
                 if (componentClass.startsWith("com.sun.faces.facelets")) {
-                    faceletsClass = Class.forName(componentClass.replace("com.sun.faces.facelets", "org.apache.myfaces.view.facelets"));
+                    faceletsClass = Class.forName(componentClass.replace("com.sun.faces.facelets",
+                            "org.apache.myfaces.view.facelets"));
                 } else {
-                    faceletsClass = Class.forName(componentClass.replace("org.apache.myfaces.view.facelets", "com.sun.faces.facelets"));
+                    faceletsClass = Class.forName(componentClass.replace("org.apache.myfaces.view.facelets",
+                            "com.sun.faces.facelets"));
                 }
             } catch (ClassNotFoundException cnfe2) {
                 logger.error(cnfe2.getMessage());
@@ -479,9 +480,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
         // if select options for "action" are defined in property file
         if (hasSelectOptions("action")) {
-            method =
-                    getExpressionFactory().createMethodExpression(elContext, getMethodEL(outcome), String.class,
-                    new Class[0]);
+            method = getExpressionFactory().createMethodExpression(elContext, getMethodEL(outcome), String.class, new Class[0]);
 
             return (String) method.invoke(elContext, null);
         }
@@ -514,18 +513,16 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
         // if no select options for "actionListener" are defined in property file and it is an EL expression
         if (!hasSelectOptions("actionListener") && isStringEL(listener)) {
-            method =
-                    getExpressionFactory().createMethodExpression(elContext, listener, void.class,
-                    new Class[]{ActionEvent.class});
-            method.invoke(elContext, new Object[]{event});
+            method = getExpressionFactory().createMethodExpression(elContext, listener, void.class,
+                    new Class[] { ActionEvent.class });
+            method.invoke(elContext, new Object[] { event });
         }
 
         // if select options for "actionListener" are defined in property file
         if (hasSelectOptions("actionListener")) {
-            method =
-                    getExpressionFactory().createMethodExpression(elContext, getMethodEL(listener), void.class,
-                    new Class[]{ActionEvent.class});
-            method.invoke(elContext, new Object[]{event});
+            method = getExpressionFactory().createMethodExpression(elContext, getMethodEL(listener), void.class,
+                    new Class[] { ActionEvent.class });
+            method.invoke(elContext, new Object[] { event });
         }
     }
 
@@ -553,17 +550,16 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
         // if no select options for "listener" are defined in property file and it is an EL expression
         if (!hasSelectOptions("listener") && isStringEL(listener)) {
-            method =
-                    getExpressionFactory().createMethodExpression(elContext, listener, void.class,
-                    new Class[]{AjaxBehaviorEvent.class});
-            method.invoke(elContext, new Object[]{event});
+            method = getExpressionFactory().createMethodExpression(elContext, listener, void.class,
+                    new Class[] { AjaxBehaviorEvent.class });
+            method.invoke(elContext, new Object[] { event });
         }
 
         // if select options for "listener" are defined in property file
         if (hasSelectOptions("listener")) {
             method = getExpressionFactory().createMethodExpression(elContext, getMethodEL(listener), void.class,
-                    new Class[]{AjaxBehaviorEvent.class});
-            method.invoke(elContext, new Object[]{event});
+                    new Class[] { AjaxBehaviorEvent.class });
+            method.invoke(elContext, new Object[] { event });
         }
     }
 
@@ -662,13 +658,13 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
         richfacesAttributes = new HashMap<Class<?>, List<Attribute>>();
 
         try {
-            ClassLoader cl = UIStatus.class.getClassLoader();
+            ClassLoader cl = Attributes.class.getClassLoader();
             Enumeration<URL> fileUrls = cl.getResources("META-INF/faces-config.xml");
             URL configFile = null;
 
             while (fileUrls.hasMoreElements()) {
                 URL url = fileUrls.nextElement();
-                if (url.getPath().contains("richfaces-components-ui")) {
+                if (url.getPath().contains("richfaces-framework")) {
                     configFile = url;
                 }
             }

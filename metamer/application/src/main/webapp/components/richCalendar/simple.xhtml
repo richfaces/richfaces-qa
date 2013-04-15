@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
-      xmlns:a4j="http://richfaces.org/a4j" xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:r="http://richfaces.org/rich"
+       xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -77,13 +77,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     return true;
                 }
 
-                testedComponentId = "#{rich:clientId('calendar')}";
+                testedComponentId = "#{r:clientId('calendar')}";
             </script>
         </ui:define>
 
         <ui:define name="component">
             <div style="padding: 250px">
-                <rich:calendar id="calendar"
+                <r:calendar id="calendar"
                                boundaryDatesMode="#{richCalendarBean.attributes['boundaryDatesMode'].value}"
                                buttonClass="#{richCalendarBean.attributes['buttonClass'].value}"
                                buttonDisabledIcon="#{richCalendarBean.attributes['buttonDisabledIcon'].value}"
@@ -166,61 +166,61 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                weekDayLabels="#{richCalendarBean.attributes['weekDayLabels'].value}"
                                weekDayLabelsShort="#{richCalendarBean.attributes['weekDayLabelsShort'].value}"
                                zindex="#{richCalendarBean.attributes['zindex'].value}">
-                    <a4j:ajax event="change" render="outputPanel, phasesPanel" />
-                </rich:calendar>
-                <rich:message id="msg" for="calendar"/>
+                    <r:ajax event="change" render="outputPanel, phasesPanel" />
+                </r:calendar>
+                <r:message id="msg" for="calendar"/>
             </div>
 
             <br/><br/>
             <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
-            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
+            <r:commandButton id="a4jButton" value="r:commandButton"/>
             <br/><br/>
 
-            <a4j:outputPanel id="outputPanel" ajaxRendered="true">
+            <r:outputPanel id="outputPanel" ajaxRendered="true">
                 output:
                 <h:outputText id="output" value="#{richCalendarBean.value}">
                     <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
                                        timeZone="#{richCalendarBean.timeZone}"/>
                 </h:outputText>
-            </a4j:outputPanel>
+            </r:outputPanel>
             <br/><br/>
             <fieldset>
                 <legend>JavaScript API</legend>
                 On click:
                 <br/>
-                <input id="showDateEditor" type="button" name="showDateEditor" value="showDateEditor()" onclick="#{rich:component('calendar')}.showDateEditor()" />
-                <input id="setValue" type="button" name="setValue" value="setValue('Oct 10, 2012 12:00')" onclick="#{rich:component('calendar')}.setValue(new Date('October 10, 2012 12:00:00'))" />
+                <input id="showDateEditor" type="button" name="showDateEditor" value="showDateEditor()" onclick="#{r:component('calendar')}.showDateEditor()" />
+                <input id="setValue" type="button" name="setValue" value="setValue('Oct 10, 2012 12:00')" onclick="#{r:component('calendar')}.setValue(new Date('October 10, 2012 12:00:00'))" />
                 <br/>
                 <br/>
                 On mouseover:
                 <br/>
-                <input id="showPopup" type="button" name="showPopup" value="showPopup()" onmouseover="#{rich:component('calendar')}.showPopup()" />
-                <input id="switchPopup" type="button" name="switchPopup" value="switchPopup()" onmouseover="#{rich:component('calendar')}.switchPopup()" />
+                <input id="showPopup" type="button" name="showPopup" value="showPopup()" onmouseover="#{r:component('calendar')}.showPopup()" />
+                <input id="switchPopup" type="button" name="switchPopup" value="switchPopup()" onmouseover="#{r:component('calendar')}.switchPopup()" />
                 <br/>
                 <br/>
                 Applicable when date is set, on click:
                 <br/>
-                <input id="showTimeEditor" type="button" name="showTimeEditor" value="showTimeEditor()" onclick="#{rich:component('calendar')}.showTimeEditor()" />
+                <input id="showTimeEditor" type="button" name="showTimeEditor" value="showTimeEditor()" onclick="#{r:component('calendar')}.showTimeEditor()" />
                 <br/>
                 <br/>
                 Applicable with opened popup, on mouseover:
                 <br/>
-                <input id="hideDateEditor" type="button" name="hideDateEditor" value="hideDateEditor()" onmouseover="#{rich:component('calendar')}.hideDateEditor()" />
-                <input id="hidePopup" type="button" name="hidePopup" value="hidePopup()" onmouseover="#{rich:component('calendar')}.hidePopup()" />
-                <input id="hideTimeEditor" type="button" name="hideTimeEditor" value="hideTimeEditor()" onmouseover="#{rich:component('calendar')}.hideTimeEditor()" />
-                <input id="resetValue" type="button" name="resetValue" value="resetValue()" onmouseover="#{rich:component('calendar')}.resetValue()" />
-                <input id="showSelectedDate" type="button" name="showSelectedDate" value="showSelectedDate()" onmouseover="#{rich:component('calendar')}.showSelectedDate()" />
-                <input id="today" type="button" name="today" value="today()" onmouseover="#{rich:component('calendar')}.today()" />
+                <input id="hideDateEditor" type="button" name="hideDateEditor" value="hideDateEditor()" onmouseover="#{r:component('calendar')}.hideDateEditor()" />
+                <input id="hidePopup" type="button" name="hidePopup" value="hidePopup()" onmouseover="#{r:component('calendar')}.hidePopup()" />
+                <input id="hideTimeEditor" type="button" name="hideTimeEditor" value="hideTimeEditor()" onmouseover="#{r:component('calendar')}.hideTimeEditor()" />
+                <input id="resetValue" type="button" name="resetValue" value="resetValue()" onmouseover="#{r:component('calendar')}.resetValue()" />
+                <input id="showSelectedDate" type="button" name="showSelectedDate" value="showSelectedDate()" onmouseover="#{r:component('calendar')}.showSelectedDate()" />
+                <input id="today" type="button" name="today" value="today()" onmouseover="#{r:component('calendar')}.today()" />
                 <br/>
                 <br/>
                 Applicable when date is set, on click:
                 <br/>
                 Output value for all get methods: <h:inputText id="value"/>
                 <br/>
-                <input id="getValue" name="getValue" type="button" value="getValue()" onclick="$('[id$=value]').val(String(#{rich:component('calendar')}.getValue()))" />
-                <input id="getValueAsString" name="getValueAsString" type="button" value="getValueAsString()" onclick="$('[id$=value]').val(#{rich:component('calendar')}.getValueAsString())" />
-                <input id="getCurrentMonth" name="getCurrentMonth" type="button" value="getCurrentMonth()" onclick="$('[id$=value]').val(String(#{rich:component('calendar')}.getCurrentMonth()))" />
-                <input id="getCurrentYear" name="getCurrentYear" type="button" value="getCurrentYear()" onclick="$('[id$=value]').val(String(#{rich:component('calendar')}.getCurrentYear()))" />
+                <input id="getValue" name="getValue" type="button" value="getValue()" onclick="$('[id$=value]').val(String(#{r:component('calendar')}.getValue()))" />
+                <input id="getValueAsString" name="getValueAsString" type="button" value="getValueAsString()" onclick="$('[id$=value]').val(#{r:component('calendar')}.getValueAsString())" />
+                <input id="getCurrentMonth" name="getCurrentMonth" type="button" value="getCurrentMonth()" onclick="$('[id$=value]').val(String(#{r:component('calendar')}.getCurrentMonth()))" />
+                <input id="getCurrentYear" name="getCurrentYear" type="button" value="getCurrentYear()" onclick="$('[id$=value]').val(String(#{r:component('calendar')}.getCurrentYear()))" />
                 <br/>
             </fieldset>
         </ui:define>

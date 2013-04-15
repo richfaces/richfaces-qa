@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -44,33 +44,33 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 var intervalID;
 
                 function updateProgress(i) {
-                #{rich:component('progressBar')}.setValue(counter*2);
+                #{r:component('progressBar')}.setValue(counter*2);
                     if ((counter++)>50){
                         clearInterval(intervalID);
-                #{rich:element('startButton')}.disabled=false;
-                #{rich:element('pauseButton')}.disabled=true;
+                #{r:element('startButton')}.disabled=false;
+                #{r:element('pauseButton')}.disabled=true;
                         counter=1;
                     }
                 }
 
                 function startProgress(){
-                #{rich:element('startButton')}.disabled=true;
-                #{rich:element('pauseButton')}.disabled=false;
-                #{rich:component('progressBar')}.enable();
-                #{rich:component('progressBar')}.setValue(counter*2);
+                #{r:element('startButton')}.disabled=true;
+                #{r:element('pauseButton')}.disabled=false;
+                #{r:component('progressBar')}.enable();
+                #{r:component('progressBar')}.setValue(counter*2);
                     intervalID = setInterval(updateProgress,1000);
                 }
 
                 function pauseProgress(){
-                #{rich:element('startButton')}.disabled=false;
-                #{rich:element('pauseButton')}.disabled=true;
-                #{rich:component('progressBar')}.disable();
+                #{r:element('startButton')}.disabled=false;
+                #{r:element('pauseButton')}.disabled=true;
+                #{r:component('progressBar')}.disable();
                     clearInterval(intervalID);
                 }
                 //]]>
             </script>
 
-            <rich:progressBar id="progressBar"
+            <r:progressBar id="progressBar"
                               data="#{richProgressBarBean.attributes['data'].value}"
                               enabled="#{richProgressBarBean.attributes['enabled'].value}"
                               finishClass="#{richProgressBarBean.attributes['finishClass'].value}"
@@ -104,7 +104,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <f:facet name="finish">
                     <h:outputText id="completeOutput" value="Process Done"/>
                 </f:facet>
-            </rich:progressBar>
+            </r:progressBar>
 
             <h:commandButton id="startButton" onclick="startProgress(); return false;" style="margin: 9px 0px 5px;" value="Start Progress"/>
             <h:commandButton id="pauseButton" onclick="pauseProgress(); return false;" style="margin: 9px 0px 5px;" disabled="true" value="Pause Progress"/>

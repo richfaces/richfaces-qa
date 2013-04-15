@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -43,14 +43,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/>
             <h:outputText value="Show data in table: " />
             <h:selectBooleanCheckbox id="noDataCheckbox" value="#{richDataGridBean.state}">
-                <a4j:ajax render="#{nestedComponentId} scroller1"/>
+                <r:ajax render="#{nestedComponentId} scroller1"/>
             </h:selectBooleanCheckbox>
             <br/><br/>
-            <rich:dataScroller id="scroller1" for="richDataGrid" page="#{richDataGridBean.page}" maxPages="7" render="#{nestedComponentId}"/>
+            <r:dataScroller id="scroller1" for="richDataGrid" page="#{richDataGridBean.page}" maxPages="7" render="#{nestedComponentId}"/>
         </ui:define>
 
         <ui:define name="component">
-            <rich:dataGrid id="richDataGrid"
+            <r:dataGrid id="richDataGrid"
                            columns="#{richDataGridBean.attributes['columns'].value}"
                            elements="#{richDataGridBean.attributes['elements'].value}"
                            first="#{richDataGridBean.attributes['first'].value}"
@@ -81,9 +81,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <h:outputText value="#{record.name}" />
 
                 <f:facet name="footer">
-                    <rich:dataScroller id="scroller2" for="richDataGrid" page="#{richDataGridBean.page}" maxPages="7" render="richDataGrid scroller1" />
+                    <r:dataScroller id="scroller2" for="richDataGrid" page="#{richDataGridBean.page}" maxPages="7" render="richDataGrid scroller1" />
                 </f:facet>
-            </rich:dataGrid>
+            </r:dataGrid>
 
         </ui:define>
 
@@ -94,23 +94,23 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <legend>scroller1</legend>
 
                 <h:commandButton id="scrollerButtonFirst1" value="&lt;&lt; first">
-                    <rich:componentControl event="click" target="#{rich:clientId('scroller1')}" operation="switchToPage">
+                    <r:componentControl event="click" target="#{r:clientId('scroller1')}" operation="switchToPage">
                         <f:param value="first" />
-                    </rich:componentControl>
+                    </r:componentControl>
                 </h:commandButton>
 
                 <h:commandButton id="scrollerButtonPrev1" value="&lt; previous">
-                    <rich:componentControl event="click" target="#{rich:clientId('scroller1')}" operation="previous" />
+                    <r:componentControl event="click" target="#{r:clientId('scroller1')}" operation="previous" />
                 </h:commandButton>
 
                 <h:commandButton id="scrollerButtonNext1" value="next &gt;">
-                    <rich:componentControl event="click" target="#{rich:clientId('scroller1')}" operation="next" />
+                    <r:componentControl event="click" target="#{r:clientId('scroller1')}" operation="next" />
                 </h:commandButton>
 
                 <h:commandButton id="scrollerButtonLast1" value="last &gt;&gt;">
-                    <rich:componentControl event="click" target="#{rich:clientId('scroller1')}" operation="switchToPage">
+                    <r:componentControl event="click" target="#{r:clientId('scroller1')}" operation="switchToPage">
                         <f:param value="last" />
-                    </rich:componentControl>
+                    </r:componentControl>
                 </h:commandButton>
             </fieldset>
 
@@ -119,23 +119,23 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <fieldset>
                 <legend>scroller2</legend>
                 <h:commandButton id="scrollerButtonFirst2" value="&lt;&lt; first">
-                    <rich:componentControl event="click" target="#{rich:clientId('scroller2')}" operation="switchToPage">
+                    <r:componentControl event="click" target="#{r:clientId('scroller2')}" operation="switchToPage">
                         <f:param value="first" />
-                    </rich:componentControl>
+                    </r:componentControl>
                 </h:commandButton>
 
                 <h:commandButton id="scrollerButtonPrev2" value="&lt; previous">
-                    <rich:componentControl event="click" target="#{rich:clientId('scroller2')}" operation="previous" />
+                    <r:componentControl event="click" target="#{r:clientId('scroller2')}" operation="previous" />
                 </h:commandButton>
 
                 <h:commandButton id="scrollerButtonNext2" value="next &gt;">
-                    <rich:componentControl event="click" target="#{rich:clientId('scroller2')}" operation="next" />
+                    <r:componentControl event="click" target="#{r:clientId('scroller2')}" operation="next" />
                 </h:commandButton>
 
                 <h:commandButton id="scrollerButtonLast2" value="last &gt;&gt;">
-                    <rich:componentControl event="click" target="#{rich:clientId('scroller2')}" operation="switchToPage">
+                    <r:componentControl event="click" target="#{r:clientId('scroller2')}" operation="switchToPage">
                         <f:param value="last" />
-                    </rich:componentControl>
+                    </r:componentControl>
                 </h:commandButton>
             </fieldset>
 

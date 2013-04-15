@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+       xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -40,7 +40,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <rich:tree id="richTree"
+            <r:tree id="richTree"
                        var="node"
                        selection="#{richTreeBean.selection}"
                        selectionChangeListener="#{richTreeListenerBean.processSelectionChange}"
@@ -87,16 +87,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                        toggleNodeEvent="#{richTreeBean.attributes['toggleNodeEvent'].value}"
                        toggleType="#{richTreeBean.attributes['toggleType'].value}"
                        >
-                <rich:treeNode expanded="#{richTreeModelRecursiveAdaptorBean.expanded[node.label]}">
+                <r:treeNode expanded="#{richTreeModelRecursiveAdaptorBean.expanded[node.label]}">
                     #{node.label}
-                </rich:treeNode>
+                </r:treeNode>
 
-                <rich:treeModelRecursiveAdaptor
+                <r:treeModelRecursiveAdaptor
                     roots="#{richTreeModelRecursiveAdaptorBean.rootNodes}"
                     nodes="#{richTreeModelRecursiveAdaptorBean.useMapModel ? node.recursiveMap : node.recursiveList}"
                     >
 
-                    <rich:treeNode
+                    <r:treeNode
                         expanded="#{richTreeModelRecursiveAdaptorBean.expanded[node.label]}"
                         rendered="#{richTreeNodeBean.attributes[0]['rendered'].value || node.number != 1}"
                         iconLeaf="#{richTreeNodeBean.attributes[0]['iconLeaf'].value}"
@@ -109,34 +109,34 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         <f:facet name="handleLoading">
                             <h:graphicImage value="/resources/images/loading.gif" rendered="#{richTreeBean.testLoadingFacet}" />
                         </f:facet>
-                        <a4j:outputPanel id="panel">
+                        <r:outputPanel id="panel">
                             #{node.label}
-                        </a4j:outputPanel>
-                    </rich:treeNode>
+                        </r:outputPanel>
+                    </r:treeNode>
 
-                    <rich:treeModelAdaptor
+                    <r:treeModelAdaptor
                         nodes="#{node.model.list}"
                         rendered="#{richTreeModelAdaptorBean.attributes['rendered'].value}">
-                        <rich:treeNode>
+                        <r:treeNode>
                             #{node.label}
-                        </rich:treeNode>
-                    </rich:treeModelAdaptor>
+                        </r:treeNode>
+                    </r:treeModelAdaptor>
 
-                    <rich:treeModelAdaptor
+                    <r:treeModelAdaptor
                         nodes="#{node.model.map}"
                         rendered="#{richTreeModelAdaptorBean.attributes['rendered'].value}"
                         rowKeyConverter="treeAdaptorKeyConverter">
-                        <rich:treeNode>
+                        <r:treeNode>
                             #{node.label}
-                        </rich:treeNode>
-                    </rich:treeModelAdaptor>
+                        </r:treeNode>
+                    </r:treeModelAdaptor>
 
-                    <rich:treeModelRecursiveAdaptor
+                    <r:treeModelRecursiveAdaptor
                         roots="#{node.model.recursive}"
                         nodes="#{richTreeModelRecursiveAdaptorBean.useMapModel ? node.recursiveMap : node.recursiveList}"
                         rendered="#{richTreeModelRecursiveAdaptorBean.attributes['rendered'].value}">
 
-                        <rich:treeNode
+                        <r:treeNode
                             expanded="#{richTreeModelRecursiveAdaptorBean.expanded[node.label]}"
                             rendered="#{richTreeNodeBean.attributes[1]['rendered'].value || node.number != 1}"
                             iconLeaf="#{richTreeNodeBean.attributes[1]['iconLeaf'].value}"
@@ -151,30 +151,30 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                 <h:graphicImage value="/resources/images/loading.gif" rendered="#{richTreeBean.testLoadingFacet}" />
                             </f:facet>
                             #{node.label}
-                        </rich:treeNode>
-                    </rich:treeModelRecursiveAdaptor>
+                        </r:treeNode>
+                    </r:treeModelRecursiveAdaptor>
 
-                </rich:treeModelRecursiveAdaptor>
-            </rich:tree>
+                </r:treeModelRecursiveAdaptor>
+            </r:tree>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
 
-            <a4j:outputPanel ajaxRendered="true">
+            <r:outputPanel ajaxRendered="true">
                 <h:panelGrid id="selectionOutput" columns="2">
                     <h:outputLabel for="loadingFacet" value="Test Loading Facet:" />
                     <h:selectBooleanCheckbox id="loadingFacet" value="#{richTreeBean.testLoadingFacet}">
-                        <a4j:ajax render="#{nestedComponentId}" />
+                        <r:ajax render="#{nestedComponentId}" />
                     </h:selectBooleanCheckbox>
 
                     <h:outputLabel for="delayedRender" value="Delayed Render (1sec):" />
                     <h:selectBooleanCheckbox id="delayedRender" value="#{richTreeBean.delayedRender}">
-                        <a4j:ajax />
+                        <r:ajax />
                     </h:selectBooleanCheckbox>
 
                     <h:outputLabel for="recursiveLeafChildrenNullable" value="Recursive Leaf Children Nullable:" />
                     <h:selectBooleanCheckbox id="recursiveLeafChildrenNullable" value="#{richTreeModelRecursiveAdaptorBean.leafChildrenNullable}">
-                        <a4j:ajax render="#{nestedComponentId}" />
+                        <r:ajax render="#{nestedComponentId}" />
                     </h:selectBooleanCheckbox>
 
                     <h:outputLabel for="recursiveModelRepresentation" value="Recursive Model Representation:" />
@@ -182,7 +182,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         <f:selectItem itemLabel="List&lt;RecursiveNode&gt;" itemValue="false" />
                         <f:selectItem itemLabel="Map&lt;Integer, RecursiveNode&gt;" itemValue="true" />
 
-                        <a4j:ajax render="#{nestedComponentId}" />
+                        <r:ajax render="#{nestedComponentId}" />
                     </h:selectOneRadio>
 
                     <h:outputLabel for="selection" value="Selection:" />
@@ -215,31 +215,31 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         <h:outputText id="toggleEventExpanded" value="#{richTreeListenerBean.treeToggleEvent.expanded}" />
                     </h:panelGrid>
                 </h:panelGrid>
-            </a4j:outputPanel>
+            </r:outputPanel>
 
             <fieldset>
-                <legend>rich:tree</legend>
+                <legend>r:tree</legend>
                 <metamer:attributes value="#{richTreeBean.attributes}" id="attributes" />
 
                 <fieldset>
-                    <legend>rich:treeModelRecursiveAdaptor [0]</legend>
+                    <legend>r:treeModelRecursiveAdaptor [0]</legend>
 
                     <fieldset>
-                        <legend>rich:treeNode [0]</legend>
+                        <legend>r:treeNode [0]</legend>
                         <metamer:attributes value="#{richTreeNodeBean.attributes[0]}" id="node0Attributes" />
                     </fieldset>
 
                     <fieldset>
-                        <legend>rich:treeModelAdaptor</legend>
+                        <legend>r:treeModelAdaptor</legend>
                         <metamer:attributes value="#{richTreeModelAdaptorBean.attributes}" id="listAttributes" />
                     </fieldset>
 
                     <fieldset>
-                        <legend>rich:treeModelRecursiveAdaptor [1]</legend>
+                        <legend>r:treeModelRecursiveAdaptor [1]</legend>
                         <metamer:attributes value="#{richTreeModelRecursiveAdaptorBean.attributes}" id="recursiveAttributes" />
 
                         <fieldset>
-                            <legend>rich:treeNode [1]</legend>
+                            <legend>r:treeNode [1]</legend>
                             <metamer:attributes value="#{richTreeNodeBean.attributes[1]}" id="node1Attributes" />
                         </fieldset>
                     </fieldset>

@@ -30,13 +30,13 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.ajax4jsf.model.DataComponentState;
-import org.richfaces.component.UIDataTableBase;
-import org.richfaces.component.UIExtendedDataTable;
+import org.richfaces.model.DataComponentState;
 import org.richfaces.model.Filter;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.ColumnSortingMap;
 import org.richfaces.tests.metamer.model.Employee;
+import org.richfaces.ui.iteration.UIDataTableBase;
+import org.richfaces.ui.iteration.UIExtendedDataTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-    xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+     xmlns:r="http://richfaces.org/rich">
 
 <!--
 JBoss, Home of Professional Open Source
@@ -38,7 +38,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
     <ui:define name="component">
 
-        <rich:pickList id="pickList" addAllText="#{richPickListBean.attributes['addAllText'].value}"
+        <r:pickList id="pickList" addAllText="#{richPickListBean.attributes['addAllText'].value}"
             addText="#{richPickListBean.attributes['addText'].value}"
             columnClasses="#{richPickListBean.attributes['columnClasses'].value}"            
             disabled="#{richPickListBean.attributes['disabled'].value}"
@@ -125,13 +125,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <f:selectItems value="#{richPickListBean.validationOptions}" />
 
-        </rich:pickList>
-        <rich:message id="msg" for="pickList" />
+        </r:pickList>
+        <r:message id="msg" for="pickList" />
 
         <br />
         <br />
         <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;" />
-        <a4j:commandButton id="a4jButton" value="a4j:commandButton" render="output" />
+        <r:commandButton id="a4jButton" value="r:commandButton" render="output" />
 
         <br />
         <br />

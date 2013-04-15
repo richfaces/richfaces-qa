@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -40,30 +40,30 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <rich:dataTable id="richDataTable"
+            <r:dataTable id="richDataTable"
                             rows="10"
                             value="#{model.employees}"
                             var="record"
                             >
 
-                <rich:column id="columnName">
+                <r:column id="columnName">
                     <f:facet name="header">
                         <h:outputText id="columnHeaderName" value="Name" />
                     </f:facet>
 
                     <h:outputText value="#{record.name}" />
-                </rich:column>
+                </r:column>
 
                 <f:facet name="footer">
-                    <rich:dataScroller id="scroller" for="richDataTable" page="3"/>
+                    <r:dataScroller id="scroller" for="richDataTable" page="3"/>
                 </f:facet>
 
-            </rich:dataTable>
+            </r:dataTable>
 
             <br/>
 
             <h:commandButton id="button" value="button">
-                <rich:componentControl event="click"
+                <r:componentControl event="click"
                                        operation="#{richComponentControlBean.attributes['operation'].value}"
                                        selector="#{richComponentControlBean.attributes['selector'].value}"
                                        target="#{richComponentControlBean.attributes['target'].value}"

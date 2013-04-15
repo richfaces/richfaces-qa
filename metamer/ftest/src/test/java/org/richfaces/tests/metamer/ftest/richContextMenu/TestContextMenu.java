@@ -45,7 +45,6 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.internal.Locatable;
-import org.richfaces.component.Positioning;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
@@ -53,6 +52,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.contextMenu.RichFacesContextMenu;
+import org.richfaces.ui.common.Positioning;
 import org.testng.annotations.Test;
 
 /**

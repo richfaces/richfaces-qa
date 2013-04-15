@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -39,10 +39,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
             <h:commandButton id="openPanelButton" value="Call the popup">
-                <rich:componentControl target="popupPanel" operation="show" />
+                <r:componentControl target="popupPanel" operation="show" />
             </h:commandButton>
 
-            <rich:popupPanel id="popupPanel"
+            <r:popupPanel id="popupPanel"
                              autosized="#{richPopupPanelBean.attributes['autosized'].value}"
                              controlsClass="#{richPopupPanelBean.attributes['controlsClass'].value}"
                              domElementAttachment="#{richPopupPanelBean.attributes['domElementAttachment'].value}"
@@ -87,7 +87,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                              zindex="#{richPopupPanelBean.attributes['zindex'].value}"
                              >
                 <f:facet name="controls">
-                    <h:outputLink value="#" onclick="#{rich:component('popupPanel')}.hide(); return false;">X</h:outputLink>
+                    <h:outputLink value="#" onclick="#{r:component('popupPanel')}.hide(); return false;">X</h:outputLink>
                 </f:facet>
 
                 <p>
@@ -107,9 +107,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                     <br/>
 
-                    <a href="#" onclick="#{rich:component('popupPanel')}.hide()">hide this panel</a>
+                    <a href="#" onclick="#{r:component('popupPanel')}.hide()">hide this panel</a>
                 </p>
-            </rich:popupPanel>
+            </r:popupPanel>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:rich="http://richfaces.org/rich" xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="http://richfaces.org/a4j">
+     xmlns:h="http://java.sun.com/jsf/html" xmlns:r="http://richfaces.org/rich">
 
 <!--
 JBoss, Home of Professional Open Source
@@ -36,18 +36,18 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     </ui:define>
 
     <ui:define name="component">
-        <a4j:jsFunction name="callAction" render="counter" action="#{richMenuItemBean.incrementCounter()}" />
+        <r:jsFunction name="callAction" render="counter" action="#{richMenuItemBean.incrementCounter()}" />
 
         <p>
             <a href="https://issues.jboss.org/browse/RF-11971">RF-11971</a>
         </p>
 
-        <rich:menuItem label="Click on Me (With Workaround)" mode="ajax"
+        <r:menuItem label="Click on Me (With Workaround)" mode="ajax"
             onclick="if (confirm('are you sure?')) { callAction();} else { return; }" />
-        <rich:menuItem action="#{richMenuItemBean.incrementCounter()}"
+        <r:menuItem action="#{richMenuItemBean.incrementCounter()}"
             label="Click on Me (onclick returns false without confirmation)" mode="ajax" render="counter"
             onclick="return confirm('are you sure?')" />
-        <rich:menuItem action="#{richMenuItemBean.incrementCounter()}"
+        <r:menuItem action="#{richMenuItemBean.incrementCounter()}"
             label="Click on Me (onclick returns null without confirmation)" mode="ajax" render="counter"
             onclick="if (confirm('are you sure?')) {return true;} else {return;}" />
         <p>

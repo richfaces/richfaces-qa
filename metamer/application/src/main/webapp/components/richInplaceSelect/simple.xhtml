@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+       xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -37,7 +37,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <rich:inplaceSelect id="inplaceSelect"
+            <r:inplaceSelect id="inplaceSelect"
                                 activeClass="#{richInplaceSelectBean.attributes['activeClass'].value}"
                                 changedClass="#{richInplaceSelectBean.attributes['changedClass'].value}"
                                 converterMessage="#{richInplaceSelectBean.attributes['converterMessage'].value}"
@@ -105,14 +105,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                 <f:selectItems value="#{richInplaceSelectBean.capitalsOptions}" />
 
-                <a4j:ajax event="change" render="output"/>
+                <r:ajax event="change" render="output"/>
 
-            </rich:inplaceSelect>
-            <rich:message id="msg" for="inplaceSelect"/>
+            </r:inplaceSelect>
+            <r:message id="msg" for="inplaceSelect"/>
 
             <br/><br/>
             <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
-            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
+            <r:commandButton id="a4jButton" value="r:commandButton"/>
             <br/><br/>
 
             output: <h:outputText id="output" value="#{richInplaceSelectBean.attributes['value'].value}"/>
@@ -123,20 +123,20 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <br/><br/>
                 On click:
                 <br/>
-                <input id="cancel" type="button" name="cancel" value="cancel()" onclick="#{rich:component('inplaceSelect')}.cancel()" />
-                <input id="getInput" type="button" name="getInput" value="getInput(), and click on it" onclick="#{rich:component('inplaceSelect')}.getInput().click()" />
-                <input id="getLabel" type="button" name="getLabel" value="getLabel()" onclick="$('[id$=value]').val(String(#{rich:component('inplaceSelect')}.getLabel()))" />
-                <input id="getValue" type="button" name="getValue" value="getValue()" onclick="$('[id$=value]').val(String(#{rich:component('inplaceSelect')}.getValue()))" />
-                <input id="isValueChanged" type="button" name="isValueChanged" value="isValueChanged()" onclick="$('[id$=value]').val(String(#{rich:component('inplaceSelect')}.isValueChanged()))" />
-                <input id="save" type="button" name="save" value="save()" onclick="#{rich:component('inplaceSelect')}.save()" />
-                <input id="setLabel" type="button" name="setLabel" value="setLabel('Completely different label')" onclick="#{rich:component('inplaceSelect')}.setLabel('Completely different label')" />
-                <input id="setValue" type="button" name="setValue" value="setValue('Hawaii')" onclick="#{rich:component('inplaceSelect')}.setValue('Hawaii')" />
+                <input id="cancel" type="button" name="cancel" value="cancel()" onclick="#{r:component('inplaceSelect')}.cancel()" />
+                <input id="getInput" type="button" name="getInput" value="getInput(), and click on it" onclick="#{r:component('inplaceSelect')}.getInput().click()" />
+                <input id="getLabel" type="button" name="getLabel" value="getLabel()" onclick="$('[id$=value]').val(String(#{r:component('inplaceSelect')}.getLabel()))" />
+                <input id="getValue" type="button" name="getValue" value="getValue()" onclick="$('[id$=value]').val(String(#{r:component('inplaceSelect')}.getValue()))" />
+                <input id="isValueChanged" type="button" name="isValueChanged" value="isValueChanged()" onclick="$('[id$=value]').val(String(#{r:component('inplaceSelect')}.isValueChanged()))" />
+                <input id="save" type="button" name="save" value="save()" onclick="#{r:component('inplaceSelect')}.save()" />
+                <input id="setLabel" type="button" name="setLabel" value="setLabel('Completely different label')" onclick="#{r:component('inplaceSelect')}.setLabel('Completely different label')" />
+                <input id="setValue" type="button" name="setValue" value="setValue('Hawaii')" onclick="#{r:component('inplaceSelect')}.setValue('Hawaii')" />
                 <br/><br/>
                 On mouseover:
                 <br/>
-                <input id="isEditState" type="button" name="isEditState" value="isEditState()" onmouseover="$('[id$=value]').val(String(#{rich:component('inplaceSelect')}.isEditState()))" />
-                <input id="showPopup" type="button" name="showPopup" value="showPopup()" onmouseover="#{rich:component('inplaceSelect')}.showPopup()" />
-                <input id="hidePopup" type="button" name="hidePopup" value="hidePopup()" onmouseover="#{rich:component('inplaceSelect')}.hidePopup()" />
+                <input id="isEditState" type="button" name="isEditState" value="isEditState()" onmouseover="$('[id$=value]').val(String(#{r:component('inplaceSelect')}.isEditState()))" />
+                <input id="showPopup" type="button" name="showPopup" value="showPopup()" onmouseover="#{r:component('inplaceSelect')}.showPopup()" />
+                <input id="hidePopup" type="button" name="hidePopup" value="hidePopup()" onmouseover="#{r:component('inplaceSelect')}.hidePopup()" />
             </fieldset>
         </ui:define>
 

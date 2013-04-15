@@ -22,11 +22,11 @@
 package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.component.Mode.ajax;
-import static org.richfaces.component.Mode.client;
-import static org.richfaces.component.Mode.server;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.mode;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuGroupAttributes;
+import static org.richfaces.ui.common.Mode.ajax;
+import static org.richfaces.ui.common.Mode.client;
+import static org.richfaces.ui.common.Mode.server;
 
 import java.net.URL;
 

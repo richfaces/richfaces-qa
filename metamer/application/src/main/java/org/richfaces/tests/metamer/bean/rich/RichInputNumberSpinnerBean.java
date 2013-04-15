@@ -27,10 +27,10 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.richfaces.component.html.HtmlInputNumberSpinner;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.abstractions.NumberInputValidationBean;
 import org.richfaces.tests.metamer.bean.abstractions.NumberInputValidationBeanImpl;
+import org.richfaces.ui.input.HtmlInputNumberSpinner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

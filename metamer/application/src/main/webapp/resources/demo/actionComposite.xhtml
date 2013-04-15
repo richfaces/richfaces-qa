@@ -3,7 +3,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:r="http://richfaces.org/rich"
 	xmlns:composite="http://java.sun.com/jsf/composite">
 
 <composite:interface>
@@ -17,7 +17,7 @@
 	<h:commandButton id="button" value="#{cc.attrs.value}">
 		<composite:insertChildren />
 		
-		<a4j:ajax render="#{cc.attrs.render}" execute="#{cc.attrs.execute}" />
+		<r:ajax render="#{cc.attrs.render}" execute="#{cc.attrs.execute}" />
 	</h:commandButton>
 </composite:implementation>
 </html>

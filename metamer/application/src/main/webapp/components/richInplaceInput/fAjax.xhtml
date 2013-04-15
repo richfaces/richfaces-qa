@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+       xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -37,7 +37,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <rich:inplaceInput id="inplaceInput"
+            <r:inplaceInput id="inplaceInput"
                                activeClass="#{richInplaceInputBean.attributes['activeClass'].value}"
                                changedClass="#{richInplaceInputBean.attributes['changedClass'].value}"
                                converter="#{richInplaceInputBean.attributes['converter'].value}"
@@ -88,12 +88,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                 <f:ajax event="change" render="output :phasesPanel"/>
 
-            </rich:inplaceInput>
-            <rich:message id="msg" for="inplaceInput"/>
+            </r:inplaceInput>
+            <r:message id="msg" for="inplaceInput"/>
 
             <br/><br/>
             <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
-            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
+            <r:commandButton id="a4jButton" value="r:commandButton"/>
             <br/><br/>
 
             output: <h:outputText id="output" value="#{richInplaceInputBean.attributes['value'].value}"/>

@@ -48,10 +48,10 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
-import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.page.fragments.impl.panelMenuGroup.RichFacesPanelMenuGroup;
+import org.richfaces.ui.common.Mode;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

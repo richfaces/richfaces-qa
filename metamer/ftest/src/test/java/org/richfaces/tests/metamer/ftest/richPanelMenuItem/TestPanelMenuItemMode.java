@@ -36,10 +36,10 @@ import java.util.LinkedList;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.ui.common.Mode;
 import org.testng.annotations.Test;
 
 

@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 
-import static org.richfaces.component.Mode.ajax;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.disabledClass;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.data;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.disabled;
@@ -38,6 +37,7 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGrou
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.selectable;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.status;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuGroupAttributes;
+import static org.richfaces.ui.common.Mode.ajax;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;

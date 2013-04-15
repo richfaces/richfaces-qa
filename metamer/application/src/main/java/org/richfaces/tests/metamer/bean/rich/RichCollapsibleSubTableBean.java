@@ -32,12 +32,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import org.richfaces.component.UICollapsibleSubTable;
-import org.richfaces.component.UIDataTableBase;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.ColumnSortingMap;
 import org.richfaces.tests.metamer.model.Employee;
 import org.richfaces.tests.metamer.model.Employee.Sex;
+import org.richfaces.ui.iteration.UICollapsibleSubTable;
+import org.richfaces.ui.iteration.UIDataTableBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

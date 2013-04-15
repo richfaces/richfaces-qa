@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+       xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -40,37 +40,37 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/>
             <h:outputText value="Show data in table: " />
             <h:selectBooleanCheckbox id="noDataCheckbox" value="#{richSubTableBean.state}">
-                <a4j:ajax render="richDataTable"/>
+                <r:ajax render="richDataTable"/>
             </h:selectBooleanCheckbox>
             <br/><br/>
         </ui:define>
 
         <ui:define name="component">
 
-            <rich:dataTable id="richDataTable" value="#{richSubTableBean.lists}" var="list" keepSaved="true">
+            <r:dataTable id="richDataTable" value="#{richSubTableBean.lists}" var="list" keepSaved="true">
                 <f:facet name="header">
-                    <rich:columnGroup id="columnGroup">
-                        <rich:column id="columnHeaderEmployees" colspan="3">
+                    <r:columnGroup id="columnGroup">
+                        <r:column id="columnHeaderEmployees" colspan="3">
                             <h:outputText id="columnHeaderEmployeesText" value="Employees" />
-                        </rich:column>
-                        <rich:column id="columnHeaderName" breakRowBefore="true">
+                        </r:column>
+                        <r:column id="columnHeaderName" breakRowBefore="true">
                             <h:outputText id="columnHeaderNameText" value="Name" />
-                        </rich:column>
-                        <rich:column id="columnHeaderTitle">
+                        </r:column>
+                        <r:column id="columnHeaderTitle">
                             <h:outputText id="columnHeaderTitleText" value="Title" />
-                        </rich:column>
-                        <rich:column id="columnHeaderBirthdate">
+                        </r:column>
+                        <r:column id="columnHeaderBirthdate">
                             <h:outputText id="columnHeaderBirthdateText" value="Birthdate" />
-                        </rich:column>
-                    </rich:columnGroup>
+                        </r:column>
+                    </r:columnGroup>
                 </f:facet>
 
-                <rich:column id="columnSubTable" colspan="3">
-                    <rich:collapsibleSubTableToggler id="subTableTC" for="richSubTable"/>
+                <r:column id="columnSubTable" colspan="3">
+                    <r:collapsibleSubTableToggler id="subTableTC" for="richSubTable"/>
                     <h:outputText value="#{list[0].sex == 'MALE' ? 'Men' : 'Women'}" />
-                </rich:column>
+                </r:column>
 
-                <rich:collapsibleSubTable id="richSubTable"
+                <r:collapsibleSubTable id="richSubTable"
                                           expanded="#{richSubTableBean.expanded[list]}"
                                           expandMode="#{richSubTableBean.attributes['expandMode'].value}"
                                           filterVar="#{richSubTableBean.attributes['filterVar'].value}"
@@ -103,20 +103,20 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                           value="#{richSubTableBean.state ? list : null}"
                                           var="item">
 
-                    <rich:column id="columnName">
+                    <r:column id="columnName">
                         <h:outputText id="name" value="#{item.name}" />
-                    </rich:column>
-                    <rich:column id="columnTitle">
+                    </r:column>
+                    <r:column id="columnTitle">
                         <h:outputText id="title" value="#{item.title}" />
-                    </rich:column>
-                    <rich:column id="columnBirthdate">
+                    </r:column>
+                    <r:column id="columnBirthdate">
                         <h:outputText id="birthdate" value="#{item.birthdate}">
                             <f:convertDateTime pattern="d MMM yyyy"/>
                         </h:outputText>
-                    </rich:column>
+                    </r:column>
 
-                </rich:collapsibleSubTable>
-            </rich:dataTable>
+                </r:collapsibleSubTable>
+            </r:dataTable>
 
         </ui:define>
 

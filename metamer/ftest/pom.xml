@@ -51,8 +51,9 @@ FSF site: http://www.fsf.org. -->
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.richfaces.ui.common</groupId>
-            <artifactId>richfaces-ui-common-api</artifactId>
+            <groupId>org.richfaces</groupId>
+            <artifactId>richfaces</artifactId>
+            <type>pom</type>
         </dependency>
         <!-- Arquillian dependencies -->
         <dependency>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer" >
 
     <!--
@@ -47,11 +47,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:panelGrid columns="2" id="inputPanel1">
                         <h:outputText value="Name: " />
                         <h:inputText id="user1NameInput" value="#{a4jRegionBean.user1.name}">
-                            <a4j:ajax render="outputPanel1" event="keyup" execute="inputPanel1" />
+                            <r:ajax render="outputPanel1" event="keyup" execute="inputPanel1" />
                         </h:inputText>
                         <h:outputText value="Email: " />
                         <h:inputText id="user1EmailInput" value="#{a4jRegionBean.user1.email}">
-                            <a4j:ajax render="outputPanel1" event="keyup" execute="inputPanel1" />
+                            <r:ajax render="outputPanel1" event="keyup" execute="inputPanel1" />
                         </h:inputText>
                     </h:panelGrid>
 
@@ -68,22 +68,22 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/>
 
             <fieldset>
-                <legend>User info panel with a4j:region</legend>
+                <legend>User info panel with r:region</legend>
 
                 <h:panelGrid columns="2">
-                    <a4j:region id="a4jRegion"
+                    <r:region id="a4jRegion"
                                 rendered="#{a4jRegionBean.attributes['rendered'].value}">
                         <h:panelGrid columns="2" id="inputPanel2">
                             <h:outputText value="Name: " />
                             <h:inputText id="user2NameInput" value="#{a4jRegionBean.user2.name}">
-                                <a4j:ajax render="outputPanel2" event="keyup" />
+                                <r:ajax render="outputPanel2" event="keyup" />
                             </h:inputText>
                             <h:outputText value="Email: " />
                             <h:inputText id="user2EmailInput" value="#{a4jRegionBean.user2.email}">
-                                <a4j:ajax render="outputPanel2" event="keyup" />
+                                <r:ajax render="outputPanel2" event="keyup" />
                             </h:inputText>
                         </h:panelGrid>
-                    </a4j:region>
+                    </r:region>
 
                     <h:panelGrid columns="2" id="outputPanel2">
                         <h:outputText value="Entered name:" />

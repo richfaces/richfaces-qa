@@ -24,7 +24,7 @@ package org.richfaces.tests.metamer.ftest.richTreeNode;
 import static org.jboss.arquillian.ajocado.Graphene.retrieveAttribute;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-
+import static org.jboss.arquillian.ajocado.dom.Attribute.SRC;
 import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.KEYDOWN;
@@ -35,11 +35,7 @@ import static org.jboss.arquillian.ajocado.dom.Event.MOUSEMOVE;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOUT;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOVER;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEUP;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.jboss.arquillian.ajocado.dom.Attribute.SRC;
-
 import static org.jboss.test.selenium.JQuerySelectors.append;
 import static org.jboss.test.selenium.JQuerySelectors.not;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
@@ -53,7 +49,6 @@ import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.
 import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.lang;
 import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.onbeforetoggle;
 import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.rendered;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -70,7 +65,6 @@ import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
 import org.jboss.arquillian.ajocado.waiting.retrievers.AttributeRetriever;
 import org.jboss.cheiron.halt.XHRHalter;
 import org.jboss.test.selenium.waiting.EventFiredCondition;
-import org.richfaces.component.SwitchType;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
@@ -78,6 +72,7 @@ import org.richfaces.tests.metamer.ftest.attributes.Attributes;
 import org.richfaces.tests.metamer.ftest.richTree.TreeAttributes;
 import org.richfaces.tests.metamer.ftest.richTree.TreeModel;
 import org.richfaces.tests.metamer.ftest.richTree.TreeNodeModel;
+import org.richfaces.ui.common.SwitchType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

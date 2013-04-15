@@ -2,8 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:r="http://richfaces.org/rich"
+      
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
@@ -53,39 +53,39 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             If add any draggable component to the page - it also starts works as scripts already inplace.
             </i></p>
 
-            <rich:dragIndicator id="indicator" />
+            <r:dragIndicator id="indicator" />
 
             <p>
-            	<rich:tree value="#{richTreeBean.richFacesTreeNodeRoot}" nodeType="#{node.type}" var="node">
+            	<r:tree value="#{richTreeBean.richFacesTreeNodeRoot}" nodeType="#{node.type}" var="node">
  
-        			<rich:treeNode type="country" title="Country node type" expanded="#{richTreeBean.expanded[node]}" >
-        				<a4j:outputPanel layout="block">
-                            <rich:dropTarget acceptedTypes="file" dropListener="#{richTreeBean.processDragging}" />        					
+        			<r:treeNode type="country" title="Country node type" expanded="#{richTreeBean.expanded[node]}" >
+        				<r:outputPanel layout="block">
+                            <r:dropTarget acceptedTypes="file" dropListener="#{richTreeBean.processDragging}" />        					
                             <h:outputText value="#{node.content.label}" />
-        				</a4j:outputPanel>
-        			</rich:treeNode>
+        				</r:outputPanel>
+        			</r:treeNode>
      
-        			<rich:treeNode type="company" title="Company node type" expanded="#{richTreeBean.expanded[node]}" >
-        				<a4j:outputPanel layout="block">
-                            <rich:dragSource type="file" dragIndicator="indicator" />                                                                                					
+        			<r:treeNode type="company" title="Company node type" expanded="#{richTreeBean.expanded[node]}" >
+        				<r:outputPanel layout="block">
+                            <r:dragSource type="file" dragIndicator="indicator" />                                                                                					
         					<h:outputText value="#{node.content.label}" />
-        				</a4j:outputPanel>
-        			</rich:treeNode>
+        				</r:outputPanel>
+        			</r:treeNode>
      
-                    <rich:treeNode type="cd" title="CD node type" expanded="#{richTreeBean.expanded[node]}" >
-                        <a4j:outputPanel layout="block">             
+                    <r:treeNode type="cd" title="CD node type" expanded="#{richTreeBean.expanded[node]}" >
+                        <r:outputPanel layout="block">             
                             <h:outputText value="#{node.content.label}" />
-                        </a4j:outputPanel>
-                    </rich:treeNode>
+                        </r:outputPanel>
+                    </r:treeNode>
      
-        		</rich:tree> 
+        		</r:tree> 
             </p>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
 
             <fieldset>
-                <legend>DnD in rich:tree</legend>
+                <legend>DnD in r:tree</legend>
                 <metamer:attributes value="#{richTreeBean.attributes}" id="attributes" />
             </fieldset>
 

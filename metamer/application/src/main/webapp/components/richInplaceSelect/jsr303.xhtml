@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:rich="http://richfaces.org/rich"
-      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:r="http://richfaces.org/rich"
+      
       xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
@@ -35,61 +35,61 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="notEmpty">
-            <rich:inplaceSelect id="notEmpty"
+            <r:inplaceSelect id="notEmpty"
                                 value="#{richInplaceSelectBean.notEmptyValue}"
                                 >
                 <f:selectItems value="#{richInplaceSelectBean.validationOptionsNotEmpty}" />
-                <a4j:ajax event="blur" render="notEmptyMsg"/>
-            </rich:inplaceSelect>
+                <r:ajax event="blur" render="notEmptyMsg"/>
+            </r:inplaceSelect>
         </ui:define>
         <ui:define name="notEmptyOutput">
             <h:outputText id="notEmptyOutput" value="#{richInplaceSelectBean.notEmptyValue}"/>
         </ui:define>
 
         <ui:define name="pattern">
-            <rich:inplaceSelect id="pattern"
+            <r:inplaceSelect id="pattern"
                                 value="#{richInplaceSelectBean.patternValue}"
                                 >
                 <f:selectItems value="#{richInplaceSelectBean.validationOptionsPattern}" />
-                <a4j:ajax event="change" render="patternMsg"/>
-            </rich:inplaceSelect>
+                <r:ajax event="change" render="patternMsg"/>
+            </r:inplaceSelect>
         </ui:define>
         <ui:define name="patternOutput">
             <h:outputText id="patternOutput" value="#{richInplaceSelectBean.patternValue}"/>
         </ui:define>
 
         <ui:define name="size">
-            <rich:inplaceSelect id="size"
+            <r:inplaceSelect id="size"
                                 value="#{richInplaceSelectBean.sizeValue}"
                                 >
                 <f:selectItems value="#{richInplaceSelectBean.validationOptionsSize}" />
-                <a4j:ajax event="change" render="sizeMsg"/>
-            </rich:inplaceSelect>
+                <r:ajax event="change" render="sizeMsg"/>
+            </r:inplaceSelect>
         </ui:define>
         <ui:define name="sizeOutput">
             <h:outputText id="sizeOutput" value="#{richInplaceSelectBean.sizeValue}"/>
         </ui:define>
 
         <ui:define name="custom">
-            <rich:inplaceSelect id="custom"
+            <r:inplaceSelect id="custom"
                                 value="#{richInplaceSelectBean.customValue}"
                                 >
                 <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>
                 <f:selectItems value="#{richInplaceSelectBean.validationOptionsCustom}" />
-                <a4j:ajax event="change" render="customMsg"/>
-            </rich:inplaceSelect>
+                <r:ajax event="change" render="customMsg"/>
+            </r:inplaceSelect>
         </ui:define>
         <ui:define name="customOutput">
             <h:outputText id="customOutput" value="#{richInplaceSelectBean.customValue}"/>
         </ui:define>
 
         <ui:define name="required" >
-            <rich:inplaceSelect id="required" required="true"
+            <r:inplaceSelect id="required" required="true"
                                 requiredMessage="#{richInplaceSelectBean.attributes['requiredMessage'].value}"
                                 value="#{richInplaceSelectBean.requiredValue}">
                 <f:selectItems value="#{richInplaceSelectBean.validationOptionsRequired}" />
-                <a4j:ajax event="change" render="requiredMsg"/>
-            </rich:inplaceSelect>
+                <r:ajax event="change" render="requiredMsg"/>
+            </r:inplaceSelect>
         </ui:define>
         <ui:define name="requiredOutput">
             <h:outputText id="requiredOutput" value="#{richInplaceSelectBean.requiredValue}"/>

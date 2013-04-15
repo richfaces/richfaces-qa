@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:rich="http://richfaces.org/rich"
-      xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:r="http://richfaces.org/rich"
+      >
     <!--
     JBoss, Home of Professional Open Source
     Copyright 2010-2013, Red Hat, Inc. and individual contributors
@@ -39,13 +39,13 @@
 
         <ui:define name="component">
             <h:inputText id="input" value="#{richPlaceholderBean.validatedInput}">
-                <rich:placeholder id="placeholder"
+                <r:placeholder id="placeholder"
                                   value="#{richPlaceholderBean.attributes['value'].value}" 
                                   />
-                <rich:validator event="blur"/>
-                <a4j:ajax event="change" execute="@form" render="output" />
+                <r:validator event="blur"/>
+                <r:ajax event="change" execute="@form" render="output" />
             </h:inputText>
-            <rich:message for="input" id="msg" ajaxRendered="true"/>
+            <r:message for="input" id="msg" ajaxRendered="true"/>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

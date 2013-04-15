@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" >
+      xmlns:r="http://richfaces.org/rich" >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -38,30 +38,30 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <rich:tabPanel id="tabPanel"
+            <r:tabPanel id="tabPanel"
                            itemChangeListener="#{richBean.itemChangeListener}"
                            >
 
-                <rich:tab id="tab1" name="tab1" header="tab1 header">
+                <r:tab id="tab1" name="tab1" header="tab1 header">
                     content of tab 1
-                </rich:tab>
-                <rich:tab id="tab2" name="tab2" header="tab2 header">
+                </r:tab>
+                <r:tab id="tab2" name="tab2" header="tab2 header">
                     content of tab 2
-                </rich:tab>
-                <rich:tab id="tab3" name="tab3" header="tab3 header">
+                </r:tab>
+                <r:tab id="tab3" name="tab3" header="tab3 header">
                     content of tab 3
-                </rich:tab>
-                <rich:tab id="tab4" name="tab4" header="tab4 header" disabled="true">
+                </r:tab>
+                <r:tab id="tab4" name="tab4" header="tab4 header" disabled="true">
                     content of tab 4
-                </rich:tab>
-                <rich:tab id="tab5" name="tab5" header="tab5 header">
+                </r:tab>
+                <r:tab id="tab5" name="tab5" header="tab5 header">
                     content of tab 5
-                </rich:tab>
-                <rich:itemChangeListener type="org.richfaces.tests.metamer.bean.ItemChangeListenerBean"/>
-                <rich:itemChangeListener listener="#{itemChangeListenerBean2.processItemChange}"/>
-            </rich:tabPanel>
+                </r:tab>
+                <r:itemChangeListener type="org.richfaces.tests.metamer.bean.ItemChangeListenerBean"/>
+                <r:itemChangeListener listener="#{itemChangeListenerBean2.processItemChange}"/>
+            </r:tabPanel>
             <!-- TODO after issue RF-12089 is solved uncomment here
-            rich:itemChangeListener for="tabPanel" type="org.richfaces.tests.metamer.bean.ItemChangeListenerBean3"
+            r:itemChangeListener for="tabPanel" type="org.richfaces.tests.metamer.bean.ItemChangeListenerBean3"
             -->
         </ui:define>
 

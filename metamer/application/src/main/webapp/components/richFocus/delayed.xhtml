@@ -4,8 +4,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:r="http://richfaces.org/rich"
+      
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
     <!--
@@ -44,28 +44,28 @@
 
         <ui:define name="component">
 
-            <rich:panel header="Expected behavior">
+            <r:panel header="Expected behavior">
                 Name input in the second step of wizard should be automatically focused.
-            </rich:panel>
+            </r:panel>
 
             <h:form id="myForm">
                 <h:panelGrid width="500" columns="2">
-                    <rich:panel styleClass="wizard">
+                    <r:panel styleClass="wizard">
                         <f:facet name="header">
                             <h:outputText
                                 value="First input in the next step should be focused!" />
                         </f:facet>
-                        <rich:togglePanel switchType="client" onitemchange="#{rich:component('focus')}.applyFocus();">
-                            <rich:togglePanelItem>
+                        <r:togglePanel switchType="client" onitemchange="#{r:component('focus')}.applyFocus();">
+                            <r:togglePanelItem>
                                 <div style="position: relative; height: 80px">
                                     Foo content!
-                                    <a4j:commandButton id="next" style="float:right" value="Next &gt;&gt;">
-                                        <rich:toggleControl targetItem="@next" event="click" />
-                                    </a4j:commandButton>
+                                    <r:commandButton id="next" style="float:right" value="Next &gt;&gt;">
+                                        <r:toggleControl targetItem="@next" event="click" />
+                                    </r:commandButton>
                                 </div>
-                            </rich:togglePanelItem>
-                            <rich:togglePanelItem>
-                                <rich:focus id="focus"
+                            </r:togglePanelItem>
+                            <r:togglePanelItem>
+                                <r:focus id="focus"
                                             ajaxRendered="#{richFocusBean.attributes['ajaxRendered'].value}"
                                             delayed="true"
                                             validationAware="#{richFocusBean.attributes['validationAware'].value}" />
@@ -80,9 +80,9 @@
                                     <h:inputText id="address" />
                                     <br />
                                 </div>
-                            </rich:togglePanelItem>
-                        </rich:togglePanel>
-                    </rich:panel>
+                            </r:togglePanelItem>
+                        </r:togglePanel>
+                    </r:panel>
                 </h:panelGrid>
 
                 <br />

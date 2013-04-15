@@ -32,9 +32,9 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.convert.Converter;
 
-import org.richfaces.component.UIOrderingList;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.model.Capital;
+import org.richfaces.ui.select.UIOrderingList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

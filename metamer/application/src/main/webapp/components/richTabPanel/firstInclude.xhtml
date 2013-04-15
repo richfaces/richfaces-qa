@@ -4,20 +4,20 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:rich="http://richfaces.org/rich"
-	xmlns:a4j="http://richfaces.org/a4j">
+	xmlns:r="http://richfaces.org/rich"
+	>
 
-	<rich:dataTable id="richDataTable2"
+	<r:dataTable id="richDataTable2"
 		value="#{nonPaginatedDataTable.capitals}"
 		var="record">
 
-		<rich:column id="columnState">
+		<r:column id="columnState">
 			<f:facet name="header">
 				<h:outputText id="columnHeaderState" value="State" />
 			</f:facet>
 			<h:outputText value="#{record.state}" />
-		</rich:column>
+		</r:column>
 
-	</rich:dataTable>
+	</r:dataTable>
 
 </ui:composition>

@@ -4,8 +4,8 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" 
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich"
-      xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:r="http://richfaces.org/rich"
+      >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -40,18 +40,18 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <rich:notifyStack id="notifyStack"
+            <r:notifyStack id="notifyStack"
                               direction="#{richNotifyStackBean.attributes['direction'].value}"
                               method="#{richNotifyStackBean.attributes['method'].value}"
                               position="#{richNotifyStackBean.attributes['position'].value}"
                               rendered="#{richNotifyStackBean.attributes['rendered'].value}"/>
 
-            <a4j:commandButton id="generateMessage" value="Generate message"
+            <r:commandButton id="generateMessage" value="Generate message"
                                action="#{richNotifyStackBean.generateInfoMessage()}" />
 
-            <a4j:commandButton id="rerenderStack" value="Rerender stack (clears messages in stack)" render="notifyStack"  />
+            <r:commandButton id="rerenderStack" value="Rerender stack (clears messages in stack)" render="notifyStack"  />
 
-            <rich:notifyMessage rendered="true"
+            <r:notifyMessage rendered="true"
                                 showCloseButton="true"
                                 showSummary="true"
                                 stack="notifyStack"

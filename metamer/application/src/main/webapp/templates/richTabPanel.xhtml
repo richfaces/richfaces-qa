@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich">
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich">
 
 <!--
 JBoss, Home of Professional Open Source
@@ -26,25 +26,25 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     -->
 
 <ui:composition>
-    <rich:tabPanel id="containerRichTabPanel" activeItem="containerItem3" switchType="client">
+    <r:tabPanel id="containerRichTabPanel" activeItem="containerItem3" switchType="client">
 
-        <rich:tab id="containerItem1" name="containerItem1" header="Item 1">
+        <r:tab id="containerItem1" name="containerItem1" header="Item 1">
                 content of item 1
-            </rich:tab>
-        <rich:tab id="containerItem2" name="containerItem2" header="Item 2">
+            </r:tab>
+        <r:tab id="containerItem2" name="containerItem2" header="Item 2">
                 content of item 2
-            </rich:tab>
-        <rich:tab id="containerItem3" name="containerItem3" header="Item 3">
+            </r:tab>
+        <r:tab id="containerItem3" name="containerItem3" header="Item 3">
             <ui:decorate template="#{templateBean.nextTemplate}.xhtml" />
-        </rich:tab>
-        <rich:tab id="containerItem4" name="containerItem4" header="Item 4" disabled="true">
+        </r:tab>
+        <r:tab id="containerItem4" name="containerItem4" header="Item 4" disabled="true">
                 content of item 4
-            </rich:tab>
-        <rich:tab id="containerItem5" name="containerItem5" header="Item 5">
+            </r:tab>
+        <r:tab id="containerItem5" name="containerItem5" header="Item 5">
                 content of item 5
-            </rich:tab>
+            </r:tab>
 
-    </rich:tabPanel>
+    </r:tabPanel>
 
 </ui:composition>
 </html>

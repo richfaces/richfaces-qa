@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richTooltip;
 
 import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
 import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
-
 import static org.jboss.arquillian.ajocado.guard.RequestGuardFactory.guard;
 
 import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
@@ -31,8 +30,8 @@ import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.request.RequestType;
-import org.richfaces.TooltipMode;
 import org.richfaces.tests.metamer.ftest.model.AbstractModel;
+import org.richfaces.ui.output.TooltipMode;
 
 
 

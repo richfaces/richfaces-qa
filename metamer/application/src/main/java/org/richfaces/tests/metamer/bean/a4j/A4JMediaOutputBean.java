@@ -34,9 +34,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.imageio.ImageIO;
 
-import org.richfaces.component.UIMediaOutput;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.MediaData;
+import org.richfaces.ui.output.UIMediaOutput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

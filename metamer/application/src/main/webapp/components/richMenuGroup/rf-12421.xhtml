@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
-      xmlns:a4j="http://richfaces.org/a4j" xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:r="http://richfaces.org/rich"
+       xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -39,62 +39,62 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="component">
         
         	<p>
-        		<h3>menuGroup in dropDownMenu does not work when rich:messages present</h3>
-        		Page contains example from showcase (dropDownMenu) + rich:message component.<br/>
-        		With rich:message component menuGroup should not work
+        		<h3>menuGroup in dropDownMenu does not work when r:messages present</h3>
+        		Page contains example from showcase (dropDownMenu) + r:message component.<br/>
+        		With r:message component menuGroup should not work
         	</p>
         
-        	<rich:messages id="testMessages" />
-        	<a4j:commandButton action="#{richDropDownMenuBean.addMessage}" value="Add message!" />
+        	<r:messages id="testMessages" />
+        	<r:commandButton action="#{richDropDownMenuBean.addMessage}" value="Add message!" />
         	<br/><br/>
         
-        	<rich:toolbar height="26px">
-	            <rich:dropDownMenu mode="ajax">
+        	<r:toolbar height="26px">
+	            <r:dropDownMenu mode="ajax">
 	                <f:facet name="label">
 	                    <h:panelGroup>
 	                        <h:graphicImage value="/resources/images/icons/copy.gif" styleClass="pic" alt="copy" />
 	                        <h:outputText value="File" />
 	                    </h:panelGroup>
 	                </f:facet>
-	                <rich:menuItem label="New" action="#{richDropDownMenuBean.doNew}" icon="/resources/images/icons/create_doc.gif">
-	                </rich:menuItem>
-	                <rich:menuItem label="Open" action="#{richDropDownMenuBean.doOpen}" icon="/resources/images/icons/open.gif" />
-	                <rich:menuGroup label="Save As...">
-	                    <rich:menuItem label="Save" action="#{richDropDownMenuBean.doSave}" icon="/resources/images/icons/save.gif" />
-	                    <rich:menuItem label="Save All" action="#{richDropDownMenuBean.doSaveAll}">
+	                <r:menuItem label="New" action="#{richDropDownMenuBean.doNew}" icon="/resources/images/icons/create_doc.gif">
+	                </r:menuItem>
+	                <r:menuItem label="Open" action="#{richDropDownMenuBean.doOpen}" icon="/resources/images/icons/open.gif" />
+	                <r:menuGroup label="Save As...">
+	                    <r:menuItem label="Save" action="#{richDropDownMenuBean.doSave}" icon="/resources/images/icons/save.gif" />
+	                    <r:menuItem label="Save All" action="#{richDropDownMenuBean.doSaveAll}">
 	                        <f:facet name="icon">
 	                            <h:graphicImage value="/resources/images/icons/save_all.gif" alt="save_all" />
 	                        </f:facet>
-	                    </rich:menuItem>
-	                </rich:menuGroup>
-	                <rich:menuItem label="Close" action="#{richDropDownMenuBean.doClose}" />
-	                <rich:menuSeparator id="menuSeparator11" />
-	                <rich:menuItem label="Exit" action="#{richDropDownMenuBean.doExit}" />
+	                    </r:menuItem>
+	                </r:menuGroup>
+	                <r:menuItem label="Close" action="#{richDropDownMenuBean.doClose}" />
+	                <r:menuSeparator id="menuSeparator11" />
+	                <r:menuItem label="Exit" action="#{richDropDownMenuBean.doExit}" />
 	
-	            </rich:dropDownMenu>
+	            </r:dropDownMenu>
 	
-	            <rich:dropDownMenu mode="ajax">
+	            <r:dropDownMenu mode="ajax">
 	                <f:facet name="label">
 	                    <h:panelGrid cellpadding="0" cellspacing="0" columns="2" style="vertical-align:middle">
 	                        <h:outputText value="Links" />
 	                    </h:panelGrid>
 	                </f:facet>
-	                <rich:menuItem submitMode="client" onclick="document.location.href='http://labs.jboss.com/jbossrichfaces/'">
+	                <r:menuItem submitMode="client" onclick="document.location.href='http://labs.jboss.com/jbossrichfaces/'">
 	                    <h:outputText value="RichFaces Home Page" />
-	                </rich:menuItem>
-	                <rich:menuItem submitMode="client"
+	                </r:menuItem>
+	                <r:menuItem submitMode="client"
 	                    onclick="document.location.href='http://jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=261'">
 	                    <h:outputText value="RichFaces Forum" />
-	                </rich:menuItem>
-	            </rich:dropDownMenu>
-	        </rich:toolbar>
+	                </r:menuItem>
+	            </r:dropDownMenu>
+	        </r:toolbar>
 	        
 	        <br /><br />
 
-            <a4j:outputPanel ajaxRendered="true">
+            <r:outputPanel ajaxRendered="true">
                 Current Selection: 
                 <h:outputText id="output" style="font-weight:bold" value="#{richDropDownMenuBean.current}"></h:outputText>
-            </a4j:outputPanel>
+            </r:outputPanel>
 
             <br /><br />
             

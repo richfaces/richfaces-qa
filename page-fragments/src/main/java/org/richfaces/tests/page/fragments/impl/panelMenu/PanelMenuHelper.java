@@ -23,7 +23,7 @@ package org.richfaces.tests.page.fragments.impl.panelMenu;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
-import org.richfaces.component.Mode;
+import org.richfaces.ui.common.Mode;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>

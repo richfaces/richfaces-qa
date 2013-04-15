@@ -23,9 +23,7 @@ package org.richfaces.tests.metamer.ftest.attributes;
 
 import static org.jboss.arquillian.ajocado.Graphene.elementNotVisible;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.tooltipAttributes;
 import static org.richfaces.tests.metamer.ftest.richTooltip.TooltipAttributes.direction;
@@ -35,9 +33,9 @@ import java.net.URL;
 
 import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.component.Positioning;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.richTooltip.TooltipModel;
+import org.richfaces.ui.common.Positioning;
 import org.testng.annotations.Test;
 
 

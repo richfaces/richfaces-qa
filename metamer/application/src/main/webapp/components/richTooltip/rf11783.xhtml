@@ -2,8 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:r="http://richfaces.org/rich"
+      
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
@@ -50,58 +50,58 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
            </p>
 
-           <a4j:commandButton id="triggerUpdate" value="Update testValue and rerender next Button"
+           <r:commandButton id="triggerUpdate" value="Update testValue and rerender next Button"
                               actionListener="#{richTooltipBean.changePropertyVal}" render="myButton" />               
            <br/>
-           <a4j:commandButton id="triggerUpdateEDT" value="Update testValue and rerender Button in EDT"
+           <r:commandButton id="triggerUpdateEDT" value="Update testValue and rerender Button in EDT"
                               actionListener="#{richTooltipBean.changePropertyVal}" render="myEDTButton" />
            <br/>
            <br/>
 
            <!-- component -->
-           <a4j:commandButton id="myButton"
+           <r:commandButton id="myButton"
                               value=" test "
                               action="apage?faces-redirect=true"
                               disabled="#{empty richTooltipBean.testProperty}">
-                <rich:tooltip mode="client" showDelay="850">
+                <r:tooltip mode="client" showDelay="850">
                    <h:panelGroup layout="block" style="width: 200px; text-align: justify">
                       <h:outputText escape="false" value="some text"/>
                    </h:panelGroup>
-                </rich:tooltip>
-           </a4j:commandButton>
+                </r:tooltip>
+           </r:commandButton>
 
            <br/>
            <br/>
 
-           <rich:extendedDataTable id="richEDT"
+           <r:extendedDataTable id="richEDT"
                                     rows="3"
                                     value="#{richExtendedDataTableBean.state ? model.capitals : null}"
                                     var="record"
                                     style="width: 230px;"
                                     >
 
-                <rich:column id="columnState" sortBy="#{record.state}">
+                <r:column id="columnState" sortBy="#{record.state}">
                     <h:outputText value="#{record.state}" />
-                </rich:column>
+                </r:column>
 
-                <rich:column id="columnCapital" sortBy="#{record.name}">
+                <r:column id="columnCapital" sortBy="#{record.name}">
                     <h:outputText value="#{record.name}" />
-                </rich:column>
+                </r:column>
  
                 <f:facet name="footer">
-                    <a4j:commandButton id="myEDTButton"
+                    <r:commandButton id="myEDTButton"
                               value=" test EDT "
                               action="apage?faces-redirect=true"
                               disabled="#{empty richTooltipBean.testProperty}">
-                        <rich:tooltip mode="client" showDelay="850">
+                        <r:tooltip mode="client" showDelay="850">
                            <h:panelGroup layout="block" style="width: 200px; text-align: justify">
                               <h:outputText escape="false" value="some text"/>
                            </h:panelGroup>
-                        </rich:tooltip>
-                   </a4j:commandButton>
+                        </r:tooltip>
+                   </r:commandButton>
                 </f:facet> 
 
-            </rich:extendedDataTable>
+            </r:extendedDataTable>
 
         </ui:define>
 

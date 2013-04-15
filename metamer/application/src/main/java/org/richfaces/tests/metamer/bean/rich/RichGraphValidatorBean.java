@@ -21,8 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.bean.rich;
 
-import com.google.common.collect.Lists;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,14 +39,16 @@ import javax.validation.constraints.NotNull;
 import javax.validation.groups.Default;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.richfaces.component.UIGraphValidator;
 import org.richfaces.tests.metamer.Attribute;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.validation.groups.ValidationGroupAllComponents;
 import org.richfaces.tests.metamer.validation.groups.ValidationGroupBooleanInputs;
 import org.richfaces.tests.metamer.validation.groups.ValidationGroupNumericInputs;
+import org.richfaces.ui.validation.UIGraphValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Lists;
 
 /**
  * Managed Bean for rich:graphValidator

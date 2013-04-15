@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -60,52 +60,52 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="jsr-303-inBean">
-            <rich:calendar id="jsr-303-inBean" value="#{validationMessagesBean.dateWithMessagesJSR}">
+            <r:calendar id="jsr-303-inBean" value="#{validationMessagesBean.dateWithMessagesJSR}">
                 <f:convertDateTime pattern="MMM d, yyyy"/>
-            </rich:calendar>
+            </r:calendar>
         </ui:define>      
 
         <ui:define name="jsr-303-inAtt">
-            <rich:calendar id="jsr-303-inAtt" value="#{validationMessagesBean.dateWithoutMessagesJSR}" 
+            <r:calendar id="jsr-303-inAtt" value="#{validationMessagesBean.dateWithoutMessagesJSR}" 
                            validatorMessage="Custom validator error message from attribute of component."
                            >
                 <f:convertDateTime pattern="MMM d, yyyy"/>
-            </rich:calendar>
+            </r:calendar>
         </ui:define> 
 
         <ui:define name="jsr-303-inBundle">
-            <rich:calendar id="jsr-303-inBundle" value="#{validationMessagesBean.dateWithoutMessages2JSR}" >
+            <r:calendar id="jsr-303-inBundle" value="#{validationMessagesBean.dateWithoutMessages2JSR}" >
                 <f:convertDateTime pattern="MMM d, yyyy"/>
-            </rich:calendar>
+            </r:calendar>
         </ui:define>  
 
         <ui:define name="csv-inBean">
-            <rich:calendar id="csv-inBean" value="#{validationMessagesBean.dateWithMessagesCSV}" >
+            <r:calendar id="csv-inBean" value="#{validationMessagesBean.dateWithMessagesCSV}" >
                 <f:convertDateTime pattern="MMM d, yyyy"/>
-            </rich:calendar>
+            </r:calendar>
         </ui:define>  
 
         <ui:define name="csv-inAtt">
-            <rich:calendar id="csv-inAtt" value="#{validationMessagesBean.dateWithoutMessagesCSV}" 
+            <r:calendar id="csv-inAtt" value="#{validationMessagesBean.dateWithoutMessagesCSV}" 
                            validatorMessage="Custom validator error message from attribute of component.">
                 <f:convertDateTime pattern="MMM d, yyyy"/>
-            </rich:calendar>
+            </r:calendar>
         </ui:define>  
 
         <ui:define name="csv-inBundle">
-            <rich:calendar id="csv-inBundle" value="#{validationMessagesBean.dateWithoutMessages2CSV}">
+            <r:calendar id="csv-inBundle" value="#{validationMessagesBean.dateWithoutMessages2CSV}">
                 <f:convertDateTime pattern="MMM d, yyyy"/>
-            </rich:calendar>
+            </r:calendar>
         </ui:define>  
 
         <ui:define name="jsf-inAtt">
             <ui:remove>
                 <!-- validator can be set by f:validator but it needs a record in faces-config.xml -->
             </ui:remove>
-            <rich:calendar validator="#{validationMessagesBean.validate}" id="jsf-inAtt" value="#{validationMessagesBean.dateJSF}" 
+            <r:calendar validator="#{validationMessagesBean.validate}" id="jsf-inAtt" value="#{validationMessagesBean.dateJSF}" 
                            validatorMessage="Custom validator error message from attribute of component.">
                 <f:convertDateTime pattern="MMM d, yyyy"/>
-            </rich:calendar>
+            </r:calendar>
         </ui:define>  
 
         <ui:define name="jsf-inBundle">

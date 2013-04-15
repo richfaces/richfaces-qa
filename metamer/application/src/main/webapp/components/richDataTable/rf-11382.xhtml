@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -45,7 +45,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 	   <p>
 	      <b>Description:</b>: In Richfaces 4 both datatable and extendedDatatable evaluate the value attribute even when rendered is set to false, even though it is not necessary. This makes it hard to achieve performance by trimming parts of the view tree. The built-in h:dataTable behaves correctly in that case.
 	   </p>
-	   <rich:dataTable id="richDataTable" value="#{richDataTableBean.emptyModel}" rendered="false" />
+	   <r:dataTable id="richDataTable" value="#{richDataTableBean.emptyModel}" rendered="false" />
 	   <br/>
 	   CALLED: <h:outputText id="outputCalled" value="#{richDataTableBean.emptyModelCalled}" />
         </ui:define>

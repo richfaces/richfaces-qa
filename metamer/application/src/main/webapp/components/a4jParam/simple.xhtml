@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
     <!--
@@ -40,18 +40,18 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <a4j:commandButton id="button1" value="A4J Command Button" render="output1,output2" >
-                <a4j:param id="a4jParam1"
+            <r:commandButton id="button1" value="A4J Command Button" render="output1,output2" >
+                <r:param id="a4jParam1"
                            assignTo="#{a4jParamBean.parameter}"
                            name="#{a4jParamBean.attributes['name'].value}"
                            noEscape="#{a4jParamBean.attributes['noEscape'].value}"
                            rendered="#{a4jParamBean.attributes['rendered'].value}"
                            value="#{a4jParamBean.attributes['value'].value}"
                            />
-            </a4j:commandButton>
+            </r:commandButton>
 
             <h:commandButton id="button2" value="H Command Button">
-                <a4j:param id="a4jParam2"
+                <r:param id="a4jParam2"
                            assignTo="#{a4jParamBean.parameter}"
                            name="#{a4jParamBean.attributes['name'].value}"
                            noEscape="#{a4jParamBean.attributes['noEscape'].value}"
@@ -60,13 +60,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                            />
             </h:commandButton>
 
-            <a4j:commandButton id="resetButton" value="Reset" action="#{a4jParamBean.reset}" render="output1,output2"/>
+            <r:commandButton id="resetButton" value="Reset" action="#{a4jParamBean.reset}" render="output1,output2"/>
 
             <br/><br/>
 
-            output1: <a4j:outputPanel id="output1" layout="inline">#{a4jParamBean.parameter}</a4j:outputPanel>
+            output1: <r:outputPanel id="output1" layout="inline">#{a4jParamBean.parameter}</r:outputPanel>
             <br/>
-            output2: <a4j:outputPanel id="output2" layout="inline">#{a4jParamBean.requestParameter}</a4j:outputPanel>
+            output2: <r:outputPanel id="output2" layout="inline">#{a4jParamBean.requestParameter}</r:outputPanel>
 
         </ui:define>
 

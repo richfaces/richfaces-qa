@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -41,67 +41,67 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <h:panelGrid id="panel1Controls" columns="6">
                 panel1:
                 <h:commandButton id="tc11" value="Item 1">
-                    <rich:toggleControl targetPanel="panel1" targetItem="item1" />
+                    <r:toggleControl targetPanel="panel1" targetItem="item1" />
                 </h:commandButton>
                 <h:outputText value=" | " />
                 <h:commandButton id="tc12" value="Item 2">
-                    <rich:toggleControl targetPanel="panel1" targetItem="item2" />
+                    <r:toggleControl targetPanel="panel1" targetItem="item2" />
                 </h:commandButton>
                 <h:outputText value=" | " />
                 <h:commandButton id="tc13" value="Item 3">
-                    <rich:toggleControl targetPanel="panel1" targetItem="item3" />
+                    <r:toggleControl targetPanel="panel1" targetItem="item3" />
                 </h:commandButton>
             </h:panelGrid>
 
             <h:panelGrid id="panel2Controls" columns="6">
                 panel2:
                 <h:commandButton id="tc21" value="Item 1">
-                    <rich:toggleControl targetPanel="panel2" targetItem="item1" />
+                    <r:toggleControl targetPanel="panel2" targetItem="item1" />
                 </h:commandButton>
                 <h:outputText value=" | " />
                 <h:commandButton id="tc22" value="Item 2">
-                    <rich:toggleControl targetPanel="panel2" targetItem="item2" />
+                    <r:toggleControl targetPanel="panel2" targetItem="item2" />
                 </h:commandButton>
                 <h:outputText value=" | " />
                 <h:commandButton id="tc23" value="Item 3">
-                    <rich:toggleControl targetPanel="panel2" targetItem="item3" />
+                    <r:toggleControl targetPanel="panel2" targetItem="item3" />
                 </h:commandButton>
             </h:panelGrid>
 
             universal toggle control (settings below)
             <h:commandButton id="tcCustom" value="#{richToggleControlBean.attributes['targetPanel'].value} #{richToggleControlBean.attributes['targetItem'].value}">
-                <rich:toggleControl targetPanel="#{richToggleControlBean.attributes['targetPanel'].value}"
+                <r:toggleControl targetPanel="#{richToggleControlBean.attributes['targetPanel'].value}"
                                     targetItem="#{richToggleControlBean.attributes['targetItem'].value}"
                                     />
             </h:commandButton>
 
             <br/><br/>
 
-            <rich:tabPanel id="panel1" activeItem="item1">
-                <rich:tab id="item11" name="item1">
+            <r:tabPanel id="panel1" activeItem="item1">
+                <r:tab id="item11" name="item1">
                     <p>content of item 1</p>
-                </rich:tab>
-                <rich:tab id="item12" name="item2">
+                </r:tab>
+                <r:tab id="item12" name="item2">
                     <p>content of item 2</p>
-                </rich:tab>
-                <rich:tab id="item13" name="item3">
+                </r:tab>
+                <r:tab id="item13" name="item3">
                     <p>content of item 3</p>
-                </rich:tab>
-            </rich:tabPanel>
+                </r:tab>
+            </r:tabPanel>
 
             <br/>
 
-            <rich:tabPanel id="panel2" activeItem="item1">
-                <rich:tab id="item21" name="item1">
+            <r:tabPanel id="panel2" activeItem="item1">
+                <r:tab id="item21" name="item1">
                     <p>content of item 1</p>
-                </rich:tab>
-                <rich:tab id="item22" name="item2">
+                </r:tab>
+                <r:tab id="item22" name="item2">
                     <p>content of item 2</p>
-                </rich:tab>
-                <rich:tab id="item23" name="item3">
+                </r:tab>
+                <r:tab id="item23" name="item3">
                     <p>content of item 3</p>
-                </rich:tab>
-            </rich:tabPanel>
+                </r:tab>
+            </r:tabPanel>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

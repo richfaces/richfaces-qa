@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:r="http://richfaces.org/rich"
+      
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"> 
 
@@ -14,8 +14,8 @@
     
         <h:form id="simpleForm">
             <h:panelGrid>
-                <rich:tabPanel id="tabPanelWithPopUp" >
-                    <rich:tab style="width: 500px;">
+                <r:tabPanel id="tabPanelWithPopUp" >
+                    <r:tab style="width: 500px;">
                         <f:facet name="header">
                             <h:graphicImage library="images" name="star.png" />
                         </f:facet>
@@ -26,12 +26,12 @@ Nulla interdum porta posuere. Cum sociis natoque penatibus et magnis dis parturi
 Mauris ipsum lorem, ornare at tempus a, posuere sit amet augue. Maecenas in mollis purus. Fusce nec tincidunt justo. Quisque mollis vehicula libero sed congue. Proin vitae gravida nulla. Vivamus interdum lectus quis metus porta a mollis dolor laoreet. Mauris non blandit sem. Donec interdum sodales erat non pretium. Donec venenatis vulputate suscipit. Quisque et sapien ante, ut auctor urna. Integer ante quam, sollicitudin vitae tincidunt non, tincidunt at risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper eros eu tellus pretium viverra. Cras fermentum orci sit amet urna cursus tristique. Integer suscipit sem adipiscing arcu ultricies id fringilla ante semper.
 
 Aenean vel leo ut tortor venenatis interdum. Integer ultricies vestibulum neque in fermentum. Nullam eu tempus justo. Sed lorem orci, varius vel dictum a, ultrices a enim. Fusce pellentesque metus eget augue sodales tempus. Sed tincidunt fringilla porttitor. Nulla non ante vel neque sollicitudin eleifend. Fusce vitae turpis urna, ut varius erat. Maecenas neque ipsum, pretium aliquet ullamcorper nec, porttitor at purus. Curabitur ornare aliquam interdum. Nullam a ante est. Nullam sit amet aliquet neque. Praesent eget massa non lorem malesuada rutrum non ut nulla. Vestibulum facilisis est ut ligula gravida dignissim. Integer auctor, lectus id placerat lobortis, orci sapien adipiscing erat, eu rhoncus odio sem sit amet lorem. Quisque non ligula at magna vehicula facilisis.</div>                                       
-                    </rich:tab>
-                </rich:tabPanel>
+                    </r:tab>
+                </r:tabPanel>
             </h:panelGrid>
             
             <h:commandButton id="openPanelButton" value="Call the popup">
-                <rich:componentControl target="myPopUp" operation="show" />
+                <r:componentControl target="myPopUp" operation="show" />
             </h:commandButton>
             
         </h:form>

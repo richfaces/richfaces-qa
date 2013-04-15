@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-    xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+     xmlns:r="http://richfaces.org/rich">
 
 <!--
 JBoss, Home of Professional Open Source
@@ -43,7 +43,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <f:selectItem itemValue="body" itemLabel="body" />
             <f:selectItem itemValue="form" itemLabel="form" />
             <f:selectItem itemValue="parent" itemLabel="parent" />
-            <a4j:ajax event="change" render="popupPanel" />
+            <r:ajax event="change" render="popupPanel" />
         </h:selectOneRadio>
 
         <br />
@@ -55,26 +55,26 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <br />
 
         <h:commandButton id="openPanelButton" value="Call the popup">
-            <rich:componentControl target="popupPanel" operation="show" />
+            <r:componentControl target="popupPanel" operation="show" />
         </h:commandButton>
 
-        <rich:popupPanel id="popupPanel" header="header"
+        <r:popupPanel id="popupPanel" header="header"
             domElementAttachment="#{richPopupPanelBean.attributes['domElementAttachment'].value}">
             <f:facet name="controls">
-                <h:outputLink value="#" onclick="#{rich:component('popupPanel')}.hide(); return false;">X</h:outputLink>
+                <h:outputLink value="#" onclick="#{r:component('popupPanel')}.hide(); return false;">X</h:outputLink>
             </f:facet>
 
             <h:panelGrid id="inputs" columns="2">
                     input2 <h:inputText id="input2" value="#{richPopupPanelBean.value2}" tabindex="2" />
                     input3 <h:inputText id="input3" value="#{richPopupPanelBean.value3}" tabindex="3" />
-                    input4 <rich:calendar id="input4" tabindex="4" />
-                    input5 <rich:inputNumberSlider id="input5" tabindex="5" />
-                    input6 <rich:inputNumberSpinner id="input6" tabindex="6" />
+                    input4 <r:calendar id="input4" tabindex="4" />
+                    input5 <r:inputNumberSlider id="input5" tabindex="5" />
+                    input6 <r:inputNumberSpinner id="input6" tabindex="6" />
             </h:panelGrid>
 
-            <a4j:commandButton action="#{richPopupPanelBean.save}" value="Save" render="output1 output2 output3"
+            <r:commandButton action="#{richPopupPanelBean.save}" value="Save" render="output1 output2 output3"
                 execute="input1 input2 input3" />
-        </rich:popupPanel>
+        </r:popupPanel>
 
         <h:panelGrid id="outputs" columns="2">
                 output1 <h:outputText id="output1" value="#{richPopupPanelBean.value1}" />

@@ -36,11 +36,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.validator.ValidatorException;
 
-import org.richfaces.component.UICalendar;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.RichBean;
 import org.richfaces.tests.metamer.bean.abstractions.DateInputValidationBean;
 import org.richfaces.tests.metamer.bean.abstractions.DateInputValidationBeanImpl;
+import org.richfaces.ui.input.UICalendar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

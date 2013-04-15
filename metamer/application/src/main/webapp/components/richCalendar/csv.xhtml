@@ -3,9 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:r="http://richfaces.org/rich"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a4j="http://richfaces.org/a4j">
+      >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -31,14 +31,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
     <ui:composition template="/templates/abstractions/inputValidation/dateInputComponentValidationTemplate.xhtml">
         <ui:define name="past">
-            <rich:calendar id="past" value="#{richCalendarBean.pastValue}"
+            <r:calendar id="past" value="#{richCalendarBean.pastValue}"
                            datePattern="#{richCalendarBean.attributes['datePattern'].value}"
                            timeZone="#{richCalendarBean.timeZone}">
                 <!-- must be this way or 2 request will be made -->
                 <!-- must be this way or other messages will disappear-->
-                <a4j:ajax event="change" render="pastMsg"/>
-                <rich:validator event="complete"/>
-            </rich:calendar>
+                <r:ajax event="change" render="pastMsg"/>
+                <r:validator event="complete"/>
+            </r:calendar>
         </ui:define>
         <ui:define name="pastOutput">
             <h:outputText id="pastOutput" value="#{richCalendarBean.pastValue}">
@@ -48,14 +48,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="future">
-            <rich:calendar id="future" value="#{richCalendarBean.futureValue}"
+            <r:calendar id="future" value="#{richCalendarBean.futureValue}"
                            datePattern="#{richCalendarBean.attributes['datePattern'].value}"
                            timeZone="#{richCalendarBean.timeZone}">
                 <!-- must be this way or 2 request will be made -->
                 <!-- must be this way or other messages will disappear-->
-                <a4j:ajax event="change" render="futureMsg"/>
-                <rich:validator event="complete"/>
-            </rich:calendar>
+                <r:ajax event="change" render="futureMsg"/>
+                <r:validator event="complete"/>
+            </r:calendar>
         </ui:define>
         <ui:define name="futureOutput">
             <h:outputText id="futureOutput" value="#{richCalendarBean.futureValue}">
@@ -65,15 +65,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="lastYear">
-            <rich:calendar id="lastYear" value="#{richCalendarBean.lastYearValue}"
+            <r:calendar id="lastYear" value="#{richCalendarBean.lastYearValue}"
                            datePattern="#{richCalendarBean.attributes['datePattern'].value}"
                            timeZone="#{richCalendarBean.timeZone}">
                 <!-- must be this way or 2 request will be made -->
                 <!-- must be this way or other messages will disappear-->
-                <a4j:ajax event="change" render="lastYearMsg"/>
-                <rich:validator event="complete"/>
+                <r:ajax event="change" render="lastYearMsg"/>
+                <r:validator event="complete"/>
                 <f:validator validatorId="org.richfaces.LastYearValidator"/>
-            </rich:calendar>
+            </r:calendar>
         </ui:define>
         <ui:define name="lastYearOutput">
             <h:outputText id="lastYearOutput" value="#{richCalendarBean.lastYearValue}">
@@ -83,15 +83,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="required" >
-            <rich:calendar id="required"
+            <r:calendar id="required"
                            datePattern="#{richCalendarBean.attributes['datePattern'].value}"
                            timeZone="#{richCalendarBean.timeZone}"
                            required="true"
                            requiredMessage="#{richCalendarBean.attributes['requiredMessage'].value}"
                            value="#{richCalendarBean.requiredValue}">
-                <a4j:ajax event="change" render="requiredMsg"/>
-                <rich:validator event="complete"/>
-            </rich:calendar>
+                <r:ajax event="change" render="requiredMsg"/>
+                <r:validator event="complete"/>
+            </r:calendar>
         </ui:define>
         <ui:define name="requiredOutput">
             <h:outputText id="requiredOutput" value="#{richCalendarBean.requiredValue}">

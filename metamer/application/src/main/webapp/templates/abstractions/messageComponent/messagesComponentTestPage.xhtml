@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:r="http://richfaces.org/rich"
       >
 
     <!--
@@ -29,7 +29,7 @@
 
     <ui:composition template="/templates/abstractions/messageComponent/template/messageComponentTestPageTemplate.xhtml">
         <ui:define name="otherBtns">
-            <a4j:commandButton id="generateAllMsgsBtn" value="Generate All kinds of message(s)"
+            <r:commandButton id="generateAllMsgsBtn" value="Generate All kinds of message(s)"
                                action="#{richMessagesBean.generateAllFacesMessages}" />
         </ui:define>
 

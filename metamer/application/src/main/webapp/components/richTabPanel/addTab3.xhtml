@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" xmlns:c="http://java.sun.com/jsp/jstl/core" >
+       xmlns:r="http://richfaces.org/rich" xmlns:c="http://java.sun.com/jsp/jstl/core" >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -38,7 +38,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <rich:tabPanel id="tabPanel"
+            <r:tabPanel id="tabPanel"
                            binding="#{richTabPanelBean.tabPanel}"
                            activeItem="#{richTabPanelBean.attributes['activeItem'].value}"
                            cycledSwitching="#{richTabPanelBean.attributes['cycledSwitching'].value}"
@@ -69,61 +69,61 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                            title="#{richTabPanelBean.attributes['title'].value}"
                            >
 
-                <rich:tab id="tab1" name="tab1" header="tab1 header">
+                <r:tab id="tab1" name="tab1" header="tab1 header">
                     content of tab 1
-                </rich:tab>
-                <rich:tab id="tab2" name="tab2" header="tab2 header">
+                </r:tab>
+                <r:tab id="tab2" name="tab2" header="tab2 header">
                     content of tab 2
-                </rich:tab>
-                <rich:tab id="tab3" name="tab3" header="tab3 header">
+                </r:tab>
+                <r:tab id="tab3" name="tab3" header="tab3 header">
                     content of tab 3
-                </rich:tab>
-                <rich:tab id="tab4" name="tab4" header="tab4 header" disabled="true">
+                </r:tab>
+                <r:tab id="tab4" name="tab4" header="tab4 header" disabled="true">
                     content of tab 4
-                </rich:tab>
-                <rich:tab id="tab5" name="tab5" header="tab5 header">
+                </r:tab>
+                <r:tab id="tab5" name="tab5" header="tab5 header">
                     content of tab 5
-                </rich:tab>
+                </r:tab>
                 
-            </rich:tabPanel>
+            </r:tabPanel>
 
             <br/><br/>
             <fieldset>
                 <legend>JavaScript API</legend>
 
                 <script type="text/javascript">
-                    testedComponentId = "#{rich:clientId('tabPanel')}";
+                    testedComponentId = "#{r:clientId('tabPanel')}";
                 </script>
 
                 <h:commandButton id="switchButton1" value="switch to tab1">
-                    <rich:componentControl event="click" operation="switchToItem" target="tabPanel" >
+                    <r:componentControl event="click" operation="switchToItem" target="tabPanel" >
                         <f:param value="tab1" />
-                    </rich:componentControl>
+                    </r:componentControl>
                 </h:commandButton>
                 <h:commandButton id="switchButton2" value="switch to tab2">
-                    <rich:componentControl event="click" operation="switchToItem" target="tabPanel" >
+                    <r:componentControl event="click" operation="switchToItem" target="tabPanel" >
                         <f:param value="tab2" />
-                    </rich:componentControl>
+                    </r:componentControl>
                 </h:commandButton>
                 <h:commandButton id="switchButton3" value="switch to tab3">
-                    <rich:componentControl event="click" operation="switchToItem" target="tabPanel" >
+                    <r:componentControl event="click" operation="switchToItem" target="tabPanel" >
                         <f:param value="tab3" />
-                    </rich:componentControl>
+                    </r:componentControl>
                 </h:commandButton>
                 <h:commandButton id="switchButton4" value="switch to tab4">
-                    <rich:componentControl event="click" operation="switchToItem" target="tabPanel" >
+                    <r:componentControl event="click" operation="switchToItem" target="tabPanel" >
                         <f:param value="tab4" />
-                    </rich:componentControl>
+                    </r:componentControl>
                 </h:commandButton>
                 <h:commandButton id="switchButton5" value="switch to tab5">
-                    <rich:componentControl event="click" operation="switchToItem" target="tabPanel" >
+                    <r:componentControl event="click" operation="switchToItem" target="tabPanel" >
                         <f:param value="tab5" />
-                    </rich:componentControl>
+                    </r:componentControl>
                 </h:commandButton>
                 
                 <h:commandButton id="hCreateTabButton" value="[h] Create tab" 
                 				   actionListener="#{richTabPanelBean.attachNewTabProgramatically}" />
-                <a4j:commandButton id="a4jCreateTabButton" value="[a4j] Create tab"
+                <r:commandButton id="a4jCreateTabButton" value="[a4j] Create tab"
                 				   render="tabPanel"                				   
                 				   actionListener="#{richTabPanelBean.attachNewTabProgramatically}" />
                 				   

@@ -28,11 +28,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.richfaces.component.SortOrder;
-import org.richfaces.component.UIColumn;
 import org.richfaces.model.Filter;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.model.Capital;
+import org.richfaces.ui.iteration.SortOrder;
+import org.richfaces.ui.iteration.UIColumn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+       xmlns:r="http://richfaces.org/rich">
 
     <!--
     JBoss, Home of Professional Open Source
@@ -41,7 +41,7 @@
 
         <ui:define name="component">
 
-            <rich:dragIndicator id="indicator"
+            <r:dragIndicator id="indicator"
                                 acceptClass="#{richDragIndicatorBean.attributes['acceptClass'].value}"
                                 draggingClass="#{richDragIndicatorBean.attributes['draggingClass'].value}"
                                 rejectClass="#{richDragIndicatorBean.attributes['rejectClass'].value}"
@@ -51,31 +51,31 @@
             <table>
                 <tr>
                     <td>
-                        <a4j:outputPanel id="draggable1" layout="block" styleClass="metamer-draggable">
+                        <r:outputPanel id="draggable1" layout="block" styleClass="metamer-draggable">
                             <h:outputText value="#1: type=#{richDragSourceBean.attributes['type'].value}" />
-                            <rich:dragSource
+                            <r:dragSource
                                 dragIndicator="indicator"
                                 dragValue="#{richDragSourceBean.dragValues[0]}"
                                 type="drg1"  />
-                        </a4j:outputPanel>
+                        </r:outputPanel>
                     </td>
                     <td>
-                        <a4j:outputPanel id="draggable2" layout="block" styleClass="metamer-draggable">
+                        <r:outputPanel id="draggable2" layout="block" styleClass="metamer-draggable">
                             <h:outputText value="#2: type=drg2" />
-                            <rich:dragSource type="drg2" dragIndicator="indicator" dragValue="#{richDragSourceBean.dragValues[1]}" />
-                        </a4j:outputPanel>
+                            <r:dragSource type="drg2" dragIndicator="indicator" dragValue="#{richDragSourceBean.dragValues[1]}" />
+                        </r:outputPanel>
                     </td>
                     <td>
-                        <a4j:outputPanel id="draggable3" layout="block" styleClass="metamer-draggable">
+                        <r:outputPanel id="draggable3" layout="block" styleClass="metamer-draggable">
                             <h:outputText value="#3: type=drg3" />
-                            <rich:dragSource type="drg3" dragIndicator="indicator" dragValue="#{richDragSourceBean.dragValues[2]}" />
-                        </a4j:outputPanel>
+                            <r:dragSource type="drg3" dragIndicator="indicator" dragValue="#{richDragSourceBean.dragValues[2]}" />
+                        </r:outputPanel>
                     </td>
                 </tr>
             </table>
 
-            <a4j:outputPanel id="droppable1" layout="block" styleClass="metamer-droppable" style="float: left">
-                <rich:dropTarget
+            <r:outputPanel id="droppable1" layout="block" styleClass="metamer-droppable" style="float: left">
+                <r:dropTarget
                     id="richDropTarget1"
                     dropValue="#{richDropTargetBean.dropValue}"
                     dropListener="#{richDropListenerBean.processDragging}"
@@ -106,10 +106,10 @@
                     </h:column>
 
                 </h:dataTable>
-            </a4j:outputPanel>
+            </r:outputPanel>
 
-            <a4j:outputPanel id="droppable2" layout="block" styleClass="metamer-droppable">
-                <rich:dropTarget
+            <r:outputPanel id="droppable2" layout="block" styleClass="metamer-droppable">
+                <r:dropTarget
                     id="richDropTarget2"
                     dropValue="#{richDropTargetBean.dropValue}"
                     dropListener="#{richDropListenerBean.processDragging}"
@@ -140,12 +140,12 @@
                     </h:column>
 
                 </h:dataTable>
-            </a4j:outputPanel>
+            </r:outputPanel>
 
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
-            <a4j:outputPanel ajaxRendered="true">
+            <r:outputPanel ajaxRendered="true">
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Drop Event:" rendered="#{not empty richDropListenerBean.dropEvent}" />
                     <h:panelGroup rendered="#{not empty richDropListenerBean.dropEvent}">
@@ -161,7 +161,7 @@
                         </h:panelGrid>
                     </h:panelGroup>
                 </h:panelGrid>
-            </a4j:outputPanel>
+            </r:outputPanel>
 
             <metamer:attributes value="#{richDragIndicatorBean.attributes}" id="attributes" />
         </ui:define>

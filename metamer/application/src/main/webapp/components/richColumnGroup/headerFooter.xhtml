@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+       xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -38,90 +38,90 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <rich:dataTable id="richDataTable" rows="10" value="#{model.employees}" var="record">
+            <r:dataTable id="richDataTable" rows="10" value="#{model.employees}" var="record">
 
                 <f:facet name="header">
 
 
-                    <rich:columnGroup id="columnGroupHeader"
+                    <r:columnGroup id="columnGroupHeader"
                                       rendered="#{richColumnGroupBean.attributes['rendered'].value}">
-                        <rich:column id="colHeaderName" rowspan="2">
+                        <r:column id="colHeaderName" rowspan="2">
                             <h:outputText id="colHeaderNameText" value="Name" />
-                        </rich:column>
-                        <rich:column id="colHeaderInfo" colspan="4">
+                        </r:column>
+                        <r:column id="colHeaderInfo" colspan="4">
                             <h:outputText id="colHeaderInfoText" value="Information" />
-                        </rich:column>
-                        <rich:column id="colHeaderTitle" breakRowBefore="true">
+                        </r:column>
+                        <r:column id="colHeaderTitle" breakRowBefore="true">
                             <h:outputText id="colHeaderTitleText" value="Title" />
-                        </rich:column>
-                        <rich:column id="colHeaderSmoker">
+                        </r:column>
+                        <r:column id="colHeaderSmoker">
                             <h:outputText id="colHeaderSmokerText" value="Smoker" />
-                        </rich:column>
-                        <rich:column id="colHeaderColor">
+                        </r:column>
+                        <r:column id="colHeaderColor">
                             <h:outputText id="colHeaderColorText" value="Favorite Color" />
-                        </rich:column>
-                        <rich:column id="colHeaderNumberOfKids">
+                        </r:column>
+                        <r:column id="colHeaderNumberOfKids">
                             <h:outputText id="colHeaderNumberOfKidsText" value="Number of Kids" />
-                        </rich:column>
-                    </rich:columnGroup>
+                        </r:column>
+                    </r:columnGroup>
 
                 </f:facet>
 
-                <rich:column id="columnName">
+                <r:column id="columnName">
                     <h:outputText value="#{record.name}" />
-                </rich:column>
+                </r:column>
 
-                <rich:column id="columnTitle">
+                <r:column id="columnTitle">
                     <h:outputText value="#{record.title}" />
-                </rich:column>
+                </r:column>
 
-                <rich:column id="columnSmoker">
+                <r:column id="columnSmoker">
                     <h:selectBooleanCheckbox id="smokerCheckbox" value="#{record.smoker}">
-                        <a4j:ajax/>
+                        <r:ajax/>
                     </h:selectBooleanCheckbox>
-                </rich:column>
+                </r:column>
 
-                <rich:column id="columnFavoriteColor">
+                <r:column id="columnFavoriteColor">
                     <h:outputText value="#{record.favoriteColor}" />
-                </rich:column>
+                </r:column>
 
-                <rich:column id="columnNumberOfKids">
-                    <rich:inputNumberSpinner id="numberOfKidsSpinner" value="#{record.numberOfKids}">
-                        <a4j:ajax/>
-                    </rich:inputNumberSpinner>
-                </rich:column>
+                <r:column id="columnNumberOfKids">
+                    <r:inputNumberSpinner id="numberOfKidsSpinner" value="#{record.numberOfKids}">
+                        <r:ajax/>
+                    </r:inputNumberSpinner>
+                </r:column>
 
                 <f:facet name="footer">
 
 
-                    <rich:columnGroup id="columnGroupFooter"
+                    <r:columnGroup id="columnGroupFooter"
                                       rendered="#{richColumnGroupBean.attributes['rendered'].value}">
-                        <rich:column colspan="5">
-                            <rich:dataScroller />
-                        </rich:column>
-                        <rich:column id="colFooterName" rowspan="2"  breakRowBefore="true">
+                        <r:column colspan="5">
+                            <r:dataScroller />
+                        </r:column>
+                        <r:column id="colFooterName" rowspan="2"  breakRowBefore="true">
                             <h:outputText id="colFooterNameText" value="Name" />
-                        </rich:column>
-                        <rich:column id="colFooterTitle" >
+                        </r:column>
+                        <r:column id="colFooterTitle" >
                             <h:outputText id="colFooterTitleText" value="Title" />
-                        </rich:column>
-                        <rich:column id="colFooterSmoker">
+                        </r:column>
+                        <r:column id="colFooterSmoker">
                             <h:outputText id="colFooterSmokerText" value="Smoker" />
-                        </rich:column>
-                        <rich:column id="colFooterColor">
+                        </r:column>
+                        <r:column id="colFooterColor">
                             <h:outputText id="colFooterColorText" value="Favorite Color" />
-                        </rich:column>
-                        <rich:column id="colFooterNumberOfKids">
+                        </r:column>
+                        <r:column id="colFooterNumberOfKids">
                             <h:outputText id="colFooterNumberOfKidsText" value="Number of Kids" />
-                        </rich:column>
-                        <rich:column id="colFooterInfo" colspan="4" breakRowBefore="true">
+                        </r:column>
+                        <r:column id="colFooterInfo" colspan="4" breakRowBefore="true">
                             <h:outputText id="colFooterInfoText" value="Information" />
-                        </rich:column>
-                    </rich:columnGroup>
+                        </r:column>
+                    </r:columnGroup>
 
                 </f:facet>
 
-            </rich:dataTable>
+            </r:dataTable>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

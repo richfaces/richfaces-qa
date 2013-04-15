@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" 
-      xmlns:rich="http://richfaces.org/rich" xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:r="http://richfaces.org/rich" xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -44,69 +44,69 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <h:form id="linksForm" style="padding-top: 130px;">
         
-            <rich:tabPanel id="components" switchType="ajax" activeItem="#{richBean.activeTabOnIndex}">
+            <r:tabPanel id="components" switchType="ajax" activeItem="#{richBean.activeTabOnIndex}">
 
-                <rich:tab id="a4jComponentsTab" name="a4j" header="A4J">
+                <r:tab id="a4jComponentsTab" name="a4j" header="A4J">
                     <h:panelGrid id="a4jComponents" columns="3" columnClasses="valign-top,valign-top,valign-top">
 
-                        <rich:list id="a4jComponentsList1" value="#{richBean.a4jComponentsList}" 
+                        <r:list id="a4jComponentsList1" value="#{richBean.a4jComponentsList}" 
                                    var="entry" rows="30" style="width: 350px">
                             <h:link outcome="/components/#{entry}/list" value="#{richBean.a4jComponents[entry]}" styleClass="link"/>
-                        </rich:list>
+                        </r:list>
 
-                        <rich:list id="a4jComponentsList2" value="#{richBean.a4jComponentsList}" 
+                        <r:list id="a4jComponentsList2" value="#{richBean.a4jComponentsList}" 
                                    var="entry" first="30" rows="30" style="width: 350px">
                             <h:link outcome="/components/#{entry}/list" value="#{richBean.a4jComponents[entry]}" styleClass="link"/>
-                        </rich:list>
+                        </r:list>
 
-                        <rich:list id="a4jComponentsList3" value="#{richBean.a4jComponentsList}" 
+                        <r:list id="a4jComponentsList3" value="#{richBean.a4jComponentsList}" 
                                    var="entry" first="60" rows="30" style="width: 350px">
                             <h:link outcome="/components/#{entry.key}/list" value="#{richBean.a4jComponents[entry]}" styleClass="link"/>
-                        </rich:list>
+                        </r:list>
                     </h:panelGrid>
-                </rich:tab>
+                </r:tab>
 
-                <rich:tab id="richComponentsTab" name="rich" header="Rich">
+                <r:tab id="richComponentsTab" name="rich" header="Rich">
                     <h:panelGrid id="richComponents" columns="3" columnClasses="valign-top,valign-top,valign-top">
 
-                        <rich:list id="richComponentsList1" value="#{richBean.richComponentsList}" 
+                        <r:list id="richComponentsList1" value="#{richBean.richComponentsList}" 
                                    var="entry" rows="30" style="width: 350px">
                             <h:link outcome="/components/#{entry}/list" value="#{richBean.richComponents[entry]}" styleClass="link"/>
-                        </rich:list>
+                        </r:list>
 
-                        <rich:list id="richComponentsList2" value="#{richBean.richComponentsList}" 
+                        <r:list id="richComponentsList2" value="#{richBean.richComponentsList}" 
                                    var="entry" first="30" rows="30" style="width: 350px">
                             <h:link outcome="/components/#{entry}/list" value="#{richBean.richComponents[entry]}" styleClass="link"/>
-                        </rich:list>
+                        </r:list>
 
-                        <rich:list id="richComponentsList3" value="#{richBean.richComponentsList}" 
+                        <r:list id="richComponentsList3" value="#{richBean.richComponentsList}" 
                                    var="entry" first="60" rows="30" style="width: 350px">
                             <h:link outcome="/components/#{entry}/list" value="#{richBean.richComponents[entry]}" styleClass="link"/>
-                        </rich:list>
+                        </r:list>
                     </h:panelGrid>
-                </rich:tab>
+                </r:tab>
 
-                <rich:tab id="otherComponentsTab" header="Other">
+                <r:tab id="otherComponentsTab" header="Other">
                     <h:panelGrid id="otherComponents" columns="3" columnClasses="valign-top,valign-top,valign-top">
 
-                        <rich:list id="otherComponentsList1" value="#{richBean.otherComponentsList}" 
+                        <r:list id="otherComponentsList1" value="#{richBean.otherComponentsList}" 
                                    var="entry" rows="30" style="width: 350px">
                             <h:link outcome="/components/#{entry}/list" value="#{richBean.otherComponents[entry]}" styleClass="link"/>
-                        </rich:list>
+                        </r:list>
 
-                        <rich:list id="otherComponentsList2" value="#{richBean.otherComponentsList}" 
+                        <r:list id="otherComponentsList2" value="#{richBean.otherComponentsList}" 
                                    var="entry" first="30" rows="30" style="width: 350px">
                             <h:link outcome="/components/#{entry}/list" value="#{richBean.otherComponents[entry]}" styleClass="link"/>
-                        </rich:list>
+                        </r:list>
 
-                        <rich:list id="otherComponentsList3" value="#{richBean.otherComponentsList}" 
+                        <r:list id="otherComponentsList3" value="#{richBean.otherComponentsList}" 
                                    var="entry" first="60" rows="30" style="width: 350px">
                             <h:link outcome="/components/#{entry}/list" value="#{richBean.otherComponents[entry]}" styleClass="link"/>
-                        </rich:list>
+                        </r:list>
                     </h:panelGrid>
-                </rich:tab>
+                </r:tab>
 
-            </rich:tabPanel>
+            </r:tabPanel>
 
             <ui:decorate template="/templates/footer.xhtml" />
         </h:form>

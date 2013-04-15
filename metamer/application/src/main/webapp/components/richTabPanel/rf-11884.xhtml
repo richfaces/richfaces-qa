@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:r="http://richfaces.org/rich"
+      
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"> 
 
@@ -13,17 +13,17 @@
 
     <p>When display this tab panel in IE8, huge bar/border is displayed under tab controls</p>
 
-    <rich:tabPanel id="perpectives_tab_panel" switchType="client"
+    <r:tabPanel id="perpectives_tab_panel" switchType="client"
                    style="width:1600px; height: 1000px" headerAlignment="left" headerPosition="top" >
-        <rich:tab id="source_tab" header="Source">
+        <r:tab id="source_tab" header="Source">
             source
-        </rich:tab>
-        <rich:tab id="query_tab" header="Query">
+        </r:tab>
+        <r:tab id="query_tab" header="Query">
             query
-        </rich:tab>
-        <rich:tab id="project_support_tab" header="Project Support" >
+        </r:tab>
+        <r:tab id="project_support_tab" header="Project Support" >
             project support
-        </rich:tab>
-    </rich:tabPanel>
+        </r:tab>
+    </r:tabPanel>
 </h:body> 
 </ui:composition>

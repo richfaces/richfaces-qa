@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+       xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -38,16 +38,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <rich:panelMenu id="panelMenu" style="width: 300px;"
+            <r:panelMenu id="panelMenu" style="width: 300px;"
                             itemChangeListener="#{richPanelMenuBean.itemChangeListener}">
 
-                <rich:panelMenuGroup id="group1" name="group1" label="Group 1">
-                    <rich:panelMenuItem id="item11" name="item11" label="Item 1.1"/>
-                    <rich:panelMenuItem id="item12" name="item12" label="Item 1.2" />
-                    <rich:panelMenuItem id="item13" name="item13" label="Item 1.3"/>
-                </rich:panelMenuGroup>
+                <r:panelMenuGroup id="group1" name="group1" label="Group 1">
+                    <r:panelMenuItem id="item11" name="item11" label="Item 1.1"/>
+                    <r:panelMenuItem id="item12" name="item12" label="Item 1.2" />
+                    <r:panelMenuItem id="item13" name="item13" label="Item 1.3"/>
+                </r:panelMenuGroup>
 
-                <rich:panelMenuGroup id="group2" name="group2" label="Group 2 (influenced by attributes)"
+                <r:panelMenuGroup id="group2" name="group2" label="Group 2 (influenced by attributes)"
                                      action="#{richBean.dummyAction}"
                                      actionListener="#{richBean.dummyActionListener}"
                                      changeExpandListener="#{richPanelMenuGroupBean.changeExpandListener}"
@@ -98,10 +98,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                      style="#{richPanelMenuGroupBean.attributes['style'].value}"
                                      styleClass="#{richPanelMenuGroupBean.attributes['styleClass'].value}"
                                      >
-                    <rich:panelMenuItem id="item21" name="item21" label="Item 2.1"/>
-                    <rich:panelMenuItem id="item22" name="item22" label="Item 2.2" />
+                    <r:panelMenuItem id="item21" name="item21" label="Item 2.1"/>
+                    <r:panelMenuItem id="item22" name="item22" label="Item 2.2" />
 
-                    <rich:panelMenuGroup id="group23" name="group23" label="Group 2.3 (influenced by attributes)"
+                    <r:panelMenuGroup id="group23" name="group23" label="Group 2.3 (influenced by attributes)"
                                          action="#{richBean.dummyAction}"
                                          actionListener="#{richBean.dummyActionListener}"
                                          changeExpandListener="#{richPanelMenuGroupBean.changeExpandListener}"
@@ -152,29 +152,29 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                          style="#{richPanelMenuGroupBean.attributes['style'].value}"
                                          styleClass="#{richPanelMenuGroupBean.attributes['styleClass'].value}"
                                          >
-                        <rich:panelMenuItem id="item231" name="item231" label="Item 2.3.1"/>
-                        <rich:panelMenuItem id="item232" name="item232" label="Item 2.3.2"/>
-                        <rich:panelMenuItem id="item233" name="item233" label="Item 2.3.3"/>
-                    </rich:panelMenuGroup>
+                        <r:panelMenuItem id="item231" name="item231" label="Item 2.3.1"/>
+                        <r:panelMenuItem id="item232" name="item232" label="Item 2.3.2"/>
+                        <r:panelMenuItem id="item233" name="item233" label="Item 2.3.3"/>
+                    </r:panelMenuGroup>
 
-                    <rich:panelMenuItem id="item24" name="item24" label="Item 2.4"/>
-                </rich:panelMenuGroup>
+                    <r:panelMenuItem id="item24" name="item24" label="Item 2.4"/>
+                </r:panelMenuGroup>
 
-                <rich:panelMenuGroup id="group3" name="group3" label="Group 3">
-                    <rich:panelMenuItem id="item31" name="item31" label="Item 3.1"/>
-                    <rich:panelMenuItem id="item32" name="item32" label="Item 3.2" />
-                    <rich:panelMenuItem id="item33" name="item33" label="Item 3.3"/>
-                </rich:panelMenuGroup>
-            </rich:panelMenu>
+                <r:panelMenuGroup id="group3" name="group3" label="Group 3">
+                    <r:panelMenuItem id="item31" name="item31" label="Item 3.1"/>
+                    <r:panelMenuItem id="item32" name="item32" label="Item 3.2" />
+                    <r:panelMenuItem id="item33" name="item33" label="Item 3.3"/>
+                </r:panelMenuGroup>
+            </r:panelMenu>
 
             <br/><br/>
 
             <fieldset>
                 <legend>selected item</legend>
 
-                <a4j:outputPanel id="selectedPanel" ajaxRendered="true">
+                <r:outputPanel id="selectedPanel" ajaxRendered="true">
                     <h:outputText id="current" value="#{richPanelMenuBean.activeItem}" />
-                </a4j:outputPanel>
+                </r:outputPanel>
             </fieldset>
 
         </ui:define>

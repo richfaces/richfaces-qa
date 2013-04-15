@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -41,7 +41,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/>
             <br/>
             <h:inputText id="input" value="#{richPlaceholderBean.inputValue1}">
-                <rich:placeholder id="placeholder"
+                <r:placeholder id="placeholder"
                                   value="#{valueBean}" 
                                   converter="valueBeanConverter" />
             </h:inputText>

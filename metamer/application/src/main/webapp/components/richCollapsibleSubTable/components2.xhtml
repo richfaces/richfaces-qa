@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+       xmlns:r="http://richfaces.org/rich" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -38,49 +38,49 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <rich:dataTable id="dataTable" value="#{richSubTableBean.lists}" var="list" keepSaved="true">
+            <r:dataTable id="dataTable" value="#{richSubTableBean.lists}" var="list" keepSaved="true">
                 <f:facet name="header">
-                    <rich:columnGroup>
-                        <rich:column id="columnHeaderEmployees" colspan="6">
+                    <r:columnGroup>
+                        <r:column id="columnHeaderEmployees" colspan="6">
                             <h:outputText id="columnHeaderEmployeesText" value="Employees" />
-                        </rich:column>
-                        <rich:column id="columnHeaderSex" breakRowBefore="true">
+                        </r:column>
+                        <r:column id="columnHeaderSex" breakRowBefore="true">
                             <h:outputText id="columnHeaderSexText" value="Sex" />
                             <br/>
-                            <h:outputText id="columnHeaderSexComponent" value="rich:paint2D" />
-                        </rich:column>
-                        <rich:column id="columnHeaderName">
+                            <h:outputText id="columnHeaderSexComponent" value="r:paint2D" />
+                        </r:column>
+                        <r:column id="columnHeaderName">
                             <h:outputText id="columnHeaderNameText" value="Name" />
                             <br/>
-                            <h:outputText id="columnHeaderNameComponent" value="rich:inplaceInput" />
-                        </rich:column>
-                        <rich:column id="columnHeaderTitle">
+                            <h:outputText id="columnHeaderNameComponent" value="r:inplaceInput" />
+                        </r:column>
+                        <r:column id="columnHeaderTitle">
                             <h:outputText id="columnHeaderTitleText" value="Title" />
                             <br/>
-                            <h:outputText id="columnHeaderTitleComponent" value="rich:comboBox" />
-                        </rich:column>
-                        <rich:column id="columnHeaderBirthdate">
+                            <h:outputText id="columnHeaderTitleComponent" value="r:comboBox" />
+                        </r:column>
+                        <r:column id="columnHeaderBirthdate">
                             <h:outputText id="columnHeaderBirthdateText" value="Birthdate" />
                             <br/>
-                            <h:outputText id="columnHeaderBirthdateComponent" value="rich:calendar" />
-                        </rich:column>
-                        <rich:column id="columnHeaderCompanies">
+                            <h:outputText id="columnHeaderBirthdateComponent" value="r:calendar" />
+                        </r:column>
+                        <r:column id="columnHeaderCompanies">
                             <h:outputText id="columnHeaderCompaniesText" value="Companies" />
                             <br/>
-                            <h:outputText id="columnHeaderCompaniesComponent" value="a4j:repeat" />
-                        </rich:column>
-                        <rich:column id="columnHeaderNumberOfKids">
+                            <h:outputText id="columnHeaderCompaniesComponent" value="r:repeat" />
+                        </r:column>
+                        <r:column id="columnHeaderNumberOfKids">
                             <h:outputText id="columnHeaderNumberOfKidsText" value="Number of Kids" />
                             <br/>
-                            <h:outputText id="columnHeaderNumberOfKidsComponent" value="rich:inputNumberSlider" />
-                        </rich:column>
-                    </rich:columnGroup>
+                            <h:outputText id="columnHeaderNumberOfKidsComponent" value="r:inputNumberSlider" />
+                        </r:column>
+                    </r:columnGroup>
                 </f:facet>
-                <rich:column id="columnTC" colspan="6">
-                    <rich:collapsibleSubTableToggler id="subTableTC" for="richSubTable"/>
+                <r:column id="columnTC" colspan="6">
+                    <r:collapsibleSubTableToggler id="subTableTC" for="richSubTable"/>
                     <h:outputText value="#{list[0].sex == 'MALE' ? 'Men' : 'Women'}" />
-                </rich:column>
-                <rich:collapsibleSubTable id="richSubTable"
+                </r:column>
+                <r:collapsibleSubTable id="richSubTable"
                                           expanded="#{richSubTableBean.expanded[list]}"
                                           expandMode="#{richSubTableBean.attributes['expandMode'].value}"
                                           filterVar="#{richSubTableBean.attributes['filterVar'].value}"
@@ -112,42 +112,42 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                           styleClass="#{richSubTableBean.attributes['styleClass'].value}"
                                           value="#{list}"
                                           var="item">
-                    <rich:column id="columnSex">
+                    <r:column id="columnSex">
                         <h:outputText value="#{item.sex}" />
-                    </rich:column>
-                    <rich:column id="columnName">
-                        <rich:inplaceInput id="nameInput" value="#{item.name}" defaultLabel="Click here to edit">
-                            <a4j:ajax event="change" render="@this"/>
-                        </rich:inplaceInput>
-                    </rich:column>
-                    <rich:column id="columnTitle">
-                        <rich:inplaceSelect id="titleInput" value="#{item.title}">
+                    </r:column>
+                    <r:column id="columnName">
+                        <r:inplaceInput id="nameInput" value="#{item.name}" defaultLabel="Click here to edit">
+                            <r:ajax event="change" render="@this"/>
+                        </r:inplaceInput>
+                    </r:column>
+                    <r:column id="columnTitle">
+                        <r:inplaceSelect id="titleInput" value="#{item.title}">
                             <f:selectItems value="#{model.jobTitlesSelectItems}"/>
-                            <a4j:ajax event="change" render="@this"/>
-                        </rich:inplaceSelect>
-                    </rich:column>
-                    <rich:column id="columnBirthdate">
-                        <rich:calendar id="birthdate" value="#{item.birthdate}">
-                            <a4j:ajax event="change" render="@this"/>
-                        </rich:calendar>
-                    </rich:column>
-                    <rich:column id="columnCompanies">
+                            <r:ajax event="change" render="@this"/>
+                        </r:inplaceSelect>
+                    </r:column>
+                    <r:column id="columnBirthdate">
+                        <r:calendar id="birthdate" value="#{item.birthdate}">
+                            <r:ajax event="change" render="@this"/>
+                        </r:calendar>
+                    </r:column>
+                    <r:column id="columnCompanies">
                         <ul>
-                            <a4j:repeat value="#{item.companies}" var="company">
+                            <r:repeat value="#{item.companies}" var="company">
                                 <li>#{company.name}</li>
-                            </a4j:repeat>
+                            </r:repeat>
                         </ul>
-                    </rich:column>
-                    <rich:column id="columnNumberOfKids">
-                        <rich:inputNumberSlider id="numOfKidsSlider" value="#{item.numberOfKids}" maxValue="5">
-                            <a4j:ajax/>
-                        </rich:inputNumberSlider>
-                    </rich:column>
+                    </r:column>
+                    <r:column id="columnNumberOfKids">
+                        <r:inputNumberSlider id="numOfKidsSlider" value="#{item.numberOfKids}" maxValue="5">
+                            <r:ajax/>
+                        </r:inputNumberSlider>
+                    </r:column>
                     <f:facet name="footer">
                         <h:outputText value="Total of #{list[0].sex == 'MALE' ? 'men' : 'women'}: #{fn:length(list)}" />
                     </f:facet>
-                </rich:collapsibleSubTable>
-            </rich:dataTable>
+                </r:collapsibleSubTable>
+            </r:dataTable>
 
         </ui:define>
 

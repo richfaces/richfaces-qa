@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" >
+      xmlns:r="http://richfaces.org/rich" >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -38,23 +38,23 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <rich:dataTable id="richDataTable" rows="10" value="#{model.employees}" var="record">
+            <r:dataTable id="richDataTable" rows="10" value="#{model.employees}" var="record">
 
-                <rich:column colspan="3">
+                <r:column colspan="3">
                     <h:outputText value="#{record.name}" />
-                </rich:column>
+                </r:column>
 
-                <rich:columnGroup>
-                    <rich:column>
+                <r:columnGroup>
+                    <r:column>
                         <h:outputText value="#{record.title}" />
-                    </rich:column>
+                    </r:column>
 
-                    <rich:column id="columnFavoriteColor">
+                    <r:column id="columnFavoriteColor">
                         <h:outputText value="#{record.favoriteColor}" />
-                    </rich:column>
-                </rich:columnGroup>
+                    </r:column>
+                </r:columnGroup>
 
-            </rich:dataTable>
+            </r:dataTable>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

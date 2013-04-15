@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"  xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+       xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -38,22 +38,22 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
         
-        	<rich:messages globalOnly="true" />
-        	<rich:messages for="editor" />
+        	<r:messages globalOnly="true" />
+        	<r:messages for="editor" />
             
-            <a4j:outputPanel id="panel">
-              <rich:editor id="editor"
+            <r:outputPanel id="panel">
+              <r:editor id="editor"
                            value="#{richEditorBean.attributes['value'].value}"
                            valueChangeListener="#{richBean.valueChangeListenerImproved}" />
-            </a4j:outputPanel>
+            </r:outputPanel>
                 		 
             <br/>
             <h:commandButton id="hButton" value="[h] Submit" />
-            <a4j:commandButton id="a4jButton" value="[a4j] Submit" render="output" />
+            <r:commandButton id="a4jButton" value="[a4j] Submit" render="output" />
             
             <br/>
-            <a4j:commandButton id="renderPanel" render="panel" value="render panel" />
-            <a4j:commandButton id="renderEditor" render="editor" value="render editor" />
+            <r:commandButton id="renderPanel" render="panel" value="render panel" />
+            <r:commandButton id="renderEditor" render="editor" value="render editor" />
             
             <br/><br/>
             Your text: <h:outputText id="output" value="#{richEditorBean.attributes['value'].value}"/>

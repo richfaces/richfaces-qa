@@ -48,12 +48,12 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebElement;
-import org.richfaces.PanelMenuMode;
-import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.ui.common.Mode;
+import org.richfaces.ui.menu.PanelMenuMode;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

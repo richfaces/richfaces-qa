@@ -35,7 +35,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 case 'custom':
                     $('[id$=custom_input]').val('2').change();
                     break;
-                case 'required':#{rich:component('required')}.setValue('2');
+                case 'required':#{r:component('required')}.setValue('2');
                     break;
                 default:
                     setCorrectValues('min');
@@ -56,7 +56,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     case 'custom':
                         $('[id$=custom_input]').val('-1').change();
                         break;
-                    case 'required':#{rich:component('required')}.setValue('');
+                    case 'required':#{r:component('required')}.setValue('');
                         break;
                     default:
                         setWrongValues('min');

@@ -30,8 +30,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import org.richfaces.component.UIFunction;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.ui.ajax.UIAjaxFunction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +60,7 @@ public class A4JJSFunctionBean implements Serializable {
         logger.debug("initializing bean " + getClass().getName());
         year = Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date()));
 
-        attributes = Attributes.getComponentAttributesFromFacesConfig(UIFunction.class, getClass());
+        attributes = Attributes.getComponentAttributesFromFacesConfig(UIAjaxFunction.class, getClass());
 
         attributes.setAttribute("action", "null");
         attributes.setAttribute("actionListener", "null");

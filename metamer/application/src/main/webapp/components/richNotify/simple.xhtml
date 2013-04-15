@@ -4,7 +4,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" 
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -38,9 +38,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <rich:notifyStack id="topLeftStack" position="topLeft"/>
-            <rich:notifyStack id="bottomRightStack" position="bottomRight"/>
-            <rich:notify id="notify"
+            <r:notifyStack id="topLeftStack" position="topLeft"/>
+            <r:notifyStack id="bottomRightStack" position="bottomRight"/>
+            <r:notify id="notify"
                          detail="#{richNotifyBean.attributes['detail'].value}"
                          escape="#{richNotifyBean.attributes['escape'].value}"
                          nonblocking="#{richNotifyBean.attributes['nonblocking'].value}"

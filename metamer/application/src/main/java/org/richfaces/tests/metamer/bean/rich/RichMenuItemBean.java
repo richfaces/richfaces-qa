@@ -22,11 +22,13 @@
 package org.richfaces.tests.metamer.bean.rich;
 
 import java.io.Serializable;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import org.richfaces.component.UIMenuItem;
+
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.ui.menu.UIMenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

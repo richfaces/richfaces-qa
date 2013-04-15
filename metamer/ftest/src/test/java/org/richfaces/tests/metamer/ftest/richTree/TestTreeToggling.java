@@ -22,16 +22,15 @@
 package org.richfaces.tests.metamer.ftest.richTree;
 
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.treeAttributes;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.util.Deque;
 import java.util.LinkedList;
 
-import org.richfaces.component.SwitchType;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.ui.common.SwitchType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

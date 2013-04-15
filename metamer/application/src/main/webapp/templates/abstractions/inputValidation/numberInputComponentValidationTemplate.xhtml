@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -44,37 +44,37 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/><br/>
             Submit buttons:<br/>
             <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
-            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
+            <r:commandButton id="a4jButton" value="r:commandButton"/>
             <br/><br/>
             <h:panelGrid columns="4">
                 min 2:
                 <ui:insert name="min"/>
                 <input id="minCorrect" name="minCorrect" type="button" value="set correct value" onclick="setCorrectValues('min')"/>
                 <input id="minWrong" name="minWrong" type="button" value="set wrong value" onclick="setWrongValues('min')"/>
-                <rich:message id="minMsg" ajaxRendered="false" for="min"/>
+                <r:message id="minMsg" ajaxRendered="false" for="min"/>
 
                 max 2:
                 <ui:insert name="max"/>
                 <input id="maxCorrect" name="maxCorrect" type="button" value="set correct value" onclick="setCorrectValues('max')"/>
                 <input id="maxWrong" name="maxWrong" type="button" value="set wrong value" onclick="setWrongValues('max')"/>
-                <rich:message id="maxMsg" ajaxRendered="false" for="max"/>
+                <r:message id="maxMsg" ajaxRendered="false" for="max"/>
 
 
                 custom (positive):
                 <ui:insert name="custom"/>
                 <input id="customCorrect" name="customCorrect" type="button" value="set correct value" onclick="setCorrectValues('custom')"/>
                 <input id="customWrong" name="customWrong" type="button" value="set wrong value" onclick="setWrongValues('custom')"/>
-                <rich:message id="customMsg" ajaxRendered="false" for="custom"/>
+                <r:message id="customMsg" ajaxRendered="false" for="custom"/>
 
 
                 required:
                 <ui:insert name="required"/>
                 <input id="requiredCorrect" name="requiredCorrect" type="button" value="set correct value" onclick="setCorrectValues('required')"/>
                 <input id="requiredWrong" name="requiredWrong" type="button" value="set wrong value" onclick="setWrongValues('required')"/>
-                <rich:message id="requiredMsg" ajaxRendered="false" for="required"/>
+                <r:message id="requiredMsg" ajaxRendered="false" for="required"/>
             </h:panelGrid>
             <br/><br/>
-            <a4j:outputPanel ajaxRendered="true" id="outputPanel">
+            <r:outputPanel ajaxRendered="true" id="outputPanel">
                 <h:panelGrid columns="2">
                     Output for min input:
                     <ui:insert name="minOutput"/>
@@ -85,7 +85,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     Output for required input:
                     <ui:insert name="requiredOutput"/>
                 </h:panelGrid>
-            </a4j:outputPanel>
+            </r:outputPanel>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

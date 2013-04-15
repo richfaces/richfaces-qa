@@ -28,20 +28,19 @@ import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuGroupAttributes;
-import static org.richfaces.component.Mode.ajax;
-import static org.richfaces.component.Mode.client;
-import static org.richfaces.component.Mode.server;
-
+import static org.richfaces.ui.common.Mode.ajax;
+import static org.richfaces.ui.common.Mode.client;
+import static org.richfaces.ui.common.Mode.server;
 import static org.testng.Assert.assertTrue;
 
 import java.util.LinkedList;
 
 import javax.faces.event.PhaseId;
 
-import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.richfaces.ui.common.Mode;
 import org.testng.annotations.Test;
 
 

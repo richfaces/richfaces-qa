@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:a4j="http://richfaces.org/a4j" xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+      xmlns:r="http://richfaces.org/rich" xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -41,7 +41,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <h:form id="componentForm">
                 <fieldset style="height: 3em">
                     <legend>status (inside form)</legend>
-                    <a4j:status id="status"
+                    <r:status id="status"
                                 onerror="#{a4jStatusBean.attributes['onerror'].value}"
                                 onstart="#{a4jStatusBean.attributes['onstart'].value}"
                                 onstop="#{a4jStatusBean.attributes['onstop'].value}"
@@ -60,14 +60,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         <f:facet name="error">
                             <h:outputText id="statusTextError" style="font-size: large; color: red;" value="ERROR" />
                         </f:facet>
-                    </a4j:status></fieldset>
+                    </r:status></fieldset>
 
                 <br />
-                <a4j:commandButton id="button1" value="Send Ajax Request" />
+                <r:commandButton id="button1" value="Send Ajax Request" />
                 <br />
-                <a4j:commandButton id="button2" value="Send Ajax Request" />
+                <r:commandButton id="button2" value="Send Ajax Request" />
                 <br />
-                <a4j:commandButton id="button3"
+                <r:commandButton id="button3"
                                    value="Send Ajax Request Causing Error"
                                    action="#{richBean.causeError}" />
             </h:form>

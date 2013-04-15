@@ -35,9 +35,9 @@ import static org.testng.Assert.assertTrue;
 
 import javax.faces.event.PhaseId;
 
-import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.ui.common.Mode;
 import org.testng.annotations.Test;
 
 

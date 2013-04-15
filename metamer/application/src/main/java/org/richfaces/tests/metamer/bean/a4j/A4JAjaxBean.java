@@ -33,8 +33,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 
-import org.ajax4jsf.component.behavior.AjaxBehavior;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.ui.core.behavior.AjaxBehavior;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

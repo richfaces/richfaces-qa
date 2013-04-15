@@ -31,8 +31,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
-import org.richfaces.component.UIEditor;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.ui.input.UIEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

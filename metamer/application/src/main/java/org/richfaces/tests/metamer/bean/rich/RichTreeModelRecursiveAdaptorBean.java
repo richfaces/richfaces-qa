@@ -35,10 +35,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.richfaces.component.UITreeModelRecursiveAdaptor;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.model.treeAdaptor.RecursiveNode;
 import org.richfaces.tests.metamer.model.treeAdaptor.RecursiveNodeImpl;
+import org.richfaces.ui.iteration.UITreeModelRecursiveAdaptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

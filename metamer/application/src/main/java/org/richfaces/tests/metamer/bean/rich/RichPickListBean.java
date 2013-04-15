@@ -35,9 +35,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
 
-import org.richfaces.component.UIPickList;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.model.Capital;
+import org.richfaces.ui.select.UIPickList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

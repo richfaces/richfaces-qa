@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
-      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:r="http://richfaces.org/rich"
+      
       xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
@@ -55,7 +55,7 @@
         </ui:define>
 
         <ui:define name="component">
-            <rich:fileUpload id="fileUpload" acceptedTypes="#{richFileUploadBean.attributes['acceptedTypes'].value}"
+            <r:fileUpload id="fileUpload" acceptedTypes="#{richFileUploadBean.attributes['acceptedTypes'].value}"
                              addLabel="#{richFileUploadBean.attributes['addLabel'].value}"
                              clearAllLabel="#{richFileUploadBean.attributes['clearAllLabel'].value}"
                              clearLabel="#{richFileUploadBean.attributes['clearLabel'].value}"
@@ -103,18 +103,18 @@
             <br />
             <fieldset style="width: 376px;">
                 <legend>Uploaded Files</legend>
-                <a4j:outputPanel id="uploadedFilesPanel" ajaxRendered="true">
+                <r:outputPanel id="uploadedFilesPanel" ajaxRendered="true">
                     <ul>
-                        <a4j:repeat value="#{richFileUploadBean.items}" var="item">
+                        <r:repeat value="#{richFileUploadBean.items}" var="item">
                             <li>#{item.name}</li>
-                        </a4j:repeat>
+                        </r:repeat>
                     </ul>
 
                     <br />
 
-                    <a4j:commandButton id="clearUploadedDataButton" action="#{richFileUploadBean.clearUploadedData}"
+                    <r:commandButton id="clearUploadedDataButton" action="#{richFileUploadBean.clearUploadedData}"
                                        value="Clear Uploaded Data" rendered="#{richFileUploadBean.renderButton}" />
-                </a4j:outputPanel>
+                </r:outputPanel>
             </fieldset>
 
         </ui:define>

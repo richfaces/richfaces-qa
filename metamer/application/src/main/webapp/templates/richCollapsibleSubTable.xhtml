@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -26,18 +26,18 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     -->
 
     <ui:composition>
-        <rich:dataTable id="containerRichCollapsibleSubTable" value="#{richSubTableBean.lists}" var="list" style="width: 100%">
+        <r:dataTable id="containerRichCollapsibleSubTable" value="#{richSubTableBean.lists}" var="list" style="width: 100%">
 
             <f:facet name="header">
                 Rich Collapible Sub Table
             </f:facet>
 
-            <rich:column id="columnSubTable" colspan="3">
-                <rich:collapsibleSubTableToggler id="subTableTC" for="richSubTable"/>
+            <r:column id="columnSubTable" colspan="3">
+                <r:collapsibleSubTableToggler id="subTableTC" for="richSubTable"/>
                 <h:outputText value="#{list[0].sex == 'MALE' ? 'xxx' : 'yyy'}" />
-            </rich:column>
+            </r:column>
 
-            <rich:collapsibleSubTable id="richSubTable" value="#{model.simple}" var="containerRichCollapsibleSubTableItem">
+            <r:collapsibleSubTable id="richSubTable" value="#{model.simple}" var="containerRichCollapsibleSubTableItem">
 
                 <h:column>
                     <f:facet name="header">
@@ -56,8 +56,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:outputText value="#{containerRichCollapsibleSubTableItem}" rendered="#{containerRichCollapsibleSubTableItem != 'row 3' or list[0].sex != 'MALE'}" />
                 </h:column>
 
-            </rich:collapsibleSubTable>
-        </rich:dataTable>
+            </r:collapsibleSubTable>
+        </r:dataTable>
 
     </ui:composition>
 </html>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
-    xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich">
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
+    xmlns:metamer="http://java.sun.com/jsf/composite/metamer" >
 
 <!--
 JBoss, Home of Professional Open Source
@@ -45,7 +45,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <br />
         <h:outputText value="Show data in table: " />
         <h:selectBooleanCheckbox id="noDataCheckbox" value="#{richDataTableBean.state}">
-            <a4j:ajax render="#{nestedComponentId}" />
+            <r:ajax render="#{nestedComponentId}" />
         </h:selectBooleanCheckbox>
         <br />
         <br />
@@ -53,7 +53,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
     <ui:define name="component">
 
-        <rich:dataTable id="richDataTable" captionClass="#{richDataTableBean.attributes['captionClass'].value}"
+        <r:dataTable id="richDataTable" captionClass="#{richDataTableBean.attributes['captionClass'].value}"
             columnClasses="#{richDataTableBean.attributes['columnClasses'].value}"
             first="#{richDataTableBean.attributes['first'].value}"
             footerClass="#{richDataTableBean.attributes['footerClass'].value}"
@@ -79,29 +79,29 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             styleClass="#{richDataTableBean.attributes['styleClass'].value}"
             value="#{richDataTableBean.state ? model.capitals : null}" var="record">
 
-            <rich:column id="columnState">
+            <r:column id="columnState">
                 <h:outputText value="#{record.state}" />
-            </rich:column>
+            </r:column>
 
-            <rich:column id="columnCapital">
+            <r:column id="columnCapital">
                 <h:outputText value="#{record.name}" />
-            </rich:column>
+            </r:column>
 
-            <rich:column width="40px">
+            <r:column width="40px">
                 <f:facet name="header">
                     <h:outputText value="bubu" />
                 </f:facet>
 
-                <rich:tooltip rendered="#{record.state != 'Alaska' || record.state != 'Colorado'}">
+                <r:tooltip rendered="#{record.state != 'Alaska' || record.state != 'Colorado'}">
                     <span>#{record.state} **** #{record.name}</span>
-                </rich:tooltip>
+                </r:tooltip>
 
                 <h:inputText id="B" value="#{record.state}" 
                 disabled="#{record.state != 'Alaska' and record.state != 'Colorado'}">
                 </h:inputText>
-            </rich:column>
+            </r:column>
 
-        </rich:dataTable>
+        </r:dataTable>
     </ui:define>
 
     <ui:define name="outOfTemplateAfter">

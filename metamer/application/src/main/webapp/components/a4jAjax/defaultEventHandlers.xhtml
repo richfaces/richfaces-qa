@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
+      
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
     <!--
@@ -45,98 +45,98 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <h:column>
                     <h:inputText id="simpleText1" value="#{a4jAjaxBean.simpleText1}" 
                                  valueChangeListener="#{richBean.valueChangeListener}" >
-                        <a4j:ajax listener="#{richBean.actionListener}" render="output" />
+                        <r:ajax listener="#{richBean.actionListener}" render="output" />
                     </h:inputText>
                 </h:column>
                 <h:column>
-                    rich:accordion
+                    r:accordion
                 </h:column>
                 <h:column>
-                    <rich:accordion id="accordion" itemChangeListener="#{richBean.itemChangeListener}" >
-                        <rich:accordionItem id="item1" name="item1"  header="Item 1">
+                    <r:accordion id="accordion" itemChangeListener="#{richBean.itemChangeListener}" >
+                        <r:accordionItem id="item1" name="item1"  header="Item 1">
                             content of item 1
-                        </rich:accordionItem>
-                        <rich:accordionItem id="item2" name="item2"  header="Item 2">
+                        </r:accordionItem>
+                        <r:accordionItem id="item2" name="item2"  header="Item 2">
                             content of item 2
-                        </rich:accordionItem>
-                        <a4j:ajax listener="#{richBean.actionListener}" render="output" />        
-                    </rich:accordion>                
+                        </r:accordionItem>
+                        <r:ajax listener="#{richBean.actionListener}" render="output" />        
+                    </r:accordion>                
                 </h:column>
 
                 <h:column>
-                    rich:autocomplete:
+                    r:autocomplete:
                 </h:column>
                 <h:column>
-                    <rich:autocomplete id="autocomplete1" value="#{a4jAjaxBean.autocomplete1}" 
+                    <r:autocomplete id="autocomplete1" value="#{a4jAjaxBean.autocomplete1}" 
                                        valueChangeListener="#{richBean.valueChangeListener}" >
-                        <a4j:ajax listener="#{richBean.actionListener}" render="output" />
-                    </rich:autocomplete>
+                        <r:ajax listener="#{richBean.actionListener}" render="output" />
+                    </r:autocomplete>
                 </h:column> 
                 <h:column>
-                    rich:calendar
+                    r:calendar
                 </h:column>
                 <h:column>
-                    <rich:calendar id="calendar1" value="#{a4jAjaxBean.calendar1}" 
+                    <r:calendar id="calendar1" value="#{a4jAjaxBean.calendar1}" 
                                    valueChangeListener="#{richBean.valueChangeListener}" >
-                        <a4j:ajax listener="#{richBean.actionListener}" render="output" />
-                    </rich:calendar>
+                        <r:ajax listener="#{richBean.actionListener}" render="output" />
+                    </r:calendar>
                 </h:column>
 
                 <h:column>
-                    rich:editor
+                    r:editor
                 </h:column>
                 <h:column>
-                    <rich:editor id="editor1" value="#{a4jAjaxBean.editor1}" width="310px" height="40px"
+                    <r:editor id="editor1" value="#{a4jAjaxBean.editor1}" width="310px" height="40px"
                                  valueChangeListener="#{richBean.valueChangeListener}" >
-                        <a4j:ajax  listener="#{richBean.actionListener}" render="output" />
-                    </rich:editor>
+                        <r:ajax  listener="#{richBean.actionListener}" render="output" />
+                    </r:editor>
                 </h:column>
 
                 <h:column>
-                    rich:inplaceInput
+                    r:inplaceInput
                 </h:column>
                 <h:column>
-                    <rich:inplaceInput id="inplaceInput1" value="#{a4jAjaxBean.inplaceInput1}"
+                    <r:inplaceInput id="inplaceInput1" value="#{a4jAjaxBean.inplaceInput1}"
                                        valueChangeListener="#{richBean.valueChangeListener}" >
-                        <a4j:ajax listener="#{richBean.actionListener}" render="output" />    
-                    </rich:inplaceInput>
+                        <r:ajax listener="#{richBean.actionListener}" render="output" />    
+                    </r:inplaceInput>
                 </h:column>     
 
                 <h:column>
-                    rich:inplaceSelect
+                    r:inplaceSelect
                 </h:column>
                 <h:column>
-                    <rich:inplaceSelect id="inplaceSelect1" value="#{a4jAjaxBean.inplaceSelect1}"
+                    <r:inplaceSelect id="inplaceSelect1" value="#{a4jAjaxBean.inplaceSelect1}"
                                         valueChangeListener="#{richBean.valueChangeListener}" >
                         <f:selectItem itemLabel="x" itemValue="x" />
                         <f:selectItem itemLabel="y" itemValue="y" />
                         <f:selectItem itemLabel="z" itemValue="z" />
-                        <a4j:ajax listener="#{richBean.actionListener}" render="output" />    
-                    </rich:inplaceSelect>
+                        <r:ajax listener="#{richBean.actionListener}" render="output" />    
+                    </r:inplaceSelect>
                 </h:column>
 
                 <h:column>
-                    rich:inputNumberSlider
+                    r:inputNumberSlider
                 </h:column>
                 <h:column>
-                    <rich:inputNumberSlider id="inputNumberSlider1" value="#{a4jAjaxBean.inputNumberSlider1}"
+                    <r:inputNumberSlider id="inputNumberSlider1" value="#{a4jAjaxBean.inputNumberSlider1}"
                                             valueChangeListener="#{richBean.valueChangeListener}" >
-                        <a4j:ajax listener="#{richBean.actionListener}" render="output" />        
-                    </rich:inputNumberSlider>
+                        <r:ajax listener="#{richBean.actionListener}" render="output" />        
+                    </r:inputNumberSlider>
                 </h:column>
 
                 <h:column>
-                    rich:inputNumberSpinner
+                    r:inputNumberSpinner
                 </h:column>
                 <h:column>
-                    <rich:inputNumberSpinner id="inputNumberSpinner1" value="#{a4jAjaxBean.inputNumberSpinner1}"
+                    <r:inputNumberSpinner id="inputNumberSpinner1" value="#{a4jAjaxBean.inputNumberSpinner1}"
                                              valueChangeListener="#{richBean.valueChangeListener}" >
-                        <a4j:ajax listener="#{richBean.actionListener}" render="output" />        
-                    </rich:inputNumberSpinner>
+                        <r:ajax listener="#{richBean.actionListener}" render="output" />        
+                    </r:inputNumberSpinner>
                 </h:column>
             </h:panelGrid>
             <br/>
-            <a4j:outputPanel id="output" layout="block">
+            <r:outputPanel id="output" layout="block">
                 inputText: <h:outputText value="#{a4jAjaxBean.simpleText1}"/><br/>
                 autocomplete: <h:outputText value="#{a4jAjaxBean.autocomplete1}"/><br/>
                 calendar: <h:outputText value="#{a4jAjaxBean.calendar1}"/><br/>
@@ -145,7 +145,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 inplaceSelect: <h:outputText value="#{a4jAjaxBean.inplaceSelect1}"/><br/>
                 inputNumberSlider: <h:outputText value="#{a4jAjaxBean.inputNumberSlider1}"/><br/>
                 inputNumberSpinner: <h:outputText value="#{a4jAjaxBean.inputNumberSpinner1}"/><br/>
-            </a4j:outputPanel>
+            </r:outputPanel>
 
         </ui:define>
 

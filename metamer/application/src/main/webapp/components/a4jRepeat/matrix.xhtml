@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich" >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -43,53 +43,53 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <h:panelGroup id="matrixInput" layout="block">
                 <table>
                     <tbody>
-                        <a4j:repeat id="a4jRepeatRows"
+                        <r:repeat id="a4jRepeatRows"
                                     iterationStatusVar="rowStatus"
                                     value="#{a4jRepeatBean.matrixRows}"
                                     var="row">
                             <tr>
-                                <a4j:repeat id="a4jRepeatColumns" value="#{row.cells}" var="cell" iterationStatusVar="cellStatus">
+                                <r:repeat id="a4jRepeatColumns" value="#{row.cells}" var="cell" iterationStatusVar="cellStatus">
                                     <td><h:panelGroup layout="block"
                                                       styleClass="cell #{rowStatus.even ? 'row-even' : 'row-odd'} #{cellStatus.even ? 'cell-even' : 'cell-odd'}">
                                             <h:inputText id="valueInput" value="#{cell.value}" size="3">
                                                 <f:convertNumber />
-                                                <a4j:ajax render="#{rich:clientId('outputRows')}:#{rowStatus.index}:outputColumns:#{cellStatus.index}:output" />
+                                                <r:ajax render="#{r:clientId('outputRows')}:#{rowStatus.index}:outputColumns:#{cellStatus.index}:output" />
                                             </h:inputText>
                                             &nbsp;
                                             <h:commandLink id="clearLink" action="#{cell.clearValueAction}" value="C">
-                                                <a4j:ajax render="valueInput #{rich:clientId('outputRows')}:#{rowStatus.index}:outputColumns:#{cellStatus.index}:output" />
+                                                <r:ajax render="valueInput #{r:clientId('outputRows')}:#{rowStatus.index}:outputColumns:#{cellStatus.index}:output" />
                                             </h:commandLink>
                                             <h:outputText value=" / " />
                                             <h:commandLink id="increaseLink" action="#{cell.increaseValueAction}" value="+">
-                                                <a4j:ajax render="valueInput #{rich:clientId('outputRows')}:#{rowStatus.index}:outputColumns:#{cellStatus.index}:output" />
+                                                <r:ajax render="valueInput #{r:clientId('outputRows')}:#{rowStatus.index}:outputColumns:#{cellStatus.index}:output" />
                                             </h:commandLink>
                                             <h:outputText value=" / " />
                                             <h:commandLink id="decreaseLink" action="#{cell.decreaseValueAction}" value="-">
-                                                <a4j:ajax render="valueInput #{rich:clientId('outputRows')}:#{rowStatus.index}:outputColumns:#{cellStatus.index}:output" />
+                                                <r:ajax render="valueInput #{r:clientId('outputRows')}:#{rowStatus.index}:outputColumns:#{cellStatus.index}:output" />
                                             </h:commandLink>
                                         </h:panelGroup></td>
-                                </a4j:repeat>
+                                </r:repeat>
                             </tr>
-                        </a4j:repeat>
+                        </r:repeat>
                     </tbody>
                 </table>
             </h:panelGroup>
             <hr/>
-            <a4j:outputPanel id="matrixOutput" layout="block">
+            <r:outputPanel id="matrixOutput" layout="block">
                 <table>
                     <tbody>
-                        <a4j:repeat id="outputRows" value="#{a4jRepeatBean.matrixRows}" var="row">
+                        <r:repeat id="outputRows" value="#{a4jRepeatBean.matrixRows}" var="row">
                             <tr>
-                                <a4j:repeat id="outputColumns" value="#{row.cells}" var="cell">
-                                    <td><a4j:outputPanel id="output" styleClass="cell" layout="block">
+                                <r:repeat id="outputColumns" value="#{row.cells}" var="cell">
+                                    <td><r:outputPanel id="output" styleClass="cell" layout="block">
                                             #{cell.value}
-                                        </a4j:outputPanel></td>
-                                </a4j:repeat>
+                                        </r:outputPanel></td>
+                                </r:repeat>
                             </tr>
-                        </a4j:repeat>
+                        </r:repeat>
                     </tbody>
                 </table>
-            </a4j:outputPanel>
+            </r:outputPanel>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

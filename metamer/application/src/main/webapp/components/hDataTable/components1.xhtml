@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -44,10 +44,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/>
             <h:outputText value="Show data in table: " />
             <h:selectBooleanCheckbox id="noDataCheckbox" value="#{hDataTableBean.state}">
-                <a4j:ajax render="hDataTable scroller1"/>
+                <r:ajax render="hDataTable scroller1"/>
             </h:selectBooleanCheckbox>
             <br/><br/>
-            <rich:dataScroller id="scroller1" for="hDataTable" page="#{hDataTableBean.page}" maxPages="7" render="hDataTable"/>
+            <r:dataScroller id="scroller1" for="hDataTable" page="#{hDataTableBean.page}" maxPages="7" render="hDataTable"/>
         </ui:define>
 
         <ui:define name="component">
@@ -131,13 +131,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <f:facet name="header">
                         <h:outputText id="columnHeaderTitle" value="Title" />
                         <br/>
-                        <h:outputText id="columnHeaderTitleComponent" value="rich:select" />
+                        <h:outputText id="columnHeaderTitleComponent" value="r:select" />
                     </f:facet>
 
-                    <rich:select id="title" value="#{record.title}">
+                    <r:select id="title" value="#{record.title}">
                         <f:selectItems value="#{model.jobTitlesSelectItems}"/>
-                        <a4j:ajax event="change" render="@this"/>
-                    </rich:select>
+                        <r:ajax event="change" render="@this"/>
+                    </r:select>
 
                     <f:facet name="footer">
                         <h:outputText id="columnFooterTitle" value="Title" />
@@ -152,7 +152,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </f:facet>
 
                     <h:selectBooleanCheckbox id="smokerCheckbox" value="#{record.smoker}">
-                        <a4j:ajax id="ajaxSmoker" event="change"/>
+                        <r:ajax id="ajaxSmoker" event="change"/>
                     </h:selectBooleanCheckbox>
 
                     <f:facet name="footer">
@@ -164,7 +164,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <f:facet name="header">
                         <h:outputText id="columnHeaderFavoriteColor" value="Favorite Color" />
                         <br/>
-                        <h:outputText id="columnHeaderFavoriteColorComponent" value="rich:colorPicker" />
+                        <h:outputText id="columnHeaderFavoriteColorComponent" value="r:colorPicker" />
                     </f:facet>
 
                     <h:outputText value="#{record.favoriteColor}" />
@@ -177,12 +177,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <f:facet name="header">
                         <h:outputText id="columnHeaderNumberOfKids" value="Number of Kids" />
                         <br/>
-                        <h:outputText id="columnHeaderNumberOfKidsComponent" value="rich:inputNumberSpinner" />
+                        <h:outputText id="columnHeaderNumberOfKidsComponent" value="r:inputNumberSpinner" />
                     </f:facet>
 
-                    <rich:inputNumberSpinner id="spinner" value="#{record.numberOfKids}" maxValue="5">
-                        <a4j:ajax/>
-                    </rich:inputNumberSpinner>
+                    <r:inputNumberSpinner id="spinner" value="#{record.numberOfKids}" maxValue="5">
+                        <r:ajax/>
+                    </r:inputNumberSpinner>
 
                     <f:facet name="footer">
                         <h:outputText id="columnFooterNumberOfKids" value="Number of Kids" />
@@ -190,7 +190,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </h:column>
 
                 <f:facet name="footer">
-                    <rich:dataScroller id="scroller2" for="hDataTable" page="#{hDataTableBean.page}" maxPages="7" render="hDataTable" />
+                    <r:dataScroller id="scroller2" for="hDataTable" page="#{hDataTableBean.page}" maxPages="7" render="hDataTable" />
                 </f:facet>
 
             </h:dataTable>

@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+       xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -38,7 +38,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <rich:panelMenu id="panelMenu"
+            <r:panelMenu id="panelMenu"
                             activeItem="#{richPanelMenuBean.activeItem}"
                             bubbleSelection="#{richPanelMenuBean.attributes['bubbleSelection'].value}"
                             collapseEvent="#{richPanelMenuBean.attributes['collapseEvent'].value}"
@@ -90,89 +90,89 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                             width="#{richPanelMenuBean.attributes['width'].value}"
                             >
 
-                <rich:panelMenuGroup id="group1" name="group1" label="Group 1">
-                    <rich:panelMenuItem id="item11" name="item11" label="Item 1.1"/>
-                    <rich:panelMenuItem id="item12" name="item12" label="Item 1.2"/>
-                    <rich:panelMenuItem id="item13" name="item13" label="Item 1.3"/>
-                </rich:panelMenuGroup>
+                <r:panelMenuGroup id="group1" name="group1" label="Group 1">
+                    <r:panelMenuItem id="item11" name="item11" label="Item 1.1"/>
+                    <r:panelMenuItem id="item12" name="item12" label="Item 1.2"/>
+                    <r:panelMenuItem id="item13" name="item13" label="Item 1.3"/>
+                </r:panelMenuGroup>
 
-                <rich:panelMenuItem id="item1" name="item1" label="Item 1"/>
+                <r:panelMenuItem id="item1" name="item1" label="Item 1"/>
 
-                <rich:panelMenuGroup id="group2" name="group2" label="Group 2">
-                    <rich:panelMenuItem id="item21" name="item21" label="Item 2.1"/>
-                    <rich:panelMenuItem id="item22" name="item22" label="Item 2.2"/>
-                    <rich:panelMenuItem id="item23" name="item23" label="Item 2.3"/>
+                <r:panelMenuGroup id="group2" name="group2" label="Group 2">
+                    <r:panelMenuItem id="item21" name="item21" label="Item 2.1"/>
+                    <r:panelMenuItem id="item22" name="item22" label="Item 2.2"/>
+                    <r:panelMenuItem id="item23" name="item23" label="Item 2.3"/>
 
-                    <rich:panelMenuGroup id="group24" name="group24" label="Group 2.4">
-                        <rich:panelMenuItem id="item241" name="item241" label="Item 2.4.1"/>
-                        <rich:panelMenuItem id="item242" name="item242" label="Item 2.4.2"/>
-                        <rich:panelMenuItem id="item243" name="item243" label="Item 2.4.3"/>
-                    </rich:panelMenuGroup>
+                    <r:panelMenuGroup id="group24" name="group24" label="Group 2.4">
+                        <r:panelMenuItem id="item241" name="item241" label="Item 2.4.1"/>
+                        <r:panelMenuItem id="item242" name="item242" label="Item 2.4.2"/>
+                        <r:panelMenuItem id="item243" name="item243" label="Item 2.4.3"/>
+                    </r:panelMenuGroup>
 
-                    <rich:panelMenuItem id="item25" name="item25" disabled="true" label="Item 2.5"/>
+                    <r:panelMenuItem id="item25" name="item25" disabled="true" label="Item 2.5"/>
 
-                    <rich:panelMenuGroup id="group26" name="group26" label="Group 2.6" disabled="true">
-                        <rich:panelMenuItem id="item261" name="item261" label="Item 2.6.1"/>
-                        <rich:panelMenuItem id="item262" name="item262" label="Item 2.6.2"/>
-                        <rich:panelMenuItem id="item263" name="item263" label="Item 2.6.3"/>
-                    </rich:panelMenuGroup>
-                </rich:panelMenuGroup>
+                    <r:panelMenuGroup id="group26" name="group26" label="Group 2.6" disabled="true">
+                        <r:panelMenuItem id="item261" name="item261" label="Item 2.6.1"/>
+                        <r:panelMenuItem id="item262" name="item262" label="Item 2.6.2"/>
+                        <r:panelMenuItem id="item263" name="item263" label="Item 2.6.3"/>
+                    </r:panelMenuGroup>
+                </r:panelMenuGroup>
 
-                <rich:panelMenuItem id="item2" name="item2" label="Item 2" disabled="true" />
+                <r:panelMenuItem id="item2" name="item2" label="Item 2" disabled="true" />
 
-                <rich:panelMenuGroup id="group3" name="group3" label="Group 3">
-                    <rich:panelMenuItem id="item31" name="item31" label="Item 3.1"/>
-                    <rich:panelMenuItem id="item32" name="item32" label="Item 3.2"/>
-                    <rich:panelMenuItem id="item33" name="item33" label="Item 3.3"/>
-                </rich:panelMenuGroup>
+                <r:panelMenuGroup id="group3" name="group3" label="Group 3">
+                    <r:panelMenuItem id="item31" name="item31" label="Item 3.1"/>
+                    <r:panelMenuItem id="item32" name="item32" label="Item 3.2"/>
+                    <r:panelMenuItem id="item33" name="item33" label="Item 3.3"/>
+                </r:panelMenuGroup>
 
-                <rich:panelMenuGroup id="group4" name="group4" label="Group 4" disabled="true">
-                    <rich:panelMenuItem id="item41" name="item41" label="Item 4.1"/>
-                    <rich:panelMenuItem id="item42" name="item42" label="Item 4.2"/>
-                    <rich:panelMenuItem id="item43" name="item43" label="Item 4.3"/>
-                </rich:panelMenuGroup>
+                <r:panelMenuGroup id="group4" name="group4" label="Group 4" disabled="true">
+                    <r:panelMenuItem id="item41" name="item41" label="Item 4.1"/>
+                    <r:panelMenuItem id="item42" name="item42" label="Item 4.2"/>
+                    <r:panelMenuItem id="item43" name="item43" label="Item 4.3"/>
+                </r:panelMenuGroup>
 
-                <rich:panelMenuItem id="item3" name="item3" label="Item 3" />
-                <rich:panelMenuItem id="item4" name="item4" label="Item 4" disabled="true" />
-                <rich:panelMenuItem id="item5" name="item5" label="Item 5" />
+                <r:panelMenuItem id="item3" name="item3" label="Item 3" />
+                <r:panelMenuItem id="item4" name="item4" label="Item 4" disabled="true" />
+                <r:panelMenuItem id="item5" name="item5" label="Item 5" />
 
-            </rich:panelMenu>
+            </r:panelMenu>
 
             <br/><br/>
 
             <fieldset>
                 <legend>selected item</legend>
 
-                <a4j:outputPanel id="selectedPanel" ajaxRendered="true">
+                <r:outputPanel id="selectedPanel" ajaxRendered="true">
                     <h:outputText id="current" value="#{richPanelMenuBean.activeItem}" />
-                </a4j:outputPanel>
+                </r:outputPanel>
             </fieldset>
             
             <fieldset>
-                <legend>rich:panelMenu JS API</legend>
-                <input type="button" id="expandAllBtn1" name="expandAllBtn" value="expandAll()" onclick="#{rich:component('panelMenu')}.expandAll()" />
+                <legend>r:panelMenu JS API</legend>
+                <input type="button" id="expandAllBtn1" name="expandAllBtn" value="expandAll()" onclick="#{r:component('panelMenu')}.expandAll()" />
                 <br/>
-                <input type="button" id="collapseAllBtn1" name="collapseAllBtn" value="collapseAll()" onclick="#{rich:component('panelMenu')}.collapseAll()" />
+                <input type="button" id="collapseAllBtn1" name="collapseAllBtn" value="collapseAll()" onclick="#{r:component('panelMenu')}.collapseAll()" />
                 <br/>
                 <input type="button" id="selectItemBtn1" name="collapseAllBtn" value="selectItem('item23')" 
-                       onclick="#{rich:component('panelMenu')}.selectItem('#{rich:clientId('item23')}')" />
+                       onclick="#{r:component('panelMenu')}.selectItem('#{r:clientId('item23')}')" />
             </fieldset>
             
             <fieldset>
-                <legend>rich:panelMenu JS API using component control</legend>
+                <legend>r:panelMenu JS API using component control</legend>
 
                 <h:commandButton id="expandAll" value="expandAll()">
-                    <rich:componentControl event="click" operation="expandAll" target="panelMenu" />                        
+                    <r:componentControl event="click" operation="expandAll" target="panelMenu" />                        
                 </h:commandButton>
                 
                 <h:commandButton id="collapseAll" value="collapseAll()">
-                    <rich:componentControl event="click" operation="collapseAll" target="panelMenu" />                        
+                    <r:componentControl event="click" operation="collapseAll" target="panelMenu" />                        
                 </h:commandButton>
                 
                 <h:commandButton id="selectItem" value="selectItem('item23')">
-                    <rich:componentControl event="click" operation="selectItem" target="panelMenu" >
+                    <r:componentControl event="click" operation="selectItem" target="panelMenu" >
                         <f:param value="item23" />
-                    </rich:componentControl>                        
+                    </r:componentControl>                        
                 </h:commandButton>
             </fieldset>
 

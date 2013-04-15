@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:r="http://richfaces.org/rich"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
       >
 
@@ -29,7 +29,7 @@
     -->
     <ui:composition template="/templates/abstractions/messageComponent/messagesComponentTestPage.xhtml">
         <ui:define name="messagesWithFor">
-            <rich:messages id="messagesWithFor"
+            <r:messages id="messagesWithFor"
                            ajaxRendered="#{richMessagesBean.attributes['ajaxRendered'].value}"            			   
                            dir="#{richMessagesBean.attributes['dir'].value}"
                            escape="#{richMessagesBean.attributes['escape'].value}"
@@ -54,7 +54,7 @@
         </ui:define>
 
         <ui:define name="messagesWithGlobal">
-            <rich:messages id="messagesWithGlobal"
+            <r:messages id="messagesWithGlobal"
                            ajaxRendered="#{richMessagesBean.attributes['ajaxRendered'].value}"            			   
                            dir="#{richMessagesBean.attributes['dir'].value}"
                            escape="#{richMessagesBean.attributes['escape'].value}"

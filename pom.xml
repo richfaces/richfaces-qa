@@ -30,7 +30,7 @@ FSF site: http://www.fsf.org. -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <version.richfaces>4.3.2-SNAPSHOT</version.richfaces>
+        <version.richfaces>5.0.0-SNAPSHOT</version.richfaces>
         <richfaces.checkstyle.version>5</richfaces.checkstyle.version>
 
         <!-- version of JBoss containers to use and download -->
@@ -533,7 +533,20 @@ FSF site: http://www.fsf.org. -->
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-
+            <dependency>
+                <groupId>org.richfaces</groupId>
+                <artifactId>richfaces-build</artifactId>
+                <version>${version.richfaces}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.spec</groupId>
+                <artifactId>jboss-javaee-all-6.0</artifactId>
+                <version>3.0.2.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -967,7 +980,7 @@ FSF site: http://www.fsf.org. -->
                 <dependency>
                     <groupId>org.jboss.as</groupId>
                     <artifactId>jboss-as-arquillian-container-managed</artifactId>
-                    <version>7.1.3.Final</version>
+                    <version>7.1.1.Final</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>

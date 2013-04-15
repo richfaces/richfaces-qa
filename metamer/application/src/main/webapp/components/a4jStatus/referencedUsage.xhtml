@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -36,13 +36,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <a4j:jsFunction id="statusFunction1" name="statusFunction1" status="status1" action="#{a4jStatusBean.delay}" />
-            <a4j:jsFunction id="statusFunction2" name="statusFunction2" status="status2" action="#{a4jStatusBean.delay}" />
+            <r:jsFunction id="statusFunction1" name="statusFunction1" status="status1" action="#{a4jStatusBean.delay}" />
+            <r:jsFunction id="statusFunction2" name="statusFunction2" status="status2" action="#{a4jStatusBean.delay}" />
 
             <h:panelGrid columns="2">
 
                 <h:commandButton id="button1" value="Named status 1" onclick="statusFunction1(); return false;" />
-                <a4j:status id="status1" name="status1">
+                <r:status id="status1" name="status1">
                     <f:facet name="start">
                         <h:outputText id="status1TextStart" style="font-size: large; color: red;" value="START" />
                     </f:facet>
@@ -54,10 +54,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <f:facet name="error">
                         <h:outputText id="status1TextError" style="font-size: large; color: red;" value="ERROR" />
                     </f:facet>
-                </a4j:status>
+                </r:status>
 
                 <h:commandButton id="button2" value="Named status 2" onclick="statusFunction2(); return false;" />
-                <a4j:status id="status2" name="status2">
+                <r:status id="status2" name="status2">
                     <f:facet name="start">
                         <h:outputText id="status2TextStart" style="font-size: large; color: red;" value="START" />
                     </f:facet>
@@ -69,7 +69,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <f:facet name="error">
                         <h:outputText id="status2TextError" style="font-size: large; color: red;" value="ERROR" />
                     </f:facet>
-                </a4j:status>
+                </r:status>
             </h:panelGrid>
 
         </ui:define>

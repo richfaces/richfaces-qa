@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:r="http://richfaces.org/rich"
       xmlns:f="http://java.sun.com/jsf/core"
       >
 
@@ -97,18 +97,18 @@
             <fieldset title="Submit buttons">
                 <legend>Submit buttons</legend>
                 <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
-                <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
+                <r:commandButton id="a4jButton" value="r:commandButton"/>
             </fieldset>
             <br/>
             <fieldset title="Faces message generation buttons">
                 <legend>Faces message generation buttons</legend>
-                <a4j:commandButton id="generateFatalMsgBtn" value="Generate fatal message(s)"
+                <r:commandButton id="generateFatalMsgBtn" value="Generate fatal message(s)"
                                    action="#{richMessageBean.generateFacesMessagesWithSeverity('fatal')}" />
-                <a4j:commandButton id="generateErrorMsgBtn" value="Generate error message(s)"
+                <r:commandButton id="generateErrorMsgBtn" value="Generate error message(s)"
                                    action="#{richMessageBean.generateFacesMessagesWithSeverity('error')}" />
-                <a4j:commandButton id="generateWarnMsgBtn" value="Generate warn message(s)"
+                <r:commandButton id="generateWarnMsgBtn" value="Generate warn message(s)"
                                    action="#{richMessageBean.generateFacesMessagesWithSeverity('warn')}" />
-                <a4j:commandButton id="generateInfoMsgBtn" value="Generate info message(s)"
+                <r:commandButton id="generateInfoMsgBtn" value="Generate info message(s)"
                                    action="#{richMessageBean.generateFacesMessagesWithSeverity('info')}" />
                 <ui:insert name="otherBtns"/>
             </fieldset>

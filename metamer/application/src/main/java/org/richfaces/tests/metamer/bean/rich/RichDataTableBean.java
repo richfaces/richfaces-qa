@@ -22,23 +22,23 @@
 package org.richfaces.tests.metamer.bean.rich;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Collection;
-import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.ajax4jsf.model.DataComponentState;
-import org.richfaces.component.UIDataTable;
-import org.richfaces.component.UIDataTableBase;
+import org.richfaces.model.DataComponentState;
 import org.richfaces.model.Filter;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.ColumnSortingMap;
 import org.richfaces.tests.metamer.model.Employee;
+import org.richfaces.ui.iteration.UIDataTable;
+import org.richfaces.ui.iteration.UIDataTableBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

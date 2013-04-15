@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -45,7 +45,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <a4j:queue id="queue1"
+            <r:queue id="queue1"
                        ignoreDupResponses="#{a4jQueueBean.attributes['ignoreDupResponses'].value}"
                        name="#{a4jQueueBean.attributes['name'].value}"
                        onbeforedomupdate="#{a4jQueueBean.attributes['onbeforedomupdate'].value}"
@@ -60,16 +60,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                        />
 
             <fieldset>
-                <legend>&lt;a4j:ajax event='click' ... &gt;</legend>
+                <legend>&lt;r:ajax event='click' ... &gt;</legend>
 
-                <a4j:ajax event="click" execute="@form"
-                          onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); "
-                          onbeforedomupdate="add(#{rich:element('updates')});"
-                          oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference(); ">
+                <r:ajax event="click" execute="@form"
+                          onbegin="add(#{r:element('requests')}); #{r:element('timeWatcher:grid')}.begin(); "
+                          onbeforedomupdate="add(#{r:element('updates')});"
+                          oncomplete="#{r:element('timeWatcher:grid')}.complete(); #{r:element('timeWatcher:grid')}.difference(); ">
 
-                    <div>&lt;a4j:attachQueue id="..1" /&gt;</div>
+                    <div>&lt;r:attachQueue id="..1" /&gt;</div>
 
-                    <a4j:attachQueue id="a4jAttachQueue1"
+                    <r:attachQueue id="a4jAttachQueue1"
                                      ignoreDupResponses="#{a4jAttachQueueBean.attributes['ignoreDupResponses'].value}"
                                      name="#{a4jAttachQueueBean.attributes['name'].value}"
                                      onrequestdequeue="#{a4jAttachQueueBean.attributes['onrequestdequeue'].value}"
@@ -80,29 +80,29 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                      />
 
                     <h:inputText id="input1" value="#{a4jAttachQueueBean.text1}"
-                                 onclick="add(#{rich:element('events1')}); #{rich:element('timeWatcher:grid')}.event(1); " />
-                    <a4j:commandButton
-                        onclick="add(#{rich:element('events1')}); #{rich:element('timeWatcher:grid')}.event(1); "
+                                 onclick="add(#{r:element('events1')}); #{r:element('timeWatcher:grid')}.event(1); " />
+                    <r:commandButton
+                        onclick="add(#{r:element('events1')}); #{r:element('timeWatcher:grid')}.event(1); "
                         id="a4jCommandButton1" value="First button" />
 
                     <fieldset>
-                        <legend>&lt;a4j:ajax event='valueChange' ... &gt;</legend>
+                        <legend>&lt;r:ajax event='valueChange' ... &gt;</legend>
 
-                        <a4j:ajax event="valueChange" render="output2" execute="@form"
-                                  onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); "
-                                  onbeforedomupdate="add(#{rich:element('updates')});"
-                                  oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference(); ">
+                        <r:ajax event="valueChange" render="output2" execute="@form"
+                                  onbegin="add(#{r:element('requests')}); #{r:element('timeWatcher:grid')}.begin(); "
+                                  onbeforedomupdate="add(#{r:element('updates')});"
+                                  oncomplete="#{r:element('timeWatcher:grid')}.complete(); #{r:element('timeWatcher:grid')}.difference(); ">
 
                             <h:inputText id="input2" value="#{a4jAttachQueueBean.text2}"
-                                         onclick="add(#{rich:element('events1')}); #{rich:element('timeWatcher:grid')}.event(1); "
-                                         onchange="add(#{rich:element('events2')}); #{rich:element('timeWatcher:grid')}.event(2); " />
-                            <a4j:commandButton
+                                         onclick="add(#{r:element('events1')}); #{r:element('timeWatcher:grid')}.event(1); "
+                                         onchange="add(#{r:element('events2')}); #{r:element('timeWatcher:grid')}.event(2); " />
+                            <r:commandButton
                                 id="a4jCommandButton2" value="First button"
-                                onclick="add(#{rich:element('events1')}); #{rich:element('timeWatcher:grid')}.event(1); " />
+                                onclick="add(#{r:element('events1')}); #{r:element('timeWatcher:grid')}.event(1); " />
 
-                            <div>&lt;a4j:attachQueue id="..2" /&gt;</div>
+                            <div>&lt;r:attachQueue id="..2" /&gt;</div>
 
-                            <a4j:attachQueue id="a4jAttachQueue2"
+                            <r:attachQueue id="a4jAttachQueue2"
                                              ignoreDupResponses="#{a4jAttachQueueBean.attributes2['ignoreDupResponses'].value}"
                                              name="#{a4jAttachQueueBean.attributes2['name'].value}"
                                              onrequestdequeue="#{a4jAttachQueueBean.attributes2['onrequestdequeue'].value}"
@@ -113,11 +113,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                              />
 
 
-                        </a4j:ajax>
+                        </r:ajax>
 
                     </fieldset>
 
-                </a4j:ajax>
+                </r:ajax>
 
             </fieldset>
 

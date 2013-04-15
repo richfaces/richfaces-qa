@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+       xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -25,10 +25,10 @@ License along with this software; if not, write to the Free
 Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
-    <h3><b>rich:tree</b></h3>
+    <h3><b>r:tree</b></h3>
 
     <p>
-        <rich:tree id="richTree"
+        <r:tree id="richTree"
                    nodeType="#{node.type}"
                    var="node"
                    value="#{treeRoot}"
@@ -76,7 +76,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                    toggleType="#{richTreeBean.attributes['toggleType'].value}"
                    >
 
-            <rich:treeNode type="country"
+            <r:treeNode type="country"
                            expanded="#{richTreeBean.expanded[node]}"
 
                            dir="#{richTreeNodeBean.attributes[0]['dir'].value}"
@@ -109,9 +109,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:graphicImage value="/resources/images/loading.gif" rendered="#{richTreeBean.testLoadingFacet}" />
                 </f:facet>
                 #{node.content.label}
-            </rich:treeNode>
+            </r:treeNode>
 
-            <rich:treeNode type="company"
+            <r:treeNode type="company"
                            expanded="#{richTreeBean.expanded[node]}"
 
                            dir="#{richTreeNodeBean.attributes[1]['dir'].value}"
@@ -145,9 +145,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </f:facet>
 
                 #{node.content.label}
-            </rich:treeNode>
+            </r:treeNode>
 
-            <rich:treeNode type="cd"
+            <r:treeNode type="cd"
                            expanded="#{richTreeBean.expanded[node]}"
 
                            dir="#{richTreeNodeBean.attributes[2]['dir'].value}"
@@ -177,11 +177,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                            title="#{richTreeNodeBean.attributes[2]['title'].value}"
                            >
                 #{node.content.label}
-            </rich:treeNode>
-            <rich:treeSelectionChangeListener type="org.richfaces.tests.metamer.bean.TreeSelectionChangeListenerBean"/>
-            <rich:treeSelectionChangeListener listener="#{treeSelectionChangeListenerBean2.processTreeSelectionChange}"/>
-        </rich:tree>
+            </r:treeNode>
+            <r:treeSelectionChangeListener type="org.richfaces.tests.metamer.bean.TreeSelectionChangeListenerBean"/>
+            <r:treeSelectionChangeListener listener="#{treeSelectionChangeListenerBean2.processTreeSelectionChange}"/>
+        </r:tree>
         <!--                         TODO after issue with @for attribute is solved > uncoment-->
-<!--        rich:treeSelectionChangeListener for="richTree" type="org.richfaces.tests.metamer.bean.TreeSelectionChangeListenerBean3"-->
+<!--        r:treeSelectionChangeListener for="richTree" type="org.richfaces.tests.metamer.bean.TreeSelectionChangeListenerBean3"-->
     </p>
 </html>

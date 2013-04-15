@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" 
-      xmlns:a4j="http://richfaces.org/a4j" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich" 
+       xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -41,7 +41,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Filter State:" for="stateNameToFilter" />
                     <h:inputText id="stateNameToFilter" value="#{richColumnBean.stateNameToFilter}">
-                        <a4j:ajax event="keyup" render="#{nestedPrefix}richDataTable1 #{nestedPrefix}richDataTable2" />
+                        <r:ajax event="keyup" render="#{nestedPrefix}richDataTable1 #{nestedPrefix}richDataTable2" />
                     </h:inputText>
                 </h:panelGrid>
             </fieldset>
@@ -51,45 +51,45 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="component">
 
             <h:panelGrid columns="3">
-                <rich:dataTable id="richDataTable1"
+                <r:dataTable id="richDataTable1"
                                 rendered="true"
                                 value="#{model.capitals}"
                                 var="record">
 
                     <f:facet name="header">
-                        <rich:column>Filter by <tt>filter</tt></rich:column>
+                        <r:column>Filter by <tt>filter</tt></r:column>
                     </f:facet>
 
-                    <rich:column id="columnState1" filter="#{richColumnBean.stateNameFilter}">
+                    <r:column id="columnState1" filter="#{richColumnBean.stateNameFilter}">
                         <f:facet name="header">State</f:facet>
                         <h:outputText id="state" value="#{record.state}" />
-                    </rich:column>
+                    </r:column>
 
-                    <rich:column id="columnCapital1">
+                    <r:column id="columnCapital1">
                         <f:facet name="header">Capital</f:facet>
                         <h:outputText id="capital" value="#{record.name}" />
-                    </rich:column>
-                </rich:dataTable>
+                    </r:column>
+                </r:dataTable>
 
-                <rich:dataTable id="richDataTable2"
+                <r:dataTable id="richDataTable2"
                                 rendered="true"
                                 value="#{model.capitals}"
                                 var="record">
 
                     <f:facet name="header">
-                        <rich:column>Filter by <tt>filterExpression</tt></rich:column>
+                        <r:column>Filter by <tt>filterExpression</tt></r:column>
                     </f:facet>
 
-                    <rich:column id="columnState2" filterExpression="#{fn:contains(fn:toLowerCase(record.state), fn:toLowerCase(richColumnBean.stateNameToFilter))}">
+                    <r:column id="columnState2" filterExpression="#{fn:contains(fn:toLowerCase(record.state), fn:toLowerCase(richColumnBean.stateNameToFilter))}">
                         <f:facet name="header">State</f:facet>
                         <h:outputText id="state" value="#{record.state}" />
-                    </rich:column>
+                    </r:column>
 
-                    <rich:column id="columnCapital2">
+                    <r:column id="columnCapital2">
                         <f:facet name="header">Capital</f:facet>
                         <h:outputText id="capital" value="#{record.name}" />
-                    </rich:column>
-                </rich:dataTable>
+                    </r:column>
+                </r:dataTable>
             </h:panelGrid>
 
 

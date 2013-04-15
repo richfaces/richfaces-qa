@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" >
+       xmlns:r="http://richfaces.org/rich" >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -38,9 +38,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <rich:tabPanel id="tabPanel" switchType="ajax" >
+            <r:tabPanel id="tabPanel" switchType="ajax" >
             
-                <rich:tab id="tab1"
+                <r:tab id="tab1"
                 		  action="#{richBean.dummyAction}"
                           actionListener="#{richBean.actionListener}"
                           
@@ -76,51 +76,51 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                           styleClass="#{richTabBean.attributes['styleClass'].value}"
                           switchType="#{richTabBean.attributes['switchType'].value}"
                           title="#{richTabBean.attributes['title'].value}" >
-                    <a4j:ajax
+                    <r:ajax
                     	event="enter"
                     	listener="#{richBean.actionListener2}"  />
                     content of tab 1
-                </rich:tab>
-                <rich:tab id="tab2" name="tab2" header="tab2 header" 
+                </r:tab>
+                <r:tab id="tab2" name="tab2" header="tab2 header" 
                 		  switchType="#{richTabBean.attributes['switchType'].value}">
                     content of tab 2
-                    <a4j:ajax
+                    <r:ajax
                     	event="enter" 
                     	listener="#{richBean.actionListener}" />
-                </rich:tab>
-                <rich:tab id="tab3" name="tab3" header="tab3 header"
+                </r:tab>
+                <r:tab id="tab3" name="tab3" header="tab3 header"
                 		  switchType="#{richTabBean.attributes['switchType'].value}" >
                     content of tab 3
-                    <a4j:ajax
+                    <r:ajax
                     	event="click"
                     	listener="#{richBean.actionListener}"  />
-                </rich:tab>
-                <rich:tab id="tab4" name="tab4" header="tab4 header" disabled="true"
+                </r:tab>
+                <r:tab id="tab4" name="tab4" header="tab4 header" disabled="true"
                 		  switchType="#{richTabBean.attributes['switchType'].value}">
                     content of tab 4                    
-                </rich:tab>
-                <rich:tab id="tab5" name="tab5" header="tab5 header"
+                </r:tab>
+                <r:tab id="tab5" name="tab5" header="tab5 header"
                 		  switchType="#{richTabBean.attributes['switchType'].value}">
                     content of tab 5
-                </rich:tab>
-            </rich:tabPanel>
+                </r:tab>
+            </r:tabPanel>
 
             <br/><br/>
 
             <h:commandButton id="firstTabButton" value="First tab">
-                <rich:toggleControl targetPanel="tabPanel" targetItem="@first" />
+                <r:toggleControl targetPanel="tabPanel" targetItem="@first" />
             </h:commandButton>
             <h:commandButton id="prevTabButton" value="Previous tab">
-                <rich:toggleControl targetPanel="tabPanel" targetItem="@prev" />
+                <r:toggleControl targetPanel="tabPanel" targetItem="@prev" />
             </h:commandButton>
             <h:commandButton id="nextTabButton" value="Next tab">
-                <rich:toggleControl targetPanel="tabPanel" targetItem="@next" />
+                <r:toggleControl targetPanel="tabPanel" targetItem="@next" />
             </h:commandButton>
             <h:commandButton id="lastTabButton" value="Last tab">
-                <rich:toggleControl targetPanel="tabPanel" targetItem="@last" />
+                <r:toggleControl targetPanel="tabPanel" targetItem="@last" />
             </h:commandButton>
             <h:commandButton id="customTabButton" value="Custon tab (#{richTabBean.attributes['name'].value})">
-                <rich:toggleControl targetPanel="tabPanel" targetItem="#{richTabBean.attributes['name'].value}" />
+                <r:toggleControl targetPanel="tabPanel" targetItem="#{richTabBean.attributes['name'].value}" />
             </h:commandButton>
 
 

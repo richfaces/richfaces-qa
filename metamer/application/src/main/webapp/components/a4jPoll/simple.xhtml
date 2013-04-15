@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich" 
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
     <!--
@@ -39,7 +39,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
             <h:panelGroup id="pollPanel">
-                <a4j:poll id="poll"
+                <r:poll id="poll"
                           action="#{a4jPollBean.attributes.action}"
                           actionListener="#{a4jPollBean.attributes.actionListener}"
                           bypassUpdates="#{a4jPollBean.attributes['bypassUpdates'].value}"
@@ -50,15 +50,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                           interval="#{a4jPollBean.attributes['interval'].value}"
                           limitRender="#{a4jPollBean.attributes['limitRender'].value}"
                           onbeforedomupdate="#{a4jPollBean.attributes['onbeforedomupdate'].value}"
-                          onbegin="#{rich:element('timeWatcher:grid')}.begin(); #{a4jPollBean.attributes['onbegin'].value}"
-                          oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{a4jPollBean.attributes['oncomplete'].value}"
-                          ontimer="#{rich:element('timeWatcher:grid')}.event(); #{rich:element('timeWatcher:grid')}.difference(); #{a4jPollBean.attributes['ontimer'].value}"
+                          onbegin="#{r:element('timeWatcher:grid')}.begin(); #{a4jPollBean.attributes['onbegin'].value}"
+                          oncomplete="#{r:element('timeWatcher:grid')}.complete(); #{a4jPollBean.attributes['oncomplete'].value}"
+                          ontimer="#{r:element('timeWatcher:grid')}.event(); #{r:element('timeWatcher:grid')}.difference(); #{a4jPollBean.attributes['ontimer'].value}"
                           render="#{a4jPollBean.attributes['render'].value} output"
                           rendered="#{a4jPollBean.attributes['rendered'].value}"
                           status="#{a4jPollBean.attributes['status'].value}"
                           value="#{a4jPollBean.attributes['value'].value}"
                           >
-                </a4j:poll>
+                </r:poll>
             </h:panelGroup>
 
             <script type="text/javascript">

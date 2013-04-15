@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:r="http://richfaces.org/rich"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
       >
 
@@ -29,7 +29,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     -->
     <ui:composition template="/templates/abstractions/messageComponent/messageComponentTestPage.xhtml">
         <ui:define name="messageForSelectableInput">
-            <rich:message id="messageForSelectableInput"
+            <r:message id="messageForSelectableInput"
                           ajaxRendered="#{richMessageBean.attributes['ajaxRendered'].value}"            			   
                           dir="#{richMessageBean.attributes['dir'].value}"
                           escape="#{richMessageBean.attributes['escape'].value}"
@@ -54,7 +54,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="messageForFirstInput">
-            <rich:message id="messageForFirstInput"
+            <r:message id="messageForFirstInput"
                           ajaxRendered="#{richMessageBean.attributes['ajaxRendered'].value}"            			   
                           dir="#{richMessageBean.attributes['dir'].value}"
                           escape="#{richMessageBean.attributes['escape'].value}"
@@ -79,7 +79,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="messageForSecondInput">
-            <rich:message id="messageForSecondInput"
+            <r:message id="messageForSecondInput"
                           ajaxRendered="#{richMessageBean.attributes['ajaxRendered'].value}"            			   
                           dir="#{richMessageBean.attributes['dir'].value}"
                           escape="#{richMessageBean.attributes['escape'].value}"

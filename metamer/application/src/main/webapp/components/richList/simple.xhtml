@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -42,7 +42,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <rich:list id="richList"
+            <r:list id="richList"
                        dir="#{richListBean.attributes['dir'].value}"
                        first="#{richListBean.attributes['first'].value}"
                        iterationStatusVar="iterationStatus"
@@ -84,7 +84,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </f:facet>
 
                 #{item.name}
-            </rich:list>
+            </r:list>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

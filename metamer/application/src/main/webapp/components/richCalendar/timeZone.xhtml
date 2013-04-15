@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"  
       xmlns:f="http://java.sun.com/jsf/core" 
       xmlns:ui="http://java.sun.com/jsf/facelets" 
-      xmlns:rich="http://richfaces.org/rich"
-      xmlns:a4j="http://richfaces.org/a4j" 
+      xmlns:r="http://richfaces.org/rich"
+       
       xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
@@ -41,22 +41,22 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
             <div style="padding: 250px">
-                <rich:calendar id="calendar"
+                <r:calendar id="calendar"
                                popup="true"
                                datePattern="#{richCalendarBean.attributes['datePattern'].value}"
                                timeZone="#{richCalendarBean.tz}"
                                value="#{richCalendarBean.value}">
-                    <a4j:ajax event="change" render="outputPanel, phasesPanel" />
-                </rich:calendar>
-                <rich:message id="msg" for="calendar"/>
+                    <r:ajax event="change" render="outputPanel, phasesPanel" />
+                </r:calendar>
+                <r:message id="msg" for="calendar"/>
             </div>
 
             <br/><br/>
             <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
-            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
+            <r:commandButton id="a4jButton" value="r:commandButton"/>
             <br/><br/>
 
-            <a4j:outputPanel id="outputPanel" ajaxRendered="true">
+            <r:outputPanel id="outputPanel" ajaxRendered="true">
                 TimeZone input:
                 <h:inputText onchange="submit()" id="timeZoneInput" value="#{richCalendarBean.tz}" >
                     <f:converter converterId="timeZoneConverter"/>
@@ -66,7 +66,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 Date pattern:
                 <h:inputText id="datePatternInput" onchange="submit()" value="#{richCalendarBean.attributes['datePattern'].value}">
                 </h:inputText>
-            </a4j:outputPanel>
+            </r:outputPanel>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">         

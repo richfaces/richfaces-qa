@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -28,20 +28,20 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     <ui:composition>
         <h:outputStylesheet library="css" name="template-edt.css"/>
 
-        <rich:extendedDataTable value="#{model.simple}" var="containerRichExtendedDataTableItem" id="containerRichExtendedDataTable">
+        <r:extendedDataTable value="#{model.simple}" var="containerRichExtendedDataTableItem" id="containerRichExtendedDataTable">
 
             <f:facet name="header">
                 Rich Extended Data Table
             </f:facet>
 
-            <rich:column id="col1">
+            <r:column id="col1">
                 <f:facet name="header">
                     Column 1
                 </f:facet>
                 #{containerRichExtendedDataTableItem}
-            </rich:column>
+            </r:column>
 
-            <rich:column id="col2">
+            <r:column id="col2">
                 <f:facet name="header">
                     Column 2
                 </f:facet>
@@ -49,9 +49,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <ui:decorate template="#{templateBean.nextTemplate}.xhtml" />
                 </h:panelGroup>
                 <h:outputText value="#{containerRichExtendedDataTableItem}" rendered="#{containerRichExtendedDataTableItem != 'row 3'}" />
-            </rich:column>
+            </r:column>
 
-        </rich:extendedDataTable>
+        </r:extendedDataTable>
 
     </ui:composition>
 </html>

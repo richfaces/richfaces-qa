@@ -2,8 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:r="http://richfaces.org/rich"
+      
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
@@ -65,34 +65,34 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <li><i><b>Description</b></i>: Using a dragSource in an absolute positioned element results in broken drag indicators</li>
             </ul>
             
-            <rich:dragIndicator id="indicator" />
-            <rich:dragIndicator id="indicator2" acceptClass="acceptClass" rejectClass="rejectClass" draggingClass="draggingClass" />
+            <r:dragIndicator id="indicator" />
+            <r:dragIndicator id="indicator2" acceptClass="acceptClass" rejectClass="rejectClass" draggingClass="draggingClass" />
             <p>Use @indicator=indicator2 to switch to usage of second defined indicator with custom styling</p>
             
             <div  id="testDNDDiv">
                 <table id="testDND">
                     <tr>
-                        <td><a4j:outputPanel id="draggable1" layout="block" styleClass="metamer-draggable">
+                        <td><r:outputPanel id="draggable1" layout="block" styleClass="metamer-draggable">
                                 <h:outputText value="#dragValue1" />
-                                <rich:dragSource type="#{richDragSourceBean.attributes['type'].value}" 
+                                <r:dragSource type="#{richDragSourceBean.attributes['type'].value}" 
                                                  dragValue="#{richDragSourceBean.dragValues[0]}"
                                                  dragIndicator="#{richDragSourceBean.attributes['dragIndicator'].value}"
                                                  rendered="#{richDragSourceBean.attributes['rendered'].value}" />
-                            </a4j:outputPanel></td>
-                        <td><a4j:outputPanel id="draggable2" layout="block" styleClass="metamer-draggable">
+                            </r:outputPanel></td>
+                        <td><r:outputPanel id="draggable2" layout="block" styleClass="metamer-draggable">
                                 <h:outputText value="#dragValue2" />
-                                <rich:dragSource type="drg2" dragIndicator="indicator" dragValue="#{richDragSourceBean.dragValues[1]}" />
-                            </a4j:outputPanel></td>
-                        <td><a4j:outputPanel id="draggable3" layout="block" styleClass="metamer-draggable">
+                                <r:dragSource type="drg2" dragIndicator="indicator" dragValue="#{richDragSourceBean.dragValues[1]}" />
+                            </r:outputPanel></td>
+                        <td><r:outputPanel id="draggable3" layout="block" styleClass="metamer-draggable">
                                 <h:outputText value="#dragValue3" />
-                                <rich:dragSource type="drg3" dragIndicator="indicator" dragValue="#{richDragSourceBean.dragValues[2]}" />
-                            </a4j:outputPanel></td>
+                                <r:dragSource type="drg3" dragIndicator="indicator" dragValue="#{richDragSourceBean.dragValues[2]}" />
+                            </r:outputPanel></td>
                     </tr>
                 </table>
             </div>
 
-            <a4j:outputPanel id="droppable1" layout="block" styleClass="metamer-droppable" style="float: left">
-                <rich:dropTarget
+            <r:outputPanel id="droppable1" layout="block" styleClass="metamer-droppable" style="float: left">
+                <r:dropTarget
                     id="richDropTarget1"
                     dropValue="#{richDropTargetBean.dropValue}"
                     dropListener="#{richDropListenerBean.processDragging}"
@@ -121,10 +121,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </h:column>
 
                 </h:dataTable>
-            </a4j:outputPanel>
+            </r:outputPanel>
 
-            <a4j:outputPanel id="droppable2" layout="block" styleClass="metamer-droppable">
-                <rich:dropTarget
+            <r:outputPanel id="droppable2" layout="block" styleClass="metamer-droppable">
+                <r:dropTarget
                     id="richDropTarget2"
                     dropValue="#{richDropTargetBean.dropValue}"
                     dropListener="#{richDropListenerBean.processDragging}"
@@ -153,12 +153,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </h:column>
 
                 </h:dataTable>
-            </a4j:outputPanel>
+            </r:outputPanel>
             
         </ui:define>
         
         <ui:define name="outOfTemplateAfter">
-            <a4j:outputPanel ajaxRendered="true">
+            <r:outputPanel ajaxRendered="true">
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Drop Event:" rendered="#{not empty richDropListenerBean.dropEvent}" />
                     <h:panelGroup rendered="#{not empty richDropListenerBean.dropEvent}">
@@ -174,7 +174,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         </h:panelGrid>
                     </h:panelGroup>
                 </h:panelGrid>
-            </a4j:outputPanel>
+            </r:outputPanel>
             
             <metamer:attributes value="#{richDragSourceBean.attributes}" id="attributes" />
         </ui:define>

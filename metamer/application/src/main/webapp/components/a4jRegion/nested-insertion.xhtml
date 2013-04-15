@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -36,13 +36,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <h:inputText id="insertionValueInput"
                              value="#{a4jRegionBean.insertionValue}" />
                 <h:commandButton id="insertionValueButton" value="Insertion">
-                    <a4j:ajax listener="#{a4jRegionBean.handleBehavior}"
+                    <r:ajax listener="#{a4jRegionBean.handleBehavior}"
                               execute="#{a4jRegionBean.insertionExecute}" render="outputValues" />
                 </h:commandButton>
                 <h:selectOneMenu id="insertionSelect"
                                  value="#{a4jRegionBean.insertionExecute}">
                     <f:selectItems value="#{a4jRegionBean.executeOptions}" />
-                    <a4j:ajax event="change" render="insertionSelect" execute="@this" />
+                    <r:ajax event="change" render="insertionSelect" execute="@this" />
                 </h:selectOneMenu>
             </h:panelGrid>
 

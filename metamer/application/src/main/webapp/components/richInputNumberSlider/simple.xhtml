@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
-      xmlns:a4j="http://richfaces.org/a4j" xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:r="http://richfaces.org/rich"
+       xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -37,7 +37,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <rich:inputNumberSlider id="slider"
+            <r:inputNumberSlider id="slider"
                                     accesskey="#{richInputNumberSliderBean.attributes['accesskey'].value}"
                                     converterMessage="#{richInputNumberSliderBean.attributes['converterMessage'].value}"
                                     decreaseClass="#{richInputNumberSliderBean.attributes['decreaseClass'].value}"
@@ -91,14 +91,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                     valueChangeListener="#{richBean.valueChangeListener}"
                                     >
 
-                <a4j:ajax event="change" render="output"/>
+                <r:ajax event="change" render="output"/>
 
-            </rich:inputNumberSlider>
-            <rich:message id="msg" for="slider"/>
+            </r:inputNumberSlider>
+            <r:message id="msg" for="slider"/>
 
             <br/><br/>
             <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
-            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
+            <r:commandButton id="a4jButton" value="r:commandButton"/>
             <br/><br/>
 
             output: <h:outputText id="output" value="#{richInputNumberSliderBean.attributes['value'].value}"/>
@@ -110,10 +110,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <br/><br/>
                 On click:
                 <br/>
-                <input id="decrease" name="decrease" type="button" value="decrease()" onclick="#{rich:component('slider')}.decrease()" />
-                <input id="getValue" name="getValue" type="button" value="getValue()" onclick="$('[id$=value]').val(String(#{rich:component('slider')}.getValue()))" />
-                <input id="increase" name="increase" type="button" value="increase()" onclick="#{rich:component('slider')}.increase()" />
-                <input id="setValue" name="setValue" type="button" value="setValue('5')" onclick="#{rich:component('slider')}.setValue(5)" />
+                <input id="decrease" name="decrease" type="button" value="decrease()" onclick="#{r:component('slider')}.decrease()" />
+                <input id="getValue" name="getValue" type="button" value="getValue()" onclick="$('[id$=value]').val(String(#{r:component('slider')}.getValue()))" />
+                <input id="increase" name="increase" type="button" value="increase()" onclick="#{r:component('slider')}.increase()" />
+                <input id="setValue" name="setValue" type="button" value="setValue('5')" onclick="#{r:component('slider')}.setValue(5)" />
             </fieldset>
 
         </ui:define>

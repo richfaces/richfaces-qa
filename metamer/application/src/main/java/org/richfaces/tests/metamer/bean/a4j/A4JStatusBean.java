@@ -26,8 +26,7 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-
-import org.richfaces.component.UIStatus;
+import org.richfaces.ui.ajax.UIAjaxStatus;
 import org.richfaces.tests.metamer.Attributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +56,7 @@ public class A4JStatusBean implements Serializable {
         logger = LoggerFactory.getLogger(getClass());
         logger.debug("initializing bean " + getClass().getName());
 
-        attributes = Attributes.getComponentAttributesFromFacesConfig(UIStatus.class, getClass());
+        attributes = Attributes.getComponentAttributesFromFacesConfig(UIAjaxStatus.class, getClass());
         attributes.setAttribute("rendered", true);
         attributes.setAttribute("startText", "start text");
         attributes.setAttribute("stopText", "stop text");

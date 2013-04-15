@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -82,59 +82,59 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="jsr-303-inBean">
-            <rich:select id="jsr-303-inBean" value="#{validationMessagesBean.valueWithMessagesJSR}" converter="#{validationMessagesBean.converter}">
+            <r:select id="jsr-303-inBean" value="#{validationMessagesBean.valueWithMessagesJSR}" converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
-            </rich:select>
+            </r:select>
         </ui:define>      
 
         <ui:define name="jsr-303-inAtt">
-            <rich:select id="jsr-303-inAtt" value="#{validationMessagesBean.valueWithoutMessagesJSR}" 
+            <r:select id="jsr-303-inAtt" value="#{validationMessagesBean.valueWithoutMessagesJSR}" 
                          validatorMessage="Custom validator error message from attribute of component."
                          converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
-            </rich:select>
+            </r:select>
         </ui:define> 
 
         <ui:define name="jsr-303-inBundle">
-            <rich:select id="jsr-303-inBundle" value="#{validationMessagesBean.valueWithoutMessages2JSR}" converter="#{validationMessagesBean.converter}">
+            <r:select id="jsr-303-inBundle" value="#{validationMessagesBean.valueWithoutMessages2JSR}" converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
-            </rich:select>
+            </r:select>
         </ui:define>  
 
         <ui:define name="csv-inBean">
-            <rich:select id="csv-inBean" value="#{validationMessagesBean.valueWithMessagesCSV}" converter="#{validationMessagesBean.converter}">
+            <r:select id="csv-inBean" value="#{validationMessagesBean.valueWithMessagesCSV}" converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
-            </rich:select>
+            </r:select>
         </ui:define>  
 
         <ui:define name="csv-inAtt">
-            <rich:select id="csv-inAtt" value="#{validationMessagesBean.valueWithoutMessagesCSV}" 
+            <r:select id="csv-inAtt" value="#{validationMessagesBean.valueWithoutMessagesCSV}" 
                          validatorMessage="Custom validator error message from attribute of component."
                          converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
-            </rich:select>
+            </r:select>
         </ui:define>  
 
         <ui:define name="csv-inBundle">
-            <rich:select id="csv-inBundle" value="#{validationMessagesBean.valueWithoutMessages2CSV}" converter="#{validationMessagesBean.converter}">
+            <r:select id="csv-inBundle" value="#{validationMessagesBean.valueWithoutMessages2CSV}" converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
-            </rich:select>
+            </r:select>
         </ui:define>  
 
         <ui:define name="jsf-inAtt">
-            <rich:select id="jsf-inAtt" value="#{validationMessagesBean.valueJSF}" 
+            <r:select id="jsf-inAtt" value="#{validationMessagesBean.valueJSF}" 
                          validatorMessage="Custom validator error message from attribute of component."
                          converter="#{validationMessagesBean.converter}">
                 <f:validateDoubleRange minimum="2" maximum="9"/>
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
-            </rich:select>
+            </r:select>
         </ui:define>  
 
         <ui:define name="jsf-inBundle">    
-            <rich:select id="jsf-inBundle" value="#{validationMessagesBean.value2JSF}" converter="#{validationMessagesBean.converter}">
+            <r:select id="jsf-inBundle" value="#{validationMessagesBean.value2JSF}" converter="#{validationMessagesBean.converter}">
                 <f:validateDoubleRange  minimum="2" maximum="9" />
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
-            </rich:select>    
+            </r:select>    
         </ui:define>   
     </ui:composition>
 </html>

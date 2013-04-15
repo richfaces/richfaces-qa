@@ -21,23 +21,23 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.bean.a4j;
 
+import static org.richfaces.demo.push.TopicsContextMessageProducer.PUSH_TOPICS_CONTEXT_TOPIC;
+
 import java.io.Serializable;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+
 import org.richfaces.application.push.MessageException;
 import org.richfaces.application.push.TopicKey;
-
 import org.richfaces.application.push.TopicsContext;
-import org.richfaces.component.UIPush;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.Message;
+import org.richfaces.ui.ajax.UIPush;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static org.richfaces.demo.push.TopicsContextMessageProducer.PUSH_TOPICS_CONTEXT_TOPIC;
 
 /**
  * Managed bean for a4j:push.

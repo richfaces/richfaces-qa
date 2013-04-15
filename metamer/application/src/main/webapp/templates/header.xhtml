@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:r="http://richfaces.org/rich" >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -44,7 +44,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </h:commandLink>
                     <h:graphicImage id="reRenderAllImage" library="images" name="refresh.png" title="Rerender All"
                                     style="width: 36px;" alt="Rerender All">
-                        <a4j:ajax event="click" render="@all" />
+                        <r:ajax event="click" render="@all" />
                     </h:graphicImage>
                 </h:panelGrid>
             </h:form>
@@ -55,53 +55,53 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <h:selectBooleanCheckbox id="a4jLogCheckbox" value="false" onchange="showOrHideLog()" />
 
                 <h:outputLabel id="a4jStatusLabel" value="Status" for="a4jStatusPanel"/>
-                <a4j:outputPanel id="a4jStatusPanel" ajaxRendered="true">
-                    <a4j:status id="a4jStatus" onstop="updateLog('#{phasesBean.phases}')">
+                <r:outputPanel id="a4jStatusPanel" ajaxRendered="true">
+                    <r:status id="a4jStatus" onstop="updateLog('#{phasesBean.phases}')">
                         <f:facet name="start">
                             <h:outputText value="WORKING" style="color: red;" />
                         </f:facet>
                         <f:facet name="error">
                             <h:outputText value="ERROR" style="color: red;" />
                         </f:facet>
-                    </a4j:status>
-                </a4j:outputPanel>
+                    </r:status>
+                </r:outputPanel>
 
                 <h:outputLabel id="localeLabel" value="Locale" for="locale" />
                 <h:outputText id="locale" value="#{facesContext.viewRoot.locale}" />
 
                 <h:outputLabel id="renderCheckerLabel" value="Render Checker" for="renderChecker"/>
-                <a4j:outputPanel id="renderChecker">
+                <r:outputPanel id="renderChecker">
                     <h:outputText value="#{phasesBean.date}">
                         <f:convertDateTime pattern="HH:MM:ss.SSS" />
                     </h:outputText>
-                </a4j:outputPanel>
+                </r:outputPanel>
 
                 <h:outputLabel id="statusCheckerLabel" value="Status Checker" for="statusChecker" />
-                <a4j:outputPanel id="statusCheckerPanel">
-                    <a4j:status id="statusChecker" name="statusChecker" onstop="updateStatusChecker()" />
+                <r:outputPanel id="statusCheckerPanel">
+                    <r:status id="statusChecker" name="statusChecker" onstop="updateStatusChecker()" />
                     <h:outputText id="statusCheckerOutput" value="" />
 
                     <h:outputScript target="head" library="script" name="clientTime-refresh.js" />
                     <script type="text/javascript">
                         function updateStatusChecker() {
-                            Metamer.ClientTime.refresh(#{rich:element('statusCheckerOutput')});
+                            Metamer.ClientTime.refresh(#{r:element('statusCheckerOutput')});
                         }
                         updateStatusChecker();
                     </script>
-                </a4j:outputPanel>
+                </r:outputPanel>
 
                 <h:outputLabel id="jsFunctionCheckerLabel" value="jsFunction Checker" for="jsFunctionChecker"/>
-                <a4j:outputPanel id="jsFunctionChecker">
+                <r:outputPanel id="jsFunctionChecker">
                     <h:outputText value="#{phasesBean.date}">
                         <f:convertDateTime pattern="HH:MM:ss.SSS" />
                     </h:outputText>
-                </a4j:outputPanel>
+                </r:outputPanel>
 
                 <h:outputLabel id="showUiDebugLabel" value="Show ui:debug" for="showUiDebug"/>
                 <h:outputText id="showUiDebug" value="Ctrl+Shift+L"/>
                 <ui:debug hotkey="L"/>
 
-                <a4j:jsFunction name="functionChecker" render="jsFunctionChecker"/>
+                <r:jsFunction name="functionChecker" render="jsFunctionChecker"/>
             </h:panelGrid>
 
 
@@ -145,7 +145,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                          style="width: 150px;">
                             <f:selectItems value="#{templateBean.availableTemplates}" />
                             <f:converter converterId="templateNameConverter" />
-                            <a4j:ajax event="change" render="templatesForm" />
+                            <r:ajax event="change" render="templatesForm" />
                         </h:selectOneMenu>
                         <br />
                     </ui:repeat>
@@ -156,16 +156,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </h:form>
 
             <h:panelGrid columns="1">
-                <a4j:outputPanel id="phasesPanel" layout="block" ajaxRendered="true">
+                <r:outputPanel id="phasesPanel" layout="block" ajaxRendered="true">
                     <h:outputText id="requestTime" value="#{phasesBean.date}">
                         <f:convertDateTime pattern="HH:mm:ss.SSS" />
                     </h:outputText>
                     <ul class="phases-list">
-                        <a4j:repeat value="#{phasesBean.phases}" var="phase">
+                        <r:repeat value="#{phasesBean.phases}" var="phase">
                             <li>#{phase}</li>
-                        </a4j:repeat>
+                        </r:repeat>
                     </ul>
-                </a4j:outputPanel>
+                </r:outputPanel>
             </h:panelGrid>
 
             <h:form id="invalidateSessionForm">

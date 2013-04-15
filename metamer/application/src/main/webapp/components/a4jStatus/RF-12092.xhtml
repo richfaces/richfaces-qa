@@ -4,7 +4,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:r="http://richfaces.org/rich"
 	xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
 <!--
@@ -34,13 +34,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 	<ui:define name="component">
 		<h:form id="mainForm">
 
-			<a4j:queue timeout="20000" />
+			<r:queue timeout="20000" />
 
 			<!-- Keep this in mainForm so we can read in the table rows selected and reRender them on table updates-->
-			<a4j:poll id="ajaxPoll" interval="5000" enabled="true"
+			<r:poll id="ajaxPoll" interval="5000" enabled="true"
 				render="helloText" />
 
-			<a4j:status id="a4jstatus">
+			<r:status id="a4jstatus">
 
 				<f:facet name="start">
 					<h:outputText value="In progress " />
@@ -49,7 +49,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 				<!--<f:facet name="stop">-->
 				<!--<img src="/appiq/images/minor_icon.gif"/>-->
 				<!--</f:facet>-->
-			</a4j:status>
+			</r:status>
 
 			<h:outputText id="helloText" value="hello" />
 		</h:form>

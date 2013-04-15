@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
       xmlns:demo="http://java.sun.com/jsf/composite/demo">
 
     <!--
@@ -47,22 +47,22 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <h:panelGrid columns="1">
                 <h:commandButton id="invokeByTypeButton" value="Invoke listener by type">
-                    <a4j:actionListener type="org.richfaces.tests.metamer.bean.a4j.A4JActionListenerBean$ActionListenerImpl" />
-                    <a4j:ajax render="messages" />
+                    <r:actionListener type="org.richfaces.tests.metamer.bean.a4j.A4JActionListenerBean$ActionListenerImpl" />
+                    <r:ajax render="messages" />
                 </h:commandButton>
 
                 <h:commandButton id="invokeByBindingButton" value="Invoke listener by binding">
-                    <a4j:actionListener binding="#{a4jActionListenerBean.actionListener}" />
-                    <a4j:ajax render="messages" />
+                    <r:actionListener binding="#{a4jActionListenerBean.actionListener}" />
+                    <r:ajax render="messages" />
                 </h:commandButton>
 
                 <h:commandButton id="invokeMethodButton" value="Invoke listener method">
-                    <a4j:actionListener listener="#{a4jActionListenerBean.handleActionMethod}" />
-                    <a4j:ajax render="messages" />
+                    <r:actionListener listener="#{a4jActionListenerBean.handleActionMethod}" />
+                    <r:ajax render="messages" />
                 </h:commandButton>
 
                 <demo:actionComposite id="invokeFromCCButton" render="messages" value="Invoke listener method in composite component">
-                    <a4j:actionListener for="button" listener="#{a4jActionListenerBean.handleActionMethodComposite}" />
+                    <r:actionListener for="button" listener="#{a4jActionListenerBean.handleActionMethodComposite}" />
                 </demo:actionComposite>
             </h:panelGrid>
         </ui:define>

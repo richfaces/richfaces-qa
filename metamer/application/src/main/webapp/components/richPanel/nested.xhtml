@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -41,11 +41,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <rich:panel id="outerPanel" header="outer panel">
+            <r:panel id="outerPanel" header="outer panel">
                 <h:outputText id="contentOuter" value="content of outer panel" style="font-size: x-large"/>
 
                 <h:panelGrid columns="2" columnClasses="grid-content">
-                    <rich:panel id="leftPanel" header="left inner panel" styleClass="inner-panel">
+                    <r:panel id="leftPanel" header="left inner panel" styleClass="inner-panel">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sodales risus non sapien pulvinar
                         volutpat. Suspendisse ac neque neque. Aliquam erat volutpat. Donec luctus nulla eget lectus vehicula
                         facilisis. Aenean non nisl nibh. Vestibulum odio metus, fermentum nec placerat in, varius eu ligula.
@@ -53,9 +53,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         suscipit vulputate suscipit varius augue. Sed non lorem erat. Vivamus ut magna sapien. In lacinia
                         pharetra mi viverra volutpat. Praesent rutrum cursus dui non lobortis. Morbi nec sem eros. Proin
                         a libero diam, id laoreet risus. Ut sit amet risus elit. Nulla facilisi.
-                    </rich:panel>
+                    </r:panel>
 
-                    <rich:panel id="rightPanel" header="right inner panel" styleClass="inner-panel">
+                    <r:panel id="rightPanel" header="right inner panel" styleClass="inner-panel">
                         <ul>
                             <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
                             <li>Mauris non velit sapien, nec varius elit.</li>
@@ -67,9 +67,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                             <li>Fusce sit amet orci quis sapien dignissim consectetur in eget leo.</li>
                             <li>Vestibulum auctor quam ultrices ligula congue semper.</li>
                         </ul>
-                    </rich:panel>
+                    </r:panel>
                 </h:panelGrid>
-            </rich:panel>
+            </r:panel>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

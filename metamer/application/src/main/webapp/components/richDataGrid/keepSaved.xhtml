@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -49,14 +49,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
 
-            <rich:dataGrid id="richDataGrid" keepSaved="#{richDataGridBean.attributes['keepSaved'].value}"
+            <r:dataGrid id="richDataGrid" keepSaved="#{richDataGridBean.attributes['keepSaved'].value}"
                            value="#{model.simple}" columns="2">
 
-                <rich:column id="columnInput">
+                <r:column id="columnInput">
                     <h:inputText id="input" value="#{maxBean.value}" converter="javax.faces.Integer"/>
-                </rich:column>
+                </r:column>
 
-            </rich:dataGrid>
+            </r:dataGrid>
 
             <br/>
             <h:commandButton id="submitButton" value="Submit"/>

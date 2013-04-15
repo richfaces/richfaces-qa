@@ -27,8 +27,8 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
 
-import org.richfaces.component.UIAjaxLog;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.ui.ajax.UIAjaxLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

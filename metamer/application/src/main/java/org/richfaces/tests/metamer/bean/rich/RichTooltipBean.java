@@ -28,8 +28,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.richfaces.component.UITooltip;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.ui.output.UITooltip;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

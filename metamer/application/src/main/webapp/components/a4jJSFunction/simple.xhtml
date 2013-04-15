@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer" >
 
     <!--
@@ -48,10 +48,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br/>
             <fieldset id="autoOutputFieldset">
                 <legend>ajaxRendered="true"</legend>
-                <a4j:outputPanel id="autoTime" ajaxRendered="true">#{timeBean.formattedTime}</a4j:outputPanel>
+                <r:outputPanel id="autoTime" ajaxRendered="true">#{timeBean.formattedTime}</r:outputPanel>
             </fieldset>
 
-            <a4j:jsFunction id="jsFunction"
+            <r:jsFunction id="jsFunction"
                             action="#{a4jJSFunctionBean.attributes.action}"
                             actionListener="#{a4jJSFunctionBean.attributes.actionListener}"
                             bypassUpdates="#{a4jJSFunctionBean.attributes['bypassUpdates'].value}"
@@ -68,7 +68,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                             status="#{a4jJSFunctionBean.attributes['status'].value}"
                             value="#{a4jJSFunctionBean.attributes['value'].value}"
                             >
-            </a4j:jsFunction>
+            </r:jsFunction>
 
             <br/>
             <a id="callFunctionLink" href="#" onclick="javascript:#{a4jJSFunctionBean.attributes['name'].value}()">Call JavaScript function (#{a4jJSFunctionBean.attributes['name'].value})</a>

@@ -23,11 +23,11 @@ package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
-import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.panelMenu.RichFacesPanelMenu;
 import org.richfaces.tests.page.fragments.impl.panelMenuGroup.RichFacesPanelMenuGroup;
 import org.richfaces.tests.page.fragments.impl.panelMenuItem.RichFacesPanelMenuItem;
+import org.richfaces.ui.common.Mode;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>

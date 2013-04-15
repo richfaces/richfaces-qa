@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
       xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
 
     <!--
@@ -27,18 +27,18 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
     <ui:composition>
         <h:commandButton id="containerOpenPanelButton" value="Call the popup">
-            <rich:componentControl target="containerPopupPanel" operation="show" />
+            <r:componentControl target="containerPopupPanel" operation="show" />
         </h:commandButton>
 
-        <rich:popupPanel id="containerPopupPanel" domElementAttachment="parent" header="Popup panel"
+        <r:popupPanel id="containerPopupPanel" domElementAttachment="parent" header="Popup panel"
                          minHeight="400" minWidth="700" moveable="true" resizeable="true" show="true" zindex="1">
             <f:facet name="controls">
-                <h:outputLink value="#" onclick="#{rich:component('containerPopupPanel')}.hide(); return false;">X</h:outputLink>
+                <h:outputLink value="#" onclick="#{r:component('containerPopupPanel')}.hide(); return false;">X</h:outputLink>
             </f:facet>
 
             <ui:decorate template="#{templateBean.nextTemplate}.xhtml" />
 
-        </rich:popupPanel>
+        </r:popupPanel>
 
     </ui:composition>
 </html>

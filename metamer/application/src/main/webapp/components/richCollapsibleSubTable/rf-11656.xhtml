@@ -2,8 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:r="http://richfaces.org/rich"
+      
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
@@ -53,79 +53,79 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 This attribute value (@expanded) for nested collapsibleSubTable should be set to false as well, and don't work.
             </p>
 
-            <rich:dataTable id="richDataTable" value="#{richSubTableBean.lists}" var="list" keepSaved="true">
+            <r:dataTable id="richDataTable" value="#{richSubTableBean.lists}" var="list" keepSaved="true">
                 <f:facet name="header">
-                    <rich:columnGroup id="columnGroup">
-                        <rich:column id="columnHeaderEmployees" colspan="3">
+                    <r:columnGroup id="columnGroup">
+                        <r:column id="columnHeaderEmployees" colspan="3">
                             <h:outputText id="columnHeaderEmployeesText" value="Employees" />
-                        </rich:column>
-                        <rich:column id="columnHeaderName" breakRowBefore="true">
+                        </r:column>
+                        <r:column id="columnHeaderName" breakRowBefore="true">
                             <h:outputText id="columnHeaderNameText" value="Name" />
-                        </rich:column>
-                        <rich:column id="columnHeaderTitle">
+                        </r:column>
+                        <r:column id="columnHeaderTitle">
                             <h:outputText id="columnHeaderTitleText" value="Title" />
-                        </rich:column>
-                        <rich:column id="columnHeaderBirthdate">
+                        </r:column>
+                        <r:column id="columnHeaderBirthdate">
                             <h:outputText id="columnHeaderBirthdateText" value="Birthdate" />
-                        </rich:column>
-                    </rich:columnGroup>
+                        </r:column>
+                    </r:columnGroup>
                 </f:facet>
 
-                <rich:column id="columnSubTable1" colspan="3">
-                    <rich:collapsibleSubTableToggler id="subTableTC" for="richSubTable1"/>
+                <r:column id="columnSubTable1" colspan="3">
+                    <r:collapsibleSubTableToggler id="subTableTC" for="richSubTable1"/>
                     <h:outputText value="#{list[0].sex == 'MALE' ? 'Men' : 'Women'}" />
-                </rich:column>
+                </r:column>
 
 
-                <rich:collapsibleSubTable id="richSubTable1"
+                <r:collapsibleSubTable id="richSubTable1"
                                           value="#{richSubTableBean.state ? list : null}"
                                           var="employee"
                                           rows="3"
                                           expandMode="ajax"
                                           expanded="#{richSubTableBean.expanded[list]}">
       
-                     <rich:column>           
+                     <r:column>           
                          <h:outputText style="margin-left: 15px" value="#{employee.name}"/>
-                     </rich:column>
-                     <rich:column>
+                     </r:column>
+                     <r:column>
                          <h:outputText value="#{employee.title}"/>
-                     </rich:column>
-                     <rich:column id="columnBirthdate">
+                     </r:column>
+                     <r:column id="columnBirthdate">
                         <h:outputText id="birthdate" value="#{employee.birthdate}">
                             <f:convertDateTime pattern="d MMM yyyy"/>
                         </h:outputText>
-                    </rich:column>
+                    </r:column>
      
-                    <rich:collapsibleSubTable value="#{employee.companies}"
+                    <r:collapsibleSubTable value="#{employee.companies}"
                                               var="company"
                                               id="richSubTable2"
                                               rows="2"
                                               expandMode="ajax"
                                               expanded="#{richSubTableBean.expandedEmployee[employee]}">
                          <!-- Following       ^^^^^^^^ attribute doesn't influence component as expected -->
-                         <rich:column>
+                         <r:column>
                              <f:facet name="header">
-                                <rich:collapsibleSubTableToggler id="subTableTC2" for="richSubTable2"/>
+                                <r:collapsibleSubTableToggler id="subTableTC2" for="richSubTable2"/>
                             <h:outputText value="Employee's Company Details" />
                              </f:facet>              
-                         </rich:column>
+                         </r:column>
           
-                         <rich:column>
+                         <r:column>
                              <f:facet name="header">
                                 <h:outputText value="Company Name"/>
                              </f:facet>
                              <h:outputText style="margin-left: 30px" value="#{company.name}"/>
-                         </rich:column>          
-                         <rich:column>
+                         </r:column>          
+                         <r:column>
                             <f:facet name="header">
                                 <h:outputText value="Company Phone"/>
                             </f:facet>
                             <h:outputText value="#{company.phone}"/>
-                         </rich:column>
-                    </rich:collapsibleSubTable>
-               </rich:collapsibleSubTable>
+                         </r:column>
+                    </r:collapsibleSubTable>
+               </r:collapsibleSubTable>
 
-            </rich:dataTable>
+            </r:dataTable>
         </ui:define>
 
     </ui:composition>

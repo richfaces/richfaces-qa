@@ -29,13 +29,13 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.richfaces.component.UIFileUpload;
+import org.richfaces.event.FileUploadEvent;
 import org.richfaces.model.UploadedFile;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.bean.RichBean;
+import org.richfaces.ui.input.UIFileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.richfaces.event.FileUploadEvent;
-import org.richfaces.tests.metamer.bean.RichBean;
 
 /**
  * Managed bean for rich:fileUpload.

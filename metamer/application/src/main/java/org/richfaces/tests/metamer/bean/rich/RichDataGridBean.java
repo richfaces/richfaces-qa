@@ -29,8 +29,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.richfaces.component.UIDataGrid;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.ui.iteration.UIDataGrid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

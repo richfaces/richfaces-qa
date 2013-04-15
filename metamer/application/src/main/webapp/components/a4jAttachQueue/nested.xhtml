@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -45,7 +45,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <a4j:queue id="queue1"
+            <r:queue id="queue1"
                        ignoreDupResponses="#{a4jQueueBean.attributes['ignoreDupResponses'].value}"
                        name="#{a4jQueueBean.attributes['name'].value}"
                        onbeforedomupdate="#{a4jQueueBean.attributes['onbeforedomupdate'].value}"
@@ -59,10 +59,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                        requestDelay="#{a4jQueueBean.attributes['requestDelay'].value}"
                        />
 
-            <h:inputText id="input1" value="#{a4jAttachQueueBean.text1}" onkeypress="add(#{rich:element('events1')}); #{rich:element('timeWatcher:grid')}.event(1); ">
-                <a4j:ajax event="keypress" render="output1" execute="@form" onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); "
-                          onbeforedomupdate="add(#{rich:element('updates')});" oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference(); ">
-                    <a4j:attachQueue id="a4jAttachQueue1"
+            <h:inputText id="input1" value="#{a4jAttachQueueBean.text1}" onkeypress="add(#{r:element('events1')}); #{r:element('timeWatcher:grid')}.event(1); ">
+                <r:ajax event="keypress" render="output1" execute="@form" onbegin="add(#{r:element('requests')}); #{r:element('timeWatcher:grid')}.begin(); "
+                          onbeforedomupdate="add(#{r:element('updates')});" oncomplete="#{r:element('timeWatcher:grid')}.complete(); #{r:element('timeWatcher:grid')}.difference(); ">
+                    <r:attachQueue id="a4jAttachQueue1"
                                      ignoreDupResponses="#{a4jAttachQueueBean.attributes['ignoreDupResponses'].value}"
                                      name="#{a4jAttachQueueBean.attributes['name'].value}"
                                      onrequestdequeue="#{a4jAttachQueueBean.attributes['onrequestdequeue'].value}"
@@ -71,13 +71,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                      requestDelay="#{a4jAttachQueueBean.attributes['requestDelay'].value}"
                                      requestGroupingId="#{a4jAttachQueueBean.attributes['requestGroupingId'].value}"
                                      />
-                </a4j:ajax>
+                </r:ajax>
             </h:inputText>
 
-            <h:inputText id="input2" value="#{a4jAttachQueueBean.text2}" onkeypress="add(#{rich:element('events2')}); #{rich:element('timeWatcher:grid')}.event(2); ">
-                <a4j:ajax event="keypress" render="output2" execute="@form" onbegin="add(#{rich:element('requests')}); #{rich:element('timeWatcher:grid')}.begin(); "
-                          onbeforedomupdate="add(#{rich:element('updates')});" oncomplete="#{rich:element('timeWatcher:grid')}.complete(); #{rich:element('timeWatcher:grid')}.difference(); ">
-                    <a4j:attachQueue id="a4jAttachQueue2"
+            <h:inputText id="input2" value="#{a4jAttachQueueBean.text2}" onkeypress="add(#{r:element('events2')}); #{r:element('timeWatcher:grid')}.event(2); ">
+                <r:ajax event="keypress" render="output2" execute="@form" onbegin="add(#{r:element('requests')}); #{r:element('timeWatcher:grid')}.begin(); "
+                          onbeforedomupdate="add(#{r:element('updates')});" oncomplete="#{r:element('timeWatcher:grid')}.complete(); #{r:element('timeWatcher:grid')}.difference(); ">
+                    <r:attachQueue id="a4jAttachQueue2"
                                      ignoreDupResponses="#{a4jAttachQueueBean.attributes2['ignoreDupResponses'].value}"
                                      name="#{a4jAttachQueueBean.attributes2['name'].value}"
                                      onrequestdequeue="#{a4jAttachQueueBean.attributes2['onrequestdequeue'].value}"
@@ -86,7 +86,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                      requestDelay="#{a4jAttachQueueBean.attributes2['requestDelay'].value}"
                                      requestGroupingId="#{a4jAttachQueueBean.attributes2['requestGroupingId'].value}"
                                      />
-                </a4j:ajax>
+                </r:ajax>
             </h:inputText>
 
             <h:panelGrid columns="2">

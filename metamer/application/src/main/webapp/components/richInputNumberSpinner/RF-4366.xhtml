@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
-      xmlns:a4j="http://richfaces.org/a4j" xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:r="http://richfaces.org/rich"
+       xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -38,7 +38,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="head">
             <script type="text/javascript">
-                testedComponentId = "#{rich:clientId('spinner')}";
+                testedComponentId = "#{r:clientId('spinner')}";
             </script>
         </ui:define>
 
@@ -51,41 +51,41 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 In GE spinner when the number has some fraction digits it strips the number of "." (e.g 1.5 >> 15).
                 The step is set to 0.5, so every second click on up/down arrow of spinner will generate this malformed number.
             </p>
-            <a4j:outputPanel id="spinnerPanelDE" ajaxRender="true" layout="block">
+            <r:outputPanel id="spinnerPanelDE" ajaxRender="true" layout="block">
                 DE number spinner. This one uses f:convertNumber with params minFractionDigits="1" and locale="de".
                 <br/>
-                <rich:inputNumberSpinner id="spinnerDE"
+                <r:inputNumberSpinner id="spinnerDE"
                                          step="0.5"
                                          value="#{richInputNumberSpinnerBean.valueLocaleDE}"
                                          valueChangeListener="#{richBean.valueChangeListener}"
                                          >
                     <f:convertNumber minFractionDigits="1" locale="de"/>
-                    <a4j:ajax event="change" render="outputDE" />
-                </rich:inputNumberSpinner>
+                    <r:ajax event="change" render="outputDE" />
+                </r:inputNumberSpinner>
 
                 <br/><br/>
                 output: <h:outputText id="outputDE" value="#{richInputNumberSpinnerBean.valueLocaleDE}"/>
-            </a4j:outputPanel>
+            </r:outputPanel>
 
             <br/><br/>
 
-            <a4j:outputPanel id="spinnerPanelEN" ajaxRender="true" layout="block">
+            <r:outputPanel id="spinnerPanelEN" ajaxRender="true" layout="block">
                 EN number spinner. This one uses f:convertNumber with params minFractionDigits="1" and locale="en". 
                 This one works correctly.
                 <br/>
-                <rich:inputNumberSpinner id="spinnerEN"
+                <r:inputNumberSpinner id="spinnerEN"
                                          step="0.5"
                                          value="#{richInputNumberSpinnerBean.valueLocaleEN}"
                                          valueChangeListener="#{richBean.valueChangeListener}"
                                          >
                     <f:convertNumber minFractionDigits="1" locale="en"/>
-                    <a4j:ajax event="change" render="outputEN" />
-                </rich:inputNumberSpinner>
+                    <r:ajax event="change" render="outputEN" />
+                </r:inputNumberSpinner>
 
                 <br/><br/>
                 output: <h:outputText id="outputEN" value="#{richInputNumberSpinnerBean.valueLocaleEN}"/>
 
-            </a4j:outputPanel>
+            </r:outputPanel>
 
             <br/><br/>
 

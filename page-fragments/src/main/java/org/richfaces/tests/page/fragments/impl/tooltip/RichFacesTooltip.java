@@ -27,8 +27,8 @@ import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
-import org.richfaces.TooltipMode;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.ui.output.TooltipMode;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>

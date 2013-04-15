@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOUT;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.PanelMenuMode.client;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.mode;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.onclick;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.ondblclick;
@@ -32,6 +31,7 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemA
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.onmouseover;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.onmouseup;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuItemAttributes;
+import static org.richfaces.ui.common.Mode.client;
 
 import java.net.URL;
 

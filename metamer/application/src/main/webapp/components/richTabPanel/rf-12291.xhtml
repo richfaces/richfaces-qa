@@ -4,9 +4,9 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:r="http://richfaces.org/rich"
 	xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-	xmlns:rich="http://richfaces.org/rich"
+	
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <!--
@@ -36,21 +36,21 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
 	<ui:define name="component">
 
-		<rich:panel><h:outputText
+		<r:panel><h:outputText
 			value="switch between the tabs and see whether there is an error thrown as described at: " />
-		<a href="https://issues.jboss.org/browse/RF-12291">here</a></rich:panel>
+		<a href="https://issues.jboss.org/browse/RF-12291">here</a></r:panel>
 		
-		<rich:tabPanel switchType="ajax" immediate="true">
+		<r:tabPanel switchType="ajax" immediate="true">
 
-			<rich:tab header="Non paginated data table">
+			<r:tab header="Non paginated data table">
 				<ui:include src="firstInclude.xhtml" />
-			</rich:tab>
+			</r:tab>
 
-			<rich:tab header="paginated data table">
+			<r:tab header="paginated data table">
 				<ui:include src="secondInclude.xhtml" />
-			</rich:tab>
+			</r:tab>
 			
-		</rich:tabPanel>
+		</r:tabPanel>
 		
 	</ui:define>
 

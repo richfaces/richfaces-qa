@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich" 
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
     <!--
@@ -101,7 +101,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
             <h:panelGrid columns="3">
 
-                <rich:validator data="#{richValidatorBean.attributes['data'].value}"
+                <r:validator data="#{richValidatorBean.attributes['data'].value}"
                                 disabled="#{richValidatorBean.attributes['disabled'].value}"
                                 immediate="#{richValidatorBean.attributes['immediate'].value}"
                                 onbeforedomupdate="#{richValidatorBean.attributes['onbeforedomupdate'].value}"
@@ -115,71 +115,71 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                     <h:outputLabel for="assertTrue" value="#{assertTrueBean.description}" />
                     <h:selectBooleanCheckbox id="assertTrue" value="#{assertTrueBean.value}" label="#{assertTrueBean.label}" />	     
-                    <rich:message id="assertTrueMsg" for="assertTrue" />
+                    <r:message id="assertTrueMsg" for="assertTrue" />
 
                     <h:outputLabel for="assertFalse" value="#{assertFalseBean.description}" />
                     <h:selectBooleanCheckbox id="assertFalse" value="#{assertFalseBean.value}" label="#{assertFalseBean.label}" />	     
-                    <rich:message id="assertFalseMsg" for="assertFalse" />
+                    <r:message id="assertFalseMsg" for="assertFalse" />
 
                     <h:outputLabel for="decimalMinMax" value="#{decimalMinMaxBean.description}" />
                     <h:inputText id="decimalMinMax" value="#{decimalMinMaxBean.value}" label="#{decimalMinMaxBean.label}" converter="#{decimalMinMaxBean.converter}" />
-                    <rich:message id="decimalMinMaxMsg" for="decimalMinMax" />
+                    <r:message id="decimalMinMaxMsg" for="decimalMinMax" />
 
                     <h:outputLabel for="digits" value="#{digitsBean.description}" />
                     <h:inputText id="digits" value="#{digitsBean.value}" label="#{digitsBean.label}" converter="#{digitsBean.converter}" />
-                    <rich:message id="digitsMsg" for="digits" />
+                    <r:message id="digitsMsg" for="digits" />
 
                     <h:outputLabel for="max" value="#{maxBean.description}" />
                     <h:inputText id="max" value="#{maxBean.value}" label="#{maxBean.label}" converter="#{maxBean.converter}" />
-                    <rich:message id="maxMsg" for="max" />
+                    <r:message id="maxMsg" for="max" />
 
                     <h:outputLabel for="min" value="#{minBean.description}" />
                     <h:inputText id="min" value="#{minBean.value}" label="#{minBean.label}" converter="#{minBean.converter}" />
-                    <rich:message id="minMsg" for="min" />
+                    <r:message id="minMsg" for="min" />
 
                     <h:outputLabel for="minMax" value="#{minMaxBean.description}" />
                     <h:inputText id="minMax" value="#{minMaxBean.value}" label="#{minMaxBean.label}" converter="#{minMaxBean.converter}" />
-                    <rich:message id="minMaxMsg" for="minMax" />
+                    <r:message id="minMaxMsg" for="minMax" />
 
                     <h:outputLabel for="notEmpty" value="#{notEmptyBean.description}" />
                     <h:inputText id="notEmpty" value="#{notEmptyBean.value}" label="#{notEmptyBean.label}" converter="#{notEmptyBean.converter}" />
-                    <rich:message id="notEmptyMsg" for="notEmpty" />
+                    <r:message id="notEmptyMsg" for="notEmpty" />
 
                     <h:outputLabel for="notNull" value="#{notNullBean.description}" />
                     <h:inputText id="notNull" value="#{notNullBean.value}" label="#{notNullBean.label}" converter="emptyStringToNullConverter" />
-                    <rich:message id="notNullMsg" for="notNull" />
+                    <r:message id="notNullMsg" for="notNull" />
 
                     <h:outputLabel for="pattern" value="#{patternBean.description}" />
                     <h:inputText id="pattern" value="#{patternBean.value}" label="#{patternBean.label}" converter="#{patternBean.converter}" />
-                    <rich:message id="patternMsg" for="pattern" />
+                    <r:message id="patternMsg" for="pattern" />
 
                     <h:outputLabel for="custom" value="custom validator, RichFaces" />
                     <h:inputText id="custom" value="#{richValidatorBean.stringValue}" label="custom">
                         <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>	     
                     </h:inputText>
-                    <rich:message id="customMsg" for="custom" />
+                    <r:message id="customMsg" for="custom" />
 
                     <h:outputLabel for="regexp" value="custom regexp validator (pattern: #{richValidatorBean.regExp})" />
                     <h:inputText id="regexp" value="#{richValidatorBean.regexpValue}" label="custom">
                         <f:validateRegex pattern="#{richValidatorBean.regExp}" />
                     </h:inputText>
-                    <rich:message id="regexpMsg" for="regexp" />
+                    <r:message id="regexpMsg" for="regexp" />
 
                     <h:outputLabel for="past" value="#{pastBean.description}" />
                     <h:inputText id="past" value="#{pastBean.value}" label="#{pastBean.label}" >
                         <f:convertDateTime pattern="d MMM yyyy"/>
                     </h:inputText>
-                    <rich:message id="pastMsg" for="past" />
+                    <r:message id="pastMsg" for="past" />
 
                     <h:outputLabel for="future" value="#{futureBean.description}" />
                     <h:inputText id="future" value="#{futureBean.value}" label="#{futureBean.label}" >
                         <f:convertDateTime pattern="d MMM yyyy"/>
                     </h:inputText>
-                    <rich:message id="futureMsg" for="future" />
+                    <r:message id="futureMsg" for="future" />
 
                     <h:outputLabel for="stringSize" value="#{stringSizeBean.description}" />
                     <h:inputText id="stringSize" value="#{stringSizeBean.value}" label="#{stringSizeBean.label}" />
-                    <rich:message id="stringSizeMsg" for="stringSize" />
+                    <r:message id="stringSizeMsg" for="stringSize" />
 
                     <h:outputLabel for="size" value="#{sizeBean.description}" />
                     <h:selectManyCheckbox id="size" value="#{sizeBean.value}" label="#{sizeBean.label}" >
@@ -190,19 +190,19 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         <f:selectItem itemValue="E" itemLabel="E"/>
                         <f:selectItem itemValue="F" itemLabel="F"/>
                     </h:selectManyCheckbox>
-                    <rich:message id="sizeMsg" for="size" />
+                    <r:message id="sizeMsg" for="size" />
 
-                </rich:validator>
+                </r:validator>
 
             </h:panelGrid>
 
             <br/>
 
             <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
-            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
+            <r:commandButton id="a4jButton" value="r:commandButton"/>
 
             <br/>
-            <rich:messages id="msgs"/>
+            <r:messages id="msgs"/>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

@@ -22,7 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richTree;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.component.SwitchType;
+import org.richfaces.ui.common.SwitchType;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
