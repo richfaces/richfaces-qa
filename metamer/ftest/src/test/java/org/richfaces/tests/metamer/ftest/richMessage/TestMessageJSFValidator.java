@@ -1,4 +1,4 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,16 +18,13 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richMessage;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 /**
@@ -36,124 +33,17 @@ import org.testng.annotations.Test;
 public class TestMessageJSFValidator extends AbstractMessageTest {
 
     @Override
-    protected void waitingForValidationMessages() {
-        MetamerPage.waitRequest(Graphene.guardXhr(page.a4jCommandButton), WaitRequestType.XHR).click();
-    }
-
-    @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richMessage/jsfValidator.xhtml");
     }
 
     @Test
-    public void testAjaxRendered() {
-        super.testAjaxRendered();
+    public void testSimple() {
+        checkSimple();
     }
 
-    @Test
-    public void testDir() {
-        super.testDir();
-    }
-
-    @Test
-    public void testEscape() {
-        super.testEscape();
-    }
-
-    @Test
-    public void testFor() {
-        super.testFor();
-    }
-
-    @Test
-    public void testLang() {
-        super.testLang();
-    }
-
-    @Test
-    public void testNoShowDetailNoShowSummary() {
-        super.testNoShowDetailNoShowSummary();
-    }
-
-    @Test
-    public void testOnClick() {
-        super.testOnClick();
-    }
-
-    @Test
-    public void testOnDblClick() {
-        super.testOnDblClick();
-    }
-
-    @Test
-    public void testOnKeyDown() {
-        super.testOnKeyDown();
-    }
-
-    @Test
-    public void testOnKeyPress() {
-        super.testOnKeyPress();
-    }
-
-    @Test
-    public void testOnKeyUp() {
-        super.testOnKeyUp();
-    }
-
-    @Test
     @Override
-    public void testOnMouseDown() {
-        super.testOnMouseDown();
-    }
-
-    @Test
-    public void testOnMouseMove() {
-        super.testOnMouseMove();
-    }
-
-    @Test
-    public void testOnMouseOut() {
-        super.testOnMouseOut();
-    }
-
-    @Test
-    @Override
-    public void testOnMouseOver() {
-        super.testOnMouseOver();
-    }
-
-    @Test
-    public void testOnMouseUp() {
-        super.testOnMouseUp();
-    }
-
-    @Test
-    public void testRendered() {
-        super.testRendered();
-    }
-
-    @Test
-    public void testShowDetail() {
-        super.testShowDetail();
-    }
-
-    @Test
-    public void testShowSummary() {
-        super.testShowSummary();
-    }
-
-    @Test
-    public void testStyle() {
-        super.testStyle();
-    }
-
-    @Test
-    public void testStyleClass() {
-        super.testStyleClass();
-    }
-
-    @Test
-    public void testTitle() {
-        super.testTitle();
+    protected void waitingForValidationMessagesToShow() {
+        submitWithA4jBtn();
     }
 }

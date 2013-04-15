@@ -19,31 +19,17 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richMessage;
+package org.richfaces.tests.metamer.ftest.abstractions.message;
 
-import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import java.net.URL;
-
-import org.testng.annotations.Test;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
+ * Common page of all messages components (rich:messages, rich:notifyMessages).
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestMessageJSR303 extends AbstractMessageTest {
+class MessagesComponentCommonPage extends MessageComponentCommonPage {
 
-    @Override
-    public URL getTestUrl() {
-        return buildUrl(contextPath, "faces/components/richMessage/jsr303.xhtml");
-    }
-
-    @Test
-    public void testSimple() {
-        checkSimple();
-    }
-
-    @Override
-    protected void waitingForValidationMessagesToShow() {
-        submitWithA4jBtn();
-    }
+    @FindBy(css = "input[id$=generateAllMsgsBtn]")
+    public WebElement generateAllMsgsButton;
 }

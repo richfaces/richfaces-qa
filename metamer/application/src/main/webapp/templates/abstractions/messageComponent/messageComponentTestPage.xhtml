@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" 
-      xmlns:f="http://java.sun.com/jsf/core">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      >
 
     <!--
     JBoss, Home of Professional Open Source
@@ -15,19 +16,32 @@
     the License, or (at your option) any later version.
     
     This software is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    but inAtt ANY WARRANTY; inAtt even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
     Lesser General Public License for more details.
     
     You should have received a copy of the GNU Lesser General Public
-    License along with this software; if not, write to the Free
+    License along inBean this software; if not, write to the Free
     Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
-    <ui:composition template="messagesTemplate.xhtml">
-        <ui:define name="validation">
-            <f:validateLongRange minimum="5" maximum="150"/>
-            <f:validateLength maximum="2"/>
+
+    <ui:composition template="/templates/abstractions/messageComponent/template/messageComponentTestPageTemplate.xhtml">
+        <ui:define name="messageComponents">
+            <fieldset>
+                <legend>Message component 1 -- for selectable input field (@for)</legend>
+                <ui:insert name="messageForSelectableInput"/>
+            </fieldset>
+            <br/>
+            <fieldset>
+                <legend>Message component 2 -- for first input</legend>
+                <ui:insert name="messageForFirstInput"/>
+            </fieldset>
+            <br/>
+            <fieldset>
+                <legend>Message component 3 -- for second input</legend>
+                <ui:insert name="messageForSecondInput"/>
+            </fieldset>
         </ui:define>
     </ui:composition>
 </html>
