@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richNotify;
+package org.richfaces.tests.metamer.ftest.richNotifyMessages;
 
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 
@@ -27,12 +27,16 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public enum NotifyAttributes implements AttributeEnum {
+public enum NotifyMessagesAttributes implements AttributeEnum {
 
+    ajaxRendered,
     binding,
-    detail,
+    dir,
     escape,
+    FOR,
+    globalOnly,
     id,
+    lang,
     nonblocking,
     nonblockingOpacity,
     onclick,
@@ -47,10 +51,13 @@ public enum NotifyAttributes implements AttributeEnum {
     onmouseup,
     rendered,
     showCloseButton,
+    showDetail,
     showShadow,
+    showSummary,
     stack,
     stayTime,
     sticky,
+    style,
     styleClass,
-    summary
+    title
 }

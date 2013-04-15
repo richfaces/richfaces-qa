@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      >
+
+    <!--
+    JBoss, Home of Professional Open Source
+    Copyright 2010-2013, Red Hat, Inc. and individual contributors
+    by the @authors tag. See the copyright.txt in the distribution for a
+    full listing of individual contributors.
+
+    This is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as
+    published by the Free Software Foundation; either version 2.1 of
+    the License, or (at your option) any later version.
+
+    This software is distributed in the hope that it will be useful,
+    but inAtt ANY WARRANTY; inAtt even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along inBean this software; if not, write to the Free
+    Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+    02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+    <ui:composition template="/templates/abstractions/messageComponent/messagesComponentTestPage.xhtml">
+        <ui:define name="messagesWithFor">
+            <rich:notifyMessages id="messagesWithFor"
+                                 ajaxRendered="#{richNotifyMessagesBean.attributes['ajaxRendered'].value}"
+                                 dir="#{richNotifyMessagesBean.attributes['dir'].value}"
+                                 escape="#{richNotifyMessagesBean.attributes['escape'].value}"
+                                 for="#{richNotifyMessagesBean.attributes['for'].value}"
+                                 lang="#{richNotifyMessagesBean.attributes['lang'].value}"
+                                 nonblocking="#{richNotifyMessagesBean.attributes['nonblocking'].value}"
+                                 nonblockingOpacity="#{richNotifyMessagesBean.attributes['nonblockingOpacity'].value}"
+                                 onclick="#{richNotifyMessagesBean.attributes['onclick'].value}"
+                                 ondblclick="#{richNotifyMessagesBean.attributes['ondblclick'].value}"
+                                 onkeydown="#{richNotifyMessagesBean.attributes['onkeydown'].value}"
+                                 onkeypress="#{richNotifyMessagesBean.attributes['onkeypress'].value}"
+                                 onkeyup="#{richNotifyMessagesBean.attributes['onkeyup'].value}"
+                                 onmousedown="#{richNotifyMessagesBean.attributes['onmousedown'].value}"
+                                 onmousemove="#{richNotifyMessagesBean.attributes['onmousemove'].value}"
+                                 onmouseout="#{richNotifyMessagesBean.attributes['onmouseout'].value}"
+                                 onmouseover="#{richNotifyMessagesBean.attributes['onmouseover'].value}"
+                                 onmouseup="#{richNotifyMessagesBean.attributes['onmouseup'].value}"
+                                 rendered="#{richNotifyMessagesBean.attributes['rendered'].value}"
+                                 showCloseButton="#{richNotifyMessagesBean.attributes['showCloseButton'].value}"
+                                 showDetail="#{richNotifyMessagesBean.attributes['showDetail'].value}"
+                                 showShadow="#{richNotifyMessagesBean.attributes['showShadow'].value}"
+                                 showSummary="#{richNotifyMessagesBean.attributes['showSummary'].value}"
+                                 stack="#{richNotifyMessagesBean.attributes['stack'].value}"
+                                 stayTime="#{richNotifyMessagesBean.attributes['stayTime'].value}"
+                                 sticky="#{richNotifyMessagesBean.attributes['sticky'].value}"
+                                 style="#{richNotifyMessagesBean.attributes['style'].value}"
+                                 styleClass="#{richNotifyMessagesBean.attributes['styleClass'].value} forSelectableInput"
+                                 title="#{richNotifyMessagesBean.attributes['title'].value}"/>
+        </ui:define>
+
+        <ui:define name="messagesWithGlobal">
+            <rich:notifyMessages id="messagesWithGlobal"
+                                 ajaxRendered="#{richNotifyMessagesBean.attributes['ajaxRendered'].value}"
+                                 dir="#{richNotifyMessagesBean.attributes['dir'].value}"
+                                 escape="#{richNotifyMessagesBean.attributes['escape'].value}"
+                                 globalOnly="#{richNotifyMessagesBean.attributes['globalOnly'].value}"
+                                 lang="#{richNotifyMessagesBean.attributes['lang'].value}"
+                                 nonblocking="#{richNotifyMessagesBean.attributes['nonblocking'].value}"
+                                 nonblockingOpacity="#{richNotifyMessagesBean.attributes['nonblockingOpacity'].value}"
+                                 onclick="#{richNotifyMessagesBean.attributes['onclick'].value}"
+                                 ondblclick="#{richNotifyMessagesBean.attributes['ondblclick'].value}"
+                                 onkeydown="#{richNotifyMessagesBean.attributes['onkeydown'].value}"
+                                 onkeypress="#{richNotifyMessagesBean.attributes['onkeypress'].value}"
+                                 onkeyup="#{richNotifyMessagesBean.attributes['onkeyup'].value}"
+                                 onmousedown="#{richNotifyMessagesBean.attributes['onmousedown'].value}"
+                                 onmousemove="#{richNotifyMessagesBean.attributes['onmousemove'].value}"
+                                 onmouseout="#{richNotifyMessagesBean.attributes['onmouseout'].value}"
+                                 onmouseover="#{richNotifyMessagesBean.attributes['onmouseover'].value}"
+                                 onmouseup="#{richNotifyMessagesBean.attributes['onmouseup'].value}"
+                                 rendered="#{richNotifyMessagesBean.attributes['rendered'].value}"
+                                 showCloseButton="#{richNotifyMessagesBean.attributes['showCloseButton'].value}"
+                                 showDetail="#{richNotifyMessagesBean.attributes['showDetail'].value}"
+                                 showShadow="#{richNotifyMessagesBean.attributes['showShadow'].value}"
+                                 showSummary="#{richNotifyMessagesBean.attributes['showSummary'].value}"
+                                 stack="#{richNotifyMessagesBean.attributes['stack'].value}"
+                                 stayTime="#{richNotifyMessagesBean.attributes['stayTime'].value}"
+                                 sticky="#{richNotifyMessagesBean.attributes['sticky'].value}"
+                                 style="#{richNotifyMessagesBean.attributes['style'].value}"
+                                 styleClass="#{richNotifyMessagesBean.attributes['styleClass'].value} forGlobalOnly"
+                                 title="#{richNotifyMessagesBean.attributes['title'].value}"/>
+        </ui:define>
+
+        <ui:define name="outOfTemplateAfter">
+            <metamer:attributes value="#{richNotifyMessagesBean.attributes}" id="attributes"/>
+        </ui:define>
+    </ui:composition>
+</html>

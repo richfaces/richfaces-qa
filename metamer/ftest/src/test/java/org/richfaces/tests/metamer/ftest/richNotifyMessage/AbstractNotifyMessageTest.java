@@ -19,38 +19,40 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richNotify;
+package org.richfaces.tests.metamer.ftest.richNotifyMessage;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.abstractions.message.AbstractMessageComponentTest;
+import org.richfaces.tests.metamer.ftest.abstractions.message.MessageComponentTestPage;
 
 /**
- * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ * Test base for rich:message component.
+ *
+ * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public enum NotifyAttributes implements AttributeEnum {
+public abstract class AbstractNotifyMessageTest extends AbstractMessageComponentTest {
 
-    binding,
-    detail,
-    escape,
-    id,
-    nonblocking,
-    nonblockingOpacity,
-    onclick,
-    ondblclick,
-    onkeydown,
-    onkeypress,
-    onkeyup,
-    onmousedown,
-    onmousemove,
-    onmouseout,
-    onmouseover,
-    onmouseup,
-    rendered,
-    showCloseButton,
-    showShadow,
-    stack,
-    stayTime,
-    sticky,
-    styleClass,
-    summary
+    @Page
+    protected NotifyMessagePage page;
+
+    public void checkNoShowDetailNoShowSummary() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected FutureTarget<WebElement> getTestedElementRoot() {
+        return new FutureTarget<WebElement>() {
+            @Override
+            public WebElement getTarget() {
+                return page.getMessageComponentForFirstInput().getRoot();
+            }
+        };
+    }
+
+    @Override
+    protected NotifyMessagePage getPage() {
+        return page;
+    }
 }

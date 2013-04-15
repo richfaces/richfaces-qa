@@ -22,31 +22,29 @@
 package org.richfaces.tests.metamer.bean.rich;
 
 import java.io.Serializable;
-import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
-import org.richfaces.component.UINotify;
+import org.richfaces.component.UINotifyStack;
 import org.richfaces.tests.metamer.Attributes;
-import org.richfaces.tests.metamer.bean.abstractions.MessageTestingBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@ManagedBean(name = "richNotifyBean")
+@ManagedBean(name = "richNotifyStackBean")
 @ViewScoped
-public class RichNotifyBean implements Serializable {
+public class RichNotifyStackBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static Logger LOGGER = LoggerFactory.getLogger(RichNotifyBean.class);
-    public static final String DEFAULT_DETAIL = "Message detail";
-    public static final String DEFAULT_SUMMARY = "Message summary";
+    private static final Logger LOGGER = LoggerFactory.getLogger(RichNotifyStackBean.class);
     private Attributes attributes;
+    private int messageNumber = 1;
 
     /**
      * Initializes the managed bean.
@@ -54,23 +52,17 @@ public class RichNotifyBean implements Serializable {
     @PostConstruct
     public void init() {
         LOGGER.debug("initializing bean " + getClass().getName());
-        attributes = Attributes.getComponentAttributesFromFacesConfig(UINotify.class, getClass());
-
-        attributes.setAttribute("detail", DEFAULT_DETAIL);
+        attributes = Attributes.getComponentAttributesFromFacesConfig(UINotifyStack.class, getClass());
+        attributes.setAttribute("direction", "vertical");
+        attributes.setAttribute("method", "first");
+        attributes.setAttribute("position", "topRight");
         attributes.setAttribute("rendered", true);
-        attributes.setAttribute("showCloseButton", true);
-        attributes.setAttribute("stayTime", 100000);
-        attributes.setAttribute("summary", DEFAULT_SUMMARY);
+        messageNumber = 1;
     }
 
-    public void generateFacesMessagesWithSeverity(String severityOfMessageToBeCreated) {
-        LOGGER.debug(" ### Just called generateFacesMessagesWithSeverity('" + severityOfMessageToBeCreated + "')");
-        severityOfMessageToBeCreated = severityOfMessageToBeCreated.toUpperCase(Locale.ENGLISH);
-        for (FacesMessage.Severity referenceSeverity : MessageTestingBean.MSGS_TYPES) {
-            if (referenceSeverity.toString().startsWith(severityOfMessageToBeCreated)) {
-                MessageTestingBean.generateFacesMessage(referenceSeverity, null);
-            }
-        }
+    public void generateInfoMessage() {
+        String value = "Generated message #" + messageNumber++;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, value, value));
     }
 
     public Attributes getAttributes() {

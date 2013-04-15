@@ -19,21 +19,31 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richNotify;
+package org.richfaces.tests.metamer.ftest.richNotifyMessage;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+
+import java.net.URL;
+
+import org.testng.annotations.Test;
 
 /**
- * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public enum NotifyMessagesAttributes implements AttributeEnum {
+public class TestNotifyMessageJSFValidator extends AbstractNotifyMessageTest {
 
-    escape,
-    rendered,
-    showCloseButton,
-    showDetail,
-    stayTime,
-    sticky,
-    styleClass
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/richNotifyMessage/jsfValidator.xhtml");
+    }
 
+    @Test
+    public void testSimple() {
+        checkSimple();
+    }
+
+    @Override
+    protected void waitingForValidationMessagesToShow() {
+        submitWithA4jBtn();
+    }
 }
