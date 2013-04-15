@@ -19,38 +19,43 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richNotify;
+package org.richfaces.tests.metamer.ftest.richNotifyMessages;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.abstractions.message.MessagesComponentTestPage;
+import org.richfaces.tests.page.fragments.impl.notify.Notify;
+import org.richfaces.tests.page.fragments.impl.notify.NotifyMessage;
+import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotifyEnhanced;
 
 /**
- * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public enum NotifyAttributes implements AttributeEnum {
+public class NotifyMessagesPage extends MessagesComponentTestPage<NotifyMessage> {
 
-    binding,
-    detail,
-    escape,
-    id,
-    nonblocking,
-    nonblockingOpacity,
-    onclick,
-    ondblclick,
-    onkeydown,
-    onkeypress,
-    onkeyup,
-    onmousedown,
-    onmousemove,
-    onmouseout,
-    onmouseover,
-    onmouseup,
-    rendered,
-    showCloseButton,
-    showShadow,
-    stack,
-    stayTime,
-    sticky,
-    styleClass,
-    summary
+    @FindBy(tagName = "body")
+    private RichFacesNotifyEnhanced messagesComponentWithFor;
+    @FindBy(tagName = "body")
+    private RichFacesNotifyEnhanced messagesComponentWithGlobal;
+    //
+    private boolean init = false;
+
+    private void init() {
+        if (!init) {
+            messagesComponentWithFor.setStyleClassToContain("forSelectableInput");
+            messagesComponentWithGlobal.setStyleClassToContain("forGlobalOnly");
+            init = true;
+        }
+    }
+
+    @Override
+    public Notify getMessagesComponentWithFor() {
+        init();
+        return messagesComponentWithFor;
+    }
+
+    @Override
+    public Notify getMessagesComponentWithGlobal() {
+        init();
+        return messagesComponentWithGlobal;
+    }
 }

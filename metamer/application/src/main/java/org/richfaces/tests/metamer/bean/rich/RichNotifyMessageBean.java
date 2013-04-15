@@ -22,14 +22,12 @@
 package org.richfaces.tests.metamer.bean.rich;
 
 import java.io.Serializable;
-import java.util.Locale;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.richfaces.component.UINotify;
+import org.richfaces.component.html.HtmlNotifyMessage;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.abstractions.MessageTestingBean;
 import org.slf4j.Logger;
@@ -38,15 +36,12 @@ import org.slf4j.LoggerFactory;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@ManagedBean(name = "richNotifyBean")
+@ManagedBean(name = "richNotifyMessageBean")
 @ViewScoped
-public class RichNotifyBean implements Serializable {
+public class RichNotifyMessageBean extends MessageTestingBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static Logger LOGGER = LoggerFactory.getLogger(RichNotifyBean.class);
-    public static final String DEFAULT_DETAIL = "Message detail";
-    public static final String DEFAULT_SUMMARY = "Message summary";
-    private Attributes attributes;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RichNotifyMessageBean.class);
 
     /**
      * Initializes the managed bean.
@@ -54,30 +49,13 @@ public class RichNotifyBean implements Serializable {
     @PostConstruct
     public void init() {
         LOGGER.debug("initializing bean " + getClass().getName());
-        attributes = Attributes.getComponentAttributesFromFacesConfig(UINotify.class, getClass());
+        attributes = Attributes.getComponentAttributesFromFacesConfig(HtmlNotifyMessage.class, getClass());
 
-        attributes.setAttribute("detail", DEFAULT_DETAIL);
-        attributes.setAttribute("rendered", true);
+        attributes.setAttribute("ajaxRendered", true); // make sense for a4j:commandButton submit
+        attributes.setAttribute("for", "simpleInput1");
         attributes.setAttribute("showCloseButton", true);
         attributes.setAttribute("stayTime", 100000);
-        attributes.setAttribute("summary", DEFAULT_SUMMARY);
-    }
-
-    public void generateFacesMessagesWithSeverity(String severityOfMessageToBeCreated) {
-        LOGGER.debug(" ### Just called generateFacesMessagesWithSeverity('" + severityOfMessageToBeCreated + "')");
-        severityOfMessageToBeCreated = severityOfMessageToBeCreated.toUpperCase(Locale.ENGLISH);
-        for (FacesMessage.Severity referenceSeverity : MessageTestingBean.MSGS_TYPES) {
-            if (referenceSeverity.toString().startsWith(severityOfMessageToBeCreated)) {
-                MessageTestingBean.generateFacesMessage(referenceSeverity, null);
-            }
-        }
-    }
-
-    public Attributes getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(Attributes attributes) {
-        this.attributes = attributes;
+        attributes.setAttribute("showSummary", true);
+        attributes.setAttribute("rendered", true);
     }
 }
