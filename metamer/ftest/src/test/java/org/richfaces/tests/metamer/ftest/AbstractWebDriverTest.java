@@ -196,10 +196,38 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         String valueOnPage = element.getAttribute(attString);
         if (new StringEqualsWrapper(value).equalsToSomeOfThis(null, "", "null")) {
             if (new StringEqualsWrapper(valueOnPage).notEqualsToSomeOfThis(null, "", "null")) {
-                fail("Attribute " + testedAttribute.toString() + " does not work properly,");
+                fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '" + valueOnPage + "', expected value '" + value + "'.");
             }
         } else if (!valueOnPage.contains(value)) {//Attribute has not been set correctly
-            fail("Attribute " + testedAttribute.toString() + " does not work properly,");
+            fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '" + valueOnPage + "', expected value '" + value + "'.");
+        }
+    }
+
+    /**
+     * Testing of HTMLAttribute (e.g. type).
+     *
+     * E.g. testHTMLAttribute(page.link, mediaOutputAttributes,
+     * MediaOutputAttributes.type, "text/html");
+     *
+     * @param element FutureTarget of WebElement which will be checked for containment of tested
+     * attribute
+     * @param attributes attributes instance which will be used for setting
+     * attribute
+     * @param testedAttribute attribute which will be tested
+     * @param value tested value of attribute
+     * @param actionAfterSettingOfAttribute action which will be performed after setting the attribute(e.g. open popup)
+     */
+    protected <T extends AttributeEnum> void testHTMLAttribute(FutureTarget<WebElement> element, Attributes<T> attributes, T testedAttribute, String value, Action actionAfterSettingOfAttribute) {
+        attributes.set(testedAttribute, value);
+        actionAfterSettingOfAttribute.perform();
+        String attString = Attribute2StringDecoder.decodeAttribute(testedAttribute);
+        String valueOnPage = element.getTarget().getAttribute(attString);
+        if (new StringEqualsWrapper(value).equalsToSomeOfThis(null, "", "null")) {
+            if (new StringEqualsWrapper(valueOnPage).notEqualsToSomeOfThis(null, "", "null")) {
+                fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '" + valueOnPage + "', expected value '" + value + "'.");
+            }
+        } else if (!valueOnPage.contains(value)) {//Attribute has not been set correctly
+            fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '" + valueOnPage + "', expected value '" + value + "'.");
         }
     }
 
@@ -225,10 +253,10 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         String valueOnPage = element.getAttribute(attString);
         if (new StringEqualsWrapper(value).equalsToSomeOfThis(null, "", "null")) {
             if (new StringEqualsWrapper(anotherValue).isNotSimilarToSomeOfThis(valueOnPage)) {
-                fail("Attribute " + testedAttribute.toString() + " does not work properly,");
+                fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '" + valueOnPage + "', expected value '" + anotherValue + "'.");
             }
         } else if (new StringEqualsWrapper(anotherValue).isNotSimilarToSomeOfThis(value)) {//Attribute has not been set correctly
-            fail("Attribute " + testedAttribute.toString() + " does not work properly,");
+            fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '" + valueOnPage + "', expected value '" + anotherValue + "'.");
         }
     }
 
@@ -256,8 +284,9 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         String attLang;
 
         // get attribute lang
-        attLang = (driver instanceof FirefoxDriver ? element.getAttribute("lang")
-                : element.getAttribute("xml:lang"));//FIXME not sure if "xml:lang" is necessary, inspired from AbstractGrapheneTest
+        String lang1 = element.getAttribute("xml:lang");
+        String lang2 = element.getAttribute("lang");
+        attLang = (lang1 == null || lang1.isEmpty() ? lang2 : lang1);
         //lang should be empty/null
         assertTrue("".equals(attLang) || "null".equals(attLang), "Attribute xml:lang should not be present.");
 
@@ -265,9 +294,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         basicAttributes.set(BasicAttributes.lang, TESTVALUE);
 
         //get attribute lang of element
-        attLang = (driver instanceof FirefoxDriver ? element.getAttribute("lang")
-                : element.getAttribute("xml:lang"));//FIXME not sure if "xml:lang" is necessary inspired from AbstractGrapheneTest
-
+        attLang = (lang1 == null || lang1.isEmpty() ? lang2 : lang1);
         assertEquals(attLang, TESTVALUE, "Attribute xml:lang should be present.");
     }
 
@@ -353,6 +380,23 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      */
     protected void testFireEvent(Event event, WebElement element) {
         testFireEvent(event, element, event.getEventName());
+    }
+
+    /**
+     * A helper method for testing JavaScripts events.
+     *
+     * @param event JavaScript event to be tested
+     * @param element FutureTarget of WebElement on which will be the event triggered
+     * @param actionBeforeFiringTheEvent action which will be performed before firing the event
+     */
+    protected void testFireEvent(final Event event, final FutureTarget<WebElement> element, final Action actionBeforeFiringTheEvent) {
+        testFireEvent(event.getEventName(), new Action() {
+            @Override
+            public void perform() {
+                actionBeforeFiringTheEvent.perform();
+                fireEvent(element.getTarget(), event);
+            }
+        });
     }
 
     /**
@@ -601,5 +645,10 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
                 verifyResponse(inputValue);
             }
         }
+    }
+
+    protected interface FutureTarget<T> {
+
+        T getTarget();
     }
 }
