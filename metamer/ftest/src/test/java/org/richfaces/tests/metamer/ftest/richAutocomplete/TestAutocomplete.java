@@ -90,7 +90,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         autocomplete.clear(ClearType.BACK_SPACE);
     }
 
-    @Test
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-11323")
     public void testTypingPrefixAndThenConfirm() throws InterruptedException {
         assertFalse(autocomplete.areSuggestionsAvailable());
@@ -102,7 +102,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         assertEquals(autocomplete.getInputValue().toLowerCase(), getExpectedStateForPrefix("ala", selectFirst).toLowerCase());
     }
 
-    @Test
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-11323")
     public void testTypingPrefixAndThenDeleteAll() {
         assertFalse(autocomplete.areSuggestionsAvailable());
