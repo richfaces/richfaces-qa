@@ -37,13 +37,17 @@ import javax.validation.constraints.Min;
 @ManagedBean
 public class MultipleValidationRulesBean extends Validable<Integer> {
 
-    public MultipleValidationRulesBean(){
+    public static final String VALIDATION_MSG_DIGITS = "Has to have less than 3 digits and no fractions.";
+    public static final String VALIDATION_MSG_MIN = "Minimum value is 5.";
+    public static final String VALIDATION_MSG_MAX = "Max value is 150.";
+
+    public MultipleValidationRulesBean() {
         value = 10;
     }
 
-    @Digits(integer=2, fraction=0)
-    @Min(5)
-    @Max(150)
+    @Digits(integer = 2, fraction = 0, message = VALIDATION_MSG_DIGITS)
+    @Min(value = 5, message = VALIDATION_MSG_MIN)
+    @Max(value = 150, message = VALIDATION_MSG_MAX)
     @Override
     public Integer getValue() {
         return value;

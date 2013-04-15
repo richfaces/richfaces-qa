@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      >
 
     <!--
 JBoss, Home of Professional Open Source
@@ -25,145 +27,84 @@ License along inBean this software; if not, write to the Free
 Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
-    <ui:composition template="/templates/template.xhtml">
-
-        <ui:define name="head">
-            <style type="text/css">
-                .rf-msg-err {
-                    display: block !important;
-                    margin-bottom: 6px;
-                }
-            </style>
-            <script type="text/javascript">
-                function command(button){
-                    window.valuesSettingState="started";
-                    if(button=="wrong"){
-                        setWrongValues();
-                    }else{
-                        setCorrectValues(); 
-                    }
-                    window.valuesSettingState="finished";
-                }
-                if(window.onload == null){
-                    window.onload = function(){
-                        window.valuesSettingState="";
-                    } 
-                }else{
-                    window.onload += function(){
-                        window.valuesSettingState="";
-                    }
-                }
-                function setCorrectValues() {                
-                    $('input[id$=simpleInput1]').val('4').change();
-                    $('input[id$=simpleInput2]').val('4').change();        
-                }
-
-                function setWrongValues() {
-                    $('input[id$=simpleInput1]').val('-5').change();
-                    $('input[id$=simpleInput2]').val('-5').change(); 
-                }
-            </script>
-        </ui:define>
-
-        <ui:define name="component">
-            <input id="setCorrectValuesButton" type="button" name="setCorrectValuesButton" value="set correct values" onclick="command('correct')"/>
-            <input id="setWrongValuesButton" type="button" name="setWrongValuesButton" value="set wrong values" onclick="command('wrong')"/>
-
-            <rich:message id="simpleInputMsg"
-                          ajaxRendered="#{richMessageBean.attributes['ajaxRendered'].value}" 
+    <ui:composition template="/templates/abstractions/messageComponent/messageComponentTestPage.xhtml">
+        <ui:define name="messageForSelectableInput">
+            <rich:message id="messageForSelectableInput"
+                          ajaxRendered="#{richMessageBean.attributes['ajaxRendered'].value}"            			   
                           dir="#{richMessageBean.attributes['dir'].value}"
                           escape="#{richMessageBean.attributes['escape'].value}"
                           for="#{richMessageBean.attributes['for'].value}"
-                          keepTransient="#{richMessageBean.attributes['keepTransient'].value}"
                           lang="#{richMessageBean.attributes['lang'].value}"
                           onclick="#{richMessageBean.attributes['onclick'].value}"
                           ondblclick="#{richMessageBean.attributes['ondblclick'].value}"
-                          onkeyup="#{richMessageBean.attributes['onkeyup'].value}"
                           onkeydown="#{richMessageBean.attributes['onkeydown'].value}"
                           onkeypress="#{richMessageBean.attributes['onkeypress'].value}"
+                          onkeyup="#{richMessageBean.attributes['onkeyup'].value}"
                           onmousedown="#{richMessageBean.attributes['onmousedown'].value}"
                           onmousemove="#{richMessageBean.attributes['onmousemove'].value}"
                           onmouseout="#{richMessageBean.attributes['onmouseout'].value}"
                           onmouseover="#{richMessageBean.attributes['onmouseover'].value}"
-                          onmouseup="#{richMessageBean.attributes['onmouseup'].value}"   
+                          onmouseup="#{richMessageBean.attributes['onmouseup'].value}"
                           rendered="#{richMessageBean.attributes['rendered'].value}"
-                          showDetail="#{richMessageBean.attributes['showDetail'].value}"                	
-                          showSummary="#{richMessageBean.attributes['showSummary'].value}"                          
+                          showDetail="#{richMessageBean.attributes['showDetail'].value}"
+                          showSummary="#{richMessageBean.attributes['showSummary'].value}"
                           style="#{richMessageBean.attributes['style'].value}"
                           styleClass="#{richMessageBean.attributes['styleClass'].value}"
-                          title="#{richMessageBean.attributes['title'].value}"
-                          />
-            <h:panelGrid columns="3">
-                <h:outputLabel for="simpleInput1" value="#{minMaxBean.description}" />
-                <h:inputText id="simpleInput1" value="#{minMaxBean.value}" label="Input 1" converter="#{minMaxBean.converter}">
-                    <ui:insert name="validation"/>
-                </h:inputText>
-                <rich:message id="simpleInputMsg1"
-                              ajaxRendered="#{richMessageBean.attributes['ajaxRendered'].value}" 
-                              dir="#{richMessageBean.attributes['dir'].value}"
-                              escape="#{richMessageBean.attributes['escape'].value}"
-                              for="simpleInput1"
-                              keepTransient="#{richMessageBean.attributes['keepTransient'].value}"
-                              lang="#{richMessageBean.attributes['lang'].value}"
-                              onclick="#{richMessageBean.attributes['onclick'].value}"
-                              ondblclick="#{richMessageBean.attributes['ondblclick'].value}"
-                              onkeyup="#{richMessageBean.attributes['onkeyup'].value}"
-                              onkeydown="#{richMessageBean.attributes['onkeydown'].value}"
-                              onkeypress="#{richMessageBean.attributes['onkeypress'].value}"
-                              onmousedown="#{richMessageBean.attributes['onmousedown'].value}"
-                              onmousemove="#{richMessageBean.attributes['onmousemove'].value}"
-                              onmouseout="#{richMessageBean.attributes['onmouseout'].value}"
-                              onmouseover="#{richMessageBean.attributes['onmouseover'].value}"
-                              onmouseup="#{richMessageBean.attributes['onmouseup'].value}"   
-                              rendered="#{richMessageBean.attributes['rendered'].value}"
-                              showDetail="#{richMessageBean.attributes['showDetail'].value}"                	
-                              showSummary="#{richMessageBean.attributes['showSummary'].value}"                          
-                              style="#{richMessageBean.attributes['style'].value}"
-                              styleClass="#{richMessageBean.attributes['styleClass'].value}"
-                              title="#{richMessageBean.attributes['title'].value}"
-                              />
+                          title="#{richMessageBean.attributes['title'].value}"/>
+        </ui:define>
 
-                <h:outputLabel for="simpleInput2" value="#{minMaxBean.description}" />
-                <h:inputText id="simpleInput2" value="#{minMaxBean.value}" label="Input 2" converter="#{minMaxBean.converter}">
-                    <ui:insert name="validation"/>
-                </h:inputText>
-                <rich:message id="simpleInputMsg2"
-                              ajaxRendered="#{richMessageBean.attributes['ajaxRendered'].value}" 
-                              dir="#{richMessageBean.attributes['dir'].value}"
-                              escape="#{richMessageBean.attributes['escape'].value}"
-                              for="simpleInput2"
-                              keepTransient="#{richMessageBean.attributes['keepTransient'].value}"
-                              lang="#{richMessageBean.attributes['lang'].value}"
-                              onclick="#{richMessageBean.attributes['onclick'].value}"
-                              ondblclick="#{richMessageBean.attributes['ondblclick'].value}"
-                              onkeyup="#{richMessageBean.attributes['onkeyup'].value}"
-                              onkeydown="#{richMessageBean.attributes['onkeydown'].value}"
-                              onkeypress="#{richMessageBean.attributes['onkeypress'].value}"
-                              onmousedown="#{richMessageBean.attributes['onmousedown'].value}"
-                              onmousemove="#{richMessageBean.attributes['onmousemove'].value}"
-                              onmouseout="#{richMessageBean.attributes['onmouseout'].value}"
-                              onmouseover="#{richMessageBean.attributes['onmouseover'].value}"
-                              onmouseup="#{richMessageBean.attributes['onmouseup'].value}"   
-                              rendered="#{richMessageBean.attributes['rendered'].value}"
-                              showDetail="#{richMessageBean.attributes['showDetail'].value}"                	
-                              showSummary="#{richMessageBean.attributes['showSummary'].value}"                          
-                              style="#{richMessageBean.attributes['style'].value}"
-                              styleClass="#{richMessageBean.attributes['styleClass'].value}"
-                              title="#{richMessageBean.attributes['title'].value}"
-                              />
-            </h:panelGrid>
+        <ui:define name="messageForFirstInput">
+            <rich:message id="messageForFirstInput"
+                          ajaxRendered="#{richMessageBean.attributes['ajaxRendered'].value}"            			   
+                          dir="#{richMessageBean.attributes['dir'].value}"
+                          escape="#{richMessageBean.attributes['escape'].value}"
+                          for="simpleInput1"
+                          lang="#{richMessageBean.attributes['lang'].value}"
+                          onclick="#{richMessageBean.attributes['onclick'].value}"
+                          ondblclick="#{richMessageBean.attributes['ondblclick'].value}"
+                          onkeydown="#{richMessageBean.attributes['onkeydown'].value}"
+                          onkeypress="#{richMessageBean.attributes['onkeypress'].value}"
+                          onkeyup="#{richMessageBean.attributes['onkeyup'].value}"
+                          onmousedown="#{richMessageBean.attributes['onmousedown'].value}"
+                          onmousemove="#{richMessageBean.attributes['onmousemove'].value}"
+                          onmouseout="#{richMessageBean.attributes['onmouseout'].value}"
+                          onmouseover="#{richMessageBean.attributes['onmouseover'].value}"
+                          onmouseup="#{richMessageBean.attributes['onmouseup'].value}"
+                          rendered="#{richMessageBean.attributes['rendered'].value}"
+                          showDetail="#{richMessageBean.attributes['showDetail'].value}"
+                          showSummary="#{richMessageBean.attributes['showSummary'].value}"
+                          style="#{richMessageBean.attributes['style'].value}"
+                          styleClass="#{richMessageBean.attributes['styleClass'].value}"
+                          title="#{richMessageBean.attributes['title'].value}"/>
+        </ui:define>
 
-            <br/>
-
-            <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
-            <a4j:commandButton id="a4jButton" value="a4j:commandButton"/>
-
-            <br/>
+        <ui:define name="messageForSecondInput">
+            <rich:message id="messageForSecondInput"
+                          ajaxRendered="#{richMessageBean.attributes['ajaxRendered'].value}"            			   
+                          dir="#{richMessageBean.attributes['dir'].value}"
+                          escape="#{richMessageBean.attributes['escape'].value}"
+                          for="simpleInput2"
+                          lang="#{richMessageBean.attributes['lang'].value}"
+                          onclick="#{richMessageBean.attributes['onclick'].value}"
+                          ondblclick="#{richMessageBean.attributes['ondblclick'].value}"
+                          onkeydown="#{richMessageBean.attributes['onkeydown'].value}"
+                          onkeypress="#{richMessageBean.attributes['onkeypress'].value}"
+                          onkeyup="#{richMessageBean.attributes['onkeyup'].value}"
+                          onmousedown="#{richMessageBean.attributes['onmousedown'].value}"
+                          onmousemove="#{richMessageBean.attributes['onmousemove'].value}"
+                          onmouseout="#{richMessageBean.attributes['onmouseout'].value}"
+                          onmouseover="#{richMessageBean.attributes['onmouseover'].value}"
+                          onmouseup="#{richMessageBean.attributes['onmouseup'].value}"
+                          rendered="#{richMessageBean.attributes['rendered'].value}"
+                          showDetail="#{richMessageBean.attributes['showDetail'].value}"
+                          showSummary="#{richMessageBean.attributes['showSummary'].value}"
+                          style="#{richMessageBean.attributes['style'].value}"
+                          styleClass="#{richMessageBean.attributes['styleClass'].value}"
+                          title="#{richMessageBean.attributes['title'].value}"/>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
-            <metamer:attributes value="#{richMessageBean.attributes}" id="attributes"/>
+            <metamer:attributes value="#{richMessageBean.attributes}"/>
         </ui:define>
-
     </ui:composition>
 </html>

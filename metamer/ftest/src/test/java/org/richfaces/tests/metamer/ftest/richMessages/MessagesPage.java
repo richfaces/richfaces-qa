@@ -1,4 +1,4 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
@@ -18,19 +18,32 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richMessages;
 
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.ftest.richMessage.MessagePage;
+import org.richfaces.tests.metamer.ftest.abstractions.message.MessagesComponentTestPage;
+import org.richfaces.tests.page.fragments.impl.message.Message;
+import org.richfaces.tests.page.fragments.impl.messages.Messages;
+import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class MessagesPage extends MessagePage {
+public class MessagesPage extends MessagesComponentTestPage<Message> {
 
-    // controls
-    @FindBy(css = "input[id$=generateMsgsBtn]")
-    WebElement generateMsgsBtn;
+    @FindBy(xpath = "//fieldset/span[contains(@id, 'messagesWithFor')]")
+    protected RichFacesMessages messagesComponentWithFor;
+    @FindBy(xpath = "//fieldset/span[contains(@id, 'messagesWithGlobal')]")
+    protected RichFacesMessages messagesComponentWithGlobal;
+
+    @Override
+    public Messages getMessagesComponentWithFor() {
+        return messagesComponentWithFor;
+    }
+
+    @Override
+    public Messages getMessagesComponentWithGlobal() {
+        return messagesComponentWithGlobal;
+    }
 }

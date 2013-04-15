@@ -24,10 +24,8 @@ package org.richfaces.tests.metamer.ftest.richMessages;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
+
 import org.jboss.arquillian.graphene.Graphene;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
-import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -43,149 +41,14 @@ public class TestMessagesCSV extends AbstractMessagesTest {
         return buildUrl(contextPath, "faces/components/richMessages/csv.xhtml");
     }
 
-    /**
-     * This test is not needed = the validation is performed on client side
-     */
-    @Test(enabled=false)
-    public void testAjaxRendered() {
-        super.testAjaxRendered();
-    }
-
     @Test
-    public void testDir() {
-        super.testDir();
+    public void testSimple() {
+        checkSimple(2);
     }
 
-    @Test
-    public void testEscape() {
-        super.testEscape();
-    }
-
-    @Test
-    @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
-    public void testFor() {
-        testFor(1);//1 message
-    }
-
-    @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-11298")
-    @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
-        "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
-    public void testForInIterationComponents() {
-        testFor();
-    }
-
-    @Test
-    @Templates(exclude = { "richAccordion", "richCollapsiblePanel" })
-    public void testGlobalOnly() {
-        super.testGlobalOnly(1);//1 message
-    }
-
-    @Test
-    @Templates(value = { "richAccordion", "richCollapsiblePanel" })
-    @RegressionTest("https://issues.jboss.org/browse/RF-11415")
-    public void testGlobalOnlyInAccordionCollapsiblePanel() {
-        testGlobalOnly();
-    }
-
-    @Test
-    public void testLang() {
-        super.testLang();
-    }
-
-    @Test
-    public void testMessagesTypes() {
-        super.testMessagesTypes();
-    }
-
-    @Test
-    public void testNoShowDetailNoShowSummary() {
-        super.testNoShowDetailNoShowSummary();
-    }
-
-    @Test
-    public void testOnClick() {
-        super.testOnClick();
-    }
-
-    @Test
-    public void testOnDblClick() {
-        super.testOnDblClick();
-    }
-
-    @Test
-    public void testOnKeyDown() {
-        super.testOnKeyDown();
-    }
-
-    @Test
-    public void testOnKeyPress() {
-        super.testOnKeyPress();
-    }
-
-    @Test
-    public void testOnKeyUp() {
-        super.testOnKeyUp();
-    }
-
-    @Test
-    public void testOnMouseDown() {
-        super.testOnMouseDown();
-    }
-
-    @Test
-    public void testOnMouseMove() {
-        super.testOnMouseMove();
-    }
-
-    @Test
-    public void testOnMouseOut() {
-        super.testOnMouseOut();
-    }
-
-    @Test
-    public void testOnMouseOver() {
-        super.testOnMouseOver();
-    }
-
-    @Test
-    public void testOnMouseUp() {
-        super.testOnMouseUp();
-    }
-
-    @Test
-    public void testRendered() {
-        super.testRendered();
-    }
-
-    @Test
-    public void testShowDetail() {
-        super.testShowDetail();
-    }
-
-    @Test
-    public void testShowSummary() {
-        super.testShowSummary();
-    }
-
-    @Test
-    public void testStyle() {
-        super.testStyle();
-    }
-
-    @Test
-    public void testStyleClass() {
-        super.testStyleClass();
-    }
-
-    @Test
-    public void testTitle() {
-        super.testTitle();
-    }
-
+    //TODO:report
     @Override
-    protected void waitingForValidationMessages() {
-        Graphene.waitGui().until(messagesWithGlobal.isVisibleCondition());
+    protected void waitingForValidationMessagesToShow() {
+        submitWithA4jBtn();
     }
 }

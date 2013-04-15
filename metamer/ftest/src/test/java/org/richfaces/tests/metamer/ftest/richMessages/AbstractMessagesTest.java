@@ -21,21 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richMessages;
 
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.messagesAttributes;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
-import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages;
-import org.testng.annotations.BeforeMethod;
+import org.richfaces.tests.metamer.ftest.abstractions.message.AbstractMessagesComponentTest;
+import org.richfaces.tests.metamer.ftest.abstractions.message.MessagesComponentTestPage;
+import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
+import org.richfaces.tests.page.fragments.impl.message.Message;
+import org.testng.Assert;
 
 /**
  * Common test case for rich:messages component
@@ -43,293 +35,69 @@ import org.testng.annotations.BeforeMethod;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractMessagesTest extends AbstractWebDriverTest {
+public abstract class AbstractMessagesTest extends AbstractMessagesComponentTest {
 
     @Page
     protected MessagesPage page;
 
-    // components
-    @FindBy(xpath = "//fieldset/span[contains(@id, 'messagesWithFor')]")
-    protected RichFacesMessages messagesWithFor;
-    @FindBy(xpath = "//fieldset/span[contains(@id, 'messagesWithGlobal')]")
-    protected RichFacesMessages messagesWithGlobal;
-
-    protected void generateAllKindsOfMessagesWithWait() {
-        setCorrectValues();
-        submitWithA4jBtn();
-        MetamerPage.waitRequest(page.generateMsgsBtn, WaitRequestType.XHR).click();
-        Graphene.waitAjax().until(messagesWithGlobal.isVisibleCondition());
+    @Override
+    protected MessagesComponentTestPage<Message> getPage() {
+        return page;
     }
 
-    private void generateValidationMessagesWithoutWait() {
-        executeJS("window.valuesSettingState=''");
-        page.wrongValuesButton.click();
-        waitForValuesSetting();
-    }
-
-    @BeforeMethod(alwaysRun = true)
-    public void generateValidationMessagesWithWait() {
+    @Override
+    public void checkFor(int expectedMessages) {
+        AttributeList.messagesAttributes.setLower(MessagesAttributes.FOR, "");
         generateValidationMessagesWithoutWait();
-        waitingForValidationMessages();
-    }
+        submitWithHBtn();
 
-    private String getIDOfElement(WebElement element) {
-        return element.getAttribute("id");
-    }
+        Assert.assertFalse(page.messagesComponentWithFor.isVisible());
 
-    protected String getSimpleInput1ID() {
-        return getIDOfElement(page.simpleInput1);
-    }
-
-    protected String getSimpleInput2ID() {
-        return getIDOfElement(page.simpleInput2);
-    }
-
-    private WebElement getTestedElementRoot() {
-        return messagesWithGlobal.getRoot();
-    }
-
-    /**
-     * Sets correct values by clicking button and wait for the client update.
-     * !Does not do any request!.
-     */
-    protected void setCorrectValues() {
-        page.correctValuesButton.click();
-        waitForValuesSetting();
-    }
-
-    protected void submitWithA4jBtn() {
-        MetamerPage.waitRequest(page.a4jCommandButton, WaitRequestType.XHR).click();
-    }
-
-    protected void submitWithHBtn() {
-        MetamerPage.waitRequest(page.hCommandButton, WaitRequestType.HTTP).click();
-    }
-    // ==================== test methods ====================
-
-    public void testAjaxRendered() {
-        assertTrue(messagesWithFor.isVisible());
-        assertTrue(messagesWithGlobal.isVisible());
-
-        messagesAttributes.set(MessagesAttributes.ajaxRendered, Boolean.FALSE);
+        // now set @for attribute to "simpleInput1"
+        AttributeList.messagesAttributes.setLower(MessagesAttributes.FOR, "simpleInput1");
         generateValidationMessagesWithoutWait();
+        submitWithHBtn();
 
-        assertFalse(messagesWithFor.isVisible());
-        assertFalse(messagesWithGlobal.isVisible());
+        Assert.assertTrue(page.messagesComponentWithFor.isVisible());
+        Assert.assertEquals(page.messagesComponentWithFor.size(), expectedMessages);
+        Assert.assertEquals(page.messagesComponentWithFor.getMessagesForInput(getSimpleInput1ID()).size(), expectedMessages, expectedMessages + " messages for input 1 were expected.");
+        Assert.assertEquals(page.messagesComponentWithFor.getMessagesForInput(getSimpleInput2ID()).size(), 0, "No messages for input 2 were expected.");
 
-        //submit with h:commandbutton
-        MetamerPage.waitRequest(page.hCommandButton, WaitRequestType.HTTP).click();
-        assertTrue(messagesWithFor.isVisible());
-        assertTrue(messagesWithGlobal.isVisible());
+        // now set @for attribute to "simpleInput2"
+        AttributeList.messagesAttributes.setLower(MessagesAttributes.FOR, "simpleInput2");
+        generateValidationMessagesWithoutWait();
+        submitWithHBtn();
+
+        Assert.assertTrue(page.messagesComponentWithFor.isVisible());
+        Assert.assertEquals(page.messagesComponentWithFor.size(), expectedMessages);
+        Assert.assertEquals(page.messagesComponentWithFor.getMessagesForInput(getSimpleInput1ID()).size(), 0, "No messages for input 1 were expected.");
+        Assert.assertEquals(page.messagesComponentWithFor.getMessagesForInput(getSimpleInput2ID()).size(), expectedMessages, expectedMessages + " messages for input 2 were expected.");
     }
 
-    public void testDir() {
-        super.testDir(getTestedElementRoot());
-    }
+    @Override
+    public void checkGlobalOnly(int expectedMessagesPerInput) {
+        AttributeList.messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.FALSE);
+        generateValidationMessagesWithWait();
+        //messages for both inputs should appear
+        Assert.assertTrue(page.messagesComponentWithGlobal.isVisible());
+        Assert.assertEquals(page.messagesComponentWithGlobal.size(), expectedMessagesPerInput * 2);//for both inputs
+        Assert.assertEquals(page.messagesComponentWithGlobal.getMessagesForInput(getSimpleInput1ID()).size(), expectedMessagesPerInput, expectedMessagesPerInput + " messages for input 1 were expected.");
+        Assert.assertEquals(page.messagesComponentWithGlobal.getMessagesForInput(getSimpleInput2ID()).size(), expectedMessagesPerInput, expectedMessagesPerInput + " messages for input 2 were expected.");
 
-    public void testEscape() {
-        //this will only show 1 message after generation of validation msgs,
-        //because of unique id of span, taht will be created
-        messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.TRUE);
-        String newSpanString = "<span id='newSpan'>newSpan</span>";
-        page.simpleInput1.clear();
-        page.simpleInput1.sendKeys(newSpanString);
-        submitWithA4jBtn();
-        Graphene.waitGui().withMessage("should not be visible").until(Graphene.element(page.newSpan).not().isVisible());
-
-        messagesAttributes.set(MessagesAttributes.escape, Boolean.FALSE);
-        page.simpleInput1.clear();
-        page.simpleInput1.sendKeys(newSpanString);
-        submitWithA4jBtn();
-        Graphene.waitGui().withMessage("should be visible").until(Graphene.element(page.newSpan).isVisible());
-    }
-
-    public void testFor(int expectedMessages) {
-        // firstly, remove value from attribute for and generate message
-        messagesAttributes.setLower(MessagesAttributes.FOR, "");
+        AttributeList.messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.TRUE);
         generateValidationMessagesWithoutWait();
         submitWithA4jBtn();
-
-        assertFalse(messagesWithFor.isVisible());
-
-        // now set for attribute to "simpleInput1"
-        messagesAttributes.setLower(MessagesAttributes.FOR, "simpleInput1");
-        generateValidationMessagesWithWait();
-
-        assertTrue(messagesWithFor.isVisible());
-        assertEquals(messagesWithFor.size(), expectedMessages);
-        assertEquals(messagesWithFor.getMessagesForInput(getSimpleInput1ID()).size(), expectedMessages, expectedMessages + " messages for input 1 were expected.");
-        assertEquals(messagesWithFor.getMessagesForInput(getSimpleInput2ID()).size(), 0, "No messages for input 2 were expected.");
-
-        // now set for attribute back to "simpleInput2"
-        messagesAttributes.setLower(MessagesAttributes.FOR, "simpleInput2");
-        generateValidationMessagesWithWait();
-
-        assertTrue(messagesWithFor.isVisible());
-        assertEquals(messagesWithFor.size(), expectedMessages);
-        assertEquals(messagesWithFor.getMessagesForInput(getSimpleInput1ID()).size(), 0, "No messages for input 1 were expected.");
-        assertEquals(messagesWithFor.getMessagesForInput(getSimpleInput2ID()).size(), expectedMessages, expectedMessages + " messages for input 2 were expected.");
+        //no messages should appear, because validation messages are bound to inputs not to 'null'
+        Assert.assertFalse(page.messagesComponentWithGlobal.isVisible());
     }
 
-    /**
-     * globalOnly change behavior of displaying messages.
-     * When <b>true</b> only messages not bound to any input are displayed
-     *      <b>false</b> all messages are displayed
-     * This attribute cannot be set with <i>for</i> attribute.
-     *
-     * In this case, messages component messagesGlobal is relevant.
-     */
-    public void testGlobalOnly(int expectedMessagesPerInput) {
-        //firstly set for attribute to null
-        messagesAttributes.setLower(MessagesAttributes.FOR, "");
-        //then set globalOnly attribute
-        messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.FALSE);
-
-        generateValidationMessagesWithWait();
-        //All messages should appear:
-        assertTrue(messagesWithGlobal.isVisible());
-        assertEquals(messagesWithGlobal.size(), expectedMessagesPerInput * 2);
-        assertEquals(messagesWithGlobal.getMessagesForInput(getSimpleInput1ID()).size(), expectedMessagesPerInput, expectedMessagesPerInput + " messages for input 1 were expected.");
-        assertEquals(messagesWithGlobal.getMessagesForInput(getSimpleInput2ID()).size(), expectedMessagesPerInput, expectedMessagesPerInput + " messages for input 2 were expected.");
-
-        messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.TRUE);
-        generateValidationMessagesWithoutWait();
-        //no messages should appear:
-        assertFalse(messagesWithGlobal.isVisible());
-    }
-
-    public void testLang() {
-        testAttributeLang(getTestedElementRoot());
-    }
-
-    public void testMessagesTypes() {
-        generateAllKindsOfMessagesWithWait();
-        assertEquals(messagesWithFor.size(), 4);
-        messagesWithFor.getMessage(0).isType(MessageType.FATAL);
-        messagesWithFor.getMessage(1).isType(MessageType.ERROR);
-        messagesWithFor.getMessage(2).isType(MessageType.WARNING);
-        messagesWithFor.getMessage(3).isType(MessageType.INFORMATION);
-    }
-
-    public void testNoShowDetailNoShowSummary() {
-        messagesAttributes.set(MessagesAttributes.showSummary, Boolean.FALSE);
-        messagesAttributes.set(MessagesAttributes.showDetail, Boolean.FALSE);
-
-        generateValidationMessagesWithoutWait();
-        submitWithA4jBtn();
-
-        assertFalse(messagesWithGlobal.isVisible());
-        assertFalse(messagesWithFor.isVisible());
-    }
-
-    public void testOnClick() {
-        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.onclick);
-    }
-
-    public void testOnDblClick() {
-        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.ondblclick);
-    }
-
-    public void testOnKeyDown() {
-        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.onkeydown);
-    }
-
-    public void testOnKeyPress() {
-        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.onkeypress);
-    }
-
-    public void testOnKeyUp() {
-        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.onkeyup);
-    }
-
-    public void testOnMouseDown() {
-        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.onmousedown);
-    }
-
-    public void testOnMouseMove() {
-        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.onmousemove);
-    }
-
-    public void testOnMouseOut() {
-        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.onmouseout);
-    }
-
-    public void testOnMouseOver() {
-        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.onmouseover);
-    }
-
-    public void testOnMouseUp() {
-        testFireEventWithJS(getTestedElementRoot(), messagesAttributes, MessagesAttributes.onmouseup);
-    }
-
-    public void testRendered() {
-        messagesAttributes.set(MessagesAttributes.rendered, Boolean.TRUE);
-        generateValidationMessagesWithWait();
-
-        assertTrue(messagesWithGlobal.isVisible());
-        assertTrue(messagesWithFor.isVisible());
-
-
-        messagesAttributes.set(MessagesAttributes.rendered, Boolean.FALSE);
-        generateValidationMessagesWithoutWait();
-        submitWithA4jBtn();
-
-        assertFalse(messagesWithGlobal.isVisible());
-        assertFalse(messagesWithFor.isVisible());
-    }
-
-    public void testShowDetail() {
-        messagesAttributes.set(MessagesAttributes.showSummary, Boolean.TRUE);
-        messagesAttributes.set(MessagesAttributes.showDetail, Boolean.TRUE);
-        generateValidationMessagesWithWait();
-
-        assertTrue(messagesWithGlobal.getMessage(0).isDetailVisible());
-        assertTrue(messagesWithFor.getMessage(0).isDetailVisible());
-
-        messagesAttributes.set(MessagesAttributes.showDetail, Boolean.FALSE);
-        generateValidationMessagesWithWait();
-
-        assertFalse(messagesWithGlobal.getMessage(0).isDetailVisible());
-        assertFalse(messagesWithFor.getMessage(0).isDetailVisible());
-    }
-
-    public void testShowSummary() {
-        messagesAttributes.set(MessagesAttributes.showDetail, Boolean.TRUE);
-        messagesAttributes.set(MessagesAttributes.showSummary, Boolean.TRUE);
-        generateValidationMessagesWithWait();
-
-        assertTrue(messagesWithGlobal.getMessage(0).isSummaryVisible());
-        assertTrue(messagesWithFor.getMessage(0).isSummaryVisible());
-
-        messagesAttributes.set(MessagesAttributes.showSummary, Boolean.FALSE);
-        generateValidationMessagesWithWait();
-
-        assertFalse(messagesWithGlobal.getMessage(0).isSummaryVisible());
-        assertFalse(messagesWithFor.getMessage(0).isSummaryVisible());
-    }
-
-    public void testStyle() {
-        super.testStyle(getTestedElementRoot());
-    }
-
-    public void testStyleClass() {
-        super.testStyleClass(getTestedElementRoot());
-    }
-
-    public void testTitle() {
-        super.testTitle(getTestedElementRoot());
-    }
-
-    private void waitForValuesSetting() {
-        String finishedString = "finished";
-        String ret = expectedReturnJS("return window.valuesSettingState", finishedString);
-        if (ret == null || !ret.equalsIgnoreCase(finishedString)) {
-            throw new IllegalStateException("The setting of values with buttons was not acomplished.");
-        }
-    }
-
-    protected void waitingForValidationMessages() {
-        submitWithA4jBtn();
-        Graphene.waitGui().until(messagesWithGlobal.isVisibleCondition());
+    @Override
+    protected FutureTarget<WebElement> getTestedElementRoot() {
+        return new FutureTarget<WebElement>() {
+            @Override
+            public WebElement getTarget() {
+                return page.messagesComponentWithGlobal.getRoot();
+            }
+        };
     }
 }
