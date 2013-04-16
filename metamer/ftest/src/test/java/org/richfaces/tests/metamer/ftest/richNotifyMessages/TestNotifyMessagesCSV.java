@@ -24,8 +24,8 @@ package org.richfaces.tests.metamer.ftest.richNotifyMessages;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
-
 import org.jboss.arquillian.graphene.Graphene;
+
 import org.testng.annotations.Test;
 
 /**
@@ -43,9 +43,10 @@ public class TestNotifyMessagesCSV extends AbstractNotifyMessagesTest {
         checkSimple(2);
     }
 
-    //TODO:report
     @Override
     protected void waitingForValidationMessagesToShow() {
-        submitWithHBtn();
+        submitWithHBtn();//FIXME: jstefek 2013-4-16
+        Graphene.waitGui().until(getPage().getMessagesComponentWithGlobal().isVisibleCondition());
+        Graphene.waitGui().until(getPage().getMessagesComponentWithFor().isVisibleCondition());
     }
 }
