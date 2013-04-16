@@ -48,7 +48,7 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
         checkAjaxRendered();
     }
 
-    @Test
+    @Test(groups = "Future")
     public void testDir() {
         checkDir();
     }
@@ -63,13 +63,12 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
         checkFor();
     }
 
-    @Test
+    @Test(groups = "Future")
     public void testLang() {
         checkLang();
     }
 
-    //TODO: report
-    @Test
+    @Test(groups = "Future")
     public void testNoShowDetailNoShowSummary() {
         checkNoShowDetailNoShowSummary();
     }
@@ -231,7 +230,7 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
         Assert.assertTrue(getPage().getGlobalNotify().size() > 0, "There should be some messages.");
     }
 
-    @Test
+    @Test(groups = "Future")
     public void testStyle() {
         checkStyle();
     }
@@ -241,7 +240,7 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
         checkStyleClass();
     }
 
-    @Test
+    @Test(groups = "Future")
     public void testTitle() {
         checkTitle();
     }

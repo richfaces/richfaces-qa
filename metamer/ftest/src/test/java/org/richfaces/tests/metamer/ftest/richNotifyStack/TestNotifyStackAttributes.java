@@ -26,10 +26,13 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.notifySt
 
 import java.net.URL;
 import java.util.Locale;
+import org.jboss.arquillian.graphene.Graphene;
 
 import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
@@ -188,6 +191,12 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
         generateMessage(3);
         Assert.assertEquals(notify.size(), 3, "There should be 3 messages.");
         MetamerPage.waitRequest(rerenderStackButton, WaitRequestType.XHR).click();
-        Assert.assertEquals(notify.size(), 0, "There should be no messages.");
+        Graphene.waitAjax().until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver from) {
+                return notify.size() == 0;
+            }
+        });
+        Assert.assertEquals(notify.size(), 0, "There should be no messages visible after rerendering the stack.");
     }
 }
