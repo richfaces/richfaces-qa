@@ -46,9 +46,10 @@ public class TestMessagesCSV extends AbstractMessagesTest {
         checkSimple(2);
     }
 
-    //TODO:report
     @Override
     protected void waitingForValidationMessagesToShow() {
-        submitWithA4jBtn();
+        submitWithA4jBtn();//FIXME: jstefek 2013-4-16
+        Graphene.waitGui().until(getPage().getMessagesComponentWithGlobal().isVisibleCondition());
+        Graphene.waitGui().until(getPage().getMessagesComponentWithFor().isVisibleCondition());
     }
 }
