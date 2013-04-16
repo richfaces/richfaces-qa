@@ -42,18 +42,6 @@ public abstract class AbstractMessageTest extends AbstractMessageComponentTest {
     @Page
     protected MessagePage page;
 
-    public void checkNoShowDetailNoShowSummary() {
-        messageAttributes.set(MessageAttributes.showSummary, Boolean.FALSE);
-        messageAttributes.set(MessageAttributes.showDetail, Boolean.FALSE);
-
-        generateValidationMessages();
-        MetamerPage.waitRequest(page.a4jCommandButton, WaitRequestType.XHR).click();
-
-        assertFalse(page.messageComponentForFirstInput.isVisible());
-        assertFalse(page.messageComponentForSecondInput.isVisible());
-        assertFalse(page.messageComponentForSelectableInput.isVisible());
-    }
-
     @Override
     protected MessageComponentTestPage getPage() {
         return page;

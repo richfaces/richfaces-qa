@@ -40,11 +40,6 @@ public abstract class AbstractNotifyMessagesTest extends AbstractMessagesCompone
     protected NotifyMessagesPage page;
 
     @Override
-    public void checkNoShowDetailNoShowSummary() {
-        new UnsupportedOperationException();
-    }
-
-    @Override
     public void checkFor(int expectedMessages) {
         AttributeList.messagesAttributes.setLower(MessagesAttributes.FOR, "");
         generateValidationMessagesWithoutWait();

@@ -59,6 +59,18 @@ public abstract class AbstractMessageComponentTest extends AbstractMessageCompon
         assertTrue(getMessageComponentForSelectableInput().isVisible());
     }
 
+    public void checkNoShowDetailNoShowSummary() {
+        AttributeList.messageAttributes.set(MessageAttributes.showSummary, Boolean.FALSE);
+        AttributeList.messageAttributes.set(MessageAttributes.showDetail, Boolean.FALSE);
+
+        generateValidationMessages();
+        submitWithA4jBtn();
+
+        assertFalse(getPage().getMessageComponentForFirstInput().isVisible());
+        assertFalse(getPage().getMessageComponentForSecondInput().isVisible());
+        assertFalse(getPage().getMessageComponentForSelectableInput().isVisible());
+    }
+
     public void checkFor() {
         // firstly, remove value from attribute @for and generate message
         AttributeList.messageAttributes.setLower(MessageAttributes.FOR, "");
