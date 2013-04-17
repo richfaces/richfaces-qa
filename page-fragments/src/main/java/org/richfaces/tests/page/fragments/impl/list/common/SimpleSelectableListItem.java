@@ -22,10 +22,9 @@
 package org.richfaces.tests.page.fragments.impl.list.common;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -39,14 +38,17 @@ public abstract class SimpleSelectableListItem extends AbstractListItem implemen
     @Root
     protected WebElement item;
 
-    private Action getAction(WebDriver driver) {
-        return new Actions(driver).keyDown(Keys.CONTROL).click(item).keyUp(Keys.CONTROL).build();
+    @ArquillianResource
+    private Actions actions;
+
+    private Action getAction() {
+        return actions.keyDown(Keys.CONTROL).click(item).keyUp(Keys.CONTROL).build();
     }
 
     @Override
     public void deselect() {
         if (isSelected()) {
-            getAction(GrapheneContext.getProxy()).perform();
+            getAction().perform();
         }
         Graphene.waitGui().until().element(item).attribute("class").not().contains(getClassForSelectedItem());
     }
@@ -70,7 +72,7 @@ public abstract class SimpleSelectableListItem extends AbstractListItem implemen
     @Override
     public void select() {
         if (!isSelected()) {
-            getAction(GrapheneContext.getProxy()).perform();
+            getAction().perform();
         }
         Graphene.waitGui().until().element(item).attribute("class").contains(getClassForSelectedItem());
     }

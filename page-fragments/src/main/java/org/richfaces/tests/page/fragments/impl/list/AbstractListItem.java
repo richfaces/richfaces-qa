@@ -21,6 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.list;
 
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.JavascriptExecutor;
 import org.richfaces.tests.page.fragments.impl.Utils;
 
 /**
@@ -28,8 +30,11 @@ import org.richfaces.tests.page.fragments.impl.Utils;
  */
 public abstract class AbstractListItem implements ListItem {
 
+    @ArquillianResource
+    private JavascriptExecutor executor;
+
     @Override
     public int getIndex() {
-        return Integer.valueOf(Utils.returningJQ("index()", getItemElement()));
+        return Integer.valueOf(Utils.returningJQ(executor, "index()", getItemElement()));
     }
 }

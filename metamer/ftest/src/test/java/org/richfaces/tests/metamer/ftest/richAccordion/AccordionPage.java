@@ -21,8 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richAccordion;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -51,6 +52,9 @@ public class AccordionPage extends MetamerPage {
     private WebElement leftInactiveIcon;
     @FindBy(css = "div[id$=item3] td.rf-ac-itm-exp-ico div.rf-ac-itm-ico-inact")
     private WebElement rightInactiveIcon;
+
+    @Drone
+    private WebDriver browser;
 
     public Accordion getAccordion() {
         return accordion;
@@ -85,7 +89,7 @@ public class AccordionPage extends MetamerPage {
     }
 
     public boolean isAccordionVisible() {
-        return Graphene.element(accordion.getRootElement()).isPresent().apply(GrapheneContext.getProxy()) && accordion.getRootElement().isDisplayed();
+        return Graphene.element(accordion.getRootElement()).isPresent().apply(browser) && accordion.getRootElement().isDisplayed();
     }
 
 }

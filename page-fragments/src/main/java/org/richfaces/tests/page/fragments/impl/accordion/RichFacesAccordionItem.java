@@ -22,9 +22,10 @@
  */
 package org.richfaces.tests.page.fragments.impl.accordion;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -42,6 +43,9 @@ public class RichFacesAccordionItem implements AccordionItem {
 
     @Root
     private WebElement root;
+
+    @Drone
+    private WebDriver browser;
 
     @FindBy(className = ACTIVE_HEADER_CLASS)
     private WebElement activeHeader;
@@ -106,17 +110,17 @@ public class RichFacesAccordionItem implements AccordionItem {
 
     @Override
     public boolean isActive() {
-        return getIsActiveCondition().apply(GrapheneContext.getProxy()) && getContentElement().isDisplayed();
+        return getIsActiveCondition().apply(browser) && getContentElement().isDisplayed();
     }
 
     @Override
     public boolean isEnabled() {
-        return getIsEnabledCondition().apply(GrapheneContext.getProxy());
+        return getIsEnabledCondition().apply(browser);
     }
 
     @Override
     public boolean isInactive() {
-        return !getIsActiveCondition().apply(GrapheneContext.getProxy()) && !getContentElement().isDisplayed();
+        return !getIsActiveCondition().apply(browser) && !getContentElement().isDisplayed();
     }
 
     protected final ExpectedCondition<Boolean> getIsActiveCondition() {

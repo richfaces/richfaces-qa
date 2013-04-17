@@ -45,9 +45,9 @@ public class ElementIsFocused implements Predicate<WebDriver> {
     public boolean apply(WebDriver browser) {
         try {
             if (element == null) {
-                return FocusRetriever.retrieveActiveElement() == null;
+                return FocusRetriever.retrieveActiveElement(browser) == null;
             }
-            return element.equals(FocusRetriever.retrieveActiveElement());
+            return element.equals(FocusRetriever.retrieveActiveElement(browser));
         } catch (StaleElementReferenceException e) {
             return false;
         }

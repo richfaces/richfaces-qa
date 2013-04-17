@@ -26,6 +26,8 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -53,6 +55,9 @@ public class TestSelecJSApi extends AbstractWebDriverTest {
     private TextInputComponentImpl value;
     @FindBy(css = "div[id$=select]")
     private RichFacesSelectEnhanced select;
+
+    @ArquillianResource
+    private JavascriptExecutor executor;
 
     @Override
     public URL getTestUrl() {
@@ -84,7 +89,7 @@ public class TestSelecJSApi extends AbstractWebDriverTest {
 
     @Test
     public void testShowPopup() {
-        Utils.triggerJQ("mouseover", showPopupButton);
+        Utils.triggerJQ(executor, "mouseover", showPopupButton);
         Assert.assertTrue(select.isPopupPresent(), "Popup should be opened");
     }
 
@@ -92,7 +97,7 @@ public class TestSelecJSApi extends AbstractWebDriverTest {
     public void testHidePopup() {
         select.callPopup();
         Assert.assertTrue(select.isPopupPresent(), "Popup should be opened");
-        Utils.triggerJQ("mouseover", hidePopupButton);
+        Utils.triggerJQ(executor, "mouseover", hidePopupButton);
         Assert.assertFalse(select.isPopupPresent(), "Popup should be hidden");
     }
 }

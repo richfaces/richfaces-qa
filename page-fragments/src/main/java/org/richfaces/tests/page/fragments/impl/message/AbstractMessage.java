@@ -36,7 +36,7 @@ public abstract class AbstractMessage implements Message {
 
     @Root
     protected WebElement root;
-    //
+
     @Drone
     protected WebDriver driver;
 

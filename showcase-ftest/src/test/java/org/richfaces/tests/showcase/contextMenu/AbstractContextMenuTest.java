@@ -28,7 +28,7 @@ import static org.testng.Assert.assertTrue;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
@@ -46,6 +46,9 @@ public class AbstractContextMenuTest extends AbstractWebDriverTest {
 
     public static final double TOLERANCE = 3.0;
 
+    @ArquillianResource
+    private Actions actions;
+
     public enum InvocationType {
         RIGHT_CLICK,
         LEFT_CLICK
@@ -53,7 +56,6 @@ public class AbstractContextMenuTest extends AbstractWebDriverTest {
 
     protected void checkContextMenuRenderedAtCorrectPosition(WebElement target, WebElement contextMenuPopup,
         InvocationType type, ExpectedCondition<Boolean> conditionTargetIsFocused) {
-        Actions builder = new Actions(GrapheneContext.getProxy());
 
         if (conditionTargetIsFocused != null) {
             target.click();
@@ -64,15 +66,15 @@ public class AbstractContextMenuTest extends AbstractWebDriverTest {
         // clicks in the middle of the target
         switch (type) {
             case LEFT_CLICK:
-                builder.click(target);
+                actions.click(target);
                 break;
             case RIGHT_CLICK:
-                builder.contextClick(target);
+                actions.contextClick(target);
                 break;
             default:
                 throw new IllegalArgumentException("Wrong type of context menu invocation!");
         }
-        builder.build().perform();
+        actions.build().perform();
 
         Graphene.waitGui().withTimeout(2, TimeUnit.SECONDS).until(element(contextMenuPopup).isVisible());
 

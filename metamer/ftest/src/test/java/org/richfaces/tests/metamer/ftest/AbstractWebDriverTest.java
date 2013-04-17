@@ -472,7 +472,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * @param event
      */
     protected void fireEvent(WebElement element, Event event) {
-        Utils.triggerJQ(event.getEventName(), element);
+        Utils.triggerJQ(executor, event.getEventName(), element);
     }
 
     /**

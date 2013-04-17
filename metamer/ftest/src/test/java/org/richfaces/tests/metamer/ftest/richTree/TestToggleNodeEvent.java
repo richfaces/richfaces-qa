@@ -28,6 +28,8 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
@@ -47,6 +49,8 @@ public class TestToggleNodeEvent extends AbstractWebDriverTest {
     MouseEvent toggleReactEvent;
     @Page
     TreeSimplePage page;
+    @ArquillianResource
+    private JavascriptExecutor executor;
 
     private static final long NODE_TOGGLE_WAIT_TIME  = 500;//ms
 
@@ -118,11 +122,11 @@ public class TestToggleNodeEvent extends AbstractWebDriverTest {
     }
 
     public void fireEventOnHandle(WebElement handle, MouseEvent event) {
-            Utils.triggerJQ(event.getValue(), handle);
+            Utils.triggerJQ(executor, event.getValue(), handle);
     }
 
     public void fireEventOnLabel(WebElement label, MouseEvent event) {
-        Utils.triggerJQ(event.getValue(), label);
+        Utils.triggerJQ(executor, event.getValue(), label);
     }
 
 }

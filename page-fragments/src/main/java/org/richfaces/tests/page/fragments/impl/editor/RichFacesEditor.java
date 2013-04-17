@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.editor;
 
-import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.By;
@@ -35,6 +35,9 @@ public class RichFacesEditor {
 
     @Root
     private WebElement root;
+
+    @Drone
+    private WebDriver driver;
 
     @FindBy(css = ".cke_toolbox")
     private EditorToolbar toolbar;
@@ -61,7 +64,6 @@ public class RichFacesEditor {
      * @param text
      */
     public void typeTextToEditor(String text) {
-        WebDriver driver = GrapheneContext.getProxy();
         try {
             // driver.switchTo().frame(page.editorFrame);
             driver.switchTo().frame(0);// must be this way

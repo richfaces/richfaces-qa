@@ -22,9 +22,9 @@
 package org.richfaces.tests.page.fragments.impl.input.inputNumberSlider;
 
 import com.google.common.base.Preconditions;
+import org.jboss.arquillian.drone.api.annotation.Drone;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -47,8 +47,9 @@ public class RichFacesSliderComponent implements SliderComponent {
     WebElement handle;
     @FindBy(className = "rf-insl-hnd-dis")
     WebElement disabledHandle;
-    //
-    WebDriver driver = GrapheneContext.getProxy();
+
+    @Drone
+    WebDriver driver;
 
     @Override
     public void decrease() {

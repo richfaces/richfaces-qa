@@ -21,8 +21,8 @@
  */
 package org.richfaces.tests.page.fragments.impl.calendar.common.editor.time;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.joda.time.DateTime;
 import org.openqa.selenium.WebDriver;
@@ -43,8 +43,9 @@ public class RichFacesTimeEditor implements TimeEditor {
 
     @Root
     private WebElement root;
-    //
-    private WebDriver driver = GrapheneContext.getProxy();
+
+    @Drone
+    private WebDriver driver;
     @FindBy(xpath = ".//td[@class='rf-cal-timepicker-inp']/table/tbody/tr/td/table[tbody/tr/td/input[contains(@id, 'TimeHours')]]")
     private RichFacesHoursSpinner12 hoursSpinner12;
     @FindBy(xpath = ".//td[@class='rf-cal-timepicker-inp']/table/tbody/tr/td/table[tbody/tr/td/input[contains(@id, 'TimeHours')]]")
