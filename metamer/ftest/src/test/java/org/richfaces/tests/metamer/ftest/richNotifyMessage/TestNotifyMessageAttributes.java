@@ -26,6 +26,7 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.openqa.selenium.TimeoutException;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.richNotify.TestNotifyAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
 import org.richfaces.tests.page.fragments.impl.Utils;
@@ -48,6 +49,7 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
         checkAjaxRendered();
     }
 
+    @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Test(groups = "Future")
     public void testDir() {
         checkDir();
@@ -63,11 +65,13 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
         checkFor();
     }
 
+    @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Test(groups = "Future")
     public void testLang() {
         checkLang();
     }
 
+    @IssueTracking("https://issues.jboss.org/browse/RF-12925")
     @Test(groups = "Future")
     public void testNoShowDetailNoShowSummary() {
         checkNoShowDetailNoShowSummary();
@@ -230,6 +234,7 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
         Assert.assertTrue(getPage().getGlobalNotify().size() > 0, "There should be some messages.");
     }
 
+    @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Test(groups = "Future")
     public void testStyle() {
         checkStyle();
@@ -240,6 +245,7 @@ public class TestNotifyMessageAttributes extends AbstractNotifyMessageTest {
         checkStyleClass();
     }
 
+    @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Test(groups = "Future")
     public void testTitle() {
         checkTitle();

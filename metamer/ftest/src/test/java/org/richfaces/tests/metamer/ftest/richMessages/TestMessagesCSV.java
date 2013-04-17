@@ -26,6 +26,7 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 /**
@@ -41,6 +42,7 @@ public class TestMessagesCSV extends AbstractMessagesTest {
         return buildUrl(contextPath, "faces/components/richMessages/csv.xhtml");
     }
 
+    @IssueTracking("https://issues.jboss.org/browse/RF-12922")//fix the waiting below
     @Test
     public void testSimple() {
         checkSimple(2);
@@ -48,7 +50,7 @@ public class TestMessagesCSV extends AbstractMessagesTest {
 
     @Override
     protected void waitingForValidationMessagesToShow() {
-        submitWithA4jBtn();//FIXME: jstefek 2013-4-16
+        submitWithA4jBtn();// "https://issues.jboss.org/browse/RF-12922"
         Graphene.waitGui().until(getPage().getMessagesComponentWithGlobal().isVisibleCondition());
         Graphene.waitGui().until(getPage().getMessagesComponentWithFor().isVisibleCondition());
     }

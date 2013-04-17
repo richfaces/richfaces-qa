@@ -51,6 +51,7 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
         checkAjaxRendered();
     }
 
+    @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Test(groups = "Future")
     public void testDir() {
         checkDir();
@@ -89,6 +90,7 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
         testGlobalOnly();
     }
 
+    @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Test(groups = "Future")
     public void testLang() {
         checkLang();
@@ -100,8 +102,8 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
         checkMessagesTypes();
     }
 
-
-    @Test(groups="Future")
+    @IssueTracking("https://issues.jboss.org/browse/RF-12925")
+    @Test(groups = "Future")
     public void testNoShowDetailNoShowSummary() {
         checkNoShowDetailNoShowSummary();
     }
@@ -265,6 +267,7 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
         Assert.assertTrue(getPage().getMessagesComponentWithFor().size() > 0, "There should be some messages.");
     }
 
+    @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Test(groups = "Future")
     public void testStyle() {
         checkStyle();
@@ -275,6 +278,7 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
         checkStyleClass();
     }
 
+    @IssueTracking("https://issues.jboss.org/browse/RF-12923")
     @Test(groups = "Future")
     public void testTitle() {
         checkTitle();
