@@ -21,8 +21,8 @@
  */
 package org.richfaces.tests.page.fragments.impl.calendar.inline;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.joda.time.DateTime;
 import org.openqa.selenium.WebDriver;
@@ -48,8 +48,9 @@ public class RichFacesCalendarInlineComponent implements CalendarInlineComponent
 
     @Root
     protected WebElement root;
-    //
-    protected WebDriver driver = GrapheneContext.getProxy();
+
+    @Drone
+    protected WebDriver driver;
     //
     @FindBy(css = "td[id$=Header]")
     protected RichFacesHeaderControls headerControls;

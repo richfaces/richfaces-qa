@@ -24,6 +24,8 @@ package org.richfaces.tests.page.fragments.impl.input.inplace;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -40,6 +42,8 @@ public abstract class AbstractInplaceComponent<T extends EditingState> implement
     protected WebElement root;
     @Drone
     protected WebDriver driver;
+    @ArquillianResource
+    private JavascriptExecutor executor;
     @FindBy(css = "span[id$=Label]")
     protected WebElement label;
     @FindBy(css = "span[id$=Edit] > input[id$=Input]")
@@ -49,7 +53,7 @@ public abstract class AbstractInplaceComponent<T extends EditingState> implement
 
     @Override
     public T editBy(OpenBy event) {
-        Utils.triggerJQ(event.getEventName(), root);
+        Utils.triggerJQ(executor, event.getEventName(), root);
         return instantiateFragment();
     }
 

@@ -20,6 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.richfaces.tests.page.fragments.impl.panelMenuItem;
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.ATTR_CLASS;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_DISABLED_SUFFIX;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_HOVERED_SUFFIX;
@@ -27,9 +28,9 @@ import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.getGuardTypeForMode;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.component.Mode;
 
@@ -41,6 +42,9 @@ public class RichFacesPanelMenuItem {
 
     @Root
     WebElement root;
+
+    @Drone
+    private WebDriver browser;
 
     @FindBy(css = "td[class*=rf-][class*=-itm-lbl]")
     public WebElement label;
@@ -83,8 +87,8 @@ public class RichFacesPanelMenuItem {
     }
 
     public boolean isVisible() {
-        boolean present = Graphene.element(root).isVisible().apply(GrapheneContext.getProxy());
-        boolean visible = Graphene.element(root).isPresent().apply(GrapheneContext.getProxy());
+        boolean present = Graphene.element(root).isVisible().apply(browser);
+        boolean visible = Graphene.element(root).isPresent().apply(browser);
         return present && visible;
     }
 

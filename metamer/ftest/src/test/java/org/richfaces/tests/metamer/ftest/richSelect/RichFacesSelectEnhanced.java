@@ -24,6 +24,8 @@ package org.richfaces.tests.metamer.ftest.richSelect;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.Utils;
@@ -54,6 +56,9 @@ public class RichFacesSelectEnhanced extends RichFacesSelect {
 
         private WebElement input;
 
+        @ArquillianResource
+        private JavascriptExecutor executor;
+
         public void setInput(WebElement input) {
             this.input = input;
         }
@@ -61,7 +66,7 @@ public class RichFacesSelectEnhanced extends RichFacesSelect {
         @Override
         public Option selectByIndex(int index, Selection selection) {
             Option option = super.selectByIndex(index, selection);
-            Utils.triggerJQ("blur", input);
+            Utils.triggerJQ(executor, "blur", input);
             return option;
         }
     }

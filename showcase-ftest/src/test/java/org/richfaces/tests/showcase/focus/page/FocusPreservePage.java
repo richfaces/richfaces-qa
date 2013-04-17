@@ -35,7 +35,7 @@ import org.richfaces.tests.showcase.focus.TestFocus;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class FocusPreservePage {
+public class FocusPreservePage extends FocusPage {
 
     @FindBy(jquery = "*[type=text]")
     public TextInputComponentImpl input;

@@ -42,7 +42,7 @@ public class RichFacesHeaderControls implements HeaderControls {
 
     @Root
     private WebElement root;
-    //
+
     @Drone
     protected WebDriver driver;
     //

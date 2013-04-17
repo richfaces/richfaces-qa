@@ -21,6 +21,7 @@
  */
 package org.richfaces.tests.page.fragments.impl.panelMenuGroup;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.ATTR_CLASS;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_COLLAPSED_SUFFIX;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_DISABLED_SUFFIX;
@@ -30,9 +31,9 @@ import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.getGuardTypeForMode;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.component.Mode;
 
@@ -49,6 +50,9 @@ public class RichFacesPanelMenuGroup {
 
     @Root
     WebElement root;
+
+    @Drone
+    private WebDriver browser;
 
     @FindBy(css = CSS_HEADER)
     public WebElement header;
@@ -94,7 +98,7 @@ public class RichFacesPanelMenuGroup {
     }
 
     public boolean isVisible() {
-        return Graphene.element(root).isPresent().apply(GrapheneContext.getProxy()) && root.isDisplayed();
+        return Graphene.element(root).isPresent().apply(browser) && root.isDisplayed();
     }
 
     public WebElement getRoot() {

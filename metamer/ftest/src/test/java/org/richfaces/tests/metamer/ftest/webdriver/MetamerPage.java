@@ -39,7 +39,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.arquillian.graphene.GrapheneContext;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
 import org.jboss.arquillian.graphene.proxy.Interceptor;
@@ -47,6 +47,7 @@ import org.jboss.arquillian.graphene.proxy.InvocationContext;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -172,7 +173,7 @@ public class MetamerPage {
         if (GrapheneProxy.isProxyInstance(target)) {
             proxy = (GrapheneProxyInstance) ((GrapheneProxyInstance) target).copy();
         } else {
-            proxy = (GrapheneProxyInstance) GrapheneProxy.getProxyForTarget(target);
+            throw new IllegalStateException("Can't create a new proxy.");
         }
         proxy.registerInterceptor(interceptor);
         return (T) proxy;
@@ -252,27 +253,27 @@ public class MetamerPage {
     private static class RequestTimeChangesWaitingInterceptor implements Interceptor {
 
         protected String time1;
-        private static final WebElement requestTime = GrapheneContext.getProxy()
-                .findElement(By.cssSelector("span[id$='requestTime']"));
 
-        protected void afterAction() {
-            Graphene.waitModel().until().element(requestTime).text().not().equalTo(time1);
+        private static final By REQUEST_TIME = By.cssSelector("span[id='requestTime']");
+
+        protected void afterAction(GrapheneContext context) {
+            Graphene.waitModel(context.getWebDriver()).until().element(REQUEST_TIME).text().not().equalTo(time1);
         }
 
-        protected void beforeAction() {
-            time1 = getTime();
+        protected void beforeAction(GrapheneContext context) {
+            time1 = getTime(context.getWebDriver());
         }
 
-        protected String getTime() {
-            String time = requestTime.getText();
+        protected String getTime(SearchContext searchContext) {
+            String time = searchContext.findElement(REQUEST_TIME).getText();
             return time;
         }
 
         @Override
         public Object intercept(InvocationContext context) throws Throwable {
-            beforeAction();
+            beforeAction(context.getGrapheneContext());
             Object o = context.invoke();
-            afterAction();
+            afterAction(context.getGrapheneContext());
             return o;
         }
 
@@ -287,9 +288,9 @@ public class MetamerPage {
         }
 
         @Override
-        protected void afterAction() {
+        protected void afterAction(GrapheneContext context) {
             waiting(guardTime);
-            if (!getTime().equals(time1)) {
+            if (!getTime(context.getWebDriver()).equals(time1)) {
                 throw new RuntimeException("No request expected, but request time has changed.");
             }
         }
@@ -304,8 +305,8 @@ public class MetamerPage {
          * WebDriver wait which ignores StaleElementException and NoSuchElementException and polling every 50 ms with
          * max wait time of 5 seconds
          */
-        public WDWait() {
-            this(5);
+        public WDWait(WebDriver browser) {
+            this(browser, 5);
         }
 
         /**
@@ -315,8 +316,8 @@ public class MetamerPage {
          * @param seconds
          *            max wait time
          */
-        public WDWait(int seconds) {
-            super(GrapheneContext.getProxy(), seconds);
+        public WDWait(WebDriver browser, int seconds) {
+            super(browser, seconds);
             ignoring(NoSuchElementException.class);
             ignoring(StaleElementReferenceException.class);
             pollingEvery(50, TimeUnit.MILLISECONDS);

@@ -64,5 +64,4 @@ public class MessagePage extends AbstractMessagePage {
         return nameMessage.isVisible() || jobMessage.isVisible() ||
                addressMessage.isVisible() || zipMessage.isVisible();
     }
-
 }

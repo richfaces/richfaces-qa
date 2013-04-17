@@ -34,7 +34,6 @@ import org.jboss.arquillian.ajocado.framework.GrapheneConfigurationContext;
 import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
 import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
 import org.jboss.arquillian.ajocado.network.NetworkTrafficType;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.test.selenium.utils.testng.TestInfo;
 import org.jboss.test.selenium.utils.testng.TestLoggingUtils;
 import org.openqa.selenium.OutputType;
@@ -46,8 +45,6 @@ import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 
 import com.thoughtworks.selenium.SeleniumException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
 
 /**
@@ -219,10 +216,10 @@ public class FailureLoggingTestListener extends TestListenerAdapter {
     }
 
     protected WebDriver getWebDriver() {
-        if (GrapheneContext.isInitialized()) {
-            return GrapheneContext.getProxyForInterfaces(TakesScreenshot.class);
-        } else {
+//        if (GrapheneContext.isInitialized()) {
+//            return GrapheneContext.getProxyForInterfaces(TakesScreenshot.class);
+//        } else {
             return null;
-        }
+//        }
     }
 }

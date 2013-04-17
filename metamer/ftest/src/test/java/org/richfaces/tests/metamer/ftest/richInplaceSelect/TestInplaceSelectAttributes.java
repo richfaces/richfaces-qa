@@ -33,7 +33,9 @@ import javax.faces.event.PhaseId;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -79,6 +81,8 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
     private WebElement output;
     @Page
     private MetamerPage page;
+    @ArquillianResource
+    private JavascriptExecutor executor;
 
     private String getOutputText() {
         return output.getText().trim();
@@ -524,7 +528,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         assertEquals(getOutputText(), "", "Output should be empty.");
         //blur
         String requestTime = page.requestTime.getText().trim();
-        Utils.triggerJQ("blur", select.getEditInputElement());
+        Utils.triggerJQ(executor, "blur", select.getEditInputElement());
         waiting(2000L);
         assertEquals(page.requestTime.getText().trim(), requestTime, "Request time shouldn't change.");
         assertEquals(getOutputText(), "", "Output should be empty.");
@@ -549,7 +553,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         assertEquals(getOutputText(), "", "Output should be empty.");
         //blur
         String requestTime = page.requestTime.getText();
-        Utils.triggerJQ("blur", select.getEditInputElement());
+        Utils.triggerJQ(executor, "blur", select.getEditInputElement());
         Graphene.waitAjax().until().element(page.requestTime).text().not().equalTo(requestTime);
         assertEquals(getOutputText(), "Hawaii", "Output should contain selected value.");
     }

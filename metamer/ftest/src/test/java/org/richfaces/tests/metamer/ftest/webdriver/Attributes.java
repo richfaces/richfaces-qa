@@ -28,9 +28,11 @@ import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.drone.api.annotation.Default;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.arquillian.graphene.GrapheneContext;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -44,7 +46,9 @@ import org.richfaces.tests.page.fragments.impl.Utils;
  */
 public class Attributes<T extends AttributeEnum> {
 
-    protected WebDriver driver = GrapheneContext.getProxy();
+    // FIXME: 2013-05-30, jpapouse:
+    // the class should be refactored to work without static context
+    protected WebDriver driver = GrapheneContext.getContextFor(Default.class).getWebDriver();
     private final String attributesID;
     private static final String PROPERTY_CSS_SELECTOR = "[id$='%s:%sInput']";
     private static final String NULLSTRING = "null";
@@ -151,7 +155,7 @@ public class Attributes<T extends AttributeEnum> {
         String text = input.getAttribute("value");
         if (!value.equals(text)) {
             if (!text.isEmpty()) {
-                Utils.jQ("val('')", input);
+                Utils.jQ((JavascriptExecutor) driver, "val('')", input);
             }
             input.sendKeys(value);
             MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();

@@ -26,7 +26,6 @@ import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertEquals;
 
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.focus.page.FocusPage;
 import org.richfaces.tests.showcase.focus.page.FocusPreservePage;
 import org.testng.annotations.Test;
 
@@ -45,7 +44,7 @@ public class TestFocusPreserve extends AbstractWebDriverTest {
     public void testFocusIsPreserved() {
         page.waitTillFirstInputIsFocused();
 
-        FocusPage.typeSomethingAndDoNotCareAboutFocus(EXPECTED_OUTCOME);
+        page.typeSomethingAndDoNotCareAboutFocus(EXPECTED_OUTCOME);
 
         guardXhr(page.button).click();
 

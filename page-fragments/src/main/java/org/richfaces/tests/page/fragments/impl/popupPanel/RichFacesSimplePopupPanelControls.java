@@ -21,9 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.popupPanel;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
@@ -34,6 +35,9 @@ public class RichFacesSimplePopupPanelControls implements PopupPanelControls {
 
     @Root
     private WebElement rootElement;
+
+    @Drone
+    private WebDriver browser;
 
     @Override
     public WebElement getRootElement() {
@@ -47,7 +51,7 @@ public class RichFacesSimplePopupPanelControls implements PopupPanelControls {
 
     @Override
     public boolean isVisible() {
-        return isVisibleCondition().apply(GrapheneContext.getProxy());
+        return isVisibleCondition().apply(browser);
     }
 
     @Override

@@ -24,6 +24,8 @@ package org.richfaces.tests.page.fragments.impl.input.inplace;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -33,10 +35,12 @@ import org.richfaces.tests.page.fragments.impl.Utils;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-class RichFacesInplaceComponentControls implements InplaceComponentControls {
+public class RichFacesInplaceComponentControls implements InplaceComponentControls {
 
     @Root
     private WebElement root;
+    @ArquillianResource
+    private JavascriptExecutor executor;
     //
     @Drone
     private WebDriver driver;
@@ -54,7 +58,7 @@ class RichFacesInplaceComponentControls implements InplaceComponentControls {
         if (Graphene.element(cancelButtonElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Cannot interact with Cancel button. It is not visible.");
         }
-        Utils.triggerJQ("mousedown", cancelButtonElement);
+        Utils.triggerJQ(executor, "mousedown", cancelButtonElement);
         //after https://issues.jboss.org/browse/RF-9872 is solved, uncomment next line
         // and delete previous lines;
         //cancelButtonElement.click();
@@ -95,7 +99,7 @@ class RichFacesInplaceComponentControls implements InplaceComponentControls {
         if (Graphene.element(okButtonElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Cannot interact with OK button. It is not visible.");
         }
-        Utils.triggerJQ("mousedown", okButtonElement);
+        Utils.triggerJQ(executor, "mousedown", okButtonElement);
         // after https://issues.jboss.org/browse/RF-9872 is solved, uncomment next line
         // and delete previous lines;
         //okButtonElement.click();

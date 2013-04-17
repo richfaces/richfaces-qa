@@ -34,7 +34,9 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -53,6 +55,9 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
 
     @Page
     private MetamerPage page;
+
+    @ArquillianResource
+    private JavascriptExecutor executor;
 
     @Override
     public URL getTestUrl() {
@@ -182,7 +187,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
                 twoColumnOrderingList.getListAreaElement().click();
                 twoColumnOrderingList.getRootElement().click();
                 waiting(500);
-                Utils.triggerJQ("blur", twoColumnOrderingList.getItems().get(0).getItemElement());
+                Utils.triggerJQ(executor, "blur", twoColumnOrderingList.getItems().get(0).getItemElement());
             }
         });
     }

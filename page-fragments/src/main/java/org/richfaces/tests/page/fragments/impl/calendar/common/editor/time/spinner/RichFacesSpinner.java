@@ -21,8 +21,8 @@
  */
 package org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.spinner;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -47,7 +47,8 @@ public abstract class RichFacesSpinner<T> implements VisibleComponent {
     protected WebElement buttonUpElement;
     @FindBy(className = "rf-cal-sp-down")
     protected WebElement buttonDownElement;
-    protected WebDriver driver = GrapheneContext.getProxy();
+    @Drone
+    protected WebDriver driver;
 
     public WebElement getButtonDownElement() {
         return buttonDownElement;

@@ -22,7 +22,8 @@
 package org.richfaces.tests.page.fragments.impl.list.simple;
 
 import java.util.List;
-
+import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.list.AbstractListFragment;
@@ -41,6 +42,7 @@ public abstract class RichFacesList<T extends ListItem> extends AbstractListFrag
     private List<WebElement> orderedList;
     @FindBy(className = "rf-ulst-itm")
     private List<WebElement> unorderedList;
+
 
     private enum RichFacesListType {
 

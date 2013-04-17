@@ -38,6 +38,8 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -95,6 +97,9 @@ public class TestSelect extends AbstractWebDriverTest {
             Graphene.guardAjax(select.callPopup()).selectByIndex(10, Selection.BY_KEYS);
         }
     };
+
+    @ArquillianResource
+    private JavascriptExecutor executor;
 
     @Override
     public URL getTestUrl() {
@@ -326,7 +331,7 @@ public class TestSelect extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 select.callPopup();
-                Utils.triggerJQ("dblclick", listElement);
+                Utils.triggerJQ(executor, "dblclick", listElement);
             }
         });
     }
@@ -354,7 +359,7 @@ public class TestSelect extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 select.callPopup();
-                Utils.triggerJQ("keydown", listElement);
+                Utils.triggerJQ(executor, "keydown", listElement);
             }
         });
     }
@@ -365,7 +370,7 @@ public class TestSelect extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 select.callPopup();
-                Utils.triggerJQ("keypress", listElement);
+                Utils.triggerJQ(executor, "keypress", listElement);
             }
         });
     }
@@ -376,7 +381,7 @@ public class TestSelect extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 select.callPopup();
-                Utils.triggerJQ("keyup", listElement);
+                Utils.triggerJQ(executor, "keyup", listElement);
             }
         });
     }
@@ -386,7 +391,7 @@ public class TestSelect extends AbstractWebDriverTest {
         testFireEvent("listmousedown", new Action() {
             @Override
             public void perform() {
-                Utils.triggerJQ("mousedown", listElement);
+                Utils.triggerJQ(executor, "mousedown", listElement);
             }
         });
     }
@@ -396,7 +401,7 @@ public class TestSelect extends AbstractWebDriverTest {
         testFireEvent("listmousemove", new Action() {
             @Override
             public void perform() {
-                Utils.triggerJQ("mousemove", listElement);
+                Utils.triggerJQ(executor, "mousemove", listElement);
             }
         });
     }
@@ -406,7 +411,7 @@ public class TestSelect extends AbstractWebDriverTest {
         testFireEvent("listmouseout", new Action() {
             @Override
             public void perform() {
-                Utils.triggerJQ("mouseout", listElement);
+                Utils.triggerJQ(executor, "mouseout", listElement);
             }
         });
     }
@@ -496,7 +501,7 @@ public class TestSelect extends AbstractWebDriverTest {
         new Actions(driver).sendKeys(Keys.RETURN).perform();
 
         String previousTime = page.requestTime.getText();
-        Utils.triggerJQ("blur", select.getInput().getInput());
+        Utils.triggerJQ(executor, "blur", select.getInput().getInput());
         Graphene.waitModel().until().element(page.requestTime).text().not().equalTo(previousTime);
         assertEquals(output.getText(), "Alabama", "Output should be Alabama");
     }

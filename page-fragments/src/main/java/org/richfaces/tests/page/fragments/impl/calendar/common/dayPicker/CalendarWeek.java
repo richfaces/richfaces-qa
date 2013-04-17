@@ -39,7 +39,7 @@ public class CalendarWeek implements Iterable<CalendarDay> {
 
     @Root
     private WebElement root;
-    //
+
     @Drone
     private WebDriver driver;
     //

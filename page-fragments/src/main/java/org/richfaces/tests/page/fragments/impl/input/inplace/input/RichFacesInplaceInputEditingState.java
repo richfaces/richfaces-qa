@@ -28,7 +28,7 @@ import org.richfaces.tests.page.fragments.impl.input.inplace.EditingState;
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-class RichFacesInplaceInputEditingState extends AbstractInplaceComponentEditingState {
+public class RichFacesInplaceInputEditingState extends AbstractInplaceComponentEditingState {
 
     @Override
     public EditingState changeToValue(String value) {

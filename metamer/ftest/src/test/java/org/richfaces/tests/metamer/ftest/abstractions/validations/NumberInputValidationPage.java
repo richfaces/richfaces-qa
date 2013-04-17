@@ -77,7 +77,7 @@ public class NumberInputValidationPage extends InputValidationPage {
     private WebElement requiredOutput;
 
     @Override
-    protected void initCustomMessages() {
+    public void initCustomMessages() {
         messageCases.put(MESSAGE_CUSTOM_NAME,
                 new ValidationMessageCase(MESSAGE_CUSTOM_NAME, messageCustom,
                 setCustomCorrectButton, setCustomWrongButton,

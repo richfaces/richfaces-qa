@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.input.inputNumberSpinner;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -45,8 +45,9 @@ public class RichFacesInputNumberSpinner implements InputNumberSpinner {
     WebElement buttonIncrease;
     @FindBy(css = "span.rf-insp-btns > span.rf-insp-dec")
     WebElement buttonDecrease;
-    //
-    WebDriver driver = GrapheneContext.getProxy();
+
+    @Drone
+    WebDriver driver;
 
     @Override
     public void decrease() {

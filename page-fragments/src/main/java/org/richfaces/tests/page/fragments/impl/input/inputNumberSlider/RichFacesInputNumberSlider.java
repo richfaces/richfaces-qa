@@ -21,8 +21,8 @@
  */
 package org.richfaces.tests.page.fragments.impl.input.inputNumberSlider;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -54,8 +54,9 @@ public class RichFacesInputNumberSlider implements VisibleComponent, InputNumber
     WebElement max;
     @FindBy(className = "rf-insl-tt")
     WebElement tooltip;
-    //
-    WebDriver driver = GrapheneContext.getProxy();
+
+    @Drone
+    WebDriver driver;
 
     @Override
     public void decreaseWithArrows() {
