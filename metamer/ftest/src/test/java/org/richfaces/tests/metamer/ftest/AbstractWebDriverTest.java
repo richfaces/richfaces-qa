@@ -282,18 +282,12 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     protected void testAttributeLang(WebElement element) {
         final String TESTVALUE = "cz";
         String attLang;
-
-        // get attribute lang
-        String lang1 = element.getAttribute("xml:lang");
-        String lang2 = element.getAttribute("lang");
-        attLang = (lang1 == null || lang1.isEmpty() ? lang2 : lang1);
-        //lang should be empty/null
-        assertTrue("".equals(attLang) || "null".equals(attLang), "Attribute xml:lang should not be present.");
-
         // set lang to TESTVALUE
         basicAttributes.set(BasicAttributes.lang, TESTVALUE);
+        // get attribute lang of element
+        String lang1 = element.getAttribute("xml:lang");
+        String lang2 = element.getAttribute("lang");
 
-        //get attribute lang of element
         attLang = (lang1 == null || lang1.isEmpty() ? lang2 : lang1);
         assertEquals(attLang, TESTVALUE, "Attribute xml:lang should be present.");
     }
