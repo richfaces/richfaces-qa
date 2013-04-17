@@ -36,6 +36,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.bean.rich.RichNotifyBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.notify.NotifyMessagePosition;
 import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotifyMessage;
@@ -47,7 +48,7 @@ import org.testng.annotations.Test;
  */
 public class TestNotifyAttributes extends AbstractWebDriverTest {
 
-    @FindBy(className= "rf-ntf")
+    @FindBy(className = "rf-ntf")
     private RichFacesNotifyMessage message;
     @FindBy(id = "newSpan")
     private WebElement newSpan;
@@ -82,6 +83,14 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
         Assert.assertTrue(message.isVisible());
         Assert.assertEquals(message.getDetail(), RichNotifyBean.DEFAULT_DETAIL);
         Assert.assertEquals(message.getSummary(), RichNotifyBean.DEFAULT_SUMMARY);
+    }
+
+    @IssueTracking("https://issues.jboss.org/browse/RF-12925")
+    @Test(groups = "Future")
+    public void testNoDetailNoSummary() {
+        notifyAttributes.set(NotifyAttributes.detail, "");
+        notifyAttributes.set(NotifyAttributes.summary, "");
+        Assert.assertFalse(message.isVisible());
     }
 
     @Test

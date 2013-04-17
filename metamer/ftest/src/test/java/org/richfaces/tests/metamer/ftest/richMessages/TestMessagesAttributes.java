@@ -24,14 +24,10 @@ package org.richfaces.tests.metamer.ftest.richMessages;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
-import java.util.List;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.richfaces.tests.metamer.Template;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.page.fragments.impl.message.Message;
 import org.testng.annotations.Test;
 
 /**

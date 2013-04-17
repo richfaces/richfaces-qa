@@ -24,7 +24,9 @@ package org.richfaces.tests.metamer.ftest.richNotifyMessages;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
+
 import org.jboss.arquillian.graphene.Graphene;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 
 import org.testng.annotations.Test;
 
@@ -38,6 +40,7 @@ public class TestNotifyMessagesCSV extends AbstractNotifyMessagesTest {
         return buildUrl(contextPath, "faces/components/richNotifyMessages/csv.xhtml");
     }
 
+    @IssueTracking("https://issues.jboss.org/browse/RF-12922")//fix the waiting below
     @Test
     public void testSimple() {
         checkSimple(2);
@@ -45,7 +48,7 @@ public class TestNotifyMessagesCSV extends AbstractNotifyMessagesTest {
 
     @Override
     protected void waitingForValidationMessagesToShow() {
-        submitWithHBtn();//FIXME: jstefek 2013-4-16
+        submitWithHBtn();// "https://issues.jboss.org/browse/RF-12922"
         Graphene.waitGui().until(getPage().getMessagesComponentWithGlobal().isVisibleCondition());
         Graphene.waitGui().until(getPage().getMessagesComponentWithFor().isVisibleCondition());
     }
