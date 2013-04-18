@@ -21,76 +21,52 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.notify;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import com.google.common.base.Predicate;
+import java.util.concurrent.TimeUnit;
+import org.jboss.arquillian.graphene.Graphene;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.page.fragments.impl.notify.NotifyMessage;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.notify.page.NotifyAttributesPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
-public class TestNotifyAttributes extends AbstractNotifyTest {
+public class TestNotifyAttributes extends AbstractWebDriverTest {
 
-    /* **********************************************************
-     * Constants**********************************************************
-     */
 
-    // it takes approximately 1100 milisec to fully disappear notify message
-    private final int NOTIFY_DISAPPEAR_DELAY = 2000;
-    private final int TIMEOUT = 5000;
+    @Page
+    private NotifyAttributesPage page;
 
-    /* **********************************************************************************************************************
-     * Locators ******************************************************************
-     * ****************************************************
-     */
-
-    private JQueryLocator inputForStayTime = jq(".rf-insl-inp:eq(0)");
-    private JQueryLocator stickyCheckBox = jq("input[type=checkbox]:eq(0)");
-    private JQueryLocator nonBlockingCheckBox = jq("input[type=checkbox]:eq(1)");
-    private JQueryLocator showShadowCheckBox = jq("input[type=checkbox]:eq(2)");
-    private JQueryLocator showCloseButtonCheckBox = jq("input[type=checkbox]:eq(3)");
-    private JQueryLocator nonBlockingOpacityInput = jq(".rf-insl-inp:eq(1)");
-
-    private JQueryLocator showNotification = jq("input[type=submit]");
-
-    private JQueryLocator closeButton = jq(".rf-ntf-cls");
-
-    private JQueryLocator shadow = jq(".rf-ntf-shdw");
-
-    /* ***********************************************************************************************************************
-     * Tests *********************************************************************
-     * **************************************************
-     */
+    @ArquillianResource
+    private Actions actions;
 
     @Test
     public void testStayTime() {
-
         checkStayTime(3500);
-
         checkStayTime(500);
-
         checkStayTime(1500);
     }
 
     @Test
     public void testSticky() {
-
-        waitUntilNotifyDissappeares(TIMEOUT);
-
-        selenium.check(stickyCheckBox);
-
-        guardXhr(selenium).click(showNotification);
+        page.waitUntilThereIsNoNotify();
+        page.setSticky(true);
+        page.showNotification();
 
         boolean ok = false;
 
         try {
-            waitUntilNotifyDissappeares(TIMEOUT);
+            page.waitUntilThereIsNoNotify();
         } catch (RuntimeException ex) {
 
             ok = true;
@@ -98,109 +74,94 @@ public class TestNotifyAttributes extends AbstractNotifyTest {
 
         assertTrue(ok, "The message should not dissapear");
 
-        selenium.click(closeButton);
-
-        waitUntilNotifyDissappeares(TIMEOUT);
+        page.getNotify().getMessageAtIndex(0).close();
+        page.waitUntilThereIsNoNotify();
     }
 
     @Test
     public void testNonBlockingOpacity() {
-
         checkNonBlockingOpacity("0.5");
-
         checkNonBlockingOpacity("0");
-
-        checkNonBlockingOpacity("1");
+        checkNonBlockingOpacity("0.9");
     }
 
     @Test
     public void testShowShadow() {
+        page.waitUntilThereIsNoNotify();
+        page.setShowShadow(true);
+        page.showNotification();
 
-        waitUntilNotifyDissappeares(TIMEOUT);
+        assertTrue(isElementPresent(page.getNotify().getMessageAtIndex(0).getShadowElement()), "The shadow should be presented!");
 
-        selenium.check(showShadowCheckBox);
+        page.waitUntilThereIsNoNotify();
 
-        guardXhr(selenium).click(showNotification);
+        page.setShowShadow(false);
+        page.showNotification();
 
-        assertTrue(selenium.isElementPresent(shadow), "The shadow should be presented!");
-
-        waitUntilNotifyDissappeares(TIMEOUT);
-
-        selenium.uncheck(showShadowCheckBox);
-
-        guardXhr(selenium).click(showNotification);
-
-        assertFalse(selenium.isElementPresent(shadow), "The shadow should not be presented!");
+        assertFalse(isElementPresent(page.getNotify().getMessageAtIndex(0).getShadowElement()), "The shadow should not be presented!");
     }
 
     @Test
     public void testShowCloseButton() {
+        page.waitUntilThereIsNoNotify();
+        page.setShowCloseButtion(true);
+        page.showNotification();
 
-        waitUntilNotifyDissappeares(TIMEOUT);
+        NotifyMessage message = page.getNotify().getMessageAtIndex(0);
 
-        selenium.check(showCloseButtonCheckBox);
+        actions.moveToElement(message.getMessageSummaryElement()).build().perform();
+        assertTrue(message.getCloseIconElement().isDisplayed(), "The close button should be visible!");
+        page.waitUntilThereIsNoNotify();
 
-        guardXhr(selenium).click(showNotification);
+        page.setShowCloseButtion(false);
 
-        selenium.mouseOver(closeButton);
+        page.showNotification();
 
-        assertTrue(selenium.isVisible(closeButton), "The close button should be visible!");
+        message = page.getNotify().getMessageAtIndex(0);
 
-        waitUntilNotifyDissappeares(TIMEOUT);
-
-        selenium.uncheck(showCloseButtonCheckBox);
-
-        guardXhr(selenium).click(showNotification);
-
-        selenium.mouseOver(closeButton);
-
-        assertFalse(selenium.isVisible(closeButton), "The close button should not be visible!");
+        actions.moveToElement(message.getMessageSummaryElement());
+        assertFalse(message.getCloseIconElement().isDisplayed(), "The close button should not be visible!");
     }
 
     /* *****************************************************************************
      * Help methods ************************************************************** ***************
      */
 
-    private void checkNonBlockingOpacity(String opacity) {
+    private void checkNonBlockingOpacity(final String opacity) {
+        loadPage();
+        page.setNonBlocking(true);
+        page.setNonBlockingOpacity(opacity);
+        page.waitUntilThereIsNoNotify();
+        page.showNotification();
 
-        waitUntilNotifyDissappeares(TIMEOUT);
+        final NotifyMessage message = page.getNotify().getMessageAtIndex(0);
+        actions.moveToElement(message.getMessageSummaryElement()).build().perform();
 
-        selenium.check(nonBlockingCheckBox);
-        guardXhr(selenium).fireEvent(nonBlockingCheckBox, Event.CLICK);
-
-        selenium.type(nonBlockingOpacityInput, opacity);
-
-        guardXhr(selenium).click(showNotification);
-
-        waitUntilNotifyAppears(TIMEOUT);
-
-        selenium.mouseOver(notify);
-
-        waitForSomeTime(1000);
-
-        String style = selenium.getAttribute(notify.getAttribute(Attribute.STYLE));
-        String actualOpacity = style.split("opacity:")[1];
-
-        assertTrue(actualOpacity.trim().startsWith(opacity), "The notify should has opacity " + opacity);
+        Graphene.waitAjax()
+                .withMessage("The notify should has opacity " + opacity + ".")
+                .pollingEvery(50, TimeUnit.MILLISECONDS)
+                .until(new Predicate<WebDriver>() {
+                    @Override
+                    public boolean apply(WebDriver input) {
+                        double actualOpacity = Double.valueOf(message.getRoot().getCssValue("opacity"));
+                        boolean succcess = Math.abs(Double.valueOf(opacity) - actualOpacity) <= 0.2;
+                        if (!succcess) {
+                            actions.moveToElement(message.getMessageSummaryElement()).build().perform();
+                        }
+                        return succcess;
+                    }
+                });
     }
 
     private void checkStayTime(long stayTime) {
-
-        selenium.type(inputForStayTime, String.valueOf(stayTime));
-
-        waitUntilNotifyDissappeares(TIMEOUT);
-
-        guardXhr(selenium).click(showNotification);
-
-        waitUntilNotifyAppears(TIMEOUT);
-
+        page.setStayTime(stayTime);
+        page.waitUntilThereIsNoNotify();
+        page.showNotification();
         long timeWhenNotifyIsRendered = System.currentTimeMillis();
-
-        waitUntilNotifyDissappeares(TIMEOUT);
-
+        page.waitUntilThereIsNoNotify();
         long timeWhenNotifyDisappeared = System.currentTimeMillis();
-
         long delta = timeWhenNotifyDisappeared - timeWhenNotifyIsRendered;
+
 
         // the time should be measured when the notify started to disappear,
         // however
@@ -208,7 +169,7 @@ public class TestNotifyAttributes extends AbstractNotifyTest {
         // added delay
 
         long moreThan = stayTime;
-        long lessThan = stayTime + NOTIFY_DISAPPEAR_DELAY;
+        long lessThan = stayTime + NotifyAttributesPage.NOTIFY_DISAPPEAR_DELAY;
 
         assertTrue((delta > moreThan) && (delta < lessThan), "The notify message should stay on the screen more than: "
             + moreThan + " and less than: " + lessThan + " milisec, but was: " + delta + " milisec");

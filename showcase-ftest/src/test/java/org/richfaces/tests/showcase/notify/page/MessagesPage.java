@@ -19,37 +19,37 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.notify;
+package org.richfaces.tests.showcase.notify.page;
 
-import junit.framework.Assert;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.richfaces.tests.page.fragments.impl.notify.NotifyMessagePosition;
-import org.richfaces.tests.showcase.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.notify.page.StackingMessagesPage;
-import org.testng.annotations.Test;
+import com.google.common.base.Predicate;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.WebDriver;
+import org.richfaces.tests.page.fragments.impl.notify.Notify;
+import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotify;
+import org.richfaces.tests.showcase.message.page.AbstractMessagePage;
 
 /**
- * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
- * @version $Revision$
  */
-public class TestStackingMessages extends AbstractWebDriverTest {
+public class MessagesPage extends AbstractMessagePage {
 
-    @Page
-    private StackingMessagesPage page;
+    @FindBy(tagName="body")
+    private RichFacesNotify notify;
 
-    @Test
-    public void testRenderFirst() {
-        page.waitUntilThereIsNoNotify();
-        page.topLeft();
-        Assert.assertEquals(page.getNotify().getMessageAtIndex(0).getPosition(), NotifyMessagePosition.TOP_LEFT);
+    public Notify getNotify() {
+        return notify;
     }
 
-    @Test
-    public void testRenderSecond() {
-        page.waitUntilThereIsNoNotify();
-        page.bottomRight();
-        Assert.assertEquals(page.getNotify().getMessageAtIndex(0).getPosition(), NotifyMessagePosition.BOTTOM_RIGHT);
+    public void waitUntilThereIsNoNotify() {
+        Graphene.waitModel()
+                .until(new Predicate<WebDriver>() {
+
+                    @Override
+                    public boolean apply(WebDriver input) {
+                        return notify.size() == 0;
+                    }
+        });
     }
 
 }

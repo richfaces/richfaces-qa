@@ -24,6 +24,9 @@
             <package name="org.richfaces.tests.showcase.list" />
             <package name="org.richfaces.tests.showcase.log" />
             <package name="org.richfaces.tests.showcase.mediaOutput" />
+            <package name="org.richfaces.tests.showcase.message" />
+            <package name="org.richfaces.tests.showcase.messages" />
+            <package name="org.richfaces.tests.showcase.notify" />
             <package name="org.richfaces.tests.showcase.param" />
             <package name="org.richfaces.tests.showcase.placeholder" />
             <package name="org.richfaces.tests.showcase.region" />

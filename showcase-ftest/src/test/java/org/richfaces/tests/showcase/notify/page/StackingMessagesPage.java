@@ -1,3 +1,6 @@
+package org.richfaces.tests.showcase.notify.page;
+
+import com.google.common.base.Predicate;
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2013, Red Hat, Inc. and individual contributors
@@ -19,37 +22,43 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.notify;
-
-import junit.framework.Assert;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.richfaces.tests.page.fragments.impl.notify.NotifyMessagePosition;
-import org.richfaces.tests.showcase.AbstractWebDriverTest;
-import org.richfaces.tests.showcase.notify.page.StackingMessagesPage;
-import org.testng.annotations.Test;
+import java.util.concurrent.TimeUnit;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 /**
- * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
- * @version $Revision$
  */
-public class TestStackingMessages extends AbstractWebDriverTest {
+public class StackingMessagesPage extends NotifyPage {
 
-    @Page
-    private StackingMessagesPage page;
+    @FindBy(jquery="input[type=submit]:eq(0)")
+    private WebElement renderFirstButtonTopLeft;
+    @FindBy(jquery="input[type=submit]:eq(1)")
+    private WebElement renderSecondBottomRight;
 
-    @Test
-    public void testRenderFirst() {
-        page.waitUntilThereIsNoNotify();
-        page.topLeft();
-        Assert.assertEquals(page.getNotify().getMessageAtIndex(0).getPosition(), NotifyMessagePosition.TOP_LEFT);
+    public void bottomRight() {
+        Graphene.guardAjax(renderSecondBottomRight).click();
+        waitUntilThereIsNotify();
     }
 
-    @Test
-    public void testRenderSecond() {
-        page.waitUntilThereIsNoNotify();
-        page.bottomRight();
-        Assert.assertEquals(page.getNotify().getMessageAtIndex(0).getPosition(), NotifyMessagePosition.BOTTOM_RIGHT);
+    public void topLeft() {
+        Graphene.guardAjax(renderFirstButtonTopLeft).click();
+        waitUntilThereIsNotify();
+    }
+
+    @Override
+    public void waitUntilThereIsNoNotify() {
+        Graphene.waitModel()
+                .withTimeout(11, TimeUnit.SECONDS)
+                .until(new Predicate<WebDriver>() {
+
+                    @Override
+                    public boolean apply(WebDriver input) {
+                        return getNotify().size() == 0;
+                    }
+        });
     }
 
 }

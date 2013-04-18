@@ -19,52 +19,50 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.ftest.richMessages;
+package org.richfaces.tests.showcase.message.page;
 
-import org.richfaces.tests.showcase.ftest.webdriver.ftest.AbstractRichMessageTest;
-import org.richfaces.tests.showcase.ftest.webdriver.page.richMessages.MessagesPage;
-import org.testng.annotations.Test;
-
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.richfaces.tests.page.fragments.impl.message.Message;
+import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichMessagesSimple extends AbstractRichMessageTest<MessagesPage> {
+public class MessagePage extends AbstractMessagePage {
 
-    @Test(groups = {"RF-12146"})
-    @Override
-    public void testAddressWrongAndCorrect() {
-        super.testAddressWrongAndCorrect();
+    @FindBy(jquery="span[id$=name]")
+    private RichFacesMessage nameMessage;
+    @FindBy(jquery="span[id$=job]")
+    private RichFacesMessage jobMessage;
+    @FindBy(jquery="span[id$=address]")
+    private RichFacesMessage addressMessage;
+    @FindBy(jquery="span[id$=zip]")
+    private RichFacesMessage zipMessage;
+
+    public Message getMessageForName() {
+        return nameMessage;
     }
 
-    @Test(groups = {"RF-12146"})
-    @Override
-    public void testAllWrongAndCorrect() {
-        super.testAllWrongAndCorrect();
+    public Message getMessageForJob() {
+        return jobMessage;
     }
 
-    @Test(groups = {"RF-12146"})
-    @Override
-    public void testJobWrongAndCorrect() {
-        super.testJobWrongAndCorrect();
+    public Message getMessageForAddress() {
+        return addressMessage;
     }
 
-    @Test(groups = {"RF-12146"})
-    @Override
-    public void testNameWrongAndCorrect() {
-        super.testNameWrongAndCorrect();
+    public Message getMessageForZip() {
+        return zipMessage;
     }
 
-    @Test(groups = {"RF-12146"})
-    @Override
-    public void testZipWrongAndCorrect() {
-        super.testZipWrongAndCorrect();
+    public boolean areAllMessagesPresent() {
+        return nameMessage.isVisible() && jobMessage.isVisible() &&
+               addressMessage.isVisible() && zipMessage.isVisible();
     }
 
-    @Override
-    protected MessagesPage createPage() {
-        return new MessagesPage();
+    public boolean isAnyMessagePresent() {
+        return nameMessage.isVisible() || jobMessage.isVisible() ||
+               addressMessage.isVisible() || zipMessage.isVisible();
     }
-
 
 }

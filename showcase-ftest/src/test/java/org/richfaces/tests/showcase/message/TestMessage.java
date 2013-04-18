@@ -21,36 +21,84 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.message;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.page.fragments.impl.message.Message;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.message.page.MessagePage;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestMessage extends AbstractTestMessage {
+public class TestMessage extends AbstractWebDriverTest {
 
-    /* ********************************************************************************************************
-     * Tests ********************************************************************* ***********************************
-     */
+    @Page
+    private MessagePage page;
 
     @Test
     public void testCorrectValues() {
-        abstractTestCorrectValues();
+        page.fillCorrectValues();
+        page.validate();
+        Assert.assertFalse(page.isAnyMessagePresent(), "Unexpected message is present.");
     }
 
     @Test
     public void testLessThanMinimum() {
-        abstractTestLessThanMinimum();
+        page.fillShorterValues();
+        page.validate();
+        Assert.assertTrue(page.areAllMessagesPresent(), "All message should be present.");
+
+        assertMessageDetail("Name", page.getMessageForName(), MessagePage.NAME_ERROR_LESS_THAN_MINIMUM);
+        assertMessageDetail("Job", page.getMessageForJob(), MessagePage.JOB_ERROR_LESS_THAN_MINIMUM);
+        assertMessageDetail("Address", page.getMessageForAddress(), MessagePage.ADDRESS_ERROR_LESS_THAN_MINIMUM);
+        assertMessageDetail("Zip", page.getMessageForZip(), MessagePage.ZIP_ERROR_LESS_THAN_MINIMUM);
     }
 
     @Test
     public void testEmptyInputs() {
-        abstractTestEmptyInputs();
+        page.eraseAll();
+        page.validate();
+        Assert.assertTrue(page.areAllMessagesPresent(), "All message should be present.");
+
+        assertMessageDetail("Name", page.getMessageForName(), MessagePage.NAME_ERROR_VALUE_REQUIRED);
+        assertMessageDetail("Job", page.getMessageForJob(), MessagePage.JOB_ERROR__VALUE_REQUIRED);
+        assertMessageDetail("Address", page.getMessageForAddress(), MessagePage.ADDRESS_ERROR__VALUE_REQUIRED);
+        assertMessageDetail("Zip", page.getMessageForZip(), MessagePage.ZIP_ERROR__VALUE_REQUIRED);
+
     }
 
     @Test
     public void testGreaterThanMaximum() {
-        abstractTestGreaterThanMaximum();
+        page.fillCorrectValues();
+        page.fillLongerJob();
+        page.validate();
+
+        Assert.assertTrue(page.getMessageForJob().isVisible(), "The message for the Job input should be present.");
+        assertMessageDetail("Job", page.getMessageForJob(), MessagePage.JOB_ERROR_GREATER_THAN_MAXIMUM);
+
+        for (Message message: new Message[] {page.getMessageForAddress(), page.getMessageForName(), page.getMessageForZip()}) {
+            Assert.assertFalse(message.isVisible(), "Unexpected message is present.");
+        }
+
+        page.fillLongerZip();
+        page.validate();
+
+        Assert.assertTrue(page.getMessageForJob().isVisible(), "A message for the Job input should be present.");
+        assertMessageDetail("Job", page.getMessageForJob(), MessagePage.JOB_ERROR_GREATER_THAN_MAXIMUM);
+
+        Assert.assertTrue(page.getMessageForZip().isVisible(), "A message for the Zip input should be present.");
+        assertMessageDetail("Zip", page.getMessageForZip(), MessagePage.ZIP_ERROR_GREATER_THAN_MAXIMUM);
+
+        for (Message message: new Message[] {page.getMessageForAddress(), page.getMessageForName()}) {
+            Assert.assertFalse(message.isVisible(), "Unexpected message is present.");
+        }
+    }
+
+    protected void assertMessageDetail(String fieldName, Message message, String expected) {
+        Assert.assertTrue(message.getDetail().contains(expected),
+                "The message detail for '" + fieldName + "' should contain '" + expected + "', but it is '" + message.getDetail() + "'");
     }
 
 }
