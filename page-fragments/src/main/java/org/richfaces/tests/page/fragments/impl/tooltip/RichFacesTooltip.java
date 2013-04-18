@@ -54,17 +54,8 @@ public class RichFacesTooltip {
     }
 
     public void recall(WebElement target, int x, int y) {
-        if (root.isDisplayed()) {
-            // guard(selenium, getRequestType()).mouseMoveAt(target, new Point(x, y));
-            Action mouseMoveAt = new Actions(GrapheneContext.getProxy()).moveToElement(target, x, y).build();
-            getGuardTypeForMode(mouseMoveAt, mode).perform();
-        } else {
-            // guard(selenium, getRequestType()).mouseOverAt(target, new Point(x, y));
-            Action mouseMoveAt = new Actions(GrapheneContext.getProxy()).moveToElement(target, x, y).build();
-            getGuardTypeForMode(mouseMoveAt, mode).perform();
-        }
-        // since there showDelay would be in action, let caloing method wait for display if need ensure it
-        // Graphene.waitGui().until(Graphene.element(root).isVisible());
+        Action mouseMoveAt = new Actions(GrapheneContext.getProxy()).moveToElement(target, x, y).build();
+        getGuardTypeForMode(mouseMoveAt, mode).perform();
     }
 
     public void hide(WebElement target) {
