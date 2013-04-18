@@ -19,52 +19,22 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.showcase.ftest.webdriver.ftest.richMessage;
+package org.richfaces.tests.showcase.messages.page;
 
-import org.richfaces.tests.showcase.ftest.webdriver.ftest.AbstractRichMessageTest;
-import org.richfaces.tests.showcase.ftest.webdriver.page.richMessage.MessagePage;
-import org.testng.annotations.Test;
-
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.richfaces.tests.page.fragments.impl.messages.Messages;
+import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages;
+import org.richfaces.tests.showcase.message.page.AbstractMessagePage;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichMessageSimple extends AbstractRichMessageTest<MessagePage> {
+public class MessagesPage extends AbstractMessagePage{
 
-    @Test(groups = {"RF-12146"})
-    @Override
-    public void testAddressWrongAndCorrect() {
-        super.testAddressWrongAndCorrect();
+    @FindBy(className="rf-msgs")
+    private RichFacesMessages messages;
+
+    public Messages getMessages() {
+        return messages;
     }
-
-    @Test(groups = {"RF-12146"})
-    @Override
-    public void testAllWrongAndCorrect() {
-        super.testAllWrongAndCorrect();
-    }
-
-    @Test(groups = {"RF-12146"})
-    @Override
-    public void testJobWrongAndCorrect() {
-        super.testJobWrongAndCorrect();
-    }
-
-    @Test(groups = {"RF-12146"})
-    @Override
-    public void testNameWrongAndCorrect() {
-        super.testNameWrongAndCorrect();
-    }
-
-    @Test(groups = {"RF-12146"})
-    @Override
-    public void testZipWrongAndCorrect() {
-        super.testZipWrongAndCorrect();
-    }
-
-    @Override
-    protected MessagePage createPage() {
-        return new MessagePage();
-    }
-
-
 }

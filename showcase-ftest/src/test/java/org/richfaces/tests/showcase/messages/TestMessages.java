@@ -21,36 +21,79 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.messages;
 
-import org.richfaces.tests.showcase.message.AbstractTestMessage;
+import java.util.List;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.page.fragments.impl.message.Message;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.messages.page.MessagesPage;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class TestMessages extends AbstractTestMessage {
+public class TestMessages extends AbstractWebDriverTest {
 
-    /* ********************************************************************************************************
-     * Tests ********************************************************************* ***********************************
-     */
+    @Page
+    private MessagesPage page;
 
     @Test
     public void testCorrectValues() {
-        abstractTestCorrectValues();
+        page.fillCorrectValues();
+        page.validate();
+        Assert.assertTrue(page.getMessages().getAllMessagesOfType(Message.MessageType.ERROR).isEmpty(), "No message should be present.");
     }
 
     @Test
     public void testLessThanMinimum() {
-        abstractTestLessThanMinimum();
+        page.fillShorterValues();
+        page.validate();
+
+        Assert.assertEquals(page.getMessages().getAllMessagesOfType(Message.MessageType.ERROR).size(), 4, "4 messages should be present.");
+
+        assertErrorIsPresent("Name", MessagesPage.NAME_ERROR_LESS_THAN_MINIMUM);
+        assertErrorIsPresent("Job", MessagesPage.JOB_ERROR_LESS_THAN_MINIMUM);
+        assertErrorIsPresent("Zip", MessagesPage.ZIP_ERROR_LESS_THAN_MINIMUM);
+        assertErrorIsPresent("Address", MessagesPage.ADDRESS_ERROR_LESS_THAN_MINIMUM);
+
     }
 
     @Test
     public void testEmptyInputs() {
-        abstractTestEmptyInputs();
+        page.eraseAll();
+        page.validate();
+
+        Assert.assertEquals(page.getMessages().getAllMessagesOfType(Message.MessageType.ERROR).size(), 4, "4 messages should be present.");
+
+        assertErrorIsPresent("Name", MessagesPage.NAME_ERROR_VALUE_REQUIRED);
+        assertErrorIsPresent("Job", MessagesPage.JOB_ERROR__VALUE_REQUIRED);
+        assertErrorIsPresent("Zip", MessagesPage.ZIP_ERROR__VALUE_REQUIRED);
+        assertErrorIsPresent("Address", MessagesPage.ADDRESS_ERROR__VALUE_REQUIRED);
     }
 
     @Test
     public void testGreaterThanMaximum() {
-        abstractTestGreaterThanMaximum();
+        page.fillCorrectValues();
+        page.validate();
+
+        Assert.assertTrue(page.getMessages().getAllMessagesOfType(Message.MessageType.ERROR).isEmpty(), "No message should be present.");
+
+        page.fillLongerJob();
+        page.validate();
+        assertErrorIsPresent("Job", MessagesPage.JOB_ERROR_GREATER_THAN_MAXIMUM);
+
+        page.fillLongerZip();
+        page.validate();
+        assertErrorIsPresent("Zip", MessagesPage.ZIP_ERROR_GREATER_THAN_MAXIMUM);
     }
 
+    public void assertErrorIsPresent(String fieldName, String expected) {
+        List<Message> messages = page.getMessages().getAllMessagesOfType(Message.MessageType.ERROR);
+        for (Message message: messages) {
+            if (message.getSummary().contains(expected)) {
+                return;
+            }
+        }
+        Assert.fail("There is no message with summary '" + expected + "' for field " + fieldName + ".");
+    }
 }
