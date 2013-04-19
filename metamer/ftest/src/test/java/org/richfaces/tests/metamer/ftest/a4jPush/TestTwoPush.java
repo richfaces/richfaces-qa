@@ -28,13 +28,12 @@ import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
 
 public class TestTwoPush extends AbstractWebDriverTest {
@@ -55,10 +54,10 @@ public class TestTwoPush extends AbstractWebDriverTest {
     @Test
     public void testPushEnable() {
         // disable push updates
-        MetamerPage.waitRequest(page.pushEnabledChckBox, WaitRequestType.XHR).click();
-
+        page.pushEnabledChckBox.click();
+        Graphene.waitModel().until(Graphene.element(page.pushEnabledChckBox).not().isSelected());
         // enable push updates
-        MetamerPage.waitRequest(page.pushEnabledChckBox, WaitRequestType.XHR).click();
+        page.pushEnabledChckBox.click();
 
         verifyPushUpdateReceive(10L);
     }
@@ -72,8 +71,10 @@ public class TestTwoPush extends AbstractWebDriverTest {
         // there are 2 push components on page (this example verify that one doesn't influence another one)
         assertEquals(event, "onsubscribed onsubscribed", "Attribute onsubscribed doesn't work");
 
-        MetamerPage.waitRequest(page.pushEnabledChckBox, WaitRequestType.XHR).click();
-        MetamerPage.waitRequest(page.pushEnabledChckBox, WaitRequestType.XHR).click();
+        page.pushEnabledChckBox.click();
+        Graphene.waitModel().until(Graphene.element(page.pushEnabledChckBox).not().isSelected());
+        page.pushEnabledChckBox.click();
+        Graphene.waitModel().until(Graphene.element(page.pushEnabledChckBox).isSelected());
         // second onsubscribed event receive after manual re-attach by checkbox
         event = ((String) executeJS("return window.metamerEvents")).trim();
         // not there should be 3rd event invoked on re-attach to topic
