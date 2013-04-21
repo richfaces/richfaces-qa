@@ -21,16 +21,14 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richValidator;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
-import static org.jboss.arquillian.ajocado.Graphene.jq;
-import static org.jboss.arquillian.ajocado.Graphene.waitModel;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
@@ -39,11 +37,10 @@ import org.testng.annotations.Test;
  *
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class TestRF12031 extends AbstractGrapheneTest {
+public class TestRF12031 extends AbstractWebDriverTest {
 
-    private JQueryLocator toggleButton = jq("input[type=submit]");
-    private JQueryLocator input = jq("input[type=text]");
-    private JQueryLocator errorMessage = jq(".rf-msg-det");
+    @Page
+    ValidatorSimplePage page;
 
     @Override
     public URL getTestUrl() {
@@ -53,15 +50,14 @@ public class TestRF12031 extends AbstractGrapheneTest {
     @Test(groups = { "Future" })
     @IssueTracking({ "https://issues.jboss.org/browse/RF-12031", "https://issues.jboss.org/browse/RF-12536" })
     public void testCSVOnConditionallyRenderedInput() {
-        selenium.click(toggleButton);
-        waitModel.timeout(1000).until(elementPresent.locator(input));
 
-        selenium.type(input, "RichFaces 4");
-        selenium.fireEvent(input, Event.BLUR);
+        page.toggleButton.click();
+        Graphene.waitGui().until(Graphene.element(page.simpleInput).isPresent());
 
-        waitModel
-            .failWith(new Exception("Client side validation should be performed, but there are no error messages!"))
-            .timeout(1000).until(elementPresent.locator(errorMessage));
+        page.simpleInput.sendKeys("RichFaces 4");
+        fireEvent(page.simpleInput, Event.BLUR);
+
+        Graphene.waitModel().until(Graphene.element(page.simpleErrorMessage).isPresent());
     }
 
 }
