@@ -21,17 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richValidator;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
-import static org.jboss.arquillian.ajocado.Graphene.textEquals;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
@@ -46,11 +41,6 @@ import org.testng.annotations.Test;
  */
 public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
 
-    private JQueryLocator input = pjq("input[id$=:min]");
-    private JQueryLocator setCorrectValBtn = pjq("input[id$=setCorrectValuesButton]");
-    private JQueryLocator a4jSubmitBtn = pjq("input[id$=a4jButton]");
-    private JQueryLocator msg = pjq("span[id$=minMsg] span.rf-msg-err");
-
     /** component page locator */
     @Override
     public URL getTestUrl() {
@@ -60,13 +50,15 @@ public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
     @Test(groups = { "4.Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11576")
     public void testIntegerMin() {
-        selenium.click(setCorrectValBtn);
+        page.setCorrectBtn.click();
 
         // integer input min
-        selenium.type(input, "1");
-        guardNoRequest(selenium).click(a4jSubmitBtn);
+        page.inputMin.clear();
+        page.inputMin.sendKeys("1");
 
-        waitGui.until(textEquals.locator(msg).text(messages.get(ID.min)));
+        Graphene.guardNoRequest(page.a4jCommandBtn).click();
+
+        Graphene.waitGui().until(Graphene.element(page.msgMin).text().equalTo(messages.get(ID.min)));
     }
 
     /**
@@ -75,15 +67,16 @@ public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
      */
     @Test
     public void testValidateOnBlur() {
-        selenium.click(setCorrectValBtn);
+        page.setCorrectBtn.click();
 
         // integer input min
-        selenium.type(input, "1");
+        page.inputMin.clear();
+        page.inputMin.sendKeys("1");
 
         // no request (HTTP neither XHR) should be sent if validation fails
-        guardNoRequest(selenium).fireEvent(input, Event.BLUR);
+        fireEvent(Graphene.guardNoRequest(page.inputMin), Event.BLUR);
 
-        waitModel.until(textEquals.locator(msg).text(messages.get(ID.min)));
+        Graphene.waitGui().until(Graphene.element(page.msgMin).text().equalTo(messages.get(ID.min)));
     }
 
 }
