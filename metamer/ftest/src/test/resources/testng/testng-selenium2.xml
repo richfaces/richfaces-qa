@@ -57,6 +57,7 @@
             <package name="org.richfaces.tests.metamer.ftest.richTooltip" />
             <package name="org.richfaces.tests.metamer.ftest.richTreeSelectionChangeListener"/>
             <package name="org.richfaces.tests.metamer.ftest.richTreeToggleListener"/>
+            <package name="org.richfaces.tests.metamer.ftest.richValidator" />
         </packages>
 
         <classes>
