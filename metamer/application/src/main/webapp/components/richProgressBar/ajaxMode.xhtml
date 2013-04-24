@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-       xmlns:r="http://richfaces.org/rich">
+      xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -37,54 +37,57 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
+            <r:commandButton id="stopPolling" value="Stop polling" action="#{richProgressBarBean.switchPolling}"/>
+            <br/>
+            <br/>
             <r:progressBar id="progressBar"
-                              data="#{richProgressBarBean.attributes['data'].value}"
-                              enabled="#{richProgressBarBean.attributes['enabled'].value}"
-                              finishClass="#{richProgressBarBean.attributes['finishClass'].value}"
-                              initialClass="#{richProgressBarBean.attributes['initialClass'].value}"
-                              interval="#{richProgressBarBean.attributes['interval'].value}"
-                              label="#{richProgressBarBean.attributes['label'].value}"
-                              maxValue="#{richProgressBarBean.attributes['maxValue'].value}"
-                              minValue="#{richProgressBarBean.attributes['minValue'].value}"
-                              mode="ajax"
-                              onbeforedomupdate="#{richProgressBarBean.attributes['onbeforedomupdate'].value}"
-                              onbegin="#{richProgressBarBean.attributes['onbegin'].value}"
-                              onclick="#{richProgressBarBean.attributes['onclick'].value}"
-                              oncomplete="#{richProgressBarBean.attributes['oncomplete'].value}"
-                              ondblclick="#{richProgressBarBean.attributes['ondblclick'].value}"
-                              onfinish="#{richProgressBarBean.attributes['onfinish'].value}"
-                              onmousedown="#{richProgressBarBean.attributes['onmousedown'].value}"
-                              onmousemove="#{richProgressBarBean.attributes['onmousemove'].value}"
-                              onmouseout="#{richProgressBarBean.attributes['onmouseout'].value}"
-                              onmouseover="#{richProgressBarBean.attributes['onmouseover'].value}"
-                              onmouseup="#{richProgressBarBean.attributes['onmouseup'].value}"
-                              progressClass="#{richProgressBarBean.attributes['progressClass'].value}"
-                              remainingClass="#{richProgressBarBean.attributes['remainingClass'].value}"
-                              rendered="#{richProgressBarBean.attributes['rendered'].value}"
-                              style="#{richProgressBarBean.attributes['style'].value}"
-                              styleClass="#{richProgressBarBean.attributes['styleClass'].value}"
-                              value="#{richProgressBarBean.currentValue}"
-                              >
+                           data="#{richProgressBarBean.attributes['data'].value}"
+                           enabled="#{richProgressBarBean.attributes['enabled'].value}"
+                           finishClass="#{richProgressBarBean.attributes['finishClass'].value}"
+                           initialClass="#{richProgressBarBean.attributes['initialClass'].value}"
+                           interval="#{richProgressBarBean.attributes['interval'].value}"
+                           label="#{richProgressBarBean.attributes['label'].value}"
+                           maxValue="#{richProgressBarBean.attributes['maxValue'].value}"
+                           minValue="#{richProgressBarBean.attributes['minValue'].value}"
+                           mode="ajax"
+                           onbeforedomupdate="#{richProgressBarBean.attributes['onbeforedomupdate'].value}"
+                           onbegin="#{richProgressBarBean.attributes['onbegin'].value}"
+                           onclick="#{richProgressBarBean.attributes['onclick'].value}"
+                           oncomplete="#{richProgressBarBean.attributes['oncomplete'].value}"
+                           ondblclick="#{richProgressBarBean.attributes['ondblclick'].value}"
+                           onfinish="#{richProgressBarBean.attributes['onfinish'].value}"
+                           onmousedown="#{richProgressBarBean.attributes['onmousedown'].value}"
+                           onmousemove="#{richProgressBarBean.attributes['onmousemove'].value}"
+                           onmouseout="#{richProgressBarBean.attributes['onmouseout'].value}"
+                           onmouseover="#{richProgressBarBean.attributes['onmouseover'].value}"
+                           onmouseup="#{richProgressBarBean.attributes['onmouseup'].value}"
+                           progressClass="#{richProgressBarBean.attributes['progressClass'].value}"
+                           remainingClass="#{richProgressBarBean.attributes['remainingClass'].value}"
+                           rendered="#{richProgressBarBean.attributes['rendered'].value}"
+                           style="#{richProgressBarBean.attributes['style'].value}"
+                           styleClass="#{richProgressBarBean.attributes['styleClass'].value}"
+                           value="#{richProgressBarBean.currentValue}"
+                           >
 
                 <f:facet name="initial">
                     <h:outputText id="initialOutput" value="Process hasn't started yet" />
                     <br/>
                     <r:commandButton id="startButton"
-                                       action="#{richProgressBarBean.startProcess}"
-                                       value="Start Process" execute="@form"
-                                       render="progressBar"
-                                       rendered="#{richProgressBarBean.buttonRendered}"
-                                       style="margin: 9px 0px 5px;" />
+                                     action="#{richProgressBarBean.startProcess}"
+                                     value="Start Process" execute="@form"
+                                     render="progressBar"
+                                     rendered="#{richProgressBarBean.buttonRendered}"
+                                     style="margin: 9px 0px 5px;" />
                 </f:facet>
                 <f:facet name="finish">
                     <h:outputText id="completeOutput" value="Process Done" />
                     <br/>
                     <r:commandButton id="restartButton"
-                                       action="#{richProgressBarBean.startProcess}"
-                                       value="Restart Process" execute="@form"
-                                       render="progressBar"
-                                       rendered="#{richProgressBarBean.buttonRendered}"
-                                       style="margin: 9px 0px 5px;" />
+                                     action="#{richProgressBarBean.startProcess}"
+                                     value="Restart Process" execute="@form"
+                                     render="progressBar"
+                                     rendered="#{richProgressBarBean.buttonRendered}"
+                                     style="margin: 9px 0px 5px;" />
                 </f:facet>
                 <h:outputText value="#{richProgressBarBean.currentValue} %"/>
             </r:progressBar>

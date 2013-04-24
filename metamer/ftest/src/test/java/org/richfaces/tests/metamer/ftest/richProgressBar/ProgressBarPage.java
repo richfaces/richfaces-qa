@@ -65,5 +65,6 @@ public class ProgressBarPage extends MetamerPage {
     WebElement restartButton;
     @FindBy(css = "input[id$=pauseButton]")
     WebElement pauseButton;
-
+    @FindBy(css = "input[id$='stopPolling']")
+    WebElement stopPollingButton;
 }

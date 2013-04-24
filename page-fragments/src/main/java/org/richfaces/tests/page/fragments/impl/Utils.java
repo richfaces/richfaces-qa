@@ -51,6 +51,14 @@ public final class Utils {
     }
 
     /**
+     * Returns text from given hidden element. WebDriver, in this case, returns empty String.
+     * @param element not visible element
+     */
+    public static String getTextFromHiddenElement(WebElement element) {
+        return returningJQ("text()", element);
+    }
+
+    /**
      * Executes jQuery command on input element. E.g. to trigger click use jQ("click()", element).
      * @param cmd command to be executed
      * @param element element on which the command will be executed
