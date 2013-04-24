@@ -73,9 +73,9 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
         assertTrue(filesToUpload.size() == 1, "File not loaded");
         assertTrue(filesToUpload.get(0).getText().equals(filenames[0]), "Label with filename does not appear.");
-        Graphene.waitModel().withMessage("Clear button does not appear.").until(Graphene.element(page.itemClear).isPresent());
-        Graphene.waitModel().withMessage("Upload button should be on the page.").until(Graphene.element(page.uploadButton).isPresent());
-        Graphene.waitModel().withMessage("Clear all button should be on the page.").until(Graphene.element(page.clearAllButton).isPresent());
+        Graphene.waitModel().withMessage("Clear button does not appear.").until().element(page.itemClear).is().present();
+        Graphene.waitModel().withMessage("Upload button should be on the page.").until().element(page.uploadButton).is().present();
+        Graphene.waitModel().withMessage("Clear all button should be on the page.").until().element(page.clearAllButton).is().present();
 
         MetamerPage.waitRequest(page.uploadButton, WaitRequestType.XHR).click();
 
@@ -216,7 +216,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
 
         sendFileToInputWithWaiting(filenames[0], true);
 
-        Graphene.waitGui().until(Graphene.element(page.addButton).not().isVisible());
+        Graphene.waitGui().until().element(page.addButton).is().not().visible();
 
         List<WebElement> filesToUpload = guardListSize(page.itemsToUpload, 1);
         assertTrue(filesToUpload.size() == maxFilesQuantity, "Files to upload list contains less/more files than there should be. List: " + filesToUpload + " .");
@@ -261,7 +261,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
             @Override
             public void perform() {
                 sendFileToInputWithWaiting(acceptableFile, true);
-                Graphene.waitGui().until(Graphene.element(page.clearAllButton).isVisible());
+                Graphene.waitGui().until().element(page.clearAllButton).is().visible();
                 page.clearAllButton.click();
             }
         });

@@ -71,7 +71,7 @@ public abstract class AbstractFileUploadTest extends AbstractWebDriverTest {
         assertTrue(file.exists(), "File does not exist.");
 
         //send file to input field
-        Graphene.waitGui().until(Graphene.element(page.fileInputField).isPresent());
+        Graphene.waitGui().until().element(page.fileInputField).is().present();
         page.fileInputField.sendKeys(file.getAbsolutePath());
         if (willBeAccepted) {
             this.filesToUploadCount++;
@@ -93,7 +93,7 @@ public abstract class AbstractFileUploadTest extends AbstractWebDriverTest {
             MetamerPage.waitRequest(page.uploadButton, WaitRequestType.XHR).click();
         } else {
             //Metamer's request time will not change, but XHR request will be send
-            Graphene.guardXhr(page.uploadButton).click();
+            Graphene.guardAjax(page.uploadButton).click();
         }
         if (willBeUploaded) {
             this.filesUploadedCount++;
@@ -113,7 +113,7 @@ public abstract class AbstractFileUploadTest extends AbstractWebDriverTest {
             By by;
             for (int i = 1; i <= expectedNumberOfFiles; i++) {
                 by = By.xpath("//span[contains(@id, 'uploadedFilesPanel')]//ul //li[" + i + "]");
-                Graphene.waitGui().until(Graphene.element(by).isVisible());
+                Graphene.waitGui().until().element(by).is().visible();
             }
         }
     }
@@ -130,7 +130,7 @@ public abstract class AbstractFileUploadTest extends AbstractWebDriverTest {
             By by;
             for (int i = 1; i <= expectedNumberOfFiles; i++) {
                 by = By.xpath("//div[@class='rf-fu-itm'][" + i + "]");
-                Graphene.waitAjax().until(Graphene.element(by).isVisible());
+                Graphene.waitAjax().until().element(by).is().visible();
             }
         }
     }
