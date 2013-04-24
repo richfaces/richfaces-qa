@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:r="http://richfaces.org/rich"
-       xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -39,96 +39,18 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="component">
             <div style="padding: 250px">
                 <r:calendar id="calendar"
-                               boundaryDatesMode="#{richCalendarBean.attributes['boundaryDatesMode'].value}"
-                               buttonClass="#{richCalendarBean.attributes['buttonClass'].value}"
-                               buttonDisabledIcon="#{richCalendarBean.attributes['buttonDisabledIcon'].value}"
-                               buttonIcon="#{richCalendarBean.attributes['buttonIcon'].value}"
-                               buttonLabel="#{richCalendarBean.attributes['buttonLabel'].value}"
-                               converterMessage="#{richCalendarBean.attributes['converterMessage'].value}"
-                               currentDate="#{richCalendarBean.currentDate}"
-                               datePattern="#{richCalendarBean.attributes['datePattern'].value}"
-                               dayClassFunction="#{richCalendarBean.attributes['dayClassFunction'].value}"
-                               dayDisableFunction="#{richCalendarBean.attributes['dayDisableFunction'].value}"
-                               defaultLabel="#{richCalendarBean.attributes['defaultLabel'].value}"
-                               defaultTime="#{richCalendarBean.attributes['defaultTime'].value}"
-                               direction="#{richCalendarBean.attributes['direction'].value}"
-                               disabled="#{richCalendarBean.attributes['disabled'].value}"
-                               enableManualInput="#{richCalendarBean.attributes['enableManualInput'].value}"
-                               firstWeekDay="#{richCalendarBean.attributes['firstWeekDay'].value}"
-                               horizontalOffset="#{richCalendarBean.attributes['horizontalOffset'].value}"
-                               immediate="#{richCalendarBean.attributes['immediate'].value}"
-                               inputClass="#{richCalendarBean.attributes['inputClass'].value}"
-                               inputSize="#{richCalendarBean.attributes['inputSize'].value}"
-                               inputStyle="#{richCalendarBean.attributes['inputStyle'].value}"
-                               jointPoint="#{richCalendarBean.attributes['jointPoint'].value}"
-                               locale="#{richCalendarBean.attributes['locale'].value}"
-                               minDaysInFirstWeek="#{richCalendarBean.attributes['minDaysInFirstWeek'].value}"
-                               mode="#{richCalendarBean.attributes['mode'].value}"
-                               monthLabels="#{richCalendarBean.attributes['monthLabels'].value}"
-                               monthLabelsShort="#{richCalendarBean.attributes['monthLabelsShort'].value}"
-                               onbeforecurrentdateselect="#{richCalendarBean.attributes['onbeforecurrentdateselect'].value}"
-                               onbeforedateselect="#{richCalendarBean.attributes['onbeforedateselect'].value}"
-                               onbeforetimeselect="#{richCalendarBean.attributes['onbeforetimeselect'].value}"
-                               onchange="#{richCalendarBean.attributes['onchange'].value}"
-                               onclean="#{richCalendarBean.attributes['onclean'].value}"
-                               oncomplete="#{richCalendarBean.attributes['oncomplete'].value}"
-                               oncurrentdateselect="#{richCalendarBean.attributes['oncurrentdateselect'].value}"
-                               ondatemouseout="#{richCalendarBean.attributes['ondatemouseout'].value}"
-                               ondatemouseover="#{richCalendarBean.attributes['ondatemouseover'].value}"
-                               ondateselect="#{richCalendarBean.attributes['ondateselect'].value}"
-                               onhide="#{richCalendarBean.attributes['onhide'].value}"
-                               oninputblur="#{richCalendarBean.attributes['oninputblur'].value}"
-                               oninputchange="#{richCalendarBean.attributes['oninputchange'].value}"
-                               oninputclick="#{richCalendarBean.attributes['oninputclick'].value}"
-                               oninputdblclick="#{richCalendarBean.attributes['oninputdblclick'].value}"
-                               oninputfocus="#{richCalendarBean.attributes['oninputfocus'].value}"
-                               oninputkeydown="#{richCalendarBean.attributes['oninputkeydown'].value}"
-                               oninputkeypress="#{richCalendarBean.attributes['oninputkeypress'].value}"
-                               oninputkeyup="#{richCalendarBean.attributes['oninputkeyup'].value}"
-                               oninputmousedown="#{richCalendarBean.attributes['oninputmousedown'].value}"
-                               oninputmousemove="#{richCalendarBean.attributes['oninputmousemove'].value}"
-                               oninputmouseout="#{richCalendarBean.attributes['oninputmouseout'].value}"
-                               oninputmouseover="#{richCalendarBean.attributes['oninputmouseover'].value}"
-                               oninputmouseup="#{richCalendarBean.attributes['oninputmouseup'].value}"
-                               oninputselect="#{richCalendarBean.attributes['oninputselect'].value}"
-                               onshow="#{richCalendarBean.attributes['onshow'].value}"
-                               ontimeselect="#{richCalendarBean.attributes['ontimeselect'].value}"
-                               popup="#{richCalendarBean.attributes['popup'].value}"
-                               popupClass="#{richCalendarBean.attributes['popupClass'].value}"
-                               popupStyle="#{richCalendarBean.attributes['popupStyle'].value}"
-                               preloadDateRangeBegin="#{richCalendarBean.attributes['preloadDateRangeBegin'].value}"
-                               preloadDateRangeEnd="#{richCalendarBean.attributes['preloadDateRangeEnd'].value}"
-                               readonly="#{richCalendarBean.attributes['readonly'].value}"
-                               rendered="#{richCalendarBean.attributes['rendered'].value}"
-                               required="#{richCalendarBean.attributes['required'].value}"
-                               requiredMessage="#{richCalendarBean.attributes['requiredMessage'].value}"
-                               resetTimeOnDateSelect="#{richCalendarBean.attributes['resetTimeOnDateSelect'].value}"
-                               showApplyButton="#{richCalendarBean.attributes['showApplyButton'].value}"
-                               showFooter="#{richCalendarBean.attributes['showFooter'].value}"
-                               showHeader="#{richCalendarBean.attributes['showHeader'].value}"
-                               showInput="#{richCalendarBean.attributes['showInput'].value}"
-                               showWeekDaysBar="#{richCalendarBean.attributes['showWeekDaysBar'].value}"
-                               showWeeksBar="#{richCalendarBean.attributes['showWeeksBar'].value}"
-                               style="#{richCalendarBean.attributes['style'].value}"
-                               styleClass="#{richCalendarBean.attributes['styleClass'].value}"
-                               tabindex="#{richCalendarBean.attributes['tabindex'].value}"
-                               timeZone="#{richCalendarBean.timeZone}"
-                               todayControlMode="#{richCalendarBean.attributes['todayControlMode'].value}"
-                               validator="#{richCalendarBean.validateDate}"
-                               validatorMessage="#{richCalendarBean.attributes['validatorMessage'].value}"
-                               value="#{richCalendarBean.value}"
-                               valueChangeListener="#{richCalendarBean.valueChangeListener}"
-                               verticalOffset="#{richCalendarBean.attributes['verticalOffset'].value}"
-                               weekDayLabels="#{richCalendarBean.attributes['weekDayLabels'].value}"
-                               weekDayLabelsShort="#{richCalendarBean.attributes['weekDayLabelsShort'].value}"
-                               zindex="#{richCalendarBean.attributes['zindex'].value}">
+                            currentDate="#{richCalendarBean.currentDate}"
+                            enableManualInput="false"
+                            datePattern="#{richCalendarBean.attributes['datePattern'].value}"
+                            popup="#{richCalendarBean.attributes['popup'].value}"
+                            rendered="#{richCalendarBean.attributes['rendered'].value}"
+                            required="false"
+                            timeZone="#{richCalendarBean.timeZone}"
+                            value="#{richCalendarBean.value}">
                     <r:ajax event="change" render="outputPanel, phasesPanel" />
                 </r:calendar>
                 <r:message id="msg" for="calendar"/>
             </div>
-            <br/><br/>
-            <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;"/>
-            <r:commandButton id="a4jButton" value="r:commandButton"/>
             <br/><br/>
 
             <r:outputPanel id="outputPanel" ajaxRendered="true">
@@ -139,18 +61,18 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </h:outputText>
                 <br/>
                 <br/>
-                Current date:  
-                <h:inputText id="currentDateInput" value="#{richCalendarBean.currentDate}">
+                Current date:
+                <h:inputText id="currentDateInput" value="#{richCalendarBean.currentDate}" onchange="submit();">
                     <f:convertDateTime pattern="#{richCalendarBean.attributes['datePattern'].value}"
                                        timeZone="#{richCalendarBean.timeZone}"/>
                 </h:inputText>
                 <br/>
                 <br/>
                 Date pattern:
-                <h:inputText id="datePatternInput" value="#{richCalendarBean.attributes['datePattern'].value}"/>
+                <h:inputText id="datePatternInput" onchange="submit();" value="#{richCalendarBean.attributes['datePattern'].value}"/>
             </r:outputPanel>
         </ui:define>
-        
+
         <ui:define name="outOfTemplateAfter">
             <ui:include src="resizedTemplatesStyles.xhtml"/>
         </ui:define>
