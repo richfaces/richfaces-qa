@@ -227,11 +227,13 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * attribute
      * @param testedAttribute attribute which will be tested
      * @param value tested value of attribute
-     * @param actionAfterSettingOfAttribute action which will be performed after setting the attribute(e.g. open popup)
+     * @param actionAfterSettingOfAttribute action which will be performed after setting the attribute(e.g. open popup), if it is null then it is skipped
      */
     protected <T extends AttributeEnum> void testHTMLAttribute(FutureTarget<WebElement> element, Attributes<T> attributes, T testedAttribute, String value, Action actionAfterSettingOfAttribute) {
         attributes.set(testedAttribute, value);
-        actionAfterSettingOfAttribute.perform();
+        if (actionAfterSettingOfAttribute != null) {
+            actionAfterSettingOfAttribute.perform();
+        }
         String attString = Attribute2StringDecoder.decodeAttribute(testedAttribute);
         String valueOnPage = element.getTarget().getAttribute(attString);
         if (new StringEqualsWrapper(value).equalsToSomeOfThis(null, "", "null")) {

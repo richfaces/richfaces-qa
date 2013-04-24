@@ -26,6 +26,7 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.richfaces.tests.metamer.Attribute;
 
 import org.richfaces.component.UIProgressBar;
 import org.richfaces.tests.metamer.Attributes;
@@ -62,14 +63,21 @@ public class RichProgressBarBean implements Serializable {
 
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIProgressBar.class, getClass());
 
+        attributes.setAttribute("enabled", Boolean.FALSE);//The true is set after start button is clicked
         attributes.setAttribute("maxValue", 20);
         attributes.setAttribute("minValue", 0);
-        attributes.setAttribute("interval", 500);
+        attributes.setAttribute("interval", 1500);
         attributes.setAttribute("rendered", true);
         attributes.setAttribute("value", -1);
 
         // attributes tested in another way
         attributes.remove("mode");
+    }
+
+    public void switchPolling() {
+        Attribute enabled = attributes.get("enabled");
+        Boolean b = (Boolean) enabled.getValue();
+        enabled.setValue(!b.booleanValue());
     }
 
     public Attributes getAttributes() {
