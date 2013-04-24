@@ -29,6 +29,7 @@ import java.util.Locale;
 import org.jboss.arquillian.graphene.Graphene;
 
 import org.openqa.selenium.Point;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -114,9 +115,16 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
         }
     }
 
-    private void generateMessage(int numberOfMessages) {
+    private void generateMessagesWithWait(int numberOfMessages) {
         for (int i = 0; i < numberOfMessages; i++) {
+            final int expectedNumberOfMessages = i + 1;
             MetamerPage.waitRequest(generateMessageButton, WaitRequestType.XHR).click();
+            Graphene.waitModel().until(new ExpectedCondition<Boolean>() {
+                @Override
+                public Boolean apply(WebDriver from) {
+                    return notify.size() == expectedNumberOfMessages;
+                }
+            });
         }
     }
 
@@ -143,7 +151,7 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
         notifyStackAttributes.set(NotifyStackAttributes.direction, direction.name().toLowerCase(Locale.ENGLISH));
         notifyStackAttributes.set(NotifyStackAttributes.method, method.name().toLowerCase(Locale.ENGLISH));
         notifyStackAttributes.set(NotifyStackAttributes.position, "topRight");
-        generateMessage(3);
+        generateMessagesWithWait(3);
         NotifyMessage firstMessage = getMessageWithNumber(1);
         NotifyMessage secondMessage = getMessageWithNumber(2);
         NotifyMessage thirdMessage = getMessageWithNumber(3);
@@ -165,7 +173,7 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
     @Use(field = "position", enumeration = true)
     public void testPosition() {
         notifyStackAttributes.set(NotifyStackAttributes.position, position.value);
-        generateMessage(3);
+        generateMessagesWithWait(3);
         NotifyMessage firstMessage = getMessageWithNumber(1);
         NotifyMessage secondMessage = getMessageWithNumber(2);
         NotifyMessage thirdMessage = getMessageWithNumber(3);
@@ -177,18 +185,22 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
     @Test
     public void testRendered() {
         notifyStackAttributes.set(NotifyStackAttributes.rendered, Boolean.TRUE);
-        generateMessage(1);
+        generateMessagesWithWait(1);
         assertVisible(getMessageWithNumber(1).getRoot(), "Message should be visible");
 
         notifyStackAttributes.set(NotifyStackAttributes.rendered, Boolean.FALSE);
-        generateMessage(1);
-        Assert.assertNull(getMessageWithNumber(1), "There should be no message.");
-        Assert.assertEquals(notify.size(), 0, "There should be no message.");
+        try {
+            generateMessagesWithWait(1);
+        } catch (TimeoutException e) {
+            Assert.assertEquals(notify.size(), 0, "There should be no message.");
+            return; //OK
+        }
+        Assert.fail("There should be no message when @rendered=false");
     }
 
     @Test
     public void testRerenderStack() {
-        generateMessage(3);
+        generateMessagesWithWait(3);
         Assert.assertEquals(notify.size(), 3, "There should be 3 messages.");
         MetamerPage.waitRequest(rerenderStackButton, WaitRequestType.XHR).click();
         Graphene.waitAjax().until(new ExpectedCondition<Boolean>() {
