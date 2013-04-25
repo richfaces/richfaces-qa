@@ -88,6 +88,7 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest {
         @Override
         public void doRequest(String inputValue) {
             MetamerPage.waitRequest(autocomplete, WaitRequestType.XHR).type(inputValue);
+            autocomplete.finish();
         }
 
         @Override
