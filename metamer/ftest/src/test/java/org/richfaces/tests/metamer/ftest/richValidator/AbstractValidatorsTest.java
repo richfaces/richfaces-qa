@@ -211,26 +211,26 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
         page.a4jCommandBtn.click();
 
-        Graphene.waitGui().until(Graphene.element(page.msgAssertTrue).text().equalTo(messages.get(ID.assertTrue)));
-        Graphene.waitGui().until(Graphene.element(page.msgAssertFalse).text().equalTo(messages.get(ID.assertFalse)));
-        Graphene.waitGui().until(Graphene.element(page.msgDecimalMinMax).text().equalTo(messages.get(ID.decimalMinMax)));
-        Graphene.waitGui().until(Graphene.element(page.msgDigits).text().equalTo(messages.get(ID.digits)));
-        Graphene.waitGui().until(Graphene.element(page.msgMax).text().equalTo(messages.get(ID.max)));
-        Graphene.waitGui().until(Graphene.element(page.msgMin).text().equalTo(messages.get(ID.min)));
-        Graphene.waitGui().until(Graphene.element(page.msgMinMax).text().equalTo(messages.get(ID.minMax)));
-        Graphene.waitGui().until(Graphene.element(page.msgNotEmpty).text().equalTo(messages.get(ID.notEmpty)));
-        Graphene.waitGui().until(Graphene.element(page.msgNotNull).text().equalTo(messages.get(ID.notNull)));
-        Graphene.waitGui().until(Graphene.element(page.msgPattern).text().equalTo(messages.get(ID.pattern)));
-        Graphene.waitGui().until(Graphene.element(page.msgCustom).text().equalTo(messages.get(ID.custom)));
+        Graphene.waitGui().until().element(page.msgAssertTrue).text().equalTo(messages.get(ID.assertTrue));
+        Graphene.waitGui().until().element(page.msgAssertFalse).text().equalTo(messages.get(ID.assertFalse));
+        Graphene.waitGui().until().element(page.msgDecimalMinMax).text().equalTo(messages.get(ID.decimalMinMax));
+        Graphene.waitGui().until().element(page.msgDigits).text().equalTo(messages.get(ID.digits));
+        Graphene.waitGui().until().element(page.msgMax).text().equalTo(messages.get(ID.max));
+        Graphene.waitGui().until().element(page.msgMin).text().equalTo(messages.get(ID.min));
+        Graphene.waitGui().until().element(page.msgMinMax).text().equalTo(messages.get(ID.minMax));
+        Graphene.waitGui().until().element(page.msgNotEmpty).text().equalTo(messages.get(ID.notEmpty));
+        Graphene.waitGui().until().element(page.msgNotNull).text().equalTo(messages.get(ID.notNull));
+        Graphene.waitGui().until().element(page.msgPattern).text().equalTo(messages.get(ID.pattern));
+        Graphene.waitGui().until().element(page.msgCustom).text().equalTo(messages.get(ID.custom));
 
         if (Graphene.element(page.inputRegexp).isPresent().apply(driver)) {
             // regExp validator isn't present in JSR303 validation
-            Graphene.waitGui().until(Graphene.element(page.msgRegexp).text().equalTo(messages.get(ID.regexp)));
+            Graphene.waitGui().until().element(page.msgRegexp).text().equalTo(messages.get(ID.regexp));
         }
-        Graphene.waitGui().until(Graphene.element(page.msgPast).text().equalTo(messages.get(ID.past)));
-        Graphene.waitGui().until(Graphene.element(page.msgFuture).text().equalTo(messages.get(ID.future)));
-        Graphene.waitGui().until(Graphene.element(page.msgStringSize).text().equalTo(messages.get(ID.stringSize)));
-        Graphene.waitGui().until(Graphene.element(page.msgSize).text().equalTo(messages.get(ID.size)));
+        Graphene.waitGui().until().element(page.msgPast).text().equalTo(messages.get(ID.past));
+        Graphene.waitGui().until().element(page.msgFuture).text().equalTo(messages.get(ID.future));
+        Graphene.waitGui().until().element(page.msgStringSize).text().equalTo(messages.get(ID.stringSize));
+        Graphene.waitGui().until().element(page.msgSize).text().equalTo(messages.get(ID.size));
     }
 
     public void verifyAllWrongWithJSFSubmit() {
@@ -238,26 +238,26 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
         page.hCommandBtn.click();
 
-        Graphene.waitGui().until(Graphene.element(page.msgAssertTrue).text().equalTo(messages.get(ID.assertTrue)));
-        Graphene.waitGui().until(Graphene.element(page.msgAssertFalse).text().equalTo(messages.get(ID.assertFalse)));
-        Graphene.waitGui().until(Graphene.element(page.msgDecimalMinMax).text().equalTo(messages.get(ID.decimalMinMax)));
-        Graphene.waitGui().until(Graphene.element(page.msgDigits).text().equalTo(messages.get(ID.digits)));
-        Graphene.waitGui().until(Graphene.element(page.msgMax).text().equalTo(messages.get(ID.max)));
-        Graphene.waitGui().until(Graphene.element(page.msgMin).text().equalTo(messages.get(ID.min)));
-        Graphene.waitGui().until(Graphene.element(page.msgMinMax).text().equalTo(messages.get(ID.minMax)));
-        Graphene.waitGui().until(Graphene.element(page.msgNotEmpty).text().equalTo(messages.get(ID.notEmpty)));
-        Graphene.waitGui().until(Graphene.element(page.msgNotNull).text().equalTo(messages.get(ID.notNull)));
-        Graphene.waitGui().until(Graphene.element(page.msgPattern).text().equalTo(messages.get(ID.pattern)));
-        Graphene.waitGui().until(Graphene.element(page.msgCustom).text().equalTo(messages.get(ID.custom)));
+        Graphene.waitGui().until().element(page.msgAssertTrue).text().equalTo(messages.get(ID.assertTrue));
+        Graphene.waitGui().until().element(page.msgAssertFalse).text().equalTo(messages.get(ID.assertFalse));
+        Graphene.waitGui().until().element(page.msgDecimalMinMax).text().equalTo(messages.get(ID.decimalMinMax));
+        Graphene.waitGui().until().element(page.msgDigits).text().equalTo(messages.get(ID.digits));
+        Graphene.waitGui().until().element(page.msgMax).text().equalTo(messages.get(ID.max));
+        Graphene.waitGui().until().element(page.msgMin).text().equalTo(messages.get(ID.min));
+        Graphene.waitGui().until().element(page.msgMinMax).text().equalTo(messages.get(ID.minMax));
+        Graphene.waitGui().until().element(page.msgNotEmpty).text().equalTo(messages.get(ID.notEmpty));
+        Graphene.waitGui().until().element(page.msgNotNull).text().equalTo(messages.get(ID.notNull));
+        Graphene.waitGui().until().element(page.msgPattern).text().equalTo(messages.get(ID.pattern));
+        Graphene.waitGui().until().element(page.msgCustom).text().equalTo(messages.get(ID.custom));
 
         if (Graphene.element(page.inputRegexp).isPresent().apply(driver)) {
             // regExp validator isn't present in JSR303 validation
-            Graphene.waitGui().until(Graphene.element(page.msgRegexp).text().equalTo(messages.get(ID.regexp)));
+            Graphene.waitGui().until().element(page.msgRegexp).text().equalTo(messages.get(ID.regexp));
         }
-        Graphene.waitGui().until(Graphene.element(page.msgPast).text().equalTo(messages.get(ID.past)));
-        Graphene.waitGui().until(Graphene.element(page.msgFuture).text().equalTo(messages.get(ID.future)));
-        Graphene.waitGui().until(Graphene.element(page.msgStringSize).text().equalTo(messages.get(ID.stringSize)));
-        Graphene.waitGui().until(Graphene.element(page.msgSize).text().equalTo(messages.get(ID.size)));
+        Graphene.waitGui().until().element(page.msgPast).text().equalTo(messages.get(ID.past));
+        Graphene.waitGui().until().element(page.msgFuture).text().equalTo(messages.get(ID.future));
+        Graphene.waitGui().until().element(page.msgStringSize).text().equalTo(messages.get(ID.stringSize));
+        Graphene.waitGui().until().element(page.msgSize).text().equalTo(messages.get(ID.size));
     }
 
     /**
@@ -271,7 +271,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         page.inputAssertTrue.click();
         page.a4jCommandBtn.click();
 
-        Graphene.waitGui().until(Graphene.element(page.msgAssertTrue).text().equalTo(messages.get(ID.assertTrue)));
+        Graphene.waitGui().until().element(page.msgAssertTrue).text().equalTo(messages.get(ID.assertTrue));
     }
 
     /**
@@ -285,7 +285,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         page.inputAssertFalse.click();
         page.a4jCommandBtn.click();
 
-        Graphene.waitGui().until(Graphene.element(page.msgAssertFalse).text().equalTo(messages.get(ID.assertFalse)));
+        Graphene.waitGui().until().element(page.msgAssertFalse).text().equalTo(messages.get(ID.assertFalse));
     }
 
     /**
@@ -300,7 +300,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         page.inputDecimalMinMax.sendKeys(wrongValue.get(ID.decimalMinMax).toString());
         page.a4jCommandBtn.click();
 
-        Graphene.waitGui().until(Graphene.element(page.msgDecimalMinMax).text().equalTo(messages.get(ID.decimalMinMax)));
+        Graphene.waitGui().until().element(page.msgDecimalMinMax).text().equalTo(messages.get(ID.decimalMinMax));
     }
 
     /**
@@ -315,7 +315,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         page.inputDigits.sendKeys(wrongValue.get(ID.digits).toString());
         page.a4jCommandBtn.click();
 
-        Graphene.waitGui().until(Graphene.element(page.msgDigits).text().equalTo(messages.get(ID.digits)));
+        Graphene.waitGui().until().element(page.msgDigits).text().equalTo(messages.get(ID.digits));
     }
 
     /**
@@ -330,7 +330,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         page.inputMax.sendKeys(wrongValue.get(ID.max).toString());
         page.a4jCommandBtn.click();
 
-        Graphene.waitGui().until(Graphene.element(page.msgMax).text().equalTo(messages.get(ID.max)));
+        Graphene.waitGui().until().element(page.msgMax).text().equalTo(messages.get(ID.max));
     }
 
     /**
@@ -346,7 +346,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         page.inputMin.sendKeys(wrongValue.get(ID.min).toString());
         page.a4jCommandBtn.click();
 
-        Graphene.waitGui().until(Graphene.element(page.msgMin).text().equalTo(messages.get(ID.min)));
+        Graphene.waitGui().until().element(page.msgMin).text().equalTo(messages.get(ID.min));
     }
 
     /**
@@ -362,7 +362,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         page.inputMinMax.sendKeys(wrongValue.get(ID.minMax).toString());
         page.a4jCommandBtn.click();
 
-        Graphene.waitGui().until(Graphene.element(page.msgMinMax).text().equalTo(messages.get(ID.minMax)));
+        Graphene.waitGui().until().element(page.msgMinMax).text().equalTo(messages.get(ID.minMax));
     }
 
     /**
@@ -378,7 +378,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         page.inputNotEmpty.sendKeys(wrongValue.get(ID.notEmpty).toString());
         page.a4jCommandBtn.click();
 
-        Graphene.waitGui().until(Graphene.element(page.msgNotEmpty).text().equalTo(messages.get(ID.notEmpty)));
+        Graphene.waitGui().until().element(page.msgNotEmpty).text().equalTo(messages.get(ID.notEmpty));
     }
 
     /**
@@ -393,7 +393,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         page.inputNotNull.sendKeys("");
         page.a4jCommandBtn.click();
 
-        Graphene.waitGui().until(Graphene.element(page.msgNotNull).text().equalTo(messages.get(ID.notNull)));
+        Graphene.waitGui().until().element(page.msgNotNull).text().equalTo(messages.get(ID.notNull));
     }
 
     /**
@@ -408,7 +408,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         page.inputPattern.sendKeys(wrongValue.get(ID.pattern).toString());
         page.a4jCommandBtn.click();
 
-        Graphene.waitGui().until(Graphene.element(page.msgPattern).text().equalTo(messages.get(ID.pattern)));
+        Graphene.waitGui().until().element(page.msgPattern).text().equalTo(messages.get(ID.pattern));
     }
 
     /**
@@ -423,7 +423,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         page.inputCustom.sendKeys(wrongValue.get(ID.custom).toString());
         page.a4jCommandBtn.click();
 
-        Graphene.waitGui().until(Graphene.element(page.msgCustom).text().equalTo(messages.get(ID.custom)));
+        Graphene.waitGui().until().element(page.msgCustom).text().equalTo(messages.get(ID.custom));
     }
 
     /**
@@ -438,7 +438,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         page.inputRegexp.sendKeys(wrongValue.get(ID.regexp).toString());
         page.a4jCommandBtn.click();
 
-        Graphene.waitGui().until(Graphene.element(page.msgRegexp).text().equalTo(messages.get(ID.regexp)));
+        Graphene.waitGui().until().element(page.msgRegexp).text().equalTo(messages.get(ID.regexp));
     }
 
     /**
@@ -453,7 +453,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         page.inputPast.sendKeys(wrongValue.get(ID.past).toString());
         Graphene.guardAjax(page.a4jCommandBtn).click();
 
-        Graphene.waitGui().until(Graphene.element(page.msgPast).text().equalTo(messages.get(ID.past)));
+        Graphene.waitGui().until().element(page.msgPast).text().equalTo(messages.get(ID.past));
     }
 
     /**
@@ -467,7 +467,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         page.inputFuture.clear();
         page.inputFuture.sendKeys(wrongValue.get(ID.future).toString());
         page.a4jCommandBtn.click();
-        Graphene.waitGui().until(Graphene.element(page.msgFuture).text().equalTo(messages.get(ID.future)));
+        Graphene.waitGui().until().element(page.msgFuture).text().equalTo(messages.get(ID.future));
     }
 
     /**
@@ -482,7 +482,7 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         page.inputStringSize.sendKeys(wrongValue.get(ID.stringSize).toString());
         page.a4jCommandBtn.click();
 
-        Graphene.waitGui().until(Graphene.element(page.msgStringSize).text().equalTo(messages.get(ID.stringSize)));
+        Graphene.waitGui().until().element(page.msgStringSize).text().equalTo(messages.get(ID.stringSize));
     }
 
     /**
@@ -497,6 +497,6 @@ public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
         page.getSelectionItemByLabel(wrongValue.get(ID.size).toString()).click();
         page.a4jCommandBtn.click();
 
-        Graphene.waitGui().until(Graphene.element(page.msgSize).text().equalTo(messages.get(ID.size)));
+        Graphene.waitGui().until().element(page.msgSize).text().equalTo(messages.get(ID.size));
     }
 }
