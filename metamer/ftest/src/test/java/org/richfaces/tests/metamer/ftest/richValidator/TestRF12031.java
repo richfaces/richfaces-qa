@@ -52,12 +52,12 @@ public class TestRF12031 extends AbstractWebDriverTest {
     public void testCSVOnConditionallyRenderedInput() {
 
         page.toggleButton.click();
-        Graphene.waitGui().until(Graphene.element(page.simpleInput).isPresent());
+        Graphene.waitGui().until().element(page.simpleInput).is().present();
 
         page.simpleInput.sendKeys("RichFaces 4");
         fireEvent(page.simpleInput, Event.BLUR);
 
-        Graphene.waitModel().until(Graphene.element(page.simpleErrorMessage).isPresent());
+        Graphene.waitModel().until().element(page.simpleErrorMessage).is().present();
     }
 
 }

@@ -58,7 +58,7 @@ public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
 
         Graphene.guardNoRequest(page.a4jCommandBtn).click();
 
-        Graphene.waitGui().until(Graphene.element(page.msgMin).text().equalTo(messages.get(ID.min)));
+        Graphene.waitGui().until().element(page.msgMin).text().equalTo(messages.get(ID.min));
     }
 
     /**
@@ -76,7 +76,7 @@ public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
         // no request (HTTP neither XHR) should be sent if validation fails
         fireEvent(Graphene.guardNoRequest(page.inputMin), Event.BLUR);
 
-        Graphene.waitGui().until(Graphene.element(page.msgMin).text().equalTo(messages.get(ID.min)));
+        Graphene.waitGui().until().element(page.msgMin).text().equalTo(messages.get(ID.min));
     }
 
 }
