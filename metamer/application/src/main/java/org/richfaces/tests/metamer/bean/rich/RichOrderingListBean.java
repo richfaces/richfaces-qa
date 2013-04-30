@@ -30,7 +30,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.convert.Converter;
 
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.model.Capital;
@@ -48,34 +47,29 @@ import org.slf4j.LoggerFactory;
 public class RichOrderingListBean implements Serializable {
 
     private static final long serialVersionUID = 5868941019675985273L;
-    private static Logger logger;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RichOrderingListBean.class);
     @ManagedProperty("#{model.capitals}")
     private List<Capital> capitals;
     private Attributes attributes;
     private Collection<String> hiddenAttributes = new ArrayList<String>();
-    @ManagedProperty("#{capitalConverter}")
-    private Converter converter;
+    private String validatorMessage;
 
     @PostConstruct
     public void init() {
-        logger = LoggerFactory.getLogger(getClass());
-        logger.info("initializing bean " + getClass().getName());
+        LOGGER.debug("initializing bean " + getClass().getName());
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIOrderingList.class, getClass());
 
-        attributes.setAttribute("columnVar", "capital");
-        attributes.setAttribute("converter", getConverter());
         attributes.setAttribute("downText", "Down");
-        attributes.setAttribute("downBottomText", "Last");
+        attributes.setAttribute("downBottomText", "Bottom");
         attributes.setAttribute("listWidth", 300);
         attributes.setAttribute("listHeight", 500);
         attributes.setAttribute("rendered", true);
-        attributes.setAttribute("var", "capital");
         attributes.setAttribute("upText", "Up");
-        attributes.setAttribute("upTopText", "First");
+        attributes.setAttribute("upTopText", "Top");
 
-        String[] attrsToHide = new String[] { "itemLabel", "itemValue", "value", "var",
-            // TODO has to be tested in another way
-            "converter", "converterMessage", "validator", "validatorMessage", "valueChangeListener" };
+        // TODO has to be tested in another way
+        String[] attrsToHide = new String[]{"collectionType", "itemLabel", "itemValue", "value", "var",
+            "converter", "converterMessage", "validator", "validatorMessage", "valueChangeListener"};
         for (String attribute : attrsToHide) {
             hiddenAttributes.add(attribute);
             attributes.remove(attribute);
@@ -90,12 +84,12 @@ public class RichOrderingListBean implements Serializable {
         return capitals;
     }
 
-    public Converter getConverter() {
-        return converter;
-    }
-
     public Collection<String> getHiddenAttributes() {
         return hiddenAttributes;
+    }
+
+    public String getValidatorMessage() {
+        return validatorMessage;
     }
 
     public void setAttributes(Attributes attributes) {
@@ -106,12 +100,11 @@ public class RichOrderingListBean implements Serializable {
         this.capitals = capitals;
     }
 
-    public void setConverter(Converter converter) {
-        this.converter = converter;
-    }
-
     public void setHiddenAttributes(Collection<String> hiddenAttributes) {
         this.hiddenAttributes = hiddenAttributes;
     }
 
+    public void setValidatorMessage(String validatorMessage) {
+        this.validatorMessage = validatorMessage;
+    }
 }

@@ -27,7 +27,6 @@ import java.net.URL;
 
 import org.testng.annotations.Test;
 
-
 /**
  * Selenium tests for page faces/components/richOrderingList/withColumn.xhtml.
  *
@@ -44,50 +43,49 @@ public class TestOrderingListMoving extends AbstractOrderingListTest {
 
     @Test
     public void testMoveFirstBottom() {
-        selectItem(0);
-        moveBottom();
+        twoColumnOrderingList.selectItemsByIndex(0);
+        moveSelectedToBottom();
     }
 
     @Test
     public void testMoveFirstDown() {
-        selectItem(0);
-        moveDown();
+        twoColumnOrderingList.selectItemsByIndex(0);
+        moveSelectedDown();
     }
 
     @Test
     public void testMoveLastTop() {
-        selectItem(getOrderingList().getNumberOfItems() - 1);
-        moveTop();
+        twoColumnOrderingList.selectItemsByIndex(twoColumnOrderingList.getItems().size() - 1);
+        moveSelectedToTop();
     }
 
     @Test
     public void testMoveLastUp() {
-        selectItem(getOrderingList().getNumberOfItems() - 1);
-        moveUp();
+        twoColumnOrderingList.selectItemsByIndex(twoColumnOrderingList.getItems().size() - 1);
+        moveSelectedUp();
     }
 
     @Test
     public void testMoveMiddleBottom() {
-        selectItem(2);
-        moveBottom();
+        twoColumnOrderingList.selectItemsByIndex(2);
+        moveSelectedToBottom();
     }
 
     @Test
     public void testMoveMiddleDown() {
-        selectItem(2);
-        moveDown();
+        twoColumnOrderingList.selectItemsByIndex(2);
+        moveSelectedDown();
     }
 
     @Test
     public void testMoveMiddleTop() {
-        selectItem(2);
-        moveTop();
+        twoColumnOrderingList.selectItemsByIndex(2);
+        moveSelectedToTop();
     }
 
     @Test
     public void testMoveMiddleUp() {
-        selectItem(2);
-        moveUp();
+        twoColumnOrderingList.selectItemsByIndex(2);
+        moveSelectedUp();
     }
-
 }
