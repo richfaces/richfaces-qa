@@ -25,21 +25,17 @@ import com.google.common.base.Predicate;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @param <T> type of ListItem
  */
-public interface ListItemsFilterBuilder {
+public interface ListItemsFilterBuilder<T> {
 
     /**
-     * Function that will build this filter. Merges all filter properties to one.
+     * Function that will build this filter. Merges all filters to one.
      */
-    Predicate<ListItem> build();
+    Predicate<T> build();
 
     /**
-     * Filters out all items with different content than specified in @content.
+     * Adds filter to collection of filters and returns the builder instance.
      */
-    ListItemsFilterBuilder filterToContentContains(String content);
-
-    /**
-     * Filters out all items that contains String specified in @content.
-     */
-    ListItemsFilterBuilder filterToContentNotContains(String content);
+    ListItemsFilterBuilder addFilter(Predicate<T> filter);
 }

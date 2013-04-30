@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -21,29 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.list;
 
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+import org.richfaces.tests.page.fragments.impl.Utils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-public class RichFacesListItems extends ArrayList<ListItem> implements ListItems {
-
-    private static final long serialVersionUID = 1L;
-
-    public RichFacesListItems() {
-    }
-
-    public RichFacesListItems(Collection<? extends ListItem> c) {
-        super(c);
-    }
-
-    public RichFacesListItems(Iterable<? extends ListItem> it) {
-        this.addAll(Lists.newArrayList(it));
-    }
+public abstract class AbstractListItem implements ListItem {
 
     @Override
-    public ListItems filter(ListItemsFilterBuilder builder) {
-        return new RichFacesListItems(Iterables.filter(this, builder.build()));
+    public int getIndex() {
+        return Integer.valueOf(Utils.returningJQ("index()", getItemElement()));
     }
 }

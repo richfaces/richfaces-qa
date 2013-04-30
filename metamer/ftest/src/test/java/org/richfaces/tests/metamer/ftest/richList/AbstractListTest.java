@@ -34,7 +34,8 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.model.Employee;
 import org.richfaces.tests.page.fragments.impl.list.ListItems;
-import org.richfaces.tests.page.fragments.impl.list.RichFacesList;
+import org.richfaces.tests.page.fragments.impl.list.simple.RichFacesSimpleList;
+import org.richfaces.tests.page.fragments.impl.list.simple.RichFacesSimpleListItem;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -44,11 +45,11 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
 
     static final List<Employee> employees = Model.unmarshallEmployees();
     static final int ELEMENTS_TOTAL = employees.size();
-    static final Integer[] INTS = { -1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL,
-        ELEMENTS_TOTAL + 1 };
+    static final Integer[] INTS = {-1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL,
+        ELEMENTS_TOTAL + 1};
     //
     @FindBy(css = "[id$=richList]")
-    protected RichFacesList list;
+    protected RichFacesSimpleList list;
     //
     @Inject
     @Use(empty = true)
@@ -103,7 +104,7 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
     }
 
     private void verifyRows() {
-        ListItems items = list.getItems();
+        ListItems<RichFacesSimpleListItem> items = list.getItems();
         int rowCount = items.size();
         for (int position = 0; position < rowCount; position++) {
             Employee employee = expectedEmployees.get(position);

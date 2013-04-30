@@ -19,22 +19,24 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.list;
+package org.richfaces.tests.page.fragments.impl.list.simple;
 
-import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.list.ListFragment;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @param <T> type of ListItem
  */
-public interface ListItem {
+public interface SimpleList<T extends ListItem> extends ListFragment<T> {
+
+    enum ListType {
+
+        ORDERED, UNORDERED, DEFINITIONS;
+    }
 
     /**
-     * Returns root element.
+     * Returns list type (ordered, unordered, definitions)
      */
-    WebElement getItemElement();
-
-    /*
-     * Returns index of this element in list.
-     */
-    int getIndex();
+    ListType getType();
 }

@@ -19,30 +19,28 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.list;
+package org.richfaces.tests.page.fragments.impl.list.simple;
 
 import java.util.List;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.richfaces.tests.page.fragments.impl.list.AbstractListFragment;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
+import org.richfaces.tests.page.fragments.impl.list.ListItems;
 
-public class RichFacesList implements ListFragment {
+/**
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @param <T> type of ListItem
+ */
+public abstract class RichFacesList<T extends ListItem> extends AbstractListFragment<T, ListItems<T>> implements SimpleList<T> {
 
-    @Root
-    private WebElement root;
     @FindBy(className = "rf-dlst-dfn")
-    private List<RichFacesListItem> definitionsList;
+    private List<WebElement> definitionsList;
     @FindBy(className = "rf-olst-itm")
-    private List<RichFacesListItem> orderedList;
+    private List<WebElement> orderedList;
     @FindBy(className = "rf-ulst-itm")
-    private List<RichFacesListItem> unorderedList;
-    //
-    private WebDriver driver = GrapheneContext.getProxy();
+    private List<WebElement> unorderedList;
 
     private enum RichFacesListType {
 
@@ -69,23 +67,22 @@ public class RichFacesList implements ListFragment {
     }
 
     @Override
-    public ListItems getItems() {
+    public ListItems<T> getItems() {
+        return createItems(getActualItems());
+    }
+
+    private List<WebElement> getActualItems() {
         ListType type = RichFacesListType.getListType(root);
         switch (type) {
             case DEFINITIONS:
-                return new RichFacesListItems(definitionsList);
+                return definitionsList;
             case ORDERED:
-                return new RichFacesListItems(orderedList);
+                return orderedList;
             case UNORDERED:
-                return new RichFacesListItems(unorderedList);
+                return unorderedList;
             default:
                 throw new UnsupportedOperationException("Unknown list type " + type);
         }
-    }
-
-    @Override
-    public WebElement getRootElement() {
-        return root;
     }
 
     @Override
@@ -94,17 +91,7 @@ public class RichFacesList implements ListFragment {
     }
 
     @Override
-    public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(root).not().isVisible();
-    }
-
-    @Override
-    public boolean isVisible() {
-        return isVisibleCondition().apply(driver);
-    }
-
-    @Override
-    public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(root).isVisible();
+    protected ListItems<T> instantiateListItems() {
+        return new RichFacesListItems<T>();
     }
 }

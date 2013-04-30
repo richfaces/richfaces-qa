@@ -25,27 +25,20 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.VisibleComponent;
 
 /**
+ * Interface for list fragments.
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @param <T> type of ListItem
  */
-public interface ListFragment extends VisibleComponent {
-
-    enum ListType {
-
-        ORDERED, UNORDERED, DEFINITIONS;
-    }
+public interface ListFragment<T extends ListItem> extends VisibleComponent {
 
     /**
      * Returns all items.
      */
-    ListItems getItems();
+    ListItems<T> getItems();
 
     /**
      * Returns root element.
      */
     WebElement getRootElement();
-
-    /**
-     * Returns list type (ordered, unordered, definitions)
-     */
-    ListType getType();
 }
