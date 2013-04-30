@@ -39,20 +39,10 @@
     </properties>
 
     <dependencies>
-        <!-- Selenium -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-chrome-driver</artifactId>
-        </dependency>
         <!-- Arquillian -->
         <dependency>
             <groupId>org.jboss.arquillian.graphene</groupId>
-            <artifactId>arquillian-graphene</artifactId>
-            <version>${arquillian.graphene-testng.version}</version>
+            <artifactId>graphene-webdriver</artifactId>
             <type>pom</type>
             <scope>test</scope>
         </dependency>

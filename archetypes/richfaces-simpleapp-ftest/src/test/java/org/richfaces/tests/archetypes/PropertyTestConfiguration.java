@@ -25,6 +25,7 @@ import java.io.File;
 
 public class PropertyTestConfiguration implements TestConfiguration {
 
+    @Override
     public File getApplicationWar() {
         return new File(getProperty("application.war"));
     }
@@ -37,11 +38,6 @@ public class PropertyTestConfiguration implements TestConfiguration {
     @Override
     public String getContextRoot() {
         return getProperty("context.root");
-    }
-
-    @Override
-    public int getWebDriverElementTries() {
-        return Integer.parseInt(getProperty("webdriver.stale.tries"));
     }
 
     private String getProperty(String key) {

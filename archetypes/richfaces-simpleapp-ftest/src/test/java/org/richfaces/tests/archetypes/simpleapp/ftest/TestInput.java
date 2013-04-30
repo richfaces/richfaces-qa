@@ -39,6 +39,7 @@ public class TestInput extends AbstractTestInput {
     }
 
     @Test
+    @Override
     public void testTypeName() {
         super.testTypeName();
     }
