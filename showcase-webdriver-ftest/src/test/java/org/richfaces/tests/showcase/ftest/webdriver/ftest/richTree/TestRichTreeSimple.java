@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richTree;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertEquals;
 
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
@@ -30,7 +31,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichTreeSimple extends AbstractWebDriverTest<TreePage> {
+public class TestRichTreeSimple extends AbstractWebDriverTest {
+
+    @Page
+    private TreePage page;
 
     @Test
     public void testExpandFirstLevel() {
@@ -56,8 +60,8 @@ public class TestRichTreeSimple extends AbstractWebDriverTest<TreePage> {
     }
 
     @Override
-    protected TreePage createPage() {
-        return new TreePage(getWebDriver());
+    protected TreePage getPage() {
+        return page;
     }
 
 }

@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richInplaceSelect;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertFalse;
 
 import org.jboss.test.selenium.android.ToolKitException;
@@ -31,7 +32,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichInplaceSelectSimple extends AbstractWebDriverTest<InplaceSelectPage>{
+public class TestRichInplaceSelectSimple extends AbstractWebDriverTest {
+
+    @Page
+    private InplaceSelectPage page;
 
     @Test
     public void testInit() {
@@ -50,8 +54,8 @@ public class TestRichInplaceSelectSimple extends AbstractWebDriverTest<InplaceSe
     }
 
     @Override
-    protected InplaceSelectPage createPage() {
-        return new InplaceSelectPage(getWebDriver());
+    protected InplaceSelectPage getPage() {
+        return page;
     }
 
 }

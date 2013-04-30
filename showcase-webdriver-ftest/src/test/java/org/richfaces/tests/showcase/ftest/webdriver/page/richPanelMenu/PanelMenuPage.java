@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.page.richPanelMenu;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractWebDriverPage;
@@ -36,10 +35,6 @@ public class PanelMenuPage extends AbstractWebDriverPage {
     private PanelMenu panelMenu;
     @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'current')]")
     private WebElement selectionElement;
-
-    public PanelMenuPage(WebDriver webDriver) {
-        super(webDriver);
-    }
 
     @Override
     public String getDemoName() {

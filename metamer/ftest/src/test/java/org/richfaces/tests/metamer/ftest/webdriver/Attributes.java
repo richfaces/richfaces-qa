@@ -30,7 +30,6 @@ import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
-import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -120,7 +119,7 @@ public class Attributes<T extends AttributeEnum> {
         WebElement foundElementProxy = driver.findElement(
                 getCssSelectorForProperty(propertyName));
         //handle the property by the tagname of the input element
-        Graphene.waitAjax().until(ElementPresent.getInstance().element(foundElementProxy));
+        Graphene.waitAjax().until().element(foundElementProxy).is().present();
         Tag tag = Tag.getTag(foundElementProxy);
         switch (tag) {
             case input:

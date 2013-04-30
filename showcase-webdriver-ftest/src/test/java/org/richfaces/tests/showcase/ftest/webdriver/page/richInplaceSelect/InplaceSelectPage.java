@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.page.richInplaceSelect;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractWebDriverPage;
@@ -41,10 +40,6 @@ public class InplaceSelectPage extends AbstractWebDriverPage {
     private WebElement popup;
 
     private Select select;
-
-    public InplaceSelectPage(WebDriver webDriver) {
-        super(webDriver);
-    }
 
     @Override
     public String getDemoName() {

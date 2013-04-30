@@ -26,13 +26,13 @@ import static org.richfaces.tests.metamer.ftest.BasicAttributes.bodyClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.headerClass;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelAttributes;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertFalse;
 
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.dom.Event;
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.test.selenium.support.ui.ElementNotPresent;
-import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -55,9 +55,6 @@ public class TestPanel extends AbstractWebDriverTest {
     @FindBy( css = "div[id$=panelWithoutHeader]" )
     private RichFacesPanel panelWithoutHeader;
 
-    private ElementNotPresent elemNotPresent = ElementNotPresent.getInstance();
-    private ElementPresent elemPresent = ElementPresent.getInstance();
-
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richPanel/simple.xhtml");
@@ -65,14 +62,14 @@ public class TestPanel extends AbstractWebDriverTest {
 
     @Test
     public void testInit() {
-        assertTrue(elemPresent.element(panelWithHeader.getRoot()).apply(driver), "Panel with header should be present and visible on the page.");
-        assertTrue(elemPresent.element(panelWithoutHeader.getRoot()).apply(driver), "Panel without header should be present and visible on the page.");
+        assertTrue(Graphene.element(panelWithHeader.getRoot()).isPresent().apply(driver), "Panel with header should be present and visible on the page.");
+        assertTrue(Graphene.element(panelWithoutHeader.getRoot()).isPresent().apply(driver), "Panel without header should be present and visible on the page.");
 
-        assertTrue(elemPresent.element(panelWithHeader.getHeader()).apply(driver), "The first panel should have a header.");
-        assertTrue(elemNotPresent.element(panelWithoutHeader.getHeader()).apply(driver), "The second panel should not have any header.");
+        assertTrue(Graphene.element(panelWithHeader.getHeader()).isPresent().apply(driver), "The first panel should have a header.");
+        assertFalse(Graphene.element(panelWithoutHeader.getHeader()).isPresent().apply(driver), "The second panel should not have any header.");
 
-        assertTrue(elemPresent.element(panelWithHeader.getBody()).apply(driver), "The first panel should have a body.");
-        assertTrue(elemPresent.element(panelWithoutHeader.getBody()).apply(driver), "The second panel should have a body.");
+        assertTrue(Graphene.element(panelWithHeader.getBody()).isPresent().apply(driver), "The first panel should have a body.");
+        assertTrue(Graphene.element(panelWithoutHeader.getBody()).isPresent().apply(driver), "The second panel should have a body.");
 
         assertTrue(panelWithHeader.getHeader().getText().endsWith("header of panel"));
         assertTrue(panelWithHeader.getBody().getText().startsWith("Lorem ipsum"), "First panel's body should start with \"Lorem ipsum\".");
@@ -179,9 +176,9 @@ public class TestPanel extends AbstractWebDriverTest {
     public void testRendered() {
         panelAttributes.set(PanelAttributes.rendered, Boolean.FALSE);
 
-        assertTrue(elemNotPresent.element(panelWithHeader.getRoot()).apply(driver),
+        assertFalse(Graphene.element(panelWithHeader.getRoot()).isPresent().apply(driver),
             "First panel should not be rendered when rendered=false.");
-        assertTrue(elemNotPresent.element(panelWithoutHeader.getRoot()).apply(driver),
+        assertFalse(Graphene.element(panelWithoutHeader.getRoot()).isPresent().apply(driver),
             "Second panel should not be rendered when rendered=false.");
     }
 

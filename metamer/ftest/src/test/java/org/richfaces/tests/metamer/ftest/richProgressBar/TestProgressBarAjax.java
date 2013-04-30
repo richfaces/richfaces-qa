@@ -34,7 +34,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -164,9 +163,12 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         executeJS("metamerEvents = \"\"");
 
         MetamerPage.requestTimeChangesWaiting(page.startButton).click();
-        Graphene.waitAjax().withTimeout(expectedRunTime, TimeUnit.SECONDS)
+        Graphene.waitAjax()
+                .withTimeout(expectedRunTime, TimeUnit.SECONDS)
                 .withMessage("Progress bar should disappear after it finishes.")
-                .until(ElementPresent.getInstance().element(page.restartButton));
+                .until()
+                .element(page.restartButton)
+                .is().present();
 
         String[] events = ((String) executeJS("return metamerEvents")).split(" ");
 
@@ -271,9 +273,12 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
             assertTrue(progressList.get(i) <= progressList.get(i + 1), "Progress of progress bar should be increasing: " + first + "!<= " + second);
         }
 
-        Graphene.waitGui().withTimeout(expectedRunTime, TimeUnit.SECONDS)
+        Graphene.waitGui()
+                .withTimeout(expectedRunTime, TimeUnit.SECONDS)
                 .withMessage("Progress bar should disappear after it finishes.")
-                .until(ElementPresent.getInstance().element(page.restartButton));
+                .until()
+                .element(page.restartButton)
+                .is().present();
         assertPresent(page.finishOutput, "Complete output should be present on the page.");
         assertPresent(page.progressBar, "Progress bar is not present on the page.");
         assertNotPresent(page.initialOutput, "Initial output should not be present on the page.");
@@ -292,9 +297,12 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         long expectedRunTime = getExpectedRunTime();
 
         MetamerPage.requestTimeChangesWaiting(page.startButton).click();
-        Graphene.waitAjax().withTimeout(expectedRunTime, TimeUnit.SECONDS)
+        Graphene.waitAjax()
+                .withTimeout(expectedRunTime, TimeUnit.SECONDS)
                 .withMessage("Progress bar should disappear after it finishes.")
-                .until(ElementPresent.getInstance().element(page.restartButton));
+                .until()
+                .element(page.restartButton)
+                .is().present();
 
         String[] events = ((String) executeJS("return metamerEvents")).split(" ");
 

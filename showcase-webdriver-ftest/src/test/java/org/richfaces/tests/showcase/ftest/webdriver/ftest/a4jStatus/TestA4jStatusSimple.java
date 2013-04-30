@@ -22,6 +22,7 @@
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jStatus;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertEquals;
 
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
@@ -31,7 +32,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jStatusSimple extends AbstractWebDriverTest<ViewUsagePage>{
+public class TestA4jStatusSimple extends AbstractWebDriverTest {
+
+    @Page
+    private ViewUsagePage page;
 
     @Test
     public void testSubmitUser() {
@@ -69,8 +73,8 @@ public class TestA4jStatusSimple extends AbstractWebDriverTest<ViewUsagePage>{
     }
 
     @Override
-    protected ViewUsagePage createPage() {
-        return new ViewUsagePage();
+    protected ViewUsagePage getPage() {
+        return page;
     }
 
 }

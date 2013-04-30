@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richOrderingList;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.richOrderingList.OrderingListPage;
 import org.testng.annotations.Test;
@@ -31,11 +32,14 @@ import static org.testng.Assert.assertFalse;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichOrderingListSimple extends AbstractWebDriverTest<OrderingListPage>{
+public class TestRichOrderingListSimple extends AbstractWebDriverTest {
+
+    @Page
+    private OrderingListPage page;
 
     @Override
-    protected OrderingListPage createPage() {
-        return new OrderingListPage(getWebDriver());
+    protected OrderingListPage getPage() {
+        return page;
     }
 
     @Test(groups = {"RF-11773"})

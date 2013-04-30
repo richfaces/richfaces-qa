@@ -35,7 +35,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -59,7 +58,7 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
 
     @Test
     public void testInit() {
-        assertTrue(ElementPresent.getInstance().element(page.progressBar).apply(driver),
+        assertTrue(Graphene.element(page.progressBar).isPresent().apply(driver),
             "Progress bar is not present on the page.");
         assertTrue(page.progressBar.isDisplayed(), "Progress bar should be visible on the page.");
         assertTrue(page.initialOutput.isDisplayed(), "Initial output should be present on the page.");
@@ -67,13 +66,13 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
         assertTrue(page.startButtonClient.isDisplayed(), "Start button is not present on the page.");
         assertTrue(page.pauseButton.isDisplayed(), "Pause button is not present on the page.");
 
-        if (ElementPresent.getInstance().element(page.remain).apply(driver)) {
+        if (Graphene.element(page.remain).isPresent().apply(driver)) {
             assertFalse(page.remain.isDisplayed(), "Progress bar should not show progress.");
         }
-        if (ElementPresent.getInstance().element(page.progress).apply(driver)) {
+        if (Graphene.element(page.progress).isPresent().apply(driver)) {
             assertFalse(page.progress.isDisplayed(), "Progress bar should not show progress.");
         }
-        if (ElementPresent.getInstance().element(page.label).apply(driver)) {
+        if (Graphene.element(page.label).isPresent().apply(driver)) {
             assertFalse(page.label.isDisplayed(), "Progress bar should not show progress.");
         }
     }
@@ -90,7 +89,7 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
 
         assertTrue(page.remain.isDisplayed(), "Progress bar should show progress.");
         assertTrue(page.progress.isDisplayed(), "Progress bar should not show progress.");
-        assertFalse(ElementPresent.getInstance().element(page.complete).apply(driver),
+        assertFalse(Graphene.element(page.complete).isPresent().apply(driver),
             "Progress bar should not show progress.");
     }
 
@@ -157,7 +156,7 @@ public class TestProgressBarClient extends AbstractWebDriverTest {
         Graphene.waitAjax().withTimeout(40, TimeUnit.SECONDS)
             .withMessage("Progress bar should disappear after it finishes.")
             .until(Graphene.element(page.finish).isVisible());
-        assertTrue(ElementPresent.getInstance().element(page.finishOutput).apply(driver),
+        assertTrue(Graphene.element(page.finishOutput).isPresent().apply(driver),
             "Complete output should be present on the page.");
 
         assertTrue(page.progressBar.isDisplayed(), "Progress bar should be visible on the page.");

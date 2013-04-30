@@ -22,6 +22,7 @@
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jPush;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.a4jPush.PushPage;
 import org.testng.annotations.Test;
@@ -29,7 +30,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jPushSimple extends AbstractWebDriverTest<PushPage>{
+public class TestA4jPushSimple extends AbstractWebDriverTest {
+
+    @Page
+    private PushPage page;
 
     @Test(groups = {"broken"})
     public void testDateUpdates() {
@@ -42,8 +46,8 @@ public class TestA4jPushSimple extends AbstractWebDriverTest<PushPage>{
     }
 
     @Override
-    protected PushPage createPage() {
-        return new PushPage();
+    protected PushPage getPage() {
+        return page;
     }
 
 }

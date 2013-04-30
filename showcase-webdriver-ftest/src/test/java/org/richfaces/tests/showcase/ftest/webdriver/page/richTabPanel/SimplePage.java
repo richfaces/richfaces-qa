@@ -44,10 +44,6 @@ public class SimplePage extends AbstractWebDriverPage {
     @FindBy(xpath = "//td[@class='rf-tab-hdr rf-tab-hdr-inact rf-tab-hdr-top'][2]")
     private WebElement secondTabInActive;
 
-    public SimplePage(WebDriver webDriver) {
-        super(webDriver);
-    }
-
     @Override
     public String getDemoName() {
         return "tabPanel";
