@@ -22,6 +22,7 @@
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richPanelMenu;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 
@@ -34,7 +35,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichPanelMenuSimple extends AbstractWebDriverTest<PanelMenuPage> {
+public class TestRichPanelMenuSimple extends AbstractWebDriverTest {
+
+    @Page
+    private PanelMenuPage page;
 
     @Test(groups = {"RF-12146"})
     public void testExpandFirst() {
@@ -70,8 +74,8 @@ public class TestRichPanelMenuSimple extends AbstractWebDriverTest<PanelMenuPage
     }
 
     @Override
-    protected PanelMenuPage createPage() {
-        return new PanelMenuPage(getWebDriver());
+    protected PanelMenuPage getPage() {
+        return page;
     }
 
 }

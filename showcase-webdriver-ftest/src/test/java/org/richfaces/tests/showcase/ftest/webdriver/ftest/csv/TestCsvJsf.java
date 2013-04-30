@@ -22,6 +22,7 @@
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.csv;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertTrue;
 
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
@@ -31,7 +32,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestCsvJsf extends AbstractWebDriverTest<JsfValidatorsPage>{
+public class TestCsvJsf extends AbstractWebDriverTest {
+
+    @Page
+    private JsfValidatorsPage page;
 
     @Test
     public void testAllWrongAndCorrect() {
@@ -160,8 +164,8 @@ public class TestCsvJsf extends AbstractWebDriverTest<JsfValidatorsPage>{
     }
 
     @Override
-    protected JsfValidatorsPage createPage() {
-        return new JsfValidatorsPage();
+    protected JsfValidatorsPage getPage() {
+        return page;
     }
 
 }

@@ -22,6 +22,7 @@
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richGraphValidator;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertTrue;
 
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
@@ -31,7 +32,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichGraphValidator extends AbstractWebDriverTest<PasswordValidationPage> {
+public class TestRichGraphValidator extends AbstractWebDriverTest {
+
+    @Page
+    private PasswordValidationPage page;
 
     @Test(groups = {"RF-12146"})
     public void testConfirmation() {
@@ -77,8 +81,8 @@ public class TestRichGraphValidator extends AbstractWebDriverTest<PasswordValida
     }
 
     @Override
-    protected PasswordValidationPage createPage() {
-        return new PasswordValidationPage();
+    protected PasswordValidationPage getPage() {
+        return page;
     }
 
 }

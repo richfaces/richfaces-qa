@@ -44,7 +44,6 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.arquillian.graphene.wait.WebDriverWait;
-import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
@@ -543,7 +542,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
             input.sendKeys(inputVal);
             // sendKeys triggers page reload automatically
             waiting(300);
-            Graphene.waitAjax().until(ElementPresent.getInstance().element(page.attributesTable));
+            Graphene.waitAjax().until().element(page.attributesTable).is().present();
             input = page.attributesTable.findElement(By.cssSelector(inputExp));
             MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
         }

@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.page.richPanel;
 
-import org.jboss.test.selenium.support.ui.ElementPresent;
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -38,10 +38,6 @@ public class SimplePage extends AbstractWebDriverPage {
     private WebElement firstPanel;
     @FindBy(xpath = "//*[@class='example-cnt']//div[@class='rf-p '][2]")
     private WebElement secondPanel;
-
-    public SimplePage(WebDriver webDriver) {
-        super(webDriver);
-    }
 
     @Override
     public String getDemoName() {
@@ -78,7 +74,7 @@ public class SimplePage extends AbstractWebDriverPage {
     }
 
     private boolean isPanelPresent(WebElement panel) {
-        return ElementPresent.getInstance().element(panel).apply(getWebDriver());
+        return Graphene.element(panel).isPresent().apply(getWebDriver());
     }
 
 }

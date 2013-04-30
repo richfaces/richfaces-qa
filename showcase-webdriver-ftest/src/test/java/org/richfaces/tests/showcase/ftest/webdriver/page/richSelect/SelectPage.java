@@ -49,10 +49,6 @@ public class SelectPage extends AbstractWebDriverPage {
     @FindBy(xpath = "//body/div[@class='rf-sel-lst-cord']")
     private WebElement popup;
 
-    public SelectPage(WebDriver webDriver) {
-        super(webDriver);
-    }
-
     @Override
     public String getDemoName() {
         return "select";

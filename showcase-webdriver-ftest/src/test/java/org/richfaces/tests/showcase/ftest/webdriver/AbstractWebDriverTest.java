@@ -25,22 +25,16 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.test.selenium.support.pagefactory.StaleReferenceAwareFieldDecorator;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.android.AndroidDriver;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
-import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
-import org.openqa.selenium.support.pagefactory.FieldDecorator;
 import org.richfaces.tests.showcase.ftest.webdriver.page.ShowcasePage;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -49,10 +43,8 @@ import org.testng.annotations.BeforeMethod;
 /**
 * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
 */
-public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends AbstractShowcaseTest {
+public abstract class AbstractWebDriverTest extends AbstractShowcaseTest {
 
-    private FieldDecorator fieldDecorator;
-    private Page page;
     @Drone
     private WebDriver webDriver;
 
@@ -75,24 +67,9 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
     }
 
     /**
-     * Initializes web driver instance
-     *
      * @throws MalformedURLException
      */
     @BeforeMethod(alwaysRun = true)
-    public void initializeWebDriver() throws MalformedURLException {
-        webDriver.manage().timeouts().implicitlyWait(getConfiguration().getWebDriverTimeout(), TimeUnit.SECONDS);
-    }
-
-    @BeforeMethod(alwaysRun = true, dependsOnMethods = { "initializeWebDriver" })
-    public void initializePage() {
-        initializePage(getPage());
-    }
-
-    /**
-     * @throws MalformedURLException
-     */
-    @BeforeMethod(alwaysRun = true, dependsOnMethods = { "initializePage" })
     public void initializePageUrl() throws MalformedURLException {
         if (getConfiguration().isVerbose()) {
             System.out.println("opening " + getPath().toString());
@@ -106,10 +83,6 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
             TakesScreenshot screenShotter = (TakesScreenshot) (getWebDriver());
             FileUtils.copyFile(screenShotter.getScreenshotAs(OutputType.FILE), new File("target" + File.separator + "screenshots" + File.separator + result.getTestClass().getName().replace(".", File.separator) + result.getMethod().getMethodName() + ".png"));
         }
-    }
-
-    protected ElementLocatorFactory createLocatorFactory() {
-        return new DefaultElementLocatorFactory(getWebDriver());
     }
 
     @Override
@@ -126,13 +99,6 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
         }
     }
 
-    protected Page getPage() {
-        if (page == null) {
-            page = createPage();
-        }
-        return page;
-    }
-
     @Override
     protected String getSampleName() {
         return getPage().getSampleName();
@@ -147,10 +113,6 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
         return webDriver;
     }
 
-    protected void initializePage(Object page) {
-        PageFactory.initElements(getFieldDecorator(), page);
-    }
-
     protected void sendKeysToInputCarefully(final WebElement input, final String text) {
         input.click();
         final String valueBefore = input.getAttribute("value") == null ? "" : input.getAttribute("value");
@@ -163,12 +125,5 @@ public abstract class AbstractWebDriverTest<Page extends ShowcasePage> extends A
                 .until(Graphene.attribute(input, "value").valueEquals(valueBefore + text));
     }
 
-    private FieldDecorator getFieldDecorator() {
-        if (fieldDecorator == null) {
-            fieldDecorator = new StaleReferenceAwareFieldDecorator(createLocatorFactory(), getConfiguration().getWebDriverElementTries());
-        }
-        return fieldDecorator;
-    }
-
-    protected abstract Page createPage();
+    protected abstract ShowcasePage getPage();
 }

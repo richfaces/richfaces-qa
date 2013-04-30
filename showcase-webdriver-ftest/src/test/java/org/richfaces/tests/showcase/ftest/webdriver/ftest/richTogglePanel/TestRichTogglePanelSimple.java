@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richTogglePanel;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
@@ -31,7 +32,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichTogglePanelSimple extends AbstractWebDriverTest<SimplePage>{
+public class TestRichTogglePanelSimple extends AbstractWebDriverTest {
+
+    @Page
+    private SimplePage page;
 
     @Test
     public void testInit() {
@@ -49,8 +53,8 @@ public class TestRichTogglePanelSimple extends AbstractWebDriverTest<SimplePage>
     }
 
     @Override
-    protected SimplePage createPage() {
-        return new SimplePage(getWebDriver());
+    protected SimplePage getPage() {
+        return page;
     }
 
 }
