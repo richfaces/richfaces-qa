@@ -22,15 +22,12 @@
 package org.richfaces.tests.metamer.ftest.richOrderingList;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
 import org.testng.annotations.Test;
-
 
 /**
  * Selenium tests for page faces/components/richOrderingList/withColumn.xhtml.
@@ -38,6 +35,7 @@ import org.testng.annotations.Test;
  * It checks whether the moving is OK.
  *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestOrderingList extends AbstractOrderingListTest {
 
@@ -48,39 +46,45 @@ public class TestOrderingList extends AbstractOrderingListTest {
 
     @Test
     public void testInit() {
-        assertTrue(getOrderingList().isOrderingListPresent(), "The ordering list should be present.");
-        assertFalse(getOrderingList().isButtonBottomEnabled(), "The button [bottom] should be disabled.");
-        assertFalse(getOrderingList().isButtonDownEnabled(), "The button [down] should be disabled.");
-        assertFalse(getOrderingList().isButtonTopEnabled(), "The button [top] should be disabled.");
-        assertFalse(getOrderingList().isButtonUpEnabled(), "The button [up] should be disabled.");
+        assertTrue(twoColumnOrderingList.isVisible(), "The ordering list should be visible.");
+        assertButtonDisabled(twoColumnOrderingList.getBottomButtonElement(), "The button [bottom] should be disabled.");
+        assertButtonDisabled(twoColumnOrderingList.getDownButtonElement(), "The button [down] should be disabled.");
+        assertButtonDisabled(twoColumnOrderingList.getTopButtonElement(), "The button [top] should be disabled.");
+        assertButtonDisabled(twoColumnOrderingList.getUpButtonElement(), "The button [up] should be disabled.");
     }
 
     @Test
     public void testSelectFirst() {
-        getOrderingList().selectItem(0);
-        checkButtonsTop();
+        twoColumnOrderingList.selectItemsByIndex(0);
+        checkButtonsStateTop();
     }
 
     @Test
     public void testSelectLast() {
-        getOrderingList().selectItem(getOrderingList().getNumberOfItems() - 1);
-        checkButtonsBottom();
+        twoColumnOrderingList.selectItemsByIndex(twoColumnOrderingList.getItems().size() - 1);
+        checkButtonsStateBottom();
     }
 
     @Test
     public void testSelectMiddle() {
-        getOrderingList().selectItem(2);
-        checkButtonsMiddle();
+        twoColumnOrderingList.selectItemsByIndex(2);
+        checkButtonsStateMiddle();
     }
 
     @Test
     public void testSubmit() {
-        getOrderingList().selectItem(1);
-        getOrderingList().moveTop();
-        String expectedState = getOrderingList().getItemColumnValue(0, 0);
+        String firstBefore = twoColumnOrderingList.getItems().get(0).getText();
+        String secondBefore = twoColumnOrderingList.getItems().get(1).getText();
+        twoColumnOrderingList.selectItemsByIndex(1).top();
         submit();
-        String foundState = getOrderingList().getItemColumnValue(0, 0);
-        assertEquals(expectedState, foundState, "After submitting the ordering list doesn't preserve the chosen order.");
+        String firstAfter = twoColumnOrderingList.getItems().get(0).getText();
+        String secondAfter = twoColumnOrderingList.getItems().get(1).getText();
+        assertEquals(firstAfter, secondBefore, "After submitting the ordering list doesn't preserve the chosen order.");
+        assertEquals(firstBefore, secondAfter, "After submitting the ordering list doesn't preserve the chosen order.");
+        submit();
+        firstAfter = twoColumnOrderingList.getItems().get(0).getText();
+        secondAfter = twoColumnOrderingList.getItems().get(1).getText();
+        assertEquals(firstAfter, secondBefore, "After submitting the ordering list doesn't preserve the chosen order.");
+        assertEquals(firstBefore, secondAfter, "After submitting the ordering list doesn't preserve the chosen order.");
     }
-
 }

@@ -77,6 +77,7 @@ import org.richfaces.tests.metamer.ftest.richNotify.NotifyAttributes;
 import org.richfaces.tests.metamer.ftest.richNotifyMessage.NotifyMessageAttributes;
 import org.richfaces.tests.metamer.ftest.richNotifyMessages.NotifyMessagesAttributes;
 import org.richfaces.tests.metamer.ftest.richNotifyStack.NotifyStackAttributes;
+import org.richfaces.tests.metamer.ftest.richOrderingList.OrderingListAttributes;
 import org.richfaces.tests.metamer.ftest.richPanel.PanelAttributes;
 import org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes;
 import org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes;
@@ -151,6 +152,7 @@ public class AttributeList {
     public static Attributes<NotifyMessageAttributes> notifyMessageAttributes = new Attributes<NotifyMessageAttributes>();
     public static Attributes<NotifyMessagesAttributes> notifyMessagesAttributes = new Attributes<NotifyMessagesAttributes>();
     public static Attributes<NotifyStackAttributes> notifyStackAttributes = new Attributes<NotifyStackAttributes>();
+    public static Attributes<OrderingListAttributes> orderingListAttributes = new Attributes<OrderingListAttributes>();
     public static Attributes<OutputPanelAttributes> outputPanelAttributes = new Attributes<OutputPanelAttributes>();
     public static Attributes<PanelAttributes> panelAttributes = new Attributes<PanelAttributes>();
     public static Attributes<PanelMenuAttributes> panelMenuAttributes = new Attributes<PanelMenuAttributes>();

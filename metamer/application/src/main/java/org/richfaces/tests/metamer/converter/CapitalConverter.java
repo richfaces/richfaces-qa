@@ -53,21 +53,21 @@ public class CapitalConverter implements Converter {
                 toReturn.setName(capital.getName());
                 toReturn.setState(capital.getState());
                 toReturn.setTimeZone(capital.getTimeZone());
-                LOGGER.info("converting string [" + value + "] to object [" + toReturn + "].");
+                LOGGER.debug("converting string [" + value + "] to object [" + toReturn + "].");
                 return toReturn;
             }
         }
-        LOGGER.info("converting [" + value + "] to object wasn't succuessful.");
+        LOGGER.debug("converting [" + value + "] to object wasn't succuessful.");
         throw new FacesException("Cannot convert parameter \"" + value + "\" to the Capital.");
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (!(value instanceof Capital)) {
-            LOGGER.info("converting [" + value + "] to string wasn't successful.");
+            LOGGER.debug("converting [" + value + "] to string wasn't successful.");
             throw new FacesException("Cannot convert parameter \"" + value + "\" to the String.");
         }
-        LOGGER.info("converting object [" + value + "] to string [" + capitalAsString((Capital) value) + "].");
+        LOGGER.debug("converting object [" + value + "] to string [" + capitalAsString((Capital) value) + "].");
         return capitalAsString((Capital) value);
     }
 
