@@ -24,17 +24,16 @@ package org.richfaces.tests.showcase.list.page;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.list.ListFragment;
-import org.richfaces.tests.page.fragments.impl.list.RichFacesList;
+import org.richfaces.tests.page.fragments.impl.list.simple.RichFacesSimpleList;
+import org.richfaces.tests.page.fragments.impl.list.simple.SimpleList.ListType;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class ListsPage {
 
-    @FindBy(xpath="//*[substring(@id, string-length(@id) - 3) = 'list']")
-    public RichFacesList list;
-
+    @FindBy(css = "[id$='list']")
+    public RichFacesSimpleList list;
     @FindBy(jquery = "a:contains('ordered')")
     private WebElement orderedList;
     @FindBy(jquery = "a:contains('unordered')")
@@ -42,8 +41,8 @@ public class ListsPage {
     @FindBy(jquery = "a:contains('definitions')")
     private WebElement definitions;
 
-    public void setType(ListFragment.ListType type) {
-        switch(type) {
+    public void setType(ListType type) {
+        switch (type) {
             case DEFINITIONS:
                 Graphene.guardXhr(definitions).click();
                 break;
@@ -55,5 +54,4 @@ public class ListsPage {
                 break;
         }
     }
-
 }

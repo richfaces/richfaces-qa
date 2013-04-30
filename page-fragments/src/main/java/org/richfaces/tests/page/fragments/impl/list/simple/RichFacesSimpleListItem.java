@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -19,22 +19,30 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.list;
+package org.richfaces.tests.page.fragments.impl.list.simple;
 
+import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.list.AbstractListItem;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface ListItem {
+public class RichFacesSimpleListItem extends AbstractListItem implements ListItem {
+
+    @Root
+    protected WebElement element;
 
     /**
-     * Returns root element.
+     * Returns trimmed content of this item.
      */
-    WebElement getItemElement();
+    public String getText() {
+        return element.getText();
+    }
 
-    /*
-     * Returns index of this element in list.
-     */
-    int getIndex();
+    @Override
+    public WebElement getItemElement() {
+        return element;
+    }
 }

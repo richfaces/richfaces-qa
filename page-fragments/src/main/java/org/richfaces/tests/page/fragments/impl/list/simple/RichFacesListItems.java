@@ -19,23 +19,44 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.list;
+package org.richfaces.tests.page.fragments.impl.list.simple;
 
-import org.jboss.arquillian.graphene.spi.annotations.Root;
-import org.openqa.selenium.WebElement;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
-public class RichFacesListItem implements ListItem {
+import java.util.ArrayList;
+import java.util.Collection;
 
-    @Root
-    private WebElement root;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
+import org.richfaces.tests.page.fragments.impl.list.ListItems;
+import org.richfaces.tests.page.fragments.impl.list.ListItemsFilterBuilder;
 
-    @Override
-    public String getText() {
-        return root.getText().trim();
+/**
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @param <T> type of ListItem
+ */
+class RichFacesListItems<T extends ListItem> extends ArrayList<T> implements ListItems<T> {
+
+    private static final long serialVersionUID = 1L;
+
+    public RichFacesListItems() {
+    }
+
+    public RichFacesListItems(Collection<? extends T> c) {
+        super(c);
+    }
+
+    public RichFacesListItems(Iterable<? extends T> it) {
+        this.addAll(Lists.newArrayList(it));
     }
 
     @Override
-    public WebElement getItemElement() {
-        return root;
+    public int indexOf(Object o) {
+        return ((ListItem) o).getIndex();
+    }
+
+    @Override
+    public ListItems<T> filter(ListItemsFilterBuilder<T> builder) {
+        return new RichFacesListItems<T>(Iterables.filter(this, builder.build()));
     }
 }

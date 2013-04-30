@@ -26,6 +26,7 @@ import static org.testng.Assert.assertEquals;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.listAttributes;
 
 import java.net.URL;
+
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -33,6 +34,7 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.page.fragments.impl.list.ListItems;
+import org.richfaces.tests.page.fragments.impl.list.simple.RichFacesSimpleListItem;
 import org.testng.annotations.Test;
 
 /**
@@ -217,14 +219,14 @@ public class TestListAttributes extends AbstractListTest {
 
     @Test
     public void testRowClass() {
-        ListItems items = list.getItems();
+        ListItems<RichFacesSimpleListItem> items = list.getItems();
         testStyleClass(items.get(0).getItemElement(), BasicAttributes.rowClass);
         testStyleClass(items.get(items.size() - 1).getItemElement(), BasicAttributes.rowClass);
     }
 
     @Test
     public void testRowClasses() {
-        ListItems items = list.getItems();
+        ListItems<RichFacesSimpleListItem> items = list.getItems();
         testStyleClass(items.get(0).getItemElement(), BasicAttributes.rowClasses);
         testStyleClass(items.get(items.size() - 1).getItemElement(), BasicAttributes.rowClasses);
     }
