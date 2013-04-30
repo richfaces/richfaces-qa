@@ -48,6 +48,7 @@ public class TestInputWithDeploying extends AbstractTestInput {
     }
 
     @Test
+    @Override
     public void testTypeName() {
         super.testTypeName();
     }

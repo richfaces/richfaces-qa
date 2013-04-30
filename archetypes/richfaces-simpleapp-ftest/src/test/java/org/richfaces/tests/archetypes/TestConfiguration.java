@@ -50,12 +50,4 @@ public interface TestConfiguration {
      */
     String getContextRoot();
 
-    /**
-     * Returns number of tries which is used for
-     * {@link org.jboss.test.selenium.webdriver.pagefactory.StaleReferenceAwareFieldDecorator}
-     *
-     * @return number of tries
-     */
-    int getWebDriverElementTries();
-
 }
