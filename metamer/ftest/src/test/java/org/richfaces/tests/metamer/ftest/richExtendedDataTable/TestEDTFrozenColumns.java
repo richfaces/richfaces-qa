@@ -80,13 +80,13 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
 
         // change page
         page.nextPage.click();
-        Graphene.waitModel().until(Graphene.element(page.secondPageSpan).isVisible());
+        Graphene.waitModel().until().element(page.secondPageSpan).is().visible();
         // test
         _testFrozenColumnsShow();
 
         // change page
         page.nextPage.click();
-        Graphene.waitModel().until(Graphene.element(page.thirdPageSpan).isVisible());
+        Graphene.waitModel().until().element(page.thirdPageSpan).is().visible();
         // test
         _testFrozenColumnsShow();
     }
@@ -116,13 +116,13 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
 
         // change page
         page.nextPage.click();
-        Graphene.waitModel().until(Graphene.element(page.secondPageSpan).isVisible());
+        Graphene.waitModel().until().element(page.secondPageSpan).is().visible();
         // test
         _testScrollerForNotFrozenColumns();
 
         // change page
         page.nextPage.click();
-        Graphene.waitModel().until(Graphene.element(page.thirdPageSpan).isVisible());
+        Graphene.waitModel().until().element(page.thirdPageSpan).is().visible();
         // test
         _testScrollerForNotFrozenColumns();
     }
@@ -146,13 +146,13 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
 
         // change page
         page.nextPage.click();
-        Graphene.waitModel().until(Graphene.element(page.secondPageSpan).isVisible());
+        Graphene.waitModel().until().element(page.secondPageSpan).is().visible();
         // test
         _testScrollerForNotFrozenColumns();
 
         // change page
         page.nextPage.click();
-        Graphene.waitModel().until(Graphene.element(page.thirdPageSpan).isVisible());
+        Graphene.waitModel().until().element(page.thirdPageSpan).is().visible();
         // test
         _testScrollerForNotFrozenColumns();
     }

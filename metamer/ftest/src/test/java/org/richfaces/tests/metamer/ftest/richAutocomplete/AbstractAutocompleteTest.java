@@ -24,9 +24,9 @@ package org.richfaces.tests.metamer.ftest.richAutocomplete;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+
 import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.model.Capital;
 
 /**

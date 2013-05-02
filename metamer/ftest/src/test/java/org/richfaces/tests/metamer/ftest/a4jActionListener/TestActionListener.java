@@ -67,7 +67,7 @@ public class TestActionListener extends AbstractWebDriverTest {
         final String msg = "Implementation of ActionListener created and called: "
             + "org.richfaces.tests.metamer.bean.a4j.A4JActionListenerBean$ActionListenerImpl";
 
-        Graphene.guardXhr(page.invokeButtonType).click();
+        Graphene.guardAjax(page.invokeButtonType).click();
         Graphene.waitGui().until(messageIsVisible);
 
         assertEquals(page.messages.size(), 1, "Only one message should be displayed on the page.");
@@ -88,7 +88,7 @@ public class TestActionListener extends AbstractWebDriverTest {
     public void testInvokeListenerByBinding() {
         final String msg = "Bound listener called";
 
-        Graphene.guardXhr(page.invokeButtonBinding).click();
+        Graphene.guardAjax(page.invokeButtonBinding).click();
         Graphene.waitGui().until(messageIsVisible);
 
         assertEquals(page.messages.size(), 1, "Only one message should be displayed on the page.");
@@ -101,7 +101,7 @@ public class TestActionListener extends AbstractWebDriverTest {
     public void testInvokeListenerMethod() {
         final String msg = "Method expression listener called";
 
-        Graphene.guardXhr(page.invokeButtonMethod).click();
+        Graphene.guardAjax(page.invokeButtonMethod).click();
         Graphene.waitGui().until(messageIsVisible);
 
         assertEquals(page.messages.size(), 1, "Only one message should be displayed on the page.");
@@ -115,7 +115,7 @@ public class TestActionListener extends AbstractWebDriverTest {
     public void testInvokeListenerMethodCC() {
         final String msg = "Method expression listener called from composite component";
 
-        Graphene.guardXhr(page.invokeButtonCC).click();
+        Graphene.guardAjax(page.invokeButtonCC).click();
         Graphene.waitGui().until(messageIsVisible);
 
         assertEquals(page.messages.size(), 1, "Only one message should be displayed on the page.");

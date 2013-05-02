@@ -216,7 +216,7 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
     }
 
     private String getGettersValue() {
-        Graphene.waitGui().until(Graphene.attribute(gettersValue, "value").not().valueEquals(""));
+        Graphene.waitGui().until().element(gettersValue).attribute("value").not().equalTo("");
         return gettersValue.getAttribute("value");
     }
 

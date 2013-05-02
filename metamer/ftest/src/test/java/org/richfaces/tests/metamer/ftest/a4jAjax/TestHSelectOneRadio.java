@@ -101,7 +101,7 @@ public class TestHSelectOneRadio extends AbstractAjaxTest {
 
     @Override
     public void performAction() {
-        Graphene.guardXhr(page.selectOneRadio).click();
+        Graphene.guardAjax(page.selectOneRadio).click();
     }
 
     @Override

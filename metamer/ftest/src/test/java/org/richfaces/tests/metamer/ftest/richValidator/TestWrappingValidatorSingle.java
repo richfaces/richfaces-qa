@@ -33,9 +33,7 @@ import java.net.URL;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.metamer.validation.MinBean;
 import org.testng.annotations.Test;
-
 
 /**
  * Selenium tests for page faces/components/richValidator/single.xhtml
