@@ -23,8 +23,8 @@ package org.richfaces.tests.metamer.bean;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.AbortProcessingException;
-import org.richfaces.event.PanelToggleEvent;
-import org.richfaces.event.PanelToggleListener;
+import org.richfaces.ui.toggle.PanelToggleEvent;
+import org.richfaces.ui.toggle.PanelToggleListener;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>

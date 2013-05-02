@@ -24,9 +24,9 @@ package org.richfaces.tests.metamer.bean.rich;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-import org.richfaces.event.TreeSelectionChangeEvent;
-import org.richfaces.event.TreeToggleEvent;
 import org.richfaces.tests.metamer.bean.RichBean;
+import org.richfaces.ui.iteration.tree.TreeSelectionChangeEvent;
+import org.richfaces.ui.iteration.tree.TreeToggleEvent;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>

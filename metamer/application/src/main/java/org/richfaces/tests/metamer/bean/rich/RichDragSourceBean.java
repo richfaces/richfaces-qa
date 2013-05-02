@@ -31,7 +31,7 @@ import javax.faces.bean.ViewScoped;
 
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.model.drag.DragValue;
-import org.richfaces.ui.drag.UIDragSource;
+import org.richfaces.ui.drag.dragSource.UIDragSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

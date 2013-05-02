@@ -34,7 +34,7 @@ import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 
 import org.richfaces.tests.metamer.Attributes;
-import org.richfaces.ui.drag.UIDropDownMenu;
+import org.richfaces.ui.menu.dropDownMenu.UIDropDownMenu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

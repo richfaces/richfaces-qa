@@ -35,7 +35,7 @@ import org.richfaces.tests.metamer.model.Employee;
 import org.richfaces.tests.metamer.model.Employee.Sex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.richfaces.ui.iteration.UICollapsibleSubTableToggler;
+import org.richfaces.ui.iteration.collapsibleSubTable.UICollapsibleSubTableToggler;
 
 /**
  * Managed bean for rich:collapsibleSubTableToggler.

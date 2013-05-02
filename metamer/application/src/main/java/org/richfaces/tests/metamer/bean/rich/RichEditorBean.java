@@ -32,7 +32,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
 import org.richfaces.tests.metamer.Attributes;
-import org.richfaces.ui.input.UIEditor;
+import org.richfaces.ui.input.editor.UIEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -38,7 +38,7 @@ import javax.faces.context.FacesContext;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.model.treeAdaptor.RecursiveNode;
 import org.richfaces.tests.metamer.model.treeAdaptor.RecursiveNodeImpl;
-import org.richfaces.ui.iteration.UITreeModelRecursiveAdaptor;
+import org.richfaces.ui.iteration.tree.UITreeModelRecursiveAdaptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

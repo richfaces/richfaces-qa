@@ -29,7 +29,7 @@ import javax.faces.bean.ViewScoped;
 import org.richfaces.tests.metamer.Attribute;
 
 import org.richfaces.tests.metamer.Attributes;
-import org.richfaces.ui.output.UIProgressBar;
+import org.richfaces.ui.output.progressBar.UIProgressBar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

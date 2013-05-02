@@ -25,8 +25,8 @@ import static org.richfaces.tests.metamer.bean.RichBean.logToPage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.AbortProcessingException;
-import org.richfaces.event.TreeToggleEvent;
-import org.richfaces.event.TreeToggleListener;
+import org.richfaces.ui.iteration.tree.TreeToggleEvent;
+import org.richfaces.ui.iteration.tree.TreeToggleListener;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>

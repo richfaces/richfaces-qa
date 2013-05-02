@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.bean.rich;
 
-
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
@@ -30,7 +29,7 @@ import javax.faces.bean.ViewScoped;
 
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.abstractions.MessageTestingBean;
-import org.richfaces.ui.message.UIMessage;
+import org.richfaces.ui.message.message.UIMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

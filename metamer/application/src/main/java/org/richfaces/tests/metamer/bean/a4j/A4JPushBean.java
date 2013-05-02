@@ -30,12 +30,12 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import org.richfaces.application.push.MessageException;
-import org.richfaces.application.push.TopicKey;
-import org.richfaces.application.push.TopicsContext;
+import org.richfaces.push.MessageException;
+import org.richfaces.push.TopicKey;
+import org.richfaces.push.TopicsContext;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.Message;
-import org.richfaces.ui.ajax.UIPush;
+import org.richfaces.ui.ajax.push.UIPush;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

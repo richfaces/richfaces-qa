@@ -25,9 +25,9 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-import org.richfaces.application.push.MessageException;
-import org.richfaces.application.push.TopicKey;
-import org.richfaces.application.push.TopicsContext;
+import org.richfaces.push.MessageException;
+import org.richfaces.push.TopicKey;
+import org.richfaces.push.TopicsContext;
 import org.richfaces.tests.metamer.Message;
 
 /**

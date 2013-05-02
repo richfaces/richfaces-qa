@@ -30,7 +30,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import org.richfaces.tests.metamer.Attributes;
-import org.richfaces.ui.ajax.UIPoll;
+import org.richfaces.ui.ajax.poll.UIPoll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

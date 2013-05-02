@@ -29,7 +29,7 @@ import javax.faces.bean.ViewScoped;
 
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.abstractions.MessageTestingBean;
-import org.richfaces.ui.message.UINotifyMessage;
+import org.richfaces.ui.message.notifyMessage.UINotifyMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

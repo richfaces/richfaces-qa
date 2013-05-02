@@ -32,7 +32,7 @@ import javax.faces.model.SelectItem;
 
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.model.Employee;
-import org.richfaces.ui.ajax.UIRegion;
+import org.richfaces.ui.ajax.region.UIRegion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

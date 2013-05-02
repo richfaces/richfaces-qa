@@ -31,7 +31,7 @@ import javax.faces.bean.ViewScoped;
 
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.abstractions.MessageTestingBean;
-import org.richfaces.ui.message.UINotify;
+import org.richfaces.ui.message.notify.UINotify;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

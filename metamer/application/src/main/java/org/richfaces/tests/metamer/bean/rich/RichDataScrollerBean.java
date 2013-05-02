@@ -28,7 +28,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.richfaces.tests.metamer.Attributes;
-import org.richfaces.ui.iteration.UIDataScroller;
+import org.richfaces.ui.iteration.dataScroller.UIDataScroller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -36,7 +36,7 @@ import org.richfaces.tests.metamer.bean.RichBean;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBeanImpl;
 import org.richfaces.tests.metamer.model.Capital;
-import org.richfaces.ui.input.UIAutocomplete;
+import org.richfaces.ui.input.autocomplete.UIAutocomplete;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

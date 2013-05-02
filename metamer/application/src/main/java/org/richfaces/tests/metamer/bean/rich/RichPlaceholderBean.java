@@ -29,7 +29,7 @@ import javax.faces.bean.ViewScoped;
 import javax.validation.constraints.Size;
 
 import org.richfaces.tests.metamer.Attributes;
-import org.richfaces.ui.misc.UIPlaceholder;
+import org.richfaces.ui.misc.placeholder.UIPlaceholder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

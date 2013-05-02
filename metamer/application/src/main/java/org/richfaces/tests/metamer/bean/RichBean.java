@@ -41,7 +41,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 
-import org.richfaces.event.ItemChangeEvent;
+import org.richfaces.ui.toggle.ItemChangeEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

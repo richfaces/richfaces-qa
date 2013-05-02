@@ -39,7 +39,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ComponentSystemEvent;
 
-import org.richfaces.event.DropEvent;
 import org.richfaces.model.SwingTreeNodeDataModelImpl;
 import org.richfaces.model.TreeDataModel;
 import org.richfaces.tests.metamer.Attributes;
@@ -54,7 +53,8 @@ import org.richfaces.tests.metamer.model.tree.RichFacesTreeNode;
 import org.richfaces.tests.metamer.model.tree.SwingTreeNode;
 import org.richfaces.tests.metamer.model.tree.TreeNodeWithContent;
 import org.richfaces.tests.metamer.model.tree.TreeNodeWithContentFactory;
-import org.richfaces.ui.iteration.UITree;
+import org.richfaces.ui.drag.dropTarget.DropEvent;
+import org.richfaces.ui.iteration.tree.UITree;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

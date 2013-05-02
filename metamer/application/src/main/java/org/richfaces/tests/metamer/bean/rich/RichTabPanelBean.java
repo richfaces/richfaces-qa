@@ -31,8 +31,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.richfaces.tests.metamer.Attributes;
-import org.richfaces.ui.output.UITab;
-import org.richfaces.ui.output.UITabPanel;
+import org.richfaces.ui.toggle.tabPanel.UITab;
+import org.richfaces.ui.toggle.tabPanel.UITabPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

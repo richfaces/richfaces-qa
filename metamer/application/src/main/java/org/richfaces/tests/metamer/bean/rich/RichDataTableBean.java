@@ -37,7 +37,7 @@ import org.richfaces.model.Filter;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.ColumnSortingMap;
 import org.richfaces.tests.metamer.model.Employee;
-import org.richfaces.ui.iteration.UIDataTable;
+import org.richfaces.ui.iteration.dataTable.UIDataTable;
 import org.richfaces.ui.iteration.UIDataTableBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -37,7 +37,7 @@ import org.richfaces.tests.metamer.bean.RichBean;
 import org.richfaces.tests.metamer.bean.abstractions.SelectValidationBean;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
 import org.richfaces.tests.metamer.model.Capital;
-import org.richfaces.ui.select.UISelect;
+import org.richfaces.ui.select.select.UISelect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

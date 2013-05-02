@@ -29,7 +29,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import org.richfaces.tests.metamer.Attributes;
-import org.richfaces.ui.ajax.UICommandLink;
+import org.richfaces.ui.ajax.command.UICommandLink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

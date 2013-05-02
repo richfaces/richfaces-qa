@@ -40,7 +40,7 @@ import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.RichBean;
 import org.richfaces.tests.metamer.bean.abstractions.DateInputValidationBean;
 import org.richfaces.tests.metamer.bean.abstractions.DateInputValidationBeanImpl;
-import org.richfaces.ui.input.UICalendar;
+import org.richfaces.ui.input.calendar.UICalendar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

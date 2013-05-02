@@ -44,7 +44,7 @@ import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.validation.groups.ValidationGroupAllComponents;
 import org.richfaces.tests.metamer.validation.groups.ValidationGroupBooleanInputs;
 import org.richfaces.tests.metamer.validation.groups.ValidationGroupNumericInputs;
-import org.richfaces.ui.validation.UIGraphValidator;
+import org.richfaces.ui.validation.graphValidator.UIGraphValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

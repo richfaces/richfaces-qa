@@ -24,7 +24,7 @@ package org.richfaces.tests.metamer.bean.issues;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-import org.richfaces.event.ItemChangeEvent;
+import org.richfaces.ui.toggle.ItemChangeEvent;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
