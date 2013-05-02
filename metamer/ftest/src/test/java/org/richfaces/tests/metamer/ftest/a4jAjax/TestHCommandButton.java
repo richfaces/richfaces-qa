@@ -137,13 +137,13 @@ public class TestHCommandButton extends AbstractAjaxTest {
     @Override
     public void performAction() {
         page.input.sendKeys("RichFaces 4");
-        Graphene.guardXhr(page.button).click();
+        Graphene.guardAjax(page.button).click();
     }
 
     public void performAction(String input) {
         page.input.clear();
         page.input.sendKeys(input);
-        Graphene.guardXhr(page.button).click();
+        Graphene.guardAjax(page.button).click();
     }
 
     @Override

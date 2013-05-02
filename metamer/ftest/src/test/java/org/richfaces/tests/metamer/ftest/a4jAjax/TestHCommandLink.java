@@ -125,7 +125,7 @@ public class TestHCommandLink extends AbstractAjaxTest {
     @Override
     public void performAction() {
         page.input.sendKeys("RichFaces 4");
-        Graphene.guardXhr(page.link).click();
+        Graphene.guardAjax(page.link).click();
     }
 
     @Override

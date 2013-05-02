@@ -25,7 +25,6 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.testng.annotations.Test;
 
 /**

@@ -21,15 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richMessage;
 
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.messageAttributes;
-import static org.testng.Assert.assertFalse;
-
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.abstractions.message.AbstractMessageComponentTest;
 import org.richfaces.tests.metamer.ftest.abstractions.message.MessageComponentTestPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 
 /**
  * Test base for rich:message component.

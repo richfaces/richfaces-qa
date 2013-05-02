@@ -69,11 +69,11 @@ public class CommandButtonLinkPage extends MetamerPage {
     }
 
     public void submitByButton() {
-        Graphene.guardXhr(button).click();
+        Graphene.guardAjax(button).click();
     }
 
     public void submitByLink() {
-        Graphene.guardXhr(link).click();
+        Graphene.guardAjax(link).click();
     }
 
     public void waitUntilOutput1Changes(String expectedText) {

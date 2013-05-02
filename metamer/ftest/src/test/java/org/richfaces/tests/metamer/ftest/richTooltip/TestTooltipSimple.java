@@ -269,7 +269,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         String renderCheckerText = page.renderCheckerOutput.getText();
 
         MetamerPage.requestTimeNotChangesWaiting(page.tooltip).recall(page.panel);
-        Graphene.waitGui().until(Graphene.element(page.renderCheckerOutput).text().not().equalTo(renderCheckerText));
+        Graphene.waitGui().until().element(page.renderCheckerOutput).text().not().equalTo(renderCheckerText);
     }
 
     @Test
@@ -287,7 +287,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
         MetamerPage.requestTimeNotChangesWaiting(page.tooltip).hide(page.panel);
 
-        Graphene.waitGui().until(Graphene.element(page.tooltip.root).not().isVisible());
+        Graphene.waitGui().until().element(page.tooltip.root).is().not().visible();
     }
 
     @Test
@@ -476,8 +476,8 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
             assertFalse(Graphene.element(page.tooltip.root).isVisible().apply(driver), "Tooltip shouldn't be displayed before deplay timeout (" + presetDelay + ") is over.");
         }
         WebDriverWait<Void> wait = new WebDriverWait<Void>(null, driver, presetDelay/1000 + 2);
-        wait.until(Graphene.element(page.tooltip.root).isPresent());
-        wait.until(Graphene.element(page.tooltip.root).isVisible());
+        wait.until().element(page.tooltip.root).is().present();
+        wait.until().element(page.tooltip.root).is().visible();
         page.tooltip.hide(page.panel);
 
     }
@@ -487,7 +487,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         tooltipAttributes.set(TooltipAttributes.showEvent, "mouseup");
 
         new Actions(driver).clickAndHold(page.panel).release(page.panel).build().perform();
-        Graphene.waitGui().until(Graphene.element(page.tooltip.root).isVisible());
+        Graphene.waitGui().until().element(page.tooltip.root).is().visible();
     }
 
     @Test
@@ -499,7 +499,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
         String statusChecker = page.statusCheckerOutput.getText();
         page.tooltip.recall(page.panel);
-        Graphene.waitAjax().until(Graphene.element(page.statusCheckerOutput).text().not().equalTo(statusChecker));
+        Graphene.waitAjax().until().element(page.statusCheckerOutput).text().not().equalTo(statusChecker);
     }
 
     @Test

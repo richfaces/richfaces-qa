@@ -227,7 +227,7 @@ public class TestMenuItem extends AbstractWebDriverTest {
     public void testLimitRender() {
         menuItemAttributes.set(MenuItemAttributes.limitRender, Boolean.TRUE);
         openMenu();
-        Graphene.guardXhr(MetamerPage.requestTimeNotChangesWaiting(menuItem1, 2L)).click();
+        Graphene.guardAjax(MetamerPage.requestTimeNotChangesWaiting(menuItem1, 2L)).click();
     }
 
     @Test

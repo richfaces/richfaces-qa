@@ -22,9 +22,9 @@
 package org.richfaces.tests.metamer.ftest.richContextMenu;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
-import static org.jboss.arquillian.graphene.Graphene.guardXhr;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.contextMenuAttributes;
@@ -223,7 +223,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         // ajax
         contextMenuAttributes.set(ContextMenuAttributes.mode, "ajax");
         page.contextMenu.invoke(page.targetPanel1);
-        guardXhr(page.contextMenu.getItems().get(0)).click();
+        guardAjax(page.contextMenu.getItems().get(0)).click();
         assertEquals(page.output.getText(), "Open", "Menu action was not performed.");
 
         // server

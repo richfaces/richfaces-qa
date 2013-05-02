@@ -67,12 +67,12 @@ public class TestTooltipTarget extends AbstractWebDriverTest {
         // 2. target
         tooltipAttributes.set(target, "jsf-div");
         page.tooltip.recall(page.panel2);
-        Graphene.waitGui().until(Graphene.element(page.tooltip.root).isVisible());
+        Graphene.waitGui().until().element(page.tooltip.root).is().visible();
 
         // 3. default target
         tooltipAttributes.set(target, "panel");
         page.tooltip.recall(page.panel3);
-        Graphene.waitGui().until(Graphene.element(page.tooltip.root).isVisible());
+        Graphene.waitGui().until().element(page.tooltip.root).is().visible();
     }
 
     @Test
@@ -80,6 +80,6 @@ public class TestTooltipTarget extends AbstractWebDriverTest {
     public void testTargetWithRegularDiv() {
         tooltipAttributes.set(target, "regular-div");
         page.tooltip.recall(page.panel1);
-        Graphene.waitGui().until(Graphene.element(page.tooltip.root).isVisible());
+        Graphene.waitGui().until().element(page.tooltip.root).is().visible();
     }
 }

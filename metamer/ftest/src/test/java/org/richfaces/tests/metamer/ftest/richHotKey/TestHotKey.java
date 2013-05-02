@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richHotKey;
 
-import org.openqa.selenium.Keys;
 import org.testng.annotations.Test;
 
 /**

@@ -102,7 +102,7 @@ public class TestHSelectManyListbox extends AbstractAjaxTest {
 
     @Override
     public void performAction() {
-        Graphene.guardXhr(new Select(page.selectManyListbox)).selectByValue("Audi");
+        Graphene.guardAjax(new Select(page.selectManyListbox)).selectByValue("Audi");
     }
 
     @Override

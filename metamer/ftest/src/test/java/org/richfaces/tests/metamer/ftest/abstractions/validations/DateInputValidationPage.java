@@ -21,20 +21,16 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions.validations;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-
-import java.util.List;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.abstractions.DateInputValidationBean;
 import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
+
+import com.google.common.collect.Sets;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>

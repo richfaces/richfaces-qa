@@ -119,7 +119,7 @@ public class TestHGraphicImage extends AbstractAjaxTest {
     @Override
     public void performAction() {
         page.input.sendKeys("RichFaces 4");
-        Graphene.guardXhr(page.image).click();
+        Graphene.guardAjax(page.image).click();
     }
 
     @Override

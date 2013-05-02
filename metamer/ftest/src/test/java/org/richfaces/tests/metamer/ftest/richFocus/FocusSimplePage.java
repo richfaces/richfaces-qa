@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richFocus;
 
-import static org.jboss.arquillian.graphene.Graphene.guardXhr;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
@@ -48,7 +48,7 @@ public class FocusSimplePage extends AbstractFocusPage {
     private WebElement preserveAttributeCheckBox;
 
     public void ajaxValidateInputs() {
-        guardXhr(ajaxValidateButton).click();
+        guardAjax(ajaxValidateButton).click();
     }
 
     public TextInputComponentImpl getNameInput() {

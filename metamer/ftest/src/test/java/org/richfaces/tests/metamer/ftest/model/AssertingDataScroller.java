@@ -26,7 +26,6 @@ import static junit.framework.Assert.assertTrue;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 
-
 /**
  * Provides DataScroller control methods with assertions about scroller state.
  *

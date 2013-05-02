@@ -30,7 +30,6 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
-
 /**
  * Selenium tests for page faces/components/richValidator/single.xhtml
  *

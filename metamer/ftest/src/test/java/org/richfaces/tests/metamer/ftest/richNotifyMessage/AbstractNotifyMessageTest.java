@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.ftest.richNotifyMessage;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.abstractions.message.AbstractMessageComponentTest;
-import org.richfaces.tests.metamer.ftest.abstractions.message.MessageComponentTestPage;
 
 /**
  * Test base for rich:message component.

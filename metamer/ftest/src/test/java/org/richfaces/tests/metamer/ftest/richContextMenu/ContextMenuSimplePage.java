@@ -85,12 +85,12 @@ public class ContextMenuSimplePage extends MetamerPage {
     }
 
     public void waitUntilContextMenuAppears() {
-        Graphene.waitModel().withMessage("Context menu did not show.").until(Graphene.element(contextMenuContent).isVisible());
+        Graphene.waitModel().withMessage("Context menu did not show.").until().element(contextMenuContent).is().visible();
     }
 
     public void waitUntilContextMenuHides() {
         Graphene.waitModel().withMessage("Context menu should not be visible.")
-                .until(Graphene.element(contextMenuContent).not().isVisible());
+                .until().element(contextMenuContent).is().not().visible();
     }
 
     public Locations getContextMenuLocations() {

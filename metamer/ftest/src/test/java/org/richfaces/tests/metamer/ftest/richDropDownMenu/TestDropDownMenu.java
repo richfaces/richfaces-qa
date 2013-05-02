@@ -23,9 +23,9 @@
 package org.richfaces.tests.metamer.ftest.richDropDownMenu;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
-import static org.jboss.arquillian.graphene.Graphene.guardXhr;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.dropDownMenuAttributes;
@@ -173,7 +173,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         // ajax
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "ajax");
         page.fileDropDownMenu.invoke(page.target1);
-        guardXhr(page.fileDropDownMenu.getItems().get(0)).click();
+        guardAjax(page.fileDropDownMenu.getItems().get(0)).click();
         assertEquals(page.output.getText(), "New", "Menu action was not performed.");
 
         // server
