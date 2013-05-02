@@ -28,7 +28,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.ui.output.TooltipMode;
+import org.richfaces.ui.output.tooltip.TooltipMode;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>

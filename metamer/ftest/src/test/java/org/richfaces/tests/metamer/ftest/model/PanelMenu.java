@@ -37,7 +37,7 @@ import org.jboss.test.selenium.GuardRequest;
 import org.jboss.test.selenium.JQuerySelectors;
 import org.jboss.test.selenium.RequestTypeModelGuard.Model;
 import org.jboss.test.selenium.locator.reference.ReferencedLocator;
-import org.richfaces.ui.menu.PanelMenuMode;
+import org.richfaces.ui.toggle.panelMenu.PanelMenuMode;
 
 public class PanelMenu extends AbstractModel<JQueryLocator> implements Model {
 

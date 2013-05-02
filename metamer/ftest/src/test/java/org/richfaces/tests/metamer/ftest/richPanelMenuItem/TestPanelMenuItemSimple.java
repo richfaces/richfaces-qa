@@ -53,7 +53,7 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.ui.common.Mode;
-import org.richfaces.ui.menu.PanelMenuMode;
+import org.richfaces.ui.toggle.panelMenu.PanelMenuMode;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

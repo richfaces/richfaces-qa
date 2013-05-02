@@ -37,7 +37,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.ui.menu.PanelMenuMode;
+import org.richfaces.ui.toggle.panelMenu.PanelMenuMode;
 import org.testng.annotations.Test;
 
 

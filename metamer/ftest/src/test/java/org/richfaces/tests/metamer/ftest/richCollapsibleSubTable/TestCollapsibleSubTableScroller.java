@@ -35,7 +35,6 @@ import java.net.URL;
 import java.util.List;
 
 import org.jboss.arquillian.ajocado.request.RequestType;
-import org.richfaces.ExpandMode;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Use;

@@ -31,9 +31,7 @@ import org.jboss.arquillian.ajocado.geometry.Point;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.request.RequestType;
 import org.richfaces.tests.metamer.ftest.model.AbstractModel;
-import org.richfaces.ui.output.TooltipMode;
-
-
+import org.richfaces.ui.output.tooltip.TooltipMode;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>

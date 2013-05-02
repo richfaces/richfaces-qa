@@ -59,8 +59,8 @@ import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.ui.common.Positioning;
-import org.richfaces.ui.output.TooltipLayout;
-import org.richfaces.ui.output.TooltipMode;
+import org.richfaces.ui.output.tooltip.TooltipLayout;
+import org.richfaces.ui.output.tooltip.TooltipMode;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
