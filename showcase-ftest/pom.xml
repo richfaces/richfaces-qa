@@ -28,7 +28,7 @@
         <android.apk.version>2.21.0</android.apk.version>
         <android.skip>true</android.skip>
         <!-- -->
-        <version.showcase-portlet>3.2.0.CR1</version.showcase-portlet>
+        <version.showcase-portlet>3.2.0.Final</version.showcase-portlet>
         <version.jboss-portal>7.1.3.Final</version.jboss-portal>
     </properties>
 
