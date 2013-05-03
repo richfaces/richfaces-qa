@@ -16,6 +16,7 @@
             <package name="org.richfaces.tests.metamer.ftest.a4jAjax"/>
             <package name="org.richfaces.tests.metamer.ftest.a4jCommandButton"/>
             <package name="org.richfaces.tests.metamer.ftest.a4jCommandLink"/>
+            <package name="org.richfaces.tests.metamer.ftest.a4jJSFunction"/>
             <package name="org.richfaces.tests.metamer.ftest.a4jLog"/>
             <package name="org.richfaces.tests.metamer.ftest.richAccordion"/>
             <package name="org.richfaces.tests.metamer.ftest.richAutocomplete"/>
@@ -63,7 +64,6 @@
         </packages>
 
         <classes>
-            <class name="org.richfaces.tests.metamer.ftest.a4jJSFunction.TestRF12510" />
             <class name="org.richfaces.tests.metamer.ftest.a4jMediaOutput.TestElementAWebDriver" />
             <class name="org.richfaces.tests.metamer.ftest.a4jPush.TestTwoPush" />
             <class name="org.richfaces.tests.metamer.ftest.richEditor.TestRichEditorWithTyping" />
