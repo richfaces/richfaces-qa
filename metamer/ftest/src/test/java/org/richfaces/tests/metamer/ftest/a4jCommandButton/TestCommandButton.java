@@ -166,7 +166,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
         page.typeToInput(CommandButtonLinkPage.STRING_RF1);
         page.submitByButton();
         page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
-        page.assertListener(PhaseId.UPDATE_MODEL_VALUES, CommandButtonLinkPage.STRING_EXECUTE_CHECKER_MSG);
+        page.assertListener(PhaseId.UPDATE_MODEL_VALUES, MetamerPage.STRING_EXECUTE_CHECKER_MSG);
     }
 
     @Test

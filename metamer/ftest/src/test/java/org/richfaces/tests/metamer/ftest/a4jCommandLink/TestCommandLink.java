@@ -170,7 +170,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
         page.typeToInput(CommandButtonLinkPage.STRING_RF1);
         page.submitByLink();
         page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
-        page.assertListener(PhaseId.UPDATE_MODEL_VALUES, CommandButtonLinkPage.STRING_EXECUTE_CHECKER_MSG);
+        page.assertListener(PhaseId.UPDATE_MODEL_VALUES, MetamerPage.STRING_EXECUTE_CHECKER_MSG);
     }
 
     @Test
@@ -191,8 +191,8 @@ public class TestCommandLink extends AbstractWebDriverTest {
         page.verifyOutput3Text("");
 
         page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, CommandButtonLinkPage.STRING_ACTIONLISTENER_MSG);
-        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, CommandButtonLinkPage.STRING_ACTION_MSG);
+        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, MetamerPage.STRING_ACTIONLISTENER_MSG);
+        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, MetamerPage.STRING_ACTION_MSG);
     }
 
     @Test

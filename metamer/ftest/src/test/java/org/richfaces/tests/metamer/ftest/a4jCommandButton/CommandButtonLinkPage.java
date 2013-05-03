@@ -44,9 +44,6 @@ public class CommandButtonLinkPage extends MetamerPage {
     public static final String STRING_UNICODE1 = "ľščťžýáíéňô";
     public static final String STRING_UNICODE2 = "ľščťžý";
     public static final String STRING_UNICODE3 = "ĽŠČŤŽÝÁÍÉŇÔ";
-    public static final String STRING_ACTIONLISTENER_MSG = "action listener invoked";
-    public static final String STRING_ACTION_MSG = "action invoked";
-    public static final String STRING_EXECUTE_CHECKER_MSG = "executeChecker";
 
     @FindBy(css = "input[id$=input]")
     public WebElement input;
