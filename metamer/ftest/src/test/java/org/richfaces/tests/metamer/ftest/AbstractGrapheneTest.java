@@ -1,24 +1,27 @@
-/*******************************************************************************
- * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
+/**
+ * *****************************************************************************
+ * JBoss, Home of Professional Open Source Copyright 2010-2013, Red Hat, Inc.
+ * and individual contributors by the
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
+ * @authors tag. See the copyright.txt in the distribution for a full listing of
+ * individual contributors.
  *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ * This is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ * This software is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this software; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
+ * site: http://www.fsf.org.
+ ******************************************************************************
+ */
 package org.richfaces.tests.metamer.ftest;
 
 import static org.jboss.arquillian.ajocado.Graphene.alertPresent;
@@ -103,28 +106,31 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     protected TextRetriever retrieveJsFunctionChecker = retrieveText.locator(jsFunctionChecker);
     protected LocatorReference<JQueryLocator> attributesRoot = new LocatorReference<JQueryLocator>(
             pjq("span[id$=:attributes:panel]"));
-
     protected ScreenshotInterceptor screenshotInterceptor = new ScreenshotInterceptor();
     protected PhaseInfo phaseInfo = new PhaseInfo();
 
     /**
-     * Opens the tested page. If templates is not empty nor null, it appends url parameter with templates.
+     * Opens the tested page. If templates is not empty nor null, it appends url
+     * parameter with templates.
      *
-     * @param templates
-     *            templates that will be used for test, e.g. "red_div"
+     * @param templates templates that will be used for test, e.g. "red_div"
      */
     @BeforeMethod(alwaysRun = true)
     public void loadPage(Object[] templates) {
         if (selenium == null) {
             throw new SkipException("selenium isn't initialized");
         }
-
-        selenium.open(buildUrl(getTestUrl() + "?templates=" + template.toString()));
+        if (runInPortalEnv) {
+             goToTestInPortal();
+        } else {
+            selenium.open(buildUrl(getTestUrl() + "?templates=" + template.toString()));
+        }
         selenium.waitForPageToLoad(TIMEOUT);
+
     }
 
     @Parameters("takeScreenshots")
-    @BeforeMethod(alwaysRun = true, dependsOnMethods = { "loadPage" })
+    @BeforeMethod(alwaysRun = true, dependsOnMethods = {"loadPage"})
     public void enableScreenshots(@Optional("false") String takeScreenshots, Method method) {
         if (!"false".equals(takeScreenshots)) {
             screenshotInterceptor.setMethod(method);
@@ -141,9 +147,10 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     }
 
     /**
-     * Factory method for creating instances of class JQueryLocator which locates the element using <a
-     * href="http://api.jquery.com/category/selectors/">JQuery Selector</a> syntax. It adds "div.content " in front of each
-     * selector.
+     * Factory method for creating instances of class JQueryLocator which
+     * locates the element using <a
+     * href="http://api.jquery.com/category/selectors/">JQuery Selector</a>
+     * syntax. It adds "div.content " in front of each selector.
      *
      * @param jquerySelector the jQuery selector
      * @return the jQuery locator
@@ -157,8 +164,7 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     /**
      * Forces the current thread sleep for given time.
      *
-     * @param millis
-     *            number of miliseconds for which the thread will sleep
+     * @param millis number of miliseconds for which the thread will sleep
      */
     protected void waitFor(long millis) {
         try {
@@ -169,7 +175,8 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     }
 
     /**
-     * Do a full page refresh (regular HTTP request) by triggering a command with no action bound.
+     * Do a full page refresh (regular HTTP request) by triggering a command
+     * with no action bound.
      */
     public void fullPageRefresh() {
         waitGui.until(elementPresent.locator(fullPageRefreshIcon));
@@ -177,7 +184,8 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     }
 
     /**
-     * Rerender all content of the page (AJAX request) by trigerring a command with no action but render bound.
+     * Rerender all content of the page (AJAX request) by trigerring a command
+     * with no action but render bound.
      */
     public void rerenderAll() {
         waitGui.until(elementPresent.locator(rerenderAllIcon));
@@ -185,28 +193,25 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     }
 
     /**
-     * A helper method for testing javascripts events. It sets alert('testedevent') to the input field for given event
-     * and fires the event. Then it checks the message in the alert dialog.
+     * A helper method for testing javascripts events. It sets
+     * alert('testedevent') to the input field for given event and fires the
+     * event. Then it checks the message in the alert dialog.
      *
-     * @param event
-     *            JavaScript event to be tested
-     * @param element
-     *            locator of tested element
+     * @param event JavaScript event to be tested
+     * @param element locator of tested element
      */
     protected void testFireEvent(Event event, ElementLocator<?> element) {
         testFireEvent(event, element, event.getEventName());
     }
 
     /**
-     * A helper method for testing javascripts events. It sets alert('testedevent') to the input field for given event
-     * and fires the event. Then it checks the message in the alert dialog.
+     * A helper method for testing javascripts events. It sets
+     * alert('testedevent') to the input field for given event and fires the
+     * event. Then it checks the message in the alert dialog.
      *
-     * @param event
-     *            JavaScript event to be tested
-     * @param element
-     *            locator of tested element
-     * @param attributeName
-     *            name of the attribute that should be set
+     * @param event JavaScript event to be tested
+     * @param element locator of tested element
+     * @param attributeName name of the attribute that should be set
      */
     protected void testFireEvent(Event event, ElementLocator<?> element, String attributeName) {
         ElementLocator<?> eventInput = pjq("input[id$=on" + attributeName + "Input]");
@@ -231,13 +236,13 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     }
 
     /**
-     * A helper method for testing attribute "style" or similar. It sets "background-color: yellow; font-size: 1.5em;"
-     * to the input field and checks that it was changed on the page.
+     * A helper method for testing attribute "style" or similar. It sets
+     * "background-color: yellow; font-size: 1.5em;" to the input field and
+     * checks that it was changed on the page.
      *
-     * @param element
-     *            locator of tested element
-     * @param attribute
-     *            name of the attribute that will be set (e.g. style, headerStyle, itemContentStyle)
+     * @param element locator of tested element
+     * @param attribute name of the attribute that will be set (e.g. style,
+     * headerStyle, itemContentStyle)
      */
     protected void testStyle(ElementLocator<?> element, BasicAttributes attribute) {
         final String value = "background-color: yellow; font-size: 1.5em;";
@@ -249,24 +254,24 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     }
 
     /**
-     * A helper method for testing attribute "style". It sets "background-color: yellow; font-size: 1.5em;" to the input
-     * field and checks that it was changed on the page.
+     * A helper method for testing attribute "style". It sets "background-color:
+     * yellow; font-size: 1.5em;" to the input field and checks that it was
+     * changed on the page.
      *
-     * @param element
-     *            locator of tested element
+     * @param element locator of tested element
      */
     protected void testStyle(ElementLocator<?> element) {
         testStyle(element, BasicAttributes.style);
     }
 
     /**
-     * A helper method for testing attribute "class" or similar. It sets "metamer-ftest-class" to the input field and
-     * checks that it was changed on the page.
+     * A helper method for testing attribute "class" or similar. It sets
+     * "metamer-ftest-class" to the input field and checks that it was changed
+     * on the page.
      *
-     * @param element
-     *            locator of tested element
-     * @param attribute
-     *            name of the attribute that will be set (e.g. styleClass, headerClass, itemContentClass)
+     * @param element locator of tested element
+     * @param attribute name of the attribute that will be set (e.g. styleClass,
+     * headerClass, itemContentClass)
      */
     protected void testStyleClass(ExtendedLocator<JQueryLocator> element, BasicAttributes attribute) {
         final String styleClass = "metamer-ftest-class";
@@ -279,25 +284,26 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     }
 
     /**
-     * A helper method for testing attribute "class". It sets "metamer-ftest-class" to the input field and checks that
-     * it was changed on the page. This method is wrapping {@link #testStyleClass(ExtendedLocator, BasicAttributes)}
+     * A helper method for testing attribute "class". It sets
+     * "metamer-ftest-class" to the input field and checks that it was changed
+     * on the page. This method is wrapping
+     * {@link #testStyleClass(ExtendedLocator, BasicAttributes)}
      *
-     * @param element
-     *            locator of tested element
+     * @param element locator of tested element
      */
     protected void testStyleClass(ExtendedLocator<JQueryLocator> element) {
         testStyleClass(element, BasicAttributes.styleClass);
     }
 
     /**
-     * Tests onrequest (e.g. onsubmit, onrequest...) events by using javascript functions. First fills Metamer's input
-     * for according component attribute with testing value, then does an action, which should end by throwing a testing
-     * event and then wait for the event if it was really launched
+     * Tests onrequest (e.g. onsubmit, onrequest...) events by using javascript
+     * functions. First fills Metamer's input for according component attribute
+     * with testing value, then does an action, which should end by throwing a
+     * testing event and then wait for the event if it was really launched
      *
-     * @param eventAttribute
-     *            event attribute (e.g. onsubmit, onrequest, onbeforedomupdate...)
-     * @param action
-     *            action wich leads to launching an event
+     * @param eventAttribute event attribute (e.g. onsubmit, onrequest,
+     * onbeforedomupdate...)
+     * @param action action wich leads to launching an event
      */
     public void testRequestEvent(AttributeEnum eventAttribute, IEventLaunchAction action) {
         testRequestEventBefore(eventAttribute);
@@ -368,8 +374,7 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     /**
      * A helper method for testing attribute "dir". It tries null, ltr and rtl.
      *
-     * @param element
-     *            locator of tested element
+     * @param element locator of tested element
      */
     protected void testDir(ElementLocator<?> element) {
         ElementLocator<?> ltrInput = ref(attributesRoot, "input[type=radio][name$=dirInput][value=ltr]");
@@ -398,8 +403,7 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     /**
      * A helper method for testing attribute "lang".
      *
-     * @param element
-     *            locator of tested element
+     * @param element locator of tested element
      */
     protected void testLang(ElementLocator<?> element) {
         JavaScript getAttributeLang = null;
@@ -425,8 +429,7 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     /**
      * A helper method for testing attribute "title".
      *
-     * @param element
-     *            locator of tested element
+     * @param element locator of tested element
      */
     protected void testTitle(ElementLocator<?> element) {
         ElementLocator<?> input = ref(attributesRoot, "input[type=text][id$=titleInput]");
@@ -445,15 +448,12 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     }
 
     /**
-     * A helper method for testing standard HTML attributes (RichFaces attributes that are directly put into markup),
-     * e.g. hreflang.
+     * A helper method for testing standard HTML attributes (RichFaces
+     * attributes that are directly put into markup), e.g. hreflang.
      *
-     * @param element
-     *            locator of tested element
-     * @param attribute
-     *            tested attribute, e.g. "hreflang"
-     * @param value
-     *            value that should be set, e.g. "cs"
+     * @param element locator of tested element
+     * @param attribute tested attribute, e.g. "hreflang"
+     * @param value value that should be set, e.g. "cs"
      */
     protected void testHtmlAttribute(ElementLocator<?> element, String attribute, String value) {
         AttributeLocator<?> attr = element.getAttribute(new Attribute(attribute));
@@ -500,10 +500,27 @@ public abstract class AbstractGrapheneTest extends AbstractMetamerTest {
     }
 
     /**
+      Method used to run selenium test in portal environment.
+     */
+    private void goToTestInPortal() {
+        selenium.open(buildUrl(format("{0}://{1}:{2}/{3}",
+            contextPath.getProtocol(), contextPath.getHost(), contextPath.getPort(), "portal/classic/metamer")));
+         selenium.waitForPageToLoad();
+         if(elementPresent.locator(jq("a[id$='controlsForm:goHomeLink']")).isTrue()) {
+             selenium.click(jq("a[id$='controlsForm:goHomeLink']"));
+             //JSF form works only on homepage
+         }
+         String testUrl = getTestUrl().toExternalForm().substring(getTestUrl().toExternalForm().indexOf("faces"));
+         selenium.type(jq("input[id$='linksForm:linkToTest']"), testUrl);
+         selenium.type(jq("input[id$='linksForm:template']"), template.toString());
+         selenium.click(jq("a[id$='linksForm:redirectToPortlet']"));
+    }
+
+    /**
      * Abstract ReloadTester for testing
      *
-     * @param <T>
-     *            the type of input values which will be set, sent and then verified
+     * @param <T> the type of input values which will be set, sent and then
+     * verified
      */
     public abstract class ReloadTester<T> {
 

@@ -38,14 +38,17 @@ import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.bean.rich.RichProgressBarBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.richfaces.tests.page.fragments.impl.Utils;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
@@ -115,20 +118,39 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     @Test
     public void testData() {
         String testedString = "RichFaces 4";
-        long interval = 2000;
         progressBarAttributes.set(ProgressBarAttributes.data, testedString);
         progressBarAttributes.set(ProgressBarAttributes.oncomplete, "data = event.data");
-        progressBarAttributes.set(ProgressBarAttributes.interval, interval);//more time for checking
 
-        MetamerPage.waitRequest(page.startButton, WaitRequestType.XHR).click();
+        MetamerPage.requestTimeChangesWaiting(page.startButton).click();
         //waiting for next request, which will carry the data
         String reqTime = page.requestTime.getText();
-        Graphene.waitGui().withTimeout(interval + 1000, TimeUnit.MILLISECONDS)
-                .withMessage("Page was not updated")
-                .until(Graphene.element(page.requestTime).not().text().equalTo(reqTime));
+        Graphene.waitAjax().withMessage("Page was not updated")
+                .until().element(page.requestTime).text().not().equalTo(reqTime);
 
         String data = expectedReturnJS("return data", testedString);
         assertEquals(data, "RichFaces 4", "Data sent with ajax request");
+    }
+
+    @Test
+    public void testEnabled() {
+        progressBarAttributes.set(ProgressBarAttributes.maxValue, 100);//longer progress
+        int timeout = Integer.parseInt(progressBarAttributes.get(ProgressBarAttributes.interval)) + 300;
+        MetamerPage.requestTimeChangesWaiting(page.startButton).click();
+        waiting(timeout * 2);//wait for 2 requests
+        //waiting for next request, which will carry the data
+        MetamerPage.requestTimeChangesWaiting(page.stopPollingButton).click();
+        waiting(timeout);//wait for the last request
+        String reqTime = page.requestTime.getText();
+        try {
+            Graphene.waitModel()
+                    .withTimeout(timeout, TimeUnit.MILLISECONDS)
+                    .until().element(page.requestTime).text().not().equalTo(reqTime);
+        } catch (TimeoutException e) {// OK
+            String progress = Utils.getTextFromHiddenElement(page.label).replace("%", "").trim();
+            Assert.assertTrue(Integer.valueOf(progress) < 100, "Progress should be lower than 100 %");
+            return;
+        }
+        Assert.fail("The request time should not change after polling is stopped.");
     }
 
     @Test
@@ -141,7 +163,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         long expectedRunTime = getExpectedRunTime();
         executeJS("metamerEvents = \"\"");
 
-        MetamerPage.waitRequest(page.startButton, WaitRequestType.XHR).click();
+        MetamerPage.requestTimeChangesWaiting(page.startButton).click();
         Graphene.waitAjax().withTimeout(expectedRunTime, TimeUnit.SECONDS)
                 .withMessage("Progress bar should disappear after it finishes.")
                 .until(ElementPresent.getInstance().element(page.restartButton));
@@ -154,6 +176,11 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
             assertEquals(events[i + 1], "beforedomupdate", "Event nr." + (i + 1) + " should be beforedomupdate.");
             assertEquals(events[i + 2], "complete", "Event nr." + (i + 2) + " should be complete.");
         }
+    }
+
+    @Test
+    public void testFinishClass() {
+        testStyleClass(page.finish, BasicAttributes.finishClass);
     }
 
     @Test
@@ -172,7 +199,12 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "testInterval", ints = { 1200, 1600, 2200 })
+    public void testInitialClass() {
+        testStyleClass(page.init, BasicAttributes.initialClass);
+    }
+
+    @Test
+    @Use(field = "testInterval", ints = {1200, 1600, 2200})
     public void testInterval() {
         testOneRunOfProgressBar(page.startButton, testInterval);
     }
@@ -201,13 +233,13 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         long expectedRunTime = getExpectedRunTime();
         int expectedNumberOfUpdates = getExpectedNumberOfUpdates();
 
-        MetamerPage.waitRequest(button, WaitRequestType.XHR).click();
+        MetamerPage.requestTimeChangesWaiting(button).click();
         String timeString = page.requestTime.getText();
         timesString.add(timeString);
         for (int i = 0; i < expectedNumberOfUpdates; i++) {
             Graphene.waitGui().withTimeout(maxWaitTime, TimeUnit.MILLISECONDS)
                     .withMessage("Page was not updated")
-                    .until(Graphene.element(page.requestTime).not().text().equalTo(timeString));
+                    .until().element(page.requestTime).text().not().equalTo(timeString);
             timeString = page.requestTime.getText();
             timesString.add(timeString);
             labelsList.add(page.label.getText().replace(" %", ""));
@@ -259,7 +291,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         executeJS("metamerEvents = \"\"");
         long expectedRunTime = getExpectedRunTime();
 
-        MetamerPage.waitRequest(page.startButton, WaitRequestType.XHR).click();
+        MetamerPage.requestTimeChangesWaiting(page.startButton).click();
         Graphene.waitAjax().withTimeout(expectedRunTime, TimeUnit.SECONDS)
                 .withMessage("Progress bar should disappear after it finishes.")
                 .until(ElementPresent.getInstance().element(page.restartButton));
@@ -306,6 +338,16 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
     }
 
     @Test
+    public void testProgressClass() {
+        testStyleClass(page.progress, BasicAttributes.progressClass);
+    }
+
+    @Test
+    public void testRemainingClass() {
+        testStyleClass(page.remain, BasicAttributes.remainingClass);
+    }
+
+    @Test
     public void testRendered() {
         progressBarAttributes.set(ProgressBarAttributes.rendered, Boolean.FALSE);
         assertNotPresent(page.progressBar, "Progress bar should not be rendered when rendered=false.");
@@ -313,7 +355,7 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
 
     @Test
     public void testStart() {
-        MetamerPage.waitRequest(page.startButton, WaitRequestType.XHR).click();
+        MetamerPage.requestTimeChangesWaiting(page.startButton).click();
 
         String labelValue = page.label.getText();
         assertTrue("1 %".equals(labelValue) || "2 %".equals(labelValue),
@@ -327,5 +369,15 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         assertNotPresent(page.finishOutput, "Complete output should not be present on the page.");
         assertNotPresent(page.startButton, "Start button should not be present on the page.");
         assertNotPresent(page.restartButton, "Restart button should not be present on the page.");
+    }
+
+    @Test
+    public void testStyle() {
+        testStyle(page.progressBar);
+    }
+
+    @Test
+    public void testStyleClass() {
+        testStyleClass(page.progressBar);
     }
 }

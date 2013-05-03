@@ -22,14 +22,12 @@
  */
 package org.richfaces.tests.metamer.ftest.richValidator;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.Graphene.textEquals;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-
 import java.util.EnumMap;
 import java.util.Map;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.validation.AssertFalseBean;
 import org.richfaces.tests.metamer.validation.AssertTrueBean;
 import org.richfaces.tests.metamer.validation.DecimalMinMaxBean;
@@ -54,7 +52,7 @@ import org.testng.annotations.BeforeMethod;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @version $Revision: 22997 $
  */
-public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
+public abstract class AbstractValidatorsTest extends AbstractWebDriverTest {
 
     protected enum ID {
 
@@ -125,13 +123,10 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
     }
     protected Map<ID, String> messages = new EnumMap<AbstractValidatorsTest.ID, String>(AbstractValidatorsTest.ID.class);
     private Map<ID, Object> wrongValue = new EnumMap<AbstractValidatorsTest.ID, Object>(AbstractValidatorsTest.ID.class);
-    private JQueryLocator inputFormat = pjq("input[id$=:{0}]");
-    private JQueryLocator setWrongBtn = pjq("input[id$=setWrongValuesButton]");
-    private JQueryLocator setCorrectBtn = pjq("input[id$=setCorrectValuesButton]");
-    private JQueryLocator hCommandBtn = pjq("input[id$=hButton]");
-    private JQueryLocator a4jCommandBtn = pjq("input[id$=a4jButton]");
-    private JQueryLocator selectionItem = pjq("table[id$=:size] tr > td > input[value={0}]");
-    private JQueryLocator msgFormat = pjq("span[id$={0}Msg] span.rf-msg-det");
+
+    @Page
+    protected ValidatorSimplePage page;
+
     private String future;
     private String past;
     private boolean firstRun = true;
@@ -172,11 +167,13 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
     }
 
     private void clickCorrectButton() {
-        selenium.click(setCorrectBtn);
-        if (selenium.isElementPresent(inputFormat.format(ID.future))
-                && selenium.isElementPresent(inputFormat.format(ID.past))) {
-            selenium.type(inputFormat.format(ID.past), past);
-            selenium.type(inputFormat.format(ID.future), future);
+        page.setCorrectBtn.click();
+        if (Graphene.element(page.inputFuture).isPresent().apply(driver)
+            && Graphene.element(page.inputPast).isPresent().apply(driver)) {
+            page.inputPast.clear();
+            page.inputPast.sendKeys(past);
+            page.inputFuture.clear();
+            page.inputFuture.sendKeys(future);
         }
     }
 
@@ -186,10 +183,11 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
     @BeforeMethod(alwaysRun = true)
     public void setDates() {
         if (firstRun) {
-            if (selenium.isElementPresent(inputFormat.format(ID.future))
-                    && selenium.isElementPresent(inputFormat.format(ID.past))) {
-                past = selenium.getValue(inputFormat.format(ID.past));
-                future = selenium.getValue(inputFormat.format(ID.future));
+            if (Graphene.element(page.inputFuture).isPresent().apply(driver)
+                && Graphene.element(page.inputPast).isPresent().apply(driver)) {
+                past = page.inputPast.getAttribute("value"); // sendKeys(past);
+                future = page.inputFuture.getAttribute("value"); // sendKeys(future);
+
                 wrongValue.put(AbstractValidatorsTest.ID.past, future);
                 wrongValue.put(AbstractValidatorsTest.ID.future, past);
                 firstRun = false;
@@ -198,67 +196,68 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
     }
 
     private void clickWrongButton() {
-        selenium.click(setWrongBtn);
-        if (selenium.isElementPresent(inputFormat.format(ID.future))
-                && selenium.isElementPresent(inputFormat.format(ID.past))) {
-            selenium.type(inputFormat.format(ID.past), future);
-            selenium.type(inputFormat.format(ID.future), past);
+        page.setWrongBtn.click();
+        if (Graphene.element(page.inputFuture).isPresent().apply(driver)
+            && Graphene.element(page.inputPast).isPresent().apply(driver)) {
+            page.inputPast.clear();
+            page.inputPast.sendKeys(future);
+            page.inputFuture.clear();
+            page.inputFuture.sendKeys(past);
         }
     }
 
     public void verifyAllWrongWithAjaxSubmit() {
         clickWrongButton();
 
-        selenium.click(a4jCommandBtn);
+        page.a4jCommandBtn.click();
 
-        waitGui.until(textEquals.locator(msgFormat.format(ID.assertTrue)).text(messages.get(ID.assertTrue)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.assertFalse)).text(messages.get(ID.assertFalse)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.decimalMinMax)).text(messages.get(ID.decimalMinMax)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.digits)).text(messages.get(ID.digits)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.max)).text(messages.get(ID.max)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.min)).text(messages.get(ID.min)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.minMax)).text(messages.get(ID.minMax)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.notEmpty)).text(messages.get(ID.notEmpty)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.notNull)).text(messages.get(ID.notNull)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.pattern)).text(messages.get(ID.pattern)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.custom)).text(messages.get(ID.custom)));
+        Graphene.waitGui().until().element(page.msgAssertTrue).text().equalTo(messages.get(ID.assertTrue));
+        Graphene.waitGui().until().element(page.msgAssertFalse).text().equalTo(messages.get(ID.assertFalse));
+        Graphene.waitGui().until().element(page.msgDecimalMinMax).text().equalTo(messages.get(ID.decimalMinMax));
+        Graphene.waitGui().until().element(page.msgDigits).text().equalTo(messages.get(ID.digits));
+        Graphene.waitGui().until().element(page.msgMax).text().equalTo(messages.get(ID.max));
+        Graphene.waitGui().until().element(page.msgMin).text().equalTo(messages.get(ID.min));
+        Graphene.waitGui().until().element(page.msgMinMax).text().equalTo(messages.get(ID.minMax));
+        Graphene.waitGui().until().element(page.msgNotEmpty).text().equalTo(messages.get(ID.notEmpty));
+        Graphene.waitGui().until().element(page.msgNotNull).text().equalTo(messages.get(ID.notNull));
+        Graphene.waitGui().until().element(page.msgPattern).text().equalTo(messages.get(ID.pattern));
+        Graphene.waitGui().until().element(page.msgCustom).text().equalTo(messages.get(ID.custom));
 
-        if (selenium.isElementPresent(inputFormat.format(ID.regexp))) {
+        if (Graphene.element(page.inputRegexp).isPresent().apply(driver)) {
             // regExp validator isn't present in JSR303 validation
-            waitGui.until(textEquals.locator(msgFormat.format(ID.regexp)).text(messages.get(ID.regexp)));
+            Graphene.waitGui().until().element(page.msgRegexp).text().equalTo(messages.get(ID.regexp));
         }
-        waitGui.until(textEquals.locator(msgFormat.format(ID.past)).text(messages.get(ID.past)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.future)).text(messages.get(ID.future)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.stringSize)).text(messages.get(ID.stringSize)));
-        // TODO JJa 2011-06-06: remove comment when fixed issue with manyCheckbox validation
-        // waitGui.until(textEquals.locator(msgFormat.format(ID.size)).text(messages.get(ID.size)));
+        Graphene.waitGui().until().element(page.msgPast).text().equalTo(messages.get(ID.past));
+        Graphene.waitGui().until().element(page.msgFuture).text().equalTo(messages.get(ID.future));
+        Graphene.waitGui().until().element(page.msgStringSize).text().equalTo(messages.get(ID.stringSize));
+        Graphene.waitGui().until().element(page.msgSize).text().equalTo(messages.get(ID.size));
     }
 
     public void verifyAllWrongWithJSFSubmit() {
         clickWrongButton();
 
-        selenium.click(hCommandBtn);
+        page.hCommandBtn.click();
 
-        waitGui.until(textEquals.locator(msgFormat.format(ID.assertTrue)).text(messages.get(ID.assertTrue)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.assertFalse)).text(messages.get(ID.assertFalse)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.decimalMinMax)).text(messages.get(ID.decimalMinMax)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.digits)).text(messages.get(ID.digits)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.max)).text(messages.get(ID.max)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.min)).text(messages.get(ID.min)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.minMax)).text(messages.get(ID.minMax)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.notEmpty)).text(messages.get(ID.notEmpty)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.notNull)).text(messages.get(ID.notNull)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.pattern)).text(messages.get(ID.pattern)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.custom)).text(messages.get(ID.custom)));
+        Graphene.waitGui().until().element(page.msgAssertTrue).text().equalTo(messages.get(ID.assertTrue));
+        Graphene.waitGui().until().element(page.msgAssertFalse).text().equalTo(messages.get(ID.assertFalse));
+        Graphene.waitGui().until().element(page.msgDecimalMinMax).text().equalTo(messages.get(ID.decimalMinMax));
+        Graphene.waitGui().until().element(page.msgDigits).text().equalTo(messages.get(ID.digits));
+        Graphene.waitGui().until().element(page.msgMax).text().equalTo(messages.get(ID.max));
+        Graphene.waitGui().until().element(page.msgMin).text().equalTo(messages.get(ID.min));
+        Graphene.waitGui().until().element(page.msgMinMax).text().equalTo(messages.get(ID.minMax));
+        Graphene.waitGui().until().element(page.msgNotEmpty).text().equalTo(messages.get(ID.notEmpty));
+        Graphene.waitGui().until().element(page.msgNotNull).text().equalTo(messages.get(ID.notNull));
+        Graphene.waitGui().until().element(page.msgPattern).text().equalTo(messages.get(ID.pattern));
+        Graphene.waitGui().until().element(page.msgCustom).text().equalTo(messages.get(ID.custom));
 
-        if (selenium.isElementPresent(inputFormat.format(ID.regexp))) {
+        if (Graphene.element(page.inputRegexp).isPresent().apply(driver)) {
             // regExp validator isn't present in JSR303 validation
-            waitGui.until(textEquals.locator(msgFormat.format(ID.regexp)).text(messages.get(ID.regexp)));
+            Graphene.waitGui().until().element(page.msgRegexp).text().equalTo(messages.get(ID.regexp));
         }
-        waitGui.until(textEquals.locator(msgFormat.format(ID.past)).text(messages.get(ID.past)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.future)).text(messages.get(ID.future)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.stringSize)).text(messages.get(ID.stringSize)));
-        waitGui.until(textEquals.locator(msgFormat.format(ID.size)).text(messages.get(ID.size)));
+        Graphene.waitGui().until().element(page.msgPast).text().equalTo(messages.get(ID.past));
+        Graphene.waitGui().until().element(page.msgFuture).text().equalTo(messages.get(ID.future));
+        Graphene.waitGui().until().element(page.msgStringSize).text().equalTo(messages.get(ID.stringSize));
+        Graphene.waitGui().until().element(page.msgSize).text().equalTo(messages.get(ID.size));
     }
 
     /**
@@ -269,12 +268,10 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
         clickCorrectButton();
 
         // checkBoolean to true
-        selenium.check(inputFormat.format(ID.assertTrue), (Boolean) wrongValue.get(ID.assertTrue));
+        page.inputAssertTrue.click();
+        page.a4jCommandBtn.click();
 
-        // guardNoRequest(selenium).click(a4jCommandBtn);
-        selenium.click(a4jCommandBtn);
-
-        waitGui.until(textEquals.locator(msgFormat.format(ID.assertTrue)).text(messages.get(ID.assertTrue)));
+        Graphene.waitGui().until().element(page.msgAssertTrue).text().equalTo(messages.get(ID.assertTrue));
     }
 
     /**
@@ -285,10 +282,10 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
         clickCorrectButton();
 
         // checkBoolean to false
-        selenium.check(inputFormat.format(ID.assertFalse), (Boolean) wrongValue.get(ID.assertFalse));
-        selenium.click(a4jCommandBtn);
+        page.inputAssertFalse.click();
+        page.a4jCommandBtn.click();
 
-        waitGui.until(textEquals.locator(msgFormat.format(ID.assertFalse)).text(messages.get(ID.assertFalse)));
+        Graphene.waitGui().until().element(page.msgAssertFalse).text().equalTo(messages.get(ID.assertFalse));
     }
 
     /**
@@ -299,10 +296,11 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
         clickCorrectButton();
 
         // Decimal input
-        selenium.type(inputFormat.format(ID.decimalMinMax), wrongValue.get(ID.decimalMinMax).toString());
-        selenium.click(a4jCommandBtn);
+        page.inputDecimalMinMax.clear();
+        page.inputDecimalMinMax.sendKeys(wrongValue.get(ID.decimalMinMax).toString());
+        page.a4jCommandBtn.click();
 
-        waitGui.until(textEquals.locator(msgFormat.format(ID.decimalMinMax)).text(messages.get(ID.decimalMinMax)));
+        Graphene.waitGui().until().element(page.msgDecimalMinMax).text().equalTo(messages.get(ID.decimalMinMax));
     }
 
     /**
@@ -313,10 +311,11 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
         clickCorrectButton();
 
         // decimal input digits
-        selenium.type(inputFormat.format(ID.digits), wrongValue.get(ID.digits).toString());
-        selenium.click(a4jCommandBtn);
+        page.inputDigits.clear();
+        page.inputDigits.sendKeys(wrongValue.get(ID.digits).toString());
+        page.a4jCommandBtn.click();
 
-        waitGui.until(textEquals.locator(msgFormat.format(ID.decimalMinMax)).text(messages.get(ID.decimalMinMax)));
+        Graphene.waitGui().until().element(page.msgDigits).text().equalTo(messages.get(ID.digits));
     }
 
     /**
@@ -327,10 +326,11 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
         clickCorrectButton();
 
         // integer input max
-        selenium.type(inputFormat.format(ID.max), wrongValue.get(ID.max).toString());
-        selenium.click(a4jCommandBtn);
+        page.inputMax.clear();
+        page.inputMax.sendKeys(wrongValue.get(ID.max).toString());
+        page.a4jCommandBtn.click();
 
-        waitGui.until(textEquals.locator(msgFormat.format(ID.max)).text(messages.get(ID.max)));
+        Graphene.waitGui().until().element(page.msgMax).text().equalTo(messages.get(ID.max));
     }
 
     /**
@@ -341,10 +341,12 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
         clickCorrectButton();
 
         // integer input min
-        selenium.type(inputFormat.format(ID.min), wrongValue.get(ID.min).toString());
-        selenium.click(a4jCommandBtn);
+        // selenium.type(inputFormat.format(ID.min), wrongValue.get(ID.min).toString());
+        page.inputMin.clear();
+        page.inputMin.sendKeys(wrongValue.get(ID.min).toString());
+        page.a4jCommandBtn.click();
 
-        waitGui.until(textEquals.locator(msgFormat.format(ID.min)).text(messages.get(ID.min)));
+        Graphene.waitGui().until().element(page.msgMin).text().equalTo(messages.get(ID.min));
     }
 
     /**
@@ -355,10 +357,12 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
         clickCorrectButton();
 
         // integer input min and max
-        selenium.type(inputFormat.format(ID.minMax), wrongValue.get(ID.minMax).toString());
-        selenium.click(a4jCommandBtn);
+        // selenium.type(inputFormat.format(ID.minMax), wrongValue.get(ID.minMax).toString());
+        page.inputMinMax.clear();
+        page.inputMinMax.sendKeys(wrongValue.get(ID.minMax).toString());
+        page.a4jCommandBtn.click();
 
-        waitGui.until(textEquals.locator(msgFormat.format(ID.minMax)).text(messages.get(ID.minMax)));
+        Graphene.waitGui().until().element(page.msgMinMax).text().equalTo(messages.get(ID.minMax));
     }
 
     /**
@@ -369,10 +373,12 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
         clickCorrectButton();
 
         // string input not empty
-        selenium.type(inputFormat.format(ID.notEmpty), wrongValue.get(ID.notEmpty).toString());
-        selenium.click(a4jCommandBtn);
+        // selenium.type(inputFormat.format(ID.notEmpty), wrongValue.get(ID.notEmpty).toString());
+        page.inputNotEmpty.clear();
+        page.inputNotEmpty.sendKeys(wrongValue.get(ID.notEmpty).toString());
+        page.a4jCommandBtn.click();
 
-        waitGui.until(textEquals.locator(msgFormat.format(ID.notEmpty)).text(messages.get(ID.notEmpty)));
+        Graphene.waitGui().until().element(page.msgNotEmpty).text().equalTo(messages.get(ID.notEmpty));
     }
 
     /**
@@ -383,10 +389,11 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
         clickCorrectButton();
 
         // string input not null
-        selenium.type(inputFormat.format(ID.notNull), "");
-        selenium.click(a4jCommandBtn);
+        page.inputNotNull.clear();
+        page.inputNotNull.sendKeys("");
+        page.a4jCommandBtn.click();
 
-        waitGui.until(textEquals.locator(msgFormat.format(ID.notNull)).text(messages.get(ID.notNull)));
+        Graphene.waitGui().until().element(page.msgNotNull).text().equalTo(messages.get(ID.notNull));
     }
 
     /**
@@ -397,10 +404,11 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
         clickCorrectButton();
 
         // string input custom pattern
-        selenium.type(inputFormat.format(ID.pattern), wrongValue.get(ID.pattern).toString());
-        selenium.click(a4jCommandBtn);
+        page.inputPattern.clear();
+        page.inputPattern.sendKeys(wrongValue.get(ID.pattern).toString());
+        page.a4jCommandBtn.click();
 
-        waitGui.until(textEquals.locator(msgFormat.format(ID.pattern)).text(messages.get(ID.pattern)));
+        Graphene.waitGui().until().element(page.msgPattern).text().equalTo(messages.get(ID.pattern));
     }
 
     /**
@@ -411,10 +419,11 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
         clickCorrectButton();
 
         // string input custom string
-        selenium.type(inputFormat.format(ID.custom), wrongValue.get(ID.custom).toString());
-        selenium.click(a4jCommandBtn);
+        page.inputCustom.clear();
+        page.inputCustom.sendKeys(wrongValue.get(ID.custom).toString());
+        page.a4jCommandBtn.click();
 
-        waitGui.until(textEquals.locator(msgFormat.format(ID.custom)).text(messages.get(ID.custom)));
+        Graphene.waitGui().until().element(page.msgCustom).text().equalTo(messages.get(ID.custom));
     }
 
     /**
@@ -425,10 +434,11 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
         clickCorrectButton();
 
         // string input regExp pattern
-        selenium.type(inputFormat.format(ID.regexp), wrongValue.get(ID.regexp).toString());
-        selenium.click(a4jCommandBtn);
+        page.inputRegexp.clear();
+        page.inputRegexp.sendKeys(wrongValue.get(ID.regexp).toString());
+        page.a4jCommandBtn.click();
 
-        waitGui.until(textEquals.locator(msgFormat.format(ID.regexp)).text(messages.get(ID.regexp)));
+        Graphene.waitGui().until().element(page.msgRegexp).text().equalTo(messages.get(ID.regexp));
     }
 
     /**
@@ -439,10 +449,11 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
         clickCorrectButton();
 
         // date input past
-        selenium.type(inputFormat.format(ID.past), wrongValue.get(ID.past).toString());
-        guardXhr(selenium).click(a4jCommandBtn);
+        page.inputPast.clear();
+        page.inputPast.sendKeys(wrongValue.get(ID.past).toString());
+        Graphene.guardAjax(page.a4jCommandBtn).click();
 
-        waitGui.until(textEquals.locator(msgFormat.format(ID.past)).text(messages.get(ID.past)));
+        Graphene.waitGui().until().element(page.msgPast).text().equalTo(messages.get(ID.past));
     }
 
     /**
@@ -453,10 +464,10 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
         clickCorrectButton();
 
         // date input future
-        selenium.type(inputFormat.format(ID.future), wrongValue.get(ID.future).toString());
-        selenium.click(a4jCommandBtn);
-
-        waitGui.until(textEquals.locator(msgFormat.format(ID.future)).text(messages.get(ID.future)));
+        page.inputFuture.clear();
+        page.inputFuture.sendKeys(wrongValue.get(ID.future).toString());
+        page.a4jCommandBtn.click();
+        Graphene.waitGui().until().element(page.msgFuture).text().equalTo(messages.get(ID.future));
     }
 
     /**
@@ -467,10 +478,11 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
         clickCorrectButton();
 
         // string input string size
-        selenium.type(inputFormat.format(ID.stringSize), wrongValue.get(ID.stringSize).toString());
-        selenium.click(a4jCommandBtn);
+        page.inputStringSize.clear();
+        page.inputStringSize.sendKeys(wrongValue.get(ID.stringSize).toString());
+        page.a4jCommandBtn.click();
 
-        waitGui.until(textEquals.locator(msgFormat.format(ID.stringSize)).text(messages.get(ID.stringSize)));
+        Graphene.waitGui().until().element(page.msgStringSize).text().equalTo(messages.get(ID.stringSize));
     }
 
     /**
@@ -482,10 +494,9 @@ public abstract class AbstractValidatorsTest extends AbstractGrapheneTest {
         clickWrongButton();
 
         // many checkBox input selection size
-        // selenium.type(inputFormat.format(ID.size), wrongValue.get(ID.size).toString());
-        selenium.check(selectionItem.format(wrongValue.get(ID.size)), true);
+        page.getSelectionItemByLabel(wrongValue.get(ID.size).toString()).click();
+        page.a4jCommandBtn.click();
 
-        selenium.click(a4jCommandBtn);
-        waitGui.until(textEquals.locator(msgFormat.format(ID.size)).text(messages.get(ID.size)));
+        Graphene.waitGui().until().element(page.msgSize).text().equalTo(messages.get(ID.size));
     }
 }

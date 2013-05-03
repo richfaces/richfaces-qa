@@ -29,7 +29,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="/templates/dateInputComponentValidationTemplate.xhtml">
+    <ui:composition template="/templates/abstractions/inputValidation/dateInputComponentValidationTemplate.xhtml">
         <ui:define name="past">
             <rich:calendar id="past" value="#{richCalendarBean.pastValue}"
                            datePattern="#{richCalendarBean.attributes['datePattern'].value}"

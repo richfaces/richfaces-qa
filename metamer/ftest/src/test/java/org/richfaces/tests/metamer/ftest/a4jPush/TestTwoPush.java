@@ -28,14 +28,17 @@ import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
+import javax.annotation.Nullable;
+
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
+
+import com.google.common.base.Predicate;
 
 public class TestTwoPush extends AbstractWebDriverTest {
 
@@ -55,29 +58,38 @@ public class TestTwoPush extends AbstractWebDriverTest {
     @Test
     public void testPushEnable() {
         // disable push updates
-        MetamerPage.waitRequest(page.pushEnabledChckBox, WaitRequestType.XHR).click();
-
+        page.pushEnabledChckBox.click();
+        Graphene.waitModel().until(Graphene.element(page.pushEnabledChckBox).not().isSelected());
         // enable push updates
-        MetamerPage.waitRequest(page.pushEnabledChckBox, WaitRequestType.XHR).click();
+        page.pushEnabledChckBox.click();
 
         verifyPushUpdateReceive(10L);
     }
 
     @Test
     public void testOnSubscribed() {
-        pushAttributes.set(PushAttributes.onsubscribed, "metamerEvents += \"onsubscribed \"");
+        pushAttributes.set(PushAttributes.onsubscribed, "sessionStorage.setItem('metamerEvents', metamerEvents += \"onsubscribed \")");
 
         // first onsubscribed event receive immediatelly after form update
-        String event = ((String) executeJS("return window.metamerEvents")).trim();
+        String event = ((String) executeJS("return sessionStorage.getItem('metamerEvents')")).trim();
         // there are 2 push components on page (this example verify that one doesn't influence another one)
         assertEquals(event, "onsubscribed onsubscribed", "Attribute onsubscribed doesn't work");
 
-        MetamerPage.waitRequest(page.pushEnabledChckBox, WaitRequestType.XHR).click();
-        MetamerPage.waitRequest(page.pushEnabledChckBox, WaitRequestType.XHR).click();
+        page.pushEnabledChckBox.click();
+        Graphene.waitModel().until(Graphene.element(page.pushEnabledChckBox).not().isSelected());
+        page.pushEnabledChckBox.click();
+        Graphene.waitModel().until(Graphene.element(page.pushEnabledChckBox).isSelected());
         // second onsubscribed event receive after manual re-attach by checkbox
-        event = ((String) executeJS("return window.metamerEvents")).trim();
-        // not there should be 3rd event invoked on re-attach to topic
-        assertEquals(event, "onsubscribed onsubscribed onsubscribed", "Attribute onsubscribed doesn't work");
+        Graphene.waitModel().until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(@Nullable WebDriver arg0) {
+                String events = ((String) executeJS("return sessionStorage.getItem('metamerEvents')")).trim();
+                // not there should be 3rd event invoked on re-attach to topic
+                return "onsubscribed onsubscribed onsubscribed".equals(events);
+            }
+        });
+        executeJS("window.metamerEvents = \"\";");
+        executeJS("sessionStorage.removeItem('metamerEvents')");
     }
 
     /**

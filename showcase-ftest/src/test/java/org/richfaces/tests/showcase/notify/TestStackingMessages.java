@@ -21,83 +21,35 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.notify;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.testng.Assert.assertTrue;
-
-import org.jboss.arquillian.ajocado.geometry.Point;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.JQueryScriptWindowObject;
+import junit.framework.Assert;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.page.fragments.impl.notify.NotifyMessagePosition;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.notify.page.StackingMessagesPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
-public class TestStackingMessages extends AbstractNotifyTest {
+public class TestStackingMessages extends AbstractWebDriverTest {
 
-    /* *********************************************************
-     * Constants*********************************************************
-     */
-
-    private final int TIMEOUT_RENDER = 2000;
-    private final int TIMEOUT_DISAPPEAR = 11000;
-
-    /* ***************************************************************************************************
-     * Locators***************************************************************************************************
-     */
-
-    private JQueryLocator renderFirstButtonTopLeft = jq("input[type=submit]:eq(0)");
-    private JQueryLocator renderSecondBottomRight = jq("input[type=submit]:eq(1)");
-
-    /* **********************************************************************
-     * Tests*********************************************************************
-     */
+    @Page
+    private StackingMessagesPage page;
 
     @Test
     public void testRenderFirst() {
-        waitUntilNotifyDissappeares(TIMEOUT_DISAPPEAR);
-
-        guardXhr(selenium).click(renderFirstButtonTopLeft);
-
-        waitUntilNotifyAppears(TIMEOUT_RENDER);
-
-        Point notifyPosition = selenium.getElementPosition(notify);
-
-        JQueryScriptWindowObject heightJQ = new JQueryScriptWindowObject("height()");
-        JQueryScriptWindowObject widthJQ = new JQueryScriptWindowObject("width()");
-
-        String screenHeight = selenium.getEval(heightJQ);
-        String screenWidth = selenium.getEval(widthJQ);
-
-        System.err.println(screenHeight + " " + screenWidth);
-        System.err.println(notifyPosition.getX() + " " + notifyPosition.getY());
-
-        assertTrue(notifyPosition.getX() < ((Integer.valueOf(screenWidth) / 10)), "The X coordination is wrong");
-        assertTrue(notifyPosition.getY() < ((Integer.valueOf(screenHeight) / 10)), "The Y coordination is wrong");
+        page.waitUntilThereIsNoNotify();
+        page.topLeft();
+        Assert.assertEquals(page.getNotify().getMessageAtIndex(0).getPosition(), NotifyMessagePosition.TOP_LEFT);
     }
 
     @Test
     public void testRenderSecond() {
-        waitUntilNotifyDissappeares(TIMEOUT_DISAPPEAR);
-
-        guardXhr(selenium).click(renderSecondBottomRight);
-
-        waitUntilNotifyAppears(TIMEOUT_RENDER);
-
-        Point notifyPosition = selenium.getElementPosition(notify);
-
-        JQueryScriptWindowObject heightJQ = new JQueryScriptWindowObject("height()");
-        JQueryScriptWindowObject widthJQ = new JQueryScriptWindowObject("width()");
-
-        String screenHeight = selenium.getEval(heightJQ);
-        String screenWidth = selenium.getEval(widthJQ);
-
-        System.err.println(screenHeight + " " + screenWidth);
-        System.err.println(notifyPosition.getX() + " " + notifyPosition.getY());
-
-        assertTrue(notifyPosition.getX() > ((Integer.valueOf(screenWidth) / 10) * 6), "The X coordination is wrong");
-        assertTrue(notifyPosition.getY() > ((Integer.valueOf(screenHeight) / 10) * 8), "The Y coordination is wrong");
+        page.waitUntilThereIsNoNotify();
+        page.bottomRight();
+        Assert.assertEquals(page.getNotify().getMessageAtIndex(0).getPosition(), NotifyMessagePosition.BOTTOM_RIGHT);
     }
 
 }

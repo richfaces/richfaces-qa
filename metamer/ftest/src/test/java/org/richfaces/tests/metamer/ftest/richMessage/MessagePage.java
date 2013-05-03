@@ -21,28 +21,35 @@
  */
 package org.richfaces.tests.metamer.ftest.richMessage;
 
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.abstractions.message.MessageComponentTestPage;
+import org.richfaces.tests.page.fragments.impl.message.Message;
+import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class MessagePage extends MetamerPage {
+public class MessagePage extends MessageComponentTestPage<Message> {
 
-    // controls
-    @FindBy(css = "input[id$=a4jButton]")
-    public WebElement a4jCommandButton;
-    @FindBy(css = "input[type=button][id$=setCorrectValuesButton]")
-    public WebElement correctValuesButton;
-    @FindBy(css = "input[id$=hButton]")
-    public WebElement hCommandButton;
-    @FindBy(css = "span[id$=newSpan]")
-    public WebElement newSpan;
-    @FindBy(css = "input[id$=simpleInput1]")
-    public WebElement simpleInput1;
-    @FindBy(css = "input[id$=simpleInput2]")
-    public WebElement simpleInput2;
-    @FindBy(css = "input[type=button][id$=setWrongValuesButton]")
-    public WebElement wrongValuesButton;
+    @FindBy(css = "span[id$=messageForSelectableInput]")
+    public RichFacesMessage messageComponentForSelectableInput;
+    @FindBy(css = "span[id$=messageForFirstInput]")
+    public RichFacesMessage messageComponentForFirstInput;
+    @FindBy(css = "span[id$=messageForSecondInput]")
+    public RichFacesMessage messageComponentForSecondInput;
+
+    @Override
+    public Message getMessageComponentForFirstInput() {
+        return messageComponentForFirstInput;
+    }
+
+    @Override
+    public Message getMessageComponentForSecondInput() {
+        return messageComponentForSecondInput;
+    }
+
+    @Override
+    public Message getMessageComponentForSelectableInput() {
+        return messageComponentForSelectableInput;
+    }
 }

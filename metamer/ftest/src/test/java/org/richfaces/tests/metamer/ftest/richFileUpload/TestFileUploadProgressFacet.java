@@ -42,24 +42,30 @@ public class TestFileUploadProgressFacet extends AbstractFileUploadTest {
 
     @Test
     public void testCustomProgressBarPresenceBeforeFinishedUpload() {
-        assertTrue(Graphene.element(page.customPB).isPresent().apply(driver), "No custom progress bar is present on page.");
-        assertFalse(Graphene.element(page.customPB).isVisible().apply(driver), "Custom progress bar should not be displayed now.");
+        assertTrue(Graphene.element(page.customPB).isPresent().apply(driver),
+            "No custom progress bar is present on page.");
+        assertFalse(Graphene.element(page.customPB).isVisible().apply(driver),
+            "Custom progress bar should not be displayed now.");
 
-        //stop page refreshing/rendering after file is sent
+        // stop page refreshing/rendering after file is sent
         fileUploadAttributes.set(FileUploadAttributes.onfilesubmit, "window.stop()");
 
-        //send file to server, the file will not be shown in uploaded files list, because we stop the rendering before it
+        // send file to server, the file will not be shown in uploaded files list, because we stop the rendering before
+        // it
         sendFileWithWaiting(acceptableFile, true, false);
 
-        Graphene.waitGui().withMessage("Custom progress bar should be displayed now.").until(Graphene.element(page.customPB).isVisible());
+        Graphene.waitGui().withMessage("Custom progress bar should be displayed now.").until().element(page.customPB)
+            .is().visible();
     }
 
     @Test
     public void testCustomProgressBarPresenceAfterFinishedUpload() {
-        //send file to server
+        // send file to server
         sendFileWithWaiting(acceptableFile, true, true);
 
-        Graphene.waitGui().withMessage("Done label should be displayed after upload.").until(Graphene.element(page.uploadStatusLabel).isVisible());
-        Graphene.waitGui().withMessage("Progress bar should not be displayed after upload is completed.").until(Graphene.element(page.customPB).not().isVisible());
+        Graphene.waitGui().withMessage("Done label should be displayed after upload.").until()
+            .element(page.uploadStatusLabel).is().visible();
+        Graphene.waitGui().withMessage("Progress bar should not be displayed after upload is completed.").until()
+            .element(page.customPB).is().not().visible();
     }
 }

@@ -33,17 +33,11 @@ import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 public enum MessageAttributes implements AttributeEnum {
 
     ajaxRendered,
-    attributes,
-    binding,//no testing
-    childCount,//no testing
-    children,//no testing
+    binding,
     dir,
     escape,
-    facets,//no testing
-    family,//no testing
     FOR,
     id,
-    keepTransient,//no testing
     lang,
     onclick,
     ondblclick,
@@ -55,10 +49,7 @@ public enum MessageAttributes implements AttributeEnum {
     onmouseout,
     onmouseover,
     onmouseup,
-    parent,//no testing
     rendered,
-    rendererType,//no testing
-    rendersChildren,//no testing
     showDetail,
     showSummary,
     style,

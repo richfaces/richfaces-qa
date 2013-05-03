@@ -150,7 +150,7 @@ public class TestRichSelect extends AbstractGrapheneTest {
         for (int i = 0; i < 3; i++) {
             selenium.keyPressNative(ARROWDOWN);
         }
-
+        waitFor(1000);
         assertTrue(selenium.belongsClass(options.format(2), "rf-sel-sel"));
     }
 

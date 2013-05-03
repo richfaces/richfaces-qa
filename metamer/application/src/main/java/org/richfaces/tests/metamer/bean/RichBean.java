@@ -162,6 +162,9 @@ public class RichBean implements Serializable {
         richComponents.put("richMessage", "Rich Message");
         richComponents.put("richMessages", "Rich Messages");
         richComponents.put("richNotify", "Rich Notify");
+        richComponents.put("richNotifyMessage", "Rich Notify Message");
+        richComponents.put("richNotifyMessages", "Rich Notify Messages");
+        richComponents.put("richNotifyStack", "Rich Notify Stack");
         richComponents.put("richOrderingList", "Rich Ordering List");
         richComponents.put("richPanel", "Rich Panel");
         richComponents.put("richPanelMenu", "Rich Panel Menu");

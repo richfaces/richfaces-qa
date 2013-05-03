@@ -42,6 +42,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <h:inputText id="input" value="#{a4jButtonBean.input}" />
 
                 <a4j:commandButton id="a4jCommandButton"
+                                   accesskey="#{a4jButtonBean.attributes['accesskey'].value}"
                                    action="#{a4jButtonBean.attributes.action}"
                                    actionListener="#{a4jButtonBean.attributes.actionListener}"
                                    bypassUpdates="#{a4jButtonBean.attributes['bypassUpdates'].value}"

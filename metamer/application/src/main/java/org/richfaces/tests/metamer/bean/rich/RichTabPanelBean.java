@@ -85,7 +85,6 @@ public class RichTabPanelBean implements Serializable {
         tab.setHeader("tab" + index + " header");
         tab.setId("tab" + index);
         tab.setName("tab" + index);
-        tab.setRender("tab" + index);
 
         tabs.add(tab);
     }
@@ -98,7 +97,6 @@ public class RichTabPanelBean implements Serializable {
         tab.setHeader("tab" + index + " header");
         tab.setId("tab" + index);
         tab.setName("tab" + index);
-        tab.setRender("tab" + index);
 
         tabPanel.getChildren().add(tab);
     }

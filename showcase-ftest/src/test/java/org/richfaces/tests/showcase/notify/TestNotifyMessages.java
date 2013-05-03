@@ -21,32 +21,24 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.notify;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementNotPresent;
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.message.AbstractTestMessage;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.page.fragments.impl.message.Message;
+import org.richfaces.tests.page.fragments.impl.notify.NotifyMessage;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.notify.page.MessagesPage;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  * @version $Revision$
  */
-public class TestNotifyMessages extends AbstractTestMessage {
+public class TestNotifyMessages extends AbstractWebDriverTest {
 
-    /* ****************************************************************
-     * Locators****************************************************************
-     */
-
-    protected JQueryLocator notify = jq(".rf-ntf");
+    @Page
+    private MessagesPage page;
 
     /* ***************************************************************************
      * Tests ********************************************************************* ******
@@ -66,68 +58,46 @@ public class TestNotifyMessages extends AbstractTestMessage {
      * ******************************************************
      */
 
-    private void checkNotifyMessages(boolean submitActivation) {
-        List<String> messages = new ArrayList<String>();
+    protected void checkNotifyMessages(boolean submitActivation) {
+        page.fillCorrectValues();
+        page.validate();
+        page.waitUntilThereIsNoNotify();
 
-        fillInputWithStringOfLength(nameInput, MINIMUM_OF_NAME - 1);
-        fillInputWithStringOfLength(jobInput, MINIMUM_OF_JOB - 1);
-        fillInputWithStringOfLength(addressInput, MINIMUM_OF_ADDRESS - 1);
-        fillInputWithStringOfLength(zipInput, MINIMUM_OF_ZIP - 1);
-
+        page.fillShorterValues();
+        page.blur();
         if (submitActivation) {
-
-            waitGui.until(elementNotPresent.locator(notify));
-
-            guardXhr(selenium).click(ajaxValidateButton);
+            page.waitUntilThereIsNoNotify();
+            page.validate();
         }
 
-        int numberOfNotifyMessages = selenium.getCount(notify);
-
-        assertEquals(numberOfNotifyMessages, 4, "There should be 4 notify messages!");
-
-        for (Iterator<JQueryLocator> i = notify.iterator(); i.hasNext();) {
-
-            String notifyText = selenium.getText(i.next());
-
-            messages.add(notifyText);
-        }
-
-        // checking that rich:message is there, and has correct value, note that messages are different for some inputs when
-        // validation
-        // invoked by AJAX or CSV
-        isThereErrorMessage(nameError, NAME_ERROR_LESS_THAN_MINIMUM, true);
-
+        int numberOfNotifyMessages = page.getNotify().size();
         if (submitActivation) {
-            isThereErrorMessage(jobError, JOB_ERROR_LESS_THAN_MINIMUM, true);
+            Assert.assertEquals(numberOfNotifyMessages, 4, "There should be 4 notify messages!");
         } else {
-            isThereErrorMessage(jobError, JOB_ERROR_NOT_BETWEEN, true);
-        }
-
-        isThereErrorMessage(addressError, ADDRESS_ERROR_LESS_THAN_MINIMUM, true);
-
-        if (submitActivation) {
-            isThereErrorMessage(zipError, ZIP_ERROR_LESS_THAN_MINIMUM, true);
-        } else {
-            isThereErrorMessage(zipError, ZIP_ERROR_NOT_BETWEEN, true);
-        }
-
-        // checking the content of the rich:notify messages
-        assertTrue(messages.contains(NAME_ERROR_LESS_THAN_MINIMUM), "The notify message for name is incorrect");
-        assertTrue(messages.contains(ADDRESS_ERROR_LESS_THAN_MINIMUM), "The notify message for address is incorrect");
-
-        if (submitActivation) {
-            assertTrue(messages.contains(JOB_ERROR_LESS_THAN_MINIMUM),
-                "The notify message after blur event for job is incorrect");
-        } else {
-            assertTrue(messages.contains(JOB_ERROR_NOT_BETWEEN), "The notify message after submit button for job is incorrect");
+            Assert.assertTrue(numberOfNotifyMessages >= 4, "There should be 4 notify messages!");
         }
 
         if (submitActivation) {
-            assertTrue(messages.contains(ZIP_ERROR_LESS_THAN_MINIMUM),
-                "The notify message after submite button activation for zip is incorrect");
+            assertErrorIsPresent("Name", MessagesPage.NAME_ERROR_LESS_THAN_MINIMUM);
+            assertErrorIsPresent("Job", MessagesPage.JOB_ERROR_LESS_THAN_MINIMUM);
+            assertErrorIsPresent("Zip", MessagesPage.ZIP_ERROR_LESS_THAN_MINIMUM);
+            assertErrorIsPresent("Address", MessagesPage.ADDRESS_ERROR_LESS_THAN_MINIMUM);
         } else {
-            assertTrue(messages.contains(ZIP_ERROR_NOT_BETWEEN),
-                "The notify message after blur event activation for zip is incorrect");
+            assertErrorIsPresent("Name", "Name");
+            assertErrorIsPresent("Job", "Job");
+            assertErrorIsPresent("Zip", "Zip");
+            assertErrorIsPresent("Address", "Address");
         }
     }
+
+    protected void assertErrorIsPresent(String fieldName, String expected) {
+        List<NotifyMessage> messages = page.getNotify().getAllMessagesOfType(Message.MessageType.ERROR);
+        for (Message message: messages) {
+            if (message.getSummary().contains(expected)) {
+                return;
+            }
+        }
+        Assert.fail("There is no message with summary '" + expected + "' for field " + fieldName + ".");
+    }
+
 }

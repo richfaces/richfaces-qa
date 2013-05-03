@@ -42,6 +42,10 @@
             <package name="org.richfaces.tests.metamer.ftest.richMenuSeparator"/>
             <package name="org.richfaces.tests.metamer.ftest.richMessage"/>
             <package name="org.richfaces.tests.metamer.ftest.richMessages"/>
+            <package name="org.richfaces.tests.metamer.ftest.richNotify"/>
+            <package name="org.richfaces.tests.metamer.ftest.richNotifyMessage"/>
+            <package name="org.richfaces.tests.metamer.ftest.richNotifyMessages"/>
+            <package name="org.richfaces.tests.metamer.ftest.richNotifyStack"/>
             <package name="org.richfaces.tests.metamer.ftest.richPanel" />
             <package name="org.richfaces.tests.metamer.ftest.richPanelMenu" />
             <package name="org.richfaces.tests.metamer.ftest.richPanelMenuGroup" />
@@ -50,8 +54,10 @@
             <package name="org.richfaces.tests.metamer.ftest.richPlaceholder"/>
             <package name="org.richfaces.tests.metamer.ftest.richProgressBar"/>
             <package name="org.richfaces.tests.metamer.ftest.richToggleControl"/>
+            <package name="org.richfaces.tests.metamer.ftest.richTooltip" />
             <package name="org.richfaces.tests.metamer.ftest.richTreeSelectionChangeListener"/>
             <package name="org.richfaces.tests.metamer.ftest.richTreeToggleListener"/>
+            <package name="org.richfaces.tests.metamer.ftest.richValidator" />
         </packages>
 
         <classes>

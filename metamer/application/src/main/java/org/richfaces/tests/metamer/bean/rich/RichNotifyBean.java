@@ -22,213 +22,62 @@
 package org.richfaces.tests.metamer.bean.rich;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import org.richfaces.component.UINotify;
-import org.richfaces.component.UINotifyStack;
-import org.richfaces.component.html.HtmlNotifyMessages;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.bean.abstractions.MessageTestingBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Managed bean for notify:notify
- *
- * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-@ManagedBean(name = "notifyBean")
+@ManagedBean(name = "richNotifyBean")
 @ViewScoped
 public class RichNotifyBean implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    private static Logger LOGGER = LoggerFactory.getLogger(RichNotifyBean.class);
     public static final String DEFAULT_DETAIL = "Message detail";
     public static final String DEFAULT_SUMMARY = "Message summary";
-    private static final long serialVersionUID = 8408544368608166106L;
-    private static Logger logger;
-    private Attributes attributesNotify;
-    private Attributes attributesNotifyMessages;
-    private Attributes attributesNotifyStackFirst;
-    private Attributes attributesNotifyStackSecond;
-    private Attributes attributesBean;
+    private Attributes attributes;
 
     /**
      * Initializes the managed bean.
      */
     @PostConstruct
     public void init() {
-        logger = LoggerFactory.getLogger(getClass());
-        logger.debug("initializing bean " + getClass().getName());
-        attributesNotify = Attributes.getComponentAttributesFromFacesConfig(UINotify.class, getClass());
-        attributesNotifyMessages = Attributes.getComponentAttributesFromFacesConfig(HtmlNotifyMessages.class, getClass());
-        attributesNotifyStackFirst = Attributes.getComponentAttributesFromFacesConfig(UINotifyStack.class, getClass());
-        attributesNotifyStackSecond = Attributes.getComponentAttributesFromFacesConfig(UINotifyStack.class, getClass());
-        attributesBean = Attributes.getEmptyAttributes(getClass());
+        LOGGER.debug("initializing bean " + getClass().getName());
+        attributes = Attributes.getComponentAttributesFromFacesConfig(UINotify.class, getClass());
 
-        attributesNotify.setAttribute("detail", DEFAULT_DETAIL);
-        attributesNotify.setAttribute("rendered", true);
-        attributesNotify.setAttribute("showCloseButton", true);
-        attributesNotify.setAttribute("stayTime", 100000);
-        attributesNotify.setAttribute("summary", DEFAULT_SUMMARY);
-        attributesNotify.remove("stack");
-
-        attributesNotifyMessages.setAttribute("showCloseButton", true);
-        attributesNotifyMessages.setAttribute("stayTime", 100000);
-        attributesNotifyMessages.remove("stack");
-        attributesNotifyMessages.setAttribute("showSummary", true);
-        attributesNotifyMessages.setAttribute("rendered", true);
-        attributesNotifyMessages.remove("for");
-        attributesNotifyMessages.remove("ajaxRendered");
-
-        attributesNotifyStackFirst.setAttribute("direction", "vertical");
-        attributesNotifyStackFirst.setAttribute("method", "first");
-        attributesNotifyStackFirst.setAttribute("position", "topRight");
-        attributesNotifyStackFirst.setAttribute("rendered", true);
-
-        attributesNotifyStackSecond.setAttribute("direction", "vertical");
-        attributesNotifyStackSecond.setAttribute("method", "first");
-        attributesNotifyStackSecond.setAttribute("position", "bottomRight");
-        attributesNotifyStackSecond.setAttribute("rendered", true);
-
-        attributesBean.setAttribute("messageCount", "1");
-        attributesBean.setAttribute("messageDetail", DEFAULT_DETAIL);
-        attributesBean.setAttribute("messageText", DEFAULT_SUMMARY);
+        attributes.setAttribute("detail", DEFAULT_DETAIL);
+        attributes.setAttribute("rendered", true);
+        attributes.setAttribute("showCloseButton", true);
+        attributes.setAttribute("stayTime", 100000);
+        attributes.setAttribute("summary", DEFAULT_SUMMARY);
     }
 
-    /**
-     * Produces error message which is handled by notify:notifyMessages component.
-     */
-    public void produceError() {
-        produceMessage(FacesMessage.SEVERITY_ERROR);
-    }
-
-    /**
-     * Produces fatal message which is handled by notify:notifyMessages component.
-     */
-    public void produceFatal() {
-        produceMessage(FacesMessage.SEVERITY_FATAL);
-    }
-
-    /**
-     * Produces info message which is handled by notify:notifyMessages component.
-     */
-    public void produceInfo() {
-        produceMessage(FacesMessage.SEVERITY_INFO);
-    }
-
-    /**
-     * Produces warn message which is handled by notify:notifyMessages component.
-     */
-    public void produceWarn() {
-        produceMessage(FacesMessage.SEVERITY_WARN);
-    }
-
-    /**
-     * General attributes for this bean
-     */
-    public Attributes getAttributesBean() {
-        return attributesBean;
-    }
-
-    /**
-     * Attributes for notify:notify component
-     *
-     * @return A map containing all attributes of tested component. Name of the component is key in the map.
-     */
-    public Attributes getAttributesNotify() {
-        return attributesNotify;
-    }
-
-    /**
-     * Attributes for notify:notifyMessages component
-     *
-     * @return A map containing all attributes of tested component. Name of the component is key in the map.
-     */
-    public Attributes getAttributesNotifyMessages() {
-        return attributesNotifyMessages;
-    }
-
-    /**
-     * Attributes for notify:notifyStack (1) component
-     *
-     * @return A map containing all attributes of tested component. Name of the component is key in the map.
-     */
-    public Attributes getAttributesNotifyStackFirst() {
-        return attributesNotifyStackFirst;
-    }
-
-    /**
-     * Attributes for notify:notifyStack (2) component
-     *
-     * @return A map containing all attributes of tested component. Name of the component is key in the map.
-     */
-    public Attributes getAttributesNotifyStackSecond() {
-        return attributesNotifyStackSecond;
-    }
-    /**
-     * General attributes for this bean
-     *
-     * @param attributesBean
-     *            map containing all attributes of tested component. Name of the component is key in the map.
-     */
-    public void setAttributesBean(Attributes attributesBean) {
-        this.attributesBean = attributesBean;
-    }
-
-    /**
-     * Attributes for notify:notify component
-     *
-     * @param attributesNotify
-     *            map containing all attributes of tested component. Name of the component is key in the map.
-     */
-    public void setAttributesNotify(Attributes attributesNotify) {
-        this.attributesNotify = attributesNotify;
-    }
-
-    /**
-     * Attributes for notify:notifyMessages component
-     *
-     * @param attributesNotifyMessages
-     *            map containing all attributes of tested component. Name of the component is key in the map.
-     */
-    public void setAttributesNotifyMessages(Attributes attributesNotifyMessages) {
-        this.attributesNotifyMessages = attributesNotifyMessages;
-    }
-
-    /**
-     * Attributes for notify:notifyStack (1) component
-     *
-     * @param attributesNotifyStack
-     *            map containing all attributes of tested component. Name of the component is key in the map.
-     */
-    public void setAttributesNotifyStackFirst(Attributes attributesNotifyStack) {
-        this.attributesNotifyStackFirst = attributesNotifyStack;
-    }
-
-    /**
-     * Attributes for notify:notifyStack (2) component
-     *
-     * @param attributesNotifyStack
-     *            map containing all attributes of tested component. Name of the component is key in the map.
-     */
-    public void setAttributesNotifyStackSecond(Attributes attributesNotifyStack) {
-        this.attributesNotifyStackSecond = attributesNotifyStack;
-    }
-
-    /**
-     * Produces a message which is handled by notify:notifyMessages component.
-     *
-     * @param severity the severity
-     */
-    private void produceMessage(FacesMessage.Severity severity) {
-        int messageCount = Integer.valueOf((String)attributesBean.get("messageCount").getValue());
-        String text = (String) attributesBean.get("messageText").getValue();
-        String detail = (String) attributesBean.get("messageDetail").getValue();
-        for(int i=0; i<messageCount; i++) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, text, detail));
+    public void generateFacesMessagesWithSeverity(String severityOfMessageToBeCreated) {
+        LOGGER.debug(" ### Just called generateFacesMessagesWithSeverity('" + severityOfMessageToBeCreated + "')");
+        severityOfMessageToBeCreated = severityOfMessageToBeCreated.toUpperCase(Locale.ENGLISH);
+        for (FacesMessage.Severity referenceSeverity : MessageTestingBean.MSGS_TYPES) {
+            if (referenceSeverity.toString().startsWith(severityOfMessageToBeCreated)) {
+                MessageTestingBean.generateFacesMessage(referenceSeverity, null);
+            }
         }
+    }
+
+    public Attributes getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Attributes attributes) {
+        this.attributes = attributes;
     }
 }

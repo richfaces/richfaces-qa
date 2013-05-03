@@ -22,31 +22,17 @@
 package org.richfaces.tests.page.fragments.impl.messages;
 
 import java.util.List;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.richfaces.tests.page.fragments.impl.VisibleComponent;
+
 import org.richfaces.tests.page.fragments.impl.message.Message;
 
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface Messages extends Iterable<Message>, VisibleComponent {
-
-    /**
-     * Returns a Message at index.
-     */
-    Message getMessage(int index);
+public interface Messages extends MessagesBase<Message> {
 
     /**
      * Returns a list of Messages for an input that's id contains an @inputID.
      */
     List<Message> getMessagesForInput(String inputID);
-
-    WebElement getRoot();
-
-    /**
-     * Returns a number of Messages.
-     */
-    int size();
 }

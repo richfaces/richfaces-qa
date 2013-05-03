@@ -22,8 +22,9 @@
 package org.richfaces.tests.metamer.ftest.richFileUpload;
 
 import java.util.List;
+
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 
 /**
@@ -35,7 +36,7 @@ public class FileUploadPage extends MetamerPage {
     WebElement fileUploadDiv;
     @FindBy(css = "span[id$=uploadedFilesPanel] li")
     List<WebElement> uploadedFilesList;
-    @FindBy(xpath = "//input[@type='file'][@class='rf-fu-inp'][last()]")
+    @FindBy(jquery = "input[type=file].rf-fu-inp:last")
     WebElement fileInputField;
     @FindBy(css = "span.rf-fu-btn-upl")
     WebElement uploadButton;

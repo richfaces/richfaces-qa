@@ -106,6 +106,6 @@ public class CustomMessagesPage extends MetamerPage {
     }
 
     private void waitForMessages(WebDriverWait wait) {
-        wait.until(Graphene.element(doubleRangeMessage).isPresent());
+        wait.until().element(doubleRangeMessage).is().present();
     }
 }

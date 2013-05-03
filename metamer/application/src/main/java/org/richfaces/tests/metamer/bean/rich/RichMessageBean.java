@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.bean.rich;
 
+
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
@@ -29,6 +30,7 @@ import javax.faces.bean.ViewScoped;
 
 import org.richfaces.component.html.HtmlMessage;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.bean.abstractions.MessageTestingBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,19 +42,14 @@ import org.slf4j.LoggerFactory;
  */
 @ManagedBean(name = "richMessageBean")
 @ViewScoped
-public class RichMessageBean implements Serializable {
+public class RichMessageBean extends MessageTestingBean implements Serializable {
 
-    /** Generated UID */
-    private static final long serialVersionUID = -5058242586244822846L;
-    private static Logger logger;
-    private Attributes attributes;
-    private String simpleInput1;
-    private String simpleInput2;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RichMessageBean.class);
+    private static final long serialVersionUID = 1L;
 
     @PostConstruct
     public void init() {
-        logger = LoggerFactory.getLogger(getClass());
-        logger.debug("initializing bean " + getClass().getName());
+        LOGGER.debug("initializing bean " + getClass().getName());
         attributes = Attributes.getComponentAttributesFromFacesConfig(HtmlMessage.class, getClass());
 
         // setting up incorrect values to fire-up validator
@@ -66,29 +63,5 @@ public class RichMessageBean implements Serializable {
         attributes.setAttribute("escape", true);
         attributes.setAttribute("showSummary", true);
         attributes.setAttribute("ajaxRendered", true); // make sense for a4j:commandButton submit
-    }
-
-    public void setAttributes(Attributes attributes) {
-        this.attributes = attributes;
-    }
-
-    public Attributes getAttributes() {
-        return attributes;
-    }
-
-    public String getSimpleInput2() {
-        return simpleInput2;
-    }
-
-    public void setSimpleInput2(String simpleInput2) {
-        this.simpleInput2 = simpleInput2;
-    }
-
-    public String getSimpleInput1() {
-        return simpleInput1;
-    }
-
-    public void setSimpleInput1(String simpleInput1) {
-        this.simpleInput1 = simpleInput1;
     }
 }

@@ -26,14 +26,15 @@ import com.google.common.collect.Lists;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.page.fragments.impl.message.Message;
+import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
 
 /**
  * Component for rich:messages.
@@ -46,11 +47,40 @@ public class RichFacesMessages implements Messages {
     //
     @FindBy(xpath = "./span")
     private List<RichFacesMessagesMessage> messages;
+    @FindBy(css = "span.rf-msgs-err")
+    private List<RichFacesMessagesMessage> errorMessages;
+    @FindBy(css = "span.rf-msgs-ftl")
+    private List<RichFacesMessagesMessage> fatalMessages;
+    @FindBy(css = "span.rf-msgs-inf")
+    private List<RichFacesMessagesMessage> infoMessages;
+    @FindBy(css = "span.rf-msgs-ok")
+    private List<RichFacesMessagesMessage> okMessages;
+    @FindBy(css = "span.rf-msgs-wrn")
+    private List<RichFacesMessagesMessage> warnMessages;
     //
-    private WebDriver driver = GrapheneContext.getProxy();
+    @Drone
+    private WebDriver driver;
 
     @Override
-    public Message getMessage(int index) {
+    public List<Message> getAllMessagesOfType(MessageType type) {
+        switch (type) {
+            case OK:
+                return Lists.<Message>newArrayList(okMessages);
+            case INFORMATION:
+                return Lists.<Message>newArrayList(infoMessages);
+            case WARNING:
+                return Lists.<Message>newArrayList(warnMessages);
+            case ERROR:
+                return Lists.<Message>newArrayList(errorMessages);
+            case FATAL:
+                return Lists.<Message>newArrayList(fatalMessages);
+            default:
+                throw new UnsupportedOperationException("Unknown type " + type);
+        }
+    }
+
+    @Override
+    public Message getMessageAtIndex(int index) {
         return messages.get(index);
     }
 
@@ -87,27 +117,35 @@ public class RichFacesMessages implements Messages {
 
     @Override
     public Iterator<Message> iterator() {
-        final Iterator<RichFacesMessagesMessage> iterator = messages.iterator();
-        return new Iterator<Message>() {
-            @Override
-            public boolean hasNext() {
-                return iterator.hasNext();
-            }
-
-            @Override
-            public Message next() {
-                return iterator.next();
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException("Remove operation is not supported");
-            }
-        };
+        return new MessagesIterator(messages.iterator());
     }
 
     @Override
     public int size() {
         return messages.size();
+    }
+
+    private static class MessagesIterator implements Iterator<Message> {
+
+        private final Iterator<RichFacesMessagesMessage> iterator;
+
+        public MessagesIterator(Iterator<RichFacesMessagesMessage> iterator) {
+            this.iterator = iterator;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return iterator.hasNext();
+        }
+
+        @Override
+        public Message next() {
+            return iterator.next();
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException("Remove operation is not supported");
+        }
     }
 }

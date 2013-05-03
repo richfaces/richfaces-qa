@@ -119,7 +119,7 @@ public class TestRichGraphValidator extends AbstractWebDriverTest {
         Assert.assertFalse(graphValidatorMessages.isVisible(), "Graph validator messages should not be visible.");
         Assert.assertTrue(graphValidatorGlobalMessages.isVisible(), "Global messages should be visible.");
         Assert.assertEquals(graphValidatorGlobalMessages.size(), 1, "There should be one message.");
-        Assert.assertEquals(graphValidatorGlobalMessages.getMessage(0).getSummary(),
+        Assert.assertEquals(graphValidatorGlobalMessages.getMessageAtIndex(0).getSummary(),
                 RichGraphValidatorBean.SUCCESSFULL_ACTION_MSG, "Summary of message.");
     }
 
@@ -215,7 +215,7 @@ public class TestRichGraphValidator extends AbstractWebDriverTest {
         Assert.assertFalse(graphValidatorGlobalMessages.isVisible(), "Global messages should not be visible.");
         Assert.assertTrue(graphValidatorMessages.isVisible(), "Graph validator messages should be visible.");
         Assert.assertEquals(graphValidatorMessages.size(), 1, "There should be one message.");
-        Assert.assertEquals(graphValidatorMessages.getMessage(0).getSummary(),
+        Assert.assertEquals(graphValidatorMessages.getMessageAtIndex(0).getSummary(),
                 getMessageForGroup(group), "Summary of message.");
         setCorrectSettingForGroup(group);
         checkGraphValidatorSuccessMessage();
@@ -255,7 +255,7 @@ public class TestRichGraphValidator extends AbstractWebDriverTest {
         Assert.assertFalse(graphValidatorGlobalMessages.isVisible(), "Global messages should not be visible.");
         Assert.assertTrue(graphValidatorMessages.isVisible(), "Graph validator messages should be visible.");
         Assert.assertEquals(graphValidatorMessages.size(), 1, "There should be one message.");
-        Assert.assertEquals(graphValidatorMessages.getMessage(0).getSummary(), msg, "Summary of message.");
+        Assert.assertEquals(graphValidatorMessages.getMessageAtIndex(0).getSummary(), msg, "Summary of message.");
     }
 
     @Test

@@ -163,11 +163,12 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @Use(field = "positioning", enumeration = true)
     public void testDirection() {
         driver.manage().window().setSize(new Dimension(1280, 1024));//for stabilizing job in all templates
-        int tolerance = 3;//px
+        int tolerance = 10;//px
         String msg = "The actual menu locations should be same as shifted default locations.";
         updateShowAction();
         //setting up the right panel because then the context menu will fit on the page
         contextMenuAttributes.set(ContextMenuAttributes.target, "targetPanel2");
+        contextMenuAttributes.set(ContextMenuAttributes.direction, "bottomRight");
 
         Locations defaultLocations = page.getContextMenuLocations();//bottom right
         Locations actMenuLocation = page.getContextMenuLocationsWhenPosition(positioning);
@@ -180,7 +181,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         assertEquals(actMenuLocation.getHeight(), defaultHeight, tolerance, "Height of context menu should be same as before.");
         assertEquals(actMenuLocation.getWidth(), defaultWidth, tolerance, "Width of context menu should be same as before.");
         switch (positioning) {
-            case auto://default
+            case auto:
             case bottomRight:
             case autoRight:
             case bottomAuto:
