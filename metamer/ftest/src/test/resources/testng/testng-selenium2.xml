@@ -60,6 +60,8 @@
             <package name="org.richfaces.tests.metamer.ftest.richProgressBar"/>
             <package name="org.richfaces.tests.metamer.ftest.richToggleControl"/>
             <package name="org.richfaces.tests.metamer.ftest.richTooltip" />
+            <package name="org.richfaces.tests.metamer.ftest.richTree"/>
+            <package name="org.richfaces.tests.metamer.ftest.richTreeNode"/>
             <package name="org.richfaces.tests.metamer.ftest.richTreeSelectionChangeListener"/>
             <package name="org.richfaces.tests.metamer.ftest.richTreeToggleListener"/>
             <package name="org.richfaces.tests.metamer.ftest.richValidator" />
