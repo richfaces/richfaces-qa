@@ -664,7 +664,7 @@ public final class Attributes implements Map<String, Attribute>, Serializable {
 
             while (fileUrls.hasMoreElements()) {
                 URL url = fileUrls.nextElement();
-                if (url.getPath().contains("richfaces-framework")) {
+                if (url.getPath().contains("richfaces")) {
                     configFile = url;
                 }
             }
