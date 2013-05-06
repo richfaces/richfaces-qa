@@ -160,6 +160,16 @@ FSF site: http://www.fsf.org. -->
             <artifactId>joda-time</artifactId>
             <type>jar</type>
         </dependency>
+        
+        <dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.cssparser</groupId>
+			<artifactId>cssparser</artifactId>
+		</dependency>
+
     </dependencies>
 
     <build>
