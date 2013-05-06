@@ -42,7 +42,6 @@ FSF site: http://www.fsf.org. -->
         <dependency>
             <groupId>org.richfaces</groupId>
             <artifactId>richfaces</artifactId>
-            <type>pom</type>
         </dependency>
 
         <dependency>
