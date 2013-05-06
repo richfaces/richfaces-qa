@@ -36,7 +36,6 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -616,7 +615,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             input.sendKeys(inputValFull);
             // sendKeys triggers page reload automatically
             waiting(300);
-            Graphene.waitAjax().until(ElementPresent.getInstance().element(attributesTable));
+            Graphene.waitAjax().until().element(attributesTable).is().present();
             input = attributesTable.findElement(By.cssSelector(inputExp));
             MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
         }
