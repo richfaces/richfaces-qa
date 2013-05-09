@@ -19,6 +19,7 @@
             <package name="org.richfaces.tests.metamer.ftest.a4jJSFunction"/>
             <package name="org.richfaces.tests.metamer.ftest.a4jLog"/>
             <package name="org.richfaces.tests.metamer.ftest.a4jParam"/>
+            <package name="org.richfaces.tests.metamer.ftest.a4jRepeat"/>
             <package name="org.richfaces.tests.metamer.ftest.richAccordion"/>
             <package name="org.richfaces.tests.metamer.ftest.richAutocomplete"/>
             <package name="org.richfaces.tests.metamer.ftest.richCalendar"/>

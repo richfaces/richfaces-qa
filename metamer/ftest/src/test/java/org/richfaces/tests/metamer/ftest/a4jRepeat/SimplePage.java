@@ -23,38 +23,28 @@ package org.richfaces.tests.metamer.ftest.a4jRepeat;
 
 import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
-import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22407 $
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
+ * @since 5.0.0.Alpha1
  */
-public class SimpleModel {
+public class SimplePage {
 
     Map<Integer, String> texts = new HashMap<Integer, String>();
 
-    JQueryLocator row = jq("#list li");
-    JQueryLocator statuses = jq("span.statuses");
-
-    private GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
-
-    public boolean isRendered() {
-        return selenium.isElementPresent(row);
-    }
-
-    public int getTotalRowCount() {
-        return selenium.getCount(row);
-    }
+    @FindBy(css = "#list li")
+    public List<WebElement> rows;
+    @FindBy(css = "span.statuses")
+    public List<WebElement> statuses;
 
     public int getBegin(int position) {
         return Integer.valueOf(getValue("begin", position));
@@ -93,15 +83,10 @@ public class SimpleModel {
         if (texts.containsKey(position)) {
             obtained = texts.get(position);
         } else {
-            JQueryLocator locator = getRowOnPosition(position).getDescendant(statuses);
-            obtained = selenium.getText(locator);
+            obtained = statuses.get(position).getText();
             texts.put(position, obtained);
         }
         return parseValue(name, obtained);
-    }
-
-    private JQueryLocator getRowOnPosition(int position) {
-        return row.get(position);
     }
 
     private String parseValue(String name, String text) {
