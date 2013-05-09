@@ -22,13 +22,14 @@
  */
 package org.richfaces.tests.metamer.ftest.a4jRepeat;
 
-import org.richfaces.tests.metamer.ftest.abstractions.AbstractKeepSavedTest;
+import org.richfaces.tests.metamer.ftest.abstractions.AbstractKeepSavedTestWD;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  */
-public class TestRepeatKeepSaved extends AbstractKeepSavedTest {
+public class TestRepeatKeepSaved extends AbstractKeepSavedTestWD {
 
     public TestRepeatKeepSaved() {
         super("a4jRepeat");
