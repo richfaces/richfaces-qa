@@ -19,21 +19,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.list.ordering;
+package org.richfaces.tests.page.fragments.impl.list.common;
 
-import org.richfaces.tests.page.fragments.impl.list.ListItems;
-import org.richfaces.tests.page.fragments.impl.list.ListItemsFilterBuilder;
+import org.openqa.selenium.WebElement;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @param <T> type of OrderingListItem
  */
-public interface OrderingListItems<T extends OrderingListItem> extends ListItems<T> {
+public interface SelectableListLayout extends ListLayout {
 
-    @Override
-    OrderingListItems<T> filter(ListItemsFilterBuilder<T> builder);
+    WebElement getCaptionElement();
 
-    OrderingListItems<T> deselectAll();
-
-    OrderingListItems<T> selectAll();
+    WebElement getHeaderElement();
 }

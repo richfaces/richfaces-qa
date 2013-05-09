@@ -32,7 +32,7 @@ import java.util.List;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @param <T> type of ListItem
  */
-public class ListItemsFilterBuilderImpl<T> implements ListItemsFilterBuilder<T> {
+public class ListItemsFilterBuilderImpl<T extends ListItem> implements ListItemsFilterBuilder<T> {
 
     protected List<Predicate<T>> filters = Lists.newArrayList();
 

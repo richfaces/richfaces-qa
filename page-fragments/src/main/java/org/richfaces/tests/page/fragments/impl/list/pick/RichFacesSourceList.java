@@ -19,19 +19,32 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.list.ordering;
+package org.richfaces.tests.page.fragments.impl.list.pick;
 
+import org.richfaces.tests.page.fragments.impl.list.common.AbstractSelectableListBase;
+import org.richfaces.tests.page.fragments.impl.list.common.SelectableList;
 import org.richfaces.tests.page.fragments.impl.list.common.SelectableListItem;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @param <T> type of SelectableListItem
- * @see RichFacesSimpleOrderingList
  */
-public abstract class RichFacesOrderingList<T extends SelectableListItem> extends AbstractOrderingListBase<T, RichFacesOrderingListLayout> {
+public abstract class RichFacesSourceList<T extends SelectableListItem> extends AbstractSelectableListBase<T, SourceListLayout> {
 
     @Override
-    protected Class<RichFacesOrderingListLayout> getLayoutType() {
-        return RichFacesOrderingListLayout.class;
+    public SelectableList<T> deselectItemsByIndex(Integer first, Integer... other) {
+        getItemsByIndex(first, other).deselectAll();
+        return this;
+    }
+
+    @Override
+    protected Class<SourceListLayout> getLayoutType() {
+        return SourceListLayout.class;
+    }
+
+    @Override
+    public SelectableList<T> selectItemsByIndex(Integer first, Integer... other) {
+        getItemsByIndex(first, other).selectAll();
+        return this;
     }
 }

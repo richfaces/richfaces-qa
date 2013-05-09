@@ -19,19 +19,39 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.list.ordering;
+package org.richfaces.tests.page.fragments.impl.list.pick;
 
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.VisibleComponent;
+import org.richfaces.tests.page.fragments.impl.list.common.SelectableList;
 import org.richfaces.tests.page.fragments.impl.list.common.SelectableListItem;
+import org.richfaces.tests.page.fragments.impl.list.ordering.OrderingList;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @param <T> type of SelectableListItem
- * @see RichFacesSimpleOrderingList
+ * @param <T> type of  SelectableListItem
  */
-public abstract class RichFacesOrderingList<T extends SelectableListItem> extends AbstractOrderingListBase<T, RichFacesOrderingListLayout> {
+public interface PickList<T extends SelectableListItem> extends VisibleComponent {
 
-    @Override
-    protected Class<RichFacesOrderingListLayout> getLayoutType() {
-        return RichFacesOrderingListLayout.class;
-    }
+    PickList<T> add();
+
+    PickList<T> addAll();
+
+    WebElement getAddAllButtonElement();
+
+    WebElement getAddButtonElement();
+
+    WebElement getRemoveAllButtonElement();
+
+    WebElement getRemoveButtonElement();
+
+    WebElement getRootElement();
+
+    SelectableList<T> source();
+
+    OrderingList<T> target();
+
+    PickList<T> remove();
+
+    PickList<T> removeAll();
 }

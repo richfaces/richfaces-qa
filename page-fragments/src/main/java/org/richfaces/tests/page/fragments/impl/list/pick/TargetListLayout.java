@@ -19,57 +19,57 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.list;
+package org.richfaces.tests.page.fragments.impl.list.pick;
 
-import java.util.List;
-import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.list.common.OrderingListLayout;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @param <T> type of ListItem
- * @param <X> type of ListItems
  */
-public abstract class AbstractListFragment<T extends ListItem, X extends ListItems<T>> implements ListFragment<T> {
+public class TargetListLayout extends SourceListLayout implements OrderingListLayout {
 
-    @Root
-    protected WebElement root;
-    @Drone
-    protected WebDriver driver;
+    @FindBy(css = "button.rf-ord-dn")
+    private WebElement downButtonElement;
+    @FindBy(css = "button.rf-ord-up-tp")
+    private WebElement topButtonElement;
+    @FindBy(css = "button.rf-ord-dn-bt")
+    private WebElement bottomButtonElement;
+    @FindBy(css = "button.rf-ord-up")
+    private WebElement upButtonElement;
+    @FindBy(css = "thead.rf-pick-lst-hdr > tr.rf-pick-hdr")
+    private WebElement headerElement;
+    @FindBy(className = "rf-pick-tgt-cptn")
+    private WebElement captionElement;
 
-    protected abstract Class<T> getListItemType();
-
-    protected X createItems(List<WebElement> list) {
-        X createdItemsFragment = instantiateListItems();
-        for (WebElement e : list) {
-            createdItemsFragment.add(Graphene.<T>createPageFragment(getListItemType(), e));
-        }
-        return createdItemsFragment;
+    @Override
+    public WebElement getBottomButtonElement() {
+        return bottomButtonElement;
     }
 
     @Override
-    public WebElement getRootElement() {
-        return root;
-    }
-
-    protected abstract X instantiateListItems();
-
-    @Override
-    public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(root).not().isVisible();
+    public WebElement getCaptionElement() {
+        return captionElement;
     }
 
     @Override
-    public boolean isVisible() {
-        return isVisibleCondition().apply(driver);
+    public WebElement getDownButtonElement() {
+        return downButtonElement;
     }
 
     @Override
-    public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(root).isVisible();
+    public WebElement getHeaderElement() {
+        return headerElement;
+    }
+
+    @Override
+    public WebElement getTopButtonElement() {
+        return topButtonElement;
+    }
+
+    @Override
+    public WebElement getUpButtonElement() {
+        return upButtonElement;
     }
 }

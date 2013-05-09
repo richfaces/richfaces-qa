@@ -19,19 +19,21 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.list.ordering;
+
+package org.richfaces.tests.page.fragments.impl.list.pick;
 
 import org.richfaces.tests.page.fragments.impl.list.common.SelectableListItem;
+import org.richfaces.tests.page.fragments.impl.list.ordering.AbstractOrderingListBase;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @param <T> type of SelectableListItem
- * @see RichFacesSimpleOrderingList
  */
-public abstract class RichFacesOrderingList<T extends SelectableListItem> extends AbstractOrderingListBase<T, RichFacesOrderingListLayout> {
+public abstract class RichFacesTargetList<T extends SelectableListItem> extends AbstractOrderingListBase<T, TargetListLayout> {
 
     @Override
-    protected Class<RichFacesOrderingListLayout> getLayoutType() {
-        return RichFacesOrderingListLayout.class;
+    protected Class<TargetListLayout> getLayoutType() {
+        return TargetListLayout.class;
     }
+
 }

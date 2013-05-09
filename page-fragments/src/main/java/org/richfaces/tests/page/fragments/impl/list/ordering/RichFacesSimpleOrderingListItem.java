@@ -21,47 +21,19 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.list.ordering;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
-import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.list.AbstractListItem;
+import org.richfaces.tests.page.fragments.impl.list.common.SimpleSelectableListItem;
 
 /**
+ * Implementation of simple ordering list item.
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesSimpleOrderingListItem extends AbstractListItem implements OrderingListItem {
+public class RichFacesSimpleOrderingListItem extends SimpleSelectableListItem {
 
     private static final String SELECTED_ITEM_CLASS = "rf-ord-sel";
-    @Root
-    private WebElement item;
 
     @Override
-    public void deselect() {
-        if (isSelected()) {
-            item.click();
-        }
-        Graphene.waitGui().until().element(item).attribute("class").not().contains(SELECTED_ITEM_CLASS);
-    }
-
-    @Override
-    public WebElement getItemElement() {
-        return item;
-    }
-
-    public String getText() {
-        return item.getText();
-    }
-
-    @Override
-    public boolean isSelected() {
-        return item.getAttribute("class").contains(SELECTED_ITEM_CLASS);
-    }
-
-    @Override
-    public void select() {
-        if (!isSelected()) {
-            item.click();
-        }
-        Graphene.waitGui().until().element(item).attribute("class").contains(SELECTED_ITEM_CLASS);
+    protected String getClassForSelectedItem() {
+        return SELECTED_ITEM_CLASS;
     }
 }

@@ -27,7 +27,7 @@ import com.google.common.base.Predicate;
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @param <T> type of ListItem
  */
-public interface ListItemsFilterBuilder<T> {
+public interface ListItemsFilterBuilder<T extends ListItem> {
 
     /**
      * Function that will build this filter. Merges all filters to one.

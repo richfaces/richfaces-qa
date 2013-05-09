@@ -19,19 +19,51 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.list.ordering;
+package org.richfaces.tests.page.fragments.impl.list.pick;
 
-import org.richfaces.tests.page.fragments.impl.list.common.SelectableListItem;
+import java.util.List;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.list.common.SelectableListLayout;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @param <T> type of SelectableListItem
- * @see RichFacesSimpleOrderingList
  */
-public abstract class RichFacesOrderingList<T extends SelectableListItem> extends AbstractOrderingListBase<T, RichFacesOrderingListLayout> {
+public class SourceListLayout implements SelectableListLayout {
+
+    @FindBy(className = "rf-pick-opt")
+    private List<WebElement> items;
+    @FindBy(className = "rf-pick-sel")
+    private List<WebElement> selectedItems;
+    @FindBy(className = "rf-pick-lst-scrl")
+    private WebElement listAreaElement;
+    @FindBy(className = "rf-pick-src-cptn")
+    private WebElement captionElement;
+    @FindBy(css = "thead.rf-pick-lst-hdr > tr.rf-pick-hdr")
+    private WebElement headerElement;
 
     @Override
-    protected Class<RichFacesOrderingListLayout> getLayoutType() {
-        return RichFacesOrderingListLayout.class;
+    public WebElement getCaptionElement() {
+        return captionElement;
+    }
+
+    @Override
+    public WebElement getHeaderElement() {
+        return headerElement;
+    }
+
+    @Override
+    public List<WebElement> getItems() {
+        return items;
+    }
+
+    @Override
+    public WebElement getListAreaElement() {
+        return listAreaElement;
+    }
+
+    @Override
+    public List<WebElement> getSelectedItems() {
+        return selectedItems;
     }
 }

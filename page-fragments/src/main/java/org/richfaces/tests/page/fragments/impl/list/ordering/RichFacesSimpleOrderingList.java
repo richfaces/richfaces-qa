@@ -21,7 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.list.ordering;
 
+import java.util.Iterator;
+
 /**
+ * Implementation of simple ordering list.
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class RichFacesSimpleOrderingList extends RichFacesOrderingList<RichFacesSimpleOrderingListItem> {
@@ -29,5 +33,20 @@ public class RichFacesSimpleOrderingList extends RichFacesOrderingList<RichFaces
     @Override
     protected Class<RichFacesSimpleOrderingListItem> getListItemType() {
         return RichFacesSimpleOrderingListItem.class;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (Iterator<RichFacesSimpleOrderingListItem> it = getItems().iterator(); it.hasNext();) {
+            RichFacesSimpleOrderingListItem item = it.next();
+            sb.append(item.getText());
+            if (it.hasNext()) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }
