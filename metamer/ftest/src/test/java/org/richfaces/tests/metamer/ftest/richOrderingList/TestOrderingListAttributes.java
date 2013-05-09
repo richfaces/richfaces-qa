@@ -69,7 +69,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     @Test
     public void testColumnClasses() {
         String testedClass = "metamer-ftest-class";
-        orderingListAttributes.set(OrderingListAttributes.columnClasses, "metamer-ftest-class");
+        orderingListAttributes.set(OrderingListAttributes.columnClasses, testedClass);
         for (TwoColumnListItem li : twoColumnOrderingList.getItems()) {
             for (WebElement e : li.getItemElement().findElements(By.tagName("td"))) {
                 assertTrue(e.getAttribute("class").contains(testedClass), "Item @class should contain " + testedClass);

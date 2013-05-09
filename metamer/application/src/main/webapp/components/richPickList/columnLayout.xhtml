@@ -1,167 +1,156 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-     xmlns:r="http://richfaces.org/rich">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:r="http://richfaces.org/rich">
 
-<!--
-JBoss, Home of Professional Open Source
-Copyright 2010-2013, Red Hat, Inc. and individual contributors
-by the @authors tag. See the copyright.txt in the distribution for a
-full listing of individual contributors.
-
-This is free software; you can redistribute it and/or modify it
-under the terms of the GNU Lesser General Public License as
-published by the Free Software Foundation; either version 2.1 of
-the License, or (at your option) any later version.
-
-This software is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with this software; if not, write to the Free
-Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    <!--
+    JBoss, Home of Professional Open Source
+    Copyright 2010-2013, Red Hat, Inc. and individual contributors
+    by the @authors tag. See the copyright.txt in the distribution for a
+    full listing of individual contributors.
+    
+    This is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as
+    published by the Free Software Foundation; either version 2.1 of
+    the License, or (at your option) any later version.
+    
+    This software is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    Lesser General Public License for more details.
+    
+    You should have received a copy of the GNU Lesser General Public
+    License along with this software; if not, write to the Free
+    Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+    02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-<ui:composition template="/templates/template.xhtml">
+    <ui:composition template="/templates/template.xhtml">
 
-    <ui:define name="view">
-        <f:metadata>
-            <f:viewParam name="templates" value="#{templateBean.templates}">
-                <f:converter converterId="templatesListConverter" />
-            </f:viewParam>
-        </f:metadata>
-    </ui:define>
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
 
-    <ui:define name="component">
+        <ui:define name="component">
+            <r:pickList id="pickList"
+                        addAllText="#{richPickListBean.attributes['addAllText'].value}"
+                        addText="#{richPickListBean.attributes['addText'].value}"
+                        collectionType="java.util.LinkedList"
+                        columnClasses="#{richPickListBean.attributes['columnClasses'].value}"
+                        converter="capitalConverter"
+                        disabled="#{richPickListBean.attributes['disabled'].value}"
+                        disabledClass="#{richPickListBean.attributes['disabledClass'].value}"
+                        downBottomText="#{richPickListBean.attributes['downBottomText'].value}"
+                        downText="#{richPickListBean.attributes['downText'].value}"
+                        headerClass="#{richPickListBean.attributes['headerClass'].value}"
+                        immediate="#{richPickListBean.attributes['immediate'].value}"
+                        itemClass="#{richPickListBean.attributes['itemClass'].value}"
+                        listHeight="#{richPickListBean.attributes['listHeight'].value}"
+                        listWidth="#{richPickListBean.attributes['listWidth'].value}"
+                        maxListHeight="#{richPickListBean.attributes['maxListHeight'].value}"
+                        minListHeight="#{richPickListBean.attributes['minListHeight'].value}"
+                        onadditems="#{richPickListBean.attributes['onadditems'].value}"
+                        onblur="#{richPickListBean.attributes['onblur'].value}"
+                        onchange="#{richPickListBean.attributes['onchange'].value}"
+                        onclick="#{richPickListBean.attributes['onclick'].value}"
+                        ondblclick="#{richPickListBean.attributes['ondblclick'].value}"
+                        onfocus="#{richPickListBean.attributes['onfocus'].value}"
+                        onkeydown="#{richPickListBean.attributes['onkeydown'].value}"
+                        onkeypress="#{richPickListBean.attributes['onkeypress'].value}"
+                        onkeyup="#{richPickListBean.attributes['onkeyup'].value}"
+                        onmousedown="#{richPickListBean.attributes['onmousedown'].value}"
+                        onmousemove="#{richPickListBean.attributes['onmousemove'].value}"
+                        onmouseout="#{richPickListBean.attributes['onmouseout'].value}"
+                        onmouseover="#{richPickListBean.attributes['onmouseover'].value}"
+                        onmouseup="#{richPickListBean.attributes['onmouseup'].value}"
+                        onremoveitems="#{richPickListBean.attributes['onremoveitems'].value}"
+                        onsourceblur="#{richPickListBean.attributes['onsourceblur'].value}"
+                        onsourceclick="#{richPickListBean.attributes['onsourceclick'].value}"
+                        onsourcedblclick="#{richPickListBean.attributes['onsourcedblclick'].value}"
+                        onsourcefocus="#{richPickListBean.attributes['onsourcefocus'].value}"
+                        onsourcekeydown="#{richPickListBean.attributes['onsourcekeydown'].value}"
+                        onsourcekeypress="#{richPickListBean.attributes['onsourcekeypress'].value}"
+                        onsourcekeyup="#{richPickListBean.attributes['onsourcekeyup'].value}"
+                        onsourcemousedown="#{richPickListBean.attributes['onsourcemousedown'].value}"
+                        onsourcemousemove="#{richPickListBean.attributes['onsourcemousemove'].value}"
+                        onsourcemouseout="#{richPickListBean.attributes['onsourcemouseout'].value}"
+                        onsourcemouseover="#{richPickListBean.attributes['onsourcemouseover'].value}"
+                        onsourcemouseup="#{richPickListBean.attributes['onsourcemouseup'].value}"
+                        ontargetblur="#{richPickListBean.attributes['ontargetblur'].value}"
+                        ontargetclick="#{richPickListBean.attributes['ontargetclick'].value}"
+                        ontargetdblclick="#{richPickListBean.attributes['ontargetdblclick'].value}"
+                        ontargetfocus="#{richPickListBean.attributes['ontargetfocus'].value}"
+                        ontargetkeydown="#{richPickListBean.attributes['ontargetkeydown'].value}"
+                        ontargetkeypress="#{richPickListBean.attributes['ontargetkeypress'].value}"
+                        ontargetkeyup="#{richPickListBean.attributes['ontargetkeyup'].value}"
+                        ontargetmousedown="#{richPickListBean.attributes['ontargetmousedown'].value}"
+                        ontargetmousemove="#{richPickListBean.attributes['ontargetmousemove'].value}"
+                        ontargetmouseout="#{richPickListBean.attributes['ontargetmouseout'].value}"
+                        ontargetmouseover="#{richPickListBean.attributes['ontargetmouseover'].value}"
+                        ontargetmouseup="#{richPickListBean.attributes['ontargetmouseup'].value}"
+                        orderable="#{richPickListBean.attributes['orderable'].value}"
+                        removeAllText="#{richPickListBean.attributes['removeAllText'].value}"
+                        removeText="#{richPickListBean.attributes['removeText'].value}"
+                        rendered="#{richPickListBean.attributes['rendered'].value}"
+                        required="#{richPickListBean.attributes['required'].value}"
+                        requiredMessage="#{richPickListBean.attributes['requiredMessage'].value}"
+                        selectItemClass="#{richPickListBean.attributes['selectItemClass'].value}"
+                        sourceCaption="#{richPickListBean.attributes['sourceCaption'].value}"
+                        style="#{richPickListBean.attributes['style'].value}"
+                        styleClass="#{richPickListBean.attributes['styleClass'].value}"
+                        switchByClick="#{richPickListBean.attributes['switchByClick'].value}"
+                        switchByDblClick="#{richPickListBean.attributes['switchByDblClick'].value}"
+                        targetCaption="#{richPickListBean.attributes['targetCaption'].value}"
+                        upText="#{richPickListBean.attributes['upText'].value}"
+                        upTopText="#{richPickListBean.attributes['upTopText'].value}"
+                        validator="#{richPickListBean.validatePickListValue}"
+                        validatorMessage="#{richPickListBean.attributes['validatorMessage'].value}"
+                        value="#{richPickListBean.value}"
+                        valueChangeListener="#{richBean.valueChangeListenerImproved}"
+                        var="tmp">
+                <f:selectItems value="#{richPickListBean.capitals}" />
 
-        <r:pickList id="pickList"
-                       addAllText="#{richPickListBean.attributes['addAllText'].value}"
-                       addText="#{richPickListBean.attributes['addText'].value}"
-                       columnClasses="#{richPickListBean.attributes['columnClasses'].value}"
-                       converter="capitalConverter"
-                       disabled="#{richPickListBean.attributes['disabled'].value}"
-                       disabledClass="#{richPickListBean.attributes['disabledClass'].value}"
-                       downBottomText="#{richPickListBean.attributes['downBottomText'].value}"
-                       downText="#{richPickListBean.attributes['downText'].value}"
-                       headerClass="#{richPickListBean.attributes['headerClass'].value}"
-                       immediate="#{richPickListBean.attributes['immediate'].value}"
-                       itemClass="#{richPickListBean.attributes['itemClass'].value}"
-                       itemLabel="#{richPickListBean.attributes['itemLabel'].value}"
-                       itemValue="#{richPickListBean.attributes['itemValue'].value}"
-                       itemValues="#{richPickListBean.attributes['itemValues'].value}"
-                       listHeight="#{richPickListBean.attributes['listHeight'].value}"
-                       listWidth="#{richPickListBean.attributes['listWidth'].value}"
-                       maxListHeight="#{richPickListBean.attributes['maxListHeight'].value}"
-                       minListHeight="#{richPickListBean.attributes['minListHeight'].value}"
-                       onadditems="#{richPickListBean.attributes['onadditems'].value}"
-                       onblur="#{richPickListBean.attributes['onblur'].value}"
-                       onchange="#{richPickListBean.attributes['onchange'].value}"
-                       onclick="#{richPickListBean.attributes['onclick'].value}"
-                       ondblclick="#{richPickListBean.attributes['ondblclick'].value}"
-                       onfocus="#{richPickListBean.attributes['onfocus'].value}"
-                       onkeydown="#{richPickListBean.attributes['onkeydown'].value}"
-                       onkeypress="#{richPickListBean.attributes['onkeypress'].value}"
-                       onkeyup="#{richPickListBean.attributes['onkeyup'].value}"
-                       onlistclick="#{richPickListBean.attributes['onlistclick'].value}"
-                       onlistdblclick="#{richPickListBean.attributes['onlistdblclick'].value}"
-                       onlistkeydown="#{richPickListBean.attributes['onlistkeydown'].value}"
-                       onlistkeypress="#{richPickListBean.attributes['onlistkeypress'].value}"
-                       onlistkeyup="#{richPickListBean.attributes['onlistkeyup'].value}"
-                       onlistmousedown="#{richPickListBean.attributes['onlistmousedown'].value}"
-                       onlistmousemove="#{richPickListBean.attributes['onlistmousemove'].value}"
-                       onlistmouseout="#{richPickListBean.attributes['onlistmouseout'].value}"
-                       onlistmouseover="#{richPickListBean.attributes['onlistmouseover'].value}"
-                       onlistmouseup="#{richPickListBean.attributes['onlistmouseup'].value}"
-                       onmousedown="#{richPickListBean.attributes['onmousedown'].value}"
-                       onmousemove="#{richPickListBean.attributes['onmousemove'].value}"
-                       onmouseout="#{richPickListBean.attributes['onmouseout'].value}"
-                       onmouseover="#{richPickListBean.attributes['onmouseover'].value}"
-                       onmouseup="#{richPickListBean.attributes['onmouseup'].value}"
-                       onremoveitems="#{richPickListBean.attributes['onremoveitems'].value}"
-                       onsourceclick="#{richPickListBean.attributes['onsourceclick'].value}"
-                       onsourcedblclick="#{richPickListBean.attributes['onsourcedblclick'].value}"
-                       onsourcekeydown="#{richPickListBean.attributes['onsourcekeydown'].value}"
-                       onsourcekeypress="#{richPickListBean.attributes['onsourcekeypress'].value}"
-                       onsourcekeyup="#{richPickListBean.attributes['onsourcekeyup'].value}"
-                       onsourcemousedown="#{richPickListBean.attributes['onsourcemousedown'].value}"
-                       onsourcemousemove="#{richPickListBean.attributes['onsourcemousemove'].value}"
-                       onsourcemouseout="#{richPickListBean.attributes['onsourcemouseout'].value}"
-                       onsourcemouseover="#{richPickListBean.attributes['onsourcemouseover'].value}"
-                       onsourcemouseup="#{richPickListBean.attributes['onsourcemouseup'].value}"
-                       ontargetclick="#{richPickListBean.attributes['ontargetclick'].value}"
-                       ontargetdblclick="#{richPickListBean.attributes['ontargetdblclick'].value}"
-                       ontargetkeydown="#{richPickListBean.attributes['ontargetkeydown'].value}"
-                       ontargetkeypress="#{richPickListBean.attributes['ontargetkeypress'].value}"
-                       ontargetkeyup="#{richPickListBean.attributes['ontargetkeyup'].value}"
-                       ontargetmousedown="#{richPickListBean.attributes['ontargetmousedown'].value}"
-                       ontargetmousemove="#{richPickListBean.attributes['ontargetmousemove'].value}"
-                       ontargetmouseout="#{richPickListBean.attributes['ontargetmouseout'].value}"
-                       ontargetmouseover="#{richPickListBean.attributes['ontargetmouseover'].value}"
-                       ontargetmouseup="#{richPickListBean.attributes['ontargetmouseup'].value}"
-                       orderable="#{richPickListBean.attributes['orderable'].value}"
-                       removeAllText="#{richPickListBean.attributes['removeAllText'].value}"
-                       removeText="#{richPickListBean.attributes['removeText'].value}"
-                       rendered="#{richPickListBean.attributes['rendered'].value}"
-                       required="#{richPickListBean.attributes['required'].value}"
-                       requiredMessage="#{richPickListBean.attributes['requiredMessage'].value}"
-                       selectItemClass="#{richPickListBean.attributes['selectItemClass'].value}"
-                       showButton="#{richPickListBean.attributes['showButton'].value}"
-                       sourceCaption="#{richPickListBean.attributes['sourceCaption'].value}"
-                       style="#{richPickListBean.attributes['style'].value}"
-                       styleClass="#{richPickListBean.attributes['styleClass'].value}"
-                       switchByClick="#{richPickListBean.attributes['switchByClick'].value}"
-                       switchByDblClick="#{richPickListBean.attributes['switchByDblClick'].value}"
-                       targetCaption="#{richPickListBean.attributes['targetCaption'].value}"
-                       upText="#{richPickListBean.attributes['upText'].value}"
-                       upTopText="#{richPickListBean.attributes['upTopText'].value}"
-                       validator="#{richPickListBean.validatePickListValue}"
-                       validatorMessage="#{richPickListBean.attributes['validatorMessage'].value}"
-                       value="#{richPickListBean.value}"
-                       valueChangeListener="#{richBean.valueChangeListenerImproved}"
-                       var="tmp">
+                <h:column id="columnFlag">
+                    <h:graphicImage name="#{tmp.stateFlag}" />
+                </h:column>
 
-                       <f:selectItems value="#{richPickListBean.capitals}" />
+                <h:column id="columnCapital">
+                    <f:facet name="header">
+                        <h:outputText id="columnHeaderCapital" value="Capital Header" />
+                    </f:facet>
+                    <h:outputText value="#{tmp.name}" />
+                </h:column>
 
-                       <h:column id="columnFlag">
-                            <h:graphicImage name="#{tmp.stateFlag}" />
-                       </h:column>
+                <h:column id="columnState">
+                    <f:facet name="header">
+                        <h:outputText id="columnHeaderState" value="State Header" />
+                    </f:facet>
+                    <h:outputText value="#{tmp.state}" />
+                </h:column>
 
-                       <h:column id="columnCapital">
-                            <f:facet name="header">
-                                <h:outputText id="columnHeaderCapital" value="Capital Header" />
-                            </f:facet>
-                            <h:outputText value="#{tmp.name}" />
-                       </h:column>
+            </r:pickList>
+            <r:message id="msg" for="pickList" />
 
-                       <h:column id="columnState">
-                            <f:facet name="header">
-                                <h:outputText id="columnHeaderState" value="State Header" />
-                            </f:facet>
-                            <h:outputText value="#{tmp.state}" />
-                       </h:column>
+            <br />
+            <br />
+            <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;" />
+            <r:commandButton id="a4jButton" value="r:commandButton" render="output" />
 
-        </r:pickList>
-        <r:message id="msg" for="pickList" />
-
-        <br />
-        <br />
-        <h:commandButton id="hButton" value="h:commandButton" style="margin-right: 10px;" />
-        <r:commandButton id="a4jButton" value="r:commandButton" render="output" />
-
-        <br />
-        <br />
+            <br />
+            <br />
             output: <h:outputText id="output" value="#{richPickListBean.value}" />
 
-    </ui:define>
+        </ui:define>
 
-    <ui:define name="outOfTemplateAfter">
+        <ui:define name="outOfTemplateAfter">
             Attributes for pickList:
             <metamer:attributes value="#{richPickListBean.attributes}" id="attributes" />
-    </ui:define>
+        </ui:define>
 
-</ui:composition>
+    </ui:composition>
 </html>

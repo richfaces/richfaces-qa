@@ -54,6 +54,7 @@
             <package name="org.richfaces.tests.metamer.ftest.richPanelMenuGroup" />
             <package name="org.richfaces.tests.metamer.ftest.richPanelMenuItem" />
             <package name="org.richfaces.tests.metamer.ftest.richPanelToggleListener"/>
+            <package name="org.richfaces.tests.metamer.ftest.richPickList"/>
             <package name="org.richfaces.tests.metamer.ftest.richPlaceholder"/>
             <package name="org.richfaces.tests.metamer.ftest.richProgressBar"/>
             <package name="org.richfaces.tests.metamer.ftest.richToggleControl"/>
