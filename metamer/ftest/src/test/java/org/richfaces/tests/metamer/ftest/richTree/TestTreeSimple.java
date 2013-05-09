@@ -49,7 +49,6 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.ajocado.dom.Event;
@@ -412,7 +411,7 @@ public class TestTreeSimple extends AbstractTestTreeWD {
 
             Graphene.waitModel().until(new Predicate<WebDriver>() {
                 @Override
-                public boolean apply(@Nullable WebDriver arg0) {
+                public boolean apply(WebDriver arg0) {
                     return treeNode.isExpanded();
                 }
             });
