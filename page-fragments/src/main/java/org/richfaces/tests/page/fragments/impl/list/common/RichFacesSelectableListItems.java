@@ -19,43 +19,35 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.list.ordering;
+package org.richfaces.tests.page.fragments.impl.list.common;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
-
-import org.richfaces.tests.page.fragments.impl.list.ListItem;
 import org.richfaces.tests.page.fragments.impl.list.ListItemsFilterBuilder;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @param <T> type of OrderingListItem
+ * @param <T> type of SelectableListItem
  */
-public class RichFacesOrderingListItems<T extends OrderingListItem> extends ArrayList<T> implements OrderingListItems<T> {
+public class RichFacesSelectableListItems<T extends SelectableListItem> extends ArrayList<T> implements SelectableListItems<T> {
 
     private static final long serialVersionUID = 1L;
-    private final WebDriver driver = GrapheneContext.getProxy();
 
-    public RichFacesOrderingListItems() {
+    public RichFacesSelectableListItems() {
     }
 
-    public RichFacesOrderingListItems(Collection<? extends T> c) {
+    public RichFacesSelectableListItems(Collection<? extends T> c) {
         super(c);
     }
 
-    public RichFacesOrderingListItems(Iterable<? extends T> it) {
+    public RichFacesSelectableListItems(Iterable<? extends T> it) {
         this.addAll(Lists.newArrayList(it));
     }
 
     @Override
-    public OrderingListItems deselectAll() {
+    public SelectableListItems deselectAll() {
         for (T item : this) {
             item.deselect();
         }
@@ -63,25 +55,20 @@ public class RichFacesOrderingListItems<T extends OrderingListItem> extends Arra
     }
 
     @Override
-    public OrderingListItems<T> filter(ListItemsFilterBuilder builder) {
-        return new RichFacesOrderingListItems(Iterables.filter(this, builder.build()));
+    public SelectableListItems<T> filter(ListItemsFilterBuilder builder) {
+        return new RichFacesSelectableListItems(Iterables.filter(this, builder.build()));
     }
 
     @Override
     public int indexOf(Object o) {
-        return ((ListItem) o).getIndex();
+        return ((SelectableListItem) o).getIndex();
     }
 
     @Override
-    public OrderingListItems<T> selectAll() {
-        Actions actions = new Actions(driver);
-        actions.keyDown(Keys.CONTROL);
+    public SelectableListItems<T> selectAll() {
         for (T item : this) {
-            if (!item.isSelected()) {
-                actions.click(item.getItemElement());
-            }
+            item.select();
         }
-        actions.keyUp(Keys.CONTROL).perform();
         return this;
     }
 }

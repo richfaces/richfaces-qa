@@ -19,19 +19,42 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.list.ordering;
+package org.richfaces.tests.page.fragments.impl.list.common;
 
-import org.richfaces.tests.page.fragments.impl.list.common.SelectableListItem;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.list.ListFragment;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  * @param <T> type of SelectableListItem
- * @see RichFacesSimpleOrderingList
  */
-public abstract class RichFacesOrderingList<T extends SelectableListItem> extends AbstractOrderingListBase<T, RichFacesOrderingListLayout> {
+public interface SelectableList<T extends SelectableListItem> extends ListFragment<T> {
+
+    /**
+     * Deselects all items at chosen indexes. Checks and wait for each deselection.
+     */
+    SelectableList<T> deselectItemsByIndex(Integer first, Integer... other);
+
+    /**
+     * Returns caption of the list if available, If not then returns empty String.
+     * @return
+     */
+    String getCaption();
+
+    WebElement getHeaderElement();
 
     @Override
-    protected Class<RichFacesOrderingListLayout> getLayoutType() {
-        return RichFacesOrderingListLayout.class;
-    }
+    SelectableListItems<T> getItems();
+
+    WebElement getListAreaElement();
+
+    /**
+     * Deselects all items and then selects items at chosen indexes. Checks and wait for each selection.
+     */
+    SelectableList<T> selectItemsByIndex(Integer first, Integer... other);
+
+    /**
+     * Returns all selected items;
+     */
+    SelectableListItems<T> getSelectedItems();
 }

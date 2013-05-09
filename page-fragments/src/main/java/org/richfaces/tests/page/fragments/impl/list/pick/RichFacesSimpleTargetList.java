@@ -19,18 +19,34 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.list.ordering;
+package org.richfaces.tests.page.fragments.impl.list.pick;
 
-import org.richfaces.tests.page.fragments.impl.list.ListItem;
+import java.util.Iterator;
 
 /**
+ * Implementation of simple target list of r:pickList.
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface OrderingListItem extends ListItem {
+public class RichFacesSimpleTargetList extends RichFacesTargetList<RichFacesSimplePickListItem> {
 
-    void deselect();
+    @Override
+    protected Class<RichFacesSimplePickListItem> getListItemType() {
+        return RichFacesSimplePickListItem.class;
+    }
 
-    boolean isSelected();
-
-    void select();
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (Iterator<RichFacesSimplePickListItem> it = getItems().iterator(); it.hasNext();) {
+            RichFacesSimplePickListItem item = it.next();
+            sb.append(item.getText());
+            if (it.hasNext()) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
+    }
 }

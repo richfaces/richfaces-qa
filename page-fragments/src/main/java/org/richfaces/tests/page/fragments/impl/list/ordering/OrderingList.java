@@ -22,43 +22,48 @@
 package org.richfaces.tests.page.fragments.impl.list.ordering;
 
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.list.ListFragment;
+import org.richfaces.tests.page.fragments.impl.list.common.SelectableList;
+import org.richfaces.tests.page.fragments.impl.list.common.SelectableListItem;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @param <T> type of OrderingListItem
+ * @param <T> type of SelectableListItem
+ * @see RichFacesOrderingList
+ * @see RichFacesSimpleOrderingList
  */
-public interface OrderingList<T extends OrderingListItem> extends ListFragment<T> {
+public interface OrderingList<T extends SelectableListItem> extends SelectableList<T> {
 
+    /**
+     * Clicks the bottom button. This should move the selected items to the bottom.
+     */
     OrderingList<T> bottom();
 
+    @Override
     OrderingList<T> deselectItemsByIndex(Integer first, Integer... other);
 
+    /**
+     * Clicks the down button. This should move the selected items one place down.
+     */
     OrderingList<T> down();
 
     WebElement getBottomButtonElement();
 
-    /**
-     * Returns caption or empty String.
-     */
-    String getCaption();
-
     WebElement getDownButtonElement();
-
-    WebElement getHeaderElement();
-
-    @Override
-    OrderingListItems<T> getItems();
-
-    OrderingListItems<T> getSelectedItems();
 
     WebElement getTopButtonElement();
 
     WebElement getUpButtonElement();
 
+    @Override
     OrderingList<T> selectItemsByIndex(Integer first, Integer... other);
 
+    /**
+     * Clicks the top button. This should move the selected items to the top.
+     */
     OrderingList<T> top();
 
+    /**
+     * Clicks the up button. This should move the selected items one place up.
+     */
     OrderingList<T> up();
 }

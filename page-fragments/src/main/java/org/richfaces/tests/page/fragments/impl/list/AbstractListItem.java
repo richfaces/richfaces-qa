@@ -23,6 +23,9 @@ package org.richfaces.tests.page.fragments.impl.list;
 
 import org.richfaces.tests.page.fragments.impl.Utils;
 
+/**
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ */
 public abstract class AbstractListItem implements ListItem {
 
     @Override

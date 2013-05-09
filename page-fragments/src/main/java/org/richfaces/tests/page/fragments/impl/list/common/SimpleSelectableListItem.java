@@ -19,57 +19,64 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.list;
+package org.richfaces.tests.page.fragments.impl.list.common;
 
-import java.util.List;
-import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.page.fragments.impl.list.AbstractListItem;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @param <T> type of ListItem
- * @param <X> type of ListItems
  */
-public abstract class AbstractListFragment<T extends ListItem, X extends ListItems<T>> implements ListFragment<T> {
+public abstract class SimpleSelectableListItem extends AbstractListItem implements SelectableListItem {
 
     @Root
-    protected WebElement root;
-    @Drone
-    protected WebDriver driver;
+    protected WebElement item;
 
-    protected abstract Class<T> getListItemType();
+    private Action getAction(WebDriver driver) {
+        return new Actions(driver).keyDown(Keys.CONTROL).click(item).keyUp(Keys.CONTROL).build();
+    }
 
-    protected X createItems(List<WebElement> list) {
-        X createdItemsFragment = instantiateListItems();
-        for (WebElement e : list) {
-            createdItemsFragment.add(Graphene.<T>createPageFragment(getListItemType(), e));
+    @Override
+    public void deselect() {
+        if (isSelected()) {
+            getAction(GrapheneContext.getProxy()).perform();
         }
-        return createdItemsFragment;
+        Graphene.waitGui().until().element(item).attribute("class").not().contains(getClassForSelectedItem());
+    }
+
+    protected abstract String getClassForSelectedItem();
+
+    @Override
+    public WebElement getItemElement() {
+        return item;
+    }
+
+    public String getText() {
+        return item.getText();
     }
 
     @Override
-    public WebElement getRootElement() {
-        return root;
-    }
-
-    protected abstract X instantiateListItems();
-
-    @Override
-    public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(root).not().isVisible();
+    public boolean isSelected() {
+        return item.getAttribute("class").contains(getClassForSelectedItem());
     }
 
     @Override
-    public boolean isVisible() {
-        return isVisibleCondition().apply(driver);
+    public void select() {
+        if (!isSelected()) {
+            getAction(GrapheneContext.getProxy()).perform();
+        }
+        Graphene.waitGui().until().element(item).attribute("class").contains(getClassForSelectedItem());
     }
 
     @Override
-    public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(root).isVisible();
+    public String toString() {
+        return getText();
     }
 }

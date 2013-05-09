@@ -21,15 +21,33 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.list.simple;
 
+import java.util.Iterator;
+
 /**
  * Simple RichFacesList fragment of RichFacesSimpleListItems
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @see RichFacesSimpleListItemsFilterBuilder
  */
 public class RichFacesSimpleList extends RichFacesList<RichFacesSimpleListItem> {
 
     @Override
     protected Class<RichFacesSimpleListItem> getListItemType() {
         return RichFacesSimpleListItem.class;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (Iterator<RichFacesSimpleListItem> it = getItems().iterator(); it.hasNext();) {
+            RichFacesSimpleListItem item = it.next();
+            sb.append(item.getText());
+            if (it.hasNext()) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }
