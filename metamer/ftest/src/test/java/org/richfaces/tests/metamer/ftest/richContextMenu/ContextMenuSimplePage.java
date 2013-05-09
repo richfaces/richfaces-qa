@@ -22,7 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richContextMenu;
 
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.contextMenuAttributes;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
@@ -30,6 +30,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.DriverType;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.contextMenu.internal.RichFacesContextMenuInternal;
@@ -67,8 +68,7 @@ public class ContextMenuSimplePage extends MetamerPage {
 
     @FindBy(jquery = "div[id$=menuGroup4_list]")
     public WebElement groupList;
-
-    public final int SHOW_DELAY_TOLERANCE = 400;
+    public final int SHOW_DELAY_TOLERANCE = 600;
 
     public void clickOnFirstPanel(DriverType type) {
         if (type == DriverType.InternetExplorer) {
@@ -108,24 +108,19 @@ public class ContextMenuSimplePage extends MetamerPage {
         return contextMenuLocations;
     }
 
-    public long getActualShowDelay(final int showDelay) {
-        contextMenuAttributes.set(ContextMenuAttributes.showDelay, String.valueOf(showDelay));
-        long showEventObserving = System.currentTimeMillis();
-        targetPanel1.click();
-        contextMenu.waitUntilIsVisible();
-        long menuVisible = System.currentTimeMillis();
-
-        return menuVisible - showEventObserving;
-    }
-
-    public void assertShowDelayIsInTolerance(long actual, int expected) {
-        assertTrue((actual + SHOW_DELAY_TOLERANCE > expected) && (actual - SHOW_DELAY_TOLERANCE < expected));
+    public int getActualShowDelay(final int showDelay) {
+    contextMenuAttributes.set(ContextMenuAttributes.showDelay, showDelay);
+        return StopWatch.watchTimeSpentInAction(new StopWatch.PerformableAction() {
+            @Override
+            public void perform() {
+                targetPanel1.click();
+                contextMenu.waitUntilIsVisible();
+            }
+        }).inMillis().intValue();
     }
 
     public void checkShowDelay(int expected) {
-        long actual = getActualShowDelay(expected);
-        System.out.println(actual);
-        assertShowDelayIsInTolerance(actual, expected);
+        assertEquals(getActualShowDelay(expected), expected, SHOW_DELAY_TOLERANCE);
     }
 
     public static String trimTheRGBAColor(String original) {

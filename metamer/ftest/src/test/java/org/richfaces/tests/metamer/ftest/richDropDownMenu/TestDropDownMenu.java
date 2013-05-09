@@ -49,6 +49,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuSimplePage;
+import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.page.fragments.impl.contextMenu.AbstractPopupMenu;
 import org.richfaces.tests.page.fragments.impl.contextMenu.RichFacesContextMenu;
 import org.testng.annotations.Test;
@@ -213,19 +214,17 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
     @Use(field = "delay", ints = { 1000, 1500, 2500 })
     public void testHideDelay() {
         updateDropDownMenuInvoker();
-        double differenceThreshold = delay * 0.5;
+        double tolerance = delay * 0.5;
         dropDownMenuAttributes.set(DropDownMenuAttributes.hideDelay, delay);
 
         page.fileDropDownMenu.invoke(page.target1);
-
-        double beforeTime = System.currentTimeMillis();
-
-        page.fileDropDownMenu.dismiss();
-
-        double diff = System.currentTimeMillis() - beforeTime;
-        double diff2 = Math.abs(diff - delay);
-        assertTrue(diff2 < differenceThreshold, "The measured delay was far" + " from set value. The difference was: " + diff2
-                + ". The difference threshold was: " + differenceThreshold);
+        int time = StopWatch.watchTimeSpentInAction(new StopWatch.PerformableAction() {
+            @Override
+            public void perform() {
+                page.fileDropDownMenu.dismiss();
+            }
+        }).inMillis().intValue();
+        assertEquals(time, delay, tolerance, "The measured delay was far from set value.");
     }
 
     @Test
@@ -249,11 +248,10 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Use(field = "delay", ints = { 1000, 1500, 2500 })
     public void testShowDelay() {
         updateDropDownMenuInvoker();
-        page.checkShowDelay(2000);
-        page.checkShowDelay(1000);
-        page.checkShowDelay(500);
+        page.checkShowDelay(delay);
     }
 
     @Test
