@@ -69,7 +69,11 @@
         <classes>
             <class name="org.richfaces.tests.metamer.ftest.a4jMediaOutput.TestElementAWebDriver" />
             <class name="org.richfaces.tests.metamer.ftest.a4jPush.TestTwoPush" />
+            <class name="org.richfaces.tests.metamer.ftest.richCollapsibleSubTable.TestCollapsibleSubTableKeepSaved" />
+            <class name="org.richfaces.tests.metamer.ftest.richDataGrid.TestDataGridKeepSaved" />
+            <class name="org.richfaces.tests.metamer.ftest.richDataTable.TestDataTableKeepSaved" />
             <class name="org.richfaces.tests.metamer.ftest.richEditor.TestRichEditorWithTyping" />
+            <class name="org.richfaces.tests.metamer.ftest.richExtendedDataTable.TestExtendedDataTableKeepSaved" />
             <class name="org.richfaces.tests.metamer.ftest.richExtendedDataTable.TestEDTFrozenColumns" />
             <class name="org.richfaces.tests.metamer.ftest.richSelect.TestRichSelectValidationMessages" />
             <class name="org.richfaces.tests.metamer.ftest.richSelect.TestSelectCSV" />

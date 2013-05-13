@@ -19,27 +19,60 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richDataGrid;
+package org.richfaces.tests.metamer.bean;
 
-import org.richfaces.tests.metamer.ftest.abstractions.AbstractKeepSavedTest;
-import org.testng.annotations.Test;
+import com.google.common.collect.Lists;
+import java.util.List;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestDataGridKeepSaved extends AbstractKeepSavedTest {
+@ManagedBean
+@ViewScoped
+public class KeepSavedBean {
 
-    public TestDataGridKeepSaved() {
-        super("richDataGrid");
+    private List<Data> dataList = Lists.newArrayList(new Data(1), new Data(2), new Data(3), new Data(4));
+    private List<String> singleStringList = Lists.newArrayList("1");
+    private boolean keepSaved = false;
+
+    public boolean isKeepSaved() {
+        return keepSaved;
     }
 
-    @Test
-    public void testKeepSavedFalse() {
-        checkKeepSavedFalse();
+    public void setKeepSaved(boolean keepSaved) {
+        this.keepSaved = keepSaved;
     }
 
-    @Test
-    public void testKeepSavedTrue() {
-        checkKeepSavedTrue();
+    public List<String> getSingleStringList() {
+        return singleStringList;
+    }
+
+    /**
+     * @return the data
+     */
+    public List<Data> getDataList() {
+        return dataList;
+    }
+
+    public static class Data {
+
+        private Integer data;
+
+        public Data() {
+        }
+
+        public Data(Integer data) {
+            this.data = data;
+        }
+
+        public Integer getData() {
+            return data;
+        }
+
+        public void setData(Integer data) {
+            this.data = data;
+        }
     }
 }
