@@ -22,18 +22,18 @@
 package org.richfaces.tests.metamer.ftest.richTreeModelAdaptor;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
-import org.richfaces.tests.metamer.ftest.attributes.Attributes;
-import org.richfaces.tests.metamer.ftest.richTree.TreeModel;
-import org.richfaces.tests.metamer.ftest.richTree.TreeNodeModel;
+import org.richfaces.tests.metamer.ftest.richTree.TreeSimplePage;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode;
 import org.testng.annotations.Test;
 
 
@@ -41,15 +41,17 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22754 $
  */
-public class TestTreeModelAdaptorSimple extends AbstractGrapheneTest {
+public class TestTreeModelAdaptorSimple extends AbstractWebDriverTest {
 
-    protected TreeModel tree = new TreeModel(pjq("div.rf-tr[id$=richTree]"));
-    protected TreeNodeModel treeNode;
+    @Page
+    TreeSimplePage page;
+
+    protected RichFacesTreeNode treeNode;
 
     private Attributes<ModelAdaptorAttributes> modelAdaptorAttributes = new Attributes<ModelAdaptorAttributes>(
-        pjq("span[id$=:listAttributes:panel]"));
+        "listAttributes");
     private Attributes<RecursiveModelAdaptorAttributes> recursiveModelAdaptorAttributes =
-        new Attributes<RecursiveModelAdaptorAttributes>(pjq("span[id$=:recursiveAttributes:panel]"));
+        new Attributes<RecursiveModelAdaptorAttributes>("recursiveAttributes");
 
 
     @Override
@@ -59,9 +61,9 @@ public class TestTreeModelAdaptorSimple extends AbstractGrapheneTest {
 
     @Test
     public void testModelAdaptorRendered() {
-        tree.getNode(2).expand();
-        tree.getNode(2).getNode(2).expand();
-        treeNode = tree.getNode(2).getNode(2).getNode(1);
+        page.tree.getNodes().get(1).expand();
+        page.tree.getNodes().get(1).getNode(1).expand();
+        treeNode = page.tree.getNodes().get(1).getNode(1).getNode(0);
 
         assertTrue(treeNode.isLeaf());
 
@@ -72,11 +74,11 @@ public class TestTreeModelAdaptorSimple extends AbstractGrapheneTest {
 
     @Test
     public void testRecursiveModelAdaptorRendered() {
-        tree.getNode(2).expand();
-        tree.getNode(2).getNode(2).expand();
+        page.tree.getNodes().get(1).expand();
+        page.tree.getNodes().get(1).getNode(1).expand();
 
         boolean subnodePresent = false;
-        for (TreeNodeModel treeNode : tree.getNode(2).getNode(2).getNodes()) {
+        for (RichFacesTreeNode treeNode : page.tree.getNodes().get(1).getNode(1).getNodes()) {
             if (!treeNode.isLeaf()) {
                 subnodePresent = true;
             }
@@ -85,7 +87,7 @@ public class TestTreeModelAdaptorSimple extends AbstractGrapheneTest {
 
         recursiveModelAdaptorAttributes.set(RecursiveModelAdaptorAttributes.rendered, false);
 
-        for (TreeNodeModel treeNode : tree.getNode(2).getNode(2).getNodes()) {
+        for (RichFacesTreeNode treeNode : page.tree.getNodes().get(1).getNode(1).getNodes()) {
             if (!treeNode.isLeaf()) {
                 fail("there should be no subnode (not leaf) in expanded branch");
             }
