@@ -154,6 +154,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         @Use(field = "horizontalOffset", value = "offsets") })
     @Templates(value = { "plain", "richCollapsibleSubTable", "richExtendedDataTable", "richPopupPanel" })
     public void testPositioning() {
+        int tolerance = 5;
         tooltipAttributes.set(TooltipAttributes.direction, direction);
         tooltipAttributes.set(TooltipAttributes.horizontalOffset, horizontalOffset);
         tooltipAttributes.set(TooltipAttributes.verticalOffset, verticalOffset);
@@ -170,11 +171,11 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         if (getHorizontalAlignment() != null) {
             switch (getHorizontalAlignment()) {
                 case RIGHT:
-                    assertEquals(tooltipPosition.getX(), eventPosition.getX() + horizontalOffset);
+                    assertEquals(tooltipPosition.getX(), eventPosition.getX() + horizontalOffset, tolerance);
                     break;
                 case LEFT:
                     assertEquals(tooltipPosition.getX() + tooltipDimension.getWidth(), eventPosition.getX()
-                        - horizontalOffset);
+                            - horizontalOffset, tolerance);
                     break;
                 default:
                     break;
@@ -184,11 +185,11 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         if (getVerticalAlignment() != null) {
             switch (getVerticalAlignment()) {
                 case BOTTOM:
-                    assertEquals(tooltipPosition.getY(), eventPosition.getY() + verticalOffset);
+                    assertEquals(tooltipPosition.getY(), eventPosition.getY() + verticalOffset, tolerance);
                     break;
                 case TOP:
                     assertEquals(tooltipPosition.getY() + tooltipDimension.getHeight(), eventPosition.getY()
-                        - verticalOffset);
+                            - verticalOffset, tolerance);
                     break;
                 default:
                     break;
