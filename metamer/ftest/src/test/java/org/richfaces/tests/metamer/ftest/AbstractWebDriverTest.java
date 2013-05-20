@@ -28,6 +28,7 @@ import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.basicAttributes;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
@@ -59,6 +60,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.VisibleComponent;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
 import org.testng.SkipException;
@@ -146,8 +148,16 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         assertTrue(Graphene.element(element).not().isVisible().apply(driver), msg);
     }
 
+    protected void assertNotVisible(VisibleComponent component, String msg) {
+        assertFalse(component.isVisible(), msg);
+    }
+
     protected void assertPresent(WebElement element, String msg) {
         assertTrue(Graphene.element(element).isPresent().apply(driver), msg);
+    }
+
+    protected void assertVisible(VisibleComponent component, String msg) {
+        assertTrue(component.isVisible(), msg);
     }
 
     protected void assertVisible(WebElement element, String msg) {
@@ -604,7 +614,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     /**
-      Method used to run selenium test in portal environment.
+     Method used to run selenium test in portal environment.
      */
     private void goToTestInPortal() {
         driver.get(format("{0}://{1}:{2}/{3}",
@@ -653,13 +663,13 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         Graphene.waitAjax().until(new Predicate<WebDriver>() {
             @Override
             public boolean apply(WebDriver arg0) {
-                String[] actualEvents = ((String)executeJS("return sessionStorage.getItem('metamerEvents')")).split(" ");
+                String[] actualEvents = ((String) executeJS("return sessionStorage.getItem('metamerEvents')")).split(" ");
                 return actualEvents != null && actualEvents.length == expectedEvents.length;
             }
         });
-        String[] actualEvents = ((String)executeJS("return sessionStorage.getItem('metamerEvents')")).split(" ");
+        String[] actualEvents = ((String) executeJS("return sessionStorage.getItem('metamerEvents')")).split(" ");
         assertEquals(actualEvents, events, format("The events ({0}) don't came in right order ({1})",
-            Arrays.deepToString(actualEvents), Arrays.deepToString(events)));
+                Arrays.deepToString(actualEvents), Arrays.deepToString(events)));
     }
 
     public void cleanMetamerEventsVariable() {
