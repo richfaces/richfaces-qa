@@ -34,7 +34,8 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.popupPanel.RichFacesPopupPanel;
+import org.richfaces.tests.page.fragments.impl.popupPanel.PopupPanel.ResizerLocation;
+import org.richfaces.tests.page.fragments.impl.popupPanel.RichFacesSimplePopupPanel;
 import org.testng.annotations.Test;
 
 /**
@@ -55,7 +56,7 @@ public class TestHashParam extends AbstractWebDriverTest {
     private static final int TOLERANCE = 2;
     //
     @FindBy(css = "div[id$=popupPanel_container]")
-    private RichFacesPopupPanel popupPanel;
+    private RichFacesSimplePopupPanel popupPanel;
     //
     @FindBy(css = "input[id$=openPanelButton]")
     private WebElement openButton;
@@ -170,13 +171,13 @@ public class TestHashParam extends AbstractWebDriverTest {
         openPopup();
         Locations panelLocations = Utils.getLocations(panelContainer);
         Locations shadowLocations = Utils.getLocations(shadow);
-        popupPanel.resize(resizeX, resizeY);
+        popupPanel.resizeFromLocation(ResizerLocation.SE, resizeX, resizeY);
 
         Utils.tolerantAssertLocationsEquals(panelContainer, panelLocations.resizeFromBottomRight(resizeX, resizeY), TOLERANCE, TOLERANCE, "Panel's position after resize.");
         Utils.tolerantAssertLocationsEquals(shadow, shadowLocations.resizeFromBottomRight(resizeX, resizeY), TOLERANCE, TOLERANCE, "Shadow's position after resize.");
 
         //resize to minimum width height by resizing it to 60x100 (example that is below min height and width, from previous resize)
-        popupPanel.resize(-DEFAULT_WIDTH, -DEFAULT_HEIGHT);//this should resize the panel to
+        popupPanel.resizeFromLocation(ResizerLocation.SE, -DEFAULT_WIDTH, -DEFAULT_HEIGHT);//this should resize the panel to
         assertEquals(Utils.getLocations(panelContainer).getHeight(), MIN_HEIGHT, TOLERANCE);
         assertEquals(Utils.getLocations(panelContainer).getWidth(), MIN_WIDTH, TOLERANCE);
         assertEquals(Utils.getLocations(shadow).getHeight(), MIN_HEIGHT, TOLERANCE);
