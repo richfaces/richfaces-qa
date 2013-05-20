@@ -196,7 +196,7 @@ public class MetamerPage {
             case HTTP:
                 return requestTimeChangesWaiting(Graphene.guardHttp(target));
             case XHR:
-                return requestTimeChangesWaiting(Graphene.guardXhr(target));
+                return requestTimeChangesWaiting(Graphene.guardAjax(target));
             case NONE:
                 return requestTimeNotChangesWaiting(Graphene.guardNoRequest(target));
             default:
@@ -226,7 +226,7 @@ public class MetamerPage {
             case HTTP:
                 return requestTimeChangesWaiting(Graphene.guardHttp(target));
             case XHR:
-                return requestTimeChangesWaiting(Graphene.guardXhr(target));
+                return requestTimeChangesWaiting(Graphene.guardAjax(target));
             case NONE:
                 return requestTimeNotChangesWaiting(Graphene.guardNoRequest(target), guardTime);
             default:
