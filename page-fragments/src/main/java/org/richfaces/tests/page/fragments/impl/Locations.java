@@ -21,6 +21,8 @@
  */
 package org.richfaces.tests.page.fragments.impl;
 
+import com.google.common.base.Objects;
+
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -42,6 +44,30 @@ public class Locations implements Iterable<Point> {
         this.topRight = topRight;
         this.bottomLeft = bottomLeft;
         this.bottomRight = bottomRight;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Locations other = (Locations) obj;
+        if (!this.topLeft.equals(other.topLeft)) {
+            return false;
+        }
+        if (!this.topRight.equals(other.topRight)) {
+            return false;
+        }
+        if (!this.bottomLeft.equals(other.bottomLeft)) {
+            return false;
+        }
+        if (!this.bottomRight.equals(other.bottomRight)) {
+            return false;
+        }
+        return true;
     }
 
     public Point getBottomLeft() {
@@ -66,6 +92,11 @@ public class Locations implements Iterable<Point> {
 
     public int getWidth() {
         return topRight.x - topLeft.x;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(bottomLeft, bottomRight, topLeft, topRight);
     }
 
     @Override
