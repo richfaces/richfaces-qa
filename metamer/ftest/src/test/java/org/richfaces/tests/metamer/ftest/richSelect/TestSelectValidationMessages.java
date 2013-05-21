@@ -27,9 +27,9 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichSelectValidationMessages extends AbstractValidationMessagesTest {
+public class TestSelectValidationMessages extends AbstractValidationMessagesTest {
 
-    public TestRichSelectValidationMessages() {
+    public TestSelectValidationMessages() {
         super("richSelect");
     }
 
