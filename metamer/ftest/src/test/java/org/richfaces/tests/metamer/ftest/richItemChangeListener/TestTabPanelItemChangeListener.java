@@ -67,13 +67,13 @@ public class TestTabPanelItemChangeListener extends AbstractItemChangeListenerTe
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12087")
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     public void testICLInsideComponentUsingListener() {
         super.testICLInComponentWithListener(ICL_inComponent_usingListener_PhaseName);
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12089")
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     public void testICLOutsideComponentUsingForAndType() {
         super.testICLAsForAttributeWithType(ICL_outsideComponent_usingType_PhaseName);
     }

@@ -79,7 +79,7 @@ public class TestDropTargetInCollapsibleSubTable extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richDropTarget/simple.xhtml");
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     public void testAcceptedTypes() {
         dropTargetAttributes.set(acceptedTypes, "drg2");
         indicator = new Indicator(page.indicator);
@@ -95,7 +95,7 @@ public class TestDropTargetInCollapsibleSubTable extends AbstractWebDriverTest {
         testAcception(page.drg3, ACCEPTING); doDrop();
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     public void testRender() {
         dropTargetAttributes.set(render, "droppable1 droppable2 renderChecker");
 
@@ -116,7 +116,7 @@ public class TestDropTargetInCollapsibleSubTable extends AbstractWebDriverTest {
         assertFalse(Graphene.element(page.drop2).equals(drop2Content));
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     public void testDropListenerAndEvent() {
 
         indicator =  new Indicator(page.indicator);
@@ -151,7 +151,7 @@ public class TestDropTargetInCollapsibleSubTable extends AbstractWebDriverTest {
         assertTrue(page.dropValue.getText().contains("5"));
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     public void testExecute() {
         dropTargetAttributes.set(execute, "executeChecker");
 
@@ -164,7 +164,7 @@ public class TestDropTargetInCollapsibleSubTable extends AbstractWebDriverTest {
         page.assertPhases(ANY_PHASE);
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @RegressionTest("https://issues.jboss.org/browse/RF-10535")
     public void testImmediate() {
         dropTargetAttributes.set(immediate, true);
@@ -178,7 +178,7 @@ public class TestDropTargetInCollapsibleSubTable extends AbstractWebDriverTest {
         page.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, RENDER_RESPONSE);
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @RegressionTest("https://issues.jboss.org/browse/RF-10535")
     public void testBypassUpdates() {
         dropTargetAttributes.set(bypassUpdates, true);
@@ -193,7 +193,7 @@ public class TestDropTargetInCollapsibleSubTable extends AbstractWebDriverTest {
         page.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, RENDER_RESPONSE);
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     public void testEvents() {
         dropTargetAttributes.set(onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
         dropTargetAttributes.set(onbegin, "metamerEvents += \"begin \"");

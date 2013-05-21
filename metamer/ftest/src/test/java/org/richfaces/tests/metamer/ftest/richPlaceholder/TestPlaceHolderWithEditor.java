@@ -166,28 +166,28 @@ public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
         }
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking({ "https://issues.jboss.org/browse/RF-12624", "https://issues.jboss.org/browse/RF-12625" })
     @Override
     public void testAjaxSubmit() {
         super.testAjaxSubmit();
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12624")
     @Override
     public void testClickOnInputWithPlaceholder() {
         super.testClickOnInputWithPlaceholder();
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking({ "https://issues.jboss.org/browse/RF-12624", "https://issues.jboss.org/browse/RF-12632" })
     @Override
     public void testDeleteTextFromInputWithPlaceholder() {
         super.testDeleteTextFromInputWithPlaceholder();
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12624")
     @Override
     public void testHTTPSubmit() {
@@ -201,7 +201,7 @@ public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
         super.testRendered();
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12624")
     @Override
     public void testSelector() {
@@ -215,7 +215,7 @@ public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
         super.testSelectorEmpty();
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking({ "https://issues.jboss.org/browse/RF-12624", "https://issues.jboss.org/browse/RF-12632" })
     @Override
     public void testStyleClass() {
@@ -224,7 +224,7 @@ public class TestPlaceHolderWithEditor extends AbstractPlaceholderTest {
             "Input does not contain set class 'metamer-ftest-class'");
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking({ "https://issues.jboss.org/browse/RF-12624", "https://issues.jboss.org/browse/RF-12632" })
     @Override
     public void testTypeToInputWithPlaceholder() {

@@ -103,7 +103,7 @@ public class TestRichTabPanel extends AbstractGrapheneTest {
                 "The header should be aligned to the right, but it isn't.");
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-11550")
     @Templates(value = { "hDataTable", "richCollapsibleSubTable", "richDataGrid", "richDataTable" })
     public void testHeaderAlignmentIterationComponents() {

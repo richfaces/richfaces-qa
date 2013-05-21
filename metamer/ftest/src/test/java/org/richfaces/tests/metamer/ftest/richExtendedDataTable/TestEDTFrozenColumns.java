@@ -131,7 +131,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
      * Tests if scroller for not frozen columns is moved to another position and if the default one is removed. Checks
      * if scroller is still there after switching to another data page.
      */
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @Use(field = "numberOfColumns", ints = { 1, 3 })
     @Templates(value = "richExtendedDataTable")
     @IssueTracking("https://issues.jboss.org/browse/RF-12278")

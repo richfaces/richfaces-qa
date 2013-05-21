@@ -128,7 +128,7 @@ public class TestHCommandButton extends AbstractAjaxTest {
          super.testFullPageRefresh();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11341")
     public void testRerenderAll() {
          super.testRerenderAll();

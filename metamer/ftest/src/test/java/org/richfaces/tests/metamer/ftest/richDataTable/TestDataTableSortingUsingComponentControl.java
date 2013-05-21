@@ -49,25 +49,25 @@ public class TestDataTableSortingUsingComponentControl extends DataTableSortingT
         model = new DataTable(pjq("table.rf-dt[id$=richDataTable]"));
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @Override
     public void testSortModeSingle() {
         super.testSortModeSingle();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @Override
     public void testSortModeSingleReverse() {
         super.testSortModeSingleReverse();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @Override
     public void testSortModeSingleDoesntRememberOrder() {
         super.testSortModeSingleDoesntRememberOrder();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @Override
     @IssueTracking({ "https://issues.jboss.org/browse/RF-9932",
         "http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790" })
@@ -75,31 +75,31 @@ public class TestDataTableSortingUsingComponentControl extends DataTableSortingT
         super.testSortModeSingleRerenderAll();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @Override
     public void testSortModeSingleFullPageRefresh() {
         super.testSortModeSingleFullPageRefresh();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @Override
     public void testSortModeMulti() {
         super.testSortModeMulti();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @Override
     public void testSortModeMultiReverse() {
         super.testSortModeMultiReverse();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @Override
     public void testSortModeMultiReplacingOldOccurences() {
         super.testSortModeMultiReplacingOldOccurences();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @Override
     @IssueTracking({ "https://issues.jboss.org/browse/RF-9932",
         "http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-790" })
@@ -107,7 +107,7 @@ public class TestDataTableSortingUsingComponentControl extends DataTableSortingT
         super.testSortModeMultiRerenderAll();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @Override
     public void testSortModeMultiFullPageRefresh() {
         super.testSortModeMultiFullPageRefresh();

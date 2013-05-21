@@ -51,7 +51,7 @@ public class TestCustomMessages extends AbstractWebDriverTest {
         verifyMessages();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-12511")
     public void testMessages2() {
         page.setAllWrong2();

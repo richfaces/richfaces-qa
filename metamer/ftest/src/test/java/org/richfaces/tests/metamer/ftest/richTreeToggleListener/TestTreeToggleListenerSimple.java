@@ -54,7 +54,7 @@ public class TestTreeToggleListenerSimple extends AbstractTreeToggleListenerTest
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12121")
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     public void testTTLOutsideComponentUsingForAndType() {
         super.testTTLAsForAttributeWithType(TTL_outsideComponent_usingType_PhaseName);
     }

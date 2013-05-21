@@ -94,7 +94,7 @@ public class TestInstantAttributes extends AbstractStatusTest {
         XHRHalter.disable();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @IssueTracking({ "https://issues.jboss.org/browse/RF-9118",
         "http://java.net/jira/browse/JAVASERVERFACES_SPEC_PUBLIC-1024" })
     public void testOnError() {

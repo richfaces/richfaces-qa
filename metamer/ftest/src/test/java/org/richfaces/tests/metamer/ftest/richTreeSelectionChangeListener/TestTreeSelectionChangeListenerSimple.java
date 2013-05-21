@@ -54,7 +54,7 @@ public class TestTreeSelectionChangeListenerSimple extends AbstractTreeSelection
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12142")
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     public void testTSCLOutsideComponentUsingForAndType() {
         super.testTSCLAsForAttributeWithType(TSCL_outsideComponent_usingType_PhaseName);
     }
