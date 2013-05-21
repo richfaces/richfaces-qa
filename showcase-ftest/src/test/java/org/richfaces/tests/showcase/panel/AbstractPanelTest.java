@@ -40,8 +40,8 @@ public class AbstractPanelTest extends AbstractGrapheneTest {
 
     protected final String RICH_FACES_INFO = "RichFaces is a component library for "
         + "JSF and an advanced framework for easily integrating AJAX capabilities into "
-        + "business applications. 100+ AJAX enabled components in two libraries a4j: page "
-        + "centric AJAX controls rich: self contained, ready to use components Whole "
+        + "business applications. 100+ AJAX enabled components in two libraries r: page "
+        + "centric AJAX controls r: self contained, ready to use components Whole "
         + "set of JSF benefits while working with AJAX Skinnability mechanism "
         + "Component Development Kit (CDK) Dynamic resources handling Testing "
         + "facilities for components, actions, listeners, and pages Broad cross-browser "

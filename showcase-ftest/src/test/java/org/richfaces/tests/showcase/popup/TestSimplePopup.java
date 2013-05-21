@@ -40,7 +40,7 @@ public class TestSimplePopup extends AbstractPoppupPanel {
      */
     protected final String BODY_OF_THE_POPPUP = "Any content might be inside this panel.\n"
         + " The popup panel is open and closed from the javascript function of component client side object. "
-        + "The following code hide this panel: #{rich:component('popup')}.hide()";
+        + "The following code hide this panel: #{r:component('popup')}.hide()";
 
     /* *************************************************************************************
      * Locators*************************************************************************************
