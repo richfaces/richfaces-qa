@@ -24,8 +24,8 @@ package org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -40,7 +40,8 @@ public class CalendarWeek implements Iterable<CalendarDay> {
     @Root
     private WebElement root;
     //
-    private WebDriver driver = GrapheneContext.getProxy();
+    @Drone
+    private WebDriver driver;
     //
     @FindBy(css = "td[id*=WeekNumCell]")
     private WebElement weekNumberElement;
@@ -51,11 +52,7 @@ public class CalendarWeek implements Iterable<CalendarDay> {
      * Returns calendar days in this week.
      */
     public CalendarDays getCalendarDays() {
-        CalendarDays result = new CalendarDays(7);
-        for (WebElement day : days) {
-            result.add(new CalendarDay(day));
-        }
-        return result;
+        return new CalendarDays(days);
     }
 
     /**
