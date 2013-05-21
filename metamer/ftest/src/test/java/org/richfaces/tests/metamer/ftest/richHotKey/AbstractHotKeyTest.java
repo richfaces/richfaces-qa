@@ -36,6 +36,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.page.fragments.impl.hotkey.RichFacesHotkey;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.log.Log.LogEntryLevel;
 import org.richfaces.tests.page.fragments.impl.log.LogEntries;
@@ -53,9 +54,9 @@ public abstract class AbstractHotKeyTest extends AbstractWebDriverTest {
     @FindBy(css = "input.second-input")
     protected TextInputComponentImpl secondInput;
     @FindBy(css = "span[id$=richHotKey1]")
-    protected WebElement hotkey1;
+    protected RichFacesHotkey hotkey1;
     @FindBy(css = "span[id$=richHotKey2]")
-    protected WebElement hotkey2;
+    protected RichFacesHotkey hotkey2;
     @FindBy(css = "div[id='richfaces.log']")
     protected RichFacesLog log;
     @FindBy(tagName = "body")

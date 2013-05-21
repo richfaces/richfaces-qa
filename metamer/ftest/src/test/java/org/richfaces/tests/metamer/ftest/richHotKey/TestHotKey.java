@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richHotKey;
 
+import org.richfaces.tests.page.fragments.impl.hotkey.Hotkey;
 import org.testng.annotations.Test;
 
 /**
@@ -35,8 +36,8 @@ public class TestHotKey extends AbstractHotKeyTest {
     public void testFirstAndSecondPair() {
         for (int i = 1; i <= NUMBER_OF_TESTS; i++) {
             for (int j = 0; j < i; j++) {
-                pressHotkeyOnElement(HOTKEY_CTRL_X, firstInput.getInput());
-                pressHotkeyOnElement(HOTKEY_ALT_X, firstInput.getInput());
+                hotkey1.invokeOn(firstInput.getInput());
+                hotkey2.invokeOn(firstInput.getInput());
             }
             checkEvents(i, i);
             clearHotKeyEvents();
@@ -45,13 +46,13 @@ public class TestHotKey extends AbstractHotKeyTest {
 
     @Test
     public void testFirstPair() {
-        testPair(HOTKEY_CTRL_X, 1);
+        testPair(hotkey1, 1);
     }
 
-    private void testPair(String keys, int hotkeyNum) {
+    private void testPair(Hotkey hotkey, int hotkeyNum) {
         for (int i = 1; i <= NUMBER_OF_TESTS; i++) {
             for (int j = 0; j < i; j++) {
-                pressHotkeyOnElement(keys, firstInput.getInput());
+                hotkey.invokeOn(firstInput.getInput());
             }
             if (hotkeyNum == 1) {
                 checkEvents(i, 0);
@@ -64,6 +65,6 @@ public class TestHotKey extends AbstractHotKeyTest {
 
     @Test
     public void testSecondPair() {
-        testPair(HOTKEY_ALT_X, 2);
+        testPair(hotkey2, 2);
     }
 }
