@@ -332,7 +332,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         testOnclick();
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12792")
     public void testOnkeydown() {
         updateDropDownMenuInvoker();
@@ -358,7 +358,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         });
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     //false negative
     public void testOnkeyup() {
         updateDropDownMenuInvoker();
@@ -396,7 +396,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         });
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12854")
     public void testOnmouseout() {
         updateDropDownMenuInvoker();

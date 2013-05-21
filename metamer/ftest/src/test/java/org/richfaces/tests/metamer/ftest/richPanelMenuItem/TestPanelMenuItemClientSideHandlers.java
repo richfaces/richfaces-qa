@@ -95,7 +95,7 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractPanelMenuCommon
         testRequestEventsAfter(ajaxEvents);
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-10844")
     public void testClientSideEventsOrderServer() {
         panelMenuItemAttributes.set(mode, server);

@@ -47,7 +47,7 @@ public class TestWrappingValidatorSingle extends AbstractValidatorsTest {
         return buildUrl(contextPath, "faces/components/richValidator/single.xhtml");
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11576")
     public void testIntegerMin() {
         page.setCorrectBtn.click();

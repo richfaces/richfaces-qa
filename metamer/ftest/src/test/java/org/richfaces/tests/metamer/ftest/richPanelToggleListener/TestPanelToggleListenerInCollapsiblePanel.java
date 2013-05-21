@@ -61,7 +61,7 @@ public class TestPanelToggleListenerInCollapsiblePanel extends AbstractPanelTogg
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-11568")
-    @Test(groups={ "4.Future" })
+    @Test(groups={ "Future" })
     @Templates(value="richCollapsiblePanel")
     public void testPTLAsAttributeInRichCollapsiblePanel() {
         super.testPTLAsAttributeOfComponent(PTL_as_ComponentAttribute_PhaseName);
@@ -102,7 +102,7 @@ public class TestPanelToggleListenerInCollapsiblePanel extends AbstractPanelTogg
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12280")
-    @Test(groups={ "4.Future" })
+    @Test(groups={ "Future" })
     @Templates(value="richCollapsiblePanel")
     public void testPTLInsideComponentUsingTypeInRichCollapsiblePanel() {
         super.testPTLInComponentWithListener(PTL_inComponent_usingType_PhaseName);
@@ -123,13 +123,13 @@ public class TestPanelToggleListenerInCollapsiblePanel extends AbstractPanelTogg
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12105")
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     public void testPTLInsideComponentUsingListener() {
         super.testPTLInComponentWithListener(PTL_inComponent_usingListener_PhaseName);
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12106")
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     public void testPTLOutsideComponentUsingForAndType() {
         super.testPTLAsForAttributeWithType(PTL_outsideComponent_usingType_PhaseName);
     }

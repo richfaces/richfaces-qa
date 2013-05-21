@@ -104,7 +104,7 @@ public class TestCollapsibleSubTableSimple extends AbstractCollapsibleSubTableTe
         }
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @RegressionTest("https://issues.jboss.org/browse/RF-12673")
     @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testFirstInSwitchablePanels() {
@@ -146,7 +146,7 @@ public class TestCollapsibleSubTableSimple extends AbstractCollapsibleSubTableTe
         }
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @RegressionTest("https://issues.jboss.org/browse/RF-12673")
     @Templates(value = { "richAccordion", "richCollapsiblePanel", "richTabPanel", "richTogglePanel" })
     public void testRowsInSwitchablePanels() {

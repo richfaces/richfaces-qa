@@ -67,7 +67,7 @@ public class TestCalendarKVS extends AbstractCalendarTest {
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12300")
-    @Test(groups = { "keepVisualStateTesting", "4.Future" })
+    @Test(groups = { "keepVisualStateTesting", "Future" })
     public void testRenderAll() {
         CalendarInputReloadTester reloadTesterInput = new CalendarInputReloadTester();
         reloadTesterInput.testRerenderAll();

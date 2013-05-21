@@ -101,7 +101,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
 
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-10256")
     @Templates(value = {"richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat"})
@@ -133,7 +133,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
         assertEquals(selection.getCurrent(), selection(range));
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-10256")
     @Templates(value = {"richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat"})
@@ -141,7 +141,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
         testMultiSelectionUsingShiftBetweenPagesInReversedOrder();
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-9977")
     public void testMultiSelectionUsingCtrlAndShiftCombinations() {
         IntRange range1 = new IntRange(2, 14);
@@ -181,7 +181,7 @@ public class TestExtendedDataTableSelection extends AbstractDataTableTest {
         verifySelected();
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-10256")
     @Templates(value = {"richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRegion", "a4jRepeat"})

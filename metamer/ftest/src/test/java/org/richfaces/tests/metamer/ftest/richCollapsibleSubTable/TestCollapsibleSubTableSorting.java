@@ -70,7 +70,7 @@ public class TestCollapsibleSubTableSorting extends AbstractCollapsibleSubTableT
         Column.resetAll();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11302")
     public void testSorting() {
         collapsibleSubTabAttributes.set(CollapsibleSubTableAttributes.rows, rows);

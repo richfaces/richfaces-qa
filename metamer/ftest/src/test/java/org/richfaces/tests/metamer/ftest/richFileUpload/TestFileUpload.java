@@ -118,7 +118,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @IssueTracking(value = "https://issues.jboss.org/browse/RF-12039")
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     public void testData() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.data, succesfulFileUploadAction);
     }
@@ -244,13 +244,13 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12037")
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     public void testOnBeforeDOMUpdate() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onbeforedomupdate, succesfulFileUploadAction);
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12037")
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     public void testOnBegin() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.onbegin, succesfulFileUploadAction);
     }
@@ -273,7 +273,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     }
 
     @IssueTracking("https://issues.jboss.org/browse/RF-12037")
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     public void testOnComplete() {
         testFireEvent(fileUploadAttributes, FileUploadAttributes.oncomplete, succesfulFileUploadAction);
     }

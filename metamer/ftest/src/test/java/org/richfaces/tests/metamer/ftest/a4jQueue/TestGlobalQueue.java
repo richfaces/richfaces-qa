@@ -238,14 +238,14 @@ public class TestGlobalQueue extends AbstractGrapheneTest {
         assertEquals(queue.getRepeatedText(), "d");
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking(value = { "https://issues.jboss.org/browse/RF-11805", "https://issues.jboss.org/browse/RF-11711" })
     public void testOnbeforeDOMUpdate() {
         testRequestEvent(QueueAttributes.onbeforedomupdate,
                 new ClickButtonEventLaunchingAction("input[id$=actionButton]"));
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking(value = { "https://issues.jboss.org/browse/RF-11805", "https://issues.jboss.org/browse/RF-11711" })
     public void testOnError() {
         testRequestEvent(QueueAttributes.onerror,
