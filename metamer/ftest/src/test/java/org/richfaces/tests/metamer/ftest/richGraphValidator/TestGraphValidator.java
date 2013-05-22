@@ -51,7 +51,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichGraphValidator extends AbstractWebDriverTest {
+public class TestGraphValidator extends AbstractWebDriverTest {
 
     private static final String CORRECT_STRING_VALUE = ":-)";
     private static final String CORRECT_INT_VALUE = "10";

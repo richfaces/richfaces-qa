@@ -43,7 +43,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestRichHashParam extends AbstractWebDriverTest {
+public class TestHashParam extends AbstractWebDriverTest {
 
     //params set on page with hashParam
     private static final int MIN_WIDTH = 300;
