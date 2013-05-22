@@ -1055,6 +1055,11 @@ FSF site: http://www.fsf.org. -->
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.as</groupId>
+                    <artifactId>jboss-as-controller-client</artifactId>
+                    <version>7.2.0.Final</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.jboss.as</groupId>
                     <artifactId>jboss-as-arquillian-container-managed</artifactId>
                     <version>7.2.0.Final</version>
                     <scope>test</scope>
