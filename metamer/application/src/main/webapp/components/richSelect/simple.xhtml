@@ -92,10 +92,26 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <r:ajax event="change" render="output"/>
 
             </r:select>
-
-            <br/><br/>
-
+            <br/>
+            <br/>
             output: <h:outputText id="output" value="#{richSelectBean.attributes['value'].value}"/>
+            <br/>
+            <br/>
+            <fieldset>
+                <legend>JavaScript API</legend>
+                Output value for all get methods: <h:inputText id="value"/>
+                <br/><br/>
+                On click:
+                <br/>
+                <input id="getValue" type="button" name="getValue" value="getValue()" onclick="$('[id$=value]').val(#{r:component('select')}.getValue())" />
+                <input id="setValue" type="button" name="setValue" value="setValue('Arizona')" onclick="#{r:component('select')}.setValue('Arizona')" />
+                <input id="getLabel" type="button" name="getLabel" value="getLabel()" onclick="$('[id$=value]').val(#{r:component('select')}.getLabel())" />
+                <br/>
+                On mouseover:
+                <br/>
+                <input id="showPopup" type="button" name="showPopup" value="showPopup()" onmouseover="#{r:component('select')}.showPopup()" />
+                <input id="hidePopup" type="button" name="hidePopup" value="hidePopup()" onmouseover="#{r:component('select')}.hidePopup()" />
+            </fieldset>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
