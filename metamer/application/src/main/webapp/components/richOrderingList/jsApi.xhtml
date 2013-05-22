@@ -40,32 +40,30 @@
         </ui:define>
 
         <ui:define name="component">
-            <h:form>
-                <h:commandButton id="submitButton" value="submit"/>
-                <br/>
-                <rich:orderingList id="orderingList"
-                                collectionType="java.util.LinkedList"
-                                itemLabel="#{capital.name}"
-                                itemValue="#{capital}"
-                                value="#{richOrderingListBean.capitals}"
-                                var="capital">
-                    <f:converter converterId="capitalConverter" />
-                </rich:orderingList>
+            <h:commandButton id="submitButton" value="submit"/>
+            <br/>
+            <rich:orderingList id="orderingList"
+                            collectionType="java.util.LinkedList"
+                            itemLabel="#{capital.name}"
+                            itemValue="#{capital}"
+                            value="#{richOrderingListBean.capitals}"
+                            var="capital">
+                <f:converter converterId="capitalConverter" />
+            </rich:orderingList>
 
+            <br/><br/>
+            <fieldset>
+                <legend>JavaScript API</legend>
+                Output value for all get methods: <h:inputText id="value"/>
                 <br/><br/>
-                <fieldset>
-                    <legend>JavaScript API</legend>
-                    Output value for all get methods: <h:inputText id="value"/>
-                    <br/><br/>
-                    On click:
-                    <br/>
-                    <input id="getList" type="button" name="getList" value="getList().length()" onclick="$('[id$=value]').val(#{r:component('orderingList')}.getList().length())" />
-                    <input id="up" type="button" name="up" value="up()" onclick="#{r:component('orderingList')}.up()" />
-                    <input id="down" type="button" name="down" value="down()" onclick="#{r:component('orderingList')}.down()" />
-                    <input id="upTop" type="button" name="upTop" value="upTop()" onclick="#{r:component('orderingList')}.upTop()" />
-                    <input id="downBottom" type="button" name="downBottom" value="downBottom()" onclick="#{r:component('orderingList')}.downBottom()" />
-                </fieldset>
-            </h:form>
+                On click:
+                <br/>
+                <input id="getList" type="button" name="getList" value="getList().length()" onclick="$('[id$=value]').val(#{r:component('orderingList')}.getList().length())" />
+                <input id="up" type="button" name="up" value="up()" onclick="#{r:component('orderingList')}.up()" />
+                <input id="down" type="button" name="down" value="down()" onclick="#{r:component('orderingList')}.down()" />
+                <input id="upTop" type="button" name="upTop" value="upTop()" onclick="#{r:component('orderingList')}.upTop()" />
+                <input id="downBottom" type="button" name="downBottom" value="downBottom()" onclick="#{r:component('orderingList')}.downBottom()" />
+            </fieldset>
         </ui:define>
     </ui:composition>
 </html>

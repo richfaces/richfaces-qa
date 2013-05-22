@@ -40,37 +40,34 @@
         </ui:define>
 
         <ui:define name="component">
-            <h:form>
-                <h:commandButton id="submitButton" value="submit"/>
-                <br/>
-                <c:choose >
-                    <c:when test="#{not empty richOrderingListBean.validatorMessage}">
-                        <r:orderingList id="orderingList"
-                                        collectionType="java.util.LinkedList"
-                                        itemLabel="#{capital.name}"
-                                        itemValue="#{capital}"
-                                        validator="org.richfaces.PhoenixFirstValidator"
-                                        validatorMessage="#{richOrderingListBean.validatorMessage}"
-                                        value="#{richOrderingListBean.capitals}"
-                                        var="capital">
-                            <f:converter converterId="capitalConverter" />
-                        </r:orderingList>
-                    </c:when>
-                    <c:otherwise>
-                        <r:orderingList id="orderingList"
-                                        collectionType="java.util.LinkedList"
-                                        itemLabel="#{capital.name}"
-                                        itemValue="#{capital}"
-                                        validator="org.richfaces.PhoenixFirstValidator"
-                                        value="#{richOrderingListBean.capitals}"
-                                        var="capital">
-                            <f:converter converterId="capitalConverter" />
-                        </r:orderingList>
-                    </c:otherwise>
-                </c:choose>
-                <r:message id="message" for="orderingList"/>
-            </h:form>
-
+            <h:commandButton id="submitButton" value="submit"/>
+            <br/>
+            <c:choose >
+                <c:when test="#{not empty richOrderingListBean.validatorMessage}">
+                    <r:orderingList id="orderingList"
+                                    collectionType="java.util.LinkedList"
+                                    itemLabel="#{capital.name}"
+                                    itemValue="#{capital}"
+                                    validator="org.richfaces.PhoenixFirstValidator"
+                                    validatorMessage="#{richOrderingListBean.validatorMessage}"
+                                    value="#{richOrderingListBean.capitals}"
+                                    var="capital">
+                        <f:converter converterId="capitalConverter" />
+                    </r:orderingList>
+                </c:when>
+                <c:otherwise>
+                    <r:orderingList id="orderingList"
+                                    collectionType="java.util.LinkedList"
+                                    itemLabel="#{capital.name}"
+                                    itemValue="#{capital}"
+                                    validator="org.richfaces.PhoenixFirstValidator"
+                                    value="#{richOrderingListBean.capitals}"
+                                    var="capital">
+                        <f:converter converterId="capitalConverter" />
+                    </r:orderingList>
+                </c:otherwise>
+            </c:choose>
+            <r:message id="message" for="orderingList"/>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
