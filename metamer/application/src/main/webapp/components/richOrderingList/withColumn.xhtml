@@ -41,77 +41,74 @@
         </ui:define>
 
         <ui:define name="component">
-            <h:form>
-                <h:commandButton id="submitButton" value="submit" />
-                <hr />
-                <r:orderingList id="orderingList"
-                                caption="#{richOrderingListBean.attributes['caption'].value}"
-                                collectionType="java.util.LinkedList"
-                                columnClasses="#{richOrderingListBean.attributes['columnClasses'].value}"
-                                disabled="#{richOrderingListBean.attributes['disabled'].value}"
-                                disabledClass="#{richOrderingListBean.attributes['disabledClass'].value}"
-                                downBottomText="#{richOrderingListBean.attributes['downBottomText'].value}"
-                                downText="#{richOrderingListBean.attributes['downText'].value}"
-                                headerClass="#{richOrderingListBean.attributes['headerClass'].value}"
-                                immediate="#{richOrderingListBean.attributes['immediate'].value}"
-                                itemClass="#{richOrderingListBean.attributes['itemClass'].value}"
-                                itemLabel="#{capital.name}"
-                                itemValue="#{capital}"
-                                listHeight="#{richOrderingListBean.attributes['listHeight'].value}"
-                                listWidth="#{richOrderingListBean.attributes['listWidth'].value}"
-                                maxListHeight="#{richOrderingListBean.attributes['maxListHeight'].value}"
-                                minListHeight="#{richOrderingListBean.attributes['minListHeight'].value}"
-                                onblur="#{richOrderingListBean.attributes['onblur'].value}"
-                                onchange="#{richOrderingListBean.attributes['onchange'].value}"
-                                onclick="#{richOrderingListBean.attributes['onclick'].value}"
-                                ondblclick="#{richOrderingListBean.attributes['ondblclick'].value}"
-                                onfocus="#{richOrderingListBean.attributes['onfocus'].value}"
-                                onkeydown="#{richOrderingListBean.attributes['onkeydown'].value}"
-                                onkeypress="#{richOrderingListBean.attributes['onkeypress'].value}"
-                                onkeyup="#{richOrderingListBean.attributes['onkeyup'].value}"
-                                onlistclick="#{richOrderingListBean.attributes['onlistclick'].value}"
-                                onlistdblclick="#{richOrderingListBean.attributes['onlistdblclick'].value}"
-                                onlistkeydown="#{richOrderingListBean.attributes['onlistkeydown'].value}"
-                                onlistkeypress="#{richOrderingListBean.attributes['onlistkeypress'].value}"
-                                onlistkeyup="#{richOrderingListBean.attributes['onlistkeyup'].value}"
-                                onlistmousedown="#{richOrderingListBean.attributes['onlistmousedown'].value}"
-                                onlistmousemove="#{richOrderingListBean.attributes['onlistmousemove'].value}"
-                                onlistmouseout="#{richOrderingListBean.attributes['onlistmouseout'].value}"
-                                onlistmouseover="#{richOrderingListBean.attributes['onlistmouseover'].value}"
-                                onlistmouseup="#{richOrderingListBean.attributes['onlistmouseup'].value}"
-                                onmousedown="#{richOrderingListBean.attributes['onmousedown'].value}"
-                                onmousemove="#{richOrderingListBean.attributes['onmousemove'].value}"
-                                onmouseout="#{richOrderingListBean.attributes['onmouseout'].value}"
-                                onmouseover="#{richOrderingListBean.attributes['onmouseover'].value}"
-                                onmouseup="#{richOrderingListBean.attributes['onmouseup'].value}"
-                                rendered="#{richOrderingListBean.attributes['rendered'].value}"
-                                required="#{richOrderingListBean.attributes['required'].value}"
-                                requiredMessage="#{richOrderingListBean.attributes['requiredMessage'].value}"
-                                selectItemClass="#{richOrderingListBean.attributes['selectItemClass'].value}"
-                                style="#{richOrderingListBean.attributes['style'].value}"
-                                styleClass="#{richOrderingListBean.attributes['styleClass'].value}"
-                                upText="#{richOrderingListBean.attributes['upText'].value}"
-                                upTopText="#{richOrderingListBean.attributes['upTopText'].value}"
-                                value="#{richOrderingListBean.capitals}"
-                                valueChangeListener="#{richBean.valueChangeListenerImproved}"
-                                var="capital">
-                    <f:converter converterId="capitalConverter" />
-                    <r:column>
-                        <f:facet name="header">State</f:facet>
-                            #{capital.state}
-                    </r:column>
-                    <r:column>
-                        <f:facet name="header">Name</f:facet>
-                            #{capital.name}
-                    </r:column>
-                </r:orderingList>
-                <hr />
-                <r:list id="output" value="#{richOrderingListBean.capitals}" var="capital">
-                    <h:outputText value="#{capital.state}, #{capital.name}" />
-                </r:list>
-                <hr />
-            </h:form>
-
+            <h:commandButton id="submitButton" value="submit" />
+            <hr />
+            <r:orderingList id="orderingList"
+                            caption="#{richOrderingListBean.attributes['caption'].value}"
+                            collectionType="java.util.LinkedList"
+                            columnClasses="#{richOrderingListBean.attributes['columnClasses'].value}"
+                            disabled="#{richOrderingListBean.attributes['disabled'].value}"
+                            disabledClass="#{richOrderingListBean.attributes['disabledClass'].value}"
+                            downBottomText="#{richOrderingListBean.attributes['downBottomText'].value}"
+                            downText="#{richOrderingListBean.attributes['downText'].value}"
+                            headerClass="#{richOrderingListBean.attributes['headerClass'].value}"
+                            immediate="#{richOrderingListBean.attributes['immediate'].value}"
+                            itemClass="#{richOrderingListBean.attributes['itemClass'].value}"
+                            itemLabel="#{capital.name}"
+                            itemValue="#{capital}"
+                            listHeight="#{richOrderingListBean.attributes['listHeight'].value}"
+                            listWidth="#{richOrderingListBean.attributes['listWidth'].value}"
+                            maxListHeight="#{richOrderingListBean.attributes['maxListHeight'].value}"
+                            minListHeight="#{richOrderingListBean.attributes['minListHeight'].value}"
+                            onblur="#{richOrderingListBean.attributes['onblur'].value}"
+                            onchange="#{richOrderingListBean.attributes['onchange'].value}"
+                            onclick="#{richOrderingListBean.attributes['onclick'].value}"
+                            ondblclick="#{richOrderingListBean.attributes['ondblclick'].value}"
+                            onfocus="#{richOrderingListBean.attributes['onfocus'].value}"
+                            onkeydown="#{richOrderingListBean.attributes['onkeydown'].value}"
+                            onkeypress="#{richOrderingListBean.attributes['onkeypress'].value}"
+                            onkeyup="#{richOrderingListBean.attributes['onkeyup'].value}"
+                            onlistclick="#{richOrderingListBean.attributes['onlistclick'].value}"
+                            onlistdblclick="#{richOrderingListBean.attributes['onlistdblclick'].value}"
+                            onlistkeydown="#{richOrderingListBean.attributes['onlistkeydown'].value}"
+                            onlistkeypress="#{richOrderingListBean.attributes['onlistkeypress'].value}"
+                            onlistkeyup="#{richOrderingListBean.attributes['onlistkeyup'].value}"
+                            onlistmousedown="#{richOrderingListBean.attributes['onlistmousedown'].value}"
+                            onlistmousemove="#{richOrderingListBean.attributes['onlistmousemove'].value}"
+                            onlistmouseout="#{richOrderingListBean.attributes['onlistmouseout'].value}"
+                            onlistmouseover="#{richOrderingListBean.attributes['onlistmouseover'].value}"
+                            onlistmouseup="#{richOrderingListBean.attributes['onlistmouseup'].value}"
+                            onmousedown="#{richOrderingListBean.attributes['onmousedown'].value}"
+                            onmousemove="#{richOrderingListBean.attributes['onmousemove'].value}"
+                            onmouseout="#{richOrderingListBean.attributes['onmouseout'].value}"
+                            onmouseover="#{richOrderingListBean.attributes['onmouseover'].value}"
+                            onmouseup="#{richOrderingListBean.attributes['onmouseup'].value}"
+                            rendered="#{richOrderingListBean.attributes['rendered'].value}"
+                            required="#{richOrderingListBean.attributes['required'].value}"
+                            requiredMessage="#{richOrderingListBean.attributes['requiredMessage'].value}"
+                            selectItemClass="#{richOrderingListBean.attributes['selectItemClass'].value}"
+                            style="#{richOrderingListBean.attributes['style'].value}"
+                            styleClass="#{richOrderingListBean.attributes['styleClass'].value}"
+                            upText="#{richOrderingListBean.attributes['upText'].value}"
+                            upTopText="#{richOrderingListBean.attributes['upTopText'].value}"
+                            value="#{richOrderingListBean.capitals}"
+                            valueChangeListener="#{richBean.valueChangeListenerImproved}"
+                            var="capital">
+                <f:converter converterId="capitalConverter" />
+                <r:column>
+                    <f:facet name="header">State</f:facet>
+                        #{capital.state}
+                </r:column>
+                <r:column>
+                    <f:facet name="header">Name</f:facet>
+                        #{capital.name}
+                </r:column>
+            </r:orderingList>
+            <hr />
+            <r:list id="output" value="#{richOrderingListBean.capitals}" var="capital">
+                <h:outputText value="#{capital.state}, #{capital.name}" />
+            </r:list>
+            <hr />
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
