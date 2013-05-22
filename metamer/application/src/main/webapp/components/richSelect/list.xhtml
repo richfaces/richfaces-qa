@@ -32,19 +32,23 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="links">
 
             <metamer:testPageLink id="simple" outcome="simple" value="Simple">
-                Simple page that contains <b>rich:select</b> with a4j:ajax and input boxes for all its attributes.
+                Simple page that contains <b>r:select</b> with r:ajax and input boxes for all its attributes.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="validator" outcome="validator" value="Validator">
+                Simple page that contains <b>r:select</b> with r:ajax for testing of validator.
             </metamer:testPageLink>
 
             <metamer:testPageLink id="fAjax" outcome="fAjax" value="f:ajax">
-                Simple page that contains <b>rich:select</b> with f:ajax and input boxes for all its attributes.
+                Simple page that contains <b>r:select</b> with f:ajax and input boxes for all its attributes.
             </metamer:testPageLink>
 
             <metamer:testPageLink id="csv" outcome="csv" value="Client Side Validation">
-                Simple page that contains some <b>rich:select</b>s testing client-side validation.
+                Simple page that contains some <b>r:select</b>s testing client-side validation.
             </metamer:testPageLink>
 
             <metamer:testPageLink id="jsr303" outcome="jsr303" value="JSR-303 Bean Validation">
-                Page containing some <b>rich:select</b>s with various JSR-303 validators.
+                Page containing some <b>r:select</b>s with various JSR-303 validators.
             </metamer:testPageLink>
 
             <metamer:testPageLink id="validationMessages" outcome="validationMessages" value="Validation messages">
