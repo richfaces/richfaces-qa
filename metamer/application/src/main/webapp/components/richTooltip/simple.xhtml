@@ -96,6 +96,21 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                 </r:tooltip>
             </r:panel>
+            
+            <br/>
+            <fieldset>
+                <legend>rich:tooltip JS API (triggered by click event)</legend>
+                <input type="button" id="showClick" name="showClick" value="Click to show()" onclick="#{r:component('tooltip')}.show(event)" />
+                <br/>
+                <input type="button" id="hideClick" name="hideClick" value="Click to hide()" onclick="#{r:component('tooltip')}.hide()" />
+            </fieldset>    
+                
+            <fieldset>
+                <legend>rich:tooltip JS API (triggered by mouseover event)</legend>     
+                <input type="button" id="showMouseOver" name="showMouseOver" value="show(mouseover)" onmouseover="#{r:component('tooltip')}.show(event)" />
+                <br/>
+                <input type="button" id="hideMouseOver" name="hideMouseOver" value="hide(mouseover)" onmouseover="#{r:component('tooltip')}.hide()" />                
+            </fieldset>
 
         </ui:define>
 
