@@ -84,8 +84,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     content of tab 5
                 </r:tab>
 
-                <c:forEach items="#{richTabPanelBean.tabBeans}" var="newTab">
-                    <r:tab id="#{newTab.tabId}" name="#{newTab.tabName}">
+                <r:repeat id="dynamic" value="#{richTabPanelBean.tabBeans}" var="newTab">
+                    <r:tab id="tab" name="#{newTab.tabName}">
                         #{newTab.tabContentText}
                         <f:facet name="header">
                             <h:outputText value="#{newTab.tabHeader} " />
@@ -94,14 +94,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                            onclick="removeTab('#{newTab.tabId}'); return false;" />
                         </f:facet>
                     </r:tab>       	      	
-                </c:forEach>
+                </r:repeat>
 
             </r:tabPanel>
 
             <r:jsFunction name="removeTab"
-                            action="#{richTabPanelBean.removeTab}"
-                            render="tabPanel"
-                            oncomplete="#{r:component('tabPanel')}.switchToItem('tab1');">
+                          action="#{richTabPanelBean.removeTab}"
+                          render="tabPanel">
                 <r:param name="removeTabId"/>
             </r:jsFunction>
 

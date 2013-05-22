@@ -102,12 +102,8 @@ public class RichTabPanelBean implements Serializable {
     }
 
     public void generateNewTab() {
-        logger.info("# generate new tab");
-
         String idBase = "tab" + ++tabIdLast;
         tabBeans.add(new TabBean(idBase, idBase, idBase + " header", "Content of dynamicaly created " + idBase));
-
-        logger.info("# TabBeans list size: " + tabBeans.size() + ".");
     }
 
     public void removeTab() throws Exception {
@@ -124,7 +120,6 @@ public class RichTabPanelBean implements Serializable {
     }
 
     private TabBean getTabById(String tabId) {
-        logger.info("# tabId to remove: '" + tabId + "'" + ", tabbeans: " + tabBeans);
         for (TabBean currentTab : tabBeans) {
             if (currentTab.getTabId().equals(tabId)) {
                 return currentTab;
