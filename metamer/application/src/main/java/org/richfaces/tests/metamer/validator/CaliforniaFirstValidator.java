@@ -35,20 +35,20 @@ import org.richfaces.tests.metamer.model.Capital;
 /**
  * Custom validator for capital names.
  */
-@FacesValidator("org.richfaces.PhoenixFirstValidator")
-public class PhoenixFirstValidator implements Validator {
+@FacesValidator("org.richfaces.CaliforniaFirstValidator")
+public class CaliforniaFirstValidator implements Validator {
 
-    public static final String VALIDATOR_ERROR_MSG = "Phoenix has to be the first city.";
+    public static final String VALIDATOR_ERROR_MSG = "California has to be the first state.";
     private static final FacesMessage MESSAGE = new FacesMessage(FacesMessage.SEVERITY_ERROR, VALIDATOR_ERROR_MSG,
             VALIDATOR_ERROR_MSG);
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        if (value == null || !(value instanceof List)) {
+        if (value == null || !(value instanceof String)) {
             throw new ValidatorException(MESSAGE);
         }
-        List<Capital> val = (List<Capital>) value;
-        if (!"Phoenix".equals(val.get(0).getName())) {
+        String val = (String) value;
+        if (!"California".equals(val)) {
             throw new ValidatorException(MESSAGE);
         }
     }

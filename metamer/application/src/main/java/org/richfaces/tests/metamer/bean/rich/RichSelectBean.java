@@ -56,6 +56,7 @@ public class RichSelectBean extends SelectValidationBean implements Serializable
     @ManagedProperty("#{model.capitals}")
     private List<Capital> capitals;
     private List<SelectItem> capitalsOptions = null;
+    private String validatorMessage;
 
     /**
      * Initializes the managed bean.
@@ -84,6 +85,14 @@ public class RichSelectBean extends SelectValidationBean implements Serializable
         attributes.remove("validatorMessage");
 
         attributes.remove("valueChangeListener");
+    }
+
+    public String getValidatorMessage() {
+        return validatorMessage;
+    }
+
+    public void setValidatorMessage(String validatorMessage) {
+        this.validatorMessage = validatorMessage;
     }
 
     public void setCapitals(List<Capital> capitals) {
