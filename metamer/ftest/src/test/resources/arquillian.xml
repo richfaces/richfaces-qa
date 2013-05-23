@@ -18,6 +18,7 @@
     <container qualifier="glassfish-managed-3-1">
         <configuration>
             <property name="javaVmArguments">${arquillian.container.all.jvm.args}</property>
+            <property name="enableAssertions">false</property>
         </configuration>
     </container>
 
@@ -30,6 +31,7 @@
     <container qualifier="jbossas-managed-6">
         <configuration>
             <property name="javaVmArguments">${arquillian.container.all.jvm.args}</property>
+            <property name="enableAssertions">false</property>
         </configuration>
     </container>
 
@@ -39,6 +41,7 @@
             <property name="javaVmArguments">${arquillian.container.all.jvm.args} -Djboss.bind.address=127.0.0.1</property>
             <property name="serverConfig">standalone-preview.xml</property>
             <property name="outputToConsole">false</property>
+            <property name="enableAssertions">false</property>
         </configuration>
         <protocol type="jmx-as7">
             <property name="executionType">REMOTE</property>
@@ -51,6 +54,7 @@
             <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>
             <property name="managementAddress">${arquillian.container.jbossas.7-1.node0}</property>
             <property name="serverConfig">standalone-full.xml</property>
+            <property name="enableAssertions">false</property>
         </configuration>
     </container>
 
@@ -60,6 +64,7 @@
             <property name="javaVmArguments">${arquillian.container.jbossas.7-1.jvm.args}</property>
             <property name="managementAddress">${arquillian.container.jbossas.7-1.node0}</property>
             <property name="serverConfig">standalone-full.xml</property>
+            <property name="enableAssertions">false</property>
         </configuration>
     </container>
 
@@ -79,6 +84,7 @@
             </property>
             <property name="user">tomcat</property>
             <property name="pass">tomcat</property>
+            <property name="enableAssertions">false</property>
         </configuration>
     </container>
 
@@ -111,6 +117,7 @@
             </property>
             <property name="user">tomcat</property>
             <property name="pass">tomcat</property>
+            <property name="enableAssertions">false</property>
         </configuration>
     </container>
 
