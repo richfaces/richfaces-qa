@@ -77,7 +77,6 @@
             <class name="org.richfaces.tests.metamer.ftest.richEditor.TestRichEditorWithTyping" />
             <class name="org.richfaces.tests.metamer.ftest.richExtendedDataTable.TestExtendedDataTableKeepSaved" />
             <class name="org.richfaces.tests.metamer.ftest.richExtendedDataTable.TestEDTFrozenColumns" />
-            <class name="org.richfaces.tests.metamer.ftest.richTree.TestToggleNodeEvent" />
         </classes>
     </test>
 
