@@ -49,6 +49,7 @@
             <package name="org.richfaces.tests.metamer.ftest.richNotifyMessage"/>
             <package name="org.richfaces.tests.metamer.ftest.richNotifyMessages"/>
             <package name="org.richfaces.tests.metamer.ftest.richNotifyStack"/>
+            <package name="org.richfaces.tests.metamer.ftest.richOrderingList"/>
             <package name="org.richfaces.tests.metamer.ftest.richPanel" />
             <package name="org.richfaces.tests.metamer.ftest.richPanelMenu" />
             <package name="org.richfaces.tests.metamer.ftest.richPanelMenuGroup" />
