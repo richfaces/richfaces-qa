@@ -96,6 +96,7 @@
             <property name="openejbVersion">${version.tomee1-1}</property>
             <property name="dir">target/apache-tomee-webprofile-${version.tomee1-1}</property>
             <property name="appWorkingDir">target/arquillian-test-working-dir</property>
+            <property name="enableAssertions">false</property>
         </configuration>
     </container>
 
@@ -107,6 +108,7 @@
             <property name="openejbVersion">${version.tomee1-5}</property>
             <property name="dir">target/apache-tomee-webprofile-${version.tomee1-5}</property>
             <property name="appWorkingDir">target/arquillian-test-working-dir</property>
+            <property name="enableAssertions">false</property>
         </configuration>
     </container>
 
