@@ -51,7 +51,7 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest {
     @Page
     private MetamerPage page;
 
-    @FindBy(id = "form:autocomplete")
+    @FindBy(css = "span.rf-au[id$=autocomplete]")
     private RichFacesAutocomplete<String> autocomplete;
 
     @BeforeMethod
