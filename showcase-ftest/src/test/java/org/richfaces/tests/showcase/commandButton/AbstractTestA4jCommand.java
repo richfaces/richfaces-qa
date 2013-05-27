@@ -40,7 +40,7 @@ public abstract class AbstractTestA4jCommand extends AbstractWebDriverTest {
      * Locators*********************************************************************
      */
 
-    @FindBy(css="form input[type=text]")
+    @FindBy(jquery = "input[type=text]:eq(0)")
     protected WebElement input;
     @FindBy(className="outhello")
     protected WebElement output;

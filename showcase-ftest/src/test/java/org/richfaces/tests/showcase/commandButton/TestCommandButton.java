@@ -37,7 +37,7 @@ public class TestCommandButton extends AbstractTestA4jCommand {
      * Locators*****************************************************************************
      */
 
-    @FindBy(css="form input[type=submit]")
+    @FindBy(jquery = "input[type=submit]:eq(0)")
     protected WebElement commandButton;
 
     /* ******************************************************************************
