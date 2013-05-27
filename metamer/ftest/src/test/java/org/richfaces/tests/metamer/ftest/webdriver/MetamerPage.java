@@ -61,7 +61,7 @@ public class MetamerPage {
 
     protected static final int MINOR_WAIT_TIME = 50;// ms
     protected static final int TRIES = 20;// for guardListSize and expectedReturnJS
-    @FindBy(css = "div#phasesPanel li")
+    @FindBy(css = "div[id$=phasesPanel] li")
     public List<WebElement> phases;
     @FindBy(css = "span[id$=requestTime]")
     public WebElement requestTime;
@@ -249,7 +249,7 @@ public class MetamerPage {
 
         protected String time1;
         private static final WebElement requestTime = GrapheneContext.getProxy()
-                .findElement(By.cssSelector("span[id='requestTime']"));
+                .findElement(By.cssSelector("span[id$='requestTime']"));
 
         protected void afterAction() {
             Graphene.waitModel().until().element(requestTime).text().not().equalTo(time1);
