@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:r="http://richfaces.org/rich"
       xmlns:a4j="http://richfaces.org/a4j"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
@@ -31,44 +31,52 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     -->
 
     <ui:composition template="/templates/abstractions/inputValidation/numberInputComponentValidationTemplate.xhtml">
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+        
         <ui:define name="js">
             <ui:include src="script.xhtml"/>
         </ui:define>
 
         <ui:define name="min">
-            <rich:inputNumberSlider id="min" maxValue="10" minValue="-10" value="#{richInputNumberSliderBean.minValue}">
+            <r:inputNumberSlider id="min" maxValue="10" minValue="-10" value="#{richInputNumberSliderBean.minValue}">
                 <a4j:ajax event="change" render="minMsg"/>
-            </rich:inputNumberSlider>
+            </r:inputNumberSlider>
         </ui:define>
         <ui:define name="minOutput">
             <h:outputText id="minOutput" value="#{richInputNumberSliderBean.minValue}"/>
         </ui:define>
 
         <ui:define name="max">
-            <rich:inputNumberSlider id="max" maxValue="10" minValue="-10" value="#{richInputNumberSliderBean.maxValue}">
+            <r:inputNumberSlider id="max" maxValue="10" minValue="-10" value="#{richInputNumberSliderBean.maxValue}">
                 <a4j:ajax event="change" render="maxMsg"/>
-            </rich:inputNumberSlider>
+            </r:inputNumberSlider>
         </ui:define>
         <ui:define name="maxOutput">
             <h:outputText id="maxOutput" value="#{richInputNumberSliderBean.maxValue}"/>
         </ui:define>
 
         <ui:define name="custom" >
-            <rich:inputNumberSlider id="custom" maxValue="10" minValue="-10" value="#{richInputNumberSliderBean.customValue}">
+            <r:inputNumberSlider id="custom" maxValue="10" minValue="-10" value="#{richInputNumberSliderBean.customValue}">
                 <f:validator validatorId="org.richfaces.PositiveNumberValidator"/>
                 <a4j:ajax event="change" render="customMsg"/>
-            </rich:inputNumberSlider>
+            </r:inputNumberSlider>
         </ui:define>
         <ui:define name="customOutput">
             <h:outputText id="customOutput" value="#{richInputNumberSliderBean.customValue}"/>
         </ui:define>
 
         <ui:define name="required" >
-            <rich:inputNumberSlider id="required" required="true"
+            <r:inputNumberSlider id="required" required="true"
                                     requiredMessage="#{richInputNumberSliderBean.attributes['requiredMessage'].value}"
                                     maxValue="10" minValue="-10" value="#{richInputNumberSliderBean.requiredValue}">
                 <a4j:ajax event="change" render="requiredMsg"/>
-            </rich:inputNumberSlider>
+            </r:inputNumberSlider>
         </ui:define>
         <ui:define name="requiredOutput">
             <h:outputText id="requiredOutput" value="#{richInputNumberSliderBean.requiredValue}"/>

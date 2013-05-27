@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:ui="http://java.sun.com/jsf/facelets"  xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -25,6 +25,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
     <ui:composition template="/templates/abstractions/validationMessagesTemplate.xhtml">
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+        
         <ui:define name="js">
             <script type="text/javascript">
                 function setCorrectValues() {
@@ -68,59 +76,59 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="jsr-303-inBean">
-            <rich:inplaceSelect id="jsr-303-inBean" value="#{validationMessagesBean.valueWithMessagesJSR}" converter="#{validationMessagesBean.converter}">
+            <r:inplaceSelect id="jsr-303-inBean" value="#{validationMessagesBean.valueWithMessagesJSR}" converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
-            </rich:inplaceSelect>
+            </r:inplaceSelect>
         </ui:define>      
 
         <ui:define name="jsr-303-inAtt">
-            <rich:inplaceSelect id="jsr-303-inAtt" value="#{validationMessagesBean.valueWithoutMessagesJSR}" 
+            <r:inplaceSelect id="jsr-303-inAtt" value="#{validationMessagesBean.valueWithoutMessagesJSR}" 
                                 validatorMessage="Custom validator error message from attribute of component."
                                 converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
-            </rich:inplaceSelect>
+            </r:inplaceSelect>
         </ui:define> 
 
         <ui:define name="jsr-303-inBundle">
-            <rich:inplaceSelect id="jsr-303-inBundle" value="#{validationMessagesBean.valueWithoutMessages2JSR}" converter="#{validationMessagesBean.converter}">
+            <r:inplaceSelect id="jsr-303-inBundle" value="#{validationMessagesBean.valueWithoutMessages2JSR}" converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
-            </rich:inplaceSelect>
+            </r:inplaceSelect>
         </ui:define>  
 
         <ui:define name="csv-inBean">
-           <rich:inplaceSelect id="csv-inBean" value="#{validationMessagesBean.valueWithMessagesCSV}" converter="#{validationMessagesBean.converter}">
+           <r:inplaceSelect id="csv-inBean" value="#{validationMessagesBean.valueWithMessagesCSV}" converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
-            </rich:inplaceSelect>
+            </r:inplaceSelect>
         </ui:define>  
 
         <ui:define name="csv-inAtt">
-            <rich:inplaceSelect  id="csv-inAtt" value="#{validationMessagesBean.valueWithoutMessagesCSV}" 
+            <r:inplaceSelect  id="csv-inAtt" value="#{validationMessagesBean.valueWithoutMessagesCSV}" 
                                  validatorMessage="Custom validator error message from attribute of component."
                                  converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
-            </rich:inplaceSelect>
+            </r:inplaceSelect>
         </ui:define>  
 
         <ui:define name="csv-inBundle">
-            <rich:inplaceSelect id="csv-inBundle" value="#{validationMessagesBean.valueWithoutMessages2CSV}" converter="#{validationMessagesBean.converter}">
+            <r:inplaceSelect id="csv-inBundle" value="#{validationMessagesBean.valueWithoutMessages2CSV}" converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
-            </rich:inplaceSelect>
+            </r:inplaceSelect>
         </ui:define>  
 
         <ui:define name="jsf-inAtt">
-            <rich:inplaceSelect id="jsf-inAtt" value="#{validationMessagesBean.valueJSF}" 
+            <r:inplaceSelect id="jsf-inAtt" value="#{validationMessagesBean.valueJSF}" 
                                 validatorMessage="Custom validator error message from attribute of component."
                                 converter="#{validationMessagesBean.converter}">
                 <f:validateDoubleRange minimum="2" maximum="9"/>
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
-            </rich:inplaceSelect>
+            </r:inplaceSelect>
         </ui:define>  
 
         <ui:define name="jsf-inBundle">    
-            <rich:inplaceSelect id="jsf-inBundle" value="#{validationMessagesBean.value2JSF}" converter="#{validationMessagesBean.converter}">
+            <r:inplaceSelect id="jsf-inBundle" value="#{validationMessagesBean.value2JSF}" converter="#{validationMessagesBean.converter}">
                 <f:validateDoubleRange  minimum="2" maximum="9" />
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
-            </rich:inplaceSelect>    
+            </r:inplaceSelect>    
         </ui:define>   
     </ui:composition>
 </html>

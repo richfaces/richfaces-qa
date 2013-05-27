@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:r="http://richfaces.org/rich"
       xmlns:a4j="http://richfaces.org/a4j"
       xmlns:h="http://java.sun.com/jsf/html">
 
@@ -30,42 +30,50 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     -->
 
     <ui:composition template="/templates/abstractions/inputValidation/numberInputComponentValidationTemplate.xhtml">
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+        
         <ui:define name="js">
             <ui:include src="script.xhtml"/>
         </ui:define>
         <ui:define name="min">
-            <rich:inputNumberSpinner id="min" maxValue="10" minValue="-10" value="#{richInputNumberSpinnerBean.minValue}">
+            <r:inputNumberSpinner id="min" maxValue="10" minValue="-10" value="#{richInputNumberSpinnerBean.minValue}">
                 <a4j:ajax event="change" render="minMsg"/>
-            </rich:inputNumberSpinner>
+            </r:inputNumberSpinner>
         </ui:define>
         <ui:define name="minOutput">
             <h:outputText id="minOutput" value="#{richInputNumberSpinnerBean.minValue}"/>
         </ui:define>
 
         <ui:define name="max">
-            <rich:inputNumberSpinner id="max" maxValue="10" minValue="-10" value="#{richInputNumberSpinnerBean.maxValue}">
+            <r:inputNumberSpinner id="max" maxValue="10" minValue="-10" value="#{richInputNumberSpinnerBean.maxValue}">
                 <a4j:ajax event="change" render="maxMsg"/>
-            </rich:inputNumberSpinner>
+            </r:inputNumberSpinner>
         </ui:define>
         <ui:define name="maxOutput">
             <h:outputText id="maxOutput" value="#{richInputNumberSpinnerBean.maxValue}"/>
         </ui:define>
 
         <ui:define name="custom" >
-            <rich:inputNumberSpinner id="custom" maxValue="10" minValue="-10" value="#{richInputNumberSpinnerBean.customValue}">
+            <r:inputNumberSpinner id="custom" maxValue="10" minValue="-10" value="#{richInputNumberSpinnerBean.customValue}">
                 <f:validator validatorId="org.richfaces.PositiveNumberValidator"/>
                 <a4j:ajax event="change" render="customMsg"/>
-            </rich:inputNumberSpinner>
+            </r:inputNumberSpinner>
         </ui:define>
         <ui:define name="customOutput">
             <h:outputText id="customOutput" value="#{richInputNumberSpinnerBean.customValue}"/>
         </ui:define>
         <ui:define name="required" >
-            <rich:inputNumberSpinner id="required" required="true"
+            <r:inputNumberSpinner id="required" required="true"
                                      requiredMessage="#{richInputNumberSpinnerBean.attributes['requiredMessage'].value}"
                                      maxValue="10" minValue="-10" value="#{richInputNumberSpinnerBean.requiredValue}">
                 <a4j:ajax event="change" render="requiredMsg"/>
-            </rich:inputNumberSpinner>
+            </r:inputNumberSpinner>
         </ui:define>
         <ui:define name="requiredOutput">
             <h:outputText id="requiredOutput" value="#{richInputNumberSpinnerBean.requiredValue}"/>
