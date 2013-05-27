@@ -22,9 +22,9 @@
 package org.richfaces.tests.metamer.ftest.richContextMenu;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
-import static org.jboss.arquillian.graphene.Graphene.guardXhr;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.contextMenuAttributes;
@@ -50,6 +50,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.contextMenu.RichFacesContextMenu;
@@ -88,7 +89,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @Use(field = "delay", ints = { 1000, 1500, 2500 })
     public void testHideDelay() {
         updateShowAction();
-        double differenceThreshold = delay * 0.5;
+        double tolerance = delay * 0.5;
         // set hideDelay
         contextMenuAttributes.set(ContextMenuAttributes.hideDelay, delay);
         // show context menu
@@ -96,17 +97,17 @@ public class TestContextMenu extends AbstractWebDriverTest {
         // check whether the context menu is displayed
         page.waitUntilContextMenuAppears();
         // save the time
-        double beforeTime = System.currentTimeMillis();
-        // blur >>> menu will disappear after delay
-        page.clickOnSecondPanel(driverType);
-        assertTrue(page.contextMenuContent.isDisplayed());
-        // wait until menu hides
-        page.waitUntilContextMenuHides();
-
-        double diff = System.currentTimeMillis() - beforeTime;
-        double diff2 = Math.abs(diff - delay);
-        assertTrue(diff2 < differenceThreshold, "The measured delay was far" + " from set value. The difference was: " + diff2
-                + ". The difference threshold was: " + differenceThreshold);
+        int time = StopWatch.watchTimeSpentInAction(new StopWatch.PerformableAction() {
+            @Override
+            public void perform() {
+                // blur >>> menu will disappear after delay
+                page.clickOnSecondPanel(driverType);
+                assertTrue(page.contextMenuContent.isDisplayed());
+                // wait until menu hides
+                page.waitUntilContextMenuHides();
+            }
+        }).inMillis().intValue();
+        assertEquals(time, delay, tolerance, "The measured delay was far from set value.");
     }
 
     @Test
@@ -223,7 +224,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         // ajax
         contextMenuAttributes.set(ContextMenuAttributes.mode, "ajax");
         page.contextMenu.invoke(page.targetPanel1);
-        guardXhr(page.contextMenu.getItems().get(0)).click();
+        guardAjax(page.contextMenu.getItems().get(0)).click();
         assertEquals(page.output.getText(), "Open", "Menu action was not performed.");
 
         // server
@@ -370,7 +371,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         testOnclick();
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12792")
     public void testOnkeydown() {
         updateShowAction();
@@ -384,7 +385,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         });
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     //false negative
     public void testOnkeyup() {
         updateShowAction();
@@ -448,7 +449,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         });
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12854")
     public void testOnmouseout() {
         updateShowAction();
@@ -499,11 +500,10 @@ public class TestContextMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Use(field = "delay", ints = { 1000, 1500, 2500 })
     public void testShowDelay() {
         updateShowAction();
-        page.checkShowDelay(2000);
-        page.checkShowDelay(1000);
-        page.checkShowDelay(500);
+        page.checkShowDelay(delay);
     }
 
     @Test

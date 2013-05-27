@@ -22,6 +22,7 @@
 package org.richfaces.tests.archetypes.ftest;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.archetypes.AbstractWebDriverTest;
 import org.richfaces.tests.archetypes.TestConfiguration;
 
@@ -37,7 +38,10 @@ import org.richfaces.tests.archetypes.TestConfiguration;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public abstract class AbstractTestInput extends AbstractWebDriverTest<WithInputPage> {
+public abstract class AbstractTestInput extends AbstractWebDriverTest {
+
+    @Page
+    private WithInputPage page;
 
     private final String inputName = "RichFaces Fan";
 
@@ -46,17 +50,19 @@ public abstract class AbstractTestInput extends AbstractWebDriverTest<WithInputP
     }
 
     @Override
-    protected WithInputPage createPage() {
-        return new WithInputPage();
+    protected String getTestUrl() {
+        return page.getUrl();
     }
 
     protected void testTypeName() {
-        getPage().getInput().click();
-        getPage().getInput().clear();
-        getPage().getInput().sendKeys(inputName);
-        Graphene.waitGui().withMessage("The output text doesn't match.")
-            .until(Graphene.element(getPage().getOutput()).textEquals("Hello " + inputName + "!"));
-
+        page.getInput().click();
+        page.getInput().clear();
+        page.getInput().sendKeys(inputName);
+        Graphene.waitAjax()
+                .until()
+                .element(page.getOutput())
+                .text()
+                .equalTo("Hello " + inputName + "!");
     }
 
 }

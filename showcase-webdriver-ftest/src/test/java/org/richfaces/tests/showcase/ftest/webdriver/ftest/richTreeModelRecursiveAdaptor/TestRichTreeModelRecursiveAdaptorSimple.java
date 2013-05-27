@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richTreeModelRecursiveAdaptor;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -31,7 +32,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestRichTreeModelRecursiveAdaptorSimple extends AbstractWebDriverTest<TreeModelRecursiveAdaptorPage> {
+public class TestRichTreeModelRecursiveAdaptorSimple extends AbstractWebDriverTest {
+
+    @Page
+    private TreeModelRecursiveAdaptorPage page;
 
     @Test(groups = {"RF-12146"})
     public void testExpandFirstLevel() {
@@ -49,8 +53,8 @@ public class TestRichTreeModelRecursiveAdaptorSimple extends AbstractWebDriverTe
     }
 
     @Override
-    protected TreeModelRecursiveAdaptorPage createPage() {
-        return new TreeModelRecursiveAdaptorPage(getWebDriver());
+    protected TreeModelRecursiveAdaptorPage getPage() {
+        return page;
     }
 
 }

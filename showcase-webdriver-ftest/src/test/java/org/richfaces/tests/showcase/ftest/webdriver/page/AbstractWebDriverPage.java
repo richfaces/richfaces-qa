@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.page;
 
-import org.apache.commons.lang.Validate;
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -29,12 +29,8 @@ import org.openqa.selenium.WebDriver;
  */
 public abstract class AbstractWebDriverPage implements ShowcasePage {
 
+    @Drone
     private WebDriver webDriver;
-
-    protected AbstractWebDriverPage(WebDriver webDriver) {
-        Validate.notNull(webDriver);
-        this.webDriver = webDriver;
-    }
 
     protected WebDriver getWebDriver() {
         return webDriver;

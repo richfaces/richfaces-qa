@@ -154,6 +154,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         @Use(field = "horizontalOffset", value = "offsets") })
     @Templates(value = { "plain", "richCollapsibleSubTable", "richExtendedDataTable", "richPopupPanel" })
     public void testPositioning() {
+        int tolerance = 5;
         tooltipAttributes.set(TooltipAttributes.direction, direction);
         tooltipAttributes.set(TooltipAttributes.horizontalOffset, horizontalOffset);
         tooltipAttributes.set(TooltipAttributes.verticalOffset, verticalOffset);
@@ -170,11 +171,11 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         if (getHorizontalAlignment() != null) {
             switch (getHorizontalAlignment()) {
                 case RIGHT:
-                    assertEquals(tooltipPosition.getX(), eventPosition.getX() + horizontalOffset);
+                    assertEquals(tooltipPosition.getX(), eventPosition.getX() + horizontalOffset, tolerance);
                     break;
                 case LEFT:
                     assertEquals(tooltipPosition.getX() + tooltipDimension.getWidth(), eventPosition.getX()
-                        - horizontalOffset);
+                            - horizontalOffset, tolerance);
                     break;
                 default:
                     break;
@@ -184,11 +185,11 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         if (getVerticalAlignment() != null) {
             switch (getVerticalAlignment()) {
                 case BOTTOM:
-                    assertEquals(tooltipPosition.getY(), eventPosition.getY() + verticalOffset);
+                    assertEquals(tooltipPosition.getY(), eventPosition.getY() + verticalOffset, tolerance);
                     break;
                 case TOP:
                     assertEquals(tooltipPosition.getY() + tooltipDimension.getHeight(), eventPosition.getY()
-                        - verticalOffset);
+                            - verticalOffset, tolerance);
                     break;
                 default:
                     break;
@@ -269,7 +270,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         String renderCheckerText = page.renderCheckerOutput.getText();
 
         MetamerPage.requestTimeNotChangesWaiting(page.tooltip).recall(page.panel);
-        Graphene.waitGui().until(Graphene.element(page.renderCheckerOutput).text().not().equalTo(renderCheckerText));
+        Graphene.waitGui().until().element(page.renderCheckerOutput).text().not().equalTo(renderCheckerText);
     }
 
     @Test
@@ -287,7 +288,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
         MetamerPage.requestTimeNotChangesWaiting(page.tooltip).hide(page.panel);
 
-        Graphene.waitGui().until(Graphene.element(page.tooltip.root).not().isVisible());
+        Graphene.waitGui().until().element(page.tooltip.root).is().not().visible();
     }
 
     @Test
@@ -476,8 +477,8 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
             assertFalse(Graphene.element(page.tooltip.root).isVisible().apply(driver), "Tooltip shouldn't be displayed before deplay timeout (" + presetDelay + ") is over.");
         }
         WebDriverWait<Void> wait = new WebDriverWait<Void>(null, driver, presetDelay/1000 + 2);
-        wait.until(Graphene.element(page.tooltip.root).isPresent());
-        wait.until(Graphene.element(page.tooltip.root).isVisible());
+        wait.until().element(page.tooltip.root).is().present();
+        wait.until().element(page.tooltip.root).is().visible();
         page.tooltip.hide(page.panel);
 
     }
@@ -487,7 +488,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         tooltipAttributes.set(TooltipAttributes.showEvent, "mouseup");
 
         new Actions(driver).clickAndHold(page.panel).release(page.panel).build().perform();
-        Graphene.waitGui().until(Graphene.element(page.tooltip.root).isVisible());
+        Graphene.waitGui().until().element(page.tooltip.root).is().visible();
     }
 
     @Test
@@ -499,7 +500,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
         String statusChecker = page.statusCheckerOutput.getText();
         page.tooltip.recall(page.panel);
-        Graphene.waitAjax().until(Graphene.element(page.statusCheckerOutput).text().not().equalTo(statusChecker));
+        Graphene.waitAjax().until().element(page.statusCheckerOutput).text().not().equalTo(statusChecker);
     }
 
     @Test

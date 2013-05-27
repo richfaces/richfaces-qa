@@ -104,8 +104,8 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
 
     @Test
     public void getInput() {
-        //the button has onclick action, it selects the input and clicks on it
-        //so the state of inplace input is set to active
+        // the button has onclick action, it selects the input and clicks on it
+        // so the state of inplace input is set to active
         getInputButton.click();
         waiting(100);
         inplaceSelect.is(State.ACTIVE);
@@ -155,9 +155,7 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
     public void isValueChangedButton() {
         isValueChangedButton.click();
         assertEquals(getValueFromOutput(), "false");
-        MetamerPage.waitRequest(inplaceSelect.editBy(OpenBy.CLICK)
-                .changeToValue(SOME_VALUE),
-                WaitRequestType.XHR).confirm();
+        inplaceSelect.editBy(OpenBy.CLICK).changeToValue(SOME_VALUE);
         isValueChangedButton.click();
         assertEquals(getValueFromOutput(), "true");
     }

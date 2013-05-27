@@ -23,40 +23,39 @@ package org.richfaces.tests.metamer.ftest.a4jRepeat;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.repeatAttributes;
-
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.repeatAttributes;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22683 $
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
+ * @since 5.0.0.Alpha1
  */
-public class TestSimple extends AbstractGrapheneTest {
+public class TestSimple extends AbstractWebDriverTest {
 
     protected static final int ELEMENTS_TOTAL = 20;
 
-    SimpleModel model;
+    @Page
+    private SimplePage page;
 
     @Inject
     @Use(empty = false)
-    Integer first;
+    private Integer first;
 
     @Inject
     @Use(empty = false)
-    Integer rows;
+    private Integer rows;
 
     int expectedBegin;
     int displayedRows;
@@ -67,36 +66,26 @@ public class TestSimple extends AbstractGrapheneTest {
         return buildUrl(contextPath, "faces/components/a4jRepeat/simple.xhtml");
     }
 
-    @BeforeMethod(alwaysRun = true, dependsOnMethods={"loadPage"})
-    public void prepareAttributes() {
-        model = new SimpleModel();
-
-        if (first != null) {
-            repeatAttributes.set(RepeatAttributes.first, first);
-        }
-        if (rows != null) {
-            repeatAttributes.set(RepeatAttributes.rows, rows);
-        }
-    }
-
     @Test
-    public void testRenderedAttribute() {
+    public void testRendered() {
         repeatAttributes.set(RepeatAttributes.rendered, "false");
-        assertEquals(model.isRendered(), false);
+        assertEquals(page.rows.size(), 0);
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-10589")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10589")
     @Use(field = "first", ints = { -1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL, ELEMENTS_TOTAL + 1 })
-    public void testFirstAttribute() {
+    public void testFirst() {
+        repeatAttributes.set(RepeatAttributes.first, first);
         verifyRepeat();
     }
 
     @Test
-    @IssueTracking("https://issues.jboss.org/browse/RF-10589")
+    @RegressionTest("https://issues.jboss.org/browse/RF-10589")
     @Use(field = "rows", ints = { -2, -1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL,
             ELEMENTS_TOTAL + 1 })
     public void testRowsAttribute() {
+        repeatAttributes.set(RepeatAttributes.rows, rows);
         verifyRepeat();
     }
 
@@ -107,23 +96,23 @@ public class TestSimple extends AbstractGrapheneTest {
     }
 
     private void verifyCounts() {
-        assertEquals(model.getTotalRowCount(), displayedRows);
+        assertEquals(page.rows.size(), displayedRows);
         if (displayedRows > 0) {
-            assertEquals(model.getIndex(1), expectedBegin);
+            assertEquals(page.getIndex(0), expectedBegin);
         }
     }
 
     private void verifyRows() {
-        int rowCount = model.getTotalRowCount();
-        for (int position = 1; position <= rowCount; position++) {
-            assertEquals(model.getBegin(position), expectedBegin, "begin");
-            assertEquals(model.getEnd(position), expectedEnd, "end");
-            assertEquals(model.getIndex(position), expectedBegin + position - 1, "index");
-            assertEquals(model.getCount(position), position, "count");
-            assertEquals(model.isFirst(position), position == 1, "first");
-            assertEquals(model.isLast(position), position == rowCount, "last");
-            assertEquals(model.isEven(position), (position % 2) == 0, "even");
-            assertEquals(model.getRowCount(position), ELEMENTS_TOTAL, "rowCount");
+        int rowCount = page.rows.size();
+        for (int position = 0; position < rowCount; position++) {
+            assertEquals(page.getBegin(position), expectedBegin, "begin");
+            assertEquals(page.getEnd(position), expectedEnd, "end");
+            assertEquals(page.getIndex(position), expectedBegin + position, "index");
+            assertEquals(page.getCount(position), position + 1, "count");
+            assertEquals(page.isFirst(position), position == 0, "first");
+            assertEquals(page.isLast(position), position == rowCount -1, "last");
+            assertEquals(page.isEven(position), (position % 2) != 0, "even");
+            assertEquals(page.getRowCount(position), ELEMENTS_TOTAL, "rowCount");
         }
     }
 

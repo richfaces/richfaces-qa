@@ -187,7 +187,7 @@ public class TestAccordion extends AbstractWebDriverTest {
         accordionAttributes.set(AccordionAttributes.onitemchange, "metamerEvents += \"itemchange \"");
 
         executeJS("metamerEvents = \"\";");
-        Graphene.guardXhr(page.getAccordion().getItem(2)).activate();
+        Graphene.guardAjax(page.getAccordion().getItem(2)).activate();
         String[] events = ((String) executeJS("return metamerEvents;")).split(" ");
 
         assertEquals(events[0], "beforeitemchange", "Attribute onbeforeitemchange doesn't work");
@@ -301,7 +301,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-12532")
     public void testSwitchTypeNull() {
         for (int i = 2; i >= 0; i--) {
-            Graphene.guardXhr(page.getAccordion().getItem(i)).activate();
+            Graphene.guardAjax(page.getAccordion().getItem(i)).activate();
         }
     }
 

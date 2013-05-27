@@ -21,12 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richDragIndicator;
 
+import org.jboss.arquillian.graphene.Graphene;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.context.GrapheneContext;
-import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -48,8 +48,6 @@ public class Indicator {
     private String draggingClass;
 
     WebElement activeIndicator;
-
-    private ElementPresent elementPresent = ElementPresent.getInstance();
 
     public Indicator(WebElement indicator) {
         this.indicator = indicator;
@@ -73,10 +71,10 @@ public class Indicator {
 
     public boolean isVisible() {
         if (defaultIndicator) {
-            return elementPresent.element(indicator).apply(driver)
+            return Graphene.element(indicator).isPresent().apply(driver)
                 && indicator.isDisplayed();
         } else {
-            return elementPresent.element(getActiveIndicator()).apply(driver)
+            return Graphene.element(getActiveIndicator()).isPresent().apply(driver)
                 && getActiveIndicator().isDisplayed();
         }
     }

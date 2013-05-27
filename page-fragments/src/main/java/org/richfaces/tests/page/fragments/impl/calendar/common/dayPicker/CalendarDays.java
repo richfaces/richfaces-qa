@@ -22,6 +22,8 @@
 package org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker;
 
 import java.util.ArrayList;
+import java.util.List;
+import org.openqa.selenium.WebElement;
 
 /**
  * Helper container for easier and quicker filtering of list of CalendarDays.
@@ -36,6 +38,12 @@ public class CalendarDays extends ArrayList<CalendarDay> {
     }
 
     public CalendarDays() {
+    }
+
+    public CalendarDays(List<WebElement> list) {
+        for (WebElement webElement : list) {
+            this.add(new CalendarDay(webElement));
+        }
     }
 
     public CalendarDays removeSpecificDays(Integer... dayNumber) {

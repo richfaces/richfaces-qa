@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:r="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -37,64 +37,81 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <rich:select id="select"
-                         converterMessage="#{richSelectBean.attributes['converterMessage'].value}"
-                         defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
-                         disabled="#{richSelectBean.attributes['disabled'].value}"
-                         enableManualInput="#{richSelectBean.attributes['enableManualInput'].value}"
-                         immediate="#{richSelectBean.attributes['immediate'].value}"
-                         itemClass="#{richSelectBean.attributes['itemClass'].value}"
-                         listClass="#{richSelectBean.attributes['listClass'].value}"
-                         listHeight="#{richSelectBean.attributes['listHeight'].value}"
-                         listWidth="#{richSelectBean.attributes['listWidth'].value}"
-                         maxListHeight="#{richSelectBean.attributes['maxListHeight'].value}"
-                         minListHeight="#{richSelectBean.attributes['minListHeight'].value}"
-                         onblur="#{richSelectBean.attributes['onblur'].value}"
-                         onchange="#{richSelectBean.attributes['onchange'].value}"
-                         onclick="#{richSelectBean.attributes['onclick'].value}"
-                         ondblclick="#{richSelectBean.attributes['ondblclick'].value}"
-                         onfocus="#{richSelectBean.attributes['onfocus'].value}"
-                         onkeydown="#{richSelectBean.attributes['onkeydown'].value}"
-                         onkeypress="#{richSelectBean.attributes['onkeypress'].value}"
-                         onkeyup="#{richSelectBean.attributes['onkeyup'].value}"
-                         onlistclick="#{richSelectBean.attributes['onlistclick'].value}"
-                         onlistdblclick="#{richSelectBean.attributes['onlistdblclick'].value}"
-                         onlistkeydown="#{richSelectBean.attributes['onlistkeydown'].value}"
-                         onlistkeypress="#{richSelectBean.attributes['onlistkeypress'].value}"
-                         onlistkeyup="#{richSelectBean.attributes['onlistkeyup'].value}"
-                         onlistmousedown="#{richSelectBean.attributes['onlistmousedown'].value}"
-                         onlistmousemove="#{richSelectBean.attributes['onlistmousemove'].value}"
-                         onlistmouseout="#{richSelectBean.attributes['onlistmouseout'].value}"
-                         onlistmouseover="#{richSelectBean.attributes['onlistmouseover'].value}"
-                         onlistmouseup="#{richSelectBean.attributes['onlistmouseup'].value}"
-                         onmousedown="#{richSelectBean.attributes['onmousedown'].value}"
-                         onmousemove="#{richSelectBean.attributes['onmousemove'].value}"
-                         onmouseout="#{richSelectBean.attributes['onmouseout'].value}"
-                         onmouseover="#{richSelectBean.attributes['onmouseover'].value}"
-                         onmouseup="#{richSelectBean.attributes['onmouseup'].value}"
-                         onselectitem="#{richSelectBean.attributes['onselectitem'].value}"
-                         rendered="#{richSelectBean.attributes['rendered'].value}"
-                         required="#{richSelectBean.attributes['required'].value}"
-                         requiredMessage="#{richSelectBean.attributes['requiredMessage'].value}"
-                         selectFirst="#{richSelectBean.attributes['selectFirst'].value}"
-                         selectItemClass="#{richSelectBean.attributes['selectItemClass'].value}"
-                         showButton="#{richSelectBean.attributes['showButton'].value}"
-                         style="#{richSelectBean.attributes['style'].value}"
-                         styleClass="#{richSelectBean.attributes['styleClass'].value}"
-                         title="#{richSelectBean.attributes['title'].value}"
-                         validatorMessage="#{richSelectBean.attributes['validatorMessage'].value}"
-                         value="#{richSelectBean.attributes['value'].value}"
-                         valueChangeListener="#{richSelectBean.listener}"
-                         >
+            <r:select id="select"
+                      clientFilterFunction="#{richSelectBean.attributes['clientFilterFunction'].value}"
+                      converterMessage="#{richSelectBean.attributes['converterMessage'].value}"
+                      defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
+                      disabled="#{richSelectBean.attributes['disabled'].value}"
+                      enableManualInput="#{richSelectBean.attributes['enableManualInput'].value}"
+                      immediate="#{richSelectBean.attributes['immediate'].value}"
+                      itemClass="#{richSelectBean.attributes['itemClass'].value}"
+                      listClass="#{richSelectBean.attributes['listClass'].value}"
+                      listHeight="#{richSelectBean.attributes['listHeight'].value}"
+                      listWidth="#{richSelectBean.attributes['listWidth'].value}"
+                      maxListHeight="#{richSelectBean.attributes['maxListHeight'].value}"
+                      minListHeight="#{richSelectBean.attributes['minListHeight'].value}"
+                      onblur="#{richSelectBean.attributes['onblur'].value}"
+                      onchange="#{richSelectBean.attributes['onchange'].value}"
+                      onclick="#{richSelectBean.attributes['onclick'].value}"
+                      ondblclick="#{richSelectBean.attributes['ondblclick'].value}"
+                      onfocus="#{richSelectBean.attributes['onfocus'].value}"
+                      onkeydown="#{richSelectBean.attributes['onkeydown'].value}"
+                      onkeypress="#{richSelectBean.attributes['onkeypress'].value}"
+                      onkeyup="#{richSelectBean.attributes['onkeyup'].value}"
+                      onlistclick="#{richSelectBean.attributes['onlistclick'].value}"
+                      onlistdblclick="#{richSelectBean.attributes['onlistdblclick'].value}"
+                      onlisthide="#{richSelectBean.attributes['onlisthide'].value}"
+                      onlistkeydown="#{richSelectBean.attributes['onlistkeydown'].value}"
+                      onlistkeypress="#{richSelectBean.attributes['onlistkeypress'].value}"
+                      onlistkeyup="#{richSelectBean.attributes['onlistkeyup'].value}"
+                      onlistmousedown="#{richSelectBean.attributes['onlistmousedown'].value}"
+                      onlistmousemove="#{richSelectBean.attributes['onlistmousemove'].value}"
+                      onlistmouseout="#{richSelectBean.attributes['onlistmouseout'].value}"
+                      onlistmouseover="#{richSelectBean.attributes['onlistmouseover'].value}"
+                      onlistmouseup="#{richSelectBean.attributes['onlistmouseup'].value}"
+                      onlistshow="#{richSelectBean.attributes['onlistshow'].value}"
+                      onmousedown="#{richSelectBean.attributes['onmousedown'].value}"
+                      onmousemove="#{richSelectBean.attributes['onmousemove'].value}"
+                      onmouseout="#{richSelectBean.attributes['onmouseout'].value}"
+                      onmouseover="#{richSelectBean.attributes['onmouseover'].value}"
+                      onmouseup="#{richSelectBean.attributes['onmouseup'].value}"
+                      onselectitem="#{richSelectBean.attributes['onselectitem'].value}"
+                      rendered="#{richSelectBean.attributes['rendered'].value}"
+                      required="#{richSelectBean.attributes['required'].value}"
+                      requiredMessage="#{richSelectBean.attributes['requiredMessage'].value}"
+                      selectFirst="#{richSelectBean.attributes['selectFirst'].value}"
+                      selectItemClass="#{richSelectBean.attributes['selectItemClass'].value}"
+                      showButton="#{richSelectBean.attributes['showButton'].value}"
+                      style="#{richSelectBean.attributes['style'].value}"
+                      styleClass="#{richSelectBean.attributes['styleClass'].value}"
+                      title="#{richSelectBean.attributes['title'].value}"
+                      value="#{richSelectBean.attributes['value'].value}"
+                      valueChangeListener="#{richSelectBean.listener}">
 
                 <f:selectItems value="#{richSelectBean.capitalsOptions}" />
                 <a4j:ajax event="change" render="output"/>
 
-            </rich:select>
-
-            <br/><br/>
-
+            </r:select>
+            <br/>
+            <br/>
             output: <h:outputText id="output" value="#{richSelectBean.attributes['value'].value}"/>
+            <br/>
+            <br/>
+            <fieldset>
+                <legend>JavaScript API</legend>
+                Output value for all get methods: <h:inputText id="value"/>
+                <br/><br/>
+                On click:
+                <br/>
+                <input id="getValue" type="button" name="getValue" value="getValue()" onclick="$('[id$=value]').val(#{r:component('select')}.getValue())" />
+                <input id="setValue" type="button" name="setValue" value="setValue('Arizona')" onclick="#{r:component('select')}.setValue('Arizona')" />
+                <input id="getLabel" type="button" name="getLabel" value="getLabel()" onclick="$('[id$=value]').val(#{r:component('select')}.getLabel())" />
+                <br/>
+                On mouseover:
+                <br/>
+                <input id="showPopup" type="button" name="showPopup" value="showPopup()" onmouseover="#{r:component('select')}.showPopup()" />
+                <input id="hidePopup" type="button" name="hidePopup" value="hidePopup()" onmouseover="#{r:component('select')}.hidePopup()" />
+            </fieldset>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

@@ -27,7 +27,6 @@ import static org.testng.Assert.assertEquals;
 import java.util.Arrays;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.test.selenium.support.ui.ElementPresent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -58,7 +57,7 @@ public abstract class AbstractPanelMenuCommonTest extends AbstractWebDriverTest 
             input.sendKeys(inputValFull);
             // sendKeys triggers page reload automatically
             waiting(300);
-            Graphene.waitAjax().until(ElementPresent.getInstance().element(getPage().attributesTable));
+            Graphene.waitAjax().until().element(getPage().attributesTable).is().present();
             input = getPage().attributesTable.findElement(By.cssSelector(inputExp));
             MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
         }

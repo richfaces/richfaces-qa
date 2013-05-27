@@ -21,6 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richDragSource;
 
+import org.jboss.arquillian.graphene.Graphene;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState.ACCEPTING;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState.DRAGGING;
 import static org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorState.REJECTING;
@@ -29,11 +30,8 @@ import static org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttribu
 import static org.richfaces.tests.metamer.ftest.richDragSource.DragSourceAttributes.type;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.dragSourceAttributes;
 import static org.testng.Assert.assertTrue;
-
+import static org.testng.Assert.assertFalse;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.jboss.test.selenium.support.ui.ElementNotPresent;
-import org.jboss.test.selenium.support.ui.ElementPresent;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -46,9 +44,6 @@ import org.richfaces.tests.metamer.ftest.richDragIndicator.Indicator.IndicatorSt
  *
  */
 public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
-
-    private ElementPresent elementPresent = ElementPresent.getInstance();
-    private ElementNotPresent elementNotPresent = ElementNotPresent.getInstance();
 
     @Page
     private DragSourceSimplePage page;
@@ -64,11 +59,11 @@ public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
 
         Action clickAndHold = actionQueue.clickAndHold(page.drag1).build();
         clickAndHold.perform();
-        assertTrue(elementNotPresent.element(page.defaultIndicator).apply(driver));
+        assertFalse(Graphene.element(page.defaultIndicator).isPresent().apply(driver));
 
         Action move = actionQueue.moveByOffset(1, 1).build();
         move.perform();
-        assertTrue(elementPresent.element(page.defaultIndicator).apply(driver));
+        assertTrue(Graphene.element(page.defaultIndicator).isPresent().apply(driver));
 
         testMovingOverDifferentStates();
 
@@ -91,7 +86,7 @@ public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
         dragSourceAttributes.set(rendered, true);
 
         // before any mouse move, no indicator appears on page
-        elementNotPresent.element(page.indicator2).apply(driver);
+        assertFalse(Graphene.element(page.indicator2).isPresent().apply(driver));
 
         // indicator = new IndicatorWD(indicatorLoc);
         indicator = new Indicator(page.indicator2);
@@ -100,17 +95,17 @@ public abstract class AbstractDragSourceTest extends AbstractWebDriverTest {
         // firstly just drag and don't move. Indicator no displayed
         Action dragging = actionQueue.clickAndHold(page.drag1).build();
         dragging.perform();
-        elementNotPresent.element(page.indicator2).apply(driver);
+        assertFalse(Graphene.element(page.indicator2).isPresent().apply(driver));
 
         // just small move to display indicator
         dragging = actionQueue.moveByOffset(1, 1).build();
         dragging.perform();
-        elementPresent.element(page.indicator2).apply(driver);
+        assertTrue(Graphene.element(page.indicator2).isPresent().apply(driver));
 
         dragging = actionQueue.release().build();
-        elementPresent.element(page.indicator2).apply(driver);
+        assertTrue(Graphene.element(page.indicator2).isPresent().apply(driver));
         dragging.perform();
-        elementNotPresent.element(page.indicator2).apply(driver);
+        assertFalse(Graphene.element(page.indicator2).isPresent().apply(driver));
 
     }
 

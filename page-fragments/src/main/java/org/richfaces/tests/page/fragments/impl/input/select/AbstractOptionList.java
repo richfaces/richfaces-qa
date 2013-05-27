@@ -47,7 +47,7 @@ public abstract class AbstractOptionList implements OptionList {
         List<Option> result = new ArrayList<Option>();
         int index = 0;
         for (WebElement option: getOptionElements()) {
-            result.add(new SimpleOption(index, option.getText().trim()));
+            result.add(new SimpleOption(index++, option.getText().trim()));
         }
         return result;
     }

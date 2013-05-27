@@ -59,6 +59,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class MetamerPage {
 
+    public static final String STRING_ACTIONLISTENER_MSG = "action listener invoked";
+    public static final String STRING_ACTION_MSG = "action invoked";
+    public static final String STRING_EXECUTE_CHECKER_MSG = "executeChecker";
+
     protected static final int MINOR_WAIT_TIME = 50;// ms
     protected static final int TRIES = 20;// for guardListSize and expectedReturnJS
     @FindBy(css = "div[id$=phasesPanel] li")
@@ -192,7 +196,7 @@ public class MetamerPage {
             case HTTP:
                 return requestTimeChangesWaiting(Graphene.guardHttp(target));
             case XHR:
-                return requestTimeChangesWaiting(Graphene.guardXhr(target));
+                return requestTimeChangesWaiting(Graphene.guardAjax(target));
             case NONE:
                 return requestTimeNotChangesWaiting(Graphene.guardNoRequest(target));
             default:
@@ -222,7 +226,7 @@ public class MetamerPage {
             case HTTP:
                 return requestTimeChangesWaiting(Graphene.guardHttp(target));
             case XHR:
-                return requestTimeChangesWaiting(Graphene.guardXhr(target));
+                return requestTimeChangesWaiting(Graphene.guardAjax(target));
             case NONE:
                 return requestTimeNotChangesWaiting(Graphene.guardNoRequest(target), guardTime);
             default:

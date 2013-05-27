@@ -26,20 +26,21 @@ import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
 import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.dom.Event.KEYPRESS;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.AbstractGrapheneTest.pjq;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.attachQueueAttributes;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.attachQueueAttrs1;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.attachQueueAttrs2;
 import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.queueAttributes;
 import static org.testng.Assert.assertEquals;
 
-import com.thoughtworks.selenium.SeleniumException;
 import java.net.URL;
+
 import org.jboss.cheiron.halt.XHRHalter;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueAttributes;
 import org.richfaces.tests.metamer.ftest.a4jQueue.QueueModel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.thoughtworks.selenium.SeleniumException;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>

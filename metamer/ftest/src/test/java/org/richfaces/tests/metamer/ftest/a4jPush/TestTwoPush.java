@@ -28,8 +28,6 @@ import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
-import javax.annotation.Nullable;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebDriver;
@@ -82,7 +80,7 @@ public class TestTwoPush extends AbstractWebDriverTest {
         // second onsubscribed event receive after manual re-attach by checkbox
         Graphene.waitModel().until(new Predicate<WebDriver>() {
             @Override
-            public boolean apply(@Nullable WebDriver arg0) {
+            public boolean apply(WebDriver arg0) {
                 String events = ((String) executeJS("return sessionStorage.getItem('metamerEvents')")).trim();
                 // not there should be 3rd event invoked on re-attach to topic
                 return "onsubscribed onsubscribed onsubscribed".equals(events);
@@ -107,6 +105,7 @@ public class TestTwoPush extends AbstractWebDriverTest {
             (new WebDriverWait(driver, timeout))
                 .withMessage(format(msgFormat, timeout, i))
                 .until(new ExpectedCondition<Boolean>() {
+                    @Override
                     public Boolean apply(WebDriver d) {
                         page.push1Btn.click();
                         return !page.output1.getText().equals(output1Text);

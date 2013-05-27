@@ -101,7 +101,7 @@ public class TestHSelectManyCheckbox extends AbstractAjaxTest {
 
     @Override
     public void performAction() {
-        Graphene.guardXhr(page.selectManyCheckbox).click();
+        Graphene.guardAjax(page.selectManyCheckbox).click();
     }
 
     @Override

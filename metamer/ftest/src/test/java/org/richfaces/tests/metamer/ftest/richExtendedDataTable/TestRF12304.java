@@ -46,7 +46,7 @@ public class TestRF12304 extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richExtendedDataTable/rf-12304.xhtml");
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12304")
     @Templates(value = { "plain" })
     public void testMultiSelectionUsingControlIterationComponents() {

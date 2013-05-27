@@ -23,8 +23,6 @@ package org.richfaces.tests.metamer.ftest.richTree;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.By;
@@ -112,7 +110,7 @@ public class TreeSimplePage extends MetamerPage {
         // Expand all nodes takes some time, so wait for some leaf nodes to be expanded
         Graphene.waitModel().until(new Predicate<WebDriver>() {
             @Override
-            public boolean apply(@Nullable WebDriver arg0) {
+            public boolean apply(WebDriver arg0) {
                 List<RichFacesTreeNode> allNodes = tree.getNodes();
                 RichFacesTreeNode lastNodeAtLevel1 = allNodes.get(allNodes.size() - 1);
                 if (lastNodeAtLevel1.isExpanded()) {

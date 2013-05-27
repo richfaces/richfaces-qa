@@ -23,7 +23,6 @@ package org.richfaces.tests.showcase.ftest.webdriver.page.richOrderingList;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractWebDriverPage;
@@ -44,10 +43,6 @@ public class OrderingListPage extends AbstractWebDriverPage {
 
     @FindBy(xpath = "//*[@class='example-cnt']//div[contains(@class, 'rf-ord-lst-scrl')]/div")
     private WebElement itemList;
-
-    public OrderingListPage(WebDriver webDriver) {
-        super(webDriver);
-    }
 
     @Override
     public String getDemoName() {

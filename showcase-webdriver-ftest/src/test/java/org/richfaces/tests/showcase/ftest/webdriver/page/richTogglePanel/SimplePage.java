@@ -43,10 +43,6 @@ public class SimplePage extends AbstractWebDriverPage {
     @FindBy(xpath = "//*[@class='example-cnt']//div[@class='tabDiv'][2]")
     private WebElement secondTab;
 
-    public SimplePage(WebDriver webDriver) {
-        super(webDriver);
-    }
-
     @Override
     public String getDemoName() {
         return "togglePanel";

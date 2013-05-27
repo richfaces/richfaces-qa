@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richHotKey;
 
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
@@ -41,7 +40,8 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
 
         CONTROL_Z(Keys.chord(Keys.CONTROL, "z"), "ctrl+z"),
         T("t", "t"),
-        CTRL_X(HOTKEY_CTRL_X, "ctrl+x");
+        CTRL_X(HOTKEY_CTRL_X, "ctrl+x"),
+        ALT_CONTROL_X(Keys.chord(Keys.ALT, Keys.CONTROL, "x"), "alt+ctrl+x");
         private final String keysToSend;
         private final String keysString;
 
@@ -54,18 +54,19 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     @Test
     public void enabledInInput() {
         // true
-        pressHotkeyOnElement(HOTKEY_CTRL_X, firstInput.getInput());
+        hotkey1.invokeOn(firstInput.getInput());
         checkEvents(1, 0);
         clearHotKeyEvents();
         // false
         ATTRIBUTES_FIRST.set(HotKeyAttributes.enabledInInput, false);
-        pressHotkeyOnElement(HOTKEY_CTRL_X, firstInput.getInput());
+        hotkey1.invokeOn(firstInput.getInput());
         checkEvents(0, 0);
     }
 
     @Test
     @Use(field = "key", enumeration = true)
     public void testKey() {
+        //check if hotkey is not triggered if different hotkey is pressed
         ATTRIBUTES_FIRST.set(HotKeyAttributes.key, key.keysString);
         for (KeysEnum fireKeyEvent : KeysEnum.values()) {
             pressHotkeyOnElement(fireKeyEvent.keysToSend, firstInput.getInput());
@@ -78,10 +79,10 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
         }
     }
 
-    private void testKeyForPreventDefault(String keys, String keyString, int expectedNum) {
+    private void testKeyForPreventDefault(String keyString, int expectedNum) {
         ATTRIBUTES_FIRST.set(HotKeyAttributes.key, keyString);
-        // hits the hotkey twice, but default browser events will prevent from hitting the hotkey second time.
-        new Actions(driver).sendKeys(keys).sendKeys(keys).perform();
+        hotkey1.invoke();
+        hotkey1.invoke();
         checkEvent("onkeydown", expectedNum);
         clearHotKeyEvents();
     }
@@ -89,9 +90,9 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     @Test
     public void testOnkeydownOnkeyup() {
         //these events are already binded, they add message to a4j:log on the page
-        pressHotkeyOnElement(HOTKEY_CTRL_X, firstInput.getInput());
+        hotkey1.invoke();
         checkEvents(1, 0);
-        pressHotkeyOnElement(HOTKEY_ALT_X, firstInput.getInput());
+        hotkey2.invoke();
         checkEvents(1, 1);
     }
 
@@ -99,7 +100,7 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     public void testPreventDefaultFalse() {
         ATTRIBUTES_FIRST.set(HotKeyAttributes.preventDefault, Boolean.FALSE);
         try {
-            testKeyForPreventDefault(Keys.chord(Keys.CONTROL, "f"), "ctrl+f", 1);
+            testKeyForPreventDefault("ctrl+f", 1);
         } finally {
             firstInput.getInput().sendKeys(Keys.ESCAPE);
         }
@@ -108,28 +109,26 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     @Test
     public void testPreventDefaultTrue() {
         ATTRIBUTES_FIRST.set(HotKeyAttributes.preventDefault, Boolean.TRUE);
-        testKeyForPreventDefault(Keys.chord(Keys.CONTROL, "f"), "ctrl+f", 2);
-        testKeyForPreventDefault(Keys.chord(Keys.CONTROL, "h"), "ctrl+h", 2);
-        testKeyForPreventDefault(Keys.chord(Keys.CONTROL, "u"), "ctrl+u", 2);
+        testKeyForPreventDefault("ctrl+f", 2);
+        testKeyForPreventDefault("ctrl+h", 2);
+        testKeyForPreventDefault("ctrl+u", 2);
     }
 
     @Test
     public void testRendered() {
         ATTRIBUTES_FIRST.set(HotKeyAttributes.rendered, false);
-        assertNotPresent(hotkey1, "Hotkey should not be present on page.");
-        pressHotkeyOnElement(HOTKEY_CTRL_X, firstInput.getInput());
-        pressHotkeyOnElement(HOTKEY_ALT_X, firstInput.getInput());
-        checkEvents(0, 1);
+        assertNotPresent(hotkey1.getRootElement(), "Hotkey 1 should not be present on page.");
+        assertPresent(hotkey2.getRootElement(), "Hotkey 2 should be present on page.");
     }
 
     @Test
     public void testSelector() {
         ATTRIBUTES_FIRST.set(HotKeyAttributes.selector, "input.first-input");
-        pressHotkeyOnElement(HOTKEY_CTRL_X, firstInput.getInput());
+        hotkey1.invokeOn(firstInput.getInput());
         checkEvents(1, 0);
-        pressHotkeyOnElement(HOTKEY_CTRL_X, secondInput.getInput());
+        hotkey1.invokeOn(secondInput.getInput());
         checkEvents(1, 0);//no change
-        pressHotkeyOnElement(HOTKEY_CTRL_X, firstInput.getInput());
+        hotkey1.invokeOn(firstInput.getInput());
         checkEvents(2, 0);
     }
 }

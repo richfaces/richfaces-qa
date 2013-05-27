@@ -117,7 +117,7 @@ public class TestPlaceHolderWithInplaceInput extends AbstractPlaceholderJSFTest 
         super.testClickOnInputWithPlaceholder();
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12651")
     @RegressionTest("https://issues.jboss.org/browse/RF-12623")
     @Override
@@ -132,7 +132,7 @@ public class TestPlaceHolderWithInplaceInput extends AbstractPlaceholderJSFTest 
         super.testHTTPSubmit();
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12650")
     @RegressionTest("https://issues.jboss.org/browse/RF-12623")
     @Override
@@ -140,7 +140,7 @@ public class TestPlaceHolderWithInplaceInput extends AbstractPlaceholderJSFTest 
         super.testRendered();
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12651")
     @RegressionTest("https://issues.jboss.org/browse/RF-12623")
     @Override
@@ -148,7 +148,7 @@ public class TestPlaceHolderWithInplaceInput extends AbstractPlaceholderJSFTest 
         super.testStyleClass();
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12651")
     @RegressionTest("https://issues.jboss.org/browse/RF-12623")
     @Override

@@ -74,7 +74,7 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest {
     public void testTypeAndSubmit() throws InterruptedException {
         typeTextToEditor("SOMETHING");
         page.hButton.submit();
-        Graphene.waitModel().until(Graphene.element(page.output).textContains("SOMETHING"));
+        Graphene.waitModel().until().element(page.output).text().contains("SOMETHING");
     }
 
     @Test
@@ -146,7 +146,7 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest {
         typeTextToEditor("text1");
         // and submit typed text
         submitBtn.submit();
-        Graphene.waitModel().until(Graphene.element(page.output).textContains("text1"));
+        Graphene.waitModel().until().element(page.output).text().contains("text1");
         typeTextToEditor("text2");
         // and submit typed text
         submitBtn.submit();

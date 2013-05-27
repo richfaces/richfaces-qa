@@ -102,7 +102,7 @@ public class TestHSelectManyMenu extends AbstractAjaxTest {
 
     @Override
     public void performAction() {
-        Graphene.guardXhr(new Select(page.selectManyMenu)).selectByValue("Audi");
+        Graphene.guardAjax(new Select(page.selectManyMenu)).selectByValue("Audi");
     }
 
     @Override

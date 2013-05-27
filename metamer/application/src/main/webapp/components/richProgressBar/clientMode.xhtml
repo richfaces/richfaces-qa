@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -37,78 +37,86 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-
-            <script type="text/javascript">
-                //<![CDATA[
-                var counter = 0;
-                var intervalID;
-
-                function updateProgress(i) {
-                #{rich:component('progressBar')}.setValue(counter*2);
-                    if ((counter++)>50){
-                        clearInterval(intervalID);
-                #{rich:element('startButton')}.disabled=false;
-                #{rich:element('pauseButton')}.disabled=true;
-                        counter=1;
-                    }
-                }
-
-                function startProgress(){
-                #{rich:element('startButton')}.disabled=true;
-                #{rich:element('pauseButton')}.disabled=false;
-                #{rich:component('progressBar')}.enable();
-                #{rich:component('progressBar')}.setValue(counter*2);
-                    intervalID = setInterval(updateProgress,1000);
-                }
-
-                function pauseProgress(){
-                #{rich:element('startButton')}.disabled=false;
-                #{rich:element('pauseButton')}.disabled=true;
-                #{rich:component('progressBar')}.disable();
-                    clearInterval(intervalID);
-                }
-                //]]>
-            </script>
-
-            <rich:progressBar id="progressBar"
-                              data="#{richProgressBarBean.attributes['data'].value}"
-                              enabled="#{richProgressBarBean.attributes['enabled'].value}"
-                              finishClass="#{richProgressBarBean.attributes['finishClass'].value}"
-                              initialClass="#{richProgressBarBean.attributes['initialClass'].value}"
-                              interval="#{richProgressBarBean.attributes['interval'].value}"
-                              label="#{richProgressBarBean.attributes['label'].value}"
-                              maxValue="#{richProgressBarBean.attributes['maxValue'].value}"
-                              minValue="#{richProgressBarBean.attributes['minValue'].value}"
-                              mode="client"
-                              onbeforedomupdate="#{richProgressBarBean.attributes['onbeforedomupdate'].value}"
-                              onbegin="#{richProgressBarBean.attributes['onbegin'].value}"
-                              onclick="#{richProgressBarBean.attributes['onclick'].value}"
-                              onfinish="#{richProgressBarBean.attributes['onfinish'].value}"
-                              oncomplete="#{richProgressBarBean.attributes['oncomplete'].value}"
-                              ondblclick="#{richProgressBarBean.attributes['ondblclick'].value}"
-                              onmousedown="#{richProgressBarBean.attributes['onmousedown'].value}"
-                              onmousemove="#{richProgressBarBean.attributes['onmousemove'].value}"
-                              onmouseout="#{richProgressBarBean.attributes['onmouseout'].value}"
-                              onmouseover="#{richProgressBarBean.attributes['onmouseover'].value}"
-                              onmouseup="#{richProgressBarBean.attributes['onmouseup'].value}"
-                              progressClass="#{richProgressBarBean.attributes['progressClass'].value}"
-                              remainingClass="#{richProgressBarBean.attributes['remainingClass'].value}"
-                              rendered="#{richProgressBarBean.attributes['rendered'].value}"
-                              style="#{richProgressBarBean.attributes['style'].value}"
-                              styleClass="#{richProgressBarBean.attributes['styleClass'].value}"
-                              value="#{richProgressBarBean.currentValue}"
-                              >
+            <r:progressBar id="progressBar"
+                           data="#{richProgressBarBean.attributes['data'].value}"
+                           enabled="#{richProgressBarBean.attributes['enabled'].value}"
+                           finishClass="#{richProgressBarBean.attributes['finishClass'].value}"
+                           initialClass="#{richProgressBarBean.attributes['initialClass'].value}"
+                           interval="#{richProgressBarBean.attributes['interval'].value}"
+                           label="#{richProgressBarBean.attributes['label'].value}"
+                           maxValue="#{richProgressBarBean.attributes['maxValue'].value}"
+                           minValue="#{richProgressBarBean.attributes['minValue'].value}"
+                           mode="client"
+                           onbeforedomupdate="#{richProgressBarBean.attributes['onbeforedomupdate'].value}"
+                           onbegin="#{richProgressBarBean.attributes['onbegin'].value}"
+                           onclick="#{richProgressBarBean.attributes['onclick'].value}"
+                           onfinish="#{richProgressBarBean.attributes['onfinish'].value}"
+                           oncomplete="#{richProgressBarBean.attributes['oncomplete'].value}"
+                           ondblclick="#{richProgressBarBean.attributes['ondblclick'].value}"
+                           onmousedown="#{richProgressBarBean.attributes['onmousedown'].value}"
+                           onmousemove="#{richProgressBarBean.attributes['onmousemove'].value}"
+                           onmouseout="#{richProgressBarBean.attributes['onmouseout'].value}"
+                           onmouseover="#{richProgressBarBean.attributes['onmouseover'].value}"
+                           onmouseup="#{richProgressBarBean.attributes['onmouseup'].value}"
+                           progressClass="#{richProgressBarBean.attributes['progressClass'].value}"
+                           remainingClass="#{richProgressBarBean.attributes['remainingClass'].value}"
+                           rendered="#{richProgressBarBean.attributes['rendered'].value}"
+                           style="#{richProgressBarBean.attributes['style'].value}"
+                           styleClass="#{richProgressBarBean.attributes['styleClass'].value}"
+                           value="#{richProgressBarBean.currentValue}"
+                           >
                 <f:facet name="initial">
                     <h:outputText id="initialOutput" value="Process hasn't started yet"/>
                 </f:facet>
                 <f:facet name="finish">
                     <h:outputText id="completeOutput" value="Process Done"/>
                 </f:facet>
-            </rich:progressBar>
+                <span id="progress"/>
+            </r:progressBar>
 
-            <h:commandButton id="startButton" onclick="startProgress(); return false;" style="margin: 9px 0px 5px;" value="Start Progress"/>
-            <h:commandButton id="pauseButton" onclick="pauseProgress(); return false;" style="margin: 9px 0px 5px;" disabled="true" value="Pause Progress"/>
+            <br/>
+            isEnabled: <span id="isEnabled"/>
+            <br/>
 
+            <h:commandButton id="startButton" onclick="startProgress();
+                    return false;" style="margin: 9px 0px 5px;" value="Start Progress"/>
+            <h:commandButton id="pauseButton" onclick="pauseProgress();
+                    return false;" style="margin: 9px 0px 5px;" disabled="true" value="Pause Progress"/>
+
+
+            <script type="text/javascript">
+                var counter = #{r:component('progressBar')}.getMinValue();
+                var intervalID;
+                    $("#isEnabled").text(#{r:component('progressBar')}.isEnabled());
+                    $("#progress").text(counter);
+                function updateProgress(i) {
+                    #{r:component('progressBar')}.setValue(counter++);
+                    $("#isEnabled").text(#{r:component('progressBar')}.isEnabled());
+                    $("#progress").text(#{r:component('progressBar')}.getValue());
+                    if (counter > #{r:component('progressBar')}.getMaxValue()) {
+                        clearInterval(intervalID);
+                        counter = #{r:component('progressBar')}.getMinValue()
+                        #{r:element('startButton')}.disabled = false;
+                        #{r:element('pauseButton')}.disabled = true;
+                    }
+
+                }
+
+                function startProgress() {
+                    #{r:element('startButton')}.disabled = true;
+                    #{r:element('pauseButton')}.disabled = false;
+                    #{r:component('progressBar')}.enable();
+                    #{r:component('progressBar')}.setValue(counter);
+                    intervalID = setInterval(updateProgress, #{richProgressBarBean.attributes['interval'].value});
+                }
+
+                function pauseProgress() {
+                    #{r:element('startButton')}.disabled = false;
+                    #{r:element('pauseButton')}.disabled = true;
+                    #{r:component('progressBar')}.disable();
+                    clearInterval(intervalID);
+                }
+            </script>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">

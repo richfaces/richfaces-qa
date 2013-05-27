@@ -62,8 +62,8 @@ public class A4JJSFunctionBean implements Serializable {
 
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIFunction.class, getClass());
 
-        attributes.setAttribute("action", "null");
-        attributes.setAttribute("actionListener", "null");
+        attributes.setAttribute("action", null);
+        attributes.setAttribute("actionListener", null);
         attributes.setAttribute("name", "metamerFunction");
         attributes.setAttribute("render", "time1, time2, year");
         attributes.setAttribute("rendered", true);
