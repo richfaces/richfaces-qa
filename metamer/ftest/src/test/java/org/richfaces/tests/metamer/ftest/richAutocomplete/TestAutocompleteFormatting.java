@@ -45,7 +45,7 @@ import org.testng.annotations.Test;
  */
 public class TestAutocompleteFormatting extends AbstractAutocompleteTest{
 
-    @FindBy(id="form:autocomplete")
+    @FindBy(css="span.rf-au[id$=autocomplete]")
     private RichFacesAutocomplete<String> autocomplete;
 
     @Inject
