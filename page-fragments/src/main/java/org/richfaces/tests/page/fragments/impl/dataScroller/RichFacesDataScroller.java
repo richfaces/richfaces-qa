@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.DataScroller;
+package org.richfaces.tests.page.fragments.impl.dataScroller;
 
 import java.util.List;
 import org.jboss.arquillian.drone.api.annotation.Drone;
@@ -55,7 +55,7 @@ public class RichFacesDataScroller implements DataScroller {
 
     @Drone
     private WebDriver driver;
-    private static final String CSS_PAGE_SELECTOR = "[id$='ds_%d']";
+    private static final String CSS_PAGE_SELECTOR = "[id$='ds_%d'].rf-ds-nmb-btn";
     private static final String CLASS_DISABLED = "rf-ds-dis";
 
     @Override
@@ -86,12 +86,20 @@ public class RichFacesDataScroller implements DataScroller {
         return By.cssSelector(String.format(CSS_PAGE_SELECTOR, pageNumber));
     }
 
-    private int getFirstVisiblePage() {
-        return Integer.valueOf(numberedPages.get(0).getText());
+    private WebElement getFirstVisiblePageElement() {
+        return numberedPages.get(0);
     }
 
-    private int getLastVisiblePage() {
-        return Integer.valueOf(numberedPages.get(numberedPages.size() - 1).getText());
+    private int getFirstVisiblePageNumber() {
+        return Integer.valueOf(getFirstVisiblePageElement().getText());
+    }
+
+    private WebElement getLastVisiblePageElement() {
+        return numberedPages.get(numberedPages.size() - 1);
+    }
+
+    private int getLastVisiblePageNumber() {
+        return Integer.valueOf(getLastVisiblePageElement().getText());
     }
 
     @Override
@@ -106,7 +114,7 @@ public class RichFacesDataScroller implements DataScroller {
 
     @Override
     public boolean isLastPage() {
-        return actPage.getText().equals(numberedPages.get(numberedPages.size() - 1).getText());
+        return actPage.getText().equals(getLastVisiblePageElement().getText());
     }
 
     @Override
@@ -132,7 +140,7 @@ public class RichFacesDataScroller implements DataScroller {
     public void switchTo(int pageNumber) {
         int counter = 50; // to prevent infinite loops
         String prevPageText = actPage.getText();
-        while (pageNumber > getLastVisiblePage() && counter > 0) {
+        while (pageNumber > getLastVisiblePageNumber() && counter > 0) {
             switchTo(DataScrollerSwitchButton.FAST_FORWARD);
             Graphene.waitModel().until().element(actPage).text().not().equalTo(prevPageText);
             prevPageText = actPage.getText();
@@ -142,8 +150,7 @@ public class RichFacesDataScroller implements DataScroller {
             throw new RuntimeException("Scroller doesn't change pages.");
         }
         counter = 50; // to prevent inifinite loops
-        prevPageText = actPage.getText();
-        while (pageNumber < getFirstVisiblePage() && counter > 0) {
+        while (pageNumber < getFirstVisiblePageNumber() && counter > 0) {
             switchTo(DataScrollerSwitchButton.FAST_REWIND);
             Graphene.waitModel().until().element(actPage).text().not().equalTo(prevPageText);
             prevPageText = actPage.getText();
