@@ -34,6 +34,8 @@ import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.Dimension;
@@ -50,6 +52,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
+import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch.PerformableAction;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.contextMenu.RichFacesContextMenu;
@@ -92,12 +95,9 @@ public class TestContextMenu extends AbstractWebDriverTest {
         double tolerance = delay * 0.5;
         // set hideDelay
         contextMenuAttributes.set(ContextMenuAttributes.hideDelay, delay);
-        // show context menu
-        page.clickOnFirstPanel(driverType);
-        // check whether the context menu is displayed
-        page.waitUntilContextMenuAppears();
-        // save the time
-        int time = StopWatch.watchTimeSpentInAction(new StopWatch.PerformableAction() {
+
+        List<Integer> times = new ArrayList<Integer>(3);
+        PerformableAction openSecondContextMenu = new StopWatch.PerformableAction() {
             @Override
             public void perform() {
                 // blur >>> menu will disappear after delay
@@ -106,8 +106,19 @@ public class TestContextMenu extends AbstractWebDriverTest {
                 // wait until menu hides
                 page.waitUntilContextMenuHides();
             }
-        }).inMillis().intValue();
-        assertEquals(time, delay, tolerance, "The measured delay was far from set value.");
+        };
+
+        for (int i = 0; i < 3; i++) {
+            // show context menu
+            page.clickOnFirstPanel(driverType);
+            // check whether the context menu is displayed
+            page.waitUntilContextMenuAppears();
+            // save the time
+            times.add(i, StopWatch.watchTimeSpentInAction(openSecondContextMenu).inMillis().intValue());
+        }
+
+        double average = (times.get(0) + times.get(1) + times.get(2)) / 3;
+        assertEquals(average, delay, tolerance, "The measured delay was far from set value.");
     }
 
     @Test
@@ -503,7 +514,21 @@ public class TestContextMenu extends AbstractWebDriverTest {
     @Use(field = "delay", ints = { 1000, 1500, 2500 })
     public void testShowDelay() {
         updateShowAction();
-        page.checkShowDelay(delay);
+        double tolerance = delay * 0.5;
+
+        List<Integer> times = new ArrayList<Integer>(3);
+
+        for (int i = 0; i < 3; i++) {
+            // save the time
+            times.add(i, page.getActualShowDelay(delay));
+            // show context menu
+            page.clickOnSecondPanel(driverType);
+            // check whether the context menu is displayed
+            page.waitUntilContextMenuHides();
+        }
+
+        double average = (times.get(0) + times.get(1) + times.get(2)) / 3;
+        assertEquals(average, delay, tolerance, "The measured delay was far from set value.");
     }
 
     @Test
