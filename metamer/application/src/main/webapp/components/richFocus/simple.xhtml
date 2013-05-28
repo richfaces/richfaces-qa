@@ -53,27 +53,27 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
 		<h:panelGrid columns="3">
 			<h:outputText value="Name:" />
-			<h:inputText value="${richFocusBean.name}" id="name" label="name">
+			<h:inputText value="${richFocusBean.name}" id="name" label="name" tabindex="1">
 				<f:validateRequired />
 				<f:validateLength minimum="3" />
 			</h:inputText>
 			<r:message for="name" ajaxRendered="true" />
 
 			<h:outputText value="Age:" />
-			<h:inputText value="${richFocusBean.age}" id="age" label="age">
+			<h:inputText value="${richFocusBean.age}" id="age" label="age"  tabindex="2">
 				<f:validateLongRange minimum="6" />
 			</h:inputText>
 			<r:message for="age" ajaxRendered="true" />
 
 			<h:outputText value="Address" />
 			<h:inputText value="${richFocusBean.address}" id="address"
-				label="address">
+				label="address"  tabindex="3">
 				<f:validateLength minimum="7" maximum="20" />
 			</h:inputText>
 			<r:message for="address" ajaxRendered="true" />
 		</h:panelGrid>
 
-		<r:commandButton id="validateButton" value="Ajax Validate" />
+		<r:commandButton id="validateButton" value="Ajax Validate" tabindex="4"/>
 
 		<br />
 
