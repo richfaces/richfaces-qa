@@ -205,7 +205,7 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
     @Test
     public void testRerenderStack() {
         waiting(500); // wait for notify to initialize
-        
+
         generateMessagesWithWait(3);
         Assert.assertEquals(notify.size(), 3, "There should be 3 messages.");
         MetamerPage.waitRequest(rerenderStackButton, WaitRequestType.XHR).click();
