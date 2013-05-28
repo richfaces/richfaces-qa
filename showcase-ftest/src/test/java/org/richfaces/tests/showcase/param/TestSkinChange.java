@@ -22,10 +22,9 @@
 package org.richfaces.tests.showcase.param;
 
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.param.page.SkinChangePage;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
 
 /**
@@ -48,17 +47,10 @@ public class TestSkinChange extends AbstractWebDriverTest {
 
     @Test
     public void testChangeSkin() {
-
-        // This method of testing is not ideal
-        // but selenium 1 is not ableto click on the link, therefore I choose this primitive way of testing
-        String hrefOfLink1 = page.deepMarineSkin.getAttribute("href");
-
-        assertTrue(hrefOfLink1.contains("skin=deepMarine"), "The link should contains deep marine");
-
-        String hrefOfLink2 = page.blueSky.getAttribute("href");
-
-        assertTrue(hrefOfLink2.contains("skin=blueSky"), "The link should contains blue sky");
-
+        page.deepMarineSkin.click();
+        assertEquals(page.currentSkin.getText(), "deepMarine", "Deep marine should be selected skin");
+        page.blueSky.click();
+        assertEquals(page.currentSkin.getText(), "blueSky", "Blue Sky should be selected skin");
     }
 
 }
