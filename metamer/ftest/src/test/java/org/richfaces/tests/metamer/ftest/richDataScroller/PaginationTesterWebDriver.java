@@ -31,7 +31,7 @@ import com.google.common.base.Predicate;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebDriver;
-import org.richfaces.tests.page.fragments.impl.DataScroller.RichFacesDataScroller;
+import org.richfaces.tests.page.fragments.impl.dataScroller.RichFacesDataScroller;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
