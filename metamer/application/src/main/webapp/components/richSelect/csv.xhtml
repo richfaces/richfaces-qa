@@ -3,8 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+<<<<<<< HEAD
       xmlns:rich="http://richfaces.org/rich"
       xmlns:a4j="http://richfaces.org/a4j"
+=======
+      xmlns:r="http://richfaces.org/rich"
+
+>>>>>>> c401344... metamer: select: fixing csv sample
       xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
@@ -37,12 +42,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </f:viewParam>
             </f:metadata>
         </ui:define>
-        
+
         <ui:define name="js">
             <ui:include src="script.xhtml"/>
         </ui:define>
 
         <ui:define name="notEmpty">
+<<<<<<< HEAD
             <rich:select id="notEmpty"
                          defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
                          value="#{richSelectBean.notEmptyValue}"
@@ -51,12 +57,23 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <rich:validator event="blur"/>
                 <a4j:ajax event="change" render="notEmptyMsg"/>
             </rich:select>
+=======
+            <r:select id="notEmpty"
+                      defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
+                      value="#{richSelectBean.notEmptyValue}"
+                      >
+                <f:selectItems value="#{richSelectBean.validationOptionsNotEmpty}" />
+                <r:ajax event="change" render="notEmptyMsg"/>
+                <r:validator event="listclick"/>
+            </r:select>
+>>>>>>> c401344... metamer: select: fixing csv sample
         </ui:define>
         <ui:define name="notEmptyOutput">
             <h:outputText id="notEmptyOutput" value="#{richSelectBean.notEmptyValue}"/>
         </ui:define>
 
         <ui:define name="pattern">
+<<<<<<< HEAD
             <rich:select id="pattern"
                          defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
                          value="#{richSelectBean.patternValue}"
@@ -65,16 +82,33 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <rich:validator event="blur"/>
                 <a4j:ajax event="change" render="patternMsg"/>
             </rich:select>
+=======
+            <r:select id="pattern"
+                      defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
+                      value="#{richSelectBean.patternValue}"
+                      >
+                <f:selectItems value="#{richSelectBean.validationOptionsPattern}" />
+                <r:ajax event="change" render="patternMsg"/>
+                <r:validator event="change"/>
+            </r:select>
+>>>>>>> c401344... metamer: select: fixing csv sample
         </ui:define>
         <ui:define name="patternOutput">
             <h:outputText id="patternOutput" value="#{richSelectBean.patternValue}"/>
         </ui:define>
 
         <ui:define name="size">
+<<<<<<< HEAD
             <rich:select id="size"
                          defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
                          value="#{richSelectBean.sizeValue}"
                          >
+=======
+            <r:select id="size"
+                      defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
+                      value="#{richSelectBean.sizeValue}"
+                      >
+>>>>>>> c401344... metamer: select: fixing csv sample
                 <f:selectItems value="#{richSelectBean.validationOptionsSize}" />
                 <a4j:ajax event="change" render="sizeMsg"/>
                 <rich:validator event="change"/>
@@ -85,10 +119,17 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="custom">
+<<<<<<< HEAD
             <rich:select id="custom"
                          defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
                          value="#{richSelectBean.customValue}"
                          >
+=======
+            <r:select id="custom"
+                      defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
+                      value="#{richSelectBean.customValue}"
+                      >
+>>>>>>> c401344... metamer: select: fixing csv sample
                 <f:selectItems value="#{richSelectBean.validationOptionsCustom}" />
                 <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>
                 <a4j:ajax event="change" render="customMsg"/>
@@ -100,9 +141,15 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="required" >
+<<<<<<< HEAD
             <rich:select id="required" required="true"
                                 requiredMessage="#{richSelectBean.attributes['requiredMessage'].value}"
                                 value="#{richSelectBean.requiredValue}">
+=======
+            <r:select id="required" required="true"
+                      requiredMessage="#{richSelectBean.attributes['requiredMessage'].value}"
+                      value="#{richSelectBean.requiredValue}">
+>>>>>>> c401344... metamer: select: fixing csv sample
                 <f:selectItems value="#{richSelectBean.validationOptionsRequired}" />
                 <a4j:ajax event="change" render="requiredMsg"/>
                 <rich:validator event="change"/>
