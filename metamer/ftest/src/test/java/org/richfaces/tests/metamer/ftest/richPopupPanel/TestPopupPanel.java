@@ -64,9 +64,9 @@ public class TestPopupPanel extends AbstractWebDriverTest {
 
     @FindBy(css = "input[id$=openPanelButton]")
     private WebElement openButton;
-    @FindBy(css = "div[id$=popupPanel_shade].rf-pp-shade")
+    @FindBy(css = "div.rf-pp-shade[id$=popupPanel_shade]")
     private WebElement shade;
-    @FindBy(css = "div.rf-pp-cntr")
+    @FindBy(css = "div.rf-pp-cntr[id$=popupPanel_container]")
     private TestedPopupPanel panel;
     @FindBy(css = "input[id$=resize]")
     private WebElement resize;
