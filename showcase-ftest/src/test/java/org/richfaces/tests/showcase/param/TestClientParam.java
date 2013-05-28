@@ -63,7 +63,7 @@ public class TestClientParam extends AbstractWebDriverTest {
     @Test
     public void testShowScreenSizeAfterClickingOnButton() {
 
-        Graphene.guardXhr(page.buttonShowScreenSize).click();
+        Graphene.guardAjax(page.buttonShowScreenSize).click();
 
         long widthActual = Long.parseLong(page.widthValueLocator.getText().trim());
         long heightActual = Long.parseLong(page.heightValueLocator.getText().trim());
