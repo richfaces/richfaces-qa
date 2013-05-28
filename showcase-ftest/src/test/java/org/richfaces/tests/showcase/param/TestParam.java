@@ -47,13 +47,13 @@ public class TestParam extends AbstractWebDriverTest {
      * Tests ********************************************************************* ***********************************
      */
 
-    @Test
+    @Test(priority = 0)
     public void testWhetherThereIsNothigSetAtFirst() {
         assertEquals(page.output.getText().trim(), "Selected Name:",
             "There can not be anything selected at first after page first load!");
     }
 
-    @Test
+    @Test(priority = 1)
     public void testClickToButtonAndCheckTheSelectedName() {
         for(ParamPage.Name name : ParamPage.Name.getAll()) {
             page.setName(name);

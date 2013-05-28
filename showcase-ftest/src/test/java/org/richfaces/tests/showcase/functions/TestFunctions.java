@@ -21,37 +21,34 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.functions;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardHttp;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import org.jboss.arquillian.graphene.Graphene;
 import static org.testng.Assert.assertEquals;
-import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-import static org.jboss.arquillian.ajocado.Graphene.elementPresent;
 
-import java.awt.event.KeyEvent;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.Keys;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.functions.page.FunctionsPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestFunctions extends AbstractGrapheneTest {
+public class TestFunctions extends AbstractWebDriverTest {
 
-    private JQueryLocator input = jq("input[type=text]");
-    private JQueryLocator out = jq("span[id$=out]");
+    @Page
+    private FunctionsPage page;
 
     @Test
     public void testFunctionFindComponentCall() {
-
         String testString = "test string";
-
-        selenium.type(input, testString);
-        selenium.focus(input);
-        guardHttp(selenium).keyPressNative(KeyEvent.VK_ENTER);
-
-        waitModel.until(elementPresent.locator(out));
-        assertEquals(selenium.getText(out), testString, "The output should be different!");
+        page.input.sendKeys(testString);
+        page.input.sendKeys(Keys.ENTER);
+        Graphene.waitGui().until("The output should be test string")
+                .element(page.output)
+                .text()
+                .equalTo(testString);
     }
+
 
 }
