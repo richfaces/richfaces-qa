@@ -4,7 +4,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:r="http://richfaces.org/rich"
-      
+
       xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
@@ -37,19 +37,19 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </f:viewParam>
             </f:metadata>
         </ui:define>
-        
+
         <ui:define name="js">
             <ui:include src="script.xhtml"/>
         </ui:define>
 
         <ui:define name="notEmpty">
             <r:select id="notEmpty"
-                         defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
-                         value="#{richSelectBean.notEmptyValue}"
-                         >
+                      defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
+                      value="#{richSelectBean.notEmptyValue}"
+                      >
                 <f:selectItems value="#{richSelectBean.validationOptionsNotEmpty}" />
-                <r:validator event="blur"/>
                 <r:ajax event="change" render="notEmptyMsg"/>
+                <r:validator event="listclick"/>
             </r:select>
         </ui:define>
         <ui:define name="notEmptyOutput">
@@ -58,12 +58,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="pattern">
             <r:select id="pattern"
-                         defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
-                         value="#{richSelectBean.patternValue}"
-                         >
+                      defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
+                      value="#{richSelectBean.patternValue}"
+                      >
                 <f:selectItems value="#{richSelectBean.validationOptionsPattern}" />
-                <r:validator event="blur"/>
                 <r:ajax event="change" render="patternMsg"/>
+                <r:validator event="change"/>
             </r:select>
         </ui:define>
         <ui:define name="patternOutput">
@@ -72,9 +72,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="size">
             <r:select id="size"
-                         defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
-                         value="#{richSelectBean.sizeValue}"
-                         >
+                      defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
+                      value="#{richSelectBean.sizeValue}"
+                      >
                 <f:selectItems value="#{richSelectBean.validationOptionsSize}" />
                 <r:ajax event="change" render="sizeMsg"/>
                 <r:validator event="change"/>
@@ -86,9 +86,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="custom">
             <r:select id="custom"
-                         defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
-                         value="#{richSelectBean.customValue}"
-                         >
+                      defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
+                      value="#{richSelectBean.customValue}"
+                      >
                 <f:selectItems value="#{richSelectBean.validationOptionsCustom}" />
                 <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>
                 <r:ajax event="change" render="customMsg"/>
@@ -101,8 +101,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="required" >
             <r:select id="required" required="true"
-                                requiredMessage="#{richSelectBean.attributes['requiredMessage'].value}"
-                                value="#{richSelectBean.requiredValue}">
+                      requiredMessage="#{richSelectBean.attributes['requiredMessage'].value}"
+                      value="#{richSelectBean.requiredValue}">
                 <f:selectItems value="#{richSelectBean.validationOptionsRequired}" />
                 <r:ajax event="change" render="requiredMsg"/>
                 <r:validator event="change"/>
