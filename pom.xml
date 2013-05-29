@@ -29,7 +29,7 @@ FSF site: http://www.fsf.org. -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <version.richfaces>5.0.0-SNAPSHOT</version.richfaces>
+        <version.richfaces>5.0.0.Alpha1</version.richfaces>
         <richfaces.checkstyle.version>5</richfaces.checkstyle.version>
 
         <!-- version of JBoss containers to use and download -->
