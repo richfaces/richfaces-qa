@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.richfaces.tests</groupId>
         <artifactId>richfaces-qa-parent</artifactId>
-        <version>5.0.0-SNAPSHOT</version>
+        <version>5.0.0.20130529-Alpha1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
