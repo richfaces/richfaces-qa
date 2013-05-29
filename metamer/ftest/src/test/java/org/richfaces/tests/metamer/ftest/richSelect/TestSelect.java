@@ -50,6 +50,7 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
+import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
 import org.richfaces.tests.page.fragments.impl.input.select.Option;
 import org.richfaces.tests.page.fragments.impl.input.select.Selection;
 import org.testng.Assert;
@@ -98,6 +99,26 @@ public class TestSelect extends AbstractWebDriverTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richSelect/simple.xhtml");
+    }
+
+    @Test
+    public void testClientFilterFunction() {
+        selectAttributes.set(SelectAttributes.clientFilterFunction, "filterValuesByLength");
+        select.getInput().fillIn("4");//get all states with 4 letters
+        assertTrue(select.isPopupPresent());
+        List<Option> options = select.getPopup().getOptions();
+        assertEquals(options.size(), 3);
+        assertEquals(options.get(0).getVisibleText(), "Iowa");
+        assertEquals(options.get(1).getVisibleText(), "Ohio");
+        assertEquals(options.get(2).getVisibleText(), "Utah");
+
+        select.getInput().clear(ClearType.JS).fillIn("5");//get all states with 5 letters
+        assertTrue(select.isPopupPresent());
+        options = select.getPopup().getOptions();
+        assertEquals(options.size(), 3);
+        assertEquals(options.get(0).getVisibleText(), "Idaho");
+        assertEquals(options.get(1).getVisibleText(), "Maine");
+        assertEquals(options.get(2).getVisibleText(), "Texas");
     }
 
     @Test
