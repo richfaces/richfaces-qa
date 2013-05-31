@@ -50,7 +50,7 @@ public class TestLog extends AbstractWebDriverTest {
     @Test
     public void testInitialStateNothingToInputAndCheckTheOutput() {
 
-        Graphene.guardXhr(page.submit).click();
+        Graphene.guardAjax(page.submit).click();
 
         assertEquals(page.output.getText().trim(), "", "The ouput string should be empty!");
     }

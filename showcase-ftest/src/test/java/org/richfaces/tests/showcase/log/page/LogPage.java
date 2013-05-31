@@ -21,25 +21,25 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.log.page;
 
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class LogPage {
 
-    @FindBy(xpath = "//*[@class='example-cnt']//button")
+    @FindBy(css = "button[name='clear'")
     public WebElement clear;
-    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='text']")
+    @FindBy(jquery = "input[type='text']:nth(0)")
     public WebElement input;
-    @FindBy(xpath = "//*[@class='example-cnt']//div[@class='rf-log-contents']")
+    @FindBy(css = "div[class='rf-log-contents']")
     public WebElement loggingArea;
-    @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'out')]")
+    @FindBy(css = "span[id$='out']")
     public WebElement output;
-    @FindBy(xpath = "//*[@class='example-cnt']//select")
+    @FindBy(css = "select[name='richfaces.log']")
     public WebElement severitySelect;
-    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='submit']")
+    @FindBy(jquery = "input[type='submit']:nth(0)")
     public WebElement submit;
 
     public static enum Severity {
