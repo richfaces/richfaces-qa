@@ -25,16 +25,13 @@ package org.richfaces.tests.metamer.ftest.model;
 import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
 import static org.jboss.test.selenium.locator.reference.ReferencedLocator.ref;
 import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-
 import static org.testng.Assert.fail;
 
 import org.jboss.arquillian.ajocado.Graphene;
 import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
 import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
 import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
-import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.waiting.ajax.JavaScriptCondition;
 import org.jboss.arquillian.ajocado.waiting.conditions.TextEquals;
 import org.jboss.test.selenium.locator.reference.ReferencedLocator;
 
@@ -109,15 +106,15 @@ public class DataScroller extends AbstractModel<JQueryLocator> {
     public void gotoFirstPage() {
         if (!isFirstPage()) {
             clickFirstPageButton();
+            Graphene.waitAjax.until(TextEquals.getInstance().locator(currentPage).text("1"));
         }
-        Graphene.waitAjax.until(TextEquals.getInstance().locator(currentPage).text("1"));
     }
 
     public void gotoLastPage() {
         if (!isLastPage()) {
             clickLastPageButton();
+            Graphene.waitAjax.until(TextEquals.getInstance().locator(currentPage).text(String.valueOf(getLastVisiblePage())));
         }
-        Graphene.waitAjax.until(TextEquals.getInstance().locator(currentPage).text(String.valueOf(getLastVisiblePage())));
     }
 
     public void gotoPage(int pageNumber) {
