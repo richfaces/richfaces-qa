@@ -21,34 +21,42 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.region.page;
 
-import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class RegionPage {
 
-    @FindBy(xpath = "//table[contains(@id, 'userInfoPanel1')]//td[contains(text(), 'User email')]/..//input")
+    @FindBy(jquery = "input[type='text']:nth(1)")
     public WebElement brokenEmailInput;
-    @FindBy(xpath = "//table[contains(@id, 'userInfoPanel1')]//td[contains(text(), 'User Name')]/..//input")
+
+    @FindBy(jquery = "input[type='text']:nth(0)")
     public WebElement brokenNameInput;
-    @FindBy(xpath = "//table[contains(@id, 'echopanel1')]//td[text()='Entered email:']/../td[position()=2]")
+
+    @FindBy(jquery = "table[id$='echopanel1'] td:nth(3)")
     public WebElement brokenEmailOutput;
-    @FindBy(xpath = "//table[contains(@id, 'echopanel1')]//td[text()='Entered name:']/../td[position()=2]")
+
+    @FindBy(jquery = "table[id$='echopanel1'] td:nth(1)")
     public WebElement brokenNameOutput;
-    @FindBy(xpath = "//input[@type='submit'][@value='broken submit']")
+
+    @FindBy(jquery = "input[type='submit']:nth(0)")
     public WebElement brokenSubmit;
-    @FindBy(xpath = "//th[contains(text(), 'User Info Panel with Region')]/../../..//td[contains(text(), 'User email')]/..//input")
+
+    @FindBy(jquery = "input[type='text']:nth(3)")
     public WebElement emailInput;
-    @FindBy(xpath = "//th[contains(text(), 'User Info Panel with Region')]/../../..//td[contains(text(), 'User Name')]/..//input")
+
+    @FindBy(jquery = "input[type='text']:nth(2)")
     public WebElement nameInput;
-    @FindBy(xpath = "//table[contains(@id, 'echopanel2')]//td[text()='Entered email:']/../td[position()=2]")
+
+    @FindBy(jquery = "table[id$='echopanel2'] td:nth(3)")
     public WebElement emailOutput;
-    @FindBy(xpath = "//table[contains(@id, 'echopanel2')]//td[text()='Entered name:']/../td[position()=2]")
+
+    @FindBy(jquery = "table[id$='echopanel2'] td:nth(1)")
     public WebElement nameOutput;
-    @FindBy(xpath = "//input[@type='submit'][@value='submit']")
+
+    @FindBy(jquery = "input[type='submit']:nth(1)")
     public WebElement submit;
 
 }
