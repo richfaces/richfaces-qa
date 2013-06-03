@@ -55,6 +55,7 @@ public class RichHashParamBean implements Serializable {
         logger.debug("initializing bean " + getClass().getName());
 
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIHashParameter.class, getClass());
+        attributes.setAttribute("rendered", true);
     }
 
     public Attributes getAttributes() {
