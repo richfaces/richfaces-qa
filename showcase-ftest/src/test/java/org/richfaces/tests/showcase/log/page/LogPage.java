@@ -29,7 +29,7 @@ import org.openqa.selenium.WebElement;
  */
 public class LogPage {
 
-    @FindBy(css = "button[name='clear'")
+    @FindBy(css = "button[name='clear']")
     public WebElement clear;
     @FindBy(jquery = "input[type='text']:nth(0)")
     public WebElement input;

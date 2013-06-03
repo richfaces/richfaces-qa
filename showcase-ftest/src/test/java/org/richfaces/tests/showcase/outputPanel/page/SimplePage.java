@@ -21,25 +21,30 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.outputPanel.page;
 
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class SimplePage {
 
-    @FindBy(xpath = "//*[@class='example-cnt']//span[contains(text(), 'text1')]")
+    @FindBy(jquery = "span:contains('text1')")
     public WebElement firstError;
-    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='text'][contains(@name, 'text1')]")
+
+    @FindBy(css = "input[id$='text1']")
     public WebElement firstInput;
-    @FindBy(xpath = "//*[@class='example-cnt']//span[contains(@id, 'out1')]")
+
+    @FindBy(css = "span[id$='out1']")
     public WebElement firstOutput;
-    @FindBy(xpath = "//*[@class='example-cnt']//span[contains(text(), 'text2')]")
+
+    @FindBy(jquery = "span:contains('text2')")
     public WebElement secondError;
-    @FindBy(xpath = "//*[@class='example-cnt']//input[@type='text'][contains(@name, 'text2')]")
+
+    @FindBy(css = "input[id$='text2']")
     public WebElement secondInput;
-    @FindBy(xpath = "//*[@class='example-cnt']//div[contains(@id, 'out2')]")
+
+    @FindBy(css = "div[id$='out2']")
     public WebElement secondOutput;
 
 }
