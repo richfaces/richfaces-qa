@@ -9,6 +9,6 @@ public class AutosavingPage {
     @FindBy(css = ".example-cnt")
     public RichFacesEditor editor;
 
-    @FindBy(css = ".rf-p-b")
+    @FindBy(className = "rf-p-b")
     public WebElement outputFromEditor;
 }
