@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.bean.rich;
 
+import com.google.common.collect.Lists;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -50,6 +51,7 @@ public class RichOrderingListBean implements Serializable {
     private static final Logger LOGGER = LoggerFactory.getLogger(RichOrderingListBean.class);
     @ManagedProperty("#{model.capitals}")
     private List<Capital> capitals;
+    private List<Capital> emptyCapitals = Lists.newArrayList();
     private Attributes attributes;
     private Collection<String> hiddenAttributes = new ArrayList<String>();
     private String validatorMessage;
@@ -66,6 +68,7 @@ public class RichOrderingListBean implements Serializable {
         attributes.setAttribute("rendered", true);
         attributes.setAttribute("upText", "Up");
         attributes.setAttribute("upTopText", "Top");
+        attributes.setAttribute("required", false);
 
         // TODO has to be tested in another way
         String[] attrsToHide = new String[]{"collectionType", "itemLabel", "itemValue", "value", "var",
@@ -84,6 +87,10 @@ public class RichOrderingListBean implements Serializable {
         return capitals;
     }
 
+    public List<Capital> getEmptyCapitals() {
+        return emptyCapitals;
+    }
+
     public Collection<String> getHiddenAttributes() {
         return hiddenAttributes;
     }
@@ -98,6 +105,10 @@ public class RichOrderingListBean implements Serializable {
 
     public void setCapitals(List<Capital> capitals) {
         this.capitals = capitals;
+    }
+
+    public void setEmptyCapitals(List<Capital> emptyCapitals) {
+        this.emptyCapitals = emptyCapitals;
     }
 
     public void setHiddenAttributes(Collection<String> hiddenAttributes) {
