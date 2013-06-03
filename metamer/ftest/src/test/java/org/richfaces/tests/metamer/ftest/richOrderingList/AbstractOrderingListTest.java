@@ -50,7 +50,7 @@ public abstract class AbstractOrderingListTest extends AbstractWebDriverTest {
     protected RichFacesSimpleOrderingList orderingList;
     //
     @FindBy(css = "input[id$=submitButton]")
-    private WebElement submitButton;
+    protected WebElement submitButton;
 
     protected void assertButtonDisabled(WebElement element, String buttonName) {
         assertTrue(element.getAttribute("class").contains("rf-ord-btn-dis"), "Button should contain disabled class 'rf-ord-btn-dis'");
