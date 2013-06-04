@@ -72,6 +72,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
      * there after switching to another data page.
      */
     @Test
+    @Templates(exclude = { "richExtendedDataTable" })
     @Use(field = "numberOfColumns", ints = { 0, 2, 4 })
     public void testFrozenColumnsShow() {
         extendedDataTableAttributes.set(ExtendedDataTableAttributes.frozenColumns, numberOfColumns);
@@ -91,11 +92,19 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
         _testFrozenColumnsShow();
     }
 
+    @Test(groups = { "Future" })
+    @Use(field = "numberOfColumns", ints = { 0, 2, 4 })
+    @Templates(value = "richExtendedDataTable")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13046")
+    public void testFrozenColumnsShowInEDT() {
+        testFrozenColumnsShow();
+    }
+
     public void _testFrozenColumnsShow() {
         // wait for list of elements with frozen columns with expected size
         List<WebElement> frozenColumns = guardListSize(page.frozenColumns, numberOfColumns);
         assertEquals(Integer.valueOf(frozenColumns.size()), numberOfColumns,
-            "The number of frozen columns set is not equal to the number of frozen columns found");
+                "The number of frozen columns set is not equal to the number of frozen columns found");
     }
 
     /**
@@ -137,52 +146,35 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
     @IssueTracking("https://issues.jboss.org/browse/RF-12278")
     // TODO https://issues.jboss.org/browse/RF-12236 , when numberOfColumns=4
     public void testScrollerForNotFrozenColumnsInRichExtendedDataTable() {
-        // check if default scroller is present and get its location
-        Graphene.waitModel().until("Default scroller is not in the page.").element(page.defaultScroller).is().present();
-        location = page.defaultScroller.getLocation();
-        extendedDataTableAttributes.set(ExtendedDataTableAttributes.frozenColumns, numberOfColumns);
-        // test
-        _testScrollerForNotFrozenColumns();
-
-        // change page
-        page.nextPage.click();
-        Graphene.waitModel().until().element(page.secondPageSpan).is().visible();
-        // test
-        _testScrollerForNotFrozenColumns();
-
-        // change page
-        page.nextPage.click();
-        Graphene.waitModel().until().element(page.thirdPageSpan).is().visible();
-        // test
-        _testScrollerForNotFrozenColumns();
+        testScrollerForNotFrozenColumns();
     }
 
     private void _testScrollerForNotFrozenColumns() {
         // check if there is default scroller
         Graphene.waitModel().until("Default scroller should not be in the page.").element(page.defaultScroller).is()
-            .not().present();
+                .not().present();
         // check if there is scroller for not frozen columns
         Graphene.waitModel().until("Scroller for the not frozen columns should be in the page.")
-            .element(page.movedScroller).is().present();
+                .element(page.movedScroller).is().present();
         // check if the location of scroller moved
         assertNotEquals(location, page.movedScroller.getLocation(), "The position of scroller has not been changed.");
     }
 
     public class FrozenColumnsPage extends MetamerPage {
 
-        @FindBy(xpath = "//td[@class='rf-edt-ftr-fzn']//div//table//tr//td")
+        @FindBy(xpath = "//div[contains(@id,'richEDT')]//td[@class='rf-edt-ftr-fzn']//div//table//tr//td")
         List<WebElement> frozenColumns;
-        @FindBy(xpath = "//td[@class='rf-edt-ftr-fzn']")
+        @FindBy(xpath = "//div[contains(@id,'richEDT')]//td[@class='rf-edt-ftr-fzn']")
         WebElement frozenColumnsTd;
-        @FindBy(xpath = "//div[@class='rf-edt-ftr']//table//tbody//tr//td[@colspan=1][1]//div[@class='rf-edt-scrl']")
+        @FindBy(xpath = "//div[contains(@id,'richEDT')]//div[@class='rf-edt-ftr']//table//tbody//tr//td[@colspan=1][1]//div[@class='rf-edt-scrl']")
         WebElement defaultScroller;
-        @FindBy(xpath = "//div[@class='rf-edt-ftr']//table//tbody//tr//td[@colspan=1][2]//div[@class='rf-edt-scrl']")
+        @FindBy(xpath = "//div[contains(@id,'richEDT')]//div[@class='rf-edt-ftr']//table//tbody//tr//td[@colspan=1][2]//div[@class='rf-edt-scrl']")
         WebElement movedScroller;
-        @FindBy(css = "a.rf-ds-btn-next")
+        @FindBy(css = "div[id$=richEDT] a.rf-ds-btn-next")
         WebElement nextPage;
-        @FindBy(xpath = "//span[contains(@id, 'scroller2_ds_2')][contains(text(), '2')]")
+        @FindBy(xpath = "//div[contains(@id,'richEDT')]//span[contains(@id, 'scroller2_ds_2')][contains(text(), '2')]")
         WebElement secondPageSpan;
-        @FindBy(xpath = "//span[contains(@id, 'scroller2_ds_3')][contains(text(), '3')]")
+        @FindBy(xpath = "//div[contains(@id,'richEDT')]//span[contains(@id, 'scroller2_ds_3')][contains(text(), '3')]")
         WebElement thirdPageSpan;
     }
 }
