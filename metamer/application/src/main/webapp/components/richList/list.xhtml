@@ -32,11 +32,16 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="links">
 
             <metamer:testPageLink id="simple" outcome="simple" value="Simple">
-                Simple page that contains <b>r:list</b> (with model containing capitals) and "term" facet which influences list in definitions mode 
+                Simple page that contains <b>r:list</b> (with model containing capitals) and "term" facet which influences list in definitions mode
             </metamer:testPageLink>
 
             <metamer:testPageLink id="scroller" outcome="scroller" value="Data Scroller">
                 Simple page that contains <b>r:list</b> (with model containing capitals) with bound dataScroller
+            </metamer:testPageLink>
+            
+            <metamer:testPageLink id="scroller2" outcome="scroller2" value="Data Scroller 2">
+                Simple page that contains <b>r:list</b> (with model containing capitals) with bound dataScroller.
+                Shows also @iterationStatusVar, @rowKeyVar, @stateVar.
             </metamer:testPageLink>
 
             <metamer:testPageLink id="keepSaved" outcome="keepSaved" value="Keep Saved">
