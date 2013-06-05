@@ -29,6 +29,8 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
+import com.google.common.base.Predicate;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,9 +39,12 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.android.AndroidDriver;
@@ -63,12 +68,12 @@ import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 
-import com.google.common.base.Predicate;
-
 public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 
     @Drone
     protected WebDriver driver;
+    @ArquillianResource
+    protected JavascriptExecutor executor;
     @FindBy(css = "input[id$=statusInput]")
     protected TextInputComponentImpl statusInput;
     @Page
@@ -77,6 +82,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     protected static final int MINOR_WAIT_TIME = 50;// ms
     protected static final int TRIES = 20;//for guardListSize and expectedReturnJS
     protected DriverType driverType;
+    private static final String ATTRIBUTE_INPUT_TEMPLATE = "input[id$={0}Input]";
 
     public enum DriverType {
 
@@ -117,6 +123,21 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         }
         driver.get(buildUrl(getTestUrl() + "?templates=" + template.toString()).toExternalForm());
         driverType = DriverType.getCurrentType(driver);
+    }
+
+    /**
+     * Sets component attribute to chosen @value. Always uses the first attribute table, unless a more specific
+     * attribute locator provided (e.g. @attributename="table2:onChange").
+     * @param attributeName name of the attribute (attach prefix of the attribute table if needed another attribute table than the first one)
+     * @param value value, which String representation will be set to attribute input.
+     */
+    protected void setAttribute(String attributeName, Object value) {
+        TextInputComponentImpl attributeInput = Graphene.createPageFragment(TextInputComponentImpl.class,
+                driver.findElement(By.cssSelector(format(ATTRIBUTE_INPUT_TEMPLATE, attributeName))));
+        //set attribute
+        MetamerPage.waitRequest(attributeInput.clear(ClearType.JS)
+                .fillIn(value.toString()), WaitRequestType.HTTP)
+                .fillIn(Keys.chord(Keys.TAB));
     }
 
     /**
@@ -164,8 +185,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * if returning script fails)
      */
     protected Object executeJS(String script, Object... args) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        return js.executeScript(script, args);
+        return executor.executeScript(script, args);
     }
 
     /**
@@ -404,7 +424,9 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         testFireEvent(event.getEventName(), new Action() {
             @Override
             public void perform() {
-                actionBeforeFiringTheEvent.perform();
+                if (actionBeforeFiringTheEvent != null) {
+                    actionBeforeFiringTheEvent.perform();
+                }
                 fireEvent(element.getTarget(), event);
             }
         });
@@ -414,30 +436,22 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * A helper method for testing JavaScripts events.
      *
      * @param event JavaScript event to be tested
-     * @param element element on which will be the event triggered
+     * @param element element on which will be the event triggered (must be present before test, or a proxy)
      * @param attributeName name of the attribute that should be set
      */
     protected void testFireEvent(final Event event, final WebElement element, String attributeName) {
-        testFireEvent(attributeName, new Action() {
-            @Override
-            public void perform() {
-                fireEvent(element, event);
-            }
-        });
+        testFireEvent(event, FutureWebElement.of(element), null);
     }
 
     /**
      * A helper method for testing events.
      *
-     * @param attributeName name of the attribute that should be set (i.e. inputselect, select ; without the prefix 'on')
+     * @param attributeName name of the attribute that should be set (i.e. inputselect, onselect ; can be without the prefix 'on')
      * @param eventFiringAction action which will be performed to trigger the event
      */
     protected void testFireEvent(String attributeName, Action eventFiringAction) {
-        TextInputComponentImpl eventInput = Graphene.createPageFragment(TextInputComponentImpl.class, driver.findElement(By.cssSelector("input[id$=on" + attributeName + "Input]")));
-        //set attribute
-        MetamerPage.waitRequest(eventInput.clear(ClearType.JS)
-                .fillIn("metamerEvents += \"" + attributeName + " \""), WaitRequestType.HTTP)
-                .trigger("blur");
+        setAttribute((attributeName.startsWith("on") ? attributeName : "on" + attributeName),
+                "metamerEvents += \"" + attributeName + " \"");
         //clear/init events
         executeJS("metamerEvents = \"\";");
         //trigger event
@@ -469,13 +483,27 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * @param labelChangeAction action which will change the label (if no action needed use <code>null</code> or empty Action)
      */
     protected <T extends AttributeEnum> void testLabelChanges(WebElement element, Attributes<T> attributes, T testedAttribute, Action labelChangeAction) {
+        testLabelChanges(FutureWebElement.of(element), attributes, testedAttribute, labelChangeAction);
+    }
+
+    protected <T extends AttributeEnum> void testLabelChanges(FutureTarget<WebElement> futureTarget, Attributes<T> attributes, T testedAttribute, Action labelChangeAction) {
         String rf = "RichFaces 4";
         attributes.set(testedAttribute, rf);
         if (labelChangeAction != null) {
             labelChangeAction.perform();
         }
-        Graphene.waitModel().until().element(element).is().visible();
-        Graphene.waitModel().until(testedAttribute + " does not work, label has not changed.").element(element).text().equalTo(rf);
+        Graphene.waitModel().until().element(futureTarget.getTarget()).is().visible();
+        Graphene.waitModel().until(testedAttribute + " does not work, label has not changed.").element(futureTarget.getTarget()).text().equalTo(rf);
+    }
+
+    protected <T extends AttributeEnum> void testLabelChanges(String attributeName, FutureTarget<WebElement> futureTarget, Action labelChangeAction) {
+        String rf = "RichFaces 4";
+        setAttribute(attributeName, rf);
+        if (labelChangeAction != null) {
+            labelChangeAction.perform();
+        }
+        Graphene.waitModel().until().element(futureTarget.getTarget()).is().visible();
+        Graphene.waitModel().until(attributeName + " does not work, label has not changed.").element(futureTarget.getTarget()).text().equalTo(rf);
     }
 
     /**
@@ -726,5 +754,30 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     protected interface FutureTarget<T> {
 
         T getTarget();
+    }
+
+    protected static final class FutureWebElement {
+
+        private FutureWebElement() {
+        }
+
+        public static FutureTarget<WebElement> of(final WebElement element) {
+            return new FutureTarget<WebElement>() {
+                @Override
+                public WebElement getTarget() {
+                    return element;
+                }
+            };
+        }
+
+        public static FutureTarget<WebElement> of(final By by, final SearchContext context) {
+
+            return new FutureTarget<WebElement>() {
+                @Override
+                public WebElement getTarget() {
+                    return context.findElement(by);
+                }
+            };
+        }
     }
 }
