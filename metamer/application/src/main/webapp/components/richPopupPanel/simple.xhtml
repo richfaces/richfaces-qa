@@ -87,10 +87,12 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                           >
                 <f:facet name="controls">
                     <h:outputLink id="controlsHideLink" value="#" onclick="#{r:component('popupPanel')}.hide();
-                            return false;">X</h:outputLink>
+                        return false;">X</h:outputLink>
                 </f:facet>
-
-                <p>
+                
+                <p style="width: #{not empty richPopupPanelBean.value1
+                                   ? (richPopupPanelBean.value1.endsWith('px')? richPopupPanelBean.value1: richPopupPanelBean.value1.concat('px'))
+                                   : 'inherited' }">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum bibendum magna non
                     justo eleifend ullamcorper. Nulla id libero consectetur mauris rutrum tincidunt. Vestibulum
                     nibh elit, aliquam eget aliquet non, consequat cursus odio. Aenean et libero et lorem sollicitudin
@@ -129,6 +131,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
+            Popup's paragraph width: <h:inputText id="textWidthInput" value="#{richPopupPanelBean.value1}" onchange="submit()"/>
+            <br/>
+            <br/>
             <metamer:attributes value="#{richPopupPanelBean.attributes}" id="attributes" render="log"/>
         </ui:define>
 

@@ -137,7 +137,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         //set attribute
         MetamerPage.waitRequest(attributeInput.clear(ClearType.JS)
                 .fillIn(value.toString()), WaitRequestType.HTTP)
-                .fillIn(Keys.chord(Keys.TAB));
+                .submit();
     }
 
     /**
@@ -440,7 +440,12 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * @param attributeName name of the attribute that should be set
      */
     protected void testFireEvent(final Event event, final WebElement element, String attributeName) {
-        testFireEvent(event, FutureWebElement.of(element), null);
+        testFireEvent(attributeName, new Action() {
+            @Override
+            public void perform() {
+                fireEvent(element, event);
+            }
+        });
     }
 
     /**
@@ -688,7 +693,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      */
     public static class Attribute2StringDecoder {
 
-        private static final String[] ATTRIBUTES = {"class", "classes", "style"};
+        private static final String[] ATTRIBUTES = { "class", "classes", "style" };
 
         public static <T extends AttributeEnum> String decodeAttribute(T testedAttribute) {
             String testedAtt = testedAttribute.toString();
