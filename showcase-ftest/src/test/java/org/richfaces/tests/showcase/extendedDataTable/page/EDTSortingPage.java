@@ -74,7 +74,7 @@ public class EDTSortingPage {
 
     public void setMultipleSorting(boolean value) {
         if (multipleSorting.isSelected() != value) {
-            Graphene.guardXhr(multipleSorting).click();
+            Graphene.guardAjax(multipleSorting).click();
         }
     }
 
@@ -86,7 +86,7 @@ public class EDTSortingPage {
             case MILEAGE:
             case VIN:
                 WebElement toggler = browser.findElement(ByJQuery.jquerySelector("a:contains(" + WordUtils.capitalize(field.name().toLowerCase()) + ")"));
-                Graphene.guardXhr(toggler).click();
+                Graphene.guardAjax(toggler).click();
                 break;
             default:
                 throw new UnsupportedOperationException(field.name());

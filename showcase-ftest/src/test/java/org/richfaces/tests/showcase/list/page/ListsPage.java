@@ -44,13 +44,13 @@ public class ListsPage {
     public void setType(ListType type) {
         switch (type) {
             case DEFINITIONS:
-                Graphene.guardXhr(definitions).click();
+                Graphene.guardAjax(definitions).click();
                 break;
             case UNORDERED:
-                Graphene.guardXhr(unordered).click();
+                Graphene.guardAjax(unordered).click();
                 break;
             case ORDERED:
-                Graphene.guardXhr(orderedList).click();
+                Graphene.guardAjax(orderedList).click();
                 break;
         }
     }

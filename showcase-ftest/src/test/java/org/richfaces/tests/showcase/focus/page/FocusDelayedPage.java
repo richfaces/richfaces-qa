@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.focus.page;
 
-import static org.jboss.arquillian.graphene.Graphene.element;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 
@@ -52,12 +51,12 @@ public class FocusDelayedPage extends FocusPage {
 
     public void showPopup() {
         showPopupButton.click();
-        waitGui().until(element(saveButton).isVisible());
+        waitGui().until().element(saveButton).is().visible();
     }
 
     public void cancelPopup() {
         cancelButton.click();
-        waitGui().until(element(saveButton).not().isVisible());
+        waitGui().until().element(saveButton).is().not().visible();
     }
 
     public void waitForFocusIsGiven(WebElement input) {

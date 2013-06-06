@@ -57,13 +57,13 @@ public abstract class AbstractTestToggleControl extends AbstractWebDriverTest {
     public void testTargetItem(WebElement[] items) {
         toggleControlAttributes.set(ToggleControlAttributes.targetItem, "item2");
 
-        Graphene.guardXhr(page.tcPanel1Item3).toggle();
-        Graphene.waitGui().until(Graphene.element(items[2]).isVisible());
+        Graphene.guardAjax(page.tcPanel1Item3).toggle();
+        Graphene.waitGui().until().element(items[2]).is().visible();
         assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
         assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
 
-        Graphene.guardXhr(page.tcCustom).toggle();
-        Graphene.waitGui().until(Graphene.element(items[1]).isVisible());
+        Graphene.guardAjax(page.tcCustom).toggle();
+        Graphene.waitGui().until().element(items[1]).is().visible();
         assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
         assertFalse(items[2].isDisplayed(), "Item 3 should not be visible.");
     }
@@ -71,31 +71,31 @@ public abstract class AbstractTestToggleControl extends AbstractWebDriverTest {
     public void testTargetPanel(WebElement[] items) {
         toggleControlAttributes.set(ToggleControlAttributes.targetPanel, "panel2");
 
-        Graphene.guardXhr(page.tcPanel2Item3).toggle();
-        Graphene.waitGui().until(Graphene.element(items[2]).isVisible());
+        Graphene.guardAjax(page.tcPanel2Item3).toggle();
+        Graphene.waitGui().until().element(items[2]).is().visible();
         assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
         assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
 
-        Graphene.guardXhr(page.tcCustom).toggle();
+        Graphene.guardAjax(page.tcCustom).toggle();
         // waitGui.failWith("Item 1 is not displayed.").until(elementVisible.locator(items[0]));
-        Graphene.waitGui().until(Graphene.element(items[0]).isVisible());
+        Graphene.waitGui().until().element(items[0]).is().visible();
         assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
         assertFalse(items[2].isDisplayed(), "Item 3 should not be visible.");
     }
 
     private void testSwitching(RichFacesToggleControl[] buttons, WebElement[] items) {
-        Graphene.guardXhr(buttons[2]).toggle();
-        Graphene.waitGui().until(Graphene.element(items[2]).isVisible());
+        Graphene.guardAjax(buttons[2]).toggle();
+        Graphene.waitGui().until().element(items[2]).is().visible();
         assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
         assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
 
-        Graphene.guardXhr(buttons[1]).toggle();
-        Graphene.waitGui().until(Graphene.element(items[1]).isVisible());
+        Graphene.guardAjax(buttons[1]).toggle();
+        Graphene.waitGui().until().element(items[1]).is().visible();
         assertFalse(items[0].isDisplayed(), "Item 1 should not be visible.");
         assertFalse(items[2].isDisplayed(), "Item 3 should not be visible.");
 
-        Graphene.guardXhr(buttons[0]).toggle();
-        Graphene.waitGui().until(Graphene.element(items[0]).isVisible());
+        Graphene.guardAjax(buttons[0]).toggle();
+        Graphene.waitGui().until().element(items[0]).is().visible();
         assertFalse(items[1].isDisplayed(), "Item 2 should not be visible.");
         assertFalse(items[2].isDisplayed(), "Item 3 should not be visible.");
     }

@@ -52,10 +52,10 @@ public class TestSimpleScrolling extends AbstractDataIterationWithCars {
     public void testFirstPageButton() {
         // starting from the first page
         // click on the last page
-        Graphene.guardXhr(page.lastPageButton).click();
+        Graphene.guardAjax(page.lastPageButton).click();
         Car carBeforeClick = retrieveCarFromRow(page.firstRowOfTable, 0, 4);
         // click on the first page
-        Graphene.guardXhr(page.firstPageButton).click();
+        Graphene.guardAjax(page.firstPageButton).click();
         Car carAfterClick = retrieveCarFromRow(page.firstRowOfTable, 0, 4);
 
         // check
@@ -72,12 +72,12 @@ public class TestSimpleScrolling extends AbstractDataIterationWithCars {
     @Test
     public void testLastPageButton() {
         // starting from the last page
-        Graphene.guardXhr(page.lastPageButton).click();
+        Graphene.guardAjax(page.lastPageButton).click();
         // click on the first page
-        Graphene.guardXhr(page.firstPageButton).click();
+        Graphene.guardAjax(page.firstPageButton).click();
         Car carBeforeClick = retrieveCarFromRow(page.firstRowOfTable, 0, 4);
         // click on the last page
-        Graphene.guardXhr(page.lastPageButton).click();
+        Graphene.guardAjax(page.lastPageButton).click();
         Car carAfterClick = retrieveCarFromRow(page.firstRowOfTable, 0, 4);
 
         // check
@@ -108,7 +108,7 @@ public class TestSimpleScrolling extends AbstractDataIterationWithCars {
         try {
             page.firstPageButtonDis.isDisplayed();
         } catch (NoSuchElementException ignored) {
-            Graphene.guardXhr(page.firstPageButton).click();
+            Graphene.guardAjax(page.firstPageButton).click();
         }
 
         checkNumberOfPagesButtons(3);
@@ -137,7 +137,7 @@ public class TestSimpleScrolling extends AbstractDataIterationWithCars {
 
         Car carBeforeClicking = retrieveCarFromRow(page.firstRowOfTable, 0, 4);
 
-        Graphene.guardXhr(checkingButton).click();
+        Graphene.guardAjax(checkingButton).click();
 
         Car carAfterClicking = retrieveCarFromRow(page.firstRowOfTable, 0, 4);
 
@@ -159,7 +159,7 @@ public class TestSimpleScrolling extends AbstractDataIterationWithCars {
         int numberOfPageAtBeginning = page.getNumberOfCurrentPage();
         Car carBeforeClick = retrieveCarFromRow(page.firstRowOfTable, 0, 4);
         // click on the next button
-        Graphene.guardXhr(nextButton).click();
+        Graphene.guardAjax(nextButton).click();
         Car carAfterClick = retrieveCarFromRow(page.firstRowOfTable, 0, 4);
         // check
         //  -- car
@@ -170,7 +170,7 @@ public class TestSimpleScrolling extends AbstractDataIterationWithCars {
         assertEquals(numberOfPageAtBeginning+1, numberOfPageAfterClickOnNext,
                 "Previous button or " + (fast ? "fast " : "") + " previous button does not work");
         // click on the previous button
-        Graphene.guardXhr(previousButton).click();
+        Graphene.guardAjax(previousButton).click();
         // check
         //  -- car
         carAfterClick = retrieveCarFromRow(page.firstRowOfTable, 0, 4);

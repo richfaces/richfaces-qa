@@ -66,13 +66,13 @@ public class TestDataScrollerAPI extends AbstractWebDriverTest {
         int currentNumberOfThePage = page.getNumberOfCurrentPage();
 
         if (currentNumberOfThePage > 1) {
-            Graphene.guardXhr(page.previousButton).click();
-            Graphene.guardXhr(page.previousButton).click();
+            Graphene.guardAjax(page.previousButton).click();
+            Graphene.guardAjax(page.previousButton).click();
         }
 
         String srcBeforeClicking = getSrcOfFirstImage();
 
-        Graphene.guardXhr(page.nextButton).click();
+        Graphene.guardAjax(page.nextButton).click();
 
         String srcAfterClicking = getSrcOfFirstImage();
 
@@ -83,7 +83,7 @@ public class TestDataScrollerAPI extends AbstractWebDriverTest {
         assertEquals(numberOfThePageAfterClicking, currentNumberOfThePage + 1,
             "The current number of the page should be higher");
 
-        Graphene.guardXhr(page.previousButton).click();
+        Graphene.guardAjax(page.previousButton).click();
 
         numberOfThePageAfterClicking = page.getNumberOfCurrentPage();
 
@@ -109,12 +109,12 @@ public class TestDataScrollerAPI extends AbstractWebDriverTest {
                     .findElement(ByJQuery.jquerySelector("a[class*='" + page.CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER + "']:contains('"
                             + numberOfPage + "')"));
             imgSrcBeforeClick = getSrcOfFirstImage();
-            Graphene.guardXhr(checkingButton).click();
+            Graphene.guardAjax(checkingButton).click();
         } catch (NoSuchElementException ignored) {
             WebElement inactiveButton = webDriver
                     .findElement(ByJQuery.jquerySelector("a[class*='" + page.CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER + "']:first"));
             imgSrcBeforeClick = getSrcOfFirstImage();
-            Graphene.guardXhr(inactiveButton).click();
+            Graphene.guardAjax(inactiveButton).click();
             numberOfPage = page.getNumberOfCurrentPage();
         }
 

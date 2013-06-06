@@ -115,13 +115,13 @@ public class TestTableSorting extends AbstractDataIterationWithStates {
         StateWithCapitalAndTimeZone ascendingState, StateWithCapitalAndTimeZone descendingState, String ascendingError,
         String descendingError) {
 
-        Graphene.guardXhr(sortBy).click();
+        Graphene.guardAjax(sortBy).click();
 
         StateWithCapitalAndTimeZone actualState = initializeStateDataFromRow();
 
         assertEquals(actualState, ascendingState, ascendingError);
 
-        Graphene.guardXhr(sortBy).click();
+        Graphene.guardAjax(sortBy).click();
 
         actualState = initializeStateDataFromRow();
 

@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.togglePanel.page;
 
-import static org.jboss.arquillian.graphene.Graphene.guardXhr;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.testng.Assert.assertTrue;
 
 import java.util.List;
@@ -49,7 +49,7 @@ public class DynamicPage {
     public void iterateOverPanelsAndAssert() {
         for (int i = 1; i <= NUMBER_OF_PANELS; i++) {
             if (i != 1) {
-                guardXhr(nextButton).click();
+                guardAjax(nextButton).click();
             }
             String valueOfSwitcherButton = skinSwitcher.getAttribute("value");
             String valueOfPanelHeader = panelHeaders.get(panelHeaders.size() - 1).getText().split(":")[1].trim();

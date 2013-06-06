@@ -123,7 +123,7 @@ public class TestArrangeableModel extends AbstractWebDriverTest {
         filterInput.click();
         filterInput.clear();
         for (char ch: filterValue.toCharArray()) {
-            Graphene.guardXhr(filterInput).sendKeys(Character.toString(ch));
+            Graphene.guardAjax(filterInput).sendKeys(Character.toString(ch));
         }
 
         boolean result = doesColumnContainsOnlyRowsWithData(column, filterValue);
@@ -134,7 +134,7 @@ public class TestArrangeableModel extends AbstractWebDriverTest {
     private void ascendingDescendingSortingOnColumn(int column, String firstCharOfRowWhenDescending) {
 
         // ascending
-        Graphene.guardXhr(page.getUnsortedLink(column)).click();
+        Graphene.guardAjax(page.getUnsortedLink(column)).click();
 
         String checkedValue = page.getFirstRowSomeColumn(column).getText();
 
@@ -142,7 +142,7 @@ public class TestArrangeableModel extends AbstractWebDriverTest {
             "Rows should be sorted in an ascending order, by column " + page.getFirstRowSomeColumn(column));
 
         // descending
-        Graphene.guardXhr(page.ascendingLink).click();
+        Graphene.guardAjax(page.ascendingLink).click();
 
         checkedValue = page.getFirstRowSomeColumn(column).getText();
 

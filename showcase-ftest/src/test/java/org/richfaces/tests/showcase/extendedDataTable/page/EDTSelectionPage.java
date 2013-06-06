@@ -71,7 +71,7 @@ public class EDTSelectionPage {
                 radio = radios.get(2);
         }
         if (!radio.isSelected()) {
-            Graphene.guardXhr(radio).click();
+            Graphene.guardAjax(radio).click();
         }
     }
 
@@ -177,7 +177,7 @@ public class EDTSelectionPage {
         @Override
         public void select(int... rows) {
             for (int index: rows) {
-                Graphene.guardXhr(rowElements.get(index)).click();
+                Graphene.guardAjax(rowElements.get(index)).click();
             }
         }
     }

@@ -137,8 +137,8 @@ public class TestToolbar extends AbstractWebDriverTest {
         assertTrue(Graphene.element(page.separator.getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
         assertTrue(Graphene.element(page.separator.getImgIcon()).isPresent().apply(driver), "Item separator does not work correctly.");
 
-        assertTrue(Graphene.attribute(page.separator.getImgIcon(), "src").contains("star.png").apply(driver),
-                "Separator's image should link to picture star.png.");
+        assertTrue(page.separator.getImgIcon().getAttribute("src").contains("star.png"),
+            "Separator's image should link to picture star.png.");
     }
 
     @Test

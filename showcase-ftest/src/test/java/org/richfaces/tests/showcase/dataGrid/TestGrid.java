@@ -31,7 +31,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.dataGrid.page.GridPage;
 import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars;
-import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars.Car;
 import org.testng.annotations.Test;
 
 /**
@@ -59,7 +58,7 @@ public class TestGrid extends AbstractDataIterationWithCars {
         @SuppressWarnings("unused")
         Car pageLastCar = retrieveCarFromThePanelGrid(page.lastPanelGridOnThePage);
 
-        Graphene.guardXhr(page.lastPageButton).click();
+        Graphene.guardAjax(page.lastPageButton).click();
 
         pageFirstCar = retrieveCarFromThePanelGrid(page.firstPanelGridOnThePage);
         pageLastCar = retrieveCarFromThePanelGrid(page.lastPanelGridOnThePage);
@@ -73,17 +72,17 @@ public class TestGrid extends AbstractDataIterationWithCars {
 
         try {
             page.firstPageButton.isDisplayed();
-            Graphene.guardXhr(page.firstPageButton).click();
+            Graphene.guardAjax(page.firstPageButton).click();
 
             numberOfThePageBeforeClick = page.getNumberOfCurrentPage();
             carBeforeClicking = retrieveCarFromThePanelGrid(page.firstPanelGridOnThePage);
 
-            Graphene.guardXhr(page.nextButton).click();
+            Graphene.guardAjax(page.nextButton).click();
         } catch (NoSuchElementException ignored) {
             numberOfThePageBeforeClick = page.getNumberOfCurrentPage();
             carBeforeClicking = retrieveCarFromThePanelGrid(page.firstPanelGridOnThePage);
 
-            Graphene.guardXhr(page.nextButton).click();
+            Graphene.guardAjax(page.nextButton).click();
         }
 
         int numberOfThePageAfterClick = page.getNumberOfCurrentPage();

@@ -52,7 +52,7 @@ public class TestTableFilteringAPI extends AbstractDataIterationWithCars {
 
         for (int i = 0; i < 6; i++) {
 
-            Graphene.guardXhr(page.getFilterValue(i)).click();
+            Graphene.guardAjax(page.getFilterValue(i)).click();
 
             for (WebElement row: page.tableRows) {
 

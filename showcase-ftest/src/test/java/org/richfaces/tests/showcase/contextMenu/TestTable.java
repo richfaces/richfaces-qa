@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.contextMenu;
 
-import static org.jboss.arquillian.graphene.Graphene.element;
 import static org.testng.Assert.assertEquals;
 
 import java.util.List;
@@ -59,7 +58,7 @@ public class TestTable extends AbstractContextMenuTest {
 
             page.getContextMenu().selectItem(TableContextMenuPage.VIEW, rowPrice);
 
-            Graphene.waitGui().until(element(page.getPriceFromPopup()).isVisible());
+            Graphene.waitGui().until().element(page.getPriceFromPopup()).is().visible();
 
             String priceFromPopup = page.getPriceFromPopup().getAttribute("value");
 
