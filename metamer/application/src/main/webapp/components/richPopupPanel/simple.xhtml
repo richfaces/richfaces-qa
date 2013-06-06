@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -38,11 +38,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
             <h:commandButton id="openPanelButton" value="Call the popup">
-                <rich:componentControl target="popupPanel" operation="show" />
+                <r:componentControl target="popupPanel" operation="show" />
             </h:commandButton>
 
-            <rich:popupPanel id="popupPanel"
-                                                       autosized="#{richPopupPanelBean.attributes['autosized'].value}"
+            <r:popupPanel id="popupPanel"
+                          autosized="#{richPopupPanelBean.attributes['autosized'].value}"
                           controlsClass="#{richPopupPanelBean.attributes['controlsClass'].value}"
                           domElementAttachment="#{richPopupPanelBean.attributes['domElementAttachment'].value}"
                           followByScroll="#{richPopupPanelBean.attributes['followByScroll'].value}"
@@ -86,10 +86,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                           zindex="#{richPopupPanelBean.attributes['zindex'].value}"
                           >
                 <f:facet name="controls">
-                    <h:outputLink id="controlsHideLink" value="#" onclick="#{rich:component('popupPanel')}.hide(); return false;">X</h:outputLink>
+                    <h:outputLink id="controlsHideLink" value="#" onclick="#{r:component('popupPanel')}.hide();
+                        return false;">X</h:outputLink>
                 </f:facet>
-
-                <p>
+                
+                <p style="width: #{not empty richPopupPanelBean.value1
+                                   ? (richPopupPanelBean.value1.endsWith('px')? richPopupPanelBean.value1: richPopupPanelBean.value1.concat('px'))
+                                   : 'inherited' }">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum bibendum magna non
                     justo eleifend ullamcorper. Nulla id libero consectetur mauris rutrum tincidunt. Vestibulum
                     nibh elit, aliquam eget aliquet non, consequat cursus odio. Aenean et libero et lorem sollicitudin
@@ -108,26 +111,29 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <h:commandButton id="submitButton" value="Submit" />
                     <br/>
 
-                    <a id="contentHideLink" href="#" onclick="#{rich:component('popupPanel')}.hide()">hide this panel</a>
+                    <a id="contentHideLink" href="#" onclick="#{r:component('popupPanel')}.hide()">hide this panel</a>
                 </p>
-            </rich:popupPanel>
-            
+            </r:popupPanel>
+
             <fieldset>
                 <legend>JavaScript API</legend>
                 Output value for all get methods: <h:inputText id="value"/>
                 <br/><br/>
                 On click:
                 <br/>
-                <input id="getTop" type="button" name="getTop" value="getTop()" onclick="$('[id$=value]').val(#{rich:component('popupPanel')}.getTop())" />
-                <input id="getLeft" type="button" name="getLeft" value="getLeft()" onclick="$('[id$=value]').val(#{rich:component('popupPanel')}.getLeft())" />
-                <input id="moveTo" type="button" name="moveTo" value="moveTo(0,0)" onclick="#{rich:component('popupPanel')}.moveTo(0,0)" />
-                <input id="resize" type="button" name="resize" value="resize(10,10)" onclick="#{rich:component('popupPanel')}.resize(10,10)" />
-                <input id="show" type="button" name="show" value="show()" onclick="#{rich:component('popupPanel')}.show()" />
-                <input id="hide" type="button" name="removeAll" value="hide()" onclick="#{rich:component('popupPanel')}.hide()" />
+                <input id="getTop" type="button" name="getTop" value="getTop()" onclick="$('[id$=value]').val(#{r:component('popupPanel')}.getTop())" />
+                <input id="getLeft" type="button" name="getLeft" value="getLeft()" onclick="$('[id$=value]').val(#{r:component('popupPanel')}.getLeft())" />
+                <input id="moveTo" type="button" name="moveTo" value="moveTo(0,0)" onclick="#{r:component('popupPanel')}.moveTo(0,0)" />
+                <input id="resize" type="button" name="resize" value="resize(10,10)" onclick="#{r:component('popupPanel')}.resize(10,10)" />
+                <input id="show" type="button" name="show" value="show()" onclick="#{r:component('popupPanel')}.show()" />
+                <input id="hide" type="button" name="removeAll" value="hide()" onclick="#{r:component('popupPanel')}.hide()" />
             </fieldset>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
+            Popup's paragraph width: <h:inputText id="textWidthInput" value="#{richPopupPanelBean.value1}" onchange="submit()"/>
+            <br/>
+            <br/>
             <metamer:attributes value="#{richPopupPanelBean.attributes}" id="attributes" render="log"/>
         </ui:define>
 
