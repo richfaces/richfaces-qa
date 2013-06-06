@@ -21,8 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.list;
 
-import junit.framework.Assert;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.junit.Assert;
 import org.richfaces.tests.page.fragments.impl.list.simple.SimpleList.ListType;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.list.page.ListsPage;

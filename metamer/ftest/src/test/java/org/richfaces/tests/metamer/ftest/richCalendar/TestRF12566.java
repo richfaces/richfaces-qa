@@ -22,7 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richCalendar;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.jboss.arquillian.graphene.Graphene.guardXhr;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -64,7 +64,7 @@ public class TestRF12566 extends AbstractWebDriverTest {
             }
         });
 
-        guardXhr(page.getNextMonthScroller()).click();
+        guardAjax(page.getNextMonthScroller()).click();
 
         List<LogEntry> errorEntries = page.getLog().getLogEntries(LogEntryLevel.ERROR);
         assertEquals(errorEntries.size(), 0, "There should be no errors on the log screen!");

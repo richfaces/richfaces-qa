@@ -99,14 +99,14 @@ public class TableFilteringPage {
     }
 
     protected void filterSelect(WebElement input, String value) {
-        Graphene.guardXhr(new Select(input)).selectByVisibleText(value);
+        Graphene.guardAjax(new Select(input)).selectByVisibleText(value);
     }
 
     protected void filterTextInput(WebElement input, String value, boolean valid) {
         input.click();
         input.clear();
         input.sendKeys(value);
-        Action blur = valid ? Graphene.guardXhr(fireEventAction(input, "blur")) : fireEventAction(input, "blur");
+        Action blur = valid ? Graphene.guardAjax(fireEventAction(input, "blur")) : fireEventAction(input, "blur");
         blur.perform();
     }
 

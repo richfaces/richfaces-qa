@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.editor;
 
-import static org.jboss.arquillian.graphene.Graphene.guardXhr;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.testng.Assert.assertTrue;
 
@@ -86,7 +86,7 @@ public class TestAutosaving extends AbstractWebDriverTest {
         String expected = "Added and possibly saved text!";
         page.editor.typeTextToEditor(expected);
 
-        guardXhr(page.outputFromEditor).click();
+        guardAjax(page.outputFromEditor).click();
         String actual = page.outputFromEditor.getText();
         assertTrue(actual.contains(expected), "The change in the editor was not saved automatically!");
     }

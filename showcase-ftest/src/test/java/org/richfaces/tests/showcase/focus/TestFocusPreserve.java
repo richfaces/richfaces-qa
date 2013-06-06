@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.focus;
 
-import static org.jboss.arquillian.graphene.Graphene.guardXhr;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertEquals;
 
@@ -46,7 +46,7 @@ public class TestFocusPreserve extends AbstractWebDriverTest {
 
         page.typeSomethingAndDoNotCareAboutFocus(EXPECTED_OUTCOME);
 
-        guardXhr(page.button).click();
+        guardAjax(page.button).click();
 
         page.waitTillFirstInputIsFocused();
 

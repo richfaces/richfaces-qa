@@ -21,13 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.region;
 
+import static org.testng.Assert.assertEquals;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.region.page.RegionPage;
-import static org.testng.Assert.assertEquals;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -108,7 +108,7 @@ public class TestRegion extends AbstractWebDriverTest {
         input.clear();
         input.sendKeys(testString);
 
-        Graphene.guardXhr(submit).click();
+        Graphene.guardAjax(submit).click();
 
         String actualString = output.getText().trim();
 
@@ -149,7 +149,7 @@ public class TestRegion extends AbstractWebDriverTest {
         input2.clear();
         input2.sendKeys(testStringEmail);
 
-        Graphene.guardXhr(submit).click();
+        Graphene.guardAjax(submit).click();
 
         String actualName = output1.getText().trim();
         String actualEmail = output2.getText().trim();

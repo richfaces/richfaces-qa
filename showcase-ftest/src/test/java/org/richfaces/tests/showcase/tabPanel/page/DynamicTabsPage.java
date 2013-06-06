@@ -21,9 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.tabPanel.page;
 
-import static org.jboss.arquillian.graphene.Graphene.attribute;
-import static org.jboss.arquillian.graphene.Graphene.element;
-import static org.jboss.arquillian.graphene.Graphene.guardXhr;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 
 import java.util.List;
@@ -53,10 +51,10 @@ public class DynamicTabsPage {
         for (WebElement i : inactiveTabsHeaders) {
             String headerText = i.getText();
 
-            guardXhr(i).click();
-            waitGui().until(element(submitButton).isVisible());
+            guardAjax(i).click();
+            waitGui().until().element(submitButton).is().visible();
             waitGui().withTimeout(2, TimeUnit.SECONDS).withMessage("The tab was not switched correctly!")
-                .until(attribute(submitButton, "value").contains(headerText));
+                .until().element(submitButton).attribute("value").contains(headerText);
         }
     }
 }
