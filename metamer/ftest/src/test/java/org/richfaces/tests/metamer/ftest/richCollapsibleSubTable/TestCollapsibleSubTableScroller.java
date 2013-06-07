@@ -91,7 +91,7 @@ public class TestCollapsibleSubTableScroller extends AbstractCollapsibleSubTable
         secondDataScroller.setLastPage(secondDataScroller.obtainLastPage());
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @Use(field = "expandMode", enumeration = true)
     @IssueTracking("https://issues.jboss.org/browse/RF-11301")
     public void testScroller() {

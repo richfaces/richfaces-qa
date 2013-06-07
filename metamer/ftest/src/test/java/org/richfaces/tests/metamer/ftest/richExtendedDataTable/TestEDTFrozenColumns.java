@@ -25,14 +25,13 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.extendedDataTableAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertFalse;
 
 import java.net.URL;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.jboss.test.selenium.support.ui.ElementNotPresent;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -64,8 +63,8 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
 
     @Test
     public void testInit() {
-        Boolean notPresent = ElementNotPresent.getInstance().element(page.frozenColumnsTd).apply(driver);
-        assertTrue(notPresent, "No frozen columns should be in page.");
+        Boolean present = Graphene.element(page.frozenColumnsTd).isPresent().apply(driver);
+        assertFalse(present, "No frozen columns should be in page.");
     }
 
     /**
@@ -81,13 +80,13 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
 
         // change page
         page.nextPage.click();
-        Graphene.waitModel().until(Graphene.element(page.secondPageSpan).isVisible());
+        Graphene.waitModel().until().element(page.secondPageSpan).is().visible();
         // test
         _testFrozenColumnsShow();
 
         // change page
         page.nextPage.click();
-        Graphene.waitModel().until(Graphene.element(page.thirdPageSpan).isVisible());
+        Graphene.waitModel().until().element(page.thirdPageSpan).is().visible();
         // test
         _testFrozenColumnsShow();
     }
@@ -117,13 +116,13 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
 
         // change page
         page.nextPage.click();
-        Graphene.waitModel().until(Graphene.element(page.secondPageSpan).isVisible());
+        Graphene.waitModel().until().element(page.secondPageSpan).is().visible();
         // test
         _testScrollerForNotFrozenColumns();
 
         // change page
         page.nextPage.click();
-        Graphene.waitModel().until(Graphene.element(page.thirdPageSpan).isVisible());
+        Graphene.waitModel().until().element(page.thirdPageSpan).is().visible();
         // test
         _testScrollerForNotFrozenColumns();
     }
@@ -132,7 +131,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
      * Tests if scroller for not frozen columns is moved to another position and if the default one is removed. Checks
      * if scroller is still there after switching to another data page.
      */
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @Use(field = "numberOfColumns", ints = { 1, 3 })
     @Templates(value = "richExtendedDataTable")
     @IssueTracking("https://issues.jboss.org/browse/RF-12278")
@@ -147,13 +146,13 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
 
         // change page
         page.nextPage.click();
-        Graphene.waitModel().until(Graphene.element(page.secondPageSpan).isVisible());
+        Graphene.waitModel().until().element(page.secondPageSpan).is().visible();
         // test
         _testScrollerForNotFrozenColumns();
 
         // change page
         page.nextPage.click();
-        Graphene.waitModel().until(Graphene.element(page.thirdPageSpan).isVisible());
+        Graphene.waitModel().until().element(page.thirdPageSpan).is().visible();
         // test
         _testScrollerForNotFrozenColumns();
     }

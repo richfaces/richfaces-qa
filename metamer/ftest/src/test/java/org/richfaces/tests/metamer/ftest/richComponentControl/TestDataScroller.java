@@ -75,7 +75,7 @@ public class TestDataScroller extends AbstractGrapheneTest {
         paginationTester.testNumberedPages();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @IssueTracking({ "https://issues.jboss.org/browse/RF-9306" })
     @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
         "richExtendedDataTable", "richList" })

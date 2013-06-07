@@ -31,6 +31,12 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
  */
 public class ProgressBarPage extends MetamerPage {
 
+    @FindBy(id = "progress")
+    WebElement actualProgress;
+    @FindBy(id = "isEnabled")
+    WebElement isEnabled;
+    @FindBy(css = "div[id$=completeOutput]")
+    WebElement completeOutput;
     @FindBy(css = "div[id$=progressBar]")
     WebElement progressBar;
     @FindBy(css = "div.rf-pb-init")
@@ -49,14 +55,12 @@ public class ProgressBarPage extends MetamerPage {
     WebElement complete;
     @FindBy(css = "div.rf-pb-lbl")
     WebElement label;
-
     @FindBy(css = "input[id$=childrenRendered]")
     WebElement childrenRenderedCheckbox;
     @FindBy(css = "input[id$=initialFacetRendered]")
     WebElement initialFacetRenderedCheckbox;
     @FindBy(css = "input[id$=finishFacetRendered]")
     WebElement finishFacetRenderedCheckbox;
-
     @FindBy(css = "div.rf-pb-init > input")
     WebElement startButton;
     @FindBy(css = "input[id$=startButton]")

@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.contextMenu;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertTrue;
 
@@ -37,6 +38,7 @@ public class TestSimple extends AbstractContextMenuTest {
 
     @Test
     public void testZoomIn() {
+        Graphene.waitGui().until().element(page.getPicture()).is().visible();
         double widthBeforeZoomIn = getTargetWidth(page.getPicture());
 
         page.getContextMenu().selectItem(SimpleContextMenuPage.ZOOM_IN);
@@ -48,6 +50,7 @@ public class TestSimple extends AbstractContextMenuTest {
 
     @Test
     public void testZoomOut() {
+        Graphene.waitGui().until().element(page.getPicture()).is().visible();
         double widthBeforeZoomOut = getTargetWidth(page.getPicture());
 
         page.getContextMenu().selectItem(SimpleContextMenuPage.ZOOM_OUT);

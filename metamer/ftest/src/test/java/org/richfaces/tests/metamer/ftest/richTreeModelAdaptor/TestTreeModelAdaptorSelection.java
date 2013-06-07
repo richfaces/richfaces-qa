@@ -21,8 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTreeModelAdaptor;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
@@ -31,10 +29,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
-import org.richfaces.tests.metamer.ftest.richTree.AbstractTestTreeSelection;
+import org.richfaces.tests.metamer.ftest.richTree.AbstractTestTreeSelectionWD;
+import org.richfaces.tests.metamer.ftest.richTree.TreeSimplePage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -42,7 +42,10 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 23132 $
  */
-public class TestTreeModelAdaptorSelection extends AbstractTestTreeSelection {
+public class TestTreeModelAdaptorSelection extends AbstractTestTreeSelectionWD {
+
+    @Page
+    TreeSimplePage page;
 
     @Inject
     PathsCrate paths;
@@ -70,10 +73,10 @@ public class TestTreeModelAdaptorSelection extends AbstractTestTreeSelection {
             selectionPaths = paths.paths;
         }
         if (representation == RecursiveModelRepresentation.MAP) {
-            guardXhr(selenium).click(pjq(":radio[id*=recursiveModelRepresentation]").get(2));
+            page.requestTimeChangesWaiting(page.recursiveModelRepresentations.get(1)).click();
         }
         if (recursiveLeafChildrenNullable) {
-            guardXhr(selenium).click(pjq(":checkbox[id$=recursiveLeafChildrenNullable]"));
+            page.requestTimeChangesWaiting(page.recursiveLeafChildrenNullable).click();
         }
     }
 
@@ -100,20 +103,21 @@ public class TestTreeModelAdaptorSelection extends AbstractTestTreeSelection {
         super.testSubNodesSelectionEvents();
     }
 
+/*
     @Override
     protected void expandAll() {
         for (Integer[] path : selectionPaths) {
             treeNode = null;
             for (int i = 0; i < path.length; i++) {
                 int index = path[i];
-                treeNode = (treeNode == null) ? tree.getNode(index) : treeNode.getNode(index);
+                treeNode = (treeNode == null) ? page.tree.getNodes().get(index-1) : treeNode.getNode(index-1);
                 if (i < path.length - 1) {
                     treeNode.expand();
                 }
             }
         }
     }
-
+*/
     @Override
     protected Integer[] getIntsFromString(String string) {
         Pattern pattern = Pattern.compile("(?:\\{[^}]+modelKey=(\\d+)\\})");

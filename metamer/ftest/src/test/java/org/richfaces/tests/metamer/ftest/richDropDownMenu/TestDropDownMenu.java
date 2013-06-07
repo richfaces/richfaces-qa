@@ -23,9 +23,9 @@
 package org.richfaces.tests.metamer.ftest.richDropDownMenu;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
-import static org.jboss.arquillian.graphene.Graphene.guardXhr;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.dropDownMenuAttributes;
@@ -49,6 +49,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuSimplePage;
+import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.page.fragments.impl.contextMenu.AbstractPopupMenu;
 import org.richfaces.tests.page.fragments.impl.contextMenu.RichFacesContextMenu;
 import org.testng.annotations.Test;
@@ -173,7 +174,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         // ajax
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "ajax");
         page.fileDropDownMenu.invoke(page.target1);
-        guardXhr(page.fileDropDownMenu.getItems().get(0)).click();
+        guardAjax(page.fileDropDownMenu.getItems().get(0)).click();
         assertEquals(page.output.getText(), "New", "Menu action was not performed.");
 
         // server
@@ -213,19 +214,17 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
     @Use(field = "delay", ints = { 1000, 1500, 2500 })
     public void testHideDelay() {
         updateDropDownMenuInvoker();
-        double differenceThreshold = delay * 0.5;
+        double tolerance = delay * 0.5;
         dropDownMenuAttributes.set(DropDownMenuAttributes.hideDelay, delay);
 
         page.fileDropDownMenu.invoke(page.target1);
-
-        double beforeTime = System.currentTimeMillis();
-
-        page.fileDropDownMenu.dismiss();
-
-        double diff = System.currentTimeMillis() - beforeTime;
-        double diff2 = Math.abs(diff - delay);
-        assertTrue(diff2 < differenceThreshold, "The measured delay was far" + " from set value. The difference was: " + diff2
-                + ". The difference threshold was: " + differenceThreshold);
+        int time = StopWatch.watchTimeSpentInAction(new StopWatch.PerformableAction() {
+            @Override
+            public void perform() {
+                page.fileDropDownMenu.dismiss();
+            }
+        }).inMillis().intValue();
+        assertEquals(time, delay, tolerance, "The measured delay was far from set value.");
     }
 
     @Test
@@ -249,11 +248,10 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
     }
 
     @Test
+    @Use(field = "delay", ints = { 1000, 1500, 2500 })
     public void testShowDelay() {
         updateDropDownMenuInvoker();
-        page.checkShowDelay(2000);
-        page.checkShowDelay(1000);
-        page.checkShowDelay(500);
+        page.checkShowDelay(delay);
     }
 
     @Test
@@ -334,7 +332,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         testOnclick();
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12792")
     public void testOnkeydown() {
         updateDropDownMenuInvoker();
@@ -360,7 +358,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         });
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     //false negative
     public void testOnkeyup() {
         updateDropDownMenuInvoker();
@@ -398,7 +396,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         });
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12854")
     public void testOnmouseout() {
         updateDropDownMenuInvoker();

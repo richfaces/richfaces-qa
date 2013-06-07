@@ -21,33 +21,20 @@
  *******************************************************************************/
 package org.richfaces.tests.archetypes;
 
-import org.jboss.test.selenium.webdriver.pagefactory.StaleReferenceAwareFieldDecorator;
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
-import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
-import org.openqa.selenium.support.pagefactory.FieldDecorator;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public abstract class AbstractWebDriverTest<P extends Page> extends AbstractTest {
+public abstract class AbstractWebDriverTest extends AbstractTest {
 
-    private FieldDecorator fieldDecorator;
-    private P page;
-    public WebDriver webDriver;
+    @Drone
+    protected WebDriver browser;
 
     protected AbstractWebDriverTest(TestConfiguration configuration) {
         super(configuration);
-    }
-
-    @BeforeClass(alwaysRun = true, dependsOnMethods = { "initializeWebDriver" })
-    public void initializePage() {
-        initializePage(getPage());
     }
 
     /**
@@ -55,47 +42,7 @@ public abstract class AbstractWebDriverTest<P extends Page> extends AbstractTest
      */
     @BeforeMethod(alwaysRun = true)
     public void initializePageUrl() {
-        webDriver.get(getPath());
+        browser.get(getPath());
     }
-
-    /**
-     * Initializes web driver instance
-     */
-    @BeforeClass(alwaysRun = true)
-    public void initializeWebDriver() {
-        webDriver = new HtmlUnitDriver(DesiredCapabilities.chrome());
-    }
-
-    protected P getPage() {
-        if (page == null) {
-            page = createPage();
-        }
-        return page;
-    }
-
-    protected String getTestUrl() {
-        return getPage().getUrl();
-    }
-
-    protected WebDriver getWebDriver() {
-        return webDriver;
-    }
-
-    protected void initializePage(Object page) {
-        PageFactory.initElements(getFieldDecorator(), page);
-    }
-
-    private FieldDecorator getFieldDecorator() {
-        if (fieldDecorator == null) {
-            fieldDecorator = new StaleReferenceAwareFieldDecorator(createLocatorFactory(), getConfiguration().getWebDriverElementTries());
-        }
-        return fieldDecorator;
-    }
-
-    private ElementLocatorFactory createLocatorFactory() {
-        return new DefaultElementLocatorFactory(getWebDriver());
-    }
-
-    protected abstract P createPage();
 
 }

@@ -49,7 +49,6 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.ajocado.dom.Event;
@@ -312,7 +311,7 @@ public class TestTreeSimple extends AbstractTestTreeWD {
         testSelectionClientSideEvents();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11319")
     @Templates(value = "a4jRegion")
     public void testSelectionClientSideEventsInRegion() {
@@ -323,7 +322,7 @@ public class TestTreeSimple extends AbstractTestTreeWD {
         testRequestEventsAfter(events);
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-10265")
     public void testToggleClientSideEvents() {
         String[] events = new String[]{ "beforenodetoggle", "begin", "beforedomupdate", "complete", "nodetoggle" };
@@ -412,7 +411,7 @@ public class TestTreeSimple extends AbstractTestTreeWD {
 
             Graphene.waitModel().until(new Predicate<WebDriver>() {
                 @Override
-                public boolean apply(@Nullable WebDriver arg0) {
+                public boolean apply(WebDriver arg0) {
                     return treeNode.isExpanded();
                 }
             });

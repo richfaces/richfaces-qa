@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTooltip;
 
-import static java.text.MessageFormat.format;
 import static javax.faces.event.PhaseId.APPLY_REQUEST_VALUES;
 import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
@@ -38,17 +37,13 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 
 import java.net.URL;
-import java.util.Arrays;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.arquillian.graphene.wait.WebDriverWait;
-import org.jboss.test.selenium.support.ui.ElementPresent;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.TooltipLayout;
@@ -61,7 +56,6 @@ import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -160,6 +154,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         @Use(field = "horizontalOffset", value = "offsets") })
     @Templates(value = { "plain", "richCollapsibleSubTable", "richExtendedDataTable", "richPopupPanel" })
     public void testPositioning() {
+        int tolerance = 5;
         tooltipAttributes.set(TooltipAttributes.direction, direction);
         tooltipAttributes.set(TooltipAttributes.horizontalOffset, horizontalOffset);
         tooltipAttributes.set(TooltipAttributes.verticalOffset, verticalOffset);
@@ -176,11 +171,11 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         if (getHorizontalAlignment() != null) {
             switch (getHorizontalAlignment()) {
                 case RIGHT:
-                    assertEquals(tooltipPosition.getX(), eventPosition.getX() + horizontalOffset);
+                    assertEquals(tooltipPosition.getX(), eventPosition.getX() + horizontalOffset, tolerance);
                     break;
                 case LEFT:
                     assertEquals(tooltipPosition.getX() + tooltipDimension.getWidth(), eventPosition.getX()
-                        - horizontalOffset);
+                            - horizontalOffset, tolerance);
                     break;
                 default:
                     break;
@@ -190,11 +185,11 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         if (getVerticalAlignment() != null) {
             switch (getVerticalAlignment()) {
                 case BOTTOM:
-                    assertEquals(tooltipPosition.getY(), eventPosition.getY() + verticalOffset);
+                    assertEquals(tooltipPosition.getY(), eventPosition.getY() + verticalOffset, tolerance);
                     break;
                 case TOP:
                     assertEquals(tooltipPosition.getY() + tooltipDimension.getHeight(), eventPosition.getY()
-                        - verticalOffset);
+                            - verticalOffset, tolerance);
                     break;
                 default:
                     break;
@@ -275,7 +270,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         String renderCheckerText = page.renderCheckerOutput.getText();
 
         MetamerPage.requestTimeNotChangesWaiting(page.tooltip).recall(page.panel);
-        Graphene.waitGui().until(Graphene.element(page.renderCheckerOutput).text().not().equalTo(renderCheckerText));
+        Graphene.waitGui().until().element(page.renderCheckerOutput).text().not().equalTo(renderCheckerText);
     }
 
     @Test
@@ -293,7 +288,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
         MetamerPage.requestTimeNotChangesWaiting(page.tooltip).hide(page.panel);
 
-        Graphene.waitGui().until(Graphene.element(page.tooltip.root).not().isVisible());
+        Graphene.waitGui().until().element(page.tooltip.root).is().not().visible();
     }
 
     @Test
@@ -482,8 +477,8 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
             assertFalse(Graphene.element(page.tooltip.root).isVisible().apply(driver), "Tooltip shouldn't be displayed before deplay timeout (" + presetDelay + ") is over.");
         }
         WebDriverWait<Void> wait = new WebDriverWait<Void>(null, driver, presetDelay/1000 + 2);
-        wait.until(Graphene.element(page.tooltip.root).isPresent());
-        wait.until(Graphene.element(page.tooltip.root).isVisible());
+        wait.until().element(page.tooltip.root).is().present();
+        wait.until().element(page.tooltip.root).is().visible();
         page.tooltip.hide(page.panel);
 
     }
@@ -493,7 +488,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         tooltipAttributes.set(TooltipAttributes.showEvent, "mouseup");
 
         new Actions(driver).clickAndHold(page.panel).release(page.panel).build().perform();
-        Graphene.waitGui().until(Graphene.element(page.tooltip.root).isVisible());
+        Graphene.waitGui().until().element(page.tooltip.root).is().visible();
     }
 
     @Test
@@ -505,7 +500,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
         String statusChecker = page.statusCheckerOutput.getText();
         page.tooltip.recall(page.panel);
-        Graphene.waitAjax().until(Graphene.element(page.statusCheckerOutput).text().not().equalTo(statusChecker));
+        Graphene.waitAjax().until().element(page.statusCheckerOutput).text().not().equalTo(statusChecker);
     }
 
     @Test
@@ -531,29 +526,22 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         assertEquals(zindex, "10");
     }
 
-    public void testRequestEventsBefore(String... events) {
-        for (String event : events) {
-            String inputExp = format(ATTR_INPUT_LOC_FORMAT, event);
-            WebElement input = page.attributesTable.findElement(By.cssSelector(inputExp));
-            String inputVal = format("metamerEvents += \"{0} \"", event);
-            // even there would be some events (in params) twice, don't expect handle routine to be executed twice
-            input.clear();
-            waiting(1000);
-            input = page.attributesTable.findElement(By.cssSelector(inputExp));
-            input.sendKeys(inputVal);
-            // sendKeys triggers page reload automatically
-            waiting(300);
-            Graphene.waitAjax().until(ElementPresent.getInstance().element(page.attributesTable));
-            input = page.attributesTable.findElement(By.cssSelector(inputExp));
-            MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
-        }
-        executeJS("window.metamerEvents = \"\";");
+    @Test
+    public void testJsAPIbyClick() {
+        page.jsAPIshowClick.click();
+        Graphene.waitAjax().until(Graphene.element(page.tooltip.root).isVisible());
+
+        page.jsAPIhideClick.click();
+        Graphene.waitAjax().until(Graphene.element(page.tooltip.root).not().isVisible());
     }
 
-    public void testRequestEventsAfter(String... events) {
-        String[] actualEvents = ((String)executeJS("return window.metamerEvents")).split(" ");
-        assertEquals(actualEvents, events, format("The events ({0}) don't came in right order ({1})",
-            Arrays.deepToString(actualEvents), Arrays.deepToString(events)));
+    @Test
+    public void testJsAPIbyMouseOver() {
+        new Actions(driver).moveToElement(page.jsAPIshowMouseOver).build().perform();
+        Graphene.waitAjax().until(Graphene.element(page.tooltip.root).isVisible());
+
+        new Actions(driver).moveToElement(page.jsAPIhideMouseOver).build().perform();
+        Graphene.waitAjax().until(Graphene.element(page.tooltip.root).not().isVisible());
     }
 
     private void recallTooltipInRightBottomCornerOfPanel(int offsetX, int offsetY) {

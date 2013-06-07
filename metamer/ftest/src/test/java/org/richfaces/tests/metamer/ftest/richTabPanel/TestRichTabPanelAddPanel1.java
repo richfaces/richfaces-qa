@@ -41,7 +41,6 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.testng.annotations.Test;
 
-
 /**
  * Test case for page /faces/components/richTabPanel/simple.xhtml
  *
@@ -57,18 +56,18 @@ public class TestRichTabPanelAddPanel1 extends AbstractGrapheneTest {
     private static final int MAX_NEW_TAB_COUNT = 3;
     private static final int STATIC_TAB_COUNT = 5;
 
-    private JQueryLocator itemContentsFormat = pjq("div[id$=tab{0}:content]");
+    private JQueryLocator itemContentsFormat = pjq("div[id$=dynamic:{0}:tab:content]");
 
-    private JQueryLocator inactiveHeadersFormat = pjq("td[id$=tab{0}:header:inactive]");
+    private JQueryLocator inactiveHeadersFormat = pjq("td[id$=dynamic:{0}:tab:header:inactive]");
 
     private JQueryLocator hCreateTabBtn = pjq("input[id$=hCreateTabButton]");
     private JQueryLocator a4jCreateTabBtn = pjq("input[id$=a4jCreateTabButton]");
 
-    private JQueryLocator tabsCount = pjq("table.rf-tab-hdr-tabs td.rf-tab-hdr-inact");
+    private JQueryLocator tabsCount = pjq("div[id$=tabPanel] td.rf-tab-hdr-inact");
 
     private JQueryLocator switchTypeFormat = pjq("input[name$=switchTypeInput][value={0}]");
 
-    private JQueryLocator tabCloseFormat = pjq("td[id$=tab{0}:header:inactive] span.rf-tab-lbl > a");
+    private JQueryLocator tabCloseFormat = pjq("td[id$=dynamic:{0}:tab:header:inactive] span.rf-tab-lbl > a");
 
     @Override
     public URL getTestUrl() {
@@ -91,23 +90,6 @@ public class TestRichTabPanelAddPanel1 extends AbstractGrapheneTest {
         }
     }
 
-    /**
-     * Simple test to tab delete. Create 3 new tabs and then delete them. Without tab switch.
-     */
-    private void verifyDeleteTab() {
-        verifyCreateTab(a4jCreateTabBtn);
-
-        int baseTabsCount = selenium.getCount(tabsCount);
-        System.out.println(baseTabsCount);
-        for (int i = 0; i < MAX_NEW_TAB_COUNT; ++i) {
-            waitGui
-                .until(elementPresent.locator(inactiveHeadersFormat.format(STATIC_TAB_COUNT + MAX_NEW_TAB_COUNT - i)));
-            selenium.fireEvent(tabCloseFormat.format(STATIC_TAB_COUNT + MAX_NEW_TAB_COUNT - i), Event.CLICK);
-            System.out.println(selenium.getCount(tabsCount));
-            waitGui.until(countEquals.count(baseTabsCount - 1 - i).locator(tabsCount));
-        }
-    }
-
     private void verifyContentOfNewTab(JQueryLocator addTabBtn) {
 
         verifyCreateTab(addTabBtn);
@@ -116,13 +98,10 @@ public class TestRichTabPanelAddPanel1 extends AbstractGrapheneTest {
         selenium.click(switchTypeFormat.format(SWITCH_TYPE_CLIENT));
         selenium.waitForPageToLoad();
 
-        System.out.println("testSwitchTypeAjax: tab count: " + selenium.getCount(tabsCount));
-
-        for (int i = STATIC_TAB_COUNT + MAX_NEW_TAB_COUNT; i > STATIC_TAB_COUNT; i--) {
+        for (int i = 0; i < MAX_NEW_TAB_COUNT; i++) {
             selenium.click(inactiveHeadersFormat.format(i));
-            waitGui.failWith("Tab " + i + " doesn't display correct content.").until(
-                textEquals.text("Content of dynamicaly created tab" + i)
-                    .locator(itemContentsFormat.format(i)));
+            waitGui.failWith("Dynamic tab " + i + " doesn't display correct content.").until(
+                textEquals.text("Content of dynamicaly created tab" + (STATIC_TAB_COUNT + i + 1)).locator(itemContentsFormat.format(i)));
         }
     }
 
@@ -147,7 +126,19 @@ public class TestRichTabPanelAddPanel1 extends AbstractGrapheneTest {
      */
     @Test
     public void testRemoveTab() {
-        verifyDeleteTab();
+        verifyCreateTab(a4jCreateTabBtn);
+
+        for (int i = 0; i < MAX_NEW_TAB_COUNT; i++) {
+            // switch to the first dynamic panel
+            waitGui.until(elementPresent.locator(inactiveHeadersFormat.format(0)));
+            guardXhr(selenium).click(inactiveHeadersFormat.format(0));
+            waitGui.failWith("Dynamic tab " + i + " doesn't display correct content.").until(
+                textEquals.text("Content of dynamicaly created tab" + (STATIC_TAB_COUNT + i + 1)).locator(itemContentsFormat.format(0)));
+
+            // remove first dynamic panel, i.e. tab6 first, tab8 last
+            selenium.fireEvent(tabCloseFormat.format(0), Event.CLICK);
+            waitGui.until(countEquals.count(STATIC_TAB_COUNT + MAX_NEW_TAB_COUNT - i - 1).locator(tabsCount));
+        }
     }
 
     /**
@@ -163,21 +154,20 @@ public class TestRichTabPanelAddPanel1 extends AbstractGrapheneTest {
      * newly created tabs still works as in previous tabs (staticaly created) 3. verify a4j ajax btn to create new tabs
      */
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11081")
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-11081", "https://issues.jboss.org/browse/RF-12945" })
     public void testSwitchTypeNull() {
 
         verifyCreateTab(hCreateTabBtn);
 
-        for (int i = STATIC_TAB_COUNT + MAX_NEW_TAB_COUNT - 1; i >= STATIC_TAB_COUNT; i--) {
-            final int index = i;
-            guardXhr(selenium).click(inactiveHeadersFormat.format(index + 1));
-            waitGui.failWith("Tab " + (index + 1) + " is not present.").until(
-                elementPresent.locator(itemContentsFormat.format(index + 1)));
+        for (int i = 0; i < MAX_NEW_TAB_COUNT; i++) {
+            guardXhr(selenium).click(inactiveHeadersFormat.format(i));
+            waitGui.failWith("Tab " + i + " is not present.").until(
+                elementPresent.locator(itemContentsFormat.format(i)));
         }
     }
 
     @Test
-    @RegressionTest("https://issues.jboss.org/browse/RF-11081")
+    @RegressionTest({ "https://issues.jboss.org/browse/RF-11081", "https://issues.jboss.org/browse/RF-12945" })
     public void testSwitchTypeAjax() {
 
         verifyCreateTab(hCreateTabBtn);
@@ -196,11 +186,10 @@ public class TestRichTabPanelAddPanel1 extends AbstractGrapheneTest {
         selenium.click(switchTypeFormat.format(SWITCH_TYPE_CLIENT));
         selenium.waitForPageToLoad();
 
-        for (int i = STATIC_TAB_COUNT + MAX_NEW_TAB_COUNT - 1; i >= STATIC_TAB_COUNT; i--) {
-            final int index = i;
-            guardNoRequest(selenium).click(inactiveHeadersFormat.format(index + 1));
-            waitGui.failWith("Tab " + (index + 1) + " is not displayed.").until(
-                elementVisible.locator(itemContentsFormat.format(index + 1)));
+        for (int i = 0; i < MAX_NEW_TAB_COUNT; i++) {
+            guardNoRequest(selenium).click(inactiveHeadersFormat.format(i));
+            waitGui.failWith("Dynamic tab " + i + " is not displayed.").until(
+                elementVisible.locator(itemContentsFormat.format(i)));
         }
     }
 
@@ -213,11 +202,10 @@ public class TestRichTabPanelAddPanel1 extends AbstractGrapheneTest {
         selenium.click(switchTypeFormat.format(SWITCH_TYPE_SERVER));
         selenium.waitForPageToLoad();
 
-        for (int i = STATIC_TAB_COUNT + MAX_NEW_TAB_COUNT - 1; i >= STATIC_TAB_COUNT; i--) {
-            final int index = i;
-            guardHttp(selenium).click(inactiveHeadersFormat.format(index + 1));
-            waitGui.failWith("Tab " + (index + 1) + " is not displayed.").until(
-                elementVisible.locator(itemContentsFormat.format(index + 1)));
+        for (int i = 0; i < MAX_NEW_TAB_COUNT; i++) {
+            guardHttp(selenium).click(inactiveHeadersFormat.format(i));
+            waitGui.failWith("Tab " + i + " is not displayed.").until(
+                elementVisible.locator(itemContentsFormat.format(i)));
         }
     }
 

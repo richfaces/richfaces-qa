@@ -89,7 +89,7 @@ FSF site: http://www.fsf.org. -->
         <openshift.ssh.user>54abf287bcf646319d0b1c8d35f15546</openshift.ssh.user>
         <openshift.identity.file />
 
-        <jodatime.version>2.1</jodatime.version>
+        <jodatime.version>2.2</jodatime.version>
         <commons-lang.version>2.6</commons-lang.version>
     </properties>
 
@@ -1017,6 +1017,11 @@ FSF site: http://www.fsf.org. -->
                 <showcase.classifier>jbas71</showcase.classifier>
             </properties>
             <dependencies>
+                <dependency>
+                    <groupId>org.jboss.as</groupId>
+                    <artifactId>jboss-as-controller-client</artifactId>
+                    <version>7.2.0.Final</version>
+                </dependency>
                 <dependency>
                     <groupId>org.jboss.as</groupId>
                     <artifactId>jboss-as-arquillian-container-managed</artifactId>

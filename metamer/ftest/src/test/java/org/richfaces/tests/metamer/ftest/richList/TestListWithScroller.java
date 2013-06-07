@@ -79,7 +79,7 @@ public class TestListWithScroller extends AbstractListTest {
         paginationTester.testNumberedPages();
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-11787")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
@@ -95,7 +95,7 @@ public class TestListWithScroller extends AbstractListTest {
         paginationTester.testNumberedPages();
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-11787")
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat" })

@@ -22,6 +22,7 @@
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jQueue;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertEquals;
 
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
@@ -31,7 +32,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jQueueSimple extends AbstractWebDriverTest<QueuePage>{
+public class TestA4jQueueSimple extends AbstractWebDriverTest {
+
+    @Page
+    private QueuePage page;
 
     @Test(groups = { "broken" })
     public void testType() {
@@ -53,8 +57,8 @@ public class TestA4jQueueSimple extends AbstractWebDriverTest<QueuePage>{
     }
 
     @Override
-    protected QueuePage createPage() {
-        return new QueuePage();
+    protected QueuePage getPage() {
+        return page;
     }
 
 }

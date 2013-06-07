@@ -26,13 +26,14 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.commandB
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.commandLinkAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertFalse;
 
 import java.net.URL;
 
 import javax.faces.event.PhaseId;
+import org.jboss.arquillian.graphene.Graphene;
 
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.jboss.test.selenium.support.ui.ElementNotPresent;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -165,7 +166,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
         page.typeToInput(CommandButtonLinkPage.STRING_RF1);
         page.submitByButton();
         page.waitUntilOutput1Changes(CommandButtonLinkPage.STRING_RF1);
-        page.assertListener(PhaseId.UPDATE_MODEL_VALUES, CommandButtonLinkPage.STRING_EXECUTE_CHECKER_MSG);
+        page.assertListener(PhaseId.UPDATE_MODEL_VALUES, MetamerPage.STRING_EXECUTE_CHECKER_MSG);
     }
 
     @Test
@@ -320,7 +321,7 @@ public class TestCommandButton extends AbstractWebDriverTest {
     @Test
     public void testRendered() {
         commandButtonAttributes.set(CommandButtonAttributes.rendered, false);
-        assertTrue(ElementNotPresent.getInstance().element(page.button).apply(driver), "Button should not be on page.");
+        assertFalse(Graphene.element(page.button).isPresent().apply(driver), "Button should not be on page.");
     }
 
     @Test

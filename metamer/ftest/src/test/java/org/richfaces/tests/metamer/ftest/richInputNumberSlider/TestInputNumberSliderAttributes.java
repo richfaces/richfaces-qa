@@ -334,7 +334,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         super.testMoveWithSlider();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-10829")
     public void testOnblur() {
         testFireEventWithJS(slider.getRoot(), inputNumberSliderAttributes, InputNumberSliderAttributes.onblur);
@@ -375,7 +375,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
                 new Actions(driver).doubleClick(slider.getRoot()).build());
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-10829")
     public void testOnfocus() {
         testFireEventWithJS(slider.getRoot(), inputNumberSliderAttributes,
@@ -430,7 +430,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
                 InputNumberSliderAttributes.onmouseup);
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-10829")
     public void testOnselect() {
         testFireEventWithJS(slider.getRoot(), inputNumberSliderAttributes,

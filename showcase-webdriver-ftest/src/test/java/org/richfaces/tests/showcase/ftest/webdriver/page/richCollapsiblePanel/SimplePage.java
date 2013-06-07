@@ -22,7 +22,6 @@ package org.richfaces.tests.showcase.ftest.webdriver.page.richCollapsiblePanel;
 
 import java.util.List;
 import org.jboss.arquillian.graphene.Graphene;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractWebDriverPage;
@@ -44,10 +43,6 @@ public class SimplePage extends AbstractWebDriverPage {
     private WebElement ajaxModePanelCollapsed;
     @FindBy(xpath = "//div[@class='rf-cp-lbl-exp'][contains(text(), 'JSF 2 and RichFaces 4')]")
     private WebElement ajaxModePanelExpanded;
-
-    public SimplePage(WebDriver webDriver) {
-        super(webDriver);
-    }
 
     @Override
     public String getDemoName() {

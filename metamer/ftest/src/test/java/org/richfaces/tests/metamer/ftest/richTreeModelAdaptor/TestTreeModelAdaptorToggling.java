@@ -21,15 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTreeModelAdaptor;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.ftest.richTree.TestTreeToggling;
+import org.richfaces.tests.metamer.ftest.richTree.TestTreeTogglingWD;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -39,7 +37,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22823 $
  */
-public class TestTreeModelAdaptorToggling extends TestTreeToggling {
+public class TestTreeModelAdaptorToggling extends TestTreeTogglingWD {
 
     @Inject
     @Use(enumeration = true)
@@ -57,10 +55,10 @@ public class TestTreeModelAdaptorToggling extends TestTreeToggling {
     @BeforeMethod
     public void initPathsAndModelRepresentation() {
         if (representation == RecursiveModelRepresentation.MAP) {
-            guardXhr(selenium).click(pjq(":radio[id*=recursiveModelRepresentation]").get(2));
+            page.requestTimeChangesWaiting(page.recursiveModelRepresentations.get(1)).click();
         }
         if (recursiveLeafChildrenNullable) {
-            guardXhr(selenium).click(pjq(":checkbox[id$=recursiveLeafChildrenNullable]"));
+            page.requestTimeChangesWaiting(page.recursiveLeafChildrenNullable).click();
         }
     }
 

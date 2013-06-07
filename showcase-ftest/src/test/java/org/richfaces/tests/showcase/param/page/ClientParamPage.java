@@ -29,11 +29,11 @@ import org.openqa.selenium.WebElement;
  */
 public class ClientParamPage {
 
-    @FindBy(css="input[type=submit]")
+    @FindBy(jquery = "input[type='submit']:first")
     public WebElement buttonShowScreenSize;
-    @FindBy(jquery="fieldset table:first tr:first td:last")
+    @FindBy(jquery = "fieldset table:first tr:first td:last")
     public WebElement widthValueLocator;
-    @FindBy(jquery="fieldset table:first tr:last td:last")
+    @FindBy(jquery = "fieldset table:first tr:last td:last")
     public WebElement heightValueLocator;
 
 }

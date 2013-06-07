@@ -35,11 +35,11 @@ public class TestListKeepSaved extends AbstractKeepSavedTest {
 
     @Test
     public void testKeepSavedFalse() {
-        super.testKeepSavedFalse();
+        checkKeepSavedFalse();
     }
 
     @Test
     public void testKeepSavedTrue() {
-        super.testKeepSavedTrue();
+        checkKeepSavedTrue();
     }
 }

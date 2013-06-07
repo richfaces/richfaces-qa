@@ -22,6 +22,7 @@
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jPoll;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.a4jPoll.PollPage;
@@ -30,7 +31,10 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestA4jPollSimple extends AbstractWebDriverTest<PollPage> {
+public class TestA4jPollSimple extends AbstractWebDriverTest {
+
+    @Page
+    private PollPage page;
 
     @Test(groups = {"RF-11871"})
     public void testStop() throws InterruptedException {
@@ -53,8 +57,9 @@ public class TestA4jPollSimple extends AbstractWebDriverTest<PollPage> {
         }
     }
 
-    protected PollPage createPage() {
-        return new PollPage();
+    @Override
+    protected PollPage getPage() {
+        return page;
     }
 
 }

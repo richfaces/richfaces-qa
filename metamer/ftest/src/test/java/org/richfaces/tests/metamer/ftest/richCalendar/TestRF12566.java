@@ -54,7 +54,7 @@ public class TestRF12566 extends AbstractWebDriverTest {
         return buildUrl(contextPath, "faces/components/richCalendar/RF-12566.xhtml");
     }
 
-    @Test(groups = "4.Future")
+    @Test(groups = "Future")
     public void testClickOnTheNextMonthAndJSErrorIsThrown() {
         page.getShowCalendarButton().click();
 

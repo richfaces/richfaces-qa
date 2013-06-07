@@ -48,6 +48,10 @@ public class CalendarDay {
         private boolean isType(WebElement day) {
             return check(day, styleClass);
         }
+
+        public String getStyle() {
+            return styleClass;
+        }
     }
 
     public CalendarDay(WebElement day) {
@@ -108,7 +112,7 @@ public class CalendarDay {
             return false;
         }
         final CalendarDay other = (CalendarDay) obj;
-        if (this.day != other.day && (this.day == null || !this.day.equals(other.day))) {
+        if (this.getDayNumber() != other.getDayNumber()) {
             return false;
         }
         return true;

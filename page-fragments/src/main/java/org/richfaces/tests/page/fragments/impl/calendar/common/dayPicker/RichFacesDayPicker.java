@@ -22,19 +22,18 @@
 package org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.joda.time.DateTime;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay.DayType;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
@@ -43,28 +42,23 @@ public class RichFacesDayPicker implements DayPicker {
 
     @Root
     private WebElement root;
-    //
-    private WebDriver driver = GrapheneContext.getProxy();
+    @Drone
+    private WebDriver driver;
     //
     @FindBy(css = "tr[id$=WeekDay]")
     private WebElement weekDaysBarElement;
     @FindBy(css = "tr[id$=WeekDay] > td")
     private List<WebElement> weekDaysLabels;
-    //TODO: should be rewritten as List of CalendarWeeks after Arquillian can handle it
-//  @FindBy(css = "tr[id*=calendarWeekNum]")
-//  private List<CalendarWeek> weeks;
-    @FindBy(css = "tr[id$=WeekNum1]")
-    private CalendarWeek week1;
-    @FindBy(css = "tr[id$=WeekNum2]")
-    private CalendarWeek week2;
-    @FindBy(css = "tr[id$=WeekNum3]")
-    private CalendarWeek week3;
-    @FindBy(css = "tr[id$=WeekNum4]")
-    private CalendarWeek week4;
-    @FindBy(css = "tr[id$=WeekNum5]")
-    private CalendarWeek week5;
-    @FindBy(css = "tr[id$=WeekNum6]")
-    private CalendarWeek week6;
+    @FindBy(css = "tr[id*=WeekNum]")
+    private List<CalendarWeek> weeks;
+    @FindBy(css = "td[id*=DayCell]:not(.rf-cal-boundary-day):not(.rf-cal-day-lbl)")
+    private List<WebElement> monthDays;
+    @FindBy(css = "td[id*=DayCell].rf-cal-boundary-day")
+    private List<WebElement> boundaryDays;
+    @FindBy(css = "td[id*=DayCell].rf-cal-sel")
+    private WebElement selectedDay;
+    @FindBy(css = "td[id*=DayCell].rf-cal-today")
+    private WebElement todayDay;
     //
 
     @Override
@@ -72,15 +66,7 @@ public class RichFacesDayPicker implements DayPicker {
         if (!isVisible()) {
             throw new RuntimeException("Cannot interact with DayPicker.");
         }
-        CalendarDays result = new CalendarDays(14);
-        for (CalendarWeek calendarWeek : getWeeks()) {
-            for (CalendarDay day : calendarWeek.getCalendarDays()) {
-                if (day.is(DayType.boundaryDay)) {
-                    result.add(day);
-                }
-            }
-        }
-        return result;
+        return new CalendarDays(boundaryDays);
     }
 
     @Override
@@ -88,11 +74,7 @@ public class RichFacesDayPicker implements DayPicker {
         if (!isVisible()) {
             throw new RuntimeException("Cannot interact with DayPicker.");
         }
-        CalendarDays result = new CalendarDays(42);
-        for (CalendarWeek calendarWeek : getWeeks()) {
-            result.addAll(calendarWeek.getCalendarDays().removeSpecificDays(DayType.boundaryDay));
-        }
-        return result;
+        return new CalendarDays(monthDays);
     }
 
     @Override
@@ -100,12 +82,8 @@ public class RichFacesDayPicker implements DayPicker {
         if (!isVisible()) {
             throw new RuntimeException("Cannot interact with DayPicker.");
         }
-        for (CalendarWeek calendarWeek : getWeeks()) {
-            for (CalendarDay day : calendarWeek) {
-                if (day.is(DayType.selectedDay)) {
-                    return day;
-                }
-            }
+        if (Graphene.element(selectedDay).isPresent().apply(driver)) {
+            return new CalendarDay(selectedDay);
         }
         return null;
     }
@@ -128,12 +106,8 @@ public class RichFacesDayPicker implements DayPicker {
         if (!isVisible()) {
             throw new RuntimeException("Cannot interact with DayPicker.");
         }
-        List<CalendarWeek> weeks = getWeeks();
-        for (CalendarWeek calendarWeek : weeks) {
-            CalendarDay today = calendarWeek.getCalendarDays().getSpecificDay(DayType.todayDay);
-            if (today != null) {
-                return today;
-            }
+        if (Graphene.element(todayDay).isPresent().apply(driver)) {
+            return new CalendarDay(todayDay);
         }
         return null;
     }
@@ -174,7 +148,7 @@ public class RichFacesDayPicker implements DayPicker {
         if (!isVisible()) {
             throw new RuntimeException("Cannot interact with DayPicker.");
         }
-        return Arrays.asList(week1, week2, week3, week4, week5, week6);
+        return weeks;
     }
 
     @Override
@@ -216,8 +190,10 @@ public class RichFacesDayPicker implements DayPicker {
             throw new RuntimeException("Cannot interact with DayPicker.");
         }
         Validate.isTrue(day > 0 && day < 32);
-        List<CalendarDay> monthDays = getMonthDays();
         Validate.isTrue(monthDays.size() >= day);
-        monthDays.get(day - 1).select();
+
+        String jq = "td[id*=DayCell]:not('.rf-cal-boundary-day'):not('.rf-cal-day-lbl'):contains('" + day + "')";
+        new CalendarDay(root.findElement(ByJQuery.jquerySelector(jq)))
+                .select();
     }
 }

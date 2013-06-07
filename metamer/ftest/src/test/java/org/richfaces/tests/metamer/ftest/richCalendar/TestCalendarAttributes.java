@@ -644,7 +644,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
             public void perform() {
                 PopupFooterControls proxiedFooterControls = calendar.openPopup().getProxiedFooterControls();
                 MetamerPage.waitRequest(proxiedFooterControls, WaitRequestType.NONE).todayDate();
-                Graphene.waitGui().until(Graphene.element(proxiedFooterControls.getCleanButtonElement()).isVisible());
+                Graphene.waitGui().until().element(proxiedFooterControls.getCleanButtonElement()).is().visible();
                 MetamerPage.waitRequest(proxiedFooterControls, WaitRequestType.NONE).cleanDate();
             }
         });

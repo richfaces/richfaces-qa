@@ -21,8 +21,8 @@
  */
 package org.richfaces.tests.page.fragments.impl.calendar.common;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -43,7 +43,8 @@ public class RichFacesHeaderControls implements HeaderControls {
     @Root
     private WebElement root;
     //
-    protected WebDriver driver = GrapheneContext.getProxy();
+    @Drone
+    protected WebDriver driver;
     //
     private RichFacesCalendarEditor calendarEditor;
     //

@@ -21,19 +21,19 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.param.page;
 
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class ParamPage {
 
-    @FindBy(xpath = "//*[@class='example-cnt']//div[@class='rf-p-b ']/span")
+    @FindBy(css = "span[id$='rep']")
     public WebElement output;
-    @FindBy(xpath = "//*[@class='example-cnt']//input[@value='Set Name to Alex']")
+    @FindBy(jquery = "input[type='submit']:nth(0)")
     private WebElement setAlex;
-    @FindBy(xpath = "//*[@class='example-cnt']//input[@value='Set Name to John']")
+    @FindBy(jquery = "input[type='submit']:nth(1)")
     private WebElement setJohn;
 
     public void setName(ParamPage.Name name) {

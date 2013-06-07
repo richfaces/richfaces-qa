@@ -28,7 +28,7 @@ import org.richfaces.tests.page.fragments.impl.VisibleComponent;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface PopupPanel extends VisibleComponent {
+public interface PopupPanel<C extends PopupPanelControls, L extends PopupPanelContent> extends VisibleComponent {
 
     /**
      * Returns locations of this popup panel.
@@ -51,9 +51,30 @@ public interface PopupPanel extends VisibleComponent {
      * @throws MovementOutOfBoundsException when WebDriver cannot scroll to view
      * @throws RuntimeException when popup is not visible
      */
-    PopupPanel resize(int byXPixels, int byYPixels);
+    PopupPanel resizeFromLocation(ResizerLocation location, int byXPixels, int byYPixels);
+
+    L content();
+
+    C controls();
+
+    WebElement getContentElement();
+
+    WebElement getContentScrollerElement();
+
+    WebElement getHeaderControlsElement();
 
     WebElement getHeaderElement();
 
+    WebElement getHeaderContentElement();
+
+    WebElement getResizerElement(ResizerLocation resizerLocation);
+
     WebElement getRootElement();
+
+    WebElement getShadowElement();
+
+    enum ResizerLocation {
+
+        N, E, S, W, NE, NW, SE, SW
+    }
 }

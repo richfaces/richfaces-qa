@@ -22,14 +22,20 @@
 package org.richfaces.tests.page.fragments.impl.input.select;
 
 import java.util.List;
+import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class RichFacesSelectPopup extends AbstractOptionList{
+public class RichFacesSelectPopup extends AbstractOptionList {
 
+    @Drone
+    private WebDriver driver;
     @FindBy(className = "rf-sel-opt")
     private List<WebElement> options;
 
@@ -50,15 +56,24 @@ public class RichFacesSelectPopup extends AbstractOptionList{
 
     @Override
     public Option selectByIndex(int index, Selection selection) {
-        switch(selection) {
+        WebElement element = options.get(index);
+        Option option = new SimpleOption(index, element.getText());
+        switch (selection) {
             case BY_MOUSE:
-                WebElement element = options.get(index);
-                Option option = new SimpleOption(index, element.getText());
                 element.click();
-                return option;
+                break;
+            case BY_KEYS:
+                Actions a = new Actions(driver);
+                // this cycle simulates the list browsing
+                for (int i = 0; i <= index; i++) {// +1 x keypress
+                    a.sendKeys(Keys.ARROW_DOWN);
+                }
+                a.sendKeys(Keys.RETURN).perform();
+                break;
             default:
                 throw new UnsupportedOperationException("Unsupported selection type: " + selection);
         }
+        return option;
     }
 
     @Override
@@ -79,5 +94,4 @@ public class RichFacesSelectPopup extends AbstractOptionList{
     protected List<WebElement> getOptionElements() {
         return options;
     }
-
 }

@@ -35,7 +35,6 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.descriptor.api.Descriptors;
 import org.jboss.shrinkwrap.descriptor.api.javaee6.ParamValueType;
 import org.jboss.shrinkwrap.descriptor.api.webapp30.WebAppDescriptor;
-import org.jboss.shrinkwrap.impl.base.path.BasicPath;
 import org.richfaces.tests.metamer.TemplatesList;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
@@ -104,7 +103,7 @@ public abstract class AbstractMetamerTest extends Arquillian {
     private static WebArchive updateArchiveWebXml(WebArchive defaultWar, Boolean compressedStages, Boolean packedStages) {
         // 1. load existing web.xml from metamer.war
         WebAppDescriptor webXmlDefault = Descriptors.importAs(WebAppDescriptor.class).fromStream(
-                defaultWar.get(new BasicPath("WEB-INF/web.xml")).getAsset().openStream());
+                defaultWar.get("WEB-INF/web.xml").getAsset().openStream());
         List<ParamValueType<WebAppDescriptor>> allContextParams = webXmlDefault.getAllContextParam();
         // 2. Iterate over all context params and alter the particular ones
         for (ParamValueType<WebAppDescriptor> param : allContextParams) {

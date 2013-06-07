@@ -31,7 +31,7 @@ import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractRichMessagePage
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public abstract class AbstractRichMessageTest<Page extends AbstractRichMessagePage> extends AbstractWebDriverTest<Page> {
+public abstract class AbstractRichMessageTest<Page extends AbstractRichMessagePage> extends AbstractWebDriverTest {
 
     protected void checkErrorNotPresent(WebElement errorArea) {
         Graphene.waitAjax()
@@ -140,5 +140,8 @@ public abstract class AbstractRichMessageTest<Page extends AbstractRichMessagePa
         getPage().getSubmitButton().click();
         checkErrorNotPresent(getPage().getZipErrorMessageArea());
     }
+
+    @Override
+    protected abstract Page getPage();
 
 }

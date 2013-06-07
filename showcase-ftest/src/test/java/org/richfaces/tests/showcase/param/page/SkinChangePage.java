@@ -33,5 +33,7 @@ public class SkinChangePage {
     public WebElement deepMarineSkin;
     @FindBy(jquery="fieldset form a:last")
     public WebElement blueSky;
+    @FindBy(jquery = "div[class$=right-controls] ul li[class$=current-skin]")
+    public WebElement currentSkin;
 
 }

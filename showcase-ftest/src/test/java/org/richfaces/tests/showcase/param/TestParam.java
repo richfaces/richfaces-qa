@@ -48,13 +48,9 @@ public class TestParam extends AbstractWebDriverTest {
      */
 
     @Test
-    public void testWhetherThereIsNothigSetAtFirst() {
+    public void testClickToButtonAndCheckTheSelectedName() {
         assertEquals(page.output.getText().trim(), "Selected Name:",
             "There can not be anything selected at first after page first load!");
-    }
-
-    @Test
-    public void testClickToButtonAndCheckTheSelectedName() {
         for(ParamPage.Name name : ParamPage.Name.getAll()) {
             page.setName(name);
             Graphene.waitAjax()

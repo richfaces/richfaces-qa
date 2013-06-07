@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richTreeModelAdaptor;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -36,10 +35,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
-import org.richfaces.tests.metamer.ftest.richTree.TreeModel;
-import org.richfaces.tests.metamer.ftest.richTree.TreeNodeModel;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.richTree.TreeSimplePage;
+import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode;
 import org.testng.annotations.Test;
 
 
@@ -47,14 +46,14 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22753 $
  */
-public class TestTreeModelAdaptorLazyLoading extends AbstractGrapheneTest {
+public class TestTreeModelAdaptorLazyLoading extends AbstractWebDriverTest {
 
-    protected TreeModel tree = new TreeModel(pjq("div.rf-tr[id$=richTree]"));
-    protected TreeNodeModel treeNode;
+    protected RichFacesTreeNode treeNode;
 
     protected Integer[][] paths = new Integer[][] {{1, 1, 1, 8, 1}, {4, 4, 11, 4}};
 
-    JQueryLocator lazyInitialized = pjq("span[id$=lazyInitialized]");
+    @Page
+    TreeSimplePage page;
 
     @Override
     public URL getTestUrl() {
@@ -72,7 +71,7 @@ public class TestTreeModelAdaptorLazyLoading extends AbstractGrapheneTest {
             treeNode = null;
             for (int i = 0; i < path.length; i++) {
                 int index = path[i];
-                treeNode = (treeNode == null) ? tree.getNode(index) : treeNode.getNode(index);
+                treeNode = (treeNode == null) ? page.tree.getNodes().get(index - 1) : treeNode.getNode(index - 1);
                 if (i < path.length - 1) {
                     treeNode.expand();
 
@@ -89,8 +88,8 @@ public class TestTreeModelAdaptorLazyLoading extends AbstractGrapheneTest {
         // takes only recursive nodes + model node (representing leaves)
         Pattern pattern = Pattern.compile("([RM\\-\\.0-9]+)(?:-.*)?");
         SortedSet<String> result = new TreeSet<String>();
-        for (TreeNodeModel treeNode : tree.getAnyNodes()) {
-            String labelText = treeNode.getLabelText();
+        for (RichFacesTreeNode treeNode : page.tree.getAnyNodes()) {
+            String labelText = treeNode.getNodeLabelText();
 
             Matcher matcher = pattern.matcher(labelText);
 
@@ -103,7 +102,7 @@ public class TestTreeModelAdaptorLazyLoading extends AbstractGrapheneTest {
     }
 
     private List<String> getLazyInitialized() {
-        String unseparated = selenium.getText(lazyInitialized);
+        String unseparated = page.lazyInitialized.getText();
         String[] separated = StringUtils.split(unseparated, "[], ");
         List<String> result = Arrays.asList(separated);
         Collections.sort(result);

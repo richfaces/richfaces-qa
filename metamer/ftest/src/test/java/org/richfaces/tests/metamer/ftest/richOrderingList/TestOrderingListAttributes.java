@@ -23,20 +23,26 @@ package org.richfaces.tests.metamer.ftest.richOrderingList;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.orderingListAttributes;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.jboss.arquillian.ajocado.css.CssProperty;
+import javax.faces.event.PhaseId;
+
 import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.page.fragments.impl.Utils;
 import org.testng.annotations.Test;
-
 
 /**
  * Selenium tests for page faces/components/richOrderingList/withColumn.xhtml.
@@ -45,219 +51,296 @@ import org.testng.annotations.Test;
  */
 public class TestOrderingListAttributes extends AbstractOrderingListTest {
 
+    @Page
+    private MetamerPage page;
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richOrderingList/withColumn.xhtml");
     }
 
     @Test
+    public void testCaption() {
+        String testedValue = "New Caption";
+        orderingListAttributes.set(OrderingListAttributes.caption, testedValue);
+        assertEquals(twoColumnOrderingList.getCaption(), testedValue);
+    }
+
+    @Test
     public void testColumnClasses() {
-        ATTRIBUTES.set(OrderingListAttributes.columnClasses, "some-class");
-        for (int i=0; i<getOrderingList().getNumberOfColumns(); i++) {
-            assertTrue(selenium.belongsClass(getOrderingList().getItemColumn(0, i), "some-class"), "The column <" + i + "> doesn't belong to set class <some-class>.");
+        String testedClass = "metamer-ftest-class";
+        orderingListAttributes.set(OrderingListAttributes.columnClasses, testedClass);
+        for (TwoColumnListItem li : twoColumnOrderingList.getItems()) {
+            for (WebElement e : li.getItemElement().findElements(By.tagName("td"))) {
+                assertTrue(e.getAttribute("class").contains(testedClass), "Item @class should contain " + testedClass);
+            }
         }
     }
 
     @Test
     public void testDisabled() {
-        ATTRIBUTES.set(OrderingListAttributes.disabled, "true");
-        try {
-            getOrderingList().getIndexOfSelectedItem();
-            fail("The attribute <disabled> is set to true, but the ordering list is still enabled.");
+        orderingListAttributes.set(OrderingListAttributes.disabled, Boolean.TRUE);
+        for (TwoColumnListItem li : twoColumnOrderingList.getItems()) {
+            assertTrue(li.getItemElement().getAttribute("class").contains("rf-ord-opt-dis"), "Item @class should contain " + "rf-ord-opt-dis");
         }
-        catch(IllegalStateException e) {}
+        try {
+            twoColumnOrderingList.getItems().get(0).select();
+            fail("The attribute <disabled> is set to true, but the ordering list is still enabled.");
+        } catch (TimeoutException e) {
+        }
     }
 
     @Test
     public void testDisabledClass() {
-        ATTRIBUTES.set(OrderingListAttributes.disabled, "true");
-        ATTRIBUTES.set(OrderingListAttributes.disabledClass, "disabled-class");
-        assertTrue(selenium.belongsClass(getOrderingList().getLocator(), "disabled-class"), "The disabled class is not set when the ordering list is disabled.");
+        orderingListAttributes.set(OrderingListAttributes.disabled, Boolean.TRUE);
+        testStyleClass(twoColumnOrderingList.getRootElement(), BasicAttributes.disabledClass);
+    }
+
+    @Test
+    public void testDownBottomText() {
+        String testedValue = "New text";
+        orderingListAttributes.set(OrderingListAttributes.downBottomText, testedValue);
+        assertEquals(twoColumnOrderingList.getBottomButtonElement().getText(), testedValue);
+    }
+
+    @Test
+    public void testDownText() {
+        String testedValue = "New text";
+        orderingListAttributes.set(OrderingListAttributes.downText, testedValue);
+        assertEquals(twoColumnOrderingList.getDownButtonElement().getText(), testedValue);
     }
 
     @Test
     public void testHeaderClass() {
-        ATTRIBUTES.set(OrderingListAttributes.headerClass, "some-class");
-        assertTrue(selenium.belongsClass(getOrderingList().getHeader(), "some-class"), "The attribute <headerClass> is set to <some-class>, but the header doesn't belong to this class.");
+        testStyleClass(twoColumnOrderingList.getHeaderElement(), BasicAttributes.headerClass);
+    }
+
+    @Test
+    public void testImmediate() {
+        orderingListAttributes.set(OrderingListAttributes.immediate, Boolean.FALSE);
+        twoColumnOrderingList.selectItemsByIndex(1).top();
+        submit();
+        page.assertPhases(PhaseId.ANY_PHASE);
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed");
+
+        orderingListAttributes.set(OrderingListAttributes.immediate, Boolean.TRUE);
+        twoColumnOrderingList.selectItemsByIndex(1).top();
+        submit();
+        page.assertPhases(PhaseId.ANY_PHASE);
+        page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed");
     }
 
     @Test
     public void testItemClass() {
-        ATTRIBUTES.set(OrderingListAttributes.itemClass, "some-class");
-        assertTrue(selenium.belongsClass(getOrderingList().getItem(0), "some-class"), "The attribute <itemClass> is set to <some-class>, but the first item doesn't belong to this class.");
+        String testedClass = "metamer-ftest-class";
+        orderingListAttributes.set(OrderingListAttributes.itemClass, "metamer-ftest-class");
+        for (TwoColumnListItem li : twoColumnOrderingList.getItems()) {
+            assertTrue(li.getItemElement().getAttribute("class").contains(testedClass), "Item @class should contain " + testedClass);
+        }
     }
 
     @Test
     public void testListHeight() {
-        testSizeCssProperty(getOrderingList().getScrollableArea(), OrderingListAttributes.listHeight, CssProperty.HEIGHT);
+        int testedValue = 600;
+        int tolerance = 10;
+        orderingListAttributes.set(OrderingListAttributes.listHeight, testedValue);
+        assertEquals(Integer.valueOf(twoColumnOrderingList.getListAreaElement().getCssValue("height").replace("px", "")), testedValue, tolerance);
     }
 
     @Test
     public void testListWidth() {
-        testSizeCssProperty(getOrderingList().getScrollableArea(), OrderingListAttributes.listWidth, CssProperty.WIDTH);
+        int testedValue = 600;
+        int tolerance = 10;
+        orderingListAttributes.set(OrderingListAttributes.listWidth, testedValue);
+        assertEquals(Integer.valueOf(twoColumnOrderingList.getListAreaElement().getCssValue("width").replace("px", "")), testedValue, tolerance);
     }
 
     @Test
     public void testMaxListHeight() {
-        ATTRIBUTES.set(OrderingListAttributes.listHeight, "");
-        testSizeCssProperty(getOrderingList().getScrollableArea(), OrderingListAttributes.maxListHeight, new CssProperty("max-height"));
+        int testedValue = 600;
+        int tolerance = 10;
+        orderingListAttributes.set(OrderingListAttributes.maxListHeight, testedValue);
+        orderingListAttributes.set(OrderingListAttributes.listHeight, "");
+        assertEquals(Integer.valueOf(twoColumnOrderingList.getListAreaElement().getCssValue("max-height").replace("px", "")), testedValue, tolerance);
     }
 
     @Test
     public void testMinListHeight() {
-        ATTRIBUTES.set(OrderingListAttributes.listHeight, "");
-        testSizeCssProperty(getOrderingList().getScrollableArea(), OrderingListAttributes.minListHeight, new CssProperty("min-height"));
+        int testedValue = 600;
+        int tolerance = 10;
+        orderingListAttributes.set(OrderingListAttributes.listHeight, "");
+        orderingListAttributes.set(OrderingListAttributes.minListHeight, testedValue);
+        assertEquals(Integer.valueOf(twoColumnOrderingList.getListAreaElement().getCssValue("min-height").replace("px", "")), testedValue, tolerance);
     }
 
-    @Test(enabled=false)
+    @Test
     public void testOnblur() {
-        // TODO
+        testFireEvent(orderingListAttributes, OrderingListAttributes.onblur, new Action() {
+            @Override
+            public void perform() {
+                //have to be this way or the blur will not be triggered
+                twoColumnOrderingList.getListAreaElement().click();
+                twoColumnOrderingList.getRootElement().click();
+                waiting(500);
+                Utils.triggerJQ("blur", twoColumnOrderingList.getItems().get(0).getItemElement());
+            }
+        });
     }
 
     @Test
     public void testOnchange() {
-        testFireEvent(Event.CHANGE, getOrderingList().getLocator());
+        testFireEvent(Event.CHANGE, twoColumnOrderingList.getListAreaElement());
     }
 
     @Test
     public void testOnclick() {
-        testFireEvent(Event.CLICK, getOrderingList().getLocator());
+        testFireEvent(orderingListAttributes, OrderingListAttributes.onlistclick,
+                new Actions(driver).click(twoColumnOrderingList.getListAreaElement()).build());
     }
 
     @Test
     public void testOndblclick() {
-        testFireEvent(Event.DBLCLICK, getOrderingList().getLocator());
+        testFireEvent(Event.DBLCLICK, twoColumnOrderingList.getListAreaElement());
     }
 
-    @Test(enabled=false)
+    @Test
     public void testOnfocus() {
-        // TODO
+        testFireEvent(orderingListAttributes, OrderingListAttributes.onfocus,
+                new Actions(driver).click(twoColumnOrderingList.getItems().get(0).getItemElement()).build());
     }
 
     @Test
     public void testOnkeydown() {
-        testFireEvent(Event.KEYDOWN, getOrderingList().getListArea());
+        testFireEvent(Event.KEYDOWN, twoColumnOrderingList.getListAreaElement());
     }
 
     @Test
     public void testOnkeypress() {
-        testFireEvent(Event.KEYPRESS, getOrderingList().getListArea());
+        testFireEvent(Event.KEYPRESS, twoColumnOrderingList.getListAreaElement());
     }
 
     @Test
     public void testOnkeyup() {
-        testFireEvent(Event.KEYUP, getOrderingList().getListArea());
+        testFireEvent(Event.KEYUP, twoColumnOrderingList.getListAreaElement());
     }
 
     @Test
     public void testOnlistclick() {
-        testFireEvent(Event.CLICK, getOrderingList().getList(), "listclick");
+        testFireEvent(orderingListAttributes, OrderingListAttributes.onlistclick, new Actions(driver).click(twoColumnOrderingList.getItems().get(0).getItemElement()).build());
     }
 
     @Test
     public void testOnlistdblclick() {
-        testFireEvent(Event.DBLCLICK, getOrderingList().getList(), "listdblclick");
+        testFireEvent(Event.DBLCLICK, twoColumnOrderingList.getItems().get(0).getItemElement(), "listdblclick");
     }
 
     @Test
     public void testOnlistkeydown() {
-        testFireEvent(Event.KEYDOWN, getOrderingList().getList(), "listkeydown");
+        testFireEvent(Event.KEYDOWN, twoColumnOrderingList.getItems().get(0).getItemElement(), "listkeydown");
     }
 
     @Test
     public void testOnlistkeypress() {
-        testFireEvent(Event.KEYPRESS, getOrderingList().getList(), "listkeypress");
+        testFireEvent(Event.KEYPRESS, twoColumnOrderingList.getItems().get(0).getItemElement(), "listkeypress");
     }
 
     @Test
     public void testOnlistkeyup() {
-        testFireEvent(Event.KEYUP, getOrderingList().getList(), "listkeyup");
+        testFireEvent(Event.KEYUP, twoColumnOrderingList.getItems().get(0).getItemElement(), "listkeyup");
     }
 
     @Test
     public void testOnlistmousedown() {
-        testFireEvent(Event.MOUSEDOWN, getOrderingList().getList(), "listmousedown");
+        testFireEvent(Event.MOUSEDOWN, twoColumnOrderingList.getItems().get(0).getItemElement(), "listmousedown");
     }
 
     @Test
     public void testOnlistmousemove() {
-        testFireEvent(Event.MOUSEMOVE, getOrderingList().getList(), "listmousemove");
+        testFireEvent(Event.MOUSEMOVE, twoColumnOrderingList.getItems().get(0).getItemElement(), "listmousemove");
     }
 
     @Test
     public void testOnlistmouseout() {
-        testFireEvent(Event.MOUSEOUT, getOrderingList().getList(), "listmouseout");
+        testFireEvent(Event.MOUSEOUT, twoColumnOrderingList.getItems().get(0).getItemElement(), "listmouseout");
     }
 
     @Test
     public void testOnlistmouseover() {
-        testFireEvent(Event.MOUSEOVER, getOrderingList().getList(), "listmouseover");
+        testFireEvent(Event.MOUSEOVER, twoColumnOrderingList.getItems().get(0).getItemElement(), "listmouseover");
     }
 
     @Test
     public void testOnlistmouseup() {
-        testFireEvent(Event.MOUSEUP, getOrderingList().getList(), "listmouseup");
+        testFireEvent(Event.MOUSEUP, twoColumnOrderingList.getItems().get(0).getItemElement(), "listmouseup");
     }
 
     @Test
     public void testOnmousedown() {
-        testFireEvent(Event.MOUSEDOWN, getOrderingList().getLocator());
+        testFireEvent(Event.MOUSEDOWN, twoColumnOrderingList.getListAreaElement());
     }
 
     @Test
     public void testOnmousemove() {
-        testFireEvent(Event.MOUSEMOVE, getOrderingList().getLocator());
+        testFireEvent(Event.MOUSEMOVE, twoColumnOrderingList.getListAreaElement());
     }
 
     @Test
     public void testOnmouseout() {
-        testFireEvent(Event.MOUSEOUT, getOrderingList().getLocator());
+        testFireEvent(Event.MOUSEOUT, twoColumnOrderingList.getListAreaElement());
     }
 
     @Test
     public void testOnmouseover() {
-        testFireEvent(Event.MOUSEOVER, getOrderingList().getLocator());
+        testFireEvent(Event.MOUSEOVER, twoColumnOrderingList.getListAreaElement());
     }
 
     @Test
     public void testOnmouseup() {
-        testFireEvent(Event.MOUSEUP, getOrderingList().getLocator());
+        testFireEvent(Event.MOUSEUP, twoColumnOrderingList.getListAreaElement());
     }
 
     @Test
     public void testRendered() {
-        ATTRIBUTES.set(OrderingListAttributes.rendered, false);
-        assertFalse(getOrderingList().isOrderingListPresent(), "The attribute <rendered> is set to <false>, but it has no effect.");
+        orderingListAttributes.set(OrderingListAttributes.rendered, false);
+        assertNotPresent(twoColumnOrderingList.getRootElement(), "The attribute <rendered> is set to <false>, but it has no effect.");
     }
 
     @Test
     public void testSelectItemClass() {
-        ATTRIBUTES.set(OrderingListAttributes.selectItemClass, "some-class");
-        selectItem(0);
-        assertTrue(selenium.belongsClass(getOrderingList().getItem(0), "some-class"), "The attribute <selectItemClass> is set to <some-class>, but it has no effect.");
+        orderingListAttributes.set(OrderingListAttributes.selectItemClass, "metamer-ftest-class");
+        twoColumnOrderingList.selectItemsByIndex(0);
+        assertTrue(twoColumnOrderingList.getSelectedItems().get(0).getItemElement().getAttribute("class").contains("metamer-ftest-class"), "The attribute <selectItemClass> is set to <metamer-ftest-class>, but it has no effect.");
     }
 
     @Test
     public void testStyle() {
-        super.testStyle(getOrderingList().getLocator());
+        testStyle(twoColumnOrderingList.getRootElement());
+    }
+
+    @Test
+    public void testStyleClass() {
+        testStyle(twoColumnOrderingList.getRootElement());
+    }
+
+    @Test
+    public void testUpText() {
+        String testedValue = "New text";
+        orderingListAttributes.set(OrderingListAttributes.upText, testedValue);
+        assertEquals(twoColumnOrderingList.getUpButtonElement().getText(), testedValue);
+    }
+
+    @Test
+    public void testUpTopText() {
+        String testedValue = "New text";
+        orderingListAttributes.set(OrderingListAttributes.upTopText, testedValue);
+        assertEquals(twoColumnOrderingList.getTopButtonElement().getText(), testedValue);
     }
 
     @Test
     public void testValueChangeListener() {
-        getOrderingList().selectItem(0);
-        getOrderingList().moveBottom();
+        twoColumnOrderingList.selectItemsByIndex(0);
+        twoColumnOrderingList.bottom();
         submit();
-        assertTrue(selenium.isElementPresent(getPhaseListener(3)));
-        assertTrue(selenium.getText(getPhaseListener(3)).contains("*3 value changed"));
-    }
-
-    private void testSizeCssProperty(JQueryLocator element, OrderingListAttributes attribute, CssProperty cssProperty) {
-        Map<String, String> values = new HashMap<String, String>();
-        values.put("100", "100px");
-        values.put("200px", "200px");
-        for(String value : values.keySet()) {
-            ATTRIBUTES.set(attribute, value);
-            assertEquals(selenium.getStyle(getOrderingList().getScrollableArea(), cssProperty), values.get(value), "The attribute <" + attribute.name() +"> is set to <" + value + ">, but it has no effect.");
-        }
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed");
     }
 }

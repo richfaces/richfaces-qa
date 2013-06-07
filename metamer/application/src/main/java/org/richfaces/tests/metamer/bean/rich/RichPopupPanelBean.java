@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
 public class RichPopupPanelBean implements Serializable {
 
     private static final long serialVersionUID = -1L;
-    private static Logger logger;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RichPopupPanelBean.class);
     private Attributes attributes;
     private String value1;
     private String value2;
@@ -54,8 +54,7 @@ public class RichPopupPanelBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        logger = LoggerFactory.getLogger(getClass());
-        logger.debug("initializing bean " + getClass().getName());
+        LOGGER.debug("initializing bean " + getClass().getName());
 
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIPopupPanel.class, getClass());
 
@@ -108,9 +107,9 @@ public class RichPopupPanelBean implements Serializable {
     }
 
     public String save() {
-        logger.warn("1:  " + value1);
-        logger.warn("2:  " + value2);
-        logger.warn("3:  " + value3);
+        LOGGER.warn("1:  " + value1);
+        LOGGER.warn("2:  " + value2);
+        LOGGER.warn("3:  " + value3);
         return null;
     }
 }

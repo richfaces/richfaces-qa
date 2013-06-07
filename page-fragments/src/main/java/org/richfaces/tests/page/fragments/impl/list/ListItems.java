@@ -25,11 +25,12 @@ import java.util.List;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @param <T> type of ListItem
  */
-public interface ListItems extends List<ListItem> {
+public interface ListItems<T extends ListItem> extends List<T> {
 
     /**
-     * Returns result of filtering of this list.
+     * Returns the result of filtering of this list.
      */
-    ListItems filter(ListItemsFilterBuilder builder);
+    ListItems<T> filter(ListItemsFilterBuilder<T> builder);
 }

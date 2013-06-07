@@ -52,7 +52,7 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
         verifyAllWrongWithAjaxSubmit();
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @IssueTracking(value = "https://issues.jboss.org/browse/RF-11035")
     public void testAllWrongJSF() {
         verifyAllWrongWithJSFSubmit();
@@ -149,7 +149,7 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
         assertFalse(Graphene.element(page.msgMax).isPresent().apply(driver));
     }
 
-    @Test(groups = { "4.Future" })
+    @Test(groups = { "Future" })
     @IssueTracking(value = "https://issues.jboss.org/browse/RF-11035")
     public void testSelectionSize() {
         verifySelectionSize();
