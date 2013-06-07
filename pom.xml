@@ -1042,6 +1042,28 @@ FSF site: http://www.fsf.org. -->
                             </environmentVariables>
                         </configuration>
                     </plugin>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy JBoss AS configuration</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${jbossEAP61Home}/standalone/configuration</outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/test/resources/eap610</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
                 </plugins>
             </build>
         </profile>

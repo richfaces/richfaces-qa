@@ -32,7 +32,7 @@
     </context-param>
     <context-param>
         <param-name>org.richfaces.push.jms.connectionPassword</param-name>
-        <param-value>guest</param-value>
+        <param-value>p@ssw0rd</param-value>
     </context-param>
     <context-param>
         <param-name>org.richfaces.push.jms.connectionUsername</param-name>
