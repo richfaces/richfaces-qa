@@ -90,38 +90,38 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="component">
 
             <rich:extendedDataTable id="richEDT"
-                                    columnClasses="#{richExtendedDataTableBean.attributes['columnClasses'].value}"
-                                    first="#{richExtendedDataTableBean.attributes['first'].value}"
-                                    footerClass="#{richExtendedDataTableBean.attributes['footerClass'].value}"
-                                    frozenColumns="#{richExtendedDataTableBean.attributes['frozenColumns'].value}"
-                                    headerClass="#{richExtendedDataTableBean.attributes['headerClass'].value}"
-                                    keepSaved="#{richExtendedDataTableBean.attributes['keepSaved'].value}"
-                                    noDataLabel="#{richExtendedDataTableBean.attributes['noDataLabel'].value}"
-                                    onbeforeselectionchange="#{richExtendedDataTableBean.attributes['onbeforeselectionchange'].value}"
-                                    onrowclick="#{richExtendedDataTableBean.attributes['onrowclick'].value}"
-                                    onrowdblclick="#{richExtendedDataTableBean.attributes['onrowdblclick'].value}"
-                                    onrowkeydown="#{richExtendedDataTableBean.attributes['onrowkeydown'].value}"
-                                    onrowkeypress="#{richExtendedDataTableBean.attributes['onrowkeypress'].value}"
-                                    onrowkeyup="#{richExtendedDataTableBean.attributes['onrowkeyup'].value}"
-                                    onrowmousedown="#{richExtendedDataTableBean.attributes['onrowmousedown'].value}"
-                                    onrowmousemove="#{richExtendedDataTableBean.attributes['onrowmousemove'].value}"
-                                    onrowmouseout="#{richExtendedDataTableBean.attributes['onrowmouseout'].value}"
-                                    onrowmouseover="#{richExtendedDataTableBean.attributes['onrowmouseover'].value}"
-                                    onrowmouseup="#{richExtendedDataTableBean.attributes['onrowmouseup'].value}"
-                                    onselectionchange="#{richExtendedDataTableBean.attributes['onselectionchange'].value}"
-                                    rendered="#{richExtendedDataTableBean.attributes['rendered'].value}"
-                                    rowClass="#{richExtendedDataTableBean.attributes['rowClass'].value}"
-                                    rowClasses="#{richExtendedDataTableBean.attributes['rowClasses'].value}"
-                                    rows="#{richExtendedDataTableBean.attributes['rows'].value}"
-                                    selection="#{richExtendedDataTableBean.attributes['selection'].value}"
-                                    selectionMode="#{richExtendedDataTableBean.attributes['selectionMode'].value}"
-                                    sortMode="#{richExtendedDataTableBean.attributes['sortMode'].value}"
-                                    sortPriority="#{richExtendedDataTableBean.attributes['sortPriority'].value}"
-                                    style="#{richExtendedDataTableBean.attributes['style'].value}"
-                                    styleClass="#{richExtendedDataTableBean.attributes['styleClass'].value}"
-                                    value="#{richExtendedDataTableBean.state ? model.employees : null}"
-                                    var="record"
-                                    >
+                                 columnClasses="#{richExtendedDataTableBean.attributes['columnClasses'].value}"
+                                 first="#{richExtendedDataTableBean.attributes['first'].value}"
+                                 footerClass="#{richExtendedDataTableBean.attributes['footerClass'].value}"
+                                 frozenColumns="#{richExtendedDataTableBean.attributes['frozenColumns'].value}"
+                                 headerClass="#{richExtendedDataTableBean.attributes['headerClass'].value}"
+                                 keepSaved="#{richExtendedDataTableBean.attributes['keepSaved'].value}"
+                                 noDataLabel="#{richExtendedDataTableBean.attributes['noDataLabel'].value}"
+                                 onbeforeselectionchange="#{richExtendedDataTableBean.attributes['onbeforeselectionchange'].value}"
+                                 onrowclick="#{richExtendedDataTableBean.attributes['onrowclick'].value}"
+                                 onrowdblclick="#{richExtendedDataTableBean.attributes['onrowdblclick'].value}"
+                                 onrowkeydown="#{richExtendedDataTableBean.attributes['onrowkeydown'].value}"
+                                 onrowkeypress="#{richExtendedDataTableBean.attributes['onrowkeypress'].value}"
+                                 onrowkeyup="#{richExtendedDataTableBean.attributes['onrowkeyup'].value}"
+                                 onrowmousedown="#{richExtendedDataTableBean.attributes['onrowmousedown'].value}"
+                                 onrowmousemove="#{richExtendedDataTableBean.attributes['onrowmousemove'].value}"
+                                 onrowmouseout="#{richExtendedDataTableBean.attributes['onrowmouseout'].value}"
+                                 onrowmouseover="#{richExtendedDataTableBean.attributes['onrowmouseover'].value}"
+                                 onrowmouseup="#{richExtendedDataTableBean.attributes['onrowmouseup'].value}"
+                                 onselectionchange="#{richExtendedDataTableBean.attributes['onselectionchange'].value}"
+                                 rendered="#{richExtendedDataTableBean.attributes['rendered'].value}"
+                                 rowClass="#{richExtendedDataTableBean.attributes['rowClass'].value}"
+                                 rowClasses="#{richExtendedDataTableBean.attributes['rowClasses'].value}"
+                                 rows="#{richExtendedDataTableBean.attributes['rows'].value}"
+                                 selection="#{richExtendedDataTableBean.attributes['selection'].value}"
+                                 selectionMode="#{richExtendedDataTableBean.attributes['selectionMode'].value}"
+                                 sortMode="#{richExtendedDataTableBean.attributes['sortMode'].value}"
+                                 sortPriority="#{richExtendedDataTableBean.attributes['sortPriority'].value}"
+                                 style="#{richExtendedDataTableBean.attributes['style'].value}"
+                                 styleClass="#{richExtendedDataTableBean.attributes['styleClass'].value}"
+                                 value="#{richExtendedDataTableBean.state ? model.employees : null}"
+                                 var="record"
+                                 >
 
                 <f:facet name="noData">
                     <h:outputText value="There is no data." style="color: red;"/>
@@ -164,6 +164,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
+            <ui:include src="resizedTemplatesStyles.xhtml"/>
             <metamer:attributes value="#{richExtendedDataTableBean.attributes}" id="attributes" />
         </ui:define>
 

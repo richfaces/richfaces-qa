@@ -64,9 +64,9 @@ public class TestPopupPanel extends AbstractWebDriverTest {
 
     @FindBy(css = "input[id$=openPanelButton]")
     private WebElement openButton;
-    @FindBy(css = "div[id$=popupPanel_shade].rf-pp-shade")
+    @FindBy(css = "div.rf-pp-shade[id$=popupPanel_shade]")
     private WebElement shade;
-    @FindBy(css = "div.rf-pp-cntr")
+    @FindBy(css = "div.rf-pp-cntr[id$=popupPanel_container]")
     private TestedPopupPanel panel;
     @FindBy(css = "input[id$=resize]")
     private WebElement resize;
@@ -151,6 +151,37 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     private void openPopupPanel() {
         openButton.click();
         Graphene.waitGui().until(panel.isVisibleCondition());
+    }
+
+    @Test
+    public void testAutosized() {
+        popupPanelAttributes.set(PopupPanelAttributes.height, -1);// set value to default (as if the attibute is not present)
+        popupPanelAttributes.set(PopupPanelAttributes.width, -1);// set value to default (as if the attibute is not present)
+        popupPanelAttributes.set(PopupPanelAttributes.resizeable, Boolean.FALSE);// need to be turned off to set @autosized=true
+        popupPanelAttributes.set(PopupPanelAttributes.autosized, Boolean.FALSE);
+        int contentWidth = 100;
+        int panelPadding = 30;
+        int tolerance = 10;
+        setAttribute("textWidth", contentWidth);
+        openPopupPanel();
+        assertEquals(panel.content().getParagraphElement().getCssValue("width"), contentWidth + "px",
+                "Paragraph's width.");
+        assertEquals(panel.getLocations().getWidth(),
+                Integer.valueOf(popupPanelAttributes.get(PopupPanelAttributes.minWidth)).intValue(),
+                tolerance,
+                "Panel's width should be the same as its minWidth, when its content is smaller.");
+
+        popupPanelAttributes.set(PopupPanelAttributes.autosized, Boolean.TRUE);
+        // when @autosized=true, then @min/max-width/height attributes are ignored
+        openPopupPanel();
+        assertEquals(panel.getLocations().getWidth(),
+                contentWidth + panelPadding,
+                tolerance,
+                "Panel's width should be autosized to content.");
+        assertTrue(panel.getLocations().getWidth() < Integer.valueOf(popupPanelAttributes.get(PopupPanelAttributes.minWidth)).intValue(),
+                "In this case panel's width should be lesser than its @minWidth when @autosized=true");
+        assertTrue(panel.getLocations().getHeight() > Integer.valueOf(popupPanelAttributes.get(PopupPanelAttributes.maxHeight)).intValue(),
+                "In this case panel's height should be greater than its @maxHeight when @autosized=true");
     }
 
     @Test
@@ -660,6 +691,8 @@ public class TestPopupPanel extends AbstractWebDriverTest {
 
     public static class TestedPopupPanelContent extends RichFacesSimplePopupPanelContent {
 
+        @FindBy(tagName = "p")
+        private WebElement paragraphElement;
         @FindBy(css = "input[id$='submitButton']")
         private WebElement submitButton;
         @FindBy(css = "a[id$='contentHideLink']")
@@ -671,6 +704,10 @@ public class TestPopupPanel extends AbstractWebDriverTest {
 
         public WebElement getHideLinkElement() {
             return hideLinkElement;
+        }
+
+        public WebElement getParagraphElement() {
+            return paragraphElement;
         }
 
         public String getContentString() {

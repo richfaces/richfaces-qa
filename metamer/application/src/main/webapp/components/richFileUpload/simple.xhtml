@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:metamer="http://java.sun.com/jsf/composite/metamer" xmlns:rich="http://richfaces.org/rich"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:h="http://java.sun.com/jsf/html">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+      xmlns:a="http://richfaces.org/a4j"
+      xmlns:r="http://richfaces.org/rich">
 
     <!--
     JBoss, Home of Professional Open Source
     Copyright 2010-2013, Red Hat, Inc. and individual contributors
     by the @authors tag. See the copyright.txt in the distribution for a
     full listing of individual contributors.
-    
+
     This is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as
     published by the Free Software Foundation; either version 2.1 of
     the License, or (at your option) any later version.
-    
+
     This software is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
     Lesser General Public License for more details.
-    
+
     You should have received a copy of the GNU Lesser General Public
     License along with this software; if not, write to the Free
     Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
@@ -39,7 +41,7 @@
 
         <ui:define name="head">
             <style type="text/css">
-                /* workaround for ChromeDriver, beacause it clicks in the centre of the element and not "on" the element. */ 
+                /* workaround for ChromeDriver, beacause it clicks in the centre of the element and not "on" the element. */
                 .rf-fu-inp{
                     font-size: 1em;
                     margin: 0;
@@ -55,66 +57,66 @@
         </ui:define>
 
         <ui:define name="component">
-            <rich:fileUpload id="fileUpload" acceptedTypes="#{richFileUploadBean.attributes['acceptedTypes'].value}"
-                             addLabel="#{richFileUploadBean.attributes['addLabel'].value}"
-                             clearAllLabel="#{richFileUploadBean.attributes['clearAllLabel'].value}"
-                             clearLabel="#{richFileUploadBean.attributes['clearLabel'].value}"
-                             data="#{richFileUploadBean.attributes['data'].value}"
-                             deleteLabel="#{richFileUploadBean.attributes['deleteLabel'].value}"
-                             dir="#{richFileUploadBean.attributes['dir'].value}" 
-                             disabled="#{richFileUploadBean.attributes['disabled'].value}"
-                             doneLabel="#{richFileUploadBean.attributes['doneLabel'].value}"
-                             execute="#{richFileUploadBean.attributes['execute'].value}" 
-                             fileUploadListener="#{richFileUploadBean.listener}"
-                             immediateUpload="#{richFileUploadBean.attributes['immediateUpload'].value}"
-                             lang="#{richFileUploadBean.attributes['lang'].value}"
-                             limitRender="#{richFileUploadBean.attributes['limitRender'].value}"
-                             listHeight="#{richFileUploadBean.attributes['listHeight'].value}"
-                             maxFilesQuantity="#{richFileUploadBean.attributes['maxFilesQuantity'].value}"
-                             noDuplicate="#{richFileUploadBean.attributes['noDuplicate'].value}"
-                             onbeforedomupdate="#{richFileUploadBean.attributes['onbeforedomupdate'].value}"
-                             onbegin="#{richFileUploadBean.attributes['onbegin'].value}"
-                             onclear="#{richFileUploadBean.attributes['onclear'].value}"
-                             onclick="#{richFileUploadBean.attributes['onclick'].value}"
-                             oncomplete="#{richFileUploadBean.attributes['oncomplete'].value}"
-                             ondblclick="#{richFileUploadBean.attributes['ondblclick'].value}"
-                             onfileselect="#{richFileUploadBean.attributes['onfileselect'].value}"
-                             onfilesubmit="#{richFileUploadBean.attributes['onfilesubmit'].value}"
-                             onkeydown="#{richFileUploadBean.attributes['onkeydown'].value}"
-                             onkeypress="#{richFileUploadBean.attributes['onkeypress'].value}"
-                             onkeyup="#{richFileUploadBean.attributes['onkeyup'].value}"
-                             onmousedown="#{richFileUploadBean.attributes['onmousedown'].value}"
-                             onmousemove="#{richFileUploadBean.attributes['onmousemove'].value}"
-                             onmouseout="#{richFileUploadBean.attributes['onmouseout'].value}"
-                             onmouseover="#{richFileUploadBean.attributes['onmouseover'].value}"
-                             onmouseup="#{richFileUploadBean.attributes['onmouseup'].value}"
-                             ontyperejected="#{richFileUploadBean.attributes['ontyperejected'].value}"
-                             onuploadcomplete="#{richFileUploadBean.attributes['onuploadcomplete'].value}"
-                             render="#{richFileUploadBean.attributes['render'].value}"
-                             rendered="#{richFileUploadBean.attributes['rendered'].value}"
-                             serverErrorLabel="#{richFileUploadBean.attributes['serverErrorLabel'].value}"
-                             sizeExceededLabel="#{richFileUploadBean.attributes['sizeExceededLabel'].value}"
-                             status="#{richFileUploadBean.attributes['status'].value}" 
-                             style="#{richFileUploadBean.attributes['style'].value}"
-                             styleClass="#{richFileUploadBean.attributes['styleClass'].value}"
-                             title="#{richFileUploadBean.attributes['title'].value}"
-                             uploadLabel="#{richFileUploadBean.attributes['uploadLabel'].value}" />
-
+            <r:fileUpload id="fileUpload"
+                          acceptedTypes="#{richFileUploadBean.attributes['acceptedTypes'].value}"
+                          addLabel="#{richFileUploadBean.attributes['addLabel'].value}"
+                          clearAllLabel="#{richFileUploadBean.attributes['clearAllLabel'].value}"
+                          clearLabel="#{richFileUploadBean.attributes['clearLabel'].value}"
+                          data="#{richFileUploadBean.attributes['data'].value}"
+                          deleteLabel="#{richFileUploadBean.attributes['deleteLabel'].value}"
+                          dir="#{richFileUploadBean.attributes['dir'].value}"
+                          disabled="#{richFileUploadBean.attributes['disabled'].value}"
+                          doneLabel="#{richFileUploadBean.attributes['doneLabel'].value}"
+                          execute="#{richFileUploadBean.attributes['execute'].value}"
+                          fileUploadListener="#{richFileUploadBean.listener}"
+                          immediateUpload="#{richFileUploadBean.attributes['immediateUpload'].value}"
+                          lang="#{richFileUploadBean.attributes['lang'].value}"
+                          limitRender="#{richFileUploadBean.attributes['limitRender'].value}"
+                          listHeight="#{richFileUploadBean.attributes['listHeight'].value}"
+                          maxFilesQuantity="#{richFileUploadBean.attributes['maxFilesQuantity'].value}"
+                          noDuplicate="#{richFileUploadBean.attributes['noDuplicate'].value}"
+                          onbeforedomupdate="#{richFileUploadBean.attributes['onbeforedomupdate'].value}"
+                          onbegin="#{richFileUploadBean.attributes['onbegin'].value}"
+                          onclear="#{richFileUploadBean.attributes['onclear'].value}"
+                          onclick="#{richFileUploadBean.attributes['onclick'].value}"
+                          oncomplete="#{richFileUploadBean.attributes['oncomplete'].value}"
+                          ondblclick="#{richFileUploadBean.attributes['ondblclick'].value}"
+                          onfileselect="#{richFileUploadBean.attributes['onfileselect'].value}"
+                          onfilesubmit="#{richFileUploadBean.attributes['onfilesubmit'].value}"
+                          onkeydown="#{richFileUploadBean.attributes['onkeydown'].value}"
+                          onkeypress="#{richFileUploadBean.attributes['onkeypress'].value}"
+                          onkeyup="#{richFileUploadBean.attributes['onkeyup'].value}"
+                          onmousedown="#{richFileUploadBean.attributes['onmousedown'].value}"
+                          onmousemove="#{richFileUploadBean.attributes['onmousemove'].value}"
+                          onmouseout="#{richFileUploadBean.attributes['onmouseout'].value}"
+                          onmouseover="#{richFileUploadBean.attributes['onmouseover'].value}"
+                          onmouseup="#{richFileUploadBean.attributes['onmouseup'].value}"
+                          ontyperejected="#{richFileUploadBean.attributes['ontyperejected'].value}"
+                          onuploadcomplete="#{richFileUploadBean.attributes['onuploadcomplete'].value}"
+                          render="#{richFileUploadBean.attributes['render'].value}"
+                          rendered="#{richFileUploadBean.attributes['rendered'].value}"
+                          serverErrorLabel="#{richFileUploadBean.attributes['serverErrorLabel'].value}"
+                          sizeExceededLabel="#{richFileUploadBean.attributes['sizeExceededLabel'].value}"
+                          status="#{richFileUploadBean.attributes['status'].value}"
+                          style="#{richFileUploadBean.attributes['style'].value}"
+                          styleClass="#{richFileUploadBean.attributes['styleClass'].value}"
+                          title="#{richFileUploadBean.attributes['title'].value}"
+                          uploadLabel="#{richFileUploadBean.attributes['uploadLabel'].value}" />
             <br />
             <fieldset style="width: 376px;">
                 <legend>Uploaded Files</legend>
-                <a4j:outputPanel id="uploadedFilesPanel" ajaxRendered="true">
+                <a:outputPanel id="uploadedFilesPanel" ajaxRendered="true">
                     <ul>
-                        <a4j:repeat value="#{richFileUploadBean.items}" var="item">
+                        <a:repeat value="#{richFileUploadBean.items}" var="item">
                             <li>#{item.name}</li>
-                        </a4j:repeat>
+                        </a:repeat>
                     </ul>
 
                     <br />
 
-                    <a4j:commandButton id="clearUploadedDataButton" action="#{richFileUploadBean.clearUploadedData}"
-                                       value="Clear Uploaded Data" rendered="#{richFileUploadBean.renderButton}" />
-                </a4j:outputPanel>
+                    <a:commandButton id="clearUploadedDataButton" action="#{richFileUploadBean.clearUploadedData}"
+                                     value="Clear Uploaded Data" rendered="#{richFileUploadBean.renderButton}" />
+                </a:outputPanel>
             </fieldset>
 
         </ui:define>

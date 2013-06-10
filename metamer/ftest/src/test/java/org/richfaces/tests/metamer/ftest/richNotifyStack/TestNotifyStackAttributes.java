@@ -151,6 +151,8 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
         notifyStackAttributes.set(NotifyStackAttributes.direction, direction.name().toLowerCase(Locale.ENGLISH));
         notifyStackAttributes.set(NotifyStackAttributes.method, method.name().toLowerCase(Locale.ENGLISH));
         notifyStackAttributes.set(NotifyStackAttributes.position, "topRight");
+        waiting(500); // workaround for document not ready error
+
         generateMessagesWithWait(3);
         NotifyMessage firstMessage = getMessageWithNumber(1);
         NotifyMessage secondMessage = getMessageWithNumber(2);
@@ -173,6 +175,8 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
     @Use(field = "position", enumeration = true)
     public void testPosition() {
         notifyStackAttributes.set(NotifyStackAttributes.position, position.value);
+        waiting(500); // workaround for document not ready error
+
         generateMessagesWithWait(3);
         NotifyMessage firstMessage = getMessageWithNumber(1);
         NotifyMessage secondMessage = getMessageWithNumber(2);
@@ -200,6 +204,8 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
 
     @Test
     public void testRerenderStack() {
+        waiting(500); // wait for notify to initialize
+
         generateMessagesWithWait(3);
         Assert.assertEquals(notify.size(), 3, "There should be 3 messages.");
         MetamerPage.waitRequest(rerenderStackButton, WaitRequestType.XHR).click();

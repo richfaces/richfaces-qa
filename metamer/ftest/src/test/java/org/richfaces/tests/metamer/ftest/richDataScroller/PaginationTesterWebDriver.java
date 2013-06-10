@@ -31,7 +31,8 @@ import com.google.common.base.Predicate;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebDriver;
-import org.richfaces.tests.page.fragments.impl.DataScroller.RichFacesDataScroller;
+import org.openqa.selenium.interactions.Action;
+import org.richfaces.tests.page.fragments.impl.dataScroller.RichFacesDataScroller;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -110,10 +111,14 @@ public abstract class PaginationTesterWebDriver {
             this.lastPage = lastPage;
         }
 
+        private void _switchTo(final int pageNum) {
+            super.switchTo(pageNum);
+        }
+
         @Override
         public void switchTo(final int pageNum) {
             int startCount = numberedPages.size();
-            super.switchTo(pageNum);
+            Graphene.guardAjax(new SwicthPageByNumberAction(pageNum)).perform();
             Graphene.waitModel().until(new Predicate<WebDriver>() {
                 @Override
                 public boolean apply(WebDriver input) {
@@ -135,9 +140,13 @@ public abstract class PaginationTesterWebDriver {
             }
         }
 
-        @Override
-        public void switchTo(DataScrollerSwitchButton btn) {
+        private void _switchTo(DataScrollerSwitchButton btn) {
             super.switchTo(btn);
+        }
+
+        @Override
+        public void switchTo(final DataScrollerSwitchButton btn) {
+            Graphene.guardAjax(new SwitchPageByButtonAction(btn)).perform();
             switch (btn) {
                 case FIRST:
                     Graphene.waitModel().until(new Predicate<WebDriver>() {
@@ -161,6 +170,34 @@ public abstract class PaginationTesterWebDriver {
                     break;
                 default:
                     break;
+            }
+        }
+
+        public class SwitchPageByButtonAction implements Action {
+
+            private final DataScrollerSwitchButton btn;
+
+            public SwitchPageByButtonAction(DataScrollerSwitchButton btn) {
+                this.btn = btn;
+            }
+
+            @Override
+            public void perform() {
+                _switchTo(btn);
+            }
+        }
+
+        public class SwicthPageByNumberAction implements Action {
+
+            private final int pageNum;
+
+            public SwicthPageByNumberAction(int pageNum) {
+                this.pageNum = pageNum;
+            }
+
+            @Override
+            public void perform() {
+                _switchTo(pageNum);
             }
         }
     }

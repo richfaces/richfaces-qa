@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:rich="http://richfaces.org/rich"
-      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:r="http://richfaces.org/rich"
+      xmlns:a="http://richfaces.org/a4j"
       xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
@@ -30,75 +30,83 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     -->
 
     <ui:composition template="/templates/abstractions/inputValidation/stringInputComponentValidationTemplate.xhtml">
+        <ui:define name="view">
+            <f:metadata>
+                <f:viewParam name="templates" value="#{templateBean.templates}">
+                    <f:converter converterId="templatesListConverter" />
+                </f:viewParam>
+            </f:metadata>
+        </ui:define>
+
         <ui:define name="js">
             <ui:include src="script.xhtml"/>
         </ui:define>
 
         <ui:define name="notEmpty">
-            <rich:select id="notEmpty"
-                         defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
-                         value="#{richSelectBean.notEmptyValue}"
-                         >
+            <r:select id="notEmpty"
+                      defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
+                      value="#{richSelectBean.notEmptyValue}"
+                      >
                 <f:selectItems value="#{richSelectBean.validationOptionsNotEmpty}" />
-                <rich:validator event="blur"/>
-                <a4j:ajax event="change" render="notEmptyMsg"/>
-            </rich:select>
+                <a:ajax event="change" render="notEmptyMsg"/>
+                <r:validator event="listclick"/>
+            </r:select>
         </ui:define>
         <ui:define name="notEmptyOutput">
             <h:outputText id="notEmptyOutput" value="#{richSelectBean.notEmptyValue}"/>
         </ui:define>
 
         <ui:define name="pattern">
-            <rich:select id="pattern"
-                         defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
-                         value="#{richSelectBean.patternValue}"
-                         >
+            <r:select id="pattern"
+                      defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
+                      value="#{richSelectBean.patternValue}"
+                      >
                 <f:selectItems value="#{richSelectBean.validationOptionsPattern}" />
-                <rich:validator event="blur"/>
-                <a4j:ajax event="change" render="patternMsg"/>
-            </rich:select>
+                <a:ajax event="change" render="patternMsg"/>
+                <r:validator event="change"/>
+            </r:select>
         </ui:define>
         <ui:define name="patternOutput">
             <h:outputText id="patternOutput" value="#{richSelectBean.patternValue}"/>
         </ui:define>
 
         <ui:define name="size">
-            <rich:select id="size"
-                         defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
-                         value="#{richSelectBean.sizeValue}"
-                         >
+            <r:select id="size"
+                      defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
+                      value="#{richSelectBean.sizeValue}"
+                      >
                 <f:selectItems value="#{richSelectBean.validationOptionsSize}" />
-                <a4j:ajax event="change" render="sizeMsg"/>
-                <rich:validator event="change"/>
-            </rich:select>
+                <a:ajax event="change" render="sizeMsg"/>
+                <r:validator event="change"/>
+            </r:select>
         </ui:define>
         <ui:define name="sizeOutput">
             <h:outputText id="sizeOutput" value="#{richSelectBean.sizeValue}"/>
         </ui:define>
 
         <ui:define name="custom">
-            <rich:select id="custom"
-                         defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
-                         value="#{richSelectBean.customValue}"
-                         >
+            <r:select id="custom"
+                      defaultLabel="#{richSelectBean.attributes['defaultLabel'].value}"
+                      value="#{richSelectBean.customValue}"
+                      >
                 <f:selectItems value="#{richSelectBean.validationOptionsCustom}" />
                 <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>
-                <a4j:ajax event="change" render="customMsg"/>
-                <rich:validator event="change"/>
-            </rich:select>
+                <a:ajax event="change" render="customMsg"/>
+                <r:validator event="change"/>
+            </r:select>
         </ui:define>
         <ui:define name="customOutput">
             <h:outputText id="customOutput" value="#{richSelectBean.customValue}"/>
         </ui:define>
 
         <ui:define name="required" >
-            <rich:select id="required" required="true"
-                                requiredMessage="#{richSelectBean.attributes['requiredMessage'].value}"
-                                value="#{richSelectBean.requiredValue}">
+            <r:select id="required" required="true"
+                      requiredMessage="#{richSelectBean.attributes['requiredMessage'].value}"
+                      value="#{richSelectBean.requiredValue}">
                 <f:selectItems value="#{richSelectBean.validationOptionsRequired}" />
-                <a4j:ajax event="change" render="requiredMsg"/>
-                <rich:validator event="change"/>
-            </rich:select>
+                <a:ajax event="change" render="requiredMsg"/>
+                <r:validator event="change"/>
+            </r:select>
         </ui:define>
         <ui:define name="requiredOutput">
             <h:outputText id="requiredOutput" value="#{richSelectBean.requiredValue}"/>

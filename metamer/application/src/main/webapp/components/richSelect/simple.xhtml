@@ -37,6 +37,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
+            <script type="text/javascript">
+                function filterValuesByLength(key, value) {
+                    if (parseInt(key) === value.length) {
+                        return true;
+                    }
+                    return false;
+                }
+            </script>
             <r:select id="select"
                       clientFilterFunction="#{richSelectBean.attributes['clientFilterFunction'].value}"
                       converterMessage="#{richSelectBean.attributes['converterMessage'].value}"
@@ -92,6 +100,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <a4j:ajax event="change" render="output"/>
 
             </r:select>
+
+
             <br/>
             <br/>
             output: <h:outputText id="output" value="#{richSelectBean.attributes['value'].value}"/>

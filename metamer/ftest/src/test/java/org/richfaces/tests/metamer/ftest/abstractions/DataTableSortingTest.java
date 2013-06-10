@@ -209,6 +209,7 @@ public abstract class DataTableSortingTest extends AbstractDataTableTest {
 
     public void sortByColumn(int column) {
         guardXhr(selenium).click(model.getColumnHeader(column).getDescendant(jq("a")));
+        waitFor(500);
     }
 
     public void verifySortingByColumns(String... columns) {

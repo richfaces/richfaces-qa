@@ -32,19 +32,32 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="links">
 
             <metamer:testPageLink id="simple" outcome="simple" value="Simple">
-                Simple page that contains a <b>rich:popupPanel</b> and input boxes for all its attributes.
-            </metamer:testPageLink>
-
-            <metamer:testPageLink id="outsideForm" outcome="outsideForm" value="Outside Form">
                 Simple page that contains a <b>r:popupPanel</b>, input boxes for all its attributes and JS API buttons.
             </metamer:testPageLink>
 
-            <metamer:testPageLink id="formInsidePanel" outcome="formInsidePanel" value="Inputs Inside">
-                Simple page that contains a <b>rich:popupPanel</b> with several inputs inside.
+            <metamer:testPageLink id="outsideForm" outcome="outsideForm" value="Outside Form">
+                Simple page that contains a <b>r:popupPanel</b> outside form and input boxes for all its attributes.
             </metamer:testPageLink>
-            
+
+            <metamer:testPageLink id="formInsidePanel" outcome="formInsidePanel" value="Inputs Inside">
+                Simple page that contains a <b>r:popupPanel</b> with several inputs inside.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="embedObject" outcome="embedObject" value="Embed object">
+                Simple page that contains a <b>r:popupPanel</b>, input boxes for all its attributes and an embed object. For testing of @overlapEmbedObjects.
+                Chrome only.
+            </metamer:testPageLink>
+
             <metamer:testPageLink id="rf-11884" outcome="rf-11884" value="RF-11884">
                 Page simulating issue <a href="https://issues.jboss.org/browse/RF-11884">RF-11884</a>
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="rf-9653" outcome="rf-9653" value="RF-9653">
+                Page simulating issue <a href="https://issues.jboss.org/browse/RF-9653">RF-9653</a>
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="rf-13052" outcome="rf-13052" value="RF-13052">
+                Page simulating issue <a href="https://issues.jboss.org/browse/RF-13052">RF-13052</a>
             </metamer:testPageLink>
 
         </ui:define>

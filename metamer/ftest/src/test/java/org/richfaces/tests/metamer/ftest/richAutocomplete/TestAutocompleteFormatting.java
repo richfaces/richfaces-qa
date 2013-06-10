@@ -30,6 +30,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
+import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -45,7 +46,7 @@ import org.testng.annotations.Test;
  */
 public class TestAutocompleteFormatting extends AbstractAutocompleteTest{
 
-    @FindBy(id="form:autocomplete")
+    @FindBy(css="span.rf-au[id$=autocomplete]")
     private RichFacesAutocomplete<String> autocomplete;
 
     @Inject
@@ -117,11 +118,11 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest{
     private By getSuggestion(String value) {
         switch(getLayout()) {
             case DIV:
-                return By.xpath("//div[@id='form:autocompleteItems']/div[contains(text(), '" + value + "')]");
+                return ByJQuery.jquerySelector("div[id$=autocompleteItems] > div:contains('" + value + "')");
             case LIST:
-                return By.xpath("//ul[@id='form:autocompleteItems']/li[contains(text(), '" + value + "')]");
+                return ByJQuery.jquerySelector("ul[id$=autocompleteItems] > li:contains('" + value + "')");
             case TABLE:
-                return By.xpath("//table[@id='form:autocompleteItems']/tbody/tr/td[contains(text(), '" + value + "')]");
+                return ByJQuery.jquerySelector("table[id$=autocompleteItems] > tbody > tr > td:contains('" + value + "')");
             default:
                 throw new UnsupportedOperationException();
         }

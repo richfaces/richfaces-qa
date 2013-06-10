@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"  xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:r="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -37,10 +38,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            <rich:popupPanel id="popupPanel" resizeable="true"
-                             header="Popup panel shown using rich:componentControl and rich:hashParam">
+            <r:popupPanel id="popupPanel" resizeable="true"
+                          header="Popup panel shown using r:componentControl and r:hashParam">
                 <f:facet name="controls">
-                    <h:outputLink value="#" onclick="#{rich:component('popupPanel')}.hide(); return false;">
+                    <h:outputLink value="#" onclick="#{r:component('popupPanel')}.hide();
+                            return false;">
                         X
                     </h:outputLink>
                 </f:facet>
@@ -66,20 +68,22 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     hashParam.
 
                 </fieldset>
-            </rich:popupPanel>
+            </r:popupPanel>
 
             <h:commandButton id="openPanelButton" value="Show popup">
-                <rich:componentControl target="popupPanel" operation="show">
+                <r:componentControl target="popupPanel" operation="show">
                     <a4j:param noEscape="true" value="event" />
-                    <rich:hashParam>
+                    <r:hashParam id="hashParam"
+                                 rendered="#{richHashParamBean.attributes['rendered'].value}"
+                                 >
                         <f:param name="width" value="543" />
                         <f:param name="height" value="345" />
                         <f:param name="minWidth" value="300" />
                         <f:param name="minHeight" value="150" />
                         <a4j:param noEscape="true" name="left" value="33+44" />
                         <a4j:param noEscape="true" name="top" value="55-33" />
-                    </rich:hashParam>
-                </rich:componentControl>
+                    </r:hashParam>
+                </r:componentControl>
             </h:commandButton>
 
         </ui:define>

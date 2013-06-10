@@ -23,17 +23,21 @@ package org.richfaces.tests.metamer.ftest.richFileUpload;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.fileUploadAttributes;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class TestFileUploadProgressFacet extends AbstractFileUploadTest {
+
+    @FindBy(css = "div[id$=customProgressBar]")
+    private WebElement customPB;
 
     @Override
     public URL getTestUrl() {
@@ -42,10 +46,8 @@ public class TestFileUploadProgressFacet extends AbstractFileUploadTest {
 
     @Test
     public void testCustomProgressBarPresenceBeforeFinishedUpload() {
-        assertTrue(Graphene.element(page.customPB).isPresent().apply(driver),
-            "No custom progress bar is present on page.");
-        assertFalse(Graphene.element(page.customPB).isVisible().apply(driver),
-            "Custom progress bar should not be displayed now.");
+        assertPresent(customPB, "No custom progress bar is present on page.");
+        assertNotVisible(customPB, "Custom progress bar should not be displayed now.");
 
         // stop page refreshing/rendering after file is sent
         fileUploadAttributes.set(FileUploadAttributes.onfilesubmit, "window.stop()");
@@ -54,8 +56,8 @@ public class TestFileUploadProgressFacet extends AbstractFileUploadTest {
         // it
         sendFileWithWaiting(acceptableFile, true, false);
 
-        Graphene.waitGui().withMessage("Custom progress bar should be displayed now.").until().element(page.customPB)
-            .is().visible();
+        Graphene.waitGui().withMessage("Custom progress bar should be displayed now.").until().element(customPB)
+                .is().visible();
     }
 
     @Test
@@ -64,8 +66,8 @@ public class TestFileUploadProgressFacet extends AbstractFileUploadTest {
         sendFileWithWaiting(acceptableFile, true, true);
 
         Graphene.waitGui().withMessage("Done label should be displayed after upload.").until()
-            .element(page.uploadStatusLabel).is().visible();
+                .element(fileUpload.getItems().get(0).getStateElement()).is().visible();
         Graphene.waitGui().withMessage("Progress bar should not be displayed after upload is completed.").until()
-            .element(page.customPB).is().not().visible();
+                .element(customPB).is().not().visible();
     }
 }

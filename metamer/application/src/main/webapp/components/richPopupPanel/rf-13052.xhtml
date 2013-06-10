@@ -2,9 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:r="http://richfaces.org/rich"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:r="http://richfaces.org/rich">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -39,37 +37,26 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-            California should be the first state.
-            <br/>
-            <c:choose >
-                <c:when test="#{not empty richSelectBean.validatorMessage}">
-                    <r:select id="select"
-                              validator="org.richfaces.CaliforniaFirstValidator"
-                              validatorMessage="#{richSelectBean.validatorMessage}"
-                              value="#{richSelectBean.attributes['value'].value}"
-                              valueChangeListener="#{richSelectBean.listener}">
-                        <f:selectItems value="#{richSelectBean.capitalsOptions}" />
-                        <a4j:ajax event="change"/>
-                    </r:select>
-                </c:when>
-                <c:otherwise>
-                    <r:select id="select"
-                              validator="org.richfaces.CaliforniaFirstValidator"
-                              value="#{richSelectBean.attributes['value'].value}"
-                              valueChangeListener="#{richSelectBean.listener}">
-                        <f:selectItems value="#{richSelectBean.capitalsOptions}" />
-                        <a4j:ajax event="change"/>
-                    </r:select>
-                </c:otherwise>
-            </c:choose>
-            <r:message id="message" for="select"/>
+            <p>
+                This panel is only influenced by @visualOptions. Set @visualOptions to e.g.: 'left:1px'
+                and check if the panel has these attributes.
+                <a href="https://issues.jboss.org/browse/RF-13052">RF-13052</a>. Not automatized.
+            </p>
+
+
+            <h:commandButton id="openPanelButton" value="Call the popup">
+                <r:componentControl target="popupPanel" operation="show" />
+            </h:commandButton>
+
+            <r:popupPanel id="popupPanel"
+                          visualOptions="#{richPopupPanelBean.attributes['visualOptions'].value}"
+                          >
+                    <a id="contentHideLink" href="#" onclick="#{r:component('popupPanel')}.hide()">hide this panel</a>
+            </r:popupPanel>
         </ui:define>
 
         <ui:define name="outOfTemplateAfter">
-            Validator message:
-            <h:inputText id="validatorMessageInput"
-                         value="#{richSelectBean.validatorMessage}"
-                         onchange="submit();"/>
+            visualOptions: <h:inputText id="visualOptionsInput" onchange="submit()" value="#{richPopupPanelBean.attributes['visualOptions'].value}"/>
         </ui:define>
 
     </ui:composition>

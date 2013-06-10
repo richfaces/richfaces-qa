@@ -19,17 +19,40 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richHashParam;
+package org.richfaces.tests.page.fragments.impl.dataScroller;
 
-import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
+import org.richfaces.tests.page.fragments.impl.VisibleComponent;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public enum HashParamAttributes implements AttributeEnum {
+public interface DataScroller extends VisibleComponent {
 
-    binding,
-    id,
-    name,
-    rendered
+    enum DataScrollerSwitchButton {
+
+        FIRST,
+        FAST_REWIND,
+        PREVIOUS,
+        NEXT,
+        FAST_FORWARD,
+        LAST;
+    }
+
+    int getActPageNumber();
+
+    boolean isButtonDisabled(DataScrollerSwitchButton btn);
+
+    boolean isFirstPage();
+
+    boolean isLastPage();
+
+    /**
+     * Direct switch to page. Indexed from 1. Page must exist. Without any waiting.
+     */
+    void switchTo(int page);
+
+    /**
+     * Switch by buttons. Clicks on the chosen button. Without any waiting.
+     */
+    void switchTo(DataScrollerSwitchButton btn);
 }

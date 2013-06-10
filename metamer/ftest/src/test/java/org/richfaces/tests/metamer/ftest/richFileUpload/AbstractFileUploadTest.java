@@ -25,12 +25,16 @@ import static org.testng.Assert.assertTrue;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.util.List;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.richfaces.tests.page.fragments.impl.input.fileUpload.RichFacesFileUpload;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -39,12 +43,16 @@ import org.testng.annotations.BeforeMethod;
 public abstract class AbstractFileUploadTest extends AbstractWebDriverTest {
 
     @Page
-    protected FileUploadPage page;
+    protected MetamerPage page;
+    @FindBy(css = "span[id$=uploadedFilesPanel] li")
+    protected List<WebElement> uploadedFilesList;
+    @FindBy(css = "div[id$=fileUpload]")
+    protected RichFacesFileUpload fileUpload;
 
     protected static final String notAcceptableFile = "file1.x";
     protected static final String acceptableFile = "file1.txt";
     protected static final String bigFile = "bigFile.txt";
-    protected static final String[] filenames = { acceptableFile, "file2.txt" };
+    protected static final String[] filenames = {acceptableFile, "file2.txt"};
     protected static final String ap = "\"";
     protected int filesToUploadCount;
     protected int filesUploadedCount;
@@ -55,13 +63,7 @@ public abstract class AbstractFileUploadTest extends AbstractWebDriverTest {
         filesUploadedCount = 0;
     }
 
-    /**
-     * Sends file to fileupload input field and waits for page update.
-     *
-     * @param filename
-     * @param willBeAccepted
-     */
-    protected void sendFileToInputWithWaiting(String filename, boolean willBeAccepted) {
+    protected File createFileFromString(String filename) {
         File file = null;
         try {
             file = new File(AbstractFileUploadTest.class.getResource(filename).toURI());
@@ -69,14 +71,20 @@ public abstract class AbstractFileUploadTest extends AbstractWebDriverTest {
         }
         assertTrue(file != null, "File does not exist.");
         assertTrue(file.exists(), "File does not exist.");
+        return file;
+    }
 
-        //send file to input field
-        Graphene.waitGui().until().element(page.fileInputField).is().present();
-        page.fileInputField.sendKeys(file.getAbsolutePath());
+    /**
+     * Sends file to fileupload input field and waits for page update.
+     *
+     * @param filename
+     * @param willBeAccepted
+     */
+    protected void sendFileToInputWithWaiting(String filename, boolean willBeAccepted) {
+        fileUpload.addFile(createFileFromString(filename));
         if (willBeAccepted) {
             this.filesToUploadCount++;
         }
-        waitUntilFilesToUploadListShow(filesToUploadCount);
     }
 
     /**
@@ -90,15 +98,11 @@ public abstract class AbstractFileUploadTest extends AbstractWebDriverTest {
     protected void sendFileWithWaiting(String filename, boolean willBeAccepted, boolean willBeUploaded) {
         sendFileToInputWithWaiting(filename, willBeAccepted);
         if (willBeUploaded) {
-            MetamerPage.waitRequest(page.uploadButton, WaitRequestType.XHR).click();
+            MetamerPage.waitRequest(fileUpload, WaitRequestType.XHR).upload();
         } else {
             //Metamer's request time will not change, but XHR request will be send
-            Graphene.guardAjax(page.uploadButton).click();
+            Graphene.guardAjax(fileUpload).upload();
         }
-        if (willBeUploaded) {
-            this.filesUploadedCount++;
-        }
-        waitUntilUploadedFilesListShow(filesUploadedCount);
     }
 
     /**
@@ -114,23 +118,6 @@ public abstract class AbstractFileUploadTest extends AbstractWebDriverTest {
             for (int i = 1; i <= expectedNumberOfFiles; i++) {
                 by = By.xpath("//span[contains(@id, 'uploadedFilesPanel')]//ul //li[" + i + "]");
                 Graphene.waitGui().until().element(by).is().visible();
-            }
-        }
-    }
-
-    /**
-     * Waits until page renders elements for all expected files to be uploaded
-     * in list of files to be uploaded
-     *
-     * @param expectedNumberOfFiles
-     */
-    protected void waitUntilFilesToUploadListShow(int expectedNumberOfFiles) {
-        if (expectedNumberOfFiles == 0) {
-        } else {
-            By by;
-            for (int i = 1; i <= expectedNumberOfFiles; i++) {
-                by = By.xpath("//div[@class='rf-fu-itm'][" + i + "]");
-                Graphene.waitAjax().until().element(by).is().visible();
             }
         }
     }
