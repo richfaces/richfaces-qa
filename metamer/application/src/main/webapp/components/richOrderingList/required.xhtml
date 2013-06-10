@@ -5,6 +5,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:r="http://richfaces.org/rich"
+      xmlns:a="http://richfaces.org/a4j"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <!--
@@ -44,7 +45,7 @@
                 Ordering is bound to empty list, so the required message can be triggered by the ajax submit button.
             </p>
 
-            <r:commandButton id="submitButton" value="ajax submit"/>
+            <a:commandButton id="submitButton" value="ajax submit"/>
             <br/>
             <c:choose>
                 <c:when test="#{not empty richOrderingListBean.attributes['requiredMessage'].value}">
