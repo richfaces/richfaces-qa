@@ -51,6 +51,13 @@
         </protocol>
     </container>
 
+    <container qualifier="jbosseap-managed-6-1">
+        <configuration>
+            <property name="serverConfig">standalone-full.xml</property>
+            <property name="enableAssertions">false</property>
+        </configuration>
+    </container>
+
     <container qualifier="tomcat-managed-6">
         <configuration>
             <property name="javaVmArguments">-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -Dcom.sun.management.jmxremote
