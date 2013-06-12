@@ -21,17 +21,18 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTree;
 
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.treeAttributes;
-
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.treeAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.util.Deque;
 import java.util.LinkedList;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.component.SwitchType;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -49,25 +50,28 @@ public class TestTreeToggling extends AbstractTestTree {
     @Use(enumeration = true)
     SwitchType toggleType = SwitchType.ajax;
 
-    private TreeModel tree = new TreeModel(pjq("div.rf-tr[id$=richTree]"));
-    private TreeNodeModel treeNode;
+    @Page
+    protected TreeSimplePage page;
+
+    private RichFacesTreeNode treeNode;
 
     @BeforeMethod
     public void verifyInitialState() {
         treeAttributes.set(TreeAttributes.toggleType, toggleType);
-        tree.setToggleType(toggleType);
-        assertEquals(tree.getCollapsedNodesCount(), TOP_LEVEL_NODES);
-        assertEquals(tree.getExpandedNodesCount(), 0);
+        page.tree.setToggleType(toggleType);
+        assertEquals(page.tree.getCollapsedNodes().size(), TOP_LEVEL_NODES);
+        assertEquals(page.tree.getExpandedNodes().size(), 0);
     }
 
     @Test
     @Use(field = "sample", value = "swingTreeNode")
     public void testTopLevelNodesExpansion() {
         for (int i = 1; i <= TOP_LEVEL_NODES; i++) {
-            treeNode = tree.getNode(i);
+            treeNode = page.tree.getNodes().get(i-1);
+            treeNode.setToggleType(toggleType);
             treeNode.expand();
-            assertEquals(tree.getCollapsedNodesCount(), TOP_LEVEL_NODES - i);
-            assertEquals(tree.getExpandedNodesCount(), i);
+            assertEquals(page.tree.getCollapsedNodes().size(), TOP_LEVEL_NODES - i);
+            assertEquals(page.tree.getExpandedNodes().size(), i);
             assertTrue(treeNode.isExpanded());
         }
     }
@@ -83,10 +87,11 @@ public class TestTreeToggling extends AbstractTestTree {
     public void testTopLevelNodesCollapsion() {
         testTopLevelNodesExpansion();
         for (int i = 1; i <= TOP_LEVEL_NODES; i++) {
-            treeNode = tree.getNode(i);
-            treeNode.expand();
-            assertEquals(tree.getCollapsedNodesCount(), i);
-            assertEquals(tree.getExpandedNodesCount(), TOP_LEVEL_NODES - i);
+            treeNode = page.tree.getNodes().get(i-1);
+            treeNode.setToggleType(toggleType);
+            treeNode.collapse();
+            assertEquals(page.tree.getCollapsedNodes().size(), i);
+            assertEquals(page.tree.getExpandedNodes().size(), TOP_LEVEL_NODES - i);
             assertTrue(treeNode.isCollapsed());
         }
     }
@@ -106,7 +111,8 @@ public class TestTreeToggling extends AbstractTestTree {
             for (int d = 1; d <= path.length; d++) {
                 int number = path[d - 1];
 
-                treeNode = (d == 1) ? tree.getNode(number) : treeNode.getNode(number);
+                treeNode = (d == 1) ? page.tree.getNodes().get(number-1) : treeNode.getNode(number-1);
+                treeNode.setToggleType(toggleType);
 
                 if (d < depth) {
                     assertNodeState(NodeState.COLLAPSED);
@@ -128,18 +134,19 @@ public class TestTreeToggling extends AbstractTestTree {
     @Test
     @Use(field = "sample", value = "swingTreeNode")
     public void testDeepCollapsion() {
-        Deque<TreeNodeModel> stack = new LinkedList<TreeNodeModel>();
+        Deque<RichFacesTreeNode> stack = new LinkedList<RichFacesTreeNode>();
 
         testDeepExpansion();
 
-        for (TreeNodeModel treeNode1 : tree.getExpandedNodes()) {
+        for (RichFacesTreeNode treeNode1 : page.tree.getExpandedNodes()) {
             stack.push(treeNode1);
-            for (TreeNodeModel treeNode2 : treeNode1.getExpandedNodes()) {
+            for (RichFacesTreeNode treeNode2 : treeNode1.getExpandedNodes()) {
                 stack.push(treeNode2);
             }
         }
 
         while ((treeNode = stack.poll()) != null) {
+            treeNode.setToggleType(toggleType);
             treeNode.expand();
         }
     }
