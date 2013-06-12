@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richHashParam;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.hashParamAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -60,6 +61,8 @@ public class TestHashParam extends AbstractWebDriverTest {
     //
     @FindBy(css = "input[id$=openPanelButton]")
     private WebElement openButton;
+    @FindBy(css = "a[id$=hiddenLink]")
+    private WebElement hiddenLink;
     @FindBy(css = "div[id$=popupPanel]")
     private WebElement panel;
     @FindBy(css = "div[id$=popupPanel_container].rf-pp-cntr")
@@ -97,6 +100,15 @@ public class TestHashParam extends AbstractWebDriverTest {
     private void openPopup() {
         openButton.click();
         Graphene.waitGui().until(popupPanel.isVisibleCondition());
+    }
+
+    @Test
+    public void testName() {
+        String generatedOnClickFunctionPartTemplate = "{\"%s\":{\"param1\":\"1\",\"param2\":\"2\"} }";
+        String testedName = "RFCustomName";
+        hashParamAttributes.set(HashParamAttributes.name, testedName);
+        String onClick = hiddenLink.getAttribute("onclick");// hidden link that contains hashParam with @name
+        assertTrue(onClick.contains(String.format(generatedOnClickFunctionPartTemplate, testedName)), "The attribute @name does not work.");
     }
 
     @Test
