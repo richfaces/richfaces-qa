@@ -31,7 +31,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 23169 $
  */
-public class TestTreeSelection extends AbstractTestTreeSelectionWD {
+public class TestTreeSelection extends AbstractTestTreeSelection {
 
     @Test
     @Use(field = "selectionType", value = "selectionTypeClient")

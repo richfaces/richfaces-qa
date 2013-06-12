@@ -21,9 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTree;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.treeAttributes;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.treeAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -34,9 +32,11 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode;
 import org.richfaces.ui.common.SwitchType;
 import org.testng.annotations.BeforeMethod;
 
@@ -55,50 +55,48 @@ public abstract class AbstractTestTreeSelection extends AbstractTestTree {
     protected SwitchType[] selectionTypeClient = new SwitchType[] { SwitchType.client };
     protected SwitchType[] eventEnabledSelectionTypes = new SwitchType[] { SwitchType.ajax };
 
-    protected TreeModel tree = new TreeModel(pjq("div.rf-tr[id$=richTree]"));
-    protected TreeNodeModel treeNode;
+    @Page
+    TreeSimplePage page;
 
     protected Integer[][] selectionPaths = new Integer[][] { { 4, 3 }, { 2, 1, 1 }, { 2 }, { 4, 10, 3 } };
 
-    private JQueryLocator expandAll = jq("input:submit[id$=expandAll]");
-    private JQueryLocator selection = jq("span[id$=selection]");
-    private JQueryLocator clientId = jq("span[id$=selectionEventClientId]");
-    private JQueryLocator newSelection = jq("span[id$=selectionEventNewSelection]");
-    private JQueryLocator oldSelection = jq("span[id$=selectionEventOldSelection]");
+    protected RichFacesTreeNode treeNode;
 
     @BeforeMethod
     public void testInitialize() {
         treeAttributes.set(TreeAttributes.selectionType, selectionType);
-        tree.setSelectionType(selectionType);
+        page.tree.setSelectionType(selectionType);
     }
 
     protected void testTopLevelSelection() {
-        assertEquals(tree.getAnySelectedNodesCount(), 0);
+        assertEquals(page.tree.getAnySelectedNodesCount(), 0);
 
-        for (TreeNodeModel treeNode : tree.getNodes()) {
+        for (RichFacesTreeNode treeNode : page.tree.getNodes()) {
             assertFalse(treeNode.isSelected());
             assertTrue(treeNode.isCollapsed());
+            treeNode.setSelectionType(selectionType);
             treeNode.select();
             assertTrue(treeNode.isSelected());
             assertTrue(treeNode.isCollapsed());
 
-            assertEquals(tree.getAnySelectedNodesCount(), 1);
+            assertEquals(page.tree.getAnySelectedNodesCount(), 1);
         }
     }
 
     protected void testSubNodesSelection() {
         expandAll();
-        assertEquals(tree.getAnySelectedNodesCount(), 0);
+        assertEquals(page.tree.getAnySelectedNodesCount(), 0);
 
         for (Integer[] path : selectionPaths) {
             treeNode = null;
             for (int index : path) {
-                treeNode = (treeNode == null) ? tree.getNode(index) : treeNode.getNode(index);
+                treeNode = (treeNode == null) ? page.tree.getNodes().get(index-1) : treeNode.getNode(index-1);
+                treeNode.setSelectionType(selectionType);
             }
             assertFalse(treeNode.isSelected());
             treeNode.select();
             assertTrue(treeNode.isSelected());
-            assertEquals(tree.getAnySelectedNodesCount(), 1);
+            assertEquals(page.tree.getAnySelectedNodesCount(), 1);
         }
     }
 
@@ -108,15 +106,24 @@ public abstract class AbstractTestTreeSelection extends AbstractTestTree {
         for (Integer[] path : selectionPaths) {
             treeNode = null;
             for (int index : path) {
-                treeNode = (treeNode == null) ? tree.getNode(index) : treeNode.getNode(index);
+                treeNode = (treeNode == null) ? page.tree.getNodes().get(index-1) : treeNode.getNode(index-1);
+                treeNode.setSelectionType(selectionType);
             }
+            String previousSelectionValue = page.selection.getText();
             treeNode.select();
+            // selection output take some time until updated
+            Graphene.waitAjax().until().element(page.clientId).is().present();
             assertEquals(getClientId(), "richTree");
+
+            // there is delay before select triggers output update
+            Graphene.waitAjax().until().element(page.selection).text().not().equalTo(previousSelectionValue);
+
             assertEquals(
                 getSelection(),
                 path,
                 SimplifiedFormat.format("Actual Selection ({0}) doesn't correspond to expected ({1})",
                     Arrays.deepToString(getSelection()), Arrays.deepToString(path)));
+
             assertEquals(
                 getNewSelection(),
                 path,
@@ -129,29 +136,43 @@ public abstract class AbstractTestTreeSelection extends AbstractTestTree {
                     SimplifiedFormat.format("Actual Old selection ({0}) doesn't correspond to expected ({1})",
                         Arrays.deepToString(getOldSelection()), Arrays.deepToString(old)));
             } else {
-                assertEquals(selenium.getText(oldSelection), "[]");
+                assertEquals(page.oldSelection.getText(), "[]");
             }
             old = getNewSelection();
         }
     }
 
     protected Integer[] getSelection() {
-        String string = selenium.getText(selection);
+        String string = page.selection.getText();
+        string = page.selection.getText();
         return getIntsFromString(string);
     }
 
     protected Integer[] getNewSelection() {
-        String string = selenium.getText(newSelection);
+        String string = page.newSelection.getText();
         return getIntsFromString(string);
     }
 
     protected Integer[] getOldSelection() {
-        String string = selenium.getText(oldSelection);
+        String string = page.oldSelection.getText();
         return getIntsFromString(string);
     }
 
     protected String getClientId() {
-        return selenium.getText(clientId);
+        return page.clientId.getText();
+    }
+
+    protected void expandAll() {
+        for (Integer[] path : selectionPaths) {
+            treeNode = null;
+            for (int i = 0; i < path.length; i++) {
+                int index = path[i];
+                treeNode = (treeNode == null) ? page.tree.getNodes().get(index-1) : treeNode.getNode(index-1);
+                if (i < path.length - 1) {
+                    treeNode.expand();
+                }
+            }
+        }
     }
 
     protected Integer[] getIntsFromString(String string) {
@@ -168,7 +189,4 @@ public abstract class AbstractTestTreeSelection extends AbstractTestTree {
         throw new IllegalStateException("pattern does not match");
     }
 
-    protected void expandAll() {
-        guardXhr(selenium).click(expandAll);
-    }
 }

@@ -33,7 +33,7 @@ import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
-import org.richfaces.tests.metamer.ftest.richTree.AbstractTestTreeSelectionWD;
+import org.richfaces.tests.metamer.ftest.richTree.AbstractTestTreeSelection;
 import org.richfaces.tests.metamer.ftest.richTree.TreeSimplePage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -42,7 +42,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 23132 $
  */
-public class TestTreeModelAdaptorSelection extends AbstractTestTreeSelectionWD {
+public class TestTreeModelAdaptorSelection extends AbstractTestTreeSelection {
 
     @Page
     TreeSimplePage page;

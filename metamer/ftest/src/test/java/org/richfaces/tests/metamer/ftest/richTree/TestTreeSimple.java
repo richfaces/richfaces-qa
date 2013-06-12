@@ -71,7 +71,7 @@ import com.google.common.base.Predicate;
  * @version $Revision: 23125 $
  */
 @Use(field = "sample", value = "swingTreeNode")
-public class TestTreeSimple extends AbstractTestTreeWD {
+public class TestTreeSimple extends AbstractTestTree {
 
     private static final String IMAGE_URL = "/resources/images/loading.gif";
     private static final String testClassValue = "metamer-ftest-class";

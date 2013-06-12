@@ -37,7 +37,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 23125 $
  */
-public class TestTreePhases extends AbstractTestTreeWD {
+public class TestTreePhases extends AbstractTestTree {
     @Inject
     @Use(booleans = { true, false })
     Boolean immediate;

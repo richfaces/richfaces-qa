@@ -27,7 +27,7 @@ import java.net.URL;
 
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.ftest.richTree.TestTreeTogglingWD;
+import org.richfaces.tests.metamer.ftest.richTree.TestTreeToggling;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -37,7 +37,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22823 $
  */
-public class TestTreeModelAdaptorToggling extends TestTreeTogglingWD {
+public class TestTreeModelAdaptorToggling extends TestTreeToggling {
 
     @Inject
     @Use(enumeration = true)
