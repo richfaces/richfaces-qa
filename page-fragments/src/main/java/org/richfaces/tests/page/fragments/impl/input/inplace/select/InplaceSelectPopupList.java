@@ -36,7 +36,7 @@ import org.richfaces.tests.page.fragments.impl.VisibleComponent;
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-class InplaceSelectPopupList implements VisibleComponent {
+public class InplaceSelectPopupList implements VisibleComponent {
 
     @Root
     private WebElement root;

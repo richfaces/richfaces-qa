@@ -298,7 +298,7 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 select.editBy(OpenBy.CLICK).changeToValueAtIndex(10);
-                page.requestTime.click();
+                page.getRequestTimeElement().click();
             }
         });
     }
@@ -527,10 +527,10 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         MetamerPage.waitRequest(select.editBy(OpenBy.CLICK), WaitRequestType.NONE).changeToValueAtIndex(10);
         assertEquals(getOutputText(), "", "Output should be empty.");
         //blur
-        String requestTime = page.requestTime.getText().trim();
+        String requestTime = page.getRequestTimeElement().getText().trim();
         Utils.triggerJQ(executor, "blur", select.getEditInputElement());
         waiting(2000L);
-        assertEquals(page.requestTime.getText().trim(), requestTime, "Request time shouldn't change.");
+        assertEquals(page.getRequestTimeElement().getText().trim(), requestTime, "Request time shouldn't change.");
         assertEquals(getOutputText(), "", "Output should be empty.");
         //with confirmation
         MetamerPage.waitRequest(select.editBy(OpenBy.CLICK).changeToValueAtIndex(10), WaitRequestType.XHR).confirm();
@@ -552,9 +552,9 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         MetamerPage.waitRequest(select.editBy(OpenBy.CLICK), WaitRequestType.NONE).changeToValueAtIndex(10);
         assertEquals(getOutputText(), "", "Output should be empty.");
         //blur
-        String requestTime = page.requestTime.getText();
+        String requestTime = page.getRequestTimeElement().getText();
         Utils.triggerJQ(executor, "blur", select.getEditInputElement());
-        Graphene.waitAjax().until().element(page.requestTime).text().not().equalTo(requestTime);
+        Graphene.waitAjax().until().element(page.getRequestTimeElement()).text().not().equalTo(requestTime);
         assertEquals(getOutputText(), "Hawaii", "Output should contain selected value.");
     }
 

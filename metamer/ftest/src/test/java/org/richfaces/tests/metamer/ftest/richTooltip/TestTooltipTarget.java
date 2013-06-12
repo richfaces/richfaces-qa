@@ -66,20 +66,20 @@ public class TestTooltipTarget extends AbstractWebDriverTest {
     public void testTarget() {
         // 2. target
         tooltipAttributes.set(target, "jsf-div");
-        page.tooltip.recall(page.panel2);
-        Graphene.waitGui().until().element(page.tooltip.root).is().visible();
+        page.getTooltip().recall(page.getPanel2());
+        Graphene.waitGui().until().element(page.getTooltip().getRoot()).is().visible();
 
         // 3. default target
         tooltipAttributes.set(target, "panel");
-        page.tooltip.recall(page.panel3);
-        Graphene.waitGui().until().element(page.tooltip.root).is().visible();
+        page.getTooltip().recall(page.getPanel3());
+        Graphene.waitGui().until().element(page.getTooltip().getRoot()).is().visible();
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11370")
     public void testTargetWithRegularDiv() {
         tooltipAttributes.set(target, "regular-div");
-        page.tooltip.recall(page.panel1);
-        Graphene.waitGui().until().element(page.tooltip.root).is().visible();
+        page.getTooltip().recall(page.getPanel1());
+        Graphene.waitGui().until().element(page.getTooltip().getRoot()).is().visible();
     }
 }

@@ -49,25 +49,37 @@ public class RichFacesPanelMenuGroup {
     public static final String CSS_ICON_RIGHT = "td[class*=rf-pm-][class*=-gr-exp-ico]";
 
     @Root
-    WebElement root;
+    private WebElement root;
 
     @Drone
     private WebDriver browser;
 
     @FindBy(css = CSS_HEADER)
-    public WebElement header;
+    private WebElement header;
 
     @FindBy(css = CSS_LABEL)
-    public WebElement label;
+    private WebElement label;
 
     @FindBy(css = CSS_ICON_LEFT)
-    public RichFacesPanelMenuGroupIcon leftIcon;
+    private RichFacesPanelMenuGroupIcon leftIcon;
 
     @FindBy(css = CSS_ICON_RIGHT)
-    public RichFacesPanelMenuGroupIcon rightIcon;
+    private RichFacesPanelMenuGroupIcon rightIcon;
 
     // mode can be inherited from parent panelMenu
-    Mode mode;
+    protected Mode mode;
+
+    public RichFacesPanelMenuGroupIcon getRightIcon() {
+        return rightIcon;
+    }
+
+    public RichFacesPanelMenuGroupIcon getLeftIcon() {
+        return leftIcon;
+    }
+
+    public WebElement getLabel() {
+        return label;
+    }
 
     public void toggle() {
         if (mode == null) {

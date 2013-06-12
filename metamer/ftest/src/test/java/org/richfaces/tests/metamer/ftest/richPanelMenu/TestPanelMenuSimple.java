@@ -168,10 +168,10 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         panelMenuAttributes.set(itemMode, PanelMenuMode.client);
 
         // expand all group manually
-        page.group1.label.click();
-        page.group2.label.click();
-        page.group24.label.click();
-        page.group3.label.click();
+        page.group1.getLabel().click();
+        page.group2.getLabel().click();
+        page.group24.getLabel().click();
+        page.group3.getLabel().click();
         page.collapseAll.click();
 
         assertEquals(page.panelMenu.getAllExpandedGroups().size(), 0);
@@ -184,10 +184,10 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
         panelMenuAttributes.set(itemMode, PanelMenuMode.client);
 
         // expand all group manually
-        page.group1.label.click();
-        page.group2.label.click();
-        page.group24.label.click();
-        page.group3.label.click();
+        page.group1.getLabel().click();
+        page.group2.getLabel().click();
+        page.group24.getLabel().click();
+        page.group3.getLabel().click();
         page.collapseAllBtn1.click();
 
         assertEquals(page.panelMenu.getAllExpandedGroups().size(), 0);

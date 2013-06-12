@@ -406,7 +406,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
                 page.fileDropDownMenu.invoke(page.target1);
                 new Actions(driver).moveToElement(page.fileDropDownMenu.getItems().get(3)).build().perform();
                 waitModel().until().element(page.groupList).is().visible();
-                new Actions(driver).moveToElement(page.requestTime).build().perform();
+                new Actions(driver).moveToElement(page.getRequestTimeElement()).build().perform();
                 waitGui().until().element(page.groupList).is().not().visible();
             }
         });

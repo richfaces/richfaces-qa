@@ -40,25 +40,29 @@ import org.richfaces.ui.common.SwitchType;
 public class RichFacesTree { //extends RichFacesTreeNode {
 
     @Root
-    public WebElement root;
+    private WebElement root;
 
     @FindBy(jquery = ">" + RichFacesTreeNode.CSS_NODE)
-    public List<RichFacesTreeNode> nodes;
+    private List<RichFacesTreeNode> nodes;
 
     @FindBy(jquery = RichFacesTreeNode.CSS_NODE)
-    public List<RichFacesTreeNode> anyNodes;
+    private List<RichFacesTreeNode> anyNodes;
 
     @FindBy(jquery = ">" + CSS_NODES_COLLAPSED)
-    public List<RichFacesTreeNode> nodesCollapsed;
+    private List<RichFacesTreeNode> nodesCollapsed;
 
     @FindBy(jquery = ">" + CSS_NODES_EXPANDED)
-    public List<RichFacesTreeNode> nodesExpanded;
+    private List<RichFacesTreeNode> nodesExpanded;
 
     @FindBy(jquery = JQUERY_NODES_SELECTED)
-    public List<WebElement> anySelectedNodes;
+    private List<WebElement> anySelectedNodes;
 
     SwitchType toggleType = SwitchType.ajax;
     SwitchType selectionType = SwitchType.ajax;
+
+    public WebElement getRoot() {
+        return root;
+    }
 
     public void setToggleType(SwitchType toggleType) {
         this.toggleType = toggleType;
@@ -94,5 +98,13 @@ public class RichFacesTree { //extends RichFacesTreeNode {
 
     public int getAnySelectedNodesCount() {
         return anySelectedNodes.size();
+    }
+
+    protected List<RichFacesTreeNode> getNodesCollapsed() {
+        return nodesCollapsed;
+    }
+
+    protected List<RichFacesTreeNode> getNodesExpanded() {
+        return nodesExpanded;
     }
 }

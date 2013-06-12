@@ -144,7 +144,7 @@ public abstract class AbstractPlaceholderNonJSFTest extends AbstractWebDriverTes
         assertEquals(getInputTextColor(input3), Color.black, "Input 3 text color");
 
         clearInput(input1);
-        page.requestTime.click();
+        page.getRequestTimeElement().click();
         Graphene.waitGui().until().element(input1).attribute("value").equalTo(DEFAULT_PLACEHOLDER_TEXT);
 
         assertEquals(getInputValue(input1), DEFAULT_PLACEHOLDER_TEXT, "Input 1 value");

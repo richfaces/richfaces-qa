@@ -45,27 +45,27 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
     protected AjaxPage page;
 
     public void testClick() {
-        String reqTime = page.requestTime.getText();
+        String reqTime = page.getRequestTimeElement().getText();
         performAction();
-        Graphene.waitModel().until("Page was not updated").element(page.requestTime).text().not().equalTo(reqTime);
+        Graphene.waitModel().until("Page was not updated").element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
 
         assertOutput1Changed();
         assertOutput2Changed();
     }
 
     public void testType() {
-        String reqTime = page.requestTime.getText();
+        String reqTime = page.getRequestTimeElement().getText();
         typeKeys("RichFaces 4");
-        Graphene.waitModel().until("Page was not updated").element(page.requestTime).text().not().equalTo(reqTime);
+        Graphene.waitModel().until("Page was not updated").element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
 
         assertOutput1Changed();
         assertOutput2Changed();
     }
 
     public void testTypeUnicode() {
-        String reqTime = page.requestTime.getText();
+        String reqTime = page.getRequestTimeElement().getText();
         typeKeys("ľščťžýáíéúôň фывацукйешгщь");
-        Graphene.waitModel().until("Page was not updated").element(page.requestTime).text().not().equalTo(reqTime);
+        Graphene.waitModel().until("Page was not updated").element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
 
         assertEquals(page.output1.getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output1 should change");
         assertEquals(page.output2.getText(), "ľščťžýáíéúôň фывацукйешгщь", "Output2 should change");
@@ -75,10 +75,10 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
         ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
         ajaxAttributes.set(AjaxAttributes.bypassUpdates, true);
 
-        String reqTime = page.requestTime.getText();
+        String reqTime = page.getRequestTimeElement().getText();
         performAction();
         waiting(500);
-        Graphene.waitModel().until("Page was not updated").element(page.requestTime).text().not().equalTo(reqTime);
+        Graphene.waitModel().until("Page was not updated").element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
 
         assertOutput1NotChanged();
         page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
@@ -90,9 +90,9 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
         ajaxAttributes.set(AjaxAttributes.data, "RichFaces 4 data");
         ajaxAttributes.set(AjaxAttributes.oncomplete, "data = event.data");
 
-        String reqTime = page.requestTime.getText();
+        String reqTime = page.getRequestTimeElement().getText();
         performAction();
-        Graphene.waitModel().until("Page was not updated").element(page.requestTime).text().not().equalTo(reqTime);
+        Graphene.waitModel().until("Page was not updated").element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
 
         String data = ((JavascriptExecutor) driver).executeScript("return data").toString();
         assertEquals(data, "RichFaces 4 data", "Data sent with ajax request");
@@ -110,11 +110,11 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
     public void testExecute() {
         ajaxAttributes.set(AjaxAttributes.execute, "[input, executeChecker]");
 
-        String reqTime = page.requestTime.getText();
+        String reqTime = page.getRequestTimeElement().getText();
         performAction();
-        Graphene.waitModel().until("Page was not updated").element(page.requestTime).text().not().equalTo(reqTime);
+        Graphene.waitModel().until("Page was not updated").element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
 
-        for (WebElement element : page.phases) {
+        for (WebElement element : page.getPhasesElements()) {
             if ("* executeChecker".equals(element.getText())) {
                 return;
             }
@@ -127,10 +127,10 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
         ajaxAttributes.set(AjaxAttributes.listener, "doubleStringListener");
         ajaxAttributes.set(AjaxAttributes.immediate, true);
 
-        String reqTime = page.requestTime.getText();
+        String reqTime = page.getRequestTimeElement().getText();
         performAction();
         waiting(500);
-        Graphene.waitModel().until("Page was not updated").element(page.requestTime).text().not().equalTo(reqTime);
+        Graphene.waitModel().until("Page was not updated").element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
 
         assertOutput1Changed();
         page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
@@ -143,9 +143,9 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
         ajaxAttributes.set(AjaxAttributes.bypassUpdates, true);
         ajaxAttributes.set(AjaxAttributes.immediate, true);
 
-        String reqTime = page.requestTime.getText();
+        String reqTime = page.getRequestTimeElement().getText();
         performAction();
-        Graphene.waitModel().until("Page was not updated").element(page.requestTime).text().not().equalTo(reqTime);
+        Graphene.waitModel().until("Page was not updated").element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
 
         assertOutput1NotChanged();
         page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
@@ -156,11 +156,11 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
     public void testLimitRender(String expectedOutput) {
         ajaxAttributes.set(AjaxAttributes.limitRender, true);
 
-        String reqTime = page.requestTime.getText();
+        String reqTime = page.getRequestTimeElement().getText();
         performAction();
         Graphene.waitModel().until("Page was not updated").element(page.output1).text().equalTo(expectedOutput);
 
-        assertEquals(page.requestTime.getText(), reqTime, "Ajax-rendered a4j:outputPanel shouldn't change");
+        assertEquals(page.getRequestTimeElement().getText(), reqTime, "Ajax-rendered a4j:outputPanel shouldn't change");
     }
 
     public void testEvents() {
@@ -170,9 +170,9 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
         ajaxAttributes.set(AjaxAttributes.oncomplete, "metamerEvents += \"complete \"");
 
         ((JavascriptExecutor) driver).executeScript("metamerEvents = \"\"");
-        String reqTime = page.requestTime.getText();
+        String reqTime = page.getRequestTimeElement().getText();
         performAction();
-        Graphene.waitModel().until("Page was not updated").element(page.requestTime).text().not().equalTo(reqTime);
+        Graphene.waitModel().until("Page was not updated").element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
 
         String[] events = ((JavascriptExecutor) driver).executeScript("return metamerEvents").toString().split(" ");
 
@@ -210,10 +210,10 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
     public void testRender() {
         ajaxAttributes.set(AjaxAttributes.render, "[output1]");
 
-        String reqTime = page.requestTime.getText();
+        String reqTime = page.getRequestTimeElement().getText();
         performAction();
         waiting(500);
-        Graphene.waitModel().until("Page was not updated").element(page.requestTime).text().not().equalTo(reqTime);
+        Graphene.waitModel().until("Page was not updated").element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
 
         assertOutput1Changed();
         assertOutput2NotChanged();
@@ -222,9 +222,9 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
     public void testStatus() {
         ajaxAttributes.set(AjaxAttributes.status, "statusChecker");
 
-        String statusCheckerTime = page.statusCheckerOutput.getText();
+        String statusCheckerTime = page.getStatusCheckerOutputElement().getText();
         performAction();
-        Graphene.waitModel().until("Page was not updated").element(page.statusCheckerOutput).text().not().equalTo(statusCheckerTime);
+        Graphene.waitModel().until("Page was not updated").element(page.getStatusCheckerOutputElement()).text().not().equalTo(statusCheckerTime);
     }
 
     public void testRerenderAll() {
@@ -243,9 +243,9 @@ public abstract class AbstractAjaxTest extends AbstractWebDriverTest {
 
         @Override
         public void doRequest(String inputValue) {
-            String reqTime = page.requestTime.getText();
+            String reqTime = page.getRequestTimeElement().getText();
             performAction(inputValue);
-            Graphene.waitModel().until("Page was not updated").element(page.requestTime).text().not().equalTo(reqTime);
+            Graphene.waitModel().until("Page was not updated").element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
         }
 
         @Override

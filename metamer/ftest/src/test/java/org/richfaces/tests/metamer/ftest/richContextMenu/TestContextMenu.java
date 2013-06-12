@@ -470,7 +470,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
                 page.contextMenu.invoke(page.targetPanel1);
                 new Actions(driver).moveToElement(page.contextMenu.getItems().get(2)).build().perform();
                 waitModel().until().element(page.groupList).is().visible();
-                new Actions(driver).moveToElement(page.requestTime).build().perform();
+                new Actions(driver).moveToElement(page.getRequestTimeElement()).build().perform();
                 waitGui().until().element(page.groupList).is().not().visible();
             }
         });

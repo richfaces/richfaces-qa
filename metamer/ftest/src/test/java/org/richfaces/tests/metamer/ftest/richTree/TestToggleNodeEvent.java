@@ -78,7 +78,7 @@ public class TestToggleNodeEvent extends AbstractWebDriverTest {
 
     private void fireEvent(boolean fireOnHandle, MouseEvent firedEvent) {
         if (fireOnHandle) {
-            fireEventOnHandle(getTestedNode().getHandle().root, firedEvent);
+            fireEventOnHandle(getTestedNode().getHandle().getRoot(), firedEvent);
         } else {
             fireEventOnLabel(getTestedNode().getNodeLabel(), firedEvent);
         }

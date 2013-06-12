@@ -142,10 +142,10 @@ public class TestDropTargetInCollapsibleSubTable extends AbstractWebDriverTest {
         assertTrue(page.dropValue.getText().contains("4"));
 
         new Actions(driver).clickAndHold(page.drg3).moveByOffset(1, 1).moveToElement(page.drop2).build().perform();
-        String requestTime = page.requestTime.getText();
+        String requestTime = page.getAttributesTableElement().getText();
         waiting(500);
         doDrop();
-        Graphene.waitModel().until().element(page.requestTime).text().not().equalTo(requestTime);
+        Graphene.waitModel().until().element(page.getAttributesTableElement()).text().not().equalTo(requestTime);
         assertTrue(page.clientId.getText().endsWith("richDropTarget2"));
         assertTrue(page.dragValue.getText().contains("3"));
         assertTrue(page.dropValue.getText().contains("5"));
@@ -221,10 +221,10 @@ public class TestDropTargetInCollapsibleSubTable extends AbstractWebDriverTest {
 
     private void testAcceptedDropping(WebElement draggable) {
         testAcception(draggable, ACCEPTING);
-        String requestTime = page.requestTime.getText();
+        String requestTime = page.getAttributesTableElement().getText();
         // waiting(1000);
         doDrop();
-        Graphene.waitModel().until().element(page.requestTime).text().not().equalTo(requestTime);
+        Graphene.waitModel().until().element(page.getAttributesTableElement()).text().not().equalTo(requestTime);
         assertNotPresent(page.indicator, "Indicator should be no longer visible");
     }
 

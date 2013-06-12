@@ -41,25 +41,33 @@ import org.richfaces.ui.common.Mode;
 public class RichFacesPanelMenuItem {
 
     @Root
-    WebElement root;
+    private WebElement root;
 
     @Drone
     private WebDriver browser;
 
     @FindBy(css = "td[class*=rf-][class*=-itm-lbl]")
-    public WebElement label;
+    private WebElement label;
 
     @FindBy(css = "td[class*=rf-][class*=-itm-ico]")
-    public RichFacesPanelMenuItemIcon leftIcon;
+    private RichFacesPanelMenuItemIcon leftIcon;
 
     @FindBy(css = "td[class*=rf-][class*=-itm-exp-ico]")
-    public RichFacesPanelMenuItemIcon rightIcon;
+    private RichFacesPanelMenuItemIcon rightIcon;
 
     // mode can be inherited from parent panelMenu
-    Mode mode;
+    protected Mode mode;
 
     public WebElement getRoot() {
         return root;
+    }
+
+    public RichFacesPanelMenuItemIcon getLeftIcon() {
+        return leftIcon;
+    }
+
+    public RichFacesPanelMenuItemIcon getRightIcon() {
+        return rightIcon;
     }
 
     public void setMode(Mode mode) {

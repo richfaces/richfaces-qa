@@ -213,7 +213,7 @@ public class TestInputNumberSpinnerAttributes extends AbstractInputNumberSpinner
     @Test
     public void testOnblur() {
         testFireEvent(inputNumberSpinnerAttributes, InputNumberSpinnerAttributes.onblur,
-                new Actions(driver).click(spinner.getInput().getInput()).click(page.requestTime).build());
+                new Actions(driver).click(spinner.getInput().getInput()).click(page.getRequestTimeElement()).build());
     }
 
     @Test

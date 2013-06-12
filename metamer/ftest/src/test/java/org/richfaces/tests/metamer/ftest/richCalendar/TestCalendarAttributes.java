@@ -703,7 +703,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         // this throws the condition 2x
         // testFireEventWithJS(calendar.getInput(), Event.BLUR, calendarAttributes, CalendarAttributes.oninputblur);
         testFireEvent(calendarAttributes, CalendarAttributes.oninputblur, new Actions(driver)
-                .click(calendar.getInput()).click(page.requestTime).build());
+                .click(calendar.getInput()).click(page.getRequestTimeElement()).build());
     }
 
     @Test
@@ -767,7 +767,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Test
     public void testOninputmouseout() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseout,
-                new Actions(driver).click(calendar.getInput()).moveToElement(page.requestTime).build());
+                new Actions(driver).click(calendar.getInput()).moveToElement(page.getRequestTimeElement()).build());
     }
 
     @Test

@@ -35,10 +35,18 @@ import org.openqa.selenium.WebElement;
 public class RichFacesPanelMenuItemIcon {
 
     @Root
-    public WebElement root;
+    private WebElement root;
 
     @FindBy(tagName = "img")
-    public WebElement imgIcon;
+    private WebElement imgIcon;
+
+    public WebElement getImgIcon() {
+        return imgIcon;
+    }
+
+    public WebElement getRoot() {
+        return root;
+    }
 
     public boolean isTransparent() {
         return root.getAttribute(ATTR_CLASS).contains(CSS_TRANSPARENT_SUFFIX);

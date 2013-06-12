@@ -33,21 +33,45 @@ import org.richfaces.tests.page.fragments.impl.tooltip.RichFacesTooltip;
 public class TooltipPage extends MetamerPage {
 
     @FindBy(css = "div[id$=panel]")
-    public WebElement panel;
+    private WebElement panel;
 
     @FindBy(css = "div[id$=regular-div]")
-    public WebElement panel1;
+    private WebElement panel1;
 
     @FindBy(css = "div[id$=jsf-div]")
-    public WebElement panel2;
+    private WebElement panel2;
 
     @FindBy(css = "div[id$=panel_body]")
-    public WebElement panel3;
+    private WebElement panel3;
 
     @FindBy(className = "rf-tt")
-    public RichFacesTooltip tooltip;
+    private RichFacesTooltip tooltip;
 
     @FindBy(css = "table[id$='attributes:attributes']")
-    public WebElement attributesTable;
+    private WebElement attributesTable;
+
+    public WebElement getAttributesTable() {
+        return attributesTable;
+    }
+
+    public WebElement getPanel() {
+        return panel;
+    }
+
+    public WebElement getPanel1() {
+        return panel1;
+    }
+
+    public WebElement getPanel2() {
+        return panel2;
+    }
+
+    public WebElement getPanel3() {
+        return panel3;
+    }
+
+    public RichFacesTooltip getTooltip() {
+        return tooltip;
+    }
 
 }

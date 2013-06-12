@@ -95,16 +95,16 @@ public class TestTreeSimple extends AbstractTestTree {
         treeAttributes.set(data, "RichFaces 4");
         treeAttributes.set(oncomplete, "data = event.data");
 
-        String requestTime = page.requestTime.getText();
+        String requestTime = page.getRequestTimeElement().getText();
         page.tree.getNodes().get(1).select();
-        Graphene.waitGui().until().element(page.requestTime).text().not().equalTo(requestTime);
+        Graphene.waitGui().until().element(page.getRequestTimeElement()).text().not().equalTo(requestTime);
 
         assertEquals(executeJS("return window.data;"), "RichFaces 4");
     }
 
     @Test
     public void testDir() {
-        super.testDir(page.tree.root);
+        super.testDir(page.tree.getRoot());
     }
 
     @Test
@@ -119,7 +119,7 @@ public class TestTreeSimple extends AbstractTestTree {
         page.expandAll();
 
         treeAttributes.set(TreeAttributes.handleClass, testClassValue);
-        String styleAttr = page.tree.getNodes().get(0).getHandle().root.getAttribute("class");
+        String styleAttr = page.tree.getNodes().get(0).getHandle().getRoot().getAttribute("class");
         assertTrue(styleAttr.contains(testClassValue), "Attribute handleClass should contain \"" + testClassValue + "\"");
     }
 
@@ -128,7 +128,7 @@ public class TestTreeSimple extends AbstractTestTree {
         page.expandAll();
 
         treeAttributes.set(TreeAttributes.iconClass, testClassValue);
-        String styleAttr = page.tree.getNodes().get(0).getIcon().root.getAttribute("class");
+        String styleAttr = page.tree.getNodes().get(0).getIcon().getRoot().getAttribute("class");
         assertTrue(styleAttr.contains(testClassValue), "Attribute iconClass should contain \"" + testClassValue + "\"");
     }
 
@@ -172,7 +172,7 @@ public class TestTreeSimple extends AbstractTestTree {
 
         int[] wout = {0, 0};
 
-        String srcAttrVal = node.getIcon().root.getAttribute("src");
+        String srcAttrVal = node.getIcon().getRoot().getAttribute("src");
         if ( null != srcAttrVal && srcAttrVal.contains(IMAGE_URL)) {
             wout[0]+=1;
         } else {
@@ -213,11 +213,11 @@ public class TestTreeSimple extends AbstractTestTree {
 
         int[] wout = {0, 0};
 
-        String srcAttrVal = node.getIcon().root.getAttribute("src");
+        String srcAttrVal = node.getIcon().getRoot().getAttribute("src");
         if ( null != srcAttrVal && srcAttrVal.contains(IMAGE_URL)) {
             wout[0]+=1;
         } else {
-            if ( !node.getIcon().root.getAttribute("class").contains(RichFacesTreeNodeIcon.CLASS_ICON_LEAF)) {
+            if ( !node.getIcon().getRoot().getAttribute("class").contains(RichFacesTreeNodeIcon.CLASS_ICON_LEAF)) {
                 // ignore leaf nodes
                 wout[1]+=1;
             }
@@ -257,11 +257,11 @@ public class TestTreeSimple extends AbstractTestTree {
 
         int[] wout = {0, 0};
 
-        String srcAttrVal = node.getIcon().root.getAttribute("src");
+        String srcAttrVal = node.getIcon().getRoot().getAttribute("src");
         if ( null != srcAttrVal && srcAttrVal.contains(IMAGE_URL)) {
             wout[0] += 1;
         } else {
-            if ( !node.getIcon().root.getAttribute("class").contains(RichFacesTreeNodeIcon.CLASS_ICON_EXPANDED)) {
+            if ( !node.getIcon().getRoot().getAttribute("class").contains(RichFacesTreeNodeIcon.CLASS_ICON_EXPANDED)) {
                 // ignore collapsed nodes
                 wout[1] += 1;
             }
@@ -278,18 +278,18 @@ public class TestTreeSimple extends AbstractTestTree {
 
     @Test
     public void testLang() {
-        super.testAttributeLang(page.tree.root);
+        super.testAttributeLang(page.tree.getRoot());
     }
 
     @Test
     public void testLimitRender() {
         treeAttributes.set(render, "@this renderChecker");
         treeAttributes.set(limitRender, true);
-        String renderChecker = page.renderCheckerOutput.getText();
-        String requestTime = page.requestTime.getText();
+        String renderChecker = page.getRenderCheckerOutputElement().getText();
+        String requestTime = page.getRequestTimeElement().getText();
         page.tree.getNodes().get(0).select();
-        Graphene.waitGui().until().element(page.renderCheckerOutput).text().not().equalTo(renderChecker);
-        assertEquals(page.requestTime.getText(), requestTime);
+        Graphene.waitGui().until().element(page.getRenderCheckerOutputElement()).text().not().equalTo(renderChecker);
+        assertEquals(page.getRequestTimeElement().getText(), requestTime);
     }
 
     @Test
@@ -334,57 +334,57 @@ public class TestTreeSimple extends AbstractTestTree {
     @Test
     @Use(field = "domEvent", value = "domEvents")
     public void testDomEvents() {
-        testFireEvent(domEvent, page.tree.root);
+        testFireEvent(domEvent, page.tree.getRoot());
     }
 
     @Test
     public void testRender() {
         treeAttributes.set(render, "@this renderChecker");
-        String renderChecker = page.renderCheckerOutput.getText();
+        String renderChecker = page.getRenderCheckerOutputElement().getText();
         page.tree.getNodes().get(0).select();
-        Graphene.waitGui().until().element(page.renderCheckerOutput).text().not().equalTo(renderChecker);
+        Graphene.waitGui().until().element(page.getRenderCheckerOutputElement()).text().not().equalTo(renderChecker);
     }
 
     @Test
     public void testRendered() {
-        assertTrue(Graphene.element(page.tree.root).isPresent().apply(driver)
-            && Graphene.element(page.tree.root).isVisible().apply(driver)) ;
+        assertTrue(Graphene.element(page.tree.getRoot()).isPresent().apply(driver)
+            && Graphene.element(page.tree.getRoot()).isVisible().apply(driver)) ;
         treeAttributes.set(rendered, false);
-        assertFalse(Graphene.element(page.tree.root).isPresent().apply(driver));
+        assertFalse(Graphene.element(page.tree.getRoot()).isPresent().apply(driver));
     }
 
     @Test
     public void testStatus() {
         treeAttributes.set(status, "statusChecker");
-        String statusChecker = page.statusCheckerOutput.getText();
+        String statusChecker = page.getStatusCheckerOutputElement().getText();
         page.tree.getNodes().get(0).select();
-        Graphene.waitAjax().until().element(page.statusCheckerOutput).text().not().equalTo(statusChecker);
+        Graphene.waitAjax().until().element(page.getStatusCheckerOutputElement()).text().not().equalTo(statusChecker);
 
         treeAttributes.reset(status);
-        statusChecker = page.statusCheckerOutput.getText();
+        statusChecker = page.getStatusCheckerOutputElement().getText();
         page.tree.getNodes().get(0).select();
         page.tree.getNodes().get(0).isSelected();
-        Graphene.waitAjax().until().element(page.statusCheckerOutput).text().equalTo(statusChecker);
+        Graphene.waitAjax().until().element(page.getStatusCheckerOutputElement()).text().equalTo(statusChecker);
     }
 
     @Test
     public void testStyle() {
         final String value = "background-color: yellow; font-size: 1.5em;";
         treeAttributes.set(TreeAttributes.style, value);
-        String styleAttr = page.tree.root.getAttribute("style");
+        String styleAttr = page.tree.getRoot().getAttribute("style");
         assertTrue(styleAttr.contains(value), "Attribute style should contain \"" + value + "\"");
     }
 
     @Test
     public void testStyleClass() {
         treeAttributes.set(TreeAttributes.styleClass, testClassValue);
-        String styleAttr = page.tree.root.getAttribute("class");
+        String styleAttr = page.tree.getRoot().getAttribute("class");
         assertTrue(styleAttr.contains(testClassValue), "Attribute class should contain \"" + testClassValue + "\"");
     }
 
     @Test
     public void testTitle() {
-        this.testTitle(page.tree.root);
+        this.testTitle(page.tree.getRoot());
     }
 
     @Test
@@ -426,8 +426,8 @@ public class TestTreeSimple extends AbstractTestTree {
     }
 
     private void setResponseDelay(int milis) {
-        page.responseDelay.sendKeys(String.valueOf(milis));
-        page.responseDelay.submit();
+        page.getResponseDelayElement().sendKeys(String.valueOf(milis));
+        page.getResponseDelayElement().submit();
     }
 
     private void expandLevel(int level) {
