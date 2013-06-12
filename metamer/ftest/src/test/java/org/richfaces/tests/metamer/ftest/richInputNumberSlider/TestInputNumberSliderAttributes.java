@@ -623,11 +623,11 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         int numberOfValues = 5;
         List<String> timesList = new ArrayList<String>(numberOfValues);
 
-        String beforeTime = page.requestTime.getText();
+        String beforeTime = page.getRequestTimeElement().getText();
         fireEvent(arrow, Event.MOUSEDOWN);//starts with increasing/decreasing of the value
         for (int i = 0; i < numberOfValues; i++) {
-            Graphene.waitModel().until().element(page.requestTime).text().not().equalTo(beforeTime);
-            beforeTime = page.requestTime.getText();
+            Graphene.waitModel().until().element(page.getRequestTimeElement()).text().not().equalTo(beforeTime);
+            beforeTime = page.getRequestTimeElement().getText();
             timesList.add(beforeTime);
         }
         fireEvent(arrow, Event.MOUSEUP);//stops with increasing/decreasing of the value

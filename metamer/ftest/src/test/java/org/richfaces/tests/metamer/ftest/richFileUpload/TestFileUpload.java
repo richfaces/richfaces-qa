@@ -192,13 +192,13 @@ public class TestFileUpload extends AbstractFileUploadTest {
         fileUploadAttributes.set(FileUploadAttributes.render, "statusCheckerOutput, requestTime, uploadedFilesPanel");
         fileUploadAttributes.set(FileUploadAttributes.limitRender, Boolean.TRUE);
 
-        String statusCheckerTime = page.statusCheckerOutput.getText();
-        String renderCheckerTime = page.renderCheckerOutput.getText();
+        String statusCheckerTime = page.getStatusCheckerOutputElement().getText();
+        String renderCheckerTime = page.getRenderCheckerOutputElement().getText();
 
         succesfulFileUploadAction.perform();
 
-        String statusCheckerTime2 = page.statusCheckerOutput.getText();
-        String renderCheckerTime2 = page.renderCheckerOutput.getText();
+        String statusCheckerTime2 = page.getStatusCheckerOutputElement().getText();
+        String renderCheckerTime2 = page.getRenderCheckerOutputElement().getText();
         assertNotEquals(statusCheckerTime, statusCheckerTime2, "status checker time did not change as expected");
         assertEquals(renderCheckerTime, renderCheckerTime2, "render checker time changed as not expected");
     }

@@ -69,27 +69,55 @@ public class MetamerPage {
     @FindBy(css = "div[id$=phasesPanel] li")
     public List<WebElement> phases;
     @FindBy(css = "span[id$=requestTime]")
-    public WebElement requestTime;
+    private WebElement requestTime;
     @FindBy(css = "span[id$=statusCheckerOutput]")
-    public WebElement statusCheckerOutput;
+    private WebElement statusCheckerOutput;
     @FindBy(css = "span[id$=renderChecker]")
-    public WebElement renderCheckerOutput;
+    private WebElement renderCheckerOutput;
     @FindBy(css = "span[id$=jsFunctionChecker]")
-    public WebElement jsFunctionChecker;
+    private WebElement jsFunctionChecker;
     @FindBy(css = "[id$=fullPageRefreshImage]")
-    public WebElement fullPageRefreshIcon;
+    private WebElement fullPageRefreshIcon;
     @FindBy(css = "[id$=reRenderAllImage]")
-    public WebElement rerenderAllIcon;
+    private WebElement rerenderAllIcon;
     /** root element for component attributes area */
     @FindBy(css = "table[id$='attributes:attributes']")
-    public WebElement attributesTable;
+    private WebElement attributesTable;
     /** Delay response by [ms] */
     @FindBy(css = "input[id$='metamerResponseDelayInput']")
-    public WebElement responseDelay;
+    private WebElement responseDelay;
     @Drone
     protected WebDriver driver;
     private String reqTime;
     private Map<PhaseId, Set<String>> map = new LinkedHashMap<PhaseId, Set<String>>();
+
+    public WebElement getStatusCheckerOutputElement() {
+        return statusCheckerOutput;
+    }
+
+    public WebElement getAttributesTableElement() {
+        return attributesTable;
+    }
+
+    public WebElement getRequestTimeElement() {
+        return requestTime;
+    }
+
+    public List<WebElement> getPhasesElements() {
+        return phases;
+    }
+
+    public WebElement getRenderCheckerOutputElement() {
+        return renderCheckerOutput;
+    }
+
+    public WebElement getResponseDelayElement() {
+        return responseDelay;
+    }
+
+    public WebElement getJsFunctionCheckerElement() {
+        return jsFunctionChecker;
+    }
 
     /**
      * Executes JavaScript script.

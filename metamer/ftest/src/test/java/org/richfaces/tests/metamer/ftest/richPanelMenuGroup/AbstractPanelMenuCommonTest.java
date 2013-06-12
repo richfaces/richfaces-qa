@@ -46,30 +46,32 @@ public abstract class AbstractPanelMenuCommonTest extends AbstractWebDriverTest 
     public void testRequestEventsBefore(String... events) {
         for (String event : events) {
             String inputExp = format(ATTR_INPUT_LOC_FORMAT, event);
-            WebElement input = getPage().attributesTable.findElement(By.cssSelector(inputExp));
+            WebElement input = getPage().getAttributesTableElement().findElement(By.cssSelector(inputExp));
             // Note: To avoid lost metamerEvents variable when @mode=server, use sessionStorage
             String inputVal = format("metamerEvents += \"{0} \"", event);
             String inputValFull = "sessionStorage.setItem('metamerEvents', " + inputVal + ")";
             // even there would be some events (in params) twice, don't expect handle routine to be executed twice
             input.clear();
             waiting(1000);
-            input = getPage().attributesTable.findElement(By.cssSelector(inputExp));
+            input = getPage().getAttributesTableElement().findElement(By.cssSelector(inputExp));
             input.sendKeys(inputValFull);
             // sendKeys triggers page reload automatically
             waiting(300);
-            Graphene.waitAjax().until().element(getPage().attributesTable).is().present();
-            input = getPage().attributesTable.findElement(By.cssSelector(inputExp));
+            Graphene.waitAjax().until().element(getPage().getAttributesTableElement()).is().present();
+            input = getPage().getAttributesTableElement().findElement(By.cssSelector(inputExp));
             MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
         }
         cleanMetamerEventsVariable();
     }
 
+    @Override
     public void testRequestEventsAfter(String... events) {
         String[] actualEvents = ((String)executeJS("return sessionStorage.getItem('metamerEvents')")).split(" ");
         assertEquals(actualEvents, events, format("The events ({0}) don't came in right order ({1})",
             Arrays.deepToString(actualEvents), Arrays.deepToString(events)));
     }
 
+    @Override
     public void cleanMetamerEventsVariable() {
         // since metamerEvents variable stored on session too, make sure that cleaned both of them
         executeJS("window.metamerEvents = \"\";");

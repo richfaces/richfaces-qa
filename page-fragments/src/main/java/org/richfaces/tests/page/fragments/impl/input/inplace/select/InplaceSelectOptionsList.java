@@ -32,7 +32,7 @@ import org.openqa.selenium.WebElement;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-class InplaceSelectOptionsList implements OptionsList {
+public class InplaceSelectOptionsList implements OptionsList {
 
     private final ArrayList<Option> options = Lists.newArrayList();
 

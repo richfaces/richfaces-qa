@@ -267,7 +267,7 @@ public class TestPickList extends AbstractWebDriverTest {
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     public void testOnblur() {
         testFireEvent(pickListAttributes, PickListAttributes.onblur,
-                new Actions(driver).click(pickList.getRootElement()).click(page.requestTime).build());
+                new Actions(driver).click(pickList.getRootElement()).click(page.getRequestTimeElement()).build());
     }
 
     @Test
@@ -351,7 +351,7 @@ public class TestPickList extends AbstractWebDriverTest {
                     @Override
                     public void perform() {
                         pickList.source().getRootElement().click();
-                        page.requestTime.click();
+                        page.getRequestTimeElement().click();
                     }
                 });
     }
@@ -428,7 +428,7 @@ public class TestPickList extends AbstractWebDriverTest {
                         pickList.source().selectItemsByIndex(0);
                         pickList.add();
                         pickList.target().getItems().get(0).getItemElement().click();
-                        page.requestTime.click();
+                        page.getRequestTimeElement().click();
                     }
                 });
     }

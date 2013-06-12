@@ -120,32 +120,32 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     @Test
     public void testHandleClass() {
         assertEquals(page.tree.getNodes().size(), 4);
-        assertEquals(page.tree.root.findElements(By.cssSelector(
+        assertEquals(page.tree.getRoot().findElements(By.cssSelector(
             RichFacesTreeNode.CSS_NODE_HANDLER + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 4);
 
         attributesNode.set(handleClass, SAMPLE_CLASS);
 
-        assertEquals(page.tree.root.findElements(By.cssSelector(
+        assertEquals(page.tree.getRoot().findElements(By.cssSelector(
             RichFacesTreeNode.CSS_NODE_HANDLER + JQ_SAMPLE_CLASS)).size(), 4);
-        assertEquals(page.tree.root.findElements(By.cssSelector(
+        assertEquals(page.tree.getRoot().findElements(By.cssSelector(
             RichFacesTreeNode.CSS_NODE_HANDLER + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 0);
     }
 
     @Test
     public void testIconClass() {
-        assertEquals(page.tree.root.findElements(By.cssSelector(
+        assertEquals(page.tree.getRoot().findElements(By.cssSelector(
             RichFacesTreeNode.CSS_NODE_ICON + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 4);
         attributesNode.set(iconClass, SAMPLE_CLASS);
 
-        assertEquals(page.tree.root.findElements(By.cssSelector(
+        assertEquals(page.tree.getRoot().findElements(By.cssSelector(
             RichFacesTreeNode.CSS_NODE_ICON + JQ_SAMPLE_CLASS)).size(), 4);
-        assertEquals(page.tree.root.findElements(By.cssSelector(
+        assertEquals(page.tree.getRoot().findElements(By.cssSelector(
             RichFacesTreeNode.CSS_NODE_ICON + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 0);
     }
 
     @Test
     public void testIconCollapsed() {
-        WebElement iconImage = page.tree.getNodes().get(0).getIcon().root;
+        WebElement iconImage = page.tree.getNodes().get(0).getIcon().getRoot();
         assertTrue(Graphene.element(iconImage).isPresent().apply(driver));
         assertFalse(Graphene.attribute(iconImage, "src").isPresent().apply(driver));
 
@@ -159,7 +159,7 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
 
     @Test
     public void testIconExpanded() {
-        WebElement iconImage = page.tree.getNodes().get(0).getIcon().root;
+        WebElement iconImage = page.tree.getNodes().get(0).getIcon().getRoot();
         assertTrue(Graphene.element(iconImage).isPresent().apply(driver));
         assertFalse(Graphene.attribute(iconImage, "src").isPresent().apply(driver));
 
@@ -185,15 +185,15 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
         RichFacesTreeNode leaf = subTreeNode.getNode(0);
         RichFacesTreeNodeIcon leafIcon = leaf.getIcon();
 
-        assertTrue(Graphene.element(leafIcon.root).isPresent().apply(driver));
-        assertFalse(Graphene.attribute(leafIcon.root, "src").isPresent().apply(driver));
+        assertTrue(Graphene.element(leafIcon.getRoot()).isPresent().apply(driver));
+        assertFalse(Graphene.attribute(leafIcon.getRoot(), "src").isPresent().apply(driver));
 
         attributesLeaf.set(iconLeaf, IMAGE_URL);
 
-        assertTrue(Graphene.element(leafIcon.root).isPresent().apply(driver));
-        assertTrue(Graphene.attribute(leafIcon.root, "src").isPresent().apply(driver));
+        assertTrue(Graphene.element(leafIcon.getRoot()).isPresent().apply(driver));
+        assertTrue(Graphene.attribute(leafIcon.getRoot(), "src").isPresent().apply(driver));
 
-        assertTrue(Graphene.attribute(leafIcon.root, "src").contains(IMAGE_URL).apply(driver));
+        assertTrue(Graphene.attribute(leafIcon.getRoot(), "src").contains(IMAGE_URL).apply(driver));
     }
 
     @Test
@@ -218,27 +218,27 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
 
     @Test
     public void testLabelClass() {
-        assertEquals(page.tree.root.findElements(By.cssSelector(
+        assertEquals(page.tree.getRoot().findElements(By.cssSelector(
             RichFacesTreeNode.CSS_NODE_LABEL + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 4);
 
         attributesNode.set(labelClass, SAMPLE_CLASS);
 
-        assertEquals(page.tree.root.findElements(By.cssSelector(
+        assertEquals(page.tree.getRoot().findElements(By.cssSelector(
             RichFacesTreeNode.CSS_NODE_LABEL + JQ_SAMPLE_CLASS)).size(), 4);
-        assertEquals(page.tree.root.findElements(By.cssSelector(
+        assertEquals(page.tree.getRoot().findElements(By.cssSelector(
             RichFacesTreeNode.CSS_NODE_LABEL + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 0);
     }
 
     @Test
     public void testLang() {
-        assertEquals(page.tree.root.findElements(By.cssSelector(
+        assertEquals(page.tree.getRoot().findElements(By.cssSelector(
             RichFacesTreeNode.CSS_NODE + ":not(" + "[lang=cs]" + ")")).size(), 4);
 
         attributesNode.set(lang, "cs");
 
-        assertEquals(page.tree.root.findElements(By.cssSelector(
+        assertEquals(page.tree.getRoot().findElements(By.cssSelector(
             RichFacesTreeNode.CSS_NODE + "[lang=cs]")).size(), 0);
-        assertEquals(page.tree.root.findElements(By.cssSelector(
+        assertEquals(page.tree.getRoot().findElements(By.cssSelector(
             RichFacesTreeNode.CSS_NODE + ":not(" + "[lang=cs]" + ")")).size(), 4);
     }
 
@@ -264,15 +264,15 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     @Test
     public void testOnbeforetoggleWithJsFunction() {
         attributesNode.set(onbeforetoggle, "functionChecker()");
-        String jsFunctionChecker = page.jsFunctionChecker.getText();
-        String requestTime = page.requestTime.getText();
+        String jsFunctionChecker = page.getJsFunctionCheckerElement().getText();
+        String requestTime = page.getRequestTimeElement().getText();
 
-        getTreeNode().getHandle().root.click();
+        getTreeNode().getHandle().getRoot().click();
 
-        Graphene.waitGui().until().element(page.jsFunctionChecker).text().not().equalTo(jsFunctionChecker);
+        Graphene.waitGui().until().element(page.getJsFunctionCheckerElement()).text().not().equalTo(jsFunctionChecker);
         page.assertNoListener("tree toggle listener invoked");
 
-        Graphene.waitGui().until().element(page.requestTime).text().not().equalTo(requestTime);
+        Graphene.waitGui().until().element(page.getRequestTimeElement()).text().not().equalTo(requestTime);
         page.getListenerCondition(PhaseId.PROCESS_VALIDATIONS, "tree toggle listener invoked");
     }
 
@@ -283,12 +283,12 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
         subTreeNode.expand();
         RichFacesTreeNode leaf = subTreeNode.getNode(0);
 
-        assertTrue(Graphene.element(leaf.root).isPresent().apply(driver));
+        assertTrue(Graphene.element(leaf.getRoot()).isPresent().apply(driver));
 
         attributesLeaf.set(rendered, false);
 
         // verify parent of leaf node is present
-        assertTrue(Graphene.element(getTreeNode().getNode(0).root).isPresent().apply(driver));
+        assertTrue(Graphene.element(getTreeNode().getNode(0).getRoot()).isPresent().apply(driver));
         // but leaf is not
         assertTrue(getTreeNode().getNode(0).getNode(0) == null);
     }

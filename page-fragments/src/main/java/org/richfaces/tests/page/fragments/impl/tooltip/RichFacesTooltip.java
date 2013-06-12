@@ -39,13 +39,17 @@ import org.richfaces.tests.page.fragments.impl.Utils;
 public class RichFacesTooltip {
 
     @Root
-    public WebElement root;
+    private WebElement root;
     @ArquillianResource
     private JavascriptExecutor executor;
     @ArquillianResource
     private Actions actions;
 
     private TooltipMode mode = TooltipMode.client;
+
+    public WebElement getRoot() {
+        return root;
+    }
 
     public TooltipMode getMode() {
         return mode;

@@ -55,7 +55,7 @@ public class TestPlaceholderCSV extends AbstractWebDriverTest {
     }
 
     private void blur() {
-        page.requestTime.click();
+        page.getRequestTimeElement().click();
     }
 
     private void typeTextAndBlur(String text) {

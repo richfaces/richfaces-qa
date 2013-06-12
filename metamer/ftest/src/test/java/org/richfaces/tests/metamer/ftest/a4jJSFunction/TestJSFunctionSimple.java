@@ -234,10 +234,10 @@ public class TestJSFunctionSimple extends AbstractWebDriverTest {
     public void testStatus() {
         jsFunctionAttributes.set(JSFunctionAttributes.status, "statusChecker");
 
-        String statusCheckerTime = page.statusCheckerOutput.getText();
+        String statusCheckerTime = page.getStatusCheckerOutputElement().getText();
 
         MetamerPage.waitRequest(page.link, WaitRequestType.XHR).click();
 
-        assertNotSame(page.statusCheckerOutput.getText(), statusCheckerTime, "Attribute status doesn't work");
+        assertNotSame(page.getStatusCheckerOutputElement().getText(), statusCheckerTime, "Attribute status doesn't work");
     }
 }

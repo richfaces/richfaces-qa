@@ -279,7 +279,7 @@ public class TestSelect extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 select.getInput().getInput().click();// will not be triggered if this step omitted
-                page.requestTime.click();// will not be triggered if this step omitted
+                page.getRequestTimeElement().click();// will not be triggered if this step omitted
                 select.getInput().clear(TextInputComponent.ClearType.JS).fillIn("ABCD").trigger("blur");
             }
         });
@@ -342,7 +342,7 @@ public class TestSelect extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 select.callPopup();
-                page.requestTime.click();
+                page.getRequestTimeElement().click();
                 Graphene.waitGui().until(new Predicate<WebDriver>() {
                     @Override
                     public boolean apply(WebDriver input) {
@@ -422,7 +422,7 @@ public class TestSelect extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 select.callPopup();
-                new Actions(driver).moveToElement(listElement).moveToElement(page.requestTime).perform();
+                new Actions(driver).moveToElement(listElement).moveToElement(page.getRequestTimeElement()).perform();
             }
         });
     }
@@ -500,9 +500,9 @@ public class TestSelect extends AbstractWebDriverTest {
         assertTrue(selectItems.get(0).getAttribute("class").contains("rf-sel-sel"), "First item should contain class for selected item.");
         new Actions(driver).sendKeys(Keys.RETURN).perform();
 
-        String previousTime = page.requestTime.getText();
+        String previousTime = page.getRequestTimeElement().getText();
         Utils.triggerJQ(executor, "blur", select.getInput().getInput());
-        Graphene.waitModel().until().element(page.requestTime).text().not().equalTo(previousTime);
+        Graphene.waitModel().until().element(page.getRequestTimeElement()).text().not().equalTo(previousTime);
         assertEquals(output.getText(), "Alabama", "Output should be Alabama");
     }
 

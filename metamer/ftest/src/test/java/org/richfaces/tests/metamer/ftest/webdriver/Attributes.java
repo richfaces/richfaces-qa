@@ -48,7 +48,7 @@ public class Attributes<T extends AttributeEnum> {
 
     // FIXME: 2013-05-30, jpapouse:
     // the class should be refactored to work without static context
-    protected WebDriver driver = GrapheneContext.getContextFor(Default.class).getWebDriver();
+    protected WebDriver driver = GrapheneContext.getContextFor(Default.class).getWebDriver(JavascriptExecutor.class);
     private final String attributesID;
     private static final String PROPERTY_CSS_SELECTOR = "[id$='%s:%sInput']";
     private static final String NULLSTRING = "null";
