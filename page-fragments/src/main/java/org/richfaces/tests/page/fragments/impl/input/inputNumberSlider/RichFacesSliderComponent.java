@@ -111,6 +111,7 @@ public class RichFacesSliderComponent implements SliderComponent {
         if (!isVisible()) {
             throw new RuntimeException("Trace is not visible.");
         }
+        scrollToView();
         new Actions(driver).clickAndHold(handle).moveToElement(root, where, 0).release(handle).build().perform();
     }
 
@@ -120,7 +121,12 @@ public class RichFacesSliderComponent implements SliderComponent {
         if (!isVisible()) {
             throw new RuntimeException("Trace is not visible.");
         }
+        scrollToView();
         new Actions(driver).clickAndHold(handle).moveToElement(root, 0, where).release(handle).build().perform();
+    }
+
+    private void scrollToView() {
+        new Actions(driver).moveToElement(root).perform();
     }
 
     @Override
@@ -145,6 +151,7 @@ public class RichFacesSliderComponent implements SliderComponent {
 
         @Override
         public void perform() {
+            scrollToView();
             new Actions(driver).clickAndHold(handle).moveByOffset(offsetLeftRight, offsetUpDown).release().build().perform();
         }
     }
