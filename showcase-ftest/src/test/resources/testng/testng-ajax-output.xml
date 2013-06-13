@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="seleniumTest">
+
+    <test name="All Components">
+        <groups>
+            <run>
+                <exclude name="4.Future" />
+            </run>
+        </groups>
+
+        <packages>
+            <package name="org.richfaces.tests.showcase.outputPanel.*" />
+            <package name="org.richfaces.tests.showcase.status.*" />
+            <package name="org.richfaces.tests.showcase.region.*" />
+            <package name="org.richfaces.tests.showcase.mediaOutput.*" />
+            <package name="org.richfaces.tests.showcase.log.*" />
+        </packages>
+    </test>
+</suite>
