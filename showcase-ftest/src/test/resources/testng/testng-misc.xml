@@ -14,6 +14,8 @@
             <package name="org.richfaces.tests.showcase.hotKey.*" />
             <package name="org.richfaces.tests.showcase.jquery.*" />
             <package name="org.richfaces.tests.showcase.functions.*" />
+            <package name="org.richfaces.tests.showcase.placeholder.*" />
+            <package name="org.richfaces.tests.showcase.focus.*" />
         </packages>
     </test>
 </suite>
