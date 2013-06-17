@@ -53,7 +53,7 @@ FSF site: http://www.fsf.org. -->
         <version.tomee1-5>1.5.1</version.tomee1-5>
 
         <!-- arquillian versions -->
-        <arquillian.bom.version>1.0.3.Final</arquillian.bom.version>
+        <arquillian.bom.version>1.0.4.Final</arquillian.bom.version>
         <arquillian.tomcat.version>1.0.0.CR4</arquillian.tomcat.version>
         <arquillian.drone.version> 1.2.0.Alpha2</arquillian.drone.version>
         <arquillian.graphene-testng.version>2.0.0.Alpha4</arquillian.graphene-testng.version>
@@ -62,6 +62,7 @@ FSF site: http://www.fsf.org. -->
         <arquillian.glassfish3-1.version>1.0.0.CR4</arquillian.glassfish3-1.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
         <arquillian.android.version>1.0.0.Alpha2</arquillian.android.version>
+        <arquillian.screenrecorder.version>1.0.0.Alpha2-SNAPSHOT</arquillian.screenrecorder.version>
         <shrinkwrap.descriptors.version>2.0.0-alpha-4</shrinkwrap.descriptors.version>
 
         <version.selenium>2.31.0</version.selenium>
@@ -89,6 +90,7 @@ FSF site: http://www.fsf.org. -->
 
         <jodatime.version>2.2</jodatime.version>
         <commons-lang.version>2.6</commons-lang.version>
+        <apache-commons-io.version>2.4</apache-commons-io.version>
     </properties>
 
     <modules>
@@ -375,6 +377,11 @@ FSF site: http://www.fsf.org. -->
             </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-screen-recorder</artifactId>
+                <version>${arquillian.screenrecorder.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
                 <artifactId>arquillian-android-depchain</artifactId>
                 <version>${arquillian.android.version}</version>
                 <type>pom</type>
@@ -545,6 +552,11 @@ FSF site: http://www.fsf.org. -->
                 <version>3.0.2.Final</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${apache-commons-io.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

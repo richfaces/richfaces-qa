@@ -49,6 +49,10 @@
             <artifactId>arquillian-drone-webdriver</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-screen-recorder</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
         </dependency>
