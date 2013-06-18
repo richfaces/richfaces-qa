@@ -29,18 +29,21 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.GrapheneElement;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public abstract class AbstractMediaOutputTest extends AbstractGrapheneTest {
+public abstract class AbstractMediaOutputTest extends AbstractWebDriverTest {
 
-    protected static final JQueryLocator MEDIA_OUTPUT = pjq("*[id$=mediaOutput]");
+    @FindBy(css="*[id$=mediaOutput]")
+    protected GrapheneElement mediaOutput;
 
-    protected String getTextContentByUrlAttribute(AttributeLocator<?> urlAttribute) throws IOException {
-        URL url = buildUrl(contextPath, selenium.getAttribute(urlAttribute));
+    protected String getTextContentByUrlAttribute(WebElement element, String urlAttribute) throws IOException {
+        URL url = buildUrl(contextPath, element.getAttribute(urlAttribute));
         BufferedReader input = null;
         StringBuilder foundContent = new StringBuilder();
         try {

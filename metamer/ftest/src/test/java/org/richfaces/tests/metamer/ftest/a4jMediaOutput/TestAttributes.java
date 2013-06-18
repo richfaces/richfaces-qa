@@ -22,16 +22,16 @@
 package org.richfaces.tests.metamer.ftest.a4jMediaOutput;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.mediaOutputAttributes;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.mediaOutputAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
+import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.testng.annotations.Test;
 
 
@@ -50,159 +50,166 @@ public class TestAttributes extends AbstractMediaOutputTest {
 
     @Test
     public void testAccesskey() {
-        testHtmlAttribute(MEDIA_OUTPUT, "accesskey", "r");
+        testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.accesskey, "r");
     }
 
     @Test
     public void testAlign() {
-        testHtmlAttribute(MEDIA_OUTPUT, "align", "left");
+        testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.align, "left");
     }
 
     @Test
     public void testBorder() {
-        testHtmlAttribute(MEDIA_OUTPUT, "border", "3");
+        testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.border, "3");
     }
 
     @Test
     public void testCharset() {
-        testHtmlAttribute(MEDIA_OUTPUT, "charset", "utf-8");
+        testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.charset, "utf-8");
     }
 
     @Test
     public void testCoords() {
-        testHtmlAttribute(MEDIA_OUTPUT, "coords", "circle: 150, 60, 60");
+        testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.coords, "circle: 150, 60, 60");
     }
 
     @Test
     public void testDir() {
-        testDir(MEDIA_OUTPUT);
+        testDir(mediaOutput);
     }
 
     @Test
     public void testHreflang() {
-        testHtmlAttribute(MEDIA_OUTPUT, "hreflang", "sk");
+        testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.hreflang, "sk");
     }
 
     @Test
     public void testIsmap() {
-        AttributeLocator<?> attr = MEDIA_OUTPUT.getAttribute(new Attribute("ismap"));
-        assertFalse(selenium.isAttributePresent(attr), "Attribute ismap should not be present.");
+        String attribute = mediaOutput.getAttribute("ismap");
+        assertNull(attribute, "Attribute ismap should not be present.");
 
         mediaOutputAttributes.set(MediaOutputAttributes.ismap, true);
 
-        assertTrue(selenium.isAttributePresent(attr), "Attribute ismap should be present.");
-        assertEquals(selenium.getAttribute(attr), "ismap", "Attribute ismap");
+        attribute = mediaOutput.getAttribute("ismap");
+        assertNotNull(attribute, "Attribute ismap should be present.");
+        if (attribute.contains("ismap")) {
+            assertEquals(attribute, "ismap", "Attribute ismap");
+        } else {
+            assertEquals(attribute, "true", "Attribute ismap");
+       }
     }
 
-    @Test
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13070")
     public void testOnblur() {
-        testFireEvent(Event.BLUR, MEDIA_OUTPUT);
+        testFireEvent(Event.BLUR, mediaOutput);
     }
 
     @Test
     public void testOnclick() {
-        testFireEvent(Event.CLICK, MEDIA_OUTPUT);
+        testFireEvent(Event.CLICK, mediaOutput);
     }
 
     @Test
     public void testOndblclick() {
-        testFireEvent(Event.DBLCLICK, MEDIA_OUTPUT);
+        testFireEvent(Event.DBLCLICK, mediaOutput);
     }
 
-    @Test
+    @Test(groups = "Future")
+    @IssueTracking("https://issues.jboss.org/browse/RF-13070")
     public void testOnfocus() {
-        testFireEvent(Event.FOCUS, MEDIA_OUTPUT);
+        testFireEvent(Event.FOCUS, mediaOutput);
     }
 
     @Test
     public void testOnkeydown() {
-        testFireEvent(Event.KEYDOWN, MEDIA_OUTPUT);
+        testFireEvent(Event.KEYDOWN, mediaOutput);
     }
 
     @Test
     public void testOnkeypress() {
-        testFireEvent(Event.KEYPRESS, MEDIA_OUTPUT);
+        testFireEvent(Event.KEYPRESS, mediaOutput);
     }
 
     @Test
     public void testOnkeyup() {
-        testFireEvent(Event.KEYUP, MEDIA_OUTPUT);
+        testFireEvent(Event.KEYUP, mediaOutput);
     }
 
     @Test
     public void testOnmousedown() {
-        testFireEvent(Event.MOUSEDOWN, MEDIA_OUTPUT);
+        testFireEvent(Event.MOUSEDOWN, mediaOutput);
     }
 
     @Test
     public void testOnmousemove() {
-        testFireEvent(Event.MOUSEMOVE, MEDIA_OUTPUT);
+        testFireEvent(Event.MOUSEMOVE, mediaOutput);
     }
 
     @Test
     public void testOnmouseout() {
-        testFireEvent(Event.MOUSEOUT, MEDIA_OUTPUT);
+        testFireEvent(Event.MOUSEOUT, mediaOutput);
     }
 
     @Test
     public void testOnmouseover() {
-        testFireEvent(Event.MOUSEOVER, MEDIA_OUTPUT);
+        testFireEvent(Event.MOUSEOVER, mediaOutput);
     }
 
     @Test
     public void testOnmouseup() {
-        testFireEvent(Event.MOUSEUP, MEDIA_OUTPUT);
+        testFireEvent(Event.MOUSEUP, mediaOutput);
     }
 
     @Test
     public void testRel() {
-        testHtmlAttribute(MEDIA_OUTPUT, "rel", "metamer");
+        testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.rel, "metamer");
     }
 
     @Test
     public void testRendered() {
         mediaOutputAttributes.set(MediaOutputAttributes.rendered, false);
-        assertFalse(selenium.isElementPresent(MEDIA_OUTPUT), "Image should not be rendered when rendered=false.");
+        assertFalse(mediaOutput.isPresent(), "Image should not be rendered when rendered=false.");
     }
 
     @Test
     public void testRev() {
-        testHtmlAttribute(MEDIA_OUTPUT, "rev", "metamer");
+        testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.rev, "metamer");
     }
 
     @Test
     public void testShape() {
-        testHtmlAttribute(MEDIA_OUTPUT, "shape", "default");
+        testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.shape, "default");
     }
 
     @Test
     public void testStyle() {
-        testStyle(MEDIA_OUTPUT);
+        testStyle(mediaOutput);
     }
 
     @Test
     public void testStyleClass() {
-        testStyleClass(MEDIA_OUTPUT);
+        testStyleClass(mediaOutput);
     }
 
     @Test
     public void testTabindex() {
-        testHtmlAttribute(MEDIA_OUTPUT, "tabindex", "50");
+        testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.tabindex, "50");
     }
 
     @Test
     public void testTarget() {
-        testHtmlAttribute(MEDIA_OUTPUT, "target", "_blank");
+        testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.target, "_blank");
     }
 
     @Test
     public void testTitle() {
-        testTitle(MEDIA_OUTPUT);
+        testTitle(mediaOutput);
     }
 
     @Test
     public void testUsemap() {
-        testHtmlAttribute(MEDIA_OUTPUT, "usemap", "metamer");
+        testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.usemap, "metamer");
     }
 
 }

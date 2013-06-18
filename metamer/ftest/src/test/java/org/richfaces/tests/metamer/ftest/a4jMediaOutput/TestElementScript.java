@@ -29,6 +29,9 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.GrapheneElement;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.Test;
 
 
@@ -39,7 +42,8 @@ import org.testng.annotations.Test;
  */
 public class TestElementScript extends AbstractMediaOutputTest {
 
-    private static final JQueryLocator JAVASCRIPT_TEXT = pjq("*#mediaOutputJavascriptText");
+    @FindBy(css="*#mediaOutputJavascriptText")
+    private GrapheneElement javascriptText;
 
     @Override
     public URL getTestUrl() {
@@ -48,8 +52,8 @@ public class TestElementScript extends AbstractMediaOutputTest {
 
     @Test
     public void init() {
-        assertTrue(selenium.isElementPresent(JAVASCRIPT_TEXT), "The javascript text is not present.");
-        assertEquals(selenium.getText(JAVASCRIPT_TEXT), "JAVASCRIPT TEXT", "The javascript text doesn't match.");
+        assertTrue(javascriptText.isPresent(), "The javascript text is not present.");
+        assertEquals(javascriptText.getText(), "JAVASCRIPT TEXT", "The javascript text doesn't match.");
     }
 
 
