@@ -21,14 +21,17 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.bean.abstractions;
 
+import java.io.Serializable;
+
 import org.richfaces.tests.metamer.Attributes;
 
 /**
  * For beans which uses Number inputs, e.g.: inputNumberSlider, inputNumberSpinner.
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class NumberInputValidationBeanImpl implements NumberInputValidationBean {
+public class NumberInputValidationBeanImpl implements NumberInputValidationBean, Serializable {
 
+    private static final long serialVersionUID = -1L;
     protected Attributes attributes;
     // properties for jsr303 validations
     private int customValue = CUSTOM_VALUE_DEFAULT;

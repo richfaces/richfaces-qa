@@ -21,12 +21,14 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.bean.abstractions;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.richfaces.tests.metamer.Attributes;
 
-public class DateInputValidationBeanImpl implements DateInputValidationBean {
+public class DateInputValidationBeanImpl implements DateInputValidationBean, Serializable {
 
+    private static final long serialVersionUID = -1L;
     protected Attributes attributes;
     private Date futureValue = FUTURE_DATE_DEFAULT;
     private Date lastYearValue = LAST_YEAR_DATE_DEFAULT;
