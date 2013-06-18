@@ -21,22 +21,20 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jRegion;
 
-import static org.jboss.arquillian.ajocado.locator.option.OptionLocatorFactory.optionLabel;
-
-import static org.jboss.arquillian.ajocado.guard.RequestGuardFactory.guard;
-
-import static org.richfaces.tests.metamer.ftest.AbstractGrapheneTest.pjq;
-
-import static org.testng.Assert.assertTrue;
-
 import org.apache.commons.lang.WordUtils;
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
-import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.locator.element.ElementLocator;
-import org.jboss.arquillian.ajocado.locator.option.OptionLocator;
-import org.jboss.arquillian.ajocado.request.RequestType;
+import org.jboss.arquillian.drone.api.annotation.Default;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.GrapheneContext;
+import org.jboss.arquillian.graphene.enricher.WebElementUtils;
+import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
+import org.jboss.arquillian.graphene.proxy.GrapheneProxyHandler;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
+import static org.testng.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -44,15 +42,15 @@ import org.jboss.arquillian.ajocado.request.RequestType;
  */
 public class NestedRegionModel {
 
-    private static GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
-
     private static ThreadLocal<Integer> sequence = new ThreadLocal<Integer>() {
+        @Override
         protected Integer initialValue() {
             return 0;
         };
     };
 
-    private JQueryLocator selectDefaults = pjq("select[id$=defaultsSelect]");
+    @FindBy(css="select[id$=defaultsSelect]")
+    private Select selectDefaults;
 
     public void setDefaultExecute(Execute execute) {
         selectOrFireChange(selectDefaults, execute.option);
@@ -62,46 +60,52 @@ public class NestedRegionModel {
         selectOrFireChange(component.select, execute.option);
     }
 
-    private void selectOrFireChange(ElementLocator<?> selectLocator, OptionLocator<?> optionLocator) {
-        if (optionLocator.getRawLocator().equals(selenium.getSelectedLabel(selectLocator))) {
-             guard(selenium, RequestType.XHR).fireEvent(selectLocator, Event.CHANGE);
-        } else {
-             guard(selenium, RequestType.XHR).select(selectLocator, optionLocator);
+    private void selectOrFireChange(Select select, String visibleText) {
+        if (!visibleText.equals(select.getFirstSelectedOption().getText())) {
+            Graphene.guardAjax(select).selectByVisibleText(visibleText);
         }
     }
 
     public void changeInputs() {
         sequence.set(sequence.get() + 1);
         for (Component component : Component.values()) {
-            selenium.type(component.input, Integer.toString(sequence.get()));
+            component.input.click();
+            component.input.clear();
+            component.input.sendKeys(Integer.toString(sequence.get()));
         }
     }
 
     public enum Component {
         OUTER("Outer"), REGION("Region"), NESTED("Nested region"), DECORATION("Decoration"), INSERTION("Insertion");
 
-        private final JQueryLocator select;
-        private final JQueryLocator output;
-        private final JQueryLocator input;
-        private final JQueryLocator link;
-        private final OptionLocator<?> executeOption;
+        private final Select select;
+        private final WebElement output;
+        private final WebElement input;
+        private final WebElement link;
+        private final String executeOption;
 
         private Component(String name) {
-            String id = name.substring(0, 1).toLowerCase() + WordUtils.capitalize(name).replace(" ", "").substring(1);
-
-            this.select = pjq("select[id$={0}Select]").format(id);
-            this.output = pjq("span[id$={0}ValueOutput]").format(id);
-            this.input = pjq("input:text[id$={0}ValueInput]").format(id);
-            this.link = pjq("input:submit[id$={0}ValueButton]").format(id);
-            this.executeOption = optionLabel(name);
+            final String id = name.substring(0, 1).toLowerCase() + WordUtils.capitalize(name).replace(" ", "").substring(1);
+            GrapheneContext context = GrapheneContext.getContextFor(Default.class);
+            final WebDriver browser = context.getWebDriver();
+            this.select = GrapheneProxy.getProxyForHandler(GrapheneProxyHandler.forFuture(context, new GrapheneProxy.FutureTarget() {
+                @Override
+                public Object getTarget() {
+                    return new Select(browser.findElement(By.cssSelector("select[id$="+id+"Select]")));
+                }
+            }), Select.class);
+            this.output = WebElementUtils.findElementLazily(By.cssSelector("span[id$="+id+"ValueOutput]"), browser);
+            this.input = WebElementUtils.findElementLazily(ByJQuery.jquerySelector("input:text[id$="+id+"ValueInput]"), browser);
+            this.link = WebElementUtils.findElementLazily(ByJQuery.jquerySelector("input:submit[id$="+id+"ValueButton]"), browser);
+            this.executeOption = name;
         }
 
         public void fireAction() {
-             guard(selenium, RequestType.XHR).click(link);
+            Graphene.guardAjax(link).click();
         }
 
         public boolean isChanged() {
-            final String out = selenium.getText(output);
+            final String out = output.getText();
             assertTrue("".equals(out) || Integer.toString(sequence.get()).equals(out));
             return Integer.toString(sequence.get()).equals(out);
         }
@@ -112,11 +116,11 @@ public class NestedRegionModel {
             Component.OUTER), COMPONENT_REGION(Component.REGION), COMPONENT_NESTED(Component.NESTED), COMPONENT_DECORATION(
             Component.DECORATION), COMPONENT_INSERTION(Component.INSERTION);
 
-        private final OptionLocator<?> option;
+        private final String option;
         private final Component componentBase;
 
         private Execute(String label) {
-            this.option = optionLabel(label);
+            this.option = label;
             this.componentBase = null;
         }
 
