@@ -53,8 +53,7 @@ public class TestImagePng extends AbstractMediaOutputTest {
 
     @Test
     public void init() {
-        AttributeLocator<?> imageURLAttr = MEDIA_OUTPUT.getAttribute(Attribute.SRC);
-        URL imageURL = buildUrl(contextPath, selenium.getAttribute(imageURLAttr));
+        URL imageURL = buildUrl(contextPath, mediaOutput.getAttribute("src"));
 
         BufferedImage bufferedImage = null;
 

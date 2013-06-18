@@ -45,7 +45,7 @@ public class TestTextHtml extends AbstractMediaOutputTest {
     @Test
     public void testInit() throws IOException {
         assertTrue(
-            getTextContentByUrlAttribute(MEDIA_OUTPUT.getAttribute(Attribute.DATA)).toString().contains(A4JMediaOutputBean.HTML_TEXT),
+            getTextContentByUrlAttribute(mediaOutput, "data").contains(A4JMediaOutputBean.HTML_TEXT),
             "The HTML content doesn't match."
         );
     }

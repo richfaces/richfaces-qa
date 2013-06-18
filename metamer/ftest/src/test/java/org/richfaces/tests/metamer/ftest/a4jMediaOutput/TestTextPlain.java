@@ -28,7 +28,6 @@ import static org.testng.Assert.assertTrue;
 import java.io.IOException;
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.richfaces.tests.metamer.bean.a4j.A4JMediaOutputBean;
 import org.testng.annotations.Test;
 
@@ -45,7 +44,7 @@ public class TestTextPlain extends AbstractMediaOutputTest {
     @Test
     public void testInit() throws IOException {
         assertTrue(
-            getTextContentByUrlAttribute(MEDIA_OUTPUT.getAttribute(Attribute.DATA)).toString().contains(A4JMediaOutputBean.PLAIN_TEXT),
+            getTextContentByUrlAttribute(mediaOutput, "data").toString().contains(A4JMediaOutputBean.PLAIN_TEXT),
             "The plain text content doesn't match."
         );
     }

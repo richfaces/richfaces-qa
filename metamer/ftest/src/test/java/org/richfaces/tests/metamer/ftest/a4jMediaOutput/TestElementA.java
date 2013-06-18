@@ -29,9 +29,11 @@ import static org.testng.Assert.assertTrue;
 import java.io.IOException;
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.dom.Attribute;
 import org.richfaces.tests.metamer.bean.a4j.A4JMediaOutputBean;
+import org.richfaces.tests.metamer.ftest.annotations.Inject;
+import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.mediaOutputAttributes;
 
 
 /**
@@ -41,6 +43,10 @@ import org.testng.annotations.Test;
  */
 public class TestElementA extends AbstractMediaOutputTest {
 
+    @Inject
+    @Use(empty = false)
+    private String typeValue;
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jMediaOutput/elementA.xhtml");
@@ -48,12 +54,21 @@ public class TestElementA extends AbstractMediaOutputTest {
 
     @Test
     public void init() throws IOException {
-        assertEquals(selenium.getText(MEDIA_OUTPUT), "This is a link", "The link text doesn't match.");
+        assertEquals(mediaOutput.getText(), "This is a link", "The link text doesn't match.");
         assertTrue(
-            getTextContentByUrlAttribute(MEDIA_OUTPUT.getAttribute(Attribute.HREF)).contains(A4JMediaOutputBean.HTML_TEXT),
+            getTextContentByUrlAttribute(mediaOutput, "href").contains(A4JMediaOutputBean.HTML_TEXT),
             "Target HTML page doesn't match."
         );
     }
 
+    @Test
+    public void testLang() {
+        testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.lang, "cz");
+    }
 
+    @Test
+    @Use(field = "typeValue", strings = { "text/html", "image/png", "image/gif", "video/mpeg", "text/css", "audio/basic" })
+    public void testType() {
+        testHTMLAttribute(mediaOutput, mediaOutputAttributes, MediaOutputAttributes.type, typeValue);
+    }
 }
