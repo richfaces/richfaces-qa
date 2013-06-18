@@ -21,14 +21,17 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.bean.abstractions;
 
+import java.io.Serializable;
+
 import org.richfaces.tests.metamer.Attributes;
 
 /**
  * For beans which uses String inputs, e.g.: autocomplete, inplaceInput, inplaceSelect, select
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class StringInputValidationBeanImpl implements StringInputValidationBean {
+public class StringInputValidationBeanImpl implements StringInputValidationBean, Serializable {
 
+    private static final long serialVersionUID = -1L;
     protected Attributes attributes;
     // properties for jsr303 validations
     private String customValue = CUSTOM_VALUE_DEFAULT;
