@@ -2,6 +2,7 @@
 SCRIPT_DIR=`dirname $BASH_SOURCE`;
 SCRIPT_DIR=`readlink -f $SCRIPT_DIR`;
 WORKING_DIR=`pwd`;
+set -x;
 source "$SCRIPT_DIR/version.sh";
 source "$SCRIPT_DIR/config.sh";
 
@@ -10,7 +11,7 @@ if [ -d "$SCRIPT_DIR/richfaces-simpleapp" ]; then
 fi
 
 if [ "$FORGE_VERSION"  == "" ]; then
-    FORGE_VERSION="1.0.3.Final";
+    FORGE_VERSION="1.3.0.Final";
 fi
 
 if [ -d "$SCRIPT_DIR/forge-distribution-${FORGE_VERSION}" ]; then
@@ -37,5 +38,5 @@ echo "--------------------------------------------------------------------------
 
 cd $SCRIPT_DIR;
     $SCRIPT_DIR/forge-distribution-${FORGE_VERSION}/bin/forge -e "set DEFAULT_PLUGIN_REPO https://raw.github.com/forge/plugin-repository/master/repository.yaml; forge install-plugin richfaces";
-    for I in {1..2}; do echo ""; done | $SCRIPT_DIR/forge-distribution-${FORGE_VERSION}/bin/forge -e "new-project --named richfaces-forge-simpleapp --topLevelPackage org.richfaces.tests --projectFolder richfaces-forge-simpleapp; richfaces setup; richfaces install-example-facelet; build;"
+    for I in {1..3}; do echo ""; done | $SCRIPT_DIR/forge-distribution-${FORGE_VERSION}/bin/forge -e "new-project --named richfaces-forge-simpleapp --topLevelPackage org.richfaces.tests --projectFolder richfaces-forge-simpleapp; richfaces setup; richfaces install-example-facelet; build;"
 cd $WORKING_DIR;
