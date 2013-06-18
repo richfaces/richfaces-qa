@@ -20,6 +20,7 @@
             <package name="org.richfaces.tests.metamer.ftest.a4jLog"/>
             <package name="org.richfaces.tests.metamer.ftest.a4jOutputPanel"/>
             <package name="org.richfaces.tests.metamer.ftest.a4jParam"/>
+            <package name="org.richfaces.tests.metamer.ftest.a4jRegion"/>
             <package name="org.richfaces.tests.metamer.ftest.a4jRepeat"/>
             <package name="org.richfaces.tests.metamer.ftest.richAccordion"/>
             <package name="org.richfaces.tests.metamer.ftest.richAutocomplete"/>

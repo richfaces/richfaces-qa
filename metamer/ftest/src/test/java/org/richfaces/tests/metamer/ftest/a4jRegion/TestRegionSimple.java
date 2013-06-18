@@ -21,36 +21,34 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jRegion;
 
-import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
-import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.regionAttributes;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.regionAttributes;
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.GrapheneElement;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22691 $
  */
-public class TestRegionSimple extends AbstractGrapheneTest {
+public class TestRegionSimple extends AbstractWebDriverTest {
 
-    JQueryLocator nameInput = pjq("input:text[id$=user2NameInput]");
-    JQueryLocator emailInput = pjq("input:text[id$=user2EmailInput]");
+    @FindBy(jquery="input:text[id$=user2NameInput]")
+    private GrapheneElement nameInput;
+    @FindBy(jquery="input:text[id$=user2EmailInput]")
+    private GrapheneElement emailInput;
 
-    JQueryLocator nameOutput = pjq("span[id$=user2NameOutput]");
-    JQueryLocator emailOutput = pjq("span[id$=user2EmailOutput]");
-
-    TextRetriever nameRetriever = retrieveText.locator(nameOutput);
-    TextRetriever emailRetriever = retrieveText.locator(emailOutput);
+    @FindBy(css="span[id$=user2NameOutput]")
+    private GrapheneElement nameOutput;
+    @FindBy(css="span[id$=user2EmailOutput]")
+    private GrapheneElement emailOutput;
 
     @Override
     public URL getTestUrl() {
@@ -59,34 +57,45 @@ public class TestRegionSimple extends AbstractGrapheneTest {
 
     @Test
     public void testExecution() {
-        nameRetriever.initializeValue();
+        String name = nameOutput.getText();
 
-        selenium.type(nameInput, "abc");
-        selenium.fireEvent(nameInput, Event.KEYUP);
+        nameInput.click();
+        nameInput.clear();
+        nameInput.sendKeys("abc");
 
-        waitAjax.waitForChange(nameRetriever);
+        Graphene.waitAjax()
+                .until()
+                .element(nameOutput)
+                .text()
+                .not().equalTo(name);
 
-        emailRetriever.initializeValue();
+        String email = emailOutput.getText();
 
-        selenium.type(emailInput, "abc");
-        selenium.fireEvent(emailInput, Event.KEYUP);
 
-        waitAjax.waitForChange(emailRetriever);
+        emailInput.click();
+        emailInput.clear();
+        emailInput.sendKeys("abc");
+
+        Graphene.waitAjax()
+                .until()
+                .element(emailOutput)
+                .text()
+                .not().equalTo(email);
     }
 
     @Test
     public void testRendered() {
-        assertTrue(selenium.isElementPresent(nameInput));
-        assertTrue(selenium.isElementPresent(emailInput));
-        assertTrue(selenium.isElementPresent(nameOutput));
-        assertTrue(selenium.isElementPresent(emailOutput));
+        assertTrue(nameInput.isPresent());
+        assertTrue(emailInput.isPresent());
+        assertTrue(nameOutput.isPresent());
+        assertTrue(emailOutput.isPresent());
 
         regionAttributes.set(RegionAttributes.rendered, false);
 
-        assertFalse(selenium.isElementPresent(nameInput));
-        assertFalse(selenium.isElementPresent(emailInput));
-        assertTrue(selenium.isElementPresent(nameOutput));
-        assertTrue(selenium.isElementPresent(emailOutput));
+        assertFalse(nameInput.isPresent());
+        assertFalse(emailInput.isPresent());
+        assertTrue(nameOutput.isPresent());
+        assertTrue(emailOutput.isPresent());
     }
 
 }
