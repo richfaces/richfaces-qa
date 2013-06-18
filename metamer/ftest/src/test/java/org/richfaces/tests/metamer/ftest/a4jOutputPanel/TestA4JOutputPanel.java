@@ -21,10 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jOutputPanel;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
-import static org.jboss.arquillian.ajocado.Graphene.textEquals;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
 import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
 import static org.jboss.arquillian.ajocado.dom.Event.KEYDOWN;
@@ -36,8 +32,7 @@ import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOUT;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOVER;
 import static org.jboss.arquillian.ajocado.dom.Event.MOUSEUP;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.outputPanelAttributes;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.outputPanelAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -45,13 +40,18 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 
 import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.GrapheneElement;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
 /**
@@ -60,7 +60,7 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22733 $
  */
-public class TestA4JOutputPanel extends AbstractGrapheneTest {
+public class TestA4JOutputPanel extends AbstractWebDriverTest {
 
     Event[] events = new Event[] { CLICK, DBLCLICK, KEYDOWN, KEYPRESS, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER,
             MOUSEUP };
@@ -71,9 +71,15 @@ public class TestA4JOutputPanel extends AbstractGrapheneTest {
     @Inject
     @Use(empty = true)
     String layout;
-    private JQueryLocator increaseCounterButton = pjq("input[id$=button]");
-    private JQueryLocator outputDiv = pjq("div[id$=outputPanel]");
-    private JQueryLocator outputSpan = pjq("span[id$=outputPanel]");
+    @FindBy(css="input[id$=button]")
+    private WebElement increaseCounterButton;
+    @FindBy(css="div[id$=outputPanel]")
+    private GrapheneElement outputDiv;
+    @FindBy(css="span[id$=outputPanel]")
+    private GrapheneElement outputSpan;
+
+    @Page
+    private MetamerPage metamerPage;
 
     @Override
     public URL getTestUrl() {
@@ -83,7 +89,7 @@ public class TestA4JOutputPanel extends AbstractGrapheneTest {
     @Test
     @Uses({ @Use(field = "event", value = "events"), @Use(field = "layout", value = "layouts") })
     public void testEvent() {
-        JQueryLocator element = null;
+        WebElement element;
 
         if ("inline".equals(layout)) {
             outputPanelAttributes.set(OutputPanelAttributes.layout, "inline");
@@ -98,28 +104,35 @@ public class TestA4JOutputPanel extends AbstractGrapheneTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11312")
     public void testClick() {
-        selenium.click(increaseCounterButton);
-        waitGui.until(textEquals.locator(outputDiv).text("1"));
+        increaseCounterButton.click();
+        Graphene.waitGui()
+                .until()
+                .element(outputDiv)
+                .text().equalTo("1");
 
-        selenium.click(increaseCounterButton);
-        waitGui.until(textEquals.locator(outputDiv).text("2"));
+        increaseCounterButton.click();
+        Graphene.waitGui()
+                .until()
+                .element(outputDiv)
+                .text().equalTo("2");
     }
 
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-10555")
     public void testAjaxRendered() {
-        JQueryLocator reRenderAllImage = jq("div.header img[id$=reRenderAllImage]");
-
         outputPanelAttributes.set(OutputPanelAttributes.ajaxRendered, false);
 
-        selenium.click(increaseCounterButton);
-        selenium.click(increaseCounterButton);
+        increaseCounterButton.click();
+        increaseCounterButton.click();
 
-        String output = selenium.getText(outputDiv);
+        String output = outputDiv.getText();
         assertEquals(output, "0", "Output after two clicks when ajaxRendered is set to false.");
 
-        selenium.click(reRenderAllImage);
-        waitGui.until(textEquals.locator(outputDiv).text("2"));
+        metamerPage.rerenderAll();
+        Graphene.waitGui()
+                .until()
+                .element(outputDiv)
+                .text().equalTo("2");
     }
 
     @Test
@@ -129,21 +142,21 @@ public class TestA4JOutputPanel extends AbstractGrapheneTest {
 
     @Test
     public void testLang() {
-        testLang(outputDiv);
+        testHTMLAttribute(outputDiv, outputPanelAttributes, OutputPanelAttributes.lang, "sk");
     }
 
     @Test
     public void testLayout() {
-        assertTrue(selenium.isElementPresent(outputDiv), "Div should be rendered on the beginning.");
-        assertFalse(selenium.isElementPresent(outputSpan), "Div should be rendered on the beginning.");
+        assertTrue(outputDiv.isPresent(), "Div should be rendered on the beginning.");
+        assertFalse(outputSpan.isPresent(), "Div should be rendered on the beginning.");
 
         outputPanelAttributes.set(OutputPanelAttributes.layout, "inline");
-        assertFalse(selenium.isElementPresent(outputDiv), "Span should be rendered when inline is set.");
-        assertTrue(selenium.isElementPresent(outputSpan), "Span should be rendered when inline is set.");
+        assertFalse(outputDiv.isPresent(), "Span should be rendered when inline is set.");
+        assertTrue(outputSpan.isPresent(), "Span should be rendered when inline is set.");
 
         outputPanelAttributes.set(OutputPanelAttributes.layout, "block");
-        assertTrue(selenium.isElementPresent(outputDiv), "Div should be rendered when block is set.");
-        assertFalse(selenium.isElementPresent(outputSpan), "Div should be rendered when block is set.");
+        assertTrue(outputDiv.isPresent(), "Div should be rendered when block is set.");
+        assertFalse(outputSpan.isPresent(), "Div should be rendered when block is set.");
 
         // TODO uncomment as soon as implemented https://issues.jboss.org/browse/RF-7819
         // selenium.click(optionNone);
@@ -156,19 +169,27 @@ public class TestA4JOutputPanel extends AbstractGrapheneTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-11312")
     public void testRendered() {
         outputPanelAttributes.set(OutputPanelAttributes.rendered, false);
-        assertFalse(selenium.isElementPresent(outputDiv), "Panel should not be rendered.");
+        assertFalse(outputDiv.isPresent(), "Panel should not be rendered.");
 
-        String timeValue = selenium.getText(time);
-        guardXhr(selenium).click(increaseCounterButton);
-        waitGui.failWith("Page was not updated").waitForChange(timeValue, retrieveText.locator(time));
-        timeValue = selenium.getText(time);
-        guardXhr(selenium).click(increaseCounterButton);
-        waitGui.failWith("Page was not updated").waitForChange(timeValue, retrieveText.locator(time));
+        String timeValue = metamerPage.getRequestTimeElement().getText();
+        Graphene.guardAjax(increaseCounterButton).click();
+        Graphene.waitGui()
+                .withMessage("Page was not updated")
+                .until()
+                .element(metamerPage.getRequestTimeElement())
+                .text().not().equalTo(timeValue);
+        timeValue = metamerPage.getRequestTimeElement().getText();
+        Graphene.guardAjax(increaseCounterButton).click();
+        Graphene.waitGui()
+                .withMessage("Page was not updated")
+                .until()
+                .element(metamerPage.getRequestTimeElement())
+                .text().not().equalTo(timeValue);
 
         outputPanelAttributes.set(OutputPanelAttributes.rendered, true);
-        assertTrue(selenium.isElementPresent(outputDiv), "Panel should be rendered.");
+        assertTrue(outputDiv.isPresent(), "Panel should be rendered.");
 
-        String counter = selenium.getText(outputDiv);
+        String counter = outputDiv.getText();
         assertEquals(counter, "2", "Counter after two clicks on button.");
     }
 
