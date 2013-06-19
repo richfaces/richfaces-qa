@@ -24,20 +24,22 @@ package org.richfaces.tests.metamer.ftest.a4jPoll;
 import static org.jboss.arquillian.ajocado.format.SimplifiedFormat.format;
 import static org.jboss.arquillian.ajocado.utils.PrimitiveUtils.asLong;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.pollAttributes;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.pollAttributes;
 import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
-import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.ajocado.framework.GrapheneConfigurationContext;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -48,20 +50,23 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22681 $
  */
-public class TestPollInterval extends AbstractGrapheneTest {
+public class TestPollInterval extends AbstractWebDriverTest {
 
     private static final int ITERATION_COUNT = 5;
 
     @Inject
-    int interval;
+    private int interval;
 
-    JQueryLocator time = pjq("span[id$=time]");
-    AttributeLocator<?> clientTime = pjq("span[id$=event1:outputTime]").getAttribute(Attribute.TITLE);
+    @FindBy(css="span[id$='event1:outputTime']")
+    private WebElement outputTime;
 
-    long startTime;
+    @Page
+    private MetamerPage metamerPage;
 
-    long deviationTotal = 0;
-    long deviationCount = 0;
+    private long startTime;
+
+    private long deviationTotal = 0;
+    private long deviationCount = 0;
 
     @Override
     public URL getTestUrl() {
@@ -130,18 +135,17 @@ public class TestPollInterval extends AbstractGrapheneTest {
     }
 
     private void waitForPoll() {
-        selenium.getPageExtensions().install();
-        selenium.getRequestGuard().clearRequestDone();
-        selenium.getRequestGuard().waitForRequest();
+        String time = metamerPage.getRequestTimeElement().getText();
+        Graphene.waitModel()
+                .withTimeout(2*interval, TimeUnit.MILLISECONDS)
+                .until()
+                .element(metamerPage.getRequestTimeElement())
+                .text().not().equalTo(time);
     }
 
     private void validateInterval() {
         long runTime = getClientTime() - startTime;
         long deviation = Math.abs(interval - runTime);
-
-        if (GrapheneConfigurationContext.getProxy().isSeleniumDebug()) {
-            System.out.println(format("deviation for interval {0}: {1}", interval, deviation));
-        }
 
         assertTrue(deviation <= (2 * interval),
             format("Deviation ({0}) is greater than two intervals (2 * {1})", deviation, interval));
@@ -151,12 +155,9 @@ public class TestPollInterval extends AbstractGrapheneTest {
     }
 
     private void validateAverageDeviation() {
-        long maximumAvgDeviation = Math.max(300, Math.min(interval / 3, 1000));
+        long maximumAvgDeviation = Math.max(400, Math.min(interval / 3, 1000));
         long averageDeviation = deviationTotal / deviationCount;
 
-        if (GrapheneConfigurationContext.getProxy().isSeleniumDebug()) {
-            System.out.println("averageDeviation: " + averageDeviation);
-        }
         assertTrue(
             averageDeviation <= maximumAvgDeviation,
             format("Average deviation for all the intervals ({0}) should not be greater than defined maximum {1}",
@@ -169,6 +170,6 @@ public class TestPollInterval extends AbstractGrapheneTest {
      * @return the time of poll event (the time when arrived the response from server)
      */
     private long getClientTime() {
-        return asLong(selenium.getAttribute(clientTime));
+        return asLong(outputTime.getAttribute("title"));
     }
 }
