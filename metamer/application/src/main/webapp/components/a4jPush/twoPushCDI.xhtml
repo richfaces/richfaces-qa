@@ -40,6 +40,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
+            <script type="text/javascript">
+                function updateOutput(outputID, event) {
+                    var timeString = 'day: ' + event.date + ', month: ' + (event.month + 1) + ', time: ' + event.hours + ':' + event.minutes + ':' + event.seconds;
+                    $('[id$=' + outputID + ']').text(timeString);
+                }
+
+            </script>
 
             <p>
                 <a href="https://issues.jboss.org/browse/RF-12095">RF-12095</a><br/>
@@ -48,13 +55,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 even for other push components on the page, which are not conditionally rendered.<br/>
             </p>
 
+            <a:commandButton id="performPushEvent1" value="Push 1!" action="#{a4jPushBean.pushCDI1}" />
             <!--  PUSH 1 -->
-            <a:commandButton id="performPushEvent1" value="Push 1!" action="#{a4jPushBean.pushJMS1}" />
             <a:outputPanel id="pushPanel">
                 <a:push id="push"
                         rendered="#{a4jPushBean.attributes['rendered'].value}"
-                        address="sampleAddress"
-                        ondataavailable="$('*[id$=outputDate]').text(event.rf.data)"
+                        address="sampleAddress1"
+                        ondataavailable="updateOutput('outputDate', event.rf.data);"
                         onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}" />
             </a:outputPanel>
 
@@ -74,10 +81,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <br />
 
             <!--  PUSH 2 -->
-            <a:commandButton id="performPushEvent2" value="Push 2!" action="#{a4jPushBean.pushJMS2}" />
+            <a:commandButton id="performPushEvent2" value="Push 2!" action="#{a4jPushBean.pushCDI2}" />
             <a:push id="push2"
                     address="sampleAddress2"
-                    ondataavailable="$('*[id$=outputDate2]').text(event.rf.data)"
+                    ondataavailable="updateOutput('outputDate2', event.rf.data);"
                     onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}" />
 
             <br />
