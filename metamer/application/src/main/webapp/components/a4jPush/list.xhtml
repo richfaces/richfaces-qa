@@ -32,22 +32,20 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <ui:define name="links">
 
             <metamer:testPageLink id="simple" outcome="simple" value="Simple">
-                Simple page that contains <b>r:push</b> and input boxes for all its attributes.
+                Simple page that contains <b>r:push</b> and input boxes for all its attributes. Messages are distributed by JMS.
             </metamer:testPageLink>
 
             <metamer:testPageLink id="messageProducer" outcome="messageProducer" value="Message Producer">
-                Page that is bind to application bean producing messages catched by r:push.
-            </metamer:testPageLink>
-            
-            <metamer:testPageLink id="twoPush" outcome="twoPush" value="Two push component on page">
-                Page that contains two push components, bound to different topic
-            </metamer:testPageLink>
-            
-            <metamer:testPageLink id="rf-12096" outcome="rf-12096" value="rf-12096">
-                Page containing push component conditionally rendered. Simulate issue
-                <a href="https://issues.jboss.org/browse/RF-12096">rf-12096</a>
+                Page that is bind to application bean producing messages catched by r:push in simple page. Messages are distributed by JMS.
             </metamer:testPageLink>
 
+            <metamer:testPageLink id="twoPush" outcome="twoPush" value="Two push component on page using JMS">
+                Page that contains two push components, bound to different topic. Messages are distributed by JMS.Also for issue <a href="https://issues.jboss.org/browse/RF-12096">rf-12096</a>.
+            </metamer:testPageLink>
+
+            <metamer:testPageLink id="twoPushCDI" outcome="twoPushCDI" value="Two push component using CDI">
+                Page that contains two push components, bound to different topic. Messages are distributed by CDI. Also for issue <a href="https://issues.jboss.org/browse/RF-12096">rf-12096</a>.
+            </metamer:testPageLink>
         </ui:define>
 
     </ui:composition>
