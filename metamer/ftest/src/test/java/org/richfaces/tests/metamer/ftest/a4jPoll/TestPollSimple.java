@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jPoll;
 
+
 import static javax.faces.event.PhaseId.ANY_PHASE;
 import static javax.faces.event.PhaseId.APPLY_REQUEST_VALUES;
 import static javax.faces.event.PhaseId.INVOKE_APPLICATION;
@@ -28,9 +29,6 @@ import static javax.faces.event.PhaseId.PROCESS_VALIDATIONS;
 import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
-import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.jboss.arquillian.ajocado.Graphene.waitModel;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
@@ -44,7 +42,7 @@ import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.limitRend
 import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.oncomplete;
 import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.render;
 import static org.richfaces.tests.metamer.ftest.a4jPoll.PollAttributes.rendered;
-import static org.richfaces.tests.metamer.ftest.attributes.AttributeList.pollAttributes;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.pollAttributes;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -52,10 +50,15 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.javascript.JavaScript;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -64,9 +67,16 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22681 $
  */
-public class TestPollSimple extends AbstractGrapheneTest {
+public class TestPollSimple extends AbstractWebDriverTest {
 
-    JQueryLocator outputCounter = pjq("span[id$=outputCounter]");
+    @FindBy(css="span[id$=outputCounter]")
+    private WebElement outputCounter;
+
+    @Page
+    private MetamerPage metamerPage;
+
+    @JavaScript
+    private Window window;
 
     @Inject
     @Use(empty = true)
@@ -87,24 +97,24 @@ public class TestPollSimple extends AbstractGrapheneTest {
 
     @Test
     public void testAction() {
-        waitForTwoSubsequentRequests();
-        phaseInfo.assertListener(INVOKE_APPLICATION, "action invoked");
-        phaseInfo.assertPhases(ANY_PHASE);
+        waitForNSubsequentRequests(2);
+        metamerPage.assertListener(INVOKE_APPLICATION, "action invoked");
+        metamerPage.assertPhases(ANY_PHASE);
     }
 
     @Test
     public void testActionListener() {
-        waitForTwoSubsequentRequests();
-        phaseInfo.assertListener(INVOKE_APPLICATION, "action listener invoked");
-        phaseInfo.assertPhases(ANY_PHASE);
+        waitForNSubsequentRequests(2);
+        metamerPage.assertListener(INVOKE_APPLICATION, "action listener invoked");
+        metamerPage.assertPhases(ANY_PHASE);
     }
 
     @Test
     public void testBypassUpdates() {
         pollAttributes.set(bypassUpdates, true);
-        waitForTwoSubsequentRequests();
-        phaseInfo.assertListener(PROCESS_VALIDATIONS, "action invoked");
-        phaseInfo.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, RENDER_RESPONSE);
+        waitForNSubsequentRequests(2);
+        metamerPage.assertListener(PROCESS_VALIDATIONS, "action listener");
+        metamerPage.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, PROCESS_VALIDATIONS, RENDER_RESPONSE);
     }
 
     @Test
@@ -112,18 +122,17 @@ public class TestPollSimple extends AbstractGrapheneTest {
         pollAttributes.set(data, "RichFaces 4");
         pollAttributes.set(oncomplete, "data = event.data");
 
-        retrieveRequestTime.initializeValue();
-        waitGui.waitForChange(retrieveRequestTime);
+        waitForNSubsequentRequests(1);
 
-        assertEquals(retrieveWindowData.retrieve(), "RichFaces 4");
+        assertEquals(window.getData(), "RichFaces 4");
     }
 
     @Test
     public void testImmediate() {
         pollAttributes.set(immediate, true);
-        waitForTwoSubsequentRequests();
-        phaseInfo.assertListener(APPLY_REQUEST_VALUES, "action invoked");
-        phaseInfo.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, RENDER_RESPONSE);
+        waitForNSubsequentRequests(2);
+        metamerPage.assertListener(APPLY_REQUEST_VALUES, "action invoked");
+        metamerPage.assertPhases(RESTORE_VIEW, APPLY_REQUEST_VALUES, RENDER_RESPONSE);
     }
 
     @Test
@@ -142,68 +151,86 @@ public class TestPollSimple extends AbstractGrapheneTest {
         pollAttributes.set(enabled, true);
         pollAttributes.set(rendered, false);
 
-        retrieveRequestTime.initializeValue();
-        waitModel.timeout(5000).interval(1000).waitForTimeout();
-        assertFalse(retrieveRequestTime.isValueChanged());
+        String time = metamerPage.getRequestTimeElement().getText();
+        waiting(5000);
+        assertTrue(time.equals(metamerPage.getRequestTimeElement().getText()));
 
         pollAttributes.set(rendered, true);
-        waitForTwoSubsequentRequests();
+        waitForNSubsequentRequests(2);
     }
 
     @Test
     public void testExecute() {
         pollAttributes.set(execute, "executeChecker");
 
-        waitForTwoSubsequentRequests();
+        waitForNSubsequentRequests(2);
 
-        phaseInfo.assertListener(UPDATE_MODEL_VALUES, "executeChecker");
+        metamerPage.assertListener(UPDATE_MODEL_VALUES, "executeChecker");
     }
 
     @Test
     public void testEnabled() {
         pollAttributes.set(enabled, false);
 
-        retrieveRequestTime.initializeValue();
-        waitModel.timeout(5000).interval(1000).waitForTimeout();
-        assertFalse(retrieveRequestTime.isValueChanged());
+        String time = metamerPage.getRequestTimeElement().getText();
+        waiting(5000);
+        assertTrue(time.equals(metamerPage.getRequestTimeElement().getText()));
 
         pollAttributes.set(enabled, true);
-        waitForTwoSubsequentRequests();
+        waitForNSubsequentRequests(2);
     }
 
     @Test
     public void testRender() {
         pollAttributes.set(render, "renderChecker");
-        retrieveRenderChecker.initializeValue();
-        retrieveRequestTime.initializeValue();
-        waitAjax.waitForChange(retrieveRenderChecker);
-        assertTrue(retrieveRequestTime.isValueChanged());
+        String render = metamerPage.getRenderCheckerOutputElement().getText();
+        String time = metamerPage.getRequestTimeElement().getText();
+
+        Graphene.waitModel()
+                .until()
+                .element(metamerPage.getRenderCheckerOutputElement())
+                .text().not().equalTo(render);
+        assertFalse(time.equals(metamerPage.getRequestTimeElement().getText()));
     }
 
     @Test
     public void testLimitRender() {
         pollAttributes.set(limitRender, true);
         pollAttributes.set(render, "renderChecker");
-        retrieveRenderChecker.initializeValue();
-        retrieveRequestTime.initializeValue();
-        waitGui.waitForChange(retrieveRenderChecker);
-        assertFalse(retrieveRequestTime.isValueChanged());
+        String render = metamerPage.getRenderCheckerOutputElement().getText();
+        String time = metamerPage.getRequestTimeElement().getText();
+        Graphene.waitModel()
+                .until()
+                .element(metamerPage.getRenderCheckerOutputElement())
+                .text().not().equalTo(render);
+        assertTrue(time.equals(metamerPage.getRequestTimeElement().getText()));
     }
 
     private void testClientSideEventHandlers(String... events) {
         pollAttributes.set(enabled, false);
         super.testRequestEventsBefore(events);
         pollAttributes.set(enabled, true);
-        retrieveRequestTime.initializeValue();
-        waitAjax.waitForChange(retrieveRequestTime);
+        String time = metamerPage.getRequestTimeElement().getText();
+        Graphene.waitAjax()
+                .until()
+                .element(metamerPage.getRequestTimeElement())
+                .text().not().equalTo(time);
 
         super.testRequestEventsAfter(events);
     }
 
-    private void waitForTwoSubsequentRequests() {
-        retrieveRequestTime.initializeValue();
+    private void waitForNSubsequentRequests(int n) {
+        for (int i=0; i<n; i++) {
+            String time = metamerPage.getRequestTimeElement().getText();
+            Graphene.waitModel()
+                    .until()
+                    .element(metamerPage.getRequestTimeElement())
+                    .text().not().equalTo(time);
+        }
+    }
 
-        waitAjax.waitForChange(retrieveRequestTime);
-        waitAjax.waitForChange(retrieveRequestTime);
+    @JavaScript("window")
+    public interface Window {
+        String getData();
     }
 }
