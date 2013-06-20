@@ -36,7 +36,6 @@ import java.util.concurrent.TimeUnit;
 import javax.faces.event.PhaseId;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneContext;
@@ -428,24 +427,6 @@ public class MetamerPage {
         initialize();
         assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.PROCESS_VALIDATIONS,
                 PhaseId.RENDER_RESPONSE);
-    }
-
-    public SeleniumCondition getListenerCondition(final PhaseId phaseId, final String message) {
-        return new SeleniumCondition() {
-            @Override
-            public boolean isTrue() {
-                initialize();
-                Set<String> set = map.get(phaseId);
-                if (set != null && set.size() > 0) {
-                    for (String description : set) {
-                        if (description.contains(message)) {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            }
-        };
     }
 
     private void initialize() {

@@ -40,13 +40,14 @@ import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.
 import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.immediate;
 import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.labelClass;
 import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.lang;
-import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.onbeforetoggle;
 import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.rendered;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.metamerAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import javax.faces.event.PhaseId;
 
@@ -55,8 +56,10 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.MetamerAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.richTree.TreeAttributes;
@@ -67,7 +70,6 @@ import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNodeIcon;
 import org.richfaces.ui.common.SwitchType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -91,12 +93,11 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     @Inject
     @Use(empty = true)
     Event event = CLICK;
-    Event[] events = new Event[] { CLICK, DBLCLICK, KEYDOWN, KEYPRESS, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER, MOUSEUP };
-
+    Event[] events = new Event[]{ CLICK, DBLCLICK, KEYDOWN, KEYPRESS, KEYUP, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER, MOUSEUP };
     @Inject
     @Use(empty = true)
     SwitchType toggleType;
-    SwitchType[] toggleTypes = new SwitchType[] { SwitchType.ajax, SwitchType.server };
+    SwitchType[] toggleTypes = new SwitchType[]{ SwitchType.ajax, SwitchType.server };
 
     @BeforeMethod
     public void init() {
@@ -121,26 +122,26 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     public void testHandleClass() {
         assertEquals(page.tree.getNodes().size(), 4);
         assertEquals(page.tree.getRoot().findElements(By.cssSelector(
-            RichFacesTreeNode.CSS_NODE_HANDLER + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 4);
+                RichFacesTreeNode.CSS_NODE_HANDLER + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 4);
 
         attributesNode.set(handleClass, SAMPLE_CLASS);
 
         assertEquals(page.tree.getRoot().findElements(By.cssSelector(
-            RichFacesTreeNode.CSS_NODE_HANDLER + JQ_SAMPLE_CLASS)).size(), 4);
+                RichFacesTreeNode.CSS_NODE_HANDLER + JQ_SAMPLE_CLASS)).size(), 4);
         assertEquals(page.tree.getRoot().findElements(By.cssSelector(
-            RichFacesTreeNode.CSS_NODE_HANDLER + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 0);
+                RichFacesTreeNode.CSS_NODE_HANDLER + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 0);
     }
 
     @Test
     public void testIconClass() {
         assertEquals(page.tree.getRoot().findElements(By.cssSelector(
-            RichFacesTreeNode.CSS_NODE_ICON + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 4);
+                RichFacesTreeNode.CSS_NODE_ICON + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 4);
         attributesNode.set(iconClass, SAMPLE_CLASS);
 
         assertEquals(page.tree.getRoot().findElements(By.cssSelector(
-            RichFacesTreeNode.CSS_NODE_ICON + JQ_SAMPLE_CLASS)).size(), 4);
+                RichFacesTreeNode.CSS_NODE_ICON + JQ_SAMPLE_CLASS)).size(), 4);
         assertEquals(page.tree.getRoot().findElements(By.cssSelector(
-            RichFacesTreeNode.CSS_NODE_ICON + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 0);
+                RichFacesTreeNode.CSS_NODE_ICON + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 0);
     }
 
     @Test
@@ -219,27 +220,27 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     @Test
     public void testLabelClass() {
         assertEquals(page.tree.getRoot().findElements(By.cssSelector(
-            RichFacesTreeNode.CSS_NODE_LABEL + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 4);
+                RichFacesTreeNode.CSS_NODE_LABEL + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 4);
 
         attributesNode.set(labelClass, SAMPLE_CLASS);
 
         assertEquals(page.tree.getRoot().findElements(By.cssSelector(
-            RichFacesTreeNode.CSS_NODE_LABEL + JQ_SAMPLE_CLASS)).size(), 4);
+                RichFacesTreeNode.CSS_NODE_LABEL + JQ_SAMPLE_CLASS)).size(), 4);
         assertEquals(page.tree.getRoot().findElements(By.cssSelector(
-            RichFacesTreeNode.CSS_NODE_LABEL + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 0);
+                RichFacesTreeNode.CSS_NODE_LABEL + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 0);
     }
 
     @Test
     public void testLang() {
         assertEquals(page.tree.getRoot().findElements(By.cssSelector(
-            RichFacesTreeNode.CSS_NODE + ":not(" + "[lang=cs]" + ")")).size(), 4);
+                RichFacesTreeNode.CSS_NODE + ":not(" + "[lang=cs]" + ")")).size(), 4);
 
         attributesNode.set(lang, "cs");
 
         assertEquals(page.tree.getRoot().findElements(By.cssSelector(
-            RichFacesTreeNode.CSS_NODE + "[lang=cs]")).size(), 0);
+                RichFacesTreeNode.CSS_NODE + "[lang=cs]")).size(), 0);
         assertEquals(page.tree.getRoot().findElements(By.cssSelector(
-            RichFacesTreeNode.CSS_NODE + ":not(" + "[lang=cs]" + ")")).size(), 4);
+                RichFacesTreeNode.CSS_NODE + ":not(" + "[lang=cs]" + ")")).size(), 4);
     }
 
     @Test
@@ -256,24 +257,38 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
 
     @Test
     public void testOnbeforetoggle() {
-        super.testRequestEventsBefore(page.node1AttributesTable, "beforetoggle", "toggle");
-        getTreeNode().expand();
-        super.testRequestEventsAfter("beforetoggle", "toggle");
+        testFireEvent(attributesNode, TreeNodeAttributes.onbeforetoggle, new Action() {
+            @Override
+            public void perform() {
+                getTreeNode().expand();
+            }
+        });
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "tree toggle listener invoked");
+    }
+
+    @Test
+    public void testOntoggle() {
+        testFireEvent(attributesNode, TreeNodeAttributes.ontoggle, new Action() {
+            @Override
+            public void perform() {
+                getTreeNode().expand();
+            }
+        });
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "tree toggle listener invoked");
     }
 
     @Test
     public void testOnbeforetoggleWithJsFunction() {
-        attributesNode.set(onbeforetoggle, "functionChecker()");
+        attributesNode.set(TreeNodeAttributes.onbeforetoggle, "functionChecker()");
+        metamerAttributes.set(MetamerAttributes.metamerResponseDelay, 2000);
         String jsFunctionChecker = page.getJsFunctionCheckerElement().getText();
         String requestTime = page.getRequestTimeElement().getText();
-
-        getTreeNode().getHandle().getRoot().click();
-
-        Graphene.waitGui().until().element(page.getJsFunctionCheckerElement()).text().not().equalTo(jsFunctionChecker);
+        getTreeNode().getHandle().getRoot().click();//expand without waiting
+        Graphene.waitModel().withTimeout(3, TimeUnit.SECONDS).until().element(page.getJsFunctionCheckerElement()).text().not().equalTo(jsFunctionChecker);
         page.assertNoListener("tree toggle listener invoked");
-
-        Graphene.waitGui().until().element(page.getRequestTimeElement()).text().not().equalTo(requestTime);
-        page.getListenerCondition(PhaseId.PROCESS_VALIDATIONS, "tree toggle listener invoked");
+        Graphene.waitModel().withTimeout(3, TimeUnit.SECONDS).until().element(page.getRequestTimeElement()).text().not().equalTo(requestTime);
+        Graphene.waitModel().until(getTreeNode().isExpandedCondition());
+        page.assertListener(PhaseId.PROCESS_VALIDATIONS, "tree toggle listener invoked");
     }
 
     @Test
@@ -334,7 +349,9 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     }
 
     private RichFacesTreeNode getTreeNode() {
-        if (treeNode == null) treeNode = page.tree.getNodes().get(0);
+        if (treeNode == null) {
+            treeNode = page.tree.getNodes().get(0);
+        }
 
         treeNode.setToggleType(toggleType);
 
