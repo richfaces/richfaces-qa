@@ -138,7 +138,6 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
-    
     public void testDisabled() {
         selectAttributes.set(SelectAttributes.disabled, Boolean.TRUE);
         assertPresent(select.getInput().getInput(), "Input should be present on the page.");
