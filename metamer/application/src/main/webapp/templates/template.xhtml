@@ -56,7 +56,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     <c:set var="nestedComponentId" value="#{templateBean.componentPrefix}#{componentId}" />
 
                     <c:choose>
-                        <c:when test="#{dontRenderForm}">
+                        <c:when test="#{dontRenderForm != null and dontRenderForm}">
                             <div style="margin-bottom: 20px;"><ui:insert name="outOfTemplateBefore" /></div>
                             <ui:decorate template="/templates/#{templateBean.firstTemplate}.xhtml" />
                             <div style="margin-top: 20px;"><ui:insert name="outOfTemplateAfter" /></div>
