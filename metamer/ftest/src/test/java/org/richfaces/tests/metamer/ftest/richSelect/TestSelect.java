@@ -49,6 +49,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
@@ -137,6 +138,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    
     public void testDisabled() {
         selectAttributes.set(SelectAttributes.disabled, Boolean.TRUE);
         assertPresent(select.getInput().getInput(), "Input should be present on the page.");
@@ -196,6 +198,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testInit() {
         assertEquals(select.getInput().getStringValue(), "Click here to edit", "Default label");
         assertPresent(select.getInput().getInput(), "Input should be present on the page.");
@@ -204,6 +207,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testItemClass() {
         final String value = "metamer-ftest-class";
         selectAttributes.set(SelectAttributes.itemClass, value);
@@ -291,41 +295,49 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(Event.CLICK, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(Event.DBLCLICK, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnfocus() {
         testFireEvent(Event.FOCUS, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEvent(Event.KEYDOWN, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEvent(Event.KEYPRESS, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeyup() {
         testFireEvent(Event.KEYUP, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistclick() {
         testFireEvent("listclick", selectHawaiiGuardedAction);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistdblclick() {
         testFireEvent("listdblclick", new Action() {
             @Override
@@ -354,6 +366,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistkeydown() {
         testFireEvent("listkeydown", new Action() {
             @Override
@@ -365,6 +378,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistkeypress() {
         testFireEvent("listkeypress", new Action() {
             @Override
@@ -376,6 +390,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistkeyup() {
         testFireEvent("listkeyup", new Action() {
             @Override
@@ -387,6 +402,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistmousedown() {
         testFireEvent("listmousedown", new Action() {
             @Override
@@ -397,6 +413,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistmousemove() {
         testFireEvent("listmousemove", new Action() {
             @Override
@@ -407,6 +424,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistmouseout() {
         testFireEvent("listmouseout", new Action() {
             @Override
@@ -417,6 +435,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistmouseover() {
         testFireEvent("listmouseover", new Action() {
             @Override
@@ -428,6 +447,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistmouseup() {
         testFireEvent("listmouseup", selectHawaiiGuardedAction);
     }
@@ -443,26 +463,31 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(Event.MOUSEDOWN, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(Event.MOUSEMOVE, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent(Event.MOUSEOUT, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent(Event.MOUSEOVER, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(Event.MOUSEUP, select.getInput().getInput());
     }
@@ -473,6 +498,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         selectAttributes.set(SelectAttributes.rendered, Boolean.FALSE);
         assertNotPresent(selectElement, "Component should not be rendered when rendered=false.");
@@ -507,6 +533,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testSelectItemClass() {
         selectAttributes.set(SelectAttributes.selectItemClass, "metamer-ftest-class");
 
@@ -577,16 +604,19 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(selectElement);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(selectElement);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testTitle() {
         testTitle(select.getInput().getInput());
     }

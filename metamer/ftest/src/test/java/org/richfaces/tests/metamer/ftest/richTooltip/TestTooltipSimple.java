@@ -150,6 +150,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDir() {
         super.testDir(page.getTooltip().getRoot());
     }
@@ -247,12 +248,14 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLang() {
         super.testAttributeLang(page.getTooltip().getRoot());
     }
 
     @Test
     @Use(field = "layout", enumeration = true)
+    @Templates(value = "plain")
     public void testLayout() {
         tooltipAttributes.set(TooltipAttributes.layout, layout);
 
@@ -350,6 +353,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "mode", enumeration = true)
+    @Templates(value = "plain")
     public void testOnClick() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         page.getTooltip().setMode(mode);
@@ -371,6 +375,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "mode", enumeration = true)
+    @Templates(value = "plain")
     public void testOnDblClick() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         page.getTooltip().setMode(mode);
@@ -405,6 +410,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "mode", enumeration = true)
+    @Templates(value = "plain")
     public void testOnMouseDown() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         page.getTooltip().setMode(mode);
@@ -414,6 +420,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "mode", enumeration = true)
+    @Templates(value = "plain")
     public void testOnMouseMove() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         page.getTooltip().setMode(mode);
@@ -423,6 +430,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "mode", enumeration = true)
+    @Templates(value = "plain")
     public void testOnMouseOut() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         page.getTooltip().setMode(mode);
@@ -441,6 +449,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "mode", enumeration = true)
+    @Templates(value = "plain")
     public void testOnMouseOver() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         page.getTooltip().setMode(mode);
@@ -450,6 +459,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "mode", enumeration = true)
+    @Templates(value = "plain")
     public void testOnMouseUp() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
         page.getTooltip().setMode(mode);
@@ -458,6 +468,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         tooltipAttributes.set(TooltipAttributes.rendered, false);
         page.getTooltip().recall(page.getPanel());
@@ -509,21 +520,25 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         super.testStyle(page.getTooltip().getRoot());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         super.testStyleClass(page.getTooltip().getRoot());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testTitle() {
         super.testTitle(page.getTooltip().getRoot());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testZindex() {
         tooltipAttributes.set(TooltipAttributes.zindex, 10);
 

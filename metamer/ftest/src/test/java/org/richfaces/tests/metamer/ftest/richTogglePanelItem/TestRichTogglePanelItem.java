@@ -39,6 +39,7 @@ import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
 
@@ -64,6 +65,7 @@ public class TestRichTogglePanelItem extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testInit() {
         assertTrue(selenium.isElementPresent(item1), "Item 1 should be present on the page.");
         assertTrue(selenium.isElementPresent(item2), "Item 2 should be present on the page.");
@@ -75,11 +77,13 @@ public class TestRichTogglePanelItem extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDir() {
         testDir(item1);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLang() {
         testLang(item1);
     }
@@ -97,11 +101,13 @@ public class TestRichTogglePanelItem extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(Event.CLICK, item1);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(Event.DBLCLICK, item1);
     }
@@ -143,32 +149,38 @@ public class TestRichTogglePanelItem extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(Event.MOUSEDOWN, item1);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(Event.MOUSEMOVE, item1);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent(Event.MOUSEOUT, item1);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent(Event.MOUSEOVER, item1);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(Event.MOUSEUP, item1);
     }
 
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-9894")
+    @Templates(value = "plain")
     public void testRendered() {
         togglePanelItemAttributes.set(TogglePanelItemAttributes.rendered, Boolean.FALSE);
 
@@ -182,11 +194,13 @@ public class TestRichTogglePanelItem extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(item1);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(item1);
     }
@@ -202,6 +216,7 @@ public class TestRichTogglePanelItem extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testSwitchTypeAjax() {
         togglePanelItemAttributes.set(TogglePanelItemAttributes.switchType, "ajax");
         testSwitchTypeNull();
@@ -230,6 +245,7 @@ public class TestRichTogglePanelItem extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testTitle() {
         testTitle(item1);
     }

@@ -36,6 +36,7 @@ import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.page.fragments.impl.panel.RichFacesPanel;
 import org.testng.annotations.Test;
 
@@ -61,6 +62,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testInit() {
         assertTrue(Graphene.element(panelWithHeader.getRoot()).isPresent().apply(driver), "Panel with header should be present and visible on the page.");
         assertTrue(Graphene.element(panelWithoutHeader.getRoot()).isPresent().apply(driver), "Panel without header should be present and visible on the page.");
@@ -77,12 +79,14 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testBodyClass() {
         testStyleClass(panelWithHeader.getBody(), bodyClass);
         testStyleClass(panelWithoutHeader.getBody(), bodyClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testHeader() {
         panelAttributes.set(PanelAttributes.header, "new header");
 
@@ -91,11 +95,13 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testHeaderClass() {
         testStyleClass(panelWithHeader.getHeader(), headerClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnclick() {
         Action clickAction = new Actions(driver).click(panelWithHeader.getRoot()).build();
         testFireEvent(panelAttributes, PanelAttributes.onclick, clickAction);
@@ -105,6 +111,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndblclick() {
         Action dblClickAction = new Actions(driver).doubleClick(panelWithHeader.getRoot()).build();
         testFireEvent(panelAttributes, PanelAttributes.ondblclick, dblClickAction);
@@ -114,24 +121,28 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEventWithJS(panelWithHeader.getRoot(), Event.KEYDOWN, panelAttributes, PanelAttributes.onkeydown);
         testFireEventWithJS(panelWithoutHeader.getRoot(), Event.KEYDOWN, panelAttributes, PanelAttributes.onkeydown);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEventWithJS(panelWithHeader.getRoot(), Event.KEYPRESS, panelAttributes, PanelAttributes.onkeypress);
         testFireEventWithJS(panelWithoutHeader.getRoot(), Event.KEYPRESS, panelAttributes, PanelAttributes.onkeypress);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeyup() {
         testFireEventWithJS(panelWithHeader.getRoot(), Event.KEYUP, panelAttributes, PanelAttributes.onkeyup);
         testFireEventWithJS(panelWithoutHeader.getRoot(), Event.KEYUP, panelAttributes, PanelAttributes.onkeyup);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         Action mouseDownAction = new Actions(driver).moveToElement(panelWithHeader.getRoot()).clickAndHold(panelWithHeader.getRoot()).build();
         testFireEvent(panelAttributes, PanelAttributes.onmousedown, mouseDownAction);
@@ -141,6 +152,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         Action mouseMoveAction = new Actions(driver).moveToElement(panelWithHeader.getRoot(), 3, 3).build();
         testFireEvent(panelAttributes, PanelAttributes.onmousemove, mouseMoveAction);
@@ -150,6 +162,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         // TODO 2013-02-01 JJa: try implement using WebDriver API (doesn't work for now)
         testFireEventWithJS(panelWithHeader.getRoot(), Event.MOUSEOUT, panelAttributes, PanelAttributes.onmouseout);
@@ -157,6 +170,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         // TODO 2013-02-01 JJa: try implement using WebDriver API (doesn't work for now)
         testFireEventWithJS(panelWithHeader.getRoot(), Event.MOUSEOVER, panelAttributes, PanelAttributes.onmouseover);
@@ -164,6 +178,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         Action mouseUpAction = new Actions(driver).moveToElement(panelWithHeader.getRoot()).clickAndHold().release().build();
         testFireEvent(panelAttributes, PanelAttributes.onmouseup, mouseUpAction);
@@ -173,6 +188,7 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         panelAttributes.set(PanelAttributes.rendered, Boolean.FALSE);
 
@@ -183,18 +199,21 @@ public class TestPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(panelWithHeader.getRoot());
         testStyle(panelWithoutHeader.getRoot());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(panelWithHeader.getRoot());
         testStyleClass(panelWithoutHeader.getRoot());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testTitle() {
         testTitle(panelWithHeader.getRoot());
         testTitle(panelWithoutHeader.getRoot());

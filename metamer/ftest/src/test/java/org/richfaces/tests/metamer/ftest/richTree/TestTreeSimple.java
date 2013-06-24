@@ -79,7 +79,7 @@ public class TestTreeSimple extends AbstractTestTree {
     @Inject
     @Use(empty = true)
     Event eventToFire;
-    Event[] eventsToFire = new Event[]{ MOUSEDOWN, MOUSEUP, MOUSEOVER, MOUSEOUT };
+    Event[] eventsToFire = new Event[] { MOUSEDOWN, MOUSEUP, MOUSEOVER, MOUSEOUT };
     @Inject
     @Use(empty = true)
     Event domEvent;
@@ -103,6 +103,7 @@ public class TestTreeSimple extends AbstractTestTree {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDir() {
         super.testDir(page.tree.getRoot());
     }
@@ -115,15 +116,18 @@ public class TestTreeSimple extends AbstractTestTree {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testHandleClass() {
         page.expandAll();
 
         treeAttributes.set(TreeAttributes.handleClass, testClassValue);
         String styleAttr = page.tree.getNodes().get(0).getHandle().getRoot().getAttribute("class");
-        assertTrue(styleAttr.contains(testClassValue), "Attribute handleClass should contain \"" + testClassValue + "\"");
+        assertTrue(styleAttr.contains(testClassValue), "Attribute handleClass should contain \"" + testClassValue
+            + "\"");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testIconClass() {
         page.expandAll();
 
@@ -133,6 +137,7 @@ public class TestTreeSimple extends AbstractTestTree {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLabelClass() {
         page.expandAll();
 
@@ -142,18 +147,20 @@ public class TestTreeSimple extends AbstractTestTree {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testNodeClass() {
         page.expandAll();
         super.testStyleClass(page.tree.getNodes().get(0).getNodeItself(), nodeClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testIconCollapsed() {
         treeAttributes.set(iconCollapsed, IMAGE_URL);
 
         for (int i = 0; i < 3; i++) {
             List<RichFacesTreeNode> nodes = page.tree.getNodes();
-            int[] withAndwithout = {0, 0};
+            int[] withAndwithout = { 0, 0 };
 
             for (RichFacesTreeNode node : nodes) {
                 int[] currentLevel = getCollapsedIconCount(withAndwithout[0], withAndwithout[1], node);
@@ -170,13 +177,13 @@ public class TestTreeSimple extends AbstractTestTree {
 
     private int[] getCollapsedIconCount(int with, int without, RichFacesTreeNode node) {
 
-        int[] wout = {0, 0};
+        int[] wout = { 0, 0 };
 
         String srcAttrVal = node.getIcon().getRoot().getAttribute("src");
-        if ( null != srcAttrVal && srcAttrVal.contains(IMAGE_URL)) {
-            wout[0]+=1;
+        if (null != srcAttrVal && srcAttrVal.contains(IMAGE_URL)) {
+            wout[0] += 1;
         } else {
-            wout[1]+=1;
+            wout[1] += 1;
         }
 
         List<RichFacesTreeNode> x = node.getNodes();
@@ -189,12 +196,13 @@ public class TestTreeSimple extends AbstractTestTree {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testIconExpanded() {
         treeAttributes.set(iconExpanded, IMAGE_URL);
 
         for (int i = 0; i < 3; i++) {
             List<RichFacesTreeNode> nodes = page.tree.getNodes();
-            int[] withAndwithout = {0, 0};
+            int[] withAndwithout = { 0, 0 };
 
             for (RichFacesTreeNode node : nodes) {
                 int[] currentLevel = getExpandedIconCount(withAndwithout[0], withAndwithout[1], node);
@@ -211,15 +219,15 @@ public class TestTreeSimple extends AbstractTestTree {
 
     private int[] getExpandedIconCount(int with, int without, RichFacesTreeNode node) {
 
-        int[] wout = {0, 0};
+        int[] wout = { 0, 0 };
 
         String srcAttrVal = node.getIcon().getRoot().getAttribute("src");
-        if ( null != srcAttrVal && srcAttrVal.contains(IMAGE_URL)) {
-            wout[0]+=1;
+        if (null != srcAttrVal && srcAttrVal.contains(IMAGE_URL)) {
+            wout[0] += 1;
         } else {
-            if ( !node.getIcon().getRoot().getAttribute("class").contains(RichFacesTreeNodeIcon.CLASS_ICON_LEAF)) {
+            if (!node.getIcon().getRoot().getAttribute("class").contains(RichFacesTreeNodeIcon.CLASS_ICON_LEAF)) {
                 // ignore leaf nodes
-                wout[1]+=1;
+                wout[1] += 1;
             }
         }
 
@@ -233,12 +241,13 @@ public class TestTreeSimple extends AbstractTestTree {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testIconLeaf() {
         treeAttributes.set(iconLeaf, IMAGE_URL);
 
         for (int i = 0; i < 3; i++) {
             List<RichFacesTreeNode> nodes = page.tree.getNodes();
-            int[] withAndwithout = {0, 0};
+            int[] withAndwithout = { 0, 0 };
 
             for (RichFacesTreeNode node : nodes) {
                 int[] currentLevel = getLeafIconCount(withAndwithout[0], withAndwithout[1], node);
@@ -247,7 +256,8 @@ public class TestTreeSimple extends AbstractTestTree {
             }
 
             assertEquals(withAndwithout[0] > 0, i > 1, "Found: with the given URL " + withAndwithout[0] + ", i: " + i);
-            assertEquals(withAndwithout[1] > 0, i < 2, "Found: without the given URL " + withAndwithout[1] + ", i: " + i);
+            assertEquals(withAndwithout[1] > 0, i < 2, "Found: without the given URL " + withAndwithout[1] + ", i: "
+                + i);
 
             expandLevel(i);
         }
@@ -255,13 +265,13 @@ public class TestTreeSimple extends AbstractTestTree {
 
     private int[] getLeafIconCount(int with, int without, RichFacesTreeNode node) {
 
-        int[] wout = {0, 0};
+        int[] wout = { 0, 0 };
 
         String srcAttrVal = node.getIcon().getRoot().getAttribute("src");
-        if ( null != srcAttrVal && srcAttrVal.contains(IMAGE_URL)) {
+        if (null != srcAttrVal && srcAttrVal.contains(IMAGE_URL)) {
             wout[0] += 1;
         } else {
-            if ( !node.getIcon().getRoot().getAttribute("class").contains(RichFacesTreeNodeIcon.CLASS_ICON_EXPANDED)) {
+            if (!node.getIcon().getRoot().getAttribute("class").contains(RichFacesTreeNodeIcon.CLASS_ICON_EXPANDED)) {
                 // ignore collapsed nodes
                 wout[1] += 1;
             }
@@ -277,6 +287,7 @@ public class TestTreeSimple extends AbstractTestTree {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLang() {
         super.testAttributeLang(page.tree.getRoot());
     }
@@ -296,7 +307,7 @@ public class TestTreeSimple extends AbstractTestTree {
     @Use(field = "sample", strings = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates(exclude = "a4jRegion")
     public void testSelectionClientSideEvents() {
-        String[] events = new String[]{ "beforeselectionchange", "begin", "beforedomupdate", "complete",
+        String[] events = new String[] { "beforeselectionchange", "begin", "beforedomupdate", "complete",
             "selectionchange" };
         testRequestEventsBefore(events);
         page.tree.getNodes().get(0).select();
@@ -315,7 +326,7 @@ public class TestTreeSimple extends AbstractTestTree {
     @IssueTracking("https://issues.jboss.org/browse/RF-11319")
     @Templates(value = "a4jRegion")
     public void testSelectionClientSideEventsInRegion() {
-        String[] events = new String[]{ "beforeselectionchange", "begin", "beforedomupdate", "complete",
+        String[] events = new String[] { "beforeselectionchange", "begin", "beforedomupdate", "complete",
             "selectionchange" };
         testRequestEventsBefore(events);
         page.tree.getNodes().get(0).select();
@@ -325,7 +336,7 @@ public class TestTreeSimple extends AbstractTestTree {
     @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-10265")
     public void testToggleClientSideEvents() {
-        String[] events = new String[]{ "beforenodetoggle", "begin", "beforedomupdate", "complete", "nodetoggle" };
+        String[] events = new String[] { "beforenodetoggle", "begin", "beforedomupdate", "complete", "nodetoggle" };
         testRequestEventsBefore(events);
         page.tree.getNodes().get(0).expand();
         testRequestEventsAfter(events);
@@ -346,9 +357,10 @@ public class TestTreeSimple extends AbstractTestTree {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         assertTrue(Graphene.element(page.tree.getRoot()).isPresent().apply(driver)
-            && Graphene.element(page.tree.getRoot()).isVisible().apply(driver)) ;
+            && Graphene.element(page.tree.getRoot()).isVisible().apply(driver));
         treeAttributes.set(rendered, false);
         assertFalse(Graphene.element(page.tree.getRoot()).isPresent().apply(driver));
     }
@@ -368,6 +380,7 @@ public class TestTreeSimple extends AbstractTestTree {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         final String value = "background-color: yellow; font-size: 1.5em;";
         treeAttributes.set(TreeAttributes.style, value);
@@ -376,6 +389,7 @@ public class TestTreeSimple extends AbstractTestTree {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         treeAttributes.set(TreeAttributes.styleClass, testClassValue);
         String styleAttr = page.tree.getRoot().getAttribute("class");
@@ -383,6 +397,7 @@ public class TestTreeSimple extends AbstractTestTree {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testTitle() {
         this.testTitle(page.tree.getRoot());
     }
@@ -390,12 +405,12 @@ public class TestTreeSimple extends AbstractTestTree {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12696")
     public void testLoadingFacet() {
-        int sufficientTimeToCheckHandles = 2000;//ms
+        int sufficientTimeToCheckHandles = 2000;// ms
         setLoadingFacet(true);
         setResponseDelay(sufficientTimeToCheckHandles);
         page.tree.setToggleType(null);
 
-        for (int index : new int[]{ 0, 1 }) {
+        for (int index : new int[] { 0, 1 }) {
             treeNode = (index == 0) ? page.tree.getNodes().get(index) : treeNode.getNode(index);
             treeNode.setToggleType(null);
 

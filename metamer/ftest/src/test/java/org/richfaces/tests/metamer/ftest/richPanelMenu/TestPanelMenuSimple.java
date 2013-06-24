@@ -36,6 +36,7 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.ui.toggle.panelMenu.PanelMenuMode;
 import org.testng.annotations.Test;
@@ -80,30 +81,35 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testGroupClass() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
         testStyleClass(page.group24.getRoot(), BasicAttributes.groupClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testGroupDisabledClass() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
         super.testStyleClass(page.group26.getRoot(), BasicAttributes.groupDisabledClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testItemClass() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
         super.testStyleClass(page.item22.getRoot(), BasicAttributes.itemClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testItemDisabledClass() {
         panelMenuAttributes.set(groupMode, PanelMenuMode.client);
         super.testStyleClass(page.item25.getRoot(), BasicAttributes.itemDisabledClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         panelMenuAttributes.set(rendered, false);
         assertFalse(Graphene.element(page.panelMenu.getRoot()).isPresent().apply(driver));
@@ -112,21 +118,25 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(page.panelMenu.getRoot());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(page.panelMenu.getRoot());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testTopGroupClass() {
         testStyleClass(page.group1.getRoot(), BasicAttributes.topGroupClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testTopItemClass() {
         testStyleClass(page.item3.getRoot(), BasicAttributes.topItemClass);
     }

@@ -45,6 +45,7 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.locator.attribute.AttributeLocator;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
 
@@ -134,17 +135,20 @@ public class TestRichTab extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testContentClass() {
         tabAttributes.set(TabAttributes.contentClass,"metamer-ftest-class" );
         assertTrue(selenium.belongsClass(itemContents[0], "metamer-ftest-class"), "contentClass does not work");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDir() {
         testDir(tab1);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDisabled() {
         // disable the first tab
         tabAttributes.set(TabAttributes.disabled,Boolean.TRUE );
@@ -174,6 +178,7 @@ public class TestRichTab extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testHeader() {
         tabAttributes.set(TabAttributes.header,"new header" );
         assertEquals(selenium.getText(activeHeaders[0]), "new header", "Header of the first tab did not change.");
@@ -184,6 +189,7 @@ public class TestRichTab extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testHeaderActiveClass() {
         tabAttributes.set(TabAttributes.headerActiveClass,"metamer-ftest-class" );
 
@@ -211,6 +217,7 @@ public class TestRichTab extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testHeaderDisabledClass() {
         tabAttributes.set(TabAttributes.headerDisabledClass,"metamer-ftest-class" );
 
@@ -228,6 +235,7 @@ public class TestRichTab extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testHeaderInactiveClass() {
         tabAttributes.set(TabAttributes.headerInactiveClass,"metamer-ftest-class" );
 
@@ -245,6 +253,7 @@ public class TestRichTab extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testHeaderStyle() {
         final String value = "background-color: yellow; font-size: 1.5em;";
         tabAttributes.set(TabAttributes.headerStyle, value );
@@ -253,6 +262,7 @@ public class TestRichTab extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLang() {
         testLang(tab1);
     }
@@ -270,11 +280,13 @@ public class TestRichTab extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(Event.CLICK, tab1);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(Event.DBLCLICK, tab1);
     }
@@ -297,26 +309,31 @@ public class TestRichTab extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnheaderclick() {
         testFireEvent(Event.CLICK, activeHeaders[0], "headerclick");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnheaderdblclick() {
         testFireEvent(Event.DBLCLICK, activeHeaders[0], "headerdblclick");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnheadermousedown() {
         testFireEvent(Event.MOUSEDOWN, activeHeaders[0], "headermousedown");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnheadermousemove() {
         testFireEvent(Event.MOUSEMOVE, activeHeaders[0], "headermousemove");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnheadermouseup() {
         testFireEvent(Event.MOUSEUP, activeHeaders[0], "headermouseup");
     }
@@ -338,31 +355,37 @@ public class TestRichTab extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(Event.MOUSEDOWN, tab1);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(Event.MOUSEMOVE, tab1);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent(Event.MOUSEOUT, tab1);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent(Event.MOUSEOVER, tab1);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(Event.MOUSEUP, tab1);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         tabAttributes.set(TabAttributes.rendered,Boolean.FALSE );
         assertFalse(selenium.isElementPresent(activeHeaders[0]), "Tab should not be rendered when rendered=false.");
@@ -372,11 +395,13 @@ public class TestRichTab extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(tab1);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(tab1);
     }
@@ -392,6 +417,7 @@ public class TestRichTab extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testSwitchTypeAjax() {
         tabAttributes.set(TabAttributes.switchType,"ajax" );
         testSwitchTypeNull();
@@ -420,6 +446,7 @@ public class TestRichTab extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testTitle() {
         testTitle(tab1);
     }
