@@ -216,6 +216,7 @@ public class TestRichTabPanel extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDir() {
         super.testDir(panel);
     }
@@ -243,6 +244,7 @@ public class TestRichTabPanel extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLang() {
         testLang(panel);
     }
@@ -278,11 +280,13 @@ public class TestRichTabPanel extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(Event.CLICK, panel);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(Event.DBLCLICK, panel);
     }
@@ -299,42 +303,50 @@ public class TestRichTabPanel extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(Event.MOUSEDOWN, panel);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(Event.MOUSEMOVE, panel);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent(Event.MOUSEOUT, panel);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent(Event.MOUSEOVER, panel);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(Event.MOUSEUP, panel);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         tabPanelAttributes.set(TabPanelAttributes.rendered,Boolean.FALSE);
         assertFalse(selenium.isElementPresent(panel), "Tab panel should not be rendered when rendered=false.");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(panel);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(panel);
     }
@@ -350,6 +362,7 @@ public class TestRichTabPanel extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testSwitchTypeAjax() {
         tabPanelAttributes.set(TabPanelAttributes.switchType, "ajax");
         testSwitchTypeNull();

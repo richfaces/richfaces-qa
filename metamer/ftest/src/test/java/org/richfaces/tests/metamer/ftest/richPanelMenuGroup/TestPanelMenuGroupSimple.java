@@ -45,6 +45,7 @@ import static org.testng.Assert.assertTrue;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
 import org.testng.annotations.Test;
 
@@ -86,12 +87,14 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDisabledClass() {
         panelMenuGroupAttributes.set(disabled, true);
         testStyleClass(page.topGroup.getRoot(), disabledClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLeftDisabledIcon() {
         panelMenuGroupAttributes.set(disabled, true);
 
@@ -99,6 +102,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLeftCollapsedIcon() {
         page.topGroup.toggle();
 
@@ -110,6 +114,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLeftExpandedIcon() {
 
         verifyStandardIcons(leftExpandedIcon, page.topGroup.getLeftIcon().getIcon(), page.topGroup.getLeftIcon().getIcon(), "");
@@ -133,6 +138,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         assertTrue(page.topGroup.isVisible());
 
@@ -142,6 +148,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRightDisabledIcon() {
         panelMenuGroupAttributes.set(disabled, true);
 
@@ -149,6 +156,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRightExpandedIcon() {
         verifyStandardIcons(rightExpandedIcon, page.topGroup.getRightIcon().getIcon(), page.topGroup.getRightIcon().getIcon(), "");
 
@@ -157,6 +165,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRightCollapsedIcon() {
         page.topGroup.toggle();
 
@@ -189,12 +198,14 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(page.topGroup.getRoot());
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10485")
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(page.topGroup.getRoot());
     }

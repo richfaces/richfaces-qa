@@ -40,6 +40,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.page.fragments.impl.accordion.AccordionItem;
 import org.richfaces.tests.page.fragments.impl.accordion.RichFacesAccordionItem;
 import org.testng.Assert;
@@ -122,6 +123,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDir() {
         testDir(page.getAccordionRootElement());
     }
@@ -148,6 +150,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testItemActiveHeaderClass() {
         testStyleClass(((RichFacesAccordionItem) page.getAccordion().getActiveItem()).getHeaderElement(), BasicAttributes.itemActiveHeaderClass);
     }
@@ -159,6 +162,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testItemContentClass() {
         for (AccordionItem item: page.getAccordion()) {
             testStyleClass(((RichFacesAccordionItem) item).getContentElement(), BasicAttributes.itemContentClass);
@@ -166,6 +170,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testItemDisabledHeaderClass() {
         for (AccordionItem item: page.getAccordion()) {
             if (!item.isEnabled()) {
@@ -175,6 +180,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testItemHeaderClass() {
         for (AccordionItem item: page.getAccordion()) {
             testStyleClass(((RichFacesAccordionItem) item).getToActivateElement(), BasicAttributes.itemHeaderClass);
@@ -195,6 +201,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testItemInactiveHeaderClass() {
         for (AccordionItem item: page.getAccordion()) {
             if (item.isInactive() && item.isEnabled()) {
@@ -204,6 +211,7 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLang() {
         testHTMLAttribute(page.getAccordionRootElement(), accordionAttributes, AccordionAttributes.lang, "sk");
     }
@@ -220,12 +228,14 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnclick() {
         Action action = new Actions(driver).click(page.getAccordionRootElement()).build();
         testFireEvent(accordionAttributes, AccordionAttributes.onclick, action);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndblclick() {
         Action action = new Actions(driver).doubleClick(page.getAccordionRootElement()).build();
         testFireEvent(accordionAttributes, AccordionAttributes.ondblclick, action);
@@ -243,35 +253,41 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         Action action = new Actions(driver).clickAndHold(page.getAccordionRootElement()).build();
         testFireEvent(accordionAttributes, AccordionAttributes.onmousedown, action);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         Action action = new Actions(driver).moveToElement(page.getAccordionRootElement()).build();
         testFireEvent(accordionAttributes, AccordionAttributes.onmousemove, action);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEventWithJS(page.getAccordionRootElement(), accordionAttributes, AccordionAttributes.onmouseout);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         Action action = new Actions(driver).moveToElement(page.getAccordionRootElement()).build();
         testFireEvent(accordionAttributes, AccordionAttributes.onmouseover, action);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         Action action = new Actions(driver).click(page.getAccordionRootElement()).build();
         testFireEvent(accordionAttributes, AccordionAttributes.onmouseup, action);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         accordionAttributes.set(AccordionAttributes.rendered, false);
         assertFalse(page.isAccordionVisible());
@@ -288,11 +304,13 @@ public class TestAccordion extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(page.getAccordionRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(page.getAccordionRootElement());
     }
@@ -307,6 +325,7 @@ public class TestAccordion extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12532")
+    @Templates(value = "plain")
     public void testSwitchTypeAjax() {
         accordionAttributes.set(AccordionAttributes.switchType, "ajax");
         testSwitchTypeNull();

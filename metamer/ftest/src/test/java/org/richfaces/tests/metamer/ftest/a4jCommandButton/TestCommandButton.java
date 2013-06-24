@@ -41,6 +41,7 @@ import org.richfaces.tests.metamer.ftest.a4jCommandLink.CommandLinkAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -242,51 +243,61 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnclick() {
         testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.onclick);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndblclick() {
         testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.ondblclick);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.onkeydown);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.onkeypress);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOneyup() {
         testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.onkeyup);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.onmousedown);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.onmousemove);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.onmouseout);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.onmouseover);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEventWithJS(page.button, commandButtonAttributes, CommandButtonAttributes.onmouseup);
     }
@@ -319,23 +330,27 @@ public class TestCommandButton extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         commandButtonAttributes.set(CommandButtonAttributes.rendered, false);
         assertFalse(Graphene.element(page.button).isPresent().apply(driver), "Button should not be on page.");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(page.button);
     }
 
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-9307")
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(page.button);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testTitle() {
         testTitle(page.button);
     }

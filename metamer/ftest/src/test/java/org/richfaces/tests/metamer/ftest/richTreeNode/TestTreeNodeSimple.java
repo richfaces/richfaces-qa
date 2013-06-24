@@ -62,6 +62,7 @@ import org.richfaces.component.SwitchType;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.MetamerAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.richTree.TreeAttributes;
 import org.richfaces.tests.metamer.ftest.richTree.TreeSimplePage;
@@ -110,6 +111,7 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDir() {
         testHTMLAttribute(getTreeNode().getNodeItself(), attributesNode, TreeNodeAttributes.dir, "null");
         Graphene.waitGui().until().element(getTreeNode().getNodeItself()).is().present();
@@ -119,6 +121,7 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testHandleClass() {
         assertEquals(page.tree.getNodes().size(), 4);
         assertEquals(page.tree.getRoot().findElements(By.cssSelector(
@@ -133,6 +136,7 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testIconClass() {
         assertEquals(page.tree.getRoot().findElements(By.cssSelector(
                 RichFacesTreeNode.CSS_NODE_ICON + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 4);
@@ -145,6 +149,7 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testIconCollapsed() {
         WebElement iconImage = page.tree.getNodes().get(0).getIcon().getRoot();
         assertTrue(Graphene.element(iconImage).isPresent().apply(driver));
@@ -159,6 +164,7 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testIconExpanded() {
         WebElement iconImage = page.tree.getNodes().get(0).getIcon().getRoot();
         assertTrue(Graphene.element(iconImage).isPresent().apply(driver));
@@ -178,6 +184,7 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testIconLeaf() {
         getTreeNode().expand();
         RichFacesTreeNode subTreeNode = getTreeNode().getNode(0);
@@ -218,6 +225,7 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLabelClass() {
         assertEquals(page.tree.getRoot().findElements(By.cssSelector(
                 RichFacesTreeNode.CSS_NODE_LABEL + ":not(" + JQ_SAMPLE_CLASS + ")")).size(), 4);
@@ -231,6 +239,7 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLang() {
         assertEquals(page.tree.getRoot().findElements(By.cssSelector(
                 RichFacesTreeNode.CSS_NODE + ":not(" + "[lang=cs]" + ")")).size(), 4);
@@ -292,6 +301,7 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         getTreeNode().expand();
         RichFacesTreeNode subTreeNode = getTreeNode().getNode(0);
@@ -309,6 +319,7 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         final String value = "background-color: yellow; font-size: 1.5em;";
         attributesNode.set(TreeNodeAttributes.style, value);
@@ -316,6 +327,7 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         final String value = "metamer-ftest-class";
         attributesNode.set(TreeNodeAttributes.styleClass, value);
@@ -323,6 +335,7 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testTitle() {
         final String testTitle = "RichFaces 4";
         testHTMLAttribute(getTreeNode().getNodeItself(), attributesNode, TreeNodeAttributes.title, testTitle);

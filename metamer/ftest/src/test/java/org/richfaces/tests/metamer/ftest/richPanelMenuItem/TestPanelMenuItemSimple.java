@@ -52,6 +52,7 @@ import org.richfaces.PanelMenuMode;
 import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
@@ -107,18 +108,21 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDisabledClass() {
         panelMenuItemAttributes.set(disabled, true);
         testStyleClass(page.item.getRoot(), disabledClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLeftDisabledIcon() {
         panelMenuItemAttributes.set(disabled, true);
         verifyStandardIcons(leftDisabledIcon, page.item.getLeftIcon().getRoot(), page.item.getLeftIcon().getImgIcon(), "");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLeftIcon() {
         verifyStandardIcons(leftIcon, page.item.getLeftIcon().getRoot(), page.item.getLeftIcon().getImgIcon(), "");
 
@@ -127,6 +131,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLeftIconClass() {
         testStyleClass(page.item.getLeftIcon().getRoot(), leftIconClass);
     }
@@ -142,6 +147,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         assertTrue(page.item.isVisible());
 
@@ -151,6 +157,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRightDisabledIcon() {
         panelMenuItemAttributes.set(disabled, true);
         verifyStandardIcons(rightDisabledIcon, page.item.getRightIcon().getRoot(), page.item.getRightIcon().getImgIcon(), "");
@@ -158,6 +165,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10519")
+    @Templates(value = "plain")
     public void testRightIcon() {
         verifyStandardIcons(rightIcon, page.item.getRightIcon().getRoot(), page.item.getRightIcon().getImgIcon(), "");
 
@@ -167,6 +175,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10519")
+    @Templates(value = "plain")
     public void testRightIconClass() {
         testStyleClass(page.item.getRightIcon().getRoot(), rightIconClass);
     }
@@ -197,11 +206,13 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(page.item.getRoot());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(page.item.getRoot());
     }

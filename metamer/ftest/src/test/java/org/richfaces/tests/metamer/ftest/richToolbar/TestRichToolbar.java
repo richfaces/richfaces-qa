@@ -40,6 +40,7 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
 
@@ -76,6 +77,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testInit() {
         assertTrue(Graphene.element(page.toolbar).isPresent().apply(driver), "Toolbar should be present on the page.");
         assertTrue(Graphene.element(page.toolbar).isVisible().apply(driver), "Toolbar should be visible.");
@@ -106,6 +108,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
+    @Templates(value = "plain")
     public void testItemClass() {
         testStyleClass(driver.findElement(itemBy) , itemClass);
     }
@@ -152,12 +155,14 @@ public class TestRichToolbar extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
+    @Templates(value = "plain")
     public void testItemStyle() {
         testStyle(driver.findElement(itemBy), itemStyle);
     }
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
+    @Templates(value = "plain")
     public void testOnitemclick() {
         Action click = new Actions(driver).click(driver.findElement(itemBy)).build();
         testFireEvent(toolbarAttributes, ToolbarAttributes.onitemclick, click);
@@ -165,6 +170,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
+    @Templates(value = "plain")
     public void testOnitemdblclick() {
         Action dblClick = new Actions(driver).doubleClick(driver.findElement(itemBy)).build();
         testFireEvent(toolbarAttributes, ToolbarAttributes.onitemdblclick, dblClick);
@@ -172,6 +178,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
+    @Templates(value = "plain")
     public void testOnitemkeydown() {
         // TODO JJa 2013-03-11: Doesn't work for now with Action, rewrite if it changes
         // Action keyDown = new Actions(driver).keyDown(WebElementProxyUtils.createProxyForElement(itemBy), Keys.ALT).build();
@@ -183,6 +190,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
+    @Templates(value = "plain")
     public void testOnitemkeypress() {
         // TODO JJa 2013-03-11: Doesn't work for now with Action, rewrite if it changes
         // Action keyPress = new Actions(driver).moveToElement(WebElementProxyUtils.createProxyForElement(itemBy)).sendKeys("a").build();
@@ -194,6 +202,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
+    @Templates(value = "plain")
     public void testOnitemkeyup() {
         // TODO JJa 2013-03-11: Doesn't work for now with Action, rewrite if it changes
         // Action keyup = new Actions(driver).keyUp(WebElementProxyUtils.createProxyForElement(itemBy), Keys.ALT).build();
@@ -205,6 +214,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
+    @Templates(value = "plain")
     public void testOnitemmousedown() {
         Action mouseDown = new Actions(driver).clickAndHold(driver.findElement(itemBy)).build();
         testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmousedown, mouseDown);
@@ -212,6 +222,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
+    @Templates(value = "plain")
     public void testOnitemmousemove() {
         Action mouseMove = new Actions(driver).moveToElement(driver.findElement(itemBy)).build();
         testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmousemove, mouseMove);
@@ -219,6 +230,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
+    @Templates(value = "plain")
     public void testOnitemmouseout() {
         // TODO JJa 2013-03-11: Doesn't work for now with Action, rewrite if it changes
         // Action mouseOut = new Actions(driver).moveToElement(WebElementProxyUtils.createProxyForElement(itemBy)).moveByOffset(-1, -1).build();
@@ -229,6 +241,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
+    @Templates(value = "plain")
     public void testOnitemmouseover() {
         Action mouseOver = new Actions(driver).moveToElement(driver.findElement(itemBy)).build();
         testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmouseover, mouseOver);
@@ -236,6 +249,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
 
     @Test
     @Use(field = "itemBy", value = "itemsBy")
+    @Templates(value = "plain")
     public void testOnitemmouseup() {
         WebElement item = driver.findElement(itemBy);
         Action mouseUp = new Actions(driver).clickAndHold(item).release(item).build();
@@ -243,6 +257,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         toolbarAttributes.set(ToolbarAttributes.rendered, Boolean.FALSE);
         assertTrue(Graphene.element(page.toolbar).not().isPresent().apply(driver), "Toolbar should not be rendered when rendered=false.");
@@ -250,11 +265,13 @@ public class TestRichToolbar extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         super.testStyle(page.toolbar);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         super.testStyleClass(page.toolbar);
     }

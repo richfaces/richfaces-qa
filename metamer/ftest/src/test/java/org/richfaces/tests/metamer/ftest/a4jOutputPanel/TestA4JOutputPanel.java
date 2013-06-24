@@ -49,6 +49,7 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -136,11 +137,13 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDir() {
         testDir(outputDiv);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLang() {
         testHTMLAttribute(outputDiv, outputPanelAttributes, OutputPanelAttributes.lang, "sk");
     }
@@ -167,6 +170,7 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11312")
+    @Templates(value = "plain")
     public void testRendered() {
         outputPanelAttributes.set(OutputPanelAttributes.rendered, false);
         assertFalse(outputDiv.isPresent(), "Panel should not be rendered.");
@@ -194,16 +198,19 @@ public class TestA4JOutputPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(outputDiv);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(outputDiv);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testTitle() {
         testTitle(outputDiv);
     }

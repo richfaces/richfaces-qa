@@ -55,6 +55,7 @@ import org.jboss.arquillian.ajocado.locator.frame.FrameRelativeLocator;
 import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
 import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -145,6 +146,7 @@ public class TestRichEditor extends AbstractGrapheneTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11394")
+    @Templates(value = "plain")
     public void testLang() {
         String langVal = "xyz";
         editorAttributes.set(lang, langVal);
@@ -229,6 +231,7 @@ public class TestRichEditor extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
 
         final AttributeLocator<?> styleAttr = editor.getAttribute(Attribute.STYLE);
@@ -243,10 +246,10 @@ public class TestRichEditor extends AbstractGrapheneTest {
                     return selenium.getAttribute(styleAttr).contains(style);
                 }
             });
-
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
 
         final String styleClassVal = "metamer-ftest-class";

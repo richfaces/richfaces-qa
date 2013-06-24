@@ -42,6 +42,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.list.common.SelectableListItem;
@@ -93,6 +94,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testAddAllText() {
         String label = "xxx";
         pickListAttributes.set(PickListAttributes.addAllText, label);
@@ -100,6 +102,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testAddText() {
         String label = "xxx";
         pickListAttributes.set(PickListAttributes.addText, label);
@@ -151,12 +154,14 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDisabledClass() {
         pickListAttributes.set(PickListAttributes.disabled, Boolean.TRUE);
         testStyleClass(pickList.getRootElement(), BasicAttributes.disabledClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDownBottomText() {
         String label = "xxx";
         pickListAttributes.set(PickListAttributes.downBottomText, label);
@@ -165,6 +170,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDownText() {
         String label = "xxx";
         pickListAttributes.set(PickListAttributes.downText, label);
@@ -190,6 +196,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testItemClass() {
         String testedClass = "metamer-ftest-class";
         pickListAttributes.set(PickListAttributes.itemClass, "metamer-ftest-class");
@@ -281,6 +288,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(Event.DBLCLICK, pickList.getRootElement());
     }
@@ -292,41 +300,49 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEvent(Event.KEYDOWN, pickList.getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEvent(Event.KEYPRESS, pickList.getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeyup() {
         testFireEvent(Event.KEYUP, pickList.getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(Event.MOUSEDOWN, pickList.getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(Event.MOUSEMOVE, pickList.getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent(Event.MOUSEOUT, pickList.getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent(Event.MOUSEOVER, pickList.getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(Event.MOUSEUP, pickList.getRootElement());
     }
@@ -357,6 +373,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnsourceclick() {
         testFireEvent(pickListAttributes, PickListAttributes.onsourceclick,
                 new Actions(driver).click(pickList.source().getListAreaElement()).build());
@@ -364,6 +381,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnsourcedblclick() {
         testFireEvent(Event.DBLCLICK, pickList.source().getListAreaElement(), "sourcedblclick");
     }
@@ -394,26 +412,31 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnsourcemousedown() {
         testFireEvent(Event.MOUSEDOWN, pickList.source().getListAreaElement(), "sourcemousedown");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnsourcemousemove() {
         testFireEvent(Event.MOUSEMOVE, pickList.source().getListAreaElement(), "sourcemousemove");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnsourcemouseout() {
         testFireEvent(Event.MOUSEOUT, pickList.source().getListAreaElement(), "sourcemouseout");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnsourcemouseover() {
         testFireEvent(Event.MOUSEOVER, pickList.source().getListAreaElement(), "sourcemouseover");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnsourcemouseup() {
         testFireEvent(Event.MOUSEUP, pickList.source().getListAreaElement(), "sourcemouseup");
     }
@@ -434,6 +457,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOntargetclick() {
         testFireEvent(pickListAttributes, PickListAttributes.ontargetclick,
                 new Actions(driver).click(pickList.target().getListAreaElement()).build());
@@ -441,6 +465,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOntargetdblclick() {
         testFireEvent(Event.DBLCLICK, pickList.target().getListAreaElement(), "targetdblclick");
     }
@@ -471,26 +496,31 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOntargetmousedown() {
         testFireEvent(Event.MOUSEDOWN, pickList.target().getListAreaElement(), "targetmousedown");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOntargetmousemove() {
         testFireEvent(Event.MOUSEMOVE, pickList.target().getListAreaElement(), "targetmousemove");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOntargetmouseout() {
         testFireEvent(Event.MOUSEOUT, pickList.target().getListAreaElement(), "targetmouseout");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOntargetmouseover() {
         testFireEvent(Event.MOUSEOVER, pickList.target().getListAreaElement(), "targetmouseover");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOntargetmouseup() {
         testFireEvent(Event.MOUSEUP, pickList.target().getListAreaElement(), "targetmouseup");
     }
@@ -539,6 +569,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRemoveAllText() {
         String label = "xxx";
         pickListAttributes.set(PickListAttributes.removeAllText, label);
@@ -546,6 +577,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRemoveText() {
         String label = "xxx";
         pickListAttributes.set(PickListAttributes.removeText, label);
@@ -553,6 +585,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         pickListAttributes.set(PickListAttributes.rendered, Boolean.TRUE);
         assertPresent(pickList.getRootElement(), "Picklist should be present");
@@ -598,6 +631,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testSelectItemClass() {
         testHTMLAttribute(new FutureTarget<WebElement>() {
             @Override
@@ -620,11 +654,13 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(pickList.getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(pickList.getRootElement());
     }
@@ -677,6 +713,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testUpText() {
         String label = "xxx";
         pickListAttributes.set(PickListAttributes.upText, label);
@@ -685,6 +722,7 @@ public class TestPickList extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testUpTopText() {
         String label = "xxx";
         pickListAttributes.set(PickListAttributes.upTopText, label);

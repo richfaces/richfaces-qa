@@ -80,11 +80,13 @@ public class TestRichCollapsiblePanel extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testBodyClass() {
         testStyleClass(content, bodyClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDir() {
         testDir(panel);
     }
@@ -109,6 +111,7 @@ public class TestRichCollapsiblePanel extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testHeaderClass() {
         testStyleClass(header, headerClass);
     }
@@ -127,6 +130,7 @@ public class TestRichCollapsiblePanel extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLang() {
         testLang(panel);
     }
@@ -211,6 +215,7 @@ public class TestRichCollapsiblePanel extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         collapsiblePanelAttributes.set(CollapsiblePanelAttributes.rendered, false);
 
@@ -242,11 +247,13 @@ public class TestRichCollapsiblePanel extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(panel);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(panel);
     }
@@ -269,6 +276,7 @@ public class TestRichCollapsiblePanel extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testSwitchTypeAjax() {
         collapsiblePanelAttributes.set(CollapsiblePanelAttributes.switchType, "ajax");
 
@@ -303,6 +311,7 @@ public class TestRichCollapsiblePanel extends AbstractGrapheneTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testTitle() {
         testTitle(panel);
     }
