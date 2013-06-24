@@ -83,10 +83,10 @@ FSF site: http://www.fsf.org. -->
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
+        <!-- <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
             <artifactId>arquillian-screen-recorder</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- Resolution of JAR libraries into WAR archive -->
         <dependency>
