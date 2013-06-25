@@ -74,4 +74,16 @@ public class TooltipPage extends MetamerPage {
         return tooltip;
     }
 
+    @FindBy(css = "input[id$=showClick]")
+    public WebElement jsAPIshowClick;
+
+    @FindBy(css = "input[id$=hideClick]")
+    public WebElement jsAPIhideClick;
+
+    @FindBy(css = "input[id$=showMouseOver]")
+    public WebElement jsAPIshowMouseOver;
+
+    @FindBy(css = "input[id$=hideMouseOver]")
+    public WebElement jsAPIhideMouseOver;
+
 }

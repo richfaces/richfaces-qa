@@ -546,6 +546,24 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         assertEquals(zindex, "10");
     }
 
+    @Test
+    public void testJsAPIbyClick() {
+        page.jsAPIshowClick.click();
+        Graphene.waitAjax().until().element(page.getTooltip().getRoot()).is().visible();
+
+        page.jsAPIhideClick.click();
+        Graphene.waitAjax().until().element(page.getTooltip().getRoot()).is().not().visible();
+    }
+
+    @Test
+    public void testJsAPIbyMouseOver() {
+        new Actions(driver).moveToElement(page.jsAPIshowMouseOver).build().perform();
+        Graphene.waitAjax().until().element(page.getTooltip().getRoot()).is().visible();
+
+        new Actions(driver).moveToElement(page.jsAPIhideMouseOver).build().perform();
+        Graphene.waitAjax().until().element(page.getTooltip().getRoot()).is().not().visible();
+    }
+
     public void testRequestEventsBefore(String... events) {
         for (String event : events) {
             String inputExp = format(ATTR_INPUT_LOC_FORMAT, event);
