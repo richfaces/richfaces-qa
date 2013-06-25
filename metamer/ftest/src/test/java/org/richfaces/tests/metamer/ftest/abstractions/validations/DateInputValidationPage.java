@@ -81,7 +81,7 @@ public class DateInputValidationPage extends InputValidationPage {
     private WebElement requiredOutput;
 
     @Override
-    protected void initCustomMessages() {
+    public void initCustomMessages() {
         DateTimeFormatter dtf = DateTimeFormat.forPattern("MMM d, yyyy HH:mm");
         messageCases.put(MESSAGE_PAST_NAME,
                 new ValidationMessageCase(MESSAGE_PAST_NAME, messagePast,

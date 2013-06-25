@@ -22,8 +22,7 @@
 package org.richfaces.tests.page.fragments.impl;
 
 import java.util.Iterator;
-
-import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.arquillian.graphene.GrapheneContext;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
 import org.openqa.selenium.Dimension;
@@ -55,7 +54,8 @@ public final class Utils {
      * @param element not visible element
      */
     public static String getTextFromHiddenElement(WebElement element) {
-        return returningJQ("text()", element);
+        GrapheneContext context = ((GrapheneProxyInstance) element).getContext();
+        return returningJQ((JavascriptExecutor) context.getWebDriver(JavascriptExecutor.class), "text()", element);
     }
 
     /**
@@ -63,8 +63,7 @@ public final class Utils {
      * @param cmd command to be executed
      * @param element element on which the command will be executed
      */
-    public static void jQ(String cmd, WebElement element) {
-        JavascriptExecutor executor = (JavascriptExecutor) GrapheneContext.getProxy();
+    public static void jQ(JavascriptExecutor executor, String cmd, WebElement element) {
         String jQueryCmd = String.format("jQuery(arguments[0]).%s", cmd);
         executor.executeScript(jQueryCmd, unwrap(element));
     }
@@ -75,8 +74,7 @@ public final class Utils {
      * @param cmd command to be executed
      * @param element element on which the command will be executed
      */
-    public static String returningJQ(String cmd, WebElement element) {
-        JavascriptExecutor executor = (JavascriptExecutor) GrapheneContext.getProxy();
+    public static String returningJQ(JavascriptExecutor executor, String cmd, WebElement element) {
         String jQueryCmd = String.format("x = jQuery(arguments[0]).%s ; return x;", cmd);
         return String.valueOf(executor.executeScript(jQueryCmd, unwrap(element)));
     }
@@ -132,8 +130,8 @@ public final class Utils {
      * @param event event to be triggered
      * @param element element on which the command will be executed
      */
-    public static void triggerJQ(String event, WebElement element) {
-        jQ(String.format("trigger('%s')", event), element);
+    public static void triggerJQ(JavascriptExecutor executor, String event, WebElement element) {
+        jQ(executor, String.format("trigger('%s')", event), element);
     }
 
     public static WebElement unwrap(WebElement e) {

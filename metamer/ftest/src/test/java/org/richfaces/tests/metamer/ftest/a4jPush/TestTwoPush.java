@@ -21,124 +21,143 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.a4jPush;
 
-import static java.text.MessageFormat.format;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.pushAttributes;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
+import com.google.common.base.Predicate;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.richfaces.tests.metamer.bean.a4j.A4JPushBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
-
-import com.google.common.base.Predicate;
 
 public class TestTwoPush extends AbstractWebDriverTest {
 
     @Page
     private TwoPushPage page;
 
+    private void clickPushEnableCheckbox(boolean waitForReinitialization) {
+        MetamerPage.waitRequest(page.pushEnabledChckBox, WaitRequestType.XHR).click();
+        if (waitForReinitialization) {
+            waitUntilPushReinits();
+        }
+    }
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/a4jPush/twoPush.xhtml");
     }
 
-    @Test
-    public void testSimplePushEventReceive() {
-        verifyPushUpdateReceive(3L);
+    private DateTime getTimeFromOutput(WebElement output) {
+        DateTimeFormatter dtf = DateTimeFormat.forPattern(A4JPushBean.DATE_PATTERN);
+        String text = output.getText();
+        return dtf.parseDateTime(text);
     }
 
     @Test
-    public void testPushEnable() {
-        // disable push updates
-        page.pushEnabledChckBox.click();
-        Graphene.waitModel().until(Graphene.element(page.pushEnabledChckBox).not().isSelected());
-        // enable push updates
-        page.pushEnabledChckBox.click();
-
-        verifyPushUpdateReceive(10L);
+    public void testBothPushes() {
+        verifyPushUpdate(3, false, page.push1Btn, page.output1);
+        verifyPushUpdate(3, false, page.push2Btn, page.output2);
+        verifyPushUpdate(1, true, page.push1Btn, page.output2);
+        verifyPushUpdate(1, true, page.push2Btn, page.output1);
+        clickPushEnableCheckbox(true);//disable 1st push
+        verifyPushUpdate(3, false, page.push2Btn, page.output2);
+        verifyPushUpdate(3, true, page.push1Btn, page.output1);
+        verifyPushUpdate(1, true, page.push1Btn, page.output2);
+        verifyPushUpdate(1, true, page.push2Btn, page.output1);
+        clickPushEnableCheckbox(true);//enable 1st push
+        verifyPushUpdate(3, false, page.push2Btn, page.output2);
+        verifyPushUpdate(3, false, page.push1Btn, page.output1);
+        verifyPushUpdate(1, true, page.push1Btn, page.output2);
+        verifyPushUpdate(1, true, page.push2Btn, page.output1);
     }
 
     @Test
     public void testOnSubscribed() {
         pushAttributes.set(PushAttributes.onsubscribed, "sessionStorage.setItem('metamerEvents', metamerEvents += \"onsubscribed \")");
-
+        final String expected1 = "onsubscribed onsubscribed";
+        final String expected2 = "onsubscribed onsubscribed onsubscribed";
         // first onsubscribed event receive immediatelly after form update
-        String event = ((String) executeJS("return sessionStorage.getItem('metamerEvents')")).trim();
+        String event = expectedReturnJS("return sessionStorage.getItem('metamerEvents')", expected1);
         // there are 2 push components on page (this example verify that one doesn't influence another one)
-        assertEquals(event, "onsubscribed onsubscribed", "Attribute onsubscribed doesn't work");
-
-        page.pushEnabledChckBox.click();
-        Graphene.waitModel().until(Graphene.element(page.pushEnabledChckBox).not().isSelected());
-        page.pushEnabledChckBox.click();
-        Graphene.waitModel().until(Graphene.element(page.pushEnabledChckBox).isSelected());
+        assertEquals(event, expected1, "Attribute onsubscribed doesn't work");
+        clickPushEnableCheckbox(false);//disable
+        clickPushEnableCheckbox(true);//enable
         // second onsubscribed event receive after manual re-attach by checkbox
         Graphene.waitModel().until(new Predicate<WebDriver>() {
             @Override
             public boolean apply(WebDriver arg0) {
-                String events = ((String) executeJS("return sessionStorage.getItem('metamerEvents')")).trim();
-                // not there should be 3rd event invoked on re-attach to topic
-                return "onsubscribed onsubscribed onsubscribed".equals(events);
+                String events = expectedReturnJS("return sessionStorage.getItem('metamerEvents')", expected2);
+                // note there should be 3rd event invoked on re-attach to topic
+                return expected2.equals(events);
             }
         });
         executeJS("window.metamerEvents = \"\";");
         executeJS("sessionStorage.removeItem('metamerEvents')");
     }
 
-    /**
-     * @param timeout in second: Since re-attach to topic require more time, there should
-     * be set a bit longer timeout to verify it correctly
-     */
-    private void verifyPushUpdateReceive(long timeout) {
-        for (int i = 0; i < 5; ++i) {
-            // date time before first push event received
-            final String output1Text = page.output1.getText();
-            // note: for fail in first iteration the 0 iterations done is correct information
-            String msgFormat = "Push event was not received within {0} sec. Iteration(s) done: {1}";
+    @Test
+    public void testPushEnable() {
+        clickPushEnableCheckbox(false);// disable push updates
+        clickPushEnableCheckbox(true);// enable push updates
+        verifyPushUpdate(5, false, page.push1Btn, page.output1);
+    }
 
-            // since there is not re-attach to topic, 3 sec timeout should be enough
-            (new WebDriverWait(driver, timeout))
-                .withMessage(format(msgFormat, timeout, i))
-                .until(new ExpectedCondition<Boolean>() {
-                    @Override
-                    public Boolean apply(WebDriver d) {
-                        page.push1Btn.click();
-                        return !page.output1.getText().equals(output1Text);
-                    }
-                });
+    @Test
+    public void testSimplePushEventReceive() {
+        verifyPushUpdate(5, false, page.push1Btn, page.output1);
+    }
+
+    /**
+     * Verifies, that push component receives or not receives updates after push
+     * button is clicked.
+     */
+    private void verifyPushUpdate(int numberOfChecks, boolean shouldNotReceiveUpdate, WebElement pushButton, WebElement outputWithTime) {
+        long waitTime = 1200L;
+        DateTime time1, time2;
+        for (int i = 0; i < numberOfChecks; ++i) {
+            time1 = getTimeFromOutput(outputWithTime);
+            waiting(waitTime);//wait, so the seconds of output (received date) should increase after button clicked
+            MetamerPage.requestTimeChangesWaiting(pushButton).click();
+            time2 = getTimeFromOutput(outputWithTime);
+            if (shouldNotReceiveUpdate) {
+                assertEquals(time2, time1, "Time in output should not change when the push is disabled.");
+            } else {
+                assertTrue(time2.isAfter(time1), "Time should be increasing.");
+            }
         }
     }
 
-/*    @Test3
-    public void testPush1() {
-        *//**
-         * 1. open page (handle alert)
-         * 2. click push button and verify push updates receiving
-         * 3. then disable push (detach)
-         * 4. try receive some updates (on both push buttons)
-         * 5. then enable push for first push again
-         * 6. start receive notifications (waint until first one received)
-         *//*
-        String startingDate = selenium.getText(date1output);
-        waitFor(2000);
-        selenium.click(push1Button);
-        selenium.answerOnNextPrompt("OK");
+    /**
+     * When push component on page is disabled/re-enabled the same and even other
+     * push components don't receive updates for some time. This method should
+     * wait until push receives updates. It continously clicks the second push
+     * button (second push is always enabled) and checks if it received an update.
+     * Because of https://issues.jboss.org/browse/RF-12096.
+     */
+    private void waitUntilPushReinits() {
+        new WebDriverWait(driver, 70, 2000).until(new Predicate<WebDriver>() {
 
-        String currentDateTime = date.getValue();
-        System.out.println(" # 1. " + startingDate + ", 2. " + currentDateTime);
-
-        System.out.println(" ### pushEnabled = " + pushEnabled.getValue());
-
-        selenium.check(push1checkbox);
-        System.out.println(" ### pushEnabled = " + pushEnabled.getValue());
-
-        currentDateTime = selenium.getText(date1output);
-
-    }*/
-
+            @Override
+            public boolean apply(WebDriver input) {
+                DateTime time1 = getTimeFromOutput(page.output2);
+                MetamerPage.requestTimeChangesWaiting(page.push2Btn).click();
+                DateTime time2 = getTimeFromOutput(page.output2);
+                return time2.isAfter(time1);
+            }
+        });
+    }
 }

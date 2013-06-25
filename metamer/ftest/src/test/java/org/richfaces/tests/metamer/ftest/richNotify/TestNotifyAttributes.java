@@ -29,6 +29,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -97,9 +99,9 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     public void testNonblocking() {
         notifyAttributes.set(NotifyAttributes.nonblocking, Boolean.TRUE);
         notifyAttributes.set(NotifyAttributes.nonblockingOpacity, 0);
-        Utils.triggerJQ("mouseover", message.getRoot());
+        Utils.triggerJQ(executor, "mouseover", message.getRoot());
         TestNotifyAttributes.waitForOpacityChange(0, message.getRoot());
-        Utils.triggerJQ("mouseout", message.getRoot());
+        Utils.triggerJQ(executor, "mouseout", message.getRoot());
         TestNotifyAttributes.waitForOpacityChange(1, message.getRoot());
     }
 
@@ -107,9 +109,9 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     public void testNonblockingOpacity() {
         notifyAttributes.set(NotifyAttributes.nonblocking, Boolean.TRUE);
         notifyAttributes.set(NotifyAttributes.nonblockingOpacity, 0.5);
-        Utils.triggerJQ("mouseover", message.getRoot());
+        Utils.triggerJQ(executor, "mouseover", message.getRoot());
         TestNotifyAttributes.waitForOpacityChange(0.5, message.getRoot());
-        Utils.triggerJQ("mouseout", message.getRoot());
+        Utils.triggerJQ(executor, "mouseout", message.getRoot());
         TestNotifyAttributes.waitForOpacityChange(1, message.getRoot());
     }
 

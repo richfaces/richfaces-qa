@@ -42,6 +42,7 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
@@ -185,6 +186,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testControlsClass() {
         testStyleClass(panel.getHeaderControlsElement(), BasicAttributes.controlsClass);
     }
@@ -220,6 +222,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testHeader() {
         String value = "new header";
         popupPanelAttributes.set(PopupPanelAttributes.header, value);
@@ -228,6 +231,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testHeaderClass() {
         testStyleClass(panel.getHeaderElement(), BasicAttributes.headerClass);
     }
@@ -378,6 +382,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testModal() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.FALSE);
         openPopupPanel();
@@ -454,48 +459,56 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmaskclick() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.TRUE);
         testFireEvent(Event.CLICK, shade, "maskclick");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmaskcontextmenu() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.TRUE);
         testFireEvent(new Event("contextmenu"), shade, "maskcontextmenu");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmaskdblclick() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.TRUE);
         testFireEvent(Event.DBLCLICK, shade, "maskdblclick");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmaskmousedown() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.TRUE);
         testFireEvent(Event.MOUSEDOWN, shade, "maskmousedown");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmaskmousemove() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.TRUE);
         testFireEvent(Event.MOUSEMOVE, shade, "maskmousemove");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmaskmouseout() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.TRUE);
         testFireEvent(Event.MOUSEOUT, shade, "maskmouseout");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmaskmouseover() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.TRUE);
         testFireEvent(Event.MOUSEOVER, shade, "maskmouseover");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmaskmouseup() {
         popupPanelAttributes.set(PopupPanelAttributes.modal, Boolean.TRUE);
         testFireEvent(Event.MOUSEUP, shade, "maskmouseup");
@@ -534,6 +547,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         popupPanelAttributes.set(PopupPanelAttributes.rendered, Boolean.TRUE);
         assertPresent(panel.getRootElement(), "Panel should berendered.");
@@ -605,12 +619,14 @@ public class TestPopupPanel extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10245")
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(panel.getRootElement());
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10245")
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(panel.getRootElement());
     }
@@ -652,6 +668,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testZindex() {
         openPopupPanel();
         checkCssValueOf("z-index", 4, panel.getRootElement());

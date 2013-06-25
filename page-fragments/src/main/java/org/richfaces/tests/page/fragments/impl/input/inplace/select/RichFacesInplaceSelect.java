@@ -22,6 +22,8 @@
 package org.richfaces.tests.page.fragments.impl.input.inplace.select;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
@@ -39,10 +41,13 @@ public class RichFacesInplaceSelect extends AbstractInplaceComponent<InplaceSele
     @FindBy(tagName = "script")
     private WebElement script;
 
+    @ArquillianResource
+    private JavascriptExecutor executor;
+
     @Override
     public InplaceSelectEditingState editBy(OpenBy event) {
         if (!globalList.isVisible()) {
-            Utils.triggerJQ(event.getEventName(), root);
+            Utils.triggerJQ(executor, event.getEventName(), root);
             if (isOpenOnEdit()) {
                 waitForPopupShow();
             }
@@ -68,7 +73,7 @@ public class RichFacesInplaceSelect extends AbstractInplaceComponent<InplaceSele
     }
 
     private boolean isOpenOnEdit() {
-        String text = Utils.returningJQ("text()", script);//getting text from hidden element
+        String text = Utils.returningJQ(executor, "text()", script);//getting text from hidden element
         if (text.contains("\"openOnEdit\":false")) {
             return Boolean.FALSE;
         }

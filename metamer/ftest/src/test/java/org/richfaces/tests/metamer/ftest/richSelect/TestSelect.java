@@ -38,6 +38,8 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -47,6 +49,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
@@ -95,6 +98,9 @@ public class TestSelect extends AbstractWebDriverTest {
             Graphene.guardAjax(select.callPopup()).selectByIndex(10, Selection.BY_KEYS);
         }
     };
+
+    @ArquillianResource
+    private JavascriptExecutor executor;
 
     @Override
     public URL getTestUrl() {
@@ -191,6 +197,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testInit() {
         assertEquals(select.getInput().getStringValue(), "Click here to edit", "Default label");
         assertPresent(select.getInput().getInput(), "Input should be present on the page.");
@@ -199,6 +206,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testItemClass() {
         final String value = "metamer-ftest-class";
         selectAttributes.set(SelectAttributes.itemClass, value);
@@ -274,7 +282,7 @@ public class TestSelect extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 select.getInput().getInput().click();// will not be triggered if this step omitted
-                page.requestTime.click();// will not be triggered if this step omitted
+                page.getRequestTimeElement().click();// will not be triggered if this step omitted
                 select.getInput().clear(TextInputComponent.ClearType.JS).fillIn("ABCD").trigger("blur");
             }
         });
@@ -286,47 +294,55 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(Event.CLICK, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(Event.DBLCLICK, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnfocus() {
         testFireEvent(Event.FOCUS, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEvent(Event.KEYDOWN, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEvent(Event.KEYPRESS, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeyup() {
         testFireEvent(Event.KEYUP, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistclick() {
         testFireEvent("listclick", selectHawaiiGuardedAction);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistdblclick() {
         testFireEvent("listdblclick", new Action() {
             @Override
             public void perform() {
                 select.callPopup();
-                Utils.triggerJQ("dblclick", listElement);
+                Utils.triggerJQ(executor, "dblclick", listElement);
             }
         });
     }
@@ -337,7 +353,7 @@ public class TestSelect extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 select.callPopup();
-                page.requestTime.click();
+                page.getRequestTimeElement().click();
                 Graphene.waitGui().until(new Predicate<WebDriver>() {
                     @Override
                     public boolean apply(WebDriver input) {
@@ -349,80 +365,88 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistkeydown() {
         testFireEvent("listkeydown", new Action() {
             @Override
             public void perform() {
                 select.callPopup();
-                Utils.triggerJQ("keydown", listElement);
+                Utils.triggerJQ(executor, "keydown", listElement);
             }
         });
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistkeypress() {
         testFireEvent("listkeypress", new Action() {
             @Override
             public void perform() {
                 select.callPopup();
-                Utils.triggerJQ("keypress", listElement);
+                Utils.triggerJQ(executor, "keypress", listElement);
             }
         });
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistkeyup() {
         testFireEvent("listkeyup", new Action() {
             @Override
             public void perform() {
                 select.callPopup();
-                Utils.triggerJQ("keyup", listElement);
+                Utils.triggerJQ(executor, "keyup", listElement);
             }
         });
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistmousedown() {
         testFireEvent("listmousedown", new Action() {
             @Override
             public void perform() {
-                Utils.triggerJQ("mousedown", listElement);
+                Utils.triggerJQ(executor, "mousedown", listElement);
             }
         });
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistmousemove() {
         testFireEvent("listmousemove", new Action() {
             @Override
             public void perform() {
-                Utils.triggerJQ("mousemove", listElement);
+                Utils.triggerJQ(executor, "mousemove", listElement);
             }
         });
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistmouseout() {
         testFireEvent("listmouseout", new Action() {
             @Override
             public void perform() {
-                Utils.triggerJQ("mouseout", listElement);
+                Utils.triggerJQ(executor, "mouseout", listElement);
             }
         });
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistmouseover() {
         testFireEvent("listmouseover", new Action() {
             @Override
             public void perform() {
                 select.callPopup();
-                new Actions(driver).moveToElement(listElement).moveToElement(page.requestTime).perform();
+                new Actions(driver).moveToElement(listElement).moveToElement(page.getRequestTimeElement()).perform();
             }
         });
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnlistmouseup() {
         testFireEvent("listmouseup", selectHawaiiGuardedAction);
     }
@@ -438,26 +462,31 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEvent(Event.MOUSEDOWN, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEvent(Event.MOUSEMOVE, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEvent(Event.MOUSEOUT, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEvent(Event.MOUSEOVER, select.getInput().getInput());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEvent(Event.MOUSEUP, select.getInput().getInput());
     }
@@ -468,6 +497,7 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         selectAttributes.set(SelectAttributes.rendered, Boolean.FALSE);
         assertNotPresent(selectElement, "Component should not be rendered when rendered=false.");
@@ -495,13 +525,14 @@ public class TestSelect extends AbstractWebDriverTest {
         assertTrue(selectItems.get(0).getAttribute("class").contains("rf-sel-sel"), "First item should contain class for selected item.");
         new Actions(driver).sendKeys(Keys.RETURN).perform();
 
-        String previousTime = page.requestTime.getText();
-        Utils.triggerJQ("blur", select.getInput().getInput());
-        Graphene.waitModel().until().element(page.requestTime).text().not().equalTo(previousTime);
+        String previousTime = page.getRequestTimeElement().getText();
+        Utils.triggerJQ(executor, "blur", select.getInput().getInput());
+        Graphene.waitModel().until().element(page.getRequestTimeElement()).text().not().equalTo(previousTime);
         assertEquals(output.getText(), "Alabama", "Output should be Alabama");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testSelectItemClass() {
         selectAttributes.set(SelectAttributes.selectItemClass, "metamer-ftest-class");
 
@@ -572,16 +603,19 @@ public class TestSelect extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(selectElement);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(selectElement);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testTitle() {
         testTitle(select.getInput().getInput());
     }

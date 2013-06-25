@@ -32,11 +32,15 @@ import org.openqa.selenium.WebElement;
 public class RichFacesTreeNodeHandle {
 
     @Root
-    public WebElement root;
+    private WebElement root;
 
     String classHandleLeaf = "rf-trn-hnd-lf";
     String classHandleExpanded = "rf-trn-hnd-exp";
     String classHandleCollapsed = "rf-trn-hnd-colps";
+
+    public WebElement getRoot() {
+        return root;
+    }
 
     public boolean isExpanded() {
         return isVisible() && root.getAttribute("class").contains(classHandleExpanded);

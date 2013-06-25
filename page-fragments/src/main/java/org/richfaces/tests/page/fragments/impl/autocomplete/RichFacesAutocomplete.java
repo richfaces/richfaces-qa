@@ -13,9 +13,9 @@ import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.Suggestion;
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.SuggestionParser;
 import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.jboss.arquillian.graphene.wait.WebDriverWait;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
@@ -31,6 +31,9 @@ public class RichFacesAutocomplete<T> implements AutocompleteComponent<T> {
     public static final String CSS_INPUT = "input[type='text']";
 
     private static final Logger LOGGER = Logger.getLogger(AutocompleteComponent.class.getName());
+
+    @ArquillianResource
+    private Actions actions;
 
     @Root
     private WebElement root;
@@ -63,11 +66,10 @@ public class RichFacesAutocomplete<T> implements AutocompleteComponent<T> {
 
         switch(clearType[0]) {
             case BACK_SPACE: {
-                Actions builder = new Actions(GrapheneContext.getProxy());
                 for (int i = 0; i < valueLength; i++) {
-                    builder.sendKeys(inputToWrite, Keys.BACK_SPACE);
+                    actions.sendKeys(inputToWrite, Keys.BACK_SPACE);
                 }
-                builder.build().perform();
+                actions.build().perform();
                 break;
             }
             case ESCAPE_SQ: {
@@ -80,20 +82,15 @@ public class RichFacesAutocomplete<T> implements AutocompleteComponent<T> {
                 break;
             }
             case DELETE: {
-                Actions builder = new Actions(GrapheneContext.getProxy());
                 String ctrlADel = Keys.chord(Keys.CONTROL, "a", Keys.DELETE);
-                builder.sendKeys(inputToWrite, ctrlADel);
-
-                builder.build().perform();
+                actions.sendKeys(inputToWrite, ctrlADel).build().perform();
             }
         }
     }
 
     @Override
     public void finish() {
-        Actions builder = new Actions(GrapheneContext.getProxy());
-        builder.sendKeys(Keys.chord(Keys.SPACE, Keys.BACK_SPACE));
-        builder.build().perform();
+        actions.sendKeys(Keys.chord(Keys.SPACE, Keys.BACK_SPACE)).build().perform();
         root.findElement(By.xpath("//body")).click();
         waitForSuggestionsNotAvailable(Graphene.waitGui());
     }
@@ -248,21 +245,20 @@ public class RichFacesAutocomplete<T> implements AutocompleteComponent<T> {
 
                     // select the suggestion by pressing exact times down key and then enter
                 } else if (scrollingType[0] == ScrollingType.BY_KEYS) {
-                    Actions builder = new Actions(GrapheneContext.getProxy());
                     LOGGER.log(Level.FINE, "Scrolling by keys.");
                     for (int j = 0; j < i; j++) {
-                        builder.sendKeys(Keys.DOWN);
+                        actions.sendKeys(Keys.DOWN);
                     }
 
-                    builder.build().perform();
+                    actions.build().perform();
                     WebElement selectedSugg = suggList.findElement(By.className(CLASS_NAME_SUGG_SELECTED));
 
                     if (selectedSugg.getText().equals(suggToCompleteWith.getValue())) {
-                        builder.sendKeys(selectedSugg, Keys.ENTER);
-                        builder.build().perform();
+                        actions.sendKeys(selectedSugg, Keys.ENTER);
+                        actions.build().perform();
                     } else {
-                        builder.sendKeys(Keys.DOWN).sendKeys(selectedSugg, Keys.ENTER);
-                        builder.build().perform();
+                        actions.sendKeys(Keys.DOWN).sendKeys(selectedSugg, Keys.ENTER);
+                        actions.build().perform();
                     }
 
                     // workaround for NoSuchElementException
@@ -270,10 +266,8 @@ public class RichFacesAutocomplete<T> implements AutocompleteComponent<T> {
 
                     // or move the mouse over the right suggestion and click
                 } else if (scrollingType[0] == ScrollingType.BY_MOUSE) {
-                    Actions builder = new Actions(GrapheneContext.getProxy());
                     LOGGER.log(Level.FINE, "Scrolling by mouse.");
-                    builder.moveToElement(suggestion);
-                    builder.build().perform();
+                    actions.moveToElement(suggestion).build().perform();
 
                     suggestion.click();
                 }

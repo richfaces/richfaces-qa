@@ -40,6 +40,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.input.inplace.EditingState;
@@ -73,6 +74,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testActiveClass() {
         String testedClass = "metamer-ftest-class";
         inplaceInputAttributes.set(InplaceInputAttributes.activeClass, testedClass);
@@ -94,6 +96,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testChangedClass() {
         String testedClass = "metamer-ftest-class";
         inplaceInputAttributes.set(InplaceInputAttributes.changedClass, testedClass);
@@ -171,6 +174,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDisabledClass() {
         inplaceInputAttributes.set(InplaceInputAttributes.disabled, Boolean.TRUE);
         testStyleClass(inplaceInput.getRootElement());
@@ -251,12 +255,14 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(inplaceInputAttributes, InplaceInputAttributes.onclick,
                 new Actions(driver).click(inplaceInput.getRootElement()).build());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(inplaceInputAttributes, InplaceInputAttributes.ondblclick,
                 new Actions(driver).doubleClick(inplaceInput.getRootElement()).build());
@@ -264,90 +270,105 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-9868")
+    @Templates(value = "plain")
     public void testOnfocus() {
         testFireEvent(inplaceInputAttributes, InplaceInputAttributes.onfocus,
                 new Actions(driver).click(inplaceInput.getRootElement()).build());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputclick() {
         testFireEventWithJS(inplaceInput.getEditInputElement(), Event.CLICK,
                 inplaceInputAttributes, InplaceInputAttributes.oninputclick);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputdblclick() {
         testFireEventWithJS(inplaceInput.getEditInputElement(), Event.DBLCLICK,
                 inplaceInputAttributes, InplaceInputAttributes.oninputdblclick);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputkeydown() {
         testFireEventWithJS(inplaceInput.getEditInputElement(), Event.KEYDOWN,
                 inplaceInputAttributes, InplaceInputAttributes.oninputkeydown);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputkeypress() {
         testFireEventWithJS(inplaceInput.getEditInputElement(), Event.KEYPRESS,
                 inplaceInputAttributes, InplaceInputAttributes.oninputkeypress);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputkeyup() {
         testFireEventWithJS(inplaceInput.getEditInputElement(), Event.KEYUP,
                 inplaceInputAttributes, InplaceInputAttributes.oninputkeyup);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputmousedown() {
         testFireEventWithJS(inplaceInput.getEditInputElement(), Event.MOUSEDOWN,
                 inplaceInputAttributes, InplaceInputAttributes.oninputmousedown);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputmousemove() {
         testFireEventWithJS(inplaceInput.getEditInputElement(), Event.MOUSEMOVE,
                 inplaceInputAttributes, InplaceInputAttributes.oninputmousemove);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputmouseout() {
         testFireEventWithJS(inplaceInput.getEditInputElement(), Event.MOUSEOUT,
                 inplaceInputAttributes, InplaceInputAttributes.oninputmouseout);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputmouseover() {
         testFireEventWithJS(inplaceInput.getEditInputElement(), Event.MOUSEOVER,
                 inplaceInputAttributes, InplaceInputAttributes.oninputmouseover);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputmouseup() {
         testFireEventWithJS(inplaceInput.getEditInputElement(), Event.MOUSEUP,
                 inplaceInputAttributes, InplaceInputAttributes.oninputmouseup);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOninputselect() {
         testFireEventWithJS(inplaceInput.getEditInputElement(), Event.SELECT,
                 inplaceInputAttributes, InplaceInputAttributes.oninputselect);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEventWithJS(inplaceInput.getRootElement(), inplaceInputAttributes,
                 InplaceInputAttributes.onkeydown);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEventWithJS(inplaceInput.getRootElement(), inplaceInputAttributes,
                 InplaceInputAttributes.onkeypress);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeyup() {
         testFireEventWithJS(inplaceInput.getRootElement(), inplaceInputAttributes,
                 InplaceInputAttributes.onkeyup);
@@ -355,12 +376,14 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEventWithJS(inplaceInput.getRootElement(), inplaceInputAttributes,
                 InplaceInputAttributes.onmousedown);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEventWithJS(inplaceInput.getRootElement(), inplaceInputAttributes,
                 InplaceInputAttributes.onmousemove);
@@ -368,24 +391,28 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEventWithJS(inplaceInput.getRootElement(), inplaceInputAttributes,
                 InplaceInputAttributes.onmouseout);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEventWithJS(inplaceInput.getRootElement(), inplaceInputAttributes,
                 InplaceInputAttributes.onmouseover);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEventWithJS(inplaceInput.getRootElement(), inplaceInputAttributes,
                 InplaceInputAttributes.onmouseup);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         inplaceInputAttributes.set(InplaceInputAttributes.rendered, Boolean.FALSE);
         assertFalse(inplaceInput.isVisible(), "Component should not be rendered when rendered=false.");
@@ -445,17 +472,20 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(inplaceInput.getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(inplaceInput.getRootElement());
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10980")
+    @Templates(value = "plain")
     public void testTabindex() {
         int testedValue = 47;
         inplaceInputAttributes.set(InplaceInputAttributes.tabindex, testedValue);
@@ -463,6 +493,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testTitle() {
         testTitle(inplaceInput.getRootElement());
     }

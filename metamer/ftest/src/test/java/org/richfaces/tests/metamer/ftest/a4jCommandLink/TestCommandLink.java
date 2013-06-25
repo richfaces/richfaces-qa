@@ -37,6 +37,7 @@ import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.a4jCommandButton.CommandButtonLinkPage;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -135,11 +136,13 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testCharset() {
         testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.charset, "utf-8");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testCoords() {
         testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.coords, "circle: 150, 60, 60");
     }
@@ -174,6 +177,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testHreflang() {
         testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.hreflang, "sk");
     }
@@ -182,9 +186,9 @@ public class TestCommandLink extends AbstractWebDriverTest {
     public void testImmediate() {
         commandLinkAttributes.set(CommandLinkAttributes.immediate, true);
 
-        String reqTime = page.requestTime.getText();
+        String reqTime = page.getRequestTimeElement().getText();
         page.submitByLink();
-        Graphene.waitModel().until("Page was not updated").element(page.requestTime).text().not().equalTo(reqTime);
+        Graphene.waitModel().until("Page was not updated").element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
 
         page.verifyOutput1Text("");
         page.verifyOutput2Text("");
@@ -214,9 +218,9 @@ public class TestCommandLink extends AbstractWebDriverTest {
         commandLinkAttributes.set(CommandLinkAttributes.oncomplete, "metamerEvents += \"complete \"");
 
         ((JavascriptExecutor) driver).executeScript("metamerEvents = \"\"");
-        String reqTime = page.requestTime.getText();
+        String reqTime = page.getRequestTimeElement().getText();
         page.submitByLink();
-        Graphene.waitModel().until("Page was not updated").element(page.requestTime).text().not().equalTo(reqTime);
+        Graphene.waitModel().until("Page was not updated").element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
 
         String[] events = ((JavascriptExecutor) driver).executeScript("return metamerEvents").toString().split(" ");
 
@@ -257,55 +261,66 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnclick() {
         testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onclick);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOndblclick() {
         testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.ondblclick);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeydown() {
         testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onkeydown);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnkeypress() {
         testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onkeypress);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOneyup() {
         testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onkeyup);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousedown() {
         testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onmousedown);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmousemove() {
         testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onmousemove);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseout() {
         testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onmouseout);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseover() {
         testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onmouseover);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnmouseup() {
         testFireEventWithJS(page.link, commandLinkAttributes, CommandLinkAttributes.onmouseup);
     }
     @Test
+    @Templates(value = "plain")
     public void testRel() {
         testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.rel, "metamer");
     }
@@ -338,6 +353,7 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         commandLinkAttributes.set(CommandLinkAttributes.rendered, false);
 
@@ -345,32 +361,38 @@ public class TestCommandLink extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRev() {
         testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.rev, "metamer");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testShape() {
         testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.shape, "default");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(page.link);
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-9307")
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(page.link);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testTitle() {
         testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.title, "metamer");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testType() {
         testHTMLAttribute(page.link, commandLinkAttributes, CommandLinkAttributes.type, "default");
     }

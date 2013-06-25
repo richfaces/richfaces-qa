@@ -20,16 +20,20 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.richfaces.tests.page.fragments.impl.panelMenuItem;
+
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.ATTR_CLASS;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_DISABLED_SUFFIX;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_HOVERED_SUFFIX;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_SELECTED_SUFFIX;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.getGuardTypeForMode;
 
+import com.google.common.base.Predicate;
+
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.component.Mode;
 
@@ -40,22 +44,33 @@ import org.richfaces.component.Mode;
 public class RichFacesPanelMenuItem {
 
     @Root
-    WebElement root;
+    private WebElement root;
+
+    @Drone
+    private WebDriver browser;
 
     @FindBy(css = "td[class*=rf-][class*=-itm-lbl]")
-    public WebElement label;
+    private WebElement label;
 
     @FindBy(css = "td[class*=rf-][class*=-itm-ico]")
-    public RichFacesPanelMenuItemIcon leftIcon;
+    private RichFacesPanelMenuItemIcon leftIcon;
 
     @FindBy(css = "td[class*=rf-][class*=-itm-exp-ico]")
-    public RichFacesPanelMenuItemIcon rightIcon;
+    private RichFacesPanelMenuItemIcon rightIcon;
 
     // mode can be inherited from parent panelMenu
-    Mode mode;
+    protected Mode mode;
 
     public WebElement getRoot() {
         return root;
+    }
+
+    public RichFacesPanelMenuItemIcon getLeftIcon() {
+        return leftIcon;
+    }
+
+    public RichFacesPanelMenuItemIcon getRightIcon() {
+        return rightIcon;
     }
 
     public void setMode(Mode mode) {
@@ -63,10 +78,38 @@ public class RichFacesPanelMenuItem {
     }
 
     public void select() {
+        boolean wasSelected = isSelected();
         if (mode == null) {
             label.click();
         } else {
             getGuardTypeForMode(label, mode).click();
+        }
+        if (!isDisabled()) {
+            if (wasSelected) {
+                Graphene.waitModel().until(new Predicate<WebDriver>() {
+                    @Override
+                    public boolean apply(WebDriver input) {
+                        return !isSelected();
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "item to be not selected.";
+                    }
+                });
+            } else {
+                Graphene.waitModel().until(new Predicate<WebDriver>() {
+                    @Override
+                    public boolean apply(WebDriver input) {
+                        return isSelected();
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "item to be selected.";
+                    }
+                });
+            }
         }
     }
 
@@ -83,9 +126,8 @@ public class RichFacesPanelMenuItem {
     }
 
     public boolean isVisible() {
-        boolean present = Graphene.element(root).isVisible().apply(GrapheneContext.getProxy());
-        boolean visible = Graphene.element(root).isPresent().apply(GrapheneContext.getProxy());
+        boolean present = Graphene.element(root).isVisible().apply(browser);
+        boolean visible = Graphene.element(root).isPresent().apply(browser);
         return present && visible;
     }
-
 }

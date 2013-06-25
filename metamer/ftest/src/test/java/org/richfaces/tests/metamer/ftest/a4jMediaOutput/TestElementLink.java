@@ -27,8 +27,8 @@ import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.css.CssProperty;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.Test;
 
 
@@ -39,7 +39,8 @@ import org.testng.annotations.Test;
  */
 public class TestElementLink extends AbstractMediaOutputTest {
 
-    private static final JQueryLocator MARKED_TEXT = pjq("*#mediaOutputMarked");
+    @FindBy(css="*#mediaOutputMarked")
+    private WebElement markedText;
 
     @Override
     public URL getTestUrl() {
@@ -48,7 +49,7 @@ public class TestElementLink extends AbstractMediaOutputTest {
 
     @Test
     public void init() {
-        assertEquals(selenium.getStyle(MARKED_TEXT, CssProperty.COLOR), "rgb(255, 0, 0)", "The marked text should be red.");
+        assertEquals(markedText.getCssValue("color"), "rgba(255, 0, 0, 1)", "The marked text should be red.");
     }
 
 

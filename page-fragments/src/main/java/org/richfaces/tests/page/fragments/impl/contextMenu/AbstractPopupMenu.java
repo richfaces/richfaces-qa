@@ -26,11 +26,15 @@ import static org.jboss.arquillian.graphene.Graphene.waitModel;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import org.jboss.arquillian.drone.api.annotation.Drone;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.arquillian.graphene.GrapheneContext;
+import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -38,6 +42,11 @@ import org.openqa.selenium.interactions.Actions;
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
 public abstract class AbstractPopupMenu {
+
+    @Drone
+    private WebDriver browser;
+    @ArquillianResource
+    private Actions actions;
 
     private int showDelay = 50;
 
@@ -96,7 +105,7 @@ public abstract class AbstractPopupMenu {
             throw new IllegalStateException("You are attemting to dismiss the " + getNameOfFragment() + ", however, no "
                     + getNameOfFragment() + " is displayed at the moment!");
         }
-        GrapheneContext.getProxy().findElement(By.tagName("body")).click();
+        browser.findElement(By.tagName("body")).click();
         waitModel().until(element(getMenuPopup()).not().isVisible());
     }
 
@@ -152,7 +161,7 @@ public abstract class AbstractPopupMenu {
      * @see #setShowDelay(int)
      */
     public void invoke(WebElement givenTarget) {
-        new Actions(GrapheneContext.getProxy()).moveToElement(givenTarget);
+        actions.moveToElement(givenTarget).build().perform();
         invoker.invoke(givenTarget);
 
         waitUntilIsVisible();
@@ -243,7 +252,8 @@ public abstract class AbstractPopupMenu {
     public static final class RightClickPopupMenuInvoker implements PopupMenuInvoker {
         @Override
         public void invoke(WebElement target) {
-            Actions builder = new Actions(GrapheneContext.getProxy());
+            GrapheneContext context = ((GrapheneProxyInstance) target).getContext();
+            Actions builder = new Actions(context.getWebDriver());
             builder.contextClick(target).build().perform();
         }
     }
@@ -251,7 +261,8 @@ public abstract class AbstractPopupMenu {
     public static final class HoverPopupMenuInvoker implements PopupMenuInvoker {
         @Override
         public void invoke(WebElement target) {
-            Actions builder = new Actions(GrapheneContext.getProxy());
+            GrapheneContext context = ((GrapheneProxyInstance) target).getContext();
+            Actions builder = new Actions(context.getWebDriver());
             builder.moveToElement(target).build().perform();
         }
     }

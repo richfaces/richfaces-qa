@@ -23,6 +23,7 @@ package org.richfaces.tests.metamer.bean.abstractions;
 
 import com.google.common.collect.Lists;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
@@ -30,8 +31,9 @@ import javax.faces.model.SelectItem;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class SelectValidationBean extends StringInputValidationBeanImpl {
+public class SelectValidationBean extends StringInputValidationBeanImpl implements Serializable {
 
+    private static final long serialVersionUID = -1L;
     private List<SelectItem> validationOptionsCustom = Lists.newArrayList(
             new SelectItem("rich faces", "rich faces"),
             new SelectItem("richfaces", "richfaces"),

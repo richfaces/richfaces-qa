@@ -485,7 +485,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      * @param event
      */
     protected void fireEvent(WebElement element, Event event) {
-        Utils.triggerJQ(event.getEventName(), element);
+        Utils.triggerJQ(executor, event.getEventName(), element);
     }
 
     /**
@@ -546,9 +546,9 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
                 .fillIn(checker), WaitRequestType.HTTP)
                 .trigger("blur");
 
-        String statusCheckerTimeBefore = metamerPage.statusCheckerOutput.getText();
+        String statusCheckerTimeBefore = metamerPage.getStatusCheckerOutputElement().getText();
         statusChangingAction.perform();
-        Graphene.waitModel().until().element(metamerPage.statusCheckerOutput).text().not().equalTo(statusCheckerTimeBefore);
+        Graphene.waitModel().until().element(metamerPage.getStatusCheckerOutputElement()).text().not().equalTo(statusCheckerTimeBefore);
     }
 
     /**
@@ -662,7 +662,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     }
 
     public void testRequestEventsBefore(String... events) {
-        testRequestEventsBefore(metamerPage.attributesTable, events);
+        testRequestEventsBefore(metamerPage.getAttributesTableElement(), events);
     }
 
     public void testRequestEventsBefore(WebElement attributesTable, String... events) {

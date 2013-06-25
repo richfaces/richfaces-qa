@@ -100,7 +100,7 @@ public class RichFacesTreeNode extends RichFacesTree {
     }
 
     public WebElement getNodeLabel() {
-        return root.findElement(By.cssSelector(CSS_NODE_LABEL));
+        return getRoot().findElement(By.cssSelector(CSS_NODE_LABEL));
     }
 
     public RichFacesTreeNodeHandle getHandle() {
@@ -116,7 +116,7 @@ public class RichFacesTreeNode extends RichFacesTree {
     }
 
     public boolean isLeaf() {
-        return root.getAttribute("class").contains(classNodeLeaf);
+        return getRoot().getAttribute("class").contains(classNodeLeaf);
     }
 
     public int getNodesCount() {
@@ -151,9 +151,9 @@ public class RichFacesTreeNode extends RichFacesTree {
     /** Just click on node handler (expand/collapse), without waiting **/
     public void triggerNodeHandlerClick() {
         if (getToggleType() == null) {
-            getHandle().root.click();
+            getHandle().getRoot().click();
         } else {
-            getGuardByRequestType(getToggleType(), getHandle().root).click();
+            getGuardByRequestType(getToggleType(), getHandle().getRoot()).click();
         }
     }
 
@@ -162,31 +162,31 @@ public class RichFacesTreeNode extends RichFacesTree {
     }
 
     public boolean isCollapsed() {
-        return root.getAttribute("class").contains(classNodeCollapsed);
+        return getRoot().getAttribute("class").contains(classNodeCollapsed);
     }
 
     public ExpectedCondition<Boolean> isCollapsedCondition() {
-        return Graphene.element(root).attribute("class").contains(classNodeCollapsed);
+        return Graphene.element(getRoot()).attribute("class").contains(classNodeCollapsed);
     }
 
     public boolean isExpanded() {
-        return root.getAttribute("class").contains(classNodeExpanded);
+        return getRoot().getAttribute("class").contains(classNodeExpanded);
     }
 
     public ExpectedCondition<Boolean> isExpandedCondition() {
-        return Graphene.element(root).attribute("class").contains(classNodeExpanded);
+        return Graphene.element(getRoot()).attribute("class").contains(classNodeExpanded);
     }
 
     public int getAnySelectedNodesCount() {
-        return root.findElements(By.cssSelector(JQUERY_NODES_SELECTED)).size();
+        return getRoot().findElements(By.cssSelector(JQUERY_NODES_SELECTED)).size();
     }
 
     public int getCollapsedNodesCount() {
-        return nodesCollapsed.size();
+        return getNodesCollapsed().size();
     }
 
     public int getExpandedNodesCount() {
-        return nodesExpanded.size();
+        return getNodesExpanded().size();
     }
 
     private <T> T getGuardByRequestType(SwitchType switchType, T target) {

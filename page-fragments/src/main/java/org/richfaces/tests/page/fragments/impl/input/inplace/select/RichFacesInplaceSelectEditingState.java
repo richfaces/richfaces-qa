@@ -22,6 +22,8 @@
 package org.richfaces.tests.page.fragments.impl.input.inplace.select;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
@@ -31,6 +33,9 @@ import org.richfaces.tests.page.fragments.impl.input.inplace.AbstractInplaceComp
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public class RichFacesInplaceSelectEditingState extends AbstractInplaceComponentEditingState implements InplaceSelectEditingState {
+
+    @ArquillianResource
+    private JavascriptExecutor executor;
 
     @FindBy(css = "span.rf-is-lst-cord")
     private WebElement localList;
@@ -82,7 +87,7 @@ public class RichFacesInplaceSelectEditingState extends AbstractInplaceComponent
     }
 
     private boolean isSaveOnSelect() {
-        String text = Utils.returningJQ("text()", script);//getting text from hidden element
+        String text = Utils.returningJQ(executor, "text()", script);//getting text from hidden element
         if (text.contains("\"saveOnSelect\":false")) {
             return Boolean.FALSE;
         }

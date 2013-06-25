@@ -19,39 +19,50 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richTree;
+package org.richfaces.tests.metamer.ftest.richOrderingList;
 
-import org.jboss.arquillian.ajocado.framework.GrapheneSelenium;
-import org.jboss.arquillian.ajocado.framework.GrapheneSeleniumContext;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.metamer.ftest.model.AbstractModel;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.metamer.bean.ConverterBean;
+import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
+import org.richfaces.tests.page.fragments.impl.list.ordering.RichFacesSimpleOrderingList;
+import org.testng.annotations.Test;
 
 /**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22407 $
+ * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TreeNodeIcon extends AbstractModel<JQueryLocator> {
+public class TestOrderingListConverter extends AbstractConverterTest {
 
-    GrapheneSelenium selenium = GrapheneSeleniumContext.getProxy();
+    @FindBy(css = "[id$=convertableInput]")
+    private RichFacesSimpleOrderingList input;
+    private static final String VALUE = "VALUE";
 
-    String classIconLeaf = "rf-trn-ico-lf";
-    String classIconExpanded = "rf-trn-ico-exp";
-    String classIconCollapsed = "rf-trn-ico-colps";
-
-    public TreeNodeIcon(JQueryLocator root) {
-        super(root);
+    @Override
+    protected String badValue() {
+        return VALUE;
     }
 
-    public boolean isExpanded() {
-        return selenium.belongsClass(this, classIconExpanded);
+    @Override
+    protected String outputForEmptyValue() {
+        return ConverterBean.DEFAULT_VALUE;
     }
 
-    public boolean isCollapsed() {
-        return selenium.belongsClass(this, classIconCollapsed);
+    @Override
+    public String getComponentName() {
+        return "richOrderingList";
     }
 
-    public boolean isLeaf() {
-        return selenium.belongsClass(this, classIconLeaf);
+    @Override
+    protected void setBadValue() {
+        // empty, in this case the converter will always fail when submitted
     }
 
+    @Test
+    public void testConverter() {
+        checkConverter();
+    }
+
+    @Test
+    public void testConverterMessage() {
+        checkConverterMessage();
+    }
 }

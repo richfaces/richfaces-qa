@@ -32,6 +32,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.testng.annotations.Test;
@@ -104,11 +105,13 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testFinishClass() {
         testStyleClass(page.finish, BasicAttributes.finishClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testInitialClass() {
         testStyleClass(page.init, BasicAttributes.initialClass);
     }
@@ -143,21 +146,25 @@ public class TestProgressBarStatic extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testProgressClass() {
         testStyleClass(page.progress, BasicAttributes.progressClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRemainingClass() {
         testStyleClass(page.remain, BasicAttributes.remainingClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(page.progressBar);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(page.progressBar);
     }

@@ -45,9 +45,9 @@ public abstract class InputValidationPage {
     @FindBy(css = "input[id$=a4jButton]")
     private WebElement a4jCommandButton;
     //
-    protected final Map<String, ValidationMessageCase> messageCases = new HashMap<String, ValidationMessageCase>();
+    protected final Map<String, ValidationMessageCase> messageCases = new HashMap<String, ValidationMessageCase>();;
 
-    public final void assertAllMessagesAreVisibleAndCorrect() {
+    public void assertAllMessagesAreVisibleAndCorrect() {
         for (ValidationMessageCase vmc : getMessageCases().values()) {
             if (vmc != null) {
                 vmc.assertMessageIsDisplayed();
@@ -56,7 +56,7 @@ public abstract class InputValidationPage {
         }
     }
 
-    public final void assertAllOutputsAreValid() {
+    public void assertAllOutputsAreValid() {
         for (ValidationMessageCase vmc : getMessageCases().values()) {
             if (vmc != null) {
                 vmc.assertValidOutput();
@@ -64,7 +64,7 @@ public abstract class InputValidationPage {
         }
     }
 
-    public final void assertNoOtherMessagesAreVisible(ValidationMessageCase vm) {
+    public void assertNoOtherMessagesAreVisible(ValidationMessageCase vm) {
         Map<String, ValidationMessageCase> map = Maps.newHashMap(getMessageCases());
         if (vm != null) {
             map.remove(vm.getName());
@@ -76,7 +76,7 @@ public abstract class InputValidationPage {
         }
     }
 
-    public final void assertOtherOutputsAreDefault(ValidationMessageCase testeVMC) {
+    public void assertOtherOutputsAreDefault(ValidationMessageCase testeVMC) {
         Map<String, ValidationMessageCase> map = Maps.newHashMap(getMessageCases());
         if (testeVMC != null) {
             map.remove(testeVMC.getName());
@@ -88,7 +88,7 @@ public abstract class InputValidationPage {
         }
     }
 
-    public final WebElement getA4jCommandButton() {
+    public WebElement getA4jCommandButton() {
         return a4jCommandButton;
     }
 
@@ -108,11 +108,11 @@ public abstract class InputValidationPage {
         return result;
     }
 
-    public final WebElement getHCommandButton() {
+    public WebElement getHCommandButton() {
         return hCommandButton;
     }
 
-    public final Map<String, ValidationMessageCase> getMessageCases() {
+    public Map<String, ValidationMessageCase> getMessageCases() {
         if (messageCases.isEmpty()) {
             messageCases.put(MESSAGE_ALL_INPUTS_NAME, null);
             initCustomMessages();
@@ -120,21 +120,21 @@ public abstract class InputValidationPage {
         return messageCases;
     }
 
-    protected abstract void initCustomMessages();
+    public abstract void initCustomMessages();
 
-    public final void setAllCorrectly() {
+    public void setAllCorrectly() {
         for (WebElement btn : getAllCorrectButtons()) {
             MetamerPage.waitRequest(btn, WaitRequestType.XHR).click();
         }
     }
 
-    public final void setAllWrongly() {
+    public void setAllWrongly() {
         for (WebElement btn : getAllWrongButtons()) {
             MetamerPage.waitRequest(btn, WaitRequestType.XHR).click();
         }
     }
 
-    public final void submit(String submitMethod) {
+    public void submit(String submitMethod) {
         if (submitMethod.equals(AbstractInputComponentValidationTest.H_COMMANDBUTTON)) {
             MetamerPage.waitRequest(hCommandButton, WaitRequestType.HTTP).click();
         } else if (submitMethod.equals(AbstractInputComponentValidationTest.A4J_COMMANDBUTTON)) {

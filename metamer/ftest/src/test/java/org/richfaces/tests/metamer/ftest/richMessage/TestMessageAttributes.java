@@ -25,6 +25,7 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -43,6 +44,7 @@ public class TestMessageAttributes extends AbstractMessageTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDir() {
         checkDir();
     }
@@ -58,6 +60,7 @@ public class TestMessageAttributes extends AbstractMessageTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLang() {
         checkLang();
     }
@@ -68,56 +71,67 @@ public class TestMessageAttributes extends AbstractMessageTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnClick() {
         checkOnClick();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnDblClick() {
         checkOnDblClick();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnKeyDown() {
         checkOnKeyDown();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnKeyPress() {
         checkOnKeyPress();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnKeyUp() {
         checkOnKeyUp();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnMouseDown() {
         checkOnMouseDown();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnMouseMove() {
         checkOnMouseMove();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnMouseOut() {
         checkOnMouseOut();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnMouseOver() {
         checkOnMouseOver();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testOnMouseUp() {
         checkOnMouseUp();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         checkRendered();
     }
@@ -133,16 +147,19 @@ public class TestMessageAttributes extends AbstractMessageTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         checkStyle();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         checkStyleClass();
     }
 
     @Test
+    @Templates(value = "plain")
     public void testTitle() {
         checkTitle();
     }

@@ -21,8 +21,11 @@
  *******************************************************************************/
 package org.jboss.test.selenium.support.ui;
 
+import org.jboss.arquillian.graphene.GrapheneContext;
 import org.jboss.arquillian.graphene.javascript.JSInterfaceFactory;
 import org.jboss.arquillian.graphene.javascript.JavaScript;
+import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -35,8 +38,9 @@ public abstract class FocusRetriever {
     /**
      * Returns active (focused) element - if no element is focused (it means body element is active), null is returned
      */
-    public static WebElement retrieveActiveElement() {
-        WebElement element = JSInterfaceFactory.create(FocusRetriever.class).getActiveElement();
+    public static WebElement retrieveActiveElement(WebDriver browser) {
+        GrapheneContext context = ((GrapheneProxyInstance) browser).getContext();
+        WebElement element = JSInterfaceFactory.create(context, FocusRetriever.class).getActiveElement();
         if ("body".equals(element.getTagName())) {
             return null;
         }

@@ -21,9 +21,11 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.input;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -41,6 +43,12 @@ public class TextInputComponentImpl implements TextInputComponent {
 
     @Root
     private WebElement root;
+
+    @ArquillianResource
+    private JavascriptExecutor executor;
+
+    @Drone
+    private WebDriver driver;
 
     @Override
     public TextInputComponent clear(ClearType clearType) {
@@ -67,7 +75,7 @@ public class TextInputComponentImpl implements TextInputComponent {
                 root.click();
                 break;
             case JS:
-                Utils.jQ("val('')", root);
+                Utils.jQ(executor, "val('')", root);
                 break;
             case WD:
                 root.clear();
@@ -106,7 +114,7 @@ public class TextInputComponentImpl implements TextInputComponent {
     }
 
     private WebDriver getWebDriver() {
-        return GrapheneContext.getProxy();
+        return driver;
     }
 
     @Override
@@ -131,7 +139,7 @@ public class TextInputComponentImpl implements TextInputComponent {
 
     @Override
     public TextInputComponent trigger(String event) {
-        Utils.triggerJQ(event, root);
+        Utils.triggerJQ(executor, event, root);
         return this;
     }
 }

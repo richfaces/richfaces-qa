@@ -2,11 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a="http://richfaces.org/a4j"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
 
     <!--
@@ -42,56 +40,56 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </ui:define>
 
         <ui:define name="component">
-        
+
             <p>
-               <a href="https://issues.jboss.org/browse/RF-12095">RF-12095</a><br/>
-               <b>Issue summary</b>: Two push components on page, one of them conditionally rendered.<br/>
-            When disable one, second stops work as well. But found that it is just delay between second component start receive push events again.<br/>
-            The same behavior when enable first push component. There is delay before both components starts receive push events.
+                <a href="https://issues.jboss.org/browse/RF-12095">RF-12095</a><br/>
+                <a href="https://issues.jboss.org/browse/RF-12096">RF-12096</a><br/>
+                <b>Issues summary</b>: When push components is conditionally rendered and disabled/re-enabled, then there is some delay between repeated subscription
+                even for other push components on the page, which are not conditionally rendered.<br/>
             </p>
-            
+
             <!--  PUSH 1 -->
-            <a4j:commandButton id="performPushEvent1" value="Push 1!" action="#{a4jPushBean.push}" />
-            <a4j:outputPanel id="pushPanel">
-                <a4j:push id="push" 
-                          rendered="#{a4jPushBean.attributes['rendered'].value}" 
-                          address="sampleAddress"
-                          ondataavailable="$('*[id$=outputDate]').text(event.rf.data)"
-                          onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}" />
-            </a4j:outputPanel>
-            
-            <a4j:outputPanel id="pushDisablementPanel">
+            <a:commandButton id="performPushEvent1" value="Push 1!" action="#{a4jPushBean.pushJMS1}" />
+            <a:outputPanel id="pushPanel">
+                <a:push id="push"
+                        rendered="#{a4jPushBean.attributes['rendered'].value}"
+                        address="sampleAddress"
+                        ondataavailable="$('*[id$=outputDate]').text(event.rf.data)"
+                        onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}" />
+            </a:outputPanel>
+
+            <a:outputPanel id="pushDisablementPanel">
                 <h:selectBooleanCheckbox id="enablePush1" value="#{a4jPushBean.attributes['rendered'].value}">
-                    <a4j:ajax render="push" />
+                    <a:ajax render="pushPanel" />
                 </h:selectBooleanCheckbox>
                 <h:outputLabel value="enabled" for="enablePush1" />
-            </a4j:outputPanel>
-            
+            </a:outputPanel>
+
             <br />
-            
-            <a4j:outputPanel id="outputDate">
+
+            <a:outputPanel id="outputDate">
                 #{a4jPushBean.date}
-            </a4j:outputPanel>
-            
+            </a:outputPanel>
+
             <br />
-            
+
             <!--  PUSH 2 -->
-            <a4j:commandButton id="performPushEvent2" value="Push 2!" action="#{a4jPushBean.push2}" />
-            <a4j:push id="push2" 
-                      address="sampleAddress2"
-                      ondataavailable="$('*[id$=outputDate2]').text(event.rf.data)"
-                      onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}" />
-            
+            <a:commandButton id="performPushEvent2" value="Push 2!" action="#{a4jPushBean.pushJMS2}" />
+            <a:push id="push2"
+                    address="sampleAddress2"
+                    ondataavailable="$('*[id$=outputDate2]').text(event.rf.data)"
+                    onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}" />
+
             <br />
-            
-            <a4j:outputPanel id="outputDate2">
+
+            <a:outputPanel id="outputDate2">
                 #{a4jPushBean.date}
-            </a4j:outputPanel>
-            
+            </a:outputPanel>
+
             <br/>
-            
+
         </ui:define>
-        
+
         <ui:define name="outOfTemplateAfter">
             <metamer:attributes value="#{a4jPushBean.attributes}" id="attributes" />
         </ui:define>

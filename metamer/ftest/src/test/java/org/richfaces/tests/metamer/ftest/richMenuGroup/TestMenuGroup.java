@@ -296,7 +296,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
             @Override
             public void perform() {
                 openMenuAndSubMenu();
-                new Actions(driver).moveToElement(page.requestTime).perform();
+                new Actions(driver).moveToElement(page.getRequestTimeElement()).perform();
                 Graphene.waitGui().until().element(groupList).is().not().visible();
             }
         });

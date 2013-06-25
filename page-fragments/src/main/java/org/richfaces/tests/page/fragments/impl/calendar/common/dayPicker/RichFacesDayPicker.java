@@ -28,11 +28,11 @@ import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.joda.time.DateTime;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
@@ -42,6 +42,7 @@ public class RichFacesDayPicker implements DayPicker {
 
     @Root
     private WebElement root;
+
     @Drone
     private WebDriver driver;
     //

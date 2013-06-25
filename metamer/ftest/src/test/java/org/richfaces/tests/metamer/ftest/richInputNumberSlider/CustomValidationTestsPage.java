@@ -40,14 +40,17 @@ public class CustomValidationTestsPage extends NumberInputValidationPage {
     private RichFacesInputNumberSlider sliderMax;
     @FindBy(css = "span[id$='custom']")
     private RichFacesInputNumberSlider sliderCustom;
-    //
 
     /**
      * Position coordinates for slider. Width is 200px, positions are relative to this
      */
     private enum Position {
+        // the trace has ~ 191px
+        //-1 ~ 86
+        // 0 ~ 96
+        // 3 ~ 126
 
-        LESS_THAN_ZERO(10), ZERO(100), MORE_THAN_TWO(150);
+        LESS_THAN_ZERO(86), ZERO(96), MORE_THAN_TWO(126);
         private final int position;
 
         private Position(int position) {

@@ -122,9 +122,9 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
 
         MetamerPage.requestTimeChangesWaiting(page.startButton).click();
         //waiting for next request, which will carry the data
-        String reqTime = page.requestTime.getText();
+        String reqTime = page.getRequestTimeElement().getText();
         Graphene.waitAjax().withMessage("Page was not updated")
-                .until().element(page.requestTime).text().not().equalTo(reqTime);
+                .until().element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
 
         String data = expectedReturnJS("return data", testedString);
         assertEquals(data, "RichFaces 4", "Data sent with ajax request");
@@ -139,11 +139,11 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         //waiting for next request, which will carry the data
         MetamerPage.requestTimeChangesWaiting(page.stopPollingButton).click();
         waiting(timeout);//wait for the last request
-        String reqTime = page.requestTime.getText();
+        String reqTime = page.getRequestTimeElement().getText();
         try {
             Graphene.waitModel()
                     .withTimeout(timeout, TimeUnit.MILLISECONDS)
-                    .until().element(page.requestTime).text().not().equalTo(reqTime);
+                    .until().element(page.getRequestTimeElement()).text().not().equalTo(reqTime);
         } catch (TimeoutException e) {// OK
             String progress = Utils.getTextFromHiddenElement(page.label).replace("%", "").trim();
             Assert.assertTrue(Integer.valueOf(progress) < 100, "Progress should be lower than 100 %");
@@ -236,13 +236,13 @@ public class TestProgressBarAjax extends AbstractWebDriverTest {
         int expectedNumberOfUpdates = getExpectedNumberOfUpdates();
 
         MetamerPage.requestTimeChangesWaiting(button).click();
-        String timeString = page.requestTime.getText();
+        String timeString = page.getRequestTimeElement().getText();
         timesString.add(timeString);
         for (int i = 0; i < expectedNumberOfUpdates; i++) {
             Graphene.waitGui().withTimeout(maxWaitTime, TimeUnit.MILLISECONDS)
                     .withMessage("Page was not updated")
-                    .until().element(page.requestTime).text().not().equalTo(timeString);
-            timeString = page.requestTime.getText();
+                    .until().element(page.getRequestTimeElement()).text().not().equalTo(timeString);
+            timeString = page.getRequestTimeElement().getText();
             timesString.add(timeString);
             labelsList.add(page.label.getText().replace(" %", ""));
             progressList.add(getProgress());

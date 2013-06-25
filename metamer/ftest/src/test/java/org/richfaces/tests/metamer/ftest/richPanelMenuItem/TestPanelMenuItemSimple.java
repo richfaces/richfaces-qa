@@ -52,6 +52,7 @@ import org.richfaces.PanelMenuMode;
 import org.richfaces.component.Mode;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
@@ -107,28 +108,32 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDisabledClass() {
         panelMenuItemAttributes.set(disabled, true);
         testStyleClass(page.item.getRoot(), disabledClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLeftDisabledIcon() {
         panelMenuItemAttributes.set(disabled, true);
-        verifyStandardIcons(leftDisabledIcon, page.item.leftIcon.root, page.item.leftIcon.imgIcon, "");
+        verifyStandardIcons(leftDisabledIcon, page.item.getLeftIcon().getRoot(), page.item.getLeftIcon().getImgIcon(), "");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLeftIcon() {
-        verifyStandardIcons(leftIcon, page.item.leftIcon.root, page.item.leftIcon.imgIcon, "");
+        verifyStandardIcons(leftIcon, page.item.getLeftIcon().getRoot(), page.item.getLeftIcon().getImgIcon(), "");
 
         panelMenuItemAttributes.set(disabled, true);
-        assertTrue(page.item.leftIcon.isTransparent());
+        assertTrue(page.item.getLeftIcon().isTransparent());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testLeftIconClass() {
-        testStyleClass(page.item.leftIcon.root, leftIconClass);
+        testStyleClass(page.item.getLeftIcon().getRoot(), leftIconClass);
     }
 
     @Test
@@ -136,12 +141,13 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
         panelMenuItemAttributes.set(render, "renderChecker");
         panelMenuItemAttributes.set(limitRender, true);
 
-        String renderChecker = page.renderCheckerOutput.getText();
+        String renderChecker = page.getRenderCheckerOutputElement().getText();
         MetamerPage.requestTimeNotChangesWaiting(page.item).select();
-        Graphene.waitModel().until("Page was not updated").element(page.renderCheckerOutput).text().not().equalTo(renderChecker);
+        Graphene.waitModel().until("Page was not updated").element(page.getRenderCheckerOutputElement()).text().not().equalTo(renderChecker);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         assertTrue(page.item.isVisible());
 
@@ -151,24 +157,27 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRightDisabledIcon() {
         panelMenuItemAttributes.set(disabled, true);
-        verifyStandardIcons(rightDisabledIcon, page.item.rightIcon.root, page.item.rightIcon.imgIcon, "");
+        verifyStandardIcons(rightDisabledIcon, page.item.getRightIcon().getRoot(), page.item.getRightIcon().getImgIcon(), "");
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10519")
+    @Templates(value = "plain")
     public void testRightIcon() {
-        verifyStandardIcons(rightIcon, page.item.rightIcon.root, page.item.rightIcon.imgIcon, "");
+        verifyStandardIcons(rightIcon, page.item.getRightIcon().getRoot(), page.item.getRightIcon().getImgIcon(), "");
 
         panelMenuItemAttributes.set(disabled, true);
-        assertTrue(page.item.rightIcon.isTransparent());
+        assertTrue(page.item.getRightIcon().isTransparent());
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10519")
+    @Templates(value = "plain")
     public void testRightIconClass() {
-        testStyleClass(page.item.rightIcon.root, rightIconClass);
+        testStyleClass(page.item.getRightIcon().getRoot(), rightIconClass);
     }
 
     @Test
@@ -191,17 +200,19 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     public void testStatus() {
         panelMenuItemAttributes.set(status, "statusChecker");
 
-        String statusChecker = page.statusCheckerOutput.getText();
+        String statusChecker = page.getStatusCheckerOutputElement().getText();
         page.item.select();
-        Graphene.waitAjax().until("Page was not updated").element(page.statusCheckerOutput).text().not().equalTo(statusChecker);
+        Graphene.waitAjax().until("Page was not updated").element(page.getStatusCheckerOutputElement()).text().not().equalTo(statusChecker);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(page.item.getRoot());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(page.item.getRoot());
     }

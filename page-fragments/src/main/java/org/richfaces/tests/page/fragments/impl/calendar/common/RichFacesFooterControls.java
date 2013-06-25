@@ -40,7 +40,7 @@ public class RichFacesFooterControls implements FooterControls {
 
     @Root
     protected WebElement root;
-    //
+
     @Drone
     protected WebDriver driver;
     //

@@ -50,7 +50,7 @@ public abstract class PanelMenuHelper {
     public static <T> T getGuardTypeForMode(T target, Mode mode) {
         switch (mode) {
             case ajax:
-                return Graphene.guardXhr(target);
+                return Graphene.guardAjax(target);
             case server:
                 return Graphene.guardHttp(target);
             default:

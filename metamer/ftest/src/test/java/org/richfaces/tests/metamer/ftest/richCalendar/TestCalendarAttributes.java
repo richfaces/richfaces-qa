@@ -205,6 +205,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testButtonClass() {
         testStyleClass(calendar.getPopupButton(), BasicAttributes.buttonClass);
     }
@@ -455,6 +456,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testInputClass() {
         testStyleClass(calendar.getInput(), BasicAttributes.inputClass);
     }
@@ -466,6 +468,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testInputStyle() {
         testStyle(calendar.getInput(), BasicAttributes.inputStyle);
     }
@@ -703,7 +706,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         // this throws the condition 2x
         // testFireEventWithJS(calendar.getInput(), Event.BLUR, calendarAttributes, CalendarAttributes.oninputblur);
         testFireEvent(calendarAttributes, CalendarAttributes.oninputblur, new Actions(driver)
-                .click(calendar.getInput()).click(page.requestTime).build());
+                .click(calendar.getInput()).click(page.getRequestTimeElement()).build());
     }
 
     @Test
@@ -767,7 +770,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Test
     public void testOninputmouseout() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseout,
-                new Actions(driver).click(calendar.getInput()).moveToElement(page.requestTime).build());
+                new Actions(driver).click(calendar.getInput()).moveToElement(page.getRequestTimeElement()).build());
     }
 
     @Test
@@ -818,18 +821,21 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testPopupClass() {
         testHTMLAttribute(calendar.openPopup().getRoot(), calendarAttributes, CalendarAttributes.popupClass,
                 "metamer-ftest-class");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testPopupStyle() {
         testHTMLAttribute(calendar.openPopup().getRoot(), calendarAttributes, CalendarAttributes.popupStyle,
                 "background-color: yellow; font-size: 1.5em;");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         calendarAttributes.set(CalendarAttributes.rendered, Boolean.FALSE);
         assertFalse(calendar.isVisible());
@@ -970,17 +976,19 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-9655")
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(calendar.getRoot());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyleClass(calendar.getRoot());
     }
 
     @Test
-    @Templates(exclude = "richPopupPanel")
+    @Templates(value = "plain")
     public void testTabindexInput() {
         testHTMLAttribute(calendar.getInput(), calendarAttributes, CalendarAttributes.tabindex, "101");
     }
@@ -1055,6 +1063,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testZindex() {
         final String zindex = "30";
         calendarAttributes.set(CalendarAttributes.zindex, zindex);

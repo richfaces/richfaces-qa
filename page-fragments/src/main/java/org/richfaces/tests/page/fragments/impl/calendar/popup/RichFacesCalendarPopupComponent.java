@@ -24,8 +24,8 @@ package org.richfaces.tests.page.fragments.impl.calendar.popup;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.joda.time.DateTime;
 import org.openqa.selenium.WebDriver;
@@ -45,8 +45,9 @@ public class RichFacesCalendarPopupComponent implements CalendarPopupComponent {
 
     @Root
     private WebElement root;
-    //
-    private WebDriver driver = GrapheneContext.getProxy();
+
+    @Drone
+    private WebDriver driver;
     //
     @FindBy(css = "span[id$=Popup] > .rf-cal-inp")
     private WebElement input;

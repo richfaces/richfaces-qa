@@ -31,7 +31,7 @@ public class AbstractFocusPage extends MetamerPage {
 
     protected static final String EXPECTED_STRING = "RichFaces";
 
-    protected void typeStringAndDoNotCareAboutFocus() {
+    public void typeStringAndDoNotCareAboutFocus() {
         new Actions(driver).sendKeys(EXPECTED_STRING).perform();
     }
 }

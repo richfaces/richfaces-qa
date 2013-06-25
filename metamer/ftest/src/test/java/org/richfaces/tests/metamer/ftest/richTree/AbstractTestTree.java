@@ -25,14 +25,14 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public abstract class AbstractTestTree extends AbstractGrapheneTest {
+public abstract class AbstractTestTree extends AbstractWebDriverTest {
 
     @Inject
     @Use(strings = { "simpleSwingTreeNode", "simpleRichFacesTreeNode", "simpleRichFacesTreeDataModel" })

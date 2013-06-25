@@ -22,9 +22,9 @@
 package org.richfaces.tests.page.fragments.impl.input.inputNumberSlider;
 
 import com.google.common.base.Preconditions;
+import org.jboss.arquillian.drone.api.annotation.Drone;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -47,8 +47,9 @@ public class RichFacesSliderComponent implements SliderComponent {
     WebElement handle;
     @FindBy(className = "rf-insl-hnd-dis")
     WebElement disabledHandle;
-    //
-    WebDriver driver = GrapheneContext.getProxy();
+
+    @Drone
+    WebDriver driver;
 
     @Override
     public void decrease() {
@@ -111,6 +112,7 @@ public class RichFacesSliderComponent implements SliderComponent {
         if (!isVisible()) {
             throw new RuntimeException("Trace is not visible.");
         }
+        scrollToView();
         new Actions(driver).clickAndHold(handle).moveToElement(root, where, 0).release(handle).build().perform();
     }
 
@@ -120,7 +122,12 @@ public class RichFacesSliderComponent implements SliderComponent {
         if (!isVisible()) {
             throw new RuntimeException("Trace is not visible.");
         }
+        scrollToView();
         new Actions(driver).clickAndHold(handle).moveToElement(root, 0, where).release(handle).build().perform();
+    }
+
+    private void scrollToView() {
+        new Actions(driver).moveToElement(root).perform();
     }
 
     @Override
@@ -145,6 +152,7 @@ public class RichFacesSliderComponent implements SliderComponent {
 
         @Override
         public void perform() {
+            scrollToView();
             new Actions(driver).clickAndHold(handle).moveByOffset(offsetLeftRight, offsetUpDown).release().build().perform();
         }
     }

@@ -19,42 +19,38 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richTree;
+package org.richfaces.tests.metamer.ftest.a4jPush;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.component.SwitchType;
+import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
-/**
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22407 $
- */
-public class TreeModel extends AbstractTreeNodeModel {
+import java.net.URL;
 
-    SwitchType toggleType = SwitchType.ajax;
-    SwitchType selectionType = SwitchType.ajax;
+import org.testng.annotations.Test;
 
-    public TreeModel(JQueryLocator root) {
-        super(root);
-        this.tree = this;
+public class TestTwoPushCDI extends TestTwoPush {
+
+    @Override
+    public URL getTestUrl() {
+        return buildUrl(contextPath, "faces/components/a4jPush/twoPushCDI.xhtml");
     }
 
-    public void setToggleType(SwitchType toggleType) {
-        this.toggleType = toggleType;
+    @Test
+    public void testBothPushes() {
+        super.testBothPushes();
     }
 
-    public SwitchType getToggleType() {
-        return toggleType;
+    @Test
+    public void testOnSubscribed() {
+        super.testOnSubscribed();
     }
 
-    public void setSelectionType(SwitchType selectionType) {
-        this.selectionType = selectionType;
+    @Test
+    public void testPushEnable() {
+        super.testPushEnable();
     }
 
-    public SwitchType getSelectionType() {
-        return selectionType;
-    }
-
-    public TreeNodeModel getAnyNode() {
-        return new TreeNodeModel(root.getLocator().getDescendant(treeNode), tree);
+    @Test
+    public void testSimplePushEventReceive() {
+        super.testSimplePushEventReceive();
     }
 }

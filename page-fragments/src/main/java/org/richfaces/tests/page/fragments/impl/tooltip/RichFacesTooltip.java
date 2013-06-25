@@ -22,8 +22,10 @@
 package org.richfaces.tests.page.fragments.impl.tooltip;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.arquillian.graphene.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -37,9 +39,17 @@ import org.richfaces.tests.page.fragments.impl.Utils;
 public class RichFacesTooltip {
 
     @Root
-    public WebElement root;
+    private WebElement root;
+    @ArquillianResource
+    private JavascriptExecutor executor;
+    @ArquillianResource
+    private Actions actions;
 
     private TooltipMode mode = TooltipMode.client;
+
+    public WebElement getRoot() {
+        return root;
+    }
 
     public TooltipMode getMode() {
         return mode;
@@ -54,7 +64,7 @@ public class RichFacesTooltip {
     }
 
     public void recall(WebElement target, int x, int y) {
-        Action mouseMoveAt = new Actions(GrapheneContext.getProxy()).moveToElement(target, x, y).build();
+        Action mouseMoveAt = actions.moveToElement(target, x, y).build();
         getGuardTypeForMode(mouseMoveAt, mode).perform();
     }
 
@@ -65,11 +75,11 @@ public class RichFacesTooltip {
     private void hide(WebElement target, int x, int y) {
         // guard(selenium, getRequestType()).mouseOutAt(target, new Point(x, y));
         // Action mouseOutAt = new Actions(GrapheneContext.getProxy()).moveToElement(target, x, y).build();
-        Action mouseOutAt = new Actions(GrapheneContext.getProxy()).moveByOffset(x, y).build();
+        Action mouseOutAt = actions.moveByOffset(x, y).build();
         mouseOutAt.perform();
 
         // TODO JJa 2013-03-25: "mouseout" event triggered "manually" since it is not triggered by Actions
-        Utils.triggerJQ("mouseout", target);
+        Utils.triggerJQ(executor, "mouseout", target);
     }
 
     private static <T> T getGuardTypeForMode(T target, TooltipMode mode) {

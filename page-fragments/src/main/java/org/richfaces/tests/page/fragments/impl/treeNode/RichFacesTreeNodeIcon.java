@@ -35,7 +35,11 @@ public class RichFacesTreeNodeIcon {
     public static final String CLASS_ICON_COLLAPSED = "rf-trn-ico-colps";
 
     @Root
-    public WebElement root;
+    private WebElement root;
+
+    public WebElement getRoot() {
+        return root;
+    }
 
     public boolean isLeaf() {
         return root.getAttribute("class").contains(CLASS_ICON_LEAF);

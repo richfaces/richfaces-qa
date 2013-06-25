@@ -21,12 +21,10 @@
  */
 package org.richfaces.tests.page.fragments.impl.panelMenuGroup;
 
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.WebElement;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.ATTR_CLASS;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_TRANSPARENT_SUFFIX;
-
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
-import org.openqa.selenium.WebElement;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
@@ -36,11 +34,12 @@ public class RichFacesPanelMenuGroupIcon {
 
     public static final String JQUERY_ICON_VISIBLE = ":visible[class*=rf-pm-ico-]";
 
-    @Root
-    WebElement root;
-
     @FindBy(jquery = JQUERY_ICON_VISIBLE)
-    public WebElement icon;
+    private WebElement icon;
+
+    public WebElement getIcon() {
+        return icon;
+    }
 
     public boolean isTransparent(WebElement icon) {
         return icon.getAttribute(ATTR_CLASS).contains(CSS_TRANSPARENT_SUFFIX);

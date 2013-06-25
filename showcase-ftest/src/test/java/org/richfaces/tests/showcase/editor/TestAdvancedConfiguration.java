@@ -25,10 +25,8 @@ import static org.jboss.arquillian.graphene.Graphene.guardXhr;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.editor.page.AdvancedConfigurationPage;
@@ -69,17 +67,16 @@ public class TestAdvancedConfiguration extends AbstractWebDriverTest {
 
     @Test
     public void testUserFocusAutomaticallyOnEditor() {
-        WebDriver driver = GrapheneContext.getProxy();
         try {
-            driver.switchTo().frame(0);
-            WebElement activeArea = driver.findElement(By.tagName("body"));
+            webDriver.switchTo().frame(0);
+            WebElement activeArea = webDriver.findElement(By.tagName("body"));
 
             String expected = "Test String";
             activeArea.sendKeys(expected);
             assertTrue(activeArea.getText().contains(expected),
                 "The text should be writen to editor without explicit previos focusing!");
         } finally {
-            driver.switchTo().defaultContent();
+            webDriver.switchTo().defaultContent();
         }
     }
 }

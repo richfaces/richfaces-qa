@@ -37,6 +37,8 @@ FSF site: http://www.fsf.org. -->
         <version.jbossas7>7.0.2.Final</version.jbossas7>
         <version.jbossas7-1>7.1.1.Final</version.jbossas7-1>
         <version.jbossEAP6>6.0</version.jbossEAP6>
+        <version.jbosseap6-1>7.2.0.Alpha1-redhat-4</version.jbosseap6-1>
+        <version.wildfly8-0>8.0.0.Alpha2</version.wildfly8-0>
         <eap61Zip>path/to/your/eap/distribution/zip</eap61Zip>
 
         <!-- version of Glassfish containers to use and download       -->
@@ -56,8 +58,8 @@ FSF site: http://www.fsf.org. -->
         <arquillian.bom.version>1.0.3.Final</arquillian.bom.version>
         <arquillian.tomcat.version>1.0.0.CR4</arquillian.tomcat.version>
         <arquillian.drone.version> 1.2.0.Alpha2</arquillian.drone.version>
-        <arquillian.graphene-testng.version>2.0.0.Alpha4</arquillian.graphene-testng.version>
-        <arquillian.graphene-webdriver.version>2.0.0.Alpha4</arquillian.graphene-webdriver.version>
+        <arquillian.graphene-testng.version>2.0.0.Beta1-SNAPSHOT</arquillian.graphene-testng.version>
+        <arquillian.graphene-webdriver.version>2.0.0.Beta1-SNAPSHOT</arquillian.graphene-webdriver.version>
         <arquillian.jboss-as6.version>1.0.0.CR3</arquillian.jboss-as6.version>
         <arquillian.glassfish3-1.version>1.0.0.CR4</arquillian.glassfish3-1.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
@@ -79,6 +81,7 @@ FSF site: http://www.fsf.org. -->
         <jboss6Home>${project.build.directory}/jboss-${version.jbossas6}</jboss6Home>
         <jbossEAP60Home>${project.build.directory}/jboss-eap-${version.jbossEAP6}</jbossEAP60Home>
         <jbossEAP61Home>${project.build.directory}/jboss-eap-6.1</jbossEAP61Home>
+        <wildfly8-0Home>${project.build.directory}/jboss-as-${version.jbossas7-1}</wildfly8-0Home>
 
         <showcase.classifier>jbas71</showcase.classifier>
         <metamer.classifier>jbas71</metamer.classifier>
@@ -1011,63 +1014,6 @@ FSF site: http://www.fsf.org. -->
             </build>
         </profile>
         <profile>
-            <id>jbosseap-managed-6-1</id>
-            <properties>
-                <metamer.classifier>jbas71</metamer.classifier>
-                <showcase.classifier>jbas71</showcase.classifier>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>org.jboss.as</groupId>
-                    <artifactId>jboss-as-controller-client</artifactId>
-                    <version>7.2.0.Final</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.jboss.as</groupId>
-                    <artifactId>jboss-as-arquillian-container-managed</artifactId>
-                    <version>7.2.0.Final</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <systemProperties>
-                                <arquillian.launch>jbosseap-managed-6-1</arquillian.launch>
-                            </systemProperties>
-                            <environmentVariables>
-                                <JBOSS_HOME>${jbossEAP61Home}</JBOSS_HOME>
-                            </environmentVariables>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>copy JBoss AS configuration</id>
-                                <phase>process-test-classes</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <outputDirectory>${jbossEAP61Home}/standalone/configuration</outputDirectory>
-                                    <overwrite>true</overwrite>
-                                    <resources>
-                                        <resource>
-                                            <directory>${basedir}/src/test/resources/eap610</directory>
-                                        </resource>
-                                    </resources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <id>jbossas-managed-7-1-https</id>
             <properties>
                 <metamer.classifier>jbas71</metamer.classifier>
@@ -1213,6 +1159,139 @@ FSF site: http://www.fsf.org. -->
             </build>
         </profile>
         <profile>
+            <id>jbosseap-managed-6-1</id>
+            <properties>
+                <metamer.classifier>jbas71</metamer.classifier>
+                <showcase.classifier>jbas71</showcase.classifier>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.as</groupId>
+                    <artifactId>jboss-as-controller-client</artifactId>
+                    <version>7.2.0.Final</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.jboss.as</groupId>
+                    <artifactId>jboss-as-arquillian-container-managed</artifactId>
+                    <version>7.2.0.Final</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <arquillian.launch>jbosseap-managed-6-1</arquillian.launch>
+                            </systemProperties>
+                            <environmentVariables>
+                                <JBOSS_HOME>${jbossEAP61Home}</JBOSS_HOME>
+                            </environmentVariables>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy JBoss AS configuration</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${jbossEAP61Home}/standalone/configuration</outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/test/resources/eap610</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>wildfly-managed-8-0</id>
+            <properties>
+                <metamer.classifier>jbas71</metamer.classifier>
+                <showcase.classifier>jbas71</showcase.classifier>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.wildfly</groupId>
+                    <artifactId>wildfly-arquillian-container-managed</artifactId>
+                    <version>${version.wildfly8-0}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>unpack</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.wildfly</groupId>
+                                            <artifactId>wildfly-dist</artifactId>
+                                            <version>${version.wildfly8-0}</version>
+                                            <type>zip</type>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${project.build.directory}</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <arquillian.launch>wildfly-managed-8-0</arquillian.launch>
+                            </systemProperties>
+                            <environmentVariables>
+                                <JBOSS_HOME>${wildfly8-0Home}</JBOSS_HOME>
+                            </environmentVariables>
+                        </configuration>
+                    </plugin>
+                    <!-- workaround for RF-11983-->
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy JBoss AS configuration</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${wildfly8-0Home}/standalone/configuration</outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/test/resources/jboss711Final</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>jbossas-remote-7</id>
             <properties>
                 <metamer.classifier>jbas71</metamer.classifier>
@@ -1263,6 +1342,39 @@ FSF site: http://www.fsf.org. -->
                     <groupId>org.jboss.as</groupId>
                     <artifactId>jboss-as-arquillian-container-remote</artifactId>
                     <version>${version.jbossas7-1}</version>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <arquillian.launch>jbossas-remote-7-1</arquillian.launch>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>wildfly-remote-8-1</id>
+            <properties>
+                <metamer.classifier>jbas71</metamer.classifier>
+                <showcase.classifier>jbas71</showcase.classifier>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.spec</groupId>
+                    <artifactId>jboss-javaee-6.0</artifactId>
+                    <version>1.0.0.Final</version>
+                    <type>pom</type>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.wildfly</groupId>
+                    <artifactId>wildfly-arquillian-container-remote</artifactId>
+                    <version>${version.wildfly8-0}</version>
                 </dependency>
             </dependencies>
             <build>

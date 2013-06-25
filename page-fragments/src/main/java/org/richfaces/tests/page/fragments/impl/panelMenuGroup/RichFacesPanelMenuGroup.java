@@ -29,10 +29,13 @@ import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_SELECTED_SUFFIX;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.getGuardTypeForMode;
 
+import com.google.common.base.Predicate;
+
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.component.Mode;
 
@@ -48,28 +51,71 @@ public class RichFacesPanelMenuGroup {
     public static final String CSS_ICON_RIGHT = "td[class*=rf-pm-][class*=-gr-exp-ico]";
 
     @Root
-    WebElement root;
+    private WebElement root;
+
+    @Drone
+    private WebDriver browser;
 
     @FindBy(css = CSS_HEADER)
-    public WebElement header;
+    private WebElement header;
 
     @FindBy(css = CSS_LABEL)
-    public WebElement label;
+    private WebElement label;
 
     @FindBy(css = CSS_ICON_LEFT)
-    public RichFacesPanelMenuGroupIcon leftIcon;
+    private RichFacesPanelMenuGroupIcon leftIcon;
 
     @FindBy(css = CSS_ICON_RIGHT)
-    public RichFacesPanelMenuGroupIcon rightIcon;
+    private RichFacesPanelMenuGroupIcon rightIcon;
 
     // mode can be inherited from parent panelMenu
-    Mode mode;
+    protected Mode mode;
+
+    public RichFacesPanelMenuGroupIcon getRightIcon() {
+        return rightIcon;
+    }
+
+    public RichFacesPanelMenuGroupIcon getLeftIcon() {
+        return leftIcon;
+    }
+
+    public WebElement getLabel() {
+        return label;
+    }
 
     public void toggle() {
+        boolean wasExpanded = isExpanded();
         if (mode == null) {
             label.click();
         } else {
             getGuardTypeForMode(label, mode).click();
+        }
+        if (!isDisabled()) {
+            if (wasExpanded) {
+                Graphene.waitModel().until(new Predicate<WebDriver>() {
+                    @Override
+                    public boolean apply(WebDriver input) {
+                        return isCollapsed();
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "group to be collapsed.";
+                    }
+                });
+            } else {
+                Graphene.waitModel().until(new Predicate<WebDriver>() {
+                    @Override
+                    public boolean apply(WebDriver input) {
+                        return isExpanded();
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "group to be expanded.";
+                    }
+                });
+            }
         }
     }
 
@@ -94,7 +140,7 @@ public class RichFacesPanelMenuGroup {
     }
 
     public boolean isVisible() {
-        return Graphene.element(root).isPresent().apply(GrapheneContext.getProxy()) && root.isDisplayed();
+        return Graphene.element(root).isPresent().apply(browser) && root.isDisplayed();
     }
 
     public WebElement getRoot() {

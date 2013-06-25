@@ -34,6 +34,7 @@ import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.Select;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
 /**
@@ -93,6 +94,7 @@ public class TestLog extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         logAttributes.set(LogAttributes.rendered, false);
         try {

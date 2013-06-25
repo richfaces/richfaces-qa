@@ -34,12 +34,15 @@ import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.testng.annotations.Test;
@@ -54,6 +57,9 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     @Page
     private MetamerPage page;
 
+    @ArquillianResource
+    private JavascriptExecutor executor;
+
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richOrderingList/withColumn.xhtml");
@@ -67,6 +73,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testColumnClasses() {
         String testedClass = "metamer-ftest-class";
         orderingListAttributes.set(OrderingListAttributes.columnClasses, testedClass);
@@ -91,12 +98,14 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDisabledClass() {
         orderingListAttributes.set(OrderingListAttributes.disabled, Boolean.TRUE);
         testStyleClass(twoColumnOrderingList.getRootElement(), BasicAttributes.disabledClass);
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDownBottomText() {
         String testedValue = "New text";
         orderingListAttributes.set(OrderingListAttributes.downBottomText, testedValue);
@@ -104,6 +113,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testDownText() {
         String testedValue = "New text";
         orderingListAttributes.set(OrderingListAttributes.downText, testedValue);
@@ -111,6 +121,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testHeaderClass() {
         testStyleClass(twoColumnOrderingList.getHeaderElement(), BasicAttributes.headerClass);
     }
@@ -131,6 +142,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testItemClass() {
         String testedClass = "metamer-ftest-class";
         orderingListAttributes.set(OrderingListAttributes.itemClass, "metamer-ftest-class");
@@ -182,7 +194,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
                 twoColumnOrderingList.getListAreaElement().click();
                 twoColumnOrderingList.getRootElement().click();
                 waiting(500);
-                Utils.triggerJQ("blur", twoColumnOrderingList.getItems().get(0).getItemElement());
+                Utils.triggerJQ(executor, "blur", twoColumnOrderingList.getItems().get(0).getItemElement());
             }
         });
     }
@@ -300,12 +312,14 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testRendered() {
         orderingListAttributes.set(OrderingListAttributes.rendered, false);
         assertNotPresent(twoColumnOrderingList.getRootElement(), "The attribute <rendered> is set to <false>, but it has no effect.");
     }
 
     @Test
+    @Templates(value = "plain")
     public void testSelectItemClass() {
         orderingListAttributes.set(OrderingListAttributes.selectItemClass, "metamer-ftest-class");
         twoColumnOrderingList.selectItemsByIndex(0);
@@ -313,16 +327,19 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyle() {
         testStyle(twoColumnOrderingList.getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testStyleClass() {
         testStyle(twoColumnOrderingList.getRootElement());
     }
 
     @Test
+    @Templates(value = "plain")
     public void testUpText() {
         String testedValue = "New text";
         orderingListAttributes.set(OrderingListAttributes.upText, testedValue);
@@ -330,6 +347,7 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     }
 
     @Test
+    @Templates(value = "plain")
     public void testUpTopText() {
         String testedValue = "New text";
         orderingListAttributes.set(OrderingListAttributes.upTopText, testedValue);

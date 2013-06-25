@@ -53,7 +53,7 @@ public class RichEditorBean implements Serializable {
     private Attributes attributes;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         attributes = Attributes.getComponentAttributesFromFacesConfig(UIEditor.class, getClass());
 
         attributes.setAttribute("rendered", Boolean.TRUE);
@@ -75,11 +75,11 @@ public class RichEditorBean implements Serializable {
      * @param value
      */
     public void validateEditorValue(FacesContext context, UIComponent component, Object value) {
-        String testValue = value.toString();
+        String testValue = (value == null ? null : value.toString());
         if (testValue != null && testValue.contains("#")) {
             throw new ValidatorException(
-                new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Editor must not contains '#' value!", "Editor must not contains '#' value!"));
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Editor must not contain '#' value!", "Editor must not contain '#' value!"));
         }
     }
 
