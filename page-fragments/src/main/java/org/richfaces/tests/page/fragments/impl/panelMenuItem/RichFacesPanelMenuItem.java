@@ -20,13 +20,16 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.richfaces.tests.page.fragments.impl.panelMenuItem;
-import org.jboss.arquillian.drone.api.annotation.Drone;
+
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.ATTR_CLASS;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_DISABLED_SUFFIX;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_HOVERED_SUFFIX;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_SELECTED_SUFFIX;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.getGuardTypeForMode;
 
+import com.google.common.base.Predicate;
+
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
@@ -75,10 +78,38 @@ public class RichFacesPanelMenuItem {
     }
 
     public void select() {
+        boolean wasSelected = isSelected();
         if (mode == null) {
             label.click();
         } else {
             getGuardTypeForMode(label, mode).click();
+        }
+        if (!isDisabled()) {
+            if (wasSelected) {
+                Graphene.waitModel().until(new Predicate<WebDriver>() {
+                    @Override
+                    public boolean apply(WebDriver input) {
+                        return !isSelected();
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "item to be not selected.";
+                    }
+                });
+            } else {
+                Graphene.waitModel().until(new Predicate<WebDriver>() {
+                    @Override
+                    public boolean apply(WebDriver input) {
+                        return isSelected();
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "item to be selected.";
+                    }
+                });
+            }
         }
     }
 
@@ -99,5 +130,4 @@ public class RichFacesPanelMenuItem {
         boolean visible = Graphene.element(root).isPresent().apply(browser);
         return present && visible;
     }
-
 }
