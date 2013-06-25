@@ -127,7 +127,7 @@
                 <dependency>
                     <groupId>com.sun.faces</groupId>
                     <artifactId>jsf-impl</artifactId>
-                    <version>2.1.7-redhat-1</version>
+                    <version>2.1.19-redhat-1</version>
                     <scope>provided</scope>
                 </dependency>
             </dependencies>
