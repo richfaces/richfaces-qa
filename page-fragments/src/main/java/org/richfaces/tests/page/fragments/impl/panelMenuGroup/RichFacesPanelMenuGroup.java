@@ -21,7 +21,6 @@
  */
 package org.richfaces.tests.page.fragments.impl.panelMenuGroup;
 
-import org.jboss.arquillian.drone.api.annotation.Drone;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.ATTR_CLASS;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_COLLAPSED_SUFFIX;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_DISABLED_SUFFIX;
@@ -30,6 +29,9 @@ import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.CSS_SELECTED_SUFFIX;
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.getGuardTypeForMode;
 
+import com.google.common.base.Predicate;
+
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
@@ -82,10 +84,38 @@ public class RichFacesPanelMenuGroup {
     }
 
     public void toggle() {
+        boolean wasExpanded = isExpanded();
         if (mode == null) {
             label.click();
         } else {
             getGuardTypeForMode(label, mode).click();
+        }
+        if (!isDisabled()) {
+            if (wasExpanded) {
+                Graphene.waitModel().until(new Predicate<WebDriver>() {
+                    @Override
+                    public boolean apply(WebDriver input) {
+                        return isCollapsed();
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "group to be collapsed.";
+                    }
+                });
+            } else {
+                Graphene.waitModel().until(new Predicate<WebDriver>() {
+                    @Override
+                    public boolean apply(WebDriver input) {
+                        return isExpanded();
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "group to be expanded.";
+                    }
+                });
+            }
         }
     }
 
