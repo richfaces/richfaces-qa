@@ -28,10 +28,12 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
 
 import java.net.URL;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -57,7 +59,7 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
     private WebElement getCurrentMonth;
     @FindBy(id = "getCurrentYear")
     private WebElement getCurrentYear;
-    //
+
     @FindBy(id = "setValue")
     private WebElement setValue;
     @FindBy(id = "resetValue")
@@ -66,7 +68,7 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
     private WebElement today;
     @FindBy(id = "showSelectedDate")
     private WebElement showSelectedDate;
-    //
+
     @FindBy(id = "showPopup")
     private WebElement showPopup;
     @FindBy(id = "hidePopup")
@@ -165,12 +167,15 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
 
     @Test
     public void testShowAndHideTimeEditor() {
+        Dimension size = driver.manage().window().getSize();
+        driver.manage().window().setSize(new Dimension(1024, 768));
         calendar.setDateTime(todayMidday.plusMonths(1));
         TimeEditor timeEditor = calendar.getPopup().getFooterControls().getTimeEditor();
         executeJSFromElement(showTimeEditor);
         Graphene.waitGui().withMessage("time editor should be visible").until(timeEditor.isVisibleCondition());
         executeJSFromElement(hideTimeEditor);
         Graphene.waitGui().withMessage("time editor should not be visible").until(timeEditor.isNotVisibleCondition());
+        driver.manage().window().setSize(size);
     }
 
     @Test

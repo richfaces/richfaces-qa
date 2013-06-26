@@ -31,13 +31,16 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
+import org.openqa.selenium.Dimension;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.DayPicker;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.CalendarPopup;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -51,6 +54,11 @@ public class TestCalendarBasic extends AbstractCalendarTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richCalendar/simple.xhtml");
+    }
+
+    @BeforeMethod
+    private void manageWindow() {
+        driver.manage().window().setSize(new Dimension(1024, 768));
     }
 
     @Test
