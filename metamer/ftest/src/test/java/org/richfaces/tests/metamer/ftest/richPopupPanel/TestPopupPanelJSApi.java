@@ -58,7 +58,7 @@ public class TestPopupPanelJSApi extends AbstractWebDriverTest {
     private WebElement hide;
     @FindBy(css = "input[id$=openPanelButton]")
     private WebElement openButton;
-    @FindBy(css = "div.rf-pp-cntr")
+    @FindBy(css = "div.rf-pp-cntr[id$=popupPanel_container]")
     private TestedPopupPanel panel;
     final int TOLERANCE = 5;// px
 
