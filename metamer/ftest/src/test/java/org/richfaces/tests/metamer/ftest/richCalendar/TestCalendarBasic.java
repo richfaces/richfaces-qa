@@ -40,6 +40,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.DayPicker;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.CalendarPopup;
+import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.PopupHeaderControls;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -97,8 +98,6 @@ public class TestCalendarBasic extends AbstractCalendarTest {
 
     @Test
     public void testHeaderMonth() {
-        MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(todayMidday);
-
         DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
         assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.getMonthOfYear(), "Calendar shows wrong month in its header.");
         assertEquals(yearAndMonth.getYear(), todayMidday.getYear(), "Calendar shows wrong year in its header.");
@@ -119,24 +118,24 @@ public class TestCalendarBasic extends AbstractCalendarTest {
 
     @Test
     public void testNextMonthButton() {
-        MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(todayMidday);
+        PopupHeaderControls headerControls = calendar.openPopup().getHeaderControls();
+        DateTime previousYearAndMonth = headerControls.getYearAndMonth();
+        headerControls.nextMonth();
+        DateTime yearAndMonth = headerControls.getYearAndMonth();
 
-        calendar.openPopup().getHeaderControls().nextMonth();
-        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
-
-        assertEquals(yearAndMonth.getYear(), todayMidday.plusMonths(1).getYear(), "Year did not change correctly.");
-        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.plusMonths(1).getMonthOfYear(), "Month did not change correctly.");
+        assertEquals(yearAndMonth.getYear(), previousYearAndMonth.plusMonths(1).getYear(), "Year did not change correctly.");
+        assertEquals(yearAndMonth.getMonthOfYear(), previousYearAndMonth.plusMonths(1).getMonthOfYear(), "Month did not change correctly.");
     }
 
     @Test
     public void testNextYearButton() {
-        MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(todayMidday);
+        PopupHeaderControls headerControls = calendar.openPopup().getHeaderControls();
+        DateTime previousYearAndMonth = headerControls.getYearAndMonth();
+        headerControls.nextYear();
+        DateTime yearAndMonth = headerControls.getYearAndMonth();
 
-        calendar.openPopup().getHeaderControls().nextYear();
-        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
-
-        assertEquals(yearAndMonth.getYear(), todayMidday.plusYears(1).getYear(), "Year did not change correctly.");
-        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.plusYears(1).getMonthOfYear(), "Month did not change correctly.");
+        assertEquals(yearAndMonth.getYear(), previousYearAndMonth.plusYears(1).getYear(), "Year did not change correctly.");
+        assertEquals(yearAndMonth.getMonthOfYear(), previousYearAndMonth.plusYears(1).getMonthOfYear(), "Month did not change correctly.");
     }
 
     @Test
@@ -151,24 +150,24 @@ public class TestCalendarBasic extends AbstractCalendarTest {
 
     @Test
     public void testPrevMonthButton() {
-        MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(todayMidday);
+        PopupHeaderControls headerControls = calendar.openPopup().getHeaderControls();
+        DateTime previousYearAndMonth = headerControls.getYearAndMonth();
+        headerControls.previousMonth();
+        DateTime yearAndMonth = headerControls.getYearAndMonth();
 
-        calendar.openPopup().getHeaderControls().previousMonth();
-        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
-
-        assertEquals(yearAndMonth.getYear(), todayMidday.minusMonths(1).getYear(), "Year did not change correctly.");
-        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.minusMonths(1).getMonthOfYear(), "Month did not change correctly.");
+        assertEquals(yearAndMonth.getYear(), previousYearAndMonth.minusMonths(1).getYear(), "Year did not change correctly.");
+        assertEquals(yearAndMonth.getMonthOfYear(), previousYearAndMonth.minusMonths(1).getMonthOfYear(), "Month did not change correctly.");
     }
 
     @Test
     public void testPrevYearButton() {
-        MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(todayMidday);
+        PopupHeaderControls headerControls = calendar.openPopup().getHeaderControls();
+        DateTime previousYearAndMonth = headerControls.getYearAndMonth();
+        headerControls.previousYear();
+        DateTime yearAndMonth = headerControls.getYearAndMonth();
 
-        calendar.openPopup().getHeaderControls().previousYear();
-        DateTime yearAndMonth = calendar.openPopup().getHeaderControls().getYearAndMonth();
-
-        assertEquals(yearAndMonth.getYear(), todayMidday.minusYears(1).getYear(), "Year did not change correctly.");
-        assertEquals(yearAndMonth.getMonthOfYear(), todayMidday.minusYears(1).getMonthOfYear(), "Month did not change correctly.");
+        assertEquals(yearAndMonth.getYear(), previousYearAndMonth.minusYears(1).getYear(), "Year did not change correctly.");
+        assertEquals(yearAndMonth.getMonthOfYear(), previousYearAndMonth.minusYears(1).getMonthOfYear(), "Month did not change correctly.");
     }
 
     @Test
