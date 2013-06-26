@@ -42,11 +42,13 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMen
 import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.getGuardTypeForMode;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.richfaces.PanelMenuMode;
 import org.richfaces.component.Mode;
@@ -57,7 +59,6 @@ import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -184,15 +185,19 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     public void testSelectable() {
         page.item.setMode(null);
         panelMenuItemAttributes.set(selectable, false);
-
-        getGuardTypeForMode(page.item, Mode.client).select();
-
+        TimeoutException ex = null;
+        try {
+            getGuardTypeForMode(page.item, Mode.client).select();
+        } catch (TimeoutException e) {
+            ex = e;
+        }
+        if (ex == null) {
+            fail("Item should not be selectable when @selectable=false.");
+        }
         assertFalse(page.item.isSelected());
 
         panelMenuItemAttributes.set(selectable, true);
-
         getGuardTypeForMode(page.item, Mode.ajax).select();
-
         assertTrue(page.item.isSelected());
     }
 
@@ -219,7 +224,7 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
 
     private void verifyStandardIcons(PanelMenuItemAttributes attribute, WebElement icon, WebElement imgIcon, String classSuffix) {
         IconsCheckerWebdriver<PanelMenuItemAttributes> checker = new IconsCheckerWebdriver<PanelMenuItemAttributes>(
-            driver, panelMenuItemAttributes, "rf-ico-", "");
+                driver, panelMenuItemAttributes, "rf-ico-", "");
 
         checker.checkCssImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
         checker.checkCssNoImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
