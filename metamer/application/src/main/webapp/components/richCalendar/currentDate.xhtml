@@ -51,8 +51,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </rich:calendar>
                 <rich:message id="msg" for="calendar"/>
             </div>
-            <br/><br/>
-
+        </ui:define>
+        
+        <ui:define name="outOfTemplateAfter">
             <a4j:outputPanel id="outputPanel" ajaxRendered="true">
                 Output:
                 <h:outputText id="output" value="#{richCalendarBean.value}">
@@ -71,9 +72,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 Date pattern:
                 <h:inputText id="datePatternInput" onchange="submit();" value="#{richCalendarBean.attributes['datePattern'].value}"/>
             </a4j:outputPanel>
-        </ui:define>
-        
-        <ui:define name="outOfTemplateAfter">
             <ui:include src="resizedTemplatesStyles.xhtml"/>
         </ui:define>
     </ui:composition>
