@@ -29,9 +29,13 @@ import static org.testng.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.poll.AbstractPollTest;
 import org.testng.annotations.Test;
 
@@ -41,38 +45,26 @@ import org.testng.annotations.Test;
  */
 public class TestPushJms extends AbstractPollTest {
 
-    /* ***************************************************************************************
-     * Locators ****************************************************************** *********************
-     */
-    protected JQueryLocator serverDate = jq("table tbody:visible:last");
+    @FindBy(jquery = "table tbody:visible:last")
+    private WebElement serverDate;
 
-    /* ***************************************************************************************
-     *
-     * ***************************************************************************************
-     */
     @Test
     public void testDeviationInServerDate() {
 
         List<Integer> deviations = new ArrayList<Integer>();
-
-        TextRetriever dateRetriever = retrieveText.locator(serverDate);
-        dateRetriever.initializeValue();
-
-        // this first wait is because there is not server time at initial state,
-        // the server date is rendered after first push
-        waitAjax.waitForChangeAndReturn(dateRetriever);
-
+        String date = serverDate.getText();
+        Graphene.waitAjax(webDriver).withTimeout(30, TimeUnit.SECONDS)
+                .until()
+                .element(serverDate)
+                .text()
+                .not()
+                .equalTo(date);
         Integer deviation = null;
-
         for (int i = 0; i < 20; i++) {
-
-            deviation = waitForServerActionAndReturnDeviation(dateRetriever, "push");
-
+            deviation = waitForServerActionAndReturnDeviation(serverDate, "push");
             deviations.add(deviation);
         }
-
         Collections.sort(deviations);
-
         assertEquals(deviations.get(9).intValue(), 5, "Median of push deviations is wrong!");
     }
 
