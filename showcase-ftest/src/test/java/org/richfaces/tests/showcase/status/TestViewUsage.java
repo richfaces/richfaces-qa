@@ -29,104 +29,42 @@ import static org.jboss.arquillian.ajocado.dom.Event.KEYUP;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.cheiron.halt.XHRHalter;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.richfaces.tests.showcase.status.page.TestViewUsagePage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestViewUsage extends AbstractGrapheneTest {
+public class TestViewUsage extends TestUsage {
 
-    /* *******************************************************************************************************
-     * Locators ****************************************************************** *************************************
-     */
-
-    protected JQueryLocator userName = jq("input[type=text]:first");
-    protected JQueryLocator address = jq("input[type=text]:odd");
-    protected JQueryLocator submitForUserDetails = jq("input[type=button]:first");
-    protected JQueryLocator submitForSearchPanel = jq("input[type=button]:last");
-    protected JQueryLocator imageOfAjaxRequestProgress = jq("span[class=rf-st-start] img");
-
-    /* ********************************************************************************************************
-     * Tests ********************************************************************* ***********************************
-     */
+    @Page
+    private TestViewUsagePage page;
 
     @Test
     public void testUserNameAndImagePresentionOfAjaxProgress() {
-
-        XHRHalter.enable();
-
-        selenium.type(userName, "a");
-        selenium.fireEvent(userName, KEYUP);
-
-        XHRHalter handle = XHRHalter.getHandleBlocking();
-        handle.send();
-
-        assertTrue(selenium.isVisible(imageOfAjaxRequestProgress), "There should be an image of ajax request progress!");
-
-        handle.complete();
-
-        waitGui.failWith("There can not be image of ajax request, since it is completed!").until(
-            elementNotVisible.locator(imageOfAjaxRequestProgress));
+        page.userNameInput.sendKeys("a");
+        assertProgressPictureAppearsOnAjaxRequest(page.progressImage);
     }
 
     @Test
     public void testAddressAndImagePresentionOfAjaxProgress() {
-
-        XHRHalter.enable();
-
-        selenium.type(address, "a");
-        selenium.fireEvent(address, KEYUP);
-
-        XHRHalter handle = XHRHalter.getHandleBlocking();
-        handle.send();
-
-        assertTrue(selenium.isVisible(imageOfAjaxRequestProgress), "There should be an image of ajax request progress!");
-
-        handle.complete();
-
-        waitGui.failWith("There can not be image of ajax request, since it is completed!").until(
-            elementNotVisible.locator(imageOfAjaxRequestProgress));
+        page.addressInput.sendKeys("a");
+        assertProgressPictureAppearsOnAjaxRequest(page.progressImage);
     }
 
     @Test
     public void testSumbitForUserDetailsAndImagePresentionOfAjaxProgress() {
-
-        XHRHalter.enable();
-
-        selenium.click(submitForUserDetails);
-        selenium.fireEvent(submitForUserDetails, Event.SUBMIT);
-
-        XHRHalter handle = XHRHalter.getHandleBlocking();
-        handle.send();
-
-        assertTrue(selenium.isVisible(imageOfAjaxRequestProgress), "There should be an image of ajax request progress!");
-
-        handle.complete();
-
-        waitGui.failWith("There can not be image of ajax request, since it is completed!").until(
-            elementNotVisible.locator(imageOfAjaxRequestProgress));
+        page.submitButton.click();
+        assertProgressPictureAppearsOnAjaxRequest(page.progressImage);
     }
 
     @Test
     public void testSubmitForSearchPanelAndImagePresentionOfAjaxProgress() {
-
-        XHRHalter.enable();
-
-        selenium.click(submitForSearchPanel);
-        selenium.fireEvent(submitForSearchPanel, Event.SUBMIT);
-
-        XHRHalter handle = XHRHalter.getHandleBlocking();
-        handle.send();
-
-        assertTrue(selenium.isVisible(imageOfAjaxRequestProgress), "There should be an image of ajax request progress!");
-
-        handle.complete();
-
-        waitGui.failWith("There can not be image of ajax request, since it is completed!").until(
-            elementNotVisible.locator(imageOfAjaxRequestProgress));
+        page.searchButton.click();
+        assertProgressPictureAppearsOnAjaxRequest(page.progressImage);
     }
 
 }

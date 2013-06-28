@@ -21,73 +21,33 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.status;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementNotVisible;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.testng.Assert.assertTrue;
+import org.jboss.arquillian.graphene.Graphene;
 
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.cheiron.halt.XHRHalter;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.status.page.TestReferencedUsagePage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestReferencedUsage extends AbstractGrapheneTest {
+public class TestReferencedUsage extends TestUsage {
 
-    /* *******************************************************************************************************
-     * Locators ****************************************************************** *************************************
-     */
-
-    protected JQueryLocator userNameInput = jq("input[type=text]:first");
-    protected JQueryLocator addressInput = jq("input[type=text]:last");
-    protected JQueryLocator firstAjaxRequestProgressImage = jq("span[class=rf-st-start] img:first");
-    protected JQueryLocator secondAjaxRequestProgressImage = jq("span[class=rf-st-start] img:last");
-
-    /* ********************************************************************************************************
-     * Tests ********************************************************************* ***********************************
-     */
+    @Page
+    private TestReferencedUsagePage page;
 
     @Test
     public void testUserNameAndAjaxRequestProgressImage() {
-        writeSomethingToTheInputAndCheckTheImageOfAjaxProgress(userNameInput, firstAjaxRequestProgressImage);
+        page.userNameInput.sendKeys("a");
+        assertProgressPictureAppearsOnAjaxRequest(page.firstAjaxRequestProgressImage);
     }
 
     @Test
     public void testAddressAndAjaxRequestProgressImage() {
-        writeSomethingToTheInputAndCheckTheImageOfAjaxProgress(addressInput, secondAjaxRequestProgressImage);
-    }
-
-    /* ********************************************************************************************************
-     * Help methods ********************************************************************* ***********************************
-     */
-
-    /**
-     * Writes something to the input and checks whether there is picture of Ajax request progress
-     *
-     * @param whichInput input where something will be written
-     * @param imageOfAjaxRequestProgress image of ajax request progress which should appear when ajax request is being handled
-     */
-    private void writeSomethingToTheInputAndCheckTheImageOfAjaxProgress(JQueryLocator whichInput,
-        JQueryLocator imageOfAjaxRequestProgress) {
-
-        XHRHalter.enable();
-
-        selenium.type(whichInput, "a");
-        selenium.fireEvent(whichInput, Event.KEYUP);
-
-        XHRHalter handle = XHRHalter.getHandleBlocking();
-        handle.send();
-
-        assertTrue(selenium.isVisible(imageOfAjaxRequestProgress), "There should be an image of ajax request progress!");
-
-        handle.complete();
-
-        waitGui.failWith("There can not be image of ajax request, since it is completed!").until(
-            elementNotVisible.locator(imageOfAjaxRequestProgress));
+        page.addressInput.sendKeys("a");
+        assertProgressPictureAppearsOnAjaxRequest(page.secondAjaxRequestProgressImage);
     }
 
 }
