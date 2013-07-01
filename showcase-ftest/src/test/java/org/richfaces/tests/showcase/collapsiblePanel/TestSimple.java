@@ -21,14 +21,15 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.collapsiblePanel;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
-import static org.testng.Assert.fail;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 import org.richfaces.tests.showcase.panel.AbstractPanelTest;
 import org.testng.annotations.Test;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.showcase.collapsiblePanel.page.SimplePage;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -36,52 +37,28 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
  */
 public class TestSimple extends AbstractPanelTest {
 
-    /* *************************************************************************************
-     * Locators*************************************************************************************
-     */
-
-    JQueryLocator firstCollapsiblePanelControl = jq("div[class*=rf-cp-hdr]:eq(0)");
-    JQueryLocator secondCollapsiblePanelControl = jq("div[class*=rf-cp-hdr]:eq(1)");
-    String bodyOfTheFirstPanel = "div.rf-cp-b:eq(0):visible";
-    String bodyOfTheSecondPanel = "div.rf-cp-b:eq(1)";
-
-    /* **************************************************************************************
-     * Tests***************************************************************************************
-     */
+    @Page
+    private SimplePage page;
 
     @Test
-    public void testCollapsAndShowPanels() {
-
-        JQueryLocator bodyOfTheFirstPanelLoc = jq(bodyOfTheFirstPanel);
-        JQueryLocator bodyOfTheSecondPanelLoc = jq(bodyOfTheSecondPanel);
-
-        if (!selenium.isElementPresent(bodyOfTheFirstPanelLoc)) {
-
-            guardNoRequest(selenium).click(firstCollapsiblePanelControl);
+    public void testCollapseAndShowPanels() {
+        if (!page.firstPanelContent.isDisplayed()) {
+            page.firstPanel.click();
         }
+        checkContentOfPanel(page.firstPanelContent, RICH_FACES_INFO);
+        page.firstPanel.click();
+        page.secondPanel.click();
+        assertFalse(page.firstPanelContent.isDisplayed(), "The content of the first panel should not be visible, since the panel is collapsed!");
 
-        checkContentOfPanel(bodyOfTheFirstPanel, RICH_FACES_INFO);
-
-        guardNoRequest(selenium).click(firstCollapsiblePanelControl);
-
-        if (selenium.isElementPresent(bodyOfTheFirstPanelLoc)) {
-
-            fail("The content of the first panel should not be visible, since the panel is collapsed!");
-        }
-
-        if (!selenium.isElementPresent(bodyOfTheSecondPanelLoc)) {
-
-            guardXhr(selenium).click(secondCollapsiblePanelControl);
-        }
-
-        checkContentOfPanel(bodyOfTheSecondPanel, RICH_FACES_JSF_INFO);
-
-        guardXhr(selenium).click(secondCollapsiblePanelControl);
-
-        if (selenium.isElementPresent(bodyOfTheSecondPanelLoc)) {
-
-            fail("The content of the second panel should not be visible, since the panel is collapsed!");
-        }
-
+        Graphene.waitAjax(webDriver).until()
+                .element(page.secondPanel)
+                .is()
+                .visible();
+        checkContentOfPanel(page.secondPanelContent, RICH_FACES_JSF_INFO);
+        page.secondPanel.click();
+        page.firstPanel.click();
+        /* This is workaround because page.secondPanelContent is not reachable at this time, there is only element with class rf-cp-b*/
+        int size = webDriver.findElements(ByJQuery.jquerySelector("div[class='rf-cp-b']")).size();
+        assertTrue(size == 1, "The content of the second panel should not be visible, since the panel is collapsed!");
     }
 }

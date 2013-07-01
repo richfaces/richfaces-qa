@@ -21,10 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.panel;
 
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import org.jboss.arquillian.graphene.Graphene;
 import static org.testng.Assert.assertFalse;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
 import org.testng.annotations.Test;
 
 /**
@@ -52,19 +52,13 @@ public class TestSimple extends AbstractPanelTest {
 
     @Test
     public void testPanelWithHeader() {
-
         checkContentOfPanel(PANEL_WITH_HEADER + " > " + HEADER, HEADER_CONTENT);
-
         checkContentOfPanel(PANEL_WITH_HEADER + " > " + BODY, RICH_FACES_INFO);
     }
 
     @Test
     public void testPanelWithoutHeader() {
-
-        JQueryLocator secondPanelHeader = jq(PANEL_WITHOUT_HEADER + " > " + HEADER);
-
-        assertFalse(selenium.isElementPresent(secondPanelHeader));
-
+        assertFalse(Graphene.element(ByJQuery.jquerySelector(PANEL_WITHOUT_HEADER + " > " + HEADER)).isPresent().apply(webDriver));
         checkContentOfPanel(PANEL_WITHOUT_HEADER, BODY_OF_PANEL_WITHOUT_HDR);
     }
 }

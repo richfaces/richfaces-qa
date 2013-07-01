@@ -21,12 +21,15 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.panel;
 
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.jboss.arquillian.ajocado.dom.Attribute.STYLE;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 
 /**
@@ -35,9 +38,8 @@ import org.testng.annotations.Test;
  */
 public class TestLookCustomization extends AbstractPanelTest {
 
-    /* **********************************************************************************
-     * Constants***********************************************************************************
-     */
+    @ArquillianResource
+    private Actions actions;
 
     protected final String outputPanelChangingStyleSyn1 = "fieldset td div.rf-p:eq(0)";
     protected final String outputPanelChangingStyleSyn2 = "fieldset td div.rf-p:eq(1)";
@@ -70,7 +72,6 @@ public class TestLookCustomization extends AbstractPanelTest {
 
     @Test
     public void testPanelsAreNotEmpty() {
-
         checkContentOfPanel(outputPanelChangingStyleSyn1 + " > " + HEADER, PANEL1_HEADER);
         checkContentOfPanel(outputPanelChangingStyleSyn1 + " > " + BODY, PANEL1_BODY);
 
@@ -83,47 +84,49 @@ public class TestLookCustomization extends AbstractPanelTest {
         checkContentOfPanel(outputPanelScrolling + " > " + HEADER, PANEL4_HEADER);
         checkContentOfPanel(outputPanelScrolling + " > " + BODY, PANEL4_BODY);
 
-        assertFalse(selenium.isElementPresent(jq(outputPanelWithoutHeader + HEADER)), "There "
-            + "should not be the header!");
+        assertFalse(Graphene.element(ByJQuery.jquerySelector(outputPanelWithoutHeader + HEADER)).isPresent().apply(webDriver),
+                "There should not be the header!");
         checkContentOfPanel(outputPanelWithoutHeader, PANEL5_BODY);
-
     }
 
     @Test
     public void testPanelWithJavaScript() {
+        WebElement outputPanelWithJS = webDriver.findElement(ByJQuery.jquerySelector(outputPanelJavaScript));
+        mouseOver(outputPanelWithJS);
+        mouseOut();
 
-        JQueryLocator panelWithJavaScript = jq(outputPanelJavaScript);
+        String styleOfHeaderBefore = getAttribute(outputPanelJavaScript + " > " + HEADER);
+        String styleOfBodyBefore = getAttribute(outputPanelJavaScript + " > " + BODY);
 
-        selenium.mouseOver(panelWithJavaScript);
-        selenium.mouseOut(panelWithJavaScript);
+        mouseOver(outputPanelWithJS);
 
-        String styleOfHeaderBefore = selenium.getAttribute(jq(outputPanelJavaScript + " > " + HEADER).getAttribute(
-            STYLE));
-
-        String styleOfBodyBefore = selenium.getAttribute(jq(outputPanelJavaScript + " > " + BODY).getAttribute(STYLE));
-
-        selenium.mouseOver(panelWithJavaScript);
-
-        String styleOfHeaderAfter = selenium.getAttribute(jq(outputPanelJavaScript + " > " + HEADER)
-            .getAttribute(STYLE));
-
-        String styleOfBodyAfter = selenium.getAttribute(jq(outputPanelJavaScript + " > " + BODY).getAttribute(STYLE));
+        String styleOfHeaderAfter = getAttribute(outputPanelJavaScript + " > " + HEADER);
+        String styleOfBodyAfter = getAttribute(outputPanelJavaScript + " > " + BODY);
 
         assertFalse(styleOfHeaderBefore.equals(styleOfHeaderAfter), "The style of header should be different"
-            + "after mouseover, the the rgb should be different");
+            + " after mouseover, the the rgb should be different");
         assertFalse(styleOfBodyBefore.equals(styleOfBodyAfter), "The style of body should be different"
-            + "after mouseover, the the rgb should be different");
+            + " after mouseover, the the rgb should be different");
 
-        selenium.mouseOut(panelWithJavaScript);
-
-        styleOfHeaderAfter = selenium.getAttribute(jq(outputPanelJavaScript + " > " + HEADER).getAttribute(STYLE));
-
-        styleOfBodyAfter = selenium.getAttribute(jq(outputPanelJavaScript + " > " + BODY).getAttribute(STYLE));
+        mouseOut();
+        styleOfHeaderAfter = getAttribute(outputPanelJavaScript + " > " + HEADER);
+        styleOfBodyAfter = getAttribute(outputPanelJavaScript + " > " + BODY);
 
         assertEquals(styleOfHeaderAfter, styleOfHeaderBefore, "The style of header should be returned to the "
             + "value on the mouseout state");
         assertEquals(styleOfBodyAfter, styleOfBodyBefore, "The style of body should be returned to the "
             + "value on the mouseout state");
+    }
 
+    private String getAttribute(String locator) {
+        return webDriver.findElement(ByJQuery.jquerySelector(locator)).getAttribute(STYLE.getAttributeName());
+    }
+
+    private void mouseOver(WebElement element) {
+        actions.moveToElement(element).build().perform();
+    }
+
+    private void mouseOut() {
+        actions.moveByOffset(200, 200).build().perform();
     }
 }

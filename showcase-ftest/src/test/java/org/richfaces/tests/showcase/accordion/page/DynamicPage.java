@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.accordion.page;
 
-import static org.jboss.arquillian.graphene.Graphene.guardXhr;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.testng.Assert.assertTrue;
 
 import java.util.List;
@@ -46,7 +46,7 @@ public class DynamicPage {
     public void interateOverAccordionPanelsAndAssert() {
         for (int i = 0; i < NUMBER_OF_ACCORDION_PANELS; i++) {
             if (i != 0) {
-                guardXhr(accordionExpanders.get(i)).click();
+                guardAjax(accordionExpanders.get(i)).click();
             }
             String valueOfSkinSwitcher = skinSwitcherButton.getAttribute("value");
             String valueOfPanelHeader = accordionExpanders.get(i).getText().split(":")[1].trim();

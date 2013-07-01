@@ -21,62 +21,53 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.popup;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.testng.Assert.assertFalse;
+import org.jboss.arquillian.graphene.Graphene;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertFalse;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.panel.AbstractPanelTest;
+import org.richfaces.tests.showcase.popup.page.LoginPage;
+import org.richfaces.tests.showcase.popup.page.PopupPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestLogin extends AbstractPoppupPanel {
+public class TestLogin extends AbstractPanelTest {
 
-    /* ********************************************************************************
-     * Locators********************************************************************************
-     */
+    @Page
+    private LoginPage page;
 
-    protected JQueryLocator loginAnchorOnTheToolbar = jq("a:contains('Login'):eq(0)");
-    protected JQueryLocator loginAnchorOnThePoppup = jq("a:contains('Login'):eq(1)");
-    protected JQueryLocator searchAnchorOnTheToolbar = jq("a:contains('Search'):eq(0)");
-    protected JQueryLocator searchAnchorOnThePoppup = jq("a:contains('Search'):eq(1)");
-
-    /* **********************************************************************************
-     * Tests**********************************************************************************
-     */
+    @Page
+    private PopupPage popupPage;
 
     @Test
     public void testLoginPoppup() {
-        checkPoppupPanel(loginAnchorOnTheToolbar, loginAnchorOnThePoppup);
+        checkPopupPanel(page.loginOnToolbar, page.loginOnPopup);
     }
 
     @Test
     public void testSearchPoppup() {
-        checkPoppupPanel(searchAnchorOnTheToolbar, searchAnchorOnThePoppup);
+        checkPopupPanel(page.searchOnToolbar, page.searchOnPopup);
     }
-
-    /* *****************************************************************************************************
-     * Help methods*****************************************************************************************************
-     */
 
     /**
      * Call the poppup panel, and then hides it, check for presence
      *
-     * @param callPoppupButton
+     * @param callPopupButton
      *            the button by which the poppup is called
-     * @param closingPoppupButton
+     * @param closingPopupButton
      *            the button by which the poppup is closed
      */
-    private void checkPoppupPanel(JQueryLocator callPoppupButton, JQueryLocator closingPoppupButton) {
-        guardNoRequest(selenium).click(callPoppupButton);
-
-        assertTrue(selenium.isElementPresent(poppupPanelContent), "The poppup panel should be visible!");
-
-        guardNoRequest(selenium).click(closingPoppupButton);
-
-        assertFalse(selenium.isVisible(poppupPanelContent), "The poppup panel should not be visible!");
+    private void checkPopupPanel(WebElement callPopupButton, WebElement closingPopupButton) {
+        Graphene.waitGui(webDriver).until().element(callPopupButton).is().visible();
+        callPopupButton.click();
+        Graphene.waitAjax(webDriver).until().element(popupPage.popupPanelContent).is().visible();
+        assertTrue(popupPage.popupPanelContent.isDisplayed(), "The popup panel should be visible!");
+        closingPopupButton.click();
+        assertFalse(popupPage.popupPanelContent.isDisplayed(), "The popup panel should not be visible!");
     }
 }

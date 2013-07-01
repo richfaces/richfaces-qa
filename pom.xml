@@ -65,7 +65,7 @@ FSF site: http://www.fsf.org. -->
         <arquillian.android.version>1.0.0.Alpha2</arquillian.android.version>
         <shrinkwrap.descriptors.version>2.0.0-alpha-4</shrinkwrap.descriptors.version>
 
-        <version.selenium>2.31.0</version.selenium>
+        <version.selenium>2.33.0</version.selenium>
         <version.slf4j.jbossas6>1.6.1</version.slf4j.jbossas6>
 
         <!-- these are set as Environmental variables to let Arquillian know where distribution of managed containers are -->

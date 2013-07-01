@@ -23,39 +23,35 @@ package org.richfaces.tests.showcase.panel;
 
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class AbstractPanelTest extends AbstractGrapheneTest {
+public class AbstractPanelTest extends AbstractWebDriverTest {
 
-    /* *********************************************************************************
-     * Constants ***************************************************************** *****************
-     */
-
-    protected final String RICH_FACES_INFO = "RichFaces is a component library for "
-        + "JSF and an advanced framework for easily integrating AJAX capabilities into "
-        + "business applications. 100+ AJAX enabled components in two libraries a4j: page "
-        + "centric AJAX controls rich: self contained, ready to use components Whole "
-        + "set of JSF benefits while working with AJAX Skinnability mechanism "
-        + "Component Development Kit (CDK) Dynamic resources handling Testing "
-        + "facilities for components, actions, listeners, and pages Broad cross-browser "
-        + "support Large and active community";
+    protected final String RICH_FACES_INFO =
+            "RichFaces is a component library for JSF and an advanced framework for easily integrating AJAX capabilities into business applications."
+        + "\n100+ AJAX enabled components in two libraries"
+        + "\na4j: page centric AJAX controls"
+        + "\nrich: self contained, ready to use components"
+        + "\nWhole set of JSF benefits while working with AJAX"
+        + "\nSkinnability mechanism"
+        + "\nComponent Development Kit (CDK)"
+        + "\nDynamic resources handling"
+        + "\nTesting facilities for components, actions, listeners, and pages"
+        + "\nBroad cross-browser support"
+        + "\nLarge and active community";
 
     protected final String RICH_FACES_JSF_INFO = "We are working hard on RichFaces 4.0 which will have full JSF 2 integration. "
         + "That is not all though, here is a summary of updates and features:";
 
-    protected final String HEADER = "div[id*=header]";
-    protected final String BODY = "div[id*=body]";
-
-    /* **********************************************************************************
-     * Help methods ************************************************************** ********************
-     */
+    protected final String HEADER = "div[id*='header']";
+    protected final String BODY = "div[id*='body']";
 
     /**
      * Checks whether the particular part of panel is not empty and whether contains particular piece of text
@@ -65,32 +61,15 @@ public class AbstractPanelTest extends AbstractGrapheneTest {
      * @param expectedContent
      *            the content which should be in the particular part of output panel
      */
-    protected void checkContentOfPanel(String whichPart, String expectedContent) {
-
-        JQueryLocator panel = jq(whichPart);
-
-        String actualContent = selenium.getText(panel);
-
-        assertFalse(actualContent.isEmpty(), "The content of " + panel.getRawLocator() + "should not be empty");
-
-        assertTrue(actualContent.contains(expectedContent), "The content is different");
+    protected void checkContentOfPanel(WebElement panel, String expectedContent) {
+        assertFalse(panel.getText().isEmpty(), "The content of the panel should not be empty");
+        assertTrue(panel.getText().contains(expectedContent), "The content is different");
     }
 
-    /**
-     * Checks whether the particular part of panel is not empty and whether contains particular piece of text
-     *
-     * @param whichPart
-     *            panel which content will be checked
-     * @param expectedContent
-     *            the content which should be in the particular part of output panel
-     */
-    protected void checkContentOfPanel(JQueryLocator whichPart, String expectedContent) {
-
-        String actualContent = selenium.getText(whichPart);
-
-        assertFalse(actualContent.isEmpty(), "The content of " + whichPart.getRawLocator() + "should not be empty");
-
-        assertTrue(actualContent.contains(expectedContent), "The content is different");
+    protected void checkContentOfPanel(String panelLocator, String expectedContent) {
+        WebElement panel = webDriver.findElement(ByJQuery.jquerySelector(panelLocator));
+        assertFalse(panel.getText().isEmpty(), "The content of the panel should not be empty");
+        assertTrue(panel.getText().contains(expectedContent), "The content is different");
     }
 
 }
