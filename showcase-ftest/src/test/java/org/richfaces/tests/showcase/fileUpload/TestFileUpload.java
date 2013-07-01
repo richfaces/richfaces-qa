@@ -21,48 +21,34 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.fileUpload;
 
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.fileUpload.page.FileUploadPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestImgUpload extends AbstractGrapheneTest {
-
-    /* ***********************************************************************
-     * Locators ***********************************************************************
-     */
-
-    private JQueryLocator addButton = jq(".rf-fu-btn-add");
-    private JQueryLocator uploadArea = jq("div[id$=upload]");
-    private JQueryLocator uploadFilesInfo = jq("div[id$=info]");
-    private JQueryLocator divWithUploadFilesMessage = jq("div.rf-p-b.info");
-
-    /* ************************************************************************
-     * Constants ************************************************************************
-     */
+public class TestFileUpload extends AbstractWebDriverTest {
 
     private final String MSG_NO_FILES = "No files currently uploaded";
 
-    /* *********************************************************************
-     * Tests *********************************************************************
-     */
+    @Page
+    private FileUploadPage page;
 
     @Test
     public void testThereAreAllRequiredElements() {
-
-        assertTrue(selenium.isElementPresent(addButton), "The add button should be there!");
-        assertTrue(selenium.isElementPresent(uploadArea), "The upload area should be there!");
-        assertTrue(selenium.isElementPresent(uploadFilesInfo), "The upload files info should be there!");
-        assertTrue(selenium.isElementPresent(divWithUploadFilesMessage),
-            "The div with uplad files messages should be there!");
-        assertEquals(selenium.getText(divWithUploadFilesMessage), MSG_NO_FILES,
+        waitModel().until().element(page.addButton).is().present();
+        assertTrue(page.addButton.isDisplayed(), "The add button should be there!");
+        assertTrue(page.uploadArea.isDisplayed(), "The upload area should be there!");
+        assertTrue(page.uploadFilesInfo.isDisplayed(), "The upload files info should be there!");
+        assertTrue(page.divWithUploadFilesMessage.isDisplayed(), "The div with uplad files messages should be there!");
+        assertEquals(page.divWithUploadFilesMessage.getText(), MSG_NO_FILES,
             "The message that no files is currently uploaded should be there!");
 
     }
