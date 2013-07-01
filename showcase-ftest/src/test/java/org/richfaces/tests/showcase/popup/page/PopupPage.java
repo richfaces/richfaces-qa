@@ -22,6 +22,6 @@ public class PopupPage {
     @FindBy(css = "a[class*='show']")
     public WebElement anchorOfSource;
 
-    @FindBy(jquery = "div[class='rf-pp-cnt']:visible")
+    @FindBy(jquery = "div[id$='popup_content']")
     public WebElement popupPanelContent;
 }
