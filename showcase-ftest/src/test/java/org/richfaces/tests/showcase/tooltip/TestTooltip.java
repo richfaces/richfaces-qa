@@ -1,87 +1,84 @@
-/*******************************************************************************
- * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
+/**
+ * *****************************************************************************
+ * JBoss, Home of Professional Open Source Copyright 2010-2013, Red Hat, Inc.
+ * and individual contributors by the
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
+ * @authors tag. See the copyright.txt in the distribution for a full listing of
+ * individual contributors.
  *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ * This is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ * This software is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this software; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
+ * site: http://www.fsf.org.
+ * *****************************************************************************
+ */
 package org.richfaces.tests.showcase.tooltip;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.testng.Assert.assertEquals;
-
-import org.jboss.arquillian.ajocado.geometry.Point;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import java.util.concurrent.TimeUnit;
+import static org.jboss.arquillian.graphene.Graphene.waitAjax;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.tooltip.page.TooltipPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestTooltip extends AbstractGrapheneTest {
+public class TestTooltip extends AbstractWebDriverTest {
 
-    /* ************************************************************************************
-     * Constants***********************************************************************************
-     */
+    private static final String TOOLTIP_TEXT_AJAX_CLICK = "This tool-tip content was rendered on server\ntooltips requested: 0";
+    private static final String TOOLTIP_TEXT_AJAX = "This tool-tip content was rendered on the server\ntooltips requested: 0";
+    private static final String TOOLTIP_CLIENT_AJAX = "This tool-tip content was pre-rendered to the page.\nThe tool-tip is also following mouse around.";
+    private static final String TOOLTIP_CLIENT_AJAX_DELAY = "This tool-tip content is also pre-rendered to the page.";
 
-    private final String TOOLTIP_TEXT_AJAX = "This tool-tip content was rendered on server\n"
-        + " tooltips requested: 0";
+    @Page
+    private TooltipPage page;
 
-    /* *******************************************************************************
-     * Locators ****************************************************************** *************
-     */
+    @ArquillianResource
+    private Actions actions;
 
-    // private JQueryLocator clientTooltipActivatingArea = jq("div[class*='rf-p tooltip-text']:eq(0)");
-    // private JQueryLocator clientWithDelayTooltipActivatingArea = jq("div[class*='rf-p tooltip-text']:eq(1)");
-    // private JQueryLocator ajaxTooltipActivatingArea = jq("div[id$=sample3]");
-    private JQueryLocator ajaxClickTooltipActivatingArea = jq("div[class*='rf-p tooltip-text']:eq(3)");
-
-    private JQueryLocator tooltip = jq("div[class*='rf-tt tooltip']:visible");
-
-    /* ***************************************************************************************************
-     * Tests, other tooltips should be tested as well, but they are not called when the mouseover is fired, should be
-     * investigated later on *********************************************************************
-     * ******************************
-     */
-
-    // @Test
+    @Test
     public void testClientTooltip() {
-
+        actions.moveToElement(page.clientTooltipActivatingArea).build().perform();
+        waitForTooltipText(TOOLTIP_CLIENT_AJAX);
     }
 
-    // @Test
+    @Test
     public void testClientWithDelayTooltip() {
-
+        actions.moveToElement(page.clientWithDelayTooltipActivatingArea).build().perform();
+        waitForTooltipText(TOOLTIP_CLIENT_AJAX_DELAY);
     }
 
-    // @Test
+    @Test
     public void testAjaxTooltip() {
-
+        actions.moveToElement(page.ajaxTooltipActivatingArea).build().perform();
+        waitForTooltipText(TOOLTIP_TEXT_AJAX);
     }
 
     @Test
     public void testAjaxClickTooltip() {
-
-        guardXhr(selenium).clickAt(ajaxClickTooltipActivatingArea, new Point(5, 5));
-
-        String actualTooltipText = selenium.getText(tooltip);
-        assertEquals(actualTooltipText, TOOLTIP_TEXT_AJAX, "The tool tip text is different!");
+        page.ajaxClickTooltipActivatingArea.click();
+        waitForTooltipText(TOOLTIP_TEXT_AJAX_CLICK);
     }
 
+    private void waitForTooltipText(String message) {
+        waitAjax(webDriver).withTimeout(5, TimeUnit.SECONDS)
+                .until("The tool tip text is different!")
+                .element(page.tooltip)
+                .text()
+                .equalTo(message);
+    }
 }
