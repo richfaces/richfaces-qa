@@ -21,16 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.jquery;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-import org.apache.commons.io.FileUtils;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.arquillian.ajocado.css.CssProperty;
 import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.WebElement;
