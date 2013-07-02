@@ -1,159 +1,122 @@
-/*******************************************************************************
- * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
+/**
+ * *****************************************************************************
+ * JBoss, Home of Professional Open Source Copyright 2010-2013, Red Hat, Inc.
+ * and individual contributors by the
  *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
+ * @authors tag. See the copyright.txt in the distribution for a full listing of
+ * individual contributors.
  *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ * This is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
+ * This software is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this software; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
+ * site: http://www.fsf.org.
+ ******************************************************************************
+ */
 package org.richfaces.tests.showcase.togglePanel;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.testng.Assert.fail;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
 import org.testng.annotations.Test;
 
-import com.thoughtworks.selenium.SeleniumException;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.togglePanel.page.WizardPage;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestWizard extends AbstractGrapheneTest {
+public class TestWizard extends AbstractWebDriverTest {
 
-    /* ***********************************************************************************
-     * Constants ***************************************************************** ******************
-     */
+    private static final String ERROR_MSG_VALUE_REQUIRED = "Validation Error: Value is required.";
+    private static final String ERROR_MSG_FIRST_NAME = "First Name: " + ERROR_MSG_VALUE_REQUIRED;
+    private static final String ERROR_MSG_LAST_NAME = "Last Name: " + ERROR_MSG_VALUE_REQUIRED;
+    private static final String ERROR_MSG_COMPANY = "Company: " + ERROR_MSG_VALUE_REQUIRED;
+    private static final String ERROR_MSG_NOTES = "Notes: " + ERROR_MSG_VALUE_REQUIRED;
 
-    protected final String ERROR_MSG_VALUE_REQUIRED = "Validation Error: Value is required.";
-    protected final String ERROR_MSG_FIRST_NAME = "First Name: " + ERROR_MSG_VALUE_REQUIRED;
-    protected final String ERROR_MSG_LAST_NAME = "Last Name: " + ERROR_MSG_VALUE_REQUIRED;
-    protected final String ERROR_MSG_COMPANY = "Company: " + ERROR_MSG_VALUE_REQUIRED;
-    protected final String ERROR_MSG_NOTES = "Notes: " + ERROR_MSG_VALUE_REQUIRED;
-
-    /* ***********************************************************************************
-     * Locators ****************************************************************** *****************
-     */
-
-    JQueryLocator firstNameInput = jq("input[type=text]:eq(0)");
-    JQueryLocator lastNameInput = jq("input[type=text]:eq(1)");
-    JQueryLocator companyInput = jq("input[type=text]:eq(2)");
-    JQueryLocator notesInput = jq("textarea");
-    JQueryLocator summaryOfAllSteps = jq("div[class*=rf-p wizard] div[class*=rf-tgp] table:visible tbody:visible");
-    JQueryLocator nextButton = jq("input[value*=Next]:visible");
-    JQueryLocator previousButton = jq("input[value*=Previous]:visible");
-    JQueryLocator errorMessageFirstName = jq("span[class=rf-msg-det]:contains('First Name: Validation Error'):visible");
-    JQueryLocator errorMessageLastName = jq("span[class=rf-msg-det]:contains('Last Name: Validation Error'):visible");
-    JQueryLocator errorMessageCompany = jq("span[class=rf-msg-det]:contains('Company: Validation Error'):visible");
-    JQueryLocator errorMessageNotes = jq("span[class=rf-msg-det]:contains('Notes: Validation Error: Value is required.'):visible");
-    JQueryLocator errorMessage = jq("span[class=rf-msg-det]:contains('Validation Error'):visible");
-
-    /* ***************************************************************************
-     * Tests ********************************************************************* ******
-     */
+    @Page
+    private WizardPage page;
 
     @Test
     public void testStep1ValidationEmptyInputs() {
-
-        guardXhr(selenium).click(nextButton);
-
+        guardAjax(page.nextButton).click();
         checkForAllErrorMessagesFromFirstStep(true);
-
-        fillAnyInput(firstNameInput, " ");
-        fillAnyInput(lastNameInput, " ");
-        fillAnyInput(companyInput, " ");
-
-        guardXhr(selenium).click(nextButton);
-
-        try {
-
-            checkForAllErrorMessagesFromFirstStep(false);
-
-            isThereErrorMessage(errorMessage, ERROR_MSG_VALUE_REQUIRED, false);
-
-        } catch (SeleniumException ex) {
-
-            fail("Has to change the test, since last time JSF considered white spaces as characters when there was restriction required!");
-        }
+        fillInputsWithText(" ");
+        guardAjax(page.nextButton).click();
+        checkForAllErrorMessagesFromFirstStep(false);
     }
 
     @Test
     public void testStep1ValidationCorrectValues() {
-
-        fillInputWithStringOfLength(firstNameInput, 5);
-        fillInputWithStringOfLength(lastNameInput, 5);
-        fillInputWithStringOfLength(companyInput, 5);
-
-        guardXhr(selenium).click(nextButton);
-
+        fillInputsWithText("xxxxx");
+        guardAjax(page.nextButton).click();
         checkForAllErrorMessagesFromFirstStep(false);
     }
 
     @Test
     public void testStep2ValidationEmptyInput() {
-
-        fillInputWithStringOfLength(firstNameInput, 5);
-        fillInputWithStringOfLength(lastNameInput, 5);
-        fillInputWithStringOfLength(companyInput, 5);
-
-        guardXhr(selenium).click(nextButton);
-
-        guardXhr(selenium).click(nextButton);
-
-        isThereErrorMessage(errorMessageNotes, ERROR_MSG_NOTES, true);
-
-        fillAnyInput(notesInput, " ");
-
-        guardXhr(selenium).click(nextButton);
-
-        try {
-
-            isThereErrorMessage(errorMessageNotes, ERROR_MSG_NOTES, false);
-
-        } catch (SeleniumException ex) {
-
-            fail("Has to change the test, since last time JSF considered white spaces as characters when there was restriction required!");
-        }
-
+        fillInputsWithText("xxxxx");
+        guardAjax(page.nextButton).click();
+        guardAjax(page.nextButton).click();
+        checkForErrors(page.errorMessageNotes, ERROR_MSG_NOTES, true);
+        page.notesInput.sendKeys("blablabla");
+        guardAjax(page.nextButton).click();
+        checkForErrors(page.errorMessageNotes, ERROR_MSG_NOTES, false);
     }
 
-    // @Test
+    @Test
     public void testStep2ValidationCorrectValue() {
-        // TODO
+        testStep1ValidationCorrectValues();
+        page.notesInput.sendKeys("notes");
+        guardAjax(page.nextButton).click();
+        checkForErrors(page.errorMessageNotes, ERROR_MSG_NOTES, false);
     }
 
-    // @Test
+    @Test
     public void testStep3CheckSummaryOfPreviousSteps() {
-        // TODO
+        testStep1ValidationCorrectValues();
+        page.notesInput.sendKeys("notes");
+        guardAjax(page.nextButton).click();
+        assertTrue(page.summaryOfAllSteps.getText().contains("Notes: notes"), "Notes should be displayed in the summary");
     }
 
-    /* ***************************************************************************************
-     * Help methods ************************************************************** *************************
-     */
+    private void checkForErrors(WebElement element, String errorMessage, boolean shouldErrorBePresented) {
+        if(shouldErrorBePresented) {
+            assertEquals(element.getText(), errorMessage, "Error " + errorMessage + " was expected!");
+        } else {
+            assertFalse(isElementPresent(element), "There should be no error message!");
+        }
+    }
+
+    private void fillInputsWithText(String text) {
+        page.firstNameInput.sendKeys(text);
+        page.lastNameInput.sendKeys(text);
+        page.companyInput.sendKeys(text);
+    }
 
     private void checkForAllErrorMessagesFromFirstStep(boolean shouldErrorMessagePresented) {
-
-        isThereErrorMessage(errorMessageFirstName, ERROR_MSG_FIRST_NAME, shouldErrorMessagePresented);
-
-        isThereErrorMessage(errorMessageLastName, ERROR_MSG_LAST_NAME, shouldErrorMessagePresented);
-
-        isThereErrorMessage(errorMessageCompany, ERROR_MSG_COMPANY, shouldErrorMessagePresented);
+        if (shouldErrorMessagePresented) {
+            assertEquals(page.errorMessageFirstName.getText(), ERROR_MSG_FIRST_NAME);
+            assertEquals(page.errorMessageLastName.getText(), ERROR_MSG_LAST_NAME);
+            assertEquals(page.errorMessageCompany.getText(), ERROR_MSG_COMPANY);
+        } else {
+            assertFalse(isElementPresent(page.errorMessageFirstName));
+            assertFalse(isElementPresent(page.errorMessageLastName));
+            assertFalse(isElementPresent(page.errorMessageCompany));
+        }
     }
-
 }
