@@ -42,36 +42,35 @@ public class MatrixPage extends MetamerPage {
 
     public static final int ROWS_COUNT = 4;
     public static final int COLUMNS_COUNT = 4;
+    public static final By BY_CELL = By.cssSelector("div.cell");
+    public static final By BY_INPUT = By.cssSelector("input[type=text]");
+    public static final By BY_INCREMENTLINK = By.cssSelector("a[id$=increaseLink]");
+    public static final By BY_DECREMENTLINK = By.cssSelector("a[id$=decreaseLink]");
+    public static final By BY_CLEARLINK = By.cssSelector("a[id$=clearLink]");
 
     @FindBy(css = "div[id$=matrixInput] > table > tbody > tr")
     public List<WebElement> inputRows;
     @FindBy(css = "div[id$=matrixOutput] > table > tbody > tr")
     public List<WebElement> outputRows;
 
-    public By cell = By.cssSelector("div.cell");
-    private By input = By.cssSelector("input[type=text]");
-    private By incrementLink = By.cssSelector("a[id$=increaseLink]");
-    private By decrementLink = By.cssSelector("a[id$=decreaseLink]");
-    private By clearLink = By.cssSelector("a[id$=clearLink]");
-
     private Vector<Vector<Integer>> matrix;
 
     public void incrementValue(int row, int column) {
-        Graphene.guardAjax(inputRows.get(row).findElements(cell).get(column).findElement(incrementLink)).click();
+        Graphene.guardAjax(inputRows.get(row).findElements(BY_CELL).get(column).findElement(BY_INCREMENTLINK)).click();
 
         Integer oldValue = matrix.get(row).get(column);
         matrix.get(row).set(column, oldValue + 1);
     }
 
     public void decrementValue(int row, int column) {
-        Graphene.guardAjax(inputRows.get(row).findElements(cell).get(column).findElement(decrementLink)).click();
+        Graphene.guardAjax(inputRows.get(row).findElements(BY_CELL).get(column).findElement(BY_DECREMENTLINK)).click();
 
         Integer oldValue = matrix.get(row).get(column);
         matrix.get(row).set(column, oldValue - 1);
     }
 
     public void changeValue(int row, int column, int newValue) {
-        WebElement inputElement = inputRows.get(row).findElements(cell).get(column).findElement(input);
+        WebElement inputElement = inputRows.get(row).findElements(BY_CELL).get(column).findElement(BY_INPUT);
         inputElement.clear();
         Graphene.guardAjax(inputElement).sendKeys(Integer.toString(newValue), Keys.RETURN);
 
@@ -79,18 +78,18 @@ public class MatrixPage extends MetamerPage {
     }
 
     public void clearValue(int row, int column) {
-        Graphene.guardAjax(inputRows.get(row).findElements(cell).get(column).findElement(clearLink)).click();
+        Graphene.guardAjax(inputRows.get(row).findElements(BY_CELL).get(column).findElement(BY_CLEARLINK)).click();
 
         matrix.get(row).set(column, 0);
     }
 
     public Integer obtainOutputValue(int row, int column) {
-        return Integer.valueOf(outputRows.get(row).findElements(cell).get(column).getText());
+        return Integer.valueOf(outputRows.get(row).findElements(BY_CELL).get(column).getText());
     }
 
     public Integer obtainInputValue(int row, int column) {
-        return Integer.valueOf(inputRows.get(row).findElements(cell).get(column).findElement(input)
-            .getAttribute("value"));
+        return Integer.valueOf(inputRows.get(row).findElements(BY_CELL).get(column).findElement(BY_INPUT)
+                .getAttribute("value"));
     }
 
     public void checkMatrix() {
@@ -98,9 +97,9 @@ public class MatrixPage extends MetamerPage {
             for (int column = 0; column < COLUMNS_COUNT; column++) {
                 Integer expectedValue = matrix.get(row).get(column);
                 assertEquals(obtainInputValue(row, column), expectedValue,
-                    format("The input value on coordinates row:{0}, column:{1} does not match: ", row, column));
+                        format("The input value on coordinates row:{0}, column:{1} does not match: ", row, column));
                 assertEquals(obtainOutputValue(row, column), expectedValue,
-                    format("The output value on coordinates row:{0}, column:{1} does not match: ", row, column));
+                        format("The output value on coordinates row:{0}, column:{1} does not match: ", row, column));
             }
         }
     }

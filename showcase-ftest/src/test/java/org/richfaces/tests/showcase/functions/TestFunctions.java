@@ -22,7 +22,6 @@
 package org.richfaces.tests.showcase.functions;
 
 import org.jboss.arquillian.graphene.Graphene;
-import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.Keys;

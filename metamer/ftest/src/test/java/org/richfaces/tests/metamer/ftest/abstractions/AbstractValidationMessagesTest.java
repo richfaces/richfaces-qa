@@ -44,7 +44,7 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
     private static final String MSG_BEAN = "Custom validator error message from bean.";
     private static final String MSG_BUNDLE_JSR = "Custom validator error message from bundle (JSR-303).";
     private static final String MSG_BUNDLE_JSF_CUSTOM = "Custom validator error message from bundle (JSF).";
-    private static final String MSG_BUNDLE_JSF_DEFAULT = "form:jsf-inBundle: Validation Error: Specified attribute is not between the expected values of 2 and 9.";
+    private static final String MSG_BUNDLE_JSF_DEFAULT = "jsf-inBundle: Validation Error: Specified attribute is not between the expected values of 2 and 9.";
     private final String component;
 
     public AbstractValidationMessagesTest(String component) {
@@ -131,7 +131,7 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
     public void testJSFMessagesJSF() {
         page.setWrongValuesAndSubmitJSF();
         assertEquals(page.jsfInAttMsg.getText(), MSG_ATT);
-        assertEquals(page.jsfInBundleMsg.getText(), MSG_BUNDLE_JSF_DEFAULT);
+        assertTrue(page.jsfInBundleMsg.getText().endsWith(MSG_BUNDLE_JSF_DEFAULT));
         page.activateCustomMessages();
         page.setWrongValuesAndSubmitJSF();
         assertEquals(page.jsfInAttMsg.getText(), MSG_ATT);
@@ -146,11 +146,10 @@ public abstract class AbstractValidationMessagesTest extends AbstractWebDriverTe
     public void testJSFMessagesRF() {
         page.setWrongValuesAndSubmitRF();
         assertEquals(page.jsfInAttMsg.getText(), MSG_ATT);
-        assertEquals(page.jsfInBundleMsg.getText(), MSG_BUNDLE_JSF_DEFAULT);
+        assertTrue(page.jsfInBundleMsg.getText().endsWith(MSG_BUNDLE_JSF_DEFAULT));
         page.activateCustomMessages();
         page.setWrongValuesAndSubmitRF();
         assertEquals(page.jsfInAttMsg.getText(), MSG_ATT);
         assertEquals(page.jsfInBundleMsg.getText(), MSG_BUNDLE_JSF_CUSTOM);
     }
-
 }

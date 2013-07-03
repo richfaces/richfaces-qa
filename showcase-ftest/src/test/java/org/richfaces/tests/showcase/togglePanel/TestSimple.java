@@ -21,61 +21,39 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.togglePanel;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.togglePanel.page.SimplePage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestSimple extends AbstractGrapheneTest {
+public class TestSimple extends AbstractWebDriverTest {
 
-    /* ****************************************************************************
-     * Constants****************************************************************************
-     */
-    protected final String CONTENT_OF_TAB1 = "For now you are at Panel 1";
-    protected final String CONTENT_OF_TAB2 = "For now you are at Panel 2";
+    private static final String CONTENT_OF_TAB1 = "For now you are at Panel 1";
+    private static final String CONTENT_OF_TAB2 = "For now you are at Panel 2";
 
-    /* ****************************************************************************
-     * Locators****************************************************************************
-     */
-
-    JQueryLocator toogleTab1 = jq("div[id$=tabs] > div:eq(0)");
-    JQueryLocator toogleTab2 = jq("div[id$=tabs] > div:eq(1)");
-    JQueryLocator bodyOfPanel = jq("div.rf-tgp-itm:visible");
-
-    /* ****************************************************************************
-     * Tests****************************************************************************
-     */
+    @Page
+    private SimplePage page;
 
     @Test
-    public void testTooglePanelItem1() {
-
-        checkToogleTab(toogleTab1, CONTENT_OF_TAB1);
+    public void testTogglePanelItem1() {
+        checkToggleTab(page.toggleTab1, CONTENT_OF_TAB1);
     }
 
     @Test
-    public void testTooglePanelItem2() {
-
-        checkToogleTab(toogleTab2, CONTENT_OF_TAB2);
+    public void testTogglePanelItem2() {
+        checkToggleTab(page.toggleTab2, CONTENT_OF_TAB2);
     }
 
-    /* ********************************************************************************
-     * Help methods********************************************************************************
-     */
-
-    private void checkToogleTab(JQueryLocator button, String expectedContent) {
-
-        guardXhr(selenium).click(button);
-
-        String actualContent = selenium.getText(bodyOfPanel);
-
-        assertTrue(actualContent.contains(expectedContent), "The content of " + button.getRawLocator()
-            + " is diferent!");
+    private void checkToggleTab(WebElement button, String expectedContent) {
+        guardAjax(button).click();
+        assertTrue(page.panelContent.getText().contains(expectedContent), "The content of panel is diferent!");
     }
 }

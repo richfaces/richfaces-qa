@@ -26,6 +26,7 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.calendar
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;

@@ -31,6 +31,8 @@ import java.util.List;
 
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.showcase.poll.page.PollingPage;
 import org.testng.annotations.Test;
 
 /**
@@ -39,33 +41,17 @@ import org.testng.annotations.Test;
  */
 public class TestPoll extends AbstractPollTest {
 
-    /* *******************************************************************************************************
-     * Locators ****************************************************************** *************************************
-     */
-
-    protected JQueryLocator serverDate = jq("span[id$=serverDate]");
-    protected JQueryLocator button = jq("input[type=submit]");
-
-    /* ********************************************************************************************************
-     * Tests ********************************************************************* ***********************************
-     */
+    @Page
+    private PollingPage page;
 
     @Test
-    public void testPooling() {
+    public void testPolling() {
         List<Integer> deviations = new ArrayList<Integer>();
-
-        TextRetriever dateRetriever = retrieveText.locator(serverDate);
-        dateRetriever.initializeValue();
-
         Integer deviation = null;
-
         for (int i = 0; i < 5; i++) {
-
-            deviation = waitForServerActionAndReturnDeviation(dateRetriever, "poll");
-
+            deviation = waitForServerActionAndReturnDeviation(page.serverDate, "poll");
             deviations.add(deviation);
         }
-
         Collections.sort(deviations);
         assertFalse(deviations.get(2) > 3, "The median of deviations is bigger than 3");
     }

@@ -23,6 +23,7 @@ package org.richfaces.tests.metamer.ftest.richPopupPanel;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.popupPanelAttributes;
+import static org.richfaces.tests.page.fragments.impl.popupPanel.PopupPanel.ResizerLocation.S;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
@@ -34,6 +35,7 @@ import java.util.Locale;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
@@ -558,6 +560,7 @@ public class TestPopupPanel extends AbstractWebDriverTest {
     @Test
     @Use(enumeration = true, field = "resizer")
     public void testResize() {
+        driver.manage().window().setSize(new Dimension(1024, 768));// to stabilize job on Jenkins
         popupPanelAttributes.set(PopupPanelAttributes.height, 400);
         popupPanelAttributes.set(PopupPanelAttributes.width, 400);
         popupPanelAttributes.set(PopupPanelAttributes.minHeight, 100);

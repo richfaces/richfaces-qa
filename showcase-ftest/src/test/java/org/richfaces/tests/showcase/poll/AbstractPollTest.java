@@ -21,20 +21,21 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.poll;
 
-import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
+import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 import static org.testng.Assert.assertTrue;
 
 import java.sql.Time;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 
-import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  */
-public class AbstractPollTest extends AbstractGrapheneTest {
+public class AbstractPollTest extends AbstractWebDriverTest {
 
     /**
      * Initialize GregorianCalendar with time which is give from dateRetriever
@@ -42,17 +43,15 @@ public class AbstractPollTest extends AbstractGrapheneTest {
      * @param dateRetriever
      *            TextRetriever from which the calendar with specific time will be inicialized
      */
-    public GregorianCalendar initializeCalendarFromDateRetriever(TextRetriever dateRetriever) {
+    public GregorianCalendar initializeCalendarFromDateRetriever(String date) {
 
-        String[] serverDateParsed = dateRetriever.getValue().split(":");
-
+        String[] serverDateParsed = date.split(":");
         String hours = serverDateParsed[1].substring(serverDateParsed[1].length() - 2, serverDateParsed[1].length());
         String minutes = serverDateParsed[2];
         String seconds = serverDateParsed[3].substring(0, 2);
 
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(Time.valueOf(hours.trim() + ":" + minutes + ":" + seconds));
-
         return calendar;
 
     }
@@ -66,36 +65,23 @@ public class AbstractPollTest extends AbstractGrapheneTest {
      *            the calendar with specific time which was after calendarInitial
      */
     public Integer computeDeviation(GregorianCalendar calendarInitial, GregorianCalendar calendarAfterServerAction) {
-
         int secondsInitial = calendarInitial.get(Calendar.SECOND);
         int secondsAfterServerAction = calendarAfterServerAction.get(Calendar.SECOND);
-
         // if there is more than one minute or one hour or deviation is return
         // error value -1
         if (secondsAfterServerAction == secondsInitial) {
-
+            return -1;
+        } else if ((calendarAfterServerAction.get(Calendar.MINUTE) - calendarInitial.get(Calendar.MINUTE)) >= 2) {
+            return -1;
+        } else if ((calendarAfterServerAction.get(Calendar.HOUR) - calendarInitial.get(Calendar.HOUR)) >= 2) {
             return -1;
         }
-
-        if ((calendarAfterServerAction.get(Calendar.MINUTE) - calendarInitial.get(Calendar.MINUTE)) >= 2) {
-            return -1;
-        }
-
-        if ((calendarAfterServerAction.get(Calendar.HOUR) - calendarInitial.get(Calendar.HOUR)) >= 2) {
-            return -1;
-        }
-
         int deviation = -1;
-
         if (secondsAfterServerAction < secondsInitial) {
-
             deviation = secondsAfterServerAction + (60 - secondsInitial);
-
         } else {
-
             deviation = secondsAfterServerAction - secondsInitial;
         }
-
         return deviation;
     }
 
@@ -107,22 +93,22 @@ public class AbstractPollTest extends AbstractGrapheneTest {
      *            retriever which points to the server date
      * @return deviation between two states of rendered server date(before particular server action and after)
      */
-    public Integer waitForServerActionAndReturnDeviation(TextRetriever dateRetriever, String whatServerAction) {
+    public Integer waitForServerActionAndReturnDeviation(WebElement dateElement, String whatServerAction) {
+        String date = dateElement.getText();
+        GregorianCalendar calendarInitial = initializeCalendarFromDateRetriever(date);
 
-        GregorianCalendar calendarInitial = initializeCalendarFromDateRetriever(dateRetriever);
+        waitAjax(webDriver).withTimeout(30, TimeUnit.SECONDS).until()
+                .element(dateElement)
+                .text()
+                .not()
+                .equalTo(date);
 
-        waitAjax.waitForChangeAndReturn(dateRetriever);
-
-        GregorianCalendar calendarAfterPush = initializeCalendarFromDateRetriever(dateRetriever);
-
-        assertTrue(calendarAfterPush.after(calendarInitial), "The time after" + whatServerAction
+        GregorianCalendar calendarAfterPush = initializeCalendarFromDateRetriever(dateElement.getText());
+        assertTrue(calendarAfterPush.after(calendarInitial), "The time after " + whatServerAction
             + "is before the initial time! You are returning to the past!");
-
         Integer deviation = computeDeviation(calendarInitial, calendarAfterPush);
-
         assertTrue(deviation > 0, "Deviaton: " + deviation + " between two " + whatServerAction + "s/es is either too "
             + "big (more than one minute/hour) or too small(zero)");
-
         return deviation;
     }
 }

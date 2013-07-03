@@ -21,54 +21,43 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.push;
 
-import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
-import static org.jboss.arquillian.ajocado.Graphene.waitAjax;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.StringUtils;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestPushTopicsContext extends AbstractGrapheneTest {
+public class TestPushTopicsContext extends AbstractWebDriverTest {
 
-    /* *****************************************************************************
-     * Locators ****************************************************************** ***********
-     */
-    private JQueryLocator uuid = jq("div[id$=uuid]");
+    @FindBy(css = "div[id$='uuid']")
+    private WebElement uuidElement;
 
     /* *****************************************************************************
      * Tests ********************************************************************* ********
      */
     @Test
     public void testUuidIsChangingInSomeIntervals() {
-        TextRetriever uuidRetriever = retrieveText.locator(uuid);
-        uuidRetriever.initializeValue();
-
-        checkTheUuid(uuidRetriever);
-
+        String uuid = uuidElement.getText();
+        checkTheUuid(uuid);
         List<Long> deviations = new ArrayList<Long>();
-
         for (int i = 0; i < 20; i++) {
-
-            Long deviation = checkDeviation(uuidRetriever);
-
+            Long deviation = checkDeviation();
             deviations.add(deviation);
         }
-
         Collections.sort(deviations);
-
         long median = deviations.get(9);
         assertTrue(((median > 4800) && (median < 5200)),
             "The median of five measurements should be in range of (4800ms, 5200ms)");
@@ -85,25 +74,23 @@ public class TestPushTopicsContext extends AbstractGrapheneTest {
      *            retriever which points to the uuid text
      * @return the deviation between two pushes
      */
-    private Long checkDeviation(TextRetriever uuidRetriever) {
+    private Long checkDeviation() {
         Long beforePush = System.currentTimeMillis();
-
-        waitAjax.failWith(new RuntimeException("The uuid is not changing, it is still the same!"))
-            .waitForChangeAndReturn(uuidRetriever);
-
+        String uuidBefore = uuidElement.getText();
+        Graphene.waitAjax(webDriver).withTimeout(30, TimeUnit.SECONDS).until()
+                .element(uuidElement)
+                .text()
+                .not()
+                .equalTo(uuidBefore);
         Long afterPush = System.currentTimeMillis();
-
-        checkTheUuid(uuidRetriever);
-
+        checkTheUuid(uuidElement.getText());
         return new Long(afterPush - beforePush);
     }
 
     /**
      * Check very simply whether uuid is correct, it means whether it has 36 characters and that contains 4 hyphens
      */
-    private void checkTheUuid(TextRetriever uuidRetriever) {
-        String uuid = uuidRetriever.getValue();
-
+    private void checkTheUuid(String uuid) {
         assertEquals(uuid.length(), 36, "The length of uuid is wrong!");
         assertEquals(StringUtils.countMatches(uuid, "-"), 4, "Wrong uuid, there should be 4 hyphens");
     }
