@@ -37,12 +37,20 @@ import org.openqa.selenium.WebElement;
 public class RichFacesToolbarGroupSeparator {
 
     @Root
-    public WebElement root;
+    private WebElement root;
 
     @FindBy(tagName = "img")
-    public WebElement imgIcon;
+    private WebElement imgIcon;
 
     public WebElement getIconByName(String icoName) {
         return root.findElement(By.cssSelector("div.rf-tb-sep-" + icoName));
+    }
+
+    public WebElement getImgIcon() {
+        return imgIcon;
+    }
+
+    public WebElement getRoot() {
+        return root;
     }
 }
