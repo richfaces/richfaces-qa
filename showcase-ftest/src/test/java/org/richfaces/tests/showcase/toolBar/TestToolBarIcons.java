@@ -21,79 +21,44 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.toolBar;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardXhr;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.toolBar.page.ToolbarIconsPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestToolBarIcons extends AbstractGrapheneTest {
+public class TestToolBarIcons extends AbstractWebDriverTest {
 
-    /* ***********************************************************************************
-     * Constants***********************************************************************************
-     */
+    private static final int NUMBER_OF_GROUP_SEP = 1;
+    private static final int NUMBER_OF_ITEMS_SEP = 4;
 
-    protected final int NUMBER_OF_GROUP_SEP = 1;
-    protected final int NUMBER_OF_ITEMS_SEP = 4;
-
-    /* ***********************************************************************************
-     * Locators***********************************************************************************
-     */
-
-    protected JQueryLocator lineGroupSep = jq("a:contains('Line'):eq(0)");
-    protected JQueryLocator gridGroupSep = jq("a:contains('Grid'):eq(0)");
-    protected JQueryLocator discGroupSep = jq("a:contains('Disc'):eq(0)");
-    protected JQueryLocator squareGroupSep = jq("a:contains('Square'):eq(0)");
-    protected JQueryLocator noneGroupSep = jq("a:contains('None'):eq(0)");
-
-    protected JQueryLocator lineItemSeparator = jq("a:contains('Line'):eq(1)");
-    protected JQueryLocator gridItemSep = jq("a:contains('Grid'):eq(1)");
-    protected JQueryLocator discItemSep = jq("a:contains('Disc'):eq(1)");
-    protected JQueryLocator squareItemSep = jq("a:contains('Square'):eq(1)");
-    protected JQueryLocator noneItemSep = jq("a:contains('None'):eq(1)");
-
-    protected JQueryLocator lineSep = jq("div.rf-tb-sep-line");
-    protected JQueryLocator gridSep = jq("div.rf-tb-sep-grid");
-    protected JQueryLocator discSep = jq("div.rf-tb-sep-disc");
-    protected JQueryLocator squareSep = jq("div.rf-tb-sep-square");
-
-    /* **********************************************************************************
-     * Tests**********************************************************************************
-     */
+    @Page
+    private ToolbarIconsPage page;
 
     @Test
     public void testGroupSeparators() {
-
-        guardXhr(selenium).click(noneGroupSep);
-        guardXhr(selenium).click(noneItemSep);
-
-        checkNumberOfAllGroupsOrItemsSeparators(0, lineGroupSep, gridGroupSep, discGroupSep, squareGroupSep);
-
-        checkNumberOfAllGroupsOrItemsSeparators(NUMBER_OF_GROUP_SEP, lineGroupSep, gridGroupSep, discGroupSep,
-            squareGroupSep);
+        page.noneGroupSep.click();
+        page.noneItemSep.click();
+        checkNumberOfAllGroupsOrItemsSeparators(0, page.lineGroupSep, page.gridGroupSep, page.discGroupSep, page.squareGroupSep);
+        checkNumberOfAllGroupsOrItemsSeparators(NUMBER_OF_GROUP_SEP, page.lineGroupSep, page.gridGroupSep, page.discGroupSep,
+            page.squareGroupSep);
     }
 
     @Test
     public void testItemSeparators() {
-
-        guardXhr(selenium).click(noneGroupSep);
-        guardXhr(selenium).click(noneItemSep);
-
-        checkNumberOfAllGroupsOrItemsSeparators(0, lineItemSeparator, gridItemSep, discItemSep, squareItemSep);
-
-        checkNumberOfAllGroupsOrItemsSeparators(NUMBER_OF_ITEMS_SEP, lineItemSeparator, gridItemSep, discItemSep,
-            squareItemSep);
+        page.noneGroupSep.click();
+        page.noneItemSep.click();
+        checkNumberOfAllGroupsOrItemsSeparators(0, page.lineItemSeparator, page.gridItemSep, page.discItemSep, page.squareItemSep);
+        checkNumberOfAllGroupsOrItemsSeparators(NUMBER_OF_ITEMS_SEP, page.lineItemSeparator, page.gridItemSep, page.discItemSep,
+            page.squareItemSep);
     }
-
-    /* ***********************************************************************************************
-     * Help methods***********************************************************************************************
-     */
 
     /**
      * Checks for number of all groups/items separators
@@ -101,28 +66,23 @@ public class TestToolBarIcons extends AbstractGrapheneTest {
      * @param numberOfSeparators
      *            the expected number of all groups/items separators
      */
-    private void checkNumberOfAllGroupsOrItemsSeparators(int numberOfSeparators, JQueryLocator whichLineSep,
-        JQueryLocator whichGridSep, JQueryLocator whichDicsSep, JQueryLocator whichSquareSep) {
-
-        if (numberOfSeparators != 0)
-            guardXhr(selenium).click(whichLineSep);
-        int actualNumberOfSeparators = selenium.getCount(lineSep);
-        assertEquals(actualNumberOfSeparators, numberOfSeparators, "Wrong number of line groups/items separators");
-
-        if (numberOfSeparators != 0)
-            guardXhr(selenium).click(whichGridSep);
-        numberOfSeparators = selenium.getCount(gridSep);
-        assertEquals(actualNumberOfSeparators, numberOfSeparators, "Wrong number of grid groups/items separators");
-
-        if (numberOfSeparators != 0)
-            guardXhr(selenium).click(whichDicsSep);
-        numberOfSeparators = selenium.getCount(discSep);
-        assertEquals(actualNumberOfSeparators, numberOfSeparators, "Wrong number of disc groups/items separators");
-
-        if (numberOfSeparators != 0)
-            guardXhr(selenium).click(whichSquareSep);
-        numberOfSeparators = selenium.getCount(squareSep);
-        assertEquals(actualNumberOfSeparators, numberOfSeparators, "Wrong number of square groups/items separators");
-
+    private void checkNumberOfAllGroupsOrItemsSeparators(int numberOfSeparators, WebElement whichLineSep,
+            WebElement whichGridSep, WebElement whichDicsSep, WebElement whichSquareSep) {
+        if(numberOfSeparators != 0) {
+            guardAjax(whichLineSep).click();
+        }
+        assertEquals(page.lineSep.size(), numberOfSeparators, "Wrong number of line groups/items separators");
+        if (numberOfSeparators != 0) {
+            guardAjax(whichGridSep).click();
+        }
+        assertEquals(page.gridSep.size(), numberOfSeparators, "Wrong number of grid groups/items separators");
+        if (numberOfSeparators != 0) {
+            guardAjax(whichDicsSep).click();
+        }
+        assertEquals(page.discSep.size(), numberOfSeparators, "Wrong number of disc groups/items separators");
+        if (numberOfSeparators != 0) {
+            guardAjax(whichSquareSep).click();
+        }
+        assertEquals(page.squareSep.size(), numberOfSeparators, "Wrong number of square groups/items separators");
     }
 }
