@@ -29,6 +29,11 @@ import org.openqa.selenium.WebElement;
  *
  */
 public class RichFacesToolbar {
+
     @Root
-    public WebElement root;
+    private WebElement root;
+
+    public WebElement getRoot() {
+        return root;
+    }
 }

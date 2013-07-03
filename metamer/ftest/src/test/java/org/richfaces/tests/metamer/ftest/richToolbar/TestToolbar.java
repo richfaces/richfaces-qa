@@ -44,27 +44,26 @@ import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
 
-
 /**
  * Test case for page /faces/components/richToolbar/simple.xhtml
  *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 23119 $
  */
-public class TestRichToolbar extends AbstractWebDriverTest {
+public class TestToolbar extends AbstractWebDriverTest {
 
     @Page
-    ToolbarPage page;
+    private ToolbarPage page;
 
     private WebElement[] items;
     private String[] separators = { "disc", "grid", "line", "square" };
 
-    private By[] itemsBy = new By[] {By.cssSelector("td[id$=createDocument_itm]"), By.cssSelector("td[id$=createFolder_itm]"),
+    private By[] itemsBy = new By[]{ By.cssSelector("td[id$=createDocument_itm]"), By.cssSelector("td[id$=createFolder_itm]"),
         By.cssSelector("td[id$=copy_itm]"), By.cssSelector("td[id$=save_itm]"), By.cssSelector("td[id$=saveAs_itm]"),
-        By.cssSelector("td[id$=saveAll_itm]"), By.cssSelector("td[id$=input_itm]"), By.cssSelector("td[id$=button_itm]")};
+        By.cssSelector("td[id$=saveAll_itm]"), By.cssSelector("td[id$=input_itm]"), By.cssSelector("td[id$=button_itm]") };
 
     @Inject
-    @Use(empty=true)
+    @Use(empty = true)
     private By itemBy;
 
     @Inject
@@ -81,11 +80,11 @@ public class TestRichToolbar extends AbstractWebDriverTest {
     public void testInit() {
         assertTrue(Graphene.element(page.toolbar).isPresent().apply(driver), "Toolbar should be present on the page.");
         assertTrue(Graphene.element(page.toolbar).isVisible().apply(driver), "Toolbar should be visible.");
-        assertTrue(Graphene.element(page.separator.root).not().isPresent().apply(driver),
-            "Item separator should not be present on the page.");
+        assertTrue(Graphene.element(page.separator.getRoot()).not().isPresent().apply(driver),
+                "Item separator should not be present on the page.");
         // just test of inverse logic could be applied as replace
-        assertFalse(Graphene.element(page.separator.root).isPresent().apply(driver),
-            "Item separator should not be present on the page.");
+        assertFalse(Graphene.element(page.separator.getRoot()).isPresent().apply(driver),
+                "Item separator should not be present on the page.");
     }
 
     @Test
@@ -99,7 +98,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
     public void testHeight() {
         AttributeConditionFactory styleAttr = Graphene.element(page.toolbar).attribute("style");
         assertTrue(styleAttr.isPresent().apply(driver),
-            "Attribute style should be present.");
+                "Attribute style should be present.");
         assertTrue(styleAttr.contains("height: 28px").apply(driver), "Height in attribute style should be 28px");
 
         toolbarAttributes.set(ToolbarAttributes.height, "50px");
@@ -110,7 +109,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
     @Use(field = "itemBy", value = "itemsBy")
     @Templates(value = "plain")
     public void testItemClass() {
-        testStyleClass(driver.findElement(itemBy) , itemClass);
+        testStyleClass(driver.findElement(itemBy), itemClass);
     }
 
     @Test
@@ -118,39 +117,39 @@ public class TestRichToolbar extends AbstractWebDriverTest {
     public void testItemSeparatorCorrect() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, itemSeparator);
 
-        assertTrue(Graphene.element(page.separator.root).isPresent().apply(driver), "Item separator should be present on the page.");
+        assertTrue(Graphene.element(page.separator.getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
         assertTrue(Graphene.element(page.separator.getIconByName(itemSeparator)).isPresent().apply(driver), "Item separator does not work correctly.");
     }
 
     @Test
     public void testItemSeparatorNone() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, "none");
-        assertTrue(Graphene.element(page.separator.root).not().isPresent().apply(driver), "Item separator should not be present on the page.");
+        assertTrue(Graphene.element(page.separator.getRoot()).not().isPresent().apply(driver), "Item separator should not be present on the page.");
 
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, "null");
-        assertTrue(Graphene.element(page.separator.root).not().isPresent().apply(driver), "Item separator should not be present on the page.");
+        assertTrue(Graphene.element(page.separator.getRoot()).not().isPresent().apply(driver), "Item separator should not be present on the page.");
     }
 
     @Test
     public void testItemSeparatorCustom() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, "star");
 
-        assertTrue(Graphene.element(page.separator.root).isPresent().apply(driver), "Item separator should be present on the page.");
-        assertTrue(Graphene.element(page.separator.imgIcon).isPresent().apply(driver), "Item separator does not work correctly.");
+        assertTrue(Graphene.element(page.separator.getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
+        assertTrue(Graphene.element(page.separator.getImgIcon()).isPresent().apply(driver), "Item separator does not work correctly.");
 
-        assertTrue(Graphene.attribute(page.separator.imgIcon, "src").contains("star.png").apply(driver),
-            "Separator's image should link to picture star.png.");
+        assertTrue(Graphene.attribute(page.separator.getImgIcon(), "src").contains("star.png").apply(driver),
+                "Separator's image should link to picture star.png.");
     }
 
     @Test
     public void testItemSeparatorNonExisting() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, "non-existing");
 
-        assertTrue(Graphene.element(page.separator.root).isPresent().apply(driver), "Item separator should be present on the page.");
-        assertTrue(Graphene.element(page.separator.imgIcon).isPresent().apply(driver), "Item separator does not work correctly.");
+        assertTrue(Graphene.element(page.separator.getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
+        assertTrue(Graphene.element(page.separator.getImgIcon()).isPresent().apply(driver), "Item separator does not work correctly.");
 
-        assertTrue(Graphene.attribute(page.separator.imgIcon, "src").contains("non-existing").apply(driver),
-            "Separator's image should link to \"non-existing\".");
+        assertTrue(Graphene.attribute(page.separator.getImgIcon(), "src").contains("non-existing").apply(driver),
+                "Separator's image should link to \"non-existing\".");
     }
 
     @Test
@@ -185,7 +184,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
         // testFireEvent(toolbarAttributes, ToolbarAttributes.onitemkeydown, keyDown);
 
         testFireEventWithJS(driver.findElement(itemBy),
-            Event.KEYDOWN, toolbarAttributes, ToolbarAttributes.onitemkeydown);
+                Event.KEYDOWN, toolbarAttributes, ToolbarAttributes.onitemkeydown);
     }
 
     @Test
@@ -197,7 +196,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
         // testFireEvent(toolbarAttributes, ToolbarAttributes.onitemkeypress, keyPress);
 
         testFireEventWithJS(driver.findElement(itemBy),
-            Event.KEYPRESS, toolbarAttributes, ToolbarAttributes.onitemkeypress);
+                Event.KEYPRESS, toolbarAttributes, ToolbarAttributes.onitemkeypress);
     }
 
     @Test
@@ -209,7 +208,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
         // testFireEvent(toolbarAttributes, ToolbarAttributes.onitemkeyup, keyup);
 
         testFireEventWithJS(driver.findElement(itemBy),
-            Event.KEYUP, toolbarAttributes, ToolbarAttributes.onitemkeyup);
+                Event.KEYUP, toolbarAttributes, ToolbarAttributes.onitemkeyup);
     }
 
     @Test
@@ -236,7 +235,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
         // Action mouseOut = new Actions(driver).moveToElement(WebElementProxyUtils.createProxyForElement(itemBy)).moveByOffset(-1, -1).build();
         // testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmouseout, mouseOut);
         testFireEventWithJS(driver.findElement(itemBy),
-            Event.MOUSEOUT, toolbarAttributes, ToolbarAttributes.onitemmouseout);
+                Event.MOUSEOUT, toolbarAttributes, ToolbarAttributes.onitemmouseout);
     }
 
     @Test
@@ -281,7 +280,7 @@ public class TestRichToolbar extends AbstractWebDriverTest {
         AttributeConditionFactory styleAttr = Graphene.attribute(page.toolbar, "style");
         assertTrue(styleAttr.isPresent().apply(driver), "Attribute style should be present.");
         assertTrue(styleAttr.contains("width: 100%").apply(driver),
-            "Attribute style should have 100% width when it is not set.");
+                "Attribute style should have 100% width when it is not set.");
 
         toolbarAttributes.set(ToolbarAttributes.width, "500px");
         styleAttr = Graphene.attribute(page.toolbar, "style");

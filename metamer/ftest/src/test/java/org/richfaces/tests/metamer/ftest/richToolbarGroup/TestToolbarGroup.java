@@ -1,25 +1,24 @@
-/**
- * *****************************************************************************
- * JBoss, Home of Professional Open Source Copyright 2010-2013, Red Hat, Inc.
- * and individual contributors by the @authors tag. See the copyright.txt in the
- * distribution for a full listing of individual contributors.
+/*******************************************************************************
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * This software is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this software; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
- * site: http://www.fsf.org.
- ******************************************************************************
- */
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richToolbarGroup;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
@@ -55,25 +54,25 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22733 $
  */
-public class TestRichToolbarGroup extends AbstractWebDriverTest {
+public class TestToolbarGroup extends AbstractWebDriverTest {
 
     @Page
-    ToolbarPage page;
+    private ToolbarPage page;
 
     AttributeContains attrContains = AttributeContains.getInstance();
 
     private String[] separators = { "disc", "grid", "line", "square" };
 
-    private By[] itemsBy = new By[] {By.cssSelector("td[id$=createDocument_itm]"), By.cssSelector("td[id$=createFolder_itm]"),
+    private By[] itemsBy = new By[]{ By.cssSelector("td[id$=createDocument_itm]"), By.cssSelector("td[id$=createFolder_itm]"),
         By.cssSelector("td[id$=copy_itm]"), By.cssSelector("td[id$=save_itm]"), By.cssSelector("td[id$=saveAs_itm]"),
-        By.cssSelector("td[id$=saveAll_itm]")};
+        By.cssSelector("td[id$=saveAll_itm]") };
 
     @Inject
     @Use(empty = true)
     private String itemSeparator;
 
     @Inject
-    @Use(empty=true)
+    @Use(empty = true)
     private By itemBy;
 
     @Override
@@ -86,7 +85,7 @@ public class TestRichToolbarGroup extends AbstractWebDriverTest {
     public void testInit() {
         assertTrue(Graphene.element(page.toolbar).isPresent().apply(driver), "Toolbar should be present on the page.");
         assertTrue(Graphene.element(page.toolbar).isVisible().apply(driver), "Toolbar should be visible.");
-        assertFalse(Graphene.element(page.separator.root).isPresent().apply(driver), "No item separator should be present on the page.");
+        assertFalse(Graphene.element(page.separator.getRoot()).isPresent().apply(driver), "No item separator should be present on the page.");
         assertTrue(Graphene.element(page.itemInput).isPresent().apply(driver), "Input should be present on the page.");
         assertTrue(Graphene.element(page.itemInput).isVisible().apply(driver), "Input should be visible.");
         assertTrue(Graphene.element(page.itemButton).isPresent().apply(driver), "Button should be present on the page.");
@@ -105,7 +104,7 @@ public class TestRichToolbarGroup extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-9976")
     @Templates(value = "plain")
     public void testItemClass() {
-        testStyleClass(driver.findElement(itemBy) , itemClass);
+        testStyleClass(driver.findElement(itemBy), itemClass);
     }
 
     @Test
@@ -115,7 +114,7 @@ public class TestRichToolbarGroup extends AbstractWebDriverTest {
 
         List<WebElement> separatorDivs = driver.findElements(By.cssSelector("div.rf-tb-sep-" + itemSeparator));
 
-        assertTrue(Graphene.element(page.separator.root).isPresent().apply(driver), "Item separator should be present on the page.");
+        assertTrue(Graphene.element(page.separator.getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
         assertEquals(page.separators.size(), 5, "Number of separators.");
         assertTrue(Graphene.element(page.separator.getIconByName(itemSeparator)).isPresent().apply(driver), "Item separator does not work correctly.");
         assertEquals(separatorDivs.size(), 5, "Number of separators.");
@@ -124,36 +123,36 @@ public class TestRichToolbarGroup extends AbstractWebDriverTest {
     @Test
     public void testItemSeparatorNone() {
         toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "none");
-        assertFalse(Graphene.element(page.separator.root).isPresent().apply(driver), "No item separator should be present on the page.");
+        assertFalse(Graphene.element(page.separator.getRoot()).isPresent().apply(driver), "No item separator should be present on the page.");
 
         toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "null");
-        assertFalse(Graphene.element(page.separator.root).isPresent().apply(driver), "No item separator should be present on the page.");
+        assertFalse(Graphene.element(page.separator.getRoot()).isPresent().apply(driver), "No item separator should be present on the page.");
     }
 
     @Test
     public void testItemSeparatorCustom() {
         toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "star");
 
-        assertTrue(Graphene.element(page.separator.root).isPresent().apply(driver), "Item separator should be present on the page.");
+        assertTrue(Graphene.element(page.separator.getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
         assertEquals(page.separators.size(), 5, "Number of separators.");
-        assertTrue(Graphene.element(page.separator.imgIcon).isPresent().apply(driver), "Item separator do not work correctly.");
+        assertTrue(Graphene.element(page.separator.getImgIcon()).isPresent().apply(driver), "Item separator do not work correctly.");
         assertEquals(page.separatorsImages.size(), 5, "Number of separators.");
 
-        assertTrue(Graphene.attribute(page.separator.imgIcon, "src").contains("star.png").apply(driver),
-            "Separator's image should link to picture star.png.");
+        assertTrue(Graphene.attribute(page.separator.getImgIcon(), "src").contains("star.png").apply(driver),
+                "Separator's image should link to picture star.png.");
     }
 
     @Test
     public void testItemSeparatorNonExisting() {
         toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "non-existing");
 
-        assertTrue(Graphene.element(page.separator.root).isPresent().apply(driver), "Item separators should be present on the page.");
+        assertTrue(Graphene.element(page.separator.getRoot()).isPresent().apply(driver), "Item separators should be present on the page.");
         assertEquals(page.separators.size(), 5, "Number of separators.");
-        assertTrue(Graphene.element(page.separator.imgIcon).isPresent().apply(driver), "Item separators do not work correctly.");
+        assertTrue(Graphene.element(page.separator.getImgIcon()).isPresent().apply(driver), "Item separators do not work correctly.");
         assertEquals(page.separatorsImages.size(), 5, "Number of separators.");
 
-        assertTrue(Graphene.attribute(page.separator.imgIcon, "src").contains("non-existing").apply(driver),
-            "Separator's image should link to \"non-existing\".");
+        assertTrue(Graphene.attribute(page.separator.getImgIcon(), "src").contains("non-existing").apply(driver),
+                "Separator's image should link to \"non-existing\".");
     }
 
     @Test
@@ -167,23 +166,23 @@ public class TestRichToolbarGroup extends AbstractWebDriverTest {
     @Test
     public void testLocation() {
         assertFalse(attrContains.element(page.items.get(0)).attributeName("class").attributeValue("rf-tb-emp").apply(driver),
-            "Toolbar group should  be located on the left.");
+                "Toolbar group should  be located on the left.");
         assertTrue(attrContains.element(page.items.get(6)).attributeName("class").attributeValue("rf-tb-emp").apply(driver),
-            "Toolbar group should  be located on the left.");
+                "Toolbar group should  be located on the left.");
 
         toolbarGroupAttributes.set(ToolbarGroupAttributes.location, "right");
 
         assertTrue(attrContains.element(page.items.get(0)).attributeName("class").attributeValue("rf-tb-emp").apply(driver),
-            "Toolbar group should  be located on the right.");
+                "Toolbar group should  be located on the right.");
         assertFalse(attrContains.element(page.items.get(6)).attributeName("class").attributeValue("rf-tb-emp").apply(driver),
-            "Toolbar group should  be located on the right.");
+                "Toolbar group should  be located on the right.");
 
         toolbarGroupAttributes.set(ToolbarGroupAttributes.location, "wrong");
 
         assertFalse(attrContains.element(page.items.get(0)).attributeName("class").attributeValue("rf-tb-emp").apply(driver),
-            "Toolbar group should  be located on the left.");
+                "Toolbar group should  be located on the left.");
         assertTrue(attrContains.element(page.items.get(6)).attributeName("class").attributeValue("rf-tb-emp").apply(driver),
-            "Toolbar group should  be located on the left.");
+                "Toolbar group should  be located on the left.");
     }
 
     @Test
@@ -208,7 +207,7 @@ public class TestRichToolbarGroup extends AbstractWebDriverTest {
     public void testOnitemkeydown() {
         // TODO JJa 2013-03-14: Doesn't work for now with Action, rewrite if it changes
         testFireEventWithJS(driver.findElement(itemBy),
-            Event.KEYDOWN, toolbarGroupAttributes, ToolbarGroupAttributes.onitemkeydown);
+                Event.KEYDOWN, toolbarGroupAttributes, ToolbarGroupAttributes.onitemkeydown);
     }
 
     @Test
@@ -217,7 +216,7 @@ public class TestRichToolbarGroup extends AbstractWebDriverTest {
     public void testOnitemkeypress() {
         // TODO JJa 2013-03-14: Doesn't work for now with Action, rewrite if it changes
         testFireEventWithJS(driver.findElement(itemBy),
-            Event.KEYPRESS, toolbarGroupAttributes, ToolbarGroupAttributes.onitemkeypress);
+                Event.KEYPRESS, toolbarGroupAttributes, ToolbarGroupAttributes.onitemkeypress);
     }
 
     @Test
@@ -226,7 +225,7 @@ public class TestRichToolbarGroup extends AbstractWebDriverTest {
     public void testOnitemkeyup() {
         // TODO JJa 2013-03-14: Doesn't work for now with Action, rewrite if it changes
         testFireEventWithJS(driver.findElement(itemBy),
-            Event.KEYUP, toolbarGroupAttributes, ToolbarGroupAttributes.onitemkeyup);
+                Event.KEYUP, toolbarGroupAttributes, ToolbarGroupAttributes.onitemkeyup);
     }
 
     @Test
@@ -251,7 +250,7 @@ public class TestRichToolbarGroup extends AbstractWebDriverTest {
     public void testOnitemmouseout() {
         // TODO JJa 2013-03-14: Doesn't work for now with Action, rewrite if it changes
         testFireEventWithJS(driver.findElement(itemBy),
-            Event.MOUSEOUT, toolbarGroupAttributes, ToolbarGroupAttributes.onitemmouseout);
+                Event.MOUSEOUT, toolbarGroupAttributes, ToolbarGroupAttributes.onitemmouseout);
     }
 
     @Test
@@ -278,7 +277,7 @@ public class TestRichToolbarGroup extends AbstractWebDriverTest {
 
         assertTrue(Graphene.element(page.toolbar).isPresent().apply(driver), "Toolbar should be present on the page.");
         assertTrue(Graphene.element(page.toolbar).isVisible().apply(driver), "Toolbar should be visible.");
-        assertFalse(Graphene.element(page.separator.root).isPresent().apply(driver), "No item separator should be present on the page.");
+        assertFalse(Graphene.element(page.separator.getRoot()).isPresent().apply(driver), "No item separator should be present on the page.");
         assertTrue(Graphene.element(page.itemInput).isPresent().apply(driver), "Input should be present on the page.");
         assertTrue(Graphene.element(page.itemInput).isVisible().apply(driver), "Input should be visible.");
         assertTrue(Graphene.element(page.itemButton).isPresent().apply(driver), "Button should be present on the page.");
