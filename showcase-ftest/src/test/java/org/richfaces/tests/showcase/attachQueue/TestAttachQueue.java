@@ -21,51 +21,29 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.attachQueue;
 
+import java.util.concurrent.TimeUnit;
 import static org.testng.Assert.assertTrue;
-import static org.jboss.arquillian.ajocado.Graphene.elementNotVisible;
-import static org.jboss.arquillian.ajocado.Graphene.elementVisible;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
 
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.cheiron.halt.XHRHalter;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.attachQueue.page.AttachQueuePage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestAttachQueue extends AbstractGrapheneTest {
+public class TestAttachQueue extends AbstractWebDriverTest {
 
-    /* *************************************************************************************
-     * Locators*************************************************************************************
-     */
+    private static final int DELAY_IN_MILISECONDS = 2000;
+    private static final int NO_DELAY = 0;
 
-    protected JQueryLocator input = jq("input[type=text]:visible");
-    protected JQueryLocator submit = jq("input[type=submit]");
-    protected JQueryLocator ajaxRequestProcessing = jq("span[class=rf-st-start]");
-
-    /* ***************************************************************************************
-     * Constants***************************************************************************************
-     */
-    private final int DELAY_IN_MILISECONDS = 2000;
-    private final int NO_DELAY = 0;
-
-    /* *****************************************************************************************
-     * Fields****************************************************************************************
-     */
-
-    protected XHRHalter handle;
-
-    /* ***************************************************************************************
-     * Tests***************************************************************************************
-     */
+    @Page
+    private AttachQueuePage page;
 
     @Test
     public void testInput() {
-
         for (int i = 0; i < 5; i++) {
             typeToTheInputAndCheckTheDelay();
         }
@@ -73,11 +51,9 @@ public class TestAttachQueue extends AbstractGrapheneTest {
 
     @Test
     public void testButton() {
-
         for (int i = 0; i < 5; i++) {
             clickOnTheButtonAndCheckTheDelay();
         }
-
     }
 
     /*
@@ -85,29 +61,20 @@ public class TestAttachQueue extends AbstractGrapheneTest {
      * DELAY_IN_MILISECONDS and DELAY_IN_MILISECONDS + 1000
      */
     private void typeToTheInputAndCheckTheDelay() {
-
-        XHRHalter.enable();
-
-        selenium.type(input, "a");
-        selenium.fireEvent(input, Event.KEYUP);
-
         long timeBeforePressingKey = System.currentTimeMillis();
-
-        waitGui.until(elementVisible.locator(ajaxRequestProcessing));
-
+        page.input.sendKeys("a");
+        waitGui(webDriver).withTimeout(3, TimeUnit.SECONDS)
+                .until()
+                .element(page.ajaxRequestProcessing)
+                .is()
+                .visible();
         long timeAfterAjaxRequestIsPresent = System.currentTimeMillis();
-
-        if (handle == null) {
-            handle = XHRHalter.getHandleBlocking();
-        } else {
-            handle.waitForOpen();
-        }
-        handle.complete();
-
-        waitGui.until(elementNotVisible.locator(ajaxRequestProcessing));
-
+        page.submit.click();
+        waitGui(webDriver).until()
+                .element(page.ajaxRequestProcessing)
+                .is()
+                .visible();
         long actualDelay = timeAfterAjaxRequestIsPresent - timeBeforePressingKey;
-
         assertTrue((actualDelay >= DELAY_IN_MILISECONDS) && (actualDelay <= DELAY_IN_MILISECONDS + 1000),
             "The delay should be between " + DELAY_IN_MILISECONDS + "ms and " + (DELAY_IN_MILISECONDS + 1000)
                 + "ms but was:" + actualDelay);
@@ -115,30 +82,15 @@ public class TestAttachQueue extends AbstractGrapheneTest {
 
     /*
      * clicks on the button and check whether delay after which the ajax processing is visible is NO_DELAY
-     */
+     * */
     private void clickOnTheButtonAndCheckTheDelay() {
-
-        XHRHalter.enable();
-
-        selenium.click(submit);
-
         long timeBeforePressingKey = System.currentTimeMillis();
-
-        waitGui.until(elementVisible.locator(ajaxRequestProcessing));
-
-        long timeAfterAjaxRequestIsPresent = System.currentTimeMillis();
-
-        if (handle == null) {
-            handle = XHRHalter.getHandleBlocking();
-        } else {
-            handle.waitForOpen();
-        }
-        handle.complete();
-
-        waitGui.until(elementNotVisible.locator(ajaxRequestProcessing));
-
-        long actualDelay = timeAfterAjaxRequestIsPresent - timeBeforePressingKey;
-
+        page.submit.click();
+        waitGui(webDriver).until()
+                .element(page.ajaxRequestProcessing)
+                .is()
+                .visible();
+        long actualDelay = System.currentTimeMillis() - timeBeforePressingKey;
         assertTrue((actualDelay >= NO_DELAY) && (actualDelay <= NO_DELAY + 500), "The delay should be between "
             + NO_DELAY + "ms and " + (NO_DELAY + 500) + "ms but was:!" + actualDelay);
     }
