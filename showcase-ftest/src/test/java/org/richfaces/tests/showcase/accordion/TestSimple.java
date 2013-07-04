@@ -21,10 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.accordion;
 
-import java.io.File;
-import java.io.IOException;
-import org.apache.commons.io.FileUtils;
-import org.jboss.arquillian.graphene.Graphene;
 import static org.testng.Assert.assertFalse;
 
 import org.jboss.arquillian.graphene.spi.annotations.Page;

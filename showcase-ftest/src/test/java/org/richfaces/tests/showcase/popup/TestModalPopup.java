@@ -21,9 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.popup;
 
-import java.io.IOException;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.assertFalse;
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
+
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebElement;
@@ -44,15 +43,22 @@ public class TestModalPopup extends AbstractPanelTest {
     private WebElement hidePopup;
 
     protected final String BODY_OF_POPUP = "You can also check and trigger events if the use clicks outside of the panel.\n"
-        + " In this example clicking outside closes the panel.";
+        + "In this example clicking outside closes the panel.";
 
     @Test
-    public void testModalPopupPanel() throws IOException {
+    public void testModalPopupPanel() {
         page.callthePopupButton.click();
-        assertTrue(page.popupPanelContent.isDisplayed(), "The poppup panel should be visible now!");
-        checkContentOfPanel(page.popupPanelContent.getText(), BODY_OF_POPUP);
+        waitGui(webDriver).until("The popup panel should be visible now!")
+                .element(page.popupPanelContent)
+                .is()
+                .visible();
+        checkContentOfPanel(page.popupPanelContent, BODY_OF_POPUP);
         hidePopup.click();
-        assertFalse(page.popupPanelContent.isDisplayed(), "The poppup panel should not be visible now!");
+        waitGui(webDriver).until("The popup panel should not be visible now!")
+                .element(page.popupPanelContent)
+                .is()
+                .not()
+                .visible();
     }
 
 }

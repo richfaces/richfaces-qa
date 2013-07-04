@@ -21,12 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.tabPanel;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.panel.AbstractPanelTest;
+import org.richfaces.tests.showcase.tabPanel.page.SimplePage;
 import org.testng.annotations.Test;
 
 /**
@@ -35,36 +35,18 @@ import org.testng.annotations.Test;
  */
 public class TestSimple extends AbstractPanelTest {
 
-    /* **************************************************************************************
-     * Locators***************************************************************************************
-     */
-
-    private JQueryLocator bodyOfPanel = jq("div.rf-tab:visible");
-    private JQueryLocator firstTabButton = jq("fieldset.example-cnt td[class*=rf-tab-hdr]:visible:eq(1)");
-    private JQueryLocator secondTabButton = jq("fieldset.example-cnt td[class*=rf-tab-hdr]:visible:eq(3)");
-
-    /* **************************************************************************************
-     * Tests**************************************************************************************
-     */
+    @Page
+    private SimplePage page;
 
     @Test
     public void testTabsAreNotEmpty() {
-        checkToogleTab(firstTabButton, RICH_FACES_INFO);
-
-        checkToogleTab(secondTabButton, RICH_FACES_JSF_INFO);
+        checkToogleTab(page.firstTabButton, RICH_FACES_INFO);
+        checkToogleTab(page.secondTabButton, RICH_FACES_JSF_INFO);
     }
 
-    /* ********************************************************************************
-     * Help methods********************************************************************************
-     */
-
-    private void checkToogleTab(JQueryLocator button, String expectedContent) {
-        /*guardNoRequest(selenium).click(button);
-
-        String actualContent = selenium.getText(bodyOfPanel);
-
-        assertTrue(actualContent.contains(expectedContent), "The content of " + button.getRawLocator()
-            + " is diferent!");*/
+    private void checkToogleTab(WebElement button, String expectedContent) {
+        button.click();
+        assertTrue(page.panelBody.getText().contains(expectedContent), "Content of the panel is different!");
     }
 
 }
