@@ -251,6 +251,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
 
     @Test
     public void testDisabled() {
+        page.waiting(500); // workaround for Property showEvent was not changed.
         updateShowAction();
         page.contextMenu.invoke(page.targetPanel1);
         assertTrue(page.contextMenuContent.isDisplayed());
