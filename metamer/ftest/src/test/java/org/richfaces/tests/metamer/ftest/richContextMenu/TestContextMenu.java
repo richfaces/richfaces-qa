@@ -177,7 +177,6 @@ public class TestContextMenu extends AbstractWebDriverTest {
         driver.manage().window().setSize(new Dimension(1280, 1024));//for stabilizing job in all templates
         int tolerance = 10;//px
         String msg = "The actual menu locations should be same as shifted default locations.";
-        updateShowAction();
         //setting up the right panel because then the context menu will fit on the page
         contextMenuAttributes.set(ContextMenuAttributes.target, "targetPanel2");
         contextMenuAttributes.set(ContextMenuAttributes.direction, "bottomRight");
