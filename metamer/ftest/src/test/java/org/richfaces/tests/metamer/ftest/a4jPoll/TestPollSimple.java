@@ -211,11 +211,6 @@ public class TestPollSimple extends AbstractWebDriverTest {
         super.testRequestEventsBefore(events);
         pollAttributes.set(enabled, true);
         String time = metamerPage.getRequestTimeElement().getText();
-        Graphene.waitAjax()
-                .until()
-                .element(metamerPage.getRequestTimeElement())
-                .text().not().equalTo(time);
-
         super.testRequestEventsAfter(events);
     }
 

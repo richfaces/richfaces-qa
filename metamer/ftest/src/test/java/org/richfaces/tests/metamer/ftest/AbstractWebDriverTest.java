@@ -689,11 +689,11 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
     public void testRequestEventsAfter(String... events) {
 
         final String[] expectedEvents = events;
-        Graphene.waitAjax().until(new Predicate<WebDriver>() {
+        Graphene.waitModel().until(new Predicate<WebDriver>() {
             @Override
             public boolean apply(WebDriver arg0) {
-                String[] actualEvents = ((String) executeJS("return sessionStorage.getItem('metamerEvents')")).split(" ");
-                return actualEvents != null && actualEvents.length == expectedEvents.length;
+                String actualEvents = ((String) executeJS("return sessionStorage.getItem('metamerEvents')"));
+                return actualEvents != null && actualEvents.split(" ").length == expectedEvents.length;
             }
         });
         String[] actualEvents = ((String) executeJS("return sessionStorage.getItem('metamerEvents')")).split(" ");
