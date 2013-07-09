@@ -21,15 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.popup;
 
-import org.jboss.arquillian.graphene.Graphene;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.assertFalse;
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
 
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.panel.AbstractPanelTest;
 import org.richfaces.tests.showcase.popup.page.LoginPage;
-import org.richfaces.tests.showcase.popup.page.PopupPage;
 import org.testng.annotations.Test;
 
 /**
@@ -41,16 +38,13 @@ public class TestLogin extends AbstractPanelTest {
     @Page
     private LoginPage page;
 
-    @Page
-    private PopupPage popupPage;
-
     @Test
-    public void testLoginPoppup() {
+    public void testLoginPopup() {
         checkPopupPanel(page.loginOnToolbar, page.loginOnPopup);
     }
 
     @Test
-    public void testSearchPoppup() {
+    public void testSearchPopup() {
         checkPopupPanel(page.searchOnToolbar, page.searchOnPopup);
     }
 
@@ -63,11 +57,16 @@ public class TestLogin extends AbstractPanelTest {
      *            the button by which the poppup is closed
      */
     private void checkPopupPanel(WebElement callPopupButton, WebElement closingPopupButton) {
-        Graphene.waitGui(webDriver).until().element(callPopupButton).is().visible();
         callPopupButton.click();
-        Graphene.waitAjax(webDriver).until().element(popupPage.popupPanelContent).is().visible();
-        assertTrue(popupPage.popupPanelContent.isDisplayed(), "The popup panel should be visible!");
+        waitGui(webDriver).until("The popup panel should be visible!")
+                .element(closingPopupButton)
+                .is()
+                .visible();
         closingPopupButton.click();
-        assertFalse(popupPage.popupPanelContent.isDisplayed(), "The popup panel should not be visible!");
+        waitGui(webDriver).until("The popup panel should not be visible!")
+                .element(closingPopupButton)
+                .is()
+                .not()
+                .visible();
     }
 }

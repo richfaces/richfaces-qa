@@ -13,10 +13,10 @@ import org.openqa.selenium.WebElement;
  */
 public class LoginPage {
 
-    @FindBy(jquery = "a:contains('Login'):eq(0)")
+    @FindBy(jquery = "td[id$='ll_itm'] a:contains('Login')")
     public WebElement loginOnToolbar;
 
-    @FindBy(jquery = "a:contains('Login'):eq(1)")
+    @FindBy(jquery = "div[id$='lp_content'] a:contains('Login')")
     public WebElement loginOnPopup;
 
     @FindBy(jquery = "a:contains('Search'):eq(0)")
