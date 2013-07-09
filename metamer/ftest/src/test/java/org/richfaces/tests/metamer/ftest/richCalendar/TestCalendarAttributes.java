@@ -49,6 +49,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -910,14 +911,22 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.showFooter, booleanValue);
         PopupFooterControls proxiedFooterControls = calendar.openPopup().getProxiedFooterControls();
         if (booleanValue) {
+            assertVisible(proxiedFooterControls, "Footer elements should be visible, when footer is rendered");
             assertListOfWebElementsVisible(Arrays.asList(proxiedFooterControls.getApplyButtonElement(),
                     proxiedFooterControls.getCleanButtonElement(), proxiedFooterControls.getTimeEditorOpenerElement(),
                     proxiedFooterControls.getTodayButtonElement()));
 
         } else {
-            assertListOfWebElementsNotVisible(Arrays.asList(proxiedFooterControls.getApplyButtonElement(),
-                    proxiedFooterControls.getCleanButtonElement(), proxiedFooterControls.getTimeEditorOpenerElement(),
-                    proxiedFooterControls.getTodayButtonElement()));
+            assertNotVisible(proxiedFooterControls, "Footer elements should not be visible, when footer is not rendered");
+//          FIXME 2013-07-09 jstefek : after https://issues.jboss.org/browse/ARQGRA-319 fixed > delete the try-catch + fail;
+            try {
+                assertListOfWebElementsNotVisible(Arrays.asList(proxiedFooterControls.getApplyButtonElement(),
+                        proxiedFooterControls.getCleanButtonElement(), proxiedFooterControls.getTimeEditorOpenerElement(),
+                        proxiedFooterControls.getTodayButtonElement()));
+            } catch (WebDriverException e) {
+                return;
+            }
+            fail("Footer elements should not be visible, when footer is not rendered");
         }
     }
 
