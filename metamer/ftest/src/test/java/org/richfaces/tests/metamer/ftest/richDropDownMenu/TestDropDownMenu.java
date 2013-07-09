@@ -135,7 +135,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         String backgroundColor = page.fileDropDownMenu.getTopLvlElement().getCssValue("background-color");
         // webdriver retrieves the color in rgba format
         assertEquals(ContextMenuSimplePage.trimTheRGBAColor(backgroundColor), "rgba(255,255,0,1)",
-                "The style was not applied correctly!");
+            "The style was not applied correctly!");
     }
 
     @Test
@@ -206,7 +206,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
             page.fileDropDownMenu.invoke(page.target1);
             fail("The context menu should not be invoked when disabled!");
         } catch (TimeoutException ex) {
-            //OK
+            // OK
         }
     }
 
@@ -341,7 +341,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.fileDropDownMenu.invoke(page.target1);
                 new Actions(driver).keyDown(page.fileDropDownMenu.getItems().get(2), Keys.CONTROL)
-                        .keyUp(page.fileDropDownMenu.getItems().get(2), Keys.CONTROL).build().perform();
+                    .keyUp(page.fileDropDownMenu.getItems().get(2), Keys.CONTROL).build().perform();
             }
         });
     }
@@ -358,18 +358,10 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         });
     }
 
-    @Test(groups = "Future")
-    //false negative
+    @Test
     public void testOnkeyup() {
-        updateDropDownMenuInvoker();
-        testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onkeyup, new Action() {
-            @Override
-            public void perform() {
-                page.fileDropDownMenu.invoke(page.target1);
-                new Actions(driver).keyDown(page.fileDropDownMenu.getItems().get(2), Keys.ALT)
-                        .keyUp(page.fileDropDownMenu.getItems().get(2), Keys.ALT).build().perform();
-            }
-        });
+        testFireEventWithJS(page.fileDropDownMenu.getMenuPopup(), dropDownMenuAttributes,
+            DropDownMenuAttributes.onkeyup);
     }
 
     @Test
@@ -387,13 +379,8 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
 
     @Test
     public void testOnmousemove() {
-        updateDropDownMenuInvoker();
-        testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onmousemove, new Action() {
-            @Override
-            public void perform() {
-                page.fileDropDownMenu.invoke(page.target1);
-            }
-        });
+        testFireEventWithJS(page.fileDropDownMenu.getMenuPopup(), dropDownMenuAttributes,
+            DropDownMenuAttributes.onmousemove);
     }
 
     @Test(groups = "Future")
@@ -414,8 +401,8 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
 
     @Test
     public void testOnmouseover() {
-        updateDropDownMenuInvoker();
-        testOnmousemove();
+        testFireEventWithJS(page.fileDropDownMenu.getMenuPopup(), dropDownMenuAttributes,
+            DropDownMenuAttributes.onmouseover);
     }
 
     @Test

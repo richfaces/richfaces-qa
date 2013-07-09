@@ -21,13 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.contextMenu;
 
-import static org.jboss.arquillian.graphene.Graphene.element;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import org.jboss.arquillian.drone.api.annotation.Drone;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneContext;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
@@ -106,7 +105,7 @@ public abstract class AbstractPopupMenu {
                     + getNameOfFragment() + " is displayed at the moment!");
         }
         browser.findElement(By.tagName("body")).click();
-        waitModel().until(element(getMenuPopup()).not().isVisible());
+        waitModel().until().element(getMenuPopup()).is().not().visible();
     }
 
     /**
@@ -175,7 +174,7 @@ public abstract class AbstractPopupMenu {
     public void waitUntilIsVisible() {
         Graphene.waitModel().withTimeout(showDelay + 4000, TimeUnit.MILLISECONDS)
                 .withMessage("The " + getNameOfFragment() + " did not show in the given timeout!")
-                .until(element(getMenuPopup()).isVisible());
+                .until().element(getMenuPopup()).is().visible();
     }
 
     /**
