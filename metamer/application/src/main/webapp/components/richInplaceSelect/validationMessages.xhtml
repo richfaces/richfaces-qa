@@ -32,45 +32,40 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </f:viewParam>
             </f:metadata>
         </ui:define>
-        
+
         <ui:define name="js">
             <script type="text/javascript">
+                var arr = [
+                    "jsr-303-inBean",
+                    "jsr-303-inAtt",
+                    "jsr-303-inBundle",
+                    "csv-inBean",
+                    "csv-inAtt",
+                    "csv-inBundle",
+                    "jsf-inAtt",
+                    "jsf-inBundle"
+                ];
+
+                function setValue(id, item) {
+                    var cssInput = '[id$=' + id + 'Input]';
+                    var cssItem = '[id$=' + id + item + ']';
+                    $(cssInput).click();
+                    $(cssItem).click();
+                    $(cssInput).blur();
+                }
+
+                function setValues(item) {
+                    for (var i = 0; arr.length > i; i++) {
+                        setValue(arr[i], item);
+                    }
+                }
+
                 function setCorrectValues() {
-                    $('span[id$=jsr-303-inBeanItem0]').click();
-                    $('[name$=jsr-303-inBeanInput]').click().blur();
-                    $('span[id$=jsr-303-inAttItem0]').click();
-                    $('[name$=jsr-303-inAttInput]').click().blur();
-                    $('span[id$=jsr-303-inBundleItem0]').click();
-                    $('[name$=jsr-303-inBundleInput]').click().blur();
-                    $('span[id$=csv-inBeanItem0]').click();
-                    $('[name$=csv-inBeanInput]').click().blur();
-                    $('span[id$=csv-inAttItem0]').click();
-                    $('[name$=csv-inAttInput]').click().blur();
-                    $('span[id$=csv-inBundleItem0]').click();
-                    $('[name$=csv-inBundleInput]').click().blur();
-                    $('span[id$=jsf-inBundleItem0]').click();
-                    $('[name$=jsf-inBundleInput]').click().blur();
-                    $('span[id$=jsf-inAttItem0]').click();
-                    $('[name$=jsf-inAttInput]').click().blur();
+                    setValues('Item0')
                 }
 
                 function setWrongValues() {
-                    $('span[id$=jsr-303-inBeanItem1]').click();
-                    $('[name$=jsr-303-inBeanInput]').click().blur();
-                    $('span[id$=jsr-303-inAttItem1]').click();
-                    $('[name$=jsr-303-inAttInput]').click().blur();
-                    $('span[id$=jsr-303-inBundleItem1]').click();
-                    $('[name$=jsr-303-inBundleInput]').click().blur();
-                    $('span[id$=csv-inBeanItem1]').click();
-                    $('[name$=csv-inBeanInput]').click().blur();
-                    $('span[id$=csv-inAttItem1]').click();
-                    $('[name$=csv-inAttInput]').click().blur();
-                    $('span[id$=csv-inBundleItem1]').click();
-                    $('[name$=csv-inBundleInput]').click().blur();
-                    $('span[id$=jsf-inBundleItem1]').click();
-                    $('[name$=jsf-inBundleInput]').click().blur();
-                    $('span[id$=jsf-inAttItem1]').click();
-                    $('[name$=jsf-inAttInput]').click().blur();
+                    setValues('Item1')
                 }
             </script>
         </ui:define>
@@ -79,56 +74,56 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <r:inplaceSelect id="jsr-303-inBean" value="#{validationMessagesBean.valueWithMessagesJSR}" converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
             </r:inplaceSelect>
-        </ui:define>      
+        </ui:define>
 
         <ui:define name="jsr-303-inAtt">
-            <r:inplaceSelect id="jsr-303-inAtt" value="#{validationMessagesBean.valueWithoutMessagesJSR}" 
-                                validatorMessage="Custom validator error message from attribute of component."
-                                converter="#{validationMessagesBean.converter}">
+            <r:inplaceSelect id="jsr-303-inAtt" value="#{validationMessagesBean.valueWithoutMessagesJSR}"
+                             validatorMessage="Custom validator error message from attribute of component."
+                             converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
             </r:inplaceSelect>
-        </ui:define> 
+        </ui:define>
 
         <ui:define name="jsr-303-inBundle">
             <r:inplaceSelect id="jsr-303-inBundle" value="#{validationMessagesBean.valueWithoutMessages2JSR}" converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
             </r:inplaceSelect>
-        </ui:define>  
+        </ui:define>
 
         <ui:define name="csv-inBean">
-           <r:inplaceSelect id="csv-inBean" value="#{validationMessagesBean.valueWithMessagesCSV}" converter="#{validationMessagesBean.converter}">
+            <r:inplaceSelect id="csv-inBean" value="#{validationMessagesBean.valueWithMessagesCSV}" converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
             </r:inplaceSelect>
-        </ui:define>  
+        </ui:define>
 
         <ui:define name="csv-inAtt">
-            <r:inplaceSelect  id="csv-inAtt" value="#{validationMessagesBean.valueWithoutMessagesCSV}" 
-                                 validatorMessage="Custom validator error message from attribute of component."
-                                 converter="#{validationMessagesBean.converter}">
+            <r:inplaceSelect  id="csv-inAtt" value="#{validationMessagesBean.valueWithoutMessagesCSV}"
+                              validatorMessage="Custom validator error message from attribute of component."
+                              converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
             </r:inplaceSelect>
-        </ui:define>  
+        </ui:define>
 
         <ui:define name="csv-inBundle">
             <r:inplaceSelect id="csv-inBundle" value="#{validationMessagesBean.valueWithoutMessages2CSV}" converter="#{validationMessagesBean.converter}">
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
             </r:inplaceSelect>
-        </ui:define>  
+        </ui:define>
 
         <ui:define name="jsf-inAtt">
-            <r:inplaceSelect id="jsf-inAtt" value="#{validationMessagesBean.valueJSF}" 
-                                validatorMessage="Custom validator error message from attribute of component."
-                                converter="#{validationMessagesBean.converter}">
+            <r:inplaceSelect id="jsf-inAtt" value="#{validationMessagesBean.valueJSF}"
+                             validatorMessage="Custom validator error message from attribute of component."
+                             converter="#{validationMessagesBean.converter}">
                 <f:validateDoubleRange minimum="2" maximum="9"/>
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
             </r:inplaceSelect>
-        </ui:define>  
+        </ui:define>
 
-        <ui:define name="jsf-inBundle">    
+        <ui:define name="jsf-inBundle">
             <r:inplaceSelect id="jsf-inBundle" value="#{validationMessagesBean.value2JSF}" converter="#{validationMessagesBean.converter}">
                 <f:validateDoubleRange  minimum="2" maximum="9" />
                 <f:selectItems value="#{validationMessagesBean.validationOptions}" />
-            </r:inplaceSelect>    
-        </ui:define>   
+            </r:inplaceSelect>
+        </ui:define>
     </ui:composition>
 </html>

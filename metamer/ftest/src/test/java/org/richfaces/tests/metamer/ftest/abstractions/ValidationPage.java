@@ -63,6 +63,8 @@ public class ValidationPage extends MetamerPage {
     WebElement activateButton;
     @FindBy(css = "input[id$=deactivateButton]")
     WebElement deactivateButton;
+    @FindBy(css = "span[id$=currRB]")
+    WebElement currentRB;
 
     /**
      * @return text of validation message for component jsf-inAtt (component
@@ -79,7 +81,7 @@ public class ValidationPage extends MetamerPage {
     public void setCorrectValuesAndSubmitJSF() {
         setCorrectValuesButton.click();
         waitForSetting();
-        waitRequest(jsfSubmitBtn, WaitRequestType.HTTP).click();
+        submitHTTP();
     }
 
     /**
@@ -89,7 +91,7 @@ public class ValidationPage extends MetamerPage {
     public void setCorrectValuesAndSubmitRF() {
         setCorrectValuesButton.click();
         waitForSetting();
-        waitRequest(rfSubmitBtn, WaitRequestType.XHR).click();
+        submitAjax();
     }
 
     /**
@@ -99,7 +101,7 @@ public class ValidationPage extends MetamerPage {
     public void setWrongValuesAndSubmitJSF() {
         setWrongValuesButton.click();
         waitForSetting();
-        waitRequest(jsfSubmitBtn, WaitRequestType.HTTP).click();
+        submitHTTP();
     }
 
     /**
@@ -109,7 +111,15 @@ public class ValidationPage extends MetamerPage {
     public void setWrongValuesAndSubmitRF() {
         setWrongValuesButton.click();
         waitForSetting();
+        submitAjax();
+    }
+
+    private void submitAjax() {
         waitRequest(rfSubmitBtn, WaitRequestType.XHR).click();
+    }
+
+    private void submitHTTP() {
+        waitRequest(jsfSubmitBtn, WaitRequestType.HTTP).click();
     }
 
     /**
@@ -151,15 +161,19 @@ public class ValidationPage extends MetamerPage {
      * Activates custom validation messages
      */
     public void activateCustomMessages() {
+        submitHTTP();
         setCorrectValuesAndSubmitJSF();
         waitRequest(activateButton, WaitRequestType.XHR).click();
+        Graphene.waitAjax().until().element(currentRB).text().equalTo("Current message resource bundle: CustomErrorMessages.");
     }
 
     /**
      * Deactivates custom validation messages.
      */
     public void deactivateCustomMessages() {
+        submitHTTP();
         setCorrectValuesAndSubmitJSF();
         waitRequest(deactivateButton, WaitRequestType.XHR).click();
+        Graphene.waitAjax().until().element(currentRB).text().equalTo("Current message resource bundle: DefaultErrorMessages.");
     }
 }
