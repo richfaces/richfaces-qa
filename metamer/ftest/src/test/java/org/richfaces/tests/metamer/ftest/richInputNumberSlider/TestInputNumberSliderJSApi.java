@@ -51,7 +51,7 @@ public class TestInputNumberSliderJSApi extends AbstractSliderTest {
     WebElement increaseButton;
     @FindBy(css = "[id$=decrease]")
     WebElement decreaseButton;
-    @FindBy(css = "input[id$=value]")
+    @FindBy(css = "input[id$=':value]'")
     WebElement value;
 
     @Override
