@@ -27,9 +27,10 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import com.google.common.base.Predicate;
 import java.net.URL;
+
 import javax.faces.event.PhaseId;
+
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
@@ -51,6 +52,8 @@ import org.richfaces.tests.page.fragments.impl.list.pick.RichFacesSimplePickList
 import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import com.google.common.base.Predicate;
 
 /**
  * Test for rich:pickList on page faces/components/richPickList/simple.xhtml.
@@ -88,7 +91,7 @@ public class TestPickList extends AbstractWebDriverTest {
 
     @Test
     public void testAddAllBtn() {
-        pickList.addAll();//fragment contains checking
+        pickList.addAll();// fragment contains checking
         assertEquals(pickList.source().getItems().size(), 0);
         assertEquals(pickList.target().getItems().size(), 54);
     }
@@ -143,7 +146,8 @@ public class TestPickList extends AbstractWebDriverTest {
         assertButtonDisabled(pickList.getRemoveAllButtonElement());
         assertButtonDisabled(pickList.getRemoveButtonElement());
         for (SelectableListItem item : pickList.source().getItems()) {
-            assertTrue(item.getItemElement().getAttribute("class").contains(disabledOptionClass), "Item should be disabled.");
+            assertTrue(item.getItemElement().getAttribute("class").contains(disabledOptionClass),
+                "Item should be disabled.");
         }
         try {
             pickList.source().selectItemsByIndex(1);
@@ -201,7 +205,8 @@ public class TestPickList extends AbstractWebDriverTest {
         String testedClass = "metamer-ftest-class";
         pickListAttributes.set(PickListAttributes.itemClass, "metamer-ftest-class");
         for (SelectableListItem li : pickList.source().getItems()) {
-            assertTrue(li.getItemElement().getAttribute("class").contains(testedClass), "Item @class should contain " + testedClass);
+            assertTrue(li.getItemElement().getAttribute("class").contains(testedClass), "Item @class should contain "
+                + testedClass);
         }
     }
 
@@ -230,7 +235,8 @@ public class TestPickList extends AbstractWebDriverTest {
         int testedValue = 600;
         int tolerance = 10;
         pickListAttributes.set(PickListAttributes.listHeight, testedValue);
-        assertEquals(Integer.valueOf(pickList.target().getListAreaElement().getCssValue("height").replace("px", "")), testedValue, tolerance);
+        assertEquals(Integer.valueOf(pickList.target().getListAreaElement().getCssValue("height").replace("px", "")),
+            testedValue, tolerance);
     }
 
     @Test
@@ -238,7 +244,8 @@ public class TestPickList extends AbstractWebDriverTest {
         int testedValue = 600;
         int tolerance = 10;
         pickListAttributes.set(PickListAttributes.listWidth, testedValue);
-        assertEquals(Integer.valueOf(pickList.target().getListAreaElement().getCssValue("width").replace("px", "")), testedValue, tolerance);
+        assertEquals(Integer.valueOf(pickList.target().getListAreaElement().getCssValue("width").replace("px", "")),
+            testedValue, tolerance);
     }
 
     @Test
@@ -247,7 +254,9 @@ public class TestPickList extends AbstractWebDriverTest {
         int tolerance = 10;
         pickListAttributes.set(PickListAttributes.maxListHeight, testedValue);
         pickListAttributes.set(PickListAttributes.listHeight, "");
-        assertEquals(Integer.valueOf(pickList.target().getListAreaElement().getCssValue("max-height").replace("px", "")), testedValue, tolerance);
+        assertEquals(
+            Integer.valueOf(pickList.target().getListAreaElement().getCssValue("max-height").replace("px", "")),
+            testedValue, tolerance);
     }
 
     @Test
@@ -256,7 +265,9 @@ public class TestPickList extends AbstractWebDriverTest {
         int tolerance = 10;
         pickListAttributes.set(PickListAttributes.listHeight, "");
         pickListAttributes.set(PickListAttributes.minListHeight, testedValue);
-        assertEquals(Integer.valueOf(pickList.target().getListAreaElement().getCssValue("min-height").replace("px", "")), testedValue, tolerance);
+        assertEquals(
+            Integer.valueOf(pickList.target().getListAreaElement().getCssValue("min-height").replace("px", "")),
+            testedValue, tolerance);
     }
 
     @Test
@@ -274,7 +285,7 @@ public class TestPickList extends AbstractWebDriverTest {
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     public void testOnblur() {
         testFireEvent(pickListAttributes, PickListAttributes.onblur,
-                new Actions(driver).click(pickList.getRootElement()).click(page.getRequestTimeElement()).build());
+            new Actions(driver).click(pickList.getRootElement()).click(page.getRequestTimeElement()).build());
     }
 
     @Test
@@ -362,22 +373,21 @@ public class TestPickList extends AbstractWebDriverTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11322")
     public void testOnsourceblur() {
-        testFireEvent(pickListAttributes, PickListAttributes.onsourceblur,
-                new Action() {
-                    @Override
-                    public void perform() {
-                        pickList.source().getRootElement().click();
-                        page.getRequestTimeElement().click();
-                    }
-                });
+        testFireEvent(pickListAttributes, PickListAttributes.onsourceblur, new Action() {
+            @Override
+            public void perform() {
+                pickList.source().selectItemsByIndex(0);
+                pickList.add();
+                pickList.target().selectItemsByIndex(0);
+            }
+        });
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnsourceclick() {
         testFireEvent(pickListAttributes, PickListAttributes.onsourceclick,
-                new Actions(driver).click(pickList.source().getListAreaElement()).build());
-//        testFireEvent(Event.CLICK, pickList.source().getListAreaElement(), "sourceclick");// this will trigger the event twice
+            new Actions(driver).click(pickList.source().getListAreaElement()).build());
     }
 
     @Test
@@ -390,7 +400,7 @@ public class TestPickList extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-11322")
     public void testOnsourcefocus() {
         testFireEvent(pickListAttributes, PickListAttributes.onsourcefocus,
-                new Actions(driver).click(pickList.source().getListAreaElement()).build());
+            new Actions(driver).click(pickList.source().getListAreaElement()).build());
     }
 
     @Test
@@ -444,24 +454,21 @@ public class TestPickList extends AbstractWebDriverTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11322")
     public void testOntargetblur() {
-        testFireEvent(pickListAttributes, PickListAttributes.onsourceblur,
-                new Action() {
-                    @Override
-                    public void perform() {
-                        pickList.source().selectItemsByIndex(0);
-                        pickList.add();
-                        pickList.target().getItems().get(0).getItemElement().click();
-                        page.getRequestTimeElement().click();
-                    }
-                });
+        testFireEvent(pickListAttributes, PickListAttributes.ontargetblur, new Action() {
+            @Override
+            public void perform() {
+                pickList.source().selectItemsByIndex(0);
+                pickList.add();
+                pickList.remove();
+            }
+        });
     }
 
     @Test
     @Templates(value = "plain")
     public void testOntargetclick() {
         testFireEvent(pickListAttributes, PickListAttributes.ontargetclick,
-                new Actions(driver).click(pickList.target().getListAreaElement()).build());
-//        testFireEvent(Event.CLICK, pickList.target().getListAreaElement(), "sourceclick");// this will trigger the event twice    }
+            new Actions(driver).click(pickList.target().getListAreaElement()).build());
     }
 
     @Test
@@ -474,7 +481,7 @@ public class TestPickList extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-11322")
     public void testOntargetfocus() {
         testFireEvent(pickListAttributes, PickListAttributes.ontargetfocus,
-                new Actions(driver).click(pickList.target().getListAreaElement()).build());
+            new Actions(driver).click(pickList.target().getListAreaElement()).build());
     }
 
     @Test
@@ -782,7 +789,7 @@ public class TestPickList extends AbstractWebDriverTest {
 
         public boolean isEnabled() {
             return !button.getAttribute("class").contains(disabledClasses[0])
-                    && !button.getAttribute("class").contains(disabledClasses[1]);
+                && !button.getAttribute("class").contains(disabledClasses[1]);
         }
     }
 }
