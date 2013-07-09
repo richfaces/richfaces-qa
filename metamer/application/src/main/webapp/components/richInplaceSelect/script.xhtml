@@ -26,13 +26,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     <script type="text/javascript">
         function setCorrectValues(id) {
             var item = 'Item1';
-            switch(id){
+            switch (id) {
                 case 'notEmpty':
                 case 'custom':
                 case 'size':
                 case 'pattern':
                 case 'required':
-                    setValue(id,item);
+                    setValue(id, item);
                     break;
                 default:
                     setCorrectValues('notEmpty');
@@ -45,13 +45,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         }
         function setWrongValues(id) {
             var item = 'Item0';
-            switch(id){
+            switch (id) {
                 case 'notEmpty':
                 case 'custom':
                 case 'size':
                 case 'pattern':
                 case 'required':
-                    setValue(id,item);
+                    setValue(id, item);
                     break;
                 default:
                     setWrongValues('notEmpty');
@@ -63,11 +63,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             }
         }
         function setValue(id, item) {
-            var input = 'Input]';
-            var cssInput='[id$='+ id +'Input]';
-            var cssItem='[id$=' + id + item + ']';
-            $(cssItem).click().click();
-            $(cssInput).click().blur();
+            var cssInput = '[id$=' + id + 'Input]';
+            var cssItem = '[id$=' + id + item + ']';
+            $(cssInput).click();
+            $(cssItem).click();
+            $(cssInput).blur();
         }
     </script>
 </html>
