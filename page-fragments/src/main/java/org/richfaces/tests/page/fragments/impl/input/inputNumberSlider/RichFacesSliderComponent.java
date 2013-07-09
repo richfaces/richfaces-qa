@@ -22,8 +22,8 @@
 package org.richfaces.tests.page.fragments.impl.input.inputNumberSlider;
 
 import com.google.common.base.Preconditions;
-import org.jboss.arquillian.drone.api.annotation.Drone;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.Keys;
@@ -41,19 +41,23 @@ import org.richfaces.tests.page.fragments.impl.Utils;
 public class RichFacesSliderComponent implements SliderComponent {
 
     @Root
-    WebElement root;
-    //
+    private WebElement root;
+
+    @FindBy(className = "rf-insl-hnd-cntr")
+    private WebElement handleContainer;
     @FindBy(className = "rf-insl-hnd")
-    WebElement handle;
+    private WebElement handle;
     @FindBy(className = "rf-insl-hnd-dis")
-    WebElement disabledHandle;
+    private WebElement disabledHandle;
+
+    private boolean isHorizontalOriented;// handled by parent
 
     @Drone
-    WebDriver driver;
+    private WebDriver driver;
 
     @Override
     public void decrease() {
-        new Actions(driver).sendKeys(handle, Keys.LEFT).build().perform();
+        new Actions(driver).sendKeys(handle, (isHorizontalOriented ? Keys.LEFT : Keys.DOWN)).build().perform();
     }
 
     @Override
@@ -68,7 +72,7 @@ public class RichFacesSliderComponent implements SliderComponent {
 
     @Override
     public int getHeight() {
-        return Utils.getLocations(root).getHeight();
+        return Utils.getLocations(handleContainer).getHeight();
     }
 
     @Override
@@ -83,12 +87,12 @@ public class RichFacesSliderComponent implements SliderComponent {
 
     @Override
     public int getWidth() {
-        return Utils.getLocations(root).getWidth();
+        return Utils.getLocations(handleContainer).getWidth();
     }
 
     @Override
     public void increase() {
-        new Actions(driver).sendKeys(handle, Keys.RIGHT).build().perform();
+        new Actions(driver).sendKeys(handle, (isHorizontalOriented ? Keys.RIGHT : Keys.UP)).build().perform();
     }
 
     @Override
@@ -107,37 +111,41 @@ public class RichFacesSliderComponent implements SliderComponent {
     }
 
     @Override
-    public void moveHandleToPointInTraceHorizontally(int where) {
-        Preconditions.checkArgument(where >= 0 && where <= getWidth(), "Cannot slide outside the trace");
+    public void dragHandleToPointInTrace(int pixelInTrace) {
+        Preconditions.checkArgument(pixelInTrace >= 0 && pixelInTrace <= (isHorizontalOriented ? getWidth() : getHeight()), "Cannot slide outside the trace.");
         if (!isVisible()) {
             throw new RuntimeException("Trace is not visible.");
         }
         scrollToView();
-        new Actions(driver).clickAndHold(handle).moveToElement(root, where, 0).release(handle).build().perform();
+        Actions actions = new Actions(driver).clickAndHold(handle);
+        if (isHorizontalOriented) {
+            actions.moveToElement(root, pixelInTrace, 0);
+        } else {
+            actions.moveToElement(root, 0, pixelInTrace);
+        }
+        actions.release(handle).build().perform();
     }
 
     @Override
-    public void moveHandleToPointInTraceVertically(int where) {
-        Preconditions.checkArgument(where >= 0 && where <= getHeight(), "Cannot slide outside the trace");
-        if (!isVisible()) {
-            throw new RuntimeException("Trace is not visible.");
-        }
-        scrollToView();
-        new Actions(driver).clickAndHold(handle).moveToElement(root, 0, where).release(handle).build().perform();
+    public void dragHandleToPointInTrace(double percentageOfTracecSize) {
+        dragHandleToPointInTrace((int) (percentageOfTracecSize * (isHorizontalOriented ? getWidth() : getHeight())));
     }
 
     private void scrollToView() {
         new Actions(driver).moveToElement(root).perform();
     }
 
-    @Override
-    public void slideLeftRightWithHandle(int byPixels) {
-        new SlideAction(0, byPixels).perform();
+    public void setOrientation(boolean isHorizontalOriented) {
+        this.isHorizontalOriented = isHorizontalOriented;
     }
 
     @Override
-    public void slideUpDownWithHandle(int byPixels) {
-        new SlideAction(byPixels, 0).perform();
+    public void slideWithHandle(int byPixels) {
+        if (isHorizontalOriented) {
+            new SlideAction(0, byPixels).perform();
+        } else {
+            new SlideAction(byPixels, 0).perform();
+        }
     }
 
     private class SlideAction implements Action {

@@ -74,8 +74,8 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
         return new Action() {
             @Override
             public void perform() {
-                MetamerPage.waitRequest(slider.getNumberSlider(), WaitRequestType.XHR)
-                    .moveHandleToPointInTraceHorizontally(pixels);
+                MetamerPage.waitRequest(slider.slider(), WaitRequestType.XHR)
+                        .dragHandleToPointInTrace(pixels);
             }
         };
     }
@@ -90,7 +90,7 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
         MetamerPage.waitRequest(slider, WaitRequestType.XHR).decreaseWithArrows();
 
         Graphene.waitGui().until("Output was not updated.").element(output).text()
-            .equalTo(String.valueOf(startValue - clicks));
+                .equalTo(String.valueOf(startValue - clicks));
     }
 
     public void testClickRightArrow() {
@@ -103,7 +103,7 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
         MetamerPage.waitRequest(slider, WaitRequestType.XHR).increaseWithArrows();
 
         Graphene.waitGui().until("Output was not updated.").element(output).text()
-            .equalTo(String.valueOf(startValue + clicks));
+                .equalTo(String.valueOf(startValue + clicks));
     }
 
     public void testMoveWithSlider() {
@@ -115,7 +115,7 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
         assertEquals(slider.getInput().getStringValue(), "-7", "Input was not updated.");
         assertEquals(output.getText(), "-7", "Output was not updated.");
 
-        moveWithSliderActionWithWaitRequest(195).perform();
+        moveWithSliderActionWithWaitRequest(slider.slider().getWidth()).perform();
         assertEquals(slider.getInput().getStringValue(), "10", "Input was not updated.");
         assertEquals(output.getText(), "10", "Output was not updated.");
     }
@@ -138,7 +138,7 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
         Double newNumber = new Double(number);
         assertEquals(output.getText(), newNumber == 0 ? "0" : newNumber.toString(), "Output was not updated.");
         assertEquals(slider.getInput().getStringValue(), newNumber == 0 ? "0" : newNumber.toString(),
-            "Input was not updated.");
+                "Input was not updated.");
     }
 
     public void testTypeIntoInputNotNumber() {
