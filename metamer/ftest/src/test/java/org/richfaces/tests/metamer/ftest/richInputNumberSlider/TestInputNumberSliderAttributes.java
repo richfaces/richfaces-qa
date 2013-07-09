@@ -149,8 +149,8 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     @Test
     public void testDisabled() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.disabled, Boolean.TRUE);
-        assertVisible(slider.getNumberSlider().getDisabledHandleElement(), "Disabled handle is not on the page.");
-        assertNotVisible(slider.getNumberSlider().getHandleElement(), "Slider's handle is not present on the page.");
+        assertVisible(slider.slider().getDisabledHandleElement(), "Disabled handle is not on the page.");
+        assertNotVisible(slider.slider().getHandleElement(), "Slider's handle is not present on the page.");
         assertEquals(slider.getInput().getInput().getAttribute("disabled"), "true", "Slider's input should be disabled.");
     }
 
@@ -164,7 +164,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     @Test
     @Templates(value = "plain")
     public void testHandleClass() {
-        testStyleClass(slider.getNumberSlider().getHandleElement(), BasicAttributes.handleClass);
+        testStyleClass(slider.slider().getHandleElement(), BasicAttributes.handleClass);
     }
 
     @Test
@@ -172,8 +172,8 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     public void testHandleSelectedClass() {
         String value = "metamer-ftest-class";
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.handleSelectedClass, value);
-        fireEvent(slider.getNumberSlider().getHandleElement(), Event.MOUSEDOWN);
-        assertTrue(slider.getNumberSlider().getHandleElement().getAttribute("class").contains(value), "handleSelectedClass does not work");
+        fireEvent(slider.slider().getHandleElement(), Event.MOUSEDOWN);
+        assertTrue(slider.slider().getHandleElement().getAttribute("class").contains(value), "handleSelectedClass does not work");
     }
 
     @Test
@@ -217,8 +217,8 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         assertTrue(slider.getInput().isVisible(), "Slider's input is not present on the page.");
         assertVisible(slider.getMinimumElement(), "Slider's min value is not present on the page.");
         assertVisible(slider.getMaximumElement(), "Slider's max value is not present on the page.");
-        assertVisible(slider.getNumberSlider().getTrackElement(), "Slider's track is not present on the page.");
-        assertVisible(slider.getNumberSlider().getHandleElement(), "Slider's handle is not present on the page.");
+        assertVisible(slider.slider().getTrackElement(), "Slider's track is not present on the page.");
+        assertVisible(slider.slider().getHandleElement(), "Slider's handle is not present on the page.");
         assertNotPresent(slider.getArrowDecrease(), "Slider's left arrow should not be present on the page.");
         assertNotPresent(slider.getArrowIncrease(), "Slider's right arrow should not be present on the page.");
         assertNotPresent(slider.getTooltipElement(), "Slider's tooltip should not be present on the page.");
@@ -235,7 +235,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     public void testInputPosition() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.inputPosition, position.value);
         Point inputPosition = Utils.getLocations(slider.getInput().getInput()).getTopLeft();
-        Point trackPosition = Utils.getLocations(slider.getNumberSlider().getTrackElement()).getTopLeft();
+        Point trackPosition = Utils.getLocations(slider.slider().getTrackElement()).getTopLeft();
         switch (position) {
             case left:
                 assertTrue(trackPosition.x > inputPosition.x, "Track should be on the right of input on the page.");
@@ -282,7 +282,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         int maxnum = 15;
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.maxValue, maxnum);
 
-        moveWithSliderActionWithWaitRequest(slider.getNumberSlider().getWidth()).perform();
+        moveWithSliderActionWithWaitRequest(slider.slider().getWidth()).perform();
         assertEquals(output.getText(), String.valueOf(maxnum), "Output was not updated.");
         assertEquals(slider.getInput().getStringValue(), String.valueOf(maxnum), "Input was not updated.");
     }
@@ -496,11 +496,11 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showTooltip, Boolean.TRUE);
         String startValue = slider.getInput().getStringValue();
 
-        fireEvent(slider.getNumberSlider().getHandleElement(), Event.MOUSEDOWN);
+        fireEvent(slider.slider().getHandleElement(), Event.MOUSEDOWN);
         assertVisible(slider.getTooltipElement(), "Tooltip is not visible");
         assertEquals(slider.getTooltipElement().getText(), startValue, "Tooltip's text.");
 
-        fireEvent(slider.getNumberSlider().getHandleElement(), Event.MOUSEUP);
+        fireEvent(slider.slider().getHandleElement(), Event.MOUSEUP);
         assertNotVisible(slider.getTooltipElement(), "Tooltip should not be visible");
     }
 
@@ -549,7 +549,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         String value = "55";
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.tabindex, value);
 
-        assertEquals(slider.getNumberSlider().getRoot().getAttribute("tabindex"), value, "Attribute tabindex of track.");
+        assertEquals(slider.slider().getRoot().getAttribute("tabindex"), value, "Attribute tabindex of track.");
         assertEquals(slider.getInput().getInput().getAttribute("tabindex"), "55", "Attribute tabindex of input.");
     }
 
@@ -570,7 +570,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     @Test
     @Templates(value = "plain")
     public void testTrackClass() {
-        testStyleClass(slider.getNumberSlider().getTrackElement(), BasicAttributes.trackClass);
+        testStyleClass(slider.slider().getTrackElement(), BasicAttributes.trackClass);
     }
 
     @Test

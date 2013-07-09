@@ -38,25 +38,27 @@ public class RichFacesInputNumberSlider implements VisibleComponent, InputNumber
 
     @Root
     private WebElement root;
-    //
+
     @FindBy(css = "span.rf-insl-inp-cntr > input.rf-insl-inp")
-    TextInputComponentImpl input;
+    private TextInputComponentImpl input;
     @FindBy(css = "span.rf-insl-trc")
-    RichFacesSliderComponent numberSlider;
-    //
+    private RichFacesSliderComponent numberSlider;
+
     @FindBy(className = "rf-insl-inc")
-    WebElement arrowIncrease;
+    private WebElement arrowIncrease;
     @FindBy(className = "rf-insl-dec")
-    WebElement arrowDecrease;
+    private WebElement arrowDecrease;
     @FindBy(className = "rf-insl-mn")
-    WebElement min;
+    private WebElement min;
     @FindBy(className = "rf-insl-mx")
-    WebElement max;
+    private WebElement max;
     @FindBy(className = "rf-insl-tt")
-    WebElement tooltip;
+    private WebElement tooltip;
+
+    private boolean horizontalOriented = true;
 
     @Drone
-    WebDriver driver;
+    private WebDriver driver;
 
     @Override
     public void decreaseWithArrows() {
@@ -97,7 +99,7 @@ public class RichFacesInputNumberSlider implements VisibleComponent, InputNumber
     @Override
     public int getMinimum() {
         if (Graphene.element(min).not().isVisible().apply(driver)) {
-            throw new RuntimeException("Minimum iss not visible.");
+            throw new RuntimeException("Minimum is not visible.");
         }
         return Integer.parseInt(min.getText());
     }
@@ -108,7 +110,8 @@ public class RichFacesInputNumberSlider implements VisibleComponent, InputNumber
     }
 
     @Override
-    public SliderComponent getNumberSlider() {
+    public SliderComponent slider() {
+        numberSlider.setOrientation(horizontalOriented);
         return numberSlider;
     }
 
@@ -131,6 +134,11 @@ public class RichFacesInputNumberSlider implements VisibleComponent, InputNumber
     }
 
     @Override
+    public boolean isHorizontalOriented() {
+        return horizontalOriented;
+    }
+
+    @Override
     public ExpectedCondition<Boolean> isNotVisibleCondition() {
         return Graphene.element(root).not().isVisible();
     }
@@ -143,5 +151,10 @@ public class RichFacesInputNumberSlider implements VisibleComponent, InputNumber
     @Override
     public ExpectedCondition<Boolean> isVisibleCondition() {
         return Graphene.element(root).isVisible();
+    }
+
+    @Override
+    public void setOrientation(boolean isHorizontal) {
+        this.horizontalOriented = isHorizontal;
     }
 }
