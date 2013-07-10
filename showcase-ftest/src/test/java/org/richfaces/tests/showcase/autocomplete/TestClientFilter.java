@@ -51,7 +51,7 @@ public class TestClientFilter extends AbstractWebDriverTest {
                 .element(page.selection)
                 .is()
                 .visible();
-        actions.sendKeys(page.selection, Keys.ENTER).build().perform();
+        actions.sendKeys(page.input, Keys.ENTER).build().perform();
         assertEquals(page.input.getText(), "Alaska", "The content should be Alaska, since it contains string ska");
     }
 
