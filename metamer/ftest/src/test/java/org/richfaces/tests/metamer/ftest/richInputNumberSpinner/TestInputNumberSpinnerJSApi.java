@@ -53,7 +53,7 @@ public class TestInputNumberSpinnerJSApi extends AbstractWebDriverTest {
     WebElement increaseButton;
     @FindBy(css = "[id$=decrease]")
     WebElement decreaseButton;
-    @FindBy(css = "input[id$=value]")
+    @FindBy(css = "input[id$=':value']")
     WebElement value;
     @FindBy(css = "span[id$=spinner]")
     RichFacesInputNumberSpinner spinner;

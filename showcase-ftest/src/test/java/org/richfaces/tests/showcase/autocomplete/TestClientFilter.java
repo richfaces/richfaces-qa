@@ -21,51 +21,38 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.autocomplete;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
-import java.awt.event.KeyEvent;
-
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.richfaces.tests.showcase.AbstractGrapheneTest;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.richfaces.tests.showcase.autocomplete.page.ClientFilterPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestClientFilter extends AbstractGrapheneTest {
+public class TestClientFilter extends AbstractWebDriverTest {
 
-    /* ********************************************************************
-     * Locators********************************************************************
-     */
+    @Page
+    private ClientFilterPage page;
 
-    protected JQueryLocator input = jq("input[type=text]");
-    protected JQueryLocator selection = jq("div.rf-au-itm");
-
-    /* *********************************************************************
-     * Tests*********************************************************************
-     */
+    @ArquillianResource
+    private Actions actions;
 
     @Test
     public void testClientFilterFunctionContains() {
-
-        selenium.focus(input);
-
-        selenium.type(input, "ska");
-
-        guardNoRequest(selenium).fireEvent(input, Event.KEYPRESS);
-
-        assertTrue(selenium.isVisible(selection),
-            "The selection should be visible, since there is correct sequence of chars!");
-
-        selenium.keyPressNative(KeyEvent.VK_ENTER);
-
-        String actualValueOfInput = selenium.getValue(input);
-        assertEquals(actualValueOfInput, "Alaska", "The content should be Alaska, since it contains string ska");
+        page.input.sendKeys("ska");
+        waitAjax(webDriver).until("The selection should be visible, since there is correct sequence of chars!")
+                .element(page.selection)
+                .is()
+                .visible();
+        actions.sendKeys(page.input, Keys.ENTER).build().perform();
+        assertEquals(page.input.getText(), "Alaska", "The content should be Alaska, since it contains string ska");
     }
 
 }

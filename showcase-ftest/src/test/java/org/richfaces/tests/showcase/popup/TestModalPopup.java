@@ -21,52 +21,44 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.popup;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.panel.AbstractPanelTest;
+import org.richfaces.tests.showcase.popup.page.PopupPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestModalPopup extends AbstractPoppupPanel {
+public class TestModalPopup extends AbstractPanelTest {
 
-    /* ************************************************************************************************************************
-     * Constants
-     * *********************************************************************************************************
-     * ****************
-     */
+    @Page
+    private PopupPage page;
 
-    protected final String BODY_OF_POPPUP = "You can also check and trigger events if the use clicks outside of the panel.\n"
-        + " In this example clicking outside closes the panel.";
+    @FindBy(css = "div[id$='popup_shade']")
+    private WebElement hidePopup;
 
-    /* **************************************************************************************************************************
-     * Locators
-     * **********************************************************************************************************
-     * ****************
-     */
-
-    JQueryLocator poppupShadow = jq("div#popup_shade");
-
-    /* *****************************************************************************
-     * Tests*****************************************************************************
-     */
+    protected final String BODY_OF_POPUP = "You can also check and trigger events if the use clicks outside of the panel.\n"
+        + "In this example clicking outside closes the panel.";
 
     @Test
-    public void testModalPoppupPanelAndHisContent() {
-        guardNoRequest(selenium).click(callthePoppupButton);
-
-        assertTrue(selenium.isElementPresent(poppupPanelContent), "The poppup panel should be visible now!");
-
-        checkContentOfPanel(poppupPanelContent, BODY_OF_POPPUP);
-
-        guardNoRequest(selenium).click(poppupShadow);
-
-        assertFalse(selenium.isElementPresent(poppupPanelContent), "The poppup panel should not be visible now!");
+    public void testModalPopupPanel() {
+        page.callthePopupButton.click();
+        waitGui(webDriver).until("The popup panel should be visible now!")
+                .element(page.popupPanelContent)
+                .is()
+                .visible();
+        checkContentOfPanel(page.popupPanelContent, BODY_OF_POPUP);
+        hidePopup.click();
+        waitGui(webDriver).until("The popup panel should not be visible now!")
+                .element(page.popupPanelContent)
+                .is()
+                .not()
+                .visible();
     }
 
 }

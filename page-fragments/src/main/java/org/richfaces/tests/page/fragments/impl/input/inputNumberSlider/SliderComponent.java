@@ -30,7 +30,7 @@ import org.richfaces.tests.page.fragments.impl.VisibleComponent;
 public interface SliderComponent extends VisibleComponent {
 
     /**
-     * Decrease value by keys.
+     * Decrease value by pressing LEFT/DOWN keyboard key.
      */
     void decrease();
 
@@ -39,7 +39,7 @@ public interface SliderComponent extends VisibleComponent {
     WebElement getHandleElement();
 
     /**
-     * Returns the height of the trace
+     * Returns the height of the trace.
      */
     int getHeight();
 
@@ -48,40 +48,34 @@ public interface SliderComponent extends VisibleComponent {
     WebElement getTrackElement();
 
     /**
-     * Returns the width of the trace
+     * Returns the width of the trace.
      */
     int getWidth();
 
     /**
-     * Increase value by keys.
+     * Increase value by pressing RIGHT/UP keyboard key.
      */
     void increase();
 
     /**
-     * Moves the handle to pixel in trace. From 0 (left) to getWidth() (right). Works only with
-     * horizontal sliders.
+     * Scrolls to view and moves the handle to a pixel in trace. From 0 (left/down) to traces width or height, depending on the slider orientation.
      * @see SliderComponent#getWidth()
-     * @throws RuntimeException if the trace is not visible
-     */
-    void moveHandleToPointInTraceHorizontally(int where);
-
-    /**
-     * Moves the handle to pixel in trace. From 0 (top) to getHeight() (bottom). Works only with
-     * vertical sliders.
      * @see SliderComponent#getHeight()
      * @throws RuntimeException if the trace is not visible
+     * @throws IllegalArgumentException when the pixelInTrace is out of interval &lt;0,getWidth()/getHeight&gt;.
      */
-    void moveHandleToPointInTraceVertically(int where);
+    void dragHandleToPointInTrace(int pixelInTrace);
 
     /**
-     * Slides the slider with the handle to left(+value) or right(-value) by value in pixels.
-     * @see SliderComponent#moveHandleToPointInTrace
+     * Scrolls to view and moves the handle to a percentage of the trace's size.
+     * Possible values interval is &lt;0,1&gt;.
+     * @throws RuntimeException if the trace is not visible
+     * @throws IllegalArgumentException when the percentage is out of interval &lt;0,1&gt;.
      */
-    void slideLeftRightWithHandle(int byPixels);
+    void dragHandleToPointInTrace(double percentageOfTracesSize);
 
     /**
-     * Slides the slider with the handle to top(-value) or bottom(+value) by value in pixels.
-     * @see SliderComponent#moveHandleToPointInTrace
+     * Scrolls to view and drags the handle to left/up(-value) or right/down(+value) by value in pixels.
      */
-    void slideUpDownWithHandle(int byPixels);
+    void slideWithHandle(int byPixels);
 }

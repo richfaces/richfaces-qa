@@ -26,13 +26,12 @@ import org.richfaces.tests.page.fragments.impl.VisibleComponent;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
 
 /**
- *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public interface InputNumberSlider extends VisibleComponent {
 
     /**
-     * Decreases the value by arrows.
+     * Decreases the value by the component's arrows.
      * @throws RuntimeException if the arrows are not displayed.
      */
     void decreaseWithArrows();
@@ -59,15 +58,26 @@ public interface InputNumberSlider extends VisibleComponent {
 
     WebElement getMinimumElement();
 
-    SliderComponent getNumberSlider();
-
     WebElement getRoot();
 
     WebElement getTooltipElement();
 
     /**
-     * Increases the value by arrows.
+     * Increases the value by the component's arrows.
      * @throws RuntimeException if the arrows are not displayed.
      */
     void increaseWithArrows();
+
+    boolean isHorizontalOriented();
+
+    /**
+     * Set slider's orientation. Default is horizontal.
+     * @param isHorizontal when true then the slider has horizontal orientation.
+     */
+    void setOrientation(boolean isHorizontal);
+
+    /**
+     * Returns the slider component.
+     */
+    SliderComponent slider();
 }

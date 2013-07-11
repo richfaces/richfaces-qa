@@ -21,58 +21,50 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.popup;
 
-import static org.jboss.arquillian.ajocado.Graphene.guardNoRequest;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.showcase.panel.AbstractPanelTest;
+import org.richfaces.tests.showcase.popup.page.PopupPage;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @version $Revision$
  */
-public class TestSimplePopup extends AbstractPoppupPanel {
+public class TestSimplePopup extends AbstractPanelTest {
 
-    /* *************************************************************************************
-     * Constants*************************************************************************************
-     */
-    protected final String BODY_OF_THE_POPPUP = "Any content might be inside this panel.\n"
-        + " The popup panel is open and closed from the javascript function of component client side object. "
+    private final String BODY_OF_THE_POPUP = "Any content might be inside this panel.\n"
+        + "The popup panel is open and closed from the javascript function of component client side object. "
         + "The following code hide this panel: #{rich:component('popup')}.hide()";
 
-    /* *************************************************************************************
-     * Locators*************************************************************************************
-     */
+    @Page
+    private PopupPage page;
 
-    JQueryLocator poppupPanelHideAnchor = jq("div.rf-pp-cnt:visible a");
-
-    /* ***************************************************************************************
-     * Tests***************************************************************************************
-     */
+    @FindBy(jquery = "div[class*='rf-pp-cnt']:visible a")
+    private WebElement popupPanelHideAnchor;
 
     @Test
     public void testCallTheNonModalPopupAndHideIt() {
-
-        guardNoRequest(selenium).click(callthePoppupButton);
-
-        assertTrue(selenium.isElementPresent(poppupPanelContent), "The panel should be visible!");
-
-        checkContentOfPanel(poppupPanelContent, BODY_OF_THE_POPPUP);
-
-        guardNoRequest(selenium).click(anchorOfSource);
-
-        assertTrue(selenium.isElementPresent(sourceOfPage), "The source of the page should be visible, since "
-            + "the poppup panel is not modal, and therefore clicking on the source should show the source");
-
-        assertTrue(selenium.isElementPresent(poppupPanelContent),
-            "The panel should not disappear when clicking somewhere else!");
-
-        guardNoRequest(selenium).click(poppupPanelHideAnchor);
-
-        assertFalse(selenium.isElementPresent(poppupPanelContent),
-            "The poppup panel should not be visible, since there was a click " + "on the hide anchor!");
+        page.callthePopupButton.click();
+        waitGui(webDriver).until("The popup panel should be visible now!")
+                .element(page.popupPanelContent)
+                .is()
+                .visible();
+        checkContentOfPanel(page.popupPanelContent, BODY_OF_THE_POPUP);
+        page.anchorOfSource.click();
+        waitGui(webDriver).until("The source of the page should be visible, since "
+            + "the poppup panel is not modal, and therefore clicking on the source should show the source")
+                .element(page.sourceOfPage)
+                .is()
+                .visible();
+        assertTrue(page.popupPanelContent.isDisplayed(), "The panel should not disappear when clicking somewhere else!");
+        popupPanelHideAnchor.click();
+        assertFalse(page.popupPanelContent.isDisplayed(), "The poppup panel should not be visible, since there was a click " + "on the hide anchor!");
     }
 
 }
