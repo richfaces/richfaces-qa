@@ -4,7 +4,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:r="http://richfaces.org/rich"
-      
+
       xmlns:h="http://java.sun.com/jsf/html">
 
     <!--
@@ -37,17 +37,17 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </f:viewParam>
             </f:metadata>
         </ui:define>
-        
+
         <ui:define name="js">
             <ui:include src="script.xhtml"/>
         </ui:define>
 
         <ui:define name="notEmpty">
             <r:inplaceSelect id="notEmpty"
-                                value="#{richInplaceSelectBean.notEmptyValue}"
-                                >
+                             value="#{richInplaceSelectBean.notEmptyValue}"
+                             >
                 <f:selectItems value="#{richInplaceSelectBean.validationOptionsNotEmpty}" />
-                <r:ajax event="blur" render="notEmptyMsg"/>
+                <r:ajax event="change" render="notEmptyMsg"/>
             </r:inplaceSelect>
         </ui:define>
         <ui:define name="notEmptyOutput">
@@ -56,8 +56,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="pattern">
             <r:inplaceSelect id="pattern"
-                                value="#{richInplaceSelectBean.patternValue}"
-                                >
+                             value="#{richInplaceSelectBean.patternValue}"
+                             >
                 <f:selectItems value="#{richInplaceSelectBean.validationOptionsPattern}" />
                 <r:ajax event="change" render="patternMsg"/>
             </r:inplaceSelect>
@@ -68,8 +68,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="size">
             <r:inplaceSelect id="size"
-                                value="#{richInplaceSelectBean.sizeValue}"
-                                >
+                             value="#{richInplaceSelectBean.sizeValue}"
+                             >
                 <f:selectItems value="#{richInplaceSelectBean.validationOptionsSize}" />
                 <r:ajax event="change" render="sizeMsg"/>
             </r:inplaceSelect>
@@ -80,8 +80,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="custom">
             <r:inplaceSelect id="custom"
-                                value="#{richInplaceSelectBean.customValue}"
-                                >
+                             value="#{richInplaceSelectBean.customValue}"
+                             >
                 <f:validator validatorId="org.richfaces.StringRichFacesValidator"/>
                 <f:selectItems value="#{richInplaceSelectBean.validationOptionsCustom}" />
                 <r:ajax event="change" render="customMsg"/>
@@ -93,8 +93,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="required" >
             <r:inplaceSelect id="required" required="true"
-                                requiredMessage="#{richInplaceSelectBean.attributes['requiredMessage'].value}"
-                                value="#{richInplaceSelectBean.requiredValue}">
+                             requiredMessage="#{richInplaceSelectBean.attributes['requiredMessage'].value}"
+                             value="#{richInplaceSelectBean.requiredValue}">
                 <f:selectItems value="#{richInplaceSelectBean.validationOptionsRequired}" />
                 <r:ajax event="change" render="requiredMsg"/>
             </r:inplaceSelect>
