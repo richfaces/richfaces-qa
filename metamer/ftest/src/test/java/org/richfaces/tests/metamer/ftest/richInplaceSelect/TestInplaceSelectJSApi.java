@@ -56,7 +56,7 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
     @FindBy(css = "body > span.rf-is-lst-cord")
     private WebElement globalPopup;
     //
-    @FindBy(css = "input[id$=value]")
+    @FindBy(css = "input[id$=':value']")
     private WebElement output;
     @FindBy(css = "input[id$=a4jButton]")
     private WebElement a4jButton;

@@ -47,7 +47,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                 value="#{richInplaceSelectBean.notEmptyValue}"
                                 >
                 <f:selectItems value="#{richInplaceSelectBean.validationOptionsNotEmpty}" />
-                <a4j:ajax event="blur" render="notEmptyMsg"/>
+                <a4j:ajax event="change" render="notEmptyMsg"/>
             </rich:inplaceSelect>
         </ui:define>
         <ui:define name="notEmptyOutput">
