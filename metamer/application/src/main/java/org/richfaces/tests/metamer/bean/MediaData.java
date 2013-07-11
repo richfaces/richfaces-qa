@@ -21,14 +21,14 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.bean;
 
-import java.io.Serializable;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.richfaces.resource.SerializableResource;
+
 @ManagedBean(name = "mediaData")
 @ViewScoped
-public class MediaData implements Serializable {
+public class MediaData implements SerializableResource {
 
     private static final long serialVersionUID = 1L;
     int height = 120;
