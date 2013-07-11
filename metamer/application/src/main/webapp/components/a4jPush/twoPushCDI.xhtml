@@ -60,7 +60,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <a:outputPanel id="pushPanel">
                 <a:push id="push"
                         rendered="#{a4jPushBean.attributes['rendered'].value}"
-                        address="sampleAddress1"
+                        address="cdiSampleAddress1"
                         ondataavailable="updateOutput('outputDate', event.rf.data);"
                         onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}" />
             </a:outputPanel>
@@ -83,7 +83,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <!--  PUSH 2 -->
             <a:commandButton id="performPushEvent2" value="Push 2!" action="#{a4jPushBean.pushCDI2}" />
             <a:push id="push2"
-                    address="sampleAddress2"
+                    address="cdiSampleAddress2"
                     ondataavailable="updateOutput('outputDate2', event.rf.data);"
                     onsubscribed="#{a4jPushBean.attributes['onsubscribed'].value}" />
 
