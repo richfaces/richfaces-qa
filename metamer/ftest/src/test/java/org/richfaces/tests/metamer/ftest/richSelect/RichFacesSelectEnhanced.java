@@ -46,7 +46,7 @@ public class RichFacesSelectEnhanced extends RichFacesSelect {
     private WebDriver browser;
 
     @Override
-    protected OptionList getPopup() {
+    public OptionList getPopup() {// made public to be accessible for GrapheneProxyHandler
         RFSelectOptionList list = Graphene.createPageFragment(RFSelectOptionList.class, browser.findElement(GLOBAL_POPUP));
         list.setInput(getInput().getInput());
         return list;
