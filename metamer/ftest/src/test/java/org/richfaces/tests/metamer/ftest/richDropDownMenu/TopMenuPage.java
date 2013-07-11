@@ -36,48 +36,104 @@ import org.richfaces.tests.page.fragments.impl.dropDownMenu.internal.RichFacesDr
 public class TopMenuPage extends MetamerPage {
 
     @FindBy(jquery = ".rf-tb-itm:eq(0)")
-    public RichFacesDropDownMenuInternal fileDropDownMenu;
+    private RichFacesDropDownMenuInternal fileDropDownMenu;
 
     @FindBy(jquery = ".rf-ddm-lbl-dec:eq(0)")
-    public WebElement target1;
+    private WebElement target1;
 
     @FindBy(jquery = "span[id$=output]")
-    public WebElement output;
+    private WebElement output;
 
     @FindBy(css = "div.rf-ddm-lst")
-    public WebElement dropDownMenuContent;
+    private WebElement dropDownMenuContent;
 
     @FindBy(jquery = "img:contains('File')")
-    public WebElement fileMenuLabel;
+    private WebElement fileMenuLabel;
 
     @FindBy(jquery = "div[id$=menu1]")
-    public WebElement fileMenu;
+    private WebElement fileMenu;
 
     @FindBy(jquery = "div[id$=menu1_list]")
-    public WebElement fileMenuList;
+    private WebElement fileMenuList;
 
     @FindBy(jquery = "div[id$=menuGroup4]")
-    public WebElement group;
+    private WebElement group;
 
     @FindBy(jquery = "div[id$=menuGroup4_list]")
-    public WebElement groupList;
+    private WebElement groupList;
 
     @FindBy(jquery = "div[id$=menu1] img.pic")
-    public WebElement icon;
+    private WebElement icon;
 
     @FindBy(jquery = "div[id$=menu1] span.rf-ddm-itm-ic > div.rf-ddm-emptyIcon")
-    public WebElement emptyIcon;
+    private WebElement emptyIcon;
 
     @FindBy(jquery = "div[id$=menuItem41]")
-    public WebElement menuItem41;
+    private WebElement menuItem41;
 
     @FindBy(jquery = " div[id$=menu1] div.rf-ddm-lbl-dec")
-    public WebElement fileMenuLabelOriginal;
+    private WebElement fileMenuLabelOriginal;
 
     @FindBy(tagName = "body")
-    public WebElement body;
+    private WebElement body;
 
-    private static final long SHOW_DELAY_TOLERANCE = 600;
+    private static final double SHOW_DELAY_TOLERANCE_MODIFIER = 0.5;
+
+    public WebElement getBody() {
+        return body;
+    }
+
+    public WebElement getDropDownMenuContent() {
+        return dropDownMenuContent;
+    }
+
+    public WebElement getEmptyIcon() {
+        return emptyIcon;
+    }
+
+    public RichFacesDropDownMenuInternal getFileDropDownMenu() {
+        return fileDropDownMenu;
+    }
+
+    public WebElement getFileMenu() {
+        return fileMenu;
+    }
+
+    public WebElement getFileMenuLabel() {
+        return fileMenuLabel;
+    }
+
+    public WebElement getFileMenuLabelOriginal() {
+        return fileMenuLabelOriginal;
+    }
+
+    public WebElement getFileMenuList() {
+        return fileMenuList;
+    }
+
+    public WebElement getGroup() {
+        return group;
+    }
+
+    public WebElement getGroupList() {
+        return groupList;
+    }
+
+    public WebElement getIcon() {
+        return icon;
+    }
+
+    public WebElement getMenuItem41() {
+        return menuItem41;
+    }
+
+    public WebElement getOutput() {
+        return output;
+    }
+
+    public WebElement getTarget1() {
+        return target1;
+    }
 
     public String returnPopupWidth(String minWidth) {
         dropDownMenuAttributes.set(DropDownMenuAttributes.popupWidth, minWidth);
@@ -96,6 +152,7 @@ public class TopMenuPage extends MetamerPage {
     }
 
     public void checkShowDelay(int expected) {
-        assertEquals(getActualShowDelay(expected), expected, SHOW_DELAY_TOLERANCE);
+        assertEquals(getActualShowDelay(expected), expected, expected * SHOW_DELAY_TOLERANCE_MODIFIER);
     }
+
 }
