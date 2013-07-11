@@ -51,7 +51,7 @@ public class TestInputNumberSliderJSApi extends AbstractSliderTest {
     WebElement increaseButton;
     @FindBy(css = "[id$=decrease]")
     WebElement decreaseButton;
-    @FindBy(css = "input[id$=':value]'")
+    @FindBy(css = "input[id$=':value']")
     WebElement value;
 
     @Override
@@ -93,7 +93,6 @@ public class TestInputNumberSliderJSApi extends AbstractSliderTest {
         MetamerPage.waitRequest(increaseButton, WaitRequestType.XHR).click();
         MetamerPage.waitRequest(increaseButton, WaitRequestType.XHR).click();
         assertEquals(slider.getInput().getStringValue(), "5");//6, but max is 5
-
     }
 
     @Test
