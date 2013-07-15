@@ -22,12 +22,10 @@
 package org.richfaces.tests.metamer.ftest.richDropDownMenu;
 
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.dropDownMenuAttributes;
-import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.page.fragments.impl.dropDownMenu.internal.RichFacesDropDownMenuInternal;
 
 /**
@@ -76,8 +74,6 @@ public class TopMenuPage extends MetamerPage {
 
     @FindBy(tagName = "body")
     private WebElement body;
-
-    private static final double SHOW_DELAY_TOLERANCE_MODIFIER = 0.5;
 
     public WebElement getBody() {
         return body;
@@ -140,19 +136,4 @@ public class TopMenuPage extends MetamerPage {
         fileDropDownMenu.invoke(target1);
         return dropDownMenuContent.getCssValue("min-width");
     }
-
-    public int getActualShowDelay(final int showDelay) {
-        dropDownMenuAttributes.set(DropDownMenuAttributes.showDelay, showDelay);
-        return StopWatch.watchTimeSpentInAction(new StopWatch.PerformableAction() {
-            @Override
-            public void perform() {
-                fileDropDownMenu.invoke(target1);
-            }
-        }).inMillis().intValue();
-    }
-
-    public void checkShowDelay(int expected) {
-        assertEquals(getActualShowDelay(expected), expected, expected * SHOW_DELAY_TOLERANCE_MODIFIER);
-    }
-
 }
