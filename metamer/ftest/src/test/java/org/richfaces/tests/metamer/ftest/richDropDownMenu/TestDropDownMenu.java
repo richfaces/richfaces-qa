@@ -32,7 +32,9 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
+import com.beust.jcommander.internal.Lists;
 import java.net.URL;
+import java.util.List;
 
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.HasInputDevices;
@@ -212,18 +214,24 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
     @Test
     @Use(field = "delay", ints = { 1000, 1500, 2500 })
     public void testHideDelay() {
-        updateDropDownMenuInvoker();
-        double tolerance = delay * 0.5;
         dropDownMenuAttributes.set(DropDownMenuAttributes.hideDelay, delay);
+        dropDownMenuAttributes.set(DropDownMenuAttributes.showDelay, 0);
+        double tolerance = delay * 0.5;
+        updateDropDownMenuInvoker();
 
-        page.getFileDropDownMenu().invoke(page.getTarget1());
-        int time = StopWatch.watchTimeSpentInAction(new StopWatch.PerformableAction() {
-            @Override
-            public void perform() {
-                page.getFileDropDownMenu().dismiss();
-            }
-        }).inMillis().intValue();
-        assertEquals(time, delay, tolerance, "The measured delay was far from set value.");
+        List<Integer> times = Lists.newArrayList(3);
+        for (int i = 0; i < 3; i++) {
+            page.getFileDropDownMenu().invoke(page.getTarget1());
+            times.add(StopWatch.watchTimeSpentInAction(new StopWatch.PerformableAction() {
+                @Override
+                public void perform() {
+                    page.getFileDropDownMenu().dismiss();
+                }
+            }).inMillis().intValue());
+        }
+        double average = (times.get(0) + times.get(1) + times.get(2)) / 3;
+        assertEquals(average, delay, tolerance, "The measured delay was far from set value.");
+
     }
 
     @Test
@@ -249,8 +257,25 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
     @Test
     @Use(field = "delay", ints = { 1000, 1500, 2500 })
     public void testShowDelay() {
+        dropDownMenuAttributes.set(DropDownMenuAttributes.hideDelay, 0);
+        dropDownMenuAttributes.set(DropDownMenuAttributes.showDelay, delay);
+        double tolerance = delay * 0.5;
         updateDropDownMenuInvoker();
-        page.checkShowDelay(delay);
+
+        List<Integer> times = Lists.newArrayList(3);
+        for (int i = 0; i < 3; i++) {
+            times.add(
+                StopWatch.watchTimeSpentInAction(new StopWatch.PerformableAction() {
+                    @Override
+                    public void perform() {
+                        page.getFileDropDownMenu().invoke(page.getTarget1());
+                    }
+                }).inMillis().intValue());
+            page.getFileDropDownMenu().dismiss();
+        }
+
+        double average = (times.get(0) + times.get(1) + times.get(2)) / 3;
+        assertEquals(average, delay, tolerance, "The measured delay was far from set value.");
     }
 
     @Test
