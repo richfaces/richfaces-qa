@@ -33,7 +33,6 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -150,10 +149,10 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
         YearAndMonthEditor yearAndMonthEditor = calendar.getPopup().getHeaderControls().getYearAndMonthEditor();
         executeJSFromElement(showDateEditor);
         Graphene.waitGui().withMessage("year and month editor should be visible")
-                .until(yearAndMonthEditor.isVisibleCondition());
+            .until(yearAndMonthEditor.isVisibleCondition());
         executeJSFromElement(hideDateEditor);
         Graphene.waitGui().withMessage("year and month editor should not be visible")
-                .until(yearAndMonthEditor.isNotVisibleCondition());
+            .until(yearAndMonthEditor.isNotVisibleCondition());
     }
 
     @Test
@@ -167,15 +166,12 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
 
     @Test
     public void testShowAndHideTimeEditor() {
-        Dimension size = driver.manage().window().getSize();
-        driver.manage().window().setSize(new Dimension(1024, 768));
-        calendar.setDateTime(todayMidday.plusMonths(1));
+        setTodaysDate();
         TimeEditor timeEditor = calendar.getPopup().getFooterControls().getTimeEditor();
         executeJSFromElement(showTimeEditor);
         Graphene.waitGui().withMessage("time editor should be visible").until(timeEditor.isVisibleCondition());
         executeJSFromElement(hideTimeEditor);
         Graphene.waitGui().withMessage("time editor should not be visible").until(timeEditor.isNotVisibleCondition());
-        driver.manage().window().setSize(size);
     }
 
     @Test
@@ -217,7 +213,7 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
      */
     private Object executeJSFromElement(WebElement element) {
         return executeJS(element.getAttribute("onclick") != null ? element.getAttribute("onclick") : element
-                .getAttribute("onmouseover"));
+            .getAttribute("onmouseover"));
     }
 
     private String getGettersValue() {
@@ -227,6 +223,6 @@ public class TestCalendarJSApi extends AbstractCalendarTest {
 
     private void setTodaysDate() {
         MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), MetamerPage.WaitRequestType.XHR)
-                .setTodaysDate();
+            .setTodaysDate();
     }
 }
