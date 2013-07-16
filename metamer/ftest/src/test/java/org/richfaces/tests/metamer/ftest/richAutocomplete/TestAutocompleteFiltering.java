@@ -31,8 +31,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.Suggestion;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
 import org.richfaces.tests.page.fragments.impl.autocomplete.SuggestionImpl;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
 import org.testng.Assert;
@@ -45,9 +43,6 @@ import org.testng.annotations.Test;
 public class TestAutocompleteFiltering extends AbstractAutocompleteTest {
 
     private static final String CLIENT_FILTER_FUNCTION_NAME = "customClientFilterFunction";
-
-    @FindBy(css = "span[id$=autocomplete]")
-    private RichFacesAutocomplete<String> autocomplete;
 
     @Override
     public URL getTestUrl() {
@@ -70,7 +65,7 @@ public class TestAutocompleteFiltering extends AbstractAutocompleteTest {
         Assert.assertNotNull(found, "Suggestions aren't available.");
         Set<Suggestion<String>> suggestions = new HashSet<Suggestion<String>>(found);
 
-        String[] expected = new String[] { "Springfield of Illinois", "Raleigh of North Carolina",
+        String[] expected = new String[]{ "Springfield of Illinois", "Raleigh of North Carolina",
             "Bismarck of North Dakota" };
 
         for (String text : expected) {

@@ -25,19 +25,40 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.model.Capital;
+import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public abstract class AbstractAutocompleteTest extends AbstractWebDriverTest {
 
-    private List<Capital> capitals = Model.unmarshallCapitals();
+    private static final List<Capital> capitals = Model.unmarshallCapitals();
+
+    @FindBy(css = "span.rf-au[id$=autocomplete]")
+    protected RichFacesAutocomplete<String> autocomplete;
+
+    @FindBy(css = "[id$='output']")
+    private WebElement output;
 
     protected List<Capital> getCapitals() {
         return Collections.unmodifiableList(capitals);
+    }
+
+    public String getExpectedStateForPrefix(String prefix, boolean selectFirst) {
+        if (selectFirst && prefix.length() > 0) {
+            return getStatesByPrefix(prefix).get(0);
+        }
+
+        return prefix;
+    }
+
+    protected String getOutput() {
+        return output.getText();
     }
 
     protected List<String> getStatesByPrefix(String prefix) {
@@ -51,13 +72,4 @@ public abstract class AbstractAutocompleteTest extends AbstractWebDriverTest {
 
         return states;
     }
-
-    public String getExpectedStateForPrefix(String prefix, boolean selectFirst) {
-        if (selectFirst && prefix.length() > 0) {
-            return getStatesByPrefix(prefix).get(0);
-        }
-
-        return prefix;
-    }
-
 }

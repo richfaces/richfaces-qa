@@ -33,21 +33,17 @@ import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType
 import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class TestAutocompleteFormatting extends AbstractAutocompleteTest{
-
-    @FindBy(css="span.rf-au[id$=autocomplete]")
-    private RichFacesAutocomplete<String> autocomplete;
+public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
 
     @Inject
     @Use(booleans = { true, false })
@@ -58,7 +54,7 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest{
     Boolean selectFirst;
 
     @Inject
-    @Use(strings= {"div", "list", "table"})
+    @Use(strings = { "div", "list", "table" })
     String layout;
 
     @Override
@@ -103,7 +99,7 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest{
         });
         String expected = getExpectedStateForPrefix("ala", selectFirst).toLowerCase();
         String found = autocomplete.getInputValue().toLowerCase();
-        assertTrue(found.startsWith(expected), "The input value should start with '"+expected+"', but '" + found + "' found.");
+        assertTrue(found.startsWith(expected), "The input value should start with '" + expected + "', but '" + found + "' found.");
     }
 
     @Test
@@ -116,7 +112,7 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest{
     }
 
     private By getSuggestion(String value) {
-        switch(getLayout()) {
+        switch (getLayout()) {
             case DIV:
                 return ByJQuery.jquerySelector("div[id$=autocompleteItems] > div:contains('" + value + "')");
             case LIST:
@@ -133,6 +129,7 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest{
     }
 
     private static enum Layout {
+
         DIV, LIST, TABLE;
     }
 
