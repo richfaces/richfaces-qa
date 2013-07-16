@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jboss.arquillian.graphene.Graphene;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.AutocompleteComponent;
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.Suggestion;
@@ -51,7 +51,6 @@ public class RichFacesAutocomplete<T> implements AutocompleteComponent<T> {
         return suggList == null ? false : suggList.isDisplayed();
     }
 
-
     @Override
     public void clear(ClearType... clearType) {
         if (clearType.length == 0) {
@@ -64,7 +63,7 @@ public class RichFacesAutocomplete<T> implements AutocompleteComponent<T> {
 
         int valueLength = inputToWrite.getAttribute("value").length();
 
-        switch(clearType[0]) {
+        switch (clearType[0]) {
             case BACK_SPACE: {
                 for (int i = 0; i < valueLength; i++) {
                     actions.sendKeys(inputToWrite, Keys.BACK_SPACE);
@@ -95,7 +94,7 @@ public class RichFacesAutocomplete<T> implements AutocompleteComponent<T> {
         waitForSuggestionsNotAvailable(Graphene.waitGui());
     }
 
-     @Override
+    @Override
     public List<Suggestion<T>> getAllSuggestions() {
         checkParser();
         if (!areSuggestionsAvailable()) {
@@ -221,7 +220,7 @@ public class RichFacesAutocomplete<T> implements AutocompleteComponent<T> {
         return inputToWrite.getAttribute("value");
     }
 
-    protected boolean autocomplete(Suggestion<T> suggToCompleteWith, ScrollingType... scrollingType) {
+    protected boolean autocomplete(Suggestion<T> suggToCompleteWith, ScrollingType scrollingType) {
         if (!checkArgumentsAndThatSuggestionsAreAvailable(suggToCompleteWith, scrollingType)) {
             return false;
         }
@@ -237,49 +236,47 @@ public class RichFacesAutocomplete<T> implements AutocompleteComponent<T> {
         int i = suggList.findElements(By.className(CLASS_NAME_SUGG_SELECTED)).isEmpty() ? 1 : 0;
         for (WebElement suggestion : allSuggestions) {
             if (suggestion.getText().equals(suggToCompleteWith.getValue())) {
+                switch (scrollingType) {
+                    case BY_KEYS:
+                        // select the suggestion by pressing exact times down key and then enter
+                        LOGGER.log(Level.FINE, "Scrolling by keys.");
+                        // simulate scrolling by keys
+                        for (int j = 0; j < i; j++) {
+                            actions.sendKeys(Keys.DOWN);
+                        }
+                        actions.perform();
 
-                // choose the suggestion according to the scrolling type
-                // at first it does not matter
-                if (scrollingType.length == 0) {
-                    suggestion.click();
+                        WebElement selectedSugg = suggList.findElement(By.className(CLASS_NAME_SUGG_SELECTED));
+                        if (!selectedSugg.getText().equals(suggToCompleteWith.getValue())) {
+                            actions.sendKeys(Keys.DOWN);
+                            actions.perform();
+                        }
 
-                    // select the suggestion by pressing exact times down key and then enter
-                } else if (scrollingType[0] == ScrollingType.BY_KEYS) {
-                    LOGGER.log(Level.FINE, "Scrolling by keys.");
-                    for (int j = 0; j < i; j++) {
-                        actions.sendKeys(Keys.DOWN);
-                    }
+                        actions.sendKeys(suggestion, Keys.NULL).perform();// ENTER | RETURN Key cause HTTP submit
 
-                    actions.build().perform();
-                    WebElement selectedSugg = suggList.findElement(By.className(CLASS_NAME_SUGG_SELECTED));
+                        // workaround for NoSuchElementException
+                        Graphene.waitGui().until().element(root).is().present();
+                        break;
 
-                    if (selectedSugg.getText().equals(suggToCompleteWith.getValue())) {
-                        actions.sendKeys(selectedSugg, Keys.ENTER);
-                        actions.build().perform();
-                    } else {
-                        actions.sendKeys(Keys.DOWN).sendKeys(selectedSugg, Keys.ENTER);
-                        actions.build().perform();
-                    }
-
-                    // workaround for NoSuchElementException
-                    Graphene.waitGui().until(Graphene.element(root).isPresent());
-
-                    // or move the mouse over the right suggestion and click
-                } else if (scrollingType[0] == ScrollingType.BY_MOUSE) {
-                    LOGGER.log(Level.FINE, "Scrolling by mouse.");
-                    actions.moveToElement(suggestion).build().perform();
-
-                    suggestion.click();
+                    default:
+                    case BY_MOUSE:
+                        // move the mouse over the right suggestion and click
+                        LOGGER.log(Level.FINE, "Scrolling by mouse.");
+                        actions.moveToElement(suggestion).perform();
+                        suggestion.click();
+                        break;
                 }
-
                 // add suggestion to the list of selected suggestions
                 selectedSuggestions.add(suggToCompleteWith);
                 return true;
             }
             i++;
         }
-
         return false;
+    }
+
+    protected boolean autocomplete(Suggestion<T> suggToCompleteWith) {
+        return autocomplete(suggToCompleteWith, ScrollingType.BY_MOUSE);
     }
 
     protected void checkParser() {
@@ -327,18 +324,11 @@ public class RichFacesAutocomplete<T> implements AutocompleteComponent<T> {
         return null;
     }
 
-    protected void waitForSuggestionsAvailable(WebDriverWait wait) {
-        wait.until(Graphene.element(getRightSuggestionList()).isVisible());
+    protected void waitForSuggestionsAvailable(WebDriverWait<Void> wait) {
+        wait.until().element(getRightSuggestionList()).is().visible();
     }
 
-    protected void waitForSuggestionsNotAvailable(WebDriverWait wait) {
-        wait.until(Graphene.element(getRightSuggestionList()).not().isVisible());
-    }
-
-    protected void waitFor(long timeInMillis) {
-        try {
-            Thread.sleep(timeInMillis);
-        } catch (InterruptedException ignored) {
-        }
+    protected void waitForSuggestionsNotAvailable(WebDriverWait<Void> wait) {
+        wait.until().element(getRightSuggestionList()).is().not().visible();
     }
 }
