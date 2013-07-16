@@ -214,7 +214,7 @@
                                             <destFileName>showcase-portlet.war</destFileName>
                                         </artifactItem>
                                     </artifactItems>
-                                    <outputDirectory>target</outputDirectory>
+                                    <outputDirectory> ${project.build.directory}</outputDirectory>
                                     <overWriteIfNewer>false</overWriteIfNewer>
                                 </configuration>
                             </execution>
