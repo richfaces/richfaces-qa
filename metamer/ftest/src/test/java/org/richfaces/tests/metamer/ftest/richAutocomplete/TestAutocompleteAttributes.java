@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import static java.text.MessageFormat.format;
+
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocompleteAttributes;
 import static org.testng.Assert.assertEquals;
@@ -33,9 +34,7 @@ import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.Suggestion;
 import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
 import org.richfaces.tests.page.fragments.impl.autocomplete.SuggestionImpl;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
 import org.testng.annotations.BeforeMethod;
@@ -50,9 +49,6 @@ public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
     private SimplePage page;
 
     private static final String PHASE_LISTENER_LOG_FORMAT = "*1 value changed: {0} -> {1}";
-
-    @FindBy(css="span[id$=autocomplete]")
-    private RichFacesAutocomplete<String> autocomplete;
 
     @Override
     public URL getTestUrl() {
@@ -85,11 +81,11 @@ public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
         assertEquals(page.getPhases().get(3), format(PHASE_LISTENER_LOG_FORMAT, "something", "something else"));
     }
 
-    @Test(groups="Future")
+    @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12820")
     public void testLayout() {
-        String[] layouts = new String[] {"div", "list", "table"};
-        for (String layout: layouts) {
+        String[] layouts = new String[]{ "div", "list", "table" };
+        for (String layout : layouts) {
             autocompleteAttributes.set(AutocompleteAttributes.layout, layout);
             Suggestion<String> expected = new SuggestionImpl<String>("Alaska");
             autocomplete.clear(ClearType.BACK_SPACE);

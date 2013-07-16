@@ -21,18 +21,19 @@
  */
 package org.richfaces.tests.metamer.bean.rich;
 
+import com.google.common.collect.Lists;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.richfaces.component.UIAutocomplete;
 import org.richfaces.tests.metamer.Attributes;
+import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.bean.RichBean;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBeanImpl;
@@ -54,9 +55,8 @@ public class RichAutocompleteBean extends StringInputValidationBeanImpl implemen
 
     private static final long serialVersionUID = -1L;
     private static final Logger logger = LoggerFactory.getLogger(RichAutocompleteBean.class);
+    private static final List<Capital> capitals = Model.unmarshallCapitals();
     private Attributes ajaxAttributes;
-    @ManagedProperty("#{model.capitals}")
-    private List<Capital> capitals;
     private String randomString;
 
     /**
@@ -95,18 +95,15 @@ public class RichAutocompleteBean extends StringInputValidationBeanImpl implemen
 
     public List<String> autocomplete(String prefix) {
         ArrayList<String> result = new ArrayList<String>();
-        if (prefix != null && prefix.length() > 0) {
-            Iterator<Capital> iterator = capitals.iterator();
-            while (iterator.hasNext()) {
-                Capital elem = ((Capital) iterator.next());
-                if ((elem.getState() != null && elem.getState().toLowerCase().indexOf(prefix.toLowerCase()) == 0)
-                        || "".equals(prefix)) {
-                    result.add(elem.getState());
-                }
+        if (prefix == null || prefix.isEmpty()) {
+            for (Capital capital : capitals) {
+                result.add(capital.getState());
             }
         } else {
             for (Capital capital : capitals) {
-                result.add(capital.getState());
+                if (capital.getState() != null && capital.getState().toLowerCase().startsWith(prefix.toLowerCase())) {
+                    result.add(capital.getState());
+                }
             }
         }
         return result;
@@ -123,29 +120,19 @@ public class RichAutocompleteBean extends StringInputValidationBeanImpl implemen
      * @return List<Capital> with matching prefix
      */
     public List<Capital> autocompleteCapital(String prefix) {
-        ArrayList<Capital> result = new ArrayList<Capital>();
-        if (prefix != null && prefix.length() > 0) {
-            Iterator<Capital> iterator = capitals.iterator();
-            while (iterator.hasNext()) {
-                Capital elem = ((Capital) iterator.next());
-                if ((elem.getState() != null && elem.getState().toLowerCase().indexOf(prefix.toLowerCase()) == 0)
-                        || "".equals(prefix)) {
-                    result.add(elem);
+        ArrayList<Capital> result;
+        if (prefix == null || prefix.isEmpty()) {
+            result = Lists.newArrayList(capitals);
+        } else {
+            result = Lists.newArrayList();
+            for (Capital capital : capitals) {
+                if (capital.getState() != null && capital.getState().toLowerCase().startsWith(prefix.toLowerCase())) {
+                    result.add(capital);
                 }
             }
-        } else {
-            for (Capital capital : capitals) {
-                result.add(capital);
-            }
         }
-
         randomString = String.valueOf(Math.random());
-
         return result;
-    }
-
-    public void setCapitals(List<Capital> capitals) {
-        this.capitals = capitals;
     }
 
     public List<Capital> getCapitals() {

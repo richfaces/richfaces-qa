@@ -28,18 +28,14 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
-import java.util.List;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.Suggestion;
 import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.model.Capital;
-import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
 import org.richfaces.tests.page.fragments.impl.autocomplete.SuggestionImpl;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
 import org.testng.annotations.BeforeMethod;
@@ -50,11 +46,8 @@ import org.testng.annotations.Test;
  */
 public class TestAutocomplete extends AbstractAutocompleteTest {
 
-    @FindBy(css="span.rf-au")
-    protected RichFacesAutocomplete<String> autocomplete;
-
     @Inject
-    @Use(strings= { "mouse", "keys" })
+    @Use(strings = { "mouse", "keys" })
     private String scrollingType;
 
     @Inject
@@ -64,8 +57,6 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
     @Inject
     @Use(booleans = { true, false })
     Boolean selectFirst;
-
-    List<Capital> capitals = Model.unmarshallCapitals();
 
     @Override
     public URL getTestUrl() {
@@ -117,11 +108,11 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
     @Test
     public void testSimpleSelection() throws InterruptedException {
         // this item is 2nd if type filter "ala", so it ensure that it was not picked first item
-       Suggestion<String> expected = new SuggestionImpl<String>("Alaska");
-       autocomplete.type("ala");
-       autocomplete.autocompleteWithSuggestion(expected, getScrollingType());
-       waiting(500);
-       assertEquals(autocomplete.getInputValue(), expected.getValue());
+        Suggestion<String> expected = new SuggestionImpl<String>("Alaska");
+        autocomplete.type("ala");
+        Graphene.guardAjax(autocomplete).autocompleteWithSuggestion(expected, getScrollingType());
+        assertEquals(autocomplete.getInputValue(), expected.getValue());
+        assertEquals(getOutput(), expected.getValue());
     }
 
     protected ScrollingType getScrollingType() {

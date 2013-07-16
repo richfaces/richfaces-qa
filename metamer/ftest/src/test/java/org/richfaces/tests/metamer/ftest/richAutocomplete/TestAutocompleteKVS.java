@@ -28,20 +28,16 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
  * Test for keeping visual state (KVS) for autocomplete on page:
- *  faces/components/richAutocomplete/autocomplete.xhtml
- *
- *  There were some problems with
+ * faces/components/richAutocomplete/autocomplete.xhtml
  *
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -50,9 +46,6 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest {
 
     @Page
     private MetamerPage page;
-
-    @FindBy(css = "span.rf-au[id$=autocomplete]")
-    private RichFacesAutocomplete<String> autocomplete;
 
     @BeforeMethod
     public void setParser() {
