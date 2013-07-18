@@ -191,7 +191,7 @@ public class RichFacesAutocomplete<T> implements AutocompleteComponent<T> {
     }
 
     public void autocomplete() {
-        inputToWrite.sendKeys("\n"); // Keys.ENTER doesn't work
+        inputToWrite.sendKeys(Keys.RETURN);
     }
 
     @Override
@@ -233,7 +233,7 @@ public class RichFacesAutocomplete<T> implements AutocompleteComponent<T> {
         // get all suggestions and find the desired one
         List<WebElement> allSuggestions = suggList.findElements(By.className(CLASS_NAME_SUGG));
         // index for remembering how many times it will need to press key down to select suggestion
-        int i = suggList.findElements(By.className(CLASS_NAME_SUGG_SELECTED)).isEmpty() ? 1 : 0;
+        int i = suggList.findElements(By.className(CLASS_NAME_SUGG_SELECTED)).isEmpty() ? 1 : 0;// when @selectFirst=true
         for (WebElement suggestion : allSuggestions) {
             if (suggestion.getText().equals(suggToCompleteWith.getValue())) {
                 switch (scrollingType) {
@@ -257,12 +257,10 @@ public class RichFacesAutocomplete<T> implements AutocompleteComponent<T> {
                         // workaround for NoSuchElementException
                         Graphene.waitGui().until().element(root).is().present();
                         break;
-
                     default:
                     case BY_MOUSE:
                         // move the mouse over the right suggestion and click
                         LOGGER.log(Level.FINE, "Scrolling by mouse.");
-                        actions.moveToElement(suggestion).perform();
                         suggestion.click();
                         break;
                 }

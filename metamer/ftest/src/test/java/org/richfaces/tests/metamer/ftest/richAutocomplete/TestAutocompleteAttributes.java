@@ -68,16 +68,16 @@ public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
     @Test
     public void testValueChangeListener() {
         autocomplete.clear(ClearType.BACK_SPACE);
-        autocomplete.type("something");
-        page.blur();
+        Graphene.guardAjax(autocomplete).type("something");
+        Graphene.guardAjax(page).blur();
 
-        Graphene.waitModel().until().element(page.getOutput()).text().equalTo("something");
+        checkOutput("something");
 
         autocomplete.clear(ClearType.BACK_SPACE);
-        autocomplete.type("something else");
-        page.blur();
+        Graphene.guardAjax(autocomplete).type("something else");
+        Graphene.guardAjax(page).blur();
         // valueChangeListener output as 4th record
-        Graphene.waitModel().until().element(page.getOutput()).text().equalTo("something else");
+        checkOutput("something else");
         assertEquals(page.getPhases().get(3), format(PHASE_LISTENER_LOG_FORMAT, "something", "something else"));
     }
 
@@ -89,8 +89,8 @@ public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
             autocompleteAttributes.set(AutocompleteAttributes.layout, layout);
             Suggestion<String> expected = new SuggestionImpl<String>("Alaska");
             autocomplete.clear(ClearType.BACK_SPACE);
-            autocomplete.type("ala");
-            autocomplete.autocompleteWithSuggestion(expected, ScrollingType.BY_MOUSE);
+            Graphene.guardAjax(autocomplete).type("ala");
+            Graphene.guardAjax(autocomplete).autocompleteWithSuggestion(expected, ScrollingType.BY_MOUSE);
             waiting(500);
             assertEquals(autocomplete.getInputValue(), expected.getValue(), "The input value doesn't match when layout is set to '" + layout + "'.");
         }
