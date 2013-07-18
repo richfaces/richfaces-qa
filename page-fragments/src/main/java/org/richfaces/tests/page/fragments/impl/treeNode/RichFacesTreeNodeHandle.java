@@ -24,7 +24,6 @@ package org.richfaces.tests.page.fragments.impl.treeNode;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebElement;
 
-
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
  *
@@ -34,24 +33,24 @@ public class RichFacesTreeNodeHandle {
     @Root
     private WebElement root;
 
-    String classHandleLeaf = "rf-trn-hnd-lf";
-    String classHandleExpanded = "rf-trn-hnd-exp";
-    String classHandleCollapsed = "rf-trn-hnd-colps";
+    public static final String CLASS_HANDLE_LEAF = "rf-trn-hnd-lf";
+    public static final String CLASS_HANDLE_EXPANDED = "rf-trn-hnd-exp";
+    public static final String CLASS_HANDLE_COLLAPSED = "rf-trn-hnd-colps";
 
     public WebElement getRoot() {
         return root;
     }
 
     public boolean isExpanded() {
-        return isVisible() && root.getAttribute("class").contains(classHandleExpanded);
+        return isVisible() && root.getAttribute("class").contains(CLASS_HANDLE_EXPANDED);
     }
 
     public boolean isCollapsed() {
-        return isVisible() && root.getAttribute("class").contains(classHandleCollapsed);
+        return isVisible() && root.getAttribute("class").contains(CLASS_HANDLE_COLLAPSED);
     }
 
     public boolean isLeaf() {
-        return isVisible() && root.getAttribute("class").contains(classHandleLeaf);
+        return isVisible() && root.getAttribute("class").contains(CLASS_HANDLE_LEAF);
     }
 
     private boolean isVisible() {

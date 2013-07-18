@@ -25,7 +25,6 @@ import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
  *
@@ -33,7 +32,14 @@ import org.openqa.selenium.WebElement;
 public class RichFacesTreeNodeHandleLoadingFacet {
 
     @Root
-    public WebElement root;
+    private WebElement root;
+
+    /**
+     * @return the root
+     */
+    public WebElement getRoot() {
+        return root;
+    }
 
     public boolean isVisible() {
         return root.isDisplayed();

@@ -57,8 +57,8 @@ public class RichFacesTree { //extends RichFacesTreeNode {
     @FindBy(jquery = JQUERY_NODES_SELECTED)
     private List<WebElement> anySelectedNodes;
 
-    SwitchType toggleType = SwitchType.ajax;
-    SwitchType selectionType = SwitchType.ajax;
+    protected SwitchType toggleType = SwitchType.ajax;
+    protected SwitchType selectionType = SwitchType.ajax;
 
     public WebElement getRoot() {
         return root;
