@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.autocompleteAttributes;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
@@ -56,7 +55,7 @@ public class TestAutocompleteFiltering extends AbstractAutocompleteTest {
     }
 
     @Test
-    public void testClientFilterFunction() throws InterruptedException {
+    public void testClientFilterFunction() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
         autocompleteAttributes.set(AutocompleteAttributes.clientFilterFunction, CLIENT_FILTER_FUNCTION_NAME);
 

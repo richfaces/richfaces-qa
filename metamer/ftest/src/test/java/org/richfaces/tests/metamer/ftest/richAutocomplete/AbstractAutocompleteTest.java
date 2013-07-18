@@ -30,6 +30,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.Model;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.model.Capital;
 import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
 
@@ -39,6 +40,7 @@ import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplet
 public abstract class AbstractAutocompleteTest extends AbstractWebDriverTest {
 
     private static final List<Capital> capitals = Model.unmarshallCapitals();
+    protected Attributes<AutocompleteAttributes> autocompleteAttributes = getAttributes();
 
     @FindBy(css = "span.rf-au[id$=autocomplete]")
     protected RichFacesAutocomplete<String> autocomplete;
