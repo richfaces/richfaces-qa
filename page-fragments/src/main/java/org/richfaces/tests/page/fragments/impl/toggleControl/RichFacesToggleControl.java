@@ -29,8 +29,16 @@ import org.openqa.selenium.WebElement;
  *
  */
 public class RichFacesToggleControl {
+
     @Root
-    public WebElement root;
+    private WebElement root;
+
+    /**
+     * @return the root
+     */
+    public WebElement getRoot() {
+        return root;
+    }
 
     public void toggle() {
         root.click();

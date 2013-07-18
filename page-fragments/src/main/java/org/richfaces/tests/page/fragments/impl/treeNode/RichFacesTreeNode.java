@@ -21,6 +21,8 @@
  */
 package org.richfaces.tests.page.fragments.impl.treeNode;
 
+import com.google.common.base.Predicate;
+
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -32,45 +34,43 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.page.fragments.impl.tree.RichFacesTree;
 import org.richfaces.ui.common.SwitchType;
 
-import com.google.common.base.Predicate;
-
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
  *
  */
 public class RichFacesTreeNode extends RichFacesTree {
 
-    @FindBy(css = CSS_NODE_ICON)
-    public RichFacesTreeNodeIcon icon;
-
-    @FindBy(css = CSS_NODE_HANDLER)
-    public RichFacesTreeNodeHandle handle;
-
-    @FindBy(css = CSS_NODE_HANDLER_LOADING)
-    public RichFacesTreeNodeHandleLoadingFacet handleLoading;
-
-    // part of node without subnodes
-    @FindBy(css = CSS_NODE_ITSELF)
-    private WebElement nodeItself;
-
-    private static final String classNodeExpanded = "rf-tr-nd-exp";
-    private static final String classNodeLeaf = "rf-tr-nd-lf";
-    private static final String classNodeCollapsed = "rf-tr-nd-colps";
-    private static final String classSelected = "rf-trn-sel";
-    private static final String classContent = "rf-trn-cnt";
-    private static final String classIcon = "rf-trn-ico";
+    public static final String CLASS_NODE_EXPANDED = "rf-tr-nd-exp";
+    public static final String CLASS_NODE_LEAF = "rf-tr-nd-lf";
+    public static final String CLASS_NODE_COLLAPSED = "rf-tr-nd-colps";
+    public static final String CLASS_SELECTED = "rf-trn-sel";
+    public static final String CLASS_CONTENT = "rf-trn-cnt";
+    public static final String CLASS_ICON = "rf-trn-ico";
 
     public static final String CSS_NODE = "div.rf-tr-nd";
     public static final String CSS_NODE_ITSELF = "div.rf-trn"; // if node expanded, this is part without child nodes
     public static final String CSS_NODE_HANDLER = "div span.rf-trn-hnd";
     public static final String CSS_NODE_HANDLER_LOADING = "div span.rf-trn-hnd-ldn-fct";
     public static final String CSS_NODE_LABEL = "span.rf-trn-lbl";
-    public static final String CSS_NODE_CONTENT = "span." + classContent;
-    public static final String CSS_NODE_ICON = "." + classIcon; // icon should be span or img
+    public static final String CSS_NODE_CONTENT = "span." + CLASS_CONTENT;
+    public static final String CSS_NODE_ICON = "." + CLASS_ICON; // icon should be span or img
 
     public static final String JQUERY_NODES_SELECTED = "div.rf-tr-nd:has(> .rf-trn > .rf-trn-sel)";
-    public static final String CSS_NODES_COLLAPSED = "div." + classNodeCollapsed;
-    public static final String CSS_NODES_EXPANDED = "div." + classNodeExpanded;
+    public static final String CSS_NODES_COLLAPSED = "div." + CLASS_NODE_COLLAPSED;
+    public static final String CSS_NODES_EXPANDED = "div." + CLASS_NODE_EXPANDED;
+
+    @FindBy(css = CSS_NODE_ICON)
+    private RichFacesTreeNodeIcon icon;
+
+    @FindBy(css = CSS_NODE_HANDLER)
+    private RichFacesTreeNodeHandle handle;
+
+    @FindBy(css = CSS_NODE_HANDLER_LOADING)
+    private RichFacesTreeNodeHandleLoadingFacet handleLoading;
+
+    // part of node without subnodes
+    @FindBy(css = CSS_NODE_ITSELF)
+    private WebElement nodeItself;
 
     @FindBy(jquery = ">" + CSS_NODE)
     public List<RichFacesTreeNode> nodes;
@@ -81,13 +81,15 @@ public class RichFacesTreeNode extends RichFacesTree {
 //
 //    @FindBy(jquery = ">" + CSS_NODES_EXPANDED)
 //    public List<RichFacesTreeNode> nodesExpanded;
-
+//
     public List<RichFacesTreeNode> getNodes() {
         return nodes;
     }
 
     public RichFacesTreeNode getNode(int index) {
-        if (getNodes().size() <= index) return null;
+        if (getNodes().size() <= index) {
+            return null;
+        }
         return getNodes().get(index);
     }
 
@@ -116,7 +118,7 @@ public class RichFacesTreeNode extends RichFacesTree {
     }
 
     public boolean isLeaf() {
-        return getRoot().getAttribute("class").contains(classNodeLeaf);
+        return getRoot().getAttribute("class").contains(CLASS_NODE_LEAF);
     }
 
     public int getNodesCount() {
@@ -125,14 +127,18 @@ public class RichFacesTreeNode extends RichFacesTree {
 
     /** Click on node expand handler and wait until expanded **/
     public void expand() {
-        if (isCollapsed()) triggerNodeHandlerClick();
+        if (isCollapsed()) {
+            triggerNodeHandlerClick();
+        }
 
         Graphene.waitAjax().until(isExpandedCondition());
     }
 
     /** Click on node collapse handler and wait until collapsed **/
     public void collapse() {
-        if (isExpanded()) triggerNodeHandlerClick();
+        if (isExpanded()) {
+            triggerNodeHandlerClick();
+        }
 
         Graphene.waitAjax().until(isCollapsedCondition());
     }
@@ -158,23 +164,23 @@ public class RichFacesTreeNode extends RichFacesTree {
     }
 
     public boolean isSelected() {
-        return getNodeItself().findElement(By.cssSelector(CSS_NODE_CONTENT)).getAttribute("class").contains(classSelected);
+        return getNodeItself().findElement(By.cssSelector(CSS_NODE_CONTENT)).getAttribute("class").contains(CLASS_SELECTED);
     }
 
     public boolean isCollapsed() {
-        return getRoot().getAttribute("class").contains(classNodeCollapsed);
+        return getRoot().getAttribute("class").contains(CLASS_NODE_COLLAPSED);
     }
 
     public ExpectedCondition<Boolean> isCollapsedCondition() {
-        return Graphene.element(getRoot()).attribute("class").contains(classNodeCollapsed);
+        return Graphene.element(getRoot()).attribute("class").contains(CLASS_NODE_COLLAPSED);
     }
 
     public boolean isExpanded() {
-        return getRoot().getAttribute("class").contains(classNodeExpanded);
+        return getRoot().getAttribute("class").contains(CLASS_NODE_EXPANDED);
     }
 
     public ExpectedCondition<Boolean> isExpandedCondition() {
-        return Graphene.element(getRoot()).attribute("class").contains(classNodeExpanded);
+        return Graphene.element(getRoot()).attribute("class").contains(CLASS_NODE_EXPANDED);
     }
 
     public int getAnySelectedNodesCount() {

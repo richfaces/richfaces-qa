@@ -35,13 +35,13 @@ public class RichFacesPanel {
     public static final String CSS_BODY = "div.rf-p-b";
 
     @Root
-    WebElement root;
+    private WebElement root;
 
     @FindBy(css = CSS_HEADER)
-    WebElement header;
+    private WebElement header;
 
     @FindBy(css = CSS_BODY)
-    WebElement body;
+    private WebElement body;
 
     public WebElement getRoot() {
         return root;
