@@ -21,16 +21,20 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.webdriver;
 
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
+
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.ajocado.javascript.JavaScript;
 import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.drone.api.annotation.Default;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneContext;
+import org.jboss.arquillian.graphene.enricher.WebElementUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -52,9 +56,7 @@ public class Attributes<T extends AttributeEnum> {
     private final String attributesID;
     private static final String PROPERTY_CSS_SELECTOR = "[id$='%s:%sInput']";
     private static final String NULLSTRING = "null";
-    private static final String[] NULLSTRINGOPTIONS = { "null", "", " " };
-    private static final int WAITTIME = 100;
-    private static final int NUMBEROFTRIES = 5;
+    private static final String[] NULLSTRINGOPTIONS = { NULLSTRING, "", " " };
 
     public Attributes() {
         this.attributesID = "";
@@ -64,21 +66,187 @@ public class Attributes<T extends AttributeEnum> {
         this.attributesID = attributesID;
     }
 
-    public void set(T attribute, String string) {
-        setProperty(attribute.toString(), string);
+    private void applyRadio(List<WebElement> radioElements, String valueToBeSet) {
+        for (WebElement element : radioElements) {
+            String attributeValue = element.getAttribute("value");
+            if (valueToBeSet.equals(NULLSTRING)) {
+                if (new StringEqualsWrapper(attributeValue).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
+                    if (!element.isSelected()) {
+                        MetamerPage.waitRequest(element, WaitRequestType.HTTP).click();
+                    }
+                    return;
+                }
+            } else if (valueToBeSet.equals(attributeValue)) {
+                if (!element.isSelected()) {
+                    MetamerPage.waitRequest(element, WaitRequestType.HTTP).click();
+                }
+                return;
+            } else if (attributeValue.contains(valueToBeSet)) {
+                //for image selection radios, which value contains a source url of the image
+                if (!element.isSelected()) {
+                    MetamerPage.waitRequest(element, WaitRequestType.HTTP).click();
+                }
+                return;
+            }
+        }
+        throw new IllegalArgumentException("No property with value " + valueToBeSet + " was found");
+    }
+
+    private void applySelect(WebElement selectElement, String valueToBeSet) {
+        Select select = new Select(selectElement);
+        if (valueToBeSet.equals(NULLSTRING)) {
+            for (WebElement element : select.getOptions()) {
+                String val = element.getAttribute("value");
+                if (new StringEqualsWrapper(val).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
+                    if (!element.isSelected()) {
+                        MetamerPage.waitRequest(element, WaitRequestType.HTTP).click();
+                    }
+                    return;
+                }
+            }
+        } else {
+            if (isSelectOptionsContainingValue(valueToBeSet, select.getOptions())) {
+                select.selectByValue(valueToBeSet);
+            } else {
+                select.selectByVisibleText(valueToBeSet);
+            }
+            return;
+        }
+        throw new IllegalArgumentException("No property with value " + valueToBeSet + " was found");
     }
 
     /**
-     * Setter for special cases. For example, 'for' is reserved java word, but
-     * valid richfaces attribute as well. So we use this attribute name in upper
-     * case in enum, and then set by special method to avoid overload by
-     * toLowerCase-in over the whole world of richfaces attributes
+     * Sets text property. Cleans input field, if there is something.
+     *
+     * @param propertyName name of the property that should change
+     * @param value value to be set
+     */
+    private void applyText(WebElement input, String value) {
+        String text = input.getAttribute("value");
+        if (!value.equals(text)) {
+            Utils.jQ((JavascriptExecutor) driver, "val('" + value + "')", input);
+            MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
+        }
+    }
+
+    /**
+     * Wait for page to load after attribute was set and then ckecks if it
+     * really was set. If it was not set, then IllegalStateException is thrown.
+     *
+     * @param propertyName string value of attribute
+     * @param value value that the attribute should have
+     */
+    private void checkIfPropertyWasSet(final String propertyName, final String value) {
+        Graphene.waitModel().until(new Predicate<WebDriver>() {
+            private String foundValue;
+
+            @Override
+            public boolean apply(WebDriver input) {
+                foundValue = getProperty(propertyName);
+                if (value.equals(NULLSTRING)) {
+                    if (new StringEqualsWrapper(foundValue).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
+                        return true;
+                    }
+                } else if (foundValue.contains(value)) {
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public String toString() {
+                return "property '" + propertyName + "' to be set to value '" + value + "'. Actual value '" + foundValue + "'.";
+            }
+        });
+    }
+
+    /**
+     * Retrieve current attribute value
      *
      * @param attribute
-     * @param string
+     * @return current attribute value
      */
-    public void setLower(T attribute, String string) {
-        setProperty(attribute.toString().toLowerCase(), string);
+    public String get(T attribute) {
+        // convert to lowercase if needed
+        // For example, 'for' is reserved java word, but also a
+        // valid richfaces attribute. So we use this attribute name in upper case in enum
+        String propertyName = attribute.toString();
+        String propertyNameCorrect = (propertyName.equals(propertyName.toUpperCase()) ? propertyName.toLowerCase() : propertyName);
+        return getProperty(propertyNameCorrect);
+    }
+
+    private By getCssSelectorForProperty(String property) {
+        return By.cssSelector(String.format(PROPERTY_CSS_SELECTOR, attributesID, property));
+    }
+
+    /**
+     * Gets String representation of attribute value set in page.
+     *
+     * @param propertyName string name of attribute
+     * @return
+     */
+    private String getProperty(String propertyName) {
+        By by = getCssSelectorForProperty(propertyName);
+        WebElement element = driver.findElement(by);
+        Graphene.waitModel().until().element(element).is().visible();
+        SearchResult result = SearchResult.getResultForElement(element);
+        switch (result.getTag()) {
+            case input:
+                return result.getElements().get(0).getAttribute("value");
+            case checkbox:
+                throw new UnsupportedOperationException("Checkboxes are not supported");
+            case radio:
+                return getValueFromRadio(result.getElements());
+            case select:
+                return getValueFromSelect(result.getElements().get(0));
+            default:
+                throw new IllegalArgumentException("Unknown property: " + propertyName);
+        }
+    }
+
+    private String getValueFromList(List<WebElement> list) {
+        boolean foundNullSelectionOption = false;
+        for (WebElement webElement : list) {
+            String value = webElement.getAttribute("value");
+            if (new StringEqualsWrapper(value).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
+                foundNullSelectionOption = true;
+            }
+            if (webElement.isSelected()) {
+                return webElement.getAttribute("value");
+            }
+        }
+        if (foundNullSelectionOption) {
+            //workaround for String options with value="" , used in attributes like
+            //action, actionListener, model...
+            //they do not preserve its selected state
+            return NULLSTRING;
+        }
+        throw new IllegalArgumentException("No selected choice for this attribute found.");
+    }
+
+    private String getValueFromRadio(List<WebElement> radioElements) {
+        return getValueFromList(radioElements);
+    }
+
+    private String getValueFromSelect(WebElement selectElement) {
+        return getValueFromList(new Select(selectElement).getAllSelectedOptions());
+    }
+
+    private boolean isSelectOptionsContainingValue(String value, List<WebElement> options) {
+        for (Iterator<WebElement> i = options.iterator(); i.hasNext();) {
+            if (value.equals(i.next().getAttribute("value"))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void reset(T attribute) {
+        setProperty(attribute.toString(), "");
+    }
+
+    public void set(T attribute, String string) {
+        setProperty(attribute.toString(), string);
     }
 
     // TODO jjamrich 2011-09-02: make sure that this resolve to correct string representation of number given as attr
@@ -106,10 +274,6 @@ public class Attributes<T extends AttributeEnum> {
         setProperty(attribute.toString(), event.getEventName());
     }
 
-    public void reset(T attribute) {
-        setProperty(attribute.toString(), "");
-    }
-
     /**
      * Sets attribute and checks if it was really set (waits for page
      * re-render).
@@ -118,231 +282,103 @@ public class Attributes<T extends AttributeEnum> {
      * @param value
      */
     protected void setProperty(String propertyName, Object value) {
+        // convert to lowercase if needed
+        // For example, 'for' is reserved java word, but also a
+        // valid richfaces attribute. So we use this attribute name in upper case in enum
+        String propertyNameCorrect = (propertyName.equals(propertyName.toUpperCase()) ? propertyName.toLowerCase() : propertyName);
+
         String valueAsString = (value == null ? NULLSTRING : value.toString());
         //element for all types of input elements
-        WebElement foundElementProxy = driver.findElement(
-                getCssSelectorForProperty(propertyName));
-        //handle the property by the tagname of the input element
-        Graphene.waitAjax().until().element(foundElementProxy).is().present();
-        Tag tag = Tag.getTag(foundElementProxy);
-        switch (tag) {
+        By by = getCssSelectorForProperty(propertyNameCorrect);
+        WebElement element = driver.findElement(by);
+        Graphene.waitModel().until().element(element).is().visible();
+        SearchResult result = SearchResult.getResultForElement(element);
+        switch (result.getTag()) {
             case input:
-                applyText(propertyName, valueAsString);
+                applyText(result.getElements().get(0), valueAsString);
                 break;
             case checkbox:
                 throw new UnsupportedOperationException("Checkboxes are not supported");
             case radio:
-                applyRadio(tag, valueAsString);
+                applyRadio(result.getElements(), valueAsString);
                 break;
             case select:
-                applySelect(tag, valueAsString);
+                applySelect(result.getElements().get(0), valueAsString);
                 break;
             default:
-                throw new IllegalArgumentException("Unknown property");
+                throw new IllegalArgumentException("Unknown property " + result.getTag());
         }
-        checkIfPropertyWasSet(propertyName, valueAsString);
+        checkIfPropertyWasSet(propertyNameCorrect, valueAsString);
     }
 
-    /**
-     * Sets text property. Cleans input field, if there is something.
-     *
-     * @param propertyName name of the property that should change
-     * @param value value to be set
-     */
-    private void applyText(String propertyName, String value) {
-        WebElement input = driver.findElement(
-                getCssSelectorForProperty(propertyName));
-        String text = input.getAttribute("value");
-        if (!value.equals(text)) {
-            if (!text.isEmpty()) {
-                Utils.jQ((JavascriptExecutor) driver, "val('')", input);
-            }
-            input.sendKeys(value);
-            MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
+    private abstract static class SearchResult {
+
+        private final Tag tag;
+        protected final Optional<List<WebElement>> elements;
+
+        public SearchResult(Tag tag, List<WebElement> elements) {
+            this.tag = tag;
+            this.elements = Optional.fromNullable(elements);
         }
-    }
 
-    private void applyRadio(Tag tag, String valueToBeSet) {
-        Validate.notEmpty(tag.radioElements, "No options from which can be selected.");
+        public List<WebElement> getElements() {
+            checkIfItIsCorrect();
+            return elements.get();
+        }
 
-        for (WebElement element : tag.radioElements) {
-            String attributeValue = element.getAttribute("value");
-            if (valueToBeSet.equals(NULLSTRING)) {
-                if (new StringEqualsWrapper(attributeValue).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
-                    if (!element.isSelected()) {
-                        MetamerPage.waitRequest(element, WaitRequestType.HTTP).click();
+        public Tag getTag() {
+            checkIfItIsCorrect();
+            return tag;
+        }
+
+        public abstract void checkIfItIsCorrect();
+
+        public static SearchResult getResultForElement(WebElement element) {
+            String elementTag = element.getTagName();
+            List<WebElement> foundElements;
+            for (Tag t : Tag.values()) {
+                if (t.getTagname().equals(elementTag)) {
+                    switch (t) {
+                        case checkbox:
+                        case radio:
+                            foundElements = element.findElements(By.tagName("input"));
+                            return new NotEmptySearchResult(t, foundElements);
+                        case input:
+                        case select:
+                            foundElements = Lists.newArrayList(element);
+                            return new SingleElementSearchResult(t, foundElements);
                     }
-                    return;
-                }
-            } else if (valueToBeSet.equals(attributeValue)) {
-                if (!element.isSelected()) {
-                    MetamerPage.waitRequest(element, WaitRequestType.HTTP).click();
-                }
-                return;
-            } else if (attributeValue.contains(valueToBeSet)) {
-                //for image selection radios, which value contains a source url of the image
-                if (!element.isSelected()) {
-                    MetamerPage.waitRequest(element, WaitRequestType.HTTP).click();
-                }
-                return;
-            }
-        }
-        throw new IllegalArgumentException("No property with value " + valueToBeSet + " was found");
-    }
-
-    private void applySelect(Tag tag, String value) {
-        Validate.notEmpty(tag.selection.getOptions(), "No options from which can be selected.");
-
-        if (value.equals(NULLSTRING)) {
-            for (WebElement element : tag.selection.getOptions()) {
-                String val = element.getAttribute("value");
-                if (new StringEqualsWrapper(val).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
-                    if (!element.isSelected()) {
-                        MetamerPage.waitRequest(element, WaitRequestType.HTTP).click();
-                    }
-                    return;
                 }
             }
-        } else {
-            if (isSelectOptionsContainingValue(value, tag.selection.getOptions())) {
-                tag.selection.selectByValue(value);
-            } else {
-                tag.selection.selectByVisibleText(value);
-            }
-            return;
-        }
-        throw new IllegalArgumentException("No property with value " + value + " was found");
-    }
-
-    private boolean isSelectOptionsContainingValue(String value, List<WebElement> options) {
-        for (Iterator<WebElement> i = options.iterator(); i.hasNext();) {
-            if (value.equals(i.next().getAttribute("value"))) {
-                return true;
-            }
-        }
-        System.out.println(" Value '" + value + "' was not found in select's options as @value. Consider use it as option label.");
-        return false;
-    }
-
-    /**
-     * Retrieve current attribute value
-     *
-     * @param attribute
-     * @return current attribute value
-     */
-    public String get(T attribute) {
-        return getProperty(attribute.toString());
-    }
-
-    private By getCssSelectorForProperty(String property) {
-        return By.cssSelector(String.format(PROPERTY_CSS_SELECTOR, attributesID, property));
-    }
-
-    /**
-     * Gets String representation of attribute value set in page.
-     *
-     * @param propertyName string name of attribute
-     * @return
-     */
-    private String getProperty(String propertyName) {
-        WebElement foundElementProxy = driver.findElement(
-                getCssSelectorForProperty(propertyName));
-        //handle the property by the tagname of the input element
-        Tag tag = Tag.getTag(foundElementProxy);
-        switch (tag) {
-            case input:
-                return foundElementProxy.getAttribute("value");
-            case checkbox:
-                throw new UnsupportedOperationException("Checkboxes are not supported");
-            case radio:
-                return getValueFromRadio(tag);
-            case select:
-                return getValueFromSelect(tag);
-            default:
-                throw new IllegalArgumentException("Unknown property: " + propertyName);
+            return new NotEmptySearchResult(null, null);
         }
     }
 
-    private String getValueFromRadio(Tag tag) {
-        Validate.notEmpty(tag.radioElements, "No inputs for this attribute found");
+    private static class NotEmptySearchResult extends SearchResult {
 
-        WebElement nullSelectionOption = null;
-        for (WebElement webElement : tag.radioElements) {
-            String value = webElement.getAttribute("value");
-            if (new StringEqualsWrapper(value).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
-                nullSelectionOption = webElement;
-            }
-            if (webElement.isSelected()) {
-                return webElement.getAttribute("value");
+        public NotEmptySearchResult(Tag tag, List<WebElement> elements) {
+            super(tag, elements);
+        }
+
+        @Override
+        public void checkIfItIsCorrect() {
+            if (elements.get().isEmpty()) {// null reference is handled by Optional
+                throw new RuntimeException("The found result is empty. " + elements.toString());
             }
         }
-        if (nullSelectionOption != null) {
-            //workaround for String options with value="" , used in attributes like
-            //action, actionListener, model...
-            //they do not preserve its selected state
-            return NULLSTRING;
-        }
-        throw new IllegalArgumentException("No selected choice for this attribute found.");
     }
 
-    private String getValueFromSelect(Tag tag) {
-        Validate.notEmpty(tag.selection.getOptions(), "No inputs for this attribute found");
+    private static class SingleElementSearchResult extends SearchResult {
 
-        WebElement nullSelectionOption = null;
-        for (WebElement webElement : tag.selection.getAllSelectedOptions()) {
-            String value = webElement.getAttribute("value");
-            if (new StringEqualsWrapper(value).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
-                nullSelectionOption = webElement;
-            }
-            if (webElement.isSelected()) {
-                return webElement.getAttribute("value");
-            }
+        public SingleElementSearchResult(Tag tag, List<WebElement> elements) {
+            super(tag, elements);
         }
-        if (nullSelectionOption != null) {
-            //workaround for String options with value="" , used in attributes like
-            //action, actionListener, model...
-            //they do not preserve its selected state
-            return NULLSTRING;
-        }
-        throw new IllegalArgumentException("No selected choice for this attribute found.");
-    }
 
-    /**
-     * Wait for page to load after attribute was set and then ckecks if it
-     * really was set. If it was not set, then IllegalStateException is thrown.
-     *
-     * @param propertyName string value of attribute
-     * @param value value that the attribute should have
-     */
-    private void checkIfPropertyWasSet(String propertyName, String value) {
-        String property;
-        for (int i = 0; i < NUMBEROFTRIES; i++) {
-            try {
-                property = getProperty(propertyName);
-                if (value.equals(NULLSTRING)) {
-                    if (new StringEqualsWrapper(property).isSimilarToSomeOfThis(NULLSTRINGOPTIONS)) {
-                        return;
-                    }
-                } else if (property.contains(value)) {
-                    return;
-                }
-                waiting(WAITTIME);
-            } catch (Exception ignored) {
-                waiting(WAITTIME);
+        @Override
+        public void checkIfItIsCorrect() {
+            if (elements.get().size() != 1) {// null reference is handled by Optional
+                throw new RuntimeException("The results size is not equal to 1. " + elements.toString());
             }
-        }
-        throw new IllegalStateException("Property " + propertyName + " was not changed.");
-    }
-
-    /**
-     * Waiting.
-     *
-     * @param milis
-     */
-    protected void waiting(int milis) {
-        try {
-            Thread.sleep(milis);
-        } catch (InterruptedException ignored) {
         }
     }
 
@@ -351,42 +387,16 @@ public class Attributes<T extends AttributeEnum> {
         input("input"),
         radio("table"),
         checkbox("table"),
-        select("select"),
-        unknown("");
+        select("select");
+
         private final String tagname;
-        private List<WebElement> radioElements;
-        private List<WebElement> checkboxElements;
-        private Select selection;
 
         Tag(String tagname) {
             this.tagname = tagname;
         }
 
-        public static Tag getTag(WebElement foundElement) {
-            String elementTag = foundElement.getTagName();
-            for (Tag t : values()) {
-                if (t.tagname.equals(elementTag)) {
-                    if (t.equals(radio) || t.equals(checkbox)) {
-                        List<WebElement> foundElements = foundElement
-                                .findElements(By.tagName("input"));
-                        String inputType = foundElements.get(0).getAttribute("type");
-                        if ("radio".equals(inputType)) {
-                            radio.radioElements = foundElements;
-                            return radio;
-                        } else if ("checkbox".equals(inputType)) { //not supported
-                            checkbox.checkboxElements = foundElements;
-                            return checkbox;
-                        }
-                        return t;
-                    } else if (t.equals(select)) {
-                        select.selection = new Select(foundElement);
-                        return select;
-                    } else {
-                        return t;
-                    }
-                }
-            }
-            return unknown;
+        public String getTagname() {
+            return tagname;
         }
     }
 }

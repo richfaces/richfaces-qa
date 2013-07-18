@@ -37,6 +37,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.HasInputDevices;
@@ -215,7 +216,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         }
         //the actual menu locations should be same as shifted default locations
         Utils.tolerantAssertLocationsEquals(defaultLocations.moveAllBy(shiftX, shiftY), actMenuLocation, tolerance, tolerance,
-                msg);
+            msg);
     }
 
     @Test
@@ -251,7 +252,6 @@ public class TestContextMenu extends AbstractWebDriverTest {
 
     @Test
     public void testDisabled() {
-        page.waiting(500); // workaround for Property showEvent was not changed.
         updateShowAction();
         page.contextMenu.invoke(page.targetPanel1);
         assertTrue(page.contextMenuContent.isDisplayed());
@@ -391,7 +391,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
                 new Actions(driver).keyDown(page.contextMenu.getItems().get(1), Keys.CONTROL)
-                        .keyUp(page.contextMenu.getItems().get(1), Keys.CONTROL).build().perform();
+                    .keyUp(page.contextMenu.getItems().get(1), Keys.CONTROL).build().perform();
             }
         });
     }
@@ -405,7 +405,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 page.contextMenu.invoke(page.targetPanel1);
                 new Actions(driver).keyDown(page.contextMenu.getItems().get(0), Keys.ALT)
-                        .keyUp(page.contextMenu.getItems().get(0), Keys.ALT).build().perform();
+                    .keyUp(page.contextMenu.getItems().get(0), Keys.ALT).build().perform();
             }
         });
     }

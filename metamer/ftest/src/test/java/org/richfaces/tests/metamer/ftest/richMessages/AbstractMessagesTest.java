@@ -47,14 +47,14 @@ public abstract class AbstractMessagesTest extends AbstractMessagesComponentTest
 
     @Override
     public void checkFor(int expectedMessages) {
-        AttributeList.messagesAttributes.setLower(MessagesAttributes.FOR, "");
+        AttributeList.messagesAttributes.set(MessagesAttributes.FOR, "");
         generateValidationMessagesWithoutWait();
         submitWithHBtn();
 
         Assert.assertFalse(page.messagesComponentWithFor.isVisible());
 
         // now set @for attribute to "simpleInput1"
-        AttributeList.messagesAttributes.setLower(MessagesAttributes.FOR, "simpleInput1");
+        AttributeList.messagesAttributes.set(MessagesAttributes.FOR, "simpleInput1");
         generateValidationMessagesWithoutWait();
         submitWithHBtn();
 
@@ -64,7 +64,7 @@ public abstract class AbstractMessagesTest extends AbstractMessagesComponentTest
         Assert.assertEquals(page.messagesComponentWithFor.getMessagesForInput(getSimpleInput2ID()).size(), 0, "No messages for input 2 were expected.");
 
         // now set @for attribute to "simpleInput2"
-        AttributeList.messagesAttributes.setLower(MessagesAttributes.FOR, "simpleInput2");
+        AttributeList.messagesAttributes.set(MessagesAttributes.FOR, "simpleInput2");
         generateValidationMessagesWithoutWait();
         submitWithHBtn();
 

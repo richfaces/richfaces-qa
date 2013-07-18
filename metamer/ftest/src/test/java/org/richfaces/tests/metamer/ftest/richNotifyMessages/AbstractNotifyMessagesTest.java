@@ -41,21 +41,21 @@ public abstract class AbstractNotifyMessagesTest extends AbstractMessagesCompone
 
     @Override
     public void checkFor(int expectedMessages) {
-        AttributeList.messagesAttributes.setLower(MessagesAttributes.FOR, "");
+        AttributeList.messagesAttributes.set(MessagesAttributes.FOR, "");
         generateValidationMessagesWithoutWait();
         submitWithA4jBtn();
 
         Assert.assertFalse(getPage().getMessagesComponentWithFor().isVisible());
 
         // now set for attribute to "simpleInput1"
-        AttributeList.messagesAttributes.setLower(MessagesAttributes.FOR, "simpleInput1");
+        AttributeList.messagesAttributes.set(MessagesAttributes.FOR, "simpleInput1");
         generateValidationMessagesWithWait();
 
         Assert.assertTrue(page.getMessagesComponentWithFor().isVisible());
         Assert.assertEquals(page.getMessagesComponentWithFor().size(), expectedMessages);
 
         // now set for attribute back to "simpleInput2"
-        AttributeList.messagesAttributes.setLower(MessagesAttributes.FOR, "simpleInput2");
+        AttributeList.messagesAttributes.set(MessagesAttributes.FOR, "simpleInput2");
         generateValidationMessagesWithWait();
 
         Assert.assertTrue(page.getMessagesComponentWithFor().isVisible());

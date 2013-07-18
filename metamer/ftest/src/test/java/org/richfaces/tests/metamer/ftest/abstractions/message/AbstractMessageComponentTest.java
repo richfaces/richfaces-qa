@@ -73,12 +73,12 @@ public abstract class AbstractMessageComponentTest extends AbstractMessageCompon
 
     public void checkFor() {
         // firstly, remove value from attribute @for and generate message
-        AttributeList.messageAttributes.setLower(MessageAttributes.FOR, "");
+        AttributeList.messageAttributes.set(MessageAttributes.FOR, "");
         generateValidationMessages();
         submitWithA4jBtn();
         assertFalse(getMessageComponentForSelectableInput().isVisible());
         // now set for attribute back to "simpleInput2"
-        AttributeList.messageAttributes.setLower(MessageAttributes.FOR, "simpleInput2");
+        AttributeList.messageAttributes.set(MessageAttributes.FOR, "simpleInput2");
         generateValidationMessagesWithWait();
         assertTrue(getMessageComponentForSelectableInput().isVisible());
     }
