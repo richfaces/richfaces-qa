@@ -34,12 +34,12 @@ import org.jboss.arquillian.ajocado.locator.JQueryLocator;
 import org.jboss.arquillian.drone.api.annotation.Default;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneContext;
-import org.jboss.arquillian.graphene.enricher.WebElementUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.FutureTarget;
 import org.richfaces.tests.metamer.ftest.attributes.AttributeEnum;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
@@ -50,20 +50,33 @@ import org.richfaces.tests.page.fragments.impl.Utils;
  */
 public class Attributes<T extends AttributeEnum> {
 
-    // FIXME: 2013-05-30, jpapouse:
-    // the class should be refactored to work without static context
-    protected WebDriver driver = GrapheneContext.getContextFor(Default.class).getWebDriver(JavascriptExecutor.class);
+    private FutureTarget<WebDriver> driver;
     private final String attributesID;
     private static final String PROPERTY_CSS_SELECTOR = "[id$='%s:%sInput']";
     private static final String NULLSTRING = "null";
     private static final String[] NULLSTRINGOPTIONS = { NULLSTRING, "", " " };
 
+    @Deprecated
     public Attributes() {
-        this.attributesID = "";
+        this("");
     }
 
+    @Deprecated
     public Attributes(String attributesID) {
+        this(null, attributesID);
+    }
+
+    public Attributes(FutureTarget<WebDriver> driver, String attributesID) {
         this.attributesID = attributesID;
+        this.driver = driver;
+    }
+
+    public static <T extends AttributeEnum> Attributes<T> getAttributesFor(FutureTarget<WebDriver> driver) {
+        return getAttributesFor(driver, "");
+    }
+
+    public static <T extends AttributeEnum> Attributes<T> getAttributesFor(FutureTarget<WebDriver> driver, String attributeTableID) {
+        return new Attributes<T>(driver, attributeTableID);
     }
 
     private void applyRadio(List<WebElement> radioElements, String valueToBeSet) {
@@ -124,7 +137,7 @@ public class Attributes<T extends AttributeEnum> {
     private void applyText(WebElement input, String value) {
         String text = input.getAttribute("value");
         if (!value.equals(text)) {
-            Utils.jQ((JavascriptExecutor) driver, "val('" + value + "')", input);
+            Utils.jQ((JavascriptExecutor) getDriver(), "val('" + value + "')", input);
             MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
         }
     }
@@ -179,6 +192,13 @@ public class Attributes<T extends AttributeEnum> {
         return By.cssSelector(String.format(PROPERTY_CSS_SELECTOR, attributesID, property));
     }
 
+    private WebDriver getDriver() {
+        if (driver == null) {
+            return GrapheneContext.getContextFor(Default.class).getWebDriver(JavascriptExecutor.class);
+        }
+        return driver.getTarget();
+    }
+
     /**
      * Gets String representation of attribute value set in page.
      *
@@ -187,7 +207,7 @@ public class Attributes<T extends AttributeEnum> {
      */
     private String getProperty(String propertyName) {
         By by = getCssSelectorForProperty(propertyName);
-        WebElement element = driver.findElement(by);
+        WebElement element = getDriver().findElement(by);
         Graphene.waitModel().until().element(element).is().visible();
         SearchResult result = SearchResult.getResultForElement(element);
         switch (result.getTag()) {
@@ -290,7 +310,7 @@ public class Attributes<T extends AttributeEnum> {
         String valueAsString = (value == null ? NULLSTRING : value.toString());
         //element for all types of input elements
         By by = getCssSelectorForProperty(propertyNameCorrect);
-        WebElement element = driver.findElement(by);
+        WebElement element = getDriver().findElement(by);
         Graphene.waitModel().until().element(element).is().visible();
         SearchResult result = SearchResult.getResultForElement(element);
         switch (result.getTag()) {
