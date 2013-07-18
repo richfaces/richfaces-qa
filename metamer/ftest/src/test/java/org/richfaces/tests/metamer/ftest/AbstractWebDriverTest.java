@@ -42,7 +42,6 @@ import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
@@ -133,11 +132,11 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      */
     protected void setAttribute(String attributeName, Object value) {
         TextInputComponentImpl attributeInput = Graphene.createPageFragment(TextInputComponentImpl.class,
-                driver.findElement(By.cssSelector(format(ATTRIBUTE_INPUT_TEMPLATE, attributeName))));
+            driver.findElement(By.cssSelector(format(ATTRIBUTE_INPUT_TEMPLATE, attributeName))));
         //set attribute
         MetamerPage.waitRequest(attributeInput.clear(ClearType.JS)
-                .fillIn(value.toString()), WaitRequestType.HTTP)
-                .submit();
+            .fillIn(value.toString()), WaitRequestType.HTTP)
+            .submit();
     }
 
     /**
@@ -456,7 +455,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
      */
     protected void testFireEvent(String attributeName, Action eventFiringAction) {
         setAttribute((attributeName.startsWith("on") ? attributeName : "on" + attributeName),
-                "metamerEvents += \"" + attributeName + " \"");
+            "metamerEvents += \"" + attributeName + " \"");
         //clear/init events
         executeJS("metamerEvents = \"\";");
         //trigger event
@@ -524,8 +523,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         String checker = "statusChecker";
         //set attribute
         MetamerPage.waitRequest(statusInput.clear(ClearType.JS)
-                .fillIn(checker), WaitRequestType.HTTP)
-                .trigger("blur");
+            .fillIn(checker), WaitRequestType.HTTP)
+            .trigger("blur");
 
         String statusCheckerTimeBefore = metamerPage.getStatusCheckerOutputElement().getText();
         statusChangingAction.perform();
@@ -621,12 +620,30 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         return list;
     }
 
+    protected <T extends AttributeEnum> Attributes<T> getAttributes(String attributesTableId) {
+        return Attributes.<T>getAttributesFor(getFutureDriver(), attributesTableId);
+    }
+
+    protected <T extends AttributeEnum> Attributes<T> getAttributes() {
+        return getAttributes("");
+    }
+
+    private FutureTarget<WebDriver> getFutureDriver() {
+        return new FutureTarget<WebDriver>() {
+
+            @Override
+            public WebDriver getTarget() {
+                return driver;
+            }
+        };
+    }
+
     /**
      Method used to run selenium test in portal environment.
      */
     private void goToTestInPortal() {
         driver.get(format("{0}://{1}:{2}/{3}",
-                contextPath.getProtocol(), contextPath.getHost(), contextPath.getPort(), "portal/classic/metamer"));
+            contextPath.getProtocol(), contextPath.getHost(), contextPath.getPort(), "portal/classic/metamer"));
         try {
             driver.findElement(By.cssSelector("a[id$='controlsForm:goHomeLink']")).click();
             //JSF form works only on home page
@@ -677,7 +694,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         });
         String[] actualEvents = ((String) executeJS("return sessionStorage.getItem('metamerEvents')")).split(" ");
         assertEquals(actualEvents, events, format("The events ({0}) don't came in right order ({1})",
-                Arrays.deepToString(actualEvents), Arrays.deepToString(events)));
+            Arrays.deepToString(actualEvents), Arrays.deepToString(events)));
     }
 
     public void cleanMetamerEventsVariable() {
@@ -756,7 +773,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         }
     }
 
-    protected interface FutureTarget<T> {
+    public interface FutureTarget<T> {
 
         T getTarget();
     }
