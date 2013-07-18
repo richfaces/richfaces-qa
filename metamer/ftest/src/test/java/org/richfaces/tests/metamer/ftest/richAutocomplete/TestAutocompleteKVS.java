@@ -26,11 +26,11 @@ import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -80,8 +80,8 @@ public class TestAutocompleteKVS extends AbstractAutocompleteTest {
 
         @Override
         public void doRequest(String inputValue) {
-            MetamerPage.waitRequest(autocomplete, WaitRequestType.XHR).type(inputValue);
-            autocomplete.finish();
+            Graphene.guardAjax(autocomplete).type(inputValue);
+            Graphene.guardAjax(autocomplete).finish();
         }
 
         @Override

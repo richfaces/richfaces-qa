@@ -88,9 +88,9 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
     public void testFormatting() {
         assertFalse(autocomplete.areSuggestionsAvailable());
         autocomplete.clear(ClearType.BACK_SPACE);
-        autocomplete.type("ala");
+        Graphene.guardAjax(autocomplete).type("ala");
         assertTrue(autocomplete.areSuggestionsAvailable());
-        autocomplete.autocomplete();
+        Graphene.guardAjax(autocomplete).autocomplete();
         Graphene.waitGui().until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver driver) {
@@ -104,7 +104,7 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
 
     @Test
     public void testLayout() {
-        autocomplete.type("Co");
+        Graphene.guardAjax(autocomplete).type("Co");
         assertTrue(Graphene.element(getSuggestion("Colorado")).isPresent().apply(driver));
         assertTrue(Graphene.element(getSuggestion("[Denver]")).isPresent().apply(driver));
         assertTrue(Graphene.element(getSuggestion("Connecticut")).isPresent().apply(driver));

@@ -34,7 +34,7 @@ import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.Suggestion;
 import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.page.fragments.impl.autocomplete.SuggestionImpl;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
@@ -81,38 +81,39 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         autocomplete.clear(ClearType.BACK_SPACE);
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-11323")
-    public void testTypingPrefixAndThenConfirm() throws InterruptedException {
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11323")
+    public void testTypingPrefixAndThenConfirm() {
         assertFalse(autocomplete.areSuggestionsAvailable());
-        autocomplete.type("ala");
-        waiting(1000);
+        Graphene.guardAjax(autocomplete).type("ala");
         assertTrue(autocomplete.areSuggestionsAvailable());
-        autocomplete.autocomplete();
+        Graphene.guardAjax(autocomplete).autocomplete();
         assertFalse(autocomplete.areSuggestionsAvailable());
-        assertEquals(autocomplete.getInputValue().toLowerCase(), getExpectedStateForPrefix("ala", selectFirst).toLowerCase());
+        String expectedStateForPrefix = getExpectedStateForPrefix("ala", selectFirst);
+        assertEquals(autocomplete.getInputValue().toLowerCase(), expectedStateForPrefix.toLowerCase());
+        checkOutput(expectedStateForPrefix);
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-11323")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-11323")
     public void testTypingPrefixAndThenDeleteAll() {
         assertFalse(autocomplete.areSuggestionsAvailable());
-        autocomplete.type("ala");
+        Graphene.guardAjax(autocomplete).type("ala");
         assertTrue(autocomplete.areSuggestionsAvailable());
-        autocomplete.clear(ClearType.BACK_SPACE);
+        Graphene.guardAjax(autocomplete).clear(ClearType.BACK_SPACE);
         assertFalse(autocomplete.areSuggestionsAvailable());
-        autocomplete.type("ala");
+        Graphene.guardAjax(autocomplete).type("ala");
         assertTrue(autocomplete.areSuggestionsAvailable());
     }
 
     @Test
-    public void testSimpleSelection() throws InterruptedException {
+    public void testSimpleSelection() {
         // this item is 2nd if type filter "ala", so it ensure that it was not picked first item
         Suggestion<String> expected = new SuggestionImpl<String>("Alaska");
-        autocomplete.type("ala");
+        Graphene.guardAjax(autocomplete).type("ala");
         Graphene.guardAjax(autocomplete).autocompleteWithSuggestion(expected, getScrollingType());
+        checkOutput(expected.getValue());
         assertEquals(autocomplete.getInputValue(), expected.getValue());
-        assertEquals(getOutput(), expected.getValue());
     }
 
     protected ScrollingType getScrollingType() {

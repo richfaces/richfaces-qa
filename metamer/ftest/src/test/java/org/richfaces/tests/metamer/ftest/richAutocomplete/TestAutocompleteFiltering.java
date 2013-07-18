@@ -30,6 +30,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.component.object.api.autocomplete.Suggestion;
 import org.richfaces.tests.page.fragments.impl.autocomplete.SuggestionImpl;
 import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;

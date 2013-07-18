@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.Model;
@@ -45,6 +46,10 @@ public abstract class AbstractAutocompleteTest extends AbstractWebDriverTest {
     @FindBy(css = "[id$='output']")
     private WebElement output;
 
+    protected void checkOutput(String expected) {
+        Graphene.waitAjax().until().element(output).text().equalTo(expected);
+    }
+
     protected List<Capital> getCapitals() {
         return Collections.unmodifiableList(capitals);
     }
@@ -55,10 +60,6 @@ public abstract class AbstractAutocompleteTest extends AbstractWebDriverTest {
         }
 
         return prefix;
-    }
-
-    protected String getOutput() {
-        return output.getText();
     }
 
     protected List<String> getStatesByPrefix(String prefix) {
