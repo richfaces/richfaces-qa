@@ -40,7 +40,7 @@ FSF site: http://www.fsf.org. -->
 
         <testng.listeners>org.richfaces.tests.metamer.ftest.MatrixConfigurator,org.richfaces.tests.metamer.ftest.MetamerSeleniumLoggingTestListener,org.richfaces.tests.metamer.ftest.MetamerConsoleStatusTestListener,org.richfaces.tests.metamer.ftest.MetamerFailureLoggingTestListener</testng.listeners>
         <testng.suite.xml>src/test/resources/testng/testng.xml</testng.suite.xml>
-        <metamer-portlet.version>3.2.0.Final</metamer-portlet.version>
+        <metamer-portlet.version>3.2.1.Final</metamer-portlet.version>
         <jboss-portal.version>7.1.3.Final</jboss-portal.version>
     </properties>
 
