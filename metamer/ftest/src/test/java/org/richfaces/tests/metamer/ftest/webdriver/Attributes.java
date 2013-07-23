@@ -137,7 +137,7 @@ public class Attributes<T extends AttributeEnum> {
     private void applyText(WebElement input, String value) {
         String text = input.getAttribute("value");
         if (!value.equals(text)) {
-            Utils.jQ((JavascriptExecutor) getDriver(), "val('" + value + "')", input);
+            Utils.jQ((JavascriptExecutor) getDriver(), "val(\"" + value + "\")", input);
             MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
         }
     }
@@ -308,6 +308,8 @@ public class Attributes<T extends AttributeEnum> {
         String propertyNameCorrect = (propertyName.equals(propertyName.toUpperCase()) ? propertyName.toLowerCase() : propertyName);
 
         String valueAsString = (value == null ? NULLSTRING : value.toString());
+        valueAsString = valueAsString.replaceAll("\"", "'");
+
         //element for all types of input elements
         By by = getCssSelectorForProperty(propertyNameCorrect);
         WebElement element = getDriver().findElement(by);
