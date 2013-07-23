@@ -57,22 +57,22 @@ public class TestMenuGroupJSApi extends AbstractWebDriverTest {
 
     @Test
     public void testHide() {
-        fireEvent(hideButton, Event.MOUSEOVER);
-        Graphene.waitGui().until().element(menuList).is().visible();
+        hideButton.click();
+        Graphene.waitGui().until().element(menuItem41).is().not().visible();
         assertNotVisible(menuItem41, "Save button should not be visible.");
         assertNotVisible(groupList, "Group list should not be visible.");
         testShow();//show the group
-        fireEvent(hideButton, Event.MOUSEOVER);
-        Graphene.waitGui().until().element(menuList).is().visible();
+        hideButton.click();
+        Graphene.waitGui().until().element(menuItem41).is().not().visible();
         assertNotVisible(menuItem41, "Save button should not be visible.");
         assertNotVisible(groupList, "Group list should not be visible.");
     }
 
     @Test
     public void testShow() {
-        fireEvent(showButton, Event.MOUSEOVER);
-        Graphene.waitGui().until().element(menuList).is().visible();
-        assertVisible(groupList, "Group list is not visible.");
+        showButton.click();
+        Graphene.waitGui().until().element(menuItem41).is().visible();
         assertVisible(menuItem41, "Save button is not visible.");
+        assertVisible(groupList, "Group list is not visible.");
     }
 }
