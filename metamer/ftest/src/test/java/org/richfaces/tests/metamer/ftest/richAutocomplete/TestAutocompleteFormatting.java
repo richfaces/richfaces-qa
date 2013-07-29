@@ -28,14 +28,15 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.component.object.api.autocomplete.ClearType;
 import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
+import org.richfaces.tests.metamer.ftest.annotations.Uses;
+import org.richfaces.tests.page.fragments.impl.autocomplete.SelectOrConfirm;
+import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -45,11 +46,11 @@ import org.testng.annotations.Test;
 public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
 
     @Inject
-    @Use(booleans = { true, false })
+    @Use(empty = true)
     Boolean autofill;
 
     @Inject
-    @Use(booleans = { true, false })
+    @Use(empty = true)
     Boolean selectFirst;
 
     @Inject
@@ -59,11 +60,6 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richAutocomplete/fetchValueAttr.xhtml");
-    }
-
-    @BeforeMethod
-    public void setParser() {
-        autocomplete.setSuggestionParser(new TextSuggestionParser());
     }
 
     @BeforeMethod
@@ -77,37 +73,43 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
         if (selectFirst == null) {
             selectFirst = false;
         }
-        autocomplete.clear(ClearType.BACK_SPACE);
+        autocomplete.advanced().getInput().clear(ClearType.BACKSPACE);
     }
 
     /**
      * This should test combination of @var and @fetchValue attributes of autocomplete
      */
     @Test
+    @Uses({ @Use(field = "autofill", booleans = { true, false }),
+        @Use(field = "selectFirst", booleans = { true, false }) })
     public void testFormatting() {
-        assertFalse(autocomplete.areSuggestionsAvailable());
-        autocomplete.clear(ClearType.BACK_SPACE);
-        Graphene.guardAjax(autocomplete).type("ala");
-        assertTrue(autocomplete.areSuggestionsAvailable());
-        Graphene.guardAjax(autocomplete).autocomplete();
+        assertTrue(autocomplete.advanced().getSuggestions().isEmpty());
+        autocomplete.advanced().getInput().clear(ClearType.BACKSPACE);
+        SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("ala");
+        assertFalse(autocomplete.advanced().getSuggestions().isEmpty());
+        Graphene.guardAjax(typed).confirm();
         Graphene.waitGui().until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver driver) {
-                return !autocomplete.areSuggestionsAvailable();
+                return autocomplete.advanced().getSuggestions().isEmpty();
             }
         });
         String expected = getExpectedStateForPrefix("ala", selectFirst).toLowerCase();
-        String found = autocomplete.getInputValue().toLowerCase();
-        assertTrue(found.startsWith(expected), "The input value should start with '" + expected + "', but '" + found + "' found.");
+        String found = autocomplete.advanced().getInput().getStringValue().toLowerCase();
+        assertTrue(found.startsWith(expected), "The input value should start with '" + expected + "', but '" + found
+            + "' found.");
     }
 
     @Test
     public void testLayout() {
         Graphene.guardAjax(autocomplete).type("Co");
-        assertTrue(Graphene.element(getSuggestion("Colorado")).isPresent().apply(driver));
-        assertTrue(Graphene.element(getSuggestion("[Denver]")).isPresent().apply(driver));
-        assertTrue(Graphene.element(getSuggestion("Connecticut")).isPresent().apply(driver));
-        assertTrue(Graphene.element(getSuggestion("[Hartford]")).isPresent().apply(driver));
+
+        Graphene.waitGui().until().element(getSuggestion("Colorado")).is().present();
+        Graphene.waitGui().until().element(getSuggestion("[Denver]")).is().present();
+        Graphene.waitGui().until().element(getSuggestion("Connecticut")).is().present();
+        Graphene.waitGui().until().element(getSuggestion("[Hartford]")).is().present();
+
+        Graphene.waitGui().until().element(getSuggestion("Hawaii")).is().not().present();
     }
 
     private By getSuggestion(String value) {
@@ -117,7 +119,8 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
             case LIST:
                 return ByJQuery.jquerySelector("ul[id$=autocompleteItems] > li:contains('" + value + "')");
             case TABLE:
-                return ByJQuery.jquerySelector("table[id$=autocompleteItems] > tbody > tr > td:contains('" + value + "')");
+                return ByJQuery.jquerySelector("table[id$=autocompleteItems] > tbody > tr > td:contains('" + value
+                    + "')");
             default:
                 throw new UnsupportedOperationException();
         }

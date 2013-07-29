@@ -22,6 +22,8 @@
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
@@ -29,12 +31,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.component.object.api.autocomplete.Suggestion;
-import org.richfaces.tests.page.fragments.impl.autocomplete.SuggestionImpl;
-import org.richfaces.tests.page.fragments.impl.autocomplete.TextSuggestionParser;
-import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 /**
@@ -49,11 +46,6 @@ public class TestAutocompleteFiltering extends AbstractAutocompleteTest {
         return buildUrl(contextPath, "faces/components/richAutocomplete/filtering.xhtml");
     }
 
-    @BeforeMethod
-    public void setParser() {
-        autocomplete.setSuggestionParser(new TextSuggestionParser());
-    }
-
     @Test
     public void testClientFilterFunction() {
         autocompleteAttributes.set(AutocompleteAttributes.mode, "client");
@@ -61,17 +53,20 @@ public class TestAutocompleteFiltering extends AbstractAutocompleteTest {
 
         autocomplete.type("No");
 
-        List<Suggestion<String>> found = autocomplete.getAllSuggestions();
-        Assert.assertNotNull(found, "Suggestions aren't available.");
-        Set<Suggestion<String>> suggestions = new HashSet<Suggestion<String>>(found);
+        List<WebElement> found = autocomplete.advanced().getSuggestions();
+        assertNotNull(found, "Suggestions aren't available.");
+        assertFalse(found.isEmpty(), "Suggestions aren't available.");
 
         String[] expected = new String[]{ "Springfield of Illinois", "Raleigh of North Carolina",
             "Bismarck of North Dakota" };
 
+        Set<String> suggestions = new HashSet<String>();
+        for (WebElement suggestion : found) {
+            suggestions.add(suggestion.getText());
+        }
+
         for (String text : expected) {
-            assertTrue(suggestions.contains(new SuggestionImpl<String>(text)), "Suggestions should contain '" + text
-                + "', found " + suggestions + ".");
+            assertTrue(suggestions.contains(text), "Suggestions should contain '" + text + "', found " + suggestions + ".");
         }
     }
-
 }
