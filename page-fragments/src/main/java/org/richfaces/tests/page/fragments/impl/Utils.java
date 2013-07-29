@@ -25,6 +25,9 @@ import java.util.Iterator;
 import org.jboss.arquillian.graphene.GrapheneContext;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
@@ -38,6 +41,7 @@ public final class Utils {
 
     /**
      * Returns Locations of input element.
+     *
      * @see Locations
      */
     public static Locations getLocations(WebElement root) {
@@ -49,8 +53,24 @@ public final class Utils {
         return new Locations(topLeft, topRight, bottomLeft, bottomRight);
     }
 
+    public static String getJSONValue(WebElement scriptElement, String property) {
+        String scriptText = getTextFromHiddenElement(scriptElement);
+        String json = scriptText.substring(scriptText.indexOf('{'), scriptText.indexOf('}') + 1);
+        JSONParser parser = new JSONParser();
+        String result = null;
+        try {
+            Object obj = parser.parse(json);
+            JSONObject jsonObj = (JSONObject) obj;
+            result = (String) jsonObj.get(property);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     /**
      * Returns text from given hidden element. WebDriver, in this case, returns empty String.
+     *
      * @param element not visible element
      */
     public static String getTextFromHiddenElement(WebElement element) {
@@ -60,6 +80,7 @@ public final class Utils {
 
     /**
      * Executes jQuery command on input element. E.g. to trigger click use jQ("click()", element).
+     *
      * @param cmd command to be executed
      * @param element element on which the command will be executed
      */
@@ -69,8 +90,9 @@ public final class Utils {
     }
 
     /**
-     * Executes returning jQuery command on input element. E.g. to get a position
-     * of element from top of the page use returningjQ("position().top", element).
+     * Executes returning jQuery command on input element. E.g. to get a position of element from top of the page use
+     * returningjQ("position().top", element).
+     *
      * @param cmd command to be executed
      * @param element element on which the command will be executed
      */
@@ -88,12 +110,9 @@ public final class Utils {
      */
     public static void tolerantAssertPointEquals(Point p1, Point p2, int xTolerance, int yTolerance, String message) {
         if (!_tolerantAssertPointEquals(p1, p2, xTolerance, yTolerance)) {
-            throw new AssertionError("The points are not equal or not in tolerance.\n"
-                    + " The tolerance for x axis was: " + xTolerance
-                    + ". The tolerance for y axis was: " + yTolerance + ".\n"
-                    + "First point: " + p1 + "\n"
-                    + "Second point: " + p2 + ".\n"
-                    + message);
+            throw new AssertionError("The points are not equal or not in tolerance.\n" + " The tolerance for x axis was: "
+                + xTolerance + ". The tolerance for y axis was: " + yTolerance + ".\n" + "First point: " + p1 + "\n"
+                + "Second point: " + p2 + ".\n" + message);
         }
     }
 
@@ -108,11 +127,9 @@ public final class Utils {
             p1 = it1.next();
             p2 = it2.next();
             if (!_tolerantAssertPointEquals(p1, p2, xTolerance, yTolerance)) {
-                throw new AssertionError("The locations are not equal or are not in tolerance.\n"
-                        + "First location: " + l1 + ".\n"
-                        + "Second location: " + l2 + ".\n"
-                        + "Diverging point: " + p1 + " (first), " + p2 + " (second).\n"
-                        + message);
+                throw new AssertionError("The locations are not equal or are not in tolerance.\n" + "First location: " + l1
+                    + ".\n" + "Second location: " + l2 + ".\n" + "Diverging point: " + p1 + " (first), " + p2 + " (second).\n"
+                    + message);
             }
         }
     }
@@ -120,13 +137,15 @@ public final class Utils {
     /**
      * Asserts that elements locations and some other locations are equal with some allowed tolerance.
      */
-    public static void tolerantAssertLocationsEquals(WebElement element, Locations l2, int xTolerance, int yTolerance, String message) {
+    public static void tolerantAssertLocationsEquals(WebElement element, Locations l2, int xTolerance, int yTolerance,
+        String message) {
         tolerantAssertLocationsEquals(Utils.getLocations(element), l2, xTolerance, yTolerance, message);
     }
 
     /**
-     * Executes jQuery trigger command on input element. Useful for easy triggering
-     * of JavaScript events like click, dblclick, mouseout...
+     * Executes jQuery trigger command on input element. Useful for easy triggering of JavaScript events like click, dblclick,
+     * mouseout...
+     *
      * @param event event to be triggered
      * @param element element on which the command will be executed
      */

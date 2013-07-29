@@ -33,7 +33,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.contextMenu.internal.RichFacesContextMenuInternal;
+import org.richfaces.tests.page.fragments.impl.contextMenu.RichFacesContextMenu;
 import org.richfaces.ui.common.Positioning;
 
 /**
@@ -46,28 +46,29 @@ import org.richfaces.ui.common.Positioning;
 public class ContextMenuSimplePage extends MetamerPage {
 
     @FindBy(css = "div[id$=targetPanel1]")
-    public WebElement targetPanel1;
+    private WebElement targetPanel1;
 
     @FindBy(css = "div[id$=targetPanel2]")
-    public WebElement targetPanel2;
+    private WebElement targetPanel2;
 
     @FindBy(css = "div.rf-ctx-lst")
-    public WebElement contextMenuContent;
+    private WebElement contextMenuContent;
 
     @FindBy(css = "div[id$=ctxMenu]")
-    public RichFacesContextMenuInternal contextMenu;
+    private RichFacesContextMenu contextMenu;
 
     @FindBy(jquery = "span[id$=output]")
-    public WebElement output;
+    private WebElement output;
 
     @FindBy(jquery = "div[id$=\":ctxMenu\"]")
-    public WebElement contextMenuRoot;
+    private WebElement contextMenuRoot;
 
     @FindBy(tagName = "body")
-    public WebElement body;
+    private WebElement body;
 
     @FindBy(jquery = "div[id$=menuGroup4_list]")
-    public WebElement groupList;
+    private WebElement groupList;
+
     public final int SHOW_DELAY_TOLERANCE = 600;
 
     public void clickOnFirstPanel(DriverType type) {
@@ -94,17 +95,17 @@ public class ContextMenuSimplePage extends MetamerPage {
     }
 
     public Locations getContextMenuLocations() {
-        contextMenu.invoke(targetPanel2);
+        contextMenu.advanced().invoke(targetPanel2);
         Locations contextMenuLocations = Utils.getLocations(contextMenuContent);
-        contextMenu.dismiss();
+        contextMenu.advanced().dismiss();
         return contextMenuLocations;
     }
 
     public Locations getContextMenuLocationsWhenPosition(Positioning positioning) {
         contextMenuAttributes.set(ContextMenuAttributes.direction, positioning);
-        contextMenu.invoke(targetPanel2);
+        contextMenu.advanced().invoke(targetPanel2);
         Locations contextMenuLocations = Utils.getLocations(contextMenuContent);
-        contextMenu.dismiss();
+        contextMenu.advanced().dismiss();
         return contextMenuLocations;
     }
 
@@ -114,7 +115,7 @@ public class ContextMenuSimplePage extends MetamerPage {
             @Override
             public void perform() {
                 targetPanel1.click();
-                contextMenu.waitUntilIsVisible();
+                contextMenu.advanced().waitUntilIsVisible();
             }
         }).inMillis().intValue();
     }
@@ -125,5 +126,69 @@ public class ContextMenuSimplePage extends MetamerPage {
 
     public static String trimTheRGBAColor(String original) {
         return original.replaceAll("\\s", "");
+    }
+
+    public WebElement getTargetPanel1() {
+        return targetPanel1;
+    }
+
+    public void setTargetPanel1(WebElement targetPanel1) {
+        this.targetPanel1 = targetPanel1;
+    }
+
+    public WebElement getTargetPanel2() {
+        return targetPanel2;
+    }
+
+    public void setTargetPanel2(WebElement targetPanel2) {
+        this.targetPanel2 = targetPanel2;
+    }
+
+    public WebElement getContextMenuContent() {
+        return contextMenuContent;
+    }
+
+    public void setContextMenuContent(WebElement contextMenuContent) {
+        this.contextMenuContent = contextMenuContent;
+    }
+
+    public RichFacesContextMenu getContextMenu() {
+        return contextMenu;
+    }
+
+    public void setContextMenu(RichFacesContextMenu contextMenu) {
+        this.contextMenu = contextMenu;
+    }
+
+    public WebElement getOutput() {
+        return output;
+    }
+
+    public void setOutput(WebElement output) {
+        this.output = output;
+    }
+
+    public WebElement getContextMenuRoot() {
+        return contextMenuRoot;
+    }
+
+    public void setContextMenuRoot(WebElement contextMenuRoot) {
+        this.contextMenuRoot = contextMenuRoot;
+    }
+
+    public WebElement getBody() {
+        return body;
+    }
+
+    public void setBody(WebElement body) {
+        this.body = body;
+    }
+
+    public WebElement getGroupList() {
+        return groupList;
+    }
+
+    public void setGroupList(WebElement groupList) {
+        this.groupList = groupList;
     }
 }

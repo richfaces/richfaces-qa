@@ -29,7 +29,6 @@ import java.util.concurrent.TimeUnit;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.showcase.contextMenu.page.TableContextMenuPage;
 import org.richfaces.tests.showcase.contextMenu.page.TreeContextMenuPage;
 import org.testng.annotations.Test;
 
@@ -57,7 +56,8 @@ public class TestTree extends AbstractContextMenuTest {
             waitGui().withTimeout(3, TimeUnit.SECONDS).until(page.getExpextedConditionOnNodeSelected(leaf));
             waitGui();
 
-            page.getContextMenu().selectItem(TableContextMenuPage.VIEW, leaf);
+            page.getContextMenu().setTarget(leaf);
+            page.getContextMenu().selectItem(0);
             waitGui().withTimeout(3, TimeUnit.SECONDS).until().element(page.getArtistFromPopup()).is().visible();
 
             String artistFromPopup = page.getArtistFromPopup().getText();
@@ -77,7 +77,7 @@ public class TestTree extends AbstractContextMenuTest {
         WebElement elementToTryOn = page.getLeaves().get(0);
         Graphene.waitGui().withTimeout(2, TimeUnit.SECONDS).until().element(elementToTryOn).is().visible();
 
-        checkContextMenuRenderedAtCorrectPosition(elementToTryOn, page.getContextMenu().getMenuPopup(),
+        checkContextMenuRenderedAtCorrectPosition(elementToTryOn, page.getContextMenu().advanced().getMenuPopup(),
             InvocationType.RIGHT_CLICK, page.getExpextedConditionOnNodeSelected(elementToTryOn));
     }
 }

@@ -38,13 +38,21 @@ public class RichFacesDropDownMenu extends AbstractPopupMenu {
     @FindBy(jquery = ".rf-ddm-lst:eq(0)")
     private WebElement dropDownMenuPopup;
 
+    @FindBy(jquery = ".rf-ddm-lbl script:last")
+    private WebElement script;
+
+    @FindBy(jquery = ".rf-ddm-lbl:eq(0)")
+    private WebElement topLvlElement;
+
+    private AdvancedInteractions advancedInteractions;
+
     @Override
-    public WebElement getMenuPopup() {
+    protected WebElement getMenuPopupInternal() {
         return dropDownMenuPopup;
     }
 
     @Override
-    public List<WebElement> getMenuItemElements() {
+    protected List<WebElement> getMenuItemElementsInternal() {
         return menuItemsElements;
     }
 
@@ -53,4 +61,25 @@ public class RichFacesDropDownMenu extends AbstractPopupMenu {
         return RichFacesDropDownMenu.class.getName();
     }
 
+    @Override
+    protected WebElement getScript() {
+        return script;
+    }
+
+    public AdvancedInteractions advanced() {
+        if (advancedInteractions == null) {
+            advancedInteractions = new AdvancedInteractions();
+        }
+        return advancedInteractions;
+    }
+
+    public class AdvancedInteractions extends AbstractPopupMenu.AdvancedInteractions {
+        public String getLangAttribute() {
+            return topLvlElement.getAttribute("lang");
+        }
+
+        public WebElement getTopLvlElement() {
+            return topLvlElement;
+        }
+    }
 }

@@ -43,8 +43,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.contextMenu.AbstractPopupMenu;
-import org.richfaces.tests.page.fragments.impl.dropDownMenu.internal.RichFacesDropDownMenuInternal;
+import org.richfaces.tests.page.fragments.impl.dropDownMenu.RichFacesDropDownMenu;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -57,7 +56,7 @@ import org.testng.annotations.Test;
 public class TestMenuGroup extends AbstractWebDriverTest {
 
     @FindBy(jquery = ".rf-tb-itm:eq(0)")
-    private RichFacesDropDownMenuInternal fileDropDownMenu;
+    private RichFacesDropDownMenu fileDropDownMenu;
     @FindBy(jquery = ".rf-ddm-lbl-dec:eq(0)")
     private WebElement target1;
     @FindBy(css = "div[id$=menu1] div.rf-ddm-lbl-dec")
@@ -102,7 +101,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
     }
 
     private void openMenu() {
-        fileDropDownMenu.invoke(target1);
+        fileDropDownMenu.advanced().invoke(target1);
     }
 
     private void openMenuAndSubMenu() {
@@ -213,7 +212,7 @@ public class TestMenuGroup extends AbstractWebDriverTest {
         assertNotVisible(group, "Menu group \"Save As...\" should not be visible on the page");
 
         assertNotVisible(fileMenuList, "Menu should not be expanded.");
-        Graphene.guardNoRequest(fileDropDownMenu).invoke(target1);
+        Graphene.guardNoRequest(fileDropDownMenu).advanced().invoke(target1);
         assertVisible(fileMenuList, "Menu should be expanded.");
 
         assertPresent(group, "M enu group \"Save As...\" should be present on the page");
@@ -387,6 +386,6 @@ public class TestMenuGroup extends AbstractWebDriverTest {
 
     @BeforeMethod
     private void updateDropDownMenuInvoker() {
-        fileDropDownMenu.setInvoker(AbstractPopupMenu.HOVER);
+        fileDropDownMenu.advanced().setInvoker(fileDropDownMenu.advanced().HOVER_INVOKER);
     }
 }

@@ -39,7 +39,7 @@ public class TestSimple extends AbstractContextMenuTest {
     public void testZoomIn() {
         double widthBeforeZoomIn = getTargetWidth(page.getPicture());
 
-        page.getContextMenu().selectItem(SimpleContextMenuPage.ZOOM_IN);
+        page.getContextMenu().selectItem(0);
 
         double widthAfterZoom = getTargetWidth(page.getPicture());
 
@@ -50,7 +50,7 @@ public class TestSimple extends AbstractContextMenuTest {
     public void testZoomOut() {
         double widthBeforeZoomOut = getTargetWidth(page.getPicture());
 
-        page.getContextMenu().selectItem(SimpleContextMenuPage.ZOOM_OUT);
+        page.getContextMenu().selectItem(1);
 
         double widthAfterZoomOut = getTargetWidth(page.getPicture());
 
@@ -60,7 +60,7 @@ public class TestSimple extends AbstractContextMenuTest {
 
     @Test
     public void testContextMenuRenderedAtCorrectPosition() {
-        checkContextMenuRenderedAtCorrectPosition(page.getPicture(), page.getContextMenu().getMenuPopup(),
+        checkContextMenuRenderedAtCorrectPosition(page.getPicture(), page.getContextMenu().advanced().getMenuPopup(),
             InvocationType.LEFT_CLICK, null);
     }
 }

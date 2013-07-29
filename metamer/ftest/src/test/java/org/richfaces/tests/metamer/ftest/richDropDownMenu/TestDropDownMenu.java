@@ -32,7 +32,6 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-import com.beust.jcommander.internal.Lists;
 import java.net.URL;
 import java.util.List;
 
@@ -51,9 +50,9 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.richContextMenu.ContextMenuSimplePage;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
-import org.richfaces.tests.page.fragments.impl.contextMenu.AbstractPopupMenu;
-import org.richfaces.tests.page.fragments.impl.contextMenu.RichFacesContextMenu;
 import org.testng.annotations.Test;
+
+import com.beust.jcommander.internal.Lists;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -74,7 +73,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
     private Integer delay;
 
     private void updateDropDownMenuInvoker() {
-        page.getFileDropDownMenu().setInvoker(AbstractPopupMenu.HOVER);
+        page.getFileDropDownMenu().advanced().setInvoker(page.getFileDropDownMenu().advanced().HOVER_INVOKER);
     }
 
     @Test
@@ -87,7 +86,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         assertNotVisible(page.getGroup(), "Menu group \"Save As...\" should not be visible on the page.");
 
         assertNotVisible(page.getFileMenuList(), "Menu should not be expanded.");
-        guardNoRequest(page.getFileDropDownMenu()).invoke(page.getTarget1());
+        guardNoRequest(page.getFileDropDownMenu()).advanced().invoke(page.getTarget1());
         assertVisible(page.getFileMenuList(), "Menu should be expanded.");
 
         assertPresent(page.getGroup(), "Menu group \"Save As...\" should be present on the page.");
@@ -97,7 +96,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         assertNotVisible(page.getMenuItem41(), "Menu item \"Save\" should not be visible on the page.");
 
         assertNotVisible(page.getGroupList(), "Submenu should not be expanded.");
-        guardNoRequest(new Actions(driver).moveToElement(page.getFileDropDownMenu().getItems().get(3)).build()).perform();
+        guardNoRequest(new Actions(driver).moveToElement(page.getFileDropDownMenu().advanced().getItems().get(3)).build()).perform();
         assertVisible(page.getGroupList(), "Submenu should be expanded.");
 
         assertPresent(page.getMenuItem41(), "Menu item \"Save\" should be present on the page.");
@@ -114,16 +113,16 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
     @Test
     public void testShowEvent() {
         dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "contextmenu");
-        page.getFileDropDownMenu().setInvoker(RichFacesContextMenu.RIGHT_CLICK);
-        page.getFileDropDownMenu().invoke(page.getTarget1());
+        page.getFileDropDownMenu().advanced().setInvoker(page.getFileDropDownMenu().advanced().RIGHT_CLICK_INVOKER);
+        page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
 
         dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "hover");
-        page.getFileDropDownMenu().setInvoker(RichFacesContextMenu.HOVER);
-        page.getFileDropDownMenu().invoke(page.getTarget1());
+        page.getFileDropDownMenu().advanced().setInvoker(page.getFileDropDownMenu().advanced().HOVER_INVOKER);
+        page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
 
         dropDownMenuAttributes.set(DropDownMenuAttributes.showEvent, "click");
-        page.getFileDropDownMenu().setInvoker(RichFacesContextMenu.LEFT_CLICK);
-        page.getFileDropDownMenu().invoke(page.getTarget1());
+        page.getFileDropDownMenu().advanced().setInvoker(page.getFileDropDownMenu().advanced().LEFT_CLICK_INVOKER);
+        page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
     }
 
     @Test
@@ -132,8 +131,8 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         String color = "yellow";
         String styleVal = "background-color: " + color + ";";
         dropDownMenuAttributes.set(DropDownMenuAttributes.style, styleVal);
-        page.getFileDropDownMenu().invoke(page.getTarget1());
-        String backgroundColor = page.getFileDropDownMenu().getTopLvlElement().getCssValue("background-color");
+        page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
+        String backgroundColor = page.getFileDropDownMenu().advanced().getTopLvlElement().getCssValue("background-color");
         // webdriver retrieves the color in rgba format
         assertEquals(ContextMenuSimplePage.trimTheRGBAColor(backgroundColor), "rgba(255,255,0,1)",
             "The style was not applied correctly!");
@@ -144,7 +143,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         updateDropDownMenuInvoker();
         String styleClassVal = "test-style-class";
         dropDownMenuAttributes.set(DropDownMenuAttributes.styleClass, styleClassVal);
-        String styleClass = page.getFileDropDownMenu().getTopLvlElement().getAttribute("class");
+        String styleClass = page.getFileDropDownMenu().advanced().getTopLvlElement().getAttribute("class");
         assertTrue(styleClass.contains(styleClassVal));
     }
 
@@ -154,8 +153,8 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         String expected = "rtl";
         dropDownMenuAttributes.set(DropDownMenuAttributes.dir, expected);
 
-        page.getFileDropDownMenu().invoke(page.getTarget1());
-        String directionCSS = page.getFileDropDownMenu().getItems().get(0).getCssValue("direction");
+        page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
+        String directionCSS = page.getFileDropDownMenu().advanced().getItems().get(0).getCssValue("direction");
         assertEquals(directionCSS, expected, "The direction attribute was not applied correctly!");
     }
 
@@ -164,9 +163,9 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         updateDropDownMenuInvoker();
         String langVal = "cs";
         dropDownMenuAttributes.set(DropDownMenuAttributes.lang, langVal);
-        page.getFileDropDownMenu().invoke(page.getTarget1());
+        page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
 
-        assertEquals(page.getFileDropDownMenu().getLangAttribute(), langVal, "The lang attribute was not set correctly!");
+        assertEquals(page.getFileDropDownMenu().advanced().getLangAttribute(), langVal, "The lang attribute was not set correctly!");
     }
 
     @Test
@@ -174,37 +173,37 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         updateDropDownMenuInvoker();
         // ajax
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "ajax");
-        page.getFileDropDownMenu().invoke(page.getTarget1());
-        guardAjax(page.getFileDropDownMenu().getItems().get(0)).click();
+        page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
+        guardAjax(page.getFileDropDownMenu().advanced().getItems().get(0)).click();
         assertEquals(page.getOutput().getText(), "New", "Menu action was not performed.");
 
         // server
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "server");
-        page.getFileDropDownMenu().invoke(page.getTarget1());
-        guardHttp(page.getFileDropDownMenu().getItems().get(8)).click();
+        page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
+        guardHttp(page.getFileDropDownMenu().advanced().getItems().get(8)).click();
         assertEquals(page.getOutput().getText(), "Close", "Menu action was not performed.");
 
         // client
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "client");
-        page.getFileDropDownMenu().invoke(page.getTarget1());
-        guardNoRequest(page.getFileDropDownMenu().getItems().get(0)).click();
+        page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
+        guardNoRequest(page.getFileDropDownMenu().advanced().getItems().get(0)).click();
 
         // null
         dropDownMenuAttributes.set(DropDownMenuAttributes.mode, "server");
-        page.getFileDropDownMenu().invoke(page.getTarget1());
-        guardHttp(page.getFileDropDownMenu().getItems().get(8)).click();
+        page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
+        guardHttp(page.getFileDropDownMenu().advanced().getItems().get(8)).click();
         assertEquals(page.getOutput().getText(), "Close", "Menu action was not performed.");
     }
 
     @Test
     public void testDisabled() {
         updateDropDownMenuInvoker();
-        page.getFileDropDownMenu().invoke(page.getTarget1());
+        page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
 
         dropDownMenuAttributes.set(DropDownMenuAttributes.disabled, true);
 
         try {
-            page.getFileDropDownMenu().invoke(page.getTarget1());
+            page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
             fail("The context menu should not be invoked when disabled!");
         } catch (TimeoutException ex) {
             // OK
@@ -221,11 +220,11 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
 
         List<Integer> times = Lists.newArrayList(3);
         for (int i = 0; i < 3; i++) {
-            page.getFileDropDownMenu().invoke(page.getTarget1());
+            page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
             times.add(StopWatch.watchTimeSpentInAction(new StopWatch.PerformableAction() {
                 @Override
                 public void perform() {
-                    page.getFileDropDownMenu().dismiss();
+                    page.getFileDropDownMenu().advanced().dismiss();
                 }
             }).inMillis().intValue());
         }
@@ -268,10 +267,10 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
                 StopWatch.watchTimeSpentInAction(new StopWatch.PerformableAction() {
                     @Override
                     public void perform() {
-                        page.getFileDropDownMenu().invoke(page.getTarget1());
+                        page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
                     }
                 }).inMillis().intValue());
-            page.getFileDropDownMenu().dismiss();
+            page.getFileDropDownMenu().advanced().dismiss();
         }
 
         double average = (times.get(0) + times.get(1) + times.get(2)) / 3;
@@ -283,7 +282,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         updateDropDownMenuInvoker();
         String titleVal = "test title";
         dropDownMenuAttributes.set(DropDownMenuAttributes.title, titleVal);
-        assertEquals(page.getFileDropDownMenu().getTopLvlElement().getAttribute("title"), titleVal);
+        assertEquals(page.getFileDropDownMenu().advanced().getTopLvlElement().getAttribute("title"), titleVal);
     }
 
     @Test
@@ -292,8 +291,8 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onclick, new Action() {
             @Override
             public void perform() {
-                page.getFileDropDownMenu().invoke(page.getTarget1());
-                page.getFileDropDownMenu().getItems().get(1).click();
+                page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
+                page.getFileDropDownMenu().advanced().getItems().get(1).click();
             }
         });
     }
@@ -304,8 +303,8 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.ondblclick, new Action() {
             @Override
             public void perform() {
-                page.getFileDropDownMenu().invoke(page.getTarget1());
-                new Actions(driver).doubleClick(page.getFileDropDownMenu().getItems().get(2)).build().perform();
+                page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
+                new Actions(driver).doubleClick(page.getFileDropDownMenu().advanced().getItems().get(2)).build().perform();
             }
         });
     }
@@ -316,10 +315,10 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.ongrouphide, new Action() {
             @Override
             public void perform() {
-                page.getFileDropDownMenu().invoke(page.getTarget1());
-                new Actions(driver).moveToElement(page.getFileDropDownMenu().getItems().get(3)).build().perform();
+                page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
+                new Actions(driver).moveToElement(page.getFileDropDownMenu().advanced().getItems().get(3)).build().perform();
                 waitGui().until().element(page.getGroupList()).is().visible();
-                new Actions(driver).click(page.getFileDropDownMenu().getItems().get(1)).build().perform();
+                new Actions(driver).click(page.getFileDropDownMenu().advanced().getItems().get(1)).build().perform();
                 waitGui().until().element(page.getGroupList()).is().not().visible();
             }
         });
@@ -331,8 +330,8 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.ongroupshow, new Action() {
             @Override
             public void perform() {
-                page.getFileDropDownMenu().invoke(page.getTarget1());
-                new Actions(driver).moveToElement(page.getFileDropDownMenu().getItems().get(3)).build().perform();
+                page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
+                new Actions(driver).moveToElement(page.getFileDropDownMenu().advanced().getItems().get(3)).build().perform();
                 waitGui().until().element(page.getGroupList()).is().visible();
             }
         });
@@ -344,8 +343,8 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onhide, new Action() {
             @Override
             public void perform() {
-                page.getFileDropDownMenu().invoke(page.getTarget1());
-                page.getFileDropDownMenu().dismiss();
+                page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
+                page.getFileDropDownMenu().advanced().dismiss();
             }
         });
     }
@@ -363,9 +362,9 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onkeydown, new Action() {
             @Override
             public void perform() {
-                page.getFileDropDownMenu().invoke(page.getTarget1());
-                new Actions(driver).keyDown(page.getFileDropDownMenu().getItems().get(2), Keys.CONTROL)
-                    .keyUp(page.getFileDropDownMenu().getItems().get(2), Keys.CONTROL).build().perform();
+                page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
+                new Actions(driver).keyDown(page.getFileDropDownMenu().advanced().getItems().get(2), Keys.CONTROL)
+                    .keyUp(page.getFileDropDownMenu().advanced().getItems().get(2), Keys.CONTROL).build().perform();
             }
         });
     }
@@ -376,7 +375,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onkeypress, new Action() {
             @Override
             public void perform() {
-                page.getFileDropDownMenu().invoke(page.getTarget1());
+                page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
                 new Actions(driver).sendKeys("a").build().perform();
             }
         });
@@ -384,7 +383,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
 
     @Test
     public void testOnkeyup() {
-        testFireEventWithJS(page.getFileDropDownMenu().getMenuPopup(), dropDownMenuAttributes,
+        testFireEventWithJS(page.getFileDropDownMenu().advanced().getMenuPopup(), dropDownMenuAttributes,
             DropDownMenuAttributes.onkeyup);
     }
 
@@ -394,16 +393,16 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onmousedown, new Action() {
             @Override
             public void perform() {
-                page.getFileDropDownMenu().invoke(page.getTarget1());
+                page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
                 Mouse mouse = ((HasInputDevices) driver).getMouse();
-                mouse.mouseDown(((Locatable) page.getFileDropDownMenu().getItems().get(1)).getCoordinates());
+                mouse.mouseDown(((Locatable) page.getFileDropDownMenu().advanced().getItems().get(1)).getCoordinates());
             }
         });
     }
 
     @Test
     public void testOnmousemove() {
-        testFireEventWithJS(page.getFileDropDownMenu().getMenuPopup(), dropDownMenuAttributes,
+        testFireEventWithJS(page.getFileDropDownMenu().advanced().getMenuPopup(), dropDownMenuAttributes,
             DropDownMenuAttributes.onmousemove);
     }
 
@@ -414,8 +413,8 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onmouseout, new Action() {
             @Override
             public void perform() {
-                page.getFileDropDownMenu().invoke(page.getTarget1());
-                new Actions(driver).moveToElement(page.getFileDropDownMenu().getItems().get(3)).build().perform();
+                page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
+                new Actions(driver).moveToElement(page.getFileDropDownMenu().advanced().getItems().get(3)).build().perform();
                 waitModel().until().element(page.getGroupList()).is().visible();
                 new Actions(driver).moveToElement(page.getRequestTimeElement()).build().perform();
                 waitGui().until().element(page.getGroupList()).is().not().visible();
@@ -425,7 +424,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
 
     @Test
     public void testOnmouseover() {
-        testFireEventWithJS(page.getFileDropDownMenu().getMenuPopup(), dropDownMenuAttributes,
+        testFireEventWithJS(page.getFileDropDownMenu().advanced().getMenuPopup(), dropDownMenuAttributes,
             DropDownMenuAttributes.onmouseover);
     }
 
@@ -435,9 +434,9 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onmouseup, new Action() {
             @Override
             public void perform() {
-                page.getFileDropDownMenu().invoke(page.getTarget1());
+                page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
                 Mouse mouse = ((HasInputDevices) driver).getMouse();
-                mouse.mouseUp(((Locatable) page.getFileDropDownMenu().getItems().get(1)).getCoordinates());
+                mouse.mouseUp(((Locatable) page.getFileDropDownMenu().advanced().getItems().get(1)).getCoordinates());
             }
         });
     }
@@ -448,7 +447,7 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         testFireEvent(dropDownMenuAttributes, DropDownMenuAttributes.onshow, new Action() {
             @Override
             public void perform() {
-                page.getFileDropDownMenu().invoke(page.getTarget1());
+                page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
             }
         });
     }
@@ -458,11 +457,11 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         updateDropDownMenuInvoker();
         int offset = 11;
 
-        page.getFileDropDownMenu().invoke(page.getTarget1());
+        page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
         Point positionBefore = page.getDropDownMenuContent().getLocation();
 
         dropDownMenuAttributes.set(DropDownMenuAttributes.horizontalOffset, offset);
-        page.getFileDropDownMenu().invoke(page.getTarget1());
+        page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
 
         Point positionAfter = page.getDropDownMenuContent().getLocation();
 
@@ -474,11 +473,11 @@ public class TestDropDownMenu extends AbstractWebDriverTest {
         updateDropDownMenuInvoker();
         int offset = 11;
 
-        page.getFileDropDownMenu().invoke(page.getTarget1());
+        page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
         Point positionBefore = page.getDropDownMenuContent().getLocation();
 
         dropDownMenuAttributes.set(DropDownMenuAttributes.verticalOffset, offset);
-        page.getFileDropDownMenu().invoke(page.getTarget1());
+        page.getFileDropDownMenu().advanced().invoke(page.getTarget1());
 
         Point positionAfter = page.getDropDownMenuContent().getLocation();
 

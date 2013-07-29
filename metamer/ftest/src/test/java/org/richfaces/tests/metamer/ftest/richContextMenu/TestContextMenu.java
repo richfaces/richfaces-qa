@@ -37,7 +37,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.HasInputDevices;
@@ -56,7 +55,6 @@ import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch.PerformableAction;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.contextMenu.RichFacesContextMenu;
 import org.richfaces.ui.common.Positioning;
 import org.testng.annotations.Test;
 
@@ -86,7 +84,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
 
     private void updateShowAction() {
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, "click");
-        page.contextMenu.setInvoker(RichFacesContextMenu.LEFT_CLICK);
+        page.getContextMenu().advanced().setInvoker(page.getContextMenu().advanced().LEFT_CLICK_INVOKER);
     }
 
     @Test
@@ -103,7 +101,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
             public void perform() {
                 // blur >>> menu will disappear after delay
                 page.clickOnSecondPanel(driverType);
-                assertTrue(page.contextMenuContent.isDisplayed());
+                assertTrue(page.getContextMenuContent().isDisplayed());
                 // wait until menu hides
                 page.waitUntilContextMenuHides();
             }
@@ -148,7 +146,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         // check whether the context menu is displayed
         page.waitUntilContextMenuAppears();
         // get position before offset is set
-        Point before = page.contextMenuContent.getLocation();
+        Point before = page.getContextMenuContent().getLocation();
         // set verticalOffset
         contextMenuAttributes.set(ContextMenuAttributes.verticalOffset, offset);
         // show context menu
@@ -156,7 +154,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         // check whether the context menu is displayed
         page.waitUntilContextMenuAppears();
         // get position after offset is set
-        Point after = page.contextMenuContent.getLocation();
+        Point after = page.getContextMenuContent().getLocation();
         // check offset
         assertEquals(before.getY(), after.getY() - offset);
     }
@@ -167,22 +165,22 @@ public class TestContextMenu extends AbstractWebDriverTest {
         String expected = "rtl";
         contextMenuAttributes.set(ContextMenuAttributes.dir, expected);
 
-        page.contextMenu.invoke(page.targetPanel1);
-        String directionCSS = page.contextMenu.getItems().get(0).getCssValue("direction");
+        page.getContextMenu().advanced().invoke(page.getTargetPanel1());
+        String directionCSS = page.getContextMenu().advanced().getItems().get(0).getCssValue("direction");
         assertEquals(directionCSS, expected, "The direction attribute was not applied correctly!");
     }
 
     @Test
     @Use(field = "positioning", enumeration = true)
     public void testDirection() {
-        driver.manage().window().setSize(new Dimension(1280, 1024));//for stabilizing job in all templates
-        int tolerance = 10;//px
+        driver.manage().window().setSize(new Dimension(1280, 1024));// for stabilizing job in all templates
+        int tolerance = 10;// px
         String msg = "The actual menu locations should be same as shifted default locations.";
-        //setting up the right panel because then the context menu will fit on the page
+        // setting up the right panel because then the context menu will fit on the page
         contextMenuAttributes.set(ContextMenuAttributes.target, "targetPanel2");
         contextMenuAttributes.set(ContextMenuAttributes.direction, "bottomRight");
 
-        Locations defaultLocations = page.getContextMenuLocations();//bottom right
+        Locations defaultLocations = page.getContextMenuLocations();// bottom right
         Locations actMenuLocation = page.getContextMenuLocationsWhenPosition(positioning);
 
         int defaultWidth = defaultLocations.getWidth();
@@ -197,7 +195,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
             case bottomRight:
             case autoRight:
             case bottomAuto:
-                //no shifting
+                // no shifting
                 break;
             case autoLeft:
             case bottomLeft:
@@ -214,7 +212,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
             default:
                 throw new IllegalArgumentException("Uknown switch " + positioning);
         }
-        //the actual menu locations should be same as shifted default locations
+        // the actual menu locations should be same as shifted default locations
         Utils.tolerantAssertLocationsEquals(defaultLocations.moveAllBy(shiftX, shiftY), actMenuLocation, tolerance, tolerance,
             msg);
     }
@@ -224,9 +222,9 @@ public class TestContextMenu extends AbstractWebDriverTest {
         updateShowAction();
         String langVal = "cs";
         contextMenuAttributes.set(ContextMenuAttributes.lang, langVal);
-        page.contextMenu.invoke(page.targetPanel1);
+        page.getContextMenu().advanced().invoke(page.getTargetPanel1());
 
-        assertEquals(page.contextMenu.getLangAttribute(), langVal, "The lang attribute was not set correctly!");
+        assertEquals(page.getContextMenu().advanced().getLangAttribute(), langVal, "The lang attribute was not set correctly!");
     }
 
     @Test
@@ -234,35 +232,35 @@ public class TestContextMenu extends AbstractWebDriverTest {
         updateShowAction();
         // ajax
         contextMenuAttributes.set(ContextMenuAttributes.mode, "ajax");
-        page.contextMenu.invoke(page.targetPanel1);
-        guardAjax(page.contextMenu.getItems().get(0)).click();
-        assertEquals(page.output.getText(), "Open", "Menu action was not performed.");
+        page.getContextMenu().advanced().invoke(page.getTargetPanel1());
+        guardAjax(page.getContextMenu().advanced().getItems().get(0)).click();
+        assertEquals(page.getOutput().getText(), "Open", "Menu action was not performed.");
 
         // server
         contextMenuAttributes.set(ContextMenuAttributes.mode, "server");
-        page.contextMenu.invoke(page.targetPanel1);
-        guardHttp(page.contextMenu.getItems().get(8)).click();
-        assertEquals(page.output.getText(), "Exit", "Menu action was not performed.");
+        page.getContextMenu().advanced().invoke(page.getTargetPanel1());
+        guardHttp(page.getContextMenu().advanced().getItems().get(8)).click();
+        assertEquals(page.getOutput().getText(), "Exit", "Menu action was not performed.");
 
         // client
         contextMenuAttributes.set(ContextMenuAttributes.mode, "client");
-        page.contextMenu.invoke(page.targetPanel1);
-        guardNoRequest(page.contextMenu.getItems().get(0)).click();
+        page.getContextMenu().advanced().invoke(page.getTargetPanel1());
+        guardNoRequest(page.getContextMenu().advanced().getItems().get(0)).click();
     }
 
     @Test
     public void testDisabled() {
         updateShowAction();
-        page.contextMenu.invoke(page.targetPanel1);
-        assertTrue(page.contextMenuContent.isDisplayed());
+        page.getContextMenu().advanced().invoke(page.getTargetPanel1());
+        assertTrue(page.getContextMenuContent().isDisplayed());
 
         contextMenuAttributes.set(ContextMenuAttributes.disabled, true);
 
         try {
-            page.contextMenu.invoke(page.targetPanel1);
+            page.getContextMenu().advanced().invoke(page.getTargetPanel1());
             fail("The context menu should not be invoked when disabled!");
         } catch (TimeoutException ex) {
-            //OK
+            // OK
         }
     }
 
@@ -271,13 +269,13 @@ public class TestContextMenu extends AbstractWebDriverTest {
         updateShowAction();
         int offset = 11;
 
-        page.contextMenu.invoke(page.targetPanel1);
-        Point positionBefore = page.contextMenuContent.getLocation();
+        page.getContextMenu().advanced().invoke(page.getTargetPanel1());
+        Point positionBefore = page.getContextMenuContent().getLocation();
 
         contextMenuAttributes.set(ContextMenuAttributes.horizontalOffset, offset);
-        page.contextMenu.invoke(page.targetPanel1);
+        page.getContextMenu().advanced().invoke(page.getTargetPanel1());
 
-        Point positionAfter = page.contextMenuContent.getLocation();
+        Point positionAfter = page.getContextMenuContent().getLocation();
 
         assertEquals(positionAfter.getX(), positionBefore.getX() + offset);
     }
@@ -288,10 +286,11 @@ public class TestContextMenu extends AbstractWebDriverTest {
         String color = "yellow";
         String styleVal = "background-color: " + color + ";";
         contextMenuAttributes.set(ContextMenuAttributes.style, styleVal);
-        page.contextMenu.invoke(page.targetPanel1);
-        String backgroundColor = page.contextMenuRoot.getCssValue("background-color");
+        page.getContextMenu().advanced().invoke(page.getTargetPanel1());
+        String backgroundColor = page.getContextMenuRoot().getCssValue("background-color");
         // webdriver retrieves the color in rgba format
-        assertEquals(ContextMenuSimplePage.trimTheRGBAColor(backgroundColor), "rgba(255,255,0,1)", "The style was not applied correctly!");
+        assertEquals(ContextMenuSimplePage.trimTheRGBAColor(backgroundColor), "rgba(255,255,0,1)",
+            "The style was not applied correctly!");
     }
 
     @Test
@@ -299,7 +298,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         updateShowAction();
         String styleClassVal = "test-style-class";
         contextMenuAttributes.set(ContextMenuAttributes.styleClass, styleClassVal);
-        String styleClass = page.contextMenuRoot.getAttribute("class");
+        String styleClass = page.getContextMenuRoot().getAttribute("class");
         assertTrue(styleClass.contains(styleClassVal));
     }
 
@@ -308,12 +307,12 @@ public class TestContextMenu extends AbstractWebDriverTest {
         updateShowAction();
         // contextMenu element is present always. Check if is displayed
         contextMenuAttributes.set(ContextMenuAttributes.target, "targetPanel2");
-        assertFalse(page.contextMenuContent.isDisplayed());
-        page.contextMenu.invoke(page.targetPanel2);
+        assertFalse(page.getContextMenuContent().isDisplayed());
+        page.getContextMenu().advanced().invoke(page.getTargetPanel2());
 
         contextMenuAttributes.set(ContextMenuAttributes.target, "targetPanel1");
-        assertFalse(page.contextMenuContent.isDisplayed());
-        page.contextMenu.invoke(page.targetPanel1);
+        assertFalse(page.getContextMenuContent().isDisplayed());
+        page.getContextMenu().advanced().invoke(page.getTargetPanel1());
     }
 
     @Test
@@ -321,7 +320,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         updateShowAction();
         String titleVal = "test title";
         contextMenuAttributes.set(ContextMenuAttributes.title, titleVal);
-        assertEquals(page.contextMenuRoot.getAttribute("title"), titleVal);
+        assertEquals(page.getContextMenuRoot().getAttribute("title"), titleVal);
     }
 
     @Test
@@ -329,10 +328,10 @@ public class TestContextMenu extends AbstractWebDriverTest {
         updateShowAction();
         contextMenuAttributes.set(ContextMenuAttributes.rendered, Boolean.FALSE);
         try {
-            page.contextMenu.invoke(page.targetPanel1);
+            page.getContextMenu().advanced().invoke(page.getTargetPanel1());
             fail("The context menu should not be invoked when rendered == false!");
         } catch (TimeoutException ex) {
-            //OK
+            // OK
         }
     }
 
@@ -341,15 +340,15 @@ public class TestContextMenu extends AbstractWebDriverTest {
         updateShowAction();
         String minWidth = "333";
         contextMenuAttributes.set(ContextMenuAttributes.popupWidth, minWidth);
-        page.contextMenu.invoke(page.targetPanel1);
-        String style = page.contextMenuContent.getCssValue("min-width");
+        page.getContextMenu().advanced().invoke(page.getTargetPanel1());
+        String style = page.getContextMenuContent().getCssValue("min-width");
         assertEquals(style, minWidth + "px");
     }
 
     @Test
     public void testOnshow() {
         updateShowAction();
-        testFireEvent(contextMenuAttributes, ContextMenuAttributes.onshow, new Actions(driver).click(page.targetPanel1).build());
+        testFireEvent(contextMenuAttributes, ContextMenuAttributes.onshow, new Actions(driver).click(page.getTargetPanel1()).build());
     }
 
     @Test
@@ -358,8 +357,8 @@ public class TestContextMenu extends AbstractWebDriverTest {
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.onclick, new Action() {
             @Override
             public void perform() {
-                page.contextMenu.invoke(page.targetPanel1);
-                page.contextMenu.getItems().get(1).click();
+                page.getContextMenu().advanced().invoke(page.getTargetPanel1());
+                page.getContextMenu().advanced().getItems().get(1).click();
             }
         });
     }
@@ -370,8 +369,8 @@ public class TestContextMenu extends AbstractWebDriverTest {
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.ondblclick, new Action() {
             @Override
             public void perform() {
-                page.contextMenu.invoke(page.targetPanel1);
-                new Actions(driver).doubleClick(page.contextMenu.getItems().get(1)).build().perform();
+                page.getContextMenu().advanced().invoke(page.getTargetPanel1());
+                new Actions(driver).doubleClick(page.getContextMenu().advanced().getItems().get(1)).build().perform();
             }
         });
     }
@@ -389,23 +388,23 @@ public class TestContextMenu extends AbstractWebDriverTest {
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.onkeydown, new Action() {
             @Override
             public void perform() {
-                page.contextMenu.invoke(page.targetPanel1);
-                new Actions(driver).keyDown(page.contextMenu.getItems().get(1), Keys.CONTROL)
-                    .keyUp(page.contextMenu.getItems().get(1), Keys.CONTROL).build().perform();
+                page.getContextMenu().advanced().invoke(page.getTargetPanel1());
+                new Actions(driver).keyDown(page.getContextMenu().advanced().getItems().get(1), Keys.CONTROL)
+                    .keyUp(page.getContextMenu().advanced().getItems().get(1), Keys.CONTROL).build().perform();
             }
         });
     }
 
     @Test(groups = "Future")
-    //false negative
+    // false negative
     public void testOnkeyup() {
         updateShowAction();
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.onkeyup, new Action() {
             @Override
             public void perform() {
-                page.contextMenu.invoke(page.targetPanel1);
-                new Actions(driver).keyDown(page.contextMenu.getItems().get(0), Keys.ALT)
-                    .keyUp(page.contextMenu.getItems().get(0), Keys.ALT).build().perform();
+                page.getContextMenu().advanced().invoke(page.getTargetPanel1());
+                new Actions(driver).keyDown(page.getContextMenu().advanced().getItems().get(0), Keys.ALT)
+                    .keyUp(page.getContextMenu().advanced().getItems().get(0), Keys.ALT).build().perform();
             }
         });
     }
@@ -416,7 +415,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.onkeypress, new Action() {
             @Override
             public void perform() {
-                page.contextMenu.invoke(page.targetPanel1);
+                page.getContextMenu().advanced().invoke(page.getTargetPanel1());
                 new Actions(driver).sendKeys("a").build().perform();
             }
         });
@@ -428,9 +427,9 @@ public class TestContextMenu extends AbstractWebDriverTest {
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.onmousedown, new Action() {
             @Override
             public void perform() {
-                page.contextMenu.invoke(page.targetPanel1);
+                page.getContextMenu().advanced().invoke(page.getTargetPanel1());
                 Mouse mouse = ((HasInputDevices) driver).getMouse();
-                mouse.mouseDown(((Locatable) page.contextMenu.getItems().get(1)).getCoordinates());
+                mouse.mouseDown(((Locatable) page.getContextMenu().advanced().getItems().get(1)).getCoordinates());
             }
         });
     }
@@ -441,9 +440,9 @@ public class TestContextMenu extends AbstractWebDriverTest {
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.onmouseup, new Action() {
             @Override
             public void perform() {
-                page.contextMenu.invoke(page.targetPanel1);
+                page.getContextMenu().advanced().invoke(page.getTargetPanel1());
                 Mouse mouse = ((HasInputDevices) driver).getMouse();
-                mouse.mouseUp(((Locatable) page.contextMenu.getItems().get(1)).getCoordinates());
+                mouse.mouseUp(((Locatable) page.getContextMenu().advanced().getItems().get(1)).getCoordinates());
             }
         });
     }
@@ -454,8 +453,8 @@ public class TestContextMenu extends AbstractWebDriverTest {
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.onmousemove, new Action() {
             @Override
             public void perform() {
-                page.contextMenu.invoke(page.targetPanel1);
-                new Actions(driver).moveToElement(page.contextMenu.getItems().get(1)).build().perform();
+                page.getContextMenu().advanced().invoke(page.getTargetPanel1());
+                new Actions(driver).moveToElement(page.getContextMenu().advanced().getItems().get(1)).build().perform();
             }
         });
     }
@@ -467,11 +466,11 @@ public class TestContextMenu extends AbstractWebDriverTest {
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.onmouseout, new Action() {
             @Override
             public void perform() {
-                page.contextMenu.invoke(page.targetPanel1);
-                new Actions(driver).moveToElement(page.contextMenu.getItems().get(2)).build().perform();
-                waitModel().until().element(page.groupList).is().visible();
+                page.getContextMenu().advanced().invoke(page.getTargetPanel1());
+                new Actions(driver).moveToElement(page.getContextMenu().advanced().getItems().get(2)).build().perform();
+                waitModel().until().element(page.getGroupList()).is().visible();
                 new Actions(driver).moveToElement(page.getRequestTimeElement()).build().perform();
-                waitGui().until().element(page.groupList).is().not().visible();
+                waitGui().until().element(page.getGroupList()).is().not().visible();
             }
         });
     }
@@ -488,9 +487,9 @@ public class TestContextMenu extends AbstractWebDriverTest {
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.ongroupshow, new Action() {
             @Override
             public void perform() {
-                page.contextMenu.invoke(page.targetPanel1);
-                new Actions(driver).moveToElement(page.contextMenu.getItems().get(2)).build().perform();
-                waitGui().until().element(page.groupList).is().visible();
+                page.getContextMenu().advanced().invoke(page.getTargetPanel1());
+                new Actions(driver).moveToElement(page.getContextMenu().advanced().getItems().get(2)).build().perform();
+                waitGui().until().element(page.getGroupList()).is().visible();
             }
         });
     }
@@ -501,11 +500,11 @@ public class TestContextMenu extends AbstractWebDriverTest {
         testFireEvent(contextMenuAttributes, ContextMenuAttributes.ongrouphide, new Action() {
             @Override
             public void perform() {
-                page.contextMenu.invoke(page.targetPanel1);
-                new Actions(driver).moveToElement(page.contextMenu.getItems().get(2)).build().perform();
-                waitGui().until().element(page.groupList).is().visible();
-                new Actions(driver).click(page.contextMenu.getItems().get(1)).build().perform();
-                waitGui().until().element(page.groupList).is().not().visible();
+                page.getContextMenu().advanced().invoke(page.getTargetPanel1());
+                new Actions(driver).moveToElement(page.getContextMenu().advanced().getItems().get(2)).build().perform();
+                waitGui().until().element(page.getGroupList()).is().visible();
+                new Actions(driver).click(page.getContextMenu().advanced().getItems().get(1)).build().perform();
+                waitGui().until().element(page.getGroupList()).is().not().visible();
             }
         });
     }
@@ -535,12 +534,12 @@ public class TestContextMenu extends AbstractWebDriverTest {
     public void testShowEvent() {
         updateShowAction();
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, "hover");
-        page.contextMenu.setInvoker(RichFacesContextMenu.HOVER);
-        page.contextMenu.invoke(page.targetPanel1);
+        page.getContextMenu().advanced().setInvoker(page.getContextMenu().advanced().HOVER_INVOKER);
+        page.getContextMenu().advanced().invoke(page.getTargetPanel1());
 
         contextMenuAttributes.set(ContextMenuAttributes.showEvent, "click");
-        page.contextMenu.setInvoker(RichFacesContextMenu.LEFT_CLICK);
-        page.contextMenu.invoke(page.targetPanel1);
+        page.getContextMenu().advanced().setInvoker(page.getContextMenu().advanced().LEFT_CLICK_INVOKER);
+        page.getContextMenu().advanced().invoke(page.getTargetPanel1());
     }
 
     @Test
@@ -548,7 +547,7 @@ public class TestContextMenu extends AbstractWebDriverTest {
         updateShowAction();
         contextMenuAttributes.set(ContextMenuAttributes.targetSelector, "div[id*=targetPanel]");
 
-        page.contextMenu.invoke(page.targetPanel1);
-        page.contextMenu.dismiss();
+        page.getContextMenu().advanced().invoke(page.getTargetPanel1());
+        page.getContextMenu().advanced().dismiss();
     }
 }

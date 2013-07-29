@@ -56,7 +56,8 @@ public class TestTable extends AbstractContextMenuTest {
 
             String priceFromTable = rowPrice.getText();
 
-            page.getContextMenu().selectItem(TableContextMenuPage.VIEW, rowPrice);
+            page.getContextMenu().setTarget(rowPrice);
+            page.getContextMenu().selectItem(0);
 
             Graphene.waitGui().until().element(page.getPriceFromPopup()).is().visible();
 
@@ -74,7 +75,7 @@ public class TestTable extends AbstractContextMenuTest {
     public void testContextMenuRenderedOnTheCorrectPosition() {
         WebElement elementToTryOn = page.getPrices().get(5);
 
-        checkContextMenuRenderedAtCorrectPosition(elementToTryOn, page.getContextMenu().getMenuPopup(),
+        checkContextMenuRenderedAtCorrectPosition(elementToTryOn, page.getContextMenu().advanced().getMenuPopup(),
             InvocationType.RIGHT_CLICK, page.getWaitConditionOnSelectingRow(elementToTryOn));
     }
 }

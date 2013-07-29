@@ -23,8 +23,8 @@ package org.richfaces.tests.page.fragments.impl.contextMenu;
 
 import java.util.List;
 
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -37,19 +37,41 @@ public class RichFacesContextMenu extends AbstractPopupMenu {
     @FindBy(css = "div.rf-ctx-lst")
     private WebElement contextMenuPopup;
 
+    @FindBy(jquery = "script:last")
+    private WebElement script;
+
+    private AdvancedInteractions advancedInteractions;
+
     @Override
-    public WebElement getMenuPopup() {
+    protected WebElement getMenuPopupInternal() {
         return contextMenuPopup;
     }
 
     @Override
-    public List<WebElement> getMenuItemElements() {
+    protected List<WebElement> getMenuItemElementsInternal() {
         return menuItemsElements;
     }
 
     @Override
-    public String getNameOfFragment() {
+    protected String getNameOfFragment() {
         return RichFacesContextMenu.class.getName();
     }
 
+    @Override
+    protected WebElement getScript() {
+        return script;
+    }
+
+    public AdvancedInteractions advanced() {
+        if (advancedInteractions == null) {
+            advancedInteractions = new AdvancedInteractions();
+        }
+        return advancedInteractions;
+    }
+
+    public class AdvancedInteractions extends AbstractPopupMenu.AdvancedInteractions {
+        public String getLangAttribute() {
+            return root.getAttribute("lang");
+        }
+    }
 }
