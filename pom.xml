@@ -91,6 +91,8 @@ FSF site: http://www.fsf.org. -->
 
         <jodatime.version>2.2</jodatime.version>
         <commons-lang.version>2.6</commons-lang.version>
+        <apache-commons-io.version>2.4</apache-commons-io.version>
+        <google.json.version>1.1</google.json.version>
     </properties>
 
     <modules>
@@ -534,7 +536,11 @@ FSF site: http://www.fsf.org. -->
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-
+            <dependency>
+                <groupId>com.googlecode.json-simple</groupId>
+                <artifactId>json-simple</artifactId>
+                <version>${google.json.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

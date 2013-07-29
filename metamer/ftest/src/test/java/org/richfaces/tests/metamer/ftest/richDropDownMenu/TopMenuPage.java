@@ -26,7 +26,7 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.dropDown
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.dropDownMenu.internal.RichFacesDropDownMenuInternal;
+import org.richfaces.tests.page.fragments.impl.dropDownMenu.RichFacesDropDownMenu;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -34,7 +34,7 @@ import org.richfaces.tests.page.fragments.impl.dropDownMenu.internal.RichFacesDr
 public class TopMenuPage extends MetamerPage {
 
     @FindBy(jquery = ".rf-tb-itm:eq(0)")
-    private RichFacesDropDownMenuInternal fileDropDownMenu;
+    private RichFacesDropDownMenu fileDropDownMenu;
 
     @FindBy(jquery = ".rf-ddm-lbl-dec:eq(0)")
     private WebElement target1;
@@ -87,7 +87,7 @@ public class TopMenuPage extends MetamerPage {
         return emptyIcon;
     }
 
-    public RichFacesDropDownMenuInternal getFileDropDownMenu() {
+    public RichFacesDropDownMenu getFileDropDownMenu() {
         return fileDropDownMenu;
     }
 
@@ -133,7 +133,7 @@ public class TopMenuPage extends MetamerPage {
 
     public String returnPopupWidth(String minWidth) {
         dropDownMenuAttributes.set(DropDownMenuAttributes.popupWidth, minWidth);
-        fileDropDownMenu.invoke(target1);
+        fileDropDownMenu.advanced().invoke(target1);
         return dropDownMenuContent.getCssValue("min-width");
     }
 }

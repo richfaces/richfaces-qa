@@ -30,12 +30,16 @@ import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneContext;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
+import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -47,26 +51,11 @@ public abstract class AbstractPopupMenu {
     @ArquillianResource
     private Actions actions;
 
-    private int showDelay = 50;
-
-    private PopupMenuInvoker invoker = RIGHT_CLICK;
+    @Root
+    protected WebElement root;
 
     private WebElement target;
-
-    /**
-     * The right click invoker of popup menu
-     */
-    public static final PopupMenuInvoker RIGHT_CLICK = new RightClickPopupMenuInvoker();
-
-    /**
-     * The left click invoker of popup menu
-     */
-    public static final PopupMenuInvoker LEFT_CLICK = new LeftClickPopupMenuInvoker();
-
-    /**
-     * The hover invoker of popup menu
-     */
-    public static final PopupMenuInvoker HOVER = new HoverPopupMenuInvoker();
+    private AdvancedInteractions advancedInteractions = null;
 
     /* ************************************************************************************************
      * Abstract methods
@@ -76,170 +65,231 @@ public abstract class AbstractPopupMenu {
      *
      * @return
      */
-    public abstract WebElement getMenuPopup();
+    protected abstract WebElement getMenuPopupInternal();
 
     /**
      * Returns all elements of this menu
      *
      * @return
      */
-    public abstract List<WebElement> getMenuItemElements();
+    protected abstract List<WebElement> getMenuItemElementsInternal();
 
     /**
      * Returns the name of the actual page fragment.
+     *
      * @return
      */
-    public abstract String getNameOfFragment();
+    protected abstract String getNameOfFragment();
+
+    protected abstract WebElement getScript();
 
     /* ************************************************************************************************
      * API
      */
-    /**
-     * Dismisses currently displayed popup menu. If no popup menu is currently displayed an exception is thrown.
-     *
-     * @throws IllegalStateException when no popup menu is displayed in the time of invoking
-     */
-    public void dismiss() {
-        if (!getMenuPopup().isDisplayed()) {
-            throw new IllegalStateException("You are attemting to dismiss the " + getNameOfFragment() + ", however, no "
-                    + getNameOfFragment() + " is displayed at the moment!");
+    public void selectItem(ChoicePicker picker) {
+        if (target == null) {
+            target = root;
         }
-        browser.findElement(By.tagName("body")).click();
-        waitModel().until().element(getMenuPopup()).is().not().visible();
+        advanced().invoke();
+        picker.pick(getMenuItemElementsInternal()).click();
     }
 
-    /**
-     * Returns menu items elements. One needs to invoke popup menu in order to work with them.
-     * Note that some of the elements may not become visible by just invoking the popup menu (e.g. popup menu items with sub items)
-     *
-     * @return the popup menu items
-     */
-    public List<WebElement> getItems() {
-        return getMenuItemElements();
+    public void selectItem(String header) {
+        selectItem(ChoicePickerHelper.byVisibleText().match(header));
     }
 
-    /**
-     * Invokes the popup menu and selects from it a given item. By default it is presumed that popup menu is invoked by right
-     * click. To change this behavior use <code>setInvoker()</code> method.
-     *
-     * @param item to be selected from popup menu
-     * @see #setInvoker(PopupMenuInvoker)
-     */
-    public void selectItem(PopupMenuItem item, WebElement givenTarget) {
-        invoke(givenTarget);
-
-        for (WebElement itemElement : getMenuItemElements()) {
-            String currentItemText = itemElement.getText();
-
-            if (item.getText().equals(currentItemText.trim())) {
-                itemElement.click();
-            }
-        }
+    public void selectItem(int index) {
+        selectItem(ChoicePickerHelper.byIndex().index(index));
     }
 
-    /**
-     * Invokes popup menu and selects from it given item. By default it is presumed that popup menu is invoked by right
-     * click. To change this behavior use <code>setInvoker()</code> method.
-     *
-     * @param item
-     * @see #setInvoker(PopupMenuInvoker)
-     * @see #setTarget(WebElement)
-     */
-    public void selectItem(PopupMenuItem item) {
-        checkWhetherTargetIsSet();
-
-        selectItem(item, this.target);
+    public void selectItem(ChoicePicker picker, WebElement target) {
+        setTarget(target);
+        selectItem(picker);
     }
 
-    /**
-     * Invokes popup menu in the middle of the given target. By default it is presumed that popup menu is invoked by right click. To change this behavior use
-     * <code>setInvoker()</code> method. It also works with the default value of <code>showDelay == 50ms</code>. Use <code>#setShowDelay</code> if this value is different for this menu.
-     *
-     * @param givenTarget
-     * @see #setInvoker(PopupMenuInvoker)
-     * @see #setShowDelay(int)
-     */
-    public void invoke(WebElement givenTarget) {
-        actions.moveToElement(givenTarget).build().perform();
-        invoker.invoke(givenTarget);
-
-        waitUntilIsVisible();
+    public void selectItem(String header, WebElement target) {
+        setTarget(target);
+        selectItem(header);
     }
 
-    /**
-     * Waits until the popup menu is visible. It takes into account the <code>showDelay</code> which has default value 50ms.
-     *
-     * @see #setShowDelay(int)
-     */
-    public void waitUntilIsVisible() {
-        Graphene.waitModel().withTimeout(showDelay + 4000, TimeUnit.MILLISECONDS)
-                .withMessage("The " + getNameOfFragment() + " did not show in the given timeout!")
-                .until().element(getMenuPopup()).is().visible();
-    }
-
-    /**
-     * Invokes popup menu on a given point within the given target. By default it is presumed that popup
-     * menu is invoked by right click. To change this behavior use
-     * <code>setInvoker()</code> method.
-     *
-     * @param givenTarget
-     * @param location
-     * @see #setInvoker(PopupMenuInvoker)
-     */
-    public void invoke(WebElement givenTarget, Point location) {
-        throw new UnsupportedOperationException("File a feature request to have this, or even better implement it:)");
-    }
-
-    /**
-     * Invokes popup menu in the middle of the currently set target. By default it is presumed that popup menu is invoked by right click.
-     * To change this behavior use <code>setInvoker()</code> method. You have to have a target set before invocation of this method.
-     *
-     * @see #setInvoker(PopupMenuInvoker)
-     * @see #setTarget(WebElement)
-     */
-    public void invoke() {
-        checkWhetherTargetIsSet();
-
-        invoke(this.target);
-    }
-
-    public WebElement getTarget() {
-        return target;
+    public void selectItem(int index, WebElement target) {
+        setTarget(target);
+        selectItem(index);
     }
 
     public void setTarget(WebElement target) {
         this.target = target;
     }
 
-    public PopupMenuInvoker getInvoker() {
-        return invoker;
-    }
-
-    public void setInvoker(PopupMenuInvoker invoker) {
-        if (invoker == null) {
-            throw new IllegalArgumentException("Parameter invoker can not be null!");
+    public AdvancedInteractions advanced() {
+        if (advancedInteractions == null) {
+            advancedInteractions = new AdvancedInteractions();
         }
-        this.invoker = invoker;
-    }
-
-    public int getShowDelay() {
-        return showDelay;
-    }
-
-    /**
-     * Sets the delay which is between showevent observing and the menu opening
-     * @param showDelay
-     */
-    public void setShowDelay(int showDelay) {
-        if (showDelay < 0) {
-            throw new IllegalArgumentException("Can not be negative!");
-        }
-        this.showDelay = showDelay;
+        return advancedInteractions;
     }
 
     /* ****************************************************************************************************
      * Nested classes
      */
+
+    public class AdvancedInteractions {
+        /**
+         * The right click invoker of popup menu
+         */
+        public final PopupMenuInvoker RIGHT_CLICK_INVOKER = new RightClickPopupMenuInvoker();
+
+        /**
+         * The left click invoker of popup menu
+         */
+        public final PopupMenuInvoker LEFT_CLICK_INVOKER = new LeftClickPopupMenuInvoker();
+
+        /**
+         * The hover invoker of popup menu
+         */
+        public final PopupMenuInvoker HOVER_INVOKER = new HoverPopupMenuInvoker();
+
+        private PopupMenuInvoker invoker = RIGHT_CLICK_INVOKER;
+        private long contextMenuVisibleWaitingTimeout = 4000L;
+        private int showDelay = 50;
+
+        public WebElement getMenuPopup() {
+            return getMenuPopupInternal();
+        }
+
+        public void setupTargetFromWidget() {
+            String targetId = Utils.getJSONValue(getScript(), "target");
+            if (targetId != null) {
+                target = browser.findElement(By.id(targetId));
+            } else {
+                target = root;
+            }
+        }
+
+        /**
+         * Returns all elements of this menu
+         *
+         * @return
+         */
+        public List<WebElement> getMenuItemElements() {
+            return getMenuItemElementsInternal();
+        }
+
+        /**
+         * Sets the delay which is between showevent observing and the menu opening
+         *
+         * @param showDelay
+         */
+        public void setShowDelay(int newShowDelay) {
+            if (showDelay < 0) {
+                throw new IllegalArgumentException("Can not be negative!");
+            }
+            showDelay = newShowDelay;
+        }
+
+        public int getShowDelay() {
+            return showDelay;
+        }
+
+        public PopupMenuInvoker getInvoker() {
+            return invoker;
+        }
+
+        public void setInvoker(PopupMenuInvoker newInvoker) {
+            if (invoker == null) {
+                throw new IllegalArgumentException("Parameter invoker can not be null!");
+            }
+            invoker = newInvoker;
+        }
+
+        public WebElement getTarget() {
+            return target;
+        }
+
+        /**
+         * Waits until the popup menu is visible. It takes into account the <code>showDelay</code> which has default value 50ms.
+         *
+         * @see #setShowDelay(int)
+         */
+        public void waitUntilIsVisible() {
+            Graphene.waitModel().withTimeout(showDelay + getContextMenuVisibleWaitingTimeout(), TimeUnit.MILLISECONDS)
+                .withMessage("The " + getNameOfFragment() + " did not show in the given timeout!").until()
+                .element(getMenuPopup()).is().visible();
+        }
+
+        public void setContextMenuVisibleWaitingTimeout(long timeoutInMillis) {
+            this.contextMenuVisibleWaitingTimeout = timeoutInMillis;
+        }
+
+        public long getContextMenuVisibleWaitingTimeout() {
+            return this.contextMenuVisibleWaitingTimeout;
+        }
+
+        /**
+         * Returns menu items elements. One needs to invoke popup menu in order to work with them. Note that some of the
+         * elements may not become visible by just invoking the popup menu (e.g. popup menu items with sub items)
+         *
+         * @return the popup menu items
+         */
+        public List<WebElement> getItems() {
+            return getMenuItemElements();
+        }
+
+        /**
+         * Dismisses currently displayed popup menu. If no popup menu is currently displayed an exception is thrown.
+         *
+         * @throws IllegalStateException when no popup menu is displayed in the time of invoking
+         */
+        public void dismiss() {
+            if (!getMenuPopupInternal().isDisplayed()) {
+                throw new IllegalStateException("You are attemting to dismiss the " + getNameOfFragment() + ", however, no "
+                    + getNameOfFragment() + " is displayed at the moment!");
+            }
+            browser.findElement(By.tagName("body")).click();
+            waitModel().until().element(getMenuPopupInternal()).is().not().visible();
+        }
+
+        /**
+         * Invokes popup menu in the middle of the given target. By default it is presumed that popup menu is invoked by right
+         * click. To change this behavior use <code>setInvoker()</code> method. It also works with the default value of
+         * <code>showDelay == 50ms</code>. Use <code>#setShowDelay</code> if this value is different for this menu.
+         *
+         * @param givenTarget
+         * @see #setInvoker(PopupMenuInvoker)
+         * @see #setShowDelay(int)
+         */
+        public void invoke(WebElement givenTarget) {
+            actions.moveToElement(givenTarget).build().perform();
+            invoker.invoke(givenTarget);
+
+            advanced().waitUntilIsVisible();
+        }
+
+        /**
+         * Invokes popup menu on a given point within the given target. By default it is presumed that popup menu is invoked by
+         * right click. To change this behavior use <code>setInvoker()</code> method.
+         *
+         * @param givenTarget
+         * @param location
+         * @see #setInvoker(PopupMenuInvoker)
+         */
+        public void invoke(WebElement givenTarget, Point location) {
+            throw new UnsupportedOperationException("File a feature request to have this, or even better implement it:)");
+        }
+
+        /**
+         * Invokes popup menu in the middle of the currently set target. By default it is presumed that popup menu is invoked by
+         * right click. To change this behavior use <code>setInvoker()</code> method. You have to have a target set before
+         * invocation of this method.
+         *
+         * @see #setInvoker(PopupMenuInvoker)
+         * @see #setTarget(WebElement)
+         */
+        public void invoke() {
+            checkWhetherTargetIsSet();
+
+            invoke(target);
+        }
+    }
 
     public static final class LeftClickPopupMenuInvoker implements PopupMenuInvoker {
         @Override
@@ -273,7 +323,7 @@ public abstract class AbstractPopupMenu {
     private void checkWhetherTargetIsSet() {
         if (target == null) {
             throw new IllegalStateException("The " + getNameOfFragment()
-                    + " target has to be set before this operation! See setTarget() method.");
+                + " target has to be set before this operation! See setTarget() method.");
         }
     }
 }
