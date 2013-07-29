@@ -30,7 +30,7 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete2;
+import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
 import org.richfaces.tests.page.fragments.impl.autocomplete.SelectOrConfirm;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.annotations.Test;
@@ -42,7 +42,7 @@ import org.testng.annotations.Test;
 public class TestAutocompleteFragment extends AbstractAutocompleteTest {
 
     @FindBy(css = "span.rf-au[id$=autocomplete]")
-    private RichFacesAutocomplete2 autocomplete;
+    private RichFacesAutocomplete autocomplete;
 
     @Override
     public URL getTestUrl() {

@@ -43,7 +43,7 @@ public abstract class AbstractAutocompleteTest extends AbstractWebDriverTest {
     protected Attributes<AutocompleteAttributes> autocompleteAttributes = getAttributes();
 
     @FindBy(css = "span.rf-au[id$=autocomplete]")
-    protected RichFacesAutocomplete<String> autocomplete;
+    protected RichFacesAutocomplete autocomplete;
 
     @FindBy(css = "[id$='output']")
     private WebElement output;
