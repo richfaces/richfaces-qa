@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:r="http://richfaces.org/rich"
+    xmlns:metamer="http://java.sun.com/jsf/composite/metamer">
+
+<!--
+JBoss, Home of Professional Open Source
+Copyright 2010-2013, Red Hat, Inc. and individual contributors
+by the @authors tag. See the copyright.txt in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+
+<ui:composition template="/templates/template.xhtml">
+    <ui:param name="componentId" value="richDataTable" />
+
+    <ui:define name="view">
+        <f:metadata>
+            <f:viewParam name="templates" value="#{templateBean.templates}">
+                <f:converter converterId="templatesListConverter" />
+            </f:viewParam>
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="head" />
+
+    <ui:define name="outOfTemplateBefore">
+        <br />
+
+        <h:outputText value="Show data in table: " />
+        <h:selectBooleanCheckbox id="noDataCheckbox" value="#{richDataScrollerBean.state}">
+            <r:ajax render="scroller1 #{nestedComponentId}" />
+        </h:selectBooleanCheckbox>
+        <br />
+        <br />
+        <fieldset>
+            <legend>Facets Settings</legend>
+            <h:panelGrid id="facetsSettings" columns="2">
+                <h:outputText value="Facet first: " />
+                <h:inputText id="facetFirst" value="#{richDataScrollerBean.facets['first']}" />
+                <h:outputText value="Facet fastRewind: " />
+                <h:inputText id="facetFastRewind" value="#{richDataScrollerBean.facets['fastRewind']}" />
+                <h:outputText value="Facet previous: " />
+                <h:inputText id="facetPrevious" value="#{richDataScrollerBean.facets['previous']}" />
+                <h:outputText value="Facet next: " />
+                <h:inputText id="facetNext" value="#{richDataScrollerBean.facets['next']}" />
+                <h:outputText value="Facet fastForward: " />
+                <h:inputText id="facetFastForward" value="#{richDataScrollerBean.facets['fastForward']}" />
+                <h:outputText value="Facet last: " />
+                <h:inputText id="facetLast" value="#{richDataScrollerBean.facets['last']}" />
+
+                <h:outputText value="Facet first_disabled: " />
+                <h:inputText id="facetFirst_disabled" value="#{richDataScrollerBean.facets['first_disabled']}" />
+                <h:outputText value="Facet fastRewind_disabled: " />
+                <h:inputText id="facetFastRewind_disabled" value="#{richDataScrollerBean.facets['fastRewind_disabled']}" />
+                <h:outputText value="Facet previous_disabled: " />
+                <h:inputText id="facetPrevious_disabled" value="#{richDataScrollerBean.facets['previous_disabled']}" />
+                <h:outputText value="Facet next_disabled: " />
+                <h:inputText id="facetNext_disabled" value="#{richDataScrollerBean.facets['next_disabled']}" />
+                <h:outputText value="Facet fastForward_disabled: " />
+                <h:inputText id="facetFastForward_disabled" value="#{richDataScrollerBean.facets['fastForward_disabled']}" />
+                <h:outputText value="Facet last_disabled: " />
+                <h:inputText id="facetLast_disabled" value="#{richDataScrollerBean.facets['last_disabled']}" />
+
+            </h:panelGrid>
+
+            <r:commandButton id="applyFacets" value="ApplyFacets" render="scroller1 #{nestedComponentId}"
+                execute="facetsSettings" />
+        </fieldset>
+        <br />
+        <br />
+        <r:dataScroller id="scroller1" for="#{richDataScrollerBean.attributes['for'].value}">
+            <f:facet name="first">#{richDataScrollerBean.facets['first']}</f:facet>
+            <f:facet name="fastRewind">#{richDataScrollerBean.facets['fastRewind']}</f:facet>
+            <f:facet name="previous">#{richDataScrollerBean.facets['previous']}</f:facet>
+            <f:facet name="next">#{richDataScrollerBean.facets['next']}</f:facet>
+            <f:facet name="fastForward">#{richDataScrollerBean.facets['fastForward']}</f:facet>
+            <f:facet name="last">#{richDataScrollerBean.facets['last']}</f:facet>
+
+            <f:facet name="first_disabled">#{richDataScrollerBean.facets['first_disabled']}</f:facet>
+            <f:facet name="fastRewind_disabled">#{richDataScrollerBean.facets['fastRewind_disabled']}</f:facet>
+            <f:facet name="previous_disabled">#{richDataScrollerBean.facets['previous_disabled']}</f:facet>
+            <f:facet name="next_disabled">#{richDataScrollerBean.facets['next_disabled']}</f:facet>
+            <f:facet name="fastForward_disabled">#{richDataScrollerBean.facets['fastForward_disabled']}</f:facet>
+            <f:facet name="last_disabled">#{richDataScrollerBean.facets['last_disabled']}</f:facet>
+        </r:dataScroller>
+    </ui:define>
+
+    <ui:define name="component">
+
+        <r:dataTable id="richDataTable" rows="#{richDataScrollerBean.tableAttributes['rows'].value}"
+            value="#{richDataScrollerBean.state ? model.capitals : null}" var="record">
+
+            <f:facet name="noData">
+                <h:outputText value="There is no data." style="color: red;" />
+            </f:facet>
+
+            <r:column id="columnState" sortBy="#{record.state}">
+                <f:facet name="header">
+                    <h:outputText id="columnHeaderState" value="State" />
+                </f:facet>
+
+                <h:outputText value="#{record.state}" />
+                <f:facet name="footer">
+                    <h:outputText id="columnFooterState" value="State" />
+                </f:facet>
+            </r:column>
+
+            <r:column id="columnCapital" sortBy="#{record.name}">
+                <f:facet name="header">
+                    <h:outputText id="columnHeaderCapital" value="Capital" />
+                </f:facet>
+
+                <h:outputText value="#{record.name}" />
+                <f:facet name="footer">
+                    <h:outputText id="columnFooterCapital" value="Capital" />
+                </f:facet>
+            </r:column>
+
+            <f:facet name="footer">
+                <r:dataScroller id="scroller2">
+
+                    <f:facet name="first">#{richDataScrollerBean.facets['first']}</f:facet>
+                    <f:facet name="fastRewind">#{richDataScrollerBean.facets['fastRewind']}</f:facet>
+                    <f:facet name="previous">#{richDataScrollerBean.facets['previous']}</f:facet>
+                    <f:facet name="next">#{richDataScrollerBean.facets['next']}</f:facet>
+                    <f:facet name="fastForward">#{richDataScrollerBean.facets['fastForward']}</f:facet>
+                    <f:facet name="last">#{richDataScrollerBean.facets['last']}</f:facet>
+
+                    <f:facet name="first_disabled">#{richDataScrollerBean.facets['first_disabled']}</f:facet>
+                    <f:facet name="fastRewind_disabled">#{richDataScrollerBean.facets['fastRewind_disabled']}</f:facet>
+                    <f:facet name="previous_disabled">#{richDataScrollerBean.facets['previous_disabled']}</f:facet>
+                    <f:facet name="next_disabled">#{richDataScrollerBean.facets['next_disabled']}</f:facet>
+                    <f:facet name="fastForward_disabled">#{richDataScrollerBean.facets['fastForward_disabled']}</f:facet>
+                    <f:facet name="last_disabled">#{richDataScrollerBean.facets['last_disabled']}</f:facet>
+
+                </r:dataScroller>
+            </f:facet>
+
+        </r:dataTable>
+    </ui:define>
+
+    <ui:define name="outOfTemplateAfter" />
+
+</ui:composition>
+</html>
