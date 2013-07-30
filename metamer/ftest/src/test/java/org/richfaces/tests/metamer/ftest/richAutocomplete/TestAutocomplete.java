@@ -35,6 +35,7 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.page.fragments.impl.autocomplete.SelectOrConfirm;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -42,10 +43,6 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TestAutocomplete extends AbstractAutocompleteTest {
-
-    @Inject
-    @Use(empty = true)
-    private String scrollingType;
 
     @Inject
     @Use(booleans = { true, false })
@@ -97,18 +94,15 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         assertFalse(autocomplete.advanced().getSuggestions().isEmpty());
     }
 
-//    @Test
-//    @Use(field = "scrollingType", strings = { "mouse", "keys" })
-//    public void testSimpleSelection() {
-//        // this item is 2nd if type filter "ala", so it ensure that it was not picked first item
-//        Suggestion<String> expected = new SuggestionImpl<String>("Alaska");
-//        Graphene.guardAjax(autocomplete).type("ala");
-//        Graphene.guardAjax(autocomplete).autocompleteWithSuggestion(expected, getScrollingType());
-//        checkOutput(expected.getValue());
-//        assertEquals(autocomplete.getInputValue(), expected.getValue());
-//    }
+    @Test
+    public void testSimpleSelectionWithMouse() {
+        autocomplete.type("a").select(ChoicePickerHelper.byVisibleText().endsWith("na"));
+        checkOutput("Arizona");
+    }
 
-    protected ScrollingType getScrollingType() {
-        return ScrollingType.valueOf("BY_" + scrollingType.toUpperCase());
+    @Test
+    public void testSimpleSelectionWithKeyboard() {
+        autocomplete.type("a").select(ChoicePickerHelper.byVisibleText().endsWith("na"), ScrollingType.BY_KEYS);
+        checkOutput("Arizona");
     }
 }

@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.autocomplete;
 
+import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 
 /**
@@ -45,7 +46,7 @@ public interface SelectOrConfirm {
     Autocomplete select();
 
     /**
-     * Selects a choice from suggestions.
+     * Selects a choice from suggestions using mouse click.
      *
      * @param picker for picking from the choices
      * @return returns back the Autocomplete component.
@@ -54,5 +55,17 @@ public interface SelectOrConfirm {
      * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByVisibleTextChoicePicker
      */
     Autocomplete select(ChoicePicker picker);
+
+    /**
+     * Selects a choice from suggestions using keyboard navigation.
+     *
+     * @param picker for picking from the choices
+     * @param scrollingType defines whether component should choose an item using keyboard or mouse
+     * @return returns back the Autocomplete component.
+     * @throws RuntimeException when no such option found
+     * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByIndexChoicePicker
+     * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByVisibleTextChoicePicker
+     */
+    Autocomplete select(ChoicePicker picker, ScrollingType scrollingType);
 
 }

@@ -21,16 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.autocomplete;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Lists;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
@@ -40,10 +37,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
+import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
+
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -193,15 +194,43 @@ public class RichFacesAutocomplete implements Autocomplete {
 
         @Override
         public Autocomplete select(ChoicePicker picker) {
+            return select(picker, ScrollingType.BY_MOUSE);
+        }
+
+        @Override
+        public Autocomplete select(ChoicePicker picker, ScrollingType scrollingType) {
             advanced().waitForSuggestionsToShow();
             WebElement foundValue = picker.pick(getSuggestions());
-            if (foundValue != null) {
-                foundValue.click();
-            } else {
+            if (foundValue == null) {
                 throw new RuntimeException("The value was not found by " + picker.toString());
             }
+
+            if (scrollingType == ScrollingType.BY_KEYS) {
+                selectWithKeys(foundValue);
+            } else {
+                foundValue.click();
+            }
+
             advanced().waitForSuggestionsToHide();
             return RichFacesAutocomplete.this;
+        }
+
+        private void selectWithKeys(WebElement foundValue) {
+            List<WebElement> suggestions = getSuggestions();
+            // if selectFirst attribute of autocomplete is set, we don't have to press arrow down key for first item
+            boolean skip = suggestions.get(0).getAttribute("class").contains("rf-au-itm-sel");
+
+            for (WebElement suggestion : suggestions) {
+                if (!skip) {
+                    new Actions(driver).sendKeys(Keys.ARROW_DOWN).perform();
+                } else {
+                    skip = false;
+                }
+                if (suggestion.equals(foundValue)) {
+                    new Actions(driver).sendKeys(Keys.RETURN).perform();
+                    break;
+                }
+            }
         }
     }
 }
