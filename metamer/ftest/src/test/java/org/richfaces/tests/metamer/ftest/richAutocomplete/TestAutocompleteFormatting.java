@@ -73,7 +73,7 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
         if (selectFirst == null) {
             selectFirst = false;
         }
-        autocomplete.advanced().getInput().clear(ClearType.BACKSPACE);
+        autocomplete.clear(ClearType.BACKSPACE);
     }
 
     /**
@@ -84,7 +84,7 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
         @Use(field = "selectFirst", booleans = { true, false }) })
     public void testFormatting() {
         assertTrue(autocomplete.advanced().getSuggestions().isEmpty());
-        autocomplete.advanced().getInput().clear(ClearType.BACKSPACE);
+        autocomplete.clear(ClearType.BACKSPACE);
         SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("ala");
         assertFalse(autocomplete.advanced().getSuggestions().isEmpty());
         Graphene.guardAjax(typed).confirm();

@@ -51,13 +51,13 @@ public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
 
     @Test
     public void testValueChangeListener() {
-        autocomplete.advanced().getInput().clear(ClearType.BACKSPACE);
+        autocomplete.clear(ClearType.BACKSPACE);
         Graphene.guardAjax(autocomplete).type("something");
         Graphene.guardAjax(page).blur();
 
         checkOutput("something");
 
-        autocomplete.advanced().getInput().clear(ClearType.BACKSPACE);
+        autocomplete.clear(ClearType.BACKSPACE);
         Graphene.guardAjax(autocomplete).type("something else");
         Graphene.guardAjax(page).blur();
         // valueChangeListener output as 4th record
@@ -71,7 +71,7 @@ public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
         String[] layouts = new String[] { "div", "list", "table" };
         for (String layout : layouts) {
             autocompleteAttributes.set(AutocompleteAttributes.layout, layout);
-            autocomplete.advanced().getInput().clear(ClearType.BACKSPACE);
+            autocomplete.clear(ClearType.BACKSPACE);
 
             Graphene.guardAjax(autocomplete).type("ala").select(ChoicePickerHelper.byVisibleText().contains("Alaska"));
             // code before refactoring

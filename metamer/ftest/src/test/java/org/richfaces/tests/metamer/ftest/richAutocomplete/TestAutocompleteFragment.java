@@ -63,7 +63,7 @@ public class TestAutocompleteFragment extends AbstractAutocompleteTest {
 
         autocompleteAttributes.set(AutocompleteAttributes.tokens, ";");
         autocomplete.advanced().setToken(";");
-        Graphene.guardHttp(autocomplete.advanced().getInput().clear(DELETE)).submit();
+        Graphene.guardHttp(autocomplete.clear(DELETE)).submit();
         Graphene.waitAjax().until().element(autocomplete.advanced().getInput().getInput()).text().equalTo("");
         autocomplete
             .type("m").select(ChoicePickerHelper.byVisibleText().contains("ss"))// selects the first one containing 'ss'
@@ -91,7 +91,7 @@ public class TestAutocompleteFragment extends AbstractAutocompleteTest {
     public void testTypingPrefixAndThenSelectFirst() {
         assertTrue(autocomplete.advanced().getSuggestions().isEmpty());
         SelectOrConfirm type = Graphene.guardAjax(autocomplete).type("ala");
-        autocomplete.advanced().waitForSuggestionsVisible();
+        autocomplete.advanced().waitForSuggestionsToShow();
         assertEquals(autocomplete.advanced().getSuggestions().size(), 2, "There should be 2 options");
         Graphene.guardAjax(type).select();
         String expectedStateForPrefix = getExpectedStateForPrefix("ala", true);

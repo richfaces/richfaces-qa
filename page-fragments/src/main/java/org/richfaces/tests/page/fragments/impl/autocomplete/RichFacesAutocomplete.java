@@ -39,7 +39,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 
@@ -49,10 +51,7 @@ import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
  */
 public class RichFacesAutocomplete implements Autocomplete {
 
-    private static final String CLASS_NAME_SUGG_LIST = "rf-au-lst-cord";
-    private static final String CLASS_NAME_SUGG = "rf-au-itm";
-    private static final String SUGGESTIONS_CSS_SELECTOR_TEMPLATE = "." + CLASS_NAME_SUGG_LIST + "[id='%sList'] ." + CLASS_NAME_SUGG;
-    private static final String CLASS_NAME_SUGG_SELECTED = "rf-au-itm-sel";
+    private static final String SUGGESTIONS_CSS_SELECTOR_TEMPLATE = ".rf-au-lst-cord[id='%sList'] .rf-au-itm";
     private static final String CSS_INPUT = "input[type='text']";
     private static final String DEFAULT_TOKEN = ",";
     private static final long DEFAULT_WAITTIME_FOR_SUGG_TO_SHOW = 2000;
@@ -91,13 +90,25 @@ public class RichFacesAutocomplete implements Autocomplete {
         return advancedInteractions;
     }
 
+    /**
+     * Clears the value of autocomplete's input field.
+     *
+     * @param clearType
+     *            defines how the input should be cleared, e.g. by using backspace key, by delete key, by JavaScript,
+     *            etc.
+     * @return input component
+     */
+    public TextInputComponent clear(ClearType clearType) {
+        return advanced().getInput().clear(clearType);
+    }
+
     private List<WebElement> getSuggestions() {
         String id = root.getAttribute("id");
         String selectorOfRoot = String.format(SUGGESTIONS_CSS_SELECTOR_TEMPLATE, id);
         List<WebElement> foundElements = driver.findElements(By.cssSelector(selectorOfRoot));
         List<WebElement> result;
-        if (!foundElements.isEmpty()
-            && foundElements.get(0).isDisplayed()) { // prevent returning of not visible elements
+        if (!foundElements.isEmpty() && foundElements.get(0).isDisplayed()) { // prevent returning of not visible
+                                                                              // elements
             result = foundElements;
         } else {
             result = Lists.newArrayList();
@@ -143,12 +154,10 @@ public class RichFacesAutocomplete implements Autocomplete {
             waitTimeForSuggToShow = value;
         }
 
-        public void waitForSuggestionsHide() {
+        public void waitForSuggestionsToHide() {
 
-            Graphene.waitModel()
-                .withTimeout(getWaitTimeForSuggToHide(), TimeUnit.MILLISECONDS)
-                .withMessage("suggestions to be not visible")
-                .until(new Predicate<WebDriver>() {
+            Graphene.waitModel().withTimeout(getWaitTimeForSuggToHide(), TimeUnit.MILLISECONDS)
+                .withMessage("suggestions to be not visible").until(new Predicate<WebDriver>() {
                     @Override
                     public boolean apply(WebDriver input) {
                         return RichFacesAutocomplete.this.getSuggestions().isEmpty();
@@ -156,11 +165,9 @@ public class RichFacesAutocomplete implements Autocomplete {
                 });
         }
 
-        public void waitForSuggestionsVisible() {
-            Graphene.waitModel()
-                .withTimeout(getWaitTimeForSuggToShow(), TimeUnit.MILLISECONDS)
-                .withMessage("suggestions to be visible")
-                .until(new Predicate<WebDriver>() {
+        public void waitForSuggestionsToShow() {
+            Graphene.waitModel().withTimeout(getWaitTimeForSuggToShow(), TimeUnit.MILLISECONDS)
+                .withMessage("suggestions to be visible").until(new Predicate<WebDriver>() {
 
                     @Override
                     public boolean apply(WebDriver input) {
@@ -174,10 +181,8 @@ public class RichFacesAutocomplete implements Autocomplete {
 
         @Override
         public Autocomplete confirm() {
-            actions.sendKeys(Keys.RETURN)
-                .click(advanced().getRoot().findElement(By.xpath("//body")))
-                .perform();
-            advanced().waitForSuggestionsHide();
+            actions.sendKeys(Keys.RETURN).click(advanced().getRoot().findElement(By.xpath("//body"))).perform();
+            advanced().waitForSuggestionsToHide();
             return RichFacesAutocomplete.this;
         }
 
@@ -188,14 +193,14 @@ public class RichFacesAutocomplete implements Autocomplete {
 
         @Override
         public Autocomplete select(ChoicePicker picker) {
-            advanced().waitForSuggestionsVisible();
+            advanced().waitForSuggestionsToShow();
             WebElement foundValue = picker.pick(getSuggestions());
             if (foundValue != null) {
                 foundValue.click();
             } else {
                 throw new RuntimeException("The value was not found by " + picker.toString());
             }
-            advanced().waitForSuggestionsHide();
+            advanced().waitForSuggestionsToHide();
             return RichFacesAutocomplete.this;
         }
     }

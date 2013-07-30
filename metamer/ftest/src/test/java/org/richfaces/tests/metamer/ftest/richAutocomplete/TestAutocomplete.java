@@ -60,11 +60,6 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         return buildUrl(contextPath, "faces/components/richAutocomplete/autocomplete.xhtml");
     }
 
-//    @BeforeMethod
-//    public void setParser() {
-//        autocomplete.setSuggestionParser(new TextSuggestionParser());
-//    }
-
     @BeforeMethod
     public void prepareProperties() {
         autocompleteAttributes.set(AutocompleteAttributes.autofill, autofill);
@@ -75,7 +70,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         if (selectFirst == null) {
             selectFirst = false;
         }
-        autocomplete.advanced().getInput().clear(ClearType.BACKSPACE);
+        autocomplete.clear(ClearType.BACKSPACE);
     }
 
     @Test
@@ -95,8 +90,8 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-11323")
     public void testTypingPrefixAndThenDeleteAll() {
         Graphene.guardAjax(autocomplete).type("ala");
-        autocomplete.advanced().getInput().clear(ClearType.BACKSPACE);
-        autocomplete.advanced().waitForSuggestionsHide();
+        autocomplete.clear(ClearType.BACKSPACE);
+        autocomplete.advanced().waitForSuggestionsToHide();
         assertTrue(autocomplete.advanced().getSuggestions().isEmpty());
         Graphene.guardAjax(autocomplete).type("ala");
         assertFalse(autocomplete.advanced().getSuggestions().isEmpty());
