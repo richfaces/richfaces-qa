@@ -37,7 +37,7 @@ FSF site: http://www.fsf.org. -->
         <version.jbossas7>7.0.2.Final</version.jbossas7>
         <version.jbossas7-1>7.1.1.Final</version.jbossas7-1>
         <version.jbosseap6-1>7.2.0.Alpha1-redhat-4</version.jbosseap6-1>
-        <version.wildfly8-0>8.0.0.Alpha2</version.wildfly8-0>
+        <version.wildfly8-0>8.0.0.Alpha3</version.wildfly8-0>
         <eap61Zip>path/to/your/eap/distribution/zip</eap61Zip>
 
         <!-- version of Glassfish containers to use and download       -->
@@ -54,8 +54,8 @@ FSF site: http://www.fsf.org. -->
         <version.tomee1-5>1.5.1</version.tomee1-5>
 
         <!-- arquillian versions -->
-        <arquillian.bom.version>1.0.3.Final</arquillian.bom.version>
-        <arquillian.tomcat.version>1.0.0.CR4</arquillian.tomcat.version>
+        <arquillian.bom.version>1.0.4.Final</arquillian.bom.version>
+        <arquillian.tomcat.version>1.0.0.CR5</arquillian.tomcat.version>
         <arquillian.drone.version> 1.2.0.Alpha2</arquillian.drone.version>
         <arquillian.graphene-testng.version>2.0.0.Beta1-SNAPSHOT</arquillian.graphene-testng.version>
         <arquillian.graphene-webdriver.version>2.0.0.Beta1-SNAPSHOT</arquillian.graphene-webdriver.version>
