@@ -29,7 +29,7 @@ import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.ftest.richDataScroller.PaginationTesterWebDriver.AssertingAndWaitingDataScroller;
+import org.richfaces.tests.page.fragments.impl.dataScroller.RichFacesDataScroller;
 import org.richfaces.tests.page.fragments.impl.list.simple.RichFacesList;
 import org.richfaces.tests.page.fragments.impl.list.simple.RichFacesSimpleListItem;
 import org.testng.Assert;
@@ -41,9 +41,10 @@ import org.testng.annotations.Test;
 public class TestListWithScroller2 extends AbstractListTest {
 
     @FindBy(css = "span.rf-ds[id$=scroller2]")
-    private AssertingAndWaitingDataScroller scroller;
+    private RichFacesDataScroller scroller;
     @FindBy(css = "[id$=richList]")
     private TestedList list;
+
     private static final int ROWS = 20;
     private static final String ROWS_STRING = "20";
     private static final String RANGE_TEMPLATE = "[ firstRow: %s, rows: %s ]";
@@ -61,7 +62,7 @@ public class TestListWithScroller2 extends AbstractListTest {
         TestedListItem li;
         int maxIndex;
         for (Integer page : pages) {
-            if (!page.equals(scroller.getActPageNumber())) {
+            if (!page.equals(scroller.getActivePageNumber())) {
                 scroller.switchTo(page);
             }
             maxIndex = ROWS * (page - 1);
@@ -79,7 +80,7 @@ public class TestListWithScroller2 extends AbstractListTest {
         String indexString;
         int index;
         for (Integer page : pages) {
-            if (!page.equals(scroller.getActPageNumber())) {
+            if (!page.equals(scroller.getActivePageNumber())) {
                 scroller.switchTo(page);
             }
             index = ROWS * (page - 1);
@@ -96,7 +97,7 @@ public class TestListWithScroller2 extends AbstractListTest {
         TestedListItem li;
         String startIndexString;
         for (Integer page : pages) {
-            if (!page.equals(scroller.getActPageNumber())) {
+            if (!page.equals(scroller.getActivePageNumber())) {
                 scroller.switchTo(page);
             }
             startIndexString = String.valueOf(ROWS * (page - 1));

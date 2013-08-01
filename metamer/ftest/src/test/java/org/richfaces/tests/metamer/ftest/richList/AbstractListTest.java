@@ -47,10 +47,10 @@ public abstract class AbstractListTest extends AbstractWebDriverTest {
     static final int ELEMENTS_TOTAL = employees.size();
     static final Integer[] INTS = {-1, 0, 1, ELEMENTS_TOTAL / 2, ELEMENTS_TOTAL - 1, ELEMENTS_TOTAL,
         ELEMENTS_TOTAL + 1};
-    //
+
     @FindBy(css = "[id$=richList]")
     protected RichFacesSimpleList list;
-    //
+
     @Inject
     @Use(empty = true)
     protected Integer first;
