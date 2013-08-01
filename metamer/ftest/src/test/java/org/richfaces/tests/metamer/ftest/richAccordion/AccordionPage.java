@@ -22,12 +22,11 @@
 package org.richfaces.tests.metamer.ftest.richAccordion;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.accordion.Accordion;
 import org.richfaces.tests.page.fragments.impl.accordion.RichFacesAccordion;
 
 /**
@@ -56,12 +55,12 @@ public class AccordionPage extends MetamerPage {
     @Drone
     private WebDriver browser;
 
-    public Accordion getAccordion() {
+    public RichFacesAccordion getAccordion() {
         return accordion;
     }
 
     public WebElement getAccordionRootElement() {
-        return accordion.getRootElement();
+        return accordion.advanced().getRootElement();
     }
 
     public WebElement getLeftActiveIcon() {
@@ -89,7 +88,7 @@ public class AccordionPage extends MetamerPage {
     }
 
     public boolean isAccordionVisible() {
-        return Graphene.element(accordion.getRootElement()).isPresent().apply(browser) && accordion.getRootElement().isDisplayed();
+        return new WebElementConditionFactory(accordion.advanced().getRootElement()).isPresent().apply(browser)
+            && accordion.advanced().getRootElement().isDisplayed();
     }
-
 }
