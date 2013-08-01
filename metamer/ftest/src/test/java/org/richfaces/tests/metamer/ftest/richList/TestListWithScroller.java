@@ -28,55 +28,31 @@ import java.net.URL;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.richDataScroller.PaginationTesterWebDriver;
-import org.richfaces.tests.metamer.ftest.richDataScroller.PaginationTesterWebDriver.AssertingAndWaitingDataScroller;
+import org.richfaces.tests.page.fragments.impl.dataScroller.RichFacesDataScroller;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  */
 public class TestListWithScroller extends AbstractListTest {
 
     @FindBy(css = "span.rf-ds[id$=scroller1]")
-    protected AssertingAndWaitingDataScroller scrollerOutsideTable;
+    private RichFacesDataScroller scrollerOutsideTable;
     @FindBy(css = "span.rf-ds[id$=scroller2]")
-    protected AssertingAndWaitingDataScroller scrollerInTableFooter;
-    PaginationTesterWebDriver paginationTester = new PaginationTesterWebDriver() {
-        final int DEFAULT_ROWS = 20;
-
-        @Override
-        protected void verifyBeforeScrolling() {
-        }
-
-        @Override
-        protected void verifyAfterScrolling() {
-            rows = DEFAULT_ROWS;
-            int currentPage = dataScroller.getActPageNumber();
-            first = rows * (currentPage - 1);
-            verifyList();
-        }
-    };
+    private RichFacesDataScroller scrollerInTableFooter;
 
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richList/scroller.xhtml");
     }
 
-    public void prepareTester(AssertingAndWaitingDataScroller dataScroller) {
-        paginationTester.setDataScroller(dataScroller);
-        int lastPage = dataScroller.obtainLastPage();
-        dataScroller.setLastPage(lastPage);
-        paginationTester.initializeTestedPages(lastPage);
-        dataScroller.setFastStep(1);
-    }
-
     @Test
     @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
     public void testScrollerWithRowsAttributeOut() {
-        prepareTester(scrollerOutsideTable);
-        paginationTester.testNumberedPages();
+        testNumberedPages(scrollerOutsideTable);
     }
 
     @Test(groups = "Future")
@@ -84,15 +60,14 @@ public class TestListWithScroller extends AbstractListTest {
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat", "hDataTable", "uiRepeat" })
     public void testScrollerWithRowsAttributeOutIterationComponents() {
-        testScrollerWithRowsAttributeOut();
+        testNumberedPages(scrollerOutsideTable);
     }
 
     @Test
     @Templates(exclude = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat" })
     public void testScrollerWithRowsAttributeIn() {
-        prepareTester(scrollerInTableFooter);
-        paginationTester.testNumberedPages();
+        testNumberedPages(scrollerInTableFooter);
     }
 
     @Test(groups = "Future")
@@ -100,6 +75,18 @@ public class TestListWithScroller extends AbstractListTest {
     @Templates(value = { "richDataTable", "richCollapsibleSubTable", "richExtendedDataTable", "richDataGrid",
         "richList", "a4jRepeat" })
     public void testScrollerWithRowsAttributeInIterationComponents() {
-        testScrollerWithRowsAttributeIn();
+        testNumberedPages(scrollerInTableFooter);
+    }
+
+    private void testNumberedPages(RichFacesDataScroller dataScroller) {
+        final int [] testPages = new int[]{ 3, 10, 1, 9, 2 };
+        rows = 20;
+
+        for (int pageNumber : testPages) {
+            dataScroller.switchTo(pageNumber);
+
+            first = rows * (dataScroller.getActivePageNumber() - 1);
+            verifyList();
+        }
     }
 }
