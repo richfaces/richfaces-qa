@@ -68,7 +68,7 @@ public class TestAccordionKVS extends AbstractWebDriverTest {
 
         @Override
         public void doRequest(Integer accordionIndex) {
-            page.getAccordion().getItem(accordionIndex).activate();
+            page.getAccordion().switchTo(accordionIndex.intValue());
         }
 
         @Override
@@ -78,7 +78,7 @@ public class TestAccordionKVS extends AbstractWebDriverTest {
                     .until(new BooleanConditionWrapper(new ExpectedCondition<Boolean>() {
                         @Override
                         public Boolean apply(WebDriver input) {
-                            return page.getAccordion().getItem(accordionIndex).isActive();
+                            return page.getAccordion().advanced().getAccordionItems().get(accordionIndex).advanced().isActive();
                         }
                     }, NoSuchElementException.class, StaleElementReferenceException.class));
         }

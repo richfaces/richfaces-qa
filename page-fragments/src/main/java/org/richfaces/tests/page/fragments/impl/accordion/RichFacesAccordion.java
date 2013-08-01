@@ -1,84 +1,54 @@
-/**
- * JBoss, Home of Professional Open Source
- * Copyright 2012, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
 package org.richfaces.tests.page.fragments.impl.accordion;
 
-import java.util.Iterator;
 import java.util.List;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.switchable.AbstractSwitchableComponent;
 
-/**
- * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
- */
-public class RichFacesAccordion implements Accordion {
+public class RichFacesAccordion extends AbstractSwitchableComponent<RichFacesAccordionItem> {
 
-    @Root
-    private WebElement root;
+    @FindBy(className = "rf-ac-itm-hdr")
+    private List<WebElement> switcherControllerElements;
 
-    @FindBy(className="rf-ac-itm")
-    private List<RichFacesAccordionItem> items;
+    @FindBy(className = "rf-ac-itm")
+    private List<RichFacesAccordionItem> accordionItems;
 
-    @Override
-    public int size() {
-        return items.size();
-    }
+    @FindBy(jquery = ".rf-ac-itm-cnt:visible")
+    private WebElement visibleContent;
 
-    @Override
-    public AccordionItem getActiveItem() {
-        for (AccordionItem item: items) {
-            if (item.isActive()) {
-                return item;
-            }
+    private AdvancedInteractions advancedInteractions;
+
+    public AdvancedInteractions advanced() {
+        if (advancedInteractions == null) {
+            advancedInteractions = new AdvancedInteractions();
         }
-        return null;
+        return advancedInteractions;
+    }
+
+    public class AdvancedInteractions extends AbstractSwitchableComponent<RichFacesAccordionItem>.AdvancedInteractions {
+
+        public List<RichFacesAccordionItem> getAccordionItems() {
+            return accordionItems;
+        }
+
+        public RichFacesAccordionItem getActiveItem() {
+            for (RichFacesAccordionItem item : accordionItems) {
+                if (item.advanced().isActive()) {
+                    return item;
+                }
+            }
+            return null;
+        }
     }
 
     @Override
-    public AccordionItem getItem(int index) {
-        return items.get(index);
-    }
-
-    public WebElement getRootElement() {
-        return root;
+    protected List<WebElement> getSwitcherControllerElements() {
+        return switcherControllerElements;
     }
 
     @Override
-    public Iterator<AccordionItem> iterator() {
-        final Iterator<RichFacesAccordionItem> iterator = items.iterator();
-        return new Iterator<AccordionItem>() {
-            @Override
-            public boolean hasNext() {
-                return iterator.hasNext();
-            }
-            @Override
-            public AccordionItem next() {
-                return iterator.next();
-            }
-            @Override
-            public void remove() {
-                iterator.remove();
-            }
-        };
+    protected WebElement getRootOfContainerElement() {
+        return visibleContent;
     }
-
 }
