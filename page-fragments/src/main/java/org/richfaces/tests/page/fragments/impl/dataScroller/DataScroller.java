@@ -40,6 +40,8 @@ public interface DataScroller {
 
     boolean isButtonDisabled(DataScrollerSwitchButton btn);
 
+    boolean isButtonPresent(DataScrollerSwitchButton btn);
+
     boolean isFirstPage();
 
     boolean isLastPage();
