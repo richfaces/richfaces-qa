@@ -68,26 +68,6 @@ public class RichFacesDataScroller implements DataScroller {
         return Integer.valueOf(activePage.getText());
     }
 
-    @Override
-    public boolean isButtonDisabled(DataScrollerSwitchButton btn) {
-        return advanced().getButton(btn).getAttribute("class").contains(CLASS_DISABLED);
-    }
-
-    @Override
-    public boolean isButtonPresent(DataScrollerSwitchButton btn) {
-        return advanced().getButton(btn).isPresent();
-    }
-
-    @Override
-    public boolean isFirstPage() {
-        return Integer.valueOf(activePage.getText()).equals(1);
-    }
-
-    @Override
-    public boolean isLastPage() {
-        return activePage.getText().equals(advanced().getLastVisiblePageElement().getText());
-    }
-
     private void switchTo(By by) {
         WebElement element = root.findElement(by);
         element.click();
@@ -139,8 +119,12 @@ public class RichFacesDataScroller implements DataScroller {
         public WebElement getRoot() {
             return root;
         }
-        
-        public GrapheneElement getButton(DataScrollerSwitchButton btn) {
+
+        public WebElement getButton(DataScrollerSwitchButton btn) {
+            return getButtonGrapheneElement(btn);
+        }
+
+        private GrapheneElement getButtonGrapheneElement(DataScrollerSwitchButton btn) {
             switch (btn) {
                 case FAST_FORWARD:
                     return fastForwardBtn;
@@ -162,7 +146,7 @@ public class RichFacesDataScroller implements DataScroller {
         public By getCssSelectorForPageNumber(int pageNumber) {
             return By.cssSelector(String.format(CSS_PAGE_SELECTOR, pageNumber));
         }
-        
+
         public List<? extends WebElement> getAllPagesWebElements() {
             return numberedPages;
         }
@@ -182,13 +166,29 @@ public class RichFacesDataScroller implements DataScroller {
         public int getLastVisiblePageNumber() {
             return Integer.valueOf(getLastVisiblePageElement().getText());
         }
-        
+
         public WebElement getActivePageElement() {
             return activePage;
         }
 
         public int getCountOfVisiblePages() {
             return numberedPages.size();
+        }
+
+        public boolean isButtonDisabled(DataScrollerSwitchButton btn) {
+            return getButton(btn).getAttribute("class").contains(CLASS_DISABLED);
+        }
+
+        public boolean isButtonPresent(DataScrollerSwitchButton btn) {
+            return getButtonGrapheneElement(btn).isPresent();
+        }
+
+        public boolean isFirstPage() {
+            return Integer.valueOf(activePage.getText()).equals(1);
+        }
+
+        public boolean isLastPage() {
+            return activePage.getText().equals(advanced().getLastVisiblePageElement().getText());
         }
     }
 }

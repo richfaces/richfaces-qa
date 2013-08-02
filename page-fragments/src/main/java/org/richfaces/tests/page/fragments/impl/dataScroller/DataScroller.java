@@ -38,14 +38,6 @@ public interface DataScroller {
 
     int getActivePageNumber();
 
-    boolean isButtonDisabled(DataScrollerSwitchButton btn);
-
-    boolean isButtonPresent(DataScrollerSwitchButton btn);
-
-    boolean isFirstPage();
-
-    boolean isLastPage();
-
     /**
      * Direct switch to page. Indexed from 1. Page must exist. Without any waiting.
      */
