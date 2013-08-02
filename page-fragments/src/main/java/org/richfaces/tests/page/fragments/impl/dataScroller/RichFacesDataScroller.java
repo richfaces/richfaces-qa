@@ -32,6 +32,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+/**
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
+ */
 public class RichFacesDataScroller implements DataScroller {
 
     @Root
@@ -71,6 +74,11 @@ public class RichFacesDataScroller implements DataScroller {
     }
 
     @Override
+    public boolean isButtonPresent(DataScrollerSwitchButton btn) {
+        return advanced().getButton(btn).isPresent();
+    }
+
+    @Override
     public boolean isFirstPage() {
         return Integer.valueOf(activePage.getText()).equals(1);
     }
@@ -89,12 +97,9 @@ public class RichFacesDataScroller implements DataScroller {
     @Override
     public void switchTo(int pageNumber) {
         int counter = 50; // to prevent infinite loops
-        String prevPageText = activePage.getText();
 
         while (pageNumber > advanced().getLastVisiblePageNumber() && counter > 0) {
             switchTo(DataScrollerSwitchButton.FAST_FORWARD);
-            Graphene.waitModel().until().element(activePage).text().not().equalTo(prevPageText);
-            prevPageText = activePage.getText();
             counter--;
         }
         if (counter == 0) {
@@ -104,8 +109,6 @@ public class RichFacesDataScroller implements DataScroller {
         counter = 50; // to prevent inifinite loops
         while (pageNumber < advanced().getFirstVisiblePageNumber() && counter > 0) {
             switchTo(DataScrollerSwitchButton.FAST_REWIND);
-            Graphene.waitModel().until().element(activePage).text().not().equalTo(prevPageText);
-            prevPageText = activePage.getText();
             counter--;
         }
         if (counter == 0) {
@@ -120,7 +123,9 @@ public class RichFacesDataScroller implements DataScroller {
 
     @Override
     public void switchTo(DataScrollerSwitchButton btn) {
+        String prevPageText = activePage.getText();
         advanced().getButton(btn).click();
+        Graphene.waitModel().until().element(activePage).text().not().equalTo(prevPageText);
     }
 
     public AdvancedInteractions advanced() {
@@ -131,7 +136,11 @@ public class RichFacesDataScroller implements DataScroller {
     }
 
     public class AdvancedInteractions {
-        public WebElement getButton(DataScrollerSwitchButton btn) {
+        public WebElement getRoot() {
+            return root;
+        }
+        
+        public GrapheneElement getButton(DataScrollerSwitchButton btn) {
             switch (btn) {
                 case FAST_FORWARD:
                     return fastForwardBtn;
@@ -153,6 +162,10 @@ public class RichFacesDataScroller implements DataScroller {
         public By getCssSelectorForPageNumber(int pageNumber) {
             return By.cssSelector(String.format(CSS_PAGE_SELECTOR, pageNumber));
         }
+        
+        public List<? extends WebElement> getAllPagesWebElements() {
+            return numberedPages;
+        }
 
         public WebElement getFirstVisiblePageElement() {
             return numberedPages.get(0);
@@ -168,6 +181,14 @@ public class RichFacesDataScroller implements DataScroller {
 
         public int getLastVisiblePageNumber() {
             return Integer.valueOf(getLastVisiblePageElement().getText());
+        }
+        
+        public WebElement getActivePageElement() {
+            return activePage;
+        }
+
+        public int getCountOfVisiblePages() {
+            return numberedPages.size();
         }
     }
 }

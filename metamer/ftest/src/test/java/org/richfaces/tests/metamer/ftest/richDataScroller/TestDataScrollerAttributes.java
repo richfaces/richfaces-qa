@@ -21,13 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richDataScroller;
 
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.jboss.arquillian.ajocado.Graphene.waitModel;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import static org.jboss.test.selenium.locator.utils.LocatorEscaping.jq;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -36,36 +30,35 @@ import static org.testng.Assert.fail;
 import java.net.URL;
 import java.util.Arrays;
 
-import org.jboss.arquillian.ajocado.javascript.JavaScript;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.waiting.selenium.SeleniumCondition;
-import org.richfaces.tests.metamer.ftest.AbstractGrapheneTest;
-import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.metamer.ftest.attributes.Attributes;
-import org.richfaces.tests.metamer.ftest.model.DataScroller;
+import org.richfaces.tests.metamer.ftest.richDataScroller.SimplePage.ScrollerPosition;
+import org.richfaces.tests.metamer.ftest.richDataTable.DataTableAttributes;
+import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.richfaces.tests.page.fragments.impl.dataScroller.DataScroller.DataScrollerSwitchButton;
 import org.testng.annotations.Test;
 
-
 /**
- * Test the functionality of switching pages using DataScroller bound to DataTable.
- *
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ * @author <a href="https://community.jboss.org/people/ppitonak">Pavol Pitonak</a>
  */
-@Use(field = "scroller", value = { "scrollerOutsideTable", "scrollerInsideTable" })
-public class TestDataScrollerAttributes extends AbstractGrapheneTest {
+public class TestDataScrollerAttributes extends AbstractWebDriverTest {
 
-    private final Attributes<DataScrollerAttributes> attributes = new Attributes<DataScrollerAttributes>(
-        pjq("table[id$='attributes']"));
-    private final Attributes<DataTableAttributes> tableAttributes = new Attributes<DataTableAttributes>(
-        pjq("table[id$='tableAttributes']"));
+    private final Attributes<DataScrollerAttributes> attributes = getAttributes("attributes");
+    private final Attributes<DataTableAttributes> tableAttributes = getAttributes("tableAttributes");
 
     @Inject
-    private DataScroller scroller;
-
-    private DataScroller scrollerOutsideTable = PaginationTester.DATA_SCROLLER_OUTSIDE_TABLE;
-    private DataScroller scrollerInsideTable = PaginationTester.DATA_SCROLLER_IN_TABLE_FOOTER;
+    @Use(enumeration = true)
+    private ScrollerPosition scroller;
+    @Page
+    private SimplePage page;
 
     @Override
     public URL getTestUrl() {
@@ -75,42 +68,43 @@ public class TestDataScrollerAttributes extends AbstractGrapheneTest {
     @Test
     public void testBoundaryControls() {
         // init - show
-        assertTrue(getScroller().isFirstPageButtonPresent(), "The first button should be present.");
-        assertTrue(getScroller().isLastPageButtonPresent(), "The last button should be present.");
+        assertTrue(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.FIRST),
+            "The first button should be present.");
+        assertTrue(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.LAST),
+            "The last button should be present.");
         // hide
-        getAttributes().set(DataScrollerAttributes.boundaryControls, "hide");
-        assertFalse(getScroller().isFirstPageButtonPresent(), "The first button shouldn't be present.");
-        assertFalse(getScroller().isLastPageButtonPresent(), "The last button shouldn't be present.");
+        attributes.set(DataScrollerAttributes.boundaryControls, "hide");
+        assertFalse(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.FIRST),
+            "The first button shouldn't be present.");
+        assertFalse(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.LAST),
+            "The last button shouldn't be present.");
     }
 
     @Test
     public void testData() {
         // attributes
-        getAttributes().set(DataScrollerAttributes.data, "RichFaces");
-        getAttributes().set(DataScrollerAttributes.oncomplete, "data = event.data");
+        attributes.set(DataScrollerAttributes.data, "RichFaces");
+        attributes.set(DataScrollerAttributes.oncomplete, "data = event.data");
         // action
-        retrieveRequestTime.initializeValue();
-        getScroller().clickFastForward();
-        waitGui.waitForChange(retrieveRequestTime);
+        MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR).switchTo(
+            DataScrollerSwitchButton.FAST_FORWARD);
         // check
-        String data = selenium.getEval(new JavaScript("window.data"));
-        assertEquals(data, "RichFaces", "Data sent with ajax request");
+        assertEquals(executor.executeScript("return data").toString(), "RichFaces", "Data sent with ajax request");
     }
 
     @Test
     public void testEvents() throws InterruptedException {
         // set event attributes
-        getAttributes().set(DataScrollerAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
-        getAttributes().set(DataScrollerAttributes.onbegin, "metamerEvents += \"begin \"");
-        getAttributes().set(DataScrollerAttributes.oncomplete, "metamerEvents += \"complete \"");
+        attributes.set(DataScrollerAttributes.onbeforedomupdate, "metamerEvents += \"beforedomupdate \"");
+        attributes.set(DataScrollerAttributes.onbegin, "metamerEvents += \"begin \"");
+        attributes.set(DataScrollerAttributes.oncomplete, "metamerEvents += \"complete \"");
         // reset events
-        selenium.getEval(new JavaScript("window.metamerEvents = \"\";"));
+        executor.executeScript("metamerEvents = \"\";");
         // action
-        retrieveRequestTime.initializeValue();
-        getScroller().clickFastForward();
-        waitGui.waitForChange(retrieveRequestTime);
+        MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR).switchTo(
+            DataScrollerSwitchButton.FAST_FORWARD);
         // check events
-        String[] events = selenium.getEval(new JavaScript("window.metamerEvents")).split(" ");
+        String[] events = executor.executeScript("return metamerEvents;").toString().split(" ");
         assertEquals(events.length, 3, "3 events should be fired, found events are " + Arrays.toString(events) + ".");
         assertEquals(events[0], "begin", "Attribute onbegin doesn't work, found events are " + Arrays.toString(events)
             + ".");
@@ -123,15 +117,13 @@ public class TestDataScrollerAttributes extends AbstractGrapheneTest {
     @Test
     public void testExecute() {
         // attributes
-        getAttributes().set(DataScrollerAttributes.execute, "executeChecker");
+        attributes.set(DataScrollerAttributes.execute, "executeChecker");
         // action
-        retrieveRequestTime.initializeValue();
-        getScroller().clickFastForward();
-        waitGui.waitForChange(retrieveRequestTime);
+        MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR).switchTo(
+            DataScrollerSwitchButton.FAST_FORWARD);
         // check
-        JQueryLocator logItems = jq("ul.phases-list li:eq({0})");
-        for (int i = 0; i < 6; i++) {
-            if ("* executeChecker".equals(selenium.getText(logItems.format(i)))) {
+        for (WebElement element : page.getPhasesElements()) {
+            if ("* executeChecker".equals(element.getText())) {
                 return;
             }
         }
@@ -141,151 +133,152 @@ public class TestDataScrollerAttributes extends AbstractGrapheneTest {
     @Test
     public void testFastControls() {
         // init - show
-        assertTrue(getScroller().isFastForwardButtonPresent(), "The fast forward button should be present.");
-        assertTrue(getScroller().isFastRewindButtonPresent(), "The fast rewind button should be present.");
+        assertTrue(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.FAST_FORWARD),
+            "The fast forward button should be present.");
+        assertTrue(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.FAST_REWIND),
+            "The fast rewind button should be present.");
         // hide
-        getAttributes().set(DataScrollerAttributes.fastControls, "hide");
-        assertFalse(getScroller().isFastForwardButtonPresent(), "The fast forward button shouldn't be present.");
-        assertFalse(getScroller().isFastRewindButtonPresent(), "The fast rewind button shouldn't be present.");
+        attributes.set(DataScrollerAttributes.fastControls, "hide");
+        assertFalse(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.FAST_FORWARD),
+            "The fast forward button shouldn't be present.");
+        assertFalse(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.FAST_REWIND),
+            "The fast rewind button shouldn't be present.");
     }
 
     @Test
     public void testFastStep() {
-        getAttributes().set(DataScrollerAttributes.fastStep, 3);
-        retrieveRequestTime.initializeValue();
-        getScroller().clickFastForward();
-        waitGui.waitForChange(retrieveRequestTime);
-        assertEquals(getScroller().getCurrentPage(), 4,
+        attributes.set(DataScrollerAttributes.fastStep, 3);
+
+        MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR).switchTo(
+            DataScrollerSwitchButton.FAST_FORWARD);
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 4,
             "After clicking on the fast forward button, the current page doesn't match.");
-        retrieveRequestTime.initializeValue();
-        getScroller().clickFastRewind();
-        waitGui.waitForChange(retrieveRequestTime);
-        assertEquals(getScroller().getCurrentPage(), 1,
+
+        MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR).switchTo(
+            DataScrollerSwitchButton.FAST_REWIND);
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 1,
             "After clicking on the fast rewind button, the current page doesn't match.");
     }
 
     @Test
     public void testLastPageMode() {
-        retrieveRequestTime.initializeValue();
-        getScroller().clickLastPageButton();
-        waitGui.waitForChange(retrieveRequestTime);
+        MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR)
+            .switchTo(DataScrollerSwitchButton.LAST);
+
         // init - short
         assertEquals(getNumberOfRows(), 5,
             "Attribute lastPageMode doesn't work. The number of rows doesn't match, when the value is set to <short>");
         // full
-        getAttributes().set(DataScrollerAttributes.lastPageMode, "full");
+        attributes.set(DataScrollerAttributes.lastPageMode, "full");
         assertEquals(getNumberOfRows(), 9,
             "Attribute lastPageMode doesn't work. The number of rows doesn't match, when the value is set to <full>");
     }
 
     @Test
     public void testLimitRender() {
-        // false
-        getAttributes().set(DataScrollerAttributes.limitRender, false);
-        retrieveRequestTime.initializeValue();
-        getScroller().clickFastForward();
-        waitGui.failWith(
-            "The panel hasn't been rerendered despite of the fact the attribute 'limitRender' is set to <false>.")
-            .waitForChange(retrieveRequestTime);
-        // true
-        getAttributes().set(DataScrollerAttributes.limitRender, false);
-        String timeBefore = retrieveRequestTime.getValue();
-        getScroller().clickFastRewind();
-        waitModel.until(new SeleniumCondition() {
-            @Override
-            public boolean isTrue() {
-                return getScroller().getCurrentPage() == 1;
-            }
-        });
-        String timeAfter = retrieveRequestTime.getValue();
-        assertEquals(timeAfter, timeBefore,
-            "The panel hasn been rerendered despite of the fact the attribute 'limitRender' is set to <true>.");
+        attributes.set(DataScrollerAttributes.limitRender, false);
+        MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR).switchTo(
+            DataScrollerSwitchButton.FAST_FORWARD);
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 2,
+            "Data scroller's active page with limitRender=false");
 
+        attributes.set(DataScrollerAttributes.limitRender, true);
+        String timeBefore = page.getRequestTimeElement().getText();
+        Graphene.guardAjax(page.getScroller(scroller)).switchTo(DataScrollerSwitchButton.FAST_FORWARD);
+        String timeAfter = page.getRequestTimeElement().getText();
+        assertEquals(timeAfter, timeBefore,
+            "The panel was rerendered despite the fact that the attribute 'limitRender' is set to <true>.");
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 3,
+            "Data scroller's active page with limitRender=true");
     }
 
     @Test
     public void testMaxPages() {
-        // init - 10
-        assertEquals(getScroller().getCountOfVisiblePages(), 6 /* it means - all pages */,
+        // initial value is 10 which means that 6 pages (i.e. all) should be displayed
+        assertEquals(page.getScroller(scroller).advanced().getCountOfVisiblePages(), 6 /* it means - all pages */,
             "The number of visible pages doesn't match.");
-        // smaller number
-        getAttributes().set(DataScrollerAttributes.maxPages, 3);
-        assertEquals(getScroller().getCountOfVisiblePages(), 3, "The number of visible pages doesn't match.");
+
+        attributes.set(DataScrollerAttributes.maxPages, 3);
+        assertEquals(page.getScroller(scroller).advanced().getCountOfVisiblePages(), 3,
+            "The number of visible pages doesn't match.");
     }
 
     @Test
     public void testPage() {
-        getAttributes().set(DataScrollerAttributes.page, 4);
-        assertEquals(getScroller().getCurrentPage(), 4, "The number of current page doesn't match.");
+        attributes.set(DataScrollerAttributes.page, 4);
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 4, "The number of current page doesn't match.");
     }
 
     @Test
     public void testRendered() {
-        getAttributes().set(DataScrollerAttributes.rendered, false);
-        assertFalse(getScroller().isPresent(), "The data scroller shouldn't be present.");
+        attributes.set(DataScrollerAttributes.rendered, false);
+        Graphene.waitGui().until().element(page.getScroller(scroller).advanced().getRoot()).is().not().present();
     }
 
     @Test
     public void testRenderIfSinglePage() {
-        // prepare
-        getTableAttributes().set(DataTableAttributes.rows, 200);
-        // init - true
-        assertTrue(getScroller().isPresent(), "The attribute 'renderIfSinglePage' doesn't work.");
+        // prepare table to display all data at once
+        tableAttributes.set(DataTableAttributes.rows, 200);
+
+        // default value - true
+        Graphene.waitGui().until("The attribute 'renderIfSinglePage' doesn't work.")
+            .element(page.getScroller(scroller).advanced().getRoot()).is().present();
+        assertTrue(page.getScroller(scroller).advanced().getRoot().isDisplayed(), "Data scroller should be displayed");
+
         // false
-        getAttributes().set(DataScrollerAttributes.renderIfSinglePage, false);
-        assertFalse(getScroller().isPresent(), "The attribute 'renderIfSinglePage' doesn't work.");
+        attributes.set(DataScrollerAttributes.renderIfSinglePage, false);
+        assertFalse(page.getScroller(scroller).advanced().getRoot().isDisplayed(),
+            "Data scroller should not be displayed");
     }
 
     @Test
     public void testStatus() {
-        // prepare
-        getAttributes().set(DataScrollerAttributes.status, "statusChecker");
-        String statusBefore = selenium.getText(statusChecker);
-        // action
-        retrieveRequestTime.initializeValue();
-        getScroller().clickFastForward();
-        waitGui.waitForChange(retrieveRequestTime);
-        // check
-        String statusAfter = selenium.getText(statusChecker);
-assertFalse(statusAfter.equals(statusBefore), "The status attribute doesn't work.");
+        attributes.set(DataScrollerAttributes.status, "statusChecker");
+
+        String statusCheckerTime = page.getStatusCheckerOutputElement().getText();
+        MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR).switchTo(
+            DataScrollerSwitchButton.FAST_FORWARD);
+        Graphene.waitModel().until("Page was not updated").element(page.getStatusCheckerOutputElement()).text().not()
+            .equalTo(statusCheckerTime);
     }
 
     @Test
     public void testStepControls() {
-        // init - show
-        assertTrue(getScroller().isNextButtonPresent(), "The next button should be present.");
-        assertTrue(getScroller().isPreviousButtonPresent(), "The previous button should be present.");
+        // default value - show
+        assertTrue(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.NEXT),
+            "The next button should be present.");
+        assertTrue(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.PREVIOUS),
+            "The previous button should be present.");
+
         // hide
-        getAttributes().set(DataScrollerAttributes.stepControls, "hide");
-        assertFalse(getScroller().isNextButtonPresent(), "The next button shouldn't be present.");
-        assertFalse(getScroller().isPreviousButtonPresent(), "The previous button shouldn't be present.");
+        attributes.set(DataScrollerAttributes.stepControls, "hide");
+        assertFalse(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.NEXT),
+            "The next button shouldn't be present.");
+        assertFalse(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.PREVIOUS),
+            "The previous button shouldn't be present.");
     }
 
-    /**
-     * Test simple step forward and step back buttons on dataScroller
-     */
     @Test
     public void testStep() {
-        retrieveRequestTime.initializeValue();
-        // 2 times move forward by basic step
-        getScroller().clickStepForward();
-        waitGui.waitForChange(retrieveRequestTime);
-        assertEquals(getScroller().getCurrentPage(), 2,
-            "After clicking on the step next button, the current page doesn't match.");
-        getScroller().clickStepForward();
-        waitGui.waitForChange(retrieveRequestTime);
-        assertEquals(getScroller().getCurrentPage(), 3,
-            "After clicking on the step next button, the current page doesn't match.");
-        // then move backward by basic step back
-        retrieveRequestTime.initializeValue();
-        getScroller().clickStepPrevious();
-        waitGui.waitForChange(retrieveRequestTime);
-        assertEquals(getScroller().getCurrentPage(), 2,
-            "After clicking on the step previous button, the current page doesn't match.");
-        getScroller().clickStepPrevious();
-        waitGui.waitForChange(retrieveRequestTime);
-        assertEquals(getScroller().getCurrentPage(), 1,
-            "After clicking on the step previous button, the current page doesn't match.");
+        MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR)
+            .switchTo(DataScrollerSwitchButton.NEXT);
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 2,
+            "After clicking on the next button, the current page doesn't match.");
+
+        MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR)
+            .switchTo(DataScrollerSwitchButton.NEXT);
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 3,
+            "After clicking on the next button, the current page doesn't match.");
+
+        MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR).switchTo(
+            DataScrollerSwitchButton.PREVIOUS);
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 2,
+            "After clicking on the previous button, the current page doesn't match.");
+
+        MetamerPage.waitRequest(page.getScroller(scroller), WaitRequestType.XHR).switchTo(
+            DataScrollerSwitchButton.PREVIOUS);
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 1,
+            "After clicking on the previous button, the current page doesn't match.");
     }
 
     /**
@@ -293,8 +286,7 @@ assertFalse(statusAfter.equals(statusBefore), "The status attribute doesn't work
      */
     @Test
     public void testJsApi() {
-        verifyJsApi(1);
-        verifyJsApi(2);
+        verifyJsApi();
     }
 
     /**
@@ -302,84 +294,61 @@ assertFalse(statusAfter.equals(statusBefore), "The status attribute doesn't work
      */
     @Test
     public void testJsApiStp() {
-        verifyJsApiStp(1);
-        verifyJsApiStp(2);
+        verifyJsApiStp();
     }
 
     @Test
     public void testStyle() {
-        super.testStyle(getScroller());
+        super.testStyle(page.getScroller(scroller).advanced().getRoot());
     }
 
     @Test
     public void testStyleClass() {
-        super.testStyleClass(getScroller());
+        super.testStyleClass(page.getScroller(scroller).advanced().getRoot());
     }
 
     @Test
     public void testTitle() {
-        super.testTitle(getScroller());
-    }
-
-    private Attributes<DataScrollerAttributes> getAttributes() {
-        return attributes;
+        super.testTitle(page.getScroller(scroller).advanced().getRoot());
     }
 
     private int getNumberOfRows() {
-        return selenium.getCount(pjq("table[id$=richDataTable].rf-dt tbody tr.rf-dt-r"));
+        return driver.findElements(By.cssSelector("table[id$=richDataTable].rf-dt tbody tr.rf-dt-r")).size();
     }
 
-    private DataScroller getScroller() {
-        return scroller;
-    }
-
-    private Attributes<DataTableAttributes> getTableAttributes() {
-        return tableAttributes;
-    }
-
-    private void verifyJsApi(int scrollerNo) {
-        retrieveRequestTime.initializeValue();
-        getScroller().clickJsApiLast(scrollerNo);
-        waitGui.waitForChange(retrieveRequestTime);
-        assertEquals(getScroller().getCurrentPage(), 6,
+    private void verifyJsApi() {
+        MetamerPage.waitRequest(page.getJsApiButtonLast(scroller), WaitRequestType.XHR).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 6,
             "After clicking on the step last button (JS API), the current page doesn't match.");
 
-        getScroller().clickJsApiFirst(scrollerNo);
-        waitGui.waitForChange(retrieveRequestTime);
-        assertEquals(getScroller().getCurrentPage(), 1,
+        MetamerPage.waitRequest(page.getJsApiButtonFirst(scroller), WaitRequestType.XHR).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 1,
             "After clicking on the step first button (JS API), the current page doesn't match.");
 
-        getScroller().clickJsApiNext(scrollerNo);
-        waitGui.waitForChange(retrieveRequestTime);
-        assertEquals(getScroller().getCurrentPage(), 2,
+        MetamerPage.waitRequest(page.getJsApiButtonNext(scroller), WaitRequestType.XHR).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 2,
             "After clicking on the step next button (JS API), the current page doesn't match.");
 
-        getScroller().clickJsApiNext(scrollerNo);
-        waitGui.waitForChange(retrieveRequestTime);
-        assertEquals(getScroller().getCurrentPage(), 3,
-            "After clicking on the step next button (JS API), the current page doesn't match.");
+        MetamerPage.waitRequest(page.getJsApiButtonPrev(scroller), WaitRequestType.XHR).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 1,
+            "After clicking on the step previous button (JS API), the current page doesn't match.");
     }
 
-    private void verifyJsApiStp(int scrollerNo) {
-        retrieveRequestTime.initializeValue();
-        getScroller().clickJsApiStpLast(scrollerNo);
-        waitGui.waitForChange(retrieveRequestTime);
-        assertEquals(getScroller().getCurrentPage(), 6,
+    private void verifyJsApiStp() {
+        MetamerPage.waitRequest(page.getJsApiButtonSwitchToLast(scroller), WaitRequestType.XHR).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 6,
             "After clicking on the step last button (JS API), the current page doesn't match.");
 
-        getScroller().clickJsApiStpFirst(scrollerNo);
-        waitGui.waitForChange(retrieveRequestTime);
-        assertEquals(getScroller().getCurrentPage(), 1,
+        MetamerPage.waitRequest(page.getJsApiButtonSwitchToFirst(scroller), WaitRequestType.XHR).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 1,
             "After clicking on the step first button (JS API), the current page doesn't match.");
 
-        getScroller().clickJsApiStpNext(scrollerNo);
-        waitGui.waitForChange(retrieveRequestTime);
-        assertEquals(getScroller().getCurrentPage(), 2,
+        MetamerPage.waitRequest(page.getJsApiButtonSwitchToNext(scroller), WaitRequestType.XHR).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 2,
             "After clicking on the step next button (JS API), the current page doesn't match.");
 
-        getScroller().clickJsApiStpNext(scrollerNo);
-        waitGui.waitForChange(retrieveRequestTime);
-        assertEquals(getScroller().getCurrentPage(), 3,
-            "After clicking on the step next button (JS API), the current page doesn't match.");
+        MetamerPage.waitRequest(page.getJsApiButtonSwitchToPrev(scroller), WaitRequestType.XHR).click();
+        assertEquals(page.getScroller(scroller).getActivePageNumber(), 1,
+            "After clicking on the step previous button (JS API), the current page doesn't match.");
     }
 }
