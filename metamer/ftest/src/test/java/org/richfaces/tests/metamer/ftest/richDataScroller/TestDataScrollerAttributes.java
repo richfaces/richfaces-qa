@@ -68,15 +68,15 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     @Test
     public void testBoundaryControls() {
         // init - show
-        assertTrue(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.FIRST),
+        assertTrue(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.FIRST),
             "The first button should be present.");
-        assertTrue(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.LAST),
+        assertTrue(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.LAST),
             "The last button should be present.");
         // hide
         attributes.set(DataScrollerAttributes.boundaryControls, "hide");
-        assertFalse(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.FIRST),
+        assertFalse(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.FIRST),
             "The first button shouldn't be present.");
-        assertFalse(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.LAST),
+        assertFalse(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.LAST),
             "The last button shouldn't be present.");
     }
 
@@ -133,15 +133,15 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     @Test
     public void testFastControls() {
         // init - show
-        assertTrue(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.FAST_FORWARD),
+        assertTrue(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.FAST_FORWARD),
             "The fast forward button should be present.");
-        assertTrue(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.FAST_REWIND),
+        assertTrue(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.FAST_REWIND),
             "The fast rewind button should be present.");
         // hide
         attributes.set(DataScrollerAttributes.fastControls, "hide");
-        assertFalse(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.FAST_FORWARD),
+        assertFalse(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.FAST_FORWARD),
             "The fast forward button shouldn't be present.");
-        assertFalse(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.FAST_REWIND),
+        assertFalse(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.FAST_REWIND),
             "The fast rewind button shouldn't be present.");
     }
 
@@ -245,16 +245,16 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     @Test
     public void testStepControls() {
         // default value - show
-        assertTrue(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.NEXT),
+        assertTrue(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.NEXT),
             "The next button should be present.");
-        assertTrue(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.PREVIOUS),
+        assertTrue(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.PREVIOUS),
             "The previous button should be present.");
 
         // hide
         attributes.set(DataScrollerAttributes.stepControls, "hide");
-        assertFalse(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.NEXT),
+        assertFalse(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.NEXT),
             "The next button shouldn't be present.");
-        assertFalse(page.getScroller(scroller).isButtonPresent(DataScrollerSwitchButton.PREVIOUS),
+        assertFalse(page.getScroller(scroller).advanced().isButtonPresent(DataScrollerSwitchButton.PREVIOUS),
             "The previous button shouldn't be present.");
     }
 
