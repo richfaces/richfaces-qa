@@ -26,6 +26,10 @@ public class RichFacesAccordion extends AbstractSwitchableComponent<RichFacesAcc
         return advancedInteractions;
     }
 
+    public int getNumberOfAccordionItems() {
+        return accordionItems.size();
+    }
+
     public class AdvancedInteractions extends AbstractSwitchableComponent<RichFacesAccordionItem>.AdvancedInteractions {
 
         public List<RichFacesAccordionItem> getAccordionItems() {

@@ -1,16 +1,11 @@
 package org.richfaces.tests.page.fragments.impl.accordion;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.switchable.ComponentContainer;
+import org.richfaces.tests.page.fragments.impl.switchable.AbstractComponentContainer;
 
-public class RichFacesAccordionItem implements ComponentContainer {
-
-    @Root
-    private WebElement root;
+public class RichFacesAccordionItem extends AbstractComponentContainer {
 
     private static final String ACTIVE_HEADER_CLASS = "rf-ac-itm-lbl-act";
     private static final String DISABLED_HEADER_CLASS = "rf-ac-itm-lbl-dis";
@@ -34,11 +29,6 @@ public class RichFacesAccordionItem implements ComponentContainer {
     private GrapheneElement toActivate;
 
     private AdvancedInteractions advancedInteractions;
-
-    @Override
-    public <T> T getContent(Class<T> clazz) {
-        return Graphene.createPageFragment(clazz, root);
-    }
 
     public AdvancedInteractions advanced() {
         if (advancedInteractions == null) {

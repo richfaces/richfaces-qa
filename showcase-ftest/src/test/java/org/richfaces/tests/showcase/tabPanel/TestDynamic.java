@@ -21,9 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.tabPanel;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertEquals;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.tabPanel.page.DynamicTabsPage;
 import org.testng.annotations.Test;
@@ -39,8 +39,7 @@ public class TestDynamic extends AbstractWebDriverTest {
 
     @Test
     public void testTabs() {
-        assertTrue(page.inactiveTabsHeaders.size() == (DynamicTabsPage.NUM_OF_TABS - 1), "There is not enough tabs generated!");
-
+        assertEquals(page.getTabPanel().getNumberOfTabs(), DynamicTabsPage.NUM_OF_TABS, "There is not enough tabs generated!");
         page.iterateOverTabsAndAssert();
     }
 }

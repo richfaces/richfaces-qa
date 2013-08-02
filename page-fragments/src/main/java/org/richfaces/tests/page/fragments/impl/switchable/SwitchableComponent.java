@@ -9,4 +9,5 @@ public interface SwitchableComponent<T extends ComponentContainer> {
     T switchTo(String header);
 
     T switchTo(int index);
+
 }
