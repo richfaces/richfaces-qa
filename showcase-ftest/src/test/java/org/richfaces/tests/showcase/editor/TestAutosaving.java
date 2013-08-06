@@ -22,7 +22,8 @@
 package org.richfaces.tests.showcase.editor;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
-import static org.jboss.arquillian.graphene.Graphene.waitAjax;
+import static org.jboss.arquillian.graphene.Graphene.waitModel;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.util.concurrent.TimeUnit;
@@ -72,7 +73,7 @@ public class TestAutosaving extends AbstractWebDriverTest {
     @Test
     public void testContentOfEditor() {
 
-        String contentOfEditorInput = page.outputFromEditor.getText();
+        String contentOfEditorInput = page.getOutputFromEditor().getText();
 
         int j = 1;
         for (String i : EXPECTED_PARAGRAPHS) {
@@ -84,20 +85,28 @@ public class TestAutosaving extends AbstractWebDriverTest {
     @Test
     public void testAutoSavingAfterBlur() {
         String expected = "Added and possibly saved text!";
-        page.editor.typeTextToEditor(expected);
+        page.getEditor().type(expected);
 
-        guardAjax(page.outputFromEditor).click();
-        String actual = page.outputFromEditor.getText();
+        guardAjax(page.getOutputFromEditor()).click();
+        String actual = page.getOutputFromEditor().getText();
         assertTrue(actual.contains(expected), "The change in the editor was not saved automatically!");
     }
 
     @Test
     public void testAutoSavingAfter1Sec() {
         String expected = "Added and possibly saved text!";
-        page.editor.typeTextToEditor(expected);
+        page.getEditor().type(expected);
 
-        waitAjax().withTimeout(TIMEOUT_FOR_AUTOSAVING, TimeUnit.MILLISECONDS).until(
-            new ElementTextContains(page.outputFromEditor, expected));
+        waitModel().withTimeout(TIMEOUT_FOR_AUTOSAVING, TimeUnit.MILLISECONDS).until(
+            new ElementTextContains(page.getOutputFromEditor(), expected));
     }
 
+    @Test
+    public void testTypingAndClearing() {
+        page.getEditor().clear();
+        assertEquals("", page.getEditor().getText());
+        String expectedText = "Lala Foo Bar tralala";
+        page.getEditor().type(expectedText);
+        assertEquals(expectedText, page.getEditor().getText());
+    }
 }

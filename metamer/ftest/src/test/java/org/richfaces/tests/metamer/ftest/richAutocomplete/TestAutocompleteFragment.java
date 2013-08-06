@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richAutocomplete;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType.DELETE;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -32,6 +31,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
 import org.richfaces.tests.page.fragments.impl.autocomplete.SelectOrConfirm;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.annotations.Test;
 
@@ -63,7 +63,7 @@ public class TestAutocompleteFragment extends AbstractAutocompleteTest {
 
         autocompleteAttributes.set(AutocompleteAttributes.tokens, ";");
         autocomplete.advanced().setToken(";");
-        Graphene.guardHttp(autocomplete.clear(DELETE)).submit();
+        Graphene.guardHttp(autocomplete.clear(ClearType.DELETE)).submit();
         Graphene.waitAjax().until().element(autocomplete.advanced().getInput().getInput()).text().equalTo("");
         autocomplete
             .type("m").select(ChoicePickerHelper.byVisibleText().contains("ss"))// selects the first one containing 'ss'

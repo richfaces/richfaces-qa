@@ -22,6 +22,7 @@
 package org.richfaces.tests.showcase.select;
 
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
 import org.richfaces.tests.page.fragments.impl.input.select.Option;
 import org.richfaces.tests.page.fragments.impl.input.select.OptionList;
@@ -70,7 +71,7 @@ public class TestSelect extends AbstractWebDriverTest {
      * Types the beginning of capital and then selects from poppup and check whether right option was selected
      */
     private void selectSomethingFromCapitalsSelectAndCheck(Select select, String capital) {
-        select.getInput().clear(TextInputComponent.ClearType.BACKSPACE);
+        select.getInput().clear(ClearType.BACKSPACE);
         select.getInput().fillIn(capital.substring(0, 2));
 
         Assert.assertTrue(select.isPopupPresent());

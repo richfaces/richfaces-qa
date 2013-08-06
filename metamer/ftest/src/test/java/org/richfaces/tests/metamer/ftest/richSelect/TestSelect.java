@@ -27,8 +27,6 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import com.google.common.base.Predicate;
-
 import java.net.URL;
 import java.util.List;
 
@@ -52,12 +50,14 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
 import org.richfaces.tests.page.fragments.impl.input.select.Option;
 import org.richfaces.tests.page.fragments.impl.input.select.Selection;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import com.google.common.base.Predicate;
 
 /**
  * Test case for page faces/components/richSelect/simple.xhtml.
@@ -283,7 +283,7 @@ public class TestSelect extends AbstractWebDriverTest {
             public void perform() {
                 select.getInput().getInput().click();// will not be triggered if this step omitted
                 page.getRequestTimeElement().click();// will not be triggered if this step omitted
-                select.getInput().clear(TextInputComponent.ClearType.JS).fillIn("ABCD").trigger("blur");
+                select.getInput().clear(ClearType.JS).fillIn("ABCD").trigger("blur");
             }
         });
     }

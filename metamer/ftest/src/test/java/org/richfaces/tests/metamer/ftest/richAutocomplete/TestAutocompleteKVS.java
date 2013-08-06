@@ -30,8 +30,6 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**

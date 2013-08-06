@@ -23,6 +23,7 @@ package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
 import org.richfaces.tests.page.fragments.impl.input.inputNumberSlider.RichFacesInputNumberSlider;
 import org.testng.annotations.Test;
@@ -54,7 +55,7 @@ public class TestInputNumberSliderConverter extends AbstractConverterTest {
 
     @Override
     protected void setBadValue() {
-        input.getInput().clear(TextInputComponent.ClearType.JS).fillIn(VALUE);
+        input.getInput().clear(ClearType.JS).fillIn(VALUE);
     }
 
     @Test

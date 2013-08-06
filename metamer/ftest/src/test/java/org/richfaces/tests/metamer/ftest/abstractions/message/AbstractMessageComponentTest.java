@@ -30,7 +30,7 @@ import org.richfaces.tests.metamer.ftest.richMessage.MessageAttributes;
 import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.message.Message;
 import org.testng.Assert;
 
