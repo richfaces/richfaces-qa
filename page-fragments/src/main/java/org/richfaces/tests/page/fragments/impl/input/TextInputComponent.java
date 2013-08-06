@@ -23,25 +23,12 @@ package org.richfaces.tests.page.fragments.impl.input;
 
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.VisibleComponent;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public interface TextInputComponent extends VisibleComponent {
-
-    public enum ClearType {
-
-        //clearing by backspace keys
-        BACKSPACE,
-        //clearing by delete keys
-        DELETE,
-        //clearing by escape sequence
-        ESCAPE_SQ,
-        //clearing by WebDriver
-        WD,
-        //clearing by JavaScript
-        JS
-    }
 
     /**
      * Clears the input  and returns actual component. The method of clearing can be passed as argument to determine the way the input will be cleared

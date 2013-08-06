@@ -21,10 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.inputNumberSpinner;
 
-import java.util.List;
 import static org.testng.Assert.assertEquals;
 
+import java.util.List;
+
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
 import org.richfaces.tests.page.fragments.impl.input.inputNumberSpinner.InputNumberSpinner;
 import org.richfaces.tests.page.fragments.impl.input.inputNumberSpinner.RichFacesInputNumberSpinner;
@@ -149,7 +151,7 @@ public class TestSpinners extends AbstractWebDriverTest {
     }
 
     private void setAndDecrease(InputNumberSpinner spinner, int step) {
-        spinner.getInput().clear(TextInputComponent.ClearType.BACKSPACE);
+        spinner.getInput().clear(ClearType.BACKSPACE);
         spinner.getInput().fillIn("30");
         spinner.getInput().trigger("blur");
         spinner.decrease();

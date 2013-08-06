@@ -32,6 +32,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
 
 /**
  * Fragment for text input component. Note that the root of the component has to point to the actual input!

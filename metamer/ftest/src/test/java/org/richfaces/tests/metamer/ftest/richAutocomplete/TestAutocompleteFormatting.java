@@ -36,7 +36,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.richfaces.tests.page.fragments.impl.autocomplete.SelectOrConfirm;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
+import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

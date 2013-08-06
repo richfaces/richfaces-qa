@@ -7,8 +7,17 @@ import org.richfaces.tests.page.fragments.impl.editor.RichFacesEditor;
 public class AutosavingPage {
 
     @FindBy(css = ".example-cnt")
-    public RichFacesEditor editor;
+    private RichFacesEditor editor;
 
     @FindBy(css = ".rf-p-b")
-    public WebElement outputFromEditor;
+    private WebElement outputFromEditor;
+
+    public RichFacesEditor getEditor() {
+        return editor;
+    }
+
+    public WebElement getOutputFromEditor() {
+        return outputFromEditor;
+    }
+
 }
