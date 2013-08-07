@@ -29,8 +29,11 @@ public interface Autocomplete {
 
     /**
      * Types @text to Autocomplete input. If the input is not empty, then it types a token in it and then sends the value.
+     *
      * @param text text to be send to input
      * @return SelectOrConfirm (@see SelectOrConfirm) state of autocomplete
      */
     SelectOrConfirm type(String text);
+
+    void clear();
 }

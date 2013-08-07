@@ -89,18 +89,6 @@ public class RichFacesAutocomplete implements Autocomplete {
         return advancedInteractions;
     }
 
-    /**
-     * Clears the value of autocomplete's input field.
-     *
-     * @param clearType
-     *            defines how the input should be cleared, e.g. by using backspace key, by delete key, by JavaScript,
-     *            etc.
-     * @return input component
-     */
-    public TextInputComponent clear(ClearType clearType) {
-        return advanced().getInput().clear(clearType);
-    }
-
     private List<WebElement> getSuggestions() {
         String id = root.getAttribute("id");
         String selectorOfRoot = String.format(SUGGESTIONS_CSS_SELECTOR_TEMPLATE, id);
@@ -113,6 +101,11 @@ public class RichFacesAutocomplete implements Autocomplete {
             result = Lists.newArrayList();
         }
         return result;
+    }
+
+    @Override
+    public void clear() {
+        advanced().clear(ClearType.DEFAULT_CLEAR_TYPE);
     }
 
     public class AdvancedInteractions {
@@ -175,6 +168,17 @@ public class RichFacesAutocomplete implements Autocomplete {
                         return !RichFacesAutocomplete.this.getSuggestions().isEmpty();
                     }
                 });
+        }
+
+        /**
+         * Clears the value of autocomplete's input field.
+         *
+         * @param clearType defines how the input should be cleared, e.g. by using backspace key, by delete key, by JavaScript,
+         *        etc.
+         * @return input component
+         */
+        public TextInputComponent clear(ClearType clearType) {
+            return advanced().getInput().clear(clearType);
         }
     }
 
