@@ -34,7 +34,6 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.page.fragments.impl.autocomplete.SelectOrConfirm;
-import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -67,7 +66,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
         if (selectFirst == null) {
             selectFirst = false;
         }
-        autocomplete.clear(ClearType.BACKSPACE);
+        autocomplete.clear();
     }
 
     @Test
@@ -87,7 +86,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-11323")
     public void testTypingPrefixAndThenDeleteAll() {
         Graphene.guardAjax(autocomplete).type("ala");
-        autocomplete.clear(ClearType.BACKSPACE);
+        autocomplete.clear();
         autocomplete.advanced().waitForSuggestionsToHide();
         assertTrue(autocomplete.advanced().getSuggestions().isEmpty());
         Graphene.guardAjax(autocomplete).type("ala");

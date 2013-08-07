@@ -36,7 +36,6 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.richfaces.tests.page.fragments.impl.autocomplete.SelectOrConfirm;
-import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -73,7 +72,7 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
         if (selectFirst == null) {
             selectFirst = false;
         }
-        autocomplete.clear(ClearType.BACKSPACE);
+        autocomplete.clear();
     }
 
     /**
@@ -85,6 +84,7 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
         @Use(field = "selectFirst", booleans = { true, false }) })
     public void testFormatting() {
         assertTrue(autocomplete.advanced().getSuggestions().isEmpty());
+        autocomplete.clear();
         SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("ala");
         assertFalse(autocomplete.advanced().getSuggestions().isEmpty());
         Graphene.guardAjax(typed).confirm();

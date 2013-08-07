@@ -30,7 +30,6 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
-import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.annotations.Test;
 
@@ -51,13 +50,13 @@ public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
 
     @Test
     public void testValueChangeListener() {
-        autocomplete.clear(ClearType.BACKSPACE);
+        autocomplete.clear();
         Graphene.guardAjax(autocomplete).type("something");
         Graphene.guardAjax(page).blur();
 
         checkOutput("something");
 
-        autocomplete.clear(ClearType.BACKSPACE);
+        autocomplete.clear();
         Graphene.guardAjax(autocomplete).type("something else");
         Graphene.guardAjax(page).blur();
         // valueChangeListener output as 4th record
@@ -71,7 +70,7 @@ public class TestAutocompleteAttributes<P> extends AbstractAutocompleteTest {
         String[] layouts = new String[] { "div", "list", "table" };
         for (String layout : layouts) {
             autocompleteAttributes.set(AutocompleteAttributes.layout, layout);
-            autocomplete.clear(ClearType.BACKSPACE);
+            autocomplete.clear();
 
             Graphene.guardAjax(autocomplete).type("ala").select(ChoicePickerHelper.byVisibleText().contains("Alaska"));
             // code before refactoring
