@@ -62,13 +62,11 @@ public abstract class AbstractHotKeyTest extends AbstractWebDriverTest {
     @FindBy(tagName = "body")
     protected WebElement body;
     //
-    protected static final Attributes<HotKeyAttributes> ATTRIBUTES_FIRST = new Attributes<HotKeyAttributes>("attributes1");
-    protected static final Attributes<HotKeyAttributes> ATTRIBUTES_SECOND = new Attributes<HotKeyAttributes>("attributes2");
+    protected Attributes<HotKeyAttributes> firstHotkeyAttributes = getAttributes("attributes1");
+    protected Attributes<HotKeyAttributes> secondHotkeyAttributes = getAttributes("attributes2");
     //
     private static final String ONKEYDOWN_TEMPLATE = "hotkey %d : onkeydown";
     private static final String ONKEYUP_TEMPLATE = "hotkey %d : onkeyup";
-    protected static final String HOTKEY_CTRL_X = Keys.chord(Keys.CONTROL, "x");
-    protected static final String HOTKEY_ALT_X = Keys.chord(Keys.ALT, "x");
 
     protected void clearHotKeyEvents() {
         log.clear();
@@ -82,7 +80,7 @@ public abstract class AbstractHotKeyTest extends AbstractWebDriverTest {
 
     protected void checkEvent(String text, int number) {
         LogEntries filter = log.getLogEntries(LogEntryLevel.INFO)
-                .filter(new RichFacesLogFilterBuilder().filterToContentContains(text));
+            .filter(new RichFacesLogFilterBuilder().filterToContentContains(text));
         int logEntriesWithContent = filter.size();
         assertEquals(logEntriesWithContent, number, "The number of hotkey events doesn't match.");
     }
@@ -97,9 +95,5 @@ public abstract class AbstractHotKeyTest extends AbstractWebDriverTest {
     @Override
     public URL getTestUrl() {
         return buildUrl(contextPath, "faces/components/richHotKey/simple.xhtml");
-    }
-
-    public void pressHotkeyOnElement(String hotkey, WebElement element) {
-        new Actions(driver).sendKeys(element, hotkey).perform();
     }
 }
