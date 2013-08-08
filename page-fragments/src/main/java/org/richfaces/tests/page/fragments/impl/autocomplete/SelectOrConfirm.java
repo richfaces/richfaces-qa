@@ -38,12 +38,30 @@ public interface SelectOrConfirm {
     Autocomplete confirm();
 
     /**
-     * Selects the first option.
+     * Selects the first option using mouse click.
      *
      * @return returns back the Autocomplete component.
      * @throws RuntimeException when no option found
      */
     Autocomplete select();
+
+    /**
+     * Selects the option at index using mouse click.
+     *
+     * @param index index of suggestion
+     * @return returns back the Autocomplete component.
+     * @throws RuntimeException when no option found
+     */
+    Autocomplete select(int index);
+
+    /**
+     * Selects the first option, which matches given text using mouse click.
+     *
+     * @param match string to match the suggestion
+     * @return returns back the Autocomplete component.
+     * @throws RuntimeException when no option found
+     */
+    Autocomplete select(String match);
 
     /**
      * Selects a choice from suggestions using mouse click.
@@ -57,7 +75,7 @@ public interface SelectOrConfirm {
     Autocomplete select(ChoicePicker picker);
 
     /**
-     * Selects a choice from suggestions using keyboard navigation.
+     * Selects a choice from suggestions using @scrollingType.
      *
      * @param picker for picking from the choices
      * @param scrollingType defines whether component should choose an item using keyboard or mouse

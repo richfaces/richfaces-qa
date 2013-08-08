@@ -21,6 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.autocomplete;
 
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -29,22 +33,18 @@ import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
-import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponent.ClearType;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.utils.Actions;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
-
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Lists;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -60,8 +60,6 @@ public class RichFacesAutocomplete implements Autocomplete {
 
     @Drone
     private WebDriver driver;
-    @ArquillianResource
-    private Actions actions;
 
     @Root
     private WebElement root;
@@ -109,7 +107,7 @@ public class RichFacesAutocomplete implements Autocomplete {
         List<WebElement> foundElements = driver.findElements(By.cssSelector(selectorOfRoot));
         List<WebElement> result;
         if (!foundElements.isEmpty() && foundElements.get(0).isDisplayed()) { // prevent returning of not visible
-                                                                              // elements
+            // elements
             result = foundElements;
         } else {
             result = Lists.newArrayList();
@@ -157,7 +155,8 @@ public class RichFacesAutocomplete implements Autocomplete {
 
         public void waitForSuggestionsToHide() {
 
-            Graphene.waitModel().withTimeout(getWaitTimeForSuggToHide(), TimeUnit.MILLISECONDS)
+            Graphene.waitModel()
+                .withTimeout(getWaitTimeForSuggToHide(), TimeUnit.MILLISECONDS)
                 .withMessage("suggestions to be not visible").until(new Predicate<WebDriver>() {
                     @Override
                     public boolean apply(WebDriver input) {
@@ -167,7 +166,8 @@ public class RichFacesAutocomplete implements Autocomplete {
         }
 
         public void waitForSuggestionsToShow() {
-            Graphene.waitModel().withTimeout(getWaitTimeForSuggToShow(), TimeUnit.MILLISECONDS)
+            Graphene.waitModel()
+                .withTimeout(getWaitTimeForSuggToShow(), TimeUnit.MILLISECONDS)
                 .withMessage("suggestions to be visible").until(new Predicate<WebDriver>() {
 
                     @Override
@@ -182,7 +182,7 @@ public class RichFacesAutocomplete implements Autocomplete {
 
         @Override
         public Autocomplete confirm() {
-            actions.sendKeys(Keys.RETURN).click(advanced().getRoot().findElement(By.xpath("//body"))).perform();
+            new Actions(driver).sendKeys(Keys.RETURN).click(driver.findElement(Utils.BY_BODY)).perform();
             advanced().waitForSuggestionsToHide();
             return RichFacesAutocomplete.this;
         }
@@ -215,22 +215,27 @@ public class RichFacesAutocomplete implements Autocomplete {
             return RichFacesAutocomplete.this;
         }
 
+        @Override
+        public Autocomplete select(int index) {
+            return select(ChoicePickerHelper.byIndex().index(index));
+        }
+
+        @Override
+        public Autocomplete select(String match) {
+            return select(ChoicePickerHelper.byVisibleText().match(match));
+        }
+
         private void selectWithKeys(WebElement foundValue) {
             List<WebElement> suggestions = getSuggestions();
             // if selectFirst attribute of autocomplete is set, we don't have to press arrow down key for first item
             boolean skip = suggestions.get(0).getAttribute("class").contains("rf-au-itm-sel");
-
-            for (WebElement suggestion : suggestions) {
-                if (!skip) {
-                    new Actions(driver).sendKeys(Keys.ARROW_DOWN).perform();
-                } else {
-                    skip = false;
-                }
-                if (suggestion.equals(foundValue)) {
-                    new Actions(driver).sendKeys(Keys.RETURN).perform();
-                    break;
-                }
+            int index = Utils.getIndexOfElement(foundValue);
+            int steps = index + (skip ? 0 : 1);
+            Actions actions = new Actions(driver);
+            for (int i = 0; i < steps; i++) {
+                actions.sendKeys(Keys.ARROW_DOWN);
             }
+            actions.sendKeys(foundValue, Keys.RETURN).perform();
         }
     }
 }
