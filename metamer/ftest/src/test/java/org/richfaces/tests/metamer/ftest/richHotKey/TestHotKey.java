@@ -36,8 +36,8 @@ public class TestHotKey extends AbstractHotKeyTest {
     public void testFirstAndSecondPair() {
         for (int i = 1; i <= NUMBER_OF_TESTS; i++) {
             for (int j = 0; j < i; j++) {
-                hotkey1.invokeOn(firstInput.getInput());
-                hotkey2.invokeOn(firstInput.getInput());
+                hotkey1.invoke();
+                hotkey2.invoke();
             }
             checkEvents(i, i);
             clearHotKeyEvents();
@@ -52,11 +52,11 @@ public class TestHotKey extends AbstractHotKeyTest {
     private void testPair(Hotkey hotkey, int hotkeyNum) {
         for (int i = 1; i <= NUMBER_OF_TESTS; i++) {
             for (int j = 0; j < i; j++) {
-                hotkey.invokeOn(firstInput.getInput());
+                hotkey.invoke();
             }
             if (hotkeyNum == 1) {
                 checkEvents(i, 0);
-            } else {//2
+            } else {// second hotkey
                 checkEvents(0, i);
             }
             clearHotKeyEvents();
