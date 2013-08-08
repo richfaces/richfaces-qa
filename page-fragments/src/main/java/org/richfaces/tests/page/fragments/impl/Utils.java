@@ -21,13 +21,18 @@
  */
 package org.richfaces.tests.page.fragments.impl;
 
+import com.google.common.base.Optional;
+
 import java.util.Iterator;
+
+import org.apache.commons.lang.StringEscapeUtils;
 import org.jboss.arquillian.graphene.GrapheneContext;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
@@ -39,18 +44,26 @@ import org.openqa.selenium.WebElement;
  */
 public final class Utils {
 
+    public static final By BY_BODY = By.tagName("body");
+    public static final By BY_HTML = By.tagName("html");
+
+    private static final String JSON_KEY_TEMPLATE = "\"%s\":";
+    private static final String JSON_VALUES_DELIMITER = ",";
+    private static final String JSON_FUNCTION_ENDING = "}";
+    private static final String JSON_FUNCTION_START = "function";
+
+    public static JavascriptExecutor getExecutorFromElement(WebElement element) {
+        GrapheneContext context = ((GrapheneProxyInstance) element).getContext();
+        return (JavascriptExecutor) context.getWebDriver(JavascriptExecutor.class);
+    }
+
     /**
-     * Returns Locations of input element.
+     * Returns the result of invocation of jQuery function <code>index()</code> on given element.
      *
-     * @see Locations
+     * @param element element on which the command will be executed, has to be instance of org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance
      */
-    public static Locations getLocations(WebElement root) {
-        Point topLeft = root.getLocation();
-        Dimension dimension = root.getSize();
-        Point topRight = topLeft.moveBy(dimension.getWidth(), 0);
-        Point bottomRight = topRight.moveBy(0, dimension.getHeight());
-        Point bottomLeft = topLeft.moveBy(0, dimension.getHeight());
-        return new Locations(topLeft, topRight, bottomLeft, bottomRight);
+    public static int getIndexOfElement(WebElement element) {
+        return Integer.valueOf(returningJQ(getExecutorFromElement(element), "index()", element));
     }
 
     public static String getJSONValue(WebElement scriptElement, String property) {
@@ -68,14 +81,53 @@ public final class Utils {
         return result;
     }
 
+    public static Optional<String> getJSONValue2(WebElement scriptElement, String property) {
+        String scriptText = getTextFromHiddenElement(scriptElement);
+        String keyPrefix = String.format(JSON_KEY_TEMPLATE, property);
+        int startIndex = scriptText.indexOf(keyPrefix);
+        if (startIndex == -1) {
+            return Optional.absent();
+        }
+        startIndex += keyPrefix.length();
+
+        boolean isFunction = scriptText.indexOf(JSON_FUNCTION_START, startIndex) != -1;
+        int endIndex = scriptText.indexOf(JSON_VALUES_DELIMITER, startIndex);
+        boolean isLastValue = endIndex == -1;
+        endIndex = (isLastValue ? (isFunction ? scriptText.indexOf(JSON_FUNCTION_ENDING, startIndex) + 1 : scriptText.length() - 1) : endIndex);
+        String value = scriptText.substring(startIndex, endIndex).replaceAll("\"", "");
+        return Optional.fromNullable((value == null ? null : StringEscapeUtils.unescapeJava(value)));
+    }
+
+    /**
+     * Returns Locations of input element.
+     *
+     * @see Locations
+     */
+    public static Locations getLocations(WebElement root) {
+        Point topLeft = root.getLocation();
+        Dimension dimension = root.getSize();
+        Point topRight = topLeft.moveBy(dimension.getWidth(), 0);
+        Point bottomRight = topRight.moveBy(0, dimension.getHeight());
+        Point bottomLeft = topLeft.moveBy(0, dimension.getHeight());
+        return new Locations(topLeft, topRight, bottomLeft, bottomRight);
+    }
+
+    /**
+     * Returns text from given hidden element. WebDriver, in this case, returns empty String.
+     *
+     * @param element not visible element
+     */
+    public static String getTextFromHiddenElement(JavascriptExecutor executor, WebElement element) {
+        return returningJQ(executor, "text()", element);
+    }
+
     /**
      * Returns text from given hidden element. WebDriver, in this case, returns empty String.
      *
      * @param element not visible element
      */
     public static String getTextFromHiddenElement(WebElement element) {
-        GrapheneContext context = ((GrapheneProxyInstance) element).getContext();
-        return returningJQ((JavascriptExecutor) context.getWebDriver(JavascriptExecutor.class), "text()", element);
+        return getTextFromHiddenElement(getExecutorFromElement(element), element);
     }
 
     /**
@@ -90,6 +142,16 @@ public final class Utils {
     }
 
     /**
+     * Executes jQuery command on input element. E.g. to trigger click use jQ("click()", element).
+     *
+     * @param cmd command to be executed
+     * @param element element on which the command will be executed
+     */
+    public static void jQ(String cmd, WebElement element) {
+        jQ(getExecutorFromElement(element), cmd, element);
+    }
+
+    /**
      * Executes returning jQuery command on input element. E.g. to get a position of element from top of the page use
      * returningjQ("position().top", element).
      *
@@ -97,8 +159,19 @@ public final class Utils {
      * @param element element on which the command will be executed
      */
     public static String returningJQ(JavascriptExecutor executor, String cmd, WebElement element) {
-        String jQueryCmd = String.format("x = jQuery(arguments[0]).%s ; return x;", cmd);
+        String jQueryCmd = String.format("return jQuery(arguments[0]).%s;", cmd);
         return String.valueOf(executor.executeScript(jQueryCmd, unwrap(element)));
+    }
+
+    /**
+     * Executes returning jQuery command on input element. E.g. to get a position of element from top of the page use
+     * returningjQ("position().top", element).
+     *
+     * @param cmd command to be executed
+     * @param element element on which the command will be executed
+     */
+    public static String returningJQ(String cmd, WebElement element) {
+        return returningJQ(getExecutorFromElement(element), cmd, element);
     }
 
     private static boolean _tolerantAssertPointEquals(Point p1, Point p2, int xTolerance, int yTolerance) {
@@ -146,11 +219,23 @@ public final class Utils {
      * Executes jQuery trigger command on input element. Useful for easy triggering of JavaScript events like click, dblclick,
      * mouseout...
      *
+     * @param executor JavascriptExecutor
      * @param event event to be triggered
      * @param element element on which the command will be executed
      */
     public static void triggerJQ(JavascriptExecutor executor, String event, WebElement element) {
         jQ(executor, String.format("trigger('%s')", event), element);
+    }
+
+    /**
+     * Executes jQuery trigger command on input element. Useful for easy triggering of JavaScript events like click, dblclick,
+     * mouseout...
+     *
+     * @param event event to be triggered
+     * @param element element on which the command will be executed, has to be instance of org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance
+     */
+    public static void triggerJQ(String event, WebElement element) {
+        triggerJQ(getExecutorFromElement(element), event, element);
     }
 
     public static WebElement unwrap(WebElement e) {
