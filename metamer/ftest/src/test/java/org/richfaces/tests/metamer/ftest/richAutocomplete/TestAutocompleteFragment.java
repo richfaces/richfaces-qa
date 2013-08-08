@@ -58,7 +58,7 @@ public class TestAutocompleteFragment extends AbstractAutocompleteTest {
     public void testSelectingMultipleValues() {
         autocomplete
             .type("ala").select(ChoicePickerHelper.byIndex().last())
-            .type("i").select(ChoicePickerHelper.byIndex().index(1));
+            .type("i").select(1);
         checkOutput("Alaska, Illinois");
 
         autocompleteAttributes.set(AutocompleteAttributes.tokens, ";");
@@ -74,10 +74,10 @@ public class TestAutocompleteFragment extends AbstractAutocompleteTest {
 
     @Test
     public void testSelectingMultipleValuesWithSomeNotListed() {
-        autocomplete
+        Graphene.guardAjax(autocomplete)
             .type("notInListValue").confirm()
             .type("alabama").confirm()
-            .type("i").select(ChoicePickerHelper.byIndex().index(1));
+            .type("i").select(1);
         checkOutput("notInListValue, alabama, Illinois");
     }
 

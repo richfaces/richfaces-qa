@@ -80,20 +80,15 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
      * This should test combination of @var and @fetchValue attributes of autocomplete
      */
     @Test
-    @Uses({ @Use(field = "autofill", booleans = { true, false }),
+    @Uses({
+        @Use(field = "autofill", booleans = { true, false }),
         @Use(field = "selectFirst", booleans = { true, false }) })
     public void testFormatting() {
         assertTrue(autocomplete.advanced().getSuggestions().isEmpty());
-        autocomplete.clear(ClearType.BACKSPACE);
         SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("ala");
         assertFalse(autocomplete.advanced().getSuggestions().isEmpty());
         Graphene.guardAjax(typed).confirm();
-        Graphene.waitGui().until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver driver) {
-                return autocomplete.advanced().getSuggestions().isEmpty();
-            }
-        });
+        autocomplete.advanced().waitForSuggestionsToHide();
         String expected = getExpectedStateForPrefix("ala", selectFirst).toLowerCase();
         String found = autocomplete.advanced().getInput().getStringValue().toLowerCase();
         assertTrue(found.startsWith(expected), "The input value should start with '" + expected + "', but '" + found
