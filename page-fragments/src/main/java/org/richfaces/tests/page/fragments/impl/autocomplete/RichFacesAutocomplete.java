@@ -55,6 +55,7 @@ public class RichFacesAutocomplete implements Autocomplete {
     private static final String SUGGESTIONS_CSS_SELECTOR_TEMPLATE = ".rf-au-lst-cord[id='%sList'] .rf-au-itm";
     private static final String CSS_INPUT = "input[type='text']";
     private static final String DEFAULT_TOKEN = ",";
+    private static final ScrollingType DEFAULT_SCROLLING_TYPE = ScrollingType.BY_MOUSE;
     private static final long DEFAULT_WAITTIME_FOR_SUGG_TO_SHOW = 2000;
     private static final long DEFAULT_WAITTIME_FOR_SUGG_TO_HIDE = DEFAULT_WAITTIME_FOR_SUGG_TO_SHOW;
 
@@ -67,6 +68,7 @@ public class RichFacesAutocomplete implements Autocomplete {
     @FindBy(css = CSS_INPUT)
     private TextInputComponentImpl input;
 
+    private ScrollingType scrollingType;
     private String token;
     private Long waitTimeForSuggToShow;
     private Long waitTimeForSuggToHide;
@@ -118,6 +120,10 @@ public class RichFacesAutocomplete implements Autocomplete {
             return root;
         }
 
+        public ScrollingType getScrollingType() {
+            return Optional.fromNullable(scrollingType).or(DEFAULT_SCROLLING_TYPE);
+        }
+
         public List<WebElement> getSuggestions() {
             return Collections.unmodifiableList(RichFacesAutocomplete.this.getSuggestions());
         }
@@ -144,6 +150,10 @@ public class RichFacesAutocomplete implements Autocomplete {
 
         public void setWaitTimeForSuggToShow(Long value) {
             waitTimeForSuggToShow = value;
+        }
+
+        public void setScrollingType(ScrollingType type) {
+            scrollingType = type;
         }
 
         public void waitForSuggestionsToHide() {
@@ -198,18 +208,13 @@ public class RichFacesAutocomplete implements Autocomplete {
 
         @Override
         public Autocomplete select(ChoicePicker picker) {
-            return select(picker, ScrollingType.BY_MOUSE);
-        }
-
-        @Override
-        public Autocomplete select(ChoicePicker picker, ScrollingType scrollingType) {
             advanced().waitForSuggestionsToShow();
             WebElement foundValue = picker.pick(getSuggestions());
             if (foundValue == null) {
                 throw new RuntimeException("The value was not found by " + picker.toString());
             }
 
-            if (scrollingType == ScrollingType.BY_KEYS) {
+            if (advanced().getScrollingType() == ScrollingType.BY_KEYS) {
                 selectWithKeys(foundValue);
             } else {
                 foundValue.click();
