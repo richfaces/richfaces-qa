@@ -22,7 +22,7 @@
 package org.richfaces.tests.showcase.list;
 
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.richfaces.tests.page.fragments.impl.list.simple.SimpleList.ListType;
+import org.richfaces.tests.page.fragments.impl.list.internal.simple.SimpleList.ListType;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.list.page.ListsPage;
 import org.testng.Assert;
@@ -40,7 +40,6 @@ public class TestLists extends AbstractWebDriverTest {
     /* ***********************************************************************************************
      * Tests***********************************************************************************************
      */
-
     @Test
     public void testOrderedList() {
         checkList(ListType.ORDERED);
@@ -61,7 +60,6 @@ public class TestLists extends AbstractWebDriverTest {
      * ******************************************************************************************************
      * **************
      */
-
     private void checkList(ListType type) {
         page.setType(type);
         Assert.assertEquals(type, page.list.getType());

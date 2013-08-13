@@ -19,41 +19,57 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.fileUpload;
+package org.richfaces.tests.page.fragments.impl.list.internal;
 
-import java.util.Iterator;
 import java.util.List;
-
+import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.list.internal.AbstractListFragment;
-import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @param <T> type of ListItem
+ * @param <X> type of ListItems
  */
-public class RichFacesFileUploadList extends AbstractListFragment<RichFacesFileUploadItem, RichFacesFileUploadItems> {
+public abstract class AbstractListFragment<T extends ListItem, X extends ListItems<T>> implements ListFragment<T> {
 
-    @FindBy(className = "rf-fu-itm")
-    private List<WebElement> items;
+    @Root
+    protected WebElement root;
+    @Drone
+    protected WebDriver driver;
 
-    @Override
-    public ListItems<RichFacesFileUploadItem> getItems() {
-        return createItems(items);
+    protected abstract Class<T> getListItemType();
+
+    protected X createItems(List<WebElement> list) {
+        X createdItemsFragment = instantiateListItems();
+        for (WebElement e : list) {
+            createdItemsFragment.add(Graphene.<T>createPageFragment(getListItemType(), e));
+        }
+        return createdItemsFragment;
     }
 
     @Override
-    protected Class<RichFacesFileUploadItem> getListItemType() {
-        return RichFacesFileUploadItem.class;
+    public WebElement getRootElement() {
+        return root;
+    }
+
+    protected abstract X instantiateListItems();
+
+    @Override
+    public ExpectedCondition<Boolean> isNotVisibleCondition() {
+        return Graphene.element(root).not().isVisible();
     }
 
     @Override
-    protected RichFacesFileUploadItems instantiateListItems() {
-        return new RichFacesFileUploadItems();
+    public boolean isVisible() {
+        return isVisibleCondition().apply(driver);
     }
 
     @Override
-    public String toString() {
-        return getItems().toString();
+    public ExpectedCondition<Boolean> isVisibleCondition() {
+        return Graphene.element(root).isVisible();
     }
 }

@@ -25,7 +25,7 @@ import java.io.File;
 
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.VisibleComponent;
-import org.richfaces.tests.page.fragments.impl.list.ListItems;
+import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>

@@ -19,41 +19,57 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.fileUpload;
+package org.richfaces.tests.page.fragments.impl.list.internal.common;
 
-import java.util.Iterator;
-import java.util.List;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import java.util.ArrayList;
+import java.util.Collection;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.list.internal.AbstractListFragment;
-import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
+import org.richfaces.tests.page.fragments.impl.list.internal.ListItemsFilterBuilder;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @param <T> type of SelectableListItem
  */
-public class RichFacesFileUploadList extends AbstractListFragment<RichFacesFileUploadItem, RichFacesFileUploadItems> {
+public class RichFacesSelectableListItems<T extends SelectableListItem> extends ArrayList<T> implements SelectableListItems<T> {
 
-    @FindBy(className = "rf-fu-itm")
-    private List<WebElement> items;
+    private static final long serialVersionUID = 1L;
 
-    @Override
-    public ListItems<RichFacesFileUploadItem> getItems() {
-        return createItems(items);
+    public RichFacesSelectableListItems() {
+    }
+
+    public RichFacesSelectableListItems(Collection<? extends T> c) {
+        super(c);
+    }
+
+    public RichFacesSelectableListItems(Iterable<? extends T> it) {
+        this.addAll(Lists.newArrayList(it));
     }
 
     @Override
-    protected Class<RichFacesFileUploadItem> getListItemType() {
-        return RichFacesFileUploadItem.class;
+    public SelectableListItems deselectAll() {
+        for (T item : this) {
+            item.deselect();
+        }
+        return this;
     }
 
     @Override
-    protected RichFacesFileUploadItems instantiateListItems() {
-        return new RichFacesFileUploadItems();
+    public SelectableListItems<T> filter(ListItemsFilterBuilder builder) {
+        return new RichFacesSelectableListItems(Iterables.filter(this, builder.build()));
     }
 
     @Override
-    public String toString() {
-        return getItems().toString();
+    public int indexOf(Object o) {
+        return ((SelectableListItem) o).getIndex();
+    }
+
+    @Override
+    public SelectableListItems<T> selectAll() {
+        for (T item : this) {
+            item.select();
+        }
+        return this;
     }
 }

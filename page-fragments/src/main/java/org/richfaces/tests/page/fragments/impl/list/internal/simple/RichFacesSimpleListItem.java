@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -19,41 +19,30 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.fileUpload;
+package org.richfaces.tests.page.fragments.impl.list.internal.simple;
 
-import java.util.Iterator;
-import java.util.List;
-
+import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.list.internal.AbstractListFragment;
-import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
+import org.richfaces.tests.page.fragments.impl.list.internal.AbstractListItem;
+import org.richfaces.tests.page.fragments.impl.list.internal.ListItem;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesFileUploadList extends AbstractListFragment<RichFacesFileUploadItem, RichFacesFileUploadItems> {
+public class RichFacesSimpleListItem extends AbstractListItem implements ListItem {
 
-    @FindBy(className = "rf-fu-itm")
-    private List<WebElement> items;
+    @Root
+    protected WebElement element;
 
-    @Override
-    public ListItems<RichFacesFileUploadItem> getItems() {
-        return createItems(items);
+    /**
+     * Returns trimmed content of this item.
+     */
+    public String getText() {
+        return element.getText();
     }
 
     @Override
-    protected Class<RichFacesFileUploadItem> getListItemType() {
-        return RichFacesFileUploadItem.class;
-    }
-
-    @Override
-    protected RichFacesFileUploadItems instantiateListItems() {
-        return new RichFacesFileUploadItems();
-    }
-
-    @Override
-    public String toString() {
-        return getItems().toString();
+    public WebElement getItemElement() {
+        return element;
     }
 }

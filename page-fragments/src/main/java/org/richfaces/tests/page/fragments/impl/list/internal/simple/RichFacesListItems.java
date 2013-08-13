@@ -1,6 +1,6 @@
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -19,41 +19,44 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.fileUpload;
+package org.richfaces.tests.page.fragments.impl.list.internal.simple;
 
-import java.util.Iterator;
-import java.util.List;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.list.internal.AbstractListFragment;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.richfaces.tests.page.fragments.impl.list.internal.ListItem;
 import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
+import org.richfaces.tests.page.fragments.impl.list.internal.ListItemsFilterBuilder;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @param <T> type of ListItem
  */
-public class RichFacesFileUploadList extends AbstractListFragment<RichFacesFileUploadItem, RichFacesFileUploadItems> {
+class RichFacesListItems<T extends ListItem> extends ArrayList<T> implements ListItems<T> {
 
-    @FindBy(className = "rf-fu-itm")
-    private List<WebElement> items;
+    private static final long serialVersionUID = 1L;
 
-    @Override
-    public ListItems<RichFacesFileUploadItem> getItems() {
-        return createItems(items);
+    public RichFacesListItems() {
+    }
+
+    public RichFacesListItems(Collection<? extends T> c) {
+        super(c);
+    }
+
+    public RichFacesListItems(Iterable<? extends T> it) {
+        this.addAll(Lists.newArrayList(it));
     }
 
     @Override
-    protected Class<RichFacesFileUploadItem> getListItemType() {
-        return RichFacesFileUploadItem.class;
+    public int indexOf(Object o) {
+        return ((ListItem) o).getIndex();
     }
 
     @Override
-    protected RichFacesFileUploadItems instantiateListItems() {
-        return new RichFacesFileUploadItems();
-    }
-
-    @Override
-    public String toString() {
-        return getItems().toString();
+    public ListItems<T> filter(ListItemsFilterBuilder<T> builder) {
+        return new RichFacesListItems<T>(Iterables.filter(this, builder.build()));
     }
 }

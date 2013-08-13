@@ -28,9 +28,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.richfaces.tests.page.fragments.impl.list.ListItem;
-import org.richfaces.tests.page.fragments.impl.list.ListItems;
-import org.richfaces.tests.page.fragments.impl.list.ListItemsFilterBuilder;
+import org.richfaces.tests.page.fragments.impl.list.internal.ListItem;
+import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
+import org.richfaces.tests.page.fragments.impl.list.internal.ListItemsFilterBuilder;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>

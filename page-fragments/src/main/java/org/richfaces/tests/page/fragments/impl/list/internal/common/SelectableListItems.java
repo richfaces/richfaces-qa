@@ -19,41 +19,21 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.fileUpload;
+package org.richfaces.tests.page.fragments.impl.list.internal.common;
 
-import java.util.Iterator;
-import java.util.List;
-
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.list.internal.AbstractListFragment;
 import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
+import org.richfaces.tests.page.fragments.impl.list.internal.ListItemsFilterBuilder;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @param <T> type of SelectableListItem
  */
-public class RichFacesFileUploadList extends AbstractListFragment<RichFacesFileUploadItem, RichFacesFileUploadItems> {
-
-    @FindBy(className = "rf-fu-itm")
-    private List<WebElement> items;
+public interface SelectableListItems<T extends SelectableListItem> extends ListItems<T> {
 
     @Override
-    public ListItems<RichFacesFileUploadItem> getItems() {
-        return createItems(items);
-    }
+    SelectableListItems<T> filter(ListItemsFilterBuilder<T> builder);
 
-    @Override
-    protected Class<RichFacesFileUploadItem> getListItemType() {
-        return RichFacesFileUploadItem.class;
-    }
+    SelectableListItems<T> deselectAll();
 
-    @Override
-    protected RichFacesFileUploadItems instantiateListItems() {
-        return new RichFacesFileUploadItems();
-    }
-
-    @Override
-    public String toString() {
-        return getItems().toString();
-    }
+    SelectableListItems<T> selectAll();
 }

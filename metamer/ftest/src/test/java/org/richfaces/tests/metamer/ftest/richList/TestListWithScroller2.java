@@ -30,8 +30,8 @@ import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.dataScroller.RichFacesDataScroller;
-import org.richfaces.tests.page.fragments.impl.list.simple.RichFacesList;
-import org.richfaces.tests.page.fragments.impl.list.simple.RichFacesSimpleListItem;
+import org.richfaces.tests.page.fragments.impl.list.internal.simple.RichFacesList;
+import org.richfaces.tests.page.fragments.impl.list.internal.simple.RichFacesSimpleListItem;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

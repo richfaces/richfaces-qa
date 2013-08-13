@@ -19,41 +19,57 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.fileUpload;
-
-import java.util.Iterator;
-import java.util.List;
+package org.richfaces.tests.page.fragments.impl.list.internal.pick;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.list.internal.AbstractListFragment;
-import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
+import org.richfaces.tests.page.fragments.impl.list.internal.common.OrderingListLayout;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesFileUploadList extends AbstractListFragment<RichFacesFileUploadItem, RichFacesFileUploadItems> {
+public class TargetListLayout extends SourceListLayout implements OrderingListLayout {
 
-    @FindBy(className = "rf-fu-itm")
-    private List<WebElement> items;
+    @FindBy(css = "button.rf-ord-dn")
+    private WebElement downButtonElement;
+    @FindBy(css = "button.rf-ord-up-tp")
+    private WebElement topButtonElement;
+    @FindBy(css = "button.rf-ord-dn-bt")
+    private WebElement bottomButtonElement;
+    @FindBy(css = "button.rf-ord-up")
+    private WebElement upButtonElement;
+    @FindBy(css = "thead.rf-pick-lst-hdr > tr.rf-pick-hdr")
+    private WebElement headerElement;
+    @FindBy(className = "rf-pick-tgt-cptn")
+    private WebElement captionElement;
 
     @Override
-    public ListItems<RichFacesFileUploadItem> getItems() {
-        return createItems(items);
+    public WebElement getBottomButtonElement() {
+        return bottomButtonElement;
     }
 
     @Override
-    protected Class<RichFacesFileUploadItem> getListItemType() {
-        return RichFacesFileUploadItem.class;
+    public WebElement getCaptionElement() {
+        return captionElement;
     }
 
     @Override
-    protected RichFacesFileUploadItems instantiateListItems() {
-        return new RichFacesFileUploadItems();
+    public WebElement getDownButtonElement() {
+        return downButtonElement;
     }
 
     @Override
-    public String toString() {
-        return getItems().toString();
+    public WebElement getHeaderElement() {
+        return headerElement;
+    }
+
+    @Override
+    public WebElement getTopButtonElement() {
+        return topButtonElement;
+    }
+
+    @Override
+    public WebElement getUpButtonElement() {
+        return upButtonElement;
     }
 }

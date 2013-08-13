@@ -19,41 +19,51 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.fileUpload;
+package org.richfaces.tests.page.fragments.impl.list.internal.pick;
 
-import java.util.Iterator;
 import java.util.List;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.list.internal.AbstractListFragment;
-import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
+import org.richfaces.tests.page.fragments.impl.list.internal.common.SelectableListLayout;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesFileUploadList extends AbstractListFragment<RichFacesFileUploadItem, RichFacesFileUploadItems> {
+public class SourceListLayout implements SelectableListLayout {
 
-    @FindBy(className = "rf-fu-itm")
+    @FindBy(className = "rf-pick-opt")
     private List<WebElement> items;
+    @FindBy(className = "rf-pick-sel")
+    private List<WebElement> selectedItems;
+    @FindBy(className = "rf-pick-lst-scrl")
+    private WebElement listAreaElement;
+    @FindBy(className = "rf-pick-src-cptn")
+    private WebElement captionElement;
+    @FindBy(css = "thead.rf-pick-lst-hdr > tr.rf-pick-hdr")
+    private WebElement headerElement;
 
     @Override
-    public ListItems<RichFacesFileUploadItem> getItems() {
-        return createItems(items);
+    public WebElement getCaptionElement() {
+        return captionElement;
     }
 
     @Override
-    protected Class<RichFacesFileUploadItem> getListItemType() {
-        return RichFacesFileUploadItem.class;
+    public WebElement getHeaderElement() {
+        return headerElement;
     }
 
     @Override
-    protected RichFacesFileUploadItems instantiateListItems() {
-        return new RichFacesFileUploadItems();
+    public List<WebElement> getItems() {
+        return items;
     }
 
     @Override
-    public String toString() {
-        return getItems().toString();
+    public WebElement getListAreaElement() {
+        return listAreaElement;
+    }
+
+    @Override
+    public List<WebElement> getSelectedItems() {
+        return selectedItems;
     }
 }

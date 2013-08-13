@@ -19,41 +19,39 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.fileUpload;
-
-import java.util.Iterator;
-import java.util.List;
+package org.richfaces.tests.page.fragments.impl.list.internal.pick;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.list.internal.AbstractListFragment;
-import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
+import org.richfaces.tests.page.fragments.impl.VisibleComponent;
+import org.richfaces.tests.page.fragments.impl.list.internal.common.SelectableList;
+import org.richfaces.tests.page.fragments.impl.list.internal.common.SelectableListItem;
+import org.richfaces.tests.page.fragments.impl.list.internal.ordering.OrderingList;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @param <T> type of  SelectableListItem
  */
-public class RichFacesFileUploadList extends AbstractListFragment<RichFacesFileUploadItem, RichFacesFileUploadItems> {
+public interface PickList<T extends SelectableListItem> extends VisibleComponent {
 
-    @FindBy(className = "rf-fu-itm")
-    private List<WebElement> items;
+    PickList<T> add();
 
-    @Override
-    public ListItems<RichFacesFileUploadItem> getItems() {
-        return createItems(items);
-    }
+    PickList<T> addAll();
 
-    @Override
-    protected Class<RichFacesFileUploadItem> getListItemType() {
-        return RichFacesFileUploadItem.class;
-    }
+    WebElement getAddAllButtonElement();
 
-    @Override
-    protected RichFacesFileUploadItems instantiateListItems() {
-        return new RichFacesFileUploadItems();
-    }
+    WebElement getAddButtonElement();
 
-    @Override
-    public String toString() {
-        return getItems().toString();
-    }
+    WebElement getRemoveAllButtonElement();
+
+    WebElement getRemoveButtonElement();
+
+    WebElement getRootElement();
+
+    SelectableList<T> source();
+
+    OrderingList<T> target();
+
+    PickList<T> remove();
+
+    PickList<T> removeAll();
 }
