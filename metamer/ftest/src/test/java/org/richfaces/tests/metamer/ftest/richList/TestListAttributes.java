@@ -33,8 +33,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
-import org.richfaces.tests.page.fragments.impl.list.ListItems;
-import org.richfaces.tests.page.fragments.impl.list.simple.RichFacesSimpleListItem;
+import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
+import org.richfaces.tests.page.fragments.impl.list.internal.simple.RichFacesSimpleListItem;
 import org.testng.annotations.Test;
 
 /**

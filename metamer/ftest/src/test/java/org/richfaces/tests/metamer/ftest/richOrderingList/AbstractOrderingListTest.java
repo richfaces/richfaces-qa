@@ -32,9 +32,9 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.list.ordering.RichFacesOrderingList;
-import org.richfaces.tests.page.fragments.impl.list.ordering.RichFacesSimpleOrderingList;
-import org.richfaces.tests.page.fragments.impl.list.ordering.RichFacesSimpleOrderingListItem;
+import org.richfaces.tests.page.fragments.impl.list.internal.ordering.RichFacesOrderingList;
+import org.richfaces.tests.page.fragments.impl.list.internal.ordering.RichFacesSimpleOrderingList;
+import org.richfaces.tests.page.fragments.impl.list.internal.ordering.RichFacesSimpleOrderingListItem;
 
 /**
  * Abstract test case for pages faces/components/richOrderingList/

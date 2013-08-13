@@ -28,7 +28,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.list.pick.RichFacesSimplePickList;
+import org.richfaces.tests.page.fragments.impl.list.internal.pick.RichFacesSimplePickList;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

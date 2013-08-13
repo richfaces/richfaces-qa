@@ -19,41 +19,34 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.fileUpload;
+package org.richfaces.tests.page.fragments.impl.list.internal.pick;
 
 import java.util.Iterator;
-import java.util.List;
-
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.list.internal.AbstractListFragment;
-import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
 
 /**
+ * Implementation of simple target list of r:pickList.
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesFileUploadList extends AbstractListFragment<RichFacesFileUploadItem, RichFacesFileUploadItems> {
-
-    @FindBy(className = "rf-fu-itm")
-    private List<WebElement> items;
+public class RichFacesSimpleTargetList extends RichFacesTargetList<RichFacesSimplePickListItem> {
 
     @Override
-    public ListItems<RichFacesFileUploadItem> getItems() {
-        return createItems(items);
-    }
-
-    @Override
-    protected Class<RichFacesFileUploadItem> getListItemType() {
-        return RichFacesFileUploadItem.class;
-    }
-
-    @Override
-    protected RichFacesFileUploadItems instantiateListItems() {
-        return new RichFacesFileUploadItems();
+    protected Class<RichFacesSimplePickListItem> getListItemType() {
+        return RichFacesSimplePickListItem.class;
     }
 
     @Override
     public String toString() {
-        return getItems().toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (Iterator<RichFacesSimplePickListItem> it = getItems().iterator(); it.hasNext();) {
+            RichFacesSimplePickListItem item = it.next();
+            sb.append(item.getText());
+            if (it.hasNext()) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }

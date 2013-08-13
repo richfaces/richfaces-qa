@@ -19,57 +19,66 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.fileUpload;
+package org.richfaces.tests.page.fragments.impl.list.internal.common;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.page.fragments.impl.list.internal.AbstractListItem;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesFileUploadItem extends AbstractListItem {
+public abstract class SimpleSelectableListItem extends AbstractListItem implements SelectableListItem {
 
     @Root
-    private WebElement rootElement;
-    @FindBy(className = "rf-fu-itm-lbl")
-    private WebElement filenameElement;
-    @FindBy(className = "rf-fu-itm-st")
-    private WebElement stateElement;
-    @FindBy(className = "rf-fu-itm-lnk")
-    private WebElement clearOrDeleteElement;
+    protected WebElement item;
 
-    public WebElement getClearElement() {
-        return clearOrDeleteElement;
-    }
+    @ArquillianResource
+    private Actions actions;
 
-    public WebElement getDeleteElement() {
-        return clearOrDeleteElement;
-    }
-
-    public String getFilename() {
-        return filenameElement.getText();
-    }
-
-    public WebElement getFilenameElement() {
-        return filenameElement;
+    private Action getAction() {
+        return actions.keyDown(Keys.CONTROL).click(item).keyUp(Keys.CONTROL).build();
     }
 
     @Override
+    public void deselect() {
+        if (isSelected()) {
+            getAction().perform();
+        }
+        Graphene.waitGui().until().element(item).attribute("class").not().contains(getClassForSelectedItem());
+    }
+
+    protected abstract String getClassForSelectedItem();
+
+    @Override
     public WebElement getItemElement() {
-        return rootElement;
+        return item;
     }
 
-    public String getState() {
-        return stateElement.getText();
+    public String getText() {
+        return item.getText();
     }
 
-    public WebElement getStateElement() {
-        return stateElement;
+    @Override
+    public boolean isSelected() {
+        return item.getAttribute("class").contains(getClassForSelectedItem());
     }
 
-    public void remove() {
-        clearOrDeleteElement.click();
+    @Override
+    public void select() {
+        if (!isSelected()) {
+            getAction().perform();
+        }
+        Graphene.waitGui().until().element(item).attribute("class").contains(getClassForSelectedItem());
+    }
+
+    @Override
+    public String toString() {
+        return getText();
     }
 }

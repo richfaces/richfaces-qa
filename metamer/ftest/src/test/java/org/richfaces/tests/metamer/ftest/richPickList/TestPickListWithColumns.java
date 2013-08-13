@@ -32,10 +32,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
-import org.richfaces.tests.page.fragments.impl.list.ordering.RichFacesSimpleOrderingListItem;
-import org.richfaces.tests.page.fragments.impl.list.pick.RichFacesPickList;
-import org.richfaces.tests.page.fragments.impl.list.pick.RichFacesSourceList;
-import org.richfaces.tests.page.fragments.impl.list.pick.RichFacesTargetList;
+import org.richfaces.tests.page.fragments.impl.list.internal.ordering.RichFacesSimpleOrderingListItem;
+import org.richfaces.tests.page.fragments.impl.list.internal.pick.RichFacesPickList;
+import org.richfaces.tests.page.fragments.impl.list.internal.pick.RichFacesSourceList;
+import org.richfaces.tests.page.fragments.impl.list.internal.pick.RichFacesTargetList;
 import org.testng.annotations.Test;
 
 /**

@@ -33,9 +33,9 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.model.Employee;
-import org.richfaces.tests.page.fragments.impl.list.ListItems;
-import org.richfaces.tests.page.fragments.impl.list.simple.RichFacesSimpleList;
-import org.richfaces.tests.page.fragments.impl.list.simple.RichFacesSimpleListItem;
+import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
+import org.richfaces.tests.page.fragments.impl.list.internal.simple.RichFacesSimpleList;
+import org.richfaces.tests.page.fragments.impl.list.internal.simple.RichFacesSimpleListItem;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>

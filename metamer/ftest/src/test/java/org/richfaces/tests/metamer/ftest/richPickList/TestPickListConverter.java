@@ -26,9 +26,9 @@ import com.google.common.base.Predicate;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.ConverterBean;
 import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
-import org.richfaces.tests.page.fragments.impl.list.ListItemsFilterBuilderImpl;
-import org.richfaces.tests.page.fragments.impl.list.pick.RichFacesSimplePickList;
-import org.richfaces.tests.page.fragments.impl.list.pick.RichFacesSimplePickListItem;
+import org.richfaces.tests.page.fragments.impl.list.internal.ListItemsFilterBuilderImpl;
+import org.richfaces.tests.page.fragments.impl.list.internal.pick.RichFacesSimplePickList;
+import org.richfaces.tests.page.fragments.impl.list.internal.pick.RichFacesSimplePickListItem;
 import org.testng.annotations.Test;
 
 /**

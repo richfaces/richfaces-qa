@@ -19,41 +19,42 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.fileUpload;
-
-import java.util.Iterator;
-import java.util.List;
+package org.richfaces.tests.page.fragments.impl.list.internal.common;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.list.internal.AbstractListFragment;
-import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
+import org.richfaces.tests.page.fragments.impl.list.internal.ListFragment;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @param <T> type of SelectableListItem
  */
-public class RichFacesFileUploadList extends AbstractListFragment<RichFacesFileUploadItem, RichFacesFileUploadItems> {
+public interface SelectableList<T extends SelectableListItem> extends ListFragment<T> {
 
-    @FindBy(className = "rf-fu-itm")
-    private List<WebElement> items;
+    /**
+     * Deselects all items at chosen indexes. Checks and wait for each deselection.
+     */
+    SelectableList<T> deselectItemsByIndex(Integer first, Integer... other);
 
-    @Override
-    public ListItems<RichFacesFileUploadItem> getItems() {
-        return createItems(items);
-    }
+    /**
+     * Returns caption of the list if available, If not then returns empty String.
+     * @return
+     */
+    String getCaption();
 
-    @Override
-    protected Class<RichFacesFileUploadItem> getListItemType() {
-        return RichFacesFileUploadItem.class;
-    }
-
-    @Override
-    protected RichFacesFileUploadItems instantiateListItems() {
-        return new RichFacesFileUploadItems();
-    }
+    WebElement getHeaderElement();
 
     @Override
-    public String toString() {
-        return getItems().toString();
-    }
+    SelectableListItems<T> getItems();
+
+    WebElement getListAreaElement();
+
+    /**
+     * Deselects all items and then selects items at chosen indexes. Checks and wait for each selection.
+     */
+    SelectableList<T> selectItemsByIndex(Integer first, Integer... other);
+
+    /**
+     * Returns all selected items;
+     */
+    SelectableListItems<T> getSelectedItems();
 }

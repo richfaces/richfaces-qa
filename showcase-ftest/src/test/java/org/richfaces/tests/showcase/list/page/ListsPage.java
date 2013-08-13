@@ -24,8 +24,8 @@ package org.richfaces.tests.showcase.list.page;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.list.simple.RichFacesSimpleList;
-import org.richfaces.tests.page.fragments.impl.list.simple.SimpleList.ListType;
+import org.richfaces.tests.page.fragments.impl.list.internal.simple.RichFacesSimpleList;
+import org.richfaces.tests.page.fragments.impl.list.internal.simple.SimpleList.ListType;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
