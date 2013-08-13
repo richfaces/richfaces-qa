@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.dataScroller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
@@ -116,6 +117,7 @@ public class RichFacesDataScroller implements DataScroller {
     }
 
     public class AdvancedInteractions {
+
         public WebElement getRoot() {
             return root;
         }
@@ -148,7 +150,7 @@ public class RichFacesDataScroller implements DataScroller {
         }
 
         public List<? extends WebElement> getAllPagesWebElements() {
-            return numberedPages;
+            return Collections.unmodifiableList(numberedPages);
         }
 
         public WebElement getFirstVisiblePageElement() {

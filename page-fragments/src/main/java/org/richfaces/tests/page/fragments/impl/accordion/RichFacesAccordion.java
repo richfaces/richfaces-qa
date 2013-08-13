@@ -1,5 +1,6 @@
 package org.richfaces.tests.page.fragments.impl.accordion;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
@@ -33,7 +34,7 @@ public class RichFacesAccordion extends AbstractSwitchableComponent<RichFacesAcc
     public class AdvancedInteractions extends AbstractSwitchableComponent<RichFacesAccordionItem>.AdvancedInteractions {
 
         public List<RichFacesAccordionItem> getAccordionItems() {
-            return accordionItems;
+            return Collections.unmodifiableList(accordionItems);
         }
 
         public RichFacesAccordionItem getActiveItem() {
