@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.autocomplete;
 
-import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 
 /**
@@ -38,7 +37,7 @@ public interface SelectOrConfirm {
     Autocomplete confirm();
 
     /**
-     * Selects the first option using mouse click.
+     * Selects the first option.
      *
      * @return returns back the Autocomplete component.
      * @throws RuntimeException when no option found
@@ -46,7 +45,7 @@ public interface SelectOrConfirm {
     Autocomplete select();
 
     /**
-     * Selects the option at index using mouse click.
+     * Selects the option at index.
      *
      * @param index index of suggestion
      * @return returns back the Autocomplete component.
@@ -55,7 +54,7 @@ public interface SelectOrConfirm {
     Autocomplete select(int index);
 
     /**
-     * Selects the first option, which matches given text using mouse click.
+     * Selects the first option, which matches given text.
      *
      * @param match string to match the suggestion
      * @return returns back the Autocomplete component.
@@ -64,7 +63,7 @@ public interface SelectOrConfirm {
     Autocomplete select(String match);
 
     /**
-     * Selects a choice from suggestions using mouse click.
+     * Selects a choice from suggestions.
      *
      * @param picker for picking from the choices
      * @return returns back the Autocomplete component.
@@ -73,17 +72,4 @@ public interface SelectOrConfirm {
      * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByVisibleTextChoicePicker
      */
     Autocomplete select(ChoicePicker picker);
-
-    /**
-     * Selects a choice from suggestions using @scrollingType.
-     *
-     * @param picker for picking from the choices
-     * @param scrollingType defines whether component should choose an item using keyboard or mouse
-     * @return returns back the Autocomplete component.
-     * @throws RuntimeException when no such option found
-     * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByIndexChoicePicker
-     * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByVisibleTextChoicePicker
-     */
-    Autocomplete select(ChoicePicker picker, ScrollingType scrollingType);
-
 }
