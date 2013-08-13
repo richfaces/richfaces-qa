@@ -74,6 +74,7 @@ public class RichFacesDropDownMenu extends AbstractPopupMenu {
     }
 
     public class AdvancedInteractions extends AbstractPopupMenu.AdvancedInteractions {
+
         public String getLangAttribute() {
             return topLvlElement.getAttribute("lang");
         }

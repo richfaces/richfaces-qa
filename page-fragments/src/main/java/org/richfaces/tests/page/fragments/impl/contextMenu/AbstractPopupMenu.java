@@ -23,6 +23,7 @@ package org.richfaces.tests.page.fragments.impl.contextMenu;
 
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -131,8 +132,8 @@ public abstract class AbstractPopupMenu {
     /* ****************************************************************************************************
      * Nested classes
      */
-
     public class AdvancedInteractions {
+
         /**
          * The right click invoker of popup menu
          */
@@ -171,7 +172,7 @@ public abstract class AbstractPopupMenu {
          * @return
          */
         public List<WebElement> getMenuItemElements() {
-            return getMenuItemElementsInternal();
+            return Collections.unmodifiableList(getMenuItemElementsInternal());
         }
 
         /**
@@ -231,7 +232,7 @@ public abstract class AbstractPopupMenu {
          * @return the popup menu items
          */
         public List<WebElement> getItems() {
-            return getMenuItemElements();
+            return Collections.unmodifiableList(getMenuItemElements());
         }
 
         /**
@@ -292,6 +293,7 @@ public abstract class AbstractPopupMenu {
     }
 
     public static final class LeftClickPopupMenuInvoker implements PopupMenuInvoker {
+
         @Override
         public void invoke(WebElement target) {
             target.click();
@@ -299,6 +301,7 @@ public abstract class AbstractPopupMenu {
     }
 
     public static final class RightClickPopupMenuInvoker implements PopupMenuInvoker {
+
         @Override
         public void invoke(WebElement target) {
             GrapheneContext context = ((GrapheneProxyInstance) target).getContext();
@@ -308,6 +311,7 @@ public abstract class AbstractPopupMenu {
     }
 
     public static final class HoverPopupMenuInvoker implements PopupMenuInvoker {
+
         @Override
         public void invoke(WebElement target) {
             GrapheneContext context = ((GrapheneProxyInstance) target).getContext();
@@ -319,7 +323,6 @@ public abstract class AbstractPopupMenu {
     /* ****************************************************************************************************
      * Help Methods
      */
-
     private void checkWhetherTargetIsSet() {
         if (target == null) {
             throw new IllegalStateException("The " + getNameOfFragment()
