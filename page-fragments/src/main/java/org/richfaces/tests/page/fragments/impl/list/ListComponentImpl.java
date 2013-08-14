@@ -21,20 +21,53 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.list;
 
-import org.jboss.arquillian.graphene.GrapheneElement;
+import java.util.List;
+
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 
 /**
+ * Basic ListComponent implementation.
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface ListItem {
+public class ListComponentImpl implements ListComponent {
 
-    /**
-     * @return text from this item
-     */
-    String getText();
+    @Root
+    private WebElement root;
 
-    /**
-     * @return root of this item
-     */
-    GrapheneElement getRoot();
+    @FindBy(jquery = "> *")
+    private List<WebElement> items;
+
+    @Override
+    public ListItem getItem(int index) {
+        return getItem(ChoicePickerHelper.byIndex().index(index));
+    }
+
+    @Override
+    public ListItem getItem(String text) {
+        return getItem(ChoicePickerHelper.byVisibleText().match(text));
+    }
+
+    @Override
+    public ListItem getItem(ChoicePicker picker) {
+        return Graphene.createPageFragment(RichFacesListItem.class, picker.pick(getItems()));
+    }
+
+    @Override
+    public int size() {
+        return getItems().size();
+    }
+
+    protected List<WebElement> getItems() {
+        return items;
+    }
+
+    protected WebElement getRoot() {
+        return root;
+    }
 }

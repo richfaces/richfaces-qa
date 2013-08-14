@@ -19,22 +19,37 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.list;
-
-import org.jboss.arquillian.graphene.GrapheneElement;
+package org.richfaces.tests.page.fragments.impl.orderingList;
 
 /**
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface ListItem {
+public interface OrderingInteraction {
 
     /**
-     * @return text from this item
+     * Clicks on the 'bottom' button.
+     * @throws RuntimeException when button cannot be clicked.
      */
-    String getText();
+    void bottom();
 
     /**
-     * @return root of this item
+     * Clicks on the 'down' button.
+     * @param times how many times to click on the button
+     * @throws RuntimeException when button cannot be clicked.
      */
-    GrapheneElement getRoot();
+    void down(int times);
+
+    /**
+     * Clicks on the 'top' button.
+     * @throws RuntimeException when button cannot be clicked.
+     */
+    void top();
+
+    /**
+     * Clicks on the 'up' button.
+     * @param times how many times to click on the button
+     * @throws RuntimeException when button cannot be clicked.
+     */
+    void up(int times);
 }

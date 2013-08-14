@@ -21,20 +21,37 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.list;
 
-import org.jboss.arquillian.graphene.GrapheneElement;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface ListItem {
+public interface ListComponent {
 
     /**
-     * @return text from this item
+     * @param index
+     * @return item at index or null
      */
-    String getText();
+    ListItem getItem(int index);
 
     /**
-     * @return root of this item
+     * @param text
+     * @return first item which matches given text or null
      */
-    GrapheneElement getRoot();
+    ListItem getItem(String text);
+
+    /**
+     * Returns item found by @picker.
+     * @param picker for picking from the items
+     * @return found item or null
+     * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByIndexChoicePicker
+     * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByVisibleTextChoicePicker
+
+     */
+    ListItem getItem(ChoicePicker picker);
+
+    /**
+     * @return size of the list
+     */
+    int size();
 }
