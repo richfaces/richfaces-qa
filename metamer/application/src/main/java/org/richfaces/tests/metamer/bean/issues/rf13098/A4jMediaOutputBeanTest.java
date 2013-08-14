@@ -8,16 +8,16 @@ import java.io.OutputStream;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.imageio.ImageIO;
+import javax.inject.Named;
 
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.ui.output.mediaOutput.UIMediaOutput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@ManagedBean(name = "a4jMediaOutputBeanTest")
+@Named("a4jMediaOutputBeanTest")
 @RequestScoped
 public class A4jMediaOutputBeanTest implements Serializable {
     public static final String CSS_TEXT = "#mediaOutputMarked { color: red }";
@@ -68,27 +68,6 @@ public class A4jMediaOutputBeanTest implements Serializable {
     public void createContentImagePng(OutputStream out, Object data) throws IOException {
         if (data instanceof RF13098) {
             RF13098 paintData = (RF13098) data;
-            BufferedImage img = new BufferedImage(paintData.getWidth(), paintData.getHeight(), BufferedImage.TYPE_INT_RGB);
-            Graphics2D graphics2D = img.createGraphics();
-            graphics2D.clearRect(0, 0, paintData.getWidth(), paintData.getHeight());
-
-            graphics2D.setColor(Color.YELLOW);
-            graphics2D.fillRect(0, 0, paintData.getWidth() / 2, paintData.getHeight() / 2);
-
-            graphics2D.setColor(Color.RED);
-            graphics2D.fillRect(paintData.getWidth() / 2, 0, paintData.getWidth() / 2, paintData.getHeight() / 2);
-
-            graphics2D.setColor(Color.BLUE);
-            graphics2D.fillRect(0, paintData.getHeight() / 2, paintData.getWidth() / 2, paintData.getHeight() / 2);
-
-            graphics2D.setColor(Color.GREEN);
-            graphics2D.fillRect(paintData.getWidth() / 2, paintData.getHeight() / 2, paintData.getWidth() / 2,
-                paintData.getHeight() / 2);
-
-            ImageIO.write(img, "png", out);
-        }
-        if (data instanceof RF13098SerializableOnly) {
-            RF13098SerializableOnly paintData = (RF13098SerializableOnly) data;
             BufferedImage img = new BufferedImage(paintData.getWidth(), paintData.getHeight(), BufferedImage.TYPE_INT_RGB);
             Graphics2D graphics2D = img.createGraphics();
             graphics2D.clearRect(0, 0, paintData.getWidth(), paintData.getHeight());

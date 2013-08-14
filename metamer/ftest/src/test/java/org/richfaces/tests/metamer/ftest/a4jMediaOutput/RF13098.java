@@ -14,12 +14,12 @@ import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
-public class RF13098 extends AbstractMediaOutputTest{
+public class RF13098 extends AbstractMediaOutputTest {
 
-    @FindBy (id = "img1")
+    @FindBy(id = "img1")
     private WebElement imageOne;
 
-    @FindBy (id = "img2")
+    @FindBy(id = "img2")
     private WebElement imageTwo;
 
     @Override
@@ -31,19 +31,6 @@ public class RF13098 extends AbstractMediaOutputTest{
     public void testImageWithSerializedResource() {
         BufferedImage image = null;
         URL imageURL = buildUrl(contextPath, imageOne.getAttribute("src"));
-        try {
-            image = ImageIO.read(imageURL);
-        } catch (IOException ex) {
-            fail("Could not download image from URL " + imageURL.getPath());
-        }
-        assertEquals(image.getHeight(), 120, "Height of the image");
-        assertEquals(image.getWidth(), 300, "Width of the image");
-    }
-
-    @Test
-    public void testImageWithSerializationOnly() {
-        BufferedImage image = null;
-        URL imageURL = buildUrl(contextPath, imageTwo.getAttribute("src"));
         try {
             image = ImageIO.read(imageURL);
         } catch (IOException ex) {

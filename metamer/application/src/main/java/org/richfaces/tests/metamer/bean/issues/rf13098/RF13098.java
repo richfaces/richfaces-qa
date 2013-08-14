@@ -1,13 +1,13 @@
 package org.richfaces.tests.metamer.bean.issues.rf13098;
 
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import org.richfaces.resource.SerializableResource;
 
 @Named("cdiBean")
 @RequestScoped
-public class RF13098 implements SerializableResource{
+public class RF13098 implements SerializableResource {
     private static final long serialVersionUID = 1L;
     int height = 120;
     int width = 300;
