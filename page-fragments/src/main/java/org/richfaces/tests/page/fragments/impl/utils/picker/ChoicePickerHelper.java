@@ -24,13 +24,17 @@ package org.richfaces.tests.page.fragments.impl.utils.picker;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
+import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import java.util.List;
+import java.util.Set;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -43,28 +47,37 @@ public final class ChoicePickerHelper {
     }
 
     /**
-     * @return Returns ChoicePicker for picking choices by visible text. The picker can have multiple conditions/filters (e.g. startsWith('xy').endsWith('z')).
-     */
-    public static ByVisibleTextChoicePicker byVisibleText() {
-        return new ByVisibleTextChoicePicker();
-    }
-
-    /**
      * @return Returns ChoicePicker for picking choices by index.
      */
     public static ByIndexChoicePicker byIndex() {
         return new ByIndexChoicePicker();
     }
 
-    public static class ByIndexChoicePicker implements ChoicePicker {
+    /**
+     * @return Returns ChoicePicker for picking choices by visible text. The picker can have multiple conditions/filters (e.g. startsWith('xy').endsWith('z')).
+     */
+    public static ByVisibleTextChoicePicker byVisibleText() {
+        return new ByVisibleTextChoicePicker();
+    }
 
-        private FindCommand command;
+    public static class ByIndexChoicePicker implements ChoicePicker, MultipleChoicePicker {
+
+        private final Set<FindCommand> commands = Sets.newHashSet();
 
         private ByIndexChoicePicker() {
         }
 
         public ByIndexChoicePicker first() {
-            command = new FindCommand() {
+            commands.add(new FindCommand() {
+
+                @Override
+                public boolean equals(Object obj) {
+                    if (obj instanceof FindCommand) {
+                        FindCommand cmd = (FindCommand) obj;
+                        return cmd.hashCode() == this.hashCode();
+                    }
+                    return FALSE;
+                }
 
                 @Override
                 public WebElement find(List<WebElement> list) {
@@ -72,15 +85,29 @@ public final class ChoicePickerHelper {
                 }
 
                 @Override
+                public int hashCode() {
+                    return 0;
+                }
+
+                @Override
                 public String toString() {
                     return "firstIndex";
                 }
-            };
+            });
             return this;
         }
 
         public ByIndexChoicePicker index(final int index) {
-            command = new FindCommand() {
+            commands.add(new FindCommand() {
+
+                @Override
+                public boolean equals(Object obj) {
+                    if (obj instanceof FindCommand) {
+                        FindCommand cmd = (FindCommand) obj;
+                        return cmd.hashCode() == this.hashCode();
+                    }
+                    return FALSE;
+                }
 
                 @Override
                 public WebElement find(List<WebElement> list) {
@@ -88,15 +115,29 @@ public final class ChoicePickerHelper {
                 }
 
                 @Override
+                public int hashCode() {
+                    return index;
+                }
+
+                @Override
                 public String toString() {
                     return "index(" + index + ")";
                 }
-            };
+            });
             return this;
         }
 
         public ByIndexChoicePicker last() {
-            command = new FindCommand() {
+            commands.add(new FindCommand() {
+
+                @Override
+                public boolean equals(Object obj) {
+                    if (obj instanceof FindCommand) {
+                        FindCommand cmd = (FindCommand) obj;
+                        return cmd.hashCode() == this.hashCode();
+                    }
+                    return FALSE;
+                }
 
                 @Override
                 public WebElement find(List<WebElement> list) {
@@ -104,24 +145,39 @@ public final class ChoicePickerHelper {
                 }
 
                 @Override
+                public int hashCode() {
+                    return Integer.MAX_VALUE;
+                }
+
+                @Override
                 public String toString() {
                     return "lastIndex";
                 }
-            };
+
+            });
             return this;
         }
 
         @Override
         public WebElement pick(List<WebElement> options) {
+            return pickMultiple(options).get(0);
+        }
+
+        @Override
+        public List<WebElement> pickMultiple(List<WebElement> options) {
             Preconditions.checkNotNull(options, "Options cannot be null.");
             Preconditions.checkArgument(!options.isEmpty(), "Options cannot be empty.");
-            Preconditions.checkNotNull(command, "No filter specified.");
-            return command.find(options);
+            Preconditions.checkArgument(!commands.isEmpty(), "No filter specified.");
+            Set<WebElement> result = Sets.newHashSet();
+            for (FindCommand command : commands) {
+                result.add(command.find(options));
+            }
+            return Lists.newArrayList(result);
         }
 
         @Override
         public String toString() {
-            return (command == null ? "unknown index picking" : command.toString());
+            return (commands.isEmpty() ? "unknown index picking" : commands.toString());
         }
 
         private interface FindCommand {
@@ -130,67 +186,34 @@ public final class ChoicePickerHelper {
         }
     };
 
-    public static class ByVisibleTextChoicePicker implements ChoicePicker {
+    public static class ByVisibleTextChoicePicker implements ChoicePicker, MultipleChoicePicker {
 
-        private final List<Predicate> filters = Lists.newArrayList();
+        private static final int CONTAINS = 89;
+        private static final int MATCHES = 47;
+        private static final int STARTS = 97;
+        private static final int ENDS = 37;
+
+        private final Set<Predicate> filters = Sets.newHashSet();
+        private boolean allRulesMustPass = Boolean.TRUE;
+        private Function<WebElement, WebElement> transformationFunction;
 
         private ByVisibleTextChoicePicker() {
         }
 
-        private ByVisibleTextChoicePicker addFilter(Predicate<WebElement> filter) {
+        public ByVisibleTextChoicePicker addFilter(Predicate<WebElement> filter) {
             filters.add(filter);
             return this;
         }
 
-        public ByVisibleTextChoicePicker match(final String str) {
-            return addFilter(new Predicate<WebElement>() {
-
-                @Override
-                public boolean apply(WebElement input) {
-                    return input.getText().matches(str);
-                }
-
-                @Override
-                public String toString() {
-                    return "matches('" + str + "')";
-                }
-            });
-        }
-
-        @Override
-        public WebElement pick(List<WebElement> options) {
-            Preconditions.checkNotNull(options, "Options cannot be null.");
-            Preconditions.checkArgument(!options.isEmpty(), "Options cannot be empty.");
-            Preconditions.checkArgument(!filters.isEmpty(), "No filters specified.");
-            Iterable<WebElement> result = Iterables.filter(options, new Predicate<WebElement>() {
-
-                @Override
-                public boolean apply(WebElement input) {
-                    for (Predicate predicate : filters) {
-                        if (!predicate.apply(input)) {
-                            return FALSE;
-                        }
-                    }
-                    return TRUE;
-                }
-            });
-
-            return (result.iterator().hasNext() ? result.iterator().next() : null);
-        }
-
-        public ByVisibleTextChoicePicker startsWith(final String str) {
-            return addFilter(new Predicate<WebElement>() {
-
-                @Override
-                public boolean apply(WebElement input) {
-                    return input.getText().startsWith(str);
-                }
-
-                @Override
-                public String toString() {
-                    return "startsWith('" + str + "')";
-                }
-            });
+        /**
+         * If true, then all rules/filters must pass to pick an element.
+         * If false, then if at least one rule/filter passes, element will be picked.
+         * Default value is true.
+         * @param allRulesMustPass
+         */
+        public ByVisibleTextChoicePicker allRulesMustPass(boolean allRulesMustPass) {
+            this.allRulesMustPass = allRulesMustPass;
+            return this;
         }
 
         public ByVisibleTextChoicePicker contains(final String str) {
@@ -202,9 +225,27 @@ public final class ChoicePickerHelper {
                 }
 
                 @Override
+                public boolean equals(Object obj) {
+                    if (obj instanceof Predicate) {
+                        Predicate<WebElement> p = (Predicate<WebElement>) obj;
+                        return p.hashCode() == this.hashCode();
+                    }
+                    return FALSE;
+                }
+
+                @Override
+                public int hashCode() {
+                    int hash = 3;
+                    hash = 89 * hash + CONTAINS;
+                    hash = 89 * hash + (str != null ? str.hashCode() : 0);
+                    return hash;
+                }
+
+                @Override
                 public String toString() {
                     return "contains('" + str + "')";
                 }
+
             });
         }
 
@@ -217,8 +258,160 @@ public final class ChoicePickerHelper {
                 }
 
                 @Override
+                public boolean equals(Object obj) {
+                    if (obj instanceof Predicate) {
+                        Predicate<WebElement> p = (Predicate<WebElement>) obj;
+                        return p.hashCode() == this.hashCode();
+                    }
+                    return FALSE;
+                }
+
+                @Override
+                public int hashCode() {
+                    int hash = 5;
+                    hash = 97 * hash + ENDS;
+                    hash = 97 * hash + (str != null ? str.hashCode() : 0);
+                    return hash;
+                }
+
+                @Override
                 public String toString() {
                     return "endsWith('" + str + "')";
+                }
+            });
+        }
+
+        public ByVisibleTextChoicePicker match(final String str) {
+            return addFilter(new Predicate<WebElement>() {
+
+                @Override
+                public boolean apply(WebElement input) {
+                    return input.getText().matches(str);
+                }
+
+                @Override
+                public boolean equals(Object obj) {
+                    if (obj instanceof Predicate) {
+                        Predicate<WebElement> p = (Predicate<WebElement>) obj;
+                        return p.hashCode() == this.hashCode();
+                    }
+                    return FALSE;
+                }
+
+                @Override
+                public int hashCode() {
+                    int hash = 3;
+                    hash = 59 * hash + MATCHES;
+                    hash = 59 * hash + (str != null ? str.hashCode() : 0);
+                    return hash;
+                }
+
+                @Override
+                public String toString() {
+                    return "matches('" + str + "')";
+                }
+            });
+        }
+
+        @Override
+        public WebElement pick(List<WebElement> options) {
+            return pickMultiple(options).get(0);
+        }
+
+        @Override
+        public List<WebElement> pickMultiple(List<WebElement> options) {
+            Preconditions.checkNotNull(options, "Options cannot be null.");
+            Preconditions.checkArgument(!options.isEmpty(), "Options cannot be empty.");
+            Preconditions.checkArgument(!filters.isEmpty(), "No filters specified.");
+            List<WebElement> result = Lists.newArrayList(Iterables.filter(options, new Predicate<WebElement>() {
+
+                @Override
+                public boolean apply(WebElement input) {
+                    WebElement element = transFormIfNeeded(input);
+                    if (allRulesMustPass) {
+                        for (Predicate predicate : filters) {
+                            if (!predicate.apply(element)) {
+                                return FALSE;
+                            }
+                        }
+                        return TRUE;
+                    } else {
+                        for (Predicate predicate : filters) {
+                            if (predicate.apply(element)) {
+                                return TRUE;
+                            }
+                        }
+                        return FALSE;
+                    }
+                }
+            }));
+            return result;
+        }
+
+        /**
+         * Sets a transformation function, that will be used to transform each WebElement from list of possible choices
+         * to another WebElement.
+         *
+         * Example:
+         * This picker will be picking and comparing text from such divs:
+         * <code>
+         *  <div>
+         *      <span>text1</span>
+         *      <span>text2</span>
+         *  </div>
+         * </code> ,
+         * but you want to compare the text only with the second span.
+         * The only thing you need to do is to add this function:
+         * <code>
+         * new Function<WebElement, WebElement>() {
+         *      @Override
+         *      public WebElement apply(WebElement input) {
+         *          return input.findElements(By.tagName("span")).get(1);
+         *      }
+         *  }
+         * </code>
+         *
+         * @param transformationFunction
+         */
+        public void setTransformationFunction(Function<WebElement, WebElement> transformationFunction) {
+            this.transformationFunction = transformationFunction;
+            new Function<WebElement, WebElement>() {
+
+                @Override
+                public WebElement apply(WebElement input) {
+                    return input.findElements(By.tagName("span")).get(1);
+                }
+            };
+        }
+
+        public ByVisibleTextChoicePicker startsWith(final String str) {
+            return addFilter(new Predicate<WebElement>() {
+
+                @Override
+                public boolean apply(WebElement input) {
+                    return input.getText().startsWith(str);
+                }
+
+                @Override
+                public boolean equals(Object obj) {
+                    if (obj instanceof Predicate) {
+                        Predicate<WebElement> p = (Predicate<WebElement>) obj;
+                        return p.hashCode() == this.hashCode();
+                    }
+                    return FALSE;
+                }
+
+                @Override
+                public int hashCode() {
+                    int hash = 3;
+                    hash = 53 * hash + STARTS;
+                    hash = 53 * hash + (str != null ? str.hashCode() : 0);
+                    return hash;
+                }
+
+                @Override
+                public String toString() {
+                    return "startsWith('" + str + "')";
                 }
             });
         }
@@ -226,6 +419,10 @@ public final class ChoicePickerHelper {
         @Override
         public String toString() {
             return (filters.isEmpty() ? "no filters specified" : filters.toString());
+        }
+
+        private WebElement transFormIfNeeded(WebElement input) {
+            return (transformationFunction == null ? input : transformationFunction.apply(input));
         }
     };
 }

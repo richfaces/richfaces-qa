@@ -26,16 +26,14 @@ import java.util.List;
 import org.openqa.selenium.WebElement;
 
 /**
- * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- * @see ChoicePickerHelper
  */
-public interface ChoicePicker {
+public interface MultipleChoicePicker {
 
     /**
-     * Picks the first WebElement from the @options, that meets all requirements depending on implementation.
+     * Picks multiple WebElements from the @options, that meets all requirements depending on implementation.
      * @param options options to be picked from.
-     * @return null or WebElement that meets all requirements.
+     * @return List of WebElement that meets all requirements or an empty list.
      */
-    WebElement pick(List<WebElement> options);
+    List<WebElement> pickMultiple(List<WebElement> options);
 }
