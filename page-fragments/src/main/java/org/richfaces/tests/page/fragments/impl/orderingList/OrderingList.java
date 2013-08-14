@@ -19,22 +19,42 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.list;
+package org.richfaces.tests.page.fragments.impl.orderingList;
 
-import org.jboss.arquillian.graphene.GrapheneElement;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 
 /**
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface ListItem {
+public interface OrderingList {
 
     /**
-     * @return text from this item
+     * Selects the first option, which matches given text.
+     *
+     * @param visibleText text to match
+     * @return PuttingSelectedItem (@see PuttingSelectedItem) state of OrderingList
+     * @throws RuntimeException when no such option found
      */
-    String getText();
+    PuttingSelectedItem select(String visibleText);
 
     /**
-     * @return root of this item
+     * Selects the choice at index.
+     *
+     * @param index index of the choice
+     * @return PuttingSelectedItem (@see PuttingSelectedItem) state of OrderingList
+     * @throws RuntimeException when no such option found
      */
-    GrapheneElement getRoot();
+    PuttingSelectedItem select(Integer index);
+
+    /**
+     * Selects a choice from suggestions.
+     *
+     * @param picker for picking from the choices
+     * @return PuttingSelectedItem (@see PuttingSelectedItem) state of OrderingList
+     * @throws RuntimeException when no such option found
+     * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByIndexChoicePicker
+     * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByVisibleTextChoicePicker
+     */
+    PuttingSelectedItem select(ChoicePicker picker);
 }

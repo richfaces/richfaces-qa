@@ -22,19 +22,24 @@
 package org.richfaces.tests.page.fragments.impl.list;
 
 import org.jboss.arquillian.graphene.GrapheneElement;
+import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.openqa.selenium.WebElement;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface ListItem {
+public class RichFacesListItem implements ListItem {
 
-    /**
-     * @return text from this item
-     */
-    String getText();
+    @Root
+    private WebElement root;
 
-    /**
-     * @return root of this item
-     */
-    GrapheneElement getRoot();
+    @Override
+    public GrapheneElement getRoot() {
+        return new GrapheneElement(root);
+    }
+
+    @Override
+    public String getText() {
+        return root.getText();
+    }
 }
