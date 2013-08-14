@@ -57,7 +57,7 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest {
     @Test
     public void testImmediate() {
         editorAttributes.set(EditorAttributes.immediate, Boolean.TRUE);
-        verifyValueChangeListener(page.hButton, page.valueChangeListenerAfterImmediate);
+        verifyValueChangeListener(page.getHButton(), page.getValueChangeListenerAfterImmediate());
     }
 
     @Test
@@ -65,23 +65,23 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest {
         String testedValue = "dirty";
         editorAttributes.set(EditorAttributes.ondirty, "metamerEvents += \"" + testedValue + " \"");
         executeJS("window.metamerEvents = \"\";");
-        typeTextToEditor("x");
+        page.getEditor().type("x");
         String event = expectedReturnJS("return window.metamerEvents", testedValue);
         assertEquals(event, "dirty", "Attribute ondirty doesn't work");
     }
 
     @Test
     public void testTypeAndSubmit() throws InterruptedException {
-        typeTextToEditor("SOMETHING");
-        page.hButton.submit();
-        Graphene.waitModel().until().element(page.output).text().contains("SOMETHING");
+        page.getEditor().type("SOMETHING");
+        page.getHButton().submit();
+        Graphene.waitModel().until().element(page.getOutput()).text().contains("SOMETHING");
     }
 
     @Test
     public void testValue() {
         // write some value in editor and submit by normal way
-        typeTextToEditor("text1");
-        page.hButton.submit();
+        page.getEditor().type("text1");
+        page.getHButton().submit();
 
         // then set value from outside, and check this value in editor
         editorAttributes.set(EditorAttributes.value, "text2");
@@ -91,17 +91,17 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest {
 
     @Test
     public void testValueChangeListenerWithHButton() {
-        verifyValueChangeListener(page.hButton, page.valueChangeListener);
+        verifyValueChangeListener(page.getHButton(), page.getValueChangeListener());
     }
 
     @Test
     public void testValueChangeListenerWithA4jButton() {
-        verifyValueChangeListener(page.a4jButton, page.valueChangeListener);
+        verifyValueChangeListener(page.getA4jButton(), page.getValueChangeListener());
     }
 
     /**
-     * Method for retrieve text from editor. Editor lives within iFrame, so there are need some additional steps to
-     * reach element containing editor text
+     * Method for retrieve text from editor. Editor lives within iFrame, so there are need some additional steps to reach
+     * element containing editor text
      *
      * @return
      */
@@ -117,37 +117,18 @@ public class TestRichEditorWithTyping extends AbstractWebDriverTest {
     }
 
     /**
-     * Since editor component lives within iFrame element, additional steps are required
-     *
-     * This method selects appropriate iframe, do action, and return focus to PARENT frame
-     *
-     * @param text
-     */
-    private void typeTextToEditor(String text) {
-        try {
-            // driver.switchTo().frame(page.editorFrame);
-            driver.switchTo().frame(0);// must be this way
-            WebElement activeArea = driver.findElement(By.tagName("body"));
-            activeArea.click();
-            activeArea.sendKeys(text);
-        } finally {
-            driver.switchTo().defaultContent();
-        }
-    }
-
-    /**
-     * Provide common steps needed to verify valueChangeListener. Accepts JQueryLocator for submit button - provide
-     * ability to verify JSF submit as well as Ajax submit.
+     * Provide common steps needed to verify valueChangeListener. Accepts JQueryLocator for submit button - provide ability to
+     * verify JSF submit as well as Ajax submit.
      *
      * @param submitBtn
      */
     private void verifyValueChangeListener(WebElement submitBtn, final WebElement listener) {
 
-        typeTextToEditor("text1");
+        page.getEditor().type("text1");
         // and submit typed text
         submitBtn.submit();
-        Graphene.waitModel().until().element(page.output).text().contains("text1");
-        typeTextToEditor("text2");
+        Graphene.waitModel().until().element(page.getOutput()).text().contains("text1");
+        page.getEditor().type("text2");
         // and submit typed text
         submitBtn.submit();
         Graphene.waitModel().until(new Predicate<WebDriver>() {

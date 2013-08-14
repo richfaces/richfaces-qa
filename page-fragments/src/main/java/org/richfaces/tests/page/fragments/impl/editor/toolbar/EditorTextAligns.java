@@ -1,6 +1,6 @@
 package org.richfaces.tests.page.fragments.impl.editor.toolbar;
 
-public enum EditorTextAligns implements EditorToolbar {
+public enum EditorTextAligns implements EditorButton {
     LEFT("cke_button_justifyleft"),
     CENTER("cke_button_justifycenter"),
     RIGHT("cke_button_justifyright"),
@@ -17,7 +17,6 @@ public enum EditorTextAligns implements EditorToolbar {
         return this.className;
     }
 
-    @Override
     public String getCSSClassName() {
         return className;
     }

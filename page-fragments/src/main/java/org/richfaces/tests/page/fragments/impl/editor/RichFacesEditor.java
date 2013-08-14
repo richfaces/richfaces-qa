@@ -22,19 +22,15 @@
 package org.richfaces.tests.page.fragments.impl.editor;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.editor.toolbar.EditorToolbar;
+import org.richfaces.tests.page.fragments.impl.editor.toolbar.RichFacesEditorToolbar;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -48,7 +44,7 @@ public class RichFacesEditor implements Editor {
     private WebDriver browser;
 
     @FindBy(css = ".cke_toolbox")
-    private EditorToolbar toolbar;
+    private RichFacesEditorToolbar toolbar;
 
     @ArquillianResource
     private JavascriptExecutor executor;
@@ -93,13 +89,8 @@ public class RichFacesEditor implements Editor {
 
     public class AdvancedInteractions {
 
-        public EditorToolbar getToolbar() {
+        public RichFacesEditorToolbar getToolbar() {
             return toolbar;
-        }
-
-        public WebElement getButton(EditorToolbar whichButton) {
-            String className = whichButton.getCSSClassName();
-            return root.findElement(By.className(className));
         }
 
         public void clear(ClearType clearType) {

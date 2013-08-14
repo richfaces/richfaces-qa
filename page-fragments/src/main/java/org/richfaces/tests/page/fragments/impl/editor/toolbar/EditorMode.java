@@ -1,6 +1,6 @@
 package org.richfaces.tests.page.fragments.impl.editor.toolbar;
 
-public enum EditorMode implements EditorToolbar {
+public enum EditorMode implements EditorButton {
 
     SOURCE("cke_button_source"),
     SPELL_CHECK_AS_YOU_TYPE("cke_button_scayt"),
@@ -27,7 +27,6 @@ public enum EditorMode implements EditorToolbar {
         return className;
     }
 
-    @Override
     public String getCSSClassName() {
         return className;
     }
