@@ -132,14 +132,31 @@ public class RichFacesOrderingList implements OrderingList {
 
     private class PuttingSelectedItemImpl implements PuttingSelectedItem {
 
+        private void putAction(int positionSource, int positionTarget, int differenceToEnd) {
+            if (positionSource != positionTarget) {
+                int differenceBetween = positionTarget - positionSource;
+                int absBetween = Math.abs(differenceBetween);
+                int min = Math.min(absBetween, Math.min(positionTarget, differenceToEnd));
+                if (min == absBetween) {
+                    singleStepMove(differenceBetween);
+                } else if (min == positionTarget) {
+                    orderingInteraction.top();
+                    if (positionTarget != 0) {
+                        singleStepMove(positionTarget);
+                    }
+                } else {
+                    orderingInteraction.bottom();
+                    if (differenceToEnd != 0) {
+                        singleStepMove(-differenceToEnd);
+                    }
+                }
+            }
+        }
+
         @Override
         public void putItAfter(ChoicePicker picker) {
-            int boundaryEnd = items.size();
-            int indexOfElement = Utils.getIndexOfElement(selectedItems.get(0));
             int indexOfTargetItem = Utils.getIndexOfElement(picker.pick(items)) + 1;
-            if (indexOfElement != indexOfTargetItem) {
-                putAction(indexOfElement, indexOfTargetItem, boundaryEnd - indexOfTargetItem);
-            }
+            putAction(Utils.getIndexOfElement(selectedItems.get(0)), indexOfTargetItem, items.size() - indexOfTargetItem);
         }
 
         @Override
@@ -154,12 +171,8 @@ public class RichFacesOrderingList implements OrderingList {
 
         @Override
         public void putItBefore(ChoicePicker picker) {
-            int boundaryEnd = items.size();
-            int indexOfElement = Utils.getIndexOfElement(selectedItems.get(0));
             int indexOfTargetItem = Utils.getIndexOfElement(picker.pick(items));
-            if (indexOfElement != indexOfTargetItem) {
-                putAction(indexOfElement, indexOfTargetItem, boundaryEnd - indexOfTargetItem);
-            }
+            putAction(Utils.getIndexOfElement(selectedItems.get(0)), indexOfTargetItem, items.size() - indexOfTargetItem);
         }
 
         @Override
@@ -172,35 +185,12 @@ public class RichFacesOrderingList implements OrderingList {
             putItBefore(ChoicePickerHelper.byVisibleText().match(match));
         }
 
-        private void singleSteps(int difference) {
+        private void singleStepMove(int difference) {
             if (difference == 0) {// no operation
             } else if (difference > 0) {
-                System.out.println("putting down " + Math.abs(difference));
                 orderingInteraction.down(Math.abs(difference));
             } else {
-                System.out.println("putting up " + Math.abs(difference));
                 orderingInteraction.up(Math.abs(difference));
-            }
-        }
-
-        private void putAction(int positionSource, int positionTarget, int differenceToEnd) {
-            int differenceBetween = positionTarget - positionSource;
-            int absBetween = Math.abs(differenceBetween);
-            int min = Math.min(absBetween, Math.min(positionTarget, differenceToEnd));
-            if (min == absBetween) {
-                singleSteps(differenceBetween);
-            } else if (min == positionTarget) {
-                System.out.println("putting to top");
-                orderingInteraction.top();
-                if (positionTarget != 0) {
-                    singleSteps(positionTarget);
-                }
-            } else {
-                System.out.println("putting to bottom");
-                orderingInteraction.bottom();
-                if (differenceToEnd != 0) {
-                    singleSteps(-differenceToEnd);
-                }
             }
         }
     }
