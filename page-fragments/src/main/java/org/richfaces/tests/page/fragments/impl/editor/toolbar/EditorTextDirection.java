@@ -1,6 +1,6 @@
 package org.richfaces.tests.page.fragments.impl.editor.toolbar;
 
-public enum EditorTextDirection implements EditorToolbar {
+public enum EditorTextDirection implements EditorButton {
 
     FROM_RIGHT_TO_LEFT("cke_button_bidirtl"),
     FROM_LEFT_TO_RIGHT("cke_button_bidiltr");
@@ -16,7 +16,6 @@ public enum EditorTextDirection implements EditorToolbar {
         return this.className;
     }
 
-    @Override
     public String getCSSClassName() {
         return className;
     }

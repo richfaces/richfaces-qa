@@ -1,6 +1,6 @@
 package org.richfaces.tests.page.fragments.impl.editor.toolbar;
 
-public enum EditorOtherButton implements EditorToolbar {
+public enum EditorOtherButton implements EditorButton {
     SAVE("cke_button_save"),
     NEW_PAGE("cke_button_newpage"),
     PREVIEW("cke_button_preview"),
@@ -54,7 +54,6 @@ public enum EditorOtherButton implements EditorToolbar {
         return className;
     }
 
-    @Override
     public String getCSSClassName() {
         return className;
     }
