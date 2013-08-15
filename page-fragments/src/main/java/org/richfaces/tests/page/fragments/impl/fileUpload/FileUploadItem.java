@@ -19,41 +19,28 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.fileUpload.internal;
-
-import java.util.Iterator;
-import java.util.List;
+package org.richfaces.tests.page.fragments.impl.fileUpload;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.list.internal.AbstractListFragment;
-import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
 
 /**
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesFileUploadList extends AbstractListFragment<RichFacesFileUploadItem, RichFacesFileUploadItems> {
+public interface FileUploadItem extends ListItem {
 
-    @FindBy(className = "rf-fu-itm")
-    private List<WebElement> items;
+    boolean isUploaded();
 
-    @Override
-    public ListItems<RichFacesFileUploadItem> getItems() {
-        return createItems(items);
-    }
+    WebElement getClearOrDeleteElement();
 
-    @Override
-    protected Class<RichFacesFileUploadItem> getListItemType() {
-        return RichFacesFileUploadItem.class;
-    }
+    String getFilename();
 
-    @Override
-    protected RichFacesFileUploadItems instantiateListItems() {
-        return new RichFacesFileUploadItems();
-    }
+    WebElement getFilenameElement();
 
-    @Override
-    public String toString() {
-        return getItems().toString();
-    }
+    String getState();
+
+    WebElement getStateElement();
+
+    void remove();
 }

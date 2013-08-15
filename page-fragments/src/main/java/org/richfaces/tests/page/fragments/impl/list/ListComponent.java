@@ -23,6 +23,7 @@ package org.richfaces.tests.page.fragments.impl.list;
 
 import java.util.List;
 
+import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.MultipleChoicePicker;
 
@@ -64,6 +65,13 @@ public interface ListComponent<T extends ListItem> {
      * @return all items that returns picker
      */
     List<T> getItems(MultipleChoicePicker picker);
+
+    WebElement getRoot();
+
+    /**
+     * @return true if size() == 0 otherwise false
+     */
+    boolean isEmpty();
 
     /**
      * @return size of the list
