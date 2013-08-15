@@ -34,7 +34,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.input.fileUpload.RichFacesFileUpload;
+import org.richfaces.tests.page.fragments.impl.fileUpload.internal.RichFacesFileUpload;
 import org.testng.annotations.BeforeMethod;
 
 /**
