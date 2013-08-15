@@ -19,57 +19,19 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.fileUpload.internal;
+package org.richfaces.tests.page.fragments.impl.fileUpload;
 
 import java.io.File;
 
-import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.VisibleComponent;
-import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
-
 /**
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface FileUpload extends VisibleComponent {
+public interface FileUpload {
 
-    WebElement getAddButtonElement();
-
-    WebElement getClearAllButtonElement();
-
-    WebElement getFileInputElement();
-
-    WebElement getRootElement();
-
-    WebElement getUploadButtonElement();
-
-    /**
-     * Checks if the fileUpload is disabled.
-     */
-    boolean isDisabled();
-
-    /**
-     * Adds file to the items list.
-     * @param file file which will be uploaded.
-     */
-    FileUpload addFile(File file);
+    boolean addFile(File file);
 
     FileUpload clearAll();
 
-    /**
-     * Returns all items that will be uploaded or are already uploaded.
-     */
-    ListItems<RichFacesFileUploadItem> getItems();
-
-    RichFacesFileUploadList getItemsList();
-
-    /**
-     * Removes file(s) from list of items that will be uploaded or that are already uploaded.
-     * @param filename exact filename
-     */
-    FileUpload removeFile(String filename);
-
-    /**
-     * Uploads all files that are not uploaded yet and are in items list.
-     */
     FileUpload upload();
 }

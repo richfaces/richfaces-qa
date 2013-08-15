@@ -97,12 +97,18 @@ public abstract class AbstractListComponent<T extends ListItem> implements ListC
         return Collections.unmodifiableList(result);
     }
 
-    protected WebElement getRoot() {
+    @Override
+    public WebElement getRoot() {
         return root;
     }
 
     private T instantiateItemFragment(WebElement item) {
         return Graphene.createPageFragment(listItemClass, item);
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size() == 0;
     }
 
     @Override

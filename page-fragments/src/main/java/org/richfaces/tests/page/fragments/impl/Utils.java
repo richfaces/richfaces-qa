@@ -35,6 +35,7 @@ import org.json.simple.parser.ParseException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 
@@ -128,6 +129,15 @@ public final class Utils {
      */
     public static String getTextFromHiddenElement(WebElement element) {
         return getTextFromHiddenElement(getExecutorFromElement(element), element);
+    }
+
+    public static boolean isVisible(WebElement e) {
+        try {
+            e.isDisplayed();
+            return true;
+        } catch (NoSuchElementException ex) {
+            return false;
+        }
     }
 
     /**
