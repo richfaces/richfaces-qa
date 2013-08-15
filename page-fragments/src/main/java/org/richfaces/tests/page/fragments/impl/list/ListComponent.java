@@ -21,24 +21,28 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.list;
 
+import java.util.List;
+
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
+import org.richfaces.tests.page.fragments.impl.utils.picker.MultipleChoicePicker;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @param <T> type extending ListItem
  */
-public interface ListComponent {
+public interface ListComponent<T extends ListItem> {
 
     /**
      * @param index
      * @return item at index or null
      */
-    ListItem getItem(int index);
+    T getItem(int index);
 
     /**
      * @param text
      * @return first item which matches given text or null
      */
-    ListItem getItem(String text);
+    T getItem(String text);
 
     /**
      * Returns item found by @picker.
@@ -48,7 +52,18 @@ public interface ListComponent {
      * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByVisibleTextChoicePicker
 
      */
-    ListItem getItem(ChoicePicker picker);
+    T getItem(ChoicePicker picker);
+
+    /**
+     * @return all items in list
+     */
+    List<T> getItems();
+
+    /**
+     * @param picker for picking from list
+     * @return all items that returns picker
+     */
+    List<T> getItems(MultipleChoicePicker picker);
 
     /**
      * @return size of the list

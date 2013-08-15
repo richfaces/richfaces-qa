@@ -21,84 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.list;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.openqa.selenium.WebElement;
-
 /**
+ * An implementation of simple, one column rich:list
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesList extends ListComponentImpl {
-
-    @FindBy(className = "rf-dlst-dfn")
-    private List<WebElement> definitionsList;
-    @FindBy(className = "rf-olst-itm")
-    private List<WebElement> orderedList;
-    @FindBy(className = "rf-ulst-itm")
-    private List<WebElement> unorderedList;
-
-    private AdvancedInteractions interactions;
-
-    private static enum RichFacesListType {
-
-        DEFINITIONS("rf-dlst"),
-        ORDERED("rf-olst"),
-        UNORDERED("rf-ulst"),
-        UNKNOWN("");
-
-        private RichFacesListType(String containsClass) {
-            this.containsClass = containsClass;
-        }
-        private final String containsClass;
-
-        private static RichFacesListType[] getPossibleValues() {
-            return new RichFacesListType[]{ UNORDERED, ORDERED, DEFINITIONS };
-        }
-
-        private static RichFacesListType getListTypeFromRootElement(WebElement root) {
-            String styleClasses = root.getAttribute("class");
-            for (RichFacesListType type : getPossibleValues()) {
-                if (styleClasses.contains(type.containsClass)) {
-                    return type;
-                }
-            }
-            return UNKNOWN;
-        }
-    }
-
-    public AdvancedInteractions advanced() {
-        if (interactions == null) {
-            interactions = new AdvancedInteractions();
-        }
-        return interactions;
-    }
-
-    private List<WebElement> getCorrectList() {
-        RichFacesListType type = RichFacesListType.getListTypeFromRootElement(getRoot());
-        switch (type) {
-            case ORDERED:
-                return orderedList;
-            case UNORDERED:
-                return unorderedList;
-            case DEFINITIONS:
-                return definitionsList;
-            default:
-                return super.getItems();
-        }
-    }
-
-    @Override
-    protected List<WebElement> getItems() {
-        return getCorrectList();
-    }
-
-    public class AdvancedInteractions {
-
-        public List<WebElement> getListItems() {
-            return Collections.unmodifiableList(getItems());
-        }
-    }
+public class RichFacesList extends AbstractListComponent<RichFacesListItem> {
 }
