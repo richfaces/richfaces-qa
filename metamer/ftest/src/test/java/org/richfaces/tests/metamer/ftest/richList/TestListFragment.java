@@ -45,6 +45,7 @@ public class TestListFragment extends AbstractListTest {
     private RichFacesList list;
 
     private static final int ROW_COUNT = 20;
+    private static final int ROW_COUNT_DEFINITIONS = ROW_COUNT * 2;
     private final Attributes<ListAttributes> attributes = getAttributes();
 
     @Use(empty = false, enumeration = true)
@@ -60,8 +61,14 @@ public class TestListFragment extends AbstractListTest {
     @Templates("plain")
     public void testRows() {
         attributes.set(ListAttributes.type, type.getValue());
-        for (int position = 0; position < ROW_COUNT; position += 2) {
-            assertEquals(list.getItem(position).getText(), employees.get(position).getName());
+        if (type.equals(ListType.DEFINITIONS)) {
+            for (int position = 0; position < ROW_COUNT; position += 2) {
+                assertEquals(list.getItem(2 * position + 1).getText(), employees.get(position).getName());
+            }
+        } else {
+            for (int position = 0; position < ROW_COUNT; position += 2) {
+                assertEquals(list.getItem(position).getText(), employees.get(position).getName());
+            }
         }
     }
 
@@ -69,7 +76,10 @@ public class TestListFragment extends AbstractListTest {
     @Templates("plain")
     public void testSize() {
         attributes.set(ListAttributes.type, type.getValue());
-        assertEquals(list.size(), ROW_COUNT);
+        if (type.equals(ListType.DEFINITIONS)) {
+            assertEquals(list.size(), ROW_COUNT_DEFINITIONS);
+        } else {
+            assertEquals(list.size(), ROW_COUNT);
+        }
     }
-
 }

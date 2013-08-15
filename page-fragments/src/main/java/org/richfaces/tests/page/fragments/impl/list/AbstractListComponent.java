@@ -21,21 +21,27 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.list;
 
+import com.google.common.collect.Lists;
+
+import java.util.Collections;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jodah.typetools.TypeResolver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
+import org.richfaces.tests.page.fragments.impl.utils.picker.MultipleChoicePicker;
 
 /**
- * Basic ListComponent implementation.
+ * Base for ListComponents implementations.
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @param <T>
  */
-public class ListComponentImpl implements ListComponent {
+public abstract class AbstractListComponent<T extends ListItem> implements ListComponent<T> {
 
     @Root
     private WebElement root;
@@ -43,19 +49,60 @@ public class ListComponentImpl implements ListComponent {
     @FindBy(jquery = "> *")
     private List<WebElement> items;
 
+    private final Class<T> listItemClass;
+
+    public AbstractListComponent() {
+        listItemClass = (Class<T>) TypeResolver.resolveRawArgument(ListComponent.class, getClass());
+    }
+
     @Override
-    public ListItem getItem(int index) {
+    public T getItem(int index) {
         return getItem(ChoicePickerHelper.byIndex().index(index));
     }
 
     @Override
-    public ListItem getItem(String text) {
+    public T getItem(String text) {
         return getItem(ChoicePickerHelper.byVisibleText().match(text));
     }
 
     @Override
-    public ListItem getItem(ChoicePicker picker) {
-        return Graphene.createPageFragment(RichFacesListItem.class, picker.pick(getItems()));
+    public T getItem(ChoicePicker picker) {
+        return instantiateItemFragment(picker.pick(getItemsElements()));
+    }
+
+    @Override
+    public List<T> getItems(MultipleChoicePicker picker) {
+        List<WebElement> foundItems = picker.pickMultiple(getItemsElements());
+        List<T> result = Lists.newArrayList();
+        for (WebElement foundItem : foundItems) {
+            result.add(instantiateItemFragment(foundItem));
+        }
+        return result;
+    }
+
+    @Override
+    public List<T> getItems() {
+        return getItemsFragments();
+    }
+
+    protected List<WebElement> getItemsElements() {
+        return Collections.unmodifiableList(items);
+    }
+
+    protected List<T> getItemsFragments() {
+        List<T> result = Lists.newArrayList();
+        for (WebElement foundItem : getItemsElements()) {
+            result.add(instantiateItemFragment(foundItem));
+        }
+        return Collections.unmodifiableList(result);
+    }
+
+    protected WebElement getRoot() {
+        return root;
+    }
+
+    private T instantiateItemFragment(WebElement item) {
+        return Graphene.createPageFragment(listItemClass, item);
     }
 
     @Override
@@ -63,11 +110,4 @@ public class ListComponentImpl implements ListComponent {
         return getItems().size();
     }
 
-    protected List<WebElement> getItems() {
-        return items;
-    }
-
-    protected WebElement getRoot() {
-        return root;
-    }
 }

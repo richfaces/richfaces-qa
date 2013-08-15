@@ -32,7 +32,7 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.list.ListComponent;
-import org.richfaces.tests.page.fragments.impl.list.ListComponentImpl;
+import org.richfaces.tests.page.fragments.impl.list.RichFacesList;
 import org.richfaces.tests.page.fragments.impl.utils.Actions;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
@@ -61,7 +61,7 @@ public class RichFacesOrderingList implements OrderingList {
     private List<WebElement> selectedItems;
 
     @FindBy(css = "div.rf-ord-lst-scrl > div[id$=Items]")
-    private ListComponentImpl list;
+    private RichFacesList list;
 
     @Drone
     private WebDriver driver;
