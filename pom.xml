@@ -78,7 +78,7 @@ FSF site: http://www.fsf.org. -->
         <jboss7-1Home>${project.build.directory}/jboss-as-${version.jbossas7-1}</jboss7-1Home>
         <jboss6Home>${project.build.directory}/jboss-${version.jbossas6}</jboss6Home>
         <jbossEAP61Home>${project.build.directory}/jboss-eap-6.1</jbossEAP61Home>
-        <wildfly8-0Home>${project.build.directory}/jboss-as-${version.jbossas7-1}</wildfly8-0Home>
+        <wildfly8-0Home>${project.build.directory}/jboss-as-${version.wildfly8-0}</wildfly8-0Home>
 
         <showcase.classifier>jbas7</showcase.classifier>
         <metamer.classifier>jbas71</metamer.classifier>
