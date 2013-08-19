@@ -31,6 +31,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -160,19 +161,29 @@ public final class ChoicePickerHelper {
 
         @Override
         public WebElement pick(List<WebElement> options) {
-            return pickMultiple(options).get(0);
+            List<WebElement> elements = pickInner(options, TRUE);
+            return (elements.isEmpty() ? null : elements.get(0));
+        }
+
+        private List<WebElement> pickInner(List<WebElement> options, boolean pickFirst) {
+            Preconditions.checkNotNull(options, "Options cannot be null.");
+            Preconditions.checkArgument(!commands.isEmpty(), "No filter specified.");
+            if (options.isEmpty()) {
+                return Collections.EMPTY_LIST;
+            }
+            Set<WebElement> result = Sets.newHashSet();
+            for (FindCommand command : commands) {
+                result.add(command.find(options));
+                if (pickFirst) {
+                    break;
+                }
+            }
+            return Lists.newArrayList(result);
         }
 
         @Override
         public List<WebElement> pickMultiple(List<WebElement> options) {
-            Preconditions.checkNotNull(options, "Options cannot be null.");
-            Preconditions.checkArgument(!options.isEmpty(), "Options cannot be empty.");
-            Preconditions.checkArgument(!commands.isEmpty(), "No filter specified.");
-            Set<WebElement> result = Sets.newHashSet();
-            for (FindCommand command : commands) {
-                result.add(command.find(options));
-            }
-            return Lists.newArrayList(result);
+            return pickInner(options, FALSE);
         }
 
         @Override
@@ -315,37 +326,26 @@ public final class ChoicePickerHelper {
 
         @Override
         public WebElement pick(List<WebElement> options) {
-            return pickMultiple(options).get(0);
+            List<WebElement> elements = pickInner(options, TRUE);
+            return (elements.isEmpty() ? null : elements.get(0));
+        }
+
+        private List<WebElement> pickInner(List<WebElement> options, boolean pickFirst) {
+            Preconditions.checkNotNull(options, "Options cannot be null.");
+            Preconditions.checkArgument(!filters.isEmpty(), "No filters specified.");
+            if (options.isEmpty()) {
+                return Collections.EMPTY_LIST;
+            }
+
+            List<WebElement> result = pickFirst
+                ? Lists.newArrayList(Iterables.find(options, new PickPredicate()))
+                : Lists.newArrayList(Iterables.filter(options, new PickPredicate()));
+            return result;
         }
 
         @Override
         public List<WebElement> pickMultiple(List<WebElement> options) {
-            Preconditions.checkNotNull(options, "Options cannot be null.");
-            Preconditions.checkArgument(!options.isEmpty(), "Options cannot be empty.");
-            Preconditions.checkArgument(!filters.isEmpty(), "No filters specified.");
-            List<WebElement> result = Lists.newArrayList(Iterables.filter(options, new Predicate<WebElement>() {
-
-                @Override
-                public boolean apply(WebElement input) {
-                    WebElement element = transFormIfNeeded(input);
-                    if (allRulesMustPass) {
-                        for (Predicate predicate : filters) {
-                            if (!predicate.apply(element)) {
-                                return FALSE;
-                            }
-                        }
-                        return TRUE;
-                    } else {
-                        for (Predicate predicate : filters) {
-                            if (predicate.apply(element)) {
-                                return TRUE;
-                            }
-                        }
-                        return FALSE;
-                    }
-                }
-            }));
-            return result;
+            return pickInner(options, FALSE);
         }
 
         /**
@@ -423,6 +423,29 @@ public final class ChoicePickerHelper {
 
         private WebElement transFormIfNeeded(WebElement input) {
             return (transformationFunction == null ? input : transformationFunction.apply(input));
+        }
+
+        private class PickPredicate implements Predicate<WebElement> {
+
+            @Override
+            public boolean apply(WebElement input) {
+                WebElement element = transFormIfNeeded(input);
+                if (allRulesMustPass) {
+                    for (Predicate predicate : filters) {
+                        if (!predicate.apply(element)) {
+                            return FALSE;
+                        }
+                    }
+                    return TRUE;
+                } else {
+                    for (Predicate predicate : filters) {
+                        if (predicate.apply(element)) {
+                            return TRUE;
+                        }
+                    }
+                    return FALSE;
+                }
+            }
         }
     };
 }
