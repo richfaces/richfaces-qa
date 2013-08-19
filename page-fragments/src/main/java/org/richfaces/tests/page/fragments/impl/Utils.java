@@ -37,6 +37,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -134,6 +135,15 @@ public final class Utils {
     public static boolean isVisible(WebElement e) {
         try {
             e.isDisplayed();
+            return true;
+        } catch (NoSuchElementException ex) {
+            return false;
+        }
+    }
+
+    public static boolean isVisible(WebDriver driver, By by) {
+        try {
+            driver.findElement(by).isDisplayed();
             return true;
         } catch (NoSuchElementException ex) {
             return false;
