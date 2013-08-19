@@ -25,8 +25,8 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.ConverterBean;
 import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
 import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent;
-import org.richfaces.tests.page.fragments.impl.input.select.RichFacesSelect;
-import org.richfaces.tests.page.fragments.impl.input.select.SimpleOption;
+import org.richfaces.tests.page.fragments.impl.select.internal.RichFacesSelect;
+import org.richfaces.tests.page.fragments.impl.select.internal.SimpleOption;
 import org.testng.annotations.Test;
 
 /**

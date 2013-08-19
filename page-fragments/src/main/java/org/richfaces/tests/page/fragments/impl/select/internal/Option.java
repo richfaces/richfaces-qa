@@ -19,28 +19,15 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.page.fragments.impl.input.select;
-
-import java.util.List;
+package org.richfaces.tests.page.fragments.impl.select.internal;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public interface OptionList {
+public interface Option {
 
-    Option getOptionByVisibleText(String text);
+    int getIndex();
 
-    List<Option> getOptions();
+    String getVisibleText();
 
-    Option select(Option option);
-
-    Option select(Option option, Selection selection);
-
-    Option selectByIndex(int index);
-
-    Option selectByIndex(int index, Selection selection);
-
-    Option selectByVisibleText(String text);
-
-    Option selectByVisibleText(String text, Selection selection);
 }

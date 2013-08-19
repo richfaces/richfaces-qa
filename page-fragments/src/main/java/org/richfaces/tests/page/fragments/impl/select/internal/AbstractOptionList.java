@@ -19,13 +19,39 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.page.fragments.impl.input.select;
+package org.richfaces.tests.page.fragments.impl.select.internal;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.openqa.selenium.WebElement;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public enum Selection {
+public abstract class AbstractOptionList implements OptionList {
 
-    BY_KEYS, BY_MOUSE;
+    @Override
+    public Option getOptionByVisibleText(String text) {
+        int index = 0;
+        for (WebElement option: getOptionElements()) {
+            if (option.getText().trim().equals(text.trim())) {
+                return new SimpleOption(index, option.getText().trim());
+            }
+            index++;
+        }
+        return null;
+    }
+
+    @Override
+    public List<Option> getOptions() {
+        List<Option> result = new ArrayList<Option>();
+        int index = 0;
+        for (WebElement option: getOptionElements()) {
+            result.add(new SimpleOption(index++, option.getText().trim()));
+        }
+        return result;
+    }
+
+    protected abstract List<WebElement> getOptionElements();
 
 }

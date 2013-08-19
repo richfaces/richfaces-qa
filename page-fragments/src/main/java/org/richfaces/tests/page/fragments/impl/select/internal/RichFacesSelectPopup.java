@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.page.fragments.impl.input.select;
+package org.richfaces.tests.page.fragments.impl.select.internal;
 
 import java.util.List;
 import org.jboss.arquillian.drone.api.annotation.Drone;

@@ -29,11 +29,11 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.input.select.Option;
-import org.richfaces.tests.page.fragments.impl.input.select.OptionList;
-import org.richfaces.tests.page.fragments.impl.input.select.RichFacesSelect;
-import org.richfaces.tests.page.fragments.impl.input.select.RichFacesSelectPopup;
-import org.richfaces.tests.page.fragments.impl.input.select.Selection;
+import org.richfaces.tests.page.fragments.impl.select.internal.Option;
+import org.richfaces.tests.page.fragments.impl.select.internal.OptionList;
+import org.richfaces.tests.page.fragments.impl.select.internal.RichFacesSelect;
+import org.richfaces.tests.page.fragments.impl.select.internal.RichFacesSelectPopup;
+import org.richfaces.tests.page.fragments.impl.select.internal.Selection;
 
 /**
  * Enhanced fragment for r:select to blur the input after the option is selected.
