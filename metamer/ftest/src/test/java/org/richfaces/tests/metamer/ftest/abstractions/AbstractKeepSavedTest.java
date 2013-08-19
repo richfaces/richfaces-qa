@@ -33,7 +33,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages;
 import org.testng.Assert;
 
@@ -63,7 +63,7 @@ public class AbstractKeepSavedTest extends AbstractWebDriverTest {
     }
 
     protected void changeInputValueToAndSubmit(String s) {
-        firstInput.clear(ClearType.JS).fillIn(s);
+        firstInput.advanced().clear(ClearType.JS).sendKeys(s);
         submit();
     }
 

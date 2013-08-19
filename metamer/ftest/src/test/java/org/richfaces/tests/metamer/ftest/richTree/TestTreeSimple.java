@@ -21,16 +21,16 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTree;
 
-import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
-import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
-import static org.jboss.arquillian.ajocado.dom.Event.KEYDOWN;
-import static org.jboss.arquillian.ajocado.dom.Event.KEYPRESS;
-import static org.jboss.arquillian.ajocado.dom.Event.KEYUP;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEDOWN;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEMOVE;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOUT;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOVER;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEUP;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.CLICK;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.DBLCLICK;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYDOWN;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYPRESS;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYUP;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEDOWN;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEMOVE;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOUT;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOVER;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEUP;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.nodeClass;
 import static org.richfaces.tests.metamer.ftest.richTree.TreeAttributes.data;
 import static org.richfaces.tests.metamer.ftest.richTree.TreeAttributes.execute;
@@ -51,7 +51,6 @@ import java.util.List;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebDriver;
@@ -62,6 +61,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode;
 import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNodeIcon;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Predicate;
@@ -122,8 +122,7 @@ public class TestTreeSimple extends AbstractTestTree {
 
         treeAttributes.set(TreeAttributes.handleClass, testClassValue);
         String styleAttr = page.tree.getNodes().get(0).getHandle().getRoot().getAttribute("class");
-        assertTrue(styleAttr.contains(testClassValue), "Attribute handleClass should contain \"" + testClassValue
-            + "\"");
+        assertTrue(styleAttr.contains(testClassValue), "Attribute handleClass should contain \"" + testClassValue + "\"");
     }
 
     @Test
@@ -256,8 +255,7 @@ public class TestTreeSimple extends AbstractTestTree {
             }
 
             assertEquals(withAndwithout[0] > 0, i > 1, "Found: with the given URL " + withAndwithout[0] + ", i: " + i);
-            assertEquals(withAndwithout[1] > 0, i < 2, "Found: without the given URL " + withAndwithout[1] + ", i: "
-                + i);
+            assertEquals(withAndwithout[1] > 0, i < 2, "Found: without the given URL " + withAndwithout[1] + ", i: " + i);
 
             expandLevel(i);
         }
@@ -307,8 +305,7 @@ public class TestTreeSimple extends AbstractTestTree {
     @Use(field = "sample", strings = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" })
     @Templates(exclude = "a4jRegion")
     public void testSelectionClientSideEvents() {
-        String[] events = new String[] { "beforeselectionchange", "begin", "beforedomupdate", "complete",
-            "selectionchange" };
+        String[] events = new String[] { "beforeselectionchange", "begin", "beforedomupdate", "complete", "selectionchange" };
         testRequestEventsBefore(events);
         page.tree.getNodes().get(0).select();
         testRequestEventsAfter(events);
@@ -326,8 +323,7 @@ public class TestTreeSimple extends AbstractTestTree {
     @IssueTracking("https://issues.jboss.org/browse/RF-11319")
     @Templates(value = "a4jRegion")
     public void testSelectionClientSideEventsInRegion() {
-        String[] events = new String[] { "beforeselectionchange", "begin", "beforedomupdate", "complete",
-            "selectionchange" };
+        String[] events = new String[] { "beforeselectionchange", "begin", "beforedomupdate", "complete", "selectionchange" };
         testRequestEventsBefore(events);
         page.tree.getNodes().get(0).select();
         testRequestEventsAfter(events);

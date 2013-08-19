@@ -27,7 +27,6 @@ import static org.testng.Assert.assertTrue;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
 import org.richfaces.tests.page.fragments.impl.autocomplete.SelectOrConfirm;
-import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.autocomplete.page.CustomLayoutsPage;
@@ -97,7 +96,7 @@ public class TestCustomLayouts extends AbstractWebDriverTest {
         String valueInInput = autocomplete.advanced().getInput().getStringValue();
         assertEquals(valueInInput, expectedValueInInputAfterEnter, "The value in input should be different!");
 
-        autocomplete.advanced().getInput().clear(ClearType.BACKSPACE);
+        autocomplete.advanced().getInput().clear();
     }
 
 }

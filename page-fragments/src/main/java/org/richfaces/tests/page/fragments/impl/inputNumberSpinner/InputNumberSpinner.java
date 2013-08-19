@@ -19,25 +19,33 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.inplace.select;
+package org.richfaces.tests.page.fragments.impl.inputNumberSpinner;
+
+import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.VisibleComponent;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 
 /**
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface OptionsList extends Iterable<Option> {
+public interface InputNumberSpinner extends VisibleComponent{
 
     /**
-     * Returns an option at index.
+     * Decreases value by clicking on the decrease button.
      */
-    Option get(int index);
+    void decrease();
+
+    WebElement getButtonDecreaseElement();
+
+    WebElement getButtonIncreaseElement();
+
+    TextInputComponentImpl getInput();
+
+    WebElement getRootElement();
 
     /**
-     * Returns selected option or null.
+     * Increases value by clicking on the increase button.
      */
-    Option getSelectedOption();
-
-    /**
-     * Returns size of this list.
-     */
-    int size();
+    void increase();
 }

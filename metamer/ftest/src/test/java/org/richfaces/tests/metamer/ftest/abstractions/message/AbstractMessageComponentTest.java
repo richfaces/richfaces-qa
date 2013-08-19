@@ -137,7 +137,7 @@ public abstract class AbstractMessageComponentTest extends AbstractMessageCompon
         Assert.assertFalse(getPage().getMessageComponentForSecondInput().isVisible());
         Assert.assertFalse(getPage().getMessageComponentForSelectableInput().isVisible());
         //type bad value to first input
-        getPage().simpleInput1.clear(ClearType.JS).fillIn("bad value");
+        getPage().simpleInput1.advanced().clear(ClearType.JS).sendKeys("bad value");
         submitWithA4jBtn();
         Assert.assertTrue(getPage().getMessageComponentForFirstInput().isVisible());
         Assert.assertFalse(getPage().getMessageComponentForSecondInput().isVisible());
@@ -145,7 +145,7 @@ public abstract class AbstractMessageComponentTest extends AbstractMessageCompon
         //hide all messages
         setCorrectValuesWithWaiting();
         //type bad value to second input
-        getPage().simpleInput2.clear(ClearType.JS).fillIn("bad value");
+        getPage().simpleInput2.advanced().clear(ClearType.JS).sendKeys("bad value");
         submitWithA4jBtn();
         Assert.assertFalse(getPage().getMessageComponentForFirstInput().isVisible());
         Assert.assertTrue(getPage().getMessageComponentForSecondInput().isVisible());

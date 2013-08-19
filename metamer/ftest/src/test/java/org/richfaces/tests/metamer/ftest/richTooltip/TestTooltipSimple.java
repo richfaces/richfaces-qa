@@ -24,20 +24,12 @@ package org.richfaces.tests.metamer.ftest.richTooltip;
 import static javax.faces.event.PhaseId.APPLY_REQUEST_VALUES;
 import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
-import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
-import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEDOWN;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEMOVE;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOUT;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOVER;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEUP;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.tooltipAttributes;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.arquillian.graphene.wait.WebDriverWait;
@@ -55,6 +47,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -84,7 +77,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     @Inject
     @Use(empty = true)
     Event domEvent;
-    Event[] domEvents = { CLICK, DBLCLICK, MOUSEDOWN, MOUSEMOVE, MOUSEOUT, MOUSEOVER, MOUSEUP };
+    Event[] domEvents = { Event.CLICK, Event.DBLCLICK, Event.MOUSEDOWN, Event.MOUSEMOVE, Event.MOUSEOUT, Event.MOUSEOVER, Event.MOUSEUP };
     @Inject
     @Use(empty = true)
     Boolean followMouse = true;

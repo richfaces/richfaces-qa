@@ -24,9 +24,9 @@ package org.richfaces.tests.showcase.inplaceSelect;
 import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.richfaces.tests.page.fragments.impl.input.inplace.EditingState.FinishEditingBy;
-import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.OpenBy;
-import org.richfaces.tests.page.fragments.impl.input.inplace.select.RichFacesInplaceSelect;
+import org.richfaces.tests.page.fragments.impl.inplaceSelect.RichFacesInplaceSelect;
+import org.richfaces.tests.page.fragments.impl.inplaceSelect.EditingState.FinishEditingBy;
+import org.richfaces.tests.page.fragments.impl.inplaceSelect.InplaceComponent.OpenBy;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.inplaceSelect.page.SimplePage;
 import org.testng.annotations.Test;

@@ -25,7 +25,7 @@ import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>

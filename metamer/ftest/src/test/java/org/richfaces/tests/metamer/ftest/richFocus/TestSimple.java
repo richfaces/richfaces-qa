@@ -71,11 +71,11 @@ public class TestSimple extends AbstractWebDriverTest {
 
     @Test
     public void testValidationAwareTrue() {
-        page.getNameInput().fillIn("Robert");
-        page.getAgeInput().fillIn("38");
+        page.getNameInput().sendKeys("Robert");
+        page.getAgeInput().sendKeys("38");
 
         page.ajaxValidateInputs();
-        waitModel().until(new ElementIsFocused(page.getAddressInput().getInput()));
+        waitModel().until(new ElementIsFocused(page.getAddressInput().advanced().getInput()));
 
         page.typeStringAndDoNotCareAboutFocus();
 
@@ -91,11 +91,11 @@ public class TestSimple extends AbstractWebDriverTest {
         // window appears, therefore making it unclickable
         AttributeList.focusAttributes.set(FocusAttributes.validationAware, false);
 
-        page.getNameInput().fillIn("Robert");
-        page.getAgeInput().fillIn("38");
+        page.getNameInput().sendKeys("Robert");
+        page.getAgeInput().sendKeys("38");
 
         page.ajaxValidateInputs();
-        waitModel().until(new ElementIsFocused(page.getNameInput().getInput()));
+        waitModel().until(new ElementIsFocused(page.getNameInput().advanced().getInput()));
 
         page.typeStringAndDoNotCareAboutFocus();
 

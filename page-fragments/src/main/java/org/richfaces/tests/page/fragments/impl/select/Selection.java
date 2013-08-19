@@ -1,6 +1,6 @@
-/*******************************************************************************
+/**
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,28 +18,14 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.inplace;
-
-import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.VisibleComponent;
+ */
+package org.richfaces.tests.page.fragments.impl.select;
 
 /**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public interface InplaceComponentControls extends VisibleComponent {
+public enum Selection {
 
-    /**
-     * Clicks on Cancel button.
-     */
-    void cancel();
+    BY_KEYS, BY_MOUSE;
 
-    /**
-     * Clicks on Ok button.
-     */
-    void ok();
-
-    WebElement getCancelButtonElement();
-
-    WebElement getOkButtonElement();
 }

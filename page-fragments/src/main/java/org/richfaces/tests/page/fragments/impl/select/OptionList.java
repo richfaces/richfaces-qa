@@ -1,6 +1,6 @@
-/*******************************************************************************
+/**
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,20 +18,29 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.inplace.select;
+ */
+package org.richfaces.tests.page.fragments.impl.select;
 
-import org.richfaces.tests.page.fragments.impl.input.inplace.EditingState;
+import java.util.List;
 
 /**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public interface InplaceSelectEditingState extends EditingState {
+public interface OptionList {
 
-    @Override
-    InplaceSelectEditingState changeToValue(String newValue);
+    Option getOptionByVisibleText(String text);
 
-    InplaceSelectEditingState changeToValueAtIndex(int index);
+    List<Option> getOptions();
 
-    OptionsList getOptions();
+    Option select(Option option);
+
+    Option select(Option option, Selection selection);
+
+    Option selectByIndex(int index);
+
+    Option selectByIndex(int index, Selection selection);
+
+    Option selectByVisibleText(String text);
+
+    Option selectByVisibleText(String text, Selection selection);
 }

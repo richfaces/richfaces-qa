@@ -23,7 +23,7 @@ package org.richfaces.tests.metamer.ftest.richFocus;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>

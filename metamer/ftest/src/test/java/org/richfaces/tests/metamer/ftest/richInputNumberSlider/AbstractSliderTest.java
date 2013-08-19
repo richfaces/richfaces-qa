@@ -35,7 +35,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.input.inputNumberSlider.RichFacesInputNumberSlider;
+import org.richfaces.tests.page.fragments.impl.inputNumberSlider.RichFacesInputNumberSlider;
 
 /**
  * Abstract test case for rich:inputNumberSlider.
@@ -74,8 +74,7 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
         return new Action() {
             @Override
             public void perform() {
-                MetamerPage.waitRequest(slider.slider(), WaitRequestType.XHR)
-                        .dragHandleToPointInTrace(pixels);
+                MetamerPage.waitRequest(slider.slider(), WaitRequestType.XHR).dragHandleToPointInTrace(pixels);
             }
         };
     }
@@ -89,8 +88,7 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
 
         MetamerPage.waitRequest(slider, WaitRequestType.XHR).decreaseWithArrows();
 
-        Graphene.waitGui().until("Output was not updated.").element(output).text()
-                .equalTo(String.valueOf(startValue - clicks));
+        Graphene.waitGui().until("Output was not updated.").element(output).text().equalTo(String.valueOf(startValue - clicks));
     }
 
     public void testClickRightArrow() {
@@ -102,8 +100,7 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
 
         MetamerPage.waitRequest(slider, WaitRequestType.XHR).increaseWithArrows();
 
-        Graphene.waitGui().until("Output was not updated.").element(output).text()
-                .equalTo(String.valueOf(startValue + clicks));
+        Graphene.waitGui().until("Output was not updated.").element(output).text().equalTo(String.valueOf(startValue + clicks));
     }
 
     public void testMoveWithSlider() {
@@ -137,8 +134,7 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
 
         Double newNumber = new Double(number);
         assertEquals(output.getText(), newNumber == 0 ? "0" : newNumber.toString(), "Output was not updated.");
-        assertEquals(slider.getInput().getStringValue(), newNumber == 0 ? "0" : newNumber.toString(),
-                "Input was not updated.");
+        assertEquals(slider.getInput().getStringValue(), newNumber == 0 ? "0" : newNumber.toString(), "Input was not updated.");
     }
 
     public void testTypeIntoInputNotNumber() {
@@ -159,7 +155,7 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
         return new Action() {
             @Override
             public void perform() {
-                MetamerPage.waitRequest(slider.getInput().clear(ClearType.JS).fillIn(num), type).trigger("blur");
+                MetamerPage.waitRequest(slider.getInput().advanced().clear(ClearType.JS).sendKeys(num), type).advanced().trigger("blur");
             }
         };
     }

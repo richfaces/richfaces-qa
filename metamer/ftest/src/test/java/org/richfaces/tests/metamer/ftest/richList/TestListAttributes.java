@@ -22,13 +22,12 @@
 package org.richfaces.tests.metamer.ftest.richList;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.testng.Assert.assertEquals;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.listAttributes;
+import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 import java.util.List;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
@@ -37,6 +36,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.page.fragments.impl.list.RichFacesListItem;
 import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
 import org.richfaces.tests.page.fragments.impl.list.internal.simple.RichFacesSimpleListItem;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
 /**

@@ -52,12 +52,12 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
     @Test
     public void enabledInInput() {
         // true
-        hotkey1.invoke(firstInput.getInput());
+        hotkey1.invoke(firstInput.advanced().getInput());
         checkEvents(1, 0);
         clearHotKeyEvents();
         // false
         firstHotkeyAttributes.set(HotKeyAttributes.enabledInInput, false);
-        hotkey1.invoke(firstInput.getInput());
+        hotkey1.invoke(firstInput.advanced().getInput());
         checkEvents(0, 0);
     }
 
@@ -93,7 +93,7 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
         try {
             testKeyForPreventDefault("ctrl+f", 1);
         } finally {
-            firstInput.getInput().sendKeys(Keys.ESCAPE);
+            firstInput.advanced().getInput().sendKeys(Keys.ESCAPE);
         }
     }
 
@@ -116,7 +116,7 @@ public class TestHotKeyAttributes extends AbstractHotKeyTest {
         hotkey1.advanced().setupSelectorFromWidget();
         hotkey1.invoke();// invoke on element found by selector
         checkEvents(1, 0);
-        hotkey1.invoke(secondInput.getInput());
+        hotkey1.invoke(secondInput.advanced().getInput());
         checkEvents(1, 0);// no change
         hotkey1.invoke();// invoke on element found by selector
         checkEvents(2, 0);

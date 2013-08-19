@@ -19,32 +19,41 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.inplace.input;
+package org.richfaces.tests.page.fragments.impl.fileUpload;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.richfaces.tests.page.fragments.impl.input.inplace.AbstractInplaceComponent;
-import org.richfaces.tests.page.fragments.impl.input.inplace.EditingState;
+import java.util.Iterator;
+import java.util.List;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.list.internal.AbstractListFragment;
+import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
 
 /**
- * Component implementation of rich:inplaceInput
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesInplaceInput extends AbstractInplaceComponent<EditingState> {
+public class RichFacesFileUploadList extends AbstractListFragment<RichFacesFileUploadItem, RichFacesFileUploadItems> {
+
+    @FindBy(className = "rf-fu-itm")
+    private List<WebElement> items;
 
     @Override
-    protected String getCssClassForState(State state) {
-        switch (state) {
-            case ACTIVE:
-                return "rf-ii-act";
-            case CHANGED:
-                return "rf-ii-chng";
-            default:
-                throw new UnsupportedOperationException();
-        }
+    public ListItems<RichFacesFileUploadItem> getItems() {
+        return createItems(items);
     }
 
     @Override
-    protected EditingState instantiateFragment() {
-        return Graphene.createPageFragment(RichFacesInplaceInputEditingState.class, root);
+    protected Class<RichFacesFileUploadItem> getListItemType() {
+        return RichFacesFileUploadItem.class;
+    }
+
+    @Override
+    protected RichFacesFileUploadItems instantiateListItems() {
+        return new RichFacesFileUploadItems();
+    }
+
+    @Override
+    public String toString() {
+        return getItems().toString();
     }
 }

@@ -26,7 +26,7 @@ import static org.testng.Assert.assertEquals;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>

@@ -28,7 +28,6 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
@@ -44,6 +43,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.dropDownMenu.RichFacesDropDownMenu;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

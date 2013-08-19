@@ -34,10 +34,8 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.input.inplace.EditingState;
-import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.OpenBy;
-import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.State;
-import org.richfaces.tests.page.fragments.impl.input.inplace.input.RichFacesInplaceInput;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput.State;
 import org.testng.annotations.Test;
 
 /**
@@ -61,17 +59,17 @@ public class TestInplaceInputFAjax extends AbstractWebDriverTest {
 
     @Test
     public void testClick() {
-        assertTrue(inplaceInput.isVisible(), "Inplace input should be visible.");
+        assertVisible(inplaceInput.advanced().getRootElement(), "Inplace input should be visible.");
 
-        EditingState editingState = MetamerPage.waitRequest(inplaceInput, WaitRequestType.NONE).editBy(OpenBy.CLICK);
-        assertTrue(inplaceInput.is(State.ACTIVE), "Input should be active.");
+        inplaceInput.type(" ");
+        assertTrue(inplaceInput.advanced().isInState(State.ACTIVE), "Input should be active.");
 
         String testedValue = "new value";
-        MetamerPage.waitRequest(editingState.changeToValue(testedValue), WaitRequestType.XHR).confirm();
+        MetamerPage.waitRequest(inplaceInput.type(testedValue), WaitRequestType.XHR).confirm();
 
-        assertTrue(inplaceInput.is(State.CHANGED), "Input should contain class indicating a change.");
-        assertEquals(inplaceInput.getEditValue(), testedValue, "Input should contain typed text.");
-        assertEquals(inplaceInput.getLabelValue(), testedValue, "Label should contain typed text.");
+        assertTrue(inplaceInput.advanced().isInState(State.CHANGED), "Input should contain class indicating a change.");
+        assertEquals(inplaceInput.getTextInput().getStringValue(), testedValue, "Input should contain typed text.");
+        assertEquals(inplaceInput.advanced().getLabelValue(), testedValue, "Label should contain typed text.");
 
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: RichFaces 4 -> " + testedValue);
         page.assertPhases(PhaseId.ANY_PHASE);

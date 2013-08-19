@@ -19,51 +19,32 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.inplace.select;
+package org.richfaces.tests.page.fragments.impl.common;
 
-import com.google.common.collect.Lists;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
+import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebElement;
 
-/**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
-public class InplaceSelectOptionsList implements OptionsList {
+public class CheckboxInputComponentImpl implements CheckboxComponent {
 
-    private final ArrayList<Option> options = Lists.newArrayList();
+    @Root
+    private WebElement root;
 
-    public InplaceSelectOptionsList(List<WebElement> options) {
-        for (int i = 0; i < options.size(); i++) {
-            this.options.add(new InplaceSelectOption(options.get(i), i));
+    @Override
+    public void check() {
+        if (!root.isSelected()) {
+            root.click();
         }
     }
 
     @Override
-    public Option get(int index) {
-        return this.options.get(index);
-    }
-
-    @Override
-    public Option getSelectedOption() {
-        for (Option option : this) {
-            if (option.isSelected()) {
-                return option;
-            }
+    public void uncheck() {
+        if (root.isSelected()) {
+            root.click();
         }
-        return null;
     }
 
     @Override
-    public Iterator<Option> iterator() {
-        return this.options.iterator();
-    }
-
-    @Override
-    public int size() {
-        return this.options.size();
+    public boolean isChecked() {
+        return root.isSelected();
     }
 }

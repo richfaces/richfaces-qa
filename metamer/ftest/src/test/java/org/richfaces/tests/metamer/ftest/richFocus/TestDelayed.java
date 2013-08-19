@@ -52,7 +52,7 @@ public class TestDelayed extends AbstractWebDriverTest {
     public void testDelayed() {
         page.getNextButton().click();
 
-        waitModel().until(new ElementIsFocused(page.getNameInput().getInput()));
+        waitModel().until(new ElementIsFocused(page.getNameInput().advanced().getInput()));
         page.typeStringAndDoNotCareAboutFocus();
 
         String actual = page.getNameInput().getStringValue();

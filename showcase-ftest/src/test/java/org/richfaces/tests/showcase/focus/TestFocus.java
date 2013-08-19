@@ -44,16 +44,16 @@ public class TestFocus extends AbstractWebDriverTest {
 
     @Test
     public void testFirstInputFocusedAfterPageLoad() {
-        waitModel().withTimeout(TIMEOUT_FOCUS, TimeUnit.SECONDS).until(new ElementIsFocused(page.nameInput.getInput()));
+        waitModel().withTimeout(TIMEOUT_FOCUS, TimeUnit.SECONDS).until(new ElementIsFocused(page.nameInput.advanced().getInput()));
     }
 
     @Test
     public void testFocusOnJobWhenItDoesNotPassValidation() {
-        page.nameInput.fillIn("RichFaces");
-        page.jobInput.fillIn("1");
+        page.nameInput.sendKeys("RichFaces");
+        page.jobInput.sendKeys("1");
 
         page.submitButton.click();
-        waitModel().withTimeout(TIMEOUT_FOCUS, TimeUnit.SECONDS).until(new ElementIsFocused(page.jobInput.getInput()));
+        waitModel().withTimeout(TIMEOUT_FOCUS, TimeUnit.SECONDS).until(new ElementIsFocused(page.jobInput.advanced().getInput()));
     }
 
 }

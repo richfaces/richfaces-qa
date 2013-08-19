@@ -28,8 +28,8 @@ import java.util.List;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.Keys;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.input.inputNumberSpinner.InputNumberSpinner;
-import org.richfaces.tests.page.fragments.impl.input.inputNumberSpinner.RichFacesInputNumberSpinner;
+import org.richfaces.tests.page.fragments.impl.inputNumberSpinner.InputNumberSpinner;
+import org.richfaces.tests.page.fragments.impl.inputNumberSpinner.RichFacesInputNumberSpinner;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
@@ -90,7 +90,7 @@ public class TestSpinners extends AbstractWebDriverTest {
 
     /**
      * Decrease by step via decrease spinner
-     *
+     * 
      * @param input
      *            which value will be decreased
      * @param increaseSpinner
@@ -122,11 +122,11 @@ public class TestSpinners extends AbstractWebDriverTest {
 
     /**
      * Increase by step via increase spinner
-     *
+     * 
      * @param spinner
      * @param step
      *            the step by which will be the value increased
-     *
+     * 
      */
     private void increaseByStep(InputNumberSpinner spinner, int step) {
 
@@ -151,12 +151,11 @@ public class TestSpinners extends AbstractWebDriverTest {
     }
 
     private void setAndDecrease(InputNumberSpinner spinner, int step) {
-        spinner.getInput().clear(ClearType.BACKSPACE);
-        spinner.getInput().fillIn("30");
-        spinner.getRootElement().sendKeys(Keys.ENTER);
-        spinner.getInput().trigger("blur");
+        spinner.advanced().getInput().clear();
+        spinner.advanced().getInput().sendKeys("30");
+        spinner.advanced().getInput().advanced().trigger("blur");
         spinner.decrease();
-        assertEquals(spinner.getInput().getIntValue(), 30 - step);
+        assertEquals(spinner.advanced().getInput().getIntValue(), 30 - step);
     }
 
 }

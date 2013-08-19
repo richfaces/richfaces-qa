@@ -36,7 +36,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
@@ -64,7 +63,8 @@ import org.richfaces.tests.metamer.ftest.webdriver.utils.StringEqualsWrapper;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.VisibleComponent;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 
@@ -141,8 +141,8 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         TextInputComponentImpl attributeInput = Graphene.createPageFragment(TextInputComponentImpl.class,
             driver.findElement(By.cssSelector(format(ATTRIBUTE_INPUT_TEMPLATE, attributeName))));
         //set attribute
-        MetamerPage.waitRequest(attributeInput.clear(ClearType.JS)
-            .fillIn(value.toString()), WaitRequestType.HTTP)
+        MetamerPage.waitRequest(attributeInput.advanced().clear(ClearType.JS)
+            .sendKeys(value.toString()), WaitRequestType.HTTP).advanced().getInput()
             .submit();
     }
 
@@ -541,9 +541,9 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         Validate.notNull(statusChangingAction, "The @statusChangingAction cannot be null");
         String checker = "statusChecker";
         //set attribute
-        MetamerPage.waitRequest(statusInput.clear(ClearType.JS)
-            .fillIn(checker), WaitRequestType.HTTP)
-            .trigger("blur");
+        MetamerPage.waitRequest(statusInput.advanced().clear(ClearType.JS)
+            .sendKeys(checker), WaitRequestType.HTTP)
+            .advanced().trigger("blur");
 
         String statusCheckerTimeBefore = metamerPage.getStatusCheckerOutputElement().getText();
         statusChangingAction.perform();
