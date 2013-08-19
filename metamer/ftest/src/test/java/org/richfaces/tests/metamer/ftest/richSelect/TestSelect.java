@@ -52,8 +52,8 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
-import org.richfaces.tests.page.fragments.impl.input.select.Option;
-import org.richfaces.tests.page.fragments.impl.input.select.Selection;
+import org.richfaces.tests.page.fragments.impl.select.internal.Option;
+import org.richfaces.tests.page.fragments.impl.select.internal.Selection;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

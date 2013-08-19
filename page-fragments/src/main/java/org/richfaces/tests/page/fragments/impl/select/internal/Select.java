@@ -19,15 +19,21 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.page.fragments.impl.input.select;
+package org.richfaces.tests.page.fragments.impl.select.internal;
+
+import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public interface Option {
+public interface Select {
 
-    int getIndex();
+    TextInputComponent getInput();
 
-    String getVisibleText();
+    Option getSelectedOption();
+
+    OptionList callPopup();
+
+    boolean isPopupPresent();
 
 }
