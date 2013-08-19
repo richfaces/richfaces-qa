@@ -40,8 +40,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponent;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.utils.Actions;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
@@ -78,9 +78,9 @@ public class RichFacesAutocomplete implements Autocomplete {
     @Override
     public SelectOrConfirm type(String str) {
         if (!input.getStringValue().isEmpty()) {
-            input.fillIn(advanced().getToken() + " ");
+            input.sendKeys(advanced().getToken() + " ");
         }
-        input.fillIn(str);
+        input.sendKeys(str);
         return new SelectOrConfirmImpl();
     }
 
@@ -187,8 +187,8 @@ public class RichFacesAutocomplete implements Autocomplete {
          *        etc.
          * @return input component
          */
-        public TextInputComponent clear(ClearType clearType) {
-            return advanced().getInput().clear(clearType);
+        public TextInputComponentImpl clear(ClearType clearType) {
+            return advanced().getInput().advanced().clear(clearType);
         }
     }
 

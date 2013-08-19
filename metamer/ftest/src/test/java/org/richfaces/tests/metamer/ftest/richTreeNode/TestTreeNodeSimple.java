@@ -21,16 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTreeNode;
 
-import static org.jboss.arquillian.ajocado.dom.Event.CLICK;
-import static org.jboss.arquillian.ajocado.dom.Event.DBLCLICK;
-import static org.jboss.arquillian.ajocado.dom.Event.KEYDOWN;
-import static org.jboss.arquillian.ajocado.dom.Event.KEYPRESS;
-import static org.jboss.arquillian.ajocado.dom.Event.KEYUP;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEDOWN;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEMOVE;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOUT;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOVER;
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEUP;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.handleClass;
 import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.iconClass;
@@ -42,6 +32,16 @@ import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.
 import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.lang;
 import static org.richfaces.tests.metamer.ftest.richTreeNode.TreeNodeAttributes.rendered;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.metamerAttributes;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.CLICK;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.DBLCLICK;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYDOWN;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYPRESS;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYUP;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEDOWN;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEMOVE;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOUT;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOVER;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEUP;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -51,7 +51,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.By;
@@ -68,6 +67,7 @@ import org.richfaces.tests.metamer.ftest.richTree.TreeSimplePage;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode;
 import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNodeIcon;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.richfaces.ui.common.SwitchType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

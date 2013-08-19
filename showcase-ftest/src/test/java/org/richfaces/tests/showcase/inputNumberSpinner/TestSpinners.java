@@ -27,9 +27,8 @@ import java.util.List;
 
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
-import org.richfaces.tests.page.fragments.impl.input.inputNumberSpinner.InputNumberSpinner;
-import org.richfaces.tests.page.fragments.impl.input.inputNumberSpinner.RichFacesInputNumberSpinner;
+import org.richfaces.tests.page.fragments.impl.inputNumberSpinner.InputNumberSpinner;
+import org.richfaces.tests.page.fragments.impl.inputNumberSpinner.RichFacesInputNumberSpinner;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
@@ -151,9 +150,9 @@ public class TestSpinners extends AbstractWebDriverTest {
     }
 
     private void setAndDecrease(InputNumberSpinner spinner, int step) {
-        spinner.getInput().clear(ClearType.BACKSPACE);
-        spinner.getInput().fillIn("30");
-        spinner.getInput().trigger("blur");
+        spinner.getInput().clear();
+        spinner.getInput().sendKeys("30");
+        spinner.getInput().advanced().trigger("blur");
         spinner.decrease();
         assertEquals(spinner.getInput().getIntValue(), 30 - step);
     }

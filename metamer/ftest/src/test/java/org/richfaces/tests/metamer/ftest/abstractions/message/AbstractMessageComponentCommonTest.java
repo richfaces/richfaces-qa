@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.abstractions.message;
 
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.basicAttributes;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -33,6 +32,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.Assert;
 
 /**
@@ -50,11 +50,11 @@ public abstract class AbstractMessageComponentCommonTest extends AbstractWebDriv
     public void checkEscape() {
         AttributeList.messageAttributes.set(MessageAttributes.escape, Boolean.TRUE);
         String newSpanString = "<span id='newSpan'>newSpan</span>";
-        getPage().simpleInput1.clear(ClearType.JS).fillIn(newSpanString);
+        getPage().simpleInput1.advanced().clear(ClearType.JS).sendKeys(newSpanString);
         submitWithHBtn();
         assertNotVisible(getPage().newSpan, "new span should not be visible");
         AttributeList.messageAttributes.set(MessageAttributes.escape, Boolean.FALSE);
-        getPage().simpleInput1.clear(ClearType.JS).fillIn(newSpanString);
+        getPage().simpleInput1.advanced().clear(ClearType.JS).sendKeys(newSpanString);
         submitWithHBtn();
         assertVisible(getPage().newSpan, "new span should be visible");
     }

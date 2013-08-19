@@ -35,11 +35,11 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.richfaces.tests.page.fragments.impl.common.CheckboxInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.input.CheckboxInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.input.inputNumberSlider.RichFacesInputNumberSlider;
-import org.richfaces.tests.page.fragments.impl.input.inputNumberSpinner.RichFacesInputNumberSpinner;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.inputNumberSlider.RichFacesInputNumberSlider;
+import org.richfaces.tests.page.fragments.impl.inputNumberSpinner.RichFacesInputNumberSpinner;
 import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages;
 import org.testng.Assert;
@@ -148,16 +148,16 @@ public class TestGraphValidator extends AbstractWebDriverTest {
             case DEFAULT:
             case NULL:
             case ValidationGroupAllComponents:
-                autocomplete.clear(ClearType.JS).fillIn(CORRECT_STRING_VALUE);
-                inputText.clear(ClearType.JS).fillIn(CORRECT_STRING_VALUE);
-                inputTextarea.clear(ClearType.JS).fillIn(CORRECT_STRING_VALUE);
+                autocomplete.advanced().clear(ClearType.JS).sendKeys(CORRECT_STRING_VALUE);
+                inputText.advanced().clear(ClearType.JS).sendKeys(CORRECT_STRING_VALUE);
+                inputTextarea.advanced().clear(ClearType.JS).sendKeys(CORRECT_STRING_VALUE);
                 break;
             case ValidationGroupBooleanInputs:
                 booleanCheckbox.check();
                 break;
             case ValidationGroupNumericInputs:
-                spinner.getInput().clear(ClearType.JS).fillIn(CORRECT_INT_VALUE);
-                slider.getInput().clear(ClearType.JS).fillIn(CORRECT_INT_VALUE);
+                spinner.getInput().advanced().clear(ClearType.JS).sendKeys(CORRECT_INT_VALUE);
+                slider.getInput().advanced().clear(ClearType.JS).sendKeys(CORRECT_INT_VALUE);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown group " + group);
@@ -167,7 +167,7 @@ public class TestGraphValidator extends AbstractWebDriverTest {
 
     private void setInputSecretCorrect() {
         // only inputSecret doesn't keep entered value after submit
-        inputSecret.clear(ClearType.JS).fillIn(RichGraphValidatorBean.SMILE);
+        inputSecret.advanced().clear(ClearType.JS).sendKeys(RichGraphValidatorBean.SMILE);
     }
 
     private void setWrongSettingForGroup(Group g) {
@@ -175,16 +175,16 @@ public class TestGraphValidator extends AbstractWebDriverTest {
             case DEFAULT:
             case NULL:
             case ValidationGroupAllComponents:
-                autocomplete.clear(ClearType.JS).fillIn(WRONG_STRING_VALUE);
-                inputText.clear(ClearType.JS).fillIn(WRONG_STRING_VALUE);
-                inputTextarea.clear(ClearType.JS).fillIn(WRONG_STRING_VALUE);
+                autocomplete.advanced().clear(ClearType.JS).sendKeys(WRONG_STRING_VALUE);
+                inputText.advanced().clear(ClearType.JS).sendKeys(WRONG_STRING_VALUE);
+                inputTextarea.advanced().clear(ClearType.JS).sendKeys(WRONG_STRING_VALUE);
                 break;
             case ValidationGroupBooleanInputs:
                 booleanCheckbox.uncheck();
                 break;
             case ValidationGroupNumericInputs:
-                spinner.getInput().clear(ClearType.JS).fillIn(WRONG_INT_VALUE);
-                slider.getInput().clear(ClearType.JS).fillIn(WRONG_INT_VALUE);
+                spinner.getInput().advanced().clear(ClearType.JS).sendKeys(WRONG_INT_VALUE);
+                slider.getInput().advanced().clear(ClearType.JS).sendKeys(WRONG_INT_VALUE);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown group " + group);

@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richPopupPanel;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.popupPanelAttributes;
-import static org.richfaces.tests.page.fragments.impl.popupPanel.PopupPanel.ResizerLocation.S;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
@@ -32,7 +31,6 @@ import java.net.URL;
 import java.util.EnumSet;
 import java.util.Locale;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -54,6 +52,7 @@ import org.richfaces.tests.page.fragments.impl.popupPanel.PopupPanel.ResizerLoca
 import org.richfaces.tests.page.fragments.impl.popupPanel.RichFacesPopupPanel;
 import org.richfaces.tests.page.fragments.impl.popupPanel.RichFacesSimplePopupPanelContent;
 import org.richfaces.tests.page.fragments.impl.popupPanel.RichFacesSimplePopupPanelControls;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

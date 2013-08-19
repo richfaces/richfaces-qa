@@ -1,6 +1,6 @@
-/*******************************************************************************
+/**
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,27 +18,20 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.inplace.select;
-
-import org.openqa.selenium.WebElement;
+ */
+package org.richfaces.tests.page.fragments.impl.select;
 
 /**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
-public class InplaceSelectOption implements Option {
+public class SimpleOption implements Option {
 
-    private final WebElement element;
     private final int index;
+    private final String visibleText;
 
-    public InplaceSelectOption(WebElement element, int index) {
-        this.element = element;
+    public SimpleOption(int index, String visibleText) {
         this.index = index;
-    }
-
-    @Override
-    public WebElement getElement() {
-        return element;
+        this.visibleText = visibleText;
     }
 
     @Override
@@ -47,17 +40,8 @@ public class InplaceSelectOption implements Option {
     }
 
     @Override
-    public String getText() {
-        return element.getText().trim();
+    public String getVisibleText() {
+        return visibleText;
     }
 
-    @Override
-    public boolean isSelected() {
-        return element.getAttribute("class").contains("rf-is-sel");
-    }
-
-    @Override
-    public String toString() {
-        return getText();
-    }
 }

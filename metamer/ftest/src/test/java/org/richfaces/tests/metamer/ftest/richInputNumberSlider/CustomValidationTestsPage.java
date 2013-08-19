@@ -27,7 +27,7 @@ import org.richfaces.tests.metamer.ftest.abstractions.validations.NumberInputVal
 import org.richfaces.tests.metamer.ftest.abstractions.validations.ValidationMessageCase;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.input.inputNumberSlider.RichFacesInputNumberSlider;
+import org.richfaces.tests.page.fragments.impl.inputNumberSlider.RichFacesInputNumberSlider;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>

@@ -19,20 +19,57 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.inplace.select;
+package org.richfaces.tests.page.fragments.impl.fileUpload;
 
+import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.richfaces.tests.page.fragments.impl.list.internal.AbstractListItem;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface Option {
+public class RichFacesFileUploadItem extends AbstractListItem {
 
-    WebElement getElement();
+    @Root
+    private WebElement rootElement;
+    @FindBy(className = "rf-fu-itm-lbl")
+    private WebElement filenameElement;
+    @FindBy(className = "rf-fu-itm-st")
+    private WebElement stateElement;
+    @FindBy(className = "rf-fu-itm-lnk")
+    private WebElement clearOrDeleteElement;
 
-    int getIndex();
+    public WebElement getClearElement() {
+        return clearOrDeleteElement;
+    }
 
-    String getText();
+    public WebElement getDeleteElement() {
+        return clearOrDeleteElement;
+    }
 
-    boolean isSelected();
+    public String getFilename() {
+        return filenameElement.getText();
+    }
+
+    public WebElement getFilenameElement() {
+        return filenameElement;
+    }
+
+    @Override
+    public WebElement getItemElement() {
+        return rootElement;
+    }
+
+    public String getState() {
+        return stateElement.getText();
+    }
+
+    public WebElement getStateElement() {
+        return stateElement;
+    }
+
+    public void remove() {
+        clearOrDeleteElement.click();
+    }
 }

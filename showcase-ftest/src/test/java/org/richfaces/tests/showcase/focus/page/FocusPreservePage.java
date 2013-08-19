@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.showcase.focus.TestFocus;
 
 /**
@@ -47,6 +47,6 @@ public class FocusPreservePage extends FocusPage {
     public WebElement output;
 
     public void waitTillFirstInputIsFocused() {
-        waitModel().withTimeout(TestFocus.TIMEOUT_FOCUS, TimeUnit.SECONDS).until(new ElementIsFocused(input.getInput()));
+        waitModel().withTimeout(TestFocus.TIMEOUT_FOCUS, TimeUnit.SECONDS).until(new ElementIsFocused(input.advanced().getInput()));
     }
 }

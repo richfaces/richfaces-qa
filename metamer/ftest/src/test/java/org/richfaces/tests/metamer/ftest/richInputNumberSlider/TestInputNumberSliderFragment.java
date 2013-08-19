@@ -31,8 +31,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.page.fragments.impl.input.inputNumberSlider.RichFacesInputNumberSlider;
-import org.richfaces.tests.page.fragments.impl.input.inputNumberSlider.SliderComponent;
+import org.richfaces.tests.page.fragments.impl.inputNumberSlider.RichFacesInputNumberSlider;
+import org.richfaces.tests.page.fragments.impl.inputNumberSlider.SliderComponent;
 import org.testng.annotations.Test;
 
 /**

@@ -42,12 +42,12 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.model.Capital;
-import org.richfaces.tests.page.fragments.impl.input.inplace.EditingState.FinishEditingBy;
-import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent;
-import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.OpenBy;
-import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.State;
-import org.richfaces.tests.page.fragments.impl.input.inplace.select.OptionsList;
-import org.richfaces.tests.page.fragments.impl.input.inplace.select.RichFacesInplaceSelect;
+import org.richfaces.tests.page.fragments.impl.inplaceSelect.InplaceComponent;
+import org.richfaces.tests.page.fragments.impl.inplaceSelect.OptionsList;
+import org.richfaces.tests.page.fragments.impl.inplaceSelect.RichFacesInplaceSelect;
+import org.richfaces.tests.page.fragments.impl.inplaceSelect.EditingState.FinishEditingBy;
+import org.richfaces.tests.page.fragments.impl.inplaceSelect.InplaceComponent.OpenBy;
+import org.richfaces.tests.page.fragments.impl.inplaceSelect.InplaceComponent.State;
 import org.testng.annotations.Test;
 
 /**

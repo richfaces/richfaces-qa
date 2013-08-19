@@ -19,43 +19,22 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.tests.page.fragments.impl.input;
+package org.richfaces.tests.page.fragments.impl.common;
 
-import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.VisibleComponent;
-import org.richfaces.tests.page.fragments.impl.common.ClearType;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface TextInputComponent extends VisibleComponent {
+public interface TextInputComponent {
 
-    /**
-     * Clears the input  and returns actual component. The method of clearing can be passed as argument to determine the way the input will be cleared
-     *
-     * @param clearType
-     * @throws UnsupportedOperationException when there is illegal  ClearType argument passed
-     */
-    TextInputComponent clear(ClearType clearType);
+    TextInputComponent clear();
 
     /**
      * Fills in given text and returns actual component.
      *
      * @param text
      */
-    TextInputComponent fillIn(String text);
-
-    /**
-     * Focuses this input.
-     */
-    TextInputComponent focus();
-
-    /**
-     * Returns the actual WebElement of input.
-     *
-     * @return
-     */
-    WebElement getInput();
+    TextInputComponent sendKeys(CharSequence text);
 
     /**
      * Returns <code>int</code> value of this input.
@@ -71,19 +50,4 @@ public interface TextInputComponent extends VisibleComponent {
      * @return
      */
     String getStringValue();
-
-    /**
-     * Submits this input.
-     *
-     * @param text
-     */
-    void submit();
-
-    /**
-     * Trigger JavaScript event using JQuery
-     *
-     * @param event JavaScript event to be triggered (blur, click...)
-     * @return same component
-     */
-    TextInputComponent trigger(String event);
 }

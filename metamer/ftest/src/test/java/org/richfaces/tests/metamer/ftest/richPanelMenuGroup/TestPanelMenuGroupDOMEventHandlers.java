@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOUT;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.mode;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.onclick;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.ondblclick;
@@ -34,6 +33,7 @@ import static org.richfaces.ui.common.Mode.client;
 
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
 
@@ -77,7 +77,7 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     public void testOnMouseout() {
         panelMenuGroupAttributes.set(mode, client);
         // TODO JJa 2013-02-13: Rewrite using webdriver api when fixed (not working now)
-        testFireEventWithJS(page.topGroup.getRoot(), MOUSEOUT, panelMenuGroupAttributes, PanelMenuGroupAttributes.onmouseout);
+        testFireEventWithJS(page.topGroup.getRoot(), Event.MOUSEOUT, panelMenuGroupAttributes, PanelMenuGroupAttributes.onmouseout);
     }
 
     @Test

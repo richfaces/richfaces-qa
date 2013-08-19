@@ -41,7 +41,6 @@ import java.util.Locale;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -74,6 +73,7 @@ import org.richfaces.tests.page.fragments.impl.calendar.popup.CalendarPopupCompo
 import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.PopupFooterControls;
 import org.richfaces.tests.page.fragments.impl.calendar.popup.popup.PopupHeaderControls;
 import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

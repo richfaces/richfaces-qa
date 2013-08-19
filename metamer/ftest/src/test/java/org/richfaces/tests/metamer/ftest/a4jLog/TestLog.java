@@ -41,7 +41,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.log.Log.LogEntryLevel;
 import org.richfaces.tests.page.fragments.impl.log.RichFacesLog;
 import org.testng.annotations.Test;
@@ -85,7 +85,7 @@ public class TestLog extends AbstractWebDriverTest {
     private void checkForEachLevel() {
         for (LogEntryLevel levelToTrigger : values()) {
             log.clear();
-            input.clear(DELETE).fillIn(levelToTrigger.toString());
+            input.advanced().clear(DELETE).sendKeys(levelToTrigger.toString());
             triggerMessage(levelToTrigger);
             assertEquals(log.getLogEntries().size(), levelToTrigger.ordinal() >= levelToSet.ordinal() ? 1 : 0);
             if (!log.getLogEntries().isEmpty()) {
@@ -150,7 +150,7 @@ public class TestLog extends AbstractWebDriverTest {
 
     @Test
     public void testSubmit() {
-        input.clear(ClearType.DELETE).fillIn("RichFaces 4");
+        input.advanced().clear(ClearType.DELETE).sendKeys("RichFaces 4");
         submit();
 
         Graphene.waitGui().until().element(output).text().equalTo("Hello RichFaces 4!");
@@ -161,7 +161,7 @@ public class TestLog extends AbstractWebDriverTest {
 
     @Test
     public void testSubmitUnicode() {
-        input.clear(DELETE).fillIn("ľščťžýáíéôúäň");
+        input.advanced().clear(DELETE).sendKeys("ľščťžýáíéôúäň");
         submit();
 
         Graphene.waitGui().until().element(output).text().equalTo("Hello ľščťžýáíéôúäň!");

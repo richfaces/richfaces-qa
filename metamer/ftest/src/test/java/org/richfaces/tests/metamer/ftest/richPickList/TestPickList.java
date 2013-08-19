@@ -35,7 +35,6 @@ import java.util.List;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
@@ -56,6 +55,7 @@ import org.richfaces.tests.page.fragments.impl.list.ListItem;
 import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 import org.richfaces.tests.page.fragments.impl.orderingList.OrderingList;
 import org.richfaces.tests.page.fragments.impl.pickList.RichFacesPickList;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.Assert;
 import org.testng.annotations.Test;

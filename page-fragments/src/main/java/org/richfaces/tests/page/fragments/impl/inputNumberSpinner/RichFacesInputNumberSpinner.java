@@ -19,69 +19,57 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input.inplace;
+package org.richfaces.tests.page.fragments.impl.inputNumberSpinner;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
-import org.jboss.arquillian.test.api.ArquillianResource;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.State;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponent;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class AbstractInplaceComponent<T extends EditingState> implements InplaceComponent {
+public class RichFacesInputNumberSpinner implements InputNumberSpinner {
 
     @Root
-    protected WebElement root;
+    private WebElement root;
+    //
+    @FindBy(css = "input.rf-insp-inp")
+    TextInputComponentImpl input;
+    @FindBy(css = "span.rf-insp-btns > span.rf-insp-inc")
+    WebElement buttonIncrease;
+    @FindBy(css = "span.rf-insp-btns > span.rf-insp-dec")
+    WebElement buttonDecrease;
+
     @Drone
-    protected WebDriver driver;
-    @ArquillianResource
-    private JavascriptExecutor executor;
-    @FindBy(css = "span[id$=Label]")
-    protected WebElement label;
-    @FindBy(css = "span[id$=Edit] > input[id$=Input]")
-    protected WebElement editInputElement;
-    @FindBy(css = "span[id$=Edit] span[id$=Btn]")
-    private RichFacesInplaceComponentControls controls;
+    WebDriver driver;
 
     @Override
-    public T editBy(OpenBy event) {
-        Utils.triggerJQ(executor, event.getEventName(), root);
-        return instantiateFragment();
+    public void decrease() {
+        if (Graphene.element(buttonDecrease).not().isVisible().apply(driver)) {
+            throw new RuntimeException("Button for increasing value is not visible.");
+        }
+        buttonDecrease.click();
     }
 
     @Override
-    public InplaceComponentControls getControls() {
-        return controls;
-    }
-
-    protected abstract String getCssClassForState(State state);
-
-    public WebElement getEditInputElement() {
-        return editInputElement;
+    public WebElement getButtonDecreaseElement() {
+        return buttonDecrease;
     }
 
     @Override
-    public String getEditValue() {
-        return editInputElement.getAttribute("value").trim();
-    }
-
-    protected abstract T instantiateFragment();
-
-    public WebElement getLabelInputElement() {
-        return label;
+    public WebElement getButtonIncreaseElement() {
+        return buttonIncrease;
     }
 
     @Override
-    public String getLabelValue() {
-        return label.getText().trim();
+    public TextInputComponentImpl getInput() {
+        return input;
     }
 
     @Override
@@ -90,8 +78,11 @@ public abstract class AbstractInplaceComponent<T extends EditingState> implement
     }
 
     @Override
-    public boolean is(State state) {
-        return root.getAttribute("class").contains(getCssClassForState(state));
+    public void increase() {
+        if (Graphene.element(buttonIncrease).not().isVisible().apply(driver)) {
+            throw new RuntimeException("Button for increasing value is not visible.");
+        }
+        buttonIncrease.click();
     }
 
     @Override

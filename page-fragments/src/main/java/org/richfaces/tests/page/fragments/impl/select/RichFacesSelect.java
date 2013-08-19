@@ -21,9 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.select;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -40,11 +37,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponent;
-import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponent;
+import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.utils.Actions;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
+
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
 
 public class RichFacesSelect implements Select {
 
@@ -97,14 +97,14 @@ public class RichFacesSelect implements Select {
     @Override
     public SelectSuggestions openSelect() {
         if (!Utils.isVisible(driver, GLOBAL_POPUP) && Utils.isVisible(localPopup)) {
-            (advanced().getOpenByInputClick() ? input.getInput() : showButton).click();
+            (advanced().getOpenByInputClick() ? input.advanced().getInput() : showButton).click();
         }
         return getSuggestions();
     }
 
     @Override
     public SelectSuggestions type(String text) {
-        input.clear(ClearType.DELETE).fillIn(text);
+        input.advanced().clear(ClearType.DELETE).sendKeys(text);
         return getSuggestions();
     }
 
@@ -123,7 +123,7 @@ public class RichFacesSelect implements Select {
                 foundValue.click();
             }
             advanced().waitUntilSuggestionsAreNotVisible();
-            input.trigger("blur");
+            input.advanced().trigger("blur");
         }
 
         @Override

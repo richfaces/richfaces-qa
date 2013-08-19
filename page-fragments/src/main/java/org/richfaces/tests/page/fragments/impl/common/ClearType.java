@@ -14,5 +14,5 @@ public enum ClearType {
     // clearing by JavaScript
     JS;
 
-    public static final ClearType DEFAULT_CLEAR_TYPE = BACKSPACE;
+    public static final ClearType DEFAULT_CLEAR_TYPE = JS;
 }

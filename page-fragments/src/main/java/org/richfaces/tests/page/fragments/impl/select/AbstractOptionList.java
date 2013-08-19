@@ -1,6 +1,6 @@
-/*******************************************************************************
+/**
  * JBoss, Home of Professional Open Source
- * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * Copyright 2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,34 +18,40 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.input;
+ */
+package org.richfaces.tests.page.fragments.impl.select;
 
-import org.jboss.arquillian.graphene.component.object.api.checkbox.CheckboxComponent;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import java.util.ArrayList;
+import java.util.List;
 import org.openqa.selenium.WebElement;
 
-public class CheckboxInputComponentImpl implements CheckboxComponent {
-
-    @Root
-    private WebElement root;
+/**
+ * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ */
+public abstract class AbstractOptionList implements OptionList {
 
     @Override
-    public void check() {
-        if (!root.isSelected()) {
-            root.click();
+    public Option getOptionByVisibleText(String text) {
+        int index = 0;
+        for (WebElement option: getOptionElements()) {
+            if (option.getText().trim().equals(text.trim())) {
+                return new SimpleOption(index, option.getText().trim());
+            }
+            index++;
         }
+        return null;
     }
 
     @Override
-    public void uncheck() {
-        if (root.isSelected()) {
-            root.click();
+    public List<Option> getOptions() {
+        List<Option> result = new ArrayList<Option>();
+        int index = 0;
+        for (WebElement option: getOptionElements()) {
+            result.add(new SimpleOption(index++, option.getText().trim()));
         }
+        return result;
     }
 
-    @Override
-    public boolean isChecked() {
-        return root.isSelected();
-    }
+    protected abstract List<WebElement> getOptionElements();
+
 }

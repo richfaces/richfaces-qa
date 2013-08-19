@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 
-import static org.jboss.arquillian.ajocado.dom.Event.MOUSEOUT;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.mode;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.onclick;
@@ -39,6 +38,7 @@ import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
 
@@ -90,7 +90,7 @@ public class TestPanelMenuItemDOMEventHandlers extends AbstractWebDriverTest {
     public void testOnMouseout() {
         panelMenuItemAttributes.set(mode, client);
         // TODO JJa 2013-02-25: Rewrite using webdriver api when fixed (not working now)
-        testFireEventWithJS(page.item.getRoot(), MOUSEOUT, panelMenuItemAttributes, PanelMenuItemAttributes.onmouseout);
+        testFireEventWithJS(page.item.getRoot(), Event.MOUSEOUT, panelMenuItemAttributes, PanelMenuItemAttributes.onmouseout);
     }
 
     @Test

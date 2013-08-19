@@ -170,7 +170,7 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
         Assert.assertFalse(getPage().getMessagesComponentWithFor().isVisible());
         Assert.assertFalse(getPage().getMessagesComponentWithGlobal().isVisible());
         //type bad value to first input
-        getPage().simpleInput1.clear(ClearType.JS).fillIn("bad value");
+        getPage().simpleInput1.advanced().clear(ClearType.JS).sendKeys("bad value");
         submitWithHBtn();
 
         Assert.assertTrue(getPage().getMessagesComponentWithFor().isVisible());
@@ -182,7 +182,7 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
         //hide all messages
         setCorrectValuesWithWaiting();
         //type bad value to second input
-        getPage().simpleInput2.clear(ClearType.JS).fillIn("bad value");
+        getPage().simpleInput2.advanced().clear(ClearType.JS).sendKeys("bad value");
         submitWithHBtn();
 
         Assert.assertFalse(getPage().getMessagesComponentWithFor().isVisible());
@@ -223,11 +223,11 @@ public abstract class AbstractMessagesComponentTest extends AbstractMessageCompo
     protected abstract MessagesComponentTestPage<? extends Message> getPage();
 
     protected String getSimpleInput1ID() {
-        return getIDOfElement(getPage().simpleInput1.getInput());
+        return getIDOfElement(getPage().simpleInput1.advanced().getInput());
     }
 
     protected String getSimpleInput2ID() {
-        return getIDOfElement(getPage().simpleInput2.getInput());
+        return getIDOfElement(getPage().simpleInput2.advanced().getInput());
     }
 
     @Override

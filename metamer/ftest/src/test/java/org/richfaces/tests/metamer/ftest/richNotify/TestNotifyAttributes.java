@@ -27,10 +27,7 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.notifyAt
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.test.api.ArquillianResource;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -42,6 +39,7 @@ import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.notify.NotifyMessagePosition;
 import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotifyMessage;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
