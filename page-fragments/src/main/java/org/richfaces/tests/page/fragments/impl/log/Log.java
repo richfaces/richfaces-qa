@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.log;
 
-import java.util.List;
+import org.richfaces.tests.page.fragments.impl.list.ListComponent;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -31,40 +31,25 @@ public interface Log {
 
     enum LogEntryLevel {
 
-        ALL("all"),
-        DEBUG("debug"),
-        INFO("info"),
-        WARN("warn"),
-        ERROR("error"),
-        FATAL("fatal");
-        private final String level;
-
-        private LogEntryLevel(String level) {
-            this.level = level;
-        }
-
-        public String getLevelName() {
-            return level;
-        }
+        DEBUG,
+        INFO,
+        WARN,
+        ERROR
     }
 
     /**
-     * Change level of log.
+     * Change log level of.
+     * @see LogEntryLevel
      */
     void changeLevel(LogEntryLevel level);
 
     /**
-     * Clear the all messages in log. Without waiting for clearing the messages.
+     * Clear the all messages in log. Wait until log is cleared.
      */
     void clear();
 
     /**
-     * Returns all entries in log with the specified level.
+     * Returns all log entries.
      */
-    List<LogEntry> getLogEntries(LogEntryLevel level);
-
-    /**
-     * Return all entries, which will pass through the filter.
-     */
-    List<LogEntry> getLogEntries(LogFilterBuilder fb);
+    ListComponent<? extends LogEntry> getLogEntries();
 }

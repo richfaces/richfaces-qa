@@ -21,27 +21,21 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richHotKey;
 
-import static org.testng.Assert.assertEquals;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
-import com.google.common.base.Predicate;
+import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
+import java.util.List;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.page.fragments.impl.hotkey.RichFacesHotkey;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.log.Log.LogEntryLevel;
-import org.richfaces.tests.page.fragments.impl.log.LogEntries;
+import org.richfaces.tests.page.fragments.impl.log.LogEntry;
 import org.richfaces.tests.page.fragments.impl.log.RichFacesLog;
-import org.richfaces.tests.page.fragments.impl.log.RichFacesLogFilterBuilder;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -70,19 +64,11 @@ public abstract class AbstractHotKeyTest extends AbstractWebDriverTest {
 
     protected void clearHotKeyEvents() {
         log.clear();
-        Graphene.waitGui().until(new Predicate<WebDriver>() {
-            @Override
-            public boolean apply(WebDriver input) {
-                return log.getLogEntries(LogEntryLevel.ALL).isEmpty();
-            }
-        });
     }
 
     protected void checkEvent(String text, int number) {
-        LogEntries filter = log.getLogEntries(LogEntryLevel.INFO)
-            .filter(new RichFacesLogFilterBuilder().filterToContentContains(text));
-        int logEntriesWithContent = filter.size();
-        assertEquals(logEntriesWithContent, number, "The number of hotkey events doesn't match.");
+        List<? extends LogEntry> items = log.getLogEntries().getItems(ChoicePickerHelper.byVisibleText().contains(text));
+        assertEquals(items.size(), number, "The number of hotkey events doesn't match.");
     }
 
     protected void checkEvents(int expectedCountOfEvents1, int expectedCountOfEvents2) {

@@ -21,12 +21,21 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.log;
 
-import java.util.List;
+import com.google.common.base.Predicate;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
+import org.richfaces.tests.page.fragments.impl.list.AbstractListComponent;
+import org.richfaces.tests.page.fragments.impl.list.ListComponent;
+import org.richfaces.tests.page.fragments.impl.list.RichFacesListItem;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -35,57 +44,111 @@ public class RichFacesLog implements Log {
 
     @Root
     private WebElement root;
-    //
-    @FindBy(css = "div.rf-log-contents > div")
-    private List<RichFacesLogEntry> logEntries;
-    @FindBy(xpath = ".//div[span[contains(@class, 'rf-log-entry-lbl-error')]]")
-    private List<RichFacesLogEntry> errorLogEntries;
-    @FindBy(xpath = ".//div[span[contains(@class, 'rf-log-entry-lbl-warn')]]")
-    private List<RichFacesLogEntry> warnLogEntries;
-    @FindBy(xpath = ".//div[span[contains(@class, 'rf-log-entry-lbl-info')]]")
-    private List<RichFacesLogEntry> infoLogEntries;
-    @FindBy(xpath = ".//div[span[contains(@class, 'rf-log-entry-lbl-debug')]]")
-    private List<RichFacesLogEntry> debugLogEntries;
-    //
+
+    @FindBy(css = "div.rf-log-contents")
+    private RichFacesLogEntries logEntries;
+
     @FindBy(tagName = "button")
     private WebElement clearButton;
     @FindBy(tagName = "select")
-    private WebElement levelSelect;
+    private Select levelSelect;
+
+    private AdvancedInteractions interactions;
+
+    public AdvancedInteractions advanced() {
+        if (interactions == null) {
+            interactions = new AdvancedInteractions();
+        }
+        return interactions;
+    }
 
     @Override
     public void clear() {
         clearButton.click();
+        Graphene.waitGui().until(new Predicate<WebDriver>() {
+
+            @Override
+            public boolean apply(WebDriver input) {
+                return getLogEntries().isEmpty();
+            }
+        });
     }
 
     @Override
     public void changeLevel(LogEntryLevel level) {
-        LogEntryLevel convertedLevel = (level.equals(LogEntryLevel.ALL) ? LogEntryLevel.DEBUG
-                : level.equals(LogEntryLevel.FATAL) ? LogEntryLevel.ERROR : level);
-        new Select(levelSelect).selectByValue(convertedLevel.getLevelName());
+        levelSelect.selectByVisibleText(level.toString().toLowerCase());
     }
 
     @Override
-    public LogEntries getLogEntries(LogEntryLevel level) {
-        switch (level) {
-            case DEBUG:
-                return new LogEntries(debugLogEntries);
-            case INFO:
-                return new LogEntries(infoLogEntries);
-            case WARN:
-                return new LogEntries(warnLogEntries);
-            case ERROR:
-                return new LogEntries(errorLogEntries);
-            case ALL:
-                return new LogEntries(logEntries);
-            case FATAL:
-                return new LogEntries();//empty list
-            default:
-                throw new UnsupportedOperationException("Unknown level " + level);
+    public ListComponent<? extends LogEntry> getLogEntries() {
+        return logEntries;
+    }
+
+    public static class RichFacesLogEntries extends AbstractListComponent<RichFacesLogEntry> {
+    }
+
+    public static class RichFacesLogEntry extends RichFacesListItem implements LogEntry {
+
+        @FindBy(css = "span.rf-log-entry-lbl")
+        private WebElement labelElement;
+        @FindBy(css = "span.rf-log-entry-msg")
+        private WebElement messageElement;
+
+        @Override
+        public String getContent() {
+            return messageElement.getText();
+        }
+
+        @Override
+        public LogEntryLevel getLevel() {
+            return RichFacesLogEntryLevel.getLevelFromLabel(labelElement);
+        }
+
+        @Override
+        public DateTime getTimeStamp() {
+            DateTime dt = null;
+            String text = labelElement.getText();
+            String timeStamp = text.substring(text.indexOf('[') + 1, text.indexOf(']'));
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("HH:m:s.S");
+            try {
+                dt = formatter.parseDateTime(timeStamp);
+            } catch (IllegalArgumentException e) {
+                throw new RuntimeException("Something went wrong with parsing of log entry timestamp!", e);
+            }
+            return dt;
         }
     }
 
-    @Override
-    public LogEntries getLogEntries(LogFilterBuilder fb) {
-        return new LogEntries(logEntries).filter(fb);
+    private static enum RichFacesLogEntryLevel {
+
+        DEBUG(LogEntryLevel.DEBUG, "rf-log-entry-lbl-debug"),
+        INFO(LogEntryLevel.INFO, "rf-log-entry-lbl-info"),
+        WARN(LogEntryLevel.WARN, "rf-log-entry-lbl-warn"),
+        ERROR(LogEntryLevel.ERROR, "rf-log-entry-lbl-error");
+
+        private final LogEntryLevel level;
+        private final String containsClass;
+
+        private RichFacesLogEntryLevel(LogEntryLevel level, String containsClass) {
+            this.level = level;
+            this.containsClass = containsClass;
+        }
+
+        private static LogEntryLevel getLevelFromLabel(WebElement label) {
+            String styleClasses = label.getAttribute("class");
+            for (RichFacesLogEntryLevel logEntryLevel : values()) {
+                if (styleClasses.contains(logEntryLevel.containsClass)) {
+                    return logEntryLevel.level;
+                }
+            }
+            throw new RuntimeException("Cannot obtain level from label: " + label);
+        }
+    }
+
+    public class AdvancedInteractions {
+
+        public GrapheneElement getRoot() {
+            return new GrapheneElement(root);
+        }
     }
 }
