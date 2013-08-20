@@ -27,13 +27,14 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneContext;
 import org.jboss.arquillian.graphene.enricher.WebElementUtils;
 import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.proxy.GrapheneContextualHandler;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
-import org.jboss.arquillian.graphene.proxy.GrapheneProxyHandler;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
+
 import static org.testng.Assert.assertTrue;
 
 /**
@@ -88,7 +89,7 @@ public class NestedRegionModel {
             final String id = name.substring(0, 1).toLowerCase() + WordUtils.capitalize(name).replace(" ", "").substring(1);
             GrapheneContext context = GrapheneContext.getContextFor(Default.class);
             final WebDriver browser = context.getWebDriver();
-            this.select = GrapheneProxy.getProxyForHandler(GrapheneProxyHandler.forFuture(context, new GrapheneProxy.FutureTarget() {
+            this.select = GrapheneProxy.getProxyForHandler(GrapheneContextualHandler.forFuture(context, new GrapheneProxy.FutureTarget() {
                 @Override
                 public Object getTarget() {
                     return new Select(browser.findElement(By.cssSelector("select[id$="+id+"Select]")));
