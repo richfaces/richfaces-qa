@@ -30,6 +30,8 @@ import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.dataScroller.RichFacesDataScroller;
+import org.richfaces.tests.page.fragments.impl.list.AbstractListComponent;
+import org.richfaces.tests.page.fragments.impl.list.RichFacesListItem;
 import org.richfaces.tests.page.fragments.impl.list.internal.simple.RichFacesList;
 import org.richfaces.tests.page.fragments.impl.list.internal.simple.RichFacesSimpleListItem;
 import org.testng.Assert;
@@ -69,7 +71,7 @@ public class TestListWithScroller2 extends AbstractListTest {
             for (Integer item : items) {
                 li = list.getItems().get(item);
                 Assert.assertEquals(li.getIterationStatusVarText(),
-                        String.format(ITERATION_STATUS_TEMPLATE, maxIndex, maxIndex + ROWS - 1, item + maxIndex, item + 1, (item == 0), (item == 19), (item % 2 == 1)));
+                    String.format(ITERATION_STATUS_TEMPLATE, maxIndex, maxIndex + ROWS - 1, item + maxIndex, item + 1, (item == 0), (item == 19), (item % 2 == 1)));
             }
         }
     }
@@ -110,15 +112,10 @@ public class TestListWithScroller2 extends AbstractListTest {
         }
     }
 
-    public static class TestedList extends RichFacesList<TestedListItem> {
-
-        @Override
-        protected Class<TestedListItem> getListItemType() {
-            return TestedListItem.class;
-        }
+    public static class TestedList extends AbstractListComponent<TestedListItem> {
     }
 
-    public static class TestedListItem extends RichFacesSimpleListItem {
+    public static class TestedListItem extends RichFacesListItem {
 
         @FindBy(css = "[id$=rowKeyVar]")
         private WebElement rowKeyVar;

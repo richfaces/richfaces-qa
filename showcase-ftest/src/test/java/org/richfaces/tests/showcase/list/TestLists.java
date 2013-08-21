@@ -22,7 +22,7 @@
 package org.richfaces.tests.showcase.list;
 
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.richfaces.tests.page.fragments.impl.list.internal.simple.SimpleList.ListType;
+import org.richfaces.component.ListType;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.list.page.ListsPage;
 import org.testng.Assert;
@@ -30,7 +30,6 @@ import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
- * @version $Revision$
  */
 public class TestLists extends AbstractWebDriverTest {
 
@@ -41,27 +40,36 @@ public class TestLists extends AbstractWebDriverTest {
      * Tests***********************************************************************************************
      */
     @Test
+    public void testDefinitionsList() {
+        checkList(ListType.definitions);
+    }
+
+    @Test
     public void testOrderedList() {
-        checkList(ListType.ORDERED);
+        checkList(ListType.ordered);
     }
 
     @Test
     public void testUnorderedList() {
-        checkList(ListType.UNORDERED);
+        checkList(ListType.unordered);
     }
-
-    @Test
-    public void testDefinitionsList() {
-        checkList(ListType.DEFINITIONS);
-    }
-
     /* ********************************************************************************************************************
      * Help methods
      * ******************************************************************************************************
      * **************
      */
+
     private void checkList(ListType type) {
         page.setType(type);
-        Assert.assertEquals(type, page.list.getType());
+        String tag = page.getList().getRoot().getTagName();
+        ListType actual = null;
+        if (tag.equals("dl")) {
+            actual = ListType.definitions;
+        } else if (tag.equals("ol")) {
+            actual = ListType.ordered;
+        } else if (tag.equals("ul")) {
+            actual = ListType.unordered;
+        }
+        Assert.assertEquals(actual, type, "Unknown list type with root tag " + tag);
     }
 }

@@ -94,6 +94,11 @@ public abstract class AbstractListComponent<T extends ListItem> implements ListC
         for (WebElement foundItem : getItemsElements()) {
             result.add(instantiateItemFragment(foundItem));
         }
+        if (result.size() == 1 && !result.get(0).getRoot().isDisplayed()) {
+            // hack for RF's list.
+            // when the list should be empty, there is always a hidden item.
+            return Collections.EMPTY_LIST;
+        }
         return Collections.unmodifiableList(result);
     }
 
