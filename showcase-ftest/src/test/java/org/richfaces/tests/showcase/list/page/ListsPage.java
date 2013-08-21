@@ -24,8 +24,10 @@ package org.richfaces.tests.showcase.list.page;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.list.internal.simple.RichFacesSimpleList;
-import org.richfaces.tests.page.fragments.impl.list.internal.simple.SimpleList.ListType;
+import org.richfaces.tests.page.fragments.impl.list.ListComponent;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
+import org.richfaces.tests.page.fragments.impl.list.RichFacesList;
+import org.richfaces.ui.iteration.list.ListType;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -33,7 +35,7 @@ import org.richfaces.tests.page.fragments.impl.list.internal.simple.SimpleList.L
 public class ListsPage {
 
     @FindBy(css = "[id$='list']")
-    public RichFacesSimpleList list;
+    private RichFacesList list;
     @FindBy(jquery = "a:contains('ordered')")
     private WebElement orderedList;
     @FindBy(jquery = "a:contains('unordered')")
@@ -43,15 +45,19 @@ public class ListsPage {
 
     public void setType(ListType type) {
         switch (type) {
-            case DEFINITIONS:
+            case definitions:
                 Graphene.guardAjax(definitions).click();
                 break;
-            case UNORDERED:
+            case unordered:
                 Graphene.guardAjax(unordered).click();
                 break;
-            case ORDERED:
+            case ordered:
                 Graphene.guardAjax(orderedList).click();
                 break;
         }
+    }
+
+    public ListComponent<? extends ListItem> getList() {
+        return list;
     }
 }

@@ -26,6 +26,7 @@ import static org.testng.Assert.assertEquals;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.listAttributes;
 
 import java.net.URL;
+import java.util.List;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.openqa.selenium.WebElement;
@@ -33,6 +34,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.page.fragments.impl.list.RichFacesListItem;
 import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
 import org.richfaces.tests.page.fragments.impl.list.internal.simple.RichFacesSimpleListItem;
 import org.testng.annotations.Test;
@@ -66,18 +68,18 @@ public class TestListAttributes extends AbstractListTest {
     }
 
     private WebElement getTestedItem() {
-        return list.getItems().get(0).getItemElement();
+        return list.getItems().get(0).getRoot();
     }
 
     @Test
     public void testRendered() {
         listAttributes.set(ListAttributes.rendered, Boolean.FALSE);
-        assertEquals(list.isVisible(), false);
+        assertNotVisible(list.getRoot(), "List should not be visible");
     }
 
     @Test
     public void testDir() {
-        testDir(list.getRootElement());
+        testDir(list.getRoot());
     }
 
     @Test
@@ -91,144 +93,144 @@ public class TestListAttributes extends AbstractListTest {
 
     @Test
     public void testLang() {
-        testAttributeLang(list.getRootElement());
+        testAttributeLang(list.getRoot());
     }
 
     @Test
     public void testOnclick() {
         testFireEvent(listAttributes, ListAttributes.onclick,
-                new Actions(driver).click(list.getRootElement()).build());
+            new Actions(driver).click(list.getRoot()).build());
     }
 
     @Test
     public void testOndblclick() {
         testFireEvent(listAttributes, ListAttributes.ondblclick,
-                new Actions(driver).doubleClick(list.getRootElement()).build());
+            new Actions(driver).doubleClick(list.getRoot()).build());
     }
 
     @Test
     public void testOnkeydown() {
-        testFireEventWithJS(list.getRootElement(), listAttributes,
-                ListAttributes.onkeydown);
+        testFireEventWithJS(list.getRoot(), listAttributes,
+            ListAttributes.onkeydown);
     }
 
     @Test
     public void testOnkeypress() {
-        testFireEventWithJS(list.getRootElement(), listAttributes,
-                ListAttributes.onkeypress);
+        testFireEventWithJS(list.getRoot(), listAttributes,
+            ListAttributes.onkeypress);
     }
 
     @Test
     public void testOnkeyup() {
-        testFireEventWithJS(list.getRootElement(), listAttributes,
-                ListAttributes.onkeyup);
+        testFireEventWithJS(list.getRoot(), listAttributes,
+            ListAttributes.onkeyup);
 
     }
 
     @Test
     public void testOnmousedown() {
-        testFireEventWithJS(list.getRootElement(), listAttributes,
-                ListAttributes.onmousedown);
+        testFireEventWithJS(list.getRoot(), listAttributes,
+            ListAttributes.onmousedown);
     }
 
     @Test
     public void testOnmousemove() {
-        testFireEventWithJS(list.getRootElement(), listAttributes,
-                ListAttributes.onmousemove);
+        testFireEventWithJS(list.getRoot(), listAttributes,
+            ListAttributes.onmousemove);
 
     }
 
     @Test
     public void testOnmouseout() {
-        testFireEventWithJS(list.getRootElement(), listAttributes,
-                ListAttributes.onmouseout);
+        testFireEventWithJS(list.getRoot(), listAttributes,
+            ListAttributes.onmouseout);
     }
 
     @Test
     public void testOnmouseover() {
-        testFireEventWithJS(list.getRootElement(), listAttributes,
-                ListAttributes.onmouseover);
+        testFireEventWithJS(list.getRoot(), listAttributes,
+            ListAttributes.onmouseover);
     }
 
     @Test
     public void testOnmouseup() {
-        testFireEventWithJS(list.getRootElement(), listAttributes,
-                ListAttributes.onmouseup);
+        testFireEventWithJS(list.getRoot(), listAttributes,
+            ListAttributes.onmouseup);
     }
 
     @Test
     public void testOnrowclick() {
         testFireEvent(listAttributes, ListAttributes.onrowclick,
-                new Actions(driver).click(getTestedItem()).build());
+            new Actions(driver).click(getTestedItem()).build());
     }
 
     @Test
     public void testOnrowdblclick() {
         testFireEvent(listAttributes, ListAttributes.onrowdblclick,
-                new Actions(driver).doubleClick(getTestedItem()).build());
+            new Actions(driver).doubleClick(getTestedItem()).build());
     }
 
     @Test
     public void testOnrowkeydown() {
         testFireEventWithJS(getTestedItem(), Event.KEYDOWN, listAttributes,
-                ListAttributes.onrowkeydown);
+            ListAttributes.onrowkeydown);
     }
 
     @Test
     public void testOnrowkeypress() {
         testFireEventWithJS(getTestedItem(), Event.KEYPRESS, listAttributes,
-                ListAttributes.onrowkeypress);
+            ListAttributes.onrowkeypress);
     }
 
     @Test
     public void testOnrowkeyup() {
         testFireEventWithJS(getTestedItem(), Event.KEYUP, listAttributes,
-                ListAttributes.onrowkeyup);
+            ListAttributes.onrowkeyup);
     }
 
     @Test
     public void testOnrowmousedown() {
         testFireEventWithJS(getTestedItem(), Event.MOUSEDOWN, listAttributes,
-                ListAttributes.onrowmousedown);
+            ListAttributes.onrowmousedown);
     }
 
     @Test
     public void testOnrowmousemove() {
         testFireEventWithJS(getTestedItem(), Event.MOUSEMOVE, listAttributes,
-                ListAttributes.onrowmousemove);
+            ListAttributes.onrowmousemove);
 
     }
 
     @Test
     public void testOnrowmouseout() {
         testFireEventWithJS(getTestedItem(), Event.MOUSEOUT, listAttributes,
-                ListAttributes.onrowmouseout);
+            ListAttributes.onrowmouseout);
     }
 
     @Test
     public void testOnrowmouseover() {
         testFireEventWithJS(getTestedItem(), Event.MOUSEOVER, listAttributes,
-                ListAttributes.onrowmouseover);
+            ListAttributes.onrowmouseover);
     }
 
     @Test
     public void testOnrowmouseup() {
         testFireEventWithJS(getTestedItem(), Event.MOUSEUP, listAttributes,
-                ListAttributes.onrowmouseup);
+            ListAttributes.onrowmouseup);
     }
 
     @Test
     public void testRowClass() {
-        ListItems<RichFacesSimpleListItem> items = list.getItems();
-        testStyleClass(items.get(0).getItemElement(), BasicAttributes.rowClass);
-        testStyleClass(items.get(items.size() - 1).getItemElement(), BasicAttributes.rowClass);
+        List<RichFacesListItem> items = list.getItems();
+        testStyleClass(items.get(0).getRoot(), BasicAttributes.rowClass);
+        testStyleClass(items.get(items.size() - 1).getRoot(), BasicAttributes.rowClass);
     }
 
     @Test
     public void testRowClasses() {
-        ListItems<RichFacesSimpleListItem> items = list.getItems();
-        testStyleClass(items.get(0).getItemElement(), BasicAttributes.rowClasses);
-        testStyleClass(items.get(items.size() - 1).getItemElement(), BasicAttributes.rowClasses);
+        List<RichFacesListItem> items = list.getItems();
+        testStyleClass(items.get(0).getRoot(), BasicAttributes.rowClasses);
+        testStyleClass(items.get(items.size() - 1).getRoot(), BasicAttributes.rowClasses);
     }
 
     @Test
@@ -240,17 +242,17 @@ public class TestListAttributes extends AbstractListTest {
 
     @Test
     public void testStyle() {
-        testStyle(list.getRootElement());
+        testStyle(list.getRoot());
     }
 
     @Test
     public void testStyleClass() {
-        testStyleClass(list.getRootElement());
+        testStyleClass(list.getRoot());
     }
 
     @Test
     public void testTitle() {
-        testTitle(list.getRootElement());
+        testTitle(list.getRoot());
     }
 
     @Test
