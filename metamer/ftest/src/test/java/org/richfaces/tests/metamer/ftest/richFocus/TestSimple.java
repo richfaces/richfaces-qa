@@ -31,6 +31,7 @@ import java.net.URL;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.AttributeList;
 import org.testng.annotations.Test;
 
@@ -84,7 +85,10 @@ public class TestSimple extends AbstractWebDriverTest {
     }
 
     @Test
+    @Templates(exclude = { "richPopupPanel" })
     public void testValidationAwareFalse() {
+        // richPopupPanel is disabled because in place where following attribute is to be set the popup
+        // window appears, therefore making it unclickable
         AttributeList.focusAttributes.set(FocusAttributes.validationAware, false);
 
         page.getNameInput().fillIn("Robert");
