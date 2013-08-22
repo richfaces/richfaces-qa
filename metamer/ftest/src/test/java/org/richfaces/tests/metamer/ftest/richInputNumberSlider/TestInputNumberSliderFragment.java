@@ -60,7 +60,8 @@ public class TestInputNumberSliderFragment extends AbstractWebDriverTest {
     }
 
     private int parseIntInOutput() throws NumberFormatException {
-        return Integer.parseInt(output.getText());
+        int result = Integer.parseInt(output.getText());
+        return result;
     }
 
     private void scrollOutOfView() {

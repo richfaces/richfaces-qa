@@ -110,7 +110,10 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     private enum BoundaryDatesMode {
 
-        NULL("null"), INACTIVE("inactive"), SCROLL("scroll"), SELECT("select");
+        NULL("null"),
+        INACTIVE("inactive"),
+        SCROLL("scroll"),
+        SELECT("select");
         private final String value;
 
         private BoundaryDatesMode(String value) {
@@ -120,8 +123,12 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     private enum Direction {
 
-        AUTO("auto"), TOPLEFT("topLeft"), TOPRIGHT("topRight"), BOTTOMLEFT("bottomLeft"), BOTTOMRIGHT("bottomRight"), NULL(
-        "null");
+        AUTO("auto"),
+        TOPLEFT("topLeft"),
+        TOPRIGHT("topRight"),
+        BOTTOMLEFT("bottomLeft"),
+        BOTTOMRIGHT("bottomRight"),
+        NULL("null");
         private final String value;
 
         private Direction(String value) {
@@ -131,7 +138,9 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     private enum Mode {
 
-        AJAX("ajax"), CLIENT("client"), NULL("null");
+        AJAX("ajax"),
+        CLIENT("client"),
+        NULL("null");
         private final String value;
 
         private Mode(String value) {
@@ -141,7 +150,10 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     private enum TodayControlMode {
 
-        HIDDEN("hidden"), NULL("null"), SELECT("select"), SCROLL("scroll");
+        HIDDEN("hidden"),
+        NULL("null"),
+        SELECT("select"),
+        SCROLL("scroll");
         private final String value;
 
         private TodayControlMode(String value) {
@@ -422,7 +434,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
         calendarAttributes.set(CalendarAttributes.enableManualInput, Boolean.TRUE);
         assertTrue(Graphene.attribute(calendar.getInput(), "readonly").not().isPresent().apply(driver),
-                "Readonly attribute of input should not be defined.");
+            "Readonly attribute of input should not be defined.");
     }
 
     @Test
@@ -485,7 +497,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         switch (direction) {
             case NULL:
             case AUTO:
-            // auto (direction depends on browser/screen resolution)
+                // auto (direction depends on browser/screen resolution)
             case BOTTOMLEFT:
                 locationInput = inputLocations.getBottomLeft();
                 break;
@@ -512,13 +524,10 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         assertEquals(weekDayShortNames, expectedShortNames);
 
         setCurrentDateWithCalendarsTodayButtonAction.perform();
-        DateTime parsedDateTime = dateTimeFormatter.withLocale(new Locale(locale)).parseDateTime(
-                calendar.getInputValue());
+        DateTime parsedDateTime = dateTimeFormatter.withLocale(new Locale(locale)).parseDateTime(calendar.getInputValue());
 
-        assertEquals(parsedDateTime.getDayOfMonth(), todayMidday.getDayOfMonth(),
-                "Input doesn't contain selected date.");
-        assertEquals(parsedDateTime.getMonthOfYear(), todayMidday.getMonthOfYear(),
-                "Input doesn't contain selected date.");
+        assertEquals(parsedDateTime.getDayOfMonth(), todayMidday.getDayOfMonth(), "Input doesn't contain selected date.");
+        assertEquals(parsedDateTime.getMonthOfYear(), todayMidday.getMonthOfYear(), "Input doesn't contain selected date.");
         assertEquals(parsedDateTime.getYear(), todayMidday.getYear(), "Input doesn't contain selected date.");
     }
 
@@ -530,8 +539,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         DateTime firstOf2011 = firstOfJanuary2012.withYear(2011);
         calendar.setDateTime(firstOf2011);
         CalendarWeek firstDisplayedWeek = calendar.openPopup().getDayPicker().getWeek(1);
-        int secondDisplayedWeekNumber = calendar.openPopup().getDayPicker()
-                .getWeek(2).getWeekNumber();
+        int secondDisplayedWeekNumber = calendar.openPopup().getDayPicker().getWeek(2).getWeekNumber();
         CalendarDays days = firstDisplayedWeek.getCalendarDays().removeSpecificDays(DayType.boundaryDay);
 
         assertEquals(days.size(), 1, "Month days in first displayed week.");
@@ -541,8 +549,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.minDaysInFirstWeek, 2);
 
         firstDisplayedWeek = calendar.openPopup().getDayPicker().getWeek(1);
-        secondDisplayedWeekNumber = calendar.openPopup().getDayPicker()
-                .getWeek(2).getWeekNumber();
+        secondDisplayedWeekNumber = calendar.openPopup().getDayPicker().getWeek(2).getWeekNumber();
         days = firstDisplayedWeek.getCalendarDays().removeSpecificDays(DayType.boundaryDay);
 
         assertEquals(days.size(), 1, "Month days in first displayed week.");
@@ -599,7 +606,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
         List<String> expectedLabels = Arrays.asList(labelsString.split(", "));
         List<String> shortMonthsLabels = calendar.openPopup().getHeaderControls().openYearAndMonthEditor()
-                .getShortMonthsLabels();
+            .getShortMonthsLabels();
 
         assertEquals(shortMonthsLabels, expectedLabels, "Month label in calendar");
     }
@@ -609,8 +616,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         int tolerance = 5;
 
         Locations before = calendar.openPopup().getLocations();
-        Locations movedFromBefore = (horizontal
-                ? before.moveAllBy(offset, 0) : before.moveAllBy(0, offset));
+        Locations movedFromBefore = (horizontal ? before.moveAllBy(offset, 0) : before.moveAllBy(0, offset));
         if (horizontal) {
             calendarAttributes.set(CalendarAttributes.horizontalOffset, offset);
         } else {
@@ -698,16 +704,16 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testOnhide() {
-        testFireEvent(calendarAttributes, CalendarAttributes.onhide, new Actions(driver).click(calendar.getInput())
-                .click(calendar.getInput()).build());
+        testFireEvent(calendarAttributes, CalendarAttributes.onhide,
+            new Actions(driver).click(calendar.getInput()).click(calendar.getInput()).build());
     }
 
     @Test
     public void testOninputblur() {
         // this throws the condition 2x
         // testFireEventWithJS(calendar.getInput(), Event.BLUR, calendarAttributes, CalendarAttributes.oninputblur);
-        testFireEvent(calendarAttributes, CalendarAttributes.oninputblur, new Actions(driver)
-                .click(calendar.getInput()).click(page.getRequestTimeElement()).build());
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputblur,
+            new Actions(driver).click(calendar.getInput()).click(page.getRequestTimeElement()).build());
     }
 
     @Test
@@ -725,20 +731,20 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testOninputclick() {
-        testFireEvent(calendarAttributes, CalendarAttributes.oninputclick,
-                new Actions(driver).click(calendar.getInput()).build());
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputclick, new Actions(driver).click(calendar.getInput())
+            .build());
     }
 
     @Test
     public void testOninputdblclick() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputdblclick,
-                new Actions(driver).doubleClick(calendar.getInput()).build());
+            new Actions(driver).doubleClick(calendar.getInput()).build());
     }
 
     @Test
     public void testOninputfocus() {
-        testFireEvent(calendarAttributes, CalendarAttributes.oninputfocus,
-                new Actions(driver).click(calendar.getInput()).build());
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputfocus, new Actions(driver).click(calendar.getInput())
+            .build());
     }
 
     @Test
@@ -759,37 +765,37 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Test
     public void testOninputmousedown() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmousedown,
-                new Actions(driver).clickAndHold(calendar.getInput()).build());
+            new Actions(driver).clickAndHold(calendar.getInput()).build());
     }
 
     @Test
     public void testOninputmousemove() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmousemove,
-                new Actions(driver).moveToElement(calendar.getInput()).build());
+            new Actions(driver).moveToElement(calendar.getInput()).build());
     }
 
     @Test
     public void testOninputmouseout() {
-        testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseout,
-                new Actions(driver).click(calendar.getInput()).moveToElement(page.getRequestTimeElement()).build());
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseout, new Actions(driver).click(calendar.getInput())
+            .moveToElement(page.getRequestTimeElement()).build());
     }
 
     @Test
     public void testOninputmouseover() {
         testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseover,
-                new Actions(driver).moveToElement(calendar.getInput()).build());
+            new Actions(driver).moveToElement(calendar.getInput()).build());
     }
 
     @Test
     public void testOninputmouseup() {
-        testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseup,
-                new Actions(driver).click(calendar.getInput()).build());
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseup, new Actions(driver).click(calendar.getInput())
+            .build());
     }
 
     @Test
     public void testOninputselect() {
-        testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseup,
-                new Actions(driver).click(calendar.getInput()).build());
+        testFireEvent(calendarAttributes, CalendarAttributes.oninputmouseup, new Actions(driver).click(calendar.getInput())
+            .build());
     }
 
     @Test
@@ -804,14 +810,12 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
     @Test
     public void testOnbeforecurrentdateselect() {
-        testFireEvent(calendarAttributes, CalendarAttributes.onbeforecurrentdateselect,
-                setTodayAndThenClickToNextMonthAction);
+        testFireEvent(calendarAttributes, CalendarAttributes.onbeforecurrentdateselect, setTodayAndThenClickToNextMonthAction);
     }
 
     @Test
     public void testOnbeforedateselect() {
-        testFireEvent(calendarAttributes, CalendarAttributes.onbeforedateselect,
-                setCurrentDateWithCalendarsTodayButtonAction);
+        testFireEvent(calendarAttributes, CalendarAttributes.onbeforedateselect, setCurrentDateWithCalendarsTodayButtonAction);
     }
 
     @Test
@@ -825,14 +829,14 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     @Templates(value = "plain")
     public void testPopupClass() {
         testHTMLAttribute(calendar.openPopup().getRoot(), calendarAttributes, CalendarAttributes.popupClass,
-                "metamer-ftest-class");
+            "metamer-ftest-class");
     }
 
     @Test
     @Templates(value = "plain")
     public void testPopupStyle() {
         testHTMLAttribute(calendar.openPopup().getRoot(), calendarAttributes, CalendarAttributes.popupStyle,
-                "background-color: yellow; font-size: 1.5em;");
+            "background-color: yellow; font-size: 1.5em;");
     }
 
     @Test
@@ -873,8 +877,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         int minutes = 33;
 
         // set yesterday with some minutes
-        MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(
-                todayMidday.plusMinutes(minutes).minusDays(1));
+        MetamerPage.waitRequest(calendar, WaitRequestType.XHR).setDateTime(todayMidday.plusMinutes(minutes).minusDays(1));
         // second time, but without minutes setting, to see if the minutes will reset
         setCurrentDateWithCalendarsTodayButtonAction.perform();
 
@@ -913,20 +916,11 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         if (booleanValue) {
             assertVisible(proxiedFooterControls, "Footer elements should be visible, when footer is rendered");
             assertListOfWebElementsVisible(Arrays.asList(proxiedFooterControls.getApplyButtonElement(),
-                    proxiedFooterControls.getCleanButtonElement(), proxiedFooterControls.getTimeEditorOpenerElement(),
-                    proxiedFooterControls.getTodayButtonElement()));
+                proxiedFooterControls.getCleanButtonElement(), proxiedFooterControls.getTimeEditorOpenerElement(),
+                proxiedFooterControls.getTodayButtonElement()));
 
         } else {
             assertNotVisible(proxiedFooterControls, "Footer elements should not be visible, when footer is not rendered");
-//          FIXME 2013-07-09 jstefek : after https://issues.jboss.org/browse/ARQGRA-319 fixed > delete the try-catch + fail;
-            try {
-                assertListOfWebElementsNotVisible(Arrays.asList(proxiedFooterControls.getApplyButtonElement(),
-                        proxiedFooterControls.getCleanButtonElement(), proxiedFooterControls.getTimeEditorOpenerElement(),
-                        proxiedFooterControls.getTodayButtonElement()));
-            } catch (WebDriverException e) {
-                return;
-            }
-            fail("Footer elements should not be visible, when footer is not rendered");
         }
     }
 
@@ -937,14 +931,14 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         PopupHeaderControls proxiedHeaderControls = calendar.openPopup().getProxiedHeaderControls();
         if (booleanValue) {
             assertListOfWebElementsVisible(Arrays.asList(proxiedHeaderControls.getCloseButtonElement(),
-                    proxiedHeaderControls.getNextMonthElement(), proxiedHeaderControls.getNextYearElement(),
-                    proxiedHeaderControls.getPreviousMonthElement(), proxiedHeaderControls.getPreviousYearElement(),
-                    proxiedHeaderControls.getYearAndMonthEditorOpenerElement()));
+                proxiedHeaderControls.getNextMonthElement(), proxiedHeaderControls.getNextYearElement(),
+                proxiedHeaderControls.getPreviousMonthElement(), proxiedHeaderControls.getPreviousYearElement(),
+                proxiedHeaderControls.getYearAndMonthEditorOpenerElement()));
         } else {
             assertListOfWebElementsNotVisible(Arrays.asList(proxiedHeaderControls.getCloseButtonElement(),
-                    proxiedHeaderControls.getNextMonthElement(), proxiedHeaderControls.getNextYearElement(),
-                    proxiedHeaderControls.getPreviousMonthElement(), proxiedHeaderControls.getPreviousYearElement(),
-                    proxiedHeaderControls.getYearAndMonthEditorOpenerElement()));
+                proxiedHeaderControls.getNextMonthElement(), proxiedHeaderControls.getNextYearElement(),
+                proxiedHeaderControls.getPreviousMonthElement(), proxiedHeaderControls.getPreviousYearElement(),
+                proxiedHeaderControls.getYearAndMonthEditorOpenerElement()));
         }
     }
 
@@ -1042,7 +1036,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
                 assertNull(calendar.openPopup().getDayPicker().getSelectedDay());
                 // but view of day picker should will change to current month
                 assertEquals(calendar.openPopup().getHeaderControls().getYearAndMonth().getMonthOfYear(),
-                        todayMidday.getMonthOfYear());
+                    todayMidday.getMonthOfYear());
                 break;
         }
     }
@@ -1117,8 +1111,8 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         @Override
         public void perform() {
             MetamerPage.waitRequest(calendar.openPopup().getFooterControls(), WaitRequestType.NONE).todayDate();
-            calendar.openPopup().getFooterControls().openTimeEditor()
-                    .setTime(todayMidday.plusMinutes(5), SetValueBy.BUTTONS).confirmTime();
+            calendar.openPopup().getFooterControls().openTimeEditor().setTime(todayMidday.plusMinutes(5), SetValueBy.BUTTONS)
+                .confirmTime();
         }
     }
 
