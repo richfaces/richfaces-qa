@@ -1,160 +1,143 @@
-/**
- * JBoss, Home of Professional Open Source
- * Copyright 2013, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
 package org.richfaces.tests.page.fragments.impl.inputNumberSlider;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.richfaces.tests.page.fragments.impl.VisibleComponent;
+import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 
-/**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
-public class RichFacesInputNumberSlider implements VisibleComponent, InputNumberSlider {
+import com.google.common.base.Preconditions;
+
+public class RichFacesInputNumberSlider extends AbstractNumberInput implements InputNumberSlider {
+
+    @FindBy(className = "rf-insl-inc")
+    private WebElement arrowIncrease;
+
+    @FindBy(className = "rf-insl-dec")
+    private WebElement arrowDecrease;
+
+    @FindBy(css = "span.rf-insl-inp-cntr > input.rf-insl-inp")
+    private TextInputComponentImpl input;
+
+    @FindBy(className = "rf-insl-hnd-cntr")
+    private WebElement handleContainer;
+
+    @FindBy(className = "rf-insl-hnd")
+    private WebElement handle;
+
+    @FindBy(className = "rf-insl-hnd-dis")
+    private WebElement disabledHandle;
+
+    @FindBy(className = "rf-insl-mn")
+    private WebElement min;
+
+    @FindBy(className = "rf-insl-mx")
+    private WebElement max;
+
+    @FindBy(css = "span.rf-insl-trc")
+    private WebElement trackComponent;
+
+    @FindBy(className = "rf-insl-tt")
+    private WebElement tooltip;
+
+    @FindBy(css = "span.rf-insl-trc")
+    private WebElement sliderElement;
+
+    @Drone
+    private WebDriver browser;
 
     @Root
     private WebElement root;
 
-    @FindBy(css = "span.rf-insl-inp-cntr > input.rf-insl-inp")
-    private TextInputComponentImpl input;
-    @FindBy(css = "span.rf-insl-trc")
-    private RichFacesSliderComponent numberSlider;
-
-    @FindBy(className = "rf-insl-inc")
-    private WebElement arrowIncrease;
-    @FindBy(className = "rf-insl-dec")
-    private WebElement arrowDecrease;
-    @FindBy(className = "rf-insl-mn")
-    private WebElement min;
-    @FindBy(className = "rf-insl-mx")
-    private WebElement max;
-    @FindBy(className = "rf-insl-tt")
-    private WebElement tooltip;
-
-    private boolean horizontalOriented = true;
-
-    @Drone
-    private WebDriver driver;
+    private AdvancedInteractions advancedInteractons;
 
     @Override
-    public void decreaseWithArrows() {
-        if (Graphene.element(arrowDecrease).not().isVisible().apply(driver)) {
-            throw new RuntimeException("arrow for decreasing value is not visible.");
+    public void slideToValue(double n) {
+        advanced().dragHandleToPointInTrace((int) (n * advanced().getWidth()));
+    }
+
+    public AdvancedInteractions advanced() {
+        if (advancedInteractons == null) {
+            advancedInteractons = new AdvancedInteractions();
         }
-        arrowDecrease.click();
+        return advancedInteractons;
+    }
+
+    public class AdvancedInteractions extends AbstractNumberInput.AdvancedInteractions {
+
+        public void dragHandleToPointInTrace(int pixelInTrace) {
+            Preconditions.checkArgument(pixelInTrace >= 0 && pixelInTrace <= getWidth(), "Cannot slide outside the trace.");
+            if (!new WebElementConditionFactory(root).isVisible().apply(browser)) {
+                throw new RuntimeException("Trace is not visible.");
+            }
+            scrollToView();
+            Actions actions = new Actions(browser).clickAndHold(handle);
+            actions.moveToElement(root, pixelInTrace, 0);
+            actions.release(handle).build().perform();
+        }
+
+        public int getWidth() {
+            return Utils.getLocations(handleContainer).getWidth();
+        }
+
+        public WebElement getRootElement() {
+            return root;
+        }
+
+        public WebElement getDisabledHandleElement() {
+            return disabledHandle;
+        }
+
+        public WebElement getHandleElement() {
+            return handle;
+        }
+
+        public WebElement getMinimumElement() {
+            return min;
+        }
+
+        public WebElement getMaximumElement() {
+            return max;
+        }
+
+        public WebElement getTrackElement() {
+            return trackComponent;
+        }
+
+        public WebElement getTooltipElement() {
+            return tooltip;
+        }
+
+        public WebElement getSliderElement() {
+            return sliderElement;
+        }
+    }
+
+    private void scrollToView() {
+        new Actions(browser).moveToElement(root).perform();
     }
 
     @Override
-    public WebElement getArrowDecrease() {
-        return arrowDecrease;
-    }
-
-    @Override
-    public WebElement getArrowIncrease() {
+    protected WebElement getArrowIncrease() {
         return arrowIncrease;
     }
 
     @Override
-    public TextInputComponentImpl getInput() {
+    protected WebDriver getBrowser() {
+        return browser;
+    }
+
+    @Override
+    protected WebElement getArrowDecrease() {
+        return arrowDecrease;
+    }
+
+    @Override
+    protected TextInputComponentImpl getInput() {
         return input;
-    }
-
-    @Override
-    public int getMaximum() {
-        if (Graphene.element(max).not().isVisible().apply(driver)) {
-            throw new RuntimeException("Maximum is not visible.");
-        }
-        return Integer.parseInt(max.getText());
-    }
-
-    @Override
-    public WebElement getMaximumElement() {
-        return max;
-    }
-
-    @Override
-    public int getMinimum() {
-        if (Graphene.element(min).not().isVisible().apply(driver)) {
-            throw new RuntimeException("Minimum is not visible.");
-        }
-        return Integer.parseInt(min.getText());
-    }
-
-    @Override
-    public WebElement getMinimumElement() {
-        return min;
-    }
-
-    @Override
-    public SliderComponent slider() {
-        numberSlider.setOrientation(horizontalOriented);
-        return numberSlider;
-    }
-
-    @Override
-    public WebElement getRoot() {
-        return root;
-    }
-
-    @Override
-    public WebElement getTooltipElement() {
-        return tooltip;
-    }
-
-    @Override
-    public void increaseWithArrows() {
-        if (Graphene.element(arrowIncrease).not().isVisible().apply(driver)) {
-            throw new RuntimeException("Arrow for increasing value is not visible.");
-        }
-        arrowIncrease.click();
-    }
-
-    @Override
-    public boolean isHorizontalOriented() {
-        return horizontalOriented;
-    }
-
-    @Override
-    public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(root).not().isVisible();
-    }
-
-    @Override
-    public boolean isVisible() {
-        return isVisibleCondition().apply(driver);
-    }
-
-    @Override
-    public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(root).isVisible();
-    }
-
-    @Override
-    public void setOrientation(boolean isHorizontal) {
-        this.horizontalOriented = isHorizontal;
     }
 }

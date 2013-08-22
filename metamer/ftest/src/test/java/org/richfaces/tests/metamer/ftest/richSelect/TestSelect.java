@@ -31,7 +31,6 @@ import java.util.List;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
@@ -49,6 +48,7 @@ import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.select.RichFacesSelect;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -120,7 +120,7 @@ public class TestSelect extends AbstractWebDriverTest {
         assertEquals(select.advanced().getInput().getStringValue(), "new label", "Default label should change");
 
         selectAttributes.set(SelectAttributes.defaultLabel, "");
-        assertPresent(select.advanced().getInput().getInput(), "Input should be present on the page.");
+        assertPresent(select.advanced().getInput().advanced().getInput(), "Input should be present on the page.");
         select.advanced().waitUntilSuggestionsAreNotVisible();
         assertEquals(select.advanced().getInput().getStringValue(), "", "Default label should change");
     }
@@ -128,7 +128,7 @@ public class TestSelect extends AbstractWebDriverTest {
     @Test
     public void testDisabled() {
         selectAttributes.set(SelectAttributes.disabled, Boolean.TRUE);
-        assertPresent(select.advanced().getInput().getInput(), "Input should be present on the page.");
+        assertPresent(select.advanced().getInput().advanced().getInput(), "Input should be present on the page.");
         select.advanced().waitUntilSuggestionsAreNotVisible();
         try {
             select.openSelect();
@@ -142,7 +142,7 @@ public class TestSelect extends AbstractWebDriverTest {
     @RegressionTest(value = { "https://issues.jboss.org/browse/RF-9663", "https://issues.jboss.org/browse/RF-9855" })
     public void testEnableManualInput() {
         selectAttributes.set(SelectAttributes.enableManualInput, Boolean.FALSE);
-        String readonly = select.advanced().getInput().getInput().getAttribute("readonly");
+        String readonly = select.advanced().getInput().advanced().getInput().getAttribute("readonly");
         assertTrue("readonly".equals(readonly) || "true".equals(readonly), "Input should be read-only");
 
         select.advanced().setOpenByInputClick(true);
@@ -181,7 +181,7 @@ public class TestSelect extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testInit() {
         assertEquals(select.advanced().getInput().getStringValue(), "Click here to edit", "Default label");
-        assertPresent(select.advanced().getInput().getInput(), "Input should be present on the page.");
+        assertPresent(select.advanced().getInput().advanced().getInput(), "Input should be present on the page.");
         assertPresent(select.advanced().getShowButton(), "Show button should be present on the page.");
         select.advanced().waitUntilSuggestionsAreNotVisible();
     }
@@ -256,9 +256,9 @@ public class TestSelect extends AbstractWebDriverTest {
         testFireEvent("blur", new Action() {
             @Override
             public void perform() {
-                select.advanced().getInput().getInput().click();// will not be triggered if this step omitted
+                select.advanced().getInput().advanced().getInput().click();// will not be triggered if this step omitted
                 page.getRequestTimeElement().click();// will not be triggered if this step omitted
-                select.advanced().getInput().fillIn("ABCD").trigger("blur");
+                select.advanced().getInput().sendKeys("ABCD").advanced().trigger("blur");
             }
         });
     }
@@ -271,37 +271,37 @@ public class TestSelect extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnclick() {
-        testFireEvent(Event.CLICK, select.advanced().getInput().getInput());
+        testFireEvent(Event.CLICK, select.advanced().getInput().advanced().getInput());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOndblclick() {
-        testFireEvent(Event.DBLCLICK, select.advanced().getInput().getInput());
+        testFireEvent(Event.DBLCLICK, select.advanced().getInput().advanced().getInput());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnfocus() {
-        testFireEvent(Event.FOCUS, select.advanced().getInput().getInput());
+        testFireEvent(Event.FOCUS, select.advanced().getInput().advanced().getInput());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeydown() {
-        testFireEvent(Event.KEYDOWN, select.advanced().getInput().getInput());
+        testFireEvent(Event.KEYDOWN, select.advanced().getInput().advanced().getInput());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeypress() {
-        testFireEvent(Event.KEYPRESS, select.advanced().getInput().getInput());
+        testFireEvent(Event.KEYPRESS, select.advanced().getInput().advanced().getInput());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeyup() {
-        testFireEvent(Event.KEYUP, select.advanced().getInput().getInput());
+        testFireEvent(Event.KEYUP, select.advanced().getInput().advanced().getInput());
     }
 
     @Test
@@ -434,31 +434,31 @@ public class TestSelect extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnmousedown() {
-        testFireEvent(Event.MOUSEDOWN, select.advanced().getInput().getInput());
+        testFireEvent(Event.MOUSEDOWN, select.advanced().getInput().advanced().getInput());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousemove() {
-        testFireEvent(Event.MOUSEMOVE, select.advanced().getInput().getInput());
+        testFireEvent(Event.MOUSEMOVE, select.advanced().getInput().advanced().getInput());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseout() {
-        testFireEvent(Event.MOUSEOUT, select.advanced().getInput().getInput());
+        testFireEvent(Event.MOUSEOUT, select.advanced().getInput().advanced().getInput());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseover() {
-        testFireEvent(Event.MOUSEOVER, select.advanced().getInput().getInput());
+        testFireEvent(Event.MOUSEOVER, select.advanced().getInput().advanced().getInput());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseup() {
-        testFireEvent(Event.MOUSEUP, select.advanced().getInput().getInput());
+        testFireEvent(Event.MOUSEUP, select.advanced().getInput().advanced().getInput());
     }
 
     @Test
@@ -489,7 +489,7 @@ public class TestSelect extends AbstractWebDriverTest {
         new Actions(driver).sendKeys(Keys.RETURN).perform();
 
         String previousTime = page.getRequestTimeElement().getText();
-        Utils.triggerJQ(executor, "blur", select.advanced().getInput().getInput());
+        Utils.triggerJQ(executor, "blur", select.advanced().getInput().advanced().getInput());
         Graphene.waitModel().until().element(page.getRequestTimeElement()).text().not().equalTo(previousTime);
         assertEquals(output.getText(), "Alabama", "Output should be Alabama");
     }
@@ -565,7 +565,7 @@ public class TestSelect extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(select.advanced().getInput().getInput());
+        testTitle(select.advanced().getInput().advanced().getInput());
     }
 
     @Test

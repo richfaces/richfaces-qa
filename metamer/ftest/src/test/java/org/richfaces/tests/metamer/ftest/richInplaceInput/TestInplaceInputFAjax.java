@@ -34,8 +34,8 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceComponentState;
 import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput.State;
 import org.testng.annotations.Test;
 
 /**
@@ -62,12 +62,12 @@ public class TestInplaceInputFAjax extends AbstractWebDriverTest {
         assertVisible(inplaceInput.advanced().getRootElement(), "Inplace input should be visible.");
 
         inplaceInput.type(" ");
-        assertTrue(inplaceInput.advanced().isInState(State.ACTIVE), "Input should be active.");
+        assertTrue(inplaceInput.advanced().isInState(InplaceComponentState.ACTIVE), "Input should be active.");
 
         String testedValue = "new value";
         MetamerPage.waitRequest(inplaceInput.type(testedValue), WaitRequestType.XHR).confirm();
 
-        assertTrue(inplaceInput.advanced().isInState(State.CHANGED), "Input should contain class indicating a change.");
+        assertTrue(inplaceInput.advanced().isInState(InplaceComponentState.CHANGED), "Input should contain class indicating a change.");
         assertEquals(inplaceInput.getTextInput().getStringValue(), testedValue, "Input should contain typed text.");
         assertEquals(inplaceInput.advanced().getLabelValue(), testedValue, "Label should contain typed text.");
 

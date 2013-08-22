@@ -152,7 +152,7 @@ public class RichFacesSelect implements Select {
 
     public class AdvancedInteractions {
 
-        public TextInputComponent getInput() {
+        public TextInputComponentImpl getInput() {
             return input;
         }
 

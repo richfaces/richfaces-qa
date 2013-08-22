@@ -58,7 +58,7 @@ public class CustomValidationTestsPage extends NumberInputValidationPage {
     }
 
     private double getActValue(RichFacesInputNumberSpinner spinner) {
-        return parseDouble(spinner.getInput().getStringValue());
+        return parseDouble(spinner.advanced().getInput().getStringValue());
     }
 
     public void verifyCustomBySpinning(WebDriverWait wait) {

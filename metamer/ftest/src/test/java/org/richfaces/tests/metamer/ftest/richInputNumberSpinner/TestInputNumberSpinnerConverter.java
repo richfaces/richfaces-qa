@@ -54,7 +54,7 @@ public class TestInputNumberSpinnerConverter extends AbstractConverterTest {
 
     @Override
     protected void setBadValue() {
-        input.getInput().advanced().clear(ClearType.JS).sendKeys(VALUE);
+        input.advanced().getInput().advanced().clear(ClearType.JS).sendKeys(VALUE);
     }
 
     @Test

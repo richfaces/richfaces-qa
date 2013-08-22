@@ -68,10 +68,10 @@ public class TestInputNumberSliderJSApi extends AbstractSliderTest {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.minValue, -1);
         MetamerPage.waitRequest(decreaseButton, WaitRequestType.XHR).click();
         MetamerPage.waitRequest(decreaseButton, WaitRequestType.XHR).click();
-        assertEquals(slider.getInput().getStringValue(), "0");//2 - 1 - 1
+        assertEquals(slider.advanced().getInput().getStringValue(), "0");//2 - 1 - 1
         MetamerPage.waitRequest(decreaseButton, WaitRequestType.XHR).click();
         MetamerPage.waitRequest(decreaseButton, WaitRequestType.XHR).click();
-        assertEquals(slider.getInput().getStringValue(), "-1");//-2, but min is -1
+        assertEquals(slider.advanced().getInput().getStringValue(), "-1");//-2, but min is -1
 
     }
 
@@ -80,7 +80,7 @@ public class TestInputNumberSliderJSApi extends AbstractSliderTest {
         assertEquals(getValueFromOutputJSField(), "");
         MetamerPage.waitRequest(getValueButton, WaitRequestType.NONE).click();
         assertEquals(getValueFromOutputJSField(), DEFAULT_VALUE);
-        assertEquals(slider.getInput().getStringValue(), DEFAULT_VALUE);
+        assertEquals(slider.advanced().getInput().getStringValue(), DEFAULT_VALUE);
     }
 
     @Test
@@ -89,10 +89,10 @@ public class TestInputNumberSliderJSApi extends AbstractSliderTest {
 
         MetamerPage.waitRequest(increaseButton, WaitRequestType.XHR).click();
         MetamerPage.waitRequest(increaseButton, WaitRequestType.XHR).click();
-        assertEquals(slider.getInput().getStringValue(), "4");//2 + 1 + 1
+        assertEquals(slider.advanced().getInput().getStringValue(), "4");//2 + 1 + 1
         MetamerPage.waitRequest(increaseButton, WaitRequestType.XHR).click();
         MetamerPage.waitRequest(increaseButton, WaitRequestType.XHR).click();
-        assertEquals(slider.getInput().getStringValue(), "5");//6, but max is 5
+        assertEquals(slider.advanced().getInput().getStringValue(), "5");//6, but max is 5
     }
 
     @Test
@@ -103,12 +103,12 @@ public class TestInputNumberSliderJSApi extends AbstractSliderTest {
         MetamerPage.waitRequest(decreaseButton, WaitRequestType.XHR).click();
         MetamerPage.waitRequest(getValueButton, WaitRequestType.NONE).click();
         assertEquals(getValueFromOutputJSField(), "6");//5 + 1 + 1 - 1
-        assertEquals(slider.getInput().getStringValue(), "6");
+        assertEquals(slider.advanced().getInput().getStringValue(), "6");
     }
 
     @Test
     public void testSetValue() {
         MetamerPage.waitRequest(setValueButton, WaitRequestType.XHR).click();
-        assertEquals(slider.getInput().getStringValue(), SET_VALUE);
+        assertEquals(slider.advanced().getInput().getStringValue(), SET_VALUE);
     }
 }

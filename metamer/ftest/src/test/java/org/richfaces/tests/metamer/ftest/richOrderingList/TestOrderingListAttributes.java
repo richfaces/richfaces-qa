@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richOrderingList;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
@@ -31,7 +30,6 @@ import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
@@ -44,6 +42,7 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.annotations.Test;
 

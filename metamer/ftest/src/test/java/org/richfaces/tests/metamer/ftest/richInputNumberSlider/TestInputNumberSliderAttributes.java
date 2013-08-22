@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richInputNumberSlider;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inputNumberSliderAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -93,7 +94,8 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-11315")
     @Templates(value = "plain")
     public void testAccesskey() {
-        testHTMLAttribute(slider.getInput().advanced().getInput(), inputNumberSliderAttributes, InputNumberSliderAttributes.accesskey);
+        testHTMLAttribute(slider.advanced().getInput().advanced().getInput(), inputNumberSliderAttributes,
+            InputNumberSliderAttributes.accesskey);
     }
 
     @Test
@@ -112,7 +114,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     @Templates(value = "plain")
     public void testDecreaseClass() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
-        testStyleClass(slider.getArrowDecrease(), BasicAttributes.decreaseClass);
+        testStyleClass(slider.advanced().getArrowDecrease(), BasicAttributes.decreaseClass);
     }
 
     @Test
@@ -123,11 +125,10 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
 
         String value = "metamer-ftest-class";
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.decreaseSelectedClass, value);
-        fireEvent(slider.getArrowDecrease(), Event.MOUSEDOWN);
+        fireEvent(slider.advanced().getArrowDecrease(), Event.MOUSEDOWN);
         Graphene.waitGui().withMessage("decreaseSelectedClass does not work")
-                .until(Graphene.attribute(slider.getArrowDecrease(), "class")
-                .contains(value));
-        fireEvent(slider.getArrowIncrease(), Event.MOUSEUP);
+            .until(Graphene.attribute(slider.advanced().getArrowDecrease(), "class").contains(value));
+        fireEvent(slider.advanced().getArrowIncrease(), Event.MOUSEUP);
 
     }
 
@@ -137,35 +138,37 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, delay);
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
 
-        verifyDelay(slider.getArrowDecrease(), delay);
-        verifyDelay(slider.getArrowIncrease(), delay);
+        verifyDelay(slider.advanced().getArrowDecrease(), delay);
+        verifyDelay(slider.advanced().getArrowIncrease(), delay);
     }
 
     @Test
     @Templates(value = "plain")
     public void testDir() {
-        testDir(slider.getRoot());
+        testDir(slider.advanced().getRootElement());
     }
 
     @Test
     public void testDisabled() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.disabled, Boolean.TRUE);
-        assertVisible(slider.slider().getDisabledHandleElement(), "Disabled handle is not on the page.");
-        assertNotVisible(slider.slider().getHandleElement(), "Slider's handle is not present on the page.");
-        assertEquals(slider.getInput().advanced().getInput().getAttribute("disabled"), "true", "Slider's input should be disabled.");
+        assertVisible(slider.advanced().getDisabledHandleElement(), "Disabled handle is not on the page.");
+        assertNotVisible(slider.advanced().getHandleElement(), "Slider's handle is not present on the page.");
+        assertEquals(slider.advanced().getInput().advanced().getInput().getAttribute("disabled"), "true",
+            "Slider's input should be disabled.");
     }
 
     @Test
     public void testEnableManualInput() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.enableManualInput, Boolean.FALSE);
-        assertEquals(slider.getInput().advanced().getInput().getAttribute("readonly"), "true", "Slider's input should be readonly.");
+        assertEquals(slider.advanced().getInput().advanced().getInput().getAttribute("readonly"), "true",
+            "Slider's input should be readonly.");
         testMoveWithSlider();
     }
 
     @Test
     @Templates(value = "plain")
     public void testHandleClass() {
-        testStyleClass(slider.slider().getHandleElement(), BasicAttributes.handleClass);
+        testStyleClass(slider.advanced().getHandleElement(), BasicAttributes.handleClass);
     }
 
     @Test
@@ -173,15 +176,17 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     public void testHandleSelectedClass() {
         String value = "metamer-ftest-class";
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.handleSelectedClass, value);
-        fireEvent(slider.slider().getHandleElement(), Event.MOUSEDOWN);
-        assertTrue(slider.slider().getHandleElement().getAttribute("class").contains(value), "handleSelectedClass does not work");
+        fireEvent(slider.advanced().getHandleElement(), Event.MOUSEDOWN);
+        assertTrue(slider.advanced().getHandleElement().getAttribute("class").contains(value),
+            "handleSelectedClass does not work");
     }
 
     @Test
     public void testImmediate() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.immediate, Boolean.TRUE);
 
-        MetamerPage.waitRequest(slider.getInput().advanced().clear(ClearType.JS).sendKeys("-10"), WaitRequestType.XHR).advanced().trigger("blur");
+        slider.advanced().getInput().advanced().clear(ClearType.JS).sendKeys("-10");
+        guardAjax(slider.advanced().getInput().advanced()).trigger("blur");
 
         page.assertPhases(PhaseId.ANY_PHASE);
         page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: 2 -> -10");
@@ -193,7 +198,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     @Templates(value = "plain")
     public void testIncreaseClass() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
-        testStyleClass(slider.getArrowIncrease(), BasicAttributes.increaseClass);
+        testStyleClass(slider.advanced().getArrowIncrease(), BasicAttributes.increaseClass);
     }
 
     @Test
@@ -204,39 +209,37 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
 
         String value = "metamer-ftest-class";
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.increaseSelectedClass, value);
-        fireEvent(slider.getArrowIncrease(), Event.MOUSEDOWN);
+        fireEvent(slider.advanced().getArrowIncrease(), Event.MOUSEDOWN);
         Graphene.waitGui().withMessage("increaseSelectedClass does not work")
-                .until(Graphene.attribute(slider.getArrowIncrease(), "class")
-                .contains(value));
-        fireEvent(slider.getArrowIncrease(), Event.MOUSEUP);
+            .until(Graphene.attribute(slider.advanced().getArrowIncrease(), "class").contains(value));
+        fireEvent(slider.advanced().getArrowIncrease(), Event.MOUSEUP);
     }
 
     @Test
     @Templates(value = "plain")
     public void testInit() {
-        assertTrue(slider.isVisible(), "Slider is not present on the page.");
-        assertTrue(new WebElementConditionFactory(slider.getInput().advanced().getInput()).isVisible().apply(driver), "Slider's input is not present on the page.");
-        assertVisible(slider.getMinimumElement(), "Slider's min value is not present on the page.");
-        assertVisible(slider.getMaximumElement(), "Slider's max value is not present on the page.");
-        assertVisible(slider.slider().getTrackElement(), "Slider's track is not present on the page.");
-        assertVisible(slider.slider().getHandleElement(), "Slider's handle is not present on the page.");
-        assertNotPresent(slider.getArrowDecrease(), "Slider's left arrow should not be present on the page.");
-        assertNotPresent(slider.getArrowIncrease(), "Slider's right arrow should not be present on the page.");
-        assertNotPresent(slider.getTooltipElement(), "Slider's tooltip should not be present on the page.");
+        assertVisible(slider.advanced().getInput().advanced().getInput(), "Slider's input is not present on the page.");
+        assertVisible(slider.advanced().getMinimumElement(), "Slider's min value is not present on the page.");
+        assertVisible(slider.advanced().getMinimumElement(), "Slider's max value is not present on the page.");
+        assertVisible(slider.advanced().getTrackElement(), "Slider's track is not present on the page.");
+        assertVisible(slider.advanced().getHandleElement(), "Slider's handle is not present on the page.");
+        assertNotPresent(slider.advanced().getArrowDecrease(), "Slider's left arrow should not be present on the page.");
+        assertNotPresent(slider.advanced().getArrowIncrease(), "Slider's right arrow should not be present on the page.");
+        assertNotPresent(slider.advanced().getTooltipElement(), "Slider's tooltip should not be present on the page.");
     }
 
     @Test
     @Templates(value = "plain")
     public void testInputClass() {
-        testStyleClass(slider.getInput().advanced().getInput(), BasicAttributes.inputClass);
+        testStyleClass(slider.advanced().getInput().advanced().getInput(), BasicAttributes.inputClass);
     }
 
     @Test
     @Use(field = "position", enumeration = true)
     public void testInputPosition() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.inputPosition, position.value);
-        Point inputPosition = Utils.getLocations(slider.getInput().advanced().getInput()).getTopLeft();
-        Point trackPosition = Utils.getLocations(slider.slider().getTrackElement()).getTopLeft();
+        Point inputPosition = Utils.getLocations(slider.advanced().getInput().advanced().getInput()).getTopLeft();
+        Point trackPosition = Utils.getLocations(slider.advanced().getTrackElement()).getTopLeft();
         switch (position) {
             case left:
                 assertTrue(trackPosition.x > inputPosition.x, "Track should be on the right of input on the page.");
@@ -263,19 +266,19 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     public void testInputSize() {
         int testedSize = 2;
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.inputSize, testedSize);
-        assertEquals(slider.getInput().advanced().getInput().getAttribute("size"),
-                String.valueOf(testedSize), "Input's size attribute.");
+        assertEquals(slider.advanced().getInput().advanced().getInput().getAttribute("size"), String.valueOf(testedSize),
+            "Input's size attribute.");
 
         testedSize = 40;
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.inputSize, testedSize);
-        assertEquals(slider.getInput().advanced().getInput().getAttribute("size"),
-                String.valueOf(testedSize), "Input's size attribute.");
+        assertEquals(slider.advanced().getInput().advanced().getInput().getAttribute("size"), String.valueOf(testedSize),
+            "Input's size attribute.");
     }
 
     @Test
     @Templates(value = "plain")
     public void testLang() {
-        testAttributeLang(slider.getRoot());
+        testAttributeLang(slider.advanced().getRootElement());
     }
 
     @Test
@@ -283,9 +286,9 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         int maxnum = 15;
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.maxValue, maxnum);
 
-        moveWithSliderActionWithWaitRequest(slider.slider().getWidth()).perform();
+        moveWithSliderActionWithWaitRequest(slider.advanced().getWidth()).perform();
         assertEquals(output.getText(), String.valueOf(maxnum), "Output was not updated.");
-        assertEquals(slider.getInput().getStringValue(), String.valueOf(maxnum), "Input was not updated.");
+        assertEquals(slider.advanced().getInput().getStringValue(), String.valueOf(maxnum), "Input was not updated.");
     }
 
     @Test
@@ -296,12 +299,12 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
 
         typeToInputActionWithXHRWaitRequest(num).perform();
         assertEquals(output.getText(), num, "Output was not updated.");
-        assertEquals(slider.getInput().getStringValue(), num, "Input was not updated.");
+        assertEquals(slider.advanced().getInput().getStringValue(), num, "Input was not updated.");
 
         num = "14";
         typeToInputActionWithXHRWaitRequest(num).perform();
         assertEquals(output.getText(), String.valueOf(maxnum), "Output was not updated.");
-        assertEquals(slider.getInput().getStringValue(), String.valueOf(maxnum), "Input was not updated.");
+        assertEquals(slider.advanced().getInput().getStringValue(), String.valueOf(maxnum), "Input was not updated.");
     }
 
     @Test
@@ -310,10 +313,12 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     public void testMaxlength() {
         String testedLength = "5";
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.maxlength, testedLength);
-        assertEquals(slider.getInput().advanced().getInput().getAttribute("maxlength"), "5", "Attribute maxlength of input.");
+        assertEquals(slider.advanced().getInput().advanced().getInput().getAttribute("maxlength"), "5",
+            "Attribute maxlength of input.");
 
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.maxlength, "");
-        assertEquals(slider.getInput().advanced().getInput().getAttribute("maxlength"), null, "Attribute maxlength should not be present.");
+        assertEquals(slider.advanced().getInput().advanced().getInput().getAttribute("maxlength"), null,
+            "Attribute maxlength should not be present.");
     }
 
     @Test
@@ -323,7 +328,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
 
         moveWithSliderActionWithWaitRequest(0).perform();
         assertEquals(output.getText(), String.valueOf(value), "Output was not updated.");
-        assertEquals(slider.getInput().getStringValue(), String.valueOf(value), "Input was not updated.");
+        assertEquals(slider.advanced().getInput().getStringValue(), String.valueOf(value), "Input was not updated.");
     }
 
     @Test
@@ -334,12 +339,12 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
 
         typeToInputActionWithXHRWaitRequest(num).perform();
         assertEquals(output.getText(), num, "Output was not updated.");
-        assertEquals(slider.getInput().getStringValue(), num, "Input was not updated.");
+        assertEquals(slider.advanced().getInput().getStringValue(), num, "Input was not updated.");
 
         num = "-14";
         typeToInputActionWithXHRWaitRequest(num).perform();
         assertEquals(output.getText(), String.valueOf(minValue), "Output was not updated.");
-        assertEquals(slider.getInput().getStringValue(), String.valueOf(minValue), "Input was not updated.");
+        assertEquals(slider.advanced().getInput().getStringValue(), String.valueOf(minValue), "Input was not updated.");
     }
 
     @Test
@@ -352,7 +357,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-10829")
     public void testOnblur() {
-        testFireEventWithJS(slider.getRoot(), inputNumberSliderAttributes, InputNumberSliderAttributes.onblur);
+        testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes, InputNumberSliderAttributes.onblur);
     }
 
     @Test
@@ -361,148 +366,149 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         testFireEvent(inputNumberSliderAttributes, InputNumberSliderAttributes.onchange, new Action() {
             @Override
             public void perform() {
-                MetamerPage.waitRequest(slider, WaitRequestType.XHR).decreaseWithArrows();
+                MetamerPage.waitRequest(slider, WaitRequestType.XHR).decrease();
             }
         });
-        testFireEvent(inputNumberSliderAttributes, InputNumberSliderAttributes.onchange,
-                new Action() {
-                    @Override
-                    public void perform() {
-                        MetamerPage.waitRequest(slider, WaitRequestType.XHR).increaseWithArrows();
-                    }
-                });
+        testFireEvent(inputNumberSliderAttributes, InputNumberSliderAttributes.onchange, new Action() {
+            @Override
+            public void perform() {
+                MetamerPage.waitRequest(slider, WaitRequestType.XHR).increase();
+            }
+        });
     }
 
     @Test
     public void testOnchangeByTyping() {
-        testFireEvent(inputNumberSliderAttributes, InputNumberSliderAttributes.onchange, typeToInputActionWithXHRWaitRequest("5"));
+        testFireEvent(inputNumberSliderAttributes, InputNumberSliderAttributes.onchange,
+            typeToInputActionWithXHRWaitRequest("5"));
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnclick() {
         testFireEvent(inputNumberSliderAttributes, InputNumberSliderAttributes.onclick,
-                new Actions(driver).click(slider.getRoot()).build());
+            new Actions(driver).click(slider.advanced().getRootElement()).build());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOndblclick() {
         testFireEvent(inputNumberSliderAttributes, InputNumberSliderAttributes.ondblclick,
-                new Actions(driver).doubleClick(slider.getRoot()).build());
+            new Actions(driver).doubleClick(slider.advanced().getRootElement()).build());
     }
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-10829")
     public void testOnfocus() {
-        testFireEventWithJS(slider.getRoot(), inputNumberSliderAttributes,
-                InputNumberSliderAttributes.onfocus);
+        testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
+            InputNumberSliderAttributes.onfocus);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeydown() {
-        testFireEventWithJS(slider.getRoot(), inputNumberSliderAttributes,
-                InputNumberSliderAttributes.onkeydown);
+        testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
+            InputNumberSliderAttributes.onkeydown);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeypress() {
-        testFireEventWithJS(slider.getRoot(), inputNumberSliderAttributes,
-                InputNumberSliderAttributes.onkeypress);
+        testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
+            InputNumberSliderAttributes.onkeypress);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeyup() {
-        testFireEventWithJS(slider.getRoot(), inputNumberSliderAttributes,
-                InputNumberSliderAttributes.onkeyup);
+        testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
+            InputNumberSliderAttributes.onkeyup);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousedown() {
-        testFireEventWithJS(slider.getRoot(), inputNumberSliderAttributes,
-                InputNumberSliderAttributes.onmousedown);
+        testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
+            InputNumberSliderAttributes.onmousedown);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousemove() {
-        testFireEventWithJS(slider.getRoot(), inputNumberSliderAttributes,
-                InputNumberSliderAttributes.onmousemove);
+        testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
+            InputNumberSliderAttributes.onmousemove);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseout() {
-        testFireEventWithJS(slider.getRoot(), inputNumberSliderAttributes,
-                InputNumberSliderAttributes.onmouseout);
+        testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
+            InputNumberSliderAttributes.onmouseout);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseover() {
-        testFireEventWithJS(slider.getRoot(), inputNumberSliderAttributes,
-                InputNumberSliderAttributes.onmouseover);
+        testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
+            InputNumberSliderAttributes.onmouseover);
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseup() {
-        testFireEventWithJS(slider.getRoot(), inputNumberSliderAttributes,
-                InputNumberSliderAttributes.onmouseup);
+        testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
+            InputNumberSliderAttributes.onmouseup);
     }
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-10829")
     public void testOnselect() {
-        testFireEventWithJS(slider.getRoot(), inputNumberSliderAttributes,
-                InputNumberSliderAttributes.onselect);
+        testFireEventWithJS(slider.advanced().getRootElement(), inputNumberSliderAttributes,
+            InputNumberSliderAttributes.onselect);
     }
 
     @Test
     @Templates(value = "plain")
     public void testRendered() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.rendered, Boolean.FALSE);
-        assertFalse(slider.isVisible(), "Slider should not be rendered when rendered=false.");
+        assertNotVisible(slider.advanced().getRootElement(), "Slider should not be rendered when rendered=false.");
     }
 
     @Test
     public void testShowArrows() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
 
-        assertVisible(slider.getArrowDecrease(), "Slider's left arrow should be on the page.");
-        assertVisible(slider.getArrowIncrease(), "Slider's right arrow should be on the page.");
+        assertVisible(slider.advanced().getArrowDecrease(), "Slider's left arrow should be on the page.");
+        assertVisible(slider.advanced().getArrowIncrease(), "Slider's right arrow should be on the page.");
     }
 
     @Test
     public void testShowBoundaryValues() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showBoundaryValues, Boolean.FALSE);
 
-        assertNotVisible(slider.getMinimumElement(), "Slider's min value should not be present on the page.");
-        assertNotVisible(slider.getMaximumElement(), "Slider's max value should not be present on the page.");
+        assertNotVisible(slider.advanced().getMinimumElement(), "Slider's min value should not be present on the page.");
+        assertNotVisible(slider.advanced().getMinimumElement(), "Slider's max value should not be present on the page.");
     }
 
     @Test
     public void testShowInput() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showInput, Boolean.FALSE);
-        assertFalse(new WebElementConditionFactory(slider.getInput().advanced().getInput()).isVisible().apply(driver), "Input should not be visible on the page.");
+        assertFalse(new WebElementConditionFactory(slider.advanced().getInput().advanced().getInput()).isVisible()
+            .apply(driver), "Input should not be visible on the page.");
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11314")
     public void testShowTooltip() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showTooltip, Boolean.TRUE);
-        String startValue = slider.getInput().getStringValue();
+        String startValue = slider.advanced().getInput().getStringValue();
 
-        fireEvent(slider.slider().getHandleElement(), Event.MOUSEDOWN);
-        assertVisible(slider.getTooltipElement(), "Tooltip is not visible");
-        assertEquals(slider.getTooltipElement().getText(), startValue, "Tooltip's text.");
+        fireEvent(slider.advanced().getHandleElement(), Event.MOUSEDOWN);
+        assertVisible(slider.advanced().getTooltipElement(), "Tooltip is not visible");
+        assertEquals(slider.advanced().getTooltipElement().getText(), startValue, "Tooltip's text.");
 
-        fireEvent(slider.slider().getHandleElement(), Event.MOUSEUP);
-        assertNotVisible(slider.getTooltipElement(), "Tooltip should not be visible");
+        fireEvent(slider.advanced().getHandleElement(), Event.MOUSEUP);
+        assertNotVisible(slider.advanced().getTooltipElement(), "Tooltip should not be visible");
     }
 
     @Test
@@ -510,37 +516,37 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, 100);
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.step, 7);
-        String startValue = slider.getInput().getStringValue();
+        String startValue = slider.advanced().getInput().getStringValue();
 
-        MetamerPage.waitRequest(slider, WaitRequestType.XHR).increaseWithArrows();
+        MetamerPage.waitRequest(slider, WaitRequestType.XHR).increase();
         assertEquals(output.getText(), "9", "Wrong output");
 
-        MetamerPage.waitRequest(slider, WaitRequestType.XHR).increaseWithArrows();
+        MetamerPage.waitRequest(slider, WaitRequestType.XHR).increase();
         assertEquals(output.getText(), "10", "Wrong output");
 
-        MetamerPage.waitRequest(slider, WaitRequestType.XHR).decreaseWithArrows();
+        MetamerPage.waitRequest(slider, WaitRequestType.XHR).decrease();
         assertEquals(output.getText(), "3", "Wrong output");
 
-        MetamerPage.waitRequest(slider, WaitRequestType.XHR).decreaseWithArrows();
+        MetamerPage.waitRequest(slider, WaitRequestType.XHR).decrease();
         assertEquals(output.getText(), "-4", "Wrong output");
 
-        MetamerPage.waitRequest(slider, WaitRequestType.XHR).decreaseWithArrows();
+        MetamerPage.waitRequest(slider, WaitRequestType.XHR).decrease();
         assertEquals(output.getText(), "-10", "Wrong output");
 
-        MetamerPage.waitRequest(slider, WaitRequestType.XHR).increaseWithArrows();
+        MetamerPage.waitRequest(slider, WaitRequestType.XHR).increase();
         assertEquals(output.getText(), "-3", "Wrong output");
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyle() {
-        testStyle(slider.getRoot());
+        testStyle(slider.advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyleClass(slider.getRoot());
+        testStyleClass(slider.advanced().getRootElement());
     }
 
     @Test
@@ -550,14 +556,15 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         String value = "55";
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.tabindex, value);
 
-        assertEquals(slider.slider().getRoot().getAttribute("tabindex"), value, "Attribute tabindex of track.");
-        assertEquals(slider.getInput().advanced().getInput().getAttribute("tabindex"), "55", "Attribute tabindex of input.");
+        assertEquals(slider.advanced().getSliderElement().getAttribute("tabindex"), value, "Attribute tabindex of track.");
+        assertEquals(slider.advanced().getInput().advanced().getInput().getAttribute("tabindex"), value,
+            "Attribute tabindex of input.");
     }
 
     @Test
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(slider.getRoot());
+        testTitle(slider.advanced().getRootElement());
     }
 
     @Test
@@ -565,13 +572,13 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
     public void testTooltipClass() {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showTooltip, Boolean.TRUE);
 
-        testStyleClass(slider.getTooltipElement(), BasicAttributes.tooltipClass);
+        testStyleClass(slider.advanced().getTooltipElement(), BasicAttributes.tooltipClass);
     }
 
     @Test
     @Templates(value = "plain")
     public void testTrackClass() {
-        testStyleClass(slider.slider().getTrackElement(), BasicAttributes.trackClass);
+        testStyleClass(slider.advanced().getTrackElement(), BasicAttributes.trackClass);
     }
 
     @Test
@@ -621,7 +628,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         String max = inputNumberSliderAttributes.get(InputNumberSliderAttributes.maxValue);
 
         assertEquals(output.getText(), number, "Output was not updated.");
-        assertEquals(slider.getInput().getStringValue(), max, "Input was not updated.");
+        assertEquals(slider.advanced().getInput().getStringValue(), max, "Input was not updated.");
     }
 
     @Test
@@ -630,7 +637,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.value, number);
 
         assertEquals(output.getText(), number, "Output was not updated.");
-        assertEquals(slider.getInput().getStringValue(), number, "Input was not updated.");
+        assertEquals(slider.advanced().getInput().getStringValue(), number, "Input was not updated.");
     }
 
     @Test
@@ -640,7 +647,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         String min = inputNumberSliderAttributes.get(InputNumberSliderAttributes.minValue);
 
         assertEquals(output.getText(), number, "Output was not updated.");
-        assertEquals(slider.getInput().getStringValue(), min, "Input was not updated.");
+        assertEquals(slider.advanced().getInput().getStringValue(), min, "Input was not updated.");
     }
 
     /**
@@ -656,13 +663,13 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         List<String> timesList = new ArrayList<String>(numberOfValues);
 
         String beforeTime = page.getRequestTimeElement().getText();
-        fireEvent(arrow, Event.MOUSEDOWN);//starts with increasing/decreasing of the value
+        fireEvent(arrow, Event.MOUSEDOWN);// starts with increasing/decreasing of the value
         for (int i = 0; i < numberOfValues; i++) {
             Graphene.waitModel().until().element(page.getRequestTimeElement()).text().not().equalTo(beforeTime);
             beforeTime = page.getRequestTimeElement().getText();
             timesList.add(beforeTime);
         }
-        fireEvent(arrow, Event.MOUSEUP);//stops with increasing/decreasing of the value
+        fireEvent(arrow, Event.MOUSEUP);// stops with increasing/decreasing of the value
 
         DateTime[] timesArray = new DateTime[numberOfValues];
         for (int i = 0; i < numberOfValues; i++) {
@@ -670,8 +677,8 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         }
 
         long average = countAverage(timesArray);
-        assertTrue(Math.abs(average - delay) < delta, "Average delay " + average + " is too far from set value ("
-                + delay + "). Delta was: " + delta + "[ms].");
+        assertTrue(Math.abs(average - delay) < delta, "Average delay " + average + " is too far from set value (" + delay
+            + "). Delta was: " + delta + "[ms].");
     }
 
     private long countAverage(DateTime[] times) {

@@ -33,8 +33,8 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceComponentState;
 import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput.State;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
@@ -78,7 +78,7 @@ public class TestInplaceInputJSApi extends AbstractWebDriverTest {
         inplaceInput.type(SOME_TEXT);
         fireEvent(cancelButton, Event.MOUSEOVER);
         assertEquals(inplaceInput.advanced().getLabelValue(), defaultText);
-        assertFalse(inplaceInput.advanced().isInState(State.CHANGED));
+        assertFalse(inplaceInput.advanced().isInState(InplaceComponentState.CHANGED));
     }
 
     @Test
@@ -87,7 +87,7 @@ public class TestInplaceInputJSApi extends AbstractWebDriverTest {
         //so the state of inplace input is set to active
         getInputButton.click();
         waiting(100);
-        inplaceInput.advanced().isInState(State.ACTIVE);
+        inplaceInput.advanced().isInState(InplaceComponentState.ACTIVE);
     }
 
     @Test
@@ -124,7 +124,7 @@ public class TestInplaceInputJSApi extends AbstractWebDriverTest {
         inplaceInput.type(SOME_TEXT);
         fireEvent(saveButton, Event.MOUSEOVER);
         assertEquals(inplaceInput.advanced().getLabelValue(), SOME_TEXT);
-        assertTrue(inplaceInput.advanced().isInState(State.CHANGED));
+        assertTrue(inplaceInput.advanced().isInState(InplaceComponentState.CHANGED));
     }
 
     @Test

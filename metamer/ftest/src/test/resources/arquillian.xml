@@ -153,6 +153,7 @@
 
     <extension qualifier="webdriver">
         <property name="browserCapabilities">firefox</property>
+        <property name="firefox_binary">/home/jhuska/apps/browsers/ff-22/firefox/firefox</property>
     </extension>
 
 </arquillian>

@@ -1,0 +1,42 @@
+[0.000][INFO]:      ChromeDriver 21.0.1180.4 /home/jhuska/Downloads/chromedriver
+[0.717][FINE]:      Initializing session with capabilities {
+   "browserName": "chrome",
+   "firefox_binary": "/home/jhuska/apps/browsers/ff-22/firefox/firefox",
+   "platform": "ANY",
+   "version": ""
+}
+
+[0.717][INFO]:      Launching chrome: /opt/google/chrome/google-chrome --disable-hang-monitor --disable-prompt-on-repost --dom-automation --full-memory-crash-report --no-default-browser-check --no-first-run --ignore-certificate-errors --disable-popup-blocking --homepage=about:blank
+[12.607][INFO]:     Connected to Chrome successfully. Version: 29.0.1547.57
+[12.685][FINE]:     Command received (/session/acab391427d18df9902671d4020b64ea)
+[12.685][FINE]:     Command finished (/session/acab391427d18df9902671d4020b64ea) with response {
+   "sessionId": "acab391427d18df9902671d4020b64ea",
+   "status": 0,
+   "value": {
+      "acceptSslCerts": false,
+      "applicationCacheEnabled": false,
+      "browserConnectionEnabled": false,
+      "browserName": "chrome",
+      "chrome.chromedriverVersion": "21.0.1180.4",
+      "chrome.nativeEvents": false,
+      "cssSelectorsEnabled": true,
+      "databaseEnabled": false,
+      "handlesAlerts": true,
+      "javascriptEnabled": true,
+      "locationContextEnabled": false,
+      "nativeEvents": true,
+      "platform": "linux",
+      "rotatable": false,
+      "takesScreenshot": true,
+      "version": "29.0.1547.57",
+      "webStorageEnabled": true
+   }
+}
+
+[24.727][FINE]:     Command received (/session/acab391427d18df9902671d4020b64ea/url) with params {
+   "url": "http://127.0.0.1:8080/metamer/faces/components/richInplaceSelect/simple.xhtml?templates=plain"
+}
+
+[24.727][FINER]:    Waiting for all views to stop loading...
+[24.728][FINER]:    Done waiting for all views to stop loading
+[25.099][FINE]:     Command received (/session/acab391427d18df9902671d4020b64ea)

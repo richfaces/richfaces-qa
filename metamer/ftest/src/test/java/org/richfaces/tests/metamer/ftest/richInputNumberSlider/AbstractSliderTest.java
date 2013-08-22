@@ -74,46 +74,46 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
         return new Action() {
             @Override
             public void perform() {
-                MetamerPage.waitRequest(slider.slider(), WaitRequestType.XHR).dragHandleToPointInTrace(pixels);
+                MetamerPage.waitRequest(slider.advanced(), WaitRequestType.XHR).dragHandleToPointInTrace(pixels);
             }
         };
     }
 
     public void testClickLeftArrow() {
-        int startValue = slider.getInput().getIntValue();
+        int startValue = slider.advanced().getInput().getIntValue();
         int clicks = 1;
 
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, 500);
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
 
-        MetamerPage.waitRequest(slider, WaitRequestType.XHR).decreaseWithArrows();
+        MetamerPage.waitRequest(slider, WaitRequestType.XHR).decrease();
 
         Graphene.waitGui().until("Output was not updated.").element(output).text().equalTo(String.valueOf(startValue - clicks));
     }
 
     public void testClickRightArrow() {
-        int startValue = slider.getInput().getIntValue();
+        int startValue = slider.advanced().getInput().getIntValue();
         int clicks = 1;
 
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.delay, 500);
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.showArrows, Boolean.TRUE);
 
-        MetamerPage.waitRequest(slider, WaitRequestType.XHR).increaseWithArrows();
+        MetamerPage.waitRequest(slider, WaitRequestType.XHR).increase();
 
         Graphene.waitGui().until("Output was not updated.").element(output).text().equalTo(String.valueOf(startValue + clicks));
     }
 
     public void testMoveWithSlider() {
         moveWithSliderActionWithWaitRequest(0).perform();
-        assertEquals(slider.getInput().getStringValue(), "-10", "Input was not updated.");
+        assertEquals(slider.advanced().getInput().getStringValue(), "-10", "Input was not updated.");
         assertEquals(output.getText(), "-10", "Output was not updated.");
 
         moveWithSliderActionWithWaitRequest(35).perform();
-        assertEquals(slider.getInput().getStringValue(), "-7", "Input was not updated.");
+        assertEquals(slider.advanced().getInput().getStringValue(), "-7", "Input was not updated.");
         assertEquals(output.getText(), "-7", "Output was not updated.");
 
-        moveWithSliderActionWithWaitRequest(slider.slider().getWidth()).perform();
-        assertEquals(slider.getInput().getStringValue(), "10", "Input was not updated.");
+        moveWithSliderActionWithWaitRequest(slider.advanced().getWidth()).perform();
+        assertEquals(slider.advanced().getInput().getStringValue(), "10", "Input was not updated.");
         assertEquals(output.getText(), "10", "Output was not updated.");
     }
 
@@ -121,7 +121,7 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
         typeToInputActionWithXHRWaitRequest(number).perform();
 
         assertEquals(output.getText(), DEFAULT_MAX_VALUE_STR, "Output was not updated.");
-        assertEquals(slider.getInput().getIntValue(), DEFAULT_MAX_VALUE, "Input was not updated.");
+        assertEquals(slider.advanced().getInput().getIntValue(), DEFAULT_MAX_VALUE, "Input was not updated.");
     }
 
     public void testTypeIntoInputCorrect() {
@@ -134,28 +134,30 @@ public abstract class AbstractSliderTest extends AbstractWebDriverTest {
 
         Double newNumber = new Double(number);
         assertEquals(output.getText(), newNumber == 0 ? "0" : newNumber.toString(), "Output was not updated.");
-        assertEquals(slider.getInput().getStringValue(), newNumber == 0 ? "0" : newNumber.toString(), "Input was not updated.");
+        assertEquals(slider.advanced().getInput().getStringValue(), newNumber == 0 ? "0" : newNumber.toString(),
+            "Input was not updated.");
     }
 
     public void testTypeIntoInputNotNumber() {
         typeToInputActionWithWaitRequest("RF 4", WaitRequestType.NONE).perform();
 
         assertEquals(output.getText(), "2", "Output should not be updated.");
-        assertEquals(slider.getInput().getStringValue(), "2", "Input should not be updated.");
+        assertEquals(slider.advanced().getInput().getStringValue(), "2", "Input should not be updated.");
     }
 
     public void testTypeIntoInputSmall() {
         typeToInputActionWithXHRWaitRequest(number).perform();
 
         assertEquals(output.getText(), DEFAULT_MIN_VALUE_STR, "Output was not updated.");
-        assertEquals(slider.getInput().getIntValue(), DEFAULT_MIN_VALUE, "Input was not updated.");
+        assertEquals(slider.advanced().getInput().getIntValue(), DEFAULT_MIN_VALUE, "Input was not updated.");
     }
 
     protected Action typeToInputActionWithWaitRequest(final String num, final WaitRequestType type) {
         return new Action() {
             @Override
             public void perform() {
-                MetamerPage.waitRequest(slider.getInput().advanced().clear(ClearType.JS).sendKeys(num), type).advanced().trigger("blur");
+                MetamerPage.waitRequest(slider.advanced().getInput().advanced().clear(ClearType.JS).sendKeys(num).advanced(),
+                    type).trigger("blur");
             }
         };
     }
