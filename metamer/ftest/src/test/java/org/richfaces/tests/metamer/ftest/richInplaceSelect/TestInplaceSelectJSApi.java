@@ -35,9 +35,8 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceComponentState;
 import org.richfaces.tests.page.fragments.impl.inplaceSelect.RichFacesInplaceSelect;
-import org.richfaces.tests.page.fragments.impl.inplaceSelect.InplaceComponent.OpenBy;
-import org.richfaces.tests.page.fragments.impl.inplaceSelect.InplaceComponent.State;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
@@ -95,11 +94,11 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
     public void cancel() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnBlur, Boolean.FALSE);
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
-        String defaultText = inplaceSelect.getLabelValue();
-        inplaceSelect.editBy(OpenBy.CLICK).changeToValue(SOME_VALUE);
+        String defaultText = inplaceSelect.advanced().getLabelValue();
+        inplaceSelect.select(SOME_VALUE);
         cancelButton.click();
-        assertEquals(inplaceSelect.getLabelValue(), defaultText);
-        assertFalse(inplaceSelect.is(State.CHANGED));
+        assertEquals(inplaceSelect.advanced().getLabelValue(), defaultText);
+        assertFalse(inplaceSelect.advanced().isInState(InplaceComponentState.CHANGED));
     }
 
     @Test
@@ -108,22 +107,22 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
         // so the state of inplace input is set to active
         getInputButton.click();
         waiting(100);
-        inplaceSelect.is(State.ACTIVE);
+        inplaceSelect.advanced().isInState(InplaceComponentState.ACTIVE);
     }
 
     @Test
     public void getLabel() {
         getLabelButton.click();
-        assertEquals(getValueFromOutput(), inplaceSelect.getLabelValue(), "Default value.");
+        assertEquals(getValueFromOutput(), inplaceSelect.advanced().getLabelValue(), "Default value.");
     }
 
     @Test
     public void getValue() {
         getValueButton.click();
-        assertEquals(getValueFromOutput(), inplaceSelect.getEditValue(), "Default value.");
-        inplaceSelect.editBy(OpenBy.CLICK).changeToValue(SOME_VALUE);
+        assertEquals(getValueFromOutput(), inplaceSelect.getTextInput().getStringValue(), "Default value.");
+        inplaceSelect.select(SOME_VALUE);
         getValueButton.click();
-        assertEquals(getValueFromOutput(), inplaceSelect.getEditValue());
+        assertEquals(getValueFromOutput(), inplaceSelect.getTextInput().getStringValue());
     }
 
     private String getValueFromOutput() {
@@ -133,7 +132,7 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
     @Test(groups = "Future")
     @IssueTracking("https://issues.jboss.org/browse/RF-12853")
     public void hidePopup() {
-        inplaceSelect.editBy(OpenBy.CLICK);
+        inplaceSelect.advanced().switchToEditingState();
         assertVisible(globalPopup, "Popup should be visible.");
         assertNotPresent(popup, "Local popup should not be present.");
         fireEvent(hidePopup, Event.MOUSEOVER);
@@ -146,7 +145,7 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
         fireEvent(isEditStateButton, Event.MOUSEOVER);
         assertEquals(getValueFromOutput(), "false");
 
-        inplaceSelect.editBy(OpenBy.CLICK);
+        inplaceSelect.advanced().switchToEditingState();
         fireEvent(isEditStateButton, Event.MOUSEOVER);
         assertEquals(getValueFromOutput(), "true");
     }
@@ -155,7 +154,7 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
     public void isValueChangedButton() {
         isValueChangedButton.click();
         assertEquals(getValueFromOutput(), "false");
-        inplaceSelect.editBy(OpenBy.CLICK).changeToValue(SOME_VALUE);
+        inplaceSelect.select(SOME_VALUE);
         isValueChangedButton.click();
         assertEquals(getValueFromOutput(), "true");
     }
@@ -164,17 +163,17 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
     public void save() {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnBlur, Boolean.FALSE);
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
-        MetamerPage.waitRequest(inplaceSelect.editBy(OpenBy.CLICK), WaitRequestType.NONE).changeToValue(SOME_VALUE);
+        inplaceSelect.select(SOME_VALUE);
         MetamerPage.waitRequest(saveButton, WaitRequestType.XHR).click();
-        assertEquals(inplaceSelect.getLabelValue(), SOME_VALUE);
-        assertTrue(inplaceSelect.is(State.CHANGED));
+        assertEquals(inplaceSelect.advanced().getLabelValue(), SOME_VALUE);
+        assertTrue(inplaceSelect.advanced().isInState(InplaceComponentState.CHANGED));
     }
 
     @Test
     public void setLabel() {
         String expected = "Completely different label";
         MetamerPage.waitRequest(setLabelButton, WaitRequestType.NONE).click();
-        assertEquals(inplaceSelect.getLabelValue(), expected);
+        assertEquals(inplaceSelect.advanced().getLabelValue(), expected);
     }
 
     @Test(groups = "Future")
@@ -182,7 +181,7 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
     public void setValue() {
         String expected = SOME_VALUE;
         MetamerPage.waitRequest(setValueButton, WaitRequestType.XHR).click();
-        assertEquals(inplaceSelect.getLabelValue(), expected);
+        assertEquals(inplaceSelect.advanced().getLabelValue(), expected);
     }
 
     @Test

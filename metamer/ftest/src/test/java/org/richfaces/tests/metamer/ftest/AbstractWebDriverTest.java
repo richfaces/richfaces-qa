@@ -135,7 +135,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             driver.findElement(By.cssSelector(format(ATTRIBUTE_INPUT_TEMPLATE, attributeName))));
         //set attribute
         MetamerPage.waitRequest(attributeInput.advanced().clear(ClearType.JS)
-            .sendKeys(value.toString()), WaitRequestType.HTTP).advanced().getInput()
+            .sendKeys(value.toString()).advanced().getInput(), WaitRequestType.HTTP)
             .submit();
     }
 

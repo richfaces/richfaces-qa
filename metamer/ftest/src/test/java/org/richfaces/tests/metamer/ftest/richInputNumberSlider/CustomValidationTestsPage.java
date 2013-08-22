@@ -59,7 +59,7 @@ public class CustomValidationTestsPage extends NumberInputValidationPage {
     }
 
     private void moveSliderWithWaitRequest(int byPixels, RichFacesInputNumberSlider slider) {
-        MetamerPage.waitRequest(slider.slider(), MetamerPage.WaitRequestType.XHR)
+        MetamerPage.waitRequest(slider.advanced(), MetamerPage.WaitRequestType.XHR)
                 .dragHandleToPointInTrace(byPixels);
     }
 

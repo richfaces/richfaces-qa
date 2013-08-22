@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.junit.Assert.fail;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inplaceInputAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -43,8 +44,8 @@ import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.inplaceInput.ConfirmOrCancel;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceComponentState;
 import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput;
-import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput.State;
 import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
@@ -107,12 +108,13 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     @Test
     public void testClick() {
         inplaceInput.type(" ");
-        assertTrue(inplaceInput.advanced().isInState(State.ACTIVE), "Input should be active.");
+        assertTrue(inplaceInput.advanced().isInState(InplaceComponentState.ACTIVE), "Input should be active.");
 
         String testedValue = "new value";
         MetamerPage.waitRequest(inplaceInput.type(testedValue), WaitRequestType.XHR).confirm();
 
-        assertTrue(inplaceInput.advanced().isInState(State.CHANGED), "Input should contain class indicating a change.");
+        assertTrue(inplaceInput.advanced().isInState(InplaceComponentState.CHANGED),
+            "Input should contain class indicating a change.");
         assertEquals(inplaceInput.advanced().getLabelValue(), testedValue, "Input should contain typed text.");
 
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: RichFaces 4 -> " + testedValue);
@@ -171,13 +173,17 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     public void testEditEvent() {
         inplaceInputAttributes.set(InplaceInputAttributes.editEvent, "dblclick");
 
-        inplaceInput.advanced().setEditByEvent(Event.CONTEXTCLICK);
-        inplaceInput.type(" ");
-        assertFalse(inplaceInput.advanced().isInState(State.ACTIVE));
+        inplaceInput.advanced().setEditByEvent(Event.KEYPRESS);
+        try {
+            inplaceInput.type(" ");
+            fail("The test should throw an exception! The editEvent is wrongly set!");
+        } catch (IllegalStateException ex) {
+            assertTrue(ex.getMessage().contains("editBy"));
+        }
 
         inplaceInput.advanced().setEditByEvent(Event.DBLCLICK);
         inplaceInput.type(" ");
-        assertTrue(inplaceInput.advanced().isInState(State.ACTIVE));
+        assertTrue(inplaceInput.advanced().isInState(InplaceComponentState.ACTIVE));
     }
 
     @Test

@@ -24,7 +24,6 @@ package org.richfaces.tests.metamer.ftest.richInplaceSelect;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.ConverterBean;
 import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
-import org.richfaces.tests.page.fragments.impl.inplaceSelect.InplaceComponent;
 import org.richfaces.tests.page.fragments.impl.inplaceSelect.RichFacesInplaceSelect;
 import org.testng.annotations.Test;
 
@@ -54,7 +53,7 @@ public class TestInplaceSelectConverter extends AbstractConverterTest {
 
     @Override
     protected void setBadValue() {
-        input.editBy(InplaceComponent.OpenBy.CLICK).changeToValue(VALUE).confirm();
+        input.select(VALUE).confirm();
     }
 
     @Test

@@ -156,8 +156,8 @@ public class TestGraphValidator extends AbstractWebDriverTest {
                 booleanCheckbox.check();
                 break;
             case ValidationGroupNumericInputs:
-                spinner.getInput().advanced().clear(ClearType.JS).sendKeys(CORRECT_INT_VALUE);
-                slider.getInput().advanced().clear(ClearType.JS).sendKeys(CORRECT_INT_VALUE);
+                spinner.advanced().getInput().advanced().clear(ClearType.JS).sendKeys(CORRECT_INT_VALUE);
+                slider.advanced().getInput().advanced().clear(ClearType.JS).sendKeys(CORRECT_INT_VALUE);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown group " + group);
@@ -183,8 +183,8 @@ public class TestGraphValidator extends AbstractWebDriverTest {
                 booleanCheckbox.uncheck();
                 break;
             case ValidationGroupNumericInputs:
-                spinner.getInput().advanced().clear(ClearType.JS).sendKeys(WRONG_INT_VALUE);
-                slider.getInput().advanced().clear(ClearType.JS).sendKeys(WRONG_INT_VALUE);
+                spinner.advanced().getInput().advanced().clear(ClearType.JS).sendKeys(WRONG_INT_VALUE);
+                slider.advanced().getInput().advanced().clear(ClearType.JS).sendKeys(WRONG_INT_VALUE);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown group " + group);

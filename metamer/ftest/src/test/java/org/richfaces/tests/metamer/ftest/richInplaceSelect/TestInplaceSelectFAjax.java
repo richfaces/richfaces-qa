@@ -42,12 +42,9 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.metamer.model.Capital;
-import org.richfaces.tests.page.fragments.impl.inplaceSelect.InplaceComponent;
-import org.richfaces.tests.page.fragments.impl.inplaceSelect.OptionsList;
+import org.richfaces.tests.page.fragments.impl.inplaceInput.InplaceComponentState;
 import org.richfaces.tests.page.fragments.impl.inplaceSelect.RichFacesInplaceSelect;
-import org.richfaces.tests.page.fragments.impl.inplaceSelect.EditingState.FinishEditingBy;
-import org.richfaces.tests.page.fragments.impl.inplaceSelect.InplaceComponent.OpenBy;
-import org.richfaces.tests.page.fragments.impl.inplaceSelect.InplaceComponent.State;
+import org.richfaces.ui.common.InplaceComponent;
 import org.testng.annotations.Test;
 
 /**
@@ -85,9 +82,10 @@ public class TestInplaceSelectFAjax extends AbstractWebDriverTest {
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnBlur, Boolean.FALSE);
         inplaceSelectAttributes.set(InplaceSelectAttributes.saveOnSelect, Boolean.FALSE);
 
-        OptionsList options = MetamerPage.waitRequest(select, WaitRequestType.NONE, 1000).editBy(OpenBy.CLICK).getOptions();
-        assertTrue(select.is(InplaceComponent.State.ACTIVE), "Select should be active.");
-        assertFalse(select.is(InplaceComponent.State.CHANGED), "Select should not have changed value.");
+        select.advanced().switchToEditingState();
+        List<WebElement> options = select.advanced().getOptions();
+        assertTrue(select.advanced().isInState(InplaceComponentState.ACTIVE), "Select should be active.");
+        assertFalse(select.advanced().isInState(InplaceComponentState.CHANGED), "Select should not have changed value.");
         assertVisible(globalPopup, "Popup should be displayed.");
 
         assertEquals(options.size(), 50, "50 options should be displayed.");
@@ -97,12 +95,12 @@ public class TestInplaceSelectFAjax extends AbstractWebDriverTest {
             assertEquals(options.get(i).getText(), capitals.get(i).getState());
         }
 
-        select.editBy(OpenBy.CLICK).changeToValueAtIndex(10).confirm(FinishEditingBy.CONTROLS);
+        select.select(10).confirmByControlls();
         Graphene.waitModel().until().element(output).text().equalTo("Hawaii");
         assertEquals(getOutputText(), "Hawaii", "Output should contain selected value.");
-        assertEquals(select.getLabelValue(), "Hawaii", "Label should contain selected value.");
-        assertTrue(select.is(State.CHANGED), "Select should have changed value.");
-        assertFalse(select.is(State.ACTIVE), "Select should not be active.");
+        assertEquals(select.advanced().getLabelValue(), "Hawaii", "Label should contain selected value.");
+        assertTrue(select.advanced().isInState(InplaceComponentState.CHANGED), "Select should have changed value.");
+        assertFalse(select.advanced().isInState(InplaceComponentState.ACTIVE), "Select should not be active.");
 
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: -> Hawaii");
     }
