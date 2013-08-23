@@ -12,8 +12,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.imageio.ImageIO;
 import javax.inject.Named;
 
+import org.richfaces.component.UIMediaOutput;
 import org.richfaces.tests.metamer.Attributes;
-import org.richfaces.ui.output.mediaOutput.UIMediaOutput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
