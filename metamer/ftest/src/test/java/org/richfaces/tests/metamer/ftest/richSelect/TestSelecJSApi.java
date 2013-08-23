@@ -26,13 +26,12 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.test.api.ArquillianResource;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
+import org.richfaces.tests.page.fragments.impl.select.RichFacesSelect;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -54,10 +53,7 @@ public class TestSelecJSApi extends AbstractWebDriverTest {
     @FindBy(css = "input[id$=value]")
     private TextInputComponentImpl value;
     @FindBy(css = "div[id$=select]")
-    private RichFacesSelectEnhanced select;
-
-    @ArquillianResource
-    private JavascriptExecutor executor;
+    private RichFacesSelect select;
 
     @Override
     public URL getTestUrl() {
@@ -70,7 +66,7 @@ public class TestSelecJSApi extends AbstractWebDriverTest {
 
     @Test
     public void testGetValue() {
-        Graphene.guardAjax(select.callPopup()).selectByVisibleText("Hawaii");
+        Graphene.guardAjax(select.openSelect()).select("Hawaii");
         getValueButton.click();
         Assert.assertEquals(getValue(), "Hawaii");
     }
@@ -78,7 +74,7 @@ public class TestSelecJSApi extends AbstractWebDriverTest {
     @Test
     public void testSetValue() {
         setValueButton.click();// sets value to Arizona
-        Assert.assertEquals(select.getInput().getStringValue(), "Arizona");
+        Assert.assertEquals(select.advanced().getInput().getStringValue(), "Arizona");
     }
 
     @Test
@@ -90,14 +86,14 @@ public class TestSelecJSApi extends AbstractWebDriverTest {
     @Test
     public void testShowPopup() {
         Utils.triggerJQ(executor, "mouseover", showPopupButton);
-        Assert.assertTrue(select.isPopupPresent(), "Popup should be opened");
+        select.advanced().waitUntilSuggestionsAreVisible();
     }
 
     @Test
     public void testHidePopup() {
-        select.callPopup();
-        Assert.assertTrue(select.isPopupPresent(), "Popup should be opened");
+        select.openSelect();
+        select.advanced().waitUntilSuggestionsAreVisible();
         Utils.triggerJQ(executor, "mouseover", hidePopupButton);
-        Assert.assertFalse(select.isPopupPresent(), "Popup should be hidden");
+        select.advanced().waitUntilSuggestionsAreNotVisible();
     }
 }

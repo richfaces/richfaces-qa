@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richSelect;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType.BY_KEYS;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
@@ -36,7 +35,6 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.Attributes;
-import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.select.RichFacesSelect;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.annotations.Test;
@@ -74,15 +72,13 @@ public class TestSelectFragment extends AbstractWebDriverTest {
     @Templates("plain")
     public void testOpenAndSelect() {
         attributes.set(SelectAttributes.selectFirst, selectFirst);
-        select.advanced().setScrollingType(BY_KEYS);
+        select.advanced().setScrollingType(scrollingType);
 
         Graphene.guardAjax(select.openSelect()).select(0);
         assertEquals(getOutputText(), "Alabama");
-        select.advanced().getInput().clear(ClearType.DELETE);
         Graphene.guardAjax(select.openSelect()).select("Michigan");
         assertEquals(getOutputText(), "Michigan");
 
-        select.advanced().getInput().clear(ClearType.DELETE);
         Graphene.guardAjax(select.openSelect()).select(ChoicePickerHelper.byIndex().last());
         assertEquals(getOutputText(), "Wyoming");
     }

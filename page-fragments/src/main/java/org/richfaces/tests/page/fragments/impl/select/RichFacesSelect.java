@@ -22,15 +22,18 @@
 package org.richfaces.tests.page.fragments.impl.select;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
 
 import java.util.Collections;
 import java.util.List;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
 import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -48,15 +51,24 @@ public class RichFacesSelect implements Select {
     @Drone
     private WebDriver driver;
 
+    @Root
+    private WebElement root;
+
     @FindBy(className = "rf-sel-inp")
     private TextInputComponentImpl input;
+    @FindBy(className = "rf-sel-btn-arrow")
+    private WebElement showButton;
+    @FindBy(className = "rf-sel-shdw")
+    private GrapheneElement localPopup;
 
     private static final ByJQuery GLOBAL_POPUP = ByJQuery.jquerySelector("div.rf-sel-shdw:visible");
     private static final ScrollingType DEFAULT_SCROLLING_TYPE = ScrollingType.BY_MOUSE;
+    private static final boolean DEFAULT_OPEN_BY_INPUT_CLICK = true;
 
     private AdvancedInteractions interactions;
     private SelectSuggestionsImpl selectSuggestions = new SelectSuggestionsImpl();
     private ScrollingType scrollingType;
+    private Boolean openByInputClick;
 
     public AdvancedInteractions advanced() {
         if (interactions == null) {
@@ -77,10 +89,15 @@ public class RichFacesSelect implements Select {
         return driver.findElement(GLOBAL_POPUP).findElements(By.className("rf-sel-opt"));
     }
 
+    private boolean isPopupPresent() {
+        return new GrapheneElement(driver.findElement(GLOBAL_POPUP)).isPresent()
+            && !localPopup.isPresent();
+    }
+
     @Override
     public SelectSuggestions openSelect() {
-        if (!Utils.isVisible(driver, GLOBAL_POPUP)) {
-            input.getInput().click();
+        if (!Utils.isVisible(driver, GLOBAL_POPUP) && Utils.isVisible(localPopup)) {
+            (advanced().getOpenByInputClick() ? input.getInput() : showButton).click();
         }
         return getSuggestions();
     }
@@ -139,24 +156,65 @@ public class RichFacesSelect implements Select {
             return input;
         }
 
+        private boolean getOpenByInputClick() {
+            return Optional.fromNullable(openByInputClick).or(DEFAULT_OPEN_BY_INPUT_CLICK);
+        }
+
+        public WebElement getRoot() {
+            return root;
+        }
+
         public ScrollingType getScrollingType() {
             return Optional.fromNullable(scrollingType).or(DEFAULT_SCROLLING_TYPE);
+        }
+
+        public WebElement getShowButton() {
+            return showButton;
         }
 
         public List<WebElement> getSuggestions() {
             return Collections.unmodifiableList(getSuggestionsElements());
         }
 
+        public boolean isPopupPresent() {
+            return RichFacesSelect.this.isPopupPresent();
+        }
+
+        /**
+         * Setups opening of select. Default open method is by clicking on the input.
+         * @param openByClickOnInput if true, select will be opened by input clicking (default). If false, the select will be opened by 'show' button of the select.
+         */
+        public void setOpenByInputClick(boolean openByClickOnInput) {
+            openByInputClick = openByClickOnInput;
+        }
+
+        /**
+         * Setups scrolling type. Default value is By_MOUSE.
+         * @param type type of scrolling through the list of options and selecting on of them.
+         */
         public void setScrollingType(ScrollingType type) {
             scrollingType = type;
         }
 
         public void waitUntilSuggestionsAreNotVisible() {
-            Graphene.waitGui().until().element(GLOBAL_POPUP).is().not().present();
+            Graphene.waitGui().withMessage("popup to hide.").until(new Predicate<WebDriver>() {
+
+                @Override
+                public boolean apply(WebDriver input) {
+                    // there can be second select with opened suggestions, so there is no check for GLOBAL POPUP presence
+                    return localPopup.isPresent();
+                }
+            });
         }
 
         public void waitUntilSuggestionsAreVisible() {
-            Graphene.waitGui().until().element(GLOBAL_POPUP).is().present();
+            Graphene.waitGui().withMessage("popup to be visible.").until(new Predicate<WebDriver>() {
+
+                @Override
+                public boolean apply(WebDriver input) {
+                    return isPopupPresent();
+                }
+            });
         }
     }
 }
