@@ -30,12 +30,13 @@ import java.net.URL;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.select.internal.Selection;
+import org.richfaces.tests.page.fragments.impl.select.RichFacesSelect;
 import org.testng.annotations.Test;
 
 /**
@@ -47,7 +48,7 @@ import org.testng.annotations.Test;
 public class TestSelectFAjax extends AbstractWebDriverTest {
 
     @FindBy(css = "div[id$=select]")
-    private RichFacesSelectEnhanced select;
+    private RichFacesSelect select;
     @FindBy(css = "span[id$=output]")
     private WebElement output;
     @FindBy(css = "div[id$=selectItem10]")
@@ -62,18 +63,18 @@ public class TestSelectFAjax extends AbstractWebDriverTest {
 
     @Test
     public void testSelectWithKeyboard() {
-        Graphene.guardAjax(select.callPopup()).selectByIndex(10, Selection.BY_KEYS);
+        select.advanced().setScrollingType(ScrollingType.BY_KEYS);
+        Graphene.guardAjax(select.openSelect()).select(10);
         assertTrue(item10.getAttribute("class").contains("rf-sel-sel"), "Selected item should contain class for selected option.");
-        assertEquals(select.getSelectedOption().getVisibleText(), "Hawaii");
         assertEquals(output.getText(), "Hawaii");
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
     }
 
     @Test
     public void testSelectWithMouse() {
-        Graphene.guardAjax(select.callPopup()).selectByIndex(10, Selection.BY_MOUSE);
+        select.advanced().setScrollingType(ScrollingType.BY_MOUSE);
+        Graphene.guardAjax(select.openSelect()).select(10);
         assertTrue(item10.getAttribute("class").contains("rf-sel-sel"), "Selected item should contain class for selected option.");
-        assertEquals(select.getSelectedOption().getVisibleText(), "Hawaii");
         assertEquals(output.getText(), "Hawaii");
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: null -> Hawaii");
     }
