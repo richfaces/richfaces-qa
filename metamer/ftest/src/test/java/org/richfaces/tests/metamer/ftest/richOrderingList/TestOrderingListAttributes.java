@@ -23,7 +23,6 @@ package org.richfaces.tests.metamer.ftest.richOrderingList;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.orderingListAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
@@ -45,6 +44,7 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.annotations.Test;
 
 /**
@@ -68,17 +68,17 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     @Test
     public void testCaption() {
         String testedValue = "New Caption";
-        orderingListAttributes.set(OrderingListAttributes.caption, testedValue);
-        assertEquals(twoColumnOrderingList.getCaption(), testedValue);
+        attributes.set(OrderingListAttributes.caption, testedValue);
+        assertEquals(orderingList.advanced().getCaptionElement().getText(), testedValue);
     }
 
     @Test
     @Templates(value = "plain")
     public void testColumnClasses() {
         String testedClass = "metamer-ftest-class";
-        orderingListAttributes.set(OrderingListAttributes.columnClasses, testedClass);
-        for (TwoColumnListItem li : twoColumnOrderingList.getItems()) {
-            for (WebElement e : li.getItemElement().findElements(By.tagName("td"))) {
+        attributes.set(OrderingListAttributes.columnClasses, testedClass);
+        for (WebElement li : orderingList.advanced().getItems()) {
+            for (WebElement e : li.findElements(By.tagName("td"))) {
                 assertTrue(e.getAttribute("class").contains(testedClass), "Item @class should contain " + testedClass);
             }
         }
@@ -86,12 +86,12 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
 
     @Test
     public void testDisabled() {
-        orderingListAttributes.set(OrderingListAttributes.disabled, Boolean.TRUE);
-        for (TwoColumnListItem li : twoColumnOrderingList.getItems()) {
-            assertTrue(li.getItemElement().getAttribute("class").contains("rf-ord-opt-dis"), "Item @class should contain " + "rf-ord-opt-dis");
+        attributes.set(OrderingListAttributes.disabled, Boolean.TRUE);
+        for (WebElement li : orderingList.advanced().getItems()) {
+            assertTrue(li.getAttribute("class").contains("rf-ord-opt-dis"), "Item @class should contain " + "rf-ord-opt-dis");
         }
         try {
-            twoColumnOrderingList.getItems().get(0).select();
+            orderingList.select(0);
             fail("The attribute <disabled> is set to true, but the ordering list is still enabled.");
         } catch (TimeoutException e) {
         }
@@ -100,42 +100,42 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     @Test
     @Templates(value = "plain")
     public void testDisabledClass() {
-        orderingListAttributes.set(OrderingListAttributes.disabled, Boolean.TRUE);
-        testStyleClass(twoColumnOrderingList.getRootElement(), BasicAttributes.disabledClass);
+        attributes.set(OrderingListAttributes.disabled, Boolean.TRUE);
+        testStyleClass(orderingList.advanced().getRootElement(), BasicAttributes.disabledClass);
     }
 
     @Test
     @Templates(value = "plain")
     public void testDownBottomText() {
         String testedValue = "New text";
-        orderingListAttributes.set(OrderingListAttributes.downBottomText, testedValue);
-        assertEquals(twoColumnOrderingList.getBottomButtonElement().getText(), testedValue);
+        attributes.set(OrderingListAttributes.downBottomText, testedValue);
+        assertEquals(orderingList.advanced().getBottomButtonElement().getText(), testedValue);
     }
 
     @Test
     @Templates(value = "plain")
     public void testDownText() {
         String testedValue = "New text";
-        orderingListAttributes.set(OrderingListAttributes.downText, testedValue);
-        assertEquals(twoColumnOrderingList.getDownButtonElement().getText(), testedValue);
+        attributes.set(OrderingListAttributes.downText, testedValue);
+        assertEquals(orderingList.advanced().getDownButtonElement().getText(), testedValue);
     }
 
     @Test
     @Templates(value = "plain")
     public void testHeaderClass() {
-        testStyleClass(twoColumnOrderingList.getHeaderElement(), BasicAttributes.headerClass);
+        testStyleClass(orderingList.advanced().getHeaderElement(), BasicAttributes.headerClass);
     }
 
     @Test
     public void testImmediate() {
-        orderingListAttributes.set(OrderingListAttributes.immediate, Boolean.FALSE);
-        twoColumnOrderingList.selectItemsByIndex(1).top();
+        attributes.set(OrderingListAttributes.immediate, Boolean.FALSE);
+        orderingList.select(1).putItBefore(0);
         submit();
         page.assertPhases(PhaseId.ANY_PHASE);
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed");
 
-        orderingListAttributes.set(OrderingListAttributes.immediate, Boolean.TRUE);
-        twoColumnOrderingList.selectItemsByIndex(1).top();
+        attributes.set(OrderingListAttributes.immediate, Boolean.TRUE);
+        orderingList.select(1).putItBefore(0);
         submit();
         page.assertPhases(PhaseId.ANY_PHASE);
         page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed");
@@ -145,9 +145,9 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     @Templates(value = "plain")
     public void testItemClass() {
         String testedClass = "metamer-ftest-class";
-        orderingListAttributes.set(OrderingListAttributes.itemClass, "metamer-ftest-class");
-        for (TwoColumnListItem li : twoColumnOrderingList.getItems()) {
-            assertTrue(li.getItemElement().getAttribute("class").contains(testedClass), "Item @class should contain " + testedClass);
+        attributes.set(OrderingListAttributes.itemClass, "metamer-ftest-class");
+        for (WebElement element : orderingList.advanced().getItems()) {
+            assertTrue(element.getAttribute("class").contains(testedClass), "Item @class should contain " + testedClass);
         }
     }
 
@@ -155,209 +155,208 @@ public class TestOrderingListAttributes extends AbstractOrderingListTest {
     public void testListHeight() {
         int testedValue = 600;
         int tolerance = 10;
-        orderingListAttributes.set(OrderingListAttributes.listHeight, testedValue);
-        assertEquals(Integer.valueOf(twoColumnOrderingList.getListAreaElement().getCssValue("height").replace("px", "")), testedValue, tolerance);
+        attributes.set(OrderingListAttributes.listHeight, testedValue);
+        assertEquals(Integer.valueOf(orderingList.advanced().getListAreaElement().getCssValue("height").replace("px", "")), testedValue, tolerance);
     }
 
     @Test
     public void testListWidth() {
         int testedValue = 600;
         int tolerance = 10;
-        orderingListAttributes.set(OrderingListAttributes.listWidth, testedValue);
-        assertEquals(Integer.valueOf(twoColumnOrderingList.getListAreaElement().getCssValue("width").replace("px", "")), testedValue, tolerance);
+        attributes.set(OrderingListAttributes.listWidth, testedValue);
+        assertEquals(Integer.valueOf(orderingList.advanced().getListAreaElement().getCssValue("width").replace("px", "")), testedValue, tolerance);
     }
 
     @Test
     public void testMaxListHeight() {
         int testedValue = 600;
         int tolerance = 10;
-        orderingListAttributes.set(OrderingListAttributes.maxListHeight, testedValue);
-        orderingListAttributes.set(OrderingListAttributes.listHeight, "");
-        assertEquals(Integer.valueOf(twoColumnOrderingList.getListAreaElement().getCssValue("max-height").replace("px", "")), testedValue, tolerance);
+        attributes.set(OrderingListAttributes.maxListHeight, testedValue);
+        attributes.set(OrderingListAttributes.listHeight, "");
+        assertEquals(Integer.valueOf(orderingList.advanced().getListAreaElement().getCssValue("max-height").replace("px", "")), testedValue, tolerance);
     }
 
     @Test
     public void testMinListHeight() {
         int testedValue = 600;
         int tolerance = 10;
-        orderingListAttributes.set(OrderingListAttributes.listHeight, "");
-        orderingListAttributes.set(OrderingListAttributes.minListHeight, testedValue);
-        assertEquals(Integer.valueOf(twoColumnOrderingList.getListAreaElement().getCssValue("min-height").replace("px", "")), testedValue, tolerance);
+        attributes.set(OrderingListAttributes.listHeight, "");
+        attributes.set(OrderingListAttributes.minListHeight, testedValue);
+        assertEquals(Integer.valueOf(orderingList.advanced().getListAreaElement().getCssValue("min-height").replace("px", "")), testedValue, tolerance);
     }
 
     @Test
     public void testOnblur() {
-        testFireEvent(orderingListAttributes, OrderingListAttributes.onblur, new Action() {
+        testFireEvent(attributes, OrderingListAttributes.onblur, new Action() {
             @Override
             public void perform() {
                 //have to be this way or the blur will not be triggered
-                twoColumnOrderingList.getListAreaElement().click();
-                twoColumnOrderingList.getRootElement().click();
+                orderingList.advanced().getListAreaElement().click();
+                orderingList.advanced().getRootElement().click();
                 waiting(500);
-                Utils.triggerJQ(executor, "blur", twoColumnOrderingList.getItems().get(0).getItemElement());
+                Utils.triggerJQ(executor, "blur", orderingList.advanced().getItems().get(0));
             }
         });
     }
 
     @Test
     public void testOnchange() {
-        testFireEvent(Event.CHANGE, twoColumnOrderingList.getListAreaElement());
+        testFireEvent(Event.CHANGE, orderingList.advanced().getListAreaElement());
     }
 
     @Test
     public void testOnclick() {
-        testFireEvent(orderingListAttributes, OrderingListAttributes.onlistclick,
-                new Actions(driver).click(twoColumnOrderingList.getListAreaElement()).build());
+        testFireEvent(attributes, OrderingListAttributes.onlistclick,
+            new Actions(driver).click(orderingList.advanced().getListAreaElement()).build());
     }
 
     @Test
     public void testOndblclick() {
-        testFireEvent(Event.DBLCLICK, twoColumnOrderingList.getListAreaElement());
+        testFireEvent(Event.DBLCLICK, orderingList.advanced().getListAreaElement());
     }
 
     @Test
     public void testOnfocus() {
-        testFireEvent(orderingListAttributes, OrderingListAttributes.onfocus,
-                new Actions(driver).click(twoColumnOrderingList.getItems().get(0).getItemElement()).build());
+        testFireEvent(attributes, OrderingListAttributes.onfocus,
+            new Actions(driver).click(orderingList.advanced().getItems().get(0)).build());
     }
 
     @Test
     public void testOnkeydown() {
-        testFireEvent(Event.KEYDOWN, twoColumnOrderingList.getListAreaElement());
+        testFireEvent(Event.KEYDOWN, orderingList.advanced().getListAreaElement());
     }
 
     @Test
     public void testOnkeypress() {
-        testFireEvent(Event.KEYPRESS, twoColumnOrderingList.getListAreaElement());
+        testFireEvent(Event.KEYPRESS, orderingList.advanced().getListAreaElement());
     }
 
     @Test
     public void testOnkeyup() {
-        testFireEvent(Event.KEYUP, twoColumnOrderingList.getListAreaElement());
+        testFireEvent(Event.KEYUP, orderingList.advanced().getListAreaElement());
     }
 
     @Test
     public void testOnlistclick() {
-        testFireEvent(orderingListAttributes, OrderingListAttributes.onlistclick, new Actions(driver).click(twoColumnOrderingList.getItems().get(0).getItemElement()).build());
+        testFireEvent(attributes, OrderingListAttributes.onlistclick, new Actions(driver).click(orderingList.advanced().getItems().get(0)).build());
     }
 
     @Test
     public void testOnlistdblclick() {
-        testFireEvent(Event.DBLCLICK, twoColumnOrderingList.getItems().get(0).getItemElement(), "listdblclick");
+        testFireEvent(Event.DBLCLICK, orderingList.advanced().getItems().get(0), "listdblclick");
     }
 
     @Test
     public void testOnlistkeydown() {
-        testFireEvent(Event.KEYDOWN, twoColumnOrderingList.getItems().get(0).getItemElement(), "listkeydown");
+        testFireEvent(Event.KEYDOWN, orderingList.advanced().getItems().get(0), "listkeydown");
     }
 
     @Test
     public void testOnlistkeypress() {
-        testFireEvent(Event.KEYPRESS, twoColumnOrderingList.getItems().get(0).getItemElement(), "listkeypress");
+        testFireEvent(Event.KEYPRESS, orderingList.advanced().getItems().get(0), "listkeypress");
     }
 
     @Test
     public void testOnlistkeyup() {
-        testFireEvent(Event.KEYUP, twoColumnOrderingList.getItems().get(0).getItemElement(), "listkeyup");
+        testFireEvent(Event.KEYUP, orderingList.advanced().getItems().get(0), "listkeyup");
     }
 
     @Test
     public void testOnlistmousedown() {
-        testFireEvent(Event.MOUSEDOWN, twoColumnOrderingList.getItems().get(0).getItemElement(), "listmousedown");
+        testFireEvent(Event.MOUSEDOWN, orderingList.advanced().getItems().get(0), "listmousedown");
     }
 
     @Test
     public void testOnlistmousemove() {
-        testFireEvent(Event.MOUSEMOVE, twoColumnOrderingList.getItems().get(0).getItemElement(), "listmousemove");
+        testFireEvent(Event.MOUSEMOVE, orderingList.advanced().getItems().get(0), "listmousemove");
     }
 
     @Test
     public void testOnlistmouseout() {
-        testFireEvent(Event.MOUSEOUT, twoColumnOrderingList.getItems().get(0).getItemElement(), "listmouseout");
+        testFireEvent(Event.MOUSEOUT, orderingList.advanced().getItems().get(0), "listmouseout");
     }
 
     @Test
     public void testOnlistmouseover() {
-        testFireEvent(Event.MOUSEOVER, twoColumnOrderingList.getItems().get(0).getItemElement(), "listmouseover");
+        testFireEvent(Event.MOUSEOVER, orderingList.advanced().getItems().get(0), "listmouseover");
     }
 
     @Test
     public void testOnlistmouseup() {
-        testFireEvent(Event.MOUSEUP, twoColumnOrderingList.getItems().get(0).getItemElement(), "listmouseup");
+        testFireEvent(Event.MOUSEUP, orderingList.advanced().getItems().get(0), "listmouseup");
     }
 
     @Test
     public void testOnmousedown() {
-        testFireEvent(Event.MOUSEDOWN, twoColumnOrderingList.getListAreaElement());
+        testFireEvent(Event.MOUSEDOWN, orderingList.advanced().getListAreaElement());
     }
 
     @Test
     public void testOnmousemove() {
-        testFireEvent(Event.MOUSEMOVE, twoColumnOrderingList.getListAreaElement());
+        testFireEvent(Event.MOUSEMOVE, orderingList.advanced().getListAreaElement());
     }
 
     @Test
     public void testOnmouseout() {
-        testFireEvent(Event.MOUSEOUT, twoColumnOrderingList.getListAreaElement());
+        testFireEvent(Event.MOUSEOUT, orderingList.advanced().getListAreaElement());
     }
 
     @Test
     public void testOnmouseover() {
-        testFireEvent(Event.MOUSEOVER, twoColumnOrderingList.getListAreaElement());
+        testFireEvent(Event.MOUSEOVER, orderingList.advanced().getListAreaElement());
     }
 
     @Test
     public void testOnmouseup() {
-        testFireEvent(Event.MOUSEUP, twoColumnOrderingList.getListAreaElement());
+        testFireEvent(Event.MOUSEUP, orderingList.advanced().getListAreaElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testRendered() {
-        orderingListAttributes.set(OrderingListAttributes.rendered, false);
-        assertNotPresent(twoColumnOrderingList.getRootElement(), "The attribute <rendered> is set to <false>, but it has no effect.");
+        attributes.set(OrderingListAttributes.rendered, false);
+        assertNotPresent(orderingList.advanced().getRootElement(), "The attribute <rendered> is set to <false>, but it has no effect.");
     }
 
     @Test
     @Templates(value = "plain")
     public void testSelectItemClass() {
-        orderingListAttributes.set(OrderingListAttributes.selectItemClass, "metamer-ftest-class");
-        twoColumnOrderingList.selectItemsByIndex(0);
-        assertTrue(twoColumnOrderingList.getSelectedItems().get(0).getItemElement().getAttribute("class").contains("metamer-ftest-class"), "The attribute <selectItemClass> is set to <metamer-ftest-class>, but it has no effect.");
+        attributes.set(OrderingListAttributes.selectItemClass, "metamer-ftest-class");
+        orderingList.select(0);
+        assertTrue(orderingList.advanced().getSelectedItems().get(0).getAttribute("class").contains("metamer-ftest-class"), "The attribute <selectItemClass> is set to <metamer-ftest-class>, but it has no effect.");
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyle() {
-        testStyle(twoColumnOrderingList.getRootElement());
+        testStyle(orderingList.advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyle(twoColumnOrderingList.getRootElement());
+        testStyle(orderingList.advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testUpText() {
         String testedValue = "New text";
-        orderingListAttributes.set(OrderingListAttributes.upText, testedValue);
-        assertEquals(twoColumnOrderingList.getUpButtonElement().getText(), testedValue);
+        attributes.set(OrderingListAttributes.upText, testedValue);
+        assertEquals(orderingList.advanced().getUpButtonElement().getText(), testedValue);
     }
 
     @Test
     @Templates(value = "plain")
     public void testUpTopText() {
         String testedValue = "New text";
-        orderingListAttributes.set(OrderingListAttributes.upTopText, testedValue);
-        assertEquals(twoColumnOrderingList.getTopButtonElement().getText(), testedValue);
+        attributes.set(OrderingListAttributes.upTopText, testedValue);
+        assertEquals(orderingList.advanced().getTopButtonElement().getText(), testedValue);
     }
 
     @Test
     public void testValueChangeListener() {
-        twoColumnOrderingList.selectItemsByIndex(0);
-        twoColumnOrderingList.bottom();
+        orderingList.select(0).putItAfter(ChoicePickerHelper.byIndex().last());
         submit();
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed");
     }

@@ -21,10 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.orderingList;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -32,6 +34,7 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.list.ListComponent;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
 import org.richfaces.tests.page.fragments.impl.list.RichFacesList;
 import org.richfaces.tests.page.fragments.impl.utils.Actions;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
@@ -46,6 +49,12 @@ import org.richfaces.tests.page.fragments.impl.utils.picker.MultipleChoicePicker
  */
 public class RichFacesOrderingList implements OrderingList {
 
+    @Root
+    private WebElement root;
+
+    @Drone
+    private WebDriver driver;
+
     @FindBy(css = "button.rf-ord-dn")
     private WebElement downButtonElement;
     @FindBy(css = "button.rf-ord-up-tp")
@@ -55,16 +64,20 @@ public class RichFacesOrderingList implements OrderingList {
     @FindBy(css = "button.rf-ord-up")
     private WebElement upButtonElement;
 
+    @FindBy(className = "rf-ord-cptn")
+    private WebElement captionElement;
+    @FindBy(css = "thead.rf-ord-lst-hdr > tr.rf-ord-hdr")
+    private WebElement headerElement;
+    @FindBy(className = "rf-ord-lst-scrl")
+    private WebElement listAreaElement;
+
     @FindBy(className = "rf-ord-opt")
     private List<WebElement> items;
     @FindBy(className = "rf-ord-sel")
     private List<WebElement> selectedItems;
 
-    @FindBy(css = "div.rf-ord-lst-scrl > div[id$=Items]")
+    @FindBy(css = "div.rf-ord-lst-scrl [id$=Items]")
     private RichFacesList list;
-
-    @Drone
-    private WebDriver driver;
 
     private final AdvancedInteractions interactions = new AdvancedInteractions();
     private final PuttingSelectedItem puttingSelectedItem = new PuttingSelectedItemImpl();
@@ -229,8 +242,54 @@ public class RichFacesOrderingList implements OrderingList {
 
     public class AdvancedInteractions {
 
-        public ListComponent getList() {
+        public WebElement getBottomButtonElement() {
+            return bottomButtonElement;
+        }
+
+        public WebElement getCaptionElement() {
+            return captionElement;
+        }
+
+        public WebElement getDownButtonElement() {
+            return downButtonElement;
+        }
+
+        public WebElement getHeaderElement() {
+            return headerElement;
+        }
+
+        /**
+         * @return items as a WebElements
+         */
+        public List<WebElement> getItems() {
+            return Collections.unmodifiableList(items);
+        }
+
+        /**
+         * @return items as a ListComponent
+         */
+        public ListComponent<? extends ListItem> getList() {
             return list;
+        }
+
+        public WebElement getListAreaElement() {
+            return listAreaElement;
+        }
+
+        public WebElement getRootElement() {
+            return root;
+        }
+
+        public List<WebElement> getSelectedItems() {
+            return Collections.unmodifiableList(selectedItems);
+        }
+
+        public WebElement getTopButtonElement() {
+            return topButtonElement;
+        }
+
+        public WebElement getUpButtonElement() {
+            return upButtonElement;
         }
 
         public OrderingInteraction select(String visibleText, String... otherTexts) {

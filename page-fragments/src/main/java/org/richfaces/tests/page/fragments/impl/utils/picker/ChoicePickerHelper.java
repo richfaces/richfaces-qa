@@ -68,6 +68,37 @@ public final class ChoicePickerHelper {
         private ByIndexChoicePicker() {
         }
 
+        public ByIndexChoicePicker beforeLast(final int positionsBeforeLast) {
+            commands.add(new FindCommand() {
+
+                @Override
+                public boolean equals(Object obj) {
+                    if (obj instanceof FindCommand) {
+                        FindCommand cmd = (FindCommand) obj;
+                        return cmd.hashCode() == this.hashCode();
+                    }
+                    return FALSE;
+                }
+
+                @Override
+                public WebElement find(List<WebElement> list) {
+                    return list.get(list.size() - 1 - positionsBeforeLast);
+                }
+
+                @Override
+                public int hashCode() {
+                    return Integer.MAX_VALUE - positionsBeforeLast;
+                }
+
+                @Override
+                public String toString() {
+                    return "lastIndex";
+                }
+
+            });
+            return this;
+        }
+
         public ByIndexChoicePicker first() {
             commands.add(new FindCommand() {
 
@@ -129,34 +160,7 @@ public final class ChoicePickerHelper {
         }
 
         public ByIndexChoicePicker last() {
-            commands.add(new FindCommand() {
-
-                @Override
-                public boolean equals(Object obj) {
-                    if (obj instanceof FindCommand) {
-                        FindCommand cmd = (FindCommand) obj;
-                        return cmd.hashCode() == this.hashCode();
-                    }
-                    return FALSE;
-                }
-
-                @Override
-                public WebElement find(List<WebElement> list) {
-                    return list.get(list.size() - 1);
-                }
-
-                @Override
-                public int hashCode() {
-                    return Integer.MAX_VALUE;
-                }
-
-                @Override
-                public String toString() {
-                    return "lastIndex";
-                }
-
-            });
-            return this;
+            return beforeLast(0);
         }
 
         @Override

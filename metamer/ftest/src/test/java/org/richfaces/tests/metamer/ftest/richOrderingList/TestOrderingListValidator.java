@@ -22,7 +22,6 @@
 package org.richfaces.tests.metamer.ftest.richOrderingList;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.orderingListAttributes;
 
 import java.net.URL;
 
@@ -53,12 +52,12 @@ public class TestOrderingListValidator extends AbstractOrderingListTest {
         Assert.assertTrue(message.isVisible(), "Validator message should be visible");
         Assert.assertEquals(message.getDetail(), PhoenixFirstValidator.VALIDATOR_ERROR_MSG);
 
-        orderingListAttributes.set(OrderingListAttributes.validatorMessage, customMessage);
+        attributes.set(OrderingListAttributes.validatorMessage, customMessage);
         submit();
         Assert.assertTrue(message.isVisible(), "Validator message should be visible");
         Assert.assertEquals(message.getDetail(), customMessage);
 
-        orderingList.selectItemsByIndex(PHOENIX_INDEX).top();
+        orderingList.select(PHOENIX_INDEX).putItBefore(0);
         submit();
         Assert.assertFalse(message.isVisible(), "Validator message should not be visible");
     }

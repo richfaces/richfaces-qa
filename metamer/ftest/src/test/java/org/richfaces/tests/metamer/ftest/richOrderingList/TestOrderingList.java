@@ -23,10 +23,10 @@ package org.richfaces.tests.metamer.ftest.richOrderingList;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.annotations.Test;
 
 /**
@@ -46,44 +46,44 @@ public class TestOrderingList extends AbstractOrderingListTest {
 
     @Test
     public void testInit() {
-        assertTrue(twoColumnOrderingList.isVisible(), "The ordering list should be visible.");
-        assertButtonDisabled(twoColumnOrderingList.getBottomButtonElement(), "The button [bottom] should be disabled.");
-        assertButtonDisabled(twoColumnOrderingList.getDownButtonElement(), "The button [down] should be disabled.");
-        assertButtonDisabled(twoColumnOrderingList.getTopButtonElement(), "The button [top] should be disabled.");
-        assertButtonDisabled(twoColumnOrderingList.getUpButtonElement(), "The button [up] should be disabled.");
+        assertVisible(orderingList.advanced().getRootElement(), "The ordering list should be visible.");
+        assertButtonDisabled(orderingList.advanced().getBottomButtonElement(), "The button [bottom] should be disabled.");
+        assertButtonDisabled(orderingList.advanced().getDownButtonElement(), "The button [down] should be disabled.");
+        assertButtonDisabled(orderingList.advanced().getTopButtonElement(), "The button [top] should be disabled.");
+        assertButtonDisabled(orderingList.advanced().getUpButtonElement(), "The button [up] should be disabled.");
     }
 
     @Test
     public void testSelectFirst() {
-        twoColumnOrderingList.selectItemsByIndex(0);
+        orderingList.select(0);
         checkButtonsStateTop();
     }
 
     @Test
     public void testSelectLast() {
-        twoColumnOrderingList.selectItemsByIndex(twoColumnOrderingList.getItems().size() - 1);
+        orderingList.select(ChoicePickerHelper.byIndex().last());
         checkButtonsStateBottom();
     }
 
     @Test
     public void testSelectMiddle() {
-        twoColumnOrderingList.selectItemsByIndex(2);
+        orderingList.select(2);
         checkButtonsStateMiddle();
     }
 
     @Test
     public void testSubmit() {
-        String firstBefore = twoColumnOrderingList.getItems().get(0).getText();
-        String secondBefore = twoColumnOrderingList.getItems().get(1).getText();
-        twoColumnOrderingList.selectItemsByIndex(1).top();
+        String firstBefore = orderingList.advanced().getItems().get(0).getText();
+        String secondBefore = orderingList.advanced().getItems().get(1).getText();
+        orderingList.select(1).putItBefore(0);
         submit();
-        String firstAfter = twoColumnOrderingList.getItems().get(0).getText();
-        String secondAfter = twoColumnOrderingList.getItems().get(1).getText();
+        String firstAfter = orderingList.advanced().getItems().get(0).getText();
+        String secondAfter = orderingList.advanced().getItems().get(1).getText();
         assertEquals(firstAfter, secondBefore, "After submitting the ordering list doesn't preserve the chosen order.");
         assertEquals(firstBefore, secondAfter, "After submitting the ordering list doesn't preserve the chosen order.");
         submit();
-        firstAfter = twoColumnOrderingList.getItems().get(0).getText();
-        secondAfter = twoColumnOrderingList.getItems().get(1).getText();
+        firstAfter = orderingList.advanced().getItems().get(0).getText();
+        secondAfter = orderingList.advanced().getItems().get(1).getText();
         assertEquals(firstAfter, secondBefore, "After submitting the ordering list doesn't preserve the chosen order.");
         assertEquals(firstBefore, secondAfter, "After submitting the ordering list doesn't preserve the chosen order.");
     }
