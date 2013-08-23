@@ -55,6 +55,10 @@ public class TestOrderingListFragment extends AbstractWebDriverTest {
         return result;
     }
 
+    private String getItemText(int index) {
+        return orderingList.advanced().getList().getItem(index).getText();
+    }
+
     private List<String> getLastXItemsNames(int x) {
         List<String> result = Lists.newArrayList();
         int fromIndex = LIST_SIZE - x;
@@ -63,10 +67,6 @@ public class TestOrderingListFragment extends AbstractWebDriverTest {
             result.add(getItemText(i));
         }
         return result;
-    }
-
-    private String getItemText(int index) {
-        return orderingList.advanced().getList().getItem(index).getText();
     }
 
     @Override
@@ -91,7 +91,7 @@ public class TestOrderingListFragment extends AbstractWebDriverTest {
         List<String> itemNamesBefore = getLastXItemsNames(3);
         List<String> itemNamesExpected = Lists.newArrayList(itemNamesBefore.get(1), itemNamesBefore.get(2), itemNamesBefore.get(0));
         orderingList
-            .select(ChoicePickerHelper.byIndex().index(LIST_SIZE - 3))
+            .select(ChoicePickerHelper.byIndex().beforeLast(2))
             .putItAfter(ChoicePickerHelper.byIndex().last());
         assertEquals(getLastXItemsNames(3), itemNamesExpected);
     }

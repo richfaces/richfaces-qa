@@ -21,10 +21,8 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richOrderingList;
 
-import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.ConverterBean;
 import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
-import org.richfaces.tests.page.fragments.impl.list.internal.ordering.RichFacesSimpleOrderingList;
 import org.testng.annotations.Test;
 
 /**
@@ -32,8 +30,6 @@ import org.testng.annotations.Test;
  */
 public class TestOrderingListConverter extends AbstractConverterTest {
 
-    @FindBy(css = "[id$=convertableInput]")
-    private RichFacesSimpleOrderingList input;
     private static final String VALUE = "VALUE";
 
     @Override

@@ -25,6 +25,7 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.annotations.Test;
 
 /**
@@ -43,49 +44,49 @@ public class TestOrderingListMoving extends AbstractOrderingListTest {
 
     @Test
     public void testMoveFirstBottom() {
-        twoColumnOrderingList.selectItemsByIndex(0);
+        orderingList.select(0);
         moveSelectedToBottom();
     }
 
     @Test
     public void testMoveFirstDown() {
-        twoColumnOrderingList.selectItemsByIndex(0);
+        orderingList.select(0);
         moveSelectedDown();
     }
 
     @Test
     public void testMoveLastTop() {
-        twoColumnOrderingList.selectItemsByIndex(twoColumnOrderingList.getItems().size() - 1);
+        orderingList.select(ChoicePickerHelper.byIndex().last());
         moveSelectedToTop();
     }
 
     @Test
     public void testMoveLastUp() {
-        twoColumnOrderingList.selectItemsByIndex(twoColumnOrderingList.getItems().size() - 1);
+        orderingList.select(ChoicePickerHelper.byIndex().last());
         moveSelectedUp();
     }
 
     @Test
     public void testMoveMiddleBottom() {
-        twoColumnOrderingList.selectItemsByIndex(2);
+        orderingList.select(2);
         moveSelectedToBottom();
     }
 
     @Test
     public void testMoveMiddleDown() {
-        twoColumnOrderingList.selectItemsByIndex(2);
+        orderingList.select(2);
         moveSelectedDown();
     }
 
     @Test
     public void testMoveMiddleTop() {
-        twoColumnOrderingList.selectItemsByIndex(2);
+        orderingList.select(2);
         moveSelectedToTop();
     }
 
     @Test
     public void testMoveMiddleUp() {
-        twoColumnOrderingList.selectItemsByIndex(2);
+        orderingList.select(2);
         moveSelectedUp();
     }
 }

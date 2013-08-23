@@ -22,15 +22,14 @@
 package org.richfaces.tests.metamer.ftest.richOrderingList;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.orderingListAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
+
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
-
 import org.testng.annotations.Test;
 
 /**
@@ -54,11 +53,11 @@ public class TestOrderingListRequired extends AbstractOrderingListTest {
 
     @Test
     public void testRequired() {
-        orderingListAttributes.set(OrderingListAttributes.required, Boolean.FALSE);
+        attributes.set(OrderingListAttributes.required, Boolean.FALSE);
         submit();
         assertNotVisible(message, "Message should not be visible.");
 
-        orderingListAttributes.set(OrderingListAttributes.required, Boolean.TRUE);
+        attributes.set(OrderingListAttributes.required, Boolean.TRUE);
         submit();
         assertVisible(message, "Message should be visible.");
         assertTrue(message.getDetail().endsWith(DEFAULT_REQUIRED_MSG), "Detail should end with '" + DEFAULT_REQUIRED_MSG + "'.");
@@ -67,8 +66,8 @@ public class TestOrderingListRequired extends AbstractOrderingListTest {
     @Test
     public void testRequiredMessage() {
         String requiredMessage = "Custom required message.";
-        orderingListAttributes.set(OrderingListAttributes.required, Boolean.TRUE);
-        orderingListAttributes.set(OrderingListAttributes.requiredMessage, requiredMessage);
+        attributes.set(OrderingListAttributes.required, Boolean.TRUE);
+        attributes.set(OrderingListAttributes.requiredMessage, requiredMessage);
         submit();
         assertVisible(message, "Message should be visible.");
         assertEquals(message.getDetail(), requiredMessage);
