@@ -19,32 +19,28 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.list;
+package org.richfaces.tests.page.fragments.impl.orderingList;
 
-import org.jboss.arquillian.graphene.GrapheneElement;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
-import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
 
 /**
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class RichFacesListItem implements ListItem {
+public interface SelectableListItem extends ListItem {
 
-    @Root
-    private WebElement root;
+    boolean isSelected();
 
-    @Override
-    public GrapheneElement getRoot() {
-        return new GrapheneElement(root);
-    }
+    /**
+     * Selects item without deselect others.
+     */
+    void select();
 
-    @Override
-    public String getText() {
-        return root.getText();
-    }
+    /**
+     * Select item and deselect other items depending on @deselectOthers.
+     * @param deselectOthers if true other items will be unselected.
+     */
+    void select(boolean deselectOthers);
 
-    @Override
-    public String toString() {
-        return getText();
-    }
+    void deselect();
 }

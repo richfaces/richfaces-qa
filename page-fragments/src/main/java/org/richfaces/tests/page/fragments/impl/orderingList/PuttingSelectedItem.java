@@ -34,14 +34,14 @@ public interface PuttingSelectedItem {
      *
      * @param index index of the item
      */
-    void putItBefore(int index);
+    OrderingList putItBefore(int index);
 
     /**
      * Puts previously selected item before another item which text matches @match.
      *
      * @param match text to match
      */
-    void putItBefore(String match);
+    OrderingList putItBefore(String match);
 
     /**
      * Puts previously selected item before another item picked by @picker.
@@ -50,21 +50,21 @@ public interface PuttingSelectedItem {
      * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByIndexChoicePicker
      * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByVisibleTextChoicePicker
      */
-    void putItBefore(ChoicePicker picker);
+    OrderingList putItBefore(ChoicePicker picker);
 
     /**
      * Puts previously selected item after another item at @index.
      *
      * @param index index of the item
      */
-    void putItAfter(int index);
+    OrderingList putItAfter(int index);
 
     /**
      * Puts previously selected item after another item which text matches @match.
      *
      * @param match text to match
      */
-    void putItAfter(String match);
+    OrderingList putItAfter(String match);
 
     /**
      * Puts previously selected item after another item picked by @picker.
@@ -73,5 +73,5 @@ public interface PuttingSelectedItem {
      * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByIndexChoicePicker
      * @see org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.ByVisibleTextChoicePicker
      */
-    void putItAfter(ChoicePicker picker);
+    OrderingList putItAfter(ChoicePicker picker);
 }
