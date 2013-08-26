@@ -92,7 +92,7 @@ public final class ChoicePickerHelper {
 
                 @Override
                 public String toString() {
-                    return "lastIndex";
+                    return "beforeLast(" + positionsBeforeLast + ")";
                 }
 
             });
