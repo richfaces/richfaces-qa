@@ -19,50 +19,41 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.metamer.ftest.richPickList;
+package org.richfaces.tests.page.fragments.impl.pickList;
 
-import org.openqa.selenium.support.FindBy;
-import org.richfaces.tests.metamer.bean.ConverterBean;
-import org.richfaces.tests.metamer.ftest.abstractions.converter.AbstractConverterTest;
-import org.richfaces.tests.page.fragments.impl.pickList.RichFacesPickList;
-import org.testng.annotations.Test;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
+import org.richfaces.tests.page.fragments.impl.utils.picker.MultipleChoicePicker;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestPickListConverter extends AbstractConverterTest {
+public interface PickList {
 
-    @FindBy(css = "[id$=convertableInput]")
-    private RichFacesPickList input;
-    private static final String VALUE = "VALUE";
+    /**
+     * Picks and adds value from source list to target list.
+     * @param picker
+     */
+    PickList add(ChoicePicker picker);
 
-    @Override
-    protected String badValue() {
-        return VALUE;
-    }
+    PickList add(String match);
 
-    @Override
-    protected String outputForEmptyValue() {
-        return ConverterBean.DEFAULT_VALUE;
-    }
+    PickList add(int index);
 
-    @Override
-    public String getComponentName() {
-        return "richPickList";
-    }
+    PickList addMultiple(MultipleChoicePicker picker);
 
-    @Override
-    protected void setBadValue() {
-        input.add(VALUE);
-    }
+    PickList addAll();
 
-    @Test
-    public void testConverter() {
-        checkConverter();
-    }
+    /**
+     * Picks and removes value from target list.
+     * @param picker
+     */
+    PickList remove(ChoicePicker picker);
 
-    @Test
-    public void testConverterMessage() {
-        checkConverterMessage();
-    }
+    PickList remove(String match);
+
+    PickList remove(int index);
+
+    PickList removeMultiple(MultipleChoicePicker picker);
+
+    PickList removeAll();
 }

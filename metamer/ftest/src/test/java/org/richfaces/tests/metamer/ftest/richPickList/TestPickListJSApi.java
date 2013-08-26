@@ -24,11 +24,12 @@ package org.richfaces.tests.metamer.ftest.richPickList;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.page.fragments.impl.input.TextInputComponentImpl;
-import org.richfaces.tests.page.fragments.impl.list.internal.pick.RichFacesSimplePickList;
+import org.richfaces.tests.page.fragments.impl.pickList.RichFacesPickList;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -52,7 +53,7 @@ public class TestPickListJSApi extends AbstractWebDriverTest {
     @FindBy(css = "input[id$=value]")
     private TextInputComponentImpl value;
     @FindBy(css = "[id$=pickList]")
-    private RichFacesSimplePickList pickList;
+    private RichFacesPickList pickList;
 
     @Override
     public URL getTestUrl() {
@@ -62,39 +63,38 @@ public class TestPickListJSApi extends AbstractWebDriverTest {
     @Test
     public void testAdd() {
         addButton.click();
-        Assert.assertEquals(pickList.target().getItems().size(), 0);
-        pickList.source().selectItemsByIndex(0, 1);
-        String selectedItems = pickList.source().getSelectedItems().toString();
+        Assert.assertTrue(pickList.advanced().getTargetList().isEmpty(), "Target list should be empty.");
+        String text = pickList.advanced().getSourceList().getItem(0).getText();
+        pickList.advanced().getSourceList().getItem(0).select();
         addButton.click();
-        Assert.assertEquals(pickList.target().getItems().size(), 2);
-        Assert.assertEquals(pickList.target().toString(), selectedItems);
+        Assert.assertEquals(pickList.advanced().getTargetList().size(), 1);
+        Assert.assertEquals(pickList.advanced().getTargetList().getItem(0).getText(), text);
     }
 
     @Test
     public void testAddAll() {
-        int size = pickList.source().getItems().size();
+        int size = pickList.advanced().getSourceList().size();
         addAllButton.click();
-        Assert.assertEquals(pickList.target().getItems().size(), size);
-
+        Assert.assertEquals(pickList.advanced().getTargetList().size(), size);
     }
 
     @Test
     public void testRemove() {
         addAllButton.click();
-        pickList.target().selectItemsByIndex(0);
-        String selectedItems = pickList.target().getSelectedItems().toString();
+        String text = pickList.advanced().getTargetList().getItem(0).getText();
+        pickList.advanced().getTargetList().getItem(0).select();
         removeButton.click();
-        Assert.assertEquals(pickList.source().getItems().size(), 1);
-        Assert.assertEquals(pickList.source().getItems().toString(), selectedItems);
+        Assert.assertEquals(pickList.advanced().getSourceList().size(), 1);
+        Assert.assertEquals(pickList.advanced().getSourceList().getItem(0).getText(), text);
     }
 
     @Test
     public void testRemoveAll() {
-        int size = pickList.source().getItems().size();
+        int size = pickList.advanced().getSourceList().size();
         testAddAll();
         removeAllButton.click();
-        Assert.assertEquals(pickList.source().getItems().size(), size);
-        Assert.assertEquals(pickList.target().getItems().size(), 0);
+        Assert.assertEquals(pickList.advanced().getSourceList().size(), size);
+        Assert.assertEquals(pickList.advanced().getTargetList().size(), 0);
     }
 
     @Test
@@ -105,14 +105,14 @@ public class TestPickListJSApi extends AbstractWebDriverTest {
         addAllButton.click();
         getTargetListLength.click();
         size = value.getIntValue();
-        Assert.assertEquals(size, pickList.target().getItems().size());
+        Assert.assertEquals(size, pickList.advanced().getTargetList().size());
     }
 
     @Test
     public void testSourceList() {
         getSourceListLength.click();
         int size = value.getIntValue();
-        Assert.assertEquals(size, pickList.source().getItems().size());
+        Assert.assertEquals(size, pickList.advanced().getSourceList().size());
         addAllButton.click();
         getSourceListLength.click();
         size = value.getIntValue();
