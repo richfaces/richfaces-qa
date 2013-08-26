@@ -27,12 +27,17 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
+
 import java.net.URL;
+import java.util.List;
 
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.ajocado.dom.Event;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -46,14 +51,14 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
-import org.richfaces.tests.page.fragments.impl.list.internal.common.SelectableListItem;
-import org.richfaces.tests.page.fragments.impl.list.internal.pick.RichFacesSimplePickList;
-import org.richfaces.tests.page.fragments.impl.list.internal.pick.RichFacesSimplePickListItem;
+import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.list.ListItem;
 import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
+import org.richfaces.tests.page.fragments.impl.orderingList.OrderingList;
+import org.richfaces.tests.page.fragments.impl.pickList.RichFacesPickList;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import com.google.common.base.Predicate;
 
 /**
  * Test for rich:pickList on page faces/components/richPickList/simple.xhtml.
@@ -70,7 +75,7 @@ public class TestPickList extends AbstractWebDriverTest {
     @FindBy(css = "span[id$=output]")
     private WebElement output;
     @FindBy(css = "[id$=pickList]")
-    private RichFacesSimplePickList pickList;
+    private RichFacesPickList pickList;
     @FindBy(css = "[id$=msg]")
     private RichFacesMessage message;
     @Page
@@ -92,8 +97,8 @@ public class TestPickList extends AbstractWebDriverTest {
     @Test
     public void testAddAllBtn() {
         pickList.addAll();// fragment contains checking
-        assertEquals(pickList.source().getItems().size(), 0);
-        assertEquals(pickList.target().getItems().size(), 54);
+        assertEquals(pickList.advanced().getSourceList().getItems().size(), 0);
+        assertEquals(pickList.advanced().getTargetList().getItems().size(), 54);
     }
 
     @Test
@@ -101,7 +106,7 @@ public class TestPickList extends AbstractWebDriverTest {
     public void testAddAllText() {
         String label = "xxx";
         pickListAttributes.set(PickListAttributes.addAllText, label);
-        assertEquals(pickList.getAddAllButtonElement().getText(), label);
+        assertEquals(pickList.advanced().getAddAllButtonElement().getText(), label);
     }
 
     @Test
@@ -109,48 +114,48 @@ public class TestPickList extends AbstractWebDriverTest {
     public void testAddText() {
         String label = "xxx";
         pickListAttributes.set(PickListAttributes.addText, label);
-        assertEquals(pickList.getAddButtonElement().getText(), label);
+        assertEquals(pickList.advanced().getAddButtonElement().getText(), label);
     }
 
     @Test
     public void testDisableAddBtn() {
-        assertButtonDisabled(pickList.getAddButtonElement());
-        pickList.source().selectItemsByIndex(1, 2);
-        assertButtonEnabled(pickList.getAddButtonElement());
-        pickList.source().getItems().deselectAll();
-        assertButtonDisabled(pickList.getAddButtonElement());
+        assertButtonDisabled(pickList.advanced().getAddButtonElement());
+        pickList.advanced().getSourceList().getItem(0).select();// select
+        assertButtonEnabled(pickList.advanced().getAddButtonElement());
+        pickList.add(0);// no selected item in source list >>> button disabled
+        assertButtonDisabled(pickList.advanced().getAddButtonElement());
         pickList.addAll();
-        assertButtonDisabled(pickList.getAddButtonElement());
+        assertButtonDisabled(pickList.advanced().getAddButtonElement());
     }
 
     @Test
     public void testDisableRemoveBtn() {
-        assertButtonDisabled(pickList.getAddButtonElement());
+        assertButtonDisabled(pickList.advanced().getRemoveButtonElement());
         pickList.addAll();
-        pickList.target().selectItemsByIndex(1, 2);
-        assertButtonEnabled(pickList.getRemoveButtonElement());
-        pickList.target().getItems().deselectAll();
-        assertButtonDisabled(pickList.getAddButtonElement());
+        pickList.advanced().getTargetList().getItem(0).select();
+        assertButtonEnabled(pickList.advanced().getRemoveButtonElement());
+        pickList.remove(0);// no selected item in target list >>> button disabled
+        assertButtonDisabled(pickList.advanced().getRemoveButtonElement());
         pickList.removeAll();
-        assertButtonDisabled(pickList.getAddButtonElement());
+        assertButtonDisabled(pickList.advanced().getRemoveButtonElement());
     }
 
     @Test
     public void testDisabled() {
         String disabledOptionClass = "rf-pick-opt-dis";
-        pickList.source().selectItemsByIndex(0);
+        pickList.advanced().getSourceList().getItem(0).select();
 
         pickListAttributes.set(PickListAttributes.disabled, Boolean.TRUE);
-        assertButtonDisabled(pickList.getAddAllButtonElement());
-        assertButtonDisabled(pickList.getAddButtonElement());
-        assertButtonDisabled(pickList.getRemoveAllButtonElement());
-        assertButtonDisabled(pickList.getRemoveButtonElement());
-        for (SelectableListItem item : pickList.source().getItems()) {
-            assertTrue(item.getItemElement().getAttribute("class").contains(disabledOptionClass),
+        assertButtonDisabled(pickList.advanced().getAddAllButtonElement());
+        assertButtonDisabled(pickList.advanced().getAddButtonElement());
+        assertButtonDisabled(pickList.advanced().getRemoveAllButtonElement());
+        assertButtonDisabled(pickList.advanced().getRemoveButtonElement());
+        for (ListItem item : pickList.advanced().getSourceList().getItems()) {
+            assertTrue(item.getRoot().getAttribute("class").contains(disabledOptionClass),
                 "Item should be disabled.");
         }
         try {
-            pickList.source().selectItemsByIndex(1);
+            pickList.add(0);
         } catch (TimeoutException e) {
             return;
         }
@@ -161,7 +166,7 @@ public class TestPickList extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testDisabledClass() {
         pickListAttributes.set(PickListAttributes.disabled, Boolean.TRUE);
-        testStyleClass(pickList.getRootElement(), BasicAttributes.disabledClass);
+        testStyleClass(pickList.advanced().getRoot(), BasicAttributes.disabledClass);
     }
 
     @Test
@@ -170,7 +175,7 @@ public class TestPickList extends AbstractWebDriverTest {
         String label = "xxx";
         pickListAttributes.set(PickListAttributes.downBottomText, label);
         pickListAttributes.set(PickListAttributes.orderable, Boolean.TRUE);
-        assertEquals(pickList.target().getBottomButtonElement().getText(), label);
+        assertEquals(pickList.advanced().getBottomButtonElement().getText(), label);
     }
 
     @Test
@@ -179,21 +184,19 @@ public class TestPickList extends AbstractWebDriverTest {
         String label = "xxx";
         pickListAttributes.set(PickListAttributes.downText, label);
         pickListAttributes.set(PickListAttributes.orderable, Boolean.TRUE);
-        assertEquals(pickList.target().getDownButtonElement().getText(), label);
+        assertEquals(pickList.advanced().getDownButtonElement().getText(), label);
     }
 
     @Test
     public void testImmediate() {
         pickListAttributes.set(PickListAttributes.immediate, Boolean.FALSE);
-        pickList.source().selectItemsByIndex(0);
-        pickList.add();
+        pickList.add(0);
         submitAjax();
         page.assertPhases(PhaseId.ANY_PHASE);
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: [] -> [Alabama]");
 
         pickListAttributes.set(PickListAttributes.immediate, Boolean.TRUE);
-        pickList.source().selectItemsByIndex(0);
-        pickList.add();
+        pickList.add(0);
         submitAjax();
         page.assertPhases(PhaseId.ANY_PHASE);
         page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "value changed: [Alabama] -> [Alabama, Alaska]");
@@ -204,8 +207,8 @@ public class TestPickList extends AbstractWebDriverTest {
     public void testItemClass() {
         String testedClass = "metamer-ftest-class";
         pickListAttributes.set(PickListAttributes.itemClass, "metamer-ftest-class");
-        for (SelectableListItem li : pickList.source().getItems()) {
-            assertTrue(li.getItemElement().getAttribute("class").contains(testedClass), "Item @class should contain "
+        for (ListItem li : pickList.advanced().getSourceList().getItems()) {
+            assertTrue(li.getRoot().getAttribute("class").contains(testedClass), "Item @class should contain "
                 + testedClass);
         }
     }
@@ -216,18 +219,17 @@ public class TestPickList extends AbstractWebDriverTest {
      */
     @Test
     public void testKeepSelected() {
-        pickList.source().selectItemsByIndex(0);
-        String textSource = pickList.source().getSelectedItems().get(0).getText();
-        pickList.add();
-        RichFacesSimplePickListItem item = pickList.target().getSelectedItems().get(0);
-        assertTrue(item.isSelected());
+        String textSource = pickList.advanced().getSourceList().getItem(0).getText();
+        pickList.add(0);
+        ListItem item = pickList.advanced().getTargetList().getItem(0);
+        assertTrue(item.getRoot().getAttribute("class").contains("rf-pick-sel"));
         assertEquals(item.getText(), textSource);
 
-        pickList.remove();
-        item = pickList.source().getSelectedItems().get(0);
-        assertTrue(item.isSelected());
+        pickList.remove(0);
+        item = pickList.advanced().getSourceList().getItem(ChoicePickerHelper.byIndex().last());
+        assertTrue(item.getRoot().getAttribute("class").contains("rf-pick-sel"));
         assertEquals(item.getText(), textSource);
-        assertEquals(item.getIndex(), pickList.source().getItems().size() - 1, "Index of removed item.");
+        assertEquals(Utils.getIndexOfElement(((GrapheneElement) item.getRoot()).getWrappedElement()), pickList.advanced().getSourceList().size() - 1, "Index of removed item.");
     }
 
     @Test
@@ -235,7 +237,7 @@ public class TestPickList extends AbstractWebDriverTest {
         int testedValue = 600;
         int tolerance = 10;
         pickListAttributes.set(PickListAttributes.listHeight, testedValue);
-        assertEquals(Integer.valueOf(pickList.target().getListAreaElement().getCssValue("height").replace("px", "")),
+        assertEquals(Integer.valueOf(pickList.advanced().getSourceListAreaElement().getCssValue("height").replace("px", "")),
             testedValue, tolerance);
     }
 
@@ -244,7 +246,7 @@ public class TestPickList extends AbstractWebDriverTest {
         int testedValue = 600;
         int tolerance = 10;
         pickListAttributes.set(PickListAttributes.listWidth, testedValue);
-        assertEquals(Integer.valueOf(pickList.target().getListAreaElement().getCssValue("width").replace("px", "")),
+        assertEquals(Integer.valueOf(pickList.advanced().getSourceListAreaElement().getCssValue("width").replace("px", "")),
             testedValue, tolerance);
     }
 
@@ -255,7 +257,7 @@ public class TestPickList extends AbstractWebDriverTest {
         pickListAttributes.set(PickListAttributes.maxListHeight, testedValue);
         pickListAttributes.set(PickListAttributes.listHeight, "");
         assertEquals(
-            Integer.valueOf(pickList.target().getListAreaElement().getCssValue("max-height").replace("px", "")),
+            Integer.valueOf(pickList.advanced().getSourceListAreaElement().getCssValue("max-height").replace("px", "")),
             testedValue, tolerance);
     }
 
@@ -266,7 +268,7 @@ public class TestPickList extends AbstractWebDriverTest {
         pickListAttributes.set(PickListAttributes.listHeight, "");
         pickListAttributes.set(PickListAttributes.minListHeight, testedValue);
         assertEquals(
-            Integer.valueOf(pickList.target().getListAreaElement().getCssValue("min-height").replace("px", "")),
+            Integer.valueOf(pickList.advanced().getSourceListAreaElement().getCssValue("min-height").replace("px", "")),
             testedValue, tolerance);
     }
 
@@ -275,8 +277,7 @@ public class TestPickList extends AbstractWebDriverTest {
         testFireEvent("additems", new Action() {
             @Override
             public void perform() {
-                pickList.source().selectItemsByIndex(0);
-                pickList.add();
+                pickList.add(0);
             }
         });
     }
@@ -285,77 +286,77 @@ public class TestPickList extends AbstractWebDriverTest {
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     public void testOnblur() {
         testFireEvent(pickListAttributes, PickListAttributes.onblur,
-            new Actions(driver).click(pickList.getRootElement()).click(page.getRequestTimeElement()).build());
+            new Actions(driver).click(pickList.advanced().getRoot()).click(page.getRequestTimeElement()).build());
     }
 
     @Test
     public void testOnchange() {
-        testFireEvent(Event.CHANGE, pickList.getRootElement(), "change");
+        testFireEvent(Event.CHANGE, pickList.advanced().getRoot(), "change");
     }
 
     @Test
     public void testOnclick() {
-        testFireEvent(Event.CLICK, pickList.getRootElement());
+        testFireEvent(Event.CLICK, pickList.advanced().getRoot());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOndblclick() {
-        testFireEvent(Event.DBLCLICK, pickList.getRootElement());
+        testFireEvent(Event.DBLCLICK, pickList.advanced().getRoot());
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     public void testOnfocus() {
-        testFireEvent(Event.FOCUS, pickList.getRootElement());
+        testFireEvent(Event.FOCUS, pickList.advanced().getRoot());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeydown() {
-        testFireEvent(Event.KEYDOWN, pickList.getRootElement());
+        testFireEvent(Event.KEYDOWN, pickList.advanced().getRoot());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeypress() {
-        testFireEvent(Event.KEYPRESS, pickList.getRootElement());
+        testFireEvent(Event.KEYPRESS, pickList.advanced().getRoot());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeyup() {
-        testFireEvent(Event.KEYUP, pickList.getRootElement());
+        testFireEvent(Event.KEYUP, pickList.advanced().getRoot());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousedown() {
-        testFireEvent(Event.MOUSEDOWN, pickList.getRootElement());
+        testFireEvent(Event.MOUSEDOWN, pickList.advanced().getRoot());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousemove() {
-        testFireEvent(Event.MOUSEMOVE, pickList.getRootElement());
+        testFireEvent(Event.MOUSEMOVE, pickList.advanced().getRoot());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseout() {
-        testFireEvent(Event.MOUSEOUT, pickList.getRootElement());
+        testFireEvent(Event.MOUSEOUT, pickList.advanced().getRoot());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseover() {
-        testFireEvent(Event.MOUSEOVER, pickList.getRootElement());
+        testFireEvent(Event.MOUSEOVER, pickList.advanced().getRoot());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseup() {
-        testFireEvent(Event.MOUSEUP, pickList.getRootElement());
+        testFireEvent(Event.MOUSEUP, pickList.advanced().getRoot());
     }
 
     @Test
@@ -363,9 +364,8 @@ public class TestPickList extends AbstractWebDriverTest {
         testFireEvent("removeitems", new Action() {
             @Override
             public void perform() {
-                pickList.addAll();
-                pickList.target().selectItemsByIndex(1);
-                pickList.remove();
+                pickList.add(0);
+                pickList.remove(0);
             }
         });
     }
@@ -376,9 +376,7 @@ public class TestPickList extends AbstractWebDriverTest {
         testFireEvent(pickListAttributes, PickListAttributes.onsourceblur, new Action() {
             @Override
             public void perform() {
-                pickList.source().selectItemsByIndex(0);
-                pickList.add();
-                pickList.target().selectItemsByIndex(0);
+                pickList.add(0).remove(0);// this will select the item from target list >>> blur
             }
         });
     }
@@ -387,68 +385,68 @@ public class TestPickList extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testOnsourceclick() {
         testFireEvent(pickListAttributes, PickListAttributes.onsourceclick,
-            new Actions(driver).click(pickList.source().getListAreaElement()).build());
+            new Actions(driver).click(pickList.advanced().getSourceListAreaElement()).build());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnsourcedblclick() {
-        testFireEvent(Event.DBLCLICK, pickList.source().getListAreaElement(), "sourcedblclick");
+        testFireEvent(Event.DBLCLICK, pickList.advanced().getSourceListAreaElement(), "sourcedblclick");
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11322")
     public void testOnsourcefocus() {
         testFireEvent(pickListAttributes, PickListAttributes.onsourcefocus,
-            new Actions(driver).click(pickList.source().getListAreaElement()).build());
+            new Actions(driver).click(pickList.advanced().getSourceListAreaElement()).build());
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     public void testOnsourcekeydown() {
-        testFireEvent(Event.KEYDOWN, pickList.source().getListAreaElement(), "sourcekeydown");
+        testFireEvent(Event.KEYDOWN, pickList.advanced().getSourceListAreaElement(), "sourcekeydown");
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     public void testOnsourcekeypress() {
-        testFireEvent(Event.KEYPRESS, pickList.source().getListAreaElement(), "sourcekeypress");
+        testFireEvent(Event.KEYPRESS, pickList.advanced().getSourceListAreaElement(), "sourcekeypress");
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     public void testOnsourcekeyup() {
-        testFireEvent(Event.KEYUP, pickList.source().getListAreaElement(), "sourcekeyup");
+        testFireEvent(Event.KEYUP, pickList.advanced().getSourceListAreaElement(), "sourcekeyup");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnsourcemousedown() {
-        testFireEvent(Event.MOUSEDOWN, pickList.source().getListAreaElement(), "sourcemousedown");
+        testFireEvent(Event.MOUSEDOWN, pickList.advanced().getSourceListAreaElement(), "sourcemousedown");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnsourcemousemove() {
-        testFireEvent(Event.MOUSEMOVE, pickList.source().getListAreaElement(), "sourcemousemove");
+        testFireEvent(Event.MOUSEMOVE, pickList.advanced().getSourceListAreaElement(), "sourcemousemove");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnsourcemouseout() {
-        testFireEvent(Event.MOUSEOUT, pickList.source().getListAreaElement(), "sourcemouseout");
+        testFireEvent(Event.MOUSEOUT, pickList.advanced().getSourceListAreaElement(), "sourcemouseout");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnsourcemouseover() {
-        testFireEvent(Event.MOUSEOVER, pickList.source().getListAreaElement(), "sourcemouseover");
+        testFireEvent(Event.MOUSEOVER, pickList.advanced().getSourceListAreaElement(), "sourcemouseover");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnsourcemouseup() {
-        testFireEvent(Event.MOUSEUP, pickList.source().getListAreaElement(), "sourcemouseup");
+        testFireEvent(Event.MOUSEUP, pickList.advanced().getSourceListAreaElement(), "sourcemouseup");
     }
 
     @Test
@@ -457,9 +455,7 @@ public class TestPickList extends AbstractWebDriverTest {
         testFireEvent(pickListAttributes, PickListAttributes.ontargetblur, new Action() {
             @Override
             public void perform() {
-                pickList.source().selectItemsByIndex(0);
-                pickList.add();
-                pickList.remove();
+                pickList.add(0).remove(0);
             }
         });
     }
@@ -468,111 +464,121 @@ public class TestPickList extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testOntargetclick() {
         testFireEvent(pickListAttributes, PickListAttributes.ontargetclick,
-            new Actions(driver).click(pickList.target().getListAreaElement()).build());
+            new Actions(driver).click(pickList.advanced().getTargetListAreaElement()).build());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOntargetdblclick() {
-        testFireEvent(Event.DBLCLICK, pickList.target().getListAreaElement(), "targetdblclick");
+        testFireEvent(Event.DBLCLICK, pickList.advanced().getTargetListAreaElement(), "targetdblclick");
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11322")
     public void testOntargetfocus() {
         testFireEvent(pickListAttributes, PickListAttributes.ontargetfocus,
-            new Actions(driver).click(pickList.target().getListAreaElement()).build());
+            new Actions(driver).click(pickList.advanced().getTargetListAreaElement()).build());
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     public void testOntargetkeydown() {
-        testFireEvent(Event.KEYDOWN, pickList.target().getListAreaElement(), "targetkeydown");
+        testFireEvent(Event.KEYDOWN, pickList.advanced().getTargetListAreaElement(), "targetkeydown");
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     public void testOntargetkeypress() {
-        testFireEvent(Event.KEYPRESS, pickList.target().getListAreaElement(), "targetkeypress");
+        testFireEvent(Event.KEYPRESS, pickList.advanced().getTargetListAreaElement(), "targetkeypress");
     }
 
     @Test
     @RegressionTest({ "https://issues.jboss.org/browse/RFPL-1659", "https://issues.jboss.org/browse/RF-11322" })
     public void testOntargetkeyup() {
-        testFireEvent(Event.KEYUP, pickList.target().getListAreaElement(), "targetkeyup");
+        testFireEvent(Event.KEYUP, pickList.advanced().getTargetListAreaElement(), "targetkeyup");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOntargetmousedown() {
-        testFireEvent(Event.MOUSEDOWN, pickList.target().getListAreaElement(), "targetmousedown");
+        testFireEvent(Event.MOUSEDOWN, pickList.advanced().getTargetListAreaElement(), "targetmousedown");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOntargetmousemove() {
-        testFireEvent(Event.MOUSEMOVE, pickList.target().getListAreaElement(), "targetmousemove");
+        testFireEvent(Event.MOUSEMOVE, pickList.advanced().getTargetListAreaElement(), "targetmousemove");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOntargetmouseout() {
-        testFireEvent(Event.MOUSEOUT, pickList.target().getListAreaElement(), "targetmouseout");
+        testFireEvent(Event.MOUSEOUT, pickList.advanced().getTargetListAreaElement(), "targetmouseout");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOntargetmouseover() {
-        testFireEvent(Event.MOUSEOVER, pickList.target().getListAreaElement(), "targetmouseover");
+        testFireEvent(Event.MOUSEOVER, pickList.advanced().getTargetListAreaElement(), "targetmouseover");
     }
 
     @Test
     @Templates(value = "plain")
     public void testOntargetmouseup() {
-        testFireEvent(Event.MOUSEUP, pickList.target().getListAreaElement(), "targetmouseup");
+        testFireEvent(Event.MOUSEUP, pickList.advanced().getTargetListAreaElement(), "targetmouseup");
     }
 
     @Test
     public void testOrderable() {
         // firstly check ordering controls doesn't appear near pickList if not "orderable"
         pickListAttributes.set(PickListAttributes.orderable, Boolean.FALSE);
-        assertNotPresent(pickList.target().getBottomButtonElement(), "Button should not be present");
-        assertNotPresent(pickList.target().getDownButtonElement(), "Button should not be present");
-        assertNotPresent(pickList.target().getTopButtonElement(), "Button should not be present");
-        assertNotPresent(pickList.target().getUpButtonElement(), "Button should not be present");
+        assertNotPresent(pickList.advanced().getBottomButtonElement(), "Button should not be present");
+        assertNotPresent(pickList.advanced().getDownButtonElement(), "Button should not be present");
+        assertNotPresent(pickList.advanced().getTopButtonElement(), "Button should not be present");
+        assertNotPresent(pickList.advanced().getUpButtonElement(), "Button should not be present");
         // then make sure that controls appear near pickList when allow ordering behavior
         pickListAttributes.set(PickListAttributes.orderable, Boolean.TRUE);
-        assertVisible(pickList.target().getBottomButtonElement(), "Button should be visible");
-        assertVisible(pickList.target().getDownButtonElement(), "Button should be visible");
-        assertVisible(pickList.target().getTopButtonElement(), "Button should be visible");
-        assertVisible(pickList.target().getUpButtonElement(), "Button should be visible");
+        assertVisible(pickList.advanced().getBottomButtonElement(), "Button should be visible");
+        assertVisible(pickList.advanced().getDownButtonElement(), "Button should be visible");
+        assertVisible(pickList.advanced().getTopButtonElement(), "Button should be visible");
+        assertVisible(pickList.advanced().getUpButtonElement(), "Button should be visible");
         // then add some items to target list
-        pickList.source().selectItemsByIndex(0, 1, 2);
-        pickList.add();
+        pickList.addMultiple(ChoicePickerHelper.byIndex().index(0).index(1).index(2));
         // all items should remain selected and in this case ordering controls should be disabled
-        assertEquals(pickList.target().getSelectedItems().size(), 3);
+        assertEquals(pickList.advanced().getTargetList().getItems().size(), 3);
+        for (ListItem item : pickList.advanced().getTargetList().getItems()) {
+            assertTrue(item.getRoot().getAttribute("class").contains("rf-pick-sel"));
+        }
         // so check ordering controls if they are disabled
-        assertButtonDisabled(pickList.target().getBottomButtonElement());
-        assertButtonDisabled(pickList.target().getDownButtonElement());
-        assertButtonDisabled(pickList.target().getTopButtonElement());
-        assertButtonDisabled(pickList.target().getUpButtonElement());
+        assertButtonDisabled(pickList.advanced().getBottomButtonElement());
+        assertButtonDisabled(pickList.advanced().getDownButtonElement());
+        assertButtonDisabled(pickList.advanced().getTopButtonElement());
+        assertButtonDisabled(pickList.advanced().getUpButtonElement());
         // now is time to select one item. This should cause ordering controls enable
-        pickList.target().selectItemsByIndex(0);
+        pickList.advanced().getTargetList().getItem(0).select(true);
         // since it was first item, "Down" and "Last" buttons should be enabled
-        assertButtonEnabled(pickList.target().getBottomButtonElement());
-        assertButtonEnabled(pickList.target().getDownButtonElement());
-        assertButtonDisabled(pickList.target().getTopButtonElement());
-        assertButtonDisabled(pickList.target().getUpButtonElement());
+        assertButtonEnabled(pickList.advanced().getBottomButtonElement());
+        assertButtonEnabled(pickList.advanced().getDownButtonElement());
+        assertButtonDisabled(pickList.advanced().getTopButtonElement());
+        assertButtonDisabled(pickList.advanced().getUpButtonElement());
         // move first item to last
-        pickList.target().bottom();
+        OrderingList orderingTargetList = pickList.advanced().orderTargetList();
+        List<? extends ListItem> items = pickList.advanced().getTargetList().getItems();
+        List<String> targetStrings = Lists.newArrayList(items.get(0).getText(), items.get(1).getText(), items.get(2).getText());
+
+        orderingTargetList.select(0).putItAfter(2);
         // verify that previously first item is now the last item (select 3rd item, and verify text)
-        assertEquals(pickList.target().getSelectedItems().get(0).getIndex(), 2);
+        items = pickList.advanced().getTargetList().getItems();
+        List<String> targetStringsAfter = Lists.newArrayList(items.get(0).getText(), items.get(1).getText(), items.get(2).getText());
+        targetStrings.add(targetStrings.remove(0));
+        assertEquals(targetStringsAfter, targetStrings);
         // then move this item one step "up"
-        pickList.target().up();
-        assertEquals(pickList.target().getSelectedItems().get(0).getIndex(), 1);
+        orderingTargetList.select(2).putItBefore(1);
         // and then verify if all items are submitted in user defined order as well
         submitAjax();
-        assertEquals(output.getText(), pickList.target().toString());
+        items = pickList.advanced().getTargetList().getItems();
+        targetStrings = Lists.newArrayList(items.get(0).getText(), items.get(1).getText(), items.get(2).getText());
+        assertEquals(output.getText(), targetStrings.toString());
     }
 
     @Test
@@ -580,7 +586,7 @@ public class TestPickList extends AbstractWebDriverTest {
     public void testRemoveAllText() {
         String label = "xxx";
         pickListAttributes.set(PickListAttributes.removeAllText, label);
-        assertEquals(pickList.getRemoveAllButtonElement().getText(), label);
+        assertEquals(pickList.advanced().getRemoveAllButtonElement().getText(), label);
     }
 
     @Test
@@ -588,23 +594,22 @@ public class TestPickList extends AbstractWebDriverTest {
     public void testRemoveText() {
         String label = "xxx";
         pickListAttributes.set(PickListAttributes.removeText, label);
-        assertEquals(pickList.getRemoveButtonElement().getText(), label);
+        assertEquals(pickList.advanced().getRemoveButtonElement().getText(), label);
     }
 
     @Test
     @Templates(value = "plain")
     public void testRendered() {
         pickListAttributes.set(PickListAttributes.rendered, Boolean.TRUE);
-        assertPresent(pickList.getRootElement(), "Picklist should be present");
+        assertPresent(pickList.advanced().getRoot(), "Picklist should be present");
         pickListAttributes.set(PickListAttributes.rendered, Boolean.FALSE);
-        assertNotPresent(pickList.getRootElement(), "Picklist should not be present");
+        assertNotPresent(pickList.advanced().getRoot(), "Picklist should not be present");
     }
 
     @Test
     public void testRequired() {
         pickListAttributes.set(PickListAttributes.required, Boolean.TRUE);
-        pickList.source().selectItemsByIndex(0);
-        pickList.add();
+        pickList.add(0);
         submitAjax();
         assertFalse(message.isVisible(), "Message should not be visible.");
 
@@ -627,14 +632,12 @@ public class TestPickList extends AbstractWebDriverTest {
      */
     @Test
     public void testSaveJSF() {
-        pickList.source().selectItemsByIndex(0);
-        String textSource = pickList.source().getSelectedItems().get(0).getText();
-        pickList.add();
+        String textSource = pickList.advanced().getSourceList().getItem(0).getText();
+        pickList.add(0);
         submitHTTP();
-        String textTarget = pickList.target().getItems().get(0).getText();
+        String textTarget = pickList.advanced().getTargetList().getItem(0).getText();
         assertEquals(textTarget, textSource);
         assertEquals(output.getText(), "[" + textSource + "]");
-        assertEquals(output.getText(), pickList.target().toString());
     }
 
     @Test
@@ -643,12 +646,12 @@ public class TestPickList extends AbstractWebDriverTest {
         testHTMLAttribute(new FutureTarget<WebElement>() {
             @Override
             public WebElement getTarget() {
-                return pickList.source().getSelectedItems().get(0).getItemElement();
+                return pickList.advanced().getSourceList().getItem(0).getRoot();
             }
         }, pickListAttributes, PickListAttributes.selectItemClass, "metamer-ftest-class", new Action() {
             @Override
             public void perform() {
-                pickList.source().selectItemsByIndex(0);
+                pickList.advanced().getSourceList().getItem(0).select();
             }
         });
     }
@@ -657,19 +660,19 @@ public class TestPickList extends AbstractWebDriverTest {
     public void testSourceCaption() {
         String caption = "This is source";
         pickListAttributes.set(PickListAttributes.sourceCaption, caption);
-        assertEquals(pickList.source().getCaption(), caption);
+        assertEquals(pickList.advanced().getSourceCaptionElement().getText(), caption);
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyle() {
-        testStyle(pickList.getRootElement());
+        testStyle(pickList.advanced().getRoot());
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyleClass(pickList.getRootElement());
+        testStyleClass(pickList.advanced().getRoot());
     }
 
     /**
@@ -678,18 +681,18 @@ public class TestPickList extends AbstractWebDriverTest {
     @Test
     public void testSwitchByClick() {
         pickListAttributes.set(PickListAttributes.switchByClick, Boolean.TRUE);
-        RichFacesSimplePickListItem item = pickList.source().getItems().get(0);
+        ListItem item = pickList.advanced().getSourceList().getItems().get(0);
         String text = item.getText();
-        item.getItemElement().click();
+        item.getRoot().click();
         Graphene.waitGui().until(new Predicate<WebDriver>() {
             @Override
             public boolean apply(WebDriver input) {
-                return pickList.target().getItems().size() == 1;
+                return pickList.advanced().getTargetList().getItems().size() == 1;
             }
         });
-        item = pickList.target().getSelectedItems().get(0);
+        item = pickList.advanced().getTargetList().getItem(0);
         assertEquals(item.getText(), text);
-        assertTrue(item.isSelected());
+        assertTrue(item.getRoot().getAttribute("class").contains("rf-pick-sel"));
     }
 
     /**
@@ -698,25 +701,24 @@ public class TestPickList extends AbstractWebDriverTest {
     @Test
     public void testSwitchByDblClick() {
         pickListAttributes.set(PickListAttributes.switchByDblClick, Boolean.TRUE);
-        RichFacesSimplePickListItem item = pickList.source().getItems().get(0);
+        ListItem item = pickList.advanced().getSourceList().getItems().get(0);
         String text = item.getText();
-        new Actions(driver).doubleClick(item.getItemElement()).perform();
+        new Actions(driver).doubleClick(item.getRoot()).perform();
         Graphene.waitGui().until(new Predicate<WebDriver>() {
             @Override
             public boolean apply(WebDriver input) {
-                return pickList.target().getItems().size() == 1;
+                return pickList.advanced().getTargetList().getItems().size() == 1;
             }
         });
-        item = pickList.target().getSelectedItems().get(0);
+        item = pickList.advanced().getTargetList().getItem(0);
         assertEquals(item.getText(), text);
-        assertTrue(item.isSelected());
     }
 
     @Test
     public void testTargetCaption() {
         String caption = "This is target";
         pickListAttributes.set(PickListAttributes.targetCaption, caption);
-        assertEquals(pickList.target().getCaption(), caption);
+        assertEquals(pickList.advanced().getTargetCaptionElement().getText(), caption);
     }
 
     @Test
@@ -725,7 +727,7 @@ public class TestPickList extends AbstractWebDriverTest {
         String label = "xxx";
         pickListAttributes.set(PickListAttributes.upText, label);
         pickListAttributes.set(PickListAttributes.orderable, Boolean.TRUE);
-        assertEquals(pickList.target().getUpButtonElement().getText(), label);
+        assertEquals(pickList.advanced().getUpButtonElement().getText(), label);
     }
 
     @Test
@@ -734,7 +736,7 @@ public class TestPickList extends AbstractWebDriverTest {
         String label = "xxx";
         pickListAttributes.set(PickListAttributes.upTopText, label);
         pickListAttributes.set(PickListAttributes.orderable, Boolean.TRUE);
-        assertEquals(pickList.target().getTopButtonElement().getText(), label);
+        assertEquals(pickList.advanced().getTopButtonElement().getText(), label);
     }
 
     @Test
@@ -755,13 +757,11 @@ public class TestPickList extends AbstractWebDriverTest {
 
     @Test
     public void testValueChangeListener() {
-        pickList.source().selectItemsByIndex(0);
-        pickList.add();
+        pickList.add(0);
         submitAjax();
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: [] -> [Alabama]");
 
-        pickList.source().selectItemsByIndex(0);
-        pickList.add();
+        pickList.add(0);
         submitAjax();
         page.assertListener(PhaseId.PROCESS_VALIDATIONS, "value changed: [Alabama] -> [Alabama, Alaska]");
     }
