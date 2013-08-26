@@ -84,7 +84,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </fieldset>
         <br />
         <br />
-        <r:dataScroller id="scroller1" for="#{richDataScrollerBean.attributes['for'].value}">
+        <r:dataScroller id="scroller1" for="#{richDataScrollerBean.attributes['for'].value}"
+            render="#{richDataScrollerBean.attributes['render'].value} #{nestedComponentId}">
             <f:facet name="first">#{richDataScrollerBean.facets['first']}</f:facet>
             <f:facet name="fastRewind">#{richDataScrollerBean.facets['fastRewind']}</f:facet>
             <f:facet name="previous">#{richDataScrollerBean.facets['previous']}</f:facet>
@@ -133,8 +134,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </r:column>
 
             <f:facet name="footer">
-                <r:dataScroller id="scroller2"
-                    render="#{richDataScrollerBean.attributes['render'].value} scroller1">
+                <r:dataScroller id="scroller2" render="#{richDataScrollerBean.attributes['render'].value} scroller1">
 
                     <f:facet name="first">#{richDataScrollerBean.facets['first']}</f:facet>
                     <f:facet name="fastRewind">#{richDataScrollerBean.facets['fastRewind']}</f:facet>
