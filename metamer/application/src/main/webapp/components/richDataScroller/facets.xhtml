@@ -84,8 +84,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </fieldset>
         <br />
         <br />
-        <r:dataScroller id="scroller1" for="#{richDataScrollerBean.attributes['for'].value}"
-            render="#{richDataScrollerBean.attributes['render'].value} #{nestedComponentId}">
+        <r:dataScroller id="scroller1" for="richDataTable" render="#{nestedComponentId}"
+            page="#{richDataScrollerBean.attributes['page'].value}">
             <f:facet name="first">#{richDataScrollerBean.facets['first']}</f:facet>
             <f:facet name="fastRewind">#{richDataScrollerBean.facets['fastRewind']}</f:facet>
             <f:facet name="previous">#{richDataScrollerBean.facets['previous']}</f:facet>
