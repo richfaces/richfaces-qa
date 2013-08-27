@@ -38,7 +38,7 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class TestSelecJSApi extends AbstractWebDriverTest {
+public class TestSelectJSApi extends AbstractWebDriverTest {
 
     @FindBy(css = "input[id$=getValue]")
     private WebElement getValueButton;
