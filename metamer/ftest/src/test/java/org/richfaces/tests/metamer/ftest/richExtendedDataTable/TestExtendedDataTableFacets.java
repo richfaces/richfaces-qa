@@ -26,15 +26,16 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import java.net.URL;
 
 import org.richfaces.tests.metamer.ftest.abstractions.DataTableFacetsTest;
+import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.model.ExtendedDataTable;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22407 $
  */
+@Templates(value = "plain")
 public class TestExtendedDataTableFacets extends DataTableFacetsTest {
 
     @Override
