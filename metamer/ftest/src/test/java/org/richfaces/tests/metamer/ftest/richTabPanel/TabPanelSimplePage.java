@@ -9,17 +9,25 @@ import org.richfaces.tests.page.fragments.impl.tabPanel.RichFacesTabPanel;
 
 public class TabPanelSimplePage extends MetamerPage {
 
-    @FindBy(className = "rf-tbp")
+    @FindBy(jquery = "div[id*=tabPanel]")
     private RichFacesTabPanel panelTab;
 
-    @FindBy(className = "rf-tbp")
+    @FindBy(jquery = "div[id*=tabPanel]")
     private WebElement panelTabAsWebElement;
 
-    @FindBy()
-    private WebElement nextTabButton;
+    @FindBy(jquery = "input[id$=hCreateTabButton]")
+    private WebElement createTabHButton;
 
-    @FindBy()
-    private WebElement prevTabButton;
+    @FindBy(jquery = "input[id$=a4jCreateTabButton]")
+    private WebElement createTabA4jButton;
+
+    public WebElement getCreateTabButtonA4j() {
+        return createTabA4jButton;
+    }
+
+    public WebElement getCreateTabButtonHButton() {
+        return createTabHButton;
+    }
 
     public RichFacesTabPanel getPanelTab() {
         return panelTab;
@@ -33,4 +41,5 @@ public class TabPanelSimplePage extends MetamerPage {
     public WebElement getPanelTabAsWebElement() {
         return panelTabAsWebElement;
     }
+
 }

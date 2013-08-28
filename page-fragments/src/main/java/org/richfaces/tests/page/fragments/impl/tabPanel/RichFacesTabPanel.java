@@ -17,16 +17,16 @@ public class RichFacesTabPanel extends AbstractSwitchableComponent<RichFacesTab>
     @FindBy(jquery = ".rf-tab-hdr-act:visible")
     private WebElement activeHeader;
 
-    @FindBy(xpath = "//td[contains(@class, 'rf-tab-hdr-act')]")
+    @FindBy(xpath = "//div[contains(@id, 'tabPanel')]//td[contains(@class, 'rf-tab-hdr-act')]")
     private List<WebElement> allActiveHeaders;
 
-    @FindBy(xpath = "//td[contains(@class, 'rf-tab-hdr-inact')]")
+    @FindBy(xpath = "//div[contains(@id, 'tabPanel')]//td[contains(@class, 'rf-tab-hdr-inact')]")
     private List<WebElement> allInactiveHeaders;
 
-    @FindBy(xpath = "//td[contains(@class, 'rf-tab-hdr-dis')]")
+    @FindBy(xpath = "//div[contains(@id, 'tabPanel')]//td[contains(@class, 'rf-tab-hdr-dis')]")
     private List<WebElement> allDisabledHeaders;
 
-    @FindBy(xpath = "//form/div/div[contains(@id, 'form:tab')]")
+    @FindBy(xpath = "//form/div/div[contains(@id, 'form:tab') or contains(@id, 'form:dynamic')]")
     private List<WebElement> allTabContents;
 
     private AdvancedInteractions advancedInteractions;
