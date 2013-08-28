@@ -12,7 +12,7 @@
         </groups>
 
         <packages>
-            <package name="org.richfaces.tests.metamer.ftest.richAutocomplete" />
+            <!--<package name="org.richfaces.tests.metamer.ftest.richAutocomplete" />-->
             <package name="org.richfaces.tests.metamer.ftest.richCalendar" />
             <package name="org.richfaces.tests.metamer.ftest.richEditor" />
             <package name="org.richfaces.tests.metamer.ftest.richFileUpload" />
