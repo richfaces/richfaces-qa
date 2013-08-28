@@ -22,7 +22,6 @@
 package org.richfaces.tests.page.fragments.impl.tooltip;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.GrapheneContext;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.JavascriptExecutor;
@@ -85,7 +84,7 @@ public class RichFacesTooltip {
     private static <T> T getGuardTypeForMode(T target, TooltipMode mode) {
         switch (mode) {
             case ajax:
-                return Graphene.guardXhr(target);
+                return Graphene.guardAjax(target);
             default:
                 return Graphene.guardNoRequest(target);
         }
