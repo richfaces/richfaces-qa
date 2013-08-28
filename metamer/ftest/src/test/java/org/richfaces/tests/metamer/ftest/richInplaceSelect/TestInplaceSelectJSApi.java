@@ -33,7 +33,7 @@ import org.jboss.arquillian.ajocado.dom.Event;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
+import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.input.inplace.InplaceComponent.OpenBy;
@@ -130,8 +130,8 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
         return this.output.getAttribute("value");
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12853")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12853")
     public void hidePopup() {
         inplaceSelect.editBy(OpenBy.CLICK);
         assertVisible(globalPopup, "Popup should be visible.");
@@ -177,8 +177,8 @@ public class TestInplaceSelectJSApi extends AbstractWebDriverTest {
         assertEquals(inplaceSelect.getLabelValue(), expected);
     }
 
-    @Test(groups = "Future")
-    @IssueTracking("https://issues.jboss.org/browse/RF-12853")
+    @Test
+    @RegressionTest("https://issues.jboss.org/browse/RF-12853")
     public void setValue() {
         String expected = SOME_VALUE;
         MetamerPage.waitRequest(setValueButton, WaitRequestType.XHR).click();
