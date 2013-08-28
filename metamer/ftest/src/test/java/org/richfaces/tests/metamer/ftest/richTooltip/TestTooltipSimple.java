@@ -27,7 +27,6 @@ import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.tooltipAttributes;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -129,12 +128,13 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
     @Test
     public void testRequestEventHandlers() {
+        tooltipAttributes.set(TooltipAttributes.showEvent, "click");
         tooltipAttributes.set(TooltipAttributes.mode, TooltipMode.ajax);
 
         page.getTooltip().setMode(TooltipMode.ajax);
 
         testRequestEventsBefore("begin", "beforedomupdate", "complete");
-        MetamerPage.requestTimeChangesWaiting(page.getTooltip()).recall(page.getPanel());
+        MetamerPage.requestTimeChangesWaiting(page.getPanel()).click();
         testRequestEventsAfter("begin", "beforedomupdate", "complete");
     }
 
