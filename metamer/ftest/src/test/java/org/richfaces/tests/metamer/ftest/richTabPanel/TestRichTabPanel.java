@@ -185,9 +185,9 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
     @Test
     public void testCycledSwitching() {
         String panelId = (String) executeJS("return testedComponentId");
-
         String result = "someString";
         result = (String) executeJS("return RichFaces.component('" + panelId + "').nextItem('tab5')");
+
         assertEquals(result, null);
 
         result = (String) executeJS("return RichFaces.component('" + panelId + "').prevItem('tab1')");
