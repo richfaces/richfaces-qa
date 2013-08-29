@@ -21,11 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.notify.page;
 
-import com.google.common.base.Predicate;
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.openqa.selenium.WebDriver;
 import org.richfaces.tests.page.fragments.impl.notify.Notify;
+import org.richfaces.tests.page.fragments.impl.notify.NotifyMessageItem;
 import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotify;
 import org.richfaces.tests.showcase.message.page.AbstractMessagePage;
 
@@ -34,22 +32,14 @@ import org.richfaces.tests.showcase.message.page.AbstractMessagePage;
  */
 public class MessagesPage extends AbstractMessagePage {
 
-    @FindBy(tagName="body")
+    @FindBy(tagName = "body")
     private RichFacesNotify notify;
 
-    public Notify getNotify() {
+    public Notify<? extends NotifyMessageItem> getNotify() {
         return notify;
     }
 
     public void waitUntilThereIsNoNotify() {
-        Graphene.waitModel()
-                .until(new Predicate<WebDriver>() {
-
-                    @Override
-                    public boolean apply(WebDriver input) {
-                        return notify.size() == 0;
-                    }
-        });
+        notify.advanced().waitUntilIsNotVisible();
     }
-
 }

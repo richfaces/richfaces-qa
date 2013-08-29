@@ -611,11 +611,11 @@ public class TestPickList extends AbstractWebDriverTest {
         pickListAttributes.set(PickListAttributes.required, Boolean.TRUE);
         pickList.add(0);
         submitAjax();
-        assertFalse(message.isVisible(), "Message should not be visible.");
+        assertFalse(message.advanced().isVisible(), "Message should not be visible.");
 
         pickList.removeAll();
         submitAjax();
-        assertTrue(message.isVisible(), "Message should be visible.");
+        assertTrue(message.advanced().isVisible(), "Message should be visible.");
     }
 
     @Test

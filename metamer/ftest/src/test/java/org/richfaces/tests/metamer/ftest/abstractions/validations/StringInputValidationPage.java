@@ -21,12 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions.validations;
 
+import com.google.common.collect.Sets;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.abstractions.StringInputValidationBean;
 import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
-
-import com.google.common.collect.Sets;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -88,31 +88,31 @@ public class StringInputValidationPage extends InputValidationPage {
     @Override
     public void initCustomMessages() {
         messageCases.put(MESSAGE_CUSTOM_NAME,
-                new ValidationMessageCase(MESSAGE_CUSTOM_NAME, messageCustomString,
-                setCustomCorrectButton, setCustomWrongButton,
-                customOutput, "richfaces", StringInputValidationBean.CUSTOM_VALUE_DEFAULT,
-                Sets.newHashSet(StringInputValidationBean.CUSTOM_VALIDATION_MSG)));
+            new ValidationMessageCase(MESSAGE_CUSTOM_NAME, messageCustomString,
+            setCustomCorrectButton, setCustomWrongButton,
+            customOutput, "richfaces", StringInputValidationBean.CUSTOM_VALUE_DEFAULT,
+            Sets.newHashSet(StringInputValidationBean.CUSTOM_VALIDATION_MSG)));
         messageCases.put(MESSAGE_STRING_NAME,
-                new ValidationMessageCase(MESSAGE_STRING_NAME, messageStringSize,
-                setSizeCorrectButton, setSizeWrongButton,
-                sizeOutput, "123", StringInputValidationBean.SIZE_VALUE_DEFAULT,
-                Sets.newHashSet(StringInputValidationBean.STRING_SIZE_VALIDATION_MSG)));
+            new ValidationMessageCase(MESSAGE_STRING_NAME, messageStringSize,
+            setSizeCorrectButton, setSizeWrongButton,
+            sizeOutput, "123", StringInputValidationBean.SIZE_VALUE_DEFAULT,
+            Sets.newHashSet(StringInputValidationBean.STRING_SIZE_VALIDATION_MSG)));
         messageCases.put(MESSAGE_REG_EXP_PATTERN_NAME,
-                new ValidationMessageCase(MESSAGE_REG_EXP_PATTERN_NAME, messageRegExpPattern,
-                setPatternCorrectButton, setPatternWrongButton,
-                patternOutput, "abcd", StringInputValidationBean.PATTERN_VALUE_DEFAULT,
-                Sets.newHashSet(StringInputValidationBean.REGEXP_VALIDATION_MSG)));
+            new ValidationMessageCase(MESSAGE_REG_EXP_PATTERN_NAME, messageRegExpPattern,
+            setPatternCorrectButton, setPatternWrongButton,
+            patternOutput, "abcd", StringInputValidationBean.PATTERN_VALUE_DEFAULT,
+            Sets.newHashSet(StringInputValidationBean.REGEXP_VALIDATION_MSG)));
         messageCases.put(MESSAGE_NOT_EMPTY_NAME,
-                new ValidationMessageCase(MESSAGE_NOT_EMPTY_NAME, messageNotEmpty,
-                setNotEmptyCorrectButton, setNotEmptyWrongButton,
-                notEmptyOutput, "not empty", StringInputValidationBean.NOTEMPTY_VALUE_DEFAULT,
-                Sets.newHashSet(StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG,
-                StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG2,
-                StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG3)));
+            new ValidationMessageCase(MESSAGE_NOT_EMPTY_NAME, messageNotEmpty,
+            setNotEmptyCorrectButton, setNotEmptyWrongButton,
+            notEmptyOutput, "not empty", StringInputValidationBean.NOTEMPTY_VALUE_DEFAULT,
+            Sets.newHashSet(StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG,
+            StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG2,
+            StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG3)));
         messageCases.put(MESSAGE_REQUIRED_NAME,
-                new ValidationMessageCase(MESSAGE_REQUIRED_NAME, messageRequired,
-                setRequiredCorrectButton, setRequiredWrongButton,
-                requiredOutput, "required 2", StringInputValidationBean.REQUIRED_VALUE_DEFAULT,
-                Sets.newHashSet(StringInputValidationBean.REQUIRED_VALIDATION_MSG)));
+            new ValidationMessageCase(MESSAGE_REQUIRED_NAME, messageRequired,
+            setRequiredCorrectButton, setRequiredWrongButton,
+            requiredOutput, "required 2", StringInputValidationBean.REQUIRED_VALUE_DEFAULT,
+            Sets.newHashSet(StringInputValidationBean.REQUIRED_VALIDATION_MSG)));
     }
 }

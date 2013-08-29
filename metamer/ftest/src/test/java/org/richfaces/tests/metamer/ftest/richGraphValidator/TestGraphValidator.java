@@ -116,11 +116,11 @@ public class TestGraphValidator extends AbstractWebDriverTest {
     private void checkGraphValidatorSuccessMessage() {
         //now all inputs are correct
         //there should be graph validator successfull message, which is not bound to any input > will be global
-        Assert.assertFalse(graphValidatorMessages.isVisible(), "Graph validator messages should not be visible.");
-        Assert.assertTrue(graphValidatorGlobalMessages.isVisible(), "Global messages should be visible.");
+        Assert.assertFalse(graphValidatorMessages.advanced().isVisible(), "Graph validator messages should not be visible.");
+        Assert.assertTrue(graphValidatorGlobalMessages.advanced().isVisible(), "Global messages should be visible.");
         Assert.assertEquals(graphValidatorGlobalMessages.size(), 1, "There should be one message.");
-        Assert.assertEquals(graphValidatorGlobalMessages.getMessageAtIndex(0).getSummary(),
-                RichGraphValidatorBean.SUCCESSFULL_ACTION_MSG, "Summary of message.");
+        Assert.assertEquals(graphValidatorGlobalMessages.getItem(0).getSummary(),
+            RichGraphValidatorBean.SUCCESSFULL_ACTION_MSG, "Summary of message.");
     }
 
     private String getMessageForGroup(Group g) {
@@ -196,15 +196,15 @@ public class TestGraphValidator extends AbstractWebDriverTest {
     @Use(field = "group", enumeration = true)
     public void testGroups() {
         graphValidatorAttributes.set(GraphValidatorAttributes.groups, group.toString());
-        Assert.assertFalse(graphValidatorGlobalMessages.isVisible(), "Global messages should not be visible.");
-        Assert.assertFalse(graphValidatorMessages.isVisible(), "Messages should be visible.");
+        Assert.assertFalse(graphValidatorGlobalMessages.advanced().isVisible(), "Global messages should not be visible.");
+        Assert.assertFalse(graphValidatorMessages.advanced().isVisible(), "Messages should be visible.");
         applyChanges();
         //a message for empty input secret should be displayed, it is validated by @NotNull
-        Assert.assertTrue(inputSecretMsg.isVisible(), "Messages for input secret should be visible.");
+        Assert.assertTrue(inputSecretMsg.advanced().isVisible(), "Messages for input secret should be visible.");
         String summary = inputSecretMsg.getDetail();
         if (!summary.equals(StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG)
-                && summary.equals(StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG2)
-                && summary.equals(StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG3)) {
+            && summary.equals(StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG2)
+            && summary.equals(StringInputValidationBean.NOT_EMPTY_VALIDATION_MSG3)) {
             throw new AssertionError("The message summary is not equal to some of expected values.");
         }
         setInputSecretCorrect();//all inputs are correct now, not submitted yet
@@ -212,11 +212,11 @@ public class TestGraphValidator extends AbstractWebDriverTest {
         //set some of group inputs to bad value
         setWrongSettingForGroup(group);
         //graph validator message should be displayed, validation of group should fail
-        Assert.assertFalse(graphValidatorGlobalMessages.isVisible(), "Global messages should not be visible.");
-        Assert.assertTrue(graphValidatorMessages.isVisible(), "Graph validator messages should be visible.");
+        Assert.assertFalse(graphValidatorGlobalMessages.advanced().isVisible(), "Global messages should not be visible.");
+        Assert.assertTrue(graphValidatorMessages.advanced().isVisible(), "Graph validator messages should be visible.");
         Assert.assertEquals(graphValidatorMessages.size(), 1, "There should be one message.");
-        Assert.assertEquals(graphValidatorMessages.getMessageAtIndex(0).getSummary(),
-                getMessageForGroup(group), "Summary of message.");
+        Assert.assertEquals(graphValidatorMessages.getItem(0).getSummary(),
+            getMessageForGroup(group), "Summary of message.");
         setCorrectSettingForGroup(group);
         checkGraphValidatorSuccessMessage();
 
@@ -252,10 +252,10 @@ public class TestGraphValidator extends AbstractWebDriverTest {
         setWrongSettingForGroup(Group.ValidationGroupAllComponents);
         applyChanges();
 
-        Assert.assertFalse(graphValidatorGlobalMessages.isVisible(), "Global messages should not be visible.");
-        Assert.assertTrue(graphValidatorMessages.isVisible(), "Graph validator messages should be visible.");
+        Assert.assertFalse(graphValidatorGlobalMessages.advanced().isVisible(), "Global messages should not be visible.");
+        Assert.assertTrue(graphValidatorMessages.advanced().isVisible(), "Graph validator messages should be visible.");
         Assert.assertEquals(graphValidatorMessages.size(), 1, "There should be one message.");
-        Assert.assertEquals(graphValidatorMessages.getMessageAtIndex(0).getSummary(), msg, "Summary of message.");
+        Assert.assertEquals(graphValidatorMessages.getItem(0).getSummary(), msg, "Summary of message.");
     }
 
     @Test

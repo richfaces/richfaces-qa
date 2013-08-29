@@ -37,6 +37,10 @@ public class RichFacesMessage extends AbstractMessage {
 
     @Override
     protected String getCssClass(MessageType type) {
+        return getCssClassForMessageType(type);
+    }
+
+    public static String getCssClassForMessageType(MessageType type) {
         switch (type) {
             case ERROR:
                 return "rf-msg-err";
@@ -54,12 +58,12 @@ public class RichFacesMessage extends AbstractMessage {
     }
 
     @Override
-    public WebElement getMessageDetailElement() {
+    protected WebElement getMessageDetailElement() {
         return messageDetailElement;
     }
 
     @Override
-    public WebElement getMessageSummaryElement() {
+    protected WebElement getMessageSummaryElement() {
         return messageSummaryElement;
     }
 }

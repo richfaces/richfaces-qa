@@ -26,8 +26,8 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.notifySt
 
 import java.net.URL;
 import java.util.Locale;
-import org.jboss.arquillian.graphene.Graphene;
 
+import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -43,8 +43,9 @@ import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.notify.NotifyMessage;
-import org.richfaces.tests.page.fragments.impl.notify.NotifyMessagePosition;
+import org.richfaces.tests.page.fragments.impl.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotify;
+import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotify.NotifyMessageItemImpl;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -128,8 +129,8 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
         }
     }
 
-    private NotifyMessage getMessageWithNumber(int number) {
-        for (NotifyMessage m : notify) {
+    private NotifyMessageItemImpl getMessageWithNumber(int number) {
+        for (NotifyMessageItemImpl m : notify.getItems()) {
             if (m.getSummary().contains(String.valueOf(number))) {
                 return m;
             }
@@ -157,9 +158,9 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
         NotifyMessage firstMessage = getMessageWithNumber(1);
         NotifyMessage secondMessage = getMessageWithNumber(2);
         NotifyMessage thirdMessage = getMessageWithNumber(3);
-        Locations locationsM1 = Utils.getLocations(firstMessage.getRoot());
-        Locations locationsM2 = Utils.getLocations(secondMessage.getRoot());
-        Locations locationsM3 = Utils.getLocations(thirdMessage.getRoot());
+        Locations locationsM1 = Utils.getLocations(firstMessage.advanced().getRootElement());
+        Locations locationsM2 = Utils.getLocations(secondMessage.advanced().getRootElement());
+        Locations locationsM3 = Utils.getLocations(thirdMessage.advanced().getRootElement());
         if (method.equals(Method.FIRST)) {
             Assert.assertTrue(direction.isAfter(locationsM1, locationsM2));
             Assert.assertTrue(direction.isAfter(locationsM2, locationsM3));
@@ -181,9 +182,9 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
         NotifyMessage firstMessage = getMessageWithNumber(1);
         NotifyMessage secondMessage = getMessageWithNumber(2);
         NotifyMessage thirdMessage = getMessageWithNumber(3);
-        Assert.assertEquals(firstMessage.getPosition(), position.getPosition());
-        Assert.assertEquals(secondMessage.getPosition(), position.getPosition());
-        Assert.assertEquals(thirdMessage.getPosition(), position.getPosition());
+        Assert.assertEquals(firstMessage.advanced().getPosition(), position.getPosition());
+        Assert.assertEquals(secondMessage.advanced().getPosition(), position.getPosition());
+        Assert.assertEquals(thirdMessage.advanced().getPosition(), position.getPosition());
     }
 
     @Test

@@ -21,12 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions.validations;
 
+import com.google.common.collect.Sets;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.bean.abstractions.NumberInputValidationBean;
 import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
-
-import com.google.common.collect.Sets;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -79,24 +79,24 @@ public class NumberInputValidationPage extends InputValidationPage {
     @Override
     public void initCustomMessages() {
         messageCases.put(MESSAGE_CUSTOM_NAME,
-                new ValidationMessageCase(MESSAGE_CUSTOM_NAME, messageCustom,
-                setCustomCorrectButton, setCustomWrongButton,
-                customOutput, "2", String.valueOf(NumberInputValidationBean.CUSTOM_VALUE_DEFAULT),
-                Sets.newHashSet(NumberInputValidationBean.CUSTOM_VALIDATION_MSG)));
+            new ValidationMessageCase(MESSAGE_CUSTOM_NAME, messageCustom,
+            setCustomCorrectButton, setCustomWrongButton,
+            customOutput, "2", String.valueOf(NumberInputValidationBean.CUSTOM_VALUE_DEFAULT),
+            Sets.newHashSet(NumberInputValidationBean.CUSTOM_VALIDATION_MSG)));
         messageCases.put(MESSAGE_MAX_NAME,
-                new ValidationMessageCase(MESSAGE_MAX_NAME, messageMax,
-                setMaxCorrectButton, setMaxWrongButton,
-                maxOutput, "2", String.valueOf(NumberInputValidationBean.MAX_VALUE_DEFAULT),
-                Sets.newHashSet(NumberInputValidationBean.MAX_VALIDATION_MSG)));
+            new ValidationMessageCase(MESSAGE_MAX_NAME, messageMax,
+            setMaxCorrectButton, setMaxWrongButton,
+            maxOutput, "2", String.valueOf(NumberInputValidationBean.MAX_VALUE_DEFAULT),
+            Sets.newHashSet(NumberInputValidationBean.MAX_VALIDATION_MSG)));
         messageCases.put(MESSAGE_MIN_NAME,
-                new ValidationMessageCase(MESSAGE_MIN_NAME, messageMin,
-                setMinCorrectButton, setMinWrongButton,
-                minOutput, "2", String.valueOf(NumberInputValidationBean.MIN_VALUE_DEFAULT),
-                Sets.newHashSet(NumberInputValidationBean.MIN_VALIDATION_MSG)));
+            new ValidationMessageCase(MESSAGE_MIN_NAME, messageMin,
+            setMinCorrectButton, setMinWrongButton,
+            minOutput, "2", String.valueOf(NumberInputValidationBean.MIN_VALUE_DEFAULT),
+            Sets.newHashSet(NumberInputValidationBean.MIN_VALIDATION_MSG)));
         messageCases.put(MESSAGE_REQUIRED_NAME,
-                new ValidationMessageCase(MESSAGE_REQUIRED_NAME, messageRequired,
-                setRequiredCorrectButton, setRequiredWrongButton,
-                requiredOutput, "2", String.valueOf(NumberInputValidationBean.REQUIRED_VALUE_DEFAULT),
-                Sets.newHashSet(NumberInputValidationBean.REQUIRED_VALIDATION_MSG)));
+            new ValidationMessageCase(MESSAGE_REQUIRED_NAME, messageRequired,
+            setRequiredCorrectButton, setRequiredWrongButton,
+            requiredOutput, "2", String.valueOf(NumberInputValidationBean.REQUIRED_VALUE_DEFAULT),
+            Sets.newHashSet(NumberInputValidationBean.REQUIRED_VALIDATION_MSG)));
     }
 }

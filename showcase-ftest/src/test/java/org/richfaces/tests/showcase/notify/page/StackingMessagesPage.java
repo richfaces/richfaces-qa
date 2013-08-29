@@ -1,6 +1,3 @@
-package org.richfaces.tests.showcase.notify.page;
-
-import com.google.common.base.Predicate;
 /*******************************************************************************
  * JBoss, Home of Professional Open Source
  * Copyright 2010-2013, Red Hat, Inc. and individual contributors
@@ -22,7 +19,12 @@ import com.google.common.base.Predicate;
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
+package org.richfaces.tests.showcase.notify.page;
+
+import com.google.common.base.Predicate;
+
 import java.util.concurrent.TimeUnit;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebDriver;
@@ -33,9 +35,9 @@ import org.openqa.selenium.WebElement;
  */
 public class StackingMessagesPage extends NotifyPage {
 
-    @FindBy(jquery="input[type=submit]:eq(0)")
+    @FindBy(jquery = "input[type=submit]:eq(0)")
     private WebElement renderFirstButtonTopLeft;
-    @FindBy(jquery="input[type=submit]:eq(1)")
+    @FindBy(jquery = "input[type=submit]:eq(1)")
     private WebElement renderSecondBottomRight;
 
     public void bottomRight() {
@@ -51,14 +53,15 @@ public class StackingMessagesPage extends NotifyPage {
     @Override
     public void waitUntilThereIsNoNotify() {
         Graphene.waitModel()
-                .withTimeout(11, TimeUnit.SECONDS)
-                .until(new Predicate<WebDriver>() {
+            .withTimeout(11, TimeUnit.SECONDS)
+            .withMessage("waiting for notify to hide.")
+            .until(new Predicate<WebDriver>() {
 
-                    @Override
-                    public boolean apply(WebDriver input) {
-                        return getNotify().size() == 0;
-                    }
-        });
+                @Override
+                public boolean apply(WebDriver input) {
+                    return getNotify().isEmpty();
+                }
+            });
     }
 
 }

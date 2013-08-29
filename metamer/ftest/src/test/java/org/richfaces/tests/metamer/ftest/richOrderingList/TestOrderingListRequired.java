@@ -55,11 +55,11 @@ public class TestOrderingListRequired extends AbstractOrderingListTest {
     public void testRequired() {
         attributes.set(OrderingListAttributes.required, Boolean.FALSE);
         submit();
-        assertNotVisible(message, "Message should not be visible.");
+        assertNotVisible(message.advanced().getRootElement(), "Message should not be visible.");
 
         attributes.set(OrderingListAttributes.required, Boolean.TRUE);
         submit();
-        assertVisible(message, "Message should be visible.");
+        assertVisible(message.advanced().getRootElement(), "Message should be visible.");
         assertTrue(message.getDetail().endsWith(DEFAULT_REQUIRED_MSG), "Detail should end with '" + DEFAULT_REQUIRED_MSG + "'.");
     }
 
@@ -69,7 +69,7 @@ public class TestOrderingListRequired extends AbstractOrderingListTest {
         attributes.set(OrderingListAttributes.required, Boolean.TRUE);
         attributes.set(OrderingListAttributes.requiredMessage, requiredMessage);
         submit();
-        assertVisible(message, "Message should be visible.");
+        assertVisible(message.advanced().getRootElement(), "Message should be visible.");
         assertEquals(message.getDetail(), requiredMessage);
     }
 }

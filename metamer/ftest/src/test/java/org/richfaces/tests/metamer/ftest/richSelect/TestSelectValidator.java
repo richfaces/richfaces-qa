@@ -56,15 +56,15 @@ public class TestSelectValidator extends AbstractWebDriverTest {
     public void testValidatorMessage() {
         String customMessage = "Custom message!";
         Graphene.guardAjax(select.openSelect()).select(10);
-        Assert.assertTrue(message.isVisible(), "Validator message should be visible");
+        Assert.assertTrue(message.advanced().isVisible(), "Validator message should be visible");
         Assert.assertEquals(message.getDetail(), CaliforniaFirstValidator.VALIDATOR_ERROR_MSG);
 
         selectAttributes.set(SelectAttributes.validatorMessage, customMessage);
         Graphene.guardAjax(select.openSelect()).select(10);
-        Assert.assertTrue(message.isVisible(), "Validator message should be visible");
+        Assert.assertTrue(message.advanced().isVisible(), "Validator message should be visible");
         Assert.assertEquals(message.getDetail(), customMessage);
 
         Graphene.guardAjax(select.openSelect()).select("California");
-        Assert.assertFalse(message.isVisible(), "Validator message should not be visible");
+        Assert.assertFalse(message.advanced().isVisible(), "Validator message should not be visible");
     }
 }

@@ -67,7 +67,7 @@ public abstract class AbstractListComponent<T extends ListItem> implements ListC
 
     @Override
     public T getItem(ChoicePicker picker) {
-        return instantiateItemFragment(picker.pick(getItemsElements()));
+        return instantiateItemFragment(getListItemClass(), picker.pick(getItemsElements()));
     }
 
     @Override
@@ -75,7 +75,7 @@ public abstract class AbstractListComponent<T extends ListItem> implements ListC
         List<WebElement> foundItems = picker.pickMultiple(getItemsElements());
         List<T> result = Lists.newArrayList();
         for (WebElement foundItem : foundItems) {
-            result.add(instantiateItemFragment(foundItem));
+            result.add(instantiateItemFragment(getListItemClass(), foundItem));
         }
         return result;
     }
@@ -90,9 +90,22 @@ public abstract class AbstractListComponent<T extends ListItem> implements ListC
     }
 
     protected List<T> getItemsFragments() {
+        return instantiateFragments(getListItemClass(), getItemsElements());
+    }
+
+    protected Class<T> getListItemClass() {
+        return listItemClass;
+    }
+
+    @Override
+    public WebElement getRoot() {
+        return root;
+    }
+
+    protected List<T> instantiateFragments(Class<T> klass, List<WebElement> itemsRoots) {
         List<T> result = Lists.newArrayList();
-        for (WebElement foundItem : getItemsElements()) {
-            result.add(instantiateItemFragment(foundItem));
+        for (WebElement itemRoot : itemsRoots) {
+            result.add(instantiateItemFragment(klass, itemRoot));
         }
         if (result.size() == 1 && !result.get(0).getRoot().isDisplayed()) {
             // hack for RF's list.
@@ -102,13 +115,8 @@ public abstract class AbstractListComponent<T extends ListItem> implements ListC
         return Collections.unmodifiableList(result);
     }
 
-    @Override
-    public WebElement getRoot() {
-        return root;
-    }
-
-    private T instantiateItemFragment(WebElement item) {
-        return Graphene.createPageFragment(listItemClass, item);
+    protected T instantiateItemFragment(Class<T> klass, WebElement item) {
+        return Graphene.createPageFragment(klass, item);
     }
 
     @Override

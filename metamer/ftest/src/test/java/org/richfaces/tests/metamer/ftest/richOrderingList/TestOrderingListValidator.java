@@ -49,16 +49,16 @@ public class TestOrderingListValidator extends AbstractOrderingListTest {
     public void testValidatorMessage() {
         String customMessage = "Phoenix first!";
         submit();
-        Assert.assertTrue(message.isVisible(), "Validator message should be visible");
+        Assert.assertTrue(message.advanced().isVisible(), "Validator message should be visible");
         Assert.assertEquals(message.getDetail(), PhoenixFirstValidator.VALIDATOR_ERROR_MSG);
 
         attributes.set(OrderingListAttributes.validatorMessage, customMessage);
         submit();
-        Assert.assertTrue(message.isVisible(), "Validator message should be visible");
+        Assert.assertTrue(message.advanced().isVisible(), "Validator message should be visible");
         Assert.assertEquals(message.getDetail(), customMessage);
 
         orderingList.select(PHOENIX_INDEX).putItBefore(0);
         submit();
-        Assert.assertFalse(message.isVisible(), "Validator message should not be visible");
+        Assert.assertFalse(message.advanced().isVisible(), "Validator message should not be visible");
     }
 }

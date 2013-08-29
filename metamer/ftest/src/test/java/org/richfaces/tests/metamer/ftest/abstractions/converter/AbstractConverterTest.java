@@ -23,6 +23,8 @@ package org.richfaces.tests.metamer.ftest.abstractions.converter;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
 
@@ -57,17 +59,17 @@ public abstract class AbstractConverterTest extends AbstractWebDriverTest {
     protected abstract String outputForEmptyValue();
 
     public void checkConverter() {
-        assertNotVisible(message, "Message should not be visible.");
+        assertNotVisible(message.advanced().getRootElement(), "Message should not be visible.");
         assertEquals(getOutputText(), ConverterBean.DEFAULT_VALUE, "Output");
 
         submitAjax();
-        assertNotVisible(message, "Message should not be visible.");
+        assertFalse(message.advanced().isVisible(), "Message should not be visible.");
         assertEquals(getOutputText(), outputForEmptyValue(), "Output");
 
         setFailing(true);
         setBadValue();
         submitAjax();
-        assertVisible(message, "Message should be visible.");
+        assertTrue(message.advanced().isVisible(), "Message should be visible.");
         assertEquals(message.getDetail(), String.format(SwitchableFailingConverter.MESSAGE_TEMPLATE, badValue()), "Output");
         assertEquals(getOutputText(), ConverterBean.DEFAULT_VALUE, "Output");
     }
@@ -75,13 +77,13 @@ public abstract class AbstractConverterTest extends AbstractWebDriverTest {
     public void checkConverterMessage() {
         setConverterMessage(CUSTOM_CONVERTER_MESSAGE);
         submitAjax();
-        assertNotVisible(message, "Message should not be visible.");
+        assertFalse(message.advanced().isVisible(), "Message should not be visible.");
         assertEquals(getOutputText(), outputForEmptyValue(), "Output");
 
         setFailing(true);
         setBadValue();
         submitAjax();
-        assertVisible(message, "Message should be visible.");
+        assertTrue(message.advanced().isVisible(), "Message should be visible.");
         assertEquals(message.getDetail(), CUSTOM_CONVERTER_MESSAGE);
         assertEquals(getOutputText(), ConverterBean.DEFAULT_VALUE, "Output");
     }

@@ -50,13 +50,13 @@ public abstract class AbstractMessageComponentCommonTest extends AbstractWebDriv
     public void checkEscape() {
         AttributeList.messageAttributes.set(MessageAttributes.escape, Boolean.TRUE);
         String newSpanString = "<span id='newSpan'>newSpan</span>";
-        getPage().simpleInput1.advanced().clear(ClearType.JS).sendKeys(newSpanString);
+        getPage().getSimpleInput1().advanced().clear(ClearType.JS).sendKeys(newSpanString);
         submitWithHBtn();
-        assertNotVisible(getPage().newSpan, "new span should not be visible");
+        assertNotVisible(getPage().getNewSpan(), "new span should not be visible");
         AttributeList.messageAttributes.set(MessageAttributes.escape, Boolean.FALSE);
-        getPage().simpleInput1.advanced().clear(ClearType.JS).sendKeys(newSpanString);
+        getPage().getSimpleInput1().advanced().clear(ClearType.JS).sendKeys(newSpanString);
         submitWithHBtn();
-        assertVisible(getPage().newSpan, "new span should be visible");
+        assertVisible(getPage().getNewSpan(), "new span should be visible");
     }
 
     public void checkLang() {
@@ -128,7 +128,7 @@ public abstract class AbstractMessageComponentCommonTest extends AbstractWebDriv
 
     protected void generateValidationMessages() {
         executeJS("window.valuesSettingState=''");
-        getPage().wrongValuesButton.click();
+        getPage().getWrongValuesButton().click();
         waitForValuesSetting();
     }
 
@@ -148,7 +148,7 @@ public abstract class AbstractMessageComponentCommonTest extends AbstractWebDriv
      * !Does not do any request!.
      */
     protected void setCorrectValues() {
-        getPage().correctValuesButton.click();
+        getPage().getCorrectValuesButton().click();
         waitForValuesSetting();
     }
 
@@ -158,11 +158,11 @@ public abstract class AbstractMessageComponentCommonTest extends AbstractWebDriv
     }
 
     protected void submitWithA4jBtn() {
-        MetamerPage.waitRequest(getPage().a4jCommandButton, WaitRequestType.XHR).click();
+        MetamerPage.waitRequest(getPage().getA4jCommandButton(), WaitRequestType.XHR).click();
     }
 
     protected void submitWithHBtn() {
-        MetamerPage.waitRequest(getPage().hCommandButton, WaitRequestType.HTTP).click();
+        MetamerPage.waitRequest(getPage().gethCommandButton(), WaitRequestType.HTTP).click();
     }
 
     protected void waitForValuesSetting() {

@@ -405,12 +405,12 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
     public void testRequired() {
         inplaceInputAttributes.set(InplaceInputAttributes.required, Boolean.TRUE);
         MetamerPage.waitRequest(inplaceInput.type(""), WaitRequestType.XHR).confirm();
-        assertTrue(requiredMessage.isVisible());
+        assertTrue(requiredMessage.advanced().isVisible());
         assertEquals(requiredMessage.getDetail(), inplaceInputAttributes.get(InplaceInputAttributes.requiredMessage));
 
         inplaceInputAttributes.set(InplaceInputAttributes.required, Boolean.FALSE);
         MetamerPage.waitRequest(inplaceInput.type(""), WaitRequestType.XHR).confirm();
-        assertFalse(requiredMessage.isVisible());
+        assertFalse(requiredMessage.advanced().isVisible());
     }
 
     @Test
@@ -419,7 +419,7 @@ public class TestInplaceInputAttributes extends AbstractWebDriverTest {
         inplaceInputAttributes.set(InplaceInputAttributes.required, Boolean.TRUE);
         inplaceInputAttributes.set(InplaceInputAttributes.requiredMessage, reqMsg);
         MetamerPage.waitRequest(inplaceInput.type(""), WaitRequestType.XHR).confirm();
-        assertTrue(requiredMessage.isVisible());
+        assertTrue(requiredMessage.advanced().isVisible());
         assertEquals(requiredMessage.getDetail(), reqMsg);
     }
 

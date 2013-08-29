@@ -45,20 +45,20 @@ public abstract class AbstractNotifyMessagesTest extends AbstractMessagesCompone
         generateValidationMessagesWithoutWait();
         submitWithA4jBtn();
 
-        Assert.assertFalse(getPage().getMessagesComponentWithFor().isVisible());
+        Assert.assertFalse(getPage().getMessagesComponentWithFor().advanced().isVisible());
 
         // now set for attribute to "simpleInput1"
         AttributeList.messagesAttributes.set(MessagesAttributes.FOR, "simpleInput1");
         generateValidationMessagesWithWait();
 
-        Assert.assertTrue(page.getMessagesComponentWithFor().isVisible());
+        Assert.assertTrue(page.getMessagesComponentWithFor().advanced().isVisible());
         Assert.assertEquals(page.getMessagesComponentWithFor().size(), expectedMessages);
 
         // now set for attribute back to "simpleInput2"
         AttributeList.messagesAttributes.set(MessagesAttributes.FOR, "simpleInput2");
         generateValidationMessagesWithWait();
 
-        Assert.assertTrue(page.getMessagesComponentWithFor().isVisible());
+        Assert.assertTrue(page.getMessagesComponentWithFor().advanced().isVisible());
         Assert.assertEquals(page.getMessagesComponentWithFor().size(), expectedMessages);
     }
 
@@ -67,14 +67,14 @@ public abstract class AbstractNotifyMessagesTest extends AbstractMessagesCompone
         AttributeList.messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.FALSE);
         generateValidationMessagesWithWait();
         //messages for both inputs should appear
-        Assert.assertTrue(page.getMessagesComponentWithGlobal().isVisible());
+        Assert.assertTrue(page.getMessagesComponentWithGlobal().advanced().isVisible());
         Assert.assertEquals(page.getMessagesComponentWithGlobal().size(), expectedMessagesPerInput * 2);
 
         AttributeList.messagesAttributes.set(MessagesAttributes.globalOnly, Boolean.TRUE);
         generateValidationMessagesWithoutWait();
         submitWithA4jBtn();
         //no messages should appear, because validation messages are bound to inputs not to 'null'
-        Assert.assertFalse(page.getMessagesComponentWithGlobal().isVisible());
+        Assert.assertFalse(page.getMessagesComponentWithGlobal().advanced().isVisible());
     }
 
     @Override
@@ -87,7 +87,7 @@ public abstract class AbstractNotifyMessagesTest extends AbstractMessagesCompone
         return new FutureTarget<WebElement>() {
             @Override
             public WebElement getTarget() {
-                return page.getMessagesComponentWithGlobal().getMessageAtIndex(0).getRoot();
+                return page.getMessagesComponentWithGlobal().getItem(0).getRoot();
             }
         };
     }
