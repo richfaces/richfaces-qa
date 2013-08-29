@@ -1,57 +1,73 @@
-/**
- * JBoss, Home of Professional Open Source
- * Copyright 2013, Red Hat, Inc. and individual contributors
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
 package org.richfaces.tests.page.fragments.impl.panel;
 
+import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jodah.typetools.TypeResolver;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 /**
- * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
+ * Add to the final doc that there is example implementation in TextualRichFacesPanel, as the most used panel.
+ * @author jhuska
  *
+ * @param <HEADER>
+ * @param <BODY>
  */
-public class RichFacesPanel {
+public abstract class RichFacesPanel<HEADER, BODY> extends Panel<HEADER, BODY> {
 
-    public static final String CSS_HEADER = "div.rf-p-hdr";
-    public static final String CSS_BODY = "div.rf-p-b";
-
-    @Root
-    private WebElement root;
-
-    @FindBy(css = CSS_HEADER)
+    @FindBy(css = "div.rf-p-hdr")
     private WebElement header;
 
-    @FindBy(css = CSS_BODY)
+    @FindBy(css = "div.rf-p-b")
     private WebElement body;
 
-    public WebElement getRoot() {
-        return root;
+    private AdvancedInteractions advancedInteractions;
+
+    @Drone
+    private WebDriver browser;
+
+    @Root
+    public WebElement root;
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public HEADER getHeaderContent() {
+        if (!new WebElementConditionFactory(header).isPresent().apply(browser)) {
+            throw new IllegalStateException("You are trying to get header content of the panel which does not have header!");
+        }
+        Class<HEADER> containerClass = (Class<HEADER>) TypeResolver.resolveRawArguments(Panel.class, getClass())[0];
+        return Graphene.createPageFragment(containerClass, header);
     }
 
-    public WebElement getHeader() {
-        return header;
+    @Override
+    @SuppressWarnings("unchecked")
+    public BODY getBodyContent() {
+        Class<BODY> containerClass = (Class<BODY>) TypeResolver.resolveRawArguments(Panel.class, getClass())[1];
+        return Graphene.createPageFragment(containerClass, body);
     }
 
-    public WebElement getBody() {
-        return body;
+    public AdvancedInteractions advanced() {
+        if (advancedInteractions == null) {
+            advancedInteractions = new AdvancedInteractions();
+        }
+        return advancedInteractions;
+    }
+
+    public class AdvancedInteractions {
+
+        public WebElement getRootElement() {
+            return root;
+        }
+
+        public WebElement getHeaderElement() {
+            return header;
+        }
+
+        public WebElement getBodyElement() {
+            return body;
+        }
     }
 }
