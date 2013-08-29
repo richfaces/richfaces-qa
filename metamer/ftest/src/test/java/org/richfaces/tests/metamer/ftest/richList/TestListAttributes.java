@@ -34,8 +34,6 @@ import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.page.fragments.impl.list.RichFacesListItem;
-import org.richfaces.tests.page.fragments.impl.list.internal.ListItems;
-import org.richfaces.tests.page.fragments.impl.list.internal.simple.RichFacesSimpleListItem;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
