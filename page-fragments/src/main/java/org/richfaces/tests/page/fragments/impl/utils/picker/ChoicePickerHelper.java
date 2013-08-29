@@ -31,12 +31,14 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+import java.util.ArrayDeque;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 import java.util.Set;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper.WebElementPicking.WebElementPicker;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -61,9 +63,16 @@ public final class ChoicePickerHelper {
         return new ByVisibleTextChoicePicker();
     }
 
+    /**
+     * @return Returns ChoicePicker for picking choices by WebElement methods/properties.
+     */
+    public static WebElementPicker byWebElement() {
+        return new WebElementPickerImpl();
+    }
+
     public static class ByIndexChoicePicker implements ChoicePicker, MultipleChoicePicker {
 
-        private final Set<FindCommand> commands = Sets.newHashSet();
+        private final List<FindCommand> commands = Lists.newArrayList();
 
         private ByIndexChoicePicker() {
         }
@@ -72,22 +81,8 @@ public final class ChoicePickerHelper {
             commands.add(new FindCommand() {
 
                 @Override
-                public boolean equals(Object obj) {
-                    if (obj instanceof FindCommand) {
-                        FindCommand cmd = (FindCommand) obj;
-                        return cmd.hashCode() == this.hashCode();
-                    }
-                    return FALSE;
-                }
-
-                @Override
                 public WebElement find(List<WebElement> list) {
                     return list.get(list.size() - 1 - positionsBeforeLast);
-                }
-
-                @Override
-                public int hashCode() {
-                    return Integer.MAX_VALUE - positionsBeforeLast;
                 }
 
                 @Override
@@ -103,22 +98,8 @@ public final class ChoicePickerHelper {
             commands.add(new FindCommand() {
 
                 @Override
-                public boolean equals(Object obj) {
-                    if (obj instanceof FindCommand) {
-                        FindCommand cmd = (FindCommand) obj;
-                        return cmd.hashCode() == this.hashCode();
-                    }
-                    return FALSE;
-                }
-
-                @Override
                 public WebElement find(List<WebElement> list) {
                     return list.get(0);
-                }
-
-                @Override
-                public int hashCode() {
-                    return 0;
                 }
 
                 @Override
@@ -133,22 +114,8 @@ public final class ChoicePickerHelper {
             commands.add(new FindCommand() {
 
                 @Override
-                public boolean equals(Object obj) {
-                    if (obj instanceof FindCommand) {
-                        FindCommand cmd = (FindCommand) obj;
-                        return cmd.hashCode() == this.hashCode();
-                    }
-                    return FALSE;
-                }
-
-                @Override
                 public WebElement find(List<WebElement> list) {
                     return list.get(index);
-                }
-
-                @Override
-                public int hashCode() {
-                    return index;
                 }
 
                 @Override
@@ -203,12 +170,7 @@ public final class ChoicePickerHelper {
 
     public static class ByVisibleTextChoicePicker implements ChoicePicker, MultipleChoicePicker {
 
-        private static final int CONTAINS = 89;
-        private static final int MATCHES = 47;
-        private static final int STARTS = 97;
-        private static final int ENDS = 37;
-
-        private final Set<Predicate> filters = Sets.newHashSet();
+        private final List<Predicate> filters = Lists.newArrayList();
         private boolean allRulesMustPass = Boolean.TRUE;
         private Function<WebElement, WebElement> transformationFunction;
 
@@ -240,23 +202,6 @@ public final class ChoicePickerHelper {
                 }
 
                 @Override
-                public boolean equals(Object obj) {
-                    if (obj instanceof Predicate) {
-                        Predicate<WebElement> p = (Predicate<WebElement>) obj;
-                        return p.hashCode() == this.hashCode();
-                    }
-                    return FALSE;
-                }
-
-                @Override
-                public int hashCode() {
-                    int hash = 3;
-                    hash = 89 * hash + CONTAINS;
-                    hash = 89 * hash + (str != null ? str.hashCode() : 0);
-                    return hash;
-                }
-
-                @Override
                 public String toString() {
                     return "contains('" + str + "')";
                 }
@@ -273,23 +218,6 @@ public final class ChoicePickerHelper {
                 }
 
                 @Override
-                public boolean equals(Object obj) {
-                    if (obj instanceof Predicate) {
-                        Predicate<WebElement> p = (Predicate<WebElement>) obj;
-                        return p.hashCode() == this.hashCode();
-                    }
-                    return FALSE;
-                }
-
-                @Override
-                public int hashCode() {
-                    int hash = 5;
-                    hash = 97 * hash + ENDS;
-                    hash = 97 * hash + (str != null ? str.hashCode() : 0);
-                    return hash;
-                }
-
-                @Override
                 public String toString() {
                     return "endsWith('" + str + "')";
                 }
@@ -302,23 +230,6 @@ public final class ChoicePickerHelper {
                 @Override
                 public boolean apply(WebElement input) {
                     return input.getText().matches(str);
-                }
-
-                @Override
-                public boolean equals(Object obj) {
-                    if (obj instanceof Predicate) {
-                        Predicate<WebElement> p = (Predicate<WebElement>) obj;
-                        return p.hashCode() == this.hashCode();
-                    }
-                    return FALSE;
-                }
-
-                @Override
-                public int hashCode() {
-                    int hash = 3;
-                    hash = 59 * hash + MATCHES;
-                    hash = 59 * hash + (str != null ? str.hashCode() : 0);
-                    return hash;
                 }
 
                 @Override
@@ -341,10 +252,10 @@ public final class ChoicePickerHelper {
                 return Collections.EMPTY_LIST;
             }
 
-            List<WebElement> result = pickFirst
-                ? Lists.newArrayList(Iterables.find(options, new PickPredicate()))
-                : Lists.newArrayList(Iterables.filter(options, new PickPredicate()));
-            return result;
+            Set<WebElement> result = pickFirst
+                ? Sets.newHashSet(Iterables.find(options, new PickPredicate()))
+                : Sets.newHashSet(Iterables.filter(options, new PickPredicate()));
+            return Lists.newArrayList(result);
         }
 
         @Override
@@ -379,13 +290,6 @@ public final class ChoicePickerHelper {
          */
         public void setTransformationFunction(Function<WebElement, WebElement> transformationFunction) {
             this.transformationFunction = transformationFunction;
-            new Function<WebElement, WebElement>() {
-
-                @Override
-                public WebElement apply(WebElement input) {
-                    return input.findElements(By.tagName("span")).get(1);
-                }
-            };
         }
 
         public ByVisibleTextChoicePicker startsWith(final String str) {
@@ -394,23 +298,6 @@ public final class ChoicePickerHelper {
                 @Override
                 public boolean apply(WebElement input) {
                     return input.getText().startsWith(str);
-                }
-
-                @Override
-                public boolean equals(Object obj) {
-                    if (obj instanceof Predicate) {
-                        Predicate<WebElement> p = (Predicate<WebElement>) obj;
-                        return p.hashCode() == this.hashCode();
-                    }
-                    return FALSE;
-                }
-
-                @Override
-                public int hashCode() {
-                    int hash = 3;
-                    hash = 53 * hash + STARTS;
-                    hash = 53 * hash + (str != null ? str.hashCode() : 0);
-                    return hash;
                 }
 
                 @Override
@@ -452,4 +339,273 @@ public final class ChoicePickerHelper {
             }
         }
     };
+
+    public interface WebElementPicking {
+
+        ComparationBy text();
+
+        ComparationBy attribute(String attributeName);
+
+        public interface ComparationBy {
+
+            LogicalOperation endsWith(String str);
+
+            LogicalOperation equalTo(String str);
+
+            LogicalOperation contains(String str);
+
+            LogicalOperation matches(String str);
+
+            LogicalOperation starstWith(String str);
+        }
+
+        public interface LogicalOperation extends ChoicePicker, MultipleChoicePicker {
+
+            WebElementPicking and();
+
+            WebElementPicking or();
+        }
+
+        public interface WebElementPicker extends ChoicePicker, MultipleChoicePicker, WebElementPicking {
+        }
+    }
+
+    public static class WebElementPickerImpl implements WebElementPicker {
+
+        private final Deque<Predicate<WebElement>> stackWithPredicates = new ArrayDeque<Predicate<WebElement>>();
+        private final Deque<LogicalFunctions> stackWithLogicalFunctions = new ArrayDeque<LogicalFunctions>();
+
+        private final ComparationBy comparation = new ComparationByImpl();
+        private final LogicalOperation operation = new LogicalOperationImpl();
+
+        private Function<WebElement, WebElement> transformationFunction;
+        private Function<WebElement, String> webElementFunction;
+
+        private enum LogicalFunctions {
+
+            OR, AND;
+        }
+
+        @Override
+        public ComparationBy attribute(String attributeName) {
+            webElementFunction = new GetAttributeFunction(attributeName);
+            return comparation;
+        }
+
+        @Override
+        public WebElement pick(List<WebElement> options) {
+            Preconditions.checkArgument(!stackWithPredicates.isEmpty());
+            Preconditions.checkArgument(stackWithPredicates.size() - 1 == stackWithLogicalFunctions.size());
+            return Iterables.find(options, new FinalPredicate());
+        }
+
+        @Override
+        public List<WebElement> pickMultiple(List<WebElement> options) {
+            Preconditions.checkArgument(!stackWithPredicates.isEmpty());
+            Preconditions.checkArgument(stackWithPredicates.size() - 1 == stackWithLogicalFunctions.size());
+            return Lists.newArrayList(Iterables.filter(options, new FinalPredicate()));
+        }
+
+        @Override
+        public ComparationBy text() {
+            webElementFunction = new GetTextFunction();
+            return comparation;
+        }
+
+        private WebElement transFormIfNeeded(WebElement input) {
+            return (transformationFunction == null ? input : transformationFunction.apply(input));
+        }
+
+        private class FinalPredicate implements Predicate<WebElement> {
+
+            @Override
+            public boolean apply(WebElement input) {
+                WebElement transformed = transFormIfNeeded(input);
+                Deque<Predicate<WebElement>> predicates = new ArrayDeque<Predicate<WebElement>>(stackWithPredicates);
+                Deque<LogicalFunctions> logicalFunctions = new ArrayDeque<LogicalFunctions>(stackWithLogicalFunctions);
+                if (logicalFunctions.isEmpty()) {
+                    return predicates.pop().apply(transformed);
+                } else {
+                    boolean result = predicates.pop().apply(transformed);
+                    while (!logicalFunctions.isEmpty()) {
+                        switch (logicalFunctions.pop()) {
+                            case AND:
+                                result &= predicates.pop().apply(transformed);
+                                break;
+                            case OR:
+                                result |= predicates.pop().apply(transformed);
+                                break;
+                        }
+                    }
+                    return result;
+                }
+            }
+        }
+
+        private class ComparationByImpl implements ComparationBy {
+
+            @Override
+            public LogicalOperation contains(String str) {
+                stackWithPredicates.push(new MergingPredicate(webElementFunction, new ContainsFunction(str)));
+                return operation;
+            }
+
+            @Override
+            public LogicalOperation endsWith(String str) {
+                stackWithPredicates.push(new MergingPredicate(webElementFunction, new EndsWithFunction(str)));
+                return operation;
+            }
+
+            @Override
+            public LogicalOperation equalTo(String str) {
+                stackWithPredicates.push(new MergingPredicate(webElementFunction, new EqualsToFunction(str)));
+                return operation;
+            }
+
+            @Override
+            public LogicalOperation matches(String str) {
+                stackWithPredicates.push(new MergingPredicate(webElementFunction, new MatchesFunction(str)));
+                return operation;
+            }
+
+            @Override
+            public LogicalOperation starstWith(String str) {
+                stackWithPredicates.push(new MergingPredicate(webElementFunction, new StartsWithFunction(str)));
+                return operation;
+            }
+        }
+
+        private class LogicalOperationImpl implements LogicalOperation {
+
+            @Override
+            public WebElementPicking and() {
+                stackWithLogicalFunctions.push(LogicalFunctions.AND);
+                return WebElementPickerImpl.this;
+            }
+
+            @Override
+            public WebElementPicking or() {
+                stackWithLogicalFunctions.push(LogicalFunctions.OR);
+                return WebElementPickerImpl.this;
+            }
+
+            @Override
+            public WebElement pick(List<WebElement> options) {
+                return WebElementPickerImpl.this.pick(options);
+            }
+
+            @Override
+            public List<WebElement> pickMultiple(List<WebElement> options) {
+                return WebElementPickerImpl.this.pickMultiple(options);
+            }
+        }
+
+        private static class MergingPredicate implements Predicate<WebElement> {
+
+            private final Function<WebElement, String> elementToString;
+            private final Function<String, Boolean> stringToBoolean;
+
+            public MergingPredicate(Function<WebElement, String> elementToString, Function<String, Boolean> stringToBoolean) {
+                this.elementToString = elementToString;
+                this.stringToBoolean = stringToBoolean;
+            }
+
+            @Override
+            public boolean apply(WebElement input) {
+                return stringToBoolean.apply(elementToString.apply(input));
+            }
+        }
+
+        private class GetTextFunction implements Function<WebElement, String> {
+
+            @Override
+            public String apply(WebElement input) {
+                return input.getText();
+            }
+        }
+
+        private static class GetAttributeFunction implements Function<WebElement, String> {
+
+            private final String attName;
+
+            public GetAttributeFunction(String attName) {
+                this.attName = attName;
+            }
+
+            @Override
+            public String apply(WebElement input) {
+                return input.getAttribute(attName);
+            }
+        }
+
+        private static class ContainsFunction implements Function<String, Boolean> {
+
+            private final String compareTo;
+
+            public ContainsFunction(String compareTo) {
+                this.compareTo = compareTo;
+            }
+
+            @Override
+            public Boolean apply(String input) {
+                return input.contains(compareTo);
+            }
+        }
+
+        private static class EndsWithFunction implements Function<String, Boolean> {
+
+            private final String compareTo;
+
+            public EndsWithFunction(String compareTo) {
+                this.compareTo = compareTo;
+            }
+
+            @Override
+            public Boolean apply(String input) {
+                return input.endsWith(compareTo);
+            }
+        }
+
+        private static class EqualsToFunction implements Function<String, Boolean> {
+
+            private final String compareTo;
+
+            public EqualsToFunction(String compareTo) {
+                this.compareTo = compareTo;
+            }
+
+            @Override
+            public Boolean apply(String input) {
+                return input.equals(compareTo);
+            }
+        }
+
+        private static class MatchesFunction implements Function<String, Boolean> {
+
+            private final String compareTo;
+
+            public MatchesFunction(String compareTo) {
+                this.compareTo = compareTo;
+            }
+
+            @Override
+            public Boolean apply(String input) {
+                return input.matches(compareTo);
+            }
+        }
+
+        private static class StartsWithFunction implements Function<String, Boolean> {
+
+            private final String compareTo;
+
+            public StartsWithFunction(String compareTo) {
+                this.compareTo = compareTo;
+            }
+
+            @Override
+            public Boolean apply(String input) {
+                return input.startsWith(compareTo);
+            }
+        }
+    }
 }
