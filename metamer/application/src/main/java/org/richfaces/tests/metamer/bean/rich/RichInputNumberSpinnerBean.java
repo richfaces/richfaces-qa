@@ -30,7 +30,7 @@ import javax.faces.bean.ViewScoped;
 import org.richfaces.tests.metamer.Attributes;
 import org.richfaces.tests.metamer.bean.abstractions.NumberInputValidationBean;
 import org.richfaces.tests.metamer.bean.abstractions.NumberInputValidationBeanImpl;
-import org.richfaces.ui.input.HtmlInputNumberSpinner;
+import org.richfaces.ui.input.inputNumberSlider.UIInputNumberSpinner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +57,7 @@ public class RichInputNumberSpinnerBean extends NumberInputValidationBeanImpl im
     public void init() {
         logger.debug("initializing bean " + getClass().getName());
 
-        attributes = Attributes.getComponentAttributesFromFacesConfig(HtmlInputNumberSpinner.class, getClass());
+        attributes = Attributes.getComponentAttributesFromFacesConfig(UIInputNumberSpinner.class, getClass());
 
         attributes.setAttribute("enableManualInput", true);
         attributes.setAttribute("maxValue", 10);
