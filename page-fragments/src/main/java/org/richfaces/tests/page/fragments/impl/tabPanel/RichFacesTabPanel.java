@@ -26,7 +26,7 @@ public class RichFacesTabPanel extends AbstractSwitchableComponent<RichFacesTab>
     @FindBy(xpath = "//div[contains(@id, 'tabPanel')]//td[contains(@class, 'rf-tab-hdr-dis')]")
     private List<WebElement> allDisabledHeaders;
 
-    @FindBy(xpath = "//form/div/div[contains(@id, 'form:tab') or contains(@id, 'form:dynamic')]")
+    @FindBy(xpath = "//div[contains(@id, 'tabPanel')]/div[contains(@id, ':tab') or contains(@id, 'form:dynamic')]")
     private List<WebElement> allTabContents;
 
     private AdvancedInteractions advancedInteractions;
