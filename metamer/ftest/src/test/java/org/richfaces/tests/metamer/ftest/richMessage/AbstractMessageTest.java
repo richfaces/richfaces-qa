@@ -47,7 +47,7 @@ public abstract class AbstractMessageTest extends AbstractMessageComponentTest {
         return new FutureTarget<WebElement>() {
             @Override
             public WebElement getTarget() {
-                return page.messageComponentForFirstInput.getRoot();
+                return page.getMessageComponentForFirstInput().advanced().getRootElement();
             }
         };
     }

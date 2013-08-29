@@ -19,31 +19,13 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.messages;
+package org.richfaces.tests.page.fragments.impl.notify;
 
-import java.util.List;
-
-import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.VisibleComponent;
-import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
+import org.richfaces.tests.page.fragments.impl.messages.MessageItem;
 
 /**
  *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface MessagesBase<T> extends Iterable<T>, VisibleComponent {
-
-    List<T> getAllMessagesOfType(MessageType type);
-
-    /**
-     * Returns a Message at index.
-     */
-    T getMessageAtIndex(int index);
-
-    WebElement getRoot();
-
-    /**
-     * Returns a number of Messages.
-     */
-    int size();
+public interface NotifyMessageItem extends NotifyMessage, MessageItem {
 }

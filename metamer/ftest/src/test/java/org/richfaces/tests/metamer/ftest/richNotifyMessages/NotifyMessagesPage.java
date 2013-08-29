@@ -24,38 +24,29 @@ package org.richfaces.tests.metamer.ftest.richNotifyMessages;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.abstractions.message.MessagesComponentTestPage;
 import org.richfaces.tests.page.fragments.impl.notify.Notify;
-import org.richfaces.tests.page.fragments.impl.notify.NotifyMessage;
-import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotifyEnhanced;
+import org.richfaces.tests.page.fragments.impl.notify.NotifyMessageItem;
+import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotify;
+import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotify.NotifyMessageItemImpl;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public class NotifyMessagesPage extends MessagesComponentTestPage<NotifyMessage> {
+public class NotifyMessagesPage extends MessagesComponentTestPage<NotifyMessageItem> {
 
     @FindBy(tagName = "body")
-    private RichFacesNotifyEnhanced messagesComponentWithFor;
+    private RichFacesNotify messagesComponentWithFor;
     @FindBy(tagName = "body")
-    private RichFacesNotifyEnhanced messagesComponentWithGlobal;
-    //
-    private boolean init = false;
-
-    private void init() {
-        if (!init) {
-            messagesComponentWithFor.setStyleClassToContain("forSelectableInput");
-            messagesComponentWithGlobal.setStyleClassToContain("forGlobalOnly");
-            init = true;
-        }
-    }
+    private RichFacesNotify messagesComponentWithGlobal;
 
     @Override
-    public Notify getMessagesComponentWithFor() {
-        init();
+    public Notify<? extends NotifyMessageItem> getMessagesComponentWithFor() {
+        messagesComponentWithFor.advanced().setStyleClassToContain("forSelectableInput");
         return messagesComponentWithFor;
     }
 
     @Override
-    public Notify getMessagesComponentWithGlobal() {
-        init();
+    public Notify<? extends NotifyMessageItem> getMessagesComponentWithGlobal() {
+        messagesComponentWithGlobal.advanced().setStyleClassToContain("forGlobalOnly");
         return messagesComponentWithGlobal;
     }
 }

@@ -90,23 +90,23 @@ public class AbstractKeepSavedTest extends AbstractWebDriverTest {
         changeInputValueToAndSubmit(TEXT_CORRECT);
         // check that value is saved
         Assert.assertEquals(getInputValue(), TEXT_CORRECT);
-        Assert.assertFalse(messages.isVisible(), "No error message should be visible.");
+        Assert.assertFalse(messages.advanced().isVisible(), "No error message should be visible.");
 
         // put in a wrong value and submit
         changeInputValueToAndSubmit(TEXT_WRONG);
         // check if the value is saved depending on the @keepSaved
         Assert.assertEquals(getInputValue(), (keepSaved ? TEXT_WRONG : TEXT_CORRECT));
-        Assert.assertTrue(messages.isVisible(), "An error message should be visible.");
+        Assert.assertTrue(messages.advanced().isVisible(), "An error message should be visible.");
         Assert.assertEquals(messages.size(), 1, "Only 1 error message should be visible.");
         // check if the value is saved depending on the @keepSaved after another submit
         submit();
         if (keepSaved) {
             Assert.assertEquals(getInputValue(), TEXT_WRONG);
-            Assert.assertTrue(messages.isVisible(), "An error message should be visible.");
+            Assert.assertTrue(messages.advanced().isVisible(), "An error message should be visible.");
             Assert.assertEquals(messages.size(), 1, "Only 1 error message should be visible.");
         } else {
             Assert.assertEquals(getInputValue(), TEXT_CORRECT);
-            Assert.assertFalse(messages.isVisible(), "No error message should be visible.");
+            Assert.assertFalse(messages.advanced().isVisible(), "No error message should be visible.");
         }
     }
 

@@ -37,7 +37,7 @@ import org.richfaces.tests.metamer.bean.rich.RichNotifyBean;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.page.fragments.impl.Utils;
-import org.richfaces.tests.page.fragments.impl.notify.NotifyMessagePosition;
+import org.richfaces.tests.page.fragments.impl.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotifyMessage;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.Assert;
@@ -80,7 +80,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
 
     @Test
     public void testInit() {
-        Assert.assertTrue(message.isVisible());
+        Assert.assertTrue(message.advanced().isVisible());
         Assert.assertEquals(message.getDetail(), RichNotifyBean.DEFAULT_DETAIL);
         Assert.assertEquals(message.getSummary(), RichNotifyBean.DEFAULT_SUMMARY);
     }
@@ -90,92 +90,92 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     public void testNoDetailNoSummary() {
         notifyAttributes.set(NotifyAttributes.detail, "");
         notifyAttributes.set(NotifyAttributes.summary, "");
-        Assert.assertFalse(message.isVisible());
+        Assert.assertFalse(message.advanced().isVisible());
     }
 
     @Test
     public void testNonblocking() {
         notifyAttributes.set(NotifyAttributes.nonblocking, Boolean.TRUE);
         notifyAttributes.set(NotifyAttributes.nonblockingOpacity, 0);
-        Utils.triggerJQ(executor, "mouseover", message.getRoot());
-        TestNotifyAttributes.waitForOpacityChange(0, message.getRoot());
-        Utils.triggerJQ(executor, "mouseout", message.getRoot());
-        TestNotifyAttributes.waitForOpacityChange(1, message.getRoot());
+        Utils.triggerJQ(executor, "mouseover", message.advanced().getRootElement());
+        TestNotifyAttributes.waitForOpacityChange(0, message.advanced().getRootElement());
+        Utils.triggerJQ(executor, "mouseout", message.advanced().getRootElement());
+        TestNotifyAttributes.waitForOpacityChange(1, message.advanced().getRootElement());
     }
 
     @Test
     public void testNonblockingOpacity() {
         notifyAttributes.set(NotifyAttributes.nonblocking, Boolean.TRUE);
         notifyAttributes.set(NotifyAttributes.nonblockingOpacity, 0.5);
-        Utils.triggerJQ(executor, "mouseover", message.getRoot());
-        TestNotifyAttributes.waitForOpacityChange(0.5, message.getRoot());
-        Utils.triggerJQ(executor, "mouseout", message.getRoot());
-        TestNotifyAttributes.waitForOpacityChange(1, message.getRoot());
+        Utils.triggerJQ(executor, "mouseover", message.advanced().getRootElement());
+        TestNotifyAttributes.waitForOpacityChange(0.5, message.advanced().getRootElement());
+        Utils.triggerJQ(executor, "mouseout", message.advanced().getRootElement());
+        TestNotifyAttributes.waitForOpacityChange(1, message.advanced().getRootElement());
     }
 
     @Test
     public void testOnClick() {
-        testFireEvent(Event.CLICK, message.getRoot());
+        testFireEvent(Event.CLICK, message.advanced().getRootElement());
     }
 
     @Test
     public void testOnDblClick() {
-        testFireEvent(Event.DBLCLICK, message.getRoot());
+        testFireEvent(Event.DBLCLICK, message.advanced().getRootElement());
     }
 
     @Test
     public void testOnKeyDown() {
-        testFireEvent(Event.KEYDOWN, message.getRoot());
+        testFireEvent(Event.KEYDOWN, message.advanced().getRootElement());
     }
 
     @Test
     public void testOnKeyPress() {
-        testFireEvent(Event.KEYPRESS, message.getRoot());
+        testFireEvent(Event.KEYPRESS, message.advanced().getRootElement());
     }
 
     @Test
     public void testOnKeyUp() {
-        testFireEvent(Event.KEYUP, message.getRoot());
+        testFireEvent(Event.KEYUP, message.advanced().getRootElement());
     }
 
     @Test
     public void testOnMouseDown() {
-        testFireEvent(Event.MOUSEDOWN, message.getRoot());
+        testFireEvent(Event.MOUSEDOWN, message.advanced().getRootElement());
     }
 
     @Test
     public void testOnMouseMove() {
-        testFireEvent(Event.MOUSEMOVE, message.getRoot());
+        testFireEvent(Event.MOUSEMOVE, message.advanced().getRootElement());
     }
 
     @Test
     public void testOnMouseOut() {
-        testFireEvent(Event.MOUSEOUT, message.getRoot());
+        testFireEvent(Event.MOUSEOUT, message.advanced().getRootElement());
     }
 
     @Test
     public void testOnMouseOver() {
-        testFireEvent(Event.MOUSEOVER, message.getRoot());
+        testFireEvent(Event.MOUSEOVER, message.advanced().getRootElement());
     }
 
     @Test
     public void testOnMouseUp() {
-        testFireEvent(Event.MOUSEUP, message.getRoot());
+        testFireEvent(Event.MOUSEUP, message.advanced().getRootElement());
     }
 
     @Test
     public void testRendered() {
         notifyAttributes.set(NotifyAttributes.rendered, Boolean.TRUE);
-        assertVisible(message.getRoot(), "Message should be visible.");
+        assertVisible(message.advanced().getRootElement(), "Message should be visible.");
         notifyAttributes.set(NotifyAttributes.rendered, Boolean.FALSE);
-        assertNotVisible(message.getRoot(), "Message should not be visible.");
+        assertNotVisible(message.advanced().getRootElement(), "Message should not be visible.");
     }
 
     @Test
     public void testShowCloseButton() {
         notifyAttributes.set(NotifyAttributes.showCloseButton, Boolean.TRUE);
         message.close();
-        assertNotVisible(message.getRoot(), "Message should not be visible after close.");
+        assertNotVisible(message.advanced().getRootElement(), "Message should not be visible after close.");
 
         notifyAttributes.set(NotifyAttributes.showCloseButton, Boolean.FALSE);
         try {
@@ -189,10 +189,10 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
     @Test
     public void testShowShadow() {
         notifyAttributes.set(NotifyAttributes.showShadow, Boolean.TRUE);
-        assertVisible(message.getShadowElement(), "Shadow should be visible");
+        assertVisible(message.advanced().getShadowElement(), "Shadow should be visible");
 
         notifyAttributes.set(NotifyAttributes.showShadow, Boolean.FALSE);
-        assertNotVisible(message.getShadowElement(), "Shadow should not be visible");
+        assertNotVisible(message.advanced().getShadowElement(), "Shadow should not be visible");
     }
 
     @Test
@@ -200,13 +200,13 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
         String[] stacks = { "topLeftStack", "bottomRightStack" };
         //default position is top right
         notifyAttributes.set(NotifyAttributes.stack, "");
-        Assert.assertEquals(message.getPosition(), NotifyMessagePosition.TOP_RIGHT);
+        Assert.assertEquals(message.advanced().getPosition(), NotifyMessagePosition.TOP_RIGHT);
 
         notifyAttributes.set(NotifyAttributes.stack, stacks[0]);
-        Assert.assertEquals(message.getPosition(), NotifyMessagePosition.TOP_LEFT);
+        Assert.assertEquals(message.advanced().getPosition(), NotifyMessagePosition.TOP_LEFT);
 
         notifyAttributes.set(NotifyAttributes.stack, stacks[1]);
-        Assert.assertEquals(message.getPosition(), NotifyMessagePosition.BOTTOM_RIGHT);
+        Assert.assertEquals(message.advanced().getPosition(), NotifyMessagePosition.BOTTOM_RIGHT);
     }
 
     @Test
@@ -214,7 +214,7 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
         notifyAttributes.set(NotifyAttributes.stayTime, 1000);
         notifyAttributes.set(NotifyAttributes.sticky, Boolean.FALSE);
         waiting(3000);
-        assertNotVisible(message.getRoot(), "Message should not be visible now.");
+        assertNotVisible(message.advanced().getRootElement(), "Message should not be visible now.");
     }
 
     @Test
@@ -222,12 +222,12 @@ public class TestNotifyAttributes extends AbstractWebDriverTest {
         notifyAttributes.set(NotifyAttributes.stayTime, 1000);
         notifyAttributes.set(NotifyAttributes.sticky, Boolean.TRUE);
         waiting(3000);
-        assertVisible(message.getRoot(), "Message should be visible until closed.");
+        assertVisible(message.advanced().getRootElement(), "Message should be visible until closed.");
     }
 
     @Test
     public void testStyleClass() {
-        testStyleClass(message.getRoot());
+        testStyleClass(message.advanced().getRootElement());
     }
 
     @Test

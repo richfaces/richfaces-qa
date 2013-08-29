@@ -48,7 +48,6 @@ import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -61,6 +60,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.Locations;
+import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.calendar.common.HeaderControls;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay.DayType;
@@ -282,7 +282,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
         calendar.getInput().sendKeys("RF 4");
         submitWithA4jSubmitBtn();
-        Graphene.waitAjax().until(message.isVisibleCondition());
+        message.advanced().waitUntilIsVisible();
 
         assertEquals(message.getDetail(), errorMsg);
     }
@@ -497,7 +497,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         switch (direction) {
             case NULL:
             case AUTO:
-                // auto (direction depends on browser/screen resolution)
+            // auto (direction depends on browser/screen resolution)
             case BOTTOMLEFT:
                 locationInput = inputLocations.getBottomLeft();
                 break;
@@ -852,10 +852,10 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.required, booleanValue);
         submitWithA4jSubmitBtn();
         if (booleanValue) {
-            assertTrue(message.isVisible());
+            assertTrue(message.advanced().isVisible());
             assertEquals(message.getDetail(), "value is required");
         } else {
-            assertFalse(message.isVisible());
+            assertFalse(message.advanced().isVisible());
         }
     }
 
@@ -866,7 +866,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         calendarAttributes.set(CalendarAttributes.required, Boolean.TRUE);
         submitWithA4jSubmitBtn();
 
-        assertTrue(message.isVisible());
+        assertTrue(message.advanced().isVisible());
         assertEquals(message.getDetail(), msg);
     }
 

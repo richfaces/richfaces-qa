@@ -25,17 +25,29 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.message.Message;
 
 /**
+ *
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
 public interface NotifyMessage extends Message {
 
+    public enum NotifyMessagePosition {
+
+        BOTTOM_LEFT, BOTTOM_RIGHT, TOP_LEFT, TOP_RIGHT;
+    }
+
+    @Override
+    AdvancedNotifyMessageIteractions advanced();
+
     void close();
 
-    WebElement getCloseElement();
+    public interface AdvancedNotifyMessageIteractions extends AdvancedMessageInteractions {
 
-    WebElement getCloseIconElement();
+        WebElement getCloseElement();
 
-    NotifyMessagePosition getPosition();
+        WebElement getCloseIconElement();
 
-    WebElement getShadowElement();
+        NotifyMessagePosition getPosition();
+
+        WebElement getShadowElement();
+    }
 }

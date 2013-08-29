@@ -25,7 +25,6 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 
 import java.net.URL;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.testng.annotations.Test;
 
 /**
@@ -45,8 +44,8 @@ public class TestMessageCSV extends AbstractMessageTest {
 
     @Override
     protected void waitingForValidationMessagesToShow() {
-        Graphene.waitGui().until(page.messageComponentForFirstInput.isVisibleCondition());
-        Graphene.waitGui().until(page.messageComponentForSecondInput.isVisibleCondition());
-        Graphene.waitGui().until(page.messageComponentForSelectableInput.isVisibleCondition());
+        page.getMessageComponentForFirstInput().advanced().waitUntilIsVisible();
+        page.getMessageComponentForSecondInput().advanced().waitUntilIsVisible();
+        page.getMessageComponentForSelectableInput().advanced().waitUntilIsVisible();
     }
 }

@@ -32,24 +32,24 @@ import org.richfaces.tests.page.fragments.impl.message.RichFacesMessage;
 public class MessagePage extends MessageComponentTestPage<Message> {
 
     @FindBy(css = "span[id$=messageForSelectableInput]")
-    public RichFacesMessage messageComponentForSelectableInput;
+    private RichFacesMessage messageComponentForSelectableInput;
     @FindBy(css = "span[id$=messageForFirstInput]")
-    public RichFacesMessage messageComponentForFirstInput;
+    private RichFacesMessage messageComponentForFirstInput;
     @FindBy(css = "span[id$=messageForSecondInput]")
-    public RichFacesMessage messageComponentForSecondInput;
+    private RichFacesMessage messageComponentForSecondInput;
 
     @Override
-    public Message getMessageComponentForFirstInput() {
+    public RichFacesMessage getMessageComponentForFirstInput() {
         return messageComponentForFirstInput;
     }
 
     @Override
-    public Message getMessageComponentForSecondInput() {
+    public RichFacesMessage getMessageComponentForSecondInput() {
         return messageComponentForSecondInput;
     }
 
     @Override
-    public Message getMessageComponentForSelectableInput() {
+    public RichFacesMessage getMessageComponentForSelectableInput() {
         return messageComponentForSelectableInput;
     }
 }

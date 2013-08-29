@@ -134,8 +134,9 @@ public final class Utils {
 
     public static boolean isVisible(WebElement e) {
         try {
-            e.isDisplayed();
-            return true;
+            boolean result = false;
+            result = e.isDisplayed();
+            return result;
         } catch (NoSuchElementException ex) {
             return false;
         }
