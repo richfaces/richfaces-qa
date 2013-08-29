@@ -198,7 +198,7 @@ public class TestRichEditor extends AbstractWebDriverTest {
             public void perform() {
                 new Actions(driver).sendKeys(page.getEditorFrame(), "some text").build().perform();
                 // click on some different component to lose focus
-                driver.findElement(By.name("afterForm:attributes:heightInput")).click();
+                driver.findElement(By.xpath("//input[contains(@name, 'a4jButton')]")).click();
             }
         });
     }
@@ -210,7 +210,7 @@ public class TestRichEditor extends AbstractWebDriverTest {
             public void perform() {
                 new Actions(driver).sendKeys(page.getEditorFrame(), "some text").build().perform();
                 // click on some different component to lose focus
-                driver.findElement(By.name("afterForm:attributes:heightInput")).click();
+                driver.findElement(By.xpath("//input[contains(@name, 'a4jButton')]")).click();
             }
         });
     }

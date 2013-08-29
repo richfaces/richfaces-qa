@@ -53,6 +53,11 @@ import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.testng.annotations.Test;
 
+/**
+ * Test case for page /faces/components/richTabPanel/simple.xhtml
+ *
+ * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
+ */
 public class TestRichTabPanel extends AbstractWebDriverTest {
 
     @Override
@@ -180,6 +185,7 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
     @Test
     public void testCycledSwitching() {
         String panelId = (String) executeJS("return testedComponentId");
+
         String result = "someString";
         result = (String) executeJS("return RichFaces.component('" + panelId + "').nextItem('tab5')");
         assertEquals(result, null);
@@ -429,7 +435,7 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
     public void testTabContentClass() {
         String contentClass = "metamer-ftest-class";
         tabPanelAttributes.set(TabPanelAttributes.tabContentClass, contentClass);
-        assertTrue(driver.findElement(By.xpath("//form/div/div/div[contains(@class, 'rf-tab-cnt')]")).getAttribute("class")
+        assertTrue(driver.findElement(By.xpath("//div[contains(text(), 'content of tab 1')] ")).getAttribute("class")
             .contains(contentClass));
     }
 

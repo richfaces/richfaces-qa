@@ -40,7 +40,7 @@ import org.testng.annotations.Test;
 import com.google.common.base.Predicate;
 
 /**
- * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
+ * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  */
 public class TestRichEditorWithTyping extends AbstractWebDriverTest {
 
