@@ -60,6 +60,15 @@ public class RichCalendarBean extends DateInputValidationBeanImpl implements Ser
     private TimeZone tz = TimeZone.getTimeZone("GMT");
     private Date currentDate;
     private Date value;
+    private Date value2;
+
+    public Date getValue2() {
+        return value2;
+    }
+
+    public void setValue2(Date value2) {
+        this.value2 = value2;
+    }
 
     /**
      * Initializes the managed bean.
