@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richEditor;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.richfaces.tests.metamer.ftest.richEditor.EditorAttributes.styleClass;
@@ -38,7 +39,6 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
@@ -196,7 +196,7 @@ public class TestRichEditor extends AbstractWebDriverTest {
         testFireEvent(editorAttributes, EditorAttributes.onblur, new Action() {
             @Override
             public void perform() {
-                new Actions(driver).sendKeys(page.getEditorFrame(), "some text").build().perform();
+                guardNoRequest(page.getEditor()).type("some text");
                 // click on some different component to lose focus
                 driver.findElement(By.xpath("//input[contains(@name, 'a4jButton')]")).click();
             }
@@ -208,7 +208,7 @@ public class TestRichEditor extends AbstractWebDriverTest {
         testFireEvent(editorAttributes, EditorAttributes.onchange, new Action() {
             @Override
             public void perform() {
-                new Actions(driver).sendKeys(page.getEditorFrame(), "some text").build().perform();
+                guardNoRequest(page.getEditor()).type("some text");
                 // click on some different component to lose focus
                 driver.findElement(By.xpath("//input[contains(@name, 'a4jButton')]")).click();
             }
@@ -220,7 +220,7 @@ public class TestRichEditor extends AbstractWebDriverTest {
         testFireEvent(editorAttributes, EditorAttributes.onfocus, new Action() {
             @Override
             public void perform() {
-                new Actions(driver).sendKeys(page.getEditorFrame(), "some text").build().perform();
+                guardNoRequest(page.getEditor()).type("some text");
             }
         });
     }
