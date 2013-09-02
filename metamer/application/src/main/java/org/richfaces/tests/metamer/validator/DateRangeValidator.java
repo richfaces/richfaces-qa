@@ -34,7 +34,7 @@ import org.richfaces.tests.metamer.bean.rich.RichCalendarBean;
 
 /**
  * Custom date validator that accepts only last year's dates.
- * 
+ *
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
  * @version $Revision: 22493 $
  */
@@ -43,7 +43,7 @@ public class DateRangeValidator implements Validator {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.validator.Validator#validate(javax.faces.context.FacesContext,
      * javax.faces.component.UIComponent, java.lang.Object)f
      */
