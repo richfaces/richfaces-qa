@@ -26,7 +26,6 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.popupPan
 
 import java.net.URL;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
@@ -69,7 +68,7 @@ public class TestPopupPanelJSApi extends AbstractWebDriverTest {
 
     private void openPopupPanel() {
         openButton.click();
-        Graphene.waitGui().until(panel.isVisibleCondition());
+        panel.advanced().waitUntilIsVisible();
     }
 
     private int getValue() {
@@ -80,22 +79,22 @@ public class TestPopupPanelJSApi extends AbstractWebDriverTest {
     public void testHide() {
         openPopupPanel();
         hide.click();
-        Graphene.waitGui().until(panel.isNotVisibleCondition());
+        panel.advanced().waitUntilIsNotVisible();
     }
 
     @Test
     public void testLeft() {
         openPopupPanel();
         getLeft.click();
-        Assert.assertEquals(getValue(), panel.getLocations().getTopLeft().x, TOLERANCE);
+        Assert.assertEquals(getValue(), panel.advanced().getLocations().getTopLeft().x, TOLERANCE);
     }
 
     @Test
     public void testMoveTo() {
         openPopupPanel();
         moveTo.click();// moves to [0, 0]
-        Assert.assertEquals(panel.getLocations().getTopLeft().x, 0, TOLERANCE);
-        Assert.assertEquals(panel.getLocations().getTopLeft().y, 0, TOLERANCE);
+        Assert.assertEquals(panel.advanced().getLocations().getTopLeft().x, 0, TOLERANCE);
+        Assert.assertEquals(panel.advanced().getLocations().getTopLeft().y, 0, TOLERANCE);
     }
 
     @Test
@@ -105,32 +104,32 @@ public class TestPopupPanelJSApi extends AbstractWebDriverTest {
         popupPanelAttributes.set(PopupPanelAttributes.height, 400);
         popupPanelAttributes.set(PopupPanelAttributes.width, 400);
         openPopupPanel();
-        int widthBefore = panel.getLocations().getWidth();
-        int heightBefore = panel.getLocations().getHeight();
+        int widthBefore = panel.advanced().getLocations().getWidth();
+        int heightBefore = panel.advanced().getLocations().getHeight();
         Assert.assertEquals(widthBefore, 400, TOLERANCE);
         Assert.assertEquals(heightBefore, 400, TOLERANCE);
         resize.click();// resizes by 10x10
-        Assert.assertEquals(panel.getLocations().getWidth(), 410, TOLERANCE);
-        Assert.assertEquals(panel.getLocations().getHeight(), 410, TOLERANCE);
+        Assert.assertEquals(panel.advanced().getLocations().getWidth(), 410, TOLERANCE);
+        Assert.assertEquals(panel.advanced().getLocations().getHeight(), 410, TOLERANCE);
         resize.click();// resizes by 10x10
-        Assert.assertEquals(panel.getLocations().getWidth(), 420, TOLERANCE);
-        Assert.assertEquals(panel.getLocations().getHeight(), 420, TOLERANCE);
+        Assert.assertEquals(panel.advanced().getLocations().getWidth(), 420, TOLERANCE);
+        Assert.assertEquals(panel.advanced().getLocations().getHeight(), 420, TOLERANCE);
         resize.click();// resizes by 10x10, resize over max width/height, width/height stays at its maximum
-        Assert.assertEquals(panel.getLocations().getWidth(), 420, TOLERANCE);
-        Assert.assertEquals(panel.getLocations().getHeight(), 420, TOLERANCE);
+        Assert.assertEquals(panel.advanced().getLocations().getWidth(), 420, TOLERANCE);
+        Assert.assertEquals(panel.advanced().getLocations().getHeight(), 420, TOLERANCE);
     }
 
     @Test
     public void testShow() {
-        assertNotVisible(panel, "Panel should not be visible.");
+        assertNotVisible(panel.advanced().getRootElement(), "Panel should not be visible.");
         show.click();
-        Graphene.waitGui().until(panel.isVisibleCondition());
+        panel.advanced().waitUntilIsVisible();
     }
 
     @Test
     public void testTop() {
         openPopupPanel();
         getTop.click();
-        Assert.assertEquals(getValue(), panel.getLocations().getTopLeft().y, TOLERANCE);
+        Assert.assertEquals(getValue(), panel.advanced().getLocations().getTopLeft().y, TOLERANCE);
     }
 }

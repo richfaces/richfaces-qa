@@ -1,12 +1,27 @@
+/*******************************************************************************
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.panel;
 
-import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
-import org.jodah.typetools.TypeResolver;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -16,7 +31,7 @@ import org.openqa.selenium.WebElement;
  * @param <HEADER>
  * @param <BODY>
  */
-public abstract class RichFacesPanel<HEADER, BODY> extends Panel<HEADER, BODY> {
+public abstract class RichFacesPanel<HEADER, BODY> extends AbstractPanel<HEADER, BODY> {
 
     @FindBy(css = "div.rf-p-hdr")
     private WebElement header;
@@ -26,29 +41,6 @@ public abstract class RichFacesPanel<HEADER, BODY> extends Panel<HEADER, BODY> {
 
     private AdvancedInteractions advancedInteractions;
 
-    @Drone
-    private WebDriver browser;
-
-    @Root
-    public WebElement root;
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public HEADER getHeaderContent() {
-        if (!new WebElementConditionFactory(header).isPresent().apply(browser)) {
-            throw new IllegalStateException("You are trying to get header content of the panel which does not have header!");
-        }
-        Class<HEADER> containerClass = (Class<HEADER>) TypeResolver.resolveRawArguments(Panel.class, getClass())[0];
-        return Graphene.createPageFragment(containerClass, header);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public BODY getBodyContent() {
-        Class<BODY> containerClass = (Class<BODY>) TypeResolver.resolveRawArguments(Panel.class, getClass())[1];
-        return Graphene.createPageFragment(containerClass, body);
-    }
-
     public AdvancedInteractions advanced() {
         if (advancedInteractions == null) {
             advancedInteractions = new AdvancedInteractions();
@@ -56,18 +48,28 @@ public abstract class RichFacesPanel<HEADER, BODY> extends Panel<HEADER, BODY> {
         return advancedInteractions;
     }
 
+    @Override
+    protected WebElement getBodyElement() {
+        return body;
+    }
+
+    @Override
+    protected WebElement getHeaderElement() {
+        return header;
+    }
+
     public class AdvancedInteractions {
 
         public WebElement getRootElement() {
-            return root;
+            return RichFacesPanel.this.getRootElement();
         }
 
         public WebElement getHeaderElement() {
-            return header;
+            return RichFacesPanel.this.getHeaderElement();
         }
 
         public WebElement getBodyElement() {
-            return body;
+            return RichFacesPanel.this.getBodyElement();
         }
     }
 }

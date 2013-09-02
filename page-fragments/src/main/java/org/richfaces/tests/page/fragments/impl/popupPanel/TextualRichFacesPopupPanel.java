@@ -21,13 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.popupPanel;
 
-import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.VisibleComponent;
+import org.richfaces.tests.page.fragments.impl.panel.TextualFragmentPart;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface PopupPanelContent extends VisibleComponent {
-
-    WebElement getRootElement();
+public class TextualRichFacesPopupPanel extends RichFacesPopupPanel<TextualFragmentPart, TextualFragmentPart, TextualFragmentPart> {
 }

@@ -19,43 +19,17 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.popupPanel;
+package org.richfaces.tests.page.fragments.impl.panel;
 
-import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 
-/**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
-public class RichFacesSimplePopupPanelControls implements PopupPanelControls {
+public class TextualFragmentPart {
 
     @Root
-    private WebElement rootElement;
+    private WebElement root;
 
-    @Drone
-    private WebDriver browser;
-
-    @Override
-    public WebElement getRootElement() {
-        return rootElement;
-    }
-
-    @Override
-    public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(rootElement).not().isVisible();
-    }
-
-    @Override
-    public boolean isVisible() {
-        return isVisibleCondition().apply(browser);
-    }
-
-    @Override
-    public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(rootElement).isVisible();
+    public String getText() {
+        return root.getText();
     }
 }

@@ -19,43 +19,41 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  *******************************************************************************/
-package org.richfaces.tests.page.fragments.impl.popupPanel;
+package org.richfaces.tests.page.fragments.impl.panel;
 
-import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
-import org.openqa.selenium.WebDriver;
+import org.jodah.typetools.TypeResolver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 
-/**
- * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
- */
-public class RichFacesSimplePopupPanelContent implements PopupPanelContent {
+public abstract class AbstractPanel<HEADER, BODY> implements Panel<HEADER, BODY> {
 
     @Root
-    private WebElement rootElement;
-
-    @Drone
-    private WebDriver browser;
+    private WebElement root;
 
     @Override
-    public WebElement getRootElement() {
-        return rootElement;
+    @SuppressWarnings(value = "unchecked")
+    public BODY getBodyContent() {
+        Class<BODY> containerClass = (Class<BODY>) TypeResolver.resolveRawArguments(Panel.class, getClass())[1];
+        return Graphene.createPageFragment(containerClass, getBodyElement());
     }
 
-    @Override
-    public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(rootElement).not().isVisible();
-    }
+    protected abstract WebElement getBodyElement();
 
     @Override
-    public boolean isVisible() {
-        return isVisibleCondition().apply(browser);
+    @SuppressWarnings(value = "unchecked")
+    public HEADER getHeaderContent() {
+        if (new GrapheneElement(getHeaderElement()).isPresent()) {
+            throw new IllegalStateException("You are trying to get header content of the panel which does not have header!");
+        }
+        Class<HEADER> containerClass = (Class<HEADER>) TypeResolver.resolveRawArguments(Panel.class, getClass())[0];
+        return Graphene.createPageFragment(containerClass, getHeaderElement());
     }
 
-    @Override
-    public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(rootElement).isVisible();
+    protected abstract WebElement getHeaderElement();
+
+    protected WebElement getRootElement() {
+        return root;
     }
 }
