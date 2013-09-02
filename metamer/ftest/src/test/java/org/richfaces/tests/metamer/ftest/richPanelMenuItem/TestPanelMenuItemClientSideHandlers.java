@@ -22,6 +22,8 @@
 package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
+import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.mode;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuItemAttributes;
 import static org.richfaces.ui.common.Mode.ajax;
@@ -70,18 +72,16 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractPanelMenuCommon
     @Use(field = "event", value = "ajaxEvents")
     public void testClientSideEvent() {
         panelMenuItemAttributes.set(mode, ajax);
-        page.item.setMode(ajax);
         testRequestEventsBefore(event);
-        page.item.select();
+        guardAjax(page.getItem()).select();
         testRequestEventsAfter(event);
     }
 
     @Test
     public void testClientSideEventsOrderClient() {
         panelMenuItemAttributes.set(mode, client);
-        page.item.setMode(client);
         testRequestEventsBefore(clientEvents);
-        page.item.select();
+        page.getItem().select();
         testRequestEventsAfter(clientEvents);
     }
 
@@ -89,9 +89,8 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractPanelMenuCommon
     @RegressionTest("https://issues.jboss.org/browse/RF-12549")
     public void testClientSideEventsOrderAjax() {
         panelMenuItemAttributes.set(mode, ajax);
-        page.item.setMode(ajax);
         testRequestEventsBefore(ajaxEvents);
-        page.item.select();
+        guardAjax(page.getItem()).select();
         testRequestEventsAfter(ajaxEvents);
     }
 
@@ -99,9 +98,8 @@ public class TestPanelMenuItemClientSideHandlers extends AbstractPanelMenuCommon
     @IssueTracking("https://issues.jboss.org/browse/RF-10844")
     public void testClientSideEventsOrderServer() {
         panelMenuItemAttributes.set(mode, server);
-        page.item.setMode(server);
         testRequestEventsBefore(serverEvents);
-        page.item.select();
+        guardHttp(page.getItem()).select();
         testRequestEventsAfter(serverEvents);
     }
 

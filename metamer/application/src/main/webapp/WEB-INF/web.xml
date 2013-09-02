@@ -95,8 +95,6 @@
         <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
     </listener>-->
     
-    ${listeners}
-    
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>

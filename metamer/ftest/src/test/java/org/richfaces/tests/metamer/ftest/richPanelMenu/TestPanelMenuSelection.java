@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;
 
 import static org.testng.Assert.assertEquals;
@@ -28,7 +29,6 @@ import static org.testng.Assert.assertEquals;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -46,16 +46,16 @@ public class TestPanelMenuSelection extends AbstractPanelMenuTest {
 
         assertEquals(getSelectedItems(), 0);
         assertEquals(getSelectedGroups(), 0);
-        page.group2.toggle();
+        page.getPanelMenu().expandGroup("Group 2");
         assertEquals(getSelectedItems(), 0);
         assertEquals(getSelectedGroups(), 0);
-        page.item22.select();
+        guardAjax(page.getItem22()).select();
         assertEquals(getSelectedItems(), 1);
         assertEquals(getSelectedGroups(), bubbledGroups(1));
-        page.group24.toggle();
+        page.getPanelMenu().expandGroup("Group 2.4");
         assertEquals(getSelectedItems(), 1);
         assertEquals(getSelectedGroups(), bubbledGroups(1));
-        page.item242.select();
+        guardAjax(page.getPanelMenu()).selectItem("Item 2.4.2");
         assertEquals(getSelectedItems(), 1);
         assertEquals(getSelectedGroups(), bubbledGroups(2));
     }
@@ -65,10 +65,10 @@ public class TestPanelMenuSelection extends AbstractPanelMenuTest {
     }
 
     private int getSelectedItems() {
-        return page.panelMenu.getAllSelectedItems().size();
+        return page.getPanelMenu().advanced().getAllSelectedItems().size();
     }
 
     private int getSelectedGroups() {
-        return page.panelMenu.getAllSelectedGroups().size();
+        return page.getPanelMenu().advanced().getAllSelectedGroups().size();
     }
 }

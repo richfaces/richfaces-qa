@@ -24,7 +24,7 @@ package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.panelMenu.RichFacesPanelMenu;
-import org.richfaces.tests.page.fragments.impl.panelMenuGroup.RichFacesPanelMenuGroup;
+import org.richfaces.tests.page.fragments.impl.panelMenu.RichFacesPanelMenuGroup;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
@@ -34,15 +34,30 @@ import org.richfaces.tests.page.fragments.impl.panelMenuGroup.RichFacesPanelMenu
 public class PanelMenuGroupPage extends MetamerPage {
 
     @FindBy(css = "div.rf-pm[id$=panelMenu]")
-    public RichFacesPanelMenu menu;
+    private RichFacesPanelMenu menu;
 
     @FindBy(css = "div[id$=group2]")
-    public RichFacesPanelMenuGroup topGroup;
+    private RichFacesPanelMenuGroup topGroup;
 
     @FindBy(css = "div[id$=group1]")
-    public RichFacesPanelMenuGroup group1;
+    private RichFacesPanelMenuGroup group1;
 
     @FindBy(css = "div[id$=group23]")
-    public RichFacesPanelMenuGroup subGroup;
+    private RichFacesPanelMenuGroup subGroup;
 
+    public RichFacesPanelMenu getMenu() {
+        return menu;
+    }
+
+    public RichFacesPanelMenuGroup getTopGroup() {
+        return topGroup;
+    }
+
+    public RichFacesPanelMenuGroup getGroup1() {
+        return group1;
+    }
+
+    public RichFacesPanelMenuGroup getSubGroup() {
+        return subGroup;
+    }
 }

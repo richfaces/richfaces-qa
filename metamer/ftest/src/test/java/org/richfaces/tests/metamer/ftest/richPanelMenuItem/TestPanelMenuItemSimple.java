@@ -22,6 +22,9 @@
 package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
+import static org.jboss.arquillian.graphene.Graphene.guardNoRequest;
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.disabledClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.leftIconClass;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.rightIconClass;
@@ -39,7 +42,6 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemA
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.selectable;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuItem.PanelMenuItemAttributes.status;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuItemAttributes;
-import static org.richfaces.tests.page.fragments.impl.panelMenu.PanelMenuHelper.getGuardTypeForMode;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
@@ -47,18 +49,20 @@ import static org.testng.Assert.fail;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.ui.common.Mode;
 import org.richfaces.ui.toggle.panelMenu.PanelMenuMode;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import com.google.common.base.Predicate;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -78,7 +82,6 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
     @BeforeMethod
     public void setupMode() {
         panelMenuItemAttributes.set(mode, PanelMenuMode.ajax);
-        page.item.setMode(Mode.ajax);
     }
 
     @Test
@@ -87,54 +90,54 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
         panelMenuItemAttributes.set(data, RF);
         panelMenuItemAttributes.set(oncomplete, "data = event.data");
 
-        MetamerPage.requestTimeChangesWaiting(page.item).select();
+        MetamerPage.requestTimeChangesWaiting(page.getItem()).select();
 
         expectedReturnJS("return window.data", RF);
     }
 
     @Test
     public void testDisabled() {
-        page.item.setMode(null);
-        assertFalse(page.item.isDisabled());
+        assertFalse(page.getItem().advanced().isDisabled());
 
         panelMenuItemAttributes.set(disabled, true);
 
-        assertFalse(page.item.isSelected());
-        assertTrue(page.item.isDisabled());
+        assertFalse(page.getItem().advanced().isSelected());
+        assertTrue(page.getItem().advanced().isDisabled());
 
-        getGuardTypeForMode(page.item, Mode.client).select();
+        guardNoRequest(page.getItem()).select();
 
-        assertFalse(page.item.isSelected());
-        assertTrue(page.item.isDisabled());
+        assertFalse(page.getItem().advanced().isSelected());
+        assertTrue(page.getItem().advanced().isDisabled());
     }
 
     @Test
     @Templates(value = "plain")
     public void testDisabledClass() {
         panelMenuItemAttributes.set(disabled, true);
-        testStyleClass(page.item.getRoot(), disabledClass);
+        testStyleClass(page.getItem().advanced().getRootElement(), disabledClass);
     }
 
     @Test
     @Templates(value = "plain")
     public void testLeftDisabledIcon() {
         panelMenuItemAttributes.set(disabled, true);
-        verifyStandardIcons(leftDisabledIcon, page.item.getLeftIcon().getRoot(), page.item.getLeftIcon().getImgIcon(), "");
+        verifyStandardIcons(leftDisabledIcon, page.getItem().advanced().getLeftIcon(), page.getItem().advanced()
+            .getLeftIconImg(), "");
     }
 
     @Test
     @Templates(value = "plain")
     public void testLeftIcon() {
-        verifyStandardIcons(leftIcon, page.item.getLeftIcon().getRoot(), page.item.getLeftIcon().getImgIcon(), "");
+        verifyStandardIcons(leftIcon, page.getItem().advanced().getLeftIcon(), page.getItem().advanced().getLeftIconImg(), "");
 
         panelMenuItemAttributes.set(disabled, true);
-        assertTrue(page.item.getLeftIcon().isTransparent());
+        assertTrue(page.getItem().advanced().isTransparent(page.getItem().advanced().getLeftIcon()));
     }
 
     @Test
     @Templates(value = "plain")
     public void testLeftIconClass() {
-        testStyleClass(page.item.getLeftIcon().getRoot(), leftIconClass);
+        testStyleClass(page.getItem().advanced().getLeftIcon(), leftIconClass);
     }
 
     @Test
@@ -143,62 +146,62 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
         panelMenuItemAttributes.set(limitRender, true);
 
         String renderChecker = page.getRenderCheckerOutputElement().getText();
-        MetamerPage.requestTimeNotChangesWaiting(page.item).select();
-        Graphene.waitModel().until("Page was not updated").element(page.getRenderCheckerOutputElement()).text().not().equalTo(renderChecker);
+        MetamerPage.requestTimeNotChangesWaiting(page.getItem()).select();
+        Graphene.waitModel().until("Page was not updated").element(page.getRenderCheckerOutputElement()).text().not()
+            .equalTo(renderChecker);
     }
 
     @Test
     @Templates(value = "plain")
     public void testRendered() {
-        assertTrue(page.item.isVisible());
+        assertTrue(new WebElementConditionFactory(page.getItem().advanced().getRootElement()).isVisible().apply(driver));
 
         panelMenuItemAttributes.set(rendered, false);
 
-        assertFalse(page.item.isVisible());
+        assertFalse(new WebElementConditionFactory(page.getItem().advanced().getRootElement()).isVisible().apply(driver));
     }
 
     @Test
     @Templates(value = "plain")
     public void testRightDisabledIcon() {
         panelMenuItemAttributes.set(disabled, true);
-        verifyStandardIcons(rightDisabledIcon, page.item.getRightIcon().getRoot(), page.item.getRightIcon().getImgIcon(), "");
+        verifyStandardIcons(rightDisabledIcon, page.getItem().advanced().getRightIcon(), page.getItem().advanced()
+            .getRightIconImg(), "");
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10519")
     @Templates(value = "plain")
     public void testRightIcon() {
-        verifyStandardIcons(rightIcon, page.item.getRightIcon().getRoot(), page.item.getRightIcon().getImgIcon(), "");
+        verifyStandardIcons(rightIcon, page.getItem().advanced().getRightIcon(), page.getItem().advanced().getRightIconImg(),
+            "");
 
         panelMenuItemAttributes.set(disabled, true);
-        assertTrue(page.item.getRightIcon().isTransparent());
+        assertTrue(page.getItem().advanced().isTransparent(page.getItem().advanced().getRightIcon()));
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10519")
     @Templates(value = "plain")
     public void testRightIconClass() {
-        testStyleClass(page.item.getRightIcon().getRoot(), rightIconClass);
+        testStyleClass(page.getItem().advanced().getRightIcon(), rightIconClass);
     }
 
     @Test
     public void testSelectable() {
-        page.item.setMode(null);
         panelMenuItemAttributes.set(selectable, false);
-        TimeoutException ex = null;
-        try {
-            getGuardTypeForMode(page.item, Mode.client).select();
-        } catch (TimeoutException e) {
-            ex = e;
-        }
-        if (ex == null) {
-            fail("Item should not be selectable when @selectable=false.");
-        }
-        assertFalse(page.item.isSelected());
+        page.getItem().select();
+        waitGui().until(new Predicate<WebDriver>() {
+            public boolean apply(WebDriver driver) {
+                return !page.getItem().advanced().isSelected();
+            }
+        });
+
+        assertFalse(page.getItem().advanced().isSelected());
 
         panelMenuItemAttributes.set(selectable, true);
-        getGuardTypeForMode(page.item, Mode.ajax).select();
-        assertTrue(page.item.isSelected());
+        guardAjax(page.getItem()).select();
+        assertTrue(page.getItem().advanced().isSelected());
     }
 
     @Test
@@ -206,25 +209,26 @@ public class TestPanelMenuItemSimple extends AbstractWebDriverTest {
         panelMenuItemAttributes.set(status, "statusChecker");
 
         String statusChecker = page.getStatusCheckerOutputElement().getText();
-        page.item.select();
-        Graphene.waitAjax().until("Page was not updated").element(page.getStatusCheckerOutputElement()).text().not().equalTo(statusChecker);
+        page.getItem().select();
+        Graphene.waitAjax().until("Page was not updated").element(page.getStatusCheckerOutputElement()).text().not()
+            .equalTo(statusChecker);
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyle() {
-        testStyle(page.item.getRoot());
+        testStyle(page.getItem().advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyleClass(page.item.getRoot());
+        testStyleClass(page.getItem().advanced().getRootElement());
     }
 
     private void verifyStandardIcons(PanelMenuItemAttributes attribute, WebElement icon, WebElement imgIcon, String classSuffix) {
-        IconsCheckerWebdriver<PanelMenuItemAttributes> checker = new IconsCheckerWebdriver<PanelMenuItemAttributes>(
-                driver, panelMenuItemAttributes, "rf-ico-", "");
+        IconsCheckerWebdriver<PanelMenuItemAttributes> checker = new IconsCheckerWebdriver<PanelMenuItemAttributes>(driver,
+            panelMenuItemAttributes, "rf-ico-", "");
 
         checker.checkCssImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);
         checker.checkCssNoImageIcons(attribute, new IconsCheckerWebdriver.WebElementLocator(icon), classSuffix);

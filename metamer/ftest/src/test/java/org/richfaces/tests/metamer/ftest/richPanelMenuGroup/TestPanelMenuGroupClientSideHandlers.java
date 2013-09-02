@@ -22,6 +22,8 @@
 package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
+import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.mode;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuGroupAttributes;
 import static org.richfaces.ui.common.Mode.ajax;
@@ -38,7 +40,6 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.Test;
 
-
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
@@ -50,14 +51,15 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @Inject
     @Use(empty = true)
     String event;
-    String[] ajaxExpansionEvents = new String[] { "beforeselect", "beforeswitch", "beforeexpand", "begin",
-        "beforedomupdate", "select", "expand", "switch", "complete" };
+
+    String[] ajaxExpansionEvents = new String[] { "beforeselect", "beforeswitch", "beforeexpand", "begin", "beforedomupdate",
+            "select", "expand", "switch", "complete" };
     String[] ajaxCollapsionEvents = new String[] { "beforeselect", "beforeswitch", "beforecollapse", "begin",
-        "beforedomupdate", "select", "collapse", "switch", "complete" };
+            "beforedomupdate", "select", "collapse", "switch", "complete" };
     String[] clientExpansionEvents = new String[] { "beforeselect", "beforeswitch", "beforeexpand", "select", "expand",
-        "switch" };
-    String[] clientCollapsionEvents = new String[] { "beforeselect", "beforeswitch", "beforecollapse", "select",
-        "collapse", "collapse", "switch" };
+            "switch" };
+    String[] clientCollapsionEvents = new String[] { "beforeselect", "beforeswitch", "beforecollapse", "select", "collapse",
+            "collapse", "switch" };
     String[] serverExpansionEvents1 = new String[] { "beforeswitch" };
     String[] serverExpansionEvents2 = new String[] { "beforeexpand" };
     String[] serverCollapsionEvents = new String[] { "beforeswitch", "beforecollapse" };
@@ -75,30 +77,28 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @Use(field = "event", value = "ajaxCollapsionEvents")
     public void testClientSideCollapsionEvent() {
         panelMenuGroupAttributes.set(mode, ajax);
-        page.topGroup.setMode(ajax);
         testRequestEventsBefore(event);
-        page.topGroup.toggle();
+        guardAjax(page.getMenu()).collapseGroup(1);
         testRequestEventsAfter(event);
     }
 
     @Test
     @Use(field = "event", value = "ajaxExpansionEvents")
-    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
-        "richExtendedDataTable", "richList" })
+    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
+            "richList" })
     public void testClientSideExpansionEvent() {
         panelMenuGroupAttributes.set(mode, ajax);
-        page.topGroup.setMode(ajax);
-        page.topGroup.toggle();
+        guardAjax(page.getMenu()).collapseGroup(1);
         testRequestEventsBefore(event);
-        page.topGroup.toggle();
+        guardAjax(page.getMenu()).expandGroup(1);
         testRequestEventsAfter(event);
     }
 
     @Test
     @Use(field = "event", strings = { "beforeselect", "beforeswitch", "begin", "beforedomupdate", "select", "switch",
-        "complete" })
-    @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
-        "richExtendedDataTable", "richList" })
+            "complete" })
+    @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
+            "richList" })
     public void testClientSideExpansionEventInIterationComponents() {
         testClientSideExpansionEvent();
     }
@@ -106,8 +106,8 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11547")
     @Use(field = "event", strings = { "beforeexpand", "expand" })
-    @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
-        "richExtendedDataTable", "richList" })
+    @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
+            "richList" })
     public void testClientSideExpansionEventInIterationComponentsExpand() {
         testClientSideExpansionEvent();
     }
@@ -115,45 +115,41 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @Test
     public void testClientSideExpansionEventsOrderClient() {
         panelMenuGroupAttributes.set(mode, client);
-        page.topGroup.setMode(client);
-        page.group1.setMode(client);
         testRequestEventsBefore(clientExpansionEvents);
-        page.topGroup.toggle();
-        page.group1.toggle();
+        page.getMenu().collapseGroup(1);
+        page.getMenu().expandGroup(0);
         cleanMetamerEventsVariable();
-        page.topGroup.toggle();
+        page.getMenu().expandGroup(1);
         testRequestEventsAfter(clientExpansionEvents);
     }
 
-    @Test
+    @Test(groups = { "Future" }) //false negative, need to fix
     @RegressionTest("https://issues.jboss.org/browse/RF-10564")
     public void testClientSideCollapsionEventsOrderClient() {
         panelMenuGroupAttributes.set(mode, client);
-        page.topGroup.setMode(client);
-        page.topGroup.toggle();
+        page.getMenu().collapseGroup(1);
         testRequestEventsBefore(clientCollapsionEvents);
-        page.topGroup.toggle();
+        page.getMenu().expandGroup(1);
         testRequestEventsAfter(clientCollapsionEvents);
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-12549")
-    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
-        "richExtendedDataTable", "richList" })
+    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
+            "richList" })
     public void testClientSideExpansionEventsOrderAjax() {
         panelMenuGroupAttributes.set(mode, ajax);
-        page.topGroup.setMode(ajax);
-        page.topGroup.toggle();
+        guardAjax(page.getMenu()).collapseGroup(1);
         testRequestEventsBefore(ajaxExpansionEvents);
         cleanMetamerEventsVariable();
-        page.topGroup.toggle();
+        guardAjax(page.getMenu()).expandGroup(1);
         testRequestEventsAfter(ajaxExpansionEvents);
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11547")
-    @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
-        "richExtendedDataTable", "richList" })
+    @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
+            "richList" })
     public void testClientSideExpansionEventsOrderAjaxInIterationComponents() {
         testClientSideExpansionEventsOrderAjax();
     }
@@ -162,9 +158,8 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @RegressionTest("https://issues.jboss.org/browse/RF-12549")
     public void testClientSideCollapsionEventsOrderAjax() {
         panelMenuGroupAttributes.set(mode, ajax);
-        page.topGroup.setMode(ajax);
         testRequestEventsBefore(ajaxCollapsionEvents);
-        page.topGroup.toggle();
+        guardAjax(page.getMenu()).collapseGroup(1);
         testRequestEventsAfter(ajaxCollapsionEvents);
     }
 
@@ -172,12 +167,10 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @Use(field = "event", value = "serverExpansionEvents1")
     public void testClientSideExpansionEventsServerBeforeSwitch() {
         panelMenuGroupAttributes.set(mode, server);
-        page.topGroup.setMode(server);
-        page.topGroup.toggle();
-        page.topGroup.setMode(null);
+        guardHttp(page.getMenu()).collapseGroup(1);
         // testRequestEventsBeforeByAlert(event);
         testRequestEventsBefore(event);
-        page.topGroup.toggle();
+        guardHttp(page.getMenu()).expandGroup(1);
         // testRequestEventsAfterByAlert(event);
         testRequestEventsAfter(event);
     }
@@ -185,16 +178,14 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @Test
     @IssueTracking("https://issues.jboss.org/browse/RF-11547")
     @Use(field = "event", value = "serverExpansionEvents2")
-    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
-        "richExtendedDataTable", "richList" })
+    @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
+            "richList" })
     public void testClientSideExpansionEventsServerBeforeExpand() {
         panelMenuGroupAttributes.set(mode, server);
-        page.topGroup.setMode(server);
-        page.topGroup.toggle();
-        page.topGroup.setMode(null);
+        guardHttp(page.getMenu()).collapseGroup(1);
         // testRequestEventsBeforeByAlert(event);
         testRequestEventsBefore(event);
-        page.topGroup.toggle();
+        guardHttp(page.getMenu()).expandGroup(1);
         // testRequestEventsAfterByAlert(event);
         testRequestEventsAfter(event);
     }
@@ -202,8 +193,8 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11547")
     @Use(field = "event", value = "serverExpansionEvents2")
-    @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
-        "richExtendedDataTable", "richList" })
+    @Templates(value = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable", "richExtendedDataTable",
+            "richList" })
     public void testClientSideExpansionEventsServerBeforeExpandIterationComponents() {
         testClientSideExpansionEventsServerBeforeExpand();
     }
@@ -212,12 +203,10 @@ public class TestPanelMenuGroupClientSideHandlers extends AbstractPanelMenuGroup
     @Use(field = "event", value = "serverCollapsionEvents")
     public void testClientSideCollapsionEventsServer() {
         panelMenuGroupAttributes.set(mode, server);
-        page.topGroup.setMode(null);
         // testRequestEventsBeforeByAlert(event);
         testRequestEventsBefore(event);
-        page.topGroup.toggle();
+        guardHttp(page.getMenu()).collapseGroup(1);
         // testRequestEventsAfterByAlert(event);
         testRequestEventsAfter(event);
     }
 }
-

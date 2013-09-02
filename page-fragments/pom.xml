@@ -46,5 +46,17 @@
             <artifactId>typetools</artifactId>
             <version>0.3.0</version>
         </dependency>
+        
+        <!-- Testing dependencies -->
+        <dependency>
+            <groupId>org.jboss.arquillian.testng</groupId>
+            <artifactId>arquillian-testng-container</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>
