@@ -27,12 +27,15 @@ import static javax.faces.event.PhaseId.PROCESS_VALIDATIONS;
 import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
 import static javax.faces.event.PhaseId.UPDATE_MODEL_VALUES;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
+import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuGroupAttributes;
 import static org.richfaces.component.Mode.ajax;
 import static org.richfaces.component.Mode.client;
 import static org.richfaces.component.Mode.server;
 
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertFalse;
 
 import java.util.LinkedList;
 
@@ -43,7 +46,6 @@ import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -68,21 +70,28 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
     @Inject
     @Use("listeners")
     String listener;
-    String[] listeners = new String[] { "phases", "action invoked", "action listener invoked", "executeChecker",
-        "item changed" };
+    String[] listeners = new String[] { "phases", "action invoked", "action listener invoked", "executeChecker", "item changed" };
 
     @Test
     public void testRequestMode() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.immediate, immediate);
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.bypassUpdates, bypassUpdates);
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, mode);
-        page.topGroup.setMode(mode);
 
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.execute, "@this executeChecker");
 
-        assertTrue(page.topGroup.isExpanded());
-        page.topGroup.toggle();
-        assertTrue(page.topGroup.isCollapsed());
+        assertTrue(page.getTopGroup().advanced().isExpanded());
+        switch (mode) {
+            case ajax:
+                guardAjax(page.getMenu()).collapseGroup(1);
+                break;
+            case server:
+                guardHttp(page.getMenu()).collapseGroup(1);
+                break;
+            case client:
+                page.getMenu().collapseGroup(1);
+        }
+        assertFalse(page.getTopGroup().advanced().isExpanded());
 
         if (mode != client) {
             if ("phases".equals(listener)) {
@@ -100,14 +109,13 @@ public class TestPanelMenuGroupMode extends AbstractPanelMenuGroupTest {
 
     @Test
     @Uses({ @Use(field = "immediate", empty = true), @Use(field = "bypassUpdates", empty = true),
-        @Use(field = "mode", empty = true), @Use(field = "listener", empty = true) })
+            @Use(field = "mode", empty = true), @Use(field = "listener", empty = true) })
     public void testClientMode() {
         panelMenuGroupAttributes.set(PanelMenuGroupAttributes.mode, client);
-        page.topGroup.setMode(client);
 
-        assertTrue(page.topGroup.isExpanded());
-        page.topGroup.toggle();
-        assertTrue(page.topGroup.isCollapsed());
+        assertTrue(page.getTopGroup().advanced().isExpanded());
+        page.getMenu().collapseGroup(1);
+        assertFalse(page.getTopGroup().advanced().isExpanded());
     }
 
     private PhaseId[] getExpectedPhases() {

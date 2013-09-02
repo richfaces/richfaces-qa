@@ -36,7 +36,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
 
-
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
@@ -48,28 +47,29 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     public void testOnClick() {
         panelMenuGroupAttributes.set(mode, client);
 
-        Action click = new Actions(driver).click(page.topGroup.getRoot()).build();
+        Action click = new Actions(driver).click(page.getTopGroup().advanced().getHeaderElement()).build();
         testFireEvent(panelMenuGroupAttributes, onclick, click);
     }
 
     @Test
     public void testOnDblClick() {
         panelMenuGroupAttributes.set(mode, client);
-        Action dblClick = new Actions(driver).doubleClick(page.topGroup.getRoot()).build();
+        Action dblClick = new Actions(driver).doubleClick(page.getTopGroup().advanced().getHeaderElement()).build();
         testFireEvent(panelMenuGroupAttributes, ondblclick, dblClick);
     }
 
     @Test
     public void testOnMousedown() {
         panelMenuGroupAttributes.set(mode, client);
-        Action mousedown = new Actions(driver).clickAndHold(page.topGroup.getRoot()).build();
+        Action mousedown = new Actions(driver).clickAndHold(page.getTopGroup().advanced().getHeaderElement()).build();
         testFireEvent(panelMenuGroupAttributes, onmousedown, mousedown);
+        new Actions(driver).release(page.getTopGroup().advanced().getHeaderElement()).perform();
     }
 
     @Test
     public void testOnMousemove() {
         panelMenuGroupAttributes.set(mode, client);
-        Action mousemove = new Actions(driver).moveToElement(page.topGroup.getRoot(), 3, 3).build();
+        Action mousemove = new Actions(driver).moveToElement(page.getTopGroup().advanced().getHeaderElement(), 3, 3).build();
         testFireEvent(panelMenuGroupAttributes, onmousemove, mousemove);
     }
 
@@ -77,20 +77,20 @@ public class TestPanelMenuGroupDOMEventHandlers extends AbstractPanelMenuGroupTe
     public void testOnMouseout() {
         panelMenuGroupAttributes.set(mode, client);
         // TODO JJa 2013-02-13: Rewrite using webdriver api when fixed (not working now)
-        testFireEventWithJS(page.topGroup.getRoot(), Event.MOUSEOUT, panelMenuGroupAttributes, PanelMenuGroupAttributes.onmouseout);
+        testFireEventWithJS(page.getTopGroup().advanced().getHeaderElement(), Event.MOUSEOUT, panelMenuGroupAttributes, PanelMenuGroupAttributes.onmouseout);
     }
 
     @Test
     public void testOnMouseover() {
         panelMenuGroupAttributes.set(mode, client);
-        Action mouseover = new Actions(driver).moveToElement(page.topGroup.getRoot(), 3, 3).build();
+        Action mouseover = new Actions(driver).moveToElement(page.getTopGroup().advanced().getHeaderElement(), 3, 3).build();
         testFireEvent(panelMenuGroupAttributes, onmouseover, mouseover);
     }
 
     @Test
     public void testOnMouseup() {
         panelMenuGroupAttributes.set(mode, client);
-        Action mouseup = new Actions(driver).clickAndHold(page.topGroup.getRoot()).release().build();
+        Action mouseup = new Actions(driver).clickAndHold(page.getTopGroup().advanced().getHeaderElement()).release().build();
         testFireEvent(panelMenuGroupAttributes, onmouseup, mouseup);
     }
 

@@ -22,15 +22,11 @@
 package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.richfaces.component.Mode.ajax;
-import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.mode;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuGroupAttributes;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.testng.annotations.BeforeMethod;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -40,7 +36,7 @@ import org.testng.annotations.BeforeMethod;
 public abstract class AbstractPanelMenuGroupTest extends AbstractPanelMenuCommonTest {
 
     @Page
-    PanelMenuGroupPage page;
+    protected PanelMenuGroupPage page;
 
     @Override
     public URL getTestUrl() {
@@ -50,11 +46,5 @@ public abstract class AbstractPanelMenuGroupTest extends AbstractPanelMenuCommon
     @Override
     public MetamerPage getPage() {
         return page;
-    }
-
-    @BeforeMethod
-    public void setupModes() {
-        panelMenuGroupAttributes.set(mode, ajax);
-        page.topGroup.setMode(ajax);
     }
 }

@@ -23,7 +23,7 @@ package org.richfaces.tests.metamer.ftest.richPanelMenuItem;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
-import org.richfaces.tests.page.fragments.impl.panelMenuItem.RichFacesPanelMenuItem;
+import org.richfaces.tests.page.fragments.impl.panelMenu.RichFacesPanelMenuItem;
 
 /**
  * @author <a href="mailto:jjamrich@redhat.com">Jan Jamrich</a>
@@ -33,6 +33,9 @@ import org.richfaces.tests.page.fragments.impl.panelMenuItem.RichFacesPanelMenuI
 public class PanelMenuItemPage extends MetamerPage {
 
     @FindByJQuery("div[id$=item12]")
-    RichFacesPanelMenuItem item;
+    private RichFacesPanelMenuItem item;
 
+    public RichFacesPanelMenuItem getItem() {
+        return item;
+    }
 }

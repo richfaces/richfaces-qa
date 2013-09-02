@@ -35,6 +35,7 @@ import java.util.ArrayDeque;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.openqa.selenium.WebElement;
@@ -242,7 +243,7 @@ public final class ChoicePickerHelper {
         @Override
         public WebElement pick(List<WebElement> options) {
             List<WebElement> elements = pickInner(options, TRUE);
-            return (elements.isEmpty() ? null : elements.get(0));
+            return (elements == null || (elements.isEmpty()) ? null : elements.get(0));
         }
 
         private List<WebElement> pickInner(List<WebElement> options, boolean pickFirst) {
@@ -252,9 +253,14 @@ public final class ChoicePickerHelper {
                 return Collections.EMPTY_LIST;
             }
 
-            Set<WebElement> result = pickFirst
-                ? Sets.newHashSet(Iterables.find(options, new PickPredicate()))
-                : Sets.newHashSet(Iterables.filter(options, new PickPredicate()));
+            Set<WebElement> result = null;
+            try {
+                result = pickFirst
+                    ? Sets.newHashSet(Iterables.find(options, new PickPredicate()))
+                    : Sets.newHashSet(Iterables.filter(options, new PickPredicate()));
+            } catch(NoSuchElementException ex) {
+                return Collections.EMPTY_LIST;
+            }
             return Lists.newArrayList(result);
         }
 

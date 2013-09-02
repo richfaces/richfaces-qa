@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenuGroup;
 
-import static org.richfaces.component.Mode.ajax;
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.disabledClass;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.data;
 import static org.richfaces.tests.metamer.ftest.richPanelMenuGroup.PanelMenuGroupAttributes.disabled;
@@ -43,12 +43,12 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -64,7 +64,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
         panelMenuGroupAttributes.set(oncomplete, "data = event.data");
 
         String requestTime = page.getRequestTimeElement().getText();
-        page.topGroup.toggle();
+        page.getMenu().collapseGroup(1);
         Graphene.waitModel().until().element(page.getRequestTimeElement()).text().not().equals(requestTime);
 
         assertEquals(expectedReturnJS("return window.data", RF_STRING), RF_STRING);
@@ -72,25 +72,24 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
 
     @Test
     public void testDisabled() {
-        page.topGroup.setMode(null);
-        assertFalse(page.topGroup.isDisabled());
+        assertFalse(page.getTopGroup().advanced().isDisabled());
 
         panelMenuGroupAttributes.set(disabled, true);
 
-        assertFalse(page.topGroup.isSelected());
-        assertTrue(page.topGroup.isDisabled());
+        assertFalse(page.getTopGroup().advanced().isSelected());
+        assertTrue(page.getTopGroup().advanced().isDisabled());
 
-        Graphene.guardNoRequest(page.topGroup).toggle();
+        Graphene.guardNoRequest(page.getTopGroup().advanced().getHeaderElement()).click();
 
-        assertFalse(page.topGroup.isSelected());
-        assertTrue(page.topGroup.isDisabled());
+        assertFalse(page.getTopGroup().advanced().isSelected());
+        assertTrue(page.getTopGroup().advanced().isDisabled());
     }
 
     @Test
     @Templates(value = "plain")
     public void testDisabledClass() {
         panelMenuGroupAttributes.set(disabled, true);
-        testStyleClass(page.topGroup.getRoot(), disabledClass);
+        testStyleClass(page.getTopGroup().advanced().getRootElement(), disabledClass);
     }
 
     @Test
@@ -98,29 +97,29 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     public void testLeftDisabledIcon() {
         panelMenuGroupAttributes.set(disabled, true);
 
-        verifyStandardIcons(leftDisabledIcon, page.topGroup.getLeftIcon().getIcon(), page.topGroup.getLeftIcon().getIcon(), "");
+        verifyStandardIcons(leftDisabledIcon, page.getTopGroup().advanced().getLeftIcon(), page.getTopGroup().advanced().getLeftIcon(), "");
     }
 
     @Test
     @Templates(value = "plain")
     public void testLeftCollapsedIcon() {
-        page.topGroup.toggle();
+        page.getMenu().collapseGroup(1);
 
-        verifyStandardIcons(leftCollapsedIcon, page.topGroup.getLeftIcon().getIcon(), page.topGroup.getLeftIcon().getIcon(), "");
+        verifyStandardIcons(leftCollapsedIcon, page.getTopGroup().advanced().getLeftIcon(), page.getTopGroup().advanced().getLeftIcon(), "");
 
         panelMenuGroupAttributes.set(disabled, true);
         // both icon should be "transparent" - invisible
-        assertTrue(page.topGroup.getLeftIcon().isTransparent(page.topGroup.getLeftIcon().getIcon()));
+        assertTrue(page.getTopGroup().advanced().isTransparent(page.getTopGroup().advanced().getLeftIcon()));
     }
 
     @Test
     @Templates(value = "plain")
     public void testLeftExpandedIcon() {
 
-        verifyStandardIcons(leftExpandedIcon, page.topGroup.getLeftIcon().getIcon(), page.topGroup.getLeftIcon().getIcon(), "");
+        verifyStandardIcons(leftExpandedIcon, page.getTopGroup().advanced().getLeftIcon(), page.getTopGroup().advanced().getLeftIcon(), "");
 
         panelMenuGroupAttributes.set(disabled, true);
-        assertTrue(page.topGroup.getRightIcon().isTransparent(page.topGroup.getRightIcon().getIcon()));
+        assertTrue(page.getTopGroup().advanced().isTransparent(page.getTopGroup().advanced().getRightIcon()));
     }
 
     @Test
@@ -131,7 +130,7 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
         String requestTime = page.getRequestTimeElement().getText();
         String renderCheckerTime = page.getRenderCheckerOutputElement().getText();
 
-        page.topGroup.toggle();
+        page.getMenu().collapseGroup(1);
 
         Graphene.waitModel().until("Page was not updated").element(page.getRenderCheckerOutputElement()).text().not().equalTo(renderCheckerTime);
         assertEquals(page.getRequestTimeElement().getText(), requestTime);
@@ -140,11 +139,11 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     @Test
     @Templates(value = "plain")
     public void testRendered() {
-        assertTrue(page.topGroup.isVisible());
+        assertTrue(new WebElementConditionFactory(page.getTopGroup().advanced().getRootElement()).isVisible().apply(driver));
 
         panelMenuGroupAttributes.set(rendered, false);
 
-        assertFalse(page.topGroup.isVisible());
+        assertFalse(new WebElementConditionFactory(page.getTopGroup().advanced().getRootElement()).isVisible().apply(driver));
     }
 
     @Test
@@ -152,40 +151,38 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
     public void testRightDisabledIcon() {
         panelMenuGroupAttributes.set(disabled, true);
 
-        verifyStandardIcons(rightDisabledIcon, page.topGroup.getRightIcon().getIcon(), page.topGroup.getRightIcon().getIcon(), "");
+        verifyStandardIcons(rightDisabledIcon, page.getTopGroup().advanced().getRightIcon(), page.getTopGroup().advanced().getRightIcon(), "");
     }
 
     @Test
     @Templates(value = "plain")
     public void testRightExpandedIcon() {
-        verifyStandardIcons(rightExpandedIcon, page.topGroup.getRightIcon().getIcon(), page.topGroup.getRightIcon().getIcon(), "");
+        verifyStandardIcons(rightExpandedIcon, page.getTopGroup().advanced().getRightIcon(), page.getTopGroup().advanced().getRightIcon(), "");
 
         panelMenuGroupAttributes.set(disabled, true);
-        assertTrue(page.topGroup.getRightIcon().isTransparent(page.topGroup.getRightIcon().getIcon()));
+        assertTrue(page.getTopGroup().advanced().isTransparent(page.getTopGroup().advanced().getRightIcon()));
     }
 
     @Test
     @Templates(value = "plain")
     public void testRightCollapsedIcon() {
-        page.topGroup.toggle();
+        page.getMenu().collapseGroup(1);
 
-        verifyStandardIcons(rightCollapsedIcon, page.topGroup.getRightIcon().getIcon(), page.topGroup.getRightIcon().getIcon(), "");
+        verifyStandardIcons(rightCollapsedIcon, page.getTopGroup().advanced().getRightIcon(), page.getTopGroup().advanced().getRightIcon(), "");
 
         panelMenuGroupAttributes.set(disabled, true);
-        assertTrue(page.topGroup.getRightIcon().isTransparent(page.topGroup.getRightIcon().getIcon()));
+        assertTrue(page.getTopGroup().advanced().isTransparent(page.getTopGroup().advanced().getRightIcon()));
     }
 
     @Test
     public void testSelectable() {
-        page.topGroup.setMode(ajax);
-
         panelMenuGroupAttributes.set(selectable, false);
-        page.topGroup.toggle();
-        assertFalse(page.topGroup.isSelected());
+        guardAjax(page.getMenu()).collapseGroup(1);
+        assertFalse(page.getTopGroup().advanced().isSelected());
 
         panelMenuGroupAttributes.set(selectable, true);
-        page.topGroup.toggle();
-        assertTrue(page.topGroup.isSelected());
+        guardAjax(page.getMenu()).expandGroup(1);
+        assertTrue(page.getTopGroup().advanced().isSelected());
     }
 
     @Test
@@ -193,21 +190,21 @@ public class TestPanelMenuGroupSimple extends AbstractPanelMenuGroupTest {
         panelMenuGroupAttributes.set(status, "statusChecker");
 
         String statusCheckerTime = page.getStatusCheckerOutputElement().getText();
-        page.topGroup.toggle();
+        guardAjax(page.getMenu()).collapseGroup(1);
         Graphene.waitModel().until("Page was not updated").element(page.getStatusCheckerOutputElement()).text().not().equalTo(statusCheckerTime);
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyle() {
-        testStyle(page.topGroup.getRoot());
+        testStyle(page.getTopGroup().advanced().getRootElement());
     }
 
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10485")
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyleClass(page.topGroup.getRoot());
+        testStyleClass(page.getTopGroup().advanced().getRootElement());
     }
 
     private void verifyStandardIcons(PanelMenuGroupAttributes attribute, WebElement icon, WebElement imgIcon, String classSuffix) {
