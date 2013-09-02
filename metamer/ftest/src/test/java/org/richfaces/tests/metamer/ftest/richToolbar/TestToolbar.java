@@ -35,8 +35,8 @@ import org.jboss.arquillian.graphene.condition.AttributeConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
+import org.richfaces.tests.metamer.Template;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
@@ -64,10 +64,6 @@ public class TestToolbar extends AbstractWebDriverTest {
 
     @Inject
     @Use(empty = true)
-    private By itemBy;
-
-    @Inject
-    @Use(empty = true)
     private String itemSeparator;
 
     @Override
@@ -78,27 +74,28 @@ public class TestToolbar extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testInit() {
-        assertTrue(Graphene.element(page.toolbar).isPresent().apply(driver), "Toolbar should be present on the page.");
-        assertTrue(Graphene.element(page.toolbar).isVisible().apply(driver), "Toolbar should be visible.");
-        assertTrue(Graphene.element(page.separator.getRoot()).not().isPresent().apply(driver),
-                "Item separator should not be present on the page.");
+        assertTrue(Graphene.element(page.getToolbar()).isPresent().apply(driver), "Toolbar should be present on the page.");
+        assertTrue(Graphene.element(page.getToolbar()).isVisible().apply(driver), "Toolbar should be visible.");
+        assertTrue(Graphene.element(page.getSeparator().getRoot()).not().isPresent().apply(driver),
+            "Item separator should not be present on the page.");
         // just test of inverse logic could be applied as replace
-        assertFalse(Graphene.element(page.separator.getRoot()).isPresent().apply(driver),
-                "Item separator should not be present on the page.");
+        assertFalse(Graphene.element(page.getSeparator().getRoot()).isPresent().apply(driver),
+            "Item separator should not be present on the page.");
     }
 
     @Test
-    @Use(field = "itemBy", value = "itemsBy")
     public void testInitItems() {
-        assertTrue(Graphene.element(itemBy).isPresent().apply(driver), "Item (" + itemBy + ") should be present on the page.");
-        assertTrue(Graphene.element(itemBy).isVisible().apply(driver), "Item (" + itemBy + ") should be visible.");
+        for (By itemBy : itemsBy) {
+            assertTrue(Graphene.element(itemBy).isPresent().apply(driver), "Item (" + itemBy + ") should be present on the page.");
+            assertTrue(Graphene.element(itemBy).isVisible().apply(driver), "Item (" + itemBy + ") should be visible.");
+        }
     }
 
     @Test
     public void testHeight() {
-        AttributeConditionFactory styleAttr = Graphene.element(page.toolbar).attribute("style");
+        AttributeConditionFactory styleAttr = Graphene.element(page.getToolbar()).attribute("style");
         assertTrue(styleAttr.isPresent().apply(driver),
-                "Attribute style should be present.");
+            "Attribute style should be present.");
         assertTrue(styleAttr.contains("height: 28px").apply(driver), "Height in attribute style should be 28px");
 
         toolbarAttributes.set(ToolbarAttributes.height, "50px");
@@ -106,10 +103,11 @@ public class TestToolbar extends AbstractWebDriverTest {
     }
 
     @Test
-    @Use(field = "itemBy", value = "itemsBy")
     @Templates(value = "plain")
     public void testItemClass() {
-        testStyleClass(driver.findElement(itemBy), itemClass);
+        for (By itemBy : itemsBy) {
+            testStyleClass(driver.findElement(itemBy), itemClass);
+        }
     }
 
     @Test
@@ -117,27 +115,27 @@ public class TestToolbar extends AbstractWebDriverTest {
     public void testItemSeparatorCorrect() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, itemSeparator);
 
-        assertTrue(Graphene.element(page.separator.getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
-        assertTrue(Graphene.element(page.separator.getIconByName(itemSeparator)).isPresent().apply(driver), "Item separator does not work correctly.");
+        assertTrue(Graphene.element(page.getSeparator().getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
+        assertTrue(Graphene.element(page.getSeparator().getIconByName(itemSeparator)).isPresent().apply(driver), "Item separator does not work correctly.");
     }
 
     @Test
     public void testItemSeparatorNone() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, "none");
-        assertTrue(Graphene.element(page.separator.getRoot()).not().isPresent().apply(driver), "Item separator should not be present on the page.");
+        assertTrue(Graphene.element(page.getSeparator().getRoot()).not().isPresent().apply(driver), "Item separator should not be present on the page.");
 
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, "null");
-        assertTrue(Graphene.element(page.separator.getRoot()).not().isPresent().apply(driver), "Item separator should not be present on the page.");
+        assertTrue(Graphene.element(page.getSeparator().getRoot()).not().isPresent().apply(driver), "Item separator should not be present on the page.");
     }
 
     @Test
     public void testItemSeparatorCustom() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, "star");
 
-        assertTrue(Graphene.element(page.separator.getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
-        assertTrue(Graphene.element(page.separator.getImgIcon()).isPresent().apply(driver), "Item separator does not work correctly.");
+        assertTrue(Graphene.element(page.getSeparator().getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
+        assertTrue(Graphene.element(page.getSeparator().getImgIcon()).isPresent().apply(driver), "Item separator does not work correctly.");
 
-        assertTrue(page.separator.getImgIcon().getAttribute("src").contains("star.png"),
+        assertTrue(page.getSeparator().getImgIcon().getAttribute("src").contains("star.png"),
             "Separator's image should link to picture star.png.");
     }
 
@@ -145,145 +143,142 @@ public class TestToolbar extends AbstractWebDriverTest {
     public void testItemSeparatorNonExisting() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, "non-existing");
 
-        assertTrue(Graphene.element(page.separator.getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
-        assertTrue(Graphene.element(page.separator.getImgIcon()).isPresent().apply(driver), "Item separator does not work correctly.");
+        assertTrue(Graphene.element(page.getSeparator().getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
+        assertTrue(Graphene.element(page.getSeparator().getImgIcon()).isPresent().apply(driver), "Item separator does not work correctly.");
 
-        assertTrue(Graphene.attribute(page.separator.getImgIcon(), "src").contains("non-existing").apply(driver),
-                "Separator's image should link to \"non-existing\".");
+        assertTrue(Graphene.attribute(page.getSeparator().getImgIcon(), "src").contains("non-existing").apply(driver),
+            "Separator's image should link to \"non-existing\".");
     }
 
     @Test
-    @Use(field = "itemBy", value = "itemsBy")
     @Templates(value = "plain")
     public void testItemStyle() {
-        testStyle(driver.findElement(itemBy), itemStyle);
+        for (By itemBy : itemsBy) {
+            testStyle(driver.findElement(itemBy), itemStyle);
+        }
     }
 
     @Test
-    @Use(field = "itemBy", value = "itemsBy")
     @Templates(value = "plain")
     public void testOnitemclick() {
-        Action click = new Actions(driver).click(driver.findElement(itemBy)).build();
-        testFireEvent(toolbarAttributes, ToolbarAttributes.onitemclick, click);
+        for (By itemBy : itemsBy) {
+            testFireEvent(toolbarAttributes, ToolbarAttributes.onitemclick,
+                new Actions(driver).click(driver.findElement(itemBy)).build());
+        }
     }
 
     @Test
-    @Use(field = "itemBy", value = "itemsBy")
     @Templates(value = "plain")
     public void testOnitemdblclick() {
-        Action dblClick = new Actions(driver).doubleClick(driver.findElement(itemBy)).build();
-        testFireEvent(toolbarAttributes, ToolbarAttributes.onitemdblclick, dblClick);
+        for (By itemBy : itemsBy) {
+            testFireEvent(toolbarAttributes, ToolbarAttributes.onitemdblclick,
+                new Actions(driver).doubleClick(driver.findElement(itemBy)).build());
+        }
     }
 
     @Test
-    @Use(field = "itemBy", value = "itemsBy")
     @Templates(value = "plain")
     public void testOnitemkeydown() {
-        // TODO JJa 2013-03-11: Doesn't work for now with Action, rewrite if it changes
-        // Action keyDown = new Actions(driver).keyDown(WebElementProxyUtils.createProxyForElement(itemBy), Keys.ALT).build();
-        // testFireEvent(toolbarAttributes, ToolbarAttributes.onitemkeydown, keyDown);
-
-        testFireEventWithJS(driver.findElement(itemBy),
+        // TODO JJa 2013-03-14: Doesn't work for now with Action, rewrite if it changes
+        for (By itemBy : itemsBy) {
+            testFireEventWithJS(driver.findElement(itemBy),
                 Event.KEYDOWN, toolbarAttributes, ToolbarAttributes.onitemkeydown);
+        }
     }
 
     @Test
-    @Use(field = "itemBy", value = "itemsBy")
     @Templates(value = "plain")
     public void testOnitemkeypress() {
-        // TODO JJa 2013-03-11: Doesn't work for now with Action, rewrite if it changes
-        // Action keyPress = new Actions(driver).moveToElement(WebElementProxyUtils.createProxyForElement(itemBy)).sendKeys("a").build();
-        // testFireEvent(toolbarAttributes, ToolbarAttributes.onitemkeypress, keyPress);
-
-        testFireEventWithJS(driver.findElement(itemBy),
+        // TODO JJa 2013-03-14: Doesn't work for now with Action, rewrite if it changes
+        for (By itemBy : itemsBy) {
+            testFireEventWithJS(driver.findElement(itemBy),
                 Event.KEYPRESS, toolbarAttributes, ToolbarAttributes.onitemkeypress);
+        }
     }
 
     @Test
-    @Use(field = "itemBy", value = "itemsBy")
     @Templates(value = "plain")
     public void testOnitemkeyup() {
-        // TODO JJa 2013-03-11: Doesn't work for now with Action, rewrite if it changes
-        // Action keyup = new Actions(driver).keyUp(WebElementProxyUtils.createProxyForElement(itemBy), Keys.ALT).build();
-        // testFireEvent(toolbarAttributes, ToolbarAttributes.onitemkeyup, keyup);
-
-        testFireEventWithJS(driver.findElement(itemBy),
+        // TODO JJa 2013-03-14: Doesn't work for now with Action, rewrite if it changes
+        for (By itemBy : itemsBy) {
+            testFireEventWithJS(driver.findElement(itemBy),
                 Event.KEYUP, toolbarAttributes, ToolbarAttributes.onitemkeyup);
+        }
     }
 
     @Test
-    @Use(field = "itemBy", value = "itemsBy")
     @Templates(value = "plain")
     public void testOnitemmousedown() {
-        Action mouseDown = new Actions(driver).clickAndHold(driver.findElement(itemBy)).build();
-        testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmousedown, mouseDown);
+        for (By itemBy : itemsBy) {
+            testFireEventWithJS(driver.findElement(itemBy), Event.MOUSEDOWN, toolbarAttributes, ToolbarAttributes.onitemmousedown);
+        }
     }
 
     @Test
-    @Use(field = "itemBy", value = "itemsBy")
     @Templates(value = "plain")
     public void testOnitemmousemove() {
-        Action mouseMove = new Actions(driver).moveToElement(driver.findElement(itemBy)).build();
-        testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmousemove, mouseMove);
+        for (By itemBy : itemsBy) {
+            testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmousemove,
+                new Actions(driver).moveToElement(driver.findElement(itemBy)).build());
+        }
     }
 
     @Test
-    @Use(field = "itemBy", value = "itemsBy")
     @Templates(value = "plain")
     public void testOnitemmouseout() {
-        // TODO JJa 2013-03-11: Doesn't work for now with Action, rewrite if it changes
-        // Action mouseOut = new Actions(driver).moveToElement(WebElementProxyUtils.createProxyForElement(itemBy)).moveByOffset(-1, -1).build();
-        // testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmouseout, mouseOut);
-        testFireEventWithJS(driver.findElement(itemBy),
+        // TODO JJa 2013-03-14: Doesn't work for now with Action, rewrite if it changes
+        for (By itemBy : itemsBy) {
+            testFireEventWithJS(driver.findElement(itemBy),
                 Event.MOUSEOUT, toolbarAttributes, ToolbarAttributes.onitemmouseout);
+        }
     }
 
     @Test
-    @Use(field = "itemBy", value = "itemsBy")
     @Templates(value = "plain")
     public void testOnitemmouseover() {
-        Action mouseOver = new Actions(driver).moveToElement(driver.findElement(itemBy)).build();
-        testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmouseover, mouseOver);
+        for (By itemBy : itemsBy) {
+            testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmouseover,
+                new Actions(driver).moveToElement(driver.findElement(itemBy)).build());
+        }
     }
 
     @Test
-    @Use(field = "itemBy", value = "itemsBy")
     @Templates(value = "plain")
     public void testOnitemmouseup() {
-        WebElement item = driver.findElement(itemBy);
-        Action mouseUp = new Actions(driver).clickAndHold(item).release(item).build();
-        testFireEvent(toolbarAttributes, ToolbarAttributes.onitemmouseup, mouseUp);
+        for (By itemBy : itemsBy) {
+            testFireEventWithJS(driver.findElement(itemBy), Event.MOUSEUP, toolbarAttributes, ToolbarAttributes.onitemmouseup);
+        }
     }
 
     @Test
     @Templates(value = "plain")
     public void testRendered() {
         toolbarAttributes.set(ToolbarAttributes.rendered, Boolean.FALSE);
-        assertTrue(Graphene.element(page.toolbar).not().isPresent().apply(driver), "Toolbar should not be rendered when rendered=false.");
-        assertFalse(Graphene.element(page.toolbar).isPresent().apply(driver), "Toolbar should not be rendered when rendered=false.");
+        assertTrue(Graphene.element(page.getToolbar()).not().isPresent().apply(driver), "Toolbar should not be rendered when rendered=false.");
+        assertFalse(Graphene.element(page.getToolbar()).isPresent().apply(driver), "Toolbar should not be rendered when rendered=false.");
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyle() {
-        super.testStyle(page.toolbar);
+        super.testStyle(page.getToolbar());
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyleClass() {
-        super.testStyleClass(page.toolbar);
+        super.testStyleClass(page.getToolbar());
     }
 
     @Test
     public void testWidth() {
-        AttributeConditionFactory styleAttr = Graphene.attribute(page.toolbar, "style");
+        AttributeConditionFactory styleAttr = Graphene.attribute(page.getToolbar(), "style");
         assertTrue(styleAttr.isPresent().apply(driver), "Attribute style should be present.");
         assertTrue(styleAttr.contains("width: 100%").apply(driver),
-                "Attribute style should have 100% width when it is not set.");
+            "Attribute style should have 100% width when it is not set.");
 
         toolbarAttributes.set(ToolbarAttributes.width, "500px");
-        styleAttr = Graphene.attribute(page.toolbar, "style");
+        styleAttr = Graphene.attribute(page.getToolbar(), "style");
         assertTrue(styleAttr.contains("width: 500px").apply(driver), "Attribute style should have width 500px.");
     }
 

@@ -25,53 +25,90 @@ import java.util.List;
 
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.toolbar.RichFacesToolbarGroupSeparator;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
  * @since 4.3.1
- *
  */
 public class ToolbarPage {
 
     @FindBy(css = "table[id$=toolbar]")
-    public WebElement toolbar;
-
+    private WebElement toolbar;
     @FindBy(jquery = "td.rf-tb-sep")
-    public RichFacesToolbarGroupSeparator separator;
-
+    private RichFacesToolbarGroupSeparator separator;
     @FindBy(jquery = "td.rf-tb-sep")
-    public List<WebElement> separators;
-
+    private List<RichFacesToolbarGroupSeparator> separators;
     @FindBy(jquery = "td.rf-tb-sep > img")
-    public List<WebElement> separatorsImages;
-
+    private List<WebElement> separatorsImages;
     /** toolbar items with no matter if tool or empty cell */
     @FindBy(jquery = "tr.rf-tb-cntr > td")
-    public List<WebElement> items;
-
+    private List<WebElement> items;
     @FindBy(jquery = "td[id$=createDocument_itm]")
-    public WebElement itemCreateDoc;
-
+    private WebElement itemCreateDoc;
     @FindBy(jquery = "td[id$=createFolder_itm]")
-    public WebElement itemCreateFolder;
-
+    private WebElement itemCreateFolder;
     @FindBy(jquery = "td[id$=copy_itm]")
-    public WebElement itemCopy;
-
+    private WebElement itemCopy;
     @FindBy(jquery = "td[id$=save_itm]")
-    public WebElement itemSave;
-
+    private WebElement itemSave;
     @FindBy(jquery = "td[id$=saveAs_itm]")
-    public WebElement itemSaveAs;
-
+    private WebElement itemSaveAs;
     @FindBy(jquery = "td[id$=saveAll_itm]")
-    public WebElement itemSaveAll;
-
+    private WebElement itemSaveAll;
     @FindBy(jquery = "td[id$=input_itm]")
-    public WebElement itemInput;
-
+    private WebElement itemInput;
     @FindBy(jquery = "td[id$=button_itm]")
-    public WebElement itemButton;
+    private WebElement itemButton;
 
+    public WebElement getItemButton() {
+        return itemButton;
+    }
+
+    public WebElement getItemCopy() {
+        return itemCopy;
+    }
+
+    public WebElement getItemCreateDoc() {
+        return itemCreateDoc;
+    }
+
+    public WebElement getItemCreateFolder() {
+        return itemCreateFolder;
+    }
+
+    public WebElement getItemInput() {
+        return itemInput;
+    }
+
+    public WebElement getItemSave() {
+        return itemSave;
+    }
+
+    public WebElement getItemSaveAll() {
+        return itemSaveAll;
+    }
+
+    public WebElement getItemSaveAs() {
+        return itemSaveAs;
+    }
+
+    public List<WebElement> getItems() {
+        return items;
+    }
+
+    public RichFacesToolbarGroupSeparator getSeparator() {
+        return separator;
+    }
+
+    public List<RichFacesToolbarGroupSeparator> getSeparators() {
+        return separators;
+    }
+
+    public List<WebElement> getSeparatorsImages() {
+        return separatorsImages;
+    }
+
+    public WebElement getToolbar() {
+        return toolbar;
+    }
 }
