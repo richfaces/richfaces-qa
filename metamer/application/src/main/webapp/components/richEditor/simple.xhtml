@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"  xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:a="http://richfaces.org/a4j"
+       xmlns:r="http://richfaces.org/rich" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <!--
 JBoss, Home of Professional Open Source
@@ -38,9 +39,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
         <ui:define name="component">
         
-            <rich:messages globalOnly="true" />
-        	<rich:messages for="editor" />
-            <rich:editor id="editor"
+            <r:messages globalOnly="true" />
+        	<r:messages for="editor" />
+            <r:editor id="editor"
            				 height="#{richEditorBean.attributes['height'].value}"
            				 immediate="#{richEditorBean.attributes['immediate'].value}"
             			 lang="#{richEditorBean.attributes['lang'].value}"
@@ -81,46 +82,46 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         ]
                   </f:facet>
                </c:if>
-               <a4j:ajax event="change" listener="#{richBean.actionListener}" render="output" />               
-            </rich:editor>
+               <a:ajax event="change" listener="#{richBean.actionListener}" render="output" />               
+            </r:editor>
                 		 
             <br/>
             <h:commandButton id="hButton" value="[h] Submit" />
-            <a4j:commandButton id="a4jButton" value="[a4j] Submit" render="output" />
+            <a:commandButton id="a4jButton" value="[a4j] Submit" render="output" />
             
             <br/><br/>
             Your text: <h:outputText id="output" value="#{richEditorBean.attributes['value'].value}"/>
             
             <br/><br/>
             <fieldset>
-                <legend>JavaScript API of rich:editor by h:commandButton</legend>
+                <legend>JavaScript API of r:editor by h:commandButton</legend>
 
                 <h:commandButton id="setReadOnly" value="setReadonly()">
-                    <rich:componentControl event="click" operation="setReadonly" target="editor" />                        
+                    <r:componentControl event="click" operation="setReadonly" target="editor" />                        
                 </h:commandButton>
                 
                 <h:commandButton id="setValue" value="setValue()">
-                    <rich:componentControl event="click" operation="setVallue" target="editor" >
+                    <r:componentControl event="click" operation="setVallue" target="editor" >
                         <f:param value="NEW EDITOR VALUE SET BY EDITOR JS API!" />
-                    </rich:componentControl>                        
+                    </r:componentControl>                        
                 </h:commandButton>
                 
             </fieldset>
 
             <br/>
             <fieldset>
-                <legend>JavaScript API of rich:editor by a4j:commandButton</legend>
+                <legend>JavaScript API of r:editor by r:commandButton</legend>
                 
-                <input type="button" name="getValue" value="getValue()" onclick="alert('Editor value: '+#{rich:component('editor')}.getValue());" />
-                <input type="button" name="setValue" value="setValue()" onclick="#{rich:component('editor')}.setValue('NEW VALUE SET BY JS!')" />
-                <input type="button" name="getInput" value="getInput()" onclick="alert('Inut value: '+#{rich:component('editor')}.getInput());" />
-                <input type="button" name="focus" value="focus()" onclick="#{rich:component('editor')}.focus()" />
-                <input type="button" name="blur" value="blur()" onclick="#{rich:component('editor')}.blur()" />
-                <input type="button" name="isFocused" value="isFocused()" onclick="alert('Is editor focused: '+#{rich:component('editor')}.isFocused());" />
-                <input type="button" name="isDirty" value="isDirty()" onclick="alert('Is editor dirty: '+#{rich:component('editor')}.isDirty());" />
-                <input type="button" name="isValueChanged" value="isValueChanged()" onclick="alert('Is editor value changed: '+#{rich:component('editor')}.isValueChanged());" />
-                <input type="button" name="isReadonly" value="isReadonly()" onclick="alert('Is editor readonly: '+#{rich:component('editor')}.isReadonly());" />
-                <input type="button" name="setReadonly" value="setReadonly()" onclick="#{rich:component('editor')}.setReadonly()" />
+                <input type="button" name="getValue" value="getValue()" onclick="alert('Editor value: '+#{r:component('editor')}.getValue());" />
+                <input type="button" name="setValue" value="setValue()" onclick="#{r:component('editor')}.setValue('NEW VALUE SET BY JS!')" />
+                <input type="button" name="getInput" value="getInput()" onclick="alert('Inut value: '+#{r:component('editor')}.getInput());" />
+                <input type="button" name="focus" value="focus()" onclick="#{r:component('editor')}.focus()" />
+                <input type="button" name="blur" value="blur()" onclick="#{r:component('editor')}.blur()" />
+                <input type="button" name="isFocused" value="isFocused()" onclick="alert('Is editor focused: '+#{r:component('editor')}.isFocused());" />
+                <input type="button" name="isDirty" value="isDirty()" onclick="alert('Is editor dirty: '+#{r:component('editor')}.isDirty());" />
+                <input type="button" name="isValueChanged" value="isValueChanged()" onclick="alert('Is editor value changed: '+#{r:component('editor')}.isValueChanged());" />
+                <input type="button" name="isReadonly" value="isReadonly()" onclick="alert('Is editor readonly: '+#{r:component('editor')}.isReadOnly());" />
+                <input type="button" name="setReadonly" value="setReadonly()" onclick="#{r:component('editor')}.setReadOnly()" />
                 
             </fieldset>
             

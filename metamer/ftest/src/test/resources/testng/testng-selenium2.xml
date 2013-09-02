@@ -31,6 +31,7 @@
             <package name="org.richfaces.tests.metamer.ftest.richDragIndicator" />
             <package name="org.richfaces.tests.metamer.ftest.richDragSource" />
             <package name="org.richfaces.tests.metamer.ftest.richDropTarget" />
+            <package name="org.richfaces.tests.metamer.ftest.richEditor" />
             <package name="org.richfaces.tests.metamer.ftest.richFileUpload"/>
             <package name="org.richfaces.tests.metamer.ftest.richFocus"/>
             <package name="org.richfaces.tests.metamer.ftest.richFunctions"/>
@@ -64,6 +65,7 @@
             <package name="org.richfaces.tests.metamer.ftest.richPopupPanel"/>
             <package name="org.richfaces.tests.metamer.ftest.richProgressBar"/>
             <package name="org.richfaces.tests.metamer.ftest.richSelect"/>
+            <package name="org.richfaces.tests.metamer.ftest.richTabPanel" />
             <package name="org.richfaces.tests.metamer.ftest.richToggleControl"/>
             <package name="org.richfaces.tests.metamer.ftest.richTooltip" />
             <package name="org.richfaces.tests.metamer.ftest.richTree"/>
