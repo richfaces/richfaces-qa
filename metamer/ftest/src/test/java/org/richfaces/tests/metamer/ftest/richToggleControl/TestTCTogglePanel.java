@@ -36,8 +36,8 @@ import org.testng.annotations.Test;
  */
 public class TestTCTogglePanel extends AbstractTestToggleControl {
 
-    WebElement[] items1;
-    WebElement[] items2;
+    private WebElement[] items1;
+    private WebElement[] items2;
 
     @Override
     public URL getTestUrl() {
@@ -65,15 +65,15 @@ public class TestTCTogglePanel extends AbstractTestToggleControl {
     }
 
     private WebElement[] getItems1() {
-        if (items1 == null ) {
-            items1 = new WebElement[] { page.panel1Item1, page.panel1Item2, page.panel1Item3 };
+        if (items1 == null) {
+            items1 = new WebElement[]{ page.getPanel1Item1(), page.getPanel1Item2(), page.getPanel1Item3() };
         }
         return items1;
     }
 
     private WebElement[] getItems2() {
-        if (items2 == null ) {
-            items2 = new WebElement[] { page.panel2Item1, page.panel2Item2, page.panel2Item3 };
+        if (items2 == null) {
+            items2 = new WebElement[]{ page.getPanel2Item1(), page.getPanel2Item2(), page.getPanel2Item3() };
         }
         return items2;
     }
