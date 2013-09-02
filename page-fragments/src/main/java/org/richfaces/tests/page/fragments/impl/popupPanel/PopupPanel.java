@@ -21,57 +21,12 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.popupPanel;
 
-import org.openqa.selenium.WebElement;
-import org.richfaces.tests.page.fragments.impl.Locations;
-import org.richfaces.tests.page.fragments.impl.VisibleComponent;
+import org.richfaces.tests.page.fragments.impl.panel.Panel;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public interface PopupPanel<C extends PopupPanelControls, L extends PopupPanelContent> extends VisibleComponent {
-
-    /**
-     * Returns locations of this popup panel.
-     *
-     * @throws RuntimeException when popup is not visible
-     */
-    Locations getLocations();
-
-    /**
-     * Moves panel by dragging it with header. Returns same instance.
-     *
-     * @throws MovementOutOfBoundsException when WebDriver cannot scroll to view
-     * @throws RuntimeException when popup is not visible
-     */
-    PopupPanel moveByOffset(int xOffset, int yOffset);
-
-    /**
-     * Resizes panel by resize handle in bottom-right corner. Returns same instance.
-     *
-     * @throws MovementOutOfBoundsException when WebDriver cannot scroll to view
-     * @throws RuntimeException when popup is not visible
-     */
-    PopupPanel resizeFromLocation(ResizerLocation location, int byXPixels, int byYPixels);
-
-    L content();
-
-    C controls();
-
-    WebElement getContentElement();
-
-    WebElement getContentScrollerElement();
-
-    WebElement getHeaderControlsElement();
-
-    WebElement getHeaderElement();
-
-    WebElement getHeaderContentElement();
-
-    WebElement getResizerElement(ResizerLocation resizerLocation);
-
-    WebElement getRootElement();
-
-    WebElement getShadowElement();
+public interface PopupPanel<HEADER, BODY> extends Panel<HEADER, BODY> {
 
     enum ResizerLocation {
 
