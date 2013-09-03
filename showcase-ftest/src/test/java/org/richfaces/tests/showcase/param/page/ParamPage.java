@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.param.page;
 
+import static org.jboss.arquillian.graphene.Graphene.guardAjax;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
 
@@ -31,18 +32,18 @@ public class ParamPage {
 
     @FindBy(css = "span[id$='rep']")
     public WebElement output;
-    @FindBy(jquery = "input[type='submit']:nth(0)")
+    @FindBy(jquery = "input[type='submit']:eq(0)")
     private WebElement setAlex;
-    @FindBy(jquery = "input[type='submit']:nth(1)")
+    @FindBy(jquery = "input[type='submit']:eq(1)")
     private WebElement setJohn;
 
     public void setName(ParamPage.Name name) {
         switch(name) {
             case ALEX:
-                setAlex.click();
+                guardAjax(setAlex).click();
                 break;
             case JOHN:
-                setJohn.click();
+                guardAjax(setJohn).click();
                 break;
         }
     }

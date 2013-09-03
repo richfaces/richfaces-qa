@@ -2,11 +2,13 @@
 <suite name="seleniumTest">
 
     <test name="All Components">
-        <groups>
-            <run>
-                <exclude name="4.Future" />
-            </run>
-        </groups>
+        <classes>
+            <class name="org.richfaces.tests.showcase.push.TestPushJms">
+                <methods>
+                    <exclude name="testDeviationInServerDate" />
+                </methods>
+            </class>
+        </classes>
 
         <packages>
             <package name="org.richfaces.tests.showcase.ajax.*" />

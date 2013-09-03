@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.functions;
 
-import org.jboss.arquillian.graphene.Graphene;
+import static org.jboss.arquillian.graphene.Graphene.waitModel;
 
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.Keys;
@@ -43,7 +43,7 @@ public class TestFunctions extends AbstractWebDriverTest {
         String testString = "test string";
         page.input.sendKeys(testString);
         page.input.sendKeys(Keys.ENTER);
-        Graphene.waitGui().until("The output should be test string")
+        waitModel().until("The output should be test string")
                 .element(page.output)
                 .text()
                 .equalTo(testString);
