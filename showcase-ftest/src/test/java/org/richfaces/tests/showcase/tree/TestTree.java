@@ -391,7 +391,7 @@ public class TestTree extends AbstractTreeTest {
 
         public void setPrice(String price) {
 
-            String priceWithoutDollarSign = price.substring(1);
+            String priceWithoutDollarSign = price.substring(runInPortalEnv ? 3 : 1);
 
             Double priceDouble = new Double(priceWithoutDollarSign);
 
