@@ -262,6 +262,11 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
         fireEventAt(getTreeNode().getNodeItself(), event);
 
         testRequestEventsAfter(attributeName);
+
+        // cleanup - release mouse button
+        if (event == MOUSEDOWN) {
+            new Actions(driver).release().perform();
+        }
     }
 
     @Test
@@ -353,7 +358,7 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
 //        } else if (event == MOUSEOUT) {
 //            selenium.mouseOutAt(element, coords);
         } else if (event == MOUSEOVER) {
-            new Actions(driver).moveToElement(element, 1, 1).perform();
+            new Actions(driver).moveToElement(page.getRequestTimeElement()).moveToElement(element).perform();
         } else if (event == MOUSEUP) {
             new Actions(driver).clickAndHold(element).release().perform();
         } else {
