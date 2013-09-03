@@ -77,7 +77,8 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     @Inject
     @Use(empty = true)
     Event domEvent;
-    Event[] domEvents = { Event.CLICK, Event.DBLCLICK, Event.MOUSEDOWN, Event.MOUSEMOVE, Event.MOUSEOUT, Event.MOUSEOVER, Event.MOUSEUP };
+    Event[] domEvents = { Event.CLICK, Event.DBLCLICK, Event.MOUSEDOWN, Event.MOUSEMOVE, Event.MOUSEOUT,
+        Event.MOUSEOVER, Event.MOUSEUP };
     @Inject
     @Use(empty = true)
     Boolean followMouse = true;
@@ -273,13 +274,14 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     @Use(field = "mode", enumeration = true)
     public void testMode() {
         tooltipAttributes.set(TooltipAttributes.mode, mode);
+        tooltipAttributes.set(TooltipAttributes.showEvent, "click");
 
         page.getTooltip().setMode(mode);
 
         if (mode == TooltipMode.ajax) {
-            MetamerPage.requestTimeChangesWaiting(page.getTooltip()).recall(page.getPanel());
+            MetamerPage.requestTimeChangesWaiting(page.getPanel()).click();
         } else {
-            page.getTooltip().recall(page.getPanel());
+            MetamerPage.requestTimeNotChangesWaiting(page.getPanel()).click();
         }
 
         MetamerPage.requestTimeNotChangesWaiting(page.getTooltip()).hide(page.getPanel());
@@ -295,7 +297,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         page.getTooltip().setMode(TooltipMode.ajax);
 
         testRequestEventsBefore("beforedomupdate");
-        page.getPanel().click();
+        Graphene.guardAjax(page.getPanel()).click();
         testRequestEventsAfter("beforedomupdate");
     }
 
@@ -360,7 +362,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         page.getTooltip().setMode(TooltipMode.ajax);
 
         testRequestEventsBefore("complete");
-        page.getPanel().click();
+        Graphene.guardAjax(page.getPanel()).click();
         testRequestEventsAfter("complete");
 
         page.getTooltip().hide(page.getPanel());
@@ -397,7 +399,8 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         page.getTooltip().setMode(mode);
 
         testRequestEventsBefore("show");
-        page.getPanel().click();
+        MetamerPage.waitRequest(page.getPanel(), mode == TooltipMode.ajax ? WaitRequestType.XHR : WaitRequestType.NONE)
+            .click();
         testRequestEventsAfter("show");
 
         page.getTooltip().hide(page.getPanel());
@@ -562,6 +565,34 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
         new Actions(driver).moveToElement(page.jsAPIhideMouseOver).build().perform();
         Graphene.waitAjax().until().element(page.getTooltip().getRoot()).is().not().visible();
+    }
+
+    public void testRequestEventsBefore(String... events) {
+        for (String event : events) {
+            String inputExp = format(ATTR_INPUT_LOC_FORMAT, event);
+            WebElement input = page.getAttributesTable().findElement(By.cssSelector(inputExp));
+            String inputVal = format("metamerEvents += \"{0} \"", event);
+            // even there would be some events (in params) twice, don't expect handle routine to be executed twice
+            input.clear();
+            waiting(1000);
+            input = page.getAttributesTable().findElement(By.cssSelector(inputExp));
+            input.sendKeys(inputVal);
+            // sendKeys triggers page reload automatically
+            waiting(300);
+            Graphene.waitAjax().until().element(page.getAttributesTable()).is().present();
+            input = page.getAttributesTable().findElement(By.cssSelector(inputExp));
+            MetamerPage.waitRequest(input, WaitRequestType.HTTP).submit();
+        }
+        executeJS("window.metamerEvents = \"\";");
+    }
+
+    public void testRequestEventsAfter(String... events) {
+        String[] actualEvents = ((String) executeJS("return window.metamerEvents")).split(" ");
+        assertEquals(
+            actualEvents,
+            events,
+            format("The events ({0}) don't came in right order ({1})", Arrays.deepToString(actualEvents),
+                Arrays.deepToString(events)));
     }
 
     private void recallTooltipInRightBottomCornerOfPanel(int offsetX, int offsetY) {
