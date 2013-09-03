@@ -56,14 +56,12 @@ FSF site: http://www.fsf.org. -->
         <arquillian.bom.version>1.1.1.Final</arquillian.bom.version>
         <arquillian.tomcat.version>1.0.0.CR5</arquillian.tomcat.version>
         <arquillian.drone.version> 1.2.0.Alpha2</arquillian.drone.version>
-        <arquillian.graphene-testng.version>2.0.0.Alpha4</arquillian.graphene-testng.version>
-        <arquillian.graphene-webdriver.version>2.0.0.Beta1-SNAPSHOT</arquillian.graphene-webdriver.version>
+        <arquillian.graphene.version>2.0.0.Beta1-SNAPSHOT</arquillian.graphene.version>
         <arquillian.jboss-as6.version>1.0.0.CR3</arquillian.jboss-as6.version>
         <arquillian.glassfish3-1.version>1.0.0.CR4</arquillian.glassfish3-1.version>
         <arquillian.openshift-express>1.0.0.Beta1</arquillian.openshift-express>
         <arquillian.android.version>1.0.0.Alpha2</arquillian.android.version>
         <arquillian.screenrecorder.version>1.0.0.Alpha2-SNAPSHOT</arquillian.screenrecorder.version>
-        <shrinkwrap.descriptors.version>2.0.0-alpha-5</shrinkwrap.descriptors.version>
 
         <version.selenium>2.35.0</version.selenium>
         <version.slf4j.jbossas6>1.6.1</version.slf4j.jbossas6>
@@ -362,7 +360,14 @@ FSF site: http://www.fsf.org. -->
                 <artifactId>testng</artifactId>
                 <version>6.1.1</version>
             </dependency>
-
+            
+            <dependency>
+                <groupId>org.jboss.arquillian.selenium</groupId>
+                <artifactId>selenium-bom</artifactId>
+                <version>${version.selenium}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
@@ -389,123 +394,6 @@ FSF site: http://www.fsf.org. -->
                 <type>pom</type>
                 <scope>test</scope>
             </dependency>
-            <dependency>
-                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-                <artifactId>shrinkwrap-descriptors-api</artifactId>
-                <version>${shrinkwrap.descriptors.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-                <artifactId>shrinkwrap-descriptors-impl</artifactId>
-                <version>${shrinkwrap.descriptors.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-                <artifactId>shrinkwrap-descriptors-api-jboss</artifactId>
-                <version>${shrinkwrap.descriptors.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-                <artifactId>shrinkwrap-descriptors-impl-jboss</artifactId>
-                <version>${shrinkwrap.descriptors.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-                <artifactId>shrinkwrap-descriptors-api-javaee</artifactId>
-                <version>${shrinkwrap.descriptors.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-                <artifactId>shrinkwrap-descriptors-impl-javaee</artifactId>
-                <version>${shrinkwrap.descriptors.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-                <artifactId>shrinkwrap-descriptors-api-base</artifactId>
-                <version>${shrinkwrap.descriptors.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-                <artifactId>shrinkwrap-descriptors-impl-base</artifactId>
-                <version>${shrinkwrap.descriptors.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-                <artifactId>shrinkwrap-descriptors-gen</artifactId>
-                <version>${shrinkwrap.descriptors.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.shrinkwrap.descriptors</groupId>
-                <artifactId>shrinkwrap-descriptors-spi</artifactId>
-                <version>${shrinkwrap.descriptors.version}</version>
-            </dependency>
-
-            <!-- Selenium Server -->
-            <dependency>
-                <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-server</artifactId>
-                <version>${version.selenium}</version>
-            </dependency>
-
-            <!-- Selenium dependecies -->
-            <dependency>
-                <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-api</artifactId>
-                <version>${version.selenium}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-java</artifactId>
-                <version>${version.selenium}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-support</artifactId>
-                <version>${version.selenium}</version>
-            </dependency>
-
-            <!-- Drivers -->
-            <dependency>
-                <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-android-driver</artifactId>
-                <version>${version.selenium}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-chrome-driver</artifactId>
-                <version>${version.selenium}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-firefox-driver</artifactId>
-                <version>${version.selenium}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-htmlunit-driver</artifactId>
-                <version>${version.selenium}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-ie-driver</artifactId>
-                <version>${version.selenium}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-iphone-driver</artifactId>
-                <version>${version.selenium}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-remote-driver</artifactId>
-                <version>${version.selenium}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.arquillian.graphene</groupId>
-                <artifactId>graphene-webdriver</artifactId>
-                <version>${arquillian.graphene-webdriver.version}</version>
-                <type>pom</type>
-            </dependency>
 
             <!-- Page Fragments dependencies -->
             <dependency>
@@ -516,17 +404,17 @@ FSF site: http://www.fsf.org. -->
             <dependency>
                 <groupId>org.jboss.arquillian.graphene</groupId>
                 <artifactId>graphene-webdriver-spi</artifactId>
-                <version>${arquillian.graphene-webdriver.version}</version>
+                <version>${arquillian.graphene.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian.graphene</groupId>
                 <artifactId>graphene-component-api</artifactId>
-                <version>${arquillian.graphene-webdriver.version}</version>
+                <version>${arquillian.graphene.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian.graphene</groupId>
                 <artifactId>graphene-webdriver-impl</artifactId>
-                <version>${arquillian.graphene-webdriver.version}</version>
+                <version>${arquillian.graphene.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-lang</groupId>

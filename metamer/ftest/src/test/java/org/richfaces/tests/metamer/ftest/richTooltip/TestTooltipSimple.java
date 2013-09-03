@@ -418,6 +418,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         page.getTooltip().setMode(mode);
         Action action = new Actions(driver).clickAndHold(page.getTooltip().getRoot()).build();
         verifyEventHandler(TooltipAttributes.onmousedown, action);
+        new Actions(driver).release().perform();
     }
 
     @Test

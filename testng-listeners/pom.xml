@@ -30,7 +30,7 @@
         <dependency>
             <groupId>org.jboss.arquillian.graphene</groupId>
             <artifactId>arquillian-graphene</artifactId>
-            <version>${arquillian.graphene-testng.version}</version>
+            <version>${arquillian.graphene.version}</version>
             <type>pom</type>
         </dependency>
         <dependency>

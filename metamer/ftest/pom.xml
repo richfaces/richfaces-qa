@@ -58,7 +58,7 @@ FSF site: http://www.fsf.org. -->
         <dependency>
             <groupId>org.jboss.arquillian.graphene</groupId>
             <artifactId>arquillian-graphene</artifactId>
-            <version>${arquillian.graphene-testng.version}</version>
+            <version>${arquillian.graphene.version}</version>
             <type>pom</type>
             <scope>test</scope>
         </dependency>
