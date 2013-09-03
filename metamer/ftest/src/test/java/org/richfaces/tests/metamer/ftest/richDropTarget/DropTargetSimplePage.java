@@ -21,6 +21,7 @@
  */
 package org.richfaces.tests.metamer.ftest.richDropTarget;
 
+import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -41,7 +42,7 @@ public class DropTargetSimplePage extends MetamerPage {
     WebElement dropValue;
 
     @FindBy( css = "div.rf-ind[id$=indicatorClone]" )
-    public WebElement indicator;
+    public GrapheneElement indicator;
 
     @FindBy( css = "[id$=draggable1]" )
     WebElement drg1;

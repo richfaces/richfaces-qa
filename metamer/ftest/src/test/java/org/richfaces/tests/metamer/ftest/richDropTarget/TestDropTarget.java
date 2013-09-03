@@ -103,8 +103,9 @@ public class TestDropTarget extends AbstractWebDriverTest {
 
         String drop1Content = page.drop1.getText();
         String drop2Content = page.drop2.getText();
+        new Actions(driver).release(page.drop1).perform();
 
-        new Actions(driver).dragAndDrop(page.drg1, page.drop1).build().perform();
+//        new Actions(driver).dragAndDrop(page.drg1, page.drop1).build().perform();
 
         // TODO JJa: find replacement
         // waitAjax.waitForChange(retrieveDrop1);
