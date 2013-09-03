@@ -28,7 +28,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
-import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.ui.output.tooltip.TooltipMode;
 
 /**
@@ -68,17 +67,11 @@ public class RichFacesTooltip {
     }
 
     public void hide(WebElement target) {
-        hide(target, -3, -3);
+        hide(target, -5, -5);
     }
 
     private void hide(WebElement target, int x, int y) {
-        // guard(selenium, getRequestType()).mouseOutAt(target, new Point(x, y));
-        // Action mouseOutAt = new Actions(GrapheneContext.getProxy()).moveToElement(target, x, y).build();
-        Action mouseOutAt = actions.moveByOffset(x, y).build();
-        mouseOutAt.perform();
-
-        // TODO JJa 2013-03-25: "mouseout" event triggered "manually" since it is not triggered by Actions
-        Utils.triggerJQ(executor, "mouseout", target);
+        actions.moveByOffset(x, y).perform();
     }
 
     private static <T> T getGuardTypeForMode(T target, TooltipMode mode) {
