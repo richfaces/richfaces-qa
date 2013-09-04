@@ -44,7 +44,7 @@ FSF site: http://www.fsf.org. -->
 
         <!-- version of Tomcat containers to use-->
         <version.tomcat6>6.0.36</version.tomcat6>
-        <version.tomcat7>7.0.39</version.tomcat7>
+        <version.tomcat7>7.0.42</version.tomcat7>
         <tomcat6Zip>path/to/your/tomcat/distribution/zip</tomcat6Zip>
         <tomcat7Zip>path/to/your/tomcat/distribution/zip</tomcat7Zip>
 
