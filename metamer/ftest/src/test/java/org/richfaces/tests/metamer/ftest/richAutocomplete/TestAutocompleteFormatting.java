@@ -28,10 +28,8 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
@@ -110,11 +108,11 @@ public class TestAutocompleteFormatting extends AbstractAutocompleteTest {
     private By getSuggestion(String value) {
         switch (getLayout()) {
             case DIV:
-                return ByJQuery.jquerySelector("div[id$=autocompleteItems] > div:contains('" + value + "')");
+                return ByJQuery.selector("div[id$=autocompleteItems] > div:contains('" + value + "')");
             case LIST:
-                return ByJQuery.jquerySelector("ul[id$=autocompleteItems] > li:contains('" + value + "')");
+                return ByJQuery.selector("ul[id$=autocompleteItems] > li:contains('" + value + "')");
             case TABLE:
-                return ByJQuery.jquerySelector("table[id$=autocompleteItems] > tbody > tr > td:contains('" + value
+                return ByJQuery.selector("table[id$=autocompleteItems] > tbody > tr > td:contains('" + value
                     + "')");
             default:
                 throw new UnsupportedOperationException();

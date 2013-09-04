@@ -22,6 +22,7 @@
 package org.richfaces.tests.page.fragments.impl.calendar.popup.popup;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.calendar.common.RichFacesHeaderControls;
@@ -37,7 +38,7 @@ public class RichFacesPopupHeaderControls extends RichFacesHeaderControls implem
 
     @Override
     public void closePopup() {
-        if (!isVisible() || Graphene.element(closeButtonElement).not().isVisible().apply(driver)) {
+        if (!isVisible() || new WebElementConditionFactory(closeButtonElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Cannot interact with close button. "
                     + "Ensure that calendar popup and header controls are displayed.");
         }

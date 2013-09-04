@@ -23,6 +23,7 @@ package org.richfaces.tests.page.fragments.impl.calendar.common;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebDriver;
@@ -61,7 +62,7 @@ public class RichFacesFooterControls implements FooterControls {
             throw new RuntimeException("Cannot open time editor. "
                     + "Ensure that calendar popup and footer controls are displayed.");
         }
-        if (Graphene.element(timeEditorOpenerElement).not().isVisible().apply(driver)) {
+        if (new WebElementConditionFactory(timeEditorOpenerElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Cannot open time editor. "
                     + "Ensure that the date is set before setting time.");
         }
@@ -74,11 +75,11 @@ public class RichFacesFooterControls implements FooterControls {
         if (!isVisible()) {
             throw new RuntimeException("Footer controls are not displayed, cannot interact with  clean button");
         }
-        if (Graphene.element(cleanButtonElement).not().isVisible().apply(driver)) {
+        if (new WebElementConditionFactory(cleanButtonElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Clean button is not displayed.");
         }
         cleanButtonElement.click();
-        Graphene.waitGui().until(Graphene.element(cleanButtonElement).not().isVisible());
+        Graphene.waitGui().until(new WebElementConditionFactory(cleanButtonElement).not().isVisible());
     }
 
     @Override
@@ -108,7 +109,7 @@ public class RichFacesFooterControls implements FooterControls {
 
     @Override
     public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(root).not().isVisible();
+        return new WebElementConditionFactory(root).not().isVisible();
     }
 
     @Override
@@ -118,7 +119,7 @@ public class RichFacesFooterControls implements FooterControls {
 
     @Override
     public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(root).isVisible();
+        return new WebElementConditionFactory(root).isVisible();
     }
 
     @Override
@@ -149,7 +150,7 @@ public class RichFacesFooterControls implements FooterControls {
         if (!isVisible()) {
             throw new RuntimeException("Footer controls are not displayed, cannot interact with today button");
         }
-        if (Graphene.element(todayButtonElement).not().isVisible().apply(driver)) {
+        if (new WebElementConditionFactory(todayButtonElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Today button is not displayed.");
         }
         todayButtonElement.click();

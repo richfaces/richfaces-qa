@@ -29,6 +29,7 @@ import java.net.URL;
 import org.apache.commons.io.FileUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -122,7 +123,7 @@ public abstract class AbstractWebDriverTest extends AbstractShowcaseTest {
         }
         Graphene.waitAjax()
                 .withMessage("The text can't be typed into the given input.")
-                .until(Graphene.attribute(input, "value").valueEquals(valueBefore + text));
+            .until(new WebElementConditionFactory(input).attribute("value").equalTo(valueBefore + text));
     }
 
     protected abstract ShowcasePage getPage();

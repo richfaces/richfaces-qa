@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.jboss.test.selenium.support.ui;
 
-import org.jboss.arquillian.graphene.GrapheneContext;
+import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.javascript.JSInterfaceFactory;
 import org.jboss.arquillian.graphene.javascript.JavaScript;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;

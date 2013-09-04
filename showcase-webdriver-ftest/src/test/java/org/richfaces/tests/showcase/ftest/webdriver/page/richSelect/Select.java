@@ -23,6 +23,7 @@ package org.richfaces.tests.showcase.ftest.webdriver.page.richSelect;
 
 import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.test.selenium.android.support.ui.AbstractComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -110,7 +111,7 @@ public class Select extends AbstractComponent {
     private void waitUntilPopupPresent() {
         Graphene.waitAjax()
             .withMessage("The popup isn't present.")
-            .until(Graphene.element(getPopup()).isPresent());
+            .until(new WebElementConditionFactory(getPopup()).isPresent());
     }
 
 }

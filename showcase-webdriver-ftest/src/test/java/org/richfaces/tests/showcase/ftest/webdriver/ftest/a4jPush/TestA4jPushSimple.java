@@ -22,6 +22,7 @@
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jPush;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.a4jPush.PushPage;
@@ -41,7 +42,7 @@ public class TestA4jPushSimple extends AbstractWebDriverTest {
             String before = getPage().getDate().getText();
             Graphene.waitAjax()
                 .withMessage("The updating doesn't work correctly. Iteration <" + i + ">.")
-                .until(Graphene.element(getPage().getDate()).not().textEquals(before));
+                .until(new WebElementConditionFactory(getPage().getDate()).not().textEquals(before));
         }
     }
 

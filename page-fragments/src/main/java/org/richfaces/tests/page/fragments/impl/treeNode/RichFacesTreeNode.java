@@ -26,6 +26,7 @@ import com.google.common.base.Predicate;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -172,7 +173,7 @@ public class RichFacesTreeNode extends RichFacesTree {
     }
 
     public ExpectedCondition<Boolean> isCollapsedCondition() {
-        return Graphene.element(getRoot()).attribute("class").contains(CLASS_NODE_COLLAPSED);
+        return new WebElementConditionFactory(getRoot()).attribute("class").contains(CLASS_NODE_COLLAPSED);
     }
 
     public boolean isExpanded() {
@@ -180,7 +181,7 @@ public class RichFacesTreeNode extends RichFacesTree {
     }
 
     public ExpectedCondition<Boolean> isExpandedCondition() {
-        return Graphene.element(getRoot()).attribute("class").contains(CLASS_NODE_EXPANDED);
+        return new WebElementConditionFactory(getRoot()).attribute("class").contains(CLASS_NODE_EXPANDED);
     }
 
     public int getAnySelectedNodesCount() {

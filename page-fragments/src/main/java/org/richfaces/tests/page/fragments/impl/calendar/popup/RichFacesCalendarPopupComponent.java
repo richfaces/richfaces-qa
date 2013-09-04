@@ -24,8 +24,10 @@ package org.richfaces.tests.page.fragments.impl.calendar.popup;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.joda.time.DateTime;
 import org.openqa.selenium.WebDriver;
@@ -64,13 +66,13 @@ public class RichFacesCalendarPopupComponent implements CalendarPopupComponent {
         }
         switch (by) {
             case INPUT_CLICKING:
-                if (Graphene.element(input).not().isVisible().apply(driver)) {
+                if (new WebElementConditionFactory(input).not().isVisible().apply(driver)) {
                     throw new RuntimeException("input is not displayed");
                 }
                 input.click();
                 break;
             case OPEN_BUTTON_CLICKING:
-                if (Graphene.element(popupButton).not().isVisible().apply(driver)) {
+                if (new WebElementConditionFactory(popupButton).not().isVisible().apply(driver)) {
                     throw new RuntimeException("popup button is not displayed");
                 }
                 popupButton.click();
@@ -153,7 +155,7 @@ public class RichFacesCalendarPopupComponent implements CalendarPopupComponent {
 
     @Override
     public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(root).not().isVisible();
+        return new WebElementConditionFactory(root).not().isVisible();
     }
 
     @Override
@@ -163,7 +165,7 @@ public class RichFacesCalendarPopupComponent implements CalendarPopupComponent {
 
     @Override
     public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(root).isVisible();
+        return new WebElementConditionFactory(root).isVisible();
     }
 
     @Override

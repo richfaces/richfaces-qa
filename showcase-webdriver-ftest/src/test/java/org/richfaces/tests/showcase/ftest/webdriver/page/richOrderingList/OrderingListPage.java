@@ -79,7 +79,7 @@ public class OrderingListPage extends AbstractWebDriverPage {
         toSelect.click();
         Graphene.waitAjax()
             .withMessage("The requested item hasn't been selected.")
-            .until(Graphene.attribute(toSelect, "class").valueContains("rf-ord-sel"));
+            .until().element(toSelect).attribute("class").contains("rf-ord-sel");
     }
 
     private WebElement getItemElement(int index) {

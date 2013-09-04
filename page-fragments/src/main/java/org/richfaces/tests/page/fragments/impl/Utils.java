@@ -21,10 +21,12 @@
  */
 package org.richfaces.tests.page.fragments.impl;
 
+import com.google.common.base.Optional;
+
 import java.util.Iterator;
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.jboss.arquillian.graphene.GrapheneContext;
+import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxy;
 import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
 import org.json.simple.JSONObject;
@@ -37,8 +39,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import com.google.common.base.Optional;
 
 /**
  *

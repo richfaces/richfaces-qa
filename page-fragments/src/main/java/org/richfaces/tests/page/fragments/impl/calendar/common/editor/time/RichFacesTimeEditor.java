@@ -23,6 +23,7 @@ package org.richfaces.tests.page.fragments.impl.calendar.common.editor.time;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.joda.time.DateTime;
 import org.openqa.selenium.WebDriver;
@@ -72,7 +73,7 @@ public class RichFacesTimeEditor implements TimeEditor {
             throw new RuntimeException("Cannot interact with TimePicker. "
                     + "Ensure that it it is opened.");
         }
-        if (Graphene.element(cancelButtonElement).not().isVisible().apply(driver)) {
+        if (new WebElementConditionFactory(cancelButtonElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Cancel button is not visible.");
         }
         cancelButtonElement.click();
@@ -85,7 +86,7 @@ public class RichFacesTimeEditor implements TimeEditor {
             throw new RuntimeException("Cannot interact with TimePicker. "
                     + "Ensure that it it is opened.");
         }
-        if (Graphene.element(okButtonElement).not().isVisible().apply(driver)) {
+        if (new WebElementConditionFactory(okButtonElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Ok button is not visible.");
         }
         okButtonElement.click();
@@ -167,7 +168,7 @@ public class RichFacesTimeEditor implements TimeEditor {
 
     @Override
     public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(root).not().isVisible();
+        return new WebElementConditionFactory(root).not().isVisible();
     }
 
     @Override
@@ -177,7 +178,7 @@ public class RichFacesTimeEditor implements TimeEditor {
 
     @Override
     public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(root).isVisible();
+        return new WebElementConditionFactory(root).isVisible();
     }
 
     private TimeEditor setTime(int hours, int minutes, int seconds, SetValueBy by) {

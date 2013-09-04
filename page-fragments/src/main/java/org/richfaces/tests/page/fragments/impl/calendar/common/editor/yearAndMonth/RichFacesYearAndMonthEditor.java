@@ -23,9 +23,11 @@ package org.richfaces.tests.page.fragments.impl.calendar.common.editor.yearAndMo
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.joda.time.DateTime;
 import org.openqa.selenium.WebDriver;
@@ -162,7 +164,7 @@ public class RichFacesYearAndMonthEditor implements YearAndMonthEditor {
 
     @Override
     public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(root).not().isVisible();
+        return new WebElementConditionFactory(root).not().isVisible();
     }
 
     @Override
@@ -172,7 +174,7 @@ public class RichFacesYearAndMonthEditor implements YearAndMonthEditor {
 
     @Override
     public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(root).isVisible();
+        return new WebElementConditionFactory(root).isVisible();
     }
 
     @Override

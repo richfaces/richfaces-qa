@@ -21,10 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.page.richPanel;
 
-import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractWebDriverPage;
@@ -74,7 +73,7 @@ public class SimplePage extends AbstractWebDriverPage {
     }
 
     private boolean isPanelPresent(WebElement panel) {
-        return Graphene.element(panel).isPresent().apply(getWebDriver());
+        return new WebElementConditionFactory(panel).isPresent().apply(getWebDriver());
     }
 
 }

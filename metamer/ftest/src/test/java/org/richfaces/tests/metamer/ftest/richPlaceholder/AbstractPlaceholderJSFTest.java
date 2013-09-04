@@ -29,8 +29,9 @@ import static org.testng.Assert.assertTrue;
 
 import java.awt.Color;
 import java.net.URL;
+
 import org.jboss.arquillian.ajocado.utils.ColorUtils;
-import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -178,7 +179,7 @@ public abstract class AbstractPlaceholderJSFTest extends AbstractWebDriverTest {
     public void testRendered() {
         placeholderAttributes.set(PlaceholderAttributes.rendered, Boolean.FALSE);
 
-        assertFalse(Graphene.element(placeholder).isPresent().apply(driver), "Placeholder should not be present");
+        assertFalse(new WebElementConditionFactory(placeholder).isPresent().apply(driver), "Placeholder should not be present");
         assertFalse(getInput1StyleClass().contains(DEFAULT_PLACEHOLDER_CLASS), "Input 1 styleClass");
         assertEquals(getInput1Value(), "", "Input 1 value");
     }

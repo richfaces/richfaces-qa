@@ -33,6 +33,7 @@ import java.net.URL;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -360,7 +361,7 @@ public class TestFileUpload extends AbstractFileUploadTest {
     @Test
     public void testRendered() {
         fileUploadAttributes.set(FileUploadAttributes.rendered, Boolean.FALSE);
-        assertFalse(Graphene.element(fileUpload.advanced().getRoot()).isPresent().apply(driver), "Component should not be rendered when rendered=false.");
+        assertFalse(new WebElementConditionFactory(fileUpload.advanced().getRoot()).isPresent().apply(driver), "Component should not be rendered when rendered=false.");
     }
 
     @Test(enabled = false)

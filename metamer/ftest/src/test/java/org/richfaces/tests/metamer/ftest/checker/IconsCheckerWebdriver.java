@@ -31,7 +31,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.ajocado.css.CssProperty;
-import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -154,9 +154,9 @@ public class IconsCheckerWebdriver<A extends AttributeEnum> {
                 continue;
             }
             if (disableIcon) {
-                assertFalse(Graphene.element(icon.findElement()).isPresent().apply(driver), "Icon's div (" + icon + ") should not be present when icon=" + imageIcon + ".");
+                assertFalse(new WebElementConditionFactory(icon.findElement()).isPresent().apply(driver), "Icon's div (" + icon + ") should not be present when icon=" + imageIcon + ".");
             }
-            assertTrue(Graphene.element(image).isPresent().apply(driver), "Icon's image should be rendered (" + image + ") when icon=" + imageIcon + ".");
+            assertTrue(new WebElementConditionFactory(driver.findElement(image)).isPresent().apply(driver), "Icon's image should be rendered (" + image + ") when icon=" + imageIcon + ".");
             assertTrue(driver.findElement(image).getAttribute("src").contains(imageIcons.get(imageIcon)),
                     "Icon's src attribute (" + image + ") should contain " + imageIcons.get(imageIcon) + " when icon=" + imageIcon + ".");
         }
@@ -187,10 +187,10 @@ public class IconsCheckerWebdriver<A extends AttributeEnum> {
                 continue;
             }
             if (disableIcon) {
-                assertFalse(Graphene.element(icon.findElement()).isPresent().apply(driver), "Icon's div (" + icon + ") should not be present when icon=" + imageIcon + ".");
+                assertFalse(new WebElementConditionFactory(icon.findElement()).isPresent().apply(driver), "Icon's div (" + icon + ") should not be present when icon=" + imageIcon + ".");
             }
             // iconElem as var to easier debug/verify what element was reached
-            assertTrue(Graphene.element(imgIconElem).isPresent().apply(driver), "Icon's image should be rendered (" + icon + ") when icon=" + imageIcon + ".");
+            assertTrue(new WebElementConditionFactory(imgIconElem).isPresent().apply(driver), "Icon's image should be rendered (" + icon + ") when icon=" + imageIcon + ".");
             assertTrue(imgIconElem.getAttribute("src").contains(imageIcons.get(imageIcon)),
                     "Icon's src attribute (" + icon + ") should contain " + imageIcons.get(imageIcon) + " when icon=" + imageIcon + ".");
         }
@@ -200,7 +200,7 @@ public class IconsCheckerWebdriver<A extends AttributeEnum> {
         if (!setAttributeSilently(attribute, "none")) {
             return;
         }
-        assertFalse(Graphene.element(icon.findElement()).isPresent().apply(driver), "Icon should not be present when icon=none.");
+        assertFalse(new WebElementConditionFactory(icon.findElement()).isPresent().apply(driver), "Icon should not be present when icon=none.");
     }
 
     private boolean setAttributeSilently(A attribute, String value) {

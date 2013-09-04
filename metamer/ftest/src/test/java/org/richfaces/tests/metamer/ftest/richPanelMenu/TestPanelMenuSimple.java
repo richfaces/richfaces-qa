@@ -31,7 +31,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.richfaces.tests.metamer.ftest.BasicAttributes;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
@@ -112,9 +112,9 @@ public class TestPanelMenuSimple extends AbstractPanelMenuTest {
     @Templates(value = "plain")
     public void testRendered() {
         panelMenuAttributes.set(rendered, false);
-        assertFalse(Graphene.element(page.panelMenu.getRoot()).isPresent().apply(driver));
+        assertFalse(new WebElementConditionFactory(page.panelMenu.getRoot()).isPresent().apply(driver));
         panelMenuAttributes.set(rendered, true);
-        assertTrue(Graphene.element(page.panelMenu.getRoot()).isPresent().apply(driver));
+        assertTrue(new WebElementConditionFactory(page.panelMenu.getRoot()).isPresent().apply(driver));
     }
 
     @Test

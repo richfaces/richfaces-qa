@@ -43,7 +43,6 @@ import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOUT;
 import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOVER;
 import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEUP;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URL;
@@ -52,6 +51,7 @@ import java.util.concurrent.TimeUnit;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -152,35 +152,29 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testIconCollapsed() {
         WebElement iconImage = page.tree.getNodes().get(0).getIcon().getRoot();
-        assertTrue(Graphene.element(iconImage).isPresent().apply(driver));
-        assertFalse(Graphene.attribute(iconImage, "src").isPresent().apply(driver));
+        assertTrue(new WebElementConditionFactory(iconImage).isPresent().apply(driver));
 
         attributesNode.set(iconCollapsed, IMAGE_URL);
 
-        assertTrue(Graphene.element(iconImage).isPresent().apply(driver));
-        assertTrue(Graphene.attribute(iconImage, "src").isPresent().apply(driver));
-
-        assertTrue(Graphene.attribute(iconImage, "src").contains(IMAGE_URL).apply(driver));
+        assertTrue(new WebElementConditionFactory(iconImage).isPresent().apply(driver));
+        assertTrue(iconImage.getAttribute("src").contains(IMAGE_URL));
     }
 
     @Test
     @Templates(value = "plain")
     public void testIconExpanded() {
         WebElement iconImage = page.tree.getNodes().get(0).getIcon().getRoot();
-        assertTrue(Graphene.element(iconImage).isPresent().apply(driver));
-        assertFalse(Graphene.attribute(iconImage, "src").isPresent().apply(driver));
+        assertTrue(new WebElementConditionFactory(iconImage).isPresent().apply(driver));
 
         attributesNode.set(iconExpanded, IMAGE_URL);
 
-        assertTrue(Graphene.element(iconImage).isPresent().apply(driver));
-        assertFalse(Graphene.attribute(iconImage, "src").isPresent().apply(driver));
+        assertTrue(new WebElementConditionFactory(iconImage).isPresent().apply(driver));
 
         getTreeNode().expand();
 
-        assertTrue(Graphene.element(iconImage).isPresent().apply(driver));
-        assertTrue(Graphene.attribute(iconImage, "src").isPresent().apply(driver));
+        assertTrue(new WebElementConditionFactory(iconImage).isPresent().apply(driver));
 
-        assertTrue(Graphene.attribute(iconImage, "src").contains(IMAGE_URL).apply(driver));
+        assertTrue(iconImage.getAttribute("src").contains(IMAGE_URL));
     }
 
     @Test
@@ -193,15 +187,13 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
         RichFacesTreeNode leaf = subTreeNode.getNode(0);
         RichFacesTreeNodeIcon leafIcon = leaf.getIcon();
 
-        assertTrue(Graphene.element(leafIcon.getRoot()).isPresent().apply(driver));
-        assertFalse(Graphene.attribute(leafIcon.getRoot(), "src").isPresent().apply(driver));
+        assertTrue(new WebElementConditionFactory(leafIcon.getRoot()).isPresent().apply(driver));
 
         attributesLeaf.set(iconLeaf, IMAGE_URL);
 
-        assertTrue(Graphene.element(leafIcon.getRoot()).isPresent().apply(driver));
-        assertTrue(Graphene.attribute(leafIcon.getRoot(), "src").isPresent().apply(driver));
+        assertTrue(new WebElementConditionFactory(leafIcon.getRoot()).isPresent().apply(driver));
 
-        assertTrue(Graphene.attribute(leafIcon.getRoot(), "src").contains(IMAGE_URL).apply(driver));
+        assertTrue(leafIcon.getRoot().getAttribute("src").contains(IMAGE_URL));
     }
 
     @Test
@@ -313,12 +305,12 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
         subTreeNode.expand();
         RichFacesTreeNode leaf = subTreeNode.getNode(0);
 
-        assertTrue(Graphene.element(leaf.getRoot()).isPresent().apply(driver));
+        assertTrue(new WebElementConditionFactory(leaf.getRoot()).isPresent().apply(driver));
 
         attributesLeaf.set(rendered, false);
 
         // verify parent of leaf node is present
-        assertTrue(Graphene.element(getTreeNode().getNode(0).getRoot()).isPresent().apply(driver));
+        assertTrue(new WebElementConditionFactory(getTreeNode().getNode(0).getRoot()).isPresent().apply(driver));
         // but leaf is not
         assertTrue(getTreeNode().getNode(0).getNode(0) == null);
     }
@@ -326,17 +318,13 @@ public class TestTreeNodeSimple extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testStyle() {
-        final String value = "background-color: yellow; font-size: 1.5em;";
-        attributesNode.set(TreeNodeAttributes.style, value);
-        assertTrue(Graphene.attribute(getTreeNode().getNodeItself(), "style").contains(value).apply(driver));
+        testStyle(getTreeNode().getNodeItself());
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyleClass() {
-        final String value = "metamer-ftest-class";
-        attributesNode.set(TreeNodeAttributes.styleClass, value);
-        assertTrue(Graphene.attribute(getTreeNode().getNodeItself(), "class").contains(value).apply(driver));
+        testStyleClass(getTreeNode().getNodeItself());
     }
 
     @Test

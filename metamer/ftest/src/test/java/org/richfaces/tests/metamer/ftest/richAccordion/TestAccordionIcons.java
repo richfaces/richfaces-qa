@@ -21,9 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richAccordion;
 
-import java.net.URL;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import org.jboss.arquillian.graphene.Graphene;
+import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.accordionAttributes;
+import static org.testng.Assert.assertFalse;
+
+import java.net.URL;
+
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -31,8 +35,6 @@ import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
 import org.richfaces.tests.metamer.ftest.checker.IconsCheckerWebdriver;
-import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.accordionAttributes;
-import static org.testng.Assert.assertFalse;
 import org.testng.annotations.Test;
 
 /**
@@ -60,7 +62,7 @@ public class TestAccordionIcons extends AbstractWebDriverTest {
         By image = By.cssSelector(String.format(leftIcon, "1") + " img");
 
         // icon=null
-        assertFalse(Graphene.element(page.getLeftActiveIcon()).isPresent().apply(driver), "Left icon of active item should not be present on the page.");
+        assertFalse(new WebElementConditionFactory(page.getLeftActiveIcon()).isPresent().apply(driver), "Left icon of active item should not be present on the page.");
 
         verifyStandardIcons(AccordionAttributes.itemActiveLeftIcon, page.getLeftActiveIcon(), image, "");
     }
@@ -70,7 +72,7 @@ public class TestAccordionIcons extends AbstractWebDriverTest {
         By image = By.cssSelector(String.format(rightIcon, "1") + " img");
 
         // icon=null
-        assertFalse(Graphene.element(page.getRightActiveIcon()).isPresent().apply(driver), "Right icon of active item should not be present on the page.");
+        assertFalse(new WebElementConditionFactory(page.getRightActiveIcon()).isPresent().apply(driver), "Right icon of active item should not be present on the page.");
 
         verifyStandardIcons(AccordionAttributes.itemActiveRightIcon, page.getRightActiveIcon(), image, "");
     }

@@ -22,8 +22,8 @@
 package org.richfaces.tests.showcase.dataTable.page;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -52,13 +52,13 @@ public class ArrangableModelPage {
     public WebElement toBlur;
 
     public WebElement getFirstRowSomeColumn(int column) {
-        return table.findElement(ByJQuery.jquerySelector(String.format("tr:eq(0) > td:eq(%s)", column)));
+        return table.findElement(ByJQuery.selector(String.format("tr:eq(0) > td:eq(%s)", column)));
     }
 
     public WebElement getUnsortedLink(int column) {
         // these are links for filtering rows in a ascending, descending way
         // 0 is for first name column, 1 surname, 2 email
-        return webDriver.findElement(ByJQuery.jquerySelector(String.format("a[onClick*='RichFaces']:eq(%s)", column)));
+        return webDriver.findElement(ByJQuery.selector(String.format("a[onClick*='RichFaces']:eq(%s)", column)));
     }
 
 }

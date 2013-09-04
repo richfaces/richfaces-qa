@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
@@ -122,6 +123,6 @@ public abstract class AbstractTreePage implements ShowcasePage {
         toToggle.click();
         Graphene.waitAjax()
             .withMessage("Unable to toggle the given element.")
-            .until(Graphene.element(toToggle).isPresent());
+            .until(new WebElementConditionFactory(toToggle).isPresent());
     }
 }

@@ -21,7 +21,9 @@
 package org.richfaces.tests.showcase.ftest.webdriver.page.richCollapsiblePanel;
 
 import java.util.List;
+
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractWebDriverPage;
@@ -100,24 +102,24 @@ public class SimplePage extends AbstractWebDriverPage {
             return true;
         }
         return false;
-        // this does not work :  return (ElementPresent.getInstance().element(panel).apply(getWebDriver()) ? Graphene.element(panel).apply(getWebDriver()) : false);
+        // this does not work :  return (ElementPresent.getInstance().element(panel).apply(getWebDriver()) ? new WebElementConditionFactory(panel).apply(getWebDriver()) : false);
     }
 
     private boolean isPanelHere(WebElement panel) {
-        return Graphene.element(panel).isVisible().apply(getWebDriver());
+        return new WebElementConditionFactory(panel).isVisible().apply(getWebDriver());
     }
 
     private void openPanel(WebElement panel, WebElement tab) {
         tab.click();
         Graphene.waitAjax()
                 .withMessage("The panel can't be opened.")
-                .until(Graphene.element(panel).isVisible());
+                .until(new WebElementConditionFactory(panel).isVisible());
     }
 
     private void openAjaxPanel(WebElement panel, WebElement tab) {
         tab.click();
         Graphene.waitAjax()
                 .withMessage("The panel can't be opened.")
-                .until(Graphene.element(panel).isVisible());
+                .until(new WebElementConditionFactory(panel).isVisible());
     }
 }

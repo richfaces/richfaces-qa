@@ -22,9 +22,10 @@
 package org.richfaces.tests.showcase.componentControl.page;
 
 import java.util.List;
+
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -40,7 +41,7 @@ public class TableFilteringAPIPage {
     public List<WebElement> tableRows;
 
     public WebElement getFilterValue(int index) {
-        return driver.findElement(ByJQuery.jquerySelector(String.format("a[name*=form]:eq(%s)", index)));
+        return driver.findElement(ByJQuery.selector(String.format("a[name*=form]:eq(%s)", index)));
     }
 
 }
