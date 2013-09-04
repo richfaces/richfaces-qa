@@ -26,8 +26,8 @@ import java.util.List;
 
 import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.joda.time.DateTime;
 import org.openqa.selenium.WebDriver;
@@ -83,7 +83,7 @@ public class RichFacesDayPicker implements DayPicker {
         if (!isVisible()) {
             throw new RuntimeException("Cannot interact with DayPicker.");
         }
-        if (Graphene.element(selectedDay).isPresent().apply(driver)) {
+        if (new WebElementConditionFactory(selectedDay).isPresent().apply(driver)) {
             return new CalendarDay(selectedDay);
         }
         return null;
@@ -107,7 +107,7 @@ public class RichFacesDayPicker implements DayPicker {
         if (!isVisible()) {
             throw new RuntimeException("Cannot interact with DayPicker.");
         }
-        if (Graphene.element(todayDay).isPresent().apply(driver)) {
+        if (new WebElementConditionFactory(todayDay).isPresent().apply(driver)) {
             return new CalendarDay(todayDay);
         }
         return null;
@@ -127,7 +127,7 @@ public class RichFacesDayPicker implements DayPicker {
         if (!isVisible()) {
             throw new RuntimeException("Cannot interact with DayPicker.");
         }
-        if (Graphene.element(weekDaysBarElement).not().isVisible().apply(driver)) {
+        if (new WebElementConditionFactory(weekDaysBarElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Week days bar is not visible");
         }
         List<String> result = new ArrayList<String>(8);
@@ -167,7 +167,7 @@ public class RichFacesDayPicker implements DayPicker {
 
     @Override
     public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(root).not().isVisible();
+        return new WebElementConditionFactory(root).not().isVisible();
     }
 
     @Override
@@ -177,7 +177,7 @@ public class RichFacesDayPicker implements DayPicker {
 
     @Override
     public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(root).isVisible();
+        return new WebElementConditionFactory(root).isVisible();
     }
 
     @Override
@@ -194,7 +194,7 @@ public class RichFacesDayPicker implements DayPicker {
         Validate.isTrue(monthDays.size() >= day);
 
         String jq = "td[id*=DayCell]:not('.rf-cal-boundary-day'):not('.rf-cal-day-lbl'):contains('" + day + "')";
-        new CalendarDay(root.findElement(ByJQuery.jquerySelector(jq)))
+        new CalendarDay(root.findElement(ByJQuery.selector(jq)))
                 .select();
     }
 }

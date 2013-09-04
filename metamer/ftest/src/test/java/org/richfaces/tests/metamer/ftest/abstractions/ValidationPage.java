@@ -22,6 +22,7 @@
 package org.richfaces.tests.metamer.ftest.abstractions;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -144,14 +145,14 @@ public class ValidationPage extends MetamerPage {
      * @return false if some error message is there, else true
      */
     public boolean noErrorMessagesDisplayed() {
-        if (Graphene.element(csvInAttMsg).isVisible().apply(driver)
-                || Graphene.element(csvInBeanMsg).isVisible().apply(driver)
-                || Graphene.element(csvInBundleMsg).isVisible().apply(driver)
-                || Graphene.element(jsfInAttMsg).isVisible().apply(driver)
-                || Graphene.element(jsfInBundleMsg).isVisible().apply(driver)
-                || Graphene.element(jsr303InAttMsg).isVisible().apply(driver)
-                || Graphene.element(jsr303InBeanMsg).isVisible().apply(driver)
-                || Graphene.element(jsr303InBundleMsg).isVisible().apply(driver)) {
+        if (new WebElementConditionFactory(csvInAttMsg).isVisible().apply(driver)
+                || new WebElementConditionFactory(csvInBeanMsg).isVisible().apply(driver)
+                || new WebElementConditionFactory(csvInBundleMsg).isVisible().apply(driver)
+                || new WebElementConditionFactory(jsfInAttMsg).isVisible().apply(driver)
+                || new WebElementConditionFactory(jsfInBundleMsg).isVisible().apply(driver)
+                || new WebElementConditionFactory(jsr303InAttMsg).isVisible().apply(driver)
+                || new WebElementConditionFactory(jsr303InBeanMsg).isVisible().apply(driver)
+                || new WebElementConditionFactory(jsr303InBundleMsg).isVisible().apply(driver)) {
             return false;
         }
         return true;

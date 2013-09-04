@@ -32,14 +32,12 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 import java.util.List;
 
-import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.jboss.test.selenium.support.ui.AttributeContains;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
-import org.richfaces.tests.metamer.Template;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
@@ -80,20 +78,20 @@ public class TestToolbarGroup extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testInit() {
-        assertTrue(Graphene.element(page.getToolbar()).isPresent().apply(driver), "Toolbar should be present on the page.");
-        assertTrue(Graphene.element(page.getToolbar()).isVisible().apply(driver), "Toolbar should be visible.");
-        assertFalse(Graphene.element(page.getSeparator().getRoot()).isPresent().apply(driver), "No item separator should be present on the page.");
-        assertTrue(Graphene.element(page.getItemInput()).isPresent().apply(driver), "Input should be present on the page.");
-        assertTrue(Graphene.element(page.getItemInput()).isVisible().apply(driver), "Input should be visible.");
-        assertTrue(Graphene.element(page.getItemButton()).isPresent().apply(driver), "Button should be present on the page.");
-        assertTrue(Graphene.element(page.getItemButton()).isVisible().apply(driver), "Button should be visible.");
+        assertTrue(new WebElementConditionFactory(page.getToolbar()).isPresent().apply(driver), "Toolbar should be present on the page.");
+        assertTrue(new WebElementConditionFactory(page.getToolbar()).isVisible().apply(driver), "Toolbar should be visible.");
+        assertFalse(new WebElementConditionFactory(page.getSeparator().getRoot()).isPresent().apply(driver), "No item separator should be present on the page.");
+        assertTrue(new WebElementConditionFactory(page.getItemInput()).isPresent().apply(driver), "Input should be present on the page.");
+        assertTrue(new WebElementConditionFactory(page.getItemInput()).isVisible().apply(driver), "Input should be visible.");
+        assertTrue(new WebElementConditionFactory(page.getItemButton()).isPresent().apply(driver), "Button should be present on the page.");
+        assertTrue(new WebElementConditionFactory(page.getItemButton()).isVisible().apply(driver), "Button should be visible.");
     }
 
     @Test
     public void testInitItems() {
         for (By itemBy : itemsBy) {
-            assertTrue(Graphene.element(itemBy).isPresent().apply(driver), "Item (" + itemBy + ") should be present on the page.");
-            assertTrue(Graphene.element(itemBy).isVisible().apply(driver), "Item (" + itemBy + ") should be visible.");
+            assertTrue(new WebElementConditionFactory(driver.findElement(itemBy)).isPresent().apply(driver), "Item (" + itemBy + ") should be present on the page.");
+            assertTrue(new WebElementConditionFactory(driver.findElement(itemBy)).isVisible().apply(driver), "Item (" + itemBy + ") should be visible.");
         }
     }
 
@@ -113,31 +111,31 @@ public class TestToolbarGroup extends AbstractWebDriverTest {
 
         List<WebElement> separatorDivs = driver.findElements(By.cssSelector("div.rf-tb-sep-" + itemSeparator));
 
-        assertTrue(Graphene.element(page.getSeparator().getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
+        assertTrue(new WebElementConditionFactory(page.getSeparator().getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
         assertEquals(page.getSeparators().size(), 5, "Number of separators.");
-        assertTrue(Graphene.element(page.getSeparator().getIconByName(itemSeparator)).isPresent().apply(driver), "Item separator does not work correctly.");
+        assertTrue(new WebElementConditionFactory(page.getSeparator().getIconByName(itemSeparator)).isPresent().apply(driver), "Item separator does not work correctly.");
         assertEquals(separatorDivs.size(), 5, "Number of separators.");
     }
 
     @Test
     public void testItemSeparatorNone() {
         toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "none");
-        assertFalse(Graphene.element(page.getSeparator().getRoot()).isPresent().apply(driver), "No item separator should be present on the page.");
+        assertFalse(new WebElementConditionFactory(page.getSeparator().getRoot()).isPresent().apply(driver), "No item separator should be present on the page.");
 
         toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "null");
-        assertFalse(Graphene.element(page.getSeparator().getRoot()).isPresent().apply(driver), "No item separator should be present on the page.");
+        assertFalse(new WebElementConditionFactory(page.getSeparator().getRoot()).isPresent().apply(driver), "No item separator should be present on the page.");
     }
 
     @Test
     public void testItemSeparatorCustom() {
         toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "star");
 
-        assertTrue(Graphene.element(page.getSeparator().getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
+        assertTrue(new WebElementConditionFactory(page.getSeparator().getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
         assertEquals(page.getSeparators().size(), 5, "Number of separators.");
-        assertTrue(Graphene.element(page.getSeparator().getImgIcon()).isPresent().apply(driver), "Item separator do not work correctly.");
+        assertTrue(new WebElementConditionFactory(page.getSeparator().getImgIcon()).isPresent().apply(driver), "Item separator do not work correctly.");
         assertEquals(page.getSeparatorsImages().size(), 5, "Number of separators.");
 
-        assertTrue(Graphene.attribute(page.getSeparator().getImgIcon(), "src").contains("star.png").apply(driver),
+        assertTrue(page.getSeparator().getImgIcon().getAttribute("src").contains("star.png"),
             "Separator's image should link to picture star.png.");
     }
 
@@ -145,12 +143,12 @@ public class TestToolbarGroup extends AbstractWebDriverTest {
     public void testItemSeparatorNonExisting() {
         toolbarGroupAttributes.set(ToolbarGroupAttributes.itemSeparator, "non-existing");
 
-        assertTrue(Graphene.element(page.getSeparator().getRoot()).isPresent().apply(driver), "Item separators should be present on the page.");
+        assertTrue(new WebElementConditionFactory(page.getSeparator().getRoot()).isPresent().apply(driver), "Item separators should be present on the page.");
         assertEquals(page.getSeparators().size(), 5, "Number of separators.");
-        assertTrue(Graphene.element(page.getSeparator().getImgIcon()).isPresent().apply(driver), "Item separators do not work correctly.");
+        assertTrue(new WebElementConditionFactory(page.getSeparator().getImgIcon()).isPresent().apply(driver), "Item separators do not work correctly.");
         assertEquals(page.getSeparatorsImages().size(), 5, "Number of separators.");
 
-        assertTrue(Graphene.attribute(page.getSeparator().getImgIcon(), "src").contains("non-existing").apply(driver),
+        assertTrue(page.getSeparator().getImgIcon().getAttribute("src").contains("non-existing"),
             "Separator's image should link to \"non-existing\".");
     }
 
@@ -282,17 +280,17 @@ public class TestToolbarGroup extends AbstractWebDriverTest {
     public void testRendered() {
         toolbarGroupAttributes.set(ToolbarGroupAttributes.rendered, Boolean.FALSE);
 
-        assertTrue(Graphene.element(page.getToolbar()).isPresent().apply(driver), "Toolbar should be present on the page.");
-        assertTrue(Graphene.element(page.getToolbar()).isVisible().apply(driver), "Toolbar should be visible.");
-        assertFalse(Graphene.element(page.getSeparator().getRoot()).isPresent().apply(driver), "No item separator should be present on the page.");
-        assertTrue(Graphene.element(page.getItemInput()).isPresent().apply(driver), "Input should be present on the page.");
-        assertTrue(Graphene.element(page.getItemInput()).isVisible().apply(driver), "Input should be visible.");
-        assertTrue(Graphene.element(page.getItemButton()).isPresent().apply(driver), "Button should be present on the page.");
-        assertTrue(Graphene.element(page.getItemButton()).isVisible().apply(driver), "Button should be visible.");
+        assertTrue(new WebElementConditionFactory(page.getToolbar()).isPresent().apply(driver), "Toolbar should be present on the page.");
+        assertTrue(new WebElementConditionFactory(page.getToolbar()).isVisible().apply(driver), "Toolbar should be visible.");
+        assertFalse(new WebElementConditionFactory(page.getSeparator().getRoot()).isPresent().apply(driver), "No item separator should be present on the page.");
+        assertTrue(new WebElementConditionFactory(page.getItemInput()).isPresent().apply(driver), "Input should be present on the page.");
+        assertTrue(new WebElementConditionFactory(page.getItemInput()).isVisible().apply(driver), "Input should be visible.");
+        assertTrue(new WebElementConditionFactory(page.getItemButton()).isPresent().apply(driver), "Button should be present on the page.");
+        assertTrue(new WebElementConditionFactory(page.getItemButton()).isVisible().apply(driver), "Button should be visible.");
 
         for (int i = 0; i < 6; i++) {
             // assertFalse(selenium.isElementPresent(items[i]), "Item " + (i + 1) + " should not be rendered.");
-            assertFalse(Graphene.element(itemsBy[i]).isPresent().apply(driver), "Item " + (i + 1) + " should not be rendered.");
+            assertFalse(new WebElementConditionFactory(driver.findElement(itemsBy[i])).isPresent().apply(driver), "Item " + (i + 1) + " should not be rendered.");
         }
     }
 

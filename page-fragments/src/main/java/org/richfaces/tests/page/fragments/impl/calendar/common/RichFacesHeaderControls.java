@@ -23,6 +23,7 @@ package org.richfaces.tests.page.fragments.impl.calendar.common;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -62,7 +63,7 @@ public class RichFacesHeaderControls implements HeaderControls {
     private final DateTimeFormatter formatter = DateTimeFormat.forPattern("MMMM, yyyy");
 
     private void _openYearAndMonthEditor() {
-        if (!isVisible() || Graphene.element(yearAndMonthEditorOpenerElement).not().isVisible().apply(driver)) {
+        if (!isVisible() || new WebElementConditionFactory(yearAndMonthEditorOpenerElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Cannot open date editor. "
                     + "Ensure that calendar popup and header controls are displayed and some date is set.");
         }
@@ -107,7 +108,7 @@ public class RichFacesHeaderControls implements HeaderControls {
 
     @Override
     public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(root).not().isVisible();
+        return new WebElementConditionFactory(root).not().isVisible();
     }
 
     @Override
@@ -117,29 +118,29 @@ public class RichFacesHeaderControls implements HeaderControls {
 
     @Override
     public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(root).isVisible();
+        return new WebElementConditionFactory(root).isVisible();
     }
 
     @Override
     public void nextMonth() {
-        if (!isVisible() || Graphene.element(nextMonthElement).not().isVisible().apply(driver)) {
+        if (!isVisible() || new WebElementConditionFactory(nextMonthElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Cannot interact with nextMonth button. "
                     + "Ensure that calendar popup and header controls are displayed.");
         }
         String before = yearAndMonthEditorOpenerElement.getText();
         nextMonthElement.click();
-        Graphene.waitAjax().until(Graphene.element(yearAndMonthEditorOpenerElement).not().textEquals(before));
+        Graphene.waitAjax().until(new WebElementConditionFactory(yearAndMonthEditorOpenerElement).not().textEquals(before));
     }
 
     @Override
     public void nextYear() {
-        if (!isVisible() || Graphene.element(nextYearElement).not().isVisible().apply(driver)) {
+        if (!isVisible() || new WebElementConditionFactory(nextYearElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Cannot interact with nextYear button. "
                     + "Ensure that calendar popup and header controls are displayed.");
         }
         String before = yearAndMonthEditorOpenerElement.getText();
         nextYearElement.click();
-        Graphene.waitAjax().until(Graphene.element(yearAndMonthEditorOpenerElement).not().textEquals(before));
+        Graphene.waitAjax().until(new WebElementConditionFactory(yearAndMonthEditorOpenerElement).not().textEquals(before));
     }
 
     @Override
@@ -154,24 +155,24 @@ public class RichFacesHeaderControls implements HeaderControls {
 
     @Override
     public void previousYear() {
-        if (!isVisible() || Graphene.element(previousYearElement).not().isVisible().apply(driver)) {
+        if (!isVisible() || new WebElementConditionFactory(previousYearElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Cannot interact with previousYear button. "
                     + "Ensure that calendar popup and header controls are displayed.");
         }
         String before = yearAndMonthEditorOpenerElement.getText();
         previousYearElement.click();
-        Graphene.waitAjax().until(Graphene.element(yearAndMonthEditorOpenerElement).not().textEquals(before));
+        Graphene.waitAjax().until(new WebElementConditionFactory(yearAndMonthEditorOpenerElement).not().textEquals(before));
     }
 
     @Override
     public void previousMonth() {
-        if (!isVisible() || Graphene.element(previousMonthElement).not().isVisible().apply(driver)) {
+        if (!isVisible() || new WebElementConditionFactory(previousMonthElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Cannot interact with previousMonth button. "
                     + "Ensure that calendar popup and header controls are displayed.");
         }
         String before = yearAndMonthEditorOpenerElement.getText();
         previousMonthElement.click();
-        Graphene.waitAjax().until(Graphene.element(yearAndMonthEditorOpenerElement).not().textEquals(before));
+        Graphene.waitAjax().until(new WebElementConditionFactory(yearAndMonthEditorOpenerElement).not().textEquals(before));
     }
 
     public void setCalendarEditor(RichFacesCalendarEditor calendarEditor) {

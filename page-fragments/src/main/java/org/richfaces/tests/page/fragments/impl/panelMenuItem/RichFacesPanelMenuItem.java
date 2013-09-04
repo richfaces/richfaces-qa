@@ -31,6 +31,7 @@ import com.google.common.base.Predicate;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebDriver;
@@ -126,8 +127,8 @@ public class RichFacesPanelMenuItem {
     }
 
     public boolean isVisible() {
-        boolean present = Graphene.element(root).isVisible().apply(browser);
-        boolean visible = Graphene.element(root).isPresent().apply(browser);
+        boolean present = new WebElementConditionFactory(root).isVisible().apply(browser);
+        boolean visible = new WebElementConditionFactory(root).isPresent().apply(browser);
         return present && visible;
     }
 }

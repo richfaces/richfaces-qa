@@ -27,7 +27,7 @@ import com.google.common.base.Preconditions;
 import java.util.EnumSet;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
@@ -142,7 +142,7 @@ public class RichFacesHotkey implements Hotkey {
         public Optional<By> getSelector() {
             return (selector == null || selector.isEmpty()
                 ? Optional.<By>absent()
-                : Optional.<By>of(ByJQuery.jquerySelector(selector)));
+                : Optional.<By>of(ByJQuery.selector(selector)));
         }
 
         public void setupFromWidget() {

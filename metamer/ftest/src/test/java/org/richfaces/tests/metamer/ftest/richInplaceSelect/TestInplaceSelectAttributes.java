@@ -121,11 +121,11 @@ public class TestInplaceSelectAttributes extends AbstractWebDriverTest {
         String testedClass = "metamer-ftest-class";
         inplaceSelectAttributes.set(InplaceSelectAttributes.changedClass, testedClass);
 
-        assertFalse(Graphene.attribute(select.advanced().getRootElement(), "class").contains(testedClass).apply(driver),
+        assertFalse(new WebElementConditionFactory(select.advanced().getRootElement()).attribute("class").contains(testedClass).apply(driver),
             "Inplace select should not have class metamer-ftest-class.");
 
         guardAjax(select).select(10);
-        assertTrue(Graphene.attribute(select.advanced().getRootElement(), "class").contains(testedClass).apply(driver),
+        assertTrue(new WebElementConditionFactory(select.advanced().getRootElement()).attribute("class").contains(testedClass).apply(driver),
             "Inplace select should have class metamer-ftest-class.");
     }
 

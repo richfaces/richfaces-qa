@@ -22,7 +22,7 @@
 package org.richfaces.tests.page.fragments.impl.calendar.inline;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.joda.time.DateTime;
 import org.openqa.selenium.WebDriver;
@@ -92,7 +92,7 @@ public class RichFacesCalendarInlineComponent implements CalendarInlineComponent
 
     @Override
     public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(root).not().isVisible();
+        return new WebElementConditionFactory(root).not().isVisible();
     }
 
     @Override
@@ -102,14 +102,14 @@ public class RichFacesCalendarInlineComponent implements CalendarInlineComponent
 
     @Override
     public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(root).isVisible();
+        return new WebElementConditionFactory(root).isVisible();
     }
 
     @Override
     public void setDateTime(DateTime dt) {
         getHeaderControls().openYearAndMonthEditor().selectDate(dt).confirmDate();
         getDayPicker().selectDayInMonth(dt);
-        if (Graphene.element(getFooterControls().getTimeEditorOpenerElement()).isVisible().apply(driver)) {
+        if (new WebElementConditionFactory(getFooterControls().getTimeEditorOpenerElement()).isVisible().apply(driver)) {
             getFooterControls().openTimeEditor().setTime(dt, TimeEditor.SetValueBy.TYPING).confirmTime();
         }
     }

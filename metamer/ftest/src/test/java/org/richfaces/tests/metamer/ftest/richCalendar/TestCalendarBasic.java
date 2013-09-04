@@ -32,7 +32,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.joda.time.DateTime;
 import org.openqa.selenium.Dimension;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
@@ -106,8 +106,8 @@ public class TestCalendarBasic extends AbstractCalendarTest {
     @Test
     public void testInit() {
         assertTrue(calendar.isVisible(), "Calendar is not present on the page.");
-        assertTrue(Graphene.element(calendar.getInput()).isVisible().apply(driver), "Calendar's input should be visible.");
-        assertTrue(Graphene.element(calendar.getPopupButton()).isVisible().apply(driver), "Calendar's image should be visible.");
+        assertTrue(new WebElementConditionFactory(calendar.getInput()).isVisible().apply(driver), "Calendar's input should be visible.");
+        assertTrue(new WebElementConditionFactory(calendar.getPopupButton()).isVisible().apply(driver), "Calendar's image should be visible.");
         assertTrue(calendar.getPopupButton().getTagName().equalsIgnoreCase("img"), "Calendar's image should be visible.");
         assertFalse(calendar.getPopupButton().getTagName().equalsIgnoreCase("button"), "Calendar's popup button should not be visible.");
         CalendarPopup popup = calendar.openPopup();

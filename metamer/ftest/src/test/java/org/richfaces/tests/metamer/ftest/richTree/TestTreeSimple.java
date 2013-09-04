@@ -21,16 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTree;
 
-import static org.richfaces.tests.page.fragments.impl.utils.Event.CLICK;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.DBLCLICK;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYDOWN;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYPRESS;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYUP;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEDOWN;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEMOVE;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOUT;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOVER;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEUP;
 import static org.richfaces.tests.metamer.ftest.BasicAttributes.nodeClass;
 import static org.richfaces.tests.metamer.ftest.richTree.TreeAttributes.data;
 import static org.richfaces.tests.metamer.ftest.richTree.TreeAttributes.execute;
@@ -43,15 +33,28 @@ import static org.richfaces.tests.metamer.ftest.richTree.TreeAttributes.render;
 import static org.richfaces.tests.metamer.ftest.richTree.TreeAttributes.rendered;
 import static org.richfaces.tests.metamer.ftest.richTree.TreeAttributes.status;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.treeAttributes;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.CLICK;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.DBLCLICK;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYDOWN;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYPRESS;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.KEYUP;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEDOWN;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEMOVE;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOUT;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOVER;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEUP;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
+
+import com.google.common.base.Predicate;
 
 import java.util.List;
 
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.WebDriver;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
@@ -63,8 +66,6 @@ import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode;
 import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNodeIcon;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.Test;
-
-import com.google.common.base.Predicate;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
@@ -355,10 +356,10 @@ public class TestTreeSimple extends AbstractTestTree {
     @Test
     @Templates(value = "plain")
     public void testRendered() {
-        assertTrue(Graphene.element(page.tree.getRoot()).isPresent().apply(driver)
-            && Graphene.element(page.tree.getRoot()).isVisible().apply(driver));
+        assertTrue(new WebElementConditionFactory(page.tree.getRoot()).isPresent().apply(driver)
+            && new WebElementConditionFactory(page.tree.getRoot()).isVisible().apply(driver));
         treeAttributes.set(rendered, false);
-        assertFalse(Graphene.element(page.tree.getRoot()).isPresent().apply(driver));
+        assertFalse(new WebElementConditionFactory(page.tree.getRoot()).isPresent().apply(driver));
     }
 
     @Test

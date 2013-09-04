@@ -23,10 +23,11 @@ package org.richfaces.tests.showcase.dataTable.page;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -62,7 +63,7 @@ public class TableFilteringPage {
 
     public boolean isNothingFound() {
         try {
-            tBody.findElement(ByJQuery.jquerySelector("tr > td:contains('Nothing found')"));
+            tBody.findElement(ByJQuery.selector("tr > td:contains('Nothing found')"));
             return true;
         } catch(NoSuchElementException ignored) {
             return false;

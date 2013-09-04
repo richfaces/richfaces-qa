@@ -24,7 +24,8 @@ package org.richfaces.tests.page.fragments.impl.calendar.popup.popup;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import org.jboss.arquillian.graphene.Graphene;
+
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.joda.time.DateTime;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.DayPicker;
@@ -100,13 +101,13 @@ public class RichFacesCalendarPopup extends RichFacesCalendarInlineComponent imp
 
     @Override
     public void setDateTime(DateTime dt) {
-        if (Graphene.element(getFooterControls().getApplyButtonElement()).isVisible().apply(driver)) {
+        if (new WebElementConditionFactory(getFooterControls().getApplyButtonElement()).isVisible().apply(driver)) {
             super.setDateTime(dt);
             getFooterControls().getApplyButtonElement().click();
         } else {
             getHeaderControls().openYearAndMonthEditor().selectDate(dt).confirmDate();
             getDayPicker().selectDayInMonth(dt);
-            if (Graphene.element(getProxiedFooterControls().getTimeEditorOpenerElement()).isVisible().apply(driver)) {
+            if (new WebElementConditionFactory(getProxiedFooterControls().getTimeEditorOpenerElement()).isVisible().apply(driver)) {
                 getProxiedFooterControls().openTimeEditor().setTime(dt, TimeEditor.SetValueBy.TYPING).confirmTime();
             }
         }

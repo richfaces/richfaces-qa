@@ -22,9 +22,9 @@
 package org.richfaces.tests.showcase.ftest.webdriver.page.richTogglePanel;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.showcase.ftest.webdriver.page.AbstractWebDriverPage;
@@ -78,7 +78,7 @@ public class SimplePage extends AbstractWebDriverPage {
     }
 
     private boolean isPanelOpened(WebElement panel) {
-        return Graphene.element(panel).isPresent().apply(getWebDriver());
+        return new WebElementConditionFactory(panel).isPresent().apply(getWebDriver());
     }
 
     private boolean isTabFocused(WebElement tab) {
@@ -94,6 +94,6 @@ public class SimplePage extends AbstractWebDriverPage {
         tab.click();
         Graphene.waitAjax()
             .withMessage("The panel can't be opened.")
-            .until(Graphene.element(panel).isVisible());
+            .until(new WebElementConditionFactory(panel).isVisible());
     }
 }

@@ -22,6 +22,7 @@
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jPoll;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
@@ -43,7 +44,7 @@ public class TestA4jPollSimple extends AbstractWebDriverTest {
         Thread.sleep(1500);
         Graphene.waitAjax()
             .withMessage("After clicking on the stop button, there should be not updates.")
-            .until(Graphene.element(getPage().getDate()).textEquals(before));
+            .until(new WebElementConditionFactory(getPage().getDate()).textEquals(before));
 
     }
 
@@ -53,7 +54,7 @@ public class TestA4jPollSimple extends AbstractWebDriverTest {
             String before = getPage().getDate().getText();
             new WebDriverWait(getWebDriver(), 2)
                 .withMessage("The updating doesn't work correctly.")
-                .until(Graphene.element(getPage().getDate()).not().textEquals(before));
+                .until(new WebElementConditionFactory(getPage().getDate()).not().textEquals(before));
         }
     }
 

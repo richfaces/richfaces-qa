@@ -24,7 +24,7 @@ package org.richfaces.tests.showcase.panel;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 
@@ -67,7 +67,7 @@ public class AbstractPanelTest extends AbstractWebDriverTest {
     }
 
     protected void checkContentOfPanel(String panelLocator, String expectedContent) {
-        WebElement panel = webDriver.findElement(ByJQuery.jquerySelector(panelLocator));
+        WebElement panel = webDriver.findElement(ByJQuery.selector(panelLocator));
         assertFalse(panel.getText().isEmpty(), "The content of the panel should not be empty");
         assertTrue(panel.getText().contains(expectedContent), "The content is different");
     }

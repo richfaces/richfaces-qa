@@ -21,16 +21,18 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataTable;
 
+import static org.testng.Assert.assertTrue;
+
 import java.util.Iterator;
 import java.util.List;
+
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.dataTable.page.ArrangableModelPage;
-import static org.testng.Assert.assertTrue;
 import org.testng.annotations.Test;
 
 /**
@@ -53,7 +55,7 @@ public class TestArrangeableModel extends AbstractWebDriverTest {
     @Test
     public void testFirstNameFilter() {
 
-        filterAnColumn(page.firstNameFilterInput, "as", ByJQuery.jquerySelector("td:eq(0)"));
+        filterAnColumn(page.firstNameFilterInput, "as", ByJQuery.selector("td:eq(0)"));
         page.firstNameFilterInput.click();
         page.firstNameFilterInput.clear();
         fireEvent(page.firstNameFilterInput, "keyup");
@@ -61,7 +63,7 @@ public class TestArrangeableModel extends AbstractWebDriverTest {
 
     @Test
     public void testSurnameFilter() {
-        filterAnColumn(page.secondNameFilterInput, "al", ByJQuery.jquerySelector("td:eq(1)"));
+        filterAnColumn(page.secondNameFilterInput, "al", ByJQuery.selector("td:eq(1)"));
         page.secondNameFilterInput.click();
         page.secondNameFilterInput.clear();
         fireEvent(page.secondNameFilterInput, "keyup");
@@ -69,7 +71,7 @@ public class TestArrangeableModel extends AbstractWebDriverTest {
 
     @Test
     public void testEmailFilter() {
-        filterAnColumn(page.emailFilterInput, "ac", ByJQuery.jquerySelector("td:eq(2)"));
+        filterAnColumn(page.emailFilterInput, "ac", ByJQuery.selector("td:eq(2)"));
         page.emailFilterInput.click();
         page.emailFilterInput.clear();
         fireEvent(page.emailFilterInput, "keyup");

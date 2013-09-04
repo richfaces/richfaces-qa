@@ -127,7 +127,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.decreaseSelectedClass, value);
         fireEvent(slider.advanced().getArrowDecrease(), Event.MOUSEDOWN);
         Graphene.waitGui().withMessage("decreaseSelectedClass does not work")
-            .until(Graphene.attribute(slider.advanced().getArrowDecrease(), "class").contains(value));
+            .until().element(slider.advanced().getArrowDecrease()).attribute("class").contains(value);
         fireEvent(slider.advanced().getArrowIncrease(), Event.MOUSEUP);
 
     }
@@ -211,7 +211,7 @@ public class TestInputNumberSliderAttributes extends AbstractSliderTest {
         inputNumberSliderAttributes.set(InputNumberSliderAttributes.increaseSelectedClass, value);
         fireEvent(slider.advanced().getArrowIncrease(), Event.MOUSEDOWN);
         Graphene.waitGui().withMessage("increaseSelectedClass does not work")
-            .until(Graphene.attribute(slider.advanced().getArrowIncrease(), "class").contains(value));
+            .until().element(slider.advanced().getArrowIncrease()).attribute("class").contains(value);
         fireEvent(slider.advanced().getArrowIncrease(), Event.MOUSEUP);
     }
 

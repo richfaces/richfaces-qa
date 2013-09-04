@@ -23,6 +23,7 @@ package org.richfaces.tests.showcase.ftest.webdriver.page;
 
 import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -91,19 +92,19 @@ public class DataScrollablePage {
     }
 
     public boolean isFirstPageButtonDisabled() {
-        return Graphene.element(firstPageButtonDis).isPresent().apply(webDriver);
+        return new WebElementConditionFactory(firstPageButtonDis).isPresent().apply(webDriver);
     }
 
     public boolean isLastPageButtonDisabled() {
-        return Graphene.element(lastPageButtonDis).isPresent().apply(webDriver);
+        return new WebElementConditionFactory(lastPageButtonDis).isPresent().apply(webDriver);
     }
 
     public boolean isNextButtonDisabled() {
-        return Graphene.element(nextButtonDis).isPresent().apply(webDriver);
+        return new WebElementConditionFactory(nextButtonDis).isPresent().apply(webDriver);
     }
 
     public boolean isNextFastButtonDisabled() {
-        return Graphene.element(fastNextButtonDis).isPresent().apply(webDriver);
+        return new WebElementConditionFactory(fastNextButtonDis).isPresent().apply(webDriver);
     }
 
     public boolean isPageNumberPresent(int pageNumber) {
@@ -116,11 +117,11 @@ public class DataScrollablePage {
     }
 
     public boolean isPreviousButtonDisabled() {
-        return Graphene.element(previousButtonDis).isPresent().apply(webDriver);
+        return new WebElementConditionFactory(previousButtonDis).isPresent().apply(webDriver);
     }
 
     public boolean isPreviousFastButtonDisabled() {
-        return Graphene.element(fastPreviousButtonDis).isPresent().apply(webDriver);
+        return new WebElementConditionFactory(fastPreviousButtonDis).isPresent().apply(webDriver);
     }
 
     public void last() {
@@ -158,7 +159,7 @@ public class DataScrollablePage {
         button.click();
         Graphene.waitAjax()
             .withMessage("After clicking on control button of data scroller, page doesn't change.")
-            .until(Graphene.element(buttonWithNumberOfCurrentPage).not().textEquals(currentPage));
+            .until(new WebElementConditionFactory(buttonWithNumberOfCurrentPage).not().textEquals(currentPage));
     }
 
     protected WebDriver getWebDriver() {

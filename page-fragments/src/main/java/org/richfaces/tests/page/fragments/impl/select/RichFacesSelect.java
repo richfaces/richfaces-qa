@@ -21,6 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.select;
 
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -28,8 +31,8 @@ import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -37,14 +40,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponent;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.utils.Actions;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
-
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
 
 public class RichFacesSelect implements Select {
 
@@ -61,7 +60,7 @@ public class RichFacesSelect implements Select {
     @FindBy(className = "rf-sel-shdw")
     private GrapheneElement localPopup;
 
-    private static final ByJQuery GLOBAL_POPUP = ByJQuery.jquerySelector("div.rf-sel-shdw:visible");
+    private static final ByJQuery GLOBAL_POPUP = ByJQuery.selector("div.rf-sel-shdw:visible");
     private static final ScrollingType DEFAULT_SCROLLING_TYPE = ScrollingType.BY_MOUSE;
     private static final boolean DEFAULT_OPEN_BY_INPUT_CLICK = true;
 

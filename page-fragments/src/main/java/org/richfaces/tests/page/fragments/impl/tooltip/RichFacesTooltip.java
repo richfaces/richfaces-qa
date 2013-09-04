@@ -28,12 +28,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
-<<<<<<< HEAD
 import org.richfaces.TooltipMode;
-import org.richfaces.tests.page.fragments.impl.Utils;
-=======
-import org.richfaces.ui.output.tooltip.TooltipMode;
->>>>>>> 5c037da... few tests for r:tooltip fixed
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>

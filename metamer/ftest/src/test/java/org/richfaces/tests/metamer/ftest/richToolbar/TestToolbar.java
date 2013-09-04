@@ -32,11 +32,11 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.AttributeConditionFactory;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.richfaces.tests.metamer.Template;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
@@ -74,26 +74,26 @@ public class TestToolbar extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testInit() {
-        assertTrue(Graphene.element(page.getToolbar()).isPresent().apply(driver), "Toolbar should be present on the page.");
-        assertTrue(Graphene.element(page.getToolbar()).isVisible().apply(driver), "Toolbar should be visible.");
-        assertTrue(Graphene.element(page.getSeparator().getRoot()).not().isPresent().apply(driver),
+        assertTrue(new WebElementConditionFactory(page.getToolbar()).isPresent().apply(driver), "Toolbar should be present on the page.");
+        assertTrue(new WebElementConditionFactory(page.getToolbar()).isVisible().apply(driver), "Toolbar should be visible.");
+        assertTrue(new WebElementConditionFactory(page.getSeparator().getRoot()).not().isPresent().apply(driver),
             "Item separator should not be present on the page.");
         // just test of inverse logic could be applied as replace
-        assertFalse(Graphene.element(page.getSeparator().getRoot()).isPresent().apply(driver),
+        assertFalse(new WebElementConditionFactory(page.getSeparator().getRoot()).isPresent().apply(driver),
             "Item separator should not be present on the page.");
     }
 
     @Test
     public void testInitItems() {
         for (By itemBy : itemsBy) {
-            assertTrue(Graphene.element(itemBy).isPresent().apply(driver), "Item (" + itemBy + ") should be present on the page.");
-            assertTrue(Graphene.element(itemBy).isVisible().apply(driver), "Item (" + itemBy + ") should be visible.");
+            assertTrue(new WebElementConditionFactory(driver.findElement(itemBy)).isPresent().apply(driver), "Item (" + itemBy + ") should be present on the page.");
+            assertTrue(new WebElementConditionFactory(driver.findElement(itemBy)).isVisible().apply(driver), "Item (" + itemBy + ") should be visible.");
         }
     }
 
     @Test
     public void testHeight() {
-        AttributeConditionFactory styleAttr = Graphene.element(page.getToolbar()).attribute("style");
+        AttributeConditionFactory styleAttr = new WebElementConditionFactory(page.getToolbar()).attribute("style");
         assertTrue(styleAttr.isPresent().apply(driver),
             "Attribute style should be present.");
         assertTrue(styleAttr.contains("height: 28px").apply(driver), "Height in attribute style should be 28px");
@@ -115,25 +115,25 @@ public class TestToolbar extends AbstractWebDriverTest {
     public void testItemSeparatorCorrect() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, itemSeparator);
 
-        assertTrue(Graphene.element(page.getSeparator().getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
-        assertTrue(Graphene.element(page.getSeparator().getIconByName(itemSeparator)).isPresent().apply(driver), "Item separator does not work correctly.");
+        assertTrue(new WebElementConditionFactory(page.getSeparator().getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
+        assertTrue(new WebElementConditionFactory(page.getSeparator().getIconByName(itemSeparator)).isPresent().apply(driver), "Item separator does not work correctly.");
     }
 
     @Test
     public void testItemSeparatorNone() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, "none");
-        assertTrue(Graphene.element(page.getSeparator().getRoot()).not().isPresent().apply(driver), "Item separator should not be present on the page.");
+        assertTrue(new WebElementConditionFactory(page.getSeparator().getRoot()).not().isPresent().apply(driver), "Item separator should not be present on the page.");
 
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, "null");
-        assertTrue(Graphene.element(page.getSeparator().getRoot()).not().isPresent().apply(driver), "Item separator should not be present on the page.");
+        assertTrue(new WebElementConditionFactory(page.getSeparator().getRoot()).not().isPresent().apply(driver), "Item separator should not be present on the page.");
     }
 
     @Test
     public void testItemSeparatorCustom() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, "star");
 
-        assertTrue(Graphene.element(page.getSeparator().getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
-        assertTrue(Graphene.element(page.getSeparator().getImgIcon()).isPresent().apply(driver), "Item separator does not work correctly.");
+        assertTrue(new WebElementConditionFactory(page.getSeparator().getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
+        assertTrue(new WebElementConditionFactory(page.getSeparator().getImgIcon()).isPresent().apply(driver), "Item separator does not work correctly.");
 
         assertTrue(page.getSeparator().getImgIcon().getAttribute("src").contains("star.png"),
             "Separator's image should link to picture star.png.");
@@ -143,10 +143,10 @@ public class TestToolbar extends AbstractWebDriverTest {
     public void testItemSeparatorNonExisting() {
         toolbarAttributes.set(ToolbarAttributes.itemSeparator, "non-existing");
 
-        assertTrue(Graphene.element(page.getSeparator().getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
-        assertTrue(Graphene.element(page.getSeparator().getImgIcon()).isPresent().apply(driver), "Item separator does not work correctly.");
+        assertTrue(new WebElementConditionFactory(page.getSeparator().getRoot()).isPresent().apply(driver), "Item separator should be present on the page.");
+        assertTrue(new WebElementConditionFactory(page.getSeparator().getImgIcon()).isPresent().apply(driver), "Item separator does not work correctly.");
 
-        assertTrue(Graphene.attribute(page.getSeparator().getImgIcon(), "src").contains("non-existing").apply(driver),
+        assertTrue(new WebElementConditionFactory(page.getSeparator().getImgIcon()).attribute("src").contains("non-existing").apply(driver),
             "Separator's image should link to \"non-existing\".");
     }
 
@@ -254,8 +254,8 @@ public class TestToolbar extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testRendered() {
         toolbarAttributes.set(ToolbarAttributes.rendered, Boolean.FALSE);
-        assertTrue(Graphene.element(page.getToolbar()).not().isPresent().apply(driver), "Toolbar should not be rendered when rendered=false.");
-        assertFalse(Graphene.element(page.getToolbar()).isPresent().apply(driver), "Toolbar should not be rendered when rendered=false.");
+        assertTrue(new WebElementConditionFactory(page.getToolbar()).not().isPresent().apply(driver), "Toolbar should not be rendered when rendered=false.");
+        assertFalse(new WebElementConditionFactory(page.getToolbar()).isPresent().apply(driver), "Toolbar should not be rendered when rendered=false.");
     }
 
     @Test
@@ -272,14 +272,13 @@ public class TestToolbar extends AbstractWebDriverTest {
 
     @Test
     public void testWidth() {
-        AttributeConditionFactory styleAttr = Graphene.attribute(page.getToolbar(), "style");
-        assertTrue(styleAttr.isPresent().apply(driver), "Attribute style should be present.");
-        assertTrue(styleAttr.contains("width: 100%").apply(driver),
+        String styleAttr = page.getToolbar().getAttribute("style");
+        assertTrue(styleAttr.contains("width: 100%"),
             "Attribute style should have 100% width when it is not set.");
 
         toolbarAttributes.set(ToolbarAttributes.width, "500px");
-        styleAttr = Graphene.attribute(page.getToolbar(), "style");
-        assertTrue(styleAttr.contains("width: 500px").apply(driver), "Attribute style should have width 500px.");
+         styleAttr = page.getToolbar().getAttribute("style");
+        assertTrue(styleAttr.contains("width: 500px"), "Attribute style should have width 500px.");
     }
 
 }

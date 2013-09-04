@@ -25,7 +25,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -59,7 +59,7 @@ public class CalendarWeek implements Iterable<CalendarDay> {
      * Returns week number.
      */
     public Integer getWeekNumber() {
-        if (Graphene.element(weekNumberElement).not().isVisible().apply(driver)) {
+        if (new WebElementConditionFactory(weekNumberElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Week numbers are not displayed");
         }
         return Integer.parseInt(weekNumberElement.getText());

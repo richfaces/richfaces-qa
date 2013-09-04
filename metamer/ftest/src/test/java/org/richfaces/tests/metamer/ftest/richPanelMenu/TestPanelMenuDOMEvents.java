@@ -21,14 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richPanelMenu;
 
-import static org.richfaces.tests.page.fragments.impl.utils.Event.CLICK;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.DBLCLICK;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEDOWN;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEMOVE;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOUT;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOVER;
-import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEUP;
-
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.collapseEvent;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.expandEvent;
@@ -40,11 +32,21 @@ import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttribute
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onmouseover;
 import static org.richfaces.tests.metamer.ftest.richPanelMenu.PanelMenuAttributes.onmouseup;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.panelMenuAttributes;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.CLICK;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.DBLCLICK;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEDOWN;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEMOVE;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOUT;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEOVER;
+import static org.richfaces.tests.page.fragments.impl.utils.Event.MOUSEUP;
 import static org.testng.Assert.assertTrue;
+
+import com.google.common.base.Predicate;
 
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -55,8 +57,6 @@ import org.richfaces.tests.page.fragments.impl.panelMenuGroup.RichFacesPanelMenu
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import com.google.common.base.Predicate;
 
 
 /**
@@ -168,7 +168,7 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
 
         @Override
         public boolean apply(WebDriver browser) {
-            Boolean present = Graphene.element(group.getRoot()).isPresent().apply(driver);
+            Boolean present = new WebElementConditionFactory(group.getRoot()).isPresent().apply(driver);
             return present && group.isExpanded();
         }
     }
@@ -181,7 +181,7 @@ public class TestPanelMenuDOMEvents extends AbstractPanelMenuTest {
         }
 
         public boolean apply(WebDriver driver) {
-            Boolean present = Graphene.element(group.getRoot()).isPresent().apply(driver);
+            Boolean present = new WebElementConditionFactory(group.getRoot()).isPresent().apply(driver);
             return present && group.isCollapsed();
         }
     };

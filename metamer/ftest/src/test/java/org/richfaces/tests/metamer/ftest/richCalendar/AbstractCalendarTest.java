@@ -27,7 +27,9 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import javax.faces.event.PhaseId;
+
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -106,7 +108,7 @@ public abstract class AbstractCalendarTest extends AbstractWebDriverTest {
     }
 
     private boolean isVisible(WebElement element) {
-        return Graphene.element(element).isVisible().apply(driver);
+        return new WebElementConditionFactory(element).isVisible().apply(driver);
     }
 
     public void testFooterButtons() {

@@ -23,7 +23,7 @@ package org.richfaces.tests.showcase.functions;
 
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.Keys;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.functions.page.FunctionsPage;
@@ -31,7 +31,7 @@ import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
- * @version $Revision$
+ * @since 4.3.4
  */
 public class TestFunctions extends AbstractWebDriverTest {
 

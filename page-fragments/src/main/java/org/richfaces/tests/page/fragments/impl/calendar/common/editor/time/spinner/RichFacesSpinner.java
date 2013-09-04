@@ -22,7 +22,7 @@
 package org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.spinner;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Root;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -70,7 +70,7 @@ public abstract class RichFacesSpinner<T> implements VisibleComponent {
 
     @Override
     public ExpectedCondition<Boolean> isNotVisibleCondition() {
-        return Graphene.element(root).not().isVisible();
+        return new WebElementConditionFactory(root).not().isVisible();
     }
 
     protected boolean isSameValueAreadySet(T value) {
@@ -84,7 +84,7 @@ public abstract class RichFacesSpinner<T> implements VisibleComponent {
 
     @Override
     public ExpectedCondition<Boolean> isVisibleCondition() {
-        return Graphene.element(root).isVisible();
+        return new WebElementConditionFactory(root).isVisible();
     }
 
     public void setValueBy(T value, SetValueBy by) {

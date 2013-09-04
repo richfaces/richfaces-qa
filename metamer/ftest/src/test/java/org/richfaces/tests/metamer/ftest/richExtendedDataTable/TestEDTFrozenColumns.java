@@ -24,13 +24,14 @@ package org.richfaces.tests.metamer.ftest.richExtendedDataTable;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.extendedDataTableAttributes;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotEquals;
 
 import java.net.URL;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
@@ -63,7 +64,7 @@ public class TestEDTFrozenColumns extends AbstractWebDriverTest {
 
     @Test
     public void testInit() {
-        Boolean present = Graphene.element(page.frozenColumnsTd).isPresent().apply(driver);
+        Boolean present = new WebElementConditionFactory(page.frozenColumnsTd).isPresent().apply(driver);
         assertFalse(present, "No frozen columns should be in page.");
     }
 

@@ -42,6 +42,7 @@ import java.util.Locale;
 import javax.faces.event.PhaseId;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -60,7 +61,6 @@ import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.Locations;
-import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.calendar.common.HeaderControls;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.CalendarDay.DayType;
@@ -102,7 +102,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     private WebElement a4jbutton;
     @FindBy(css = "span[id$=msg]")
     private RichFacesMessage message;
-    //
+
     private final Action setTimeAction = new SetTimeAction();
     private final Action setCurrentDateWithCalendarsTodayButtonAction = new SetCurrentDateWithCalendarsTodayButtonAction();
     private final Action setTodayAndThenClickToNextMonthAction = new SetTodayAndThenClickToNextMonthAction();
@@ -265,7 +265,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     public void testButtonLabel() {
         calendarAttributes.set(CalendarAttributes.buttonLabel, "label");
 
-        assertTrue(Graphene.element(calendar.getPopupButton()).isVisible().apply(driver), "Button should be displayed.");
+        assertTrue(new WebElementConditionFactory(calendar.getPopupButton()).isVisible().apply(driver), "Button should be displayed.");
         assertEquals(calendar.getPopupButton().getText(), "label", "Label of the button.");
         assertNotEquals(calendar.getPopupButton().getTagName(), "img", "Image should not be displayed.");
 
@@ -433,7 +433,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
         assertEquals(calendar.getInput().getAttribute("readonly"), "true");
 
         calendarAttributes.set(CalendarAttributes.enableManualInput, Boolean.TRUE);
-        assertTrue(Graphene.attribute(calendar.getInput(), "readonly").not().isPresent().apply(driver),
+        assertTrue(new WebElementConditionFactory(calendar.getInput()).attribute("readonly").not().isPresent().apply(driver),
             "Readonly attribute of input should not be defined.");
     }
 
@@ -1083,11 +1083,11 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
     }
 
     private void assertVisible(WebElement element) {
-        assertTrue(Graphene.element(element).isVisible().apply(driver));
+        assertTrue(new WebElementConditionFactory(element).isVisible().apply(driver));
     }
 
     private void assertNotVisible(WebElement element) {
-        assertTrue(Graphene.element(element).not().isVisible().apply(driver));
+        assertTrue(new WebElementConditionFactory(element).not().isVisible().apply(driver));
     }
 
     private void assertListOfWebElementsVisible(List<WebElement> list) {

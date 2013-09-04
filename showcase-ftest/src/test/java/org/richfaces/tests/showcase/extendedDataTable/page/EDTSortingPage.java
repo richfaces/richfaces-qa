@@ -23,11 +23,12 @@ package org.richfaces.tests.showcase.extendedDataTable.page;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.commons.lang.WordUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -85,7 +86,7 @@ public class EDTSortingPage {
             case PRICE:
             case MILEAGE:
             case VIN:
-                WebElement toggler = browser.findElement(ByJQuery.jquerySelector("a:contains(" + WordUtils.capitalize(field.name().toLowerCase()) + ")"));
+                WebElement toggler = browser.findElement(ByJQuery.selector("a:contains(" + WordUtils.capitalize(field.name().toLowerCase()) + ")"));
                 Graphene.guardAjax(toggler).click();
                 break;
             default:

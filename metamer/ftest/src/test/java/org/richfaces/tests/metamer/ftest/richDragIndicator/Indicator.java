@@ -21,14 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richDragIndicator;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.GrapheneElement;
-import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import org.jboss.arquillian.graphene.GrapheneElement;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
+import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -77,7 +76,7 @@ public class Indicator {
             return indicator.isPresent()
                 && indicator.isDisplayed();
         } else {
-            return Graphene.element(getActiveIndicator()).isPresent().apply(driver)
+            return new WebElementConditionFactory(getActiveIndicator()).isPresent().apply(driver)
                 && getActiveIndicator().isDisplayed();
         }
     }

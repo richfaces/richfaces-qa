@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTooltip;
 
+import static java.text.MessageFormat.format;
 import static javax.faces.event.PhaseId.APPLY_REQUEST_VALUES;
 import static javax.faces.event.PhaseId.RENDER_RESPONSE;
 import static javax.faces.event.PhaseId.RESTORE_VIEW;
@@ -29,12 +30,15 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.tooltipA
 import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.jboss.arquillian.graphene.wait.WebDriverWait;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.TooltipLayout;
@@ -47,6 +51,7 @@ import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -60,6 +65,8 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     private static final int EVENT_OFFSET = 10;
     private static final int PRESET_OFFSET = 5;
 
+    private static final String ATTR_INPUT_LOC_FORMAT = "input[id$=on{0}Input]";
+
     @Page
     TooltipPage page;
 
@@ -67,7 +74,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     @Inject
     @Use(empty = true)
     Positioning direction;
-    Integer[] offsets = new Integer[] { 0, PRESET_OFFSET, -PRESET_OFFSET };
+    Integer[] offsets = new Integer[]{ 0, PRESET_OFFSET, -PRESET_OFFSET };
     @Inject
     @Use(ints = 0)
     Integer verticalOffset;
@@ -122,7 +129,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         MetamerPage.requestTimeChangesWaiting(page.getTooltip()).recall(page.getPanel());
 
         assertEquals(expectedReturnJS("return window.data;", "RichFaces 4"), "RichFaces 4"); // retrieveWindowData.retrieve(),
-                                                                                             // "RichFaces 4");
+        // "RichFaces 4");
     }
 
     @Test
@@ -144,7 +151,9 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
     }
 
     @Test
-    @Uses({ @Use(field = "direction", enumeration = true), @Use(field = "verticalOffset", value = "offsets"),
+    @Uses({
+        @Use(field = "direction", enumeration = true),
+        @Use(field = "verticalOffset", value = "offsets"),
         @Use(field = "horizontalOffset", value = "offsets") })
     @Templates(value = { "plain", "richCollapsibleSubTable", "richExtendedDataTable", "richPopupPanel" })
     public void testPositioning() {
@@ -221,8 +230,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
 
         page.getTooltip().recall(page.getPanel());
         page.getTooltip().hide(page.getPanel());
-        WebDriverWait<Void> wait = new WebDriverWait<Void>(null, driver, presetDelay + 2);
-        wait.until("Tooltip didn't disappears!").element(page.getTooltip().getRoot()).is().not().visible();
+        Graphene.waitModel().withTimeout(presetDelay + 2, TimeUnit.SECONDS).until("Tooltip didn't disappears!").element(page.getTooltip().getRoot()).is().not().visible();
     }
 
     @Test
@@ -494,11 +502,8 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
                 .withMessage("Tooltip shouldn't be displayed before deplay timeout (" + presetDelay + ") is over.")
                 .until().element(page.getTooltip().getRoot()).is().not().visible();
         }
-        WebDriverWait<Void> wait = new WebDriverWait<Void>(null, driver, presetDelay / 1000 + 2);
-        wait.until().element(page.getTooltip().getRoot()).is().present();
-        wait.until().element(page.getTooltip().getRoot()).is().visible();
+        Graphene.waitModel().withTimeout(presetDelay / 1000 + 2, TimeUnit.SECONDS).until("Tooltip didn't disappears!").element(page.getTooltip().getRoot()).is().visible();
         page.getTooltip().hide(page.getPanel());
-
     }
 
     @Test
@@ -545,7 +550,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
         tooltipAttributes.set(TooltipAttributes.zindex, 10);
 
         String zindex = page.getTooltip().getRoot().getCssValue("z-index"); // selenium.getStyle(page.getTooltip().root,
-                                                                            // CssProperty.Z_INDEX);
+        // CssProperty.Z_INDEX);
         assertEquals(zindex, "10");
     }
 
@@ -592,7 +597,7 @@ public class TestTooltipSimple extends AbstractWebDriverTest {
             actualEvents,
             events,
             format("The events ({0}) don't came in right order ({1})", Arrays.deepToString(actualEvents),
-                Arrays.deepToString(events)));
+            Arrays.deepToString(events)));
     }
 
     private void recallTooltipInRightBottomCornerOfPanel(int offsetX, int offsetY) {

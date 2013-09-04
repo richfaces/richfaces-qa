@@ -138,7 +138,6 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
         Graphene.guardNoRequest(page.inputMax).sendKeys(invalidValue);
         page.a4jCommandBtn.click();
         // check error message from validator
-        // assertTrue(Graphene.element(page.msgMax).isPresent().apply(driver));
         assertPresent(page.msgMax, "Element page.msgMax should be present!");
 
         // set disabled to true
@@ -147,7 +146,6 @@ public class TestWrappingValidator extends AbstractValidatorsTest {
         Graphene.guardNoRequest(page.inputMax).sendKeys(invalidValue);
         page.a4jCommandBtn.click();
         // check error message from validator
-        // assertFalse(Graphene.element(page.msgMax).isPresent().apply(driver));
         assertNotPresent(page.msgMax, "Element page.msgMax should be present!");
     }
 

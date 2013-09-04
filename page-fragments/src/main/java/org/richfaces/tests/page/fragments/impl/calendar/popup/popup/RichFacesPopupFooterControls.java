@@ -21,7 +21,7 @@
  */
 package org.richfaces.tests.page.fragments.impl.calendar.popup.popup;
 
-import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
 import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.calendar.common.RichFacesFooterControls;
@@ -40,7 +40,7 @@ public class RichFacesPopupFooterControls extends RichFacesFooterControls implem
         if (!isVisible()) {
             throw new RuntimeException("Footer controls are not displayed, cannot interact with apply button");
         }
-        if (Graphene.element(applyButtonElement).not().isVisible().apply(driver)) {
+        if (new WebElementConditionFactory(applyButtonElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Apply button is not displayed.");
         }
         applyButtonElement.click();
@@ -54,7 +54,7 @@ public class RichFacesPopupFooterControls extends RichFacesFooterControls implem
     @Override
     public void setTodaysDate() {
         todayDate();
-        if (Graphene.element(applyButtonElement).isVisible().apply(driver)) {
+        if (new WebElementConditionFactory(applyButtonElement).isVisible().apply(driver)) {
             applyDate();
         }
     }
@@ -64,7 +64,7 @@ public class RichFacesPopupFooterControls extends RichFacesFooterControls implem
         if (!isVisible()) {
             throw new RuntimeException("Footer controls are not displayed, cannot interact with today button");
         }
-        if (Graphene.element(todayButtonElement).not().isVisible().apply(driver)) {
+        if (new WebElementConditionFactory(todayButtonElement).not().isVisible().apply(driver)) {
             throw new RuntimeException("Today button is not displayed.");
         }
         todayButtonElement.click();

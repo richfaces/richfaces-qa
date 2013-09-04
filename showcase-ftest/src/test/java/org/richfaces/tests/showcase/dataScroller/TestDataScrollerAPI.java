@@ -25,7 +25,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.ByJQuery;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -106,13 +106,13 @@ public class TestDataScrollerAPI extends AbstractWebDriverTest {
 
         try {
             WebElement checkingButton = webDriver
-                    .findElement(ByJQuery.jquerySelector("a[class*='" + page.CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER + "']:contains('"
+                    .findElement(ByJQuery.selector("a[class*='" + page.CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER + "']:contains('"
                             + numberOfPage + "')"));
             imgSrcBeforeClick = getSrcOfFirstImage();
             Graphene.guardAjax(checkingButton).click();
         } catch (NoSuchElementException ignored) {
             WebElement inactiveButton = webDriver
-                    .findElement(ByJQuery.jquerySelector("a[class*='" + page.CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER + "']:first"));
+                    .findElement(ByJQuery.selector("a[class*='" + page.CLASS_OF_INACTIVE_BUTTON_WITH_NUMBER + "']:first"));
             imgSrcBeforeClick = getSrcOfFirstImage();
             Graphene.guardAjax(inactiveButton).click();
             numberOfPage = page.getNumberOfCurrentPage();
