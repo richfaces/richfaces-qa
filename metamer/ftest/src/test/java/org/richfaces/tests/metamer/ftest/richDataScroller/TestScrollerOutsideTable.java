@@ -23,10 +23,10 @@ package org.richfaces.tests.metamer.ftest.richDataScroller;
 
 import javax.xml.bind.JAXBException;
 
+import org.jboss.arquillian.graphene.spi.annotations.Page;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
-import org.richfaces.tests.metamer.ftest.annotations.Use;
+import org.richfaces.tests.metamer.ftest.richDataScroller.SimplePage.ScrollerPosition;
 import org.testng.annotations.Test;
-
 
 /**
  * <p>
@@ -36,16 +36,17 @@ import org.testng.annotations.Test;
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @version $Revision: 22407 $
  */
-@Use(field = "dataScroller", value = "dataScroller1")
-@Templates(exclude = {"a4jRepeat", "hDataTable", "richDataTable", "uiRepeat"})
+@Templates(exclude = { "a4jRepeat", "hDataTable", "richDataTable", "uiRepeat" })
 public class TestScrollerOutsideTable extends AbstractScrollerTest {
+
+    @Page
+    SimplePage page;
 
     public TestScrollerOutsideTable() throws JAXBException {
     }
 
     @Test
-    @Override
     public void testNumberedPages() {
-        super.testNumberedPages();
+        testNumberedPages(page.getScroller(ScrollerPosition.DATA_SCROLLER_OUTSIDE_TABLE));
     }
 }

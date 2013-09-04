@@ -206,4 +206,26 @@ public class TestEditorJSApi extends AbstractWebDriverTest {
         guardAjax(page.getA4jButton()).click();
         assertEquals(page.getEditor().getText(), testText);
     }
+
+    /**
+     * Idea is to get editor Object and use several its functions to assure the object works correctly
+     */
+    @Test
+    @Templates(value = { "plain" })
+    public void testJsGetEditor() {
+        String someText = "some text";
+        executeJS("RichFaces.component('" + getEditorId() + "').getEditor().setReadOnly()");
+        try {
+            page.getEditor().type("Nice text");
+        } catch (Exception e) {
+            // OK exception should be thrown as you cannot edit read only editor
+        }
+        // additional check with JS function
+        assertTrue((Boolean) executeJS("return RichFaces.component('" + getEditorId() + "').isReadOnly()"));
+        // set back to editable
+        executeJS("RichFaces.component('" + getEditorId() + "').getEditor().setReadOnly(false)");
+
+        executeJS("RichFaces.component('" + getEditorId() + "').getEditor().setData('" + someText + "')");
+        assertEquals(page.getEditor().getText(), someText);
+    }
 }
