@@ -21,8 +21,9 @@
  */
 package org.richfaces.tests.metamer.ftest.richToggleControl;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>

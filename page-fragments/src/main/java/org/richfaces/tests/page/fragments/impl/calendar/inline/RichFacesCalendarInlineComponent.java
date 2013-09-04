@@ -23,7 +23,7 @@ package org.richfaces.tests.page.fragments.impl.calendar.inline;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.joda.time.DateTime;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

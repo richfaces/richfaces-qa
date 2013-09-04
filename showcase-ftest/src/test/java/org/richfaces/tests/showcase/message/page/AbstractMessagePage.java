@@ -22,8 +22,9 @@
 package org.richfaces.tests.showcase.message.page;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -59,16 +60,16 @@ public class AbstractMessagePage {
     public static final String JOB_ERROR_NOT_BETWEEN = "Job: Validation Error: Specified attribute is not between the expected values of 3 and 50.";
     public static final String ZIP_ERROR_NOT_BETWEEN = "Zip: Validation Error: Specified attribute is not between the expected values of 4 and 9.";
 
-    @FindBy(jquery="input[id$=name]")
+    @FindByJQuery("input[id$=name]")
     private WebElement nameInput;
-    @FindBy(jquery="input[id$=job]")
+    @FindByJQuery("input[id$=job]")
     private WebElement jobInput;
-    @FindBy(jquery="input[id$=address]")
+    @FindByJQuery("input[id$=address]")
     private WebElement addressInput;
-    @FindBy(jquery="input[id$=zip]")
+    @FindByJQuery("input[id$=zip]")
     private WebElement zipInput;
 
-    @FindBy(css="input[type=submit]")
+    @FindBy(css = "input[type=submit]")
     protected WebElement ajaxValidateButton;
 
     public void fillLongerJob() {
@@ -94,7 +95,7 @@ public class AbstractMessagePage {
     }
 
     public void eraseAll() {
-        for (WebElement input: allInputs()) {
+        for (WebElement input : allInputs()) {
             input.click();
             input.clear();
         }
@@ -102,7 +103,7 @@ public class AbstractMessagePage {
 
     protected void fillInputWithStringOfLength(WebElement input, int length) {
         StringBuilder builder = new StringBuilder();
-        for (int i=0; i<length; i++) {
+        for (int i = 0; i < length; i++) {
             builder.append("x");
         }
         input.click();
@@ -120,7 +121,7 @@ public class AbstractMessagePage {
     }
 
     protected WebElement[] allInputs() {
-        return new WebElement[] {nameInput, jobInput, addressInput, zipInput};
+        return new WebElement[]{ nameInput, jobInput, addressInput, zipInput };
     }
 
 }

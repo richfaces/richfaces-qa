@@ -25,7 +25,8 @@ import static org.testng.Assert.assertEquals;
 
 import java.util.List;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 
 /**
@@ -34,7 +35,7 @@ import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
  */
 public class PlaceholderPage {
 
-    @FindBy(jquery = "*[type='text']")
+    @FindByJQuery("*[type='text']")
     public List<TextInputComponentImpl> inputsWithPlaceHolders;
 
     @FindBy(tagName = "textarea")

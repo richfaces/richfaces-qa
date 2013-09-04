@@ -26,7 +26,7 @@ import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import java.net.URL;
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage.WaitRequestType;

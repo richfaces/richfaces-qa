@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.messages.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.messages.MessageItem;
 import org.richfaces.tests.page.fragments.impl.messages.Messages;
 import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages;

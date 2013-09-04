@@ -25,7 +25,7 @@ import static org.jboss.arquillian.graphene.Graphene.waitModel;
 
 import java.util.concurrent.TimeUnit;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
@@ -37,13 +37,13 @@ import org.richfaces.tests.showcase.focus.TestFocus;
  */
 public class FocusPreservePage extends FocusPage {
 
-    @FindBy(jquery = "*[type=text]")
+    @FindByJQuery("*[type=text]")
     public TextInputComponentImpl input;
 
-    @FindBy(jquery = "*[type=submit]")
+    @FindByJQuery("*[type=submit]")
     public WebElement button;
 
-    @FindBy(jquery = "*[id*=output]")
+    @FindByJQuery("*[id*=output]")
     public WebElement output;
 
     public void waitTillFirstInputIsFocused() {

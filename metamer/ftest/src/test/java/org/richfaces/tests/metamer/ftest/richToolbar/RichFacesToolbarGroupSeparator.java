@@ -21,10 +21,10 @@
  */
 package org.richfaces.tests.metamer.ftest.richToolbar;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * ToolbarGroup add only group separator markup comparing to Toolbar

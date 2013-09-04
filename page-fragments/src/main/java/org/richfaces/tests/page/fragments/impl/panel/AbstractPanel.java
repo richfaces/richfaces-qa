@@ -23,7 +23,7 @@ package org.richfaces.tests.page.fragments.impl.panel;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.jodah.typetools.TypeResolver;
 import org.openqa.selenium.WebElement;
 

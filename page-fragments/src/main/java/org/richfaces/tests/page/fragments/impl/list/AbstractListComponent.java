@@ -27,8 +27,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.jodah.typetools.TypeResolver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
@@ -46,7 +46,7 @@ public abstract class AbstractListComponent<T extends ListItem> implements ListC
     @Root
     private WebElement root;
 
-    @FindBy(jquery = "> *")
+    @FindByJQuery("> *")
     private List<WebElement> items;
 
     private final Class<T> listItemClass;

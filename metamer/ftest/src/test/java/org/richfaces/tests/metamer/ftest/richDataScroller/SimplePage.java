@@ -22,7 +22,7 @@
 package org.richfaces.tests.metamer.ftest.richDataScroller;
 
 import org.jboss.arquillian.graphene.GrapheneElement;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;

@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.list;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.component.ListType;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.list.page.ListsPage;

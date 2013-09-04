@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.param.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -29,11 +29,11 @@ import org.openqa.selenium.WebElement;
  */
 public class SkinChangePage {
 
-    @FindBy(jquery="fieldset form a:first")
+    @FindByJQuery("fieldset form a:first")
     public WebElement deepMarineSkin;
-    @FindBy(jquery="fieldset form a:last")
+    @FindByJQuery("fieldset form a:last")
     public WebElement blueSky;
-    @FindBy(jquery = "div[class$=right-controls] ul li[class$=current-skin]")
+    @FindByJQuery("div[class$=right-controls] ul li[class$=current-skin]")
     public WebElement currentSkin;
 
 }

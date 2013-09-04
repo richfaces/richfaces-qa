@@ -22,7 +22,7 @@ package org.richfaces.tests.showcase.extendedDataTable;
 
 import org.apache.commons.lang.StringUtils;
 import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.dataTable.TestTableFiltering;
 import org.richfaces.tests.showcase.dataTable.page.TableFilteringPage;
 import org.richfaces.tests.showcase.extendedDataTable.page.EDTFilteringPage;

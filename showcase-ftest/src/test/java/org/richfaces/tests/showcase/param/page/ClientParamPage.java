@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.param.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -29,11 +29,11 @@ import org.openqa.selenium.WebElement;
  */
 public class ClientParamPage {
 
-    @FindBy(jquery = "input[type='submit']:first")
+    @FindByJQuery("input[type=submit]:first")
     public WebElement buttonShowScreenSize;
-    @FindBy(jquery = "fieldset table:first tr:first td:last")
+    @FindByJQuery("fieldset table:first tr:first td:last")
     public WebElement widthValueLocator;
-    @FindBy(jquery = "fieldset table:first tr:last td:last")
+    @FindByJQuery("fieldset table:first tr:last td:last")
     public WebElement heightValueLocator;
 
 }

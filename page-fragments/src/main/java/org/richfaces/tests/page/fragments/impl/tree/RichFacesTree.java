@@ -27,8 +27,8 @@ import static org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode
 
 import java.util.List;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.WebElement;
 import org.richfaces.component.SwitchType;
 import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode;
@@ -42,19 +42,19 @@ public class RichFacesTree { //extends RichFacesTreeNode {
     @Root
     private WebElement root;
 
-    @FindBy(jquery = ">" + RichFacesTreeNode.CSS_NODE)
+    @FindByJQuery(">" + RichFacesTreeNode.CSS_NODE)
     private List<RichFacesTreeNode> nodes;
 
-    @FindBy(jquery = RichFacesTreeNode.CSS_NODE)
+    @FindByJQuery(RichFacesTreeNode.CSS_NODE)
     private List<RichFacesTreeNode> anyNodes;
 
-    @FindBy(jquery = ">" + CSS_NODES_COLLAPSED)
+    @FindByJQuery(">" + CSS_NODES_COLLAPSED)
     private List<RichFacesTreeNode> nodesCollapsed;
 
-    @FindBy(jquery = ">" + CSS_NODES_EXPANDED)
+    @FindByJQuery(">" + CSS_NODES_EXPANDED)
     private List<RichFacesTreeNode> nodesExpanded;
 
-    @FindBy(jquery = JQUERY_NODES_SELECTED)
+    @FindByJQuery(JQUERY_NODES_SELECTED)
     private List<WebElement> anySelectedNodes;
 
     protected SwitchType toggleType = SwitchType.ajax;

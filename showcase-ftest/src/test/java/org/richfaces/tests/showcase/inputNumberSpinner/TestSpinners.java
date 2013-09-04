@@ -25,7 +25,7 @@ import static org.testng.Assert.assertEquals;
 
 import java.util.List;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.inputNumberSpinner.RichFacesInputNumberSpinner;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.testng.annotations.Test;
@@ -49,7 +49,6 @@ public class TestSpinners extends AbstractWebDriverTest {
     /* *********************************************************************************
      * Tests ********************************************************************* ************
      */
-
     @Test
     public void testInputIncreasedByOne() {
         increaseByStep(spinners.get(0), FIRST_INPUT_STEP);
@@ -84,7 +83,6 @@ public class TestSpinners extends AbstractWebDriverTest {
      * Help methods **************************************************************
      * ************************************************************
      */
-
     /**
      * Decrease by step via decrease spinner
      *

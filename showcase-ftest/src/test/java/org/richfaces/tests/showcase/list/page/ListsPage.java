@@ -22,9 +22,10 @@
 package org.richfaces.tests.showcase.list.page;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.richfaces.component.ListType;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.list.ListComponent;
 import org.richfaces.tests.page.fragments.impl.list.ListItem;
 import org.richfaces.tests.page.fragments.impl.list.RichFacesList;
@@ -36,11 +37,11 @@ public class ListsPage {
 
     @FindBy(css = "[id$='list']")
     private RichFacesList list;
-    @FindBy(jquery = "a:contains('ordered')")
+    @FindByJQuery("a:contains('ordered')")
     private WebElement orderedList;
-    @FindBy(jquery = "a:contains('unordered')")
+    @FindByJQuery("a:contains('unordered')")
     private WebElement unordered;
-    @FindBy(jquery = "a:contains('definitions')")
+    @FindByJQuery("a:contains('definitions')")
     private WebElement definitions;
 
     public void setType(ListType type) {

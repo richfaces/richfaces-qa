@@ -22,7 +22,7 @@
 package org.richfaces.tests.archetypes.ftest;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.archetypes.AbstractWebDriverTest;
 import org.richfaces.tests.archetypes.TestConfiguration;
 

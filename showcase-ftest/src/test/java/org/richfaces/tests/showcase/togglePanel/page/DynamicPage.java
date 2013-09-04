@@ -26,8 +26,9 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -35,10 +36,10 @@ import org.openqa.selenium.WebElement;
  */
 public class DynamicPage {
 
-    @FindBy(jquery = "input:visible:eq(3)")
+    @FindByJQuery("input:visible:eq(3)")
     WebElement nextButton;
 
-    @FindBy(jquery = "input:visible:eq(1)")
+    @FindByJQuery("input:visible:eq(1)")
     WebElement skinSwitcher;
 
     @FindBy(className = "rf-p-hdr")

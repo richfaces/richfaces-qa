@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
@@ -46,9 +46,9 @@ public class TestSelectsUpdates extends AbstractWebDriverTest {
      * Locators*************************************************************************************
      */
 
-    @FindBy(jquery="fieldset form select:eq(0)")
+    @FindByJQuery("fieldset form select:eq(0)")
     protected WebElement firstSelect;
-    @FindBy(jquery="div[id$='second'] select")
+    @FindByJQuery("div[id$='second'] select")
     protected WebElement secondSelect;
 
     /* ***************************************************************************************

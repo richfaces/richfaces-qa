@@ -22,10 +22,11 @@
 package org.richfaces.tests.showcase.dataTable.page;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -35,17 +36,17 @@ public class ArrangableModelPage {
     @Drone
     private WebDriver webDriver;
 
-    @FindBy(jquery="input[type=text]:eq(0)")
+    @FindByJQuery("input[type=text]:eq(0)")
     public WebElement firstNameFilterInput;
-    @FindBy(jquery="input[type=text]:eq(1)")
+    @FindByJQuery("input[type=text]:eq(1)")
     public WebElement secondNameFilterInput;
-    @FindBy(jquery="input[type=text]:eq(2)")
+    @FindByJQuery("input[type=text]:eq(2)")
     public WebElement emailFilterInput;
     @FindBy(css="tbody.rf-dt-b")
     public WebElement table;
-    @FindBy(jquery="a:contains(ascending)")
+    @FindByJQuery("a:contains(ascending)")
     public WebElement ascendingLink;
-    @FindBy(jquery="a:contains(descending)")
+    @FindByJQuery("a:contains(descending)")
     public WebElement descendingLink;
 
     @FindBy(id="footer")

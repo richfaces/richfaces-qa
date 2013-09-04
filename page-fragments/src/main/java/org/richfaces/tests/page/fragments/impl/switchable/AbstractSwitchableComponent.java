@@ -7,7 +7,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;

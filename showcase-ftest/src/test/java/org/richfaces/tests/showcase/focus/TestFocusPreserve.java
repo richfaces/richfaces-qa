@@ -22,7 +22,7 @@
 package org.richfaces.tests.showcase.focus;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import static org.testng.Assert.assertEquals;
 
 import org.richfaces.tests.showcase.AbstractWebDriverTest;

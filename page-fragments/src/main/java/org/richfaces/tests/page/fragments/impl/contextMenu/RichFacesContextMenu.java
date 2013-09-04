@@ -23,8 +23,9 @@ package org.richfaces.tests.page.fragments.impl.contextMenu;
 
 import java.util.List;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -37,7 +38,7 @@ public class RichFacesContextMenu extends AbstractPopupMenu {
     @FindBy(css = "div.rf-ctx-lst")
     private WebElement contextMenuPopup;
 
-    @FindBy(jquery = "script:last")
+    @FindByJQuery("script:last")
     private WebElement script;
 
     private AdvancedInteractions advancedInteractions;

@@ -25,7 +25,7 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.treeAttr
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.IssueTracking;
 import org.richfaces.tests.metamer.ftest.annotations.Use;

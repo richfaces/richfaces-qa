@@ -21,8 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.panel;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * Add to the final doc that there is example implementation in TextualRichFacesPanel, as the most used panel.

@@ -30,7 +30,7 @@ import java.net.URL;
 
 import javax.faces.event.PhaseId;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;

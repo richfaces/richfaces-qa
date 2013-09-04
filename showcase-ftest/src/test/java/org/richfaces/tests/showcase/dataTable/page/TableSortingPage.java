@@ -21,19 +21,19 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataTable.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class TableSortingPage {
-    @FindBy(jquery="a:contains('Sort by Capital Name')")
+    @FindByJQuery("a:contains('Sort by Capital Name')")
     public WebElement sortByCapitalName;
-    @FindBy(jquery="a:contains('Sort by State Name')")
+    @FindByJQuery("a:contains('Sort by State Name')")
     public WebElement sortByStateName;
-    @FindBy(jquery="a:contains('Sort by Time Zone')")
+    @FindByJQuery("a:contains('Sort by Time Zone')")
     public WebElement sortByTimeZone;
-    @FindBy(jquery="tr[class='rf-dt-r rf-dt-fst-r']")
+    @FindByJQuery("tr[class='rf-dt-r rf-dt-fst-r']")
     public WebElement firstRow;
 }

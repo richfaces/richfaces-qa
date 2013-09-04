@@ -27,7 +27,7 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.treeAttr
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;

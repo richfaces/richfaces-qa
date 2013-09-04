@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.jboss.arquillian.graphene.component.object.api.calendar.CalendarPopupComponent;
 import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.joda.time.DateTime;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

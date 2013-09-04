@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.subTableToggleControl.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -29,18 +29,18 @@ import org.openqa.selenium.WebElement;
  */
 public class SubTableToggleControlPage {
 
-    @FindBy(jquery="span.rf-csttg:eq(0)")
+    @FindByJQuery("span.rf-csttg:eq(0)")
     public WebElement chevroletToggler;
-    @FindBy(jquery="span.rf-csttg:eq(2)")
+    @FindByJQuery("span.rf-csttg:eq(2)")
     public WebElement gMCToggler;
-    @FindBy(jquery="span.rf-csttg:eq(4)")
+    @FindByJQuery("span.rf-csttg:eq(4)")
     public WebElement nissanToggler;
 
-    @FindBy(jquery="tbody.rf-cst:eq(0)")
+    @FindByJQuery("tbody.rf-cst:eq(0)")
     public WebElement bodyOfChevroletSubtable;
-    @FindBy(jquery="tbody.rf-cst:eq(2)")
+    @FindByJQuery("tbody.rf-cst:eq(2)")
     public WebElement bodyOfGMCSubtable;
-    @FindBy(jquery="tbody.rf-cst:eq(4)")
+    @FindByJQuery("tbody.rf-cst:eq(4)")
     public WebElement bodyOfNissanSubtable;
 
 }

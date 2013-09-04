@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.extendedDataTable;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
@@ -32,7 +32,7 @@ import org.testng.annotations.Test;
  */
 public class TestSimpleTable extends AbstractExtendedTableTest {
 
-    @FindBy(jquery="tbody[id$=tbf]")
+    @FindByJQuery("tbody[id$=tbf]")
     private WebElement tableNonScrollablePart;
 
     /*

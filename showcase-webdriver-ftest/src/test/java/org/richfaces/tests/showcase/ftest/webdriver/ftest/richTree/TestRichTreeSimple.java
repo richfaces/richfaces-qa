@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richTree;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import static org.testng.Assert.assertEquals;
 
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;

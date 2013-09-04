@@ -24,7 +24,7 @@ package org.richfaces.tests.showcase.componentControl;
 import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.componentControl.page.TableFilteringAPIPage;
 import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars;

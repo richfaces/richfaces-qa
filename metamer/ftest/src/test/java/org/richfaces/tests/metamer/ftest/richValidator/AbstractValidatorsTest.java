@@ -26,7 +26,7 @@ import java.util.Map;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.validation.AssertFalseBean;
 import org.richfaces.tests.metamer.validation.AssertTrueBean;

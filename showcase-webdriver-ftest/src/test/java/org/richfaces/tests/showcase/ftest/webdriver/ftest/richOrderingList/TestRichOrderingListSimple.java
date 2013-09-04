@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.richOrderingList;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.ftest.webdriver.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ftest.webdriver.page.richOrderingList.OrderingListPage;
 import org.testng.annotations.Test;

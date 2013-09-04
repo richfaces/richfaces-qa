@@ -25,7 +25,7 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.toggleCo
 import static org.testng.Assert.assertFalse;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 

@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.abstractions.validations;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>

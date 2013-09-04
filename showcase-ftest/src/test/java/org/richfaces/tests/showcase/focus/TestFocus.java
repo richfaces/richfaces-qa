@@ -24,7 +24,7 @@ package org.richfaces.tests.showcase.focus;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 
 import java.util.concurrent.TimeUnit;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;

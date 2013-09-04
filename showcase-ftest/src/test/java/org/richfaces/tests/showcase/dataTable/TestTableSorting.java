@@ -24,7 +24,7 @@ package org.richfaces.tests.showcase.dataTable;
 import java.util.Iterator;
 import java.util.List;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.dataTable.page.TableSortingPage;

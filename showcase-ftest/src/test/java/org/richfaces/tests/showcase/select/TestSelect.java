@@ -26,7 +26,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.select.RichFacesSelect;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
@@ -39,9 +39,9 @@ import org.testng.annotations.Test;
  */
 public class TestSelect extends AbstractWebDriverTest {
 
-    @FindBy(jquery = "div.rf-sel:eq(0)")
+    @FindByJQuery("div.rf-sel:eq(0)")
     private RichFacesSelect first;
-    @FindBy(jquery = "div.rf-sel:eq(1)")
+    @FindByJQuery("div.rf-sel:eq(1)")
     private RichFacesSelect second;
 
     @Test

@@ -6,7 +6,7 @@ import static org.testng.Assert.assertEquals;
 
 import java.net.URL;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.page.fragments.impl.inplaceInput.RichFacesInplaceInput;
 import org.testng.annotations.Test;

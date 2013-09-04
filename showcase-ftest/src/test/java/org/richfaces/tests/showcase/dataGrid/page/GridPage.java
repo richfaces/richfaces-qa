@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataGrid.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.dataScroller.page.AbstractDataScrollerPage;
 
@@ -30,9 +30,9 @@ import org.richfaces.tests.showcase.dataScroller.page.AbstractDataScrollerPage;
  */
 public class GridPage extends AbstractDataScrollerPage {
 
-    @FindBy(jquery="td.rf-dg-c:first")
+    @FindByJQuery("td.rf-dg-c:first")
     public WebElement firstPanelGridOnThePage;
-    @FindBy(jquery="td.rf-dg-c:contains('Price'):last")
+    @FindByJQuery("td.rf-dg-c:contains('Price'):last")
     public WebElement lastPanelGridOnThePage;
 
 }

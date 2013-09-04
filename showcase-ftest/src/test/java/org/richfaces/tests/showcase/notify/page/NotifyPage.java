@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.notify.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.notify.Notify;
 import org.richfaces.tests.page.fragments.impl.notify.NotifyMessageItem;
 import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotify;

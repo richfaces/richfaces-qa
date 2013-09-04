@@ -25,7 +25,7 @@ import static org.jboss.arquillian.graphene.Graphene.waitGui;
 
 import java.util.concurrent.TimeUnit;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.tabPanel.RichFacesTabPanel;
 
@@ -35,14 +35,14 @@ import org.richfaces.tests.page.fragments.impl.tabPanel.RichFacesTabPanel;
  */
 public class DynamicTabsPage {
 
-    @FindBy(jquery = ".rf-tbp:eq(1)")
+    @FindByJQuery(".rf-tbp:eq(1)")
     private RichFacesTabPanel tabPanel;
 
     public RichFacesTabPanel getTabPanel() {
         return tabPanel;
     }
 
-    @FindBy(jquery = "input[type='submit']:visible")
+    @FindByJQuery("input[type='submit']:visible")
     public WebElement submitButton;
 
     public static final int NUM_OF_TABS = 8;

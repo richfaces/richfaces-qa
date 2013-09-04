@@ -23,7 +23,7 @@ package org.richfaces.tests.page.fragments.impl.panelMenu;
 
 import java.util.List;
 
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 

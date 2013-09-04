@@ -24,7 +24,7 @@ package org.richfaces.tests.metamer.ftest.richTree;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -33,6 +33,8 @@ import org.richfaces.tests.page.fragments.impl.tree.RichFacesTree;
 import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode;
 
 import com.google.common.base.Predicate;
+
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
@@ -43,7 +45,7 @@ public class TreeSimplePage extends MetamerPage {
     @FindBy(css = "div[id$=richTree]")
     public RichFacesTree tree;
 
-    @FindBy(jquery = "input:submit[id$=expandAll]")
+    @FindByJQuery("input:submit[id$=expandAll]")
     private WebElement expandAll;
 
     @FindBy(css = "span[id$=selection]")
@@ -61,31 +63,31 @@ public class TreeSimplePage extends MetamerPage {
     @FindBy(css = "span[id$=lazyInitialized]")
     public WebElement lazyInitialized;
 
-    @FindBy(jquery = "input:checkbox[id$=loadingFacet]")
+    @FindByJQuery("input:checkbox[id$=loadingFacet]")
     public WebElement loadingFacet;
 
-    @FindBy(jquery = "input[id$='treeNode1Attributes:styleClassInput']")
+    @FindByJQuery("input[id$='treeNode1Attributes:styleClassInput']")
     public WebElement node1StyleClassInput;
 
     @FindBy(css = "input[id$='treeNode1Attributes:styleInput']")
     public WebElement node1StyleInput;
 
     /** rich:treeNode type="country" (1st level) */
-    @FindBy(jquery = "span[id$='treeNode1Attributes:panel']")
+    @FindByJQuery("span[id$='treeNode1Attributes:panel']")
     public WebElement node1AttributesTable;
 
     /** rich:treeNode type="company" (2nd level) */
-    @FindBy(jquery = "span[id$='treeNode2Attributes:panel']")
+    @FindByJQuery("span[id$='treeNode2Attributes:panel']")
     public WebElement node2AttributesTable;
 
     /** rich:treeNode type="cd" (3rd level) */
-    @FindBy(jquery = "span[id$='treeNode3Attributes:panel']")
+    @FindByJQuery("span[id$='treeNode3Attributes:panel']")
     public WebElement node3AttributesTable;
 
-    @FindBy(jquery = ":radio[id*=recursiveModelRepresentation]")
+    @FindByJQuery(":radio[id*=recursiveModelRepresentation]")
     public List<WebElement> recursiveModelRepresentations;
 
-    @FindBy(jquery = ":checkbox[id$=recursiveLeafChildrenNullable]")
+    @FindByJQuery(":checkbox[id$=recursiveLeafChildrenNullable]")
     public WebElement recursiveLeafChildrenNullable;
 
     public WebElement getNode1InputForAttribute(String attributeName) {

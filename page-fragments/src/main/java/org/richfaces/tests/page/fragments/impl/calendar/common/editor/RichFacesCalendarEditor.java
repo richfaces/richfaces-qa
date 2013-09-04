@@ -21,7 +21,7 @@
  */
 package org.richfaces.tests.page.fragments.impl.calendar.common.editor;
 
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.calendar.common.editor.time.RichFacesTimeEditor;

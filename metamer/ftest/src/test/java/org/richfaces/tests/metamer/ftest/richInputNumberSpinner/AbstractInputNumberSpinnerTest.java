@@ -24,7 +24,7 @@ package org.richfaces.tests.metamer.ftest.richInputNumberSpinner;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inputNumberSpinnerAttributes;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;

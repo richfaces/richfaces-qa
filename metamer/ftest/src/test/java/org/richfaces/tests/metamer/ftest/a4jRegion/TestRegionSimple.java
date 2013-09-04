@@ -30,7 +30,8 @@ import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.testng.annotations.Test;
 
@@ -40,9 +41,9 @@ import org.testng.annotations.Test;
  */
 public class TestRegionSimple extends AbstractWebDriverTest {
 
-    @FindBy(jquery="input:text[id$=user2NameInput]")
+    @FindByJQuery("input:text[id$=user2NameInput]")
     private GrapheneElement nameInput;
-    @FindBy(jquery="input:text[id$=user2EmailInput]")
+    @FindByJQuery("input:text[id$=user2EmailInput]")
     private GrapheneElement emailInput;
 
     @FindBy(css="span[id$=user2NameOutput]")

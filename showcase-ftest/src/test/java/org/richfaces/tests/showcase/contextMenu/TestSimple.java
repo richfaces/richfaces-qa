@@ -21,10 +21,10 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.contextMenu;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
 import static org.testng.Assert.assertTrue;
 
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.contextMenu.page.SimpleContextMenuPage;
 import org.testng.annotations.Test;
 
