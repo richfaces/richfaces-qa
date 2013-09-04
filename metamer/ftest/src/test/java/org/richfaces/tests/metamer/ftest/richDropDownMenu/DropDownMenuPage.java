@@ -2,8 +2,9 @@ package org.richfaces.tests.metamer.ftest.richDropDownMenu;
 
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.dropDownMenuAttributes;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.dropDownMenu.RichFacesDropDownMenu;
 
@@ -14,46 +15,46 @@ import org.richfaces.tests.page.fragments.impl.dropDownMenu.RichFacesDropDownMen
  *
  */
 public class DropDownMenuPage extends MetamerPage {
-    @FindBy(jquery = ".rf-tb-itm:eq(0)")
+    @FindByJQuery(".rf-tb-itm:eq(0)")
     private RichFacesDropDownMenu fileDropDownMenuTop;
 
-    @FindBy(jquery = ".optionList:eq(0)")
+    @FindByJQuery(".optionList:eq(0)")
     private RichFacesDropDownMenu fileDropDownMenuSide;
 
-    @FindBy(jquery = ".rf-ddm-lbl-dec:eq(0)")
+    @FindByJQuery(".rf-ddm-lbl-dec:eq(0)")
     private WebElement target1;
 
-    @FindBy(jquery = "span[id$=output]")
+    @FindByJQuery("span[id$=output]")
     private WebElement output;
 
     @FindBy(css = "div.rf-ddm-lst")
     private WebElement dropDownMenuContent;
 
-    @FindBy(jquery = "img:contains('File')")
+    @FindByJQuery("img:contains('File')")
     private WebElement fileMenuLabel;
 
-    @FindBy(jquery = "div[id$=menu1]")
+    @FindByJQuery("div[id$=menu1]")
     private WebElement fileMenu;
 
-    @FindBy(jquery = "div[id$=menu1_list]")
+    @FindByJQuery("div[id$=menu1_list]")
     private WebElement fileMenuList;
 
-    @FindBy(jquery = "div[id$=menuGroup4]")
+    @FindByJQuery("div[id$=menuGroup4]")
     private WebElement group;
 
-    @FindBy(jquery = "div[id$=menuGroup4_list]")
+    @FindByJQuery("div[id$=menuGroup4_list]")
     private WebElement groupList;
 
-    @FindBy(jquery = "div[id$=menu1] img.pic")
+    @FindByJQuery("div[id$=menu1] img.pic")
     private WebElement icon;
 
-    @FindBy(jquery = "div[id$=menu1] span.rf-ddm-itm-ic > div.rf-ddm-emptyIcon")
+    @FindByJQuery("div[id$=menu1] span.rf-ddm-itm-ic > div.rf-ddm-emptyIcon")
     private WebElement emptyIcon;
 
-    @FindBy(jquery = "div[id$=menuItem41]")
+    @FindByJQuery("div[id$=menuItem41]")
     private WebElement menuItem41;
 
-    @FindBy(jquery = " div[id$=menu1] div.rf-ddm-lbl-dec")
+    @FindByJQuery(" div[id$=menu1] div.rf-ddm-lbl-dec")
     private WebElement fileMenuLabelOriginal;
 
     @FindBy(tagName = "body")
