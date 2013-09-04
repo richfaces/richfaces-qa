@@ -31,7 +31,6 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.panel.AbstractPanel;
-import org.richfaces.tests.page.fragments.impl.popupPanel.PopupPanel.ResizerLocation;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>

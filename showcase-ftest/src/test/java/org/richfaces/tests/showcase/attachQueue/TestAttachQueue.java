@@ -26,7 +26,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.concurrent.TimeUnit;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.attachQueue.page.AttachQueuePage;
 import org.testng.annotations.Test;

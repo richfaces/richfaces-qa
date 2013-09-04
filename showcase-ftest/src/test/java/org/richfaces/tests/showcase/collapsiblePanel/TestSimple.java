@@ -29,7 +29,7 @@ import static org.testng.Assert.assertTrue;
 import org.richfaces.tests.showcase.panel.AbstractPanelTest;
 import org.testng.annotations.Test;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.collapsiblePanel.page.SimplePage;
 
 /**

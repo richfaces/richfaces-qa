@@ -21,16 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.status;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementNotVisible;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.jboss.arquillian.ajocado.dom.Event.KEYUP;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
-import static org.testng.Assert.assertTrue;
-
-import org.jboss.arquillian.ajocado.dom.Event;
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.jboss.cheiron.halt.XHRHalter;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.status.page.TestViewUsagePage;
 import org.testng.annotations.Test;
 

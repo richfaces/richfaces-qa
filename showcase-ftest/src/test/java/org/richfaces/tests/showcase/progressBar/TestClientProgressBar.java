@@ -24,15 +24,16 @@
  */
 package org.richfaces.tests.showcase.progressBar;
 
-import java.util.concurrent.TimeUnit;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.testng.Assert.assertTrue;
 
+import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.ajocado.dom.Attribute;
-import org.testng.annotations.Test;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -46,7 +47,7 @@ public class TestClientProgressBar extends AbstractProgressBarTest {
     private static final String START_WIDTH = "width: 0%;";
     private static final String END_WIDTH = "width: 100%;";
 
-    @FindBy(jquery = "input[type='button']:eq(0)")
+    @FindByJQuery("input[type='button']:eq(0)")
     private WebElement startButton;
 
     @FindBy(css = "div[class='rf-pb-prgs']")

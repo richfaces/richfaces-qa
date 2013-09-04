@@ -4,8 +4,9 @@
  */
 package org.richfaces.tests.showcase.attachQueue.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  *
@@ -13,10 +14,10 @@ import org.openqa.selenium.WebElement;
  */
 public class AttachQueuePage {
 
-    @FindBy(jquery = "input[type='text']:visible")
+    @FindByJQuery("input[type='text']:visible")
     public WebElement input;
 
-    @FindBy(jquery = "input[type='submit']:eq(0)")
+    @FindByJQuery("input[type='submit']:eq(0)")
     public WebElement submit;
 
     @FindBy(css = "span[class*='rf-st-start']")

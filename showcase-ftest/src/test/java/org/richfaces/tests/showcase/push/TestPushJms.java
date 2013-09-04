@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.showcase.poll.AbstractPollTest;
 import org.testng.annotations.Test;
@@ -40,7 +40,7 @@ import org.testng.annotations.Test;
  */
 public class TestPushJms extends AbstractPollTest {
 
-    @FindBy(jquery = "table tbody:visible:last")
+    @FindByJQuery("table tbody:visible:last")
     private WebElement serverDate;
 
     @Test

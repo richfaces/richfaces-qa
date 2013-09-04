@@ -21,10 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.autocomplete;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Lists;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -40,11 +36,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponent;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.utils.Actions;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
+
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>

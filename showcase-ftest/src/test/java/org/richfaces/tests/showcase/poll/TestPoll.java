@@ -21,17 +21,13 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.poll;
 
-import static org.jboss.arquillian.ajocado.Graphene.retrieveText;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertFalse;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.jboss.arquillian.ajocado.locator.JQueryLocator;
-import org.jboss.arquillian.ajocado.waiting.retrievers.TextRetriever;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.poll.page.PollingPage;
 import org.testng.annotations.Test;
 

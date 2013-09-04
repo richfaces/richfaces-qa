@@ -22,8 +22,10 @@
 package org.richfaces.tests.showcase.param.page;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -32,13 +34,13 @@ public class ParamPage {
 
     @FindBy(css = "span[id$='rep']")
     public WebElement output;
-    @FindBy(jquery = "input[type='submit']:eq(0)")
+    @FindByJQuery("input[type='submit']:eq(0)")
     private WebElement setAlex;
-    @FindBy(jquery = "input[type='submit']:eq(1)")
+    @FindByJQuery("input[type='submit']:eq(1)")
     private WebElement setJohn;
 
     public void setName(ParamPage.Name name) {
-        switch(name) {
+        switch (name) {
             case ALEX:
                 guardAjax(setAlex).click();
                 break;
@@ -57,7 +59,7 @@ public class ParamPage {
         }
 
         public static ParamPage.Name[] getAll() {
-            return new ParamPage.Name[] {ALEX, JOHN};
+            return new ParamPage.Name[] { ALEX, JOHN };
         }
 
         @Override

@@ -24,9 +24,11 @@
  */
 package org.richfaces.tests.showcase.tooltip;
 
-import java.util.concurrent.TimeUnit;
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+
+import java.util.concurrent.TimeUnit;
+
+import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.interactions.Actions;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;

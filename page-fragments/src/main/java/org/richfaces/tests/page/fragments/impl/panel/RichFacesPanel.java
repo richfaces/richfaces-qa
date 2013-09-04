@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.panel;
 
-import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 

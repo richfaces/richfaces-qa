@@ -21,15 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.status;
 
-import static org.jboss.arquillian.ajocado.Graphene.elementNotVisible;
-import static org.jboss.arquillian.ajocado.Graphene.waitGui;
-import static org.jboss.arquillian.ajocado.locator.LocatorFactory.jq;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
-import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
-import org.richfaces.tests.showcase.AbstractWebDriverTest;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.status.page.TestSimplePage;
 import org.testng.annotations.Test;
 

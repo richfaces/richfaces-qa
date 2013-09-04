@@ -24,7 +24,7 @@ package org.richfaces.tests.showcase.autocomplete;
 import static org.jboss.arquillian.graphene.Graphene.waitAjax;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;

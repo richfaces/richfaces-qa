@@ -21,8 +21,9 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.log.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
@@ -31,7 +32,7 @@ public class LogPage {
 
     @FindBy(css = "button[name='clear']")
     public WebElement clear;
-    @FindBy(jquery = "input[type='text']:nth(0)")
+    @FindByJQuery("input[type='text']:nth(0)")
     public WebElement input;
     @FindBy(css = "div[class='rf-log-contents']")
     public WebElement loggingArea;
@@ -39,7 +40,7 @@ public class LogPage {
     public WebElement output;
     @FindBy(css = "select[name='richfaces.log']")
     public WebElement severitySelect;
-    @FindBy(jquery = "input[type='submit']:nth(0)")
+    @FindByJQuery("input[type='submit']:nth(0)")
     public WebElement submit;
 
     public static enum Severity {

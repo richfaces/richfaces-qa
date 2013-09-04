@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataTable.page;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
