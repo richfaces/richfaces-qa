@@ -24,9 +24,9 @@ package org.richfaces.tests.showcase.commandButton;
 import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 
 /**
@@ -39,16 +39,14 @@ public abstract class AbstractTestA4jCommand extends AbstractWebDriverTest {
     /* *********************************************************************
      * Locators*********************************************************************
      */
-
-    @FindBy(css="form input[type=text]")
+    @FindBy(css = "form input[type=text]")
     protected WebElement input;
-    @FindBy(className="outhello")
+    @FindBy(className = "outhello")
     protected WebElement output;
 
     /* ******************************************************************************
      * Tests******************************************************************************
      */
-
     protected void checkClickOnTheButtonWhileInputIsEmpty(String empty) {
 
         /*
@@ -59,10 +57,9 @@ public abstract class AbstractTestA4jCommand extends AbstractWebDriverTest {
         try {
             output.isDisplayed();
             assertEquals(output.getText().trim(), empty, "The output should be emtpy string");
-        } catch(NoSuchElementException ignored) {
+        } catch (NoSuchElementException ignored) {
         }
     }
-
 
     protected void checkTypeSomeCharactersAndClickOnTheButton() {
 
@@ -101,7 +98,7 @@ public abstract class AbstractTestA4jCommand extends AbstractWebDriverTest {
         try {
             output.isDisplayed();
             assertEquals(output.getText().trim(), empty, "The output should be emtpy string");
-        } catch(NoSuchElementException ignored) {
+        } catch (NoSuchElementException ignored) {
         }
     }
 

@@ -1,6 +1,6 @@
 package org.richfaces.tests.metamer.ftest.richTabPanel;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.page.fragments.impl.tabPanel.RichFacesTabPanel;
@@ -9,16 +9,16 @@ import org.richfaces.tests.page.fragments.impl.tabPanel.RichFacesTabPanel;
 
 public class TabPanelSimplePage extends MetamerPage {
 
-    @FindBy(jquery = "div[id*=tabPanel]")
+    @FindByJQuery("div[id*=tabPanel]")
     private RichFacesTabPanel panelTab;
 
-    @FindBy(jquery = "div[id*=tabPanel]")
+    @FindByJQuery("div[id*=tabPanel]")
     private WebElement panelTabAsWebElement;
 
-    @FindBy(jquery = "input[id$=hCreateTabButton]")
+    @FindByJQuery("input[id$=hCreateTabButton]")
     private WebElement createTabHButton;
 
-    @FindBy(jquery = "input[id$=a4jCreateTabButton]")
+    @FindByJQuery("input[id$=a4jCreateTabButton]")
     private WebElement createTabA4jButton;
 
     public WebElement getCreateTabButtonA4j() {

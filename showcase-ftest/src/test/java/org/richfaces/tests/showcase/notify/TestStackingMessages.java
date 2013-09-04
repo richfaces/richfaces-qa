@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.notify;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.junit.Assert;
 import org.richfaces.tests.page.fragments.impl.notify.NotifyMessage.NotifyMessagePosition;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;

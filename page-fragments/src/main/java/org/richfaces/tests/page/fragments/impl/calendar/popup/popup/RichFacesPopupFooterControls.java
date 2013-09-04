@@ -22,7 +22,7 @@
 package org.richfaces.tests.page.fragments.impl.calendar.popup.popup;
 
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.calendar.common.RichFacesFooterControls;
 
@@ -32,7 +32,7 @@ import org.richfaces.tests.page.fragments.impl.calendar.common.RichFacesFooterCo
  */
 public class RichFacesPopupFooterControls extends RichFacesFooterControls implements PopupFooterControls {
 
-    @FindBy(jquery = "div.rf-cal-tl-btn:contains('Apply')")
+    @FindByJQuery("div.rf-cal-tl-btn:contains('Apply')")
     private WebElement applyButtonElement;
 
     @Override

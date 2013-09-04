@@ -29,6 +29,8 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
+import com.google.common.base.Predicate;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,7 +38,7 @@ import org.apache.commons.lang.Validate;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -65,8 +67,6 @@ import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
-
-import com.google.common.base.Predicate;
 
 public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
 

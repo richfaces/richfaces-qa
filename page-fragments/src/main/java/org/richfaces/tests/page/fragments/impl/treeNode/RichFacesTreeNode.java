@@ -27,10 +27,11 @@ import java.util.List;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.page.fragments.impl.tree.RichFacesTree;
 import org.richfaces.ui.common.SwitchType;
@@ -73,14 +74,14 @@ public class RichFacesTreeNode extends RichFacesTree {
     @FindBy(css = CSS_NODE_ITSELF)
     private WebElement nodeItself;
 
-    @FindBy(jquery = ">" + CSS_NODE)
+    @FindByJQuery(">" + CSS_NODE)
     public List<RichFacesTreeNode> nodes;
 
-//    @FindBy(jquery = ">" + CSS_NODES_COLLAPSED)
+//    @FindByJQuery(">" + CSS_NODES_COLLAPSED)
 //    public List<RichFacesTreeNode> nodesCollapsed;
 //
 //
-//    @FindBy(jquery = ">" + CSS_NODES_EXPANDED)
+//    @FindByJQuery(">" + CSS_NODES_EXPANDED)
 //    public List<RichFacesTreeNode> nodesExpanded;
 //
     public List<RichFacesTreeNode> getNodes() {

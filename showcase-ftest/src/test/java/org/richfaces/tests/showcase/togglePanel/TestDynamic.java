@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.togglePanel;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.togglePanel.page.DynamicPage;
 import org.testng.annotations.Test;

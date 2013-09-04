@@ -21,19 +21,20 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.param.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * @author <a href="mailto:jpapouse@redhat.com">Jan Papousek</a>
  */
 public class ClientParamPage {
 
-    @FindBy(css="input[type=submit]")
+    @FindBy(css = "input[type=submit]")
     public WebElement buttonShowScreenSize;
-    @FindBy(jquery="fieldset table:first tr:first td:last")
+    @FindByJQuery("fieldset table:first tr:first td:last")
     public WebElement widthValueLocator;
-    @FindBy(jquery="fieldset table:first tr:last td:last")
+    @FindByJQuery("fieldset table:first tr:last td:last")
     public WebElement heightValueLocator;
 
 }

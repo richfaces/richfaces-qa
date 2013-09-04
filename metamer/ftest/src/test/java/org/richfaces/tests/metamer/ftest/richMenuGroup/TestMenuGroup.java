@@ -29,12 +29,13 @@ import static org.testng.Assert.assertTrue;
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.RegressionTest;
@@ -55,9 +56,9 @@ import org.testng.annotations.Test;
  */
 public class TestMenuGroup extends AbstractWebDriverTest {
 
-    @FindBy(jquery = ".rf-tb-itm:eq(0)")
+    @FindByJQuery(".rf-tb-itm:eq(0)")
     private RichFacesDropDownMenu fileDropDownMenu;
-    @FindBy(jquery = ".rf-ddm-lbl-dec:eq(0)")
+    @FindByJQuery(".rf-ddm-lbl-dec:eq(0)")
     private WebElement target1;
     @FindBy(css = "div[id$=menu1] div.rf-ddm-lbl-dec")
     private WebElement fileMenuLabel;

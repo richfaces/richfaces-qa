@@ -24,10 +24,11 @@ package org.richfaces.tests.page.fragments.impl.calendar.common;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.richfaces.tests.page.fragments.impl.calendar.common.dayPicker.RichFacesDayPicker;
 import org.richfaces.tests.page.fragments.impl.calendar.common.editor.RichFacesCalendarEditor;
@@ -48,13 +49,13 @@ public class RichFacesFooterControls implements FooterControls {
     protected RichFacesCalendarEditor calendarEditor;
     protected RichFacesDayPicker dayPicker;
     //
-    @FindBy(jquery = "div.rf-cal-tl-btn:contains('Clean')")
+    @FindByJQuery("div.rf-cal-tl-btn:contains('Clean')")
     protected WebElement cleanButtonElement;
     @FindBy(css = "td.rf-cal-tl-ftr > div[onclick*='showTimeEditor']")
     protected WebElement timeEditorOpenerElement;
     @FindBy(css = "td.rf-cal-tl-ftr > div[onclick*='showSelectedDate']")
     protected WebElement selectedDateElement;
-    @FindBy(jquery = "div.rf-cal-tl-btn:contains('Today')")
+    @FindByJQuery("div.rf-cal-tl-btn:contains('Today')")
     protected WebElement todayButtonElement;
 
     private void _openTimeEditor() {

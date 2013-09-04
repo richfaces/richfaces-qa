@@ -26,13 +26,14 @@ import java.util.List;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars;
@@ -46,26 +47,26 @@ public class TableFilteringPage {
     @Drone
     protected WebDriver browser;
 
-    @FindBy(css="span.rf-msgs-sum")
+    @FindBy(css = "span.rf-msgs-sum")
     public WebElement errorMessage;
 
-    @FindBy(tagName="select")
+    @FindBy(tagName = "select")
     private WebElement vendorSelect;
-    @FindBy(jquery="input[type=text]:first")
+    @FindByJQuery("input[type=text]:first")
     private WebElement mileageInput;
-    @FindBy(jquery="input[type=text]:last")
+    @FindByJQuery("input[type=text]:last")
     private WebElement vinInput;
-    @FindBy(css="*.rf-dt-b")
+    @FindBy(css = "*.rf-dt-b")
     private WebElement tBody;
 
-    @FindBy(id="footer")
+    @FindBy(id = "footer")
     private WebElement toBlur;
 
     public boolean isNothingFound() {
         try {
             tBody.findElement(ByJQuery.selector("tr > td:contains('Nothing found')"));
             return true;
-        } catch(NoSuchElementException ignored) {
+        } catch (NoSuchElementException ignored) {
             return false;
         }
     }
@@ -75,7 +76,7 @@ public class TableFilteringPage {
     }
 
     public void filter(AbstractDataIterationWithCars.Field field, String value, boolean valid) {
-        switch(field) {
+        switch (field) {
             case MILEAGE:
                 filterTextInput(mileageInput, value, valid);
                 break;
@@ -92,7 +93,7 @@ public class TableFilteringPage {
 
     public List<Car> getCars() {
         List<Car> result = new ArrayList<Car>();
-        for (WebElement row: tBody.findElements(By.tagName("tr"))) {
+        for (WebElement row : tBody.findElements(By.tagName("tr"))) {
             List<WebElement> cells = row.findElements(By.tagName("td"));
             result.add(new Car(cells.get(0).getText(), cells.get(1).getText(), cells.get(2).getText(), cells.get(3).getText(), cells.get(4).getText(), null));
         }
@@ -111,7 +112,7 @@ public class TableFilteringPage {
         blur.perform();
     }
 
-   protected Action fireEventAction(final WebElement element, final String event) {
+    protected Action fireEventAction(final WebElement element, final String event) {
         return new AbstractWebDriverTest.EventAction(browser, element, event);
     }
 }

@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.List;
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

@@ -23,7 +23,7 @@ package org.richfaces.tests.showcase.dataTable;
 
 import java.util.Collection;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.dataTable.page.TableFilteringPage;
 import static org.testng.Assert.assertTrue;
 import org.testng.annotations.Test;

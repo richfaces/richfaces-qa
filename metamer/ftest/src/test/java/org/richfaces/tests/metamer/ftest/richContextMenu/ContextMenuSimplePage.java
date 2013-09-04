@@ -25,9 +25,10 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.contextM
 import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest.DriverType;
 import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.richfaces.tests.metamer.ftest.webdriver.utils.StopWatch;
@@ -57,16 +58,16 @@ public class ContextMenuSimplePage extends MetamerPage {
     @FindBy(css = "div[id$=ctxMenu]")
     private RichFacesContextMenu contextMenu;
 
-    @FindBy(jquery = "span[id$=output]")
+    @FindByJQuery("span[id$=output]")
     private WebElement output;
 
-    @FindBy(jquery = "div[id$=\":ctxMenu\"]")
+    @FindByJQuery("div[id$=\":ctxMenu\"]")
     private WebElement contextMenuRoot;
 
     @FindBy(tagName = "body")
     private WebElement body;
 
-    @FindBy(jquery = "div[id$=menuGroup4_list]")
+    @FindByJQuery("div[id$=menuGroup4_list]")
     private WebElement groupList;
 
     public final int SHOW_DELAY_TOLERANCE = 600;

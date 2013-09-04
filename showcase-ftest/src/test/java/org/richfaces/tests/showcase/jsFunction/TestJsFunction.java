@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 import org.jboss.arquillian.graphene.Graphene;
 import static org.testng.Assert.assertEquals;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.android.AndroidDriver;

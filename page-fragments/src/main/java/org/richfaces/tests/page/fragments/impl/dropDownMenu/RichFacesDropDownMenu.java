@@ -23,8 +23,9 @@ package org.richfaces.tests.page.fragments.impl.dropDownMenu;
 
 import java.util.List;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.contextMenu.AbstractPopupMenu;
 
 /**
@@ -35,13 +36,13 @@ public class RichFacesDropDownMenu extends AbstractPopupMenu {
     @FindBy(className = "rf-ddm-itm")
     private List<WebElement> menuItemsElements;
 
-    @FindBy(jquery = ".rf-ddm-lst:eq(0)")
+    @FindByJQuery(".rf-ddm-lst:eq(0)")
     private WebElement dropDownMenuPopup;
 
-    @FindBy(jquery = ".rf-ddm-lbl script:last")
+    @FindByJQuery(".rf-ddm-lbl script:last")
     private WebElement script;
 
-    @FindBy(jquery = ".rf-ddm-lbl:eq(0)")
+    @FindByJQuery(".rf-ddm-lbl:eq(0)")
     private WebElement topLvlElement;
 
     private AdvancedInteractions advancedInteractions;

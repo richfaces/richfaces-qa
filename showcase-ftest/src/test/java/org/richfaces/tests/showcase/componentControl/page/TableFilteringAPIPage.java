@@ -24,7 +24,7 @@ package org.richfaces.tests.showcase.componentControl.page;
 import java.util.List;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -37,7 +37,7 @@ public class TableFilteringAPIPage {
     @Drone
     private WebDriver driver;
 
-    @FindBy(jquery="tbody.rf-dt-b tr[class*=rf-dt-r]")
+    @FindByJQuery("tbody.rf-dt-b tr[class*=rf-dt-r]")
     public List<WebElement> tableRows;
 
     public WebElement getFilterValue(int index) {

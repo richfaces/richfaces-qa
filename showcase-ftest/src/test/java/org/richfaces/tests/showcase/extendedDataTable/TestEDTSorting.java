@@ -24,7 +24,7 @@ import static org.testng.Assert.assertTrue;
 
 import org.apache.commons.lang.StringUtils;
 import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.extendedDataTable.page.EDTSortingPage;
 import org.testng.annotations.Test;
 

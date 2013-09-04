@@ -3,8 +3,9 @@ package org.richfaces.tests.page.fragments.impl.accordion;
 import java.util.Collections;
 import java.util.List;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.switchable.AbstractSwitchableComponent;
 
 public class RichFacesAccordion extends AbstractSwitchableComponent<RichFacesAccordionItem> {
@@ -15,7 +16,7 @@ public class RichFacesAccordion extends AbstractSwitchableComponent<RichFacesAcc
     @FindBy(className = "rf-ac-itm")
     private List<RichFacesAccordionItem> accordionItems;
 
-    @FindBy(jquery = ".rf-ac-itm-cnt:visible")
+    @FindByJQuery(".rf-ac-itm-cnt:visible")
     private WebElement visibleContent;
 
     private AdvancedInteractions advancedInteractions;

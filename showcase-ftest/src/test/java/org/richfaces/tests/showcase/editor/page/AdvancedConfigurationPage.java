@@ -1,6 +1,6 @@
 package org.richfaces.tests.showcase.editor.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 
 public class AdvancedConfigurationPage {
@@ -9,15 +9,15 @@ public class AdvancedConfigurationPage {
     public static final String NEW_PAGE_FR = "Nouvelle page";
     public static final String NEW_PAGE_DE = "Neue Seite";
 
-    @FindBy(jquery = "input[type=radio]:eq(0)")
+    @FindByJQuery("input[type=radio]:eq(0)")
     public WebElement englishRadio;
 
-    @FindBy(jquery = "input[type=radio]:eq(1)")
+    @FindByJQuery("input[type=radio]:eq(1)")
     public WebElement frenchRadio;
 
-    @FindBy(jquery = "input[type=radio]:eq(2)")
+    @FindByJQuery("input[type=radio]:eq(2)")
     public WebElement germanRadio;
 
-    @FindBy(jquery = ".cke_button_newpage")
+    @FindByJQuery(".cke_button_newpage")
     public WebElement newPageButton;
 }

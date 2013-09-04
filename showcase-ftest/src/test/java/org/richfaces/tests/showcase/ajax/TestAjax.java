@@ -22,7 +22,7 @@
 package org.richfaces.tests.showcase.ajax;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.ajax.page.AjaxPage;
 import org.testng.annotations.Test;

@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.autocomplete.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplete;
 
 /**
@@ -30,10 +30,10 @@ import org.richfaces.tests.page.fragments.impl.autocomplete.RichFacesAutocomplet
  */
 public class CustomLayoutsPage {
 
-    @FindBy(jquery = ".rf-au:eq(0)")
+    @FindByJQuery(".rf-au:eq(0)")
     private RichFacesAutocomplete autocomplete1;
 
-    @FindBy(jquery = ".rf-au:eq(1)")
+    @FindByJQuery(".rf-au:eq(1)")
     private RichFacesAutocomplete autocomplete2;
 
     public RichFacesAutocomplete getAutocomplete1() {

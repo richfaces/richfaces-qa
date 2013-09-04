@@ -1,7 +1,7 @@
 package org.richfaces.tests.showcase.editor.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.editor.RichFacesEditor;
 
 public class AutosavingPage {

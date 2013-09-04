@@ -27,11 +27,12 @@ import java.util.List;
 import org.apache.commons.lang.WordUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars;
 import org.richfaces.tests.showcase.dataTable.AbstractDataIterationWithCars.Field;
 
@@ -43,10 +44,10 @@ public class EDTSortingPage {
     @Drone
     private WebDriver browser;
 
-    @FindBy(css="input[type=checkbox]")
+    @FindBy(css = "input[type=checkbox]")
     private WebElement multipleSorting;
 
-    @FindBy(jquery="*.rf-edt-b td div *.rf-edt-tbl")
+    @FindByJQuery("*.rf-edt-b td div *.rf-edt-tbl")
     private List<WebElement> tableParts;
 
     public List<AbstractDataIterationWithCars.Car> getCars() {
@@ -56,18 +57,18 @@ public class EDTSortingPage {
         List<String> price = new ArrayList<String>();
         List<String> mileage = new ArrayList<String>();
         List<String> vin = new ArrayList<String>();
-        for (WebElement row: tableParts.get(0).findElements(By.tagName("tr"))) {
+        for (WebElement row : tableParts.get(0).findElements(By.tagName("tr"))) {
             List<WebElement> cells = row.findElements(By.cssSelector("td > div > div"));
             vendor.add(cells.get(0).getText());
             model.add(cells.get(1).getText());
         }
-        for (WebElement row: tableParts.get(1).findElements(By.tagName("tr"))) {
+        for (WebElement row : tableParts.get(1).findElements(By.tagName("tr"))) {
             List<WebElement> cells = row.findElements(By.cssSelector("td > div > div"));
             price.add(cells.get(0).getText());
             mileage.add(cells.get(1).getText());
             vin.add(cells.get(2).getText());
         }
-        for (int i=0; i < vendor.size(); i++) {
+        for (int i = 0; i < vendor.size(); i++) {
             result.add(new AbstractDataIterationWithCars.Car(vendor.get(i), model.get(i), price.get(i), mileage.get(i), vin.get(i), null));
         }
         return result;
@@ -80,7 +81,7 @@ public class EDTSortingPage {
     }
 
     public void sort(Field field) {
-        switch(field) {
+        switch (field) {
             case VENDOR:
             case MODEL:
             case PRICE:
@@ -96,7 +97,6 @@ public class EDTSortingPage {
     }
 
     public void resetSorting() {
-
     }
 
 }

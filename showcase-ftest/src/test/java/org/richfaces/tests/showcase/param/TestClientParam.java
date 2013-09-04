@@ -23,7 +23,7 @@ package org.richfaces.tests.showcase.param;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.javascript.JavaScript;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.AbstractWebDriverTest;
 import org.richfaces.tests.showcase.param.page.ClientParamPage;
 import static org.testng.Assert.assertEquals;

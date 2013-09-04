@@ -1,12 +1,13 @@
 package org.richfaces.tests.page.fragments.impl.inplaceInput;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
@@ -16,10 +17,10 @@ public class RichFacesInplaceInput implements InplaceInput {
     @FindBy(className = "rf-ii-fld")
     private TextInputComponentImpl textInput;
 
-    @FindBy(jquery = ".rf-ii-btn:eq(0)")
+    @FindByJQuery(".rf-ii-btn:eq(0)")
     private WebElement confirmButton;
 
-    @FindBy(jquery = ".rf-ii-btn:eq(1)")
+    @FindByJQuery(".rf-ii-btn:eq(1)")
     private WebElement cancelButton;
 
     @FindBy(css = "span[id$=Label]")

@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataScroller.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -29,7 +29,7 @@ import org.openqa.selenium.WebElement;
  */
 public class SimpleScrollingPage extends AbstractDataScrollerPage {
 
-    @FindBy(jquery="tbody[class=rf-dt-b] tr:first")
+    @FindByJQuery("tbody[class=rf-dt-b] tr:first")
     public WebElement firstRowOfTable;
 
 }

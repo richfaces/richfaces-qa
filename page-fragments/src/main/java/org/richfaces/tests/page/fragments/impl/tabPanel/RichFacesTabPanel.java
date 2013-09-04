@@ -2,19 +2,20 @@ package org.richfaces.tests.page.fragments.impl.tabPanel;
 
 import java.util.List;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.switchable.AbstractSwitchableComponent;
 
 public class RichFacesTabPanel extends AbstractSwitchableComponent<RichFacesTab> {
 
-    @FindBy(jquery = ".rf-tab-hdr:visible")
+    @FindByJQuery(".rf-tab-hdr:visible")
     private List<WebElement> switcherControllerElements;
 
-    @FindBy(jquery = ".rf-tab:visible")
+    @FindByJQuery(".rf-tab:visible")
     private WebElement rootOfContainerElement;
 
-    @FindBy(jquery = ".rf-tab-hdr-act:visible")
+    @FindByJQuery(".rf-tab-hdr-act:visible")
     private WebElement activeHeader;
 
     @FindBy(xpath = "//div[contains(@id, 'tabPanel')]//td[contains(@class, 'rf-tab-hdr-act')]")

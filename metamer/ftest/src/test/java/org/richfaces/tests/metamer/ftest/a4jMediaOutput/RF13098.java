@@ -10,8 +10,8 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.Test;
 
 public class RF13098 extends AbstractMediaOutputTest {

@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.focus.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -33,19 +33,19 @@ import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
  */
 public class FocusPage {
 
-    @FindBy(jquery = "*[type=text]:eq(0)")
+    @FindByJQuery("*[type=text]:eq(0)")
     public TextInputComponentImpl nameInput;
 
-    @FindBy(jquery = "*[type=text]:eq(1)")
+    @FindByJQuery("*[type=text]:eq(1)")
     public TextInputComponentImpl jobInput;
 
-    @FindBy(jquery = "*[type=text]:eq(2)")
+    @FindByJQuery("*[type=text]:eq(2)")
     public TextInputComponentImpl addressnput;
 
-    @FindBy(jquery = "*[type=text]:eq(3)")
+    @FindByJQuery("*[type=text]:eq(3)")
     public TextInputComponentImpl zipInput;
 
-    @FindBy(jquery = "*[type=submit]")
+    @FindByJQuery("*[type=submit]")
     public WebElement submitButton;
 
     @ArquillianResource

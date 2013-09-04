@@ -21,7 +21,7 @@
  *******************************************************************************/
 package org.richfaces.tests.showcase.dataScroller.page;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -29,11 +29,11 @@ import org.openqa.selenium.WebElement;
  */
 public class DataScrollerAPIPage extends AbstractDataScrollerPage {
 
-    @FindBy(jquery="table[id$=repeat] tbody tr:first td:eq(1) img:eq(0)")
+    @FindByJQuery("table[id$=repeat] tbody tr:first td:eq(1) img:eq(0)")
     public WebElement firstImgOnThePage;
-    @FindBy(jquery="table[id$=repeat] tbody tr:first td:first img")
+    @FindByJQuery("table[id$=repeat] tbody tr:first td:first img")
     public WebElement previousButton;
-    @FindBy(jquery="table[id$=repeat] tbody tr:first td:last img")
+    @FindByJQuery("table[id$=repeat] tbody tr:first td:last img")
     public WebElement nextButton;
 
 }

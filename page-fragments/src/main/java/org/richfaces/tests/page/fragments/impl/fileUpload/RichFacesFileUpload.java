@@ -32,11 +32,12 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Root;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.list.AbstractListComponent;
 import org.richfaces.tests.page.fragments.impl.list.ListComponent;
@@ -60,7 +61,7 @@ public class RichFacesFileUpload implements FileUpload {
     private WebElement clearAllButtonElement;
     @FindBy(className = "rf-fu-btn-cnt-upl")
     private WebElement uploadButtonElement;
-    @FindBy(jquery = "input[type=file].rf-fu-inp:last")
+    @FindByJQuery("input[type=file].rf-fu-inp:last")
     private WebElement fileInputElement;
     @FindBy(css = "input[type=file].rf-fu-inp")
     private List<WebElement> fileInputElements;

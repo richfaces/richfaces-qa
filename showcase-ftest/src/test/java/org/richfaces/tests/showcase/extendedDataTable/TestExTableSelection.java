@@ -23,7 +23,7 @@
 package org.richfaces.tests.showcase.extendedDataTable;
 
 import java.util.List;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.showcase.extendedDataTable.page.EDTSelectionPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;

@@ -26,9 +26,10 @@ import static org.jboss.arquillian.graphene.Graphene.waitModel;
 
 import java.util.concurrent.TimeUnit;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.test.selenium.support.ui.ElementIsFocused;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.showcase.focus.TestFocus;
 
 /**
@@ -37,16 +38,16 @@ import org.richfaces.tests.showcase.focus.TestFocus;
  */
 public class FocusDelayedPage extends FocusPage {
 
-    @FindBy(jquery = "*[type=button]")
+    @FindByJQuery("*[type=button]")
     public WebElement showPopupButton;
 
     @FindBy(className = ".rf-pp-cnt:visible")
     public WebElement popupContent;
 
-    @FindBy(jquery = "*[value*=Save]")
+    @FindByJQuery("*[value*=Save]")
     public WebElement saveButton;
 
-    @FindBy(jquery = "*[value*=Cancel]")
+    @FindByJQuery("*[value*=Cancel]")
     public WebElement cancelButton;
 
     public void showPopup() {

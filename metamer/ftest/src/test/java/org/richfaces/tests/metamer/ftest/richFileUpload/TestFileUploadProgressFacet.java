@@ -27,8 +27,8 @@ import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.fileUplo
 import java.net.URL;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.Test;
 
 /**

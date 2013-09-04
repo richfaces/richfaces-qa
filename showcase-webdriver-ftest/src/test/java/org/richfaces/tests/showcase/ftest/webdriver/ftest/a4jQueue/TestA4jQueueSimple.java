@@ -22,7 +22,7 @@
 package org.richfaces.tests.showcase.ftest.webdriver.ftest.a4jQueue;
 
 import org.jboss.arquillian.graphene.Graphene;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import static org.testng.Assert.assertEquals;
 
 import org.jboss.arquillian.graphene.condition.element.WebElementConditionFactory;
