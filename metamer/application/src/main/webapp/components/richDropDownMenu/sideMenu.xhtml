@@ -94,13 +94,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                         </h:panelGroup>
                     </f:facet>
 
-                    <r:menuItem  label="New" action="#{richDropDownMenuBean.doNew}" icon="/resources/images/icons/create_doc.gif"/>
+                    <r:menuItem id="menuItem1" label="New" action="#{richDropDownMenuBean.doNew}" icon="/resources/images/icons/create_doc.gif"/>
 
-                    <r:menuItem  label="Open" action="#{richDropDownMenuBean.doOpen}" icon="/resources/images/icons/open.gif" />
+                    <r:menuItem id="menuItem2" label="Open" action="#{richDropDownMenuBean.doOpen}" icon="/resources/images/icons/open.gif" />
 
-                    <r:menuGroup label="Open Recent..." disabled="true">
-                        <r:menuItem  label="Save" action="#{richDropDownMenuBean.doSave}" icon="/resources/images/icons/save.gif" />
-                        <r:menuItem  label="Save All" action="#{richDropDownMenuBean.doSaveAll}">
+                    <r:menuGroup id="menuGroup3" label="Open Recent..." disabled="true">
+                        <r:menuItem id="menuItem31" label="Save" action="#{richDropDownMenuBean.doSave}" icon="/resources/images/icons/save.gif" />
+                        <r:menuItem id="menuItem32" label="Save All" action="#{richDropDownMenuBean.doSaveAll}">
                             <f:facet name="icon">
                                 <h:graphicImage library="images/icons" name="save_all.gif" />
                             </f:facet>
@@ -109,23 +109,23 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
                     <r:menuSeparator id="menuSeparator11" />
 
-                    <r:menuGroup label="Save As...">
-                        <r:menuItem  label="Save" action="#{richDropDownMenuBean.doSave}" icon="/resources/images/icons/save.gif" />
-                        <r:menuItem  label="Save All" action="#{richDropDownMenuBean.doSaveAll}">
+                    <r:menuGroup id="menuGroup4" label="Save As...">
+                        <r:menuItem id="menuItem41" label="Save" action="#{richDropDownMenuBean.doSave}" icon="/resources/images/icons/save.gif" />
+                        <r:menuItem id="menuItem42" label="Save All" action="#{richDropDownMenuBean.doSaveAll}">
                             <f:facet name="icon">
                                 <h:graphicImage library="images/icons" name="save_all.gif" />
                             </f:facet>
                         </r:menuItem>
-                        <r:menuItem  label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
+                        <r:menuItem id="menuItem43" label="Send Online" icon="/resources/images/icons/save.gif" disabled="true" />
                     </r:menuGroup>
 
-                    <r:menuItem  label="Print" action="#{richDropDownMenuBean.doPrint}" disabled="true"/>
+                    <r:menuItem id="menuItem5" label="Print" action="#{richDropDownMenuBean.doPrint}" disabled="true"/>
 
-                    <r:menuItem  label="Close" action="#{richDropDownMenuBean.doClose}" />
+                    <r:menuItem id="menuItem6" label="Close" action="#{richDropDownMenuBean.doClose}" />
 
                     <r:menuSeparator id="menuSeparator12" />
 
-                    <r:menuItem  label="Exit" action="#{richDropDownMenuBean.doExit}" />
+                    <r:menuItem id="menuItem7" label="Exit" action="#{richDropDownMenuBean.doExit}" />
 
                 </r:dropDownMenu>
 
