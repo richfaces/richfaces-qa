@@ -22,6 +22,7 @@
 package org.richfaces.tests.page.fragments.impl;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 
 import java.util.Iterator;
 
@@ -55,8 +56,12 @@ public final class Utils {
     private static final String JSON_FUNCTION_START = "function";
 
     public static JavascriptExecutor getExecutorFromElement(WebElement element) {
-        GrapheneContext context = ((GrapheneProxyInstance) element).getContext();
-        return (JavascriptExecutor) context.getWebDriver(JavascriptExecutor.class);
+        Preconditions.checkNotNull(element, "The element cannot be null.");
+        if (element instanceof GrapheneProxyInstance) {
+            GrapheneContext context = ((GrapheneProxyInstance) element).getContext();
+            return (JavascriptExecutor) context.getWebDriver(JavascriptExecutor.class);
+        }
+        throw new RuntimeException("Cannot obtain JavascriptExecutor from element which is not an instance of GrapheneProxyInstance.");
     }
 
     /**
@@ -69,6 +74,8 @@ public final class Utils {
     }
 
     public static String getJSONValue(WebElement scriptElement, String property) {
+        Preconditions.checkNotNull(scriptElement, "The scriptElement cannot be null.");
+        Preconditions.checkNotNull(property, "The property cannot be null.");
         String scriptText = getTextFromHiddenElement(scriptElement);
         String json = scriptText.substring(scriptText.indexOf('{'), scriptText.indexOf('}') + 1);
         JSONParser parser = new JSONParser();
@@ -84,6 +91,8 @@ public final class Utils {
     }
 
     public static Optional<String> getJSONValue2(WebElement scriptElement, String property) {
+        Preconditions.checkNotNull(scriptElement, "The scriptElement cannot be null.");
+        Preconditions.checkNotNull(property, "The property cannot be null.");
         String scriptText = getTextFromHiddenElement(scriptElement);
         String keyPrefix = String.format(JSON_KEY_TEMPLATE, property);
         int startIndex = scriptText.indexOf(keyPrefix);
@@ -106,6 +115,7 @@ public final class Utils {
      * @see Locations
      */
     public static Locations getLocations(WebElement root) {
+        Preconditions.checkNotNull(root, "The element cannot be null.");
         Point topLeft = root.getLocation();
         Dimension dimension = root.getSize();
         Point topRight = topLeft.moveBy(dimension.getWidth(), 0);
@@ -144,8 +154,9 @@ public final class Utils {
 
     public static boolean isVisible(WebDriver driver, By by) {
         try {
-            driver.findElement(by).isDisplayed();
-            return true;
+            boolean result = false;
+            result = driver.findElement(by).isDisplayed();
+            return result;
         } catch (NoSuchElementException ex) {
             return false;
         }
@@ -158,6 +169,9 @@ public final class Utils {
      * @param element element on which the command will be executed
      */
     public static void jQ(JavascriptExecutor executor, String cmd, WebElement element) {
+        Preconditions.checkNotNull(executor, "The executor cannot be null.");
+        Preconditions.checkNotNull(cmd, "The command cannot be null.");
+        Preconditions.checkNotNull(element, "The element cannot be null.");
         String jQueryCmd = String.format("jQuery(arguments[0]).%s", cmd);
         executor.executeScript(jQueryCmd, unwrap(element));
     }
@@ -180,6 +194,9 @@ public final class Utils {
      * @param element element on which the command will be executed
      */
     public static String returningJQ(JavascriptExecutor executor, String cmd, WebElement element) {
+        Preconditions.checkNotNull(executor, "The executor cannot be null.");
+        Preconditions.checkNotNull(cmd, "The command cannot be null.");
+        Preconditions.checkNotNull(element, "The element cannot be null.");
         String jQueryCmd = String.format("return jQuery(arguments[0]).%s;", cmd);
         return String.valueOf(executor.executeScript(jQueryCmd, unwrap(element)));
     }
@@ -259,8 +276,9 @@ public final class Utils {
         triggerJQ(getExecutorFromElement(element), event, element);
     }
 
-    public static WebElement unwrap(WebElement e) {
-        WebElement result = e;
+    public static WebElement unwrap(WebElement element) {
+        Preconditions.checkNotNull(element, "The element cannot be null.");
+        WebElement result = element;
         while (GrapheneProxy.isProxyInstance(result)) {
             result = ((GrapheneProxyInstance) result).unwrap();
         }
