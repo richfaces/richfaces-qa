@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
-       xmlns:r="http://richfaces.org" xmlns:c="http://java.sun.com/jsp/jstl/core" >
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:metamer="http://java.sun.com/jsf/composite/metamer"
+    xmlns:r="http://richfaces.org" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-    <!--
+<!--
 JBoss, Home of Professional Open Source
 Copyright 2010-2013, Red Hat, Inc. and individual contributors
 by the @authors tag. See the copyright.txt in the distribution for a
@@ -26,131 +26,138 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 
-    <ui:composition template="/templates/template.xhtml">
+<ui:composition template="/templates/template.xhtml">
 
-        <ui:define name="view">
-            <f:metadata>
-                <f:viewParam name="templates" value="#{templateBean.templates}">
-                    <f:converter converterId="templatesListConverter" />
-                </f:viewParam>
-            </f:metadata>
-        </ui:define>
+    <ui:define name="view">
+        <f:metadata>
+            <f:viewParam name="templates" value="#{templateBean.templates}">
+                <f:converter converterId="templatesListConverter" />
+            </f:viewParam>
+        </f:metadata>
+    </ui:define>
 
-        <ui:define name="component">
+    <ui:define name="component">
 
-            <r:tabPanel id="tabPanel"
-                           activeItem="#{richTabPanelBean.attributes['activeItem'].value}"
-                           cycledSwitching="#{richTabPanelBean.attributes['cycledSwitching'].value}"
-                           dir="#{richTabPanelBean.attributes['dir'].value}"
-                           headerAlignment="#{richTabPanelBean.attributes['headerAlignment'].value}"
-                           headerPosition="#{richTabPanelBean.attributes['headerPosition'].value}"
-                           immediate="#{richTabPanelBean.attributes['immediate'].value}"
-                           itemChangeListener="#{richBean.itemChangeListener}"
-                           lang="#{richTabPanelBean.attributes['lang'].value}"
-                           onbeforeitemchange="#{richTabPanelBean.attributes['onbeforeitemchange'].value}"
-                           onclick="#{richTabPanelBean.attributes['onclick'].value}"
-                           ondblclick="#{richTabPanelBean.attributes['ondblclick'].value}"
-                           onitemchange="#{richTabPanelBean.attributes['onitemchange'].value}"
-                           onmousedown="#{richTabPanelBean.attributes['onmousedown'].value}"
-                           onmousemove="#{richTabPanelBean.attributes['onmousemove'].value}"
-                           onmouseout="#{richTabPanelBean.attributes['onmouseout'].value}"
-                           onmouseover="#{richTabPanelBean.attributes['onmouseover'].value}"
-                           onmouseup="#{richTabPanelBean.attributes['onmouseup'].value}"
-                           rendered="#{richTabPanelBean.attributes['rendered'].value}"
-                           style="#{richTabPanelBean.attributes['style'].value}"
-                           styleClass="#{richTabPanelBean.attributes['styleClass'].value}"
-                           switchType="#{richTabPanelBean.attributes['switchType'].value}"
-                           tabActiveHeaderClass="#{richTabPanelBean.attributes['tabActiveHeaderClass'].value}"
-                           tabContentClass="#{richTabPanelBean.attributes['tabContentClass'].value}"
-                           tabDisabledHeaderClass="#{richTabPanelBean.attributes['tabDisabledHeaderClass'].value}"
-                           tabHeaderClass="#{richTabPanelBean.attributes['tabHeaderClass'].value}"
-                           tabInactiveHeaderClass="#{richTabPanelBean.attributes['tabInactiveHeaderClass'].value}"
-                           title="#{richTabPanelBean.attributes['title'].value}"
-                           >
+        <r:tabPanel id="tabPanel" activeItem="#{richTabPanelBean.attributes['activeItem'].value}"
+            cycledSwitching="#{richTabPanelBean.attributes['cycledSwitching'].value}"
+            dir="#{richTabPanelBean.attributes['dir'].value}"
+            headerAlignment="#{richTabPanelBean.attributes['headerAlignment'].value}"
+            headerPosition="#{richTabPanelBean.attributes['headerPosition'].value}"
+            immediate="#{richTabPanelBean.attributes['immediate'].value}" itemChangeListener="#{richBean.itemChangeListener}"
+            lang="#{richTabPanelBean.attributes['lang'].value}"
+            onbeforeitemchange="#{richTabPanelBean.attributes['onbeforeitemchange'].value}"
+            onclick="#{richTabPanelBean.attributes['onclick'].value}"
+            ondblclick="#{richTabPanelBean.attributes['ondblclick'].value}"
+            onitemchange="#{richTabPanelBean.attributes['onitemchange'].value}"
+            onmousedown="#{richTabPanelBean.attributes['onmousedown'].value}"
+            onmousemove="#{richTabPanelBean.attributes['onmousemove'].value}"
+            onmouseout="#{richTabPanelBean.attributes['onmouseout'].value}"
+            onmouseover="#{richTabPanelBean.attributes['onmouseover'].value}"
+            onmouseup="#{richTabPanelBean.attributes['onmouseup'].value}"
+            rendered="#{richTabPanelBean.attributes['rendered'].value}" style="#{richTabPanelBean.attributes['style'].value}"
+            styleClass="#{richTabPanelBean.attributes['styleClass'].value}"
+            switchType="#{richTabPanelBean.attributes['switchType'].value}"
+            tabActiveHeaderClass="#{richTabPanelBean.attributes['tabActiveHeaderClass'].value}"
+            tabContentClass="#{richTabPanelBean.attributes['tabContentClass'].value}"
+            tabDisabledHeaderClass="#{richTabPanelBean.attributes['tabDisabledHeaderClass'].value}"
+            tabHeaderClass="#{richTabPanelBean.attributes['tabHeaderClass'].value}"
+            tabInactiveHeaderClass="#{richTabPanelBean.attributes['tabInactiveHeaderClass'].value}"
+            title="#{richTabPanelBean.attributes['title'].value}">
 
-                <r:tab id="tab1" name="tab1" header="tab1 header">
+            <r:tab id="tab1" name="tab1" header="tab1 header">
                     content of tab 1
                 </r:tab>
-                <r:tab id="tab2" name="tab2" header="tab2 header">
+            <r:tab id="tab2" name="tab2" header="tab2 header">
                     content of tab 2
                 </r:tab>
-                <r:tab id="tab3" name="tab3" header="tab3 header">
+            <r:tab id="tab3" name="tab3" header="tab3 header">
                     content of tab 3
                 </r:tab>
-                <r:tab id="tab4" name="tab4" header="tab4 header" disabled="true">
+            <r:tab id="tab4" name="tab4" header="tab4 header" disabled="true">
                     content of tab 4
                 </r:tab>
-                <r:tab id="tab5" name="tab5" header="tab5 header">
+            <r:tab id="tab5" name="tab5" header="tab5 header">
                     content of tab 5
                 </r:tab>
 
-                <r:repeat id="dynamic" value="#{richTabPanelBean.tabBeans}" var="newTab">
-                    <r:tab id="tab" name="#{newTab.tabName}">
+            <r:repeat id="dynamic" value="#{richTabPanelBean.tabBeans}" var="newTab">
+                <r:tab id="tab" name="#{newTab.tabName}">
                         #{newTab.tabContentText}
                         <f:facet name="header">
-                            <h:outputText value="#{newTab.tabHeader} " />
-                            <h:commandLink value="[x]" 
-                                           rendered="#{newTab.closable}" 
-                                           onclick="removeTab('#{newTab.tabId}'); return false;" />
-                        </f:facet>
-                    </r:tab>       	      	
-                </r:repeat>
+                        <h:outputText value="#{newTab.tabHeader} " />
+                        <h:commandLink value="[x]" rendered="#{newTab.closable}"
+                            onclick="removeTab('#{newTab.tabId}'); return false;" />
+                    </f:facet>
+                </r:tab>
+            </r:repeat>
 
-            </r:tabPanel>
+        </r:tabPanel>
 
-            <r:jsFunction name="removeTab"
-                          action="#{richTabPanelBean.removeTab}"
-                          render="tabPanel">
-                <r:param name="removeTabId"/>
-            </r:jsFunction>
+        <r:jsFunction name="removeTab" action="#{richTabPanelBean.removeTab}" render="tabPanel">
+            <r:param name="removeTabId" />
+        </r:jsFunction>
 
-            <br/><br/>
-            <fieldset>
-                <legend>JavaScript API</legend>
+        <br />
+        <br />
+        <fieldset>
+            <legend>JavaScript API</legend>
 
-                <script type="text/javascript">
+            <script type="text/javascript">
                     testedComponentId = "#{r:clientId('tabPanel')}";
                 </script>
 
-                <h:commandButton id="switchButton1" value="switch to tab1">
-                    <r:componentControl event="click" operation="switchToItem" target="tabPanel" >
-                        <f:param value="tab1" />
-                    </r:componentControl>
-                </h:commandButton>
-                <h:commandButton id="switchButton2" value="switch to tab2">
-                    <r:componentControl event="click" operation="switchToItem" target="tabPanel" >
-                        <f:param value="tab2" />
-                    </r:componentControl>
-                </h:commandButton>
-                <h:commandButton id="switchButton3" value="switch to tab3">
-                    <r:componentControl event="click" operation="switchToItem" target="tabPanel" >
-                        <f:param value="tab3" />
-                    </r:componentControl>
-                </h:commandButton>
-                <h:commandButton id="switchButton4" value="switch to tab4">
-                    <r:componentControl event="click" operation="switchToItem" target="tabPanel" >
-                        <f:param value="tab4" />
-                    </r:componentControl>
-                </h:commandButton>
-                <h:commandButton id="switchButton5" value="switch to tab5">
-                    <r:componentControl event="click" operation="switchToItem" target="tabPanel" >
-                        <f:param value="tab5" />
-                    </r:componentControl>
-                </h:commandButton>
+            <h:commandButton id="switchButton1" value="switch to tab1">
+                <r:componentControl event="click" operation="switchToItem" target="tabPanel">
+                    <f:param value="tab1" />
+                </r:componentControl>
+            </h:commandButton>
+            <h:commandButton id="switchButton2" value="switch to tab2">
+                <r:componentControl event="click" operation="switchToItem" target="tabPanel">
+                    <f:param value="tab2" />
+                </r:componentControl>
+            </h:commandButton>
+            <h:commandButton id="switchButton3" value="switch to tab3">
+                <r:componentControl event="click" operation="switchToItem" target="tabPanel">
+                    <f:param value="tab3" />
+                </r:componentControl>
+            </h:commandButton>
+            <h:commandButton id="switchButton4" value="switch to tab4">
+                <r:componentControl event="click" operation="switchToItem" target="tabPanel">
+                    <f:param value="tab4" />
+                </r:componentControl>
+            </h:commandButton>
+            <h:commandButton id="switchButton5" value="switch to tab5">
+                <r:componentControl event="click" operation="switchToItem" target="tabPanel">
+                    <f:param value="tab5" />
+                </r:componentControl>
+            </h:commandButton>
+            <input type="button" onclick="alert('Value is: ' + RichFaces.component('form:tabPanel').getItems())"
+                value="getItems()" name="getItems"></input> <input type="button"
+                onclick="alert('Value is: ' + RichFaces.component('form:tabPanel').getItemsNames())" value="getItemsNames()"
+                name="getItemsNames"></input>
+                <input type="button"
+                onclick="alert('Value is: ' + RichFaces.component('form:tabPanel').lastItem())" value="lastItem()"
+                name="lastItem"></input>
+                <input type="button"
+                onclick="alert('Value is: ' + RichFaces.component('form:tabPanel').firstItem())" value="firstItem()"
+                name="firstItem"></input>
+                <input type="button"
+                onclick="alert('Value is: ' + RichFaces.component('form:tabPanel').nextItem())" value="nextItem()"
+                name="nextItem"></input>
+                <input type="button"
+                onclick="alert('Value is: ' + RichFaces.component('form:tabPanel').prevItem())" value="prevItem()"
+                name="prevItem"></input>
+            <h:commandButton id="hCreateTabButton" value="[h] Create tab" actionListener="#{richTabPanelBean.generateNewTab}" />
+            <r:commandButton id="a4jCreateTabButton" value="[a4j] Create tab" render="tabPanel"
+                actionListener="#{richTabPanelBean.generateNewTab}" />
 
-                <h:commandButton id="hCreateTabButton" value="[h] Create tab" 
-                                 actionListener="#{richTabPanelBean.generateNewTab}" />
-                <r:commandButton id="a4jCreateTabButton" value="[a4j] Create tab"
-                                   render="tabPanel"                				   
-                                   actionListener="#{richTabPanelBean.generateNewTab}" />
+        </fieldset>
 
-            </fieldset>
+    </ui:define>
 
-        </ui:define>
+    <ui:define name="outOfTemplateAfter">
+        <metamer:attributes value="#{richTabPanelBean.attributes}" id="attributes" render="log" />
+    </ui:define>
 
-        <ui:define name="outOfTemplateAfter">
-            <metamer:attributes value="#{richTabPanelBean.attributes}" id="attributes" render="log"/>
-        </ui:define>
-
-    </ui:composition>
+</ui:composition>
 </html>
