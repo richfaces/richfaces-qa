@@ -55,7 +55,7 @@ import static org.richfaces.demo.push.TopicsContextMessageProducer.PUSH_TOPICS_C
 public class A4JPushBean implements Serializable {
 
     private static final long serialVersionUID = 4810889475400649809L;
-    public static final String DATE_PATTERN = "'day:' d', month:' M', time:' HH:mm:ss";
+    public static final String DATE_PATTERN = "'day:' d', month:' M', time:' HH:mm:ss.SSS";
     public static final String METAMER_SUBTOPIC = "xxx";
     public static final String METAMER_TOPIC_CDI = "topic2";
     private static final Logger LOGGER = LoggerFactory.getLogger(A4JPushBean.class);
@@ -66,10 +66,10 @@ public class A4JPushBean implements Serializable {
 
     @Inject
     @Push(topic = "cdiSampleAddress1")
-    private Event<Date> messageProducerForAddress1;
+    private Event<String> messageProducerForAddress1;
     @Inject
     @Push(topic = "cdiSampleAddress2")
-    private Event<Date> messageProducerForAddress2;
+    private Event<String> messageProducerForAddress2;
 
     /**
      * Initializes the managed bean.
@@ -97,12 +97,12 @@ public class A4JPushBean implements Serializable {
     }
 
     public void pushCDI1() {
-        messageProducerForAddress1.fire(new Date());
+        messageProducerForAddress1.fire(new DateTime().toString(DATE_PATTERN));
         LOGGER.debug("cdi push event 1");
     }
 
     public void pushCDI2() {
-        messageProducerForAddress2.fire(new Date());
+        messageProducerForAddress2.fire(new DateTime().toString(DATE_PATTERN));
         LOGGER.debug("cdi push event 2");
     }
 
