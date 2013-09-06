@@ -23,7 +23,7 @@ package org.richfaces.tests.metamer.ftest.richDataScroller;
 
 import javax.xml.bind.JAXBException;
 
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.page.Page;
 import org.richfaces.tests.metamer.ftest.annotations.Templates;
 import org.richfaces.tests.metamer.ftest.richDataScroller.SimplePage.ScrollerPosition;
 import org.testng.annotations.Test;
