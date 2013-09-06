@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.jboss.arquillian.graphene.enricher.findby.FindBy;
-import org.jboss.arquillian.graphene.spi.annotations.Page;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
@@ -21,6 +21,7 @@ import org.richfaces.tests.page.fragments.impl.dataScroller.RichFacesDataScrolle
 import org.testng.annotations.BeforeMethod;
 
 public class AbstractScrollerTest extends AbstractWebDriverTest {
+
     @Page
     private SimplePage page;
 
@@ -41,7 +42,7 @@ public class AbstractScrollerTest extends AbstractWebDriverTest {
         assertEquals(maxPages, dataScroller.advanced().getCountOfVisiblePages());
     }
 
-    @FindBy(jquery = "table.rf-dt[id$=richDataTable]")
+    @FindByJQuery("table.rf-dt[id$=richDataTable]")
     private WebElement dataTable;
 
     @Override
