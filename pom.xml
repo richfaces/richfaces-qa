@@ -403,17 +403,13 @@ FSF site: http://www.fsf.org. -->
             </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian.graphene</groupId>
-                <artifactId>graphene-webdriver-spi</artifactId>
+                <artifactId>graphene-webdriver</artifactId>
                 <version>${arquillian.graphene.version}</version>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian.graphene</groupId>
                 <artifactId>graphene-component-api</artifactId>
-                <version>${arquillian.graphene.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.arquillian.graphene</groupId>
-                <artifactId>graphene-webdriver-impl</artifactId>
                 <version>${arquillian.graphene.version}</version>
             </dependency>
             <dependency>
