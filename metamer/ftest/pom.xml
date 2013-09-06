@@ -59,8 +59,8 @@ FSF site: http://www.fsf.org. -->
         <!-- Arquillian dependencies -->
         <dependency>
             <groupId>org.jboss.arquillian.graphene</groupId>
-            <artifactId>arquillian-graphene</artifactId>
-            <version>${arquillian.graphene-testng.version}</version>
+            <artifactId>graphene-webdriver</artifactId>
+            <version>${arquillian.graphene.version}</version>
             <type>pom</type>
             <scope>test</scope>
         </dependency>
@@ -72,11 +72,6 @@ FSF site: http://www.fsf.org. -->
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
             <artifactId>arquillian-drone-impl</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.graphene</groupId>
-            <artifactId>graphene-component-api</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -161,12 +156,6 @@ FSF site: http://www.fsf.org. -->
             <artifactId>webdriver-utils</artifactId>
             <scope>test</scope>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.graphene</groupId>
-            <artifactId>graphene-webdriver</artifactId>
-            <scope>test</scope>
-            <type>pom</type>
         </dependency>
         <!-- see the https://community.jboss.org/wiki/WhatsTheCauseOfThisExceptionJavalangClassFormatErrorAbsentCode -->
         <dependency>
