@@ -1,0 +1,28 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="seleniumTest">
+
+    <test name="Table Components" preserve-order="false">
+        <groups>
+            <run>
+                <exclude name="4.3" />
+                <exclude name="4.Future" />
+                <exclude name="Future" />
+                <exclude name="extended" />
+            </run>
+        </groups>
+
+        <packages>
+            <package name="org.richfaces.tests.metamer.ftest.richCollapsibleSubTable" />
+            <package name="org.richfaces.tests.metamer.ftest.richCollapsibleSubTableToggler" />
+            <package name="org.richfaces.tests.metamer.ftest.richColumn" />
+            <package name="org.richfaces.tests.metamer.ftest.richColumnGroup" />
+            <package name="org.richfaces.tests.metamer.ftest.richDataGrid" />
+            <package name="org.richfaces.tests.metamer.ftest.richDataScroller" />
+            <package name="org.richfaces.tests.metamer.ftest.richDataTable" />
+            <package name="org.richfaces.tests.metamer.ftest.richExtendedDataTable" />
+            <package name="org.richfaces.tests.metamer.ftest.richList" />
+        </packages>
+    </test>
+
+</suite>
+

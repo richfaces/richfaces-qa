@@ -1,0 +1,21 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="seleniumTest">
+
+    <test name="Tree Components" preserve-order="false">
+        <groups>
+            <run>
+                <exclude name="4.3" />
+                <exclude name="4.Future" />
+                <exclude name="Future" />
+                <exclude name="extended" />
+            </run>
+        </groups>
+
+        <packages>
+            <package name="org.richfaces.tests.metamer.ftest.richTree" />
+            <package name="org.richfaces.tests.metamer.ftest.richTreeNode" />
+        </packages>
+    </test>
+
+</suite>
+

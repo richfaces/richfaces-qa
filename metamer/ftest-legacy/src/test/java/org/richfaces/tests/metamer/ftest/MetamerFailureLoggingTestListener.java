@@ -53,7 +53,7 @@ public class MetamerFailureLoggingTestListener extends FailureLoggingTestListene
 
     @Override
     public void onFailure(ITestResult result) {
-        onFailureForSelenium2(result);
+        onFailureForSelenium1(result);
 
         List<String> issueList = new LinkedList<String>();
         IssueTracking issueTracking = result.getMethod().getConstructorOrMethod().getMethod()

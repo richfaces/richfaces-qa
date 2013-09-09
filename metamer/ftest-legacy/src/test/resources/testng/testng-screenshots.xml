@@ -1,0 +1,20 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Extended Test Suite" >
+
+    <test name="All Components" preserve-order="false">
+
+        <parameter name="takeScreenshots" value="true"/>
+
+        <groups>
+            <run>
+                <include name="arquillian" />
+                <include name="screenshot" />
+            </run>
+        </groups>
+
+        <packages>
+            <package name="org.richfaces.tests.metamer.ftest.*" />
+        </packages>
+    </test>
+
+</suite>

@@ -1,0 +1,44 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="seleniumTest">
+
+    <test name="Miscellaneous Components" preserve-order="false">
+        <groups>
+            <run>
+                <exclude name="4.3" />
+                <exclude name="4.Future" />
+                <exclude name="Future" />
+                <exclude name="extended" />
+            </run>
+        </groups>
+
+        <packages>
+            <package name="org.richfaces.tests.metamer.ftest.richComponentControl" />
+            <package name="org.richfaces.tests.metamer.ftest.richContextMenu" />
+            <package name="org.richfaces.tests.metamer.ftest.richDropDownMenu" />
+            <package name="org.richfaces.tests.metamer.ftest.richFocus" />
+            <package name="org.richfaces.tests.metamer.ftest.richFunctions" />
+            <package name="org.richfaces.tests.metamer.ftest.richGraphValidator" />
+            <package name="org.richfaces.tests.metamer.ftest.richHashParam" />
+            <package name="org.richfaces.tests.metamer.ftest.richHotKey" />
+            <package name="org.richfaces.tests.metamer.ftest.richItemChangeListener" />
+            <package name="org.richfaces.tests.metamer.ftest.richJQuery" />
+            <package name="org.richfaces.tests.metamer.ftest.richMenuGroup" />
+            <package name="org.richfaces.tests.metamer.ftest.richMenuItem" />
+            <package name="org.richfaces.tests.metamer.ftest.richMenuSeparator" />
+            <package name="org.richfaces.tests.metamer.ftest.richMessage" />
+            <package name="org.richfaces.tests.metamer.ftest.richMessages" />
+            <package name="org.richfaces.tests.metamer.ftest.richNotify" />
+            <package name="org.richfaces.tests.metamer.ftest.richNotifyMessage"/>
+            <package name="org.richfaces.tests.metamer.ftest.richNotifyMessages"/>
+            <package name="org.richfaces.tests.metamer.ftest.richNotifyStack"/>
+            <package name="org.richfaces.tests.metamer.ftest.richPanelToggleListener" />
+            <package name="org.richfaces.tests.metamer.ftest.richPlaceholder" />
+            <package name="org.richfaces.tests.metamer.ftest.richToggleControl" />
+            <package name="org.richfaces.tests.metamer.ftest.richTreeSelectionChangeListener" />
+            <package name="org.richfaces.tests.metamer.ftest.richTreeToggleListener" />
+            <package name="org.richfaces.tests.metamer.ftest.richValidator" />
+        </packages>
+    </test>
+
+</suite>
+

@@ -1,0 +1,30 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="seleniumTest">
+
+    <test name="Input Components" preserve-order="false">
+        <groups>
+            <run>
+                <exclude name="4.3" />
+                <exclude name="4.Future" />
+                <exclude name="Future" />
+                <exclude name="extended" />
+            </run>
+        </groups>
+
+        <packages>
+            <!--<package name="org.richfaces.tests.metamer.ftest.richAutocomplete" />-->
+            <package name="org.richfaces.tests.metamer.ftest.richCalendar" />
+            <package name="org.richfaces.tests.metamer.ftest.richEditor" />
+            <package name="org.richfaces.tests.metamer.ftest.richFileUpload" />
+            <package name="org.richfaces.tests.metamer.ftest.richInplaceInput" />
+            <package name="org.richfaces.tests.metamer.ftest.richInplaceSelect" />
+            <package name="org.richfaces.tests.metamer.ftest.richInputNumberSlider" />
+            <package name="org.richfaces.tests.metamer.ftest.richInputNumberSpinner" />
+            <package name="org.richfaces.tests.metamer.ftest.richOrderingList" />
+            <package name="org.richfaces.tests.metamer.ftest.richPickList" />
+            <package name="org.richfaces.tests.metamer.ftest.richSelect" />
+        </packages>
+    </test>
+
+</suite>
+
