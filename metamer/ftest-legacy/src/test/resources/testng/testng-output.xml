@@ -1,0 +1,26 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="seleniumTest">
+
+    <test name="Output Components" preserve-order="false">
+        <groups>
+            <run>
+                <exclude name="4.3" />
+                <exclude name="4.Future" />
+                <exclude name="Future" />
+                <exclude name="extended" />
+            </run>
+        </groups>
+
+        <packages>
+            <package name="org.richfaces.tests.metamer.ftest.richPanel" />
+            <package name="org.richfaces.tests.metamer.ftest.richPopupPanel" />
+            <package name="org.richfaces.tests.metamer.ftest.richProgressBar" />
+            <package name="org.richfaces.tests.metamer.ftest.richToolbar" />
+            <package name="org.richfaces.tests.metamer.ftest.richToolbarGroup" />
+            <package name="org.richfaces.tests.metamer.ftest.richTooltip" />
+        </packages>
+        
+    </test>
+
+</suite>
+
