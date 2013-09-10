@@ -21,10 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.autocomplete;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Lists;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -40,11 +36,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
-import org.richfaces.tests.page.fragments.impl.common.TextInputComponent;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.utils.Actions;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
+
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -52,7 +51,7 @@ import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
  */
 public class RichFacesAutocomplete implements Autocomplete {
 
-    private static final String SUGGESTIONS_CSS_SELECTOR_TEMPLATE = ".rf-au-lst-cord[id='%sList'] .rf-au-itm";
+    private static final String SUGGESTIONS_CSS_SELECTOR_TEMPLATE = "ul.ui-autocomplete li.ui-menu-item";
     private static final String CSS_INPUT = "input[type='text']";
     private static final String DEFAULT_TOKEN = ",";
     private static final ScrollingType DEFAULT_SCROLLING_TYPE = ScrollingType.BY_MOUSE;
@@ -95,14 +94,12 @@ public class RichFacesAutocomplete implements Autocomplete {
         String id = root.getAttribute("id");
         String selectorOfRoot = String.format(SUGGESTIONS_CSS_SELECTOR_TEMPLATE, id);
         List<WebElement> foundElements = driver.findElements(By.cssSelector(selectorOfRoot));
-        List<WebElement> result;
         if (!foundElements.isEmpty() && foundElements.get(0).isDisplayed()) { // prevent returning of not visible
             // elements
-            result = foundElements;
+            return foundElements;
         } else {
-            result = Lists.newArrayList();
+            return Lists.newArrayList();
         }
-        return result;
     }
 
     @Override

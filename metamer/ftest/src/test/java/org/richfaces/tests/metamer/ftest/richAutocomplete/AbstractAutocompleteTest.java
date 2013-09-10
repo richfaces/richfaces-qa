@@ -42,7 +42,7 @@ public abstract class AbstractAutocompleteTest extends AbstractWebDriverTest {
     private static final List<Capital> capitals = Model.unmarshallCapitals();
     protected Attributes<AutocompleteAttributes> autocompleteAttributes = getAttributes();
 
-    @FindBy(css = "span.rf-au[id$=autocomplete]")
+    @FindBy(css = "div[id$=autocomplete]")
     protected RichFacesAutocomplete autocomplete;
 
     @FindBy(css = "[id$='output']")
