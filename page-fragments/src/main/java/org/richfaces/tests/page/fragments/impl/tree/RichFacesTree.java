@@ -1,6 +1,6 @@
-/**
+/*******************************************************************************
  * JBoss, Home of Professional Open Source
- * Copyright 2013, Red Hat, Inc. and individual contributors
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -18,93 +18,169 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
+ *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.tree;
 
-import static org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode.CSS_NODES_COLLAPSED;
-import static org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode.CSS_NODES_EXPANDED;
-import static org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode.JQUERY_NODES_SELECTED;
-
+import java.util.Collections;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
 import org.openqa.selenium.WebElement;
-import org.richfaces.component.SwitchType;
-import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode;
+import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.utils.Event;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
+import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 
-/**
- * @author <a href="jjamrich@redhat.com">Jan Jamrich</a>
- *
- */
-public class RichFacesTree { //extends RichFacesTreeNode {
+import com.google.common.collect.Lists;
+
+public class RichFacesTree implements Tree {
 
     @Root
     private WebElement root;
 
-    @FindByJQuery(">" + RichFacesTreeNode.CSS_NODE)
-    private List<RichFacesTreeNode> nodes;
+    @FindByJQuery("> div.rf-tr-nd")
+    private List<RichFacesTreeNode> childNodes;
+    @FindByJQuery("> div.rf-tr-nd")
+    private List<WebElement> childNodesElements;
 
-    @FindByJQuery(RichFacesTreeNode.CSS_NODE)
-    private List<RichFacesTreeNode> anyNodes;
+    private final AdvancedTreeInteractions interactions = new AdvancedTreeInteractionsImpl();
 
-    @FindByJQuery(">" + CSS_NODES_COLLAPSED)
-    private List<RichFacesTreeNode> nodesCollapsed;
-
-    @FindByJQuery(">" + CSS_NODES_EXPANDED)
-    private List<RichFacesTreeNode> nodesExpanded;
-
-    @FindByJQuery(JQUERY_NODES_SELECTED)
-    private List<WebElement> anySelectedNodes;
-
-    protected SwitchType toggleType = SwitchType.ajax;
-    protected SwitchType selectionType = SwitchType.ajax;
-
-    public WebElement getRoot() {
-        return root;
+    @Override
+    public AdvancedTreeInteractions advanced() {
+        return interactions;
     }
 
-    public void setToggleType(SwitchType toggleType) {
-        this.toggleType = toggleType;
+    @Override
+    public TreeNode collapseNode(int index) {
+        return collapseNode(ChoicePickerHelper.byIndex().index(index));
     }
 
-    public SwitchType getToggleType() {
-        return toggleType;
+    @Override
+    public TreeNode collapseNode(ChoicePicker picker) {
+        return childNodes.get(getIndexOfPickedElement(picker)).advanced().collapse();
     }
 
-    public void setSelectionType(SwitchType selectionType) {
-        this.selectionType = selectionType;
+    @Override
+    public TreeNode expandNode(int index) {
+        return expandNode(ChoicePickerHelper.byIndex().index(index));
     }
 
-    public SwitchType getSelectionType() {
-        return selectionType;
+    @Override
+    public TreeNode expandNode(ChoicePicker picker) {
+        return childNodes.get(getIndexOfPickedElement(picker)).advanced().expand();
     }
 
-    public List<RichFacesTreeNode> getNodes() {
-        return nodes;
+    protected List<RichFacesTreeNode> getChildNodes() {
+        return Collections.unmodifiableList(childNodes);
     }
 
-    public List<RichFacesTreeNode> getAnyNodes() {
-        return anyNodes;
+    protected List<WebElement> getChildNodesElements() {
+        return Collections.unmodifiableList(childNodesElements);
     }
 
-    public List<RichFacesTreeNode> getExpandedNodes() {
-        return nodesExpanded;
+    protected int getIndexOfPickedElement(ChoicePicker picker) {
+        if (childNodesElements.isEmpty()) {
+            throw new RuntimeException("Cannot find child node, because there are no child nodes.");
+        }
+        return Utils.getIndexOfElement(picker.pick(childNodesElements));
     }
 
-    public List<RichFacesTreeNode> getCollapsedNodes() {
-        return nodesCollapsed;
+    @Override
+    public TreeNode selectNode(int index) {
+        return selectNode(ChoicePickerHelper.byIndex().index(index));
     }
 
-    public int getAnySelectedNodesCount() {
-        return anySelectedNodes.size();
+    @Override
+    public TreeNode selectNode(ChoicePicker picker) {
+        return childNodes.get(getIndexOfPickedElement(picker)).advanced().select();
     }
 
-    protected List<RichFacesTreeNode> getNodesCollapsed() {
-        return nodesCollapsed;
-    }
+    public class AdvancedTreeInteractionsImpl implements AdvancedTreeInteractions {
 
-    protected List<RichFacesTreeNode> getNodesExpanded() {
-        return nodesExpanded;
+        private boolean toggleByHandle = Boolean.TRUE;
+        private Event toggleNodeEvent = null;
+
+        @Override
+        public TreeNode getFirstNode() {
+            return getNodes().get(0);
+        }
+
+        @Override
+        public List<? extends TreeNode> getLeafNodes() {
+            List<TreeNode> result = Lists.newArrayList();
+            for (TreeNode treeNode : childNodes) {
+                if (treeNode.advanced().isLeaf()) {
+                    result.add(treeNode);
+                }
+            }
+            return Collections.unmodifiableList(result);
+        }
+
+        @Override
+        public List<? extends TreeNode> getNodes() {
+            return Collections.unmodifiableList(childNodes);
+        }
+
+        @Override
+        public List<? extends TreeNode> getNodesCollapsed() {
+            List<TreeNode> result = Lists.newArrayList();
+            for (TreeNode treeNode : childNodes) {
+                if (treeNode.advanced().isCollapsed()) {
+                    result.add(treeNode);
+                }
+            }
+            return Collections.unmodifiableList(result);
+        }
+
+        @Override
+        public List<WebElement> getNodesElements() {
+            return Collections.unmodifiableList(childNodesElements);
+        }
+
+        @Override
+        public List<? extends TreeNode> getNodesExpanded() {
+            List<TreeNode> result = Lists.newArrayList();
+            for (TreeNode treeNode : childNodes) {
+                if (treeNode.advanced().isExpanded()) {
+                    result.add(treeNode);
+                }
+            }
+            return Collections.unmodifiableList(result);
+        }
+
+        @Override
+        public WebElement getRootElement() {
+            return root;
+        }
+
+        @Override
+        public List<? extends TreeNode> getSelectedNodes() {
+            List<TreeNode> result = Lists.newArrayList();
+            for (TreeNode treeNode : childNodes) {
+                if (treeNode.advanced().isSelected()) {
+                    result.add(treeNode);
+                }
+            }
+            return Collections.unmodifiableList(result);
+        }
+
+        protected Event getToggleNodeEvent() {
+            return toggleNodeEvent;
+        }
+
+        protected boolean isToggleByHandle() {
+            return toggleByHandle;
+        }
+
+        @Override
+        public void setToggleByHandle(boolean toggleByHandle) {
+            this.toggleByHandle = toggleByHandle;
+        }
+
+        @Override
+        public void setToggleNodeEvent(Event toggleNodeEvent) {
+            this.toggleNodeEvent = toggleNodeEvent;
+        }
     }
 }

@@ -262,36 +262,40 @@ public class Attributes<T extends AttributeEnum> {
     }
 
     public void reset(T attribute) {
-        setProperty(attribute.toString(), "");
+        set(attribute.toString(), "");
     }
 
     public void set(T attribute, String string) {
-        setProperty(attribute.toString(), string);
+        set(attribute.toString(), string);
+    }
+
+    protected void set(String attribute, Object value) {
+        setProperty(attribute, value);
     }
 
     // TODO jjamrich 2011-09-02: make sure that this resolve to correct string representation of number given as attr
     public void set(T attribute, Number no) {
-        setProperty(attribute.toString(), no);
+        set(attribute.toString(), no);
     }
 
     public void set(T attribute, Boolean bool) {
-        setProperty(attribute.toString(), bool);
+        set(attribute.toString(), bool);
     }
 
     public void set(T attribute, JavaScript js) {
-        setProperty(attribute.toString(), js);
+        set(attribute.toString(), js);
     }
 
     public void set(T attribute, JQueryLocator locator) {
-        setProperty(attribute.toString(), locator.getRawLocator());
+        set(attribute.toString(), locator.getRawLocator());
     }
 
     public void set(T attribute, Enum<?> item) {
-        setProperty(attribute.toString(), item.toString());
+        set(attribute.toString(), item.toString());
     }
 
     public void set(T attribute, Event event) {
-        setProperty(attribute.toString(), event.getEventName());
+        set(attribute.toString(), event.getEventName());
     }
 
     /**

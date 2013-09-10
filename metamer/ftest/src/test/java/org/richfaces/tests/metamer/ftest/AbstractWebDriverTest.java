@@ -300,7 +300,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
                     + valueOnPage + "', expected value '" + anotherValue + "'.");
             }
         } else if (new StringEqualsWrapper(anotherValue).isNotSimilarToSomeOfThis(value)) {// Attribute has not been set
-                                                                                           // correctly
+            // correctly
             fail("Attribute " + testedAttribute.toString() + " does not work properly, Value of attribute on page: '"
                 + valueOnPage + "', expected value '" + anotherValue + "'.");
         }
@@ -529,8 +529,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         Validate.notNull(statusChangingAction, "The @statusChangingAction cannot be null");
         String checker = "statusChecker";
         // set attribute
-        MetamerPage.waitRequest(statusInput.advanced().clear(ClearType.JS).sendKeys(checker), WaitRequestType.HTTP).advanced()
-            .trigger("blur");
+        getUnsafeAttributes("").set("status", checker);
 
         String statusCheckerTimeBefore = metamerPage.getStatusCheckerOutputElement().getText();
         statusChangingAction.perform();
@@ -625,6 +624,10 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         return Attributes.<T>getAttributesFor(getFutureDriver(), attributesTableId);
     }
 
+    protected UnsafeAttributes getUnsafeAttributes(String attributesTableId) {
+        return new UnsafeAttributes(getFutureDriver(), attributesTableId);
+    }
+
     protected <T extends AttributeEnum> Attributes<T> getAttributes() {
         return getAttributes("");
     }
@@ -698,7 +701,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
             actualEvents,
             events,
             format("The events ({0}) don't came in right order ({1})", Arrays.deepToString(actualEvents),
-                Arrays.deepToString(events)));
+            Arrays.deepToString(events)));
     }
 
     public void cleanMetamerEventsVariable() {
@@ -773,6 +776,18 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
                 page.fullPageRefresh();
                 verifyResponse(inputValue);
             }
+        }
+    }
+
+    protected class UnsafeAttributes<T extends AttributeEnum> extends Attributes<T> {
+
+        public UnsafeAttributes(FutureTarget<WebDriver> driver, String attributesID) {
+            super(driver, attributesID);
+        }
+
+        @Override
+        public void set(String attribute, Object value) {
+            super.set(attribute, value);
         }
     }
 
