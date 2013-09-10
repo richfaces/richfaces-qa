@@ -1219,7 +1219,7 @@ FSF site: http://www.fsf.org. -->
             </build>
         </profile>
         <profile>
-            <id>wildfly-remote-8-1</id>
+            <id>wildfly-remote-8-0</id>
             <properties>
                 <metamer.classifier>jbas71</metamer.classifier>
                 <showcase.classifier>jbas71</showcase.classifier>
@@ -1244,7 +1244,7 @@ FSF site: http://www.fsf.org. -->
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <systemProperties>
-                                <arquillian.launch>jbossas-remote-7-1</arquillian.launch>
+                                <arquillian.launch>wildfly-remote-8-0</arquillian.launch>
                             </systemProperties>
                         </configuration>
                     </plugin>
