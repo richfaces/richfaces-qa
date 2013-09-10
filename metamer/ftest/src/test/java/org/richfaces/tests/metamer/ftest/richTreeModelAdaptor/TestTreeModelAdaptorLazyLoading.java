@@ -35,25 +35,35 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
+import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
 import org.jboss.arquillian.graphene.page.Page;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.richfaces.tests.metamer.ftest.AbstractWebDriverTest;
-import org.richfaces.tests.metamer.ftest.richTree.TreeSimplePage;
-import org.richfaces.tests.page.fragments.impl.treeNode.RichFacesTreeNode;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
+import org.richfaces.tests.page.fragments.impl.tree.RichFacesTree;
+import org.richfaces.tests.page.fragments.impl.tree.RichFacesTreeNode;
+import org.richfaces.tests.page.fragments.impl.tree.Tree.TreeNode;
 import org.testng.annotations.Test;
-
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 22753 $
  */
 public class TestTreeModelAdaptorLazyLoading extends AbstractWebDriverTest {
 
-    protected RichFacesTreeNode treeNode;
-
-    protected Integer[][] paths = new Integer[][] {{1, 1, 1, 8, 1}, {4, 4, 11, 4}};
-
     @Page
-    TreeSimplePage page;
+    private MetamerPage page;
+    @FindBy(css = "div[id$=richTree]")
+    private RichFacesTree tree;
+    @FindBy(css = "span[id$=lazyInitialized]")
+    private WebElement lazyInitialized;
+    @FindByJQuery(".rf-tr-nd:visible")
+    private List<RichFacesTreeNode> allVisibleNodes;
+
+    private TreeNode treeNode;
+
+    private Integer[][] paths = new Integer[][]{ { 1, 1, 1, 8, 1 }, { 4, 4, 11, 4 } };
 
     @Override
     public URL getTestUrl() {
@@ -62,23 +72,15 @@ public class TestTreeModelAdaptorLazyLoading extends AbstractWebDriverTest {
 
     @Test
     public void testLazyLoading() {
-        List<String> expected = getListOfVisibleNodes();
-        List<String> actual = getLazyInitialized();
-
-        assertEquals(actual, expected);
-
+        assertEquals(getLazyInitialized(), getListOfVisibleNodes());
         for (Integer[] path : paths) {
             treeNode = null;
             for (int i = 0; i < path.length; i++) {
-                int index = path[i];
-                treeNode = (treeNode == null) ? page.tree.getNodes().get(index - 1) : treeNode.getNode(index - 1);
+                int index = path[i] - 1;
+                treeNode = (treeNode == null ? tree.advanced().getNodes().get(index) : treeNode.advanced().getNodes().get(index));
                 if (i < path.length - 1) {
-                    treeNode.expand();
-
-                    expected = getListOfVisibleNodes();
-                    actual = getLazyInitialized();
-
-                    assertEquals(actual, expected);
+                    Graphene.guardAjax(treeNode.advanced()).expand();
+                    assertEquals(getLazyInitialized(), getListOfVisibleNodes());
                 }
             }
         }
@@ -88,8 +90,8 @@ public class TestTreeModelAdaptorLazyLoading extends AbstractWebDriverTest {
         // takes only recursive nodes + model node (representing leaves)
         Pattern pattern = Pattern.compile("([RM\\-\\.0-9]+)(?:-.*)?");
         SortedSet<String> result = new TreeSet<String>();
-        for (RichFacesTreeNode treeNode : page.tree.getAnyNodes()) {
-            String labelText = treeNode.getNodeLabelText();
+        for (TreeNode actTreeNode : allVisibleNodes) {
+            String labelText = actTreeNode.advanced().getLabelElement().getText();
 
             Matcher matcher = pattern.matcher(labelText);
 
@@ -102,7 +104,7 @@ public class TestTreeModelAdaptorLazyLoading extends AbstractWebDriverTest {
     }
 
     private List<String> getLazyInitialized() {
-        String unseparated = page.lazyInitialized.getText();
+        String unseparated = lazyInitialized.getText();
         String[] separated = StringUtils.split(unseparated, "[], ");
         List<String> result = Arrays.asList(separated);
         Collections.sort(result);

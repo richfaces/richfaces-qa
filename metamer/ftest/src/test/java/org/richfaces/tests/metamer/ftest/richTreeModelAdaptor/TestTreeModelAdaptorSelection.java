@@ -29,30 +29,32 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jboss.arquillian.graphene.page.Page;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.openqa.selenium.WebElement;
 import org.richfaces.tests.metamer.ftest.annotations.Inject;
 import org.richfaces.tests.metamer.ftest.annotations.Use;
 import org.richfaces.tests.metamer.ftest.annotations.Uses;
-import org.richfaces.tests.metamer.ftest.richTree.AbstractTestTreeSelection;
-import org.richfaces.tests.metamer.ftest.richTree.TreeSimplePage;
+import org.richfaces.tests.metamer.ftest.richTree.AbstractTreeSelectionTest;
+import org.richfaces.tests.metamer.ftest.webdriver.MetamerPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
- * @version $Revision: 23132 $
  */
-public class TestTreeModelAdaptorSelection extends AbstractTestTreeSelection {
+public class TestTreeModelAdaptorSelection extends AbstractTreeSelectionTest {
 
-    @Page
-    TreeSimplePage page;
+    @FindByJQuery(":radio[id*=recursiveModelRepresentation]")
+    private List<WebElement> recursiveModelRepresentations;
+    @FindByJQuery(":checkbox[id$=recursiveLeafChildrenNullable]")
+    private WebElement recursiveLeafChildrenNullableElement;
 
     @Inject
-    PathsCrate paths;
-    PathsCrate pathsForListModel = new PathsCrate("listModel", new Integer[][] { { 2, 1, 3 }, { 3, 3, 2, 2 } });
-    PathsCrate pathsForMapModel = new PathsCrate("mapModel", new Integer[][] { { 2, 1, 5 }, { 3, 3, 2, 6 } });
-    PathsCrate pathsForRecursiveModel = new PathsCrate("recursiveModel", new Integer[][] { { 4, 1, 10, 2 },
-        { 1, 4, 3, 11, 4 } });
+    private PathsCrate paths;
+    private final PathsCrate pathsForListModel = new PathsCrate("listModel", new Integer[][]{ { 1, 0, 2 }, { 2, 2, 1, 1 } });
+    private final PathsCrate pathsForMapModel = new PathsCrate("mapModel", new Integer[][]{ { 1, 0, 4 }, { 2, 2, 1, 5 } });
+    private final PathsCrate pathsForRecursiveModel = new PathsCrate("recursiveModel", new Integer[][]{ { 3, 0, 9, 1 },
+    { 0, 3, 2, 10, 3 } });
 
     @Inject
     @Use(enumeration = true)
@@ -73,29 +75,34 @@ public class TestTreeModelAdaptorSelection extends AbstractTestTreeSelection {
             selectionPaths = paths.paths;
         }
         if (representation == RecursiveModelRepresentation.MAP) {
-            page.requestTimeChangesWaiting(page.recursiveModelRepresentations.get(1)).click();
+            MetamerPage.requestTimeChangesWaiting(recursiveModelRepresentations.get(1)).click();
         }
         if (recursiveLeafChildrenNullable) {
-            page.requestTimeChangesWaiting(page.recursiveLeafChildrenNullable).click();
+            MetamerPage.requestTimeChangesWaiting(recursiveLeafChildrenNullableElement).click();
         }
     }
 
     @Test
-    @Uses({ @Use(field = "paths", empty = true), @Use(field = "sample", empty = true) })
+    @Uses({
+        @Use(field = "paths", empty = true),
+        @Use(field = "sample", empty = true) })
     @Override
     public void testTopLevelSelection() {
         super.testTopLevelSelection();
     }
 
     @Test
-    @Uses({@Use(field = "paths", value = "paths*"), @Use(field = "sample", empty = true) })
+    @Uses({
+        @Use(field = "paths", value = "paths*"),
+        @Use(field = "sample", empty = true) })
     @Override
     public void testSubNodesSelection() {
         super.testSubNodesSelection();
     }
 
     @Test
-    @Uses({ @Use(field = "paths", value = "paths*"),
+    @Uses({
+        @Use(field = "paths", value = "paths*"),
         @Use(field = "sample", empty = true),
         @Use(field = "selectionType", value = "eventEnabledSelectionTypes") })
     @Override
@@ -103,21 +110,6 @@ public class TestTreeModelAdaptorSelection extends AbstractTestTreeSelection {
         super.testSubNodesSelectionEvents();
     }
 
-/*
-    @Override
-    protected void expandAll() {
-        for (Integer[] path : selectionPaths) {
-            treeNode = null;
-            for (int i = 0; i < path.length; i++) {
-                int index = path[i];
-                treeNode = (treeNode == null) ? page.tree.getNodes().get(index-1) : treeNode.getNode(index-1);
-                if (i < path.length - 1) {
-                    treeNode.expand();
-                }
-            }
-        }
-    }
-*/
     @Override
     protected Integer[] getIntsFromString(String string) {
         Pattern pattern = Pattern.compile("(?:\\{[^}]+modelKey=(\\d+)\\})");
@@ -158,6 +150,7 @@ public class TestTreeModelAdaptorSelection extends AbstractTestTreeSelection {
     }
 
     private class PathsCrate {
+
         String name;
         Integer[][] paths;
 
@@ -166,6 +159,7 @@ public class TestTreeModelAdaptorSelection extends AbstractTestTreeSelection {
             this.paths = paths;
         }
 
+        @Override
         public String toString() {
             return name;
         }

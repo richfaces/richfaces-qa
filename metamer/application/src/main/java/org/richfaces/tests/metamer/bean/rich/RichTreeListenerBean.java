@@ -49,6 +49,11 @@ public class RichTreeListenerBean {
         RichBean.logToPage("* tree toggle listener invoked");
     }
 
+    public void processNodeToggle(TreeToggleEvent event) {
+        this.treeToggleEvent = event;
+        RichBean.logToPage("* node toggle listener invoked");
+    }
+
     public TreeSelectionChangeEvent getTreeSelectionChangeEvent() {
         return treeSelectionChangeEvent;
     }

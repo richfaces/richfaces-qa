@@ -29,29 +29,24 @@ import org.testng.annotations.Test;
 /**
  * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
  * @author <a href="mailto:ppitonak@redhat.com">Pavol Pitonak</a>
- * @version $Revision: 23169 $
  */
-public class TestTreeSelection extends AbstractTestTreeSelection {
+public class TestTreeSelection extends AbstractTreeSelectionTest {
 
     @Test
-    @Use(field = "selectionType", value = "selectionTypeClient")
-    public void testTopLevelSelectionClient() {
-        testTopLevelSelection();
-    }
-
-    @Test
-    @Uses({ @Use(field = "selectionType", value = "selectionTypeAjax"),
+    @Uses({
+        @Use(field = "selectionType", value = "selectionTypeAjax"),
         @Use(field = "sample", strings = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" }) })
-    public void testTopLevelSelectionAjax() {
-        testTopLevelSelection();
+    public void testSubNodesSelectionAjax() {
+        testSubNodesSelection();
     }
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Uses({ @Use(field = "selectionType", value = "selectionTypeAjax"),
+    @Uses({
+        @Use(field = "selectionType", value = "selectionTypeAjax"),
         @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
-    public void testTopLevelSelectionAjaxWithSimpleTreeNode() {
-        testTopLevelSelection();
+    public void testSubNodesSelectionAjaxWithSimpleTreeNode() {
+        testSubNodesSelection();
     }
 
     @Test
@@ -61,22 +56,8 @@ public class TestTreeSelection extends AbstractTestTreeSelection {
     }
 
     @Test
-    @Uses({ @Use(field = "selectionType", value = "selectionTypeAjax"),
-        @Use(field = "sample", strings = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" }) })
-    public void testSubNodesSelectionAjax() {
-        testSubNodesSelection();
-    }
-
-    @Test(groups = { "Future" })
-    @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Uses({ @Use(field = "selectionType", value = "selectionTypeAjax"),
-        @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
-    public void testSubNodesSelectionAjaxWithSimpleTreeNode() {
-        testSubNodesSelection();
-    }
-
-    @Test
-    @Uses({ @Use(field = "selectionType", value = "eventEnabledSelectionTypes"),
+    @Uses({
+        @Use(field = "selectionType", value = "eventEnabledSelectionTypes"),
         @Use(field = "sample", strings = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" }) })
     public void testSubNodesSelectionEventsAjax() {
         testSubNodesSelectionEvents();
@@ -84,10 +65,33 @@ public class TestTreeSelection extends AbstractTestTreeSelection {
 
     @Test(groups = { "Future" })
     @IssueTracking("https://issues.jboss.org/browse/RF-11766")
-    @Uses({ @Use(field = "selectionType", value = "eventEnabledSelectionTypes"),
+    @Uses({
+        @Use(field = "selectionType", value = "eventEnabledSelectionTypes"),
         @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
     public void testSubNodesSelectionEventsAjaxWithSimpleTreeNode() {
         testSubNodesSelectionEvents();
     }
 
+    @Test
+    @Uses({
+        @Use(field = "selectionType", value = "selectionTypeAjax"),
+        @Use(field = "sample", strings = { "simpleSwingTreeNode", "simpleRichFacesTreeDataModel" }) })
+    public void testTopLevelSelectionAjax() {
+        testTopLevelSelection();
+    }
+
+    @Test(groups = { "Future" })
+    @IssueTracking("https://issues.jboss.org/browse/RF-11766")
+    @Uses({
+        @Use(field = "selectionType", value = "selectionTypeAjax"),
+        @Use(field = "sample", strings = { "simpleRichFacesTreeNode" }) })
+    public void testTopLevelSelectionAjaxWithSimpleTreeNode() {
+        testTopLevelSelection();
+    }
+
+    @Test
+    @Use(field = "selectionType", value = "selectionTypeClient")
+    public void testTopLevelSelectionClient() {
+        testTopLevelSelection();
+    }
 }
