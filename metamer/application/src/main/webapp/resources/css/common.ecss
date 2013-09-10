@@ -2,6 +2,11 @@ body {
 	background: white;
 }
 
+body > div.container {
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
 .button {
 	width: 100px;
 	height: 21px;
