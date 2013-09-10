@@ -21,7 +21,7 @@
 
             <r:jsFunction id="submitAjaxFunction" name="submitAjax" execute="#{cc.attrs.execute}" render="#{cc.attrs.render}" />
 
-            <r:outputPanel id="panel" ajaxRendered="true">
+            <r:outputPanel id="panel" ajaxRendered="true" layout="block">
                 <h:panelGrid id="#{cc.attrs.id}" columns="#{cc.attrs.columns * 2}" styleClass="attributes"
                              columnClasses="attributes-first-column, attributes-second-column, attributes-first-column, attributes-second-column">
                     <c:forEach items="#{cc.attrs.value}" var="entry">
