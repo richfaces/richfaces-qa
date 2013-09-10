@@ -102,6 +102,21 @@ public class Event {
         this.eventName = eventName;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Event other = (Event) obj;
+        if ((this.eventName == null) ? (other.eventName != null) : !this.eventName.equals(other.eventName)) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Returns the name of this event as it is specified in DOM Event model.
      *
@@ -109,6 +124,13 @@ public class Event {
      */
     public String getEventName() {
         return eventName;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash + (this.eventName != null ? this.eventName.hashCode() : 0);
+        return hash;
     }
 
     /*

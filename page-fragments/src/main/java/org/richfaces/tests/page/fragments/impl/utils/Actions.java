@@ -183,24 +183,24 @@ public class Actions extends org.openqa.selenium.interactions.Actions {
     }
 
     public Actions triggerEventByWD(Event event, WebElement element) {
-        if (event == Event.CLICK) {
+        if (event.equals(Event.CLICK)) {
             return click(element);
-        } else if (event == Event.DBLCLICK) {
+        } else if (event.equals(Event.DBLCLICK)) {
             return doubleClick(element);
-        } else if (event == Event.MOUSEDOWN) {
+        } else if (event.equals(Event.MOUSEDOWN)) {
             return clickAndHold(element);
-        } else if (event == Event.MOUSEMOVE) {
+        } else if (event.equals(Event.MOUSEMOVE)) {
             return moveToElement(element);
-        } else if (event == Event.CONTEXTCLICK) {
+        } else if (event.equals(Event.CONTEXTCLICK)) {
             return contextClick(element);
-        } else if (event == Event.MOUSEOUT) {
-            return moveToElement(element).moveByOffset(-1000, -1000);// TODO jstefek 07-08-2013: test it
-        } else if (event == Event.MOUSEOVER) {
+        } else if (event.equals(Event.MOUSEOUT)) {
+            return moveToElement(element).moveByOffset(-1000, -1000);
+        } else if (event.equals(Event.MOUSEOVER)) {
             return moveToElement(element, 1, 1);
-        } else if (event == Event.MOUSEUP) {
+        } else if (event.equals(Event.MOUSEUP)) {
             return clickAndHold(element).release();
         } else {
-            //warn
+            Logger.getLogger(Actions.class.getName()).log(Level.WARNING, "Cannot trigger this event " + event + " with WebDriver. Try to use 'triggerEventByJS' instead.");
         }
         return this;
     }
