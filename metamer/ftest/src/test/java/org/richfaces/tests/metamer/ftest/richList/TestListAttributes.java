@@ -66,7 +66,7 @@ public class TestListAttributes extends AbstractListTest {
     }
 
     private WebElement getTestedItem() {
-        return list.getItems().get(0).getRoot();
+        return list.getItems().get(0).getRootElement();
     }
 
     @Test
@@ -220,15 +220,15 @@ public class TestListAttributes extends AbstractListTest {
     @Test
     public void testRowClass() {
         List<RichFacesListItem> items = list.getItems();
-        testStyleClass(items.get(0).getRoot(), BasicAttributes.rowClass);
-        testStyleClass(items.get(items.size() - 1).getRoot(), BasicAttributes.rowClass);
+        testStyleClass(items.get(0).getRootElement(), BasicAttributes.rowClass);
+        testStyleClass(items.get(items.size() - 1).getRootElement(), BasicAttributes.rowClass);
     }
 
     @Test
     public void testRowClasses() {
         List<RichFacesListItem> items = list.getItems();
-        testStyleClass(items.get(0).getRoot(), BasicAttributes.rowClasses);
-        testStyleClass(items.get(items.size() - 1).getRoot(), BasicAttributes.rowClasses);
+        testStyleClass(items.get(0).getRootElement(), BasicAttributes.rowClasses);
+        testStyleClass(items.get(items.size() - 1).getRootElement(), BasicAttributes.rowClasses);
     }
 
     @Test

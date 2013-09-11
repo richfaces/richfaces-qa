@@ -113,10 +113,10 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
         AttributeList.notifyMessagesAttributes.set(NotifyMessagesAttributes.nonblocking, Boolean.TRUE);
         AttributeList.notifyMessagesAttributes.set(NotifyMessagesAttributes.nonblockingOpacity, 0);
         generateValidationMessagesWithWait();
-        Utils.triggerJQ(executor, "mouseover", getPage().getMessagesComponentWithGlobal().getItem(0).getRoot());
-        TestNotifyAttributes.waitForOpacityChange(0, getPage().getMessagesComponentWithGlobal().getItem(0).getRoot());
-        Utils.triggerJQ(executor, "mouseout", getPage().getMessagesComponentWithGlobal().getItem(0).getRoot());
-        TestNotifyAttributes.waitForOpacityChange(1, getPage().getMessagesComponentWithGlobal().getItem(0).getRoot());
+        Utils.triggerJQ(executor, "mouseover", getPage().getMessagesComponentWithGlobal().getItem(0).getRootElement());
+        TestNotifyAttributes.waitForOpacityChange(0, getPage().getMessagesComponentWithGlobal().getItem(0).getRootElement());
+        Utils.triggerJQ(executor, "mouseout", getPage().getMessagesComponentWithGlobal().getItem(0).getRootElement());
+        TestNotifyAttributes.waitForOpacityChange(1, getPage().getMessagesComponentWithGlobal().getItem(0).getRootElement());
     }
 
     @Test
@@ -124,10 +124,10 @@ public class TestNotifyMessagesAttributes extends AbstractNotifyMessagesTest {
         AttributeList.notifyMessagesAttributes.set(NotifyMessagesAttributes.nonblocking, Boolean.TRUE);
         AttributeList.notifyMessagesAttributes.set(NotifyMessagesAttributes.nonblockingOpacity, 0.5);
         generateValidationMessagesWithWait();
-        Utils.triggerJQ(executor, "mouseover", getPage().getMessagesComponentWithGlobal().getItem(0).getRoot());
-        TestNotifyAttributes.waitForOpacityChange(0.5, getPage().getMessagesComponentWithGlobal().getItem(0).getRoot());
-        Utils.triggerJQ(executor, "mouseout", getPage().getMessagesComponentWithGlobal().getItem(0).getRoot());
-        TestNotifyAttributes.waitForOpacityChange(1, getPage().getMessagesComponentWithGlobal().getItem(0).getRoot());
+        Utils.triggerJQ(executor, "mouseover", getPage().getMessagesComponentWithGlobal().getItem(0).getRootElement());
+        TestNotifyAttributes.waitForOpacityChange(0.5, getPage().getMessagesComponentWithGlobal().getItem(0).getRootElement());
+        Utils.triggerJQ(executor, "mouseout", getPage().getMessagesComponentWithGlobal().getItem(0).getRootElement());
+        TestNotifyAttributes.waitForOpacityChange(1, getPage().getMessagesComponentWithGlobal().getItem(0).getRootElement());
     }
 
     @Test

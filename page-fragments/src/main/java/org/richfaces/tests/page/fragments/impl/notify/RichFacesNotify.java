@@ -21,19 +21,21 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.notify;
 
-import com.google.common.base.Predicate;
-
 import java.util.List;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
+import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.list.AbstractListComponent;
 import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
 import org.richfaces.tests.page.fragments.impl.notify.RichFacesNotify.NotifyMessageItemImpl;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
+
+import com.google.common.base.Predicate;
 
 /**
  * This fragment ignores its findBy. Global component.
@@ -126,36 +128,50 @@ public class RichFacesNotify extends AbstractListComponent<NotifyMessageItemImpl
         }
 
         @Override
-        public void waitUntilIsNotVisible() {
-            Graphene.waitModel().withMessage("waiting for notify to hide").until(new Predicate<WebDriver>() {
+        public WaitingWrapper waitUntilMessagesAreNotVisible() {
+            return new WaitingWrapperImpl() {
+
                 @Override
-                public boolean apply(WebDriver input) {
-                    return !isVisible();
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return !isVisible();
+                        }
+                    });
                 }
-            });
+            }.withMessage("Waiting for notify to be not visible.");
         }
 
         @Override
-        public void waitUntilIsVisible() {
-            Graphene.waitModel().withMessage("waiting for notify to show").until(new Predicate<WebDriver>() {
+        public WaitingWrapper waitUntilMessagesAreVisible() {
+            return new WaitingWrapperImpl() {
+
                 @Override
-                public boolean apply(WebDriver input) {
-                    return isVisible();
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return isVisible();
+                        }
+                    });
                 }
-            });
+            }.withMessage("Waiting for notify to be visible.");
         }
     }
 
     public static class NotifyMessageItemImpl extends RichFacesNotifyMessage implements NotifyMessageItem {
 
         @Override
-        public GrapheneElement getRoot() {
-            return super.getRoot();
+        public GrapheneElement getRootElement() {
+            return super.getRootElement();
         }
 
         @Override
         public String getText() {
-            return getRoot().getText();
+            return getRootElement().getText();
         }
     }
 

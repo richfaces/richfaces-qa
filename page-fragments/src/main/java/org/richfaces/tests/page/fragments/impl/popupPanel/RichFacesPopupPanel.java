@@ -23,6 +23,7 @@ package org.richfaces.tests.page.fragments.impl.popupPanel;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.jodah.typetools.TypeResolver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -32,11 +33,13 @@ import org.richfaces.tests.page.fragments.impl.Locations;
 import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.panel.AbstractPanel;
 import org.richfaces.tests.page.fragments.impl.popupPanel.PopupPanel.ResizerLocation;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
 
 /**
  * @author <a href="mailto:jstefek@redhat.com">Jiri Stefek</a>
  */
-public abstract class RichFacesPopupPanel<HEADER, HEADERCONTROLS, BODY> extends AbstractPanel<HEADER, BODY> implements PopupPanel<HEADER, BODY> {
+public abstract class RichFacesPopupPanel<HEADER, HEADERCONTROLS, BODY> extends AbstractPanel<HEADER, BODY> implements PopupPanel<HEADER, HEADERCONTROLS, BODY> {
 
     @Drone
     private WebDriver driver;
@@ -69,12 +72,13 @@ public abstract class RichFacesPopupPanel<HEADER, HEADERCONTROLS, BODY> extends 
     @FindBy(css = "div.rf-pp-shdw")
     private WebElement shadowElement;
 
-    private final AdvancedInteractions interactions = new AdvancedInteractions();
+    private final AdvancedPopupPanelInteractions interactions = new AdvancedPopupPanelInteractions();
 
-    public AdvancedInteractions advanced() {
+    public AdvancedPopupPanelInteractions advanced() {
         return interactions;
     }
 
+    @Override
     public HEADERCONTROLS getHeaderControlsContent() {
         Class<HEADERCONTROLS> containerClass = (Class<HEADERCONTROLS>) TypeResolver.resolveRawArguments(RichFacesPopupPanel.class, getClass())[1];
         return Graphene.createPageFragment(containerClass, getBodyElement());
@@ -90,7 +94,7 @@ public abstract class RichFacesPopupPanel<HEADER, HEADERCONTROLS, BODY> extends 
         return headerElement;
     }
 
-    public class AdvancedInteractions {
+    public class AdvancedPopupPanelInteractions {
 
         public WebElement getBodyElement() {
             return contentElement;
@@ -151,22 +155,34 @@ public abstract class RichFacesPopupPanel<HEADER, HEADERCONTROLS, BODY> extends 
             return shadowElement;
         }
 
-        public AdvancedInteractions moveByOffset(int xOffset, int yOffset) {
+        public AdvancedPopupPanelInteractions moveByOffset(int xOffset, int yOffset) {
             new Actions(driver).dragAndDropBy(headerElement, xOffset, yOffset).perform();
             return this;
         }
 
-        public AdvancedInteractions resizeFromLocation(ResizerLocation location, int byXPixels, int byYPixels) {
+        public AdvancedPopupPanelInteractions resizeFromLocation(ResizerLocation location, int byXPixels, int byYPixels) {
             new Actions(driver).dragAndDropBy(getResizerElement(location), byXPixels, byYPixels).perform();
             return this;
         }
 
-        public void waitUntilIsNotVisible() {
-            Graphene.waitModel().until().element(getRootElement()).is().not().visible();
+        public WaitingWrapper waitUntilPopupIsNotVisible() {
+            return new WaitingWrapperImpl() {
+
+                @Override
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until().element(getRootElement()).is().not().visible();
+                }
+            }.withMessage("Waiting for popup to be not visible.");
         }
 
-        public void waitUntilIsVisible() {
-            Graphene.waitModel().until().element(getRootElement()).is().visible();
+        public WaitingWrapper waitUntilPopupIsVisible() {
+            return new WaitingWrapperImpl() {
+
+                @Override
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until().element(getRootElement()).is().visible();
+                }
+            }.withMessage("Waiting for popup to be visible.");
         }
     }
 }

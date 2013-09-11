@@ -129,20 +129,20 @@ public class TestFunctions extends AbstractWebDriverTest {
 
     @Test
     public void testFadeOutFadeIn() {
-        assertVisible(input.advanced().getInput(), "Input should be visible");
+        assertVisible(input.advanced().getInputElement(), "Input should be visible");
         new Actions(driver).moveToElement(fadeOut).perform();
-        Graphene.waitGui().until().element(input.advanced().getInput()).is().not().visible();
-        assertNotVisible(input.advanced().getInput(), "Input should not be visible.");
+        Graphene.waitGui().until().element(input.advanced().getInputElement()).is().not().visible();
+        assertNotVisible(input.advanced().getInputElement(), "Input should not be visible.");
         new Actions(driver).moveToElement(fadeIn).perform();
-        Graphene.waitGui().until().element(input.advanced().getInput()).is().visible();
-        assertVisible(input.advanced().getInput(), "Input should be visible");
+        Graphene.waitGui().until().element(input.advanced().getInputElement()).is().visible();
+        assertVisible(input.advanced().getInputElement(), "Input should be visible");
     }
 
     @Test
     @Templates(exclude = { "a4jRepeat", "richCollapsibleSubTable", "richDataGrid", "richDataTable",
         "richExtendedDataTable", "richList", "hDataTable", "uiRepeat" })
     public void testFunctions() {
-        String id = input.advanced().getInput().getAttribute("id");
+        String id = input.advanced().getInputElement().getAttribute("id");
         String clientId = clientIdOutput.getText();
         assertNotNull(clientId, "Function clientId() doesn't work.");
         assertNotSame(clientId, "", "Function clientId() doesn't work.");

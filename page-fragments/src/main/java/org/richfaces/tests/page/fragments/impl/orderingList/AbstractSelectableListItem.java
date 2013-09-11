@@ -43,7 +43,7 @@ public abstract class AbstractSelectableListItem extends RichFacesListItem imple
 
     @Override
     public boolean isSelected() {
-        if (getRoot().getAttribute("class").contains(getStyleClassForSelectedItem())) {
+        if (getRootElement().getAttribute("class").contains(getStyleClassForSelectedItem())) {
             return TRUE;
         }
         return FALSE;
@@ -60,11 +60,11 @@ public abstract class AbstractSelectableListItem extends RichFacesListItem imple
     public void select(boolean deselectOthers) {
         if (deselectOthers) {
             new Actions(driver)
-                .click(getRoot())
+                .click(getRootElement())
                 .addAction(new Action() {
                     @Override
                     public void perform() {
-                        Graphene.waitGui().until().element(getRoot()).attribute("class").contains(getStyleClassForSelectedItem());
+                        Graphene.waitGui().until().element(getRootElement()).attribute("class").contains(getStyleClassForSelectedItem());
                     }
                 })
                 .perform();
@@ -72,12 +72,12 @@ public abstract class AbstractSelectableListItem extends RichFacesListItem imple
             if (!isSelected()) {
                 new Actions(driver)
                     .keyDown(Keys.CONTROL)
-                    .click(getRoot())
+                    .click(getRootElement())
                     .keyUp(Keys.CONTROL)
                     .addAction(new Action() {
                         @Override
                         public void perform() {
-                            Graphene.waitGui().until().element(getRoot()).attribute("class").contains(getStyleClassForSelectedItem());
+                            Graphene.waitGui().until().element(getRootElement()).attribute("class").contains(getStyleClassForSelectedItem());
                         }
                     })
                     .perform();
@@ -90,12 +90,12 @@ public abstract class AbstractSelectableListItem extends RichFacesListItem imple
         if (isSelected()) {
             new Actions(driver)
                 .keyDown(Keys.CONTROL)
-                .click(getRoot())
+                .click(getRootElement())
                 .keyUp(Keys.CONTROL)
                 .addAction(new Action() {
                     @Override
                     public void perform() {
-                        Graphene.waitGui().until().element(getRoot()).attribute("class").not().contains(getStyleClassForSelectedItem());
+                        Graphene.waitGui().until().element(getRootElement()).attribute("class").not().contains(getStyleClassForSelectedItem());
                     }
                 })
                 .perform();

@@ -49,11 +49,11 @@ public abstract class AbstractOrderingList implements OrderingList {
     @Drone
     private WebDriver driver;
 
-    private final AdvancedInteractions interactions = new AdvancedInteractions();
+    private final AdvancedOrderingListInteractions interactions = new AdvancedOrderingListInteractions();
     private final OrderingInteraction orderingInteraction = new OrderingInteractionImpl();
     private final PuttingSelectedItem puttingSelectedItem = new PuttingSelectedItemImpl();
 
-    public AdvancedInteractions advanced() {
+    public AdvancedOrderingListInteractions advanced() {
         return interactions;
     }
 
@@ -76,7 +76,7 @@ public abstract class AbstractOrderingList implements OrderingList {
     @Override
     public PuttingSelectedItem select(ChoicePicker picker) {
         unselectAll();
-        selectItem(picker.pick(getBody().getItems()));
+        selectItem(picker.pick(getBody().getItemsElements()));
         return puttingSelectedItem;
     }
 
@@ -98,13 +98,13 @@ public abstract class AbstractOrderingList implements OrderingList {
     protected void unselectAll() {
         if (!getBody().getSelectedItems().isEmpty()) {
             new Actions(driver)
-                .click(getBody().getItems().get(0))
-                .keyDown(Keys.CONTROL).click(getBody().getItems().get(0))
+                .click(getBody().getItemsElements().get(0))
+                .keyDown(Keys.CONTROL).click(getBody().getItemsElements().get(0))
                 .keyUp(Keys.CONTROL)
                 .addAction(new Action() {
                     @Override
                     public void perform() {
-                        Graphene.waitGui().until().element(getBody().getItems().get(0)).attribute("class").not().contains("rf-ord-sel");
+                        Graphene.waitGui().until().element(getBody().getItemsElements().get(0)).attribute("class").not().contains("rf-ord-sel");
                     }
                 }).perform();
             if (!getBody().getSelectedItems().isEmpty()) {
@@ -139,8 +139,8 @@ public abstract class AbstractOrderingList implements OrderingList {
 
         @Override
         public OrderingList putItAfter(ChoicePicker picker) {
-            int indexOfTargetItem = Utils.getIndexOfElement(picker.pick(getBody().getItems())) + 1;
-            return putAction(Utils.getIndexOfElement(getBody().getSelectedItems().get(0)), indexOfTargetItem, getBody().getItems().size() - indexOfTargetItem);
+            int indexOfTargetItem = Utils.getIndexOfElement(picker.pick(getBody().getItemsElements())) + 1;
+            return putAction(Utils.getIndexOfElement(getBody().getSelectedItems().get(0)), indexOfTargetItem, getBody().getItemsElements().size() - indexOfTargetItem);
         }
 
         @Override
@@ -155,8 +155,8 @@ public abstract class AbstractOrderingList implements OrderingList {
 
         @Override
         public OrderingList putItBefore(ChoicePicker picker) {
-            int indexOfTargetItem = Utils.getIndexOfElement(picker.pick(getBody().getItems()));
-            return putAction(Utils.getIndexOfElement(getBody().getSelectedItems().get(0)), indexOfTargetItem, getBody().getItems().size() - indexOfTargetItem);
+            int indexOfTargetItem = Utils.getIndexOfElement(picker.pick(getBody().getItemsElements()));
+            return putAction(Utils.getIndexOfElement(getBody().getSelectedItems().get(0)), indexOfTargetItem, getBody().getItemsElements().size() - indexOfTargetItem);
         }
 
         @Override
@@ -211,7 +211,7 @@ public abstract class AbstractOrderingList implements OrderingList {
         }
     }
 
-    public class AdvancedInteractions {
+    public class AdvancedOrderingListInteractions {
 
         public WebElement getBottomButtonElement() {
             return getBody().getBottomButtonElement();
@@ -229,8 +229,8 @@ public abstract class AbstractOrderingList implements OrderingList {
             return getBody().getHeaderElement();
         }
 
-        public List<WebElement> getItems() {
-            return getBody().getItems();
+        public List<WebElement> getItemsElements() {
+            return getBody().getItemsElements();
         }
 
         public ListComponent<? extends SelectableListItem> getList() {
@@ -245,7 +245,7 @@ public abstract class AbstractOrderingList implements OrderingList {
             return getBody().getRootElement();
         }
 
-        public List<WebElement> getSelectedItems() {
+        public List<WebElement> getSelectedItemsElements() {
             return getBody().getSelectedItems();
         }
 
@@ -275,7 +275,7 @@ public abstract class AbstractOrderingList implements OrderingList {
 
         public OrderingInteraction select(MultipleChoicePicker picker) {
             unselectAll();
-            selectItems(picker.pickMultiple(getBody().getItems()));
+            selectItems(picker.pickMultiple(getBody().getItemsElements()));
             return orderingInteraction;
         }
     }
@@ -290,7 +290,7 @@ public abstract class AbstractOrderingList implements OrderingList {
 
         WebElement getHeaderElement();
 
-        List<WebElement> getItems();
+        List<WebElement> getItemsElements();
 
         ListComponent<? extends SelectableListItem> getList();
 

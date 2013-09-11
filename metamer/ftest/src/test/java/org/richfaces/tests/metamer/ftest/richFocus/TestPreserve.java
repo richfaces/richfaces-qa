@@ -64,10 +64,10 @@ public class TestPreserve extends AbstractWebDriverTest {
 
     private void testPreserveTrue() {
         page.getAgeInput().advanced().focus();
-        page.getAgeInput().advanced().getInput().click();
+        page.getAgeInput().advanced().getInputElement().click();
 
         page.ajaxValidateInputs();
-        waitModel().until(new ElementIsFocused(page.getAgeInput().advanced().getInput()));
+        waitModel().until(new ElementIsFocused(page.getAgeInput().advanced().getInputElement()));
 
         page.typeStringAndDoNotCareAboutFocus();
 

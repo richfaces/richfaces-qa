@@ -1,3 +1,24 @@
+/*******************************************************************************
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.inplaceInput;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
@@ -32,8 +53,6 @@ public class RichFacesInplaceInput implements InplaceInput {
     @FindBy(css = "span[id$=Edit] > input[id$=Input]")
     private WebElement editInputElement;
 
-    private Event editByEvent = Event.CLICK;
-
     @Root
     private WebElement root;
 
@@ -43,7 +62,11 @@ public class RichFacesInplaceInput implements InplaceInput {
     @ArquillianResource
     private JavascriptExecutor executor;
 
-    private AdvancedInteractions advancedInteractions;
+    private final AdvancedInplaceInputInteractions advancedInteractions = new AdvancedInplaceInputInteractions();
+
+    public AdvancedInplaceInputInteractions advanced() {
+        return advancedInteractions;
+    }
 
     @Override
     public TextInputComponentImpl getTextInput() {
@@ -52,13 +75,12 @@ public class RichFacesInplaceInput implements InplaceInput {
 
     @Override
     public ConfirmOrCancel type(String text) {
-        Utils.triggerJQ(executor, editByEvent.getEventName(), root);
+        Utils.triggerJQ(executor, advanced().getEditByEvent().getEventName(), root);
         if (!advanced().isInState(InplaceComponentState.ACTIVE)) {
-            throw new IllegalStateException("You should set correct editBy event. Current: " + editByEvent
+            throw new IllegalStateException("You should set correct editBy event. Current: " + advanced().getEditByEvent()
                 + " did not changed the inplace input for editing!");
         }
-        textInput.clear();
-        textInput.sendKeys(text);
+        textInput.clear().sendKeys(text);
         return new ConfirmOrCancelImpl();
     }
 
@@ -86,23 +108,25 @@ public class RichFacesInplaceInput implements InplaceInput {
 
         @Override
         public void waitAfterConfirmOrCancel() {
-
         }
     }
 
-    public AdvancedInteractions advanced() {
-        if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedInteractions();
-        }
-        return advancedInteractions;
-    }
-
-    public class AdvancedInteractions {
+    public class AdvancedInplaceInputInteractions {
 
         private static final String RF_II_CHNG_CLASS = "rf-ii-chng";
         private static final String RF_II_ACT_CLASS = "rf-ii-act";
+        private final Event DEFAULT_EDIT_EVENT = Event.CLICK;
+        private Event editByEvent = DEFAULT_EDIT_EVENT;
 
-        public void setEditByEvent(Event event) {
+        protected Event getEditByEvent() {
+            return editByEvent;
+        }
+
+        public void setupEditByEvent() {
+            editByEvent = DEFAULT_EDIT_EVENT;
+        }
+
+        public void setupEditByEvent(Event event) {
             editByEvent = event;
         }
 

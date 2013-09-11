@@ -21,18 +21,15 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.select;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-
 import java.util.Collections;
 import java.util.List;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
+import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -42,8 +39,12 @@ import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.utils.Actions;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
+
+import com.google.common.base.Predicate;
 
 public class RichFacesSelect implements Select {
 
@@ -61,26 +62,16 @@ public class RichFacesSelect implements Select {
     private GrapheneElement localPopup;
 
     private static final ByJQuery GLOBAL_POPUP = ByJQuery.selector("div.rf-sel-shdw:visible");
-    private static final ScrollingType DEFAULT_SCROLLING_TYPE = ScrollingType.BY_MOUSE;
-    private static final boolean DEFAULT_OPEN_BY_INPUT_CLICK = true;
 
-    private AdvancedInteractions interactions;
-    private SelectSuggestionsImpl selectSuggestions = new SelectSuggestionsImpl();
-    private ScrollingType scrollingType;
-    private Boolean openByInputClick;
+    private final AdvancedSelectInteractions interactions = new AdvancedSelectInteractions();
+    private final SelectSuggestionsImpl selectSuggestions = new SelectSuggestionsImpl();
 
-    public AdvancedInteractions advanced() {
-        if (interactions == null) {
-            interactions = new AdvancedInteractions();
-        }
+    public AdvancedSelectInteractions advanced() {
         return interactions;
     }
 
     private SelectSuggestionsImpl getSuggestions() {
-        advanced().waitUntilSuggestionsAreVisible();
-        if (selectSuggestions == null) {
-            selectSuggestions = new SelectSuggestionsImpl();
-        }
+        advanced().waitUntilSuggestionsAreVisible().perform();
         return selectSuggestions;
     }
 
@@ -96,7 +87,7 @@ public class RichFacesSelect implements Select {
     @Override
     public SelectSuggestions openSelect() {
         if (!Utils.isVisible(driver, GLOBAL_POPUP) && Utils.isVisible(localPopup)) {
-            (advanced().getOpenByInputClick() ? input.advanced().getInput() : showButton).click();
+            (advanced().getOpenByInputClick() ? input.advanced().getInputElement() : showButton).click();
         }
         return getSuggestions();
     }
@@ -121,7 +112,7 @@ public class RichFacesSelect implements Select {
             } else {
                 foundValue.click();
             }
-            advanced().waitUntilSuggestionsAreNotVisible();
+            advanced().waitUntilSuggestionsAreNotVisible().perform();
             input.advanced().trigger("blur");
         }
 
@@ -149,29 +140,34 @@ public class RichFacesSelect implements Select {
 
     }
 
-    public class AdvancedInteractions {
+    public class AdvancedSelectInteractions {
+
+        private final ScrollingType DEFAULT_SCROLLING_TYPE = ScrollingType.BY_MOUSE;
+        private static final boolean DEFAULT_OPEN_BY_INPUT_CLICK = true;
+        private ScrollingType scrollingType = DEFAULT_SCROLLING_TYPE;
+        private Boolean openByInputClick = DEFAULT_OPEN_BY_INPUT_CLICK;
 
         public TextInputComponentImpl getInput() {
             return input;
         }
 
-        private boolean getOpenByInputClick() {
-            return Optional.fromNullable(openByInputClick).or(DEFAULT_OPEN_BY_INPUT_CLICK);
+        protected boolean getOpenByInputClick() {
+            return openByInputClick;
         }
 
-        public WebElement getRoot() {
+        public WebElement getRootElement() {
             return root;
         }
 
-        public ScrollingType getScrollingType() {
-            return Optional.fromNullable(scrollingType).or(DEFAULT_SCROLLING_TYPE);
+        protected ScrollingType getScrollingType() {
+            return scrollingType;
         }
 
-        public WebElement getShowButton() {
+        public WebElement getShowButtonElement() {
             return showButton;
         }
 
-        public List<WebElement> getSuggestions() {
+        public List<WebElement> getSuggestionsElements() {
             return Collections.unmodifiableList(getSuggestionsElements());
         }
 
@@ -179,41 +175,54 @@ public class RichFacesSelect implements Select {
             return RichFacesSelect.this.isPopupPresent();
         }
 
+        public void setupOpenByInputClick() {
+            openByInputClick = DEFAULT_OPEN_BY_INPUT_CLICK;
+        }
+
         /**
          * Setups opening of select. Default open method is by clicking on the input.
          * @param openByClickOnInput if true, select will be opened by input clicking (default). If false, the select will be opened by 'show' button of the select.
          */
-        public void setOpenByInputClick(boolean openByClickOnInput) {
+        public void setupOpenByInputClick(boolean openByClickOnInput) {
             openByInputClick = openByClickOnInput;
+        }
+
+        public void setupScrollingType() {
+            scrollingType = DEFAULT_SCROLLING_TYPE;
         }
 
         /**
          * Setups scrolling type. Default value is By_MOUSE.
          * @param type type of scrolling through the list of options and selecting on of them.
          */
-        public void setScrollingType(ScrollingType type) {
+        public void setupScrollingType(ScrollingType type) {
             scrollingType = type;
         }
 
-        public void waitUntilSuggestionsAreNotVisible() {
-            Graphene.waitGui().withMessage("popup to hide.").until(new Predicate<WebDriver>() {
+        public WaitingWrapper waitUntilSuggestionsAreNotVisible() {
+            return new WaitingWrapperImpl() {
 
                 @Override
-                public boolean apply(WebDriver input) {
-                    // there can be second select with opened suggestions, so there is no check for GLOBAL POPUP presence
-                    return localPopup.isPresent();
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until().element(localPopup).is().present();
                 }
-            });
+            }.withMessage("Waiting for popup to be not visible");
         }
 
-        public void waitUntilSuggestionsAreVisible() {
-            Graphene.waitGui().withMessage("popup to be visible.").until(new Predicate<WebDriver>() {
+        public WaitingWrapper waitUntilSuggestionsAreVisible() {
+            return new WaitingWrapperImpl() {
 
                 @Override
-                public boolean apply(WebDriver input) {
-                    return isPopupPresent();
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return isPopupPresent();
+                        }
+                    });
                 }
-            });
+            }.withMessage("Waiting for popup to be visible");
         }
     }
 }

@@ -136,7 +136,7 @@ public abstract class AbstractWebDriverTest extends AbstractMetamerTest {
         TextInputComponentImpl attributeInput = Graphene.createPageFragment(TextInputComponentImpl.class,
             driver.findElement(By.cssSelector(format(ATTRIBUTE_INPUT_TEMPLATE, attributeName))));
         // set attribute
-        MetamerPage.waitRequest(attributeInput.advanced().clear(ClearType.JS).sendKeys(value.toString()).advanced().getInput(),
+        MetamerPage.waitRequest(attributeInput.advanced().clear(ClearType.JS).sendKeys(value.toString()).advanced().getInputElement(),
             WaitRequestType.HTTP).submit();
 
     }

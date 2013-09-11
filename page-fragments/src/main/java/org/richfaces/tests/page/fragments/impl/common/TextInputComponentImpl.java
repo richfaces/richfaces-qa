@@ -48,11 +48,15 @@ public class TextInputComponentImpl implements TextInputComponent {
     @Drone
     private WebDriver driver;
 
-    private AdvancedInteractions advancedInteractions;
+    private final AdvancedTextInputInteractions advancedInteractions = new AdvancedTextInputInteractions();
+
+    public AdvancedTextInputInteractions advanced() {
+        return advancedInteractions;
+    }
 
     @Override
-    public TextInputComponentImpl sendKeys(CharSequence text) {
-        root.sendKeys(text);
+    public TextInputComponent clear() {
+        advanced().clear(ClearType.DEFAULT_CLEAR_TYPE);
         return this;
     }
 
@@ -67,27 +71,12 @@ public class TextInputComponentImpl implements TextInputComponent {
     }
 
     @Override
-    public TextInputComponent clear() {
-        advanced().clear(ClearType.DEFAULT_CLEAR_TYPE);
+    public TextInputComponentImpl sendKeys(CharSequence text) {
+        root.sendKeys(text);
         return this;
     }
 
-    public AdvancedInteractions advanced() {
-        if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedInteractions();
-        }
-        return advancedInteractions;
-    }
-
-    public class AdvancedInteractions {
-        public TextInputComponentImpl focus() {
-            root.sendKeys("");
-            return TextInputComponentImpl.this;
-        }
-
-        public WebElement getInput() {
-            return root;
-        }
+    public class AdvancedTextInputInteractions {
 
         public TextInputComponentImpl clear(ClearType clearType) {
             int valueLength = root.getAttribute("value").length();
@@ -95,8 +84,8 @@ public class TextInputComponentImpl implements TextInputComponent {
             switch (clearType) {
                 case BACKSPACE:
                     for (int i = 0; i < valueLength; i++) {
-                        builder.sendKeys(root, Keys.BACK_SPACE);
-                    }
+                    builder.sendKeys(root, Keys.BACK_SPACE);
+                }
                     builder.build().perform();
                     break;
                 case DELETE:
@@ -122,6 +111,15 @@ public class TextInputComponentImpl implements TextInputComponent {
                     throw new UnsupportedOperationException("Unknown type of clear method " + clearType);
             }
             return TextInputComponentImpl.this;
+        }
+
+        public TextInputComponentImpl focus() {
+            root.sendKeys("");
+            return TextInputComponentImpl.this;
+        }
+
+        public WebElement getInputElement() {
+            return root;
         }
 
         public TextInputComponentImpl trigger(String event) {

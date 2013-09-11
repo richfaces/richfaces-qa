@@ -63,7 +63,7 @@ public class TestSelectFAjax extends AbstractWebDriverTest {
 
     @Test
     public void testSelectWithKeyboard() {
-        select.advanced().setScrollingType(ScrollingType.BY_KEYS);
+        select.advanced().setupScrollingType(ScrollingType.BY_KEYS);
         Graphene.guardAjax(select.openSelect()).select(10);
         assertTrue(item10.getAttribute("class").contains("rf-sel-sel"), "Selected item should contain class for selected option.");
         assertEquals(output.getText(), "Hawaii");
@@ -72,7 +72,7 @@ public class TestSelectFAjax extends AbstractWebDriverTest {
 
     @Test
     public void testSelectWithMouse() {
-        select.advanced().setScrollingType(ScrollingType.BY_MOUSE);
+        select.advanced().setupScrollingType(ScrollingType.BY_MOUSE);
         Graphene.guardAjax(select.openSelect()).select(10);
         assertTrue(item10.getAttribute("class").contains("rf-sel-sel"), "Selected item should contain class for selected option.");
         assertEquals(output.getText(), "Hawaii");

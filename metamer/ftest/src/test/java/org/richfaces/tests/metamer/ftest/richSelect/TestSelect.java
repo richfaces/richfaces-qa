@@ -86,7 +86,7 @@ public class TestSelect extends AbstractWebDriverTest {
     private final Action selectHawaiiWithKeyboardGuardedAction = new Action() {
         @Override
         public void perform() {
-            select.advanced().setScrollingType(ScrollingType.BY_KEYS);
+            select.advanced().setupScrollingType(ScrollingType.BY_KEYS);
             Graphene.guardAjax(select.openSelect()).select(10);
         }
     };
@@ -100,14 +100,14 @@ public class TestSelect extends AbstractWebDriverTest {
     public void testClientFilterFunction() {
         selectAttributes.set(SelectAttributes.clientFilterFunction, "filterValuesByLength");
         select.type("4");//get all states with 4 letters
-        List<WebElement> suggestions = select.advanced().getSuggestions();
+        List<WebElement> suggestions = select.advanced().getSuggestionsElements();
         assertEquals(suggestions.size(), 3);
         assertEquals(suggestions.get(0).getText(), "Iowa");
         assertEquals(suggestions.get(1).getText(), "Ohio");
         assertEquals(suggestions.get(2).getText(), "Utah");
 
         select.type("5");//get all states with 5 letters
-        suggestions = select.advanced().getSuggestions();
+        suggestions = select.advanced().getSuggestionsElements();
         assertEquals(suggestions.size(), 3);
         assertEquals(suggestions.get(0).getText(), "Idaho");
         assertEquals(suggestions.get(1).getText(), "Maine");
@@ -120,16 +120,16 @@ public class TestSelect extends AbstractWebDriverTest {
         assertEquals(select.advanced().getInput().getStringValue(), "new label", "Default label should change");
 
         selectAttributes.set(SelectAttributes.defaultLabel, "");
-        assertPresent(select.advanced().getInput().advanced().getInput(), "Input should be present on the page.");
-        select.advanced().waitUntilSuggestionsAreNotVisible();
+        assertPresent(select.advanced().getInput().advanced().getInputElement(), "Input should be present on the page.");
+        select.advanced().waitUntilSuggestionsAreNotVisible().perform();
         assertEquals(select.advanced().getInput().getStringValue(), "", "Default label should change");
     }
 
     @Test
     public void testDisabled() {
         selectAttributes.set(SelectAttributes.disabled, Boolean.TRUE);
-        assertPresent(select.advanced().getInput().advanced().getInput(), "Input should be present on the page.");
-        select.advanced().waitUntilSuggestionsAreNotVisible();
+        assertPresent(select.advanced().getInput().advanced().getInputElement(), "Input should be present on the page.");
+        select.advanced().waitUntilSuggestionsAreNotVisible().perform();
         try {
             select.openSelect();
         } catch (TimeoutException ex) {
@@ -142,12 +142,12 @@ public class TestSelect extends AbstractWebDriverTest {
     @RegressionTest(value = { "https://issues.jboss.org/browse/RF-9663", "https://issues.jboss.org/browse/RF-9855" })
     public void testEnableManualInput() {
         selectAttributes.set(SelectAttributes.enableManualInput, Boolean.FALSE);
-        String readonly = select.advanced().getInput().advanced().getInput().getAttribute("readonly");
+        String readonly = select.advanced().getInput().advanced().getInputElement().getAttribute("readonly");
         assertTrue("readonly".equals(readonly) || "true".equals(readonly), "Input should be read-only");
 
-        select.advanced().setOpenByInputClick(true);
+        select.advanced().setupOpenByInputClick(true);
         select.openSelect();
-        select.advanced().waitUntilSuggestionsAreVisible();
+        select.advanced().waitUntilSuggestionsAreVisible().perform();
         selectHawaiiGuardedAction.perform();
         assertTrue(item10.getAttribute("class").contains("rf-sel-sel"));
         assertEquals(output.getText(), "Hawaii");
@@ -157,7 +157,7 @@ public class TestSelect extends AbstractWebDriverTest {
     @RegressionTest("https://issues.jboss.org/browse/RF-11320")
     public void testFiltering() {
         select.type("a");
-        List<WebElement> suggestions = select.advanced().getSuggestions();
+        List<WebElement> suggestions = select.advanced().getSuggestionsElements();
         assertEquals(suggestions.size(), 4, "Count of filtered options ('a')");
         String[] selectOptions = { "Alabama", "Alaska", "Arizona", "Arkansas" };
         for (int i = 0; i < selectOptions.length; i++) {
@@ -181,9 +181,9 @@ public class TestSelect extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testInit() {
         assertEquals(select.advanced().getInput().getStringValue(), "Click here to edit", "Default label");
-        assertPresent(select.advanced().getInput().advanced().getInput(), "Input should be present on the page.");
-        assertPresent(select.advanced().getShowButton(), "Show button should be present on the page.");
-        select.advanced().waitUntilSuggestionsAreNotVisible();
+        assertPresent(select.advanced().getInput().advanced().getInputElement(), "Input should be present on the page.");
+        assertPresent(select.advanced().getShowButtonElement(), "Show button should be present on the page.");
+        select.advanced().waitUntilSuggestionsAreNotVisible().perform();
     }
 
     @Test
@@ -192,7 +192,7 @@ public class TestSelect extends AbstractWebDriverTest {
         final String value = "metamer-ftest-class";
         selectAttributes.set(SelectAttributes.itemClass, value);
         select.openSelect();
-        List<WebElement> suggestions = select.advanced().getSuggestions();
+        List<WebElement> suggestions = select.advanced().getSuggestionsElements();
         assertEquals(suggestions.size(), 50);
         for (WebElement webElement : suggestions) {
             assertTrue(webElement.getAttribute("class").contains(value));
@@ -256,7 +256,7 @@ public class TestSelect extends AbstractWebDriverTest {
         testFireEvent("blur", new Action() {
             @Override
             public void perform() {
-                select.advanced().getInput().advanced().getInput().click();// will not be triggered if this step omitted
+                select.advanced().getInput().advanced().getInputElement().click();// will not be triggered if this step omitted
                 page.getRequestTimeElement().click();// will not be triggered if this step omitted
                 select.advanced().getInput().sendKeys("ABCD").advanced().trigger("blur");
             }
@@ -271,37 +271,37 @@ public class TestSelect extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnclick() {
-        testFireEvent(Event.CLICK, select.advanced().getInput().advanced().getInput());
+        testFireEvent(Event.CLICK, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOndblclick() {
-        testFireEvent(Event.DBLCLICK, select.advanced().getInput().advanced().getInput());
+        testFireEvent(Event.DBLCLICK, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnfocus() {
-        testFireEvent(Event.FOCUS, select.advanced().getInput().advanced().getInput());
+        testFireEvent(Event.FOCUS, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeydown() {
-        testFireEvent(Event.KEYDOWN, select.advanced().getInput().advanced().getInput());
+        testFireEvent(Event.KEYDOWN, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeypress() {
-        testFireEvent(Event.KEYPRESS, select.advanced().getInput().advanced().getInput());
+        testFireEvent(Event.KEYPRESS, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnkeyup() {
-        testFireEvent(Event.KEYUP, select.advanced().getInput().advanced().getInput());
+        testFireEvent(Event.KEYUP, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
@@ -329,7 +329,7 @@ public class TestSelect extends AbstractWebDriverTest {
             public void perform() {
                 select.openSelect();
                 page.getRequestTimeElement().click();
-                select.advanced().waitUntilSuggestionsAreNotVisible();
+                select.advanced().waitUntilSuggestionsAreNotVisible().perform();
             }
         });
     }
@@ -434,31 +434,31 @@ public class TestSelect extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testOnmousedown() {
-        testFireEvent(Event.MOUSEDOWN, select.advanced().getInput().advanced().getInput());
+        testFireEvent(Event.MOUSEDOWN, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmousemove() {
-        testFireEvent(Event.MOUSEMOVE, select.advanced().getInput().advanced().getInput());
+        testFireEvent(Event.MOUSEMOVE, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseout() {
-        testFireEvent(Event.MOUSEOUT, select.advanced().getInput().advanced().getInput());
+        testFireEvent(Event.MOUSEOUT, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseover() {
-        testFireEvent(Event.MOUSEOVER, select.advanced().getInput().advanced().getInput());
+        testFireEvent(Event.MOUSEOVER, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testOnmouseup() {
-        testFireEvent(Event.MOUSEUP, select.advanced().getInput().advanced().getInput());
+        testFireEvent(Event.MOUSEUP, select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test
@@ -470,7 +470,7 @@ public class TestSelect extends AbstractWebDriverTest {
     @Templates(value = "plain")
     public void testRendered() {
         selectAttributes.set(SelectAttributes.rendered, Boolean.FALSE);
-        assertNotPresent(select.advanced().getRoot(), "Component should not be rendered when rendered=false.");
+        assertNotPresent(select.advanced().getRootElement(), "Component should not be rendered when rendered=false.");
     }
 
     @Test
@@ -479,7 +479,7 @@ public class TestSelect extends AbstractWebDriverTest {
         selectAttributes.set(SelectAttributes.selectFirst, Boolean.TRUE);
 
         select.type("a");
-        List<WebElement> suggestions = select.advanced().getSuggestions();
+        List<WebElement> suggestions = select.advanced().getSuggestionsElements();
         assertEquals(suggestions.size(), 4, "Count of filtered options ('a')");
         String[] selectOptions = { "Alabama", "Alaska", "Arizona", "Arkansas" };
         for (int i = 0; i < selectOptions.length; i++) {
@@ -489,7 +489,7 @@ public class TestSelect extends AbstractWebDriverTest {
         new Actions(driver).sendKeys(Keys.RETURN).perform();
 
         String previousTime = page.getRequestTimeElement().getText();
-        Utils.triggerJQ(executor, "blur", select.advanced().getInput().advanced().getInput());
+        Utils.triggerJQ(executor, "blur", select.advanced().getInput().advanced().getInputElement());
         Graphene.waitModel().until().element(page.getRequestTimeElement()).text().not().equalTo(previousTime);
         assertEquals(output.getText(), "Alabama", "Output should be Alabama");
     }
@@ -501,7 +501,7 @@ public class TestSelect extends AbstractWebDriverTest {
 
         Graphene.guardAjax(select.openSelect()).select(0);
         select.openSelect();
-        List<WebElement> suggestions = select.advanced().getSuggestions();
+        List<WebElement> suggestions = select.advanced().getSuggestionsElements();
         assertTrue(suggestions.get(0).getAttribute("class").contains("metamer-ftest-class"), "Selected item should contain set class");
         for (int i = 1; i < suggestions.size(); i++) {
             assertFalse(suggestions.get(i).getAttribute("class").contains("metamer-ftest-class"), "Not selected item should not contain set class");
@@ -527,19 +527,19 @@ public class TestSelect extends AbstractWebDriverTest {
     @Test
     public void testShowButton() {
         selectAttributes.set(SelectAttributes.showButton, Boolean.FALSE);
-        assertNotVisible(select.advanced().getShowButton(), "Show button should not be visible.");
+        assertNotVisible(select.advanced().getShowButtonElement(), "Show button should not be visible.");
 
         selectAttributes.set(SelectAttributes.showButton, Boolean.TRUE);
-        assertVisible(select.advanced().getShowButton(), "Show button should be visible.");
+        assertVisible(select.advanced().getShowButtonElement(), "Show button should be visible.");
     }
 
     @Test
     public void testShowButtonClick() {
         selectAttributes.set(SelectAttributes.showButton, Boolean.TRUE);
-        assertVisible(select.advanced().getShowButton(), "Show button should be visible.");
-        select.advanced().setOpenByInputClick(false);
+        assertVisible(select.advanced().getShowButtonElement(), "Show button should be visible.");
+        select.advanced().setupOpenByInputClick(false);
         select.openSelect();
-        List<WebElement> suggestions = select.advanced().getSuggestions();
+        List<WebElement> suggestions = select.advanced().getSuggestionsElements();
         assertEquals(suggestions.size(), 50, "There should be 50 options.");
 
         String[] selectOptions = { "Alabama", "Hawaii", "Massachusetts", "New Mexico", "South Dakota" };
@@ -553,19 +553,19 @@ public class TestSelect extends AbstractWebDriverTest {
     @Test
     @Templates(value = "plain")
     public void testStyle() {
-        testStyle(select.advanced().getRoot());
+        testStyle(select.advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testStyleClass() {
-        testStyleClass(select.advanced().getRoot());
+        testStyleClass(select.advanced().getRootElement());
     }
 
     @Test
     @Templates(value = "plain")
     public void testTitle() {
-        testTitle(select.advanced().getInput().advanced().getInput());
+        testTitle(select.advanced().getInput().advanced().getInputElement());
     }
 
     @Test

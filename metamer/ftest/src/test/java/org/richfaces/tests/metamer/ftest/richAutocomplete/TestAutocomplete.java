@@ -72,11 +72,11 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-11323")
     public void testTypingPrefixAndThenConfirm() {
-        assertTrue(autocomplete.advanced().getSuggestions().isEmpty());
+        assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
         SelectOrConfirm typed = Graphene.guardAjax(autocomplete).type("ala");
-        assertFalse(autocomplete.advanced().getSuggestions().isEmpty());
+        assertFalse(autocomplete.advanced().getSuggestionsElements().isEmpty());
         Graphene.guardAjax(typed).confirm();
-        assertTrue(autocomplete.advanced().getSuggestions().isEmpty());
+        assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
         String expectedStateForPrefix = getExpectedStateForPrefix("ala", selectFirst);
         assertEquals(autocomplete.advanced().getInput().getStringValue(), expectedStateForPrefix);
         checkOutput(expectedStateForPrefix);
@@ -87,10 +87,10 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
     public void testTypingPrefixAndThenDeleteAll() {
         Graphene.guardAjax(autocomplete).type("ala");
         autocomplete.clear();
-        autocomplete.advanced().waitForSuggestionsToHide();
-        assertTrue(autocomplete.advanced().getSuggestions().isEmpty());
+        autocomplete.advanced().waitForSuggestionsToBeNotVisible().perform();
+        assertTrue(autocomplete.advanced().getSuggestionsElements().isEmpty());
         Graphene.guardAjax(autocomplete).type("ala");
-        assertFalse(autocomplete.advanced().getSuggestions().isEmpty());
+        assertFalse(autocomplete.advanced().getSuggestionsElements().isEmpty());
     }
 
     @Test
@@ -101,7 +101,7 @@ public class TestAutocomplete extends AbstractAutocompleteTest {
 
     @Test
     public void testSimpleSelectionWithKeyboard() {
-        autocomplete.advanced().setScrollingType(ScrollingType.BY_KEYS);
+        autocomplete.advanced().setupScrollingType(ScrollingType.BY_KEYS);
         autocomplete.type("a").select(ChoicePickerHelper.byVisibleText().endsWith("na"));
         checkOutput("Arizona");
     }

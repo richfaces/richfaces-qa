@@ -40,6 +40,6 @@ public class MessagesPage extends AbstractMessagePage {
     }
 
     public void waitUntilThereIsNoNotify() {
-        notify.advanced().waitUntilIsNotVisible();
+        notify.advanced().waitUntilMessagesAreNotVisible().perform();
     }
 }

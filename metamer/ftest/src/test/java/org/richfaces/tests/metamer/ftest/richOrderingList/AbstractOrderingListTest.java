@@ -57,7 +57,7 @@ public abstract class AbstractOrderingListTest extends AbstractWebDriverTest {
     protected final Attributes<OrderingListAttributes> attributes = getAttributes();
 
     private TwoColumnListItem convertItem(ListItem item) {
-        return convertItem(item.getRoot());
+        return convertItem(item.getRootElement());
     }
 
     private TwoColumnListItem convertItem(WebElement itemRoot) {
@@ -111,13 +111,13 @@ public abstract class AbstractOrderingListTest extends AbstractWebDriverTest {
     }
 
     private int getFirstSelectedItemIndex() {
-        return Utils.getIndexOfElement(orderingList.advanced().getSelectedItems().get(0));
+        return Utils.getIndexOfElement(orderingList.advanced().getSelectedItemsElements().get(0));
     }
 
     protected void moveSelectedDown() {
         int beforeIndex = getFirstSelectedItemIndex();
-        TwoColumnListItem itemA = convertItem(orderingList.advanced().getSelectedItems().get(0));
-        TwoColumnListItem itemB = convertItem(orderingList.advanced().getItems().get(beforeIndex + 1));
+        TwoColumnListItem itemA = convertItem(orderingList.advanced().getSelectedItemsElements().get(0));
+        TwoColumnListItem itemB = convertItem(orderingList.advanced().getItemsElements().get(beforeIndex + 1));
 
         String stateA = itemA.state();
         String cityA = itemA.city();
@@ -128,7 +128,7 @@ public abstract class AbstractOrderingListTest extends AbstractWebDriverTest {
         int afterIndex = getFirstSelectedItemIndex();
         assertEquals(afterIndex, beforeIndex + 1, "The index of selected item doesn't match.");
         checkColumnValuesSwapped(beforeIndex, stateA, cityA, afterIndex, stateB, cityB);
-        if (afterIndex < orderingList.advanced().getItems().size() - 1) {
+        if (afterIndex < orderingList.advanced().getItemsElements().size() - 1) {
             checkButtonsStateMiddle();
         } else {
             checkButtonsStateBottom();
@@ -137,7 +137,7 @@ public abstract class AbstractOrderingListTest extends AbstractWebDriverTest {
 
     protected void moveSelectedToBottom() {
         int beforeIndex = getFirstSelectedItemIndex();
-        TwoColumnListItem itemA = convertItem(orderingList.advanced().getSelectedItems().get(0));
+        TwoColumnListItem itemA = convertItem(orderingList.advanced().getSelectedItemsElements().get(0));
         TwoColumnListItem itemB = convertItem(orderingList.advanced().getList().getItem(ChoicePickerHelper.byIndex().last()));
 
         String stateA = itemA.state();
@@ -147,15 +147,15 @@ public abstract class AbstractOrderingListTest extends AbstractWebDriverTest {
 
         orderingList.advanced().getBottomButtonElement().click();
         int after = getFirstSelectedItemIndex();
-        assertEquals(after, orderingList.advanced().getItems().size() - 1, "The index of selected item doesn't match.");
-        checkColumnValuesMoved(beforeIndex, stateA, cityA, orderingList.advanced().getItems().size() - 1, stateB, cityB);
+        assertEquals(after, orderingList.advanced().getItemsElements().size() - 1, "The index of selected item doesn't match.");
+        checkColumnValuesMoved(beforeIndex, stateA, cityA, orderingList.advanced().getItemsElements().size() - 1, stateB, cityB);
         checkButtonsStateBottom();
     }
 
     protected void moveSelectedToTop() {
         int beforeIndex = getFirstSelectedItemIndex();
-        TwoColumnListItem itemA = convertItem(orderingList.advanced().getSelectedItems().get(0));
-        TwoColumnListItem itemB = convertItem(orderingList.advanced().getItems().get(0));
+        TwoColumnListItem itemA = convertItem(orderingList.advanced().getSelectedItemsElements().get(0));
+        TwoColumnListItem itemB = convertItem(orderingList.advanced().getItemsElements().get(0));
 
         String stateA = itemA.state();
         String cityA = itemA.city();
@@ -171,8 +171,8 @@ public abstract class AbstractOrderingListTest extends AbstractWebDriverTest {
 
     protected void moveSelectedUp() {
         int beforeIndex = getFirstSelectedItemIndex();
-        TwoColumnListItem itemA = convertItem(orderingList.advanced().getSelectedItems().get(0));
-        TwoColumnListItem itemB = convertItem(orderingList.advanced().getItems().get(beforeIndex - 1));
+        TwoColumnListItem itemA = convertItem(orderingList.advanced().getSelectedItemsElements().get(0));
+        TwoColumnListItem itemB = convertItem(orderingList.advanced().getItemsElements().get(beforeIndex - 1));
         String stateA = itemA.state();
         String cityA = itemA.city();
         String stateB = itemB.state();

@@ -191,7 +191,7 @@ public class TestNotifyStackAttributes extends AbstractWebDriverTest {
     public void testRendered() {
         notifyStackAttributes.set(NotifyStackAttributes.rendered, Boolean.TRUE);
         generateMessagesWithWait(1);
-        assertVisible(getMessageWithNumber(1).getRoot(), "Message should be visible");
+        assertVisible(getMessageWithNumber(1).getRootElement(), "Message should be visible");
 
         notifyStackAttributes.set(NotifyStackAttributes.rendered, Boolean.FALSE);
         try {

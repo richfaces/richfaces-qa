@@ -21,15 +21,17 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.tree;
 
-import com.google.common.base.Predicate;
-
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.utils.Actions;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
+
+import com.google.common.base.Predicate;
 
 public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
 
@@ -53,10 +55,10 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
     @Drone
     private WebDriver driver;
 
-    private final AdvancedNodeInteractions interactions = new AdvancedNodeInteractionsImpl();
+    private final AdvancedTreeNodeInteractions interactions = new AdvancedNodeInteractionsImpl();
 
     @Override
-    public AdvancedNodeInteractions advanced() {
+    public AdvancedTreeNodeInteractions advanced() {
         return interactions;
     }
 
@@ -66,7 +68,7 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
         return super.getIndexOfPickedElement(picker) - 1;
     }
 
-    public class AdvancedNodeInteractionsImpl extends AdvancedTreeInteractionsImpl implements AdvancedNodeInteractions {
+    public class AdvancedNodeInteractionsImpl extends AdvancedTreeInteractionsImpl implements AdvancedTreeNodeInteractions {
 
         @Override
         public TreeNode collapse() {
@@ -77,7 +79,7 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
                     new Actions(driver).triggerEventByWD(getToggleNodeEvent(), getLabelElement()).perform();
                 }
             }
-            waitUntilNodeIsCollapsed();
+            waitUntilNodeIsCollapsed().perform();
             return RichFacesTreeNode.this;
         }
 
@@ -90,7 +92,7 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
                     new Actions(driver).triggerEventByWD(getToggleNodeEvent(), getLabelElement()).perform();
                 }
             }
-            waitUntilNodeIsExpanded();
+            waitUntilNodeIsExpanded().perform();
             return RichFacesTreeNode.this;
         }
 
@@ -155,52 +157,76 @@ public class RichFacesTreeNode extends RichFacesTree implements Tree.TreeNode {
             if (!isSelected()) {
                 getLabelElement().click();
             }
-            waitUntilNodeIsSelected();
+            waitUntilNodeIsSelected().perform();
             return RichFacesTreeNode.this;
         }
 
         @Override
-        public void waitUntilNodeIsCollapsed() {
-            Graphene.waitModel().withMessage("Waiting for node to be collapsed").until(new Predicate<WebDriver>() {
+        public WaitingWrapper waitUntilNodeIsCollapsed() {
+            return new WaitingWrapperImpl() {
 
                 @Override
-                public boolean apply(WebDriver input) {
-                    return isCollapsed();
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return isCollapsed();
+                        }
+                    });
                 }
-            });
+            }.withMessage("Waiting for node to be collapsed");
         }
 
         @Override
-        public void waitUntilNodeIsExpanded() {
-            Graphene.waitModel().withMessage("Waiting for node to be expanded").until(new Predicate<WebDriver>() {
+        public WaitingWrapper waitUntilNodeIsExpanded() {
+            return new WaitingWrapperImpl() {
 
                 @Override
-                public boolean apply(WebDriver input) {
-                    return isExpanded();
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return isExpanded();
+                        }
+                    });
                 }
-            });
+            }.withMessage("Waiting for node to be expanded");
         }
 
         @Override
-        public void waitUntilNodeIsNotSelected() {
-            Graphene.waitModel().withMessage("Waiting for node to be not selected").until(new Predicate<WebDriver>() {
+        public WaitingWrapper waitUntilNodeIsNotSelected() {
+            return new WaitingWrapperImpl() {
 
                 @Override
-                public boolean apply(WebDriver input) {
-                    return !isSelected();
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return !isSelected();
+                        }
+                    });
                 }
-            });
+            }.withMessage("Waiting for node to be not selected");
         }
 
         @Override
-        public void waitUntilNodeIsSelected() {
-            Graphene.waitModel().withMessage("Waiting for node to be selected").until(new Predicate<WebDriver>() {
+        public WaitingWrapper waitUntilNodeIsSelected() {
+            return new WaitingWrapperImpl() {
 
                 @Override
-                public boolean apply(WebDriver input) {
-                    return isSelected();
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return isSelected();
+                        }
+                    });
                 }
-            });
+            }.withMessage("Waiting for node to be selected");
         }
     }
 }

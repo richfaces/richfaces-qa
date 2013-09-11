@@ -49,14 +49,10 @@ public class RichFacesEditor implements Editor {
     @ArquillianResource
     private JavascriptExecutor executor;
 
-    private AdvancedInteractions advancedInteractions;
+    private final AdvancedEditorInteractions advancedInteractions = new AdvancedEditorInteractions();
 
-    public void type(String text) {
-        try {
-            switchToEditorActiveArea().sendKeys(text);
-        } finally {
-            browser.switchTo().defaultContent();
-        }
+    public AdvancedEditorInteractions advanced() {
+        return advancedInteractions;
     }
 
     @Override
@@ -73,13 +69,6 @@ public class RichFacesEditor implements Editor {
         }
     }
 
-    public AdvancedInteractions advanced() {
-        if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedInteractions();
-        }
-        return advancedInteractions;
-    }
-
     private WebElement switchToEditorActiveArea() {
         browser.switchTo().frame(0);
         WebElement activeArea = browser.findElement(By.tagName("body"));
@@ -87,11 +76,16 @@ public class RichFacesEditor implements Editor {
         return activeArea;
     }
 
-    public class AdvancedInteractions {
-
-        public RichFacesEditorToolbar getToolbar() {
-            return toolbar;
+    @Override
+    public void type(String text) {
+        try {
+            switchToEditorActiveArea().sendKeys(text);
+        } finally {
+            browser.switchTo().defaultContent();
         }
+    }
+
+    public class AdvancedEditorInteractions {
 
         public void clear(ClearType clearType) {
             try {
@@ -114,6 +108,10 @@ public class RichFacesEditor implements Editor {
             } finally {
                 browser.switchTo().defaultContent();
             }
+        }
+
+        public RichFacesEditorToolbar getToolbar() {
+            return toolbar;
         }
     }
 }

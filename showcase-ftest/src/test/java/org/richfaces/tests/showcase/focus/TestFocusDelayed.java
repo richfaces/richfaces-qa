@@ -39,7 +39,7 @@ public class TestFocusDelayed extends AbstractWebDriverTest {
     public void testDelayedFocusOnNameInput() {
         for (int i = 0; i < 3; i++) {
             page.showPopup();
-            page.waitForFocusIsGiven(page.nameInput.advanced().getInput());
+            page.waitForFocusIsGiven(page.nameInput.advanced().getInputElement());
 
             page.cancelPopup();
         }
@@ -53,11 +53,11 @@ public class TestFocusDelayed extends AbstractWebDriverTest {
         page.jobInput.sendKeys("aa");
 
         page.saveButton.click();
-        page.waitForFocusIsGiven(page.jobInput.advanced().getInput());
+        page.waitForFocusIsGiven(page.jobInput.advanced().getInputElement());
 
         page.cancelPopup();
 
         page.showPopup();
-        page.waitForFocusIsGiven(page.jobInput.advanced().getInput());
+        page.waitForFocusIsGiven(page.jobInput.advanced().getInputElement());
     }
 }

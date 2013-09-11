@@ -23,12 +23,11 @@ package org.richfaces.tests.page.fragments.impl.autocomplete;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.component.object.api.scrolling.ScrollingType;
 import org.jboss.arquillian.graphene.fragment.Root;
+import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -38,12 +37,12 @@ import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.common.ClearType;
 import org.richfaces.tests.page.fragments.impl.common.TextInputComponentImpl;
 import org.richfaces.tests.page.fragments.impl.utils.Actions;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
-import com.google.common.collect.Lists;
 
 /**
  * @author <a href="mailto:jhuska@redhat.com">Juraj Huska</a>
@@ -53,10 +52,6 @@ public class RichFacesAutocomplete implements Autocomplete {
 
     private static final String SUGGESTIONS_CSS_SELECTOR_TEMPLATE = "ul.ui-autocomplete li.ui-menu-item";
     private static final String CSS_INPUT = "input[type='text']";
-    private static final String DEFAULT_TOKEN = ",";
-    private static final ScrollingType DEFAULT_SCROLLING_TYPE = ScrollingType.BY_MOUSE;
-    private static final long DEFAULT_WAITTIME_FOR_SUGG_TO_SHOW = 2000;
-    private static final long DEFAULT_WAITTIME_FOR_SUGG_TO_HIDE = DEFAULT_WAITTIME_FOR_SUGG_TO_SHOW;
 
     @Drone
     private WebDriver driver;
@@ -67,12 +62,16 @@ public class RichFacesAutocomplete implements Autocomplete {
     @FindBy(css = CSS_INPUT)
     private TextInputComponentImpl input;
 
-    private ScrollingType scrollingType;
-    private String token;
-    private Long waitTimeForSuggToShow;
-    private Long waitTimeForSuggToHide;
+    private final AdvancedAutocompleteInteractions advancedInteractions = new AdvancedAutocompleteInteractions();
 
-    private AdvancedInteractions advancedInteractions;
+    public AdvancedAutocompleteInteractions advanced() {
+        return advancedInteractions;
+    }
+
+    @Override
+    public void clear() {
+        advanced().clear(ClearType.DEFAULT_CLEAR_TYPE);
+    }
 
     @Override
     public SelectOrConfirm type(String str) {
@@ -83,99 +82,12 @@ public class RichFacesAutocomplete implements Autocomplete {
         return new SelectOrConfirmImpl();
     }
 
-    public AdvancedInteractions advanced() {
-        if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedInteractions();
-        }
-        return advancedInteractions;
-    }
+    public class AdvancedAutocompleteInteractions {
 
-    private List<WebElement> getSuggestions() {
-        String id = root.getAttribute("id");
-        String selectorOfRoot = String.format(SUGGESTIONS_CSS_SELECTOR_TEMPLATE, id);
-        List<WebElement> foundElements = driver.findElements(By.cssSelector(selectorOfRoot));
-        if (!foundElements.isEmpty() && foundElements.get(0).isDisplayed()) { // prevent returning of not visible
-            // elements
-            return foundElements;
-        } else {
-            return Lists.newArrayList();
-        }
-    }
-
-    @Override
-    public void clear() {
-        advanced().clear(ClearType.DEFAULT_CLEAR_TYPE);
-    }
-
-    public class AdvancedInteractions {
-
-        public TextInputComponentImpl getInput() {
-            return input;
-        }
-
-        public WebElement getRoot() {
-            return root;
-        }
-
-        public ScrollingType getScrollingType() {
-            return Optional.fromNullable(scrollingType).or(DEFAULT_SCROLLING_TYPE);
-        }
-
-        public List<WebElement> getSuggestions() {
-            return Collections.unmodifiableList(RichFacesAutocomplete.this.getSuggestions());
-        }
-
-        public String getToken() {
-            return Optional.fromNullable(token).or(DEFAULT_TOKEN);
-        }
-
-        public Long getWaitTimeForSuggToHide() {
-            return Optional.fromNullable(waitTimeForSuggToHide).or(DEFAULT_WAITTIME_FOR_SUGG_TO_HIDE);
-        }
-
-        public Long getWaitTimeForSuggToShow() {
-            return Optional.fromNullable(waitTimeForSuggToShow).or(DEFAULT_WAITTIME_FOR_SUGG_TO_SHOW);
-        }
-
-        public void setToken(String value) {
-            token = value;
-        }
-
-        public void setWaitTimeForSuggToHide(Long value) {
-            waitTimeForSuggToHide = value;
-        }
-
-        public void setWaitTimeForSuggToShow(Long value) {
-            waitTimeForSuggToShow = value;
-        }
-
-        public void setScrollingType(ScrollingType type) {
-            scrollingType = type;
-        }
-
-        public void waitForSuggestionsToHide() {
-
-            Graphene.waitModel()
-                .withTimeout(getWaitTimeForSuggToHide(), TimeUnit.MILLISECONDS)
-                .withMessage("suggestions to be not visible").until(new Predicate<WebDriver>() {
-                    @Override
-                    public boolean apply(WebDriver input) {
-                        return RichFacesAutocomplete.this.getSuggestions().isEmpty();
-                    }
-                });
-        }
-
-        public void waitForSuggestionsToShow() {
-            Graphene.waitModel()
-                .withTimeout(getWaitTimeForSuggToShow(), TimeUnit.MILLISECONDS)
-                .withMessage("suggestions to be visible").until(new Predicate<WebDriver>() {
-
-                    @Override
-                    public boolean apply(WebDriver input) {
-                        return !RichFacesAutocomplete.this.getSuggestions().isEmpty();
-                    }
-                });
-        }
+        private static final String DEFAULT_TOKEN = ",";
+        private final ScrollingType DEFAULT_SCROLLING_TYPE = ScrollingType.BY_MOUSE;
+        private ScrollingType scrollingType = DEFAULT_SCROLLING_TYPE;
+        private String token = DEFAULT_TOKEN;
 
         /**
          * Clears the value of autocomplete's input field.
@@ -187,6 +99,81 @@ public class RichFacesAutocomplete implements Autocomplete {
         public TextInputComponentImpl clear(ClearType clearType) {
             return advanced().getInput().advanced().clear(clearType);
         }
+
+        public TextInputComponentImpl getInput() {
+            return input;
+        }
+
+        public WebElement getRootElement() {
+            return root;
+        }
+
+        protected ScrollingType getScrollingType() {
+            return scrollingType;
+        }
+
+        public List<WebElement> getSuggestionsElements() {
+            String id = root.getAttribute("id");
+            String selectorOfRoot = String.format(SUGGESTIONS_CSS_SELECTOR_TEMPLATE, id);
+            List<WebElement> foundElements = driver.findElements(By.cssSelector(selectorOfRoot));
+            if (!foundElements.isEmpty() && foundElements.get(0).isDisplayed()) { // prevent returning of not visible
+                // elements
+                return Collections.unmodifiableList(foundElements);
+            } else {
+                return Collections.EMPTY_LIST;
+            }
+        }
+
+        public String getToken() {
+            return token;
+        }
+
+        public void setupToken() {
+            token = DEFAULT_TOKEN;
+        }
+
+        public void setupToken(String value) {
+            token = value;
+        }
+
+        public void setupScrollingType() {
+            scrollingType = DEFAULT_SCROLLING_TYPE;
+        }
+
+        public void setupScrollingType(ScrollingType type) {
+            scrollingType = type;
+        }
+
+        public WaitingWrapper waitForSuggestionsToBeNotVisible() {
+            return new WaitingWrapperImpl() {
+
+                @Override
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return getSuggestionsElements().isEmpty();
+                        }
+                    });
+                }
+            }.withMessage("Waiting for suggestions to be not visible");
+        }
+
+        public WaitingWrapper waitForSuggestionsToBeVisible() {
+            return new WaitingWrapperImpl() {
+
+                @Override
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return !getSuggestionsElements().isEmpty();
+                        }
+                    });
+                }
+            }.withMessage("Waiting for suggestions to be visible");
+        }
+
     }
 
     public class SelectOrConfirmImpl implements SelectOrConfirm {
@@ -194,7 +181,7 @@ public class RichFacesAutocomplete implements Autocomplete {
         @Override
         public Autocomplete confirm() {
             new Actions(driver).sendKeys(Keys.RETURN).click(driver.findElement(Utils.BY_BODY)).perform();
-            advanced().waitForSuggestionsToHide();
+            advanced().waitForSuggestionsToBeNotVisible().perform();
             return RichFacesAutocomplete.this;
         }
 
@@ -205,8 +192,8 @@ public class RichFacesAutocomplete implements Autocomplete {
 
         @Override
         public Autocomplete select(ChoicePicker picker) {
-            advanced().waitForSuggestionsToShow();
-            WebElement foundValue = picker.pick(getSuggestions());
+            advanced().waitForSuggestionsToBeVisible().perform();
+            WebElement foundValue = picker.pick(advanced().getSuggestionsElements());
             if (foundValue == null) {
                 throw new RuntimeException("The value was not found by " + picker.toString());
             }
@@ -217,7 +204,7 @@ public class RichFacesAutocomplete implements Autocomplete {
                 foundValue.click();
             }
 
-            advanced().waitForSuggestionsToHide();
+            advanced().waitForSuggestionsToBeNotVisible().perform();
             return RichFacesAutocomplete.this;
         }
 
@@ -232,7 +219,7 @@ public class RichFacesAutocomplete implements Autocomplete {
         }
 
         private void selectWithKeys(WebElement foundValue) {
-            List<WebElement> suggestions = getSuggestions();
+            List<WebElement> suggestions = advanced().getSuggestionsElements();
             // if selectFirst attribute of autocomplete is set, we don't have to press arrow down key for first item
             boolean skip = suggestions.get(0).getAttribute("class").contains("rf-au-itm-sel");
             int index = Utils.getIndexOfElement(foundValue);

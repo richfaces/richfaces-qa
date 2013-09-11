@@ -77,15 +77,15 @@ public class TestPlaceholderCSV extends AbstractWebDriverTest {
         assertFalse(msg.advanced().isVisible(), "Validation message should not be visible");
 
         typeTextAndBlur("");
-        msg.advanced().waitUntilIsVisible();
+        msg.advanced().waitUntilMessageIsVisible().perform();
         assertEquals(input.getAttribute("value"), AbstractPlaceholderJSFTest.DEFAULT_PLACEHOLDER_TEXT);
         assertTrue(msg.advanced().isVisible(), "Validation message should  be visible");
 
         typeTextAndBlur(goodText);
-        msg.advanced().waitUntilIsNotVisible();
+        msg.advanced().waitUntilMessageIsNotVisible().perform();
 
         typeTextAndBlur(longText);
-        msg.advanced().waitUntilIsVisible();
+        msg.advanced().waitUntilMessageIsVisible().perform();
         assertEquals(input.getAttribute("value"), longText);
         assertTrue(msg.advanced().isVisible(), "Validation message should  be visible");
     }

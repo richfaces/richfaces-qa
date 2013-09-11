@@ -21,8 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.tree;
 
-import com.google.common.collect.Lists;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -33,6 +31,8 @@ import org.richfaces.tests.page.fragments.impl.Utils;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
+
+import com.google.common.collect.Lists;
 
 public class RichFacesTree implements Tree {
 
@@ -98,8 +98,10 @@ public class RichFacesTree implements Tree {
 
     public class AdvancedTreeInteractionsImpl implements AdvancedTreeInteractions {
 
-        private boolean toggleByHandle = Boolean.TRUE;
-        private Event toggleNodeEvent = null;
+        private final Event DEFAULT_TOGGLE_NODE_EVENT = Event.CLICK;
+        private final boolean DEFAULT_TOGGLE_BY_HANDLE = Boolean.TRUE;
+        private boolean toggleByHandle = DEFAULT_TOGGLE_BY_HANDLE;
+        private Event toggleNodeEvent = DEFAULT_TOGGLE_NODE_EVENT;
 
         @Override
         public TreeNode getFirstNode() {
@@ -174,12 +176,22 @@ public class RichFacesTree implements Tree {
         }
 
         @Override
-        public void setToggleByHandle(boolean toggleByHandle) {
+        public void setupToggleByHandle() {
+            this.toggleByHandle = DEFAULT_TOGGLE_BY_HANDLE;
+        }
+
+        @Override
+        public void setupToggleByHandle(boolean toggleByHandle) {
             this.toggleByHandle = toggleByHandle;
         }
 
         @Override
-        public void setToggleNodeEvent(Event toggleNodeEvent) {
+        public void setupToggleNodeEvent() {
+            this.toggleNodeEvent = DEFAULT_TOGGLE_NODE_EVENT;
+        }
+
+        @Override
+        public void setupToggleNodeEvent(Event toggleNodeEvent) {
             this.toggleNodeEvent = toggleNodeEvent;
         }
     }

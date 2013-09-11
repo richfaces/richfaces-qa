@@ -86,14 +86,14 @@ public class TestSelectJSApi extends AbstractWebDriverTest {
     @Test
     public void testShowPopup() {
         Utils.triggerJQ(executor, "mouseover", showPopupButton);
-        select.advanced().waitUntilSuggestionsAreVisible();
+        select.advanced().waitUntilSuggestionsAreVisible().perform();
     }
 
     @Test
     public void testHidePopup() {
         select.openSelect();
-        select.advanced().waitUntilSuggestionsAreVisible();
+        select.advanced().waitUntilSuggestionsAreVisible().perform();
         Utils.triggerJQ(executor, "mouseover", hidePopupButton);
-        select.advanced().waitUntilSuggestionsAreNotVisible();
+        select.advanced().waitUntilSuggestionsAreNotVisible().perform();
     }
 }

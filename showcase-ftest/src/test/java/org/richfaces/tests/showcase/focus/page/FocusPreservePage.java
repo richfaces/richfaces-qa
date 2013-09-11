@@ -47,6 +47,6 @@ public class FocusPreservePage extends FocusPage {
     public WebElement output;
 
     public void waitTillFirstInputIsFocused() {
-        waitModel().withTimeout(TestFocus.TIMEOUT_FOCUS, TimeUnit.SECONDS).until(new ElementIsFocused(input.advanced().getInput()));
+        waitModel().withTimeout(TestFocus.TIMEOUT_FOCUS, TimeUnit.SECONDS).until(new ElementIsFocused(input.advanced().getInputElement()));
     }
 }

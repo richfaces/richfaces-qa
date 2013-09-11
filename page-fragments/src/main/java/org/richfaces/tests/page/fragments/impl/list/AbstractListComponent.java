@@ -21,8 +21,6 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.list;
 
-import com.google.common.collect.Lists;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -34,6 +32,8 @@ import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePickerHelper;
 import org.richfaces.tests.page.fragments.impl.utils.picker.MultipleChoicePicker;
+
+import com.google.common.collect.Lists;
 
 /**
  * Base for ListComponents implementations.
@@ -107,7 +107,7 @@ public abstract class AbstractListComponent<T extends ListItem> implements ListC
         for (WebElement itemRoot : itemsRoots) {
             result.add(instantiateItemFragment(klass, itemRoot));
         }
-        if (result.size() == 1 && !result.get(0).getRoot().isDisplayed()) {
+        if (result.size() == 1 && !result.get(0).getRootElement().isDisplayed()) {
             // hack for RF's list.
             // when the list should be empty, there is always a hidden item.
             return Collections.EMPTY_LIST;
@@ -128,5 +128,4 @@ public abstract class AbstractListComponent<T extends ListItem> implements ListC
     public int size() {
         return getItems().size();
     }
-
 }

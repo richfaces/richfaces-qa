@@ -212,7 +212,7 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
     @Test
     public void testRendered() {
         attributes.set(DataScrollerAttributes.rendered, false);
-        Graphene.waitGui().until().element(page.getScroller(scroller).advanced().getRoot()).is().not().present();
+        Graphene.waitGui().until().element(page.getScroller(scroller).advanced().getRootElement()).is().not().present();
     }
 
     @Test
@@ -222,12 +222,12 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
 
         // default value - true
         Graphene.waitGui().until("The attribute 'renderIfSinglePage' doesn't work.")
-            .element(page.getScroller(scroller).advanced().getRoot()).is().present();
-        assertTrue(page.getScroller(scroller).advanced().getRoot().isDisplayed(), "Data scroller should be displayed");
+            .element(page.getScroller(scroller).advanced().getRootElement()).is().present();
+        assertTrue(page.getScroller(scroller).advanced().getRootElement().isDisplayed(), "Data scroller should be displayed");
 
         // false
         attributes.set(DataScrollerAttributes.renderIfSinglePage, false);
-        assertFalse(page.getScroller(scroller).advanced().getRoot().isDisplayed(),
+        assertFalse(page.getScroller(scroller).advanced().getRootElement().isDisplayed(),
             "Data scroller should not be displayed");
     }
 
@@ -299,17 +299,17 @@ public class TestDataScrollerAttributes extends AbstractWebDriverTest {
 
     @Test
     public void testStyle() {
-        super.testStyle(page.getScroller(scroller).advanced().getRoot());
+        super.testStyle(page.getScroller(scroller).advanced().getRootElement());
     }
 
     @Test
     public void testStyleClass() {
-        super.testStyleClass(page.getScroller(scroller).advanced().getRoot());
+        super.testStyleClass(page.getScroller(scroller).advanced().getRootElement());
     }
 
     @Test
     public void testTitle() {
-        super.testTitle(page.getScroller(scroller).advanced().getRoot());
+        super.testTitle(page.getScroller(scroller).advanced().getRootElement());
     }
 
     private int getNumberOfRows() {

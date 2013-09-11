@@ -21,13 +21,16 @@
  *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.message;
 
-import com.google.common.base.Predicate;
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.fragment.Root;
+import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.Utils;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
+
+import com.google.common.base.Predicate;
 
 /**
  * Abstract base for message component.
@@ -37,6 +40,7 @@ public abstract class AbstractMessage implements Message {
 
     @Root
     private WebElement root;
+
     private final AdvancedMessageInteractions interactions = new AdvancedMessageInteractionsImpl();
 
     @Override
@@ -55,7 +59,7 @@ public abstract class AbstractMessage implements Message {
 
     protected abstract WebElement getMessageSummaryElement();
 
-    protected GrapheneElement getRoot() {
+    protected GrapheneElement getRootElement() {
         return new GrapheneElement(root);
     }
 
@@ -66,7 +70,7 @@ public abstract class AbstractMessage implements Message {
 
     @Override
     public MessageType getType() {
-        String attribute = getRoot().getAttribute("class");
+        String attribute = getRootElement().getAttribute("class");
         for (MessageType type : MessageType.values()) {
             if (attribute.contains(getCssClass(type))) {
                 return type;
@@ -98,25 +102,37 @@ public abstract class AbstractMessage implements Message {
         }
 
         @Override
-        public void waitUntilIsNotVisible() {
-            Graphene.waitModel().until(new Predicate<WebDriver>() {
+        public WaitingWrapper waitUntilMessageIsNotVisible() {
+            return new WaitingWrapperImpl() {
 
                 @Override
-                public boolean apply(WebDriver input) {
-                    return !isVisible();
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return !isVisible();
+                        }
+                    });
                 }
-            });
+            }.withMessage("Waiting for message to be not visible.");
         }
 
         @Override
-        public void waitUntilIsVisible() {
-            Graphene.waitModel().until(new Predicate<WebDriver>() {
+        public WaitingWrapper waitUntilMessageIsVisible() {
+            return new WaitingWrapperImpl() {
 
                 @Override
-                public boolean apply(WebDriver input) {
-                    return isVisible();
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return isVisible();
+                        }
+                    });
                 }
-            });
+            }.withMessage("Waiting for message to be visible.");
         }
     }
 }

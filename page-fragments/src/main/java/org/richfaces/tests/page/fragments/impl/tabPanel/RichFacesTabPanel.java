@@ -1,5 +1,27 @@
+/*******************************************************************************
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.tabPanel;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.jboss.arquillian.graphene.findby.FindByJQuery;
@@ -30,34 +52,32 @@ public class RichFacesTabPanel extends AbstractSwitchableComponent<RichFacesTab>
     @FindBy(xpath = "//div[contains(@id, 'tabPanel')]/div[contains(@id, ':tab') or contains(@id, 'form:dynamic')]")
     private List<WebElement> allTabContents;
 
-    private AdvancedInteractions advancedInteractions;
+    private final AdvancedTabPanelInteractions advancedInteractions = new AdvancedTabPanelInteractions();
 
-    public AdvancedInteractions advanced() {
-        if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedInteractions();
-        }
+    public AdvancedTabPanelInteractions advanced() {
         return advancedInteractions;
     }
 
-    public class AdvancedInteractions extends AbstractSwitchableComponent<RichFacesTab>.AdvancedInteractions {
-        public WebElement getActiveHeader() {
+    public class AdvancedTabPanelInteractions extends AbstractSwitchableComponent<RichFacesTab>.AdvancedSwitchableComponentInteractions {
+
+        public WebElement getActiveHeaderElement() {
             return activeHeader;
         }
 
-        public List<WebElement> getAllActiveHeaders() {
-            return allActiveHeaders;
+        public List<WebElement> getAllActiveHeadersElements() {
+            return Collections.unmodifiableList(allActiveHeaders);
         }
 
-        public List<WebElement> getAllInactiveHeaders() {
-            return allInactiveHeaders;
+        public List<WebElement> getAllInactiveHeadersElements() {
+            return Collections.unmodifiableList(allInactiveHeaders);
         }
 
-        public List<WebElement> getAllDisabledHeaders() {
-            return allDisabledHeaders;
+        public List<WebElement> getAllDisabledHeadersElements() {
+            return Collections.unmodifiableList(allDisabledHeaders);
         }
 
-        public List<WebElement> getAllTabContents() {
-            return allTabContents;
+        public List<WebElement> getAllTabContentsElements() {
+            return Collections.unmodifiableList(allTabContents);
         }
     }
 
@@ -67,12 +87,11 @@ public class RichFacesTabPanel extends AbstractSwitchableComponent<RichFacesTab>
 
     @Override
     protected List<WebElement> getSwitcherControllerElements() {
-        return switcherControllerElements;
+        return Collections.unmodifiableList(switcherControllerElements);
     }
 
     @Override
     protected WebElement getRootOfContainerElement() {
         return rootOfContainerElement;
     }
-
 }

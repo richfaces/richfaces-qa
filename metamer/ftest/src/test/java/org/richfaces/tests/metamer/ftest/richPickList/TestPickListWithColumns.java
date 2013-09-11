@@ -55,7 +55,7 @@ public class TestPickListWithColumns extends AbstractWebDriverTest {
         String testedClass = "metamer-ftest-class";
         pickListAttributes.set(PickListAttributes.columnClasses, testedClass);
         for (SelectableListItem li : picklist.advanced().getSourceList().getItems()) {
-            for (WebElement e : li.getRoot().findElements(By.tagName("td"))) {
+            for (WebElement e : li.getRootElement().findElements(By.tagName("td"))) {
                 assertTrue(e.getAttribute("class").contains(testedClass), "Item @class should contain " + testedClass);
             }
         }

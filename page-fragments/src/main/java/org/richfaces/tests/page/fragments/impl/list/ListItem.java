@@ -36,5 +36,5 @@ public interface ListItem {
     /**
      * @return root of this item
      */
-    GrapheneElement getRoot();
+    GrapheneElement getRootElement();
 }

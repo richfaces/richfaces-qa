@@ -282,7 +282,7 @@ public class TestCalendarAttributes extends AbstractCalendarTest {
 
         calendar.getInput().sendKeys("RF 4");
         submitWithA4jSubmitBtn();
-        message.advanced().waitUntilIsVisible();
+        message.advanced().waitUntilMessageIsVisible().perform();
 
         assertEquals(message.getDetail(), errorMsg);
     }

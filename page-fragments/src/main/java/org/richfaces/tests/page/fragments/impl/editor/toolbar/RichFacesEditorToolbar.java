@@ -33,9 +33,6 @@ import org.openqa.selenium.WebElement;
  */
 public class RichFacesEditorToolbar implements EditorToolbar {
 
-//    @Root
-//    private WebElement root;
-
     @Drone
     private WebDriver browser;
 

@@ -145,10 +145,10 @@ public class ValidationMessageCase {
     }
 
     public void waitForMessageHide(WebDriverWait wait) {
-        message.advanced().waitUntilIsNotVisible();
+        message.advanced().waitUntilMessageIsNotVisible().perform();
     }
 
     public void waitForMessageShow(WebDriverWait wait) {
-        message.advanced().waitUntilIsVisible();
+        message.advanced().waitUntilMessageIsVisible().perform();
     }
 }

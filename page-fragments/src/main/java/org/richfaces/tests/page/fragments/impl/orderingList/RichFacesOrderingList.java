@@ -95,7 +95,7 @@ public class RichFacesOrderingList extends AbstractOrderingList {
         }
 
         @Override
-        public List<WebElement> getItems() {
+        public List<WebElement> getItemsElements() {
             return items;
         }
 

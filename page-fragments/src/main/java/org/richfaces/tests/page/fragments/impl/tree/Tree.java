@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.richfaces.tests.page.fragments.impl.utils.Event;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
 import org.richfaces.tests.page.fragments.impl.utils.picker.ChoicePicker;
 
 public interface Tree {
@@ -112,17 +113,22 @@ public interface Tree {
          */
         List<? extends TreeNode> getSelectedNodes();
 
-        void setToggleByHandle(boolean toggleByHandle);
+        void setupToggleByHandle();
 
-        void setToggleNodeEvent(Event toggleNodeEvent);
+        void setupToggleByHandle(boolean toggleByHandle);
+
+        void setupToggleNodeEvent();
+
+        void setupToggleNodeEvent(Event toggleNodeEvent);
+
     }
 
     public interface TreeNode extends Tree {
 
         @Override
-        AdvancedNodeInteractions advanced();
+        AdvancedTreeNodeInteractions advanced();
 
-        public interface AdvancedNodeInteractions extends AdvancedTreeInteractions {
+        public interface AdvancedTreeNodeInteractions extends AdvancedTreeInteractions {
 
             /**
              * Expands this node.
@@ -170,17 +176,19 @@ public interface Tree {
 
             /**
              * Checks styleClasses of root, handle, and icon elements.
+             * @return WaitingWrapper
              */
-            void waitUntilNodeIsCollapsed();
+            WaitingWrapper waitUntilNodeIsCollapsed();
 
             /**
              * Checks styleClasses of root, handle, and icon elements.
+             * @return WaitingWrapper
              */
-            void waitUntilNodeIsExpanded();
+            WaitingWrapper waitUntilNodeIsExpanded();
 
-            void waitUntilNodeIsNotSelected();
+            WaitingWrapper waitUntilNodeIsNotSelected();
 
-            void waitUntilNodeIsSelected();
+            WaitingWrapper waitUntilNodeIsSelected();
         }
     }
 }

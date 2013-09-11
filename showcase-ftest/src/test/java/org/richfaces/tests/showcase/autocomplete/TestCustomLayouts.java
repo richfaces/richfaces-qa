@@ -87,7 +87,7 @@ public class TestCustomLayouts extends AbstractWebDriverTest {
 
         SelectOrConfirm suggestions = autocomplete.type(whatTotype);
 
-        String firstSuggestion = autocomplete.advanced().getSuggestions().get(0).getText();
+        String firstSuggestion = autocomplete.advanced().getSuggestionsElements().get(0).getText();
         assertTrue(expectedValueInPopup.equals(firstSuggestion), "The first row of popup should suggest "
             + expectedValueInPopup + " " + "when " + whatTotype + " is typed in input");
 

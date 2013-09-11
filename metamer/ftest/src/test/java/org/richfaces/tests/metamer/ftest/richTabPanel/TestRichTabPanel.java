@@ -1,25 +1,24 @@
-/**
- * *****************************************************************************
- * JBoss, Home of Professional Open Source Copyright 2010-2013, Red Hat, Inc.
- * and individual contributors by the @authors tag. See the copyright.txt in the
- * distribution for a full listing of individual contributors.
+/*******************************************************************************
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * This software is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this software; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
- * site: http://www.fsf.org.
- ******************************************************************************
- */
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTabPanel;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
@@ -120,19 +119,19 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
         assertVisible(page.getPanelTabAsWebElement(), "Panel tab is not visible!");
 
         // assert there are 5 ACTIVE headers out of which only first is visible
-        List<WebElement> allActiveHeaders = page.getPanelTab().advanced().getAllActiveHeaders();
+        List<WebElement> allActiveHeaders = page.getPanelTab().advanced().getAllActiveHeadersElements();
         assertEquals(allActiveHeaders.size(), 5);
         assertVisible(allActiveHeaders.get(0), "First tab should be visible");
 
         // assert there are 5 INACTIVE headers, 3 visible
-        List<WebElement> allInactiveHeaders = page.getPanelTab().advanced().getAllInactiveHeaders();
+        List<WebElement> allInactiveHeaders = page.getPanelTab().advanced().getAllInactiveHeadersElements();
         assertEquals(allInactiveHeaders.size(), 5);
         assertVisible(allInactiveHeaders.get(1), "Second inactive tab should be visible!");
         assertVisible(allInactiveHeaders.get(2), "Third inactive tab should be visible!");
         assertVisible(allInactiveHeaders.get(4), "Fifth inactive tab should be visible!");
 
         // assert there are 5 DISABLED headers, 1 visible
-        List<WebElement> allDisabledHeaders = page.getPanelTab().advanced().getAllDisabledHeaders();
+        List<WebElement> allDisabledHeaders = page.getPanelTab().advanced().getAllDisabledHeadersElements();
         assertEquals(allDisabledHeaders.size(), 5);
         assertVisible(allDisabledHeaders.get(3), "Fourth disabled tab should be visible!");
 
@@ -150,7 +149,7 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
         assertEquals(visible, 5);
 
         // assert only content of first tab is displayed
-        List<WebElement> tabContents = page.getPanelTab().advanced().getAllTabContents();
+        List<WebElement> tabContents = page.getPanelTab().advanced().getAllTabContentsElements();
         for (int i = 1; i < 5; i++) {
             assertNotVisible(tabContents.get(i), "Contents of tab number " + (i + 1) + " should not be visible!");
         }
@@ -164,7 +163,7 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
 
         // switch tabs and check which are visible
         tabPanelAttributes.set(TabPanelAttributes.activeItem, "tab5");
-        List<WebElement> allActiveHeaders = page.getPanelTab().advanced().getAllActiveHeaders();
+        List<WebElement> allActiveHeaders = page.getPanelTab().advanced().getAllActiveHeadersElements();
         for (int i = 0; i < 4; i++) {
             assertNotVisible(allActiveHeaders.get(i), "Header on position " + (i + 1) + " should not be visible!");
         }
@@ -176,7 +175,7 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
             assertNotVisible(allActiveHeaders.get(i), "Header of tab number " + (i + 1) + " should not be visible!");
         }
 
-        List<WebElement> tabContents = page.getPanelTab().advanced().getAllTabContents();
+        List<WebElement> tabContents = page.getPanelTab().advanced().getAllTabContentsElements();
         for (int i = 1; i < 5; i++) {
             assertNotVisible(tabContents.get(i), "Contents of tab number " + (i + 1) + " should not be visible!");
         }
@@ -213,9 +212,9 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
     public void testImmediate() {
         tabPanelAttributes.set(TabPanelAttributes.immediate, Boolean.TRUE);
         WebElement thirdPanel;
-        thirdPanel = page.getPanelTab().advanced().getAllInactiveHeaders().get(2);
+        thirdPanel = page.getPanelTab().advanced().getAllInactiveHeadersElements().get(2);
         thirdPanel.click();
-        waitModel().until().element(page.getPanelTab().advanced().getAllActiveHeaders().get(2)).is().visible();
+        waitModel().until().element(page.getPanelTab().advanced().getAllActiveHeadersElements().get(2)).is().visible();
         page.assertPhases(PhaseId.RESTORE_VIEW, PhaseId.APPLY_REQUEST_VALUES, PhaseId.RENDER_RESPONSE);
         page.assertListener(PhaseId.APPLY_REQUEST_VALUES, "item changed: tab1 -> tab3");
     }
@@ -223,8 +222,8 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
     @Test
     @RegressionTest("https://issues.jboss.org/browse/RF-10523")
     public void testItemChangeListener() {
-        page.getPanelTab().advanced().getAllInactiveHeaders().get(2).click();
-        waitGui().until().element(page.getPanelTab().advanced().getAllActiveHeaders().get(2)).is().visible();
+        page.getPanelTab().advanced().getAllInactiveHeadersElements().get(2).click();
+        waitGui().until().element(page.getPanelTab().advanced().getAllActiveHeadersElements().get(2)).is().visible();
         page.assertListener(PhaseId.UPDATE_MODEL_VALUES, "item changed: tab1 -> tab3");
     }
 
@@ -241,7 +240,7 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
         testFireEvent(tabPanelAttributes, TabPanelAttributes.onbeforeitemchange, new Action() {
             @Override
             public void perform() {
-                new Actions(driver).click(page.getPanelTab().advanced().getAllInactiveHeaders().get(2)).build().perform();
+                new Actions(driver).click(page.getPanelTab().advanced().getAllInactiveHeadersElements().get(2)).build().perform();
             }
         });
     }
@@ -253,9 +252,9 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
         tabPanelAttributes.set(TabPanelAttributes.onitemchange, "metamerEvents += \"itemchange \"");
         executeJS("window.metamerEvents = \"\";");
         WebElement thirdPanel;
-        thirdPanel = page.getPanelTab().advanced().getAllInactiveHeaders().get(2);
+        thirdPanel = page.getPanelTab().advanced().getAllInactiveHeadersElements().get(2);
         thirdPanel.click();
-        waitModel().until().element(page.getPanelTab().advanced().getAllActiveHeaders().get(2)).is().visible();
+        waitModel().until().element(page.getPanelTab().advanced().getAllActiveHeadersElements().get(2)).is().visible();
 
         Object obj = executeJS("return window.metamerEvents");
         String[] events = ((String) obj).split(" ");
@@ -271,7 +270,7 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
         testFireEvent(tabPanelAttributes, TabPanelAttributes.onclick, new Action() {
             @Override
             public void perform() {
-                new Actions(driver).click(page.getPanelTab().advanced().getAllInactiveHeaders().get(2)).build().perform();
+                new Actions(driver).click(page.getPanelTab().advanced().getAllInactiveHeadersElements().get(2)).build().perform();
             }
         });
     }
@@ -292,7 +291,7 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
         testFireEvent(tabPanelAttributes, TabPanelAttributes.onitemchange, new Action() {
             @Override
             public void perform() {
-                new Actions(driver).click(page.getPanelTab().advanced().getAllInactiveHeaders().get(2)).build().perform();
+                new Actions(driver).click(page.getPanelTab().advanced().getAllInactiveHeadersElements().get(2)).build().perform();
             }
         });
     }
@@ -376,8 +375,8 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
     public void testSwitchTypeNull() {
         for (int i = 2; i >= 0; i--) {
             final int index = i;
-            guardAjax(page.getPanelTab().advanced().getAllInactiveHeaders().get(index)).click();
-            waitAjax().until().element(page.getPanelTab().advanced().getAllActiveHeaders().get(index)).is().visible();
+            guardAjax(page.getPanelTab().advanced().getAllInactiveHeadersElements().get(index)).click();
+            waitAjax().until().element(page.getPanelTab().advanced().getAllActiveHeadersElements().get(index)).is().visible();
         }
     }
 
@@ -395,8 +394,8 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
 
         for (int i = 2; i >= 0; i--) {
             final int index = i;
-            guardNoRequest(page.getPanelTab().advanced().getAllInactiveHeaders().get(index)).click();
-            waitGui().until().element(page.getPanelTab().advanced().getAllActiveHeaders().get(index)).is().visible();
+            guardNoRequest(page.getPanelTab().advanced().getAllInactiveHeadersElements().get(index)).click();
+            waitGui().until().element(page.getPanelTab().advanced().getAllActiveHeadersElements().get(index)).is().visible();
         }
     }
 
@@ -407,8 +406,8 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
 
         for (int i = 2; i >= 0; i--) {
             final int index = i;
-            guardHttp(page.getPanelTab().advanced().getAllInactiveHeaders().get(index)).click();
-            waitGui().until().element(page.getPanelTab().advanced().getAllActiveHeaders().get(index)).is().visible();
+            guardHttp(page.getPanelTab().advanced().getAllInactiveHeadersElements().get(index)).click();
+            waitGui().until().element(page.getPanelTab().advanced().getAllActiveHeadersElements().get(index)).is().visible();
         }
     }
 
@@ -418,15 +417,15 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
         String headerClass = "metamer-ftest-class";
         tabPanelAttributes.set(TabPanelAttributes.tabActiveHeaderClass, headerClass);
 
-        for (WebElement elem : page.getPanelTab().advanced().getAllActiveHeaders()) {
+        for (WebElement elem : page.getPanelTab().advanced().getAllActiveHeadersElements()) {
             assertTrue(elem.getAttribute("class").contains(headerClass), "tabActiveHeaderClass does not work");
         }
 
-        for (WebElement elem : page.getPanelTab().advanced().getAllDisabledHeaders()) {
+        for (WebElement elem : page.getPanelTab().advanced().getAllDisabledHeadersElements()) {
             assertFalse(elem.getAttribute("class").contains(headerClass), "tabActiveHeaderClass does not work");
         }
 
-        for (WebElement elem : page.getPanelTab().advanced().getAllInactiveHeaders()) {
+        for (WebElement elem : page.getPanelTab().advanced().getAllInactiveHeadersElements()) {
             assertFalse(elem.getAttribute("class").contains(headerClass), "tabActiveHeaderClass does not work");
         }
     }
@@ -445,15 +444,15 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
         String headerClass = "metamer-ftest-class";
         tabPanelAttributes.set(TabPanelAttributes.tabDisabledHeaderClass, headerClass);
 
-        for (WebElement elem : page.getPanelTab().advanced().getAllActiveHeaders()) {
+        for (WebElement elem : page.getPanelTab().advanced().getAllActiveHeadersElements()) {
             assertFalse(elem.getAttribute("class").contains(headerClass), "tabDisabledHeaderClass does not work");
         }
 
-        for (WebElement elem : page.getPanelTab().advanced().getAllDisabledHeaders()) {
+        for (WebElement elem : page.getPanelTab().advanced().getAllDisabledHeadersElements()) {
             assertTrue(elem.getAttribute("class").contains(headerClass), "tabDisabledHeaderClass does not work");
         }
 
-        for (WebElement elem : page.getPanelTab().advanced().getAllInactiveHeaders()) {
+        for (WebElement elem : page.getPanelTab().advanced().getAllInactiveHeadersElements()) {
             assertFalse(elem.getAttribute("class").contains(headerClass), "tabDisabledHeaderClass does not work");
         }
     }
@@ -464,15 +463,15 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
         String testString = "metamer-ftest-class";
         tabPanelAttributes.set(TabPanelAttributes.tabHeaderClass, testString);
 
-        for (WebElement elem : page.getPanelTab().advanced().getAllActiveHeaders()) {
+        for (WebElement elem : page.getPanelTab().advanced().getAllActiveHeadersElements()) {
             assertTrue(elem.getAttribute("class").contains(testString), "tabHeaderClass does not work");
         }
 
-        for (WebElement elem : page.getPanelTab().advanced().getAllDisabledHeaders()) {
+        for (WebElement elem : page.getPanelTab().advanced().getAllDisabledHeadersElements()) {
             assertTrue(elem.getAttribute("class").contains(testString), "tabHeaderClass does not work");
         }
 
-        for (WebElement elem : page.getPanelTab().advanced().getAllInactiveHeaders()) {
+        for (WebElement elem : page.getPanelTab().advanced().getAllInactiveHeadersElements()) {
             assertTrue(elem.getAttribute("class").contains(testString), "tabHeaderClass does not work");
         }
     }
@@ -483,15 +482,15 @@ public class TestRichTabPanel extends AbstractWebDriverTest {
         String testString = "metamer-ftest-class";
         tabPanelAttributes.set(TabPanelAttributes.tabInactiveHeaderClass, testString);
 
-        for (WebElement elem : page.getPanelTab().advanced().getAllActiveHeaders()) {
+        for (WebElement elem : page.getPanelTab().advanced().getAllActiveHeadersElements()) {
             assertFalse(elem.getAttribute("class").contains(testString), "tabInactiveHeaderClass does not work");
         }
 
-        for (WebElement elem : page.getPanelTab().advanced().getAllDisabledHeaders()) {
+        for (WebElement elem : page.getPanelTab().advanced().getAllDisabledHeadersElements()) {
             assertFalse(elem.getAttribute("class").contains(testString), "tabInactiveHeaderClass does not work");
         }
 
-        for (WebElement elem : page.getPanelTab().advanced().getAllInactiveHeaders()) {
+        for (WebElement elem : page.getPanelTab().advanced().getAllInactiveHeadersElements()) {
             assertTrue(elem.getAttribute("class").contains(testString), "tabInactiveHeaderClass does not work");
         }
     }

@@ -72,7 +72,7 @@ public class TestSelectFragment extends AbstractWebDriverTest {
     @Templates("plain")
     public void testOpenAndSelect() {
         attributes.set(SelectAttributes.selectFirst, selectFirst);
-        select.advanced().setScrollingType(scrollingType);
+        select.advanced().setupScrollingType(scrollingType);
 
         Graphene.guardAjax(select.openSelect()).select(0);
         assertEquals(getOutputText(), "Alabama");
@@ -87,7 +87,7 @@ public class TestSelectFragment extends AbstractWebDriverTest {
     @Templates("plain")
     public void testTypeAndSelect() {
         attributes.set(SelectAttributes.selectFirst, selectFirst);
-        select.advanced().setScrollingType(scrollingType);
+        select.advanced().setupScrollingType(scrollingType);
 
         Graphene.guardAjax(select.type("ala")).select(0);
         assertEquals(getOutputText(), "Alabama");

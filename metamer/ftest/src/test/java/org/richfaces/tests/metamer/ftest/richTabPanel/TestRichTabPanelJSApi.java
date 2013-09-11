@@ -1,25 +1,24 @@
-/**
- * *****************************************************************************
- * JBoss, Home of Professional Open Source Copyright 2010-2013, Red Hat, Inc.
- * and individual contributors by the @authors tag. See the copyright.txt in the
- * distribution for a full listing of individual contributors.
+/*******************************************************************************
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- * This is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * This software is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this software; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF
- * site: http://www.fsf.org.
- * *****************************************************************************
- */
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *******************************************************************************/
 package org.richfaces.tests.metamer.ftest.richTabPanel;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
@@ -77,19 +76,19 @@ public class TestRichTabPanelJSApi extends AbstractWebDriverTest {
 
         // switch to certain panel and assert it's content is visible
         guardAjax(switchToButtons.get(4)).click();
-        assertVisible(page.getPanelTab().advanced().getAllTabContents().get(4), "Content of the last tab should be visible");
+        assertVisible(page.getPanelTab().advanced().getAllTabContentsElements().get(4), "Content of the last tab should be visible");
 
         guardAjax(switchToButtons.get(0)).click();
-        assertVisible(page.getPanelTab().advanced().getAllTabContents().get(0), "Content of the first tab should be visible");
+        assertVisible(page.getPanelTab().advanced().getAllTabContentsElements().get(0), "Content of the first tab should be visible");
 
         guardAjax(switchToButtons.get(2)).click();
-        assertVisible(page.getPanelTab().advanced().getAllTabContents().get(2), "Content of the third tab should be visible");
+        assertVisible(page.getPanelTab().advanced().getAllTabContentsElements().get(2), "Content of the third tab should be visible");
 
         guardAjax(switchToButtons.get(1)).click();
-        assertVisible(page.getPanelTab().advanced().getAllTabContents().get(1), "Content of the second tab should be visible");
+        assertVisible(page.getPanelTab().advanced().getAllTabContentsElements().get(1), "Content of the second tab should be visible");
 
         guardNoRequest(switchToButtons.get(3)).click();
-        assertNotVisible(page.getPanelTab().advanced().getAllTabContents().get(3),
+        assertNotVisible(page.getPanelTab().advanced().getAllTabContentsElements().get(3),
             "Content of the fourth tab should not be visible");
     }
 
@@ -103,7 +102,7 @@ public class TestRichTabPanelJSApi extends AbstractWebDriverTest {
             Boolean selected = (Boolean) executeJS("return RichFaces.component('"
                 + page.getPanelTabAsWebElement().getAttribute("id") + "').getItems()['" + i + "'].isSelected()");
 
-            assertTrue(page.getPanelTab().advanced().getAllActiveHeaders().get(i).getAttribute("id").contains(id));
+            assertTrue(page.getPanelTab().advanced().getAllActiveHeadersElements().get(i).getAttribute("id").contains(id));
             if (i == 0) {
                 // first tab is selected
                 assertTrue(selected);

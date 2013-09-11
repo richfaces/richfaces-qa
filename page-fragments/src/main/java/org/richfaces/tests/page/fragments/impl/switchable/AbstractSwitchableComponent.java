@@ -1,3 +1,24 @@
+/*******************************************************************************
+ * JBoss, Home of Professional Open Source
+ * Copyright 2010-2013, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *******************************************************************************/
 package org.richfaces.tests.page.fragments.impl.switchable;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
@@ -17,8 +38,15 @@ public abstract class AbstractSwitchableComponent<T extends ComponentContainer> 
     @Root
     private WebElement root;
 
-    private SwitchType switchType = SwitchType.AJAX;
-    private AdvancedInteractions advancedInteractions;
+    private final AdvancedSwitchableComponentInteractions advancedInteractions = new AdvancedSwitchableComponentInteractions();
+
+    public AdvancedSwitchableComponentInteractions advanced() {
+        return advancedInteractions;
+    }
+
+    protected abstract WebElement getRootOfContainerElement();
+
+    protected abstract List<WebElement> getSwitcherControllerElements();
 
     @Override
     @SuppressWarnings("unchecked")
@@ -43,19 +71,8 @@ public abstract class AbstractSwitchableComponent<T extends ComponentContainer> 
         return switchTo(ChoicePickerHelper.byIndex().index(index));
     }
 
-    public AdvancedInteractions advanced() {
-        if (advancedInteractions == null) {
-            advancedInteractions = new AdvancedInteractions();
-        }
-        return advancedInteractions;
-    }
-
-    protected abstract List<WebElement> getSwitcherControllerElements();
-
-    protected abstract WebElement getRootOfContainerElement();
-
     private void switchTo(WebElement switcher) {
-        switch (switchType) {
+        switch (advanced().getSwitchType()) {
             case CLIENT:
                 switcher.click();
                 Graphene.waitGui();
@@ -69,9 +86,20 @@ public abstract class AbstractSwitchableComponent<T extends ComponentContainer> 
         }
     }
 
-    public class AdvancedInteractions {
+    public class AdvancedSwitchableComponentInteractions {
 
-        public void setSwitcherType(SwitchType newSwitchType) {
+        private final SwitchType DEFAULT_SWITCH_TYPE = SwitchType.AJAX;
+        private SwitchType switchType = SwitchType.AJAX;
+
+        private SwitchType getSwitchType() {
+            return switchType;
+        }
+
+        public void setupSwitchType() {
+            switchType = DEFAULT_SWITCH_TYPE;
+        }
+
+        public void setupSwitchType(SwitchType newSwitchType) {
             switchType = newSwitchType;
         }
 

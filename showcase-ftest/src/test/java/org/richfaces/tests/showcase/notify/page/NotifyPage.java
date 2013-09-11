@@ -39,11 +39,11 @@ public class NotifyPage {
     }
 
     public void waitUntilThereIsNotify() {
-        notify.advanced().waitUntilIsVisible();
+        notify.advanced().waitUntilMessagesAreVisible().perform();
     }
 
     public void waitUntilThereIsNoNotify() {
-        notify.advanced().waitUntilIsNotVisible();
+        notify.advanced().waitUntilMessagesAreNotVisible().perform();
     }
 
 }

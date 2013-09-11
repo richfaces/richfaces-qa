@@ -44,8 +44,8 @@ public class TestMessageCSV extends AbstractMessageTest {
 
     @Override
     protected void waitingForValidationMessagesToShow() {
-        page.getMessageComponentForFirstInput().advanced().waitUntilIsVisible();
-        page.getMessageComponentForSecondInput().advanced().waitUntilIsVisible();
-        page.getMessageComponentForSelectableInput().advanced().waitUntilIsVisible();
+        page.getMessageComponentForFirstInput().advanced().waitUntilMessageIsVisible().perform();
+        page.getMessageComponentForSecondInput().advanced().waitUntilMessageIsVisible().perform();
+        page.getMessageComponentForSelectableInput().advanced().waitUntilMessageIsVisible().perform();
     }
 }

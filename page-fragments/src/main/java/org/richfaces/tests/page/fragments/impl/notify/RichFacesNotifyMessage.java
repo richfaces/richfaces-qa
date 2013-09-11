@@ -22,7 +22,6 @@
 package org.richfaces.tests.page.fragments.impl.notify;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
@@ -63,7 +62,7 @@ public class RichFacesNotifyMessage extends AbstractMessage implements NotifyMes
 
     @Override
     public void close() {
-        new Actions(driver).moveToElement(getRoot()).perform();
+        new Actions(driver).moveToElement(getRootElement()).perform();
         Graphene.waitModel().until().element(closeIconElement).is().visible();
         final List<WebElement> messages = driver.findElements(By.cssSelector("div.rf-ntf-cnt"));
         final int sizeBefore = messages.size();

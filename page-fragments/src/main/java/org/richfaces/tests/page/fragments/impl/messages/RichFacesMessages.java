@@ -26,8 +26,8 @@ import com.google.common.base.Predicate;
 import java.util.Collections;
 import java.util.List;
 
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.GrapheneElement;
+import org.jboss.arquillian.graphene.wait.FluentWait;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -36,6 +36,8 @@ import org.richfaces.tests.page.fragments.impl.list.AbstractListComponent;
 import org.richfaces.tests.page.fragments.impl.message.AbstractMessage;
 import org.richfaces.tests.page.fragments.impl.message.Message.MessageType;
 import org.richfaces.tests.page.fragments.impl.messages.RichFacesMessages.MessageImpl;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapper;
+import org.richfaces.tests.page.fragments.impl.utils.WaitingWrapperImpl;
 
 /**
  * Component for rich:messages.
@@ -119,45 +121,59 @@ public class RichFacesMessages extends AbstractListComponent<MessageImpl> implem
         }
 
         @Override
-        public GrapheneElement getRoot() {
-            return super.getRoot();
+        public GrapheneElement getRootElement() {
+            return super.getRootElement();
         }
 
         @Override
         public String getText() {
-            return getRoot().getText();
+            return getRootElement().getText();
         }
     }
 
     public class AdvancedMessagesInteractionsImpl implements AdvancedMessagesInteractions {
 
-        public WebElement getRoot() {
+        public WebElement getRootElement() {
             return RichFacesMessages.this.getRoot();
         }
 
         @Override
         public boolean isVisible() {
-            return Utils.isVisible(getRoot()) && !getItems().isEmpty();
+            return Utils.isVisible(getRootElement()) && !getItems().isEmpty();
         }
 
         @Override
-        public void waitUntilIsNotVisible() {
-            Graphene.waitModel().until(new Predicate<WebDriver>() {
+        public WaitingWrapper waitUntilMessagesAreNotVisible() {
+            return new WaitingWrapperImpl() {
+
                 @Override
-                public boolean apply(WebDriver input) {
-                    return !isVisible();
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return !isVisible();
+                        }
+                    });
                 }
-            });
+            }.withMessage("Waiting for message to be not visible.");
         }
 
         @Override
-        public void waitUntilIsVisible() {
-            Graphene.waitModel().until(new Predicate<WebDriver>() {
+        public WaitingWrapper waitUntilMessagesAreVisible() {
+            return new WaitingWrapperImpl() {
+
                 @Override
-                public boolean apply(WebDriver input) {
-                    return isVisible();
+                protected void performWait(FluentWait<WebDriver, Void> wait) {
+                    wait.until(new Predicate<WebDriver>() {
+
+                        @Override
+                        public boolean apply(WebDriver input) {
+                            return isVisible();
+                        }
+                    });
                 }
-            });
+            }.withMessage("Waiting for message to be visible.");
         }
     }
 }

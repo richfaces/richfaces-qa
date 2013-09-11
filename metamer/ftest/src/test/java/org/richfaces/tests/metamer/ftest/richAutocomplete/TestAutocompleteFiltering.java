@@ -53,7 +53,7 @@ public class TestAutocompleteFiltering extends AbstractAutocompleteTest {
 
         autocomplete.type("No");
 
-        List<WebElement> found = autocomplete.advanced().getSuggestions();
+        List<WebElement> found = autocomplete.advanced().getSuggestionsElements();
         assertNotNull(found, "Suggestions aren't available.");
         assertFalse(found.isEmpty(), "Suggestions aren't available.");
 
