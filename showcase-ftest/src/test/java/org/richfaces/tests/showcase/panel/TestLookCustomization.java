@@ -26,7 +26,6 @@ package org.richfaces.tests.showcase.panel;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
-import static org.jboss.arquillian.ajocado.dom.Attribute.STYLE;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
@@ -119,7 +118,7 @@ public class TestLookCustomization extends AbstractPanelTest {
     }
 
     private String getAttribute(String locator) {
-        return webDriver.findElement(ByJQuery.selector(locator)).getAttribute(STYLE.getAttributeName());
+        return webDriver.findElement(ByJQuery.selector(locator)).getAttribute("style");
     }
 
     private void mouseOver(WebElement element) {
