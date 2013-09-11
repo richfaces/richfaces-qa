@@ -27,7 +27,6 @@ import java.net.URL;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
-import org.jboss.arquillian.ajocado.format.SimplifiedFormat;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.testng.Arquillian;
@@ -64,10 +63,10 @@ public abstract class AbstractShowcaseTest extends Arquillian {
         ShowcaseLayout layout = loadLayout();
         String addition;
         if (layout == ShowcaseLayout.COMMON) {
-            addition = SimplifiedFormat.format("richfaces/component-sample.jsf?skin=blueSky&demo={0}&sample={1}", demoName,
+            addition = String.format("richfaces/component-sample.jsf?skin=blueSky&demo=%s&sample=%s", demoName,
                 sampleName);
         } else {
-            addition = SimplifiedFormat.format("mobile/#{0}:{1}", demoName, sampleName);
+            addition = String.format("mobile/#%s:%s", demoName, sampleName);
         }
 
         return addition;

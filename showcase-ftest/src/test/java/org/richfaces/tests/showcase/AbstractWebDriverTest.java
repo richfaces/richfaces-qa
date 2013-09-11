@@ -25,7 +25,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jboss.arquillian.ajocado.utils.URLUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.openqa.selenium.By;
@@ -54,9 +53,9 @@ public class AbstractWebDriverTest extends AbstractShowcaseTest {
         this.contextRoot = getContextRoot();
         ShowcaseLayout layout = loadLayout();
         if (layout == ShowcaseLayout.MOBILE) {
-            webDriver.get(URLUtils.buildUrl(this.contextRoot, "mobile/").toExternalForm()); // because of '#' in URLs
+            webDriver.get(this.contextRoot.toExternalForm() + "mobile/"); // because of '#' in URLs
         }
-        webDriver.get(URLUtils.buildUrl(contextRoot, addition).toExternalForm());
+        webDriver.get(contextRoot.toExternalForm() + addition);
         if (layout == ShowcaseLayout.MOBILE) {
         Graphene.waitAjax()
                 .until()
