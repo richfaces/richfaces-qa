@@ -22,11 +22,11 @@
 package org.richfaces.tests.metamer.ftest.richInplaceInput;
 
 import static org.jboss.arquillian.ajocado.utils.URLUtils.buildUrl;
-import static org.junit.Assert.fail;
 import static org.richfaces.tests.metamer.ftest.webdriver.AttributeList.inplaceInputAttributes;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 import java.net.URL;
 
