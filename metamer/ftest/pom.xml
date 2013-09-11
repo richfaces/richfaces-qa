@@ -9,7 +9,8 @@ General Public License for more details. You should have received a copy of the 
 software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the
 FSF site: http://www.fsf.org. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -57,19 +58,20 @@ FSF site: http://www.fsf.org. -->
         <!-- Arquillian dependencies -->
         <dependency>
             <groupId>org.jboss.arquillian.graphene</groupId>
-            <artifactId>graphene-webdriver</artifactId>
-            <version>${arquillian.graphene.version}</version>
+            <artifactId>arquillian-graphene</artifactId>
             <type>pom</type>
             <scope>test</scope>
+        </dependency>
+        <!-- This is because of Ajocado.buildURL etc. used in loadPage -->
+        <dependency>
+            <groupId>org.jboss.arquillian.graphene</groupId>
+            <artifactId>graphene-selenium</artifactId>
+            <version>2.0.0.Alpha5</version>
+            <type>pom</type>
         </dependency>
         <dependency>
             <groupId>org.jboss.arquillian.testng</groupId>
             <artifactId>arquillian-testng-container</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-drone-impl</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -100,39 +102,6 @@ FSF site: http://www.fsf.org. -->
             <artifactId>shrinkwrap-descriptors-api-base</artifactId>
         </dependency>
 
-        <!-- Support for Selenium in Arquillian Drone -->
-        <dependency>
-            <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-drone-webdriver</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- Selenium -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-api</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-support</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-server</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-codec</groupId>
-                    <artifactId>commons-codec</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
         <dependency>
             <groupId>com.opera</groupId>
             <artifactId>operadriver</artifactId>
@@ -144,13 +113,6 @@ FSF site: http://www.fsf.org. -->
             <artifactId>testng-listeners</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
-        </dependency>
-        <!-- XHRHalter support -->
-        <dependency>
-            <groupId>org.richfaces.tests</groupId>
-            <artifactId>xhrhalter</artifactId>
-            <scope>test</scope>
-            <version>${project.version}</version>
         </dependency>
         <!-- WebDriver Utils -->
         <dependency>
@@ -182,6 +144,11 @@ FSF site: http://www.fsf.org. -->
             <artifactId>httpcore</artifactId>
             <version>4.2.2</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
         </dependency>
     </dependencies>
 

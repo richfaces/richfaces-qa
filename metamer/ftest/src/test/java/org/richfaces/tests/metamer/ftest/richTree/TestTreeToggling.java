@@ -58,7 +58,7 @@ public class TestTreeToggling extends AbstractTreeTest {
     }
 
     @Test
-    @Use(field = "sample", value = "swingTreeNode")
+    @Use(field = "sample", value = "simpleSwingTreeNode")
     public void testDeepCollapsion() {
         checkInitialState();
 
@@ -81,7 +81,7 @@ public class TestTreeToggling extends AbstractTreeTest {
     }
 
     @Test
-    @Use(field = "sample", value = "swingTreeNode")
+    @Use(field = "sample", value = "simpleSwingTreeNode")
     public void testDeepExpansion() {
         checkInitialState();
         for (int[] path : paths) {
@@ -109,7 +109,7 @@ public class TestTreeToggling extends AbstractTreeTest {
     }
 
     @Test
-    @Use(field = "sample", value = "swingTreeNode")
+    @Use(field = "sample", value = "simpleSwingTreeNode")
     public void testTopLevelNodesCollapsion() {
         checkInitialState();
         testTopLevelNodesExpansion();
@@ -129,7 +129,7 @@ public class TestTreeToggling extends AbstractTreeTest {
     }
 
     @Test
-    @Use(field = "sample", value = "swingTreeNode")
+    @Use(field = "sample", value = "simpleSwingTreeNode")
     public void testTopLevelNodesExpansion() {
         checkInitialState();
         for (int i = 1; i <= TOP_LEVEL_NODES; i++) {

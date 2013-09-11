@@ -80,7 +80,7 @@ public abstract class AbstractTreeTest extends AbstractWebDriverTest {
 })
     protected String sample;
 
-    protected final String swingTreeNode = "simpleSwingTreeNode";
+    protected final String simpleSwingTreeNode = "simpleSwingTreeNode";
     protected final String[] richFacesTreeNodes = { "simpleRichFacesTreeNode", "simpleRichFacesTreeDataModel" };
 
     protected <T> T getGuarded(T something, SwitchType type) {
